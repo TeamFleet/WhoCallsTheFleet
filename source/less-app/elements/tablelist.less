@@ -113,7 +113,8 @@
 									opacity:	.75;
 									.font-size(12);
 									display:	block;
-									line-height:1em;
+									line-height:1.5em;
+									.margin-top(-3);
 									padding:	0 0 0 .25em;
 								}
 							}
@@ -374,7 +375,7 @@
 								&:empty{
 									display:	inline-block;
 									height:		0 !important;
-									.margin-right(20);
+									.margin-left(20);
 								}
 								@media all and (min-width: 1152px ){
 									.flex-basis(190px);
@@ -393,29 +394,45 @@
 								//.border-top(1, solid, #d3c9db);
 								border-bottom:	0;
 								position:	relative;
-								.margin-right(20);
+								.margin-left(20);
+								.margin-top(10);
+								.height(39);
+								background-size:	0 100%;
+								background-color:	transparent !important;
+								background-repeat:	no-repeat;
+								background-image:	linear-gradient(to right, transparent 10px, rgba(0, 0, 0, .35) ~"calc(100% - 30px)", transparent);
 								input[type="checkbox"].compare{
 									position:	absolute;
 									.left(-15);
+									.line-height(39);
+									&:after{
+										top:	0;
+										height:	100%;
+									}	
 								}
 								th, td{
 									display:	block;
 								}
-								td[class^=stat-]{
-									display:	none;
-								}
 								th{
+									.height(39);
+									padding-top:	0;
+									padding-bottom:	0;
 									.flexbox();
 									.align-items(center);
 									img{
+										top:	0;
 										.mask-image(~"linear-gradient(to right, transparent 0, transparent 50px, #000 58px, #000 calc(100% - 60px), transparent calc(100% - 10px))");
 									}
+								}
+								td[class^=stat-]{
+									display:	none;
 								}
 							}
 						}
 						&.hashover{
 							tbody tr[data-shipid]:hover{
-								background:	rgba(0, 0, 0, .35);
+								background-size:	100% 100%;
+								//background:	rgba(0, 0, 0, .35);
 							}
 						}
 					} // table

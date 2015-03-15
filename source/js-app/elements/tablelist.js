@@ -100,7 +100,7 @@ _tablelist.prototype.global_index = 0
 							//+ '<small>' + ship_data['pron'] + '</small>'
 						)
 						.prepend(
-							$('<input type="checkbox" class="compare"/>').on('click',function(){
+							$('<input type="checkbox" class="compare"/>').on('click, change',function(){
 								if( $(this).prop('checked') )
 									tr.attr('compare-checked', true )
 								else
@@ -243,7 +243,7 @@ _tablelist.prototype.global_index = 0
 		_config.set( 'shiplist-viewtype', this._ships_last_viewtype )
 	}
 	_tablelist.prototype._ships_compare_end = function(){
-		this.dom.tbody.find('input[type="checkbox"].compare:checked').prop('checked', false)
+		this.dom.tbody.find('input[type="checkbox"].compare:checked').prop('checked', false).trigger('change')
 		this.dom.filter_container.attr('viewtype', this._ships_last_viewtype)
 		delete this._ships_last_viewtype
 		this.dom.msg_container.removeAttr('data-msgs')
