@@ -19,12 +19,19 @@
 		background-size:	100% unit(@thead_height - 1, px);
 		.transition-property(~"background-size, padding-top");
 		.transition-duration(.5s);
+		.window-noframe({
+			.padding-right(2);
+		});
 		&>.fixed-table-container-inner{
 			width:		100%;
 			height:		auto;
 			.flex(1 0 100%);
 			.padding-left(@nav_height);
 			.padding-right(@nav_height - @scrollbar_width);
+			.padding-bottom(20);
+			.window-noframe({
+				.padding-right(@nav_height - @scrollbar_width + 2);
+			});
 			table{
 				thead{
 					tr{
@@ -388,6 +395,7 @@
 								display:	block;
 								.flex(none);
 								width:		100%;
+								.height(50);
 							}
 							tr[data-shipid]{
 								display:	inline-block;
@@ -396,7 +404,7 @@
 								position:	relative;
 								.margin-left(20);
 								.margin-top(10);
-								.height(39);
+								.height(40);
 								background-size:	0 100%;
 								background-color:	transparent !important;
 								background-repeat:	no-repeat;
@@ -404,7 +412,7 @@
 								input[type="checkbox"].compare{
 									position:	absolute;
 									.left(-15);
-									.line-height(39);
+									.line-height(40);
 									&:after{
 										top:	0;
 										height:	100%;
@@ -414,7 +422,7 @@
 									display:	block;
 								}
 								th{
-									.height(39);
+									.height(40);
 									padding-top:	0;
 									padding-bottom:	0;
 									.flexbox();

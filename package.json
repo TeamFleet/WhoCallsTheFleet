@@ -1,7 +1,10 @@
 {
 	"name":		"Who Calls the Fleet",
 	"main":		"app/main.html",
-	"version":	"0.1.0",
+	"version":	"0.1.1",
+
+	"debug": 	true,
+
 	"window": {
 		"width": 			1280,
 		"height":			720,
@@ -15,9 +18,17 @@
 		"always-on-top":	false,
 		"fullscreen":		false,
 		"show_in_taskbar":	true,
-		"frame":			true,
+		"frame":			false,
 		"show":				false,
 		"kiosk":			false,
 		"transparent":		false
+	},
+
+	"platformOverrides": {
+		"win": {
+			"window": {
+				"frame": 	false
+			}
+		}
 	}
 }

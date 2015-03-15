@@ -17,7 +17,8 @@
 }
 
 
-html{
+
+// Scrollbar
 	::-webkit-scrollbar{
 		.width(@scrollbar_width);
 	}
@@ -78,219 +79,247 @@ html{
 			background:		@scrollbar-thumb-background;
 		}
 	}
-	&, body{
-		height:		100%;
-		overflow:	hidden;
+
+
+
+
+
+html, body{
+	height:		100%;
+	overflow:	hidden;
+}
+body{
+	.font-size(14);
+	font-family:	@font_family_sans;
+	h1, h2, h3, h4, h5, h6{
+		font-family:@font_famliy_Song;
+		line-height:1.2em;
 	}
-	body{
+	h2{
+		.font-size(36);
+	}
+	h3{
+		.font-size(24);
+	}
+	h4{
+		.font-size(18);
+		font-weight:	normal;
+	}
+	h5{
 		.font-size(14);
-		font-family:	@font_famliy_Hei;
-		h1, h2, h3, h4, h5, h6{
-			font-family:@font_famliy_Song;
-			line-height:1.2em;
+		font-weight:	normal;
+	}
+	#layout{
+		.padding-top(@nav_height);
+		height:		100%;
+		&>nav, &>main{
+			.transition-duration(0.75s);
 		}
-		h2{
-			.font-size(36);
-		}
-		h3{
-			.font-size(24);
-		}
-		h4{
-			.font-size(18);
-			font-weight:	normal;
-		}
-		h5{
-			.font-size(14);
-			font-weight:	normal;
-		}
-		#layout{
-			.padding-top(@nav_height);
-			height:		100%;
-			&>nav, &>main{
-				.transition-duration(0.75s);
-			}
-			&>nav{
-				display:	block;
+		&>nav{
+			display:	block;
+			position:	absolute;
+			.top( 0 - @nav_height );
+			left:		0;
+			.height(@nav_height);
+			width:		100%;
+			z-index:	4;
+			.transition-property(top);
+			//background:	#000;
+			background:	rgba(0, 0, 0, .5);
+			.user-select(none);
+			.window-noframe({
+				-webkit-app-region:	drag;
+			});
+			&:after{
+				content:	'';
 				position:	absolute;
-				.top( 0 - @nav_height );
-				left:		0;
-				.height(@nav_height);
-				width:		100%;
 				z-index:	4;
-				.transition-property(top);
-				//background:	#000;
-				background:	rgba(0, 0, 0, .5);
-				&>.logo{
-					position:	fixed;
-					overflow:	hidden;
-					top:		0;
-					left:		0;
-					width:		100%;
-					height:		100%;
-					pointer-events: none;
-					&:before{
-						content:	"";
-						position:	absolute;
-						.animation(~"layout-loading-logo 1.2s ease-out infinite alternate");
-						top:		0;
-						left:		0;
-						width:		100%;
-						height:		100%;
-						background:	~"url(@{folder_images}/boat.png) no-repeat 50% 50%";
-					}
-				}
-				&>div{
-					z-index:	3;
-					position:	relative;
-					height:		100%;
-					.border-bottom(1, solid, fade(#e5e5e5, 25%));
-					.padding(0, (@nav_height - 10));
-					button{
-						.line-height(@nav_height);
-						.font-size(24);
-						font-weight:lighter;
-						color:		#cccccc;
-						.transition-property(~"text-shadow, color");
-						.padding(0, 10);
-						&.on{
-							color:		#fff;
-							text-shadow:0 0 10px #fff
-										,0 0 10px rgba(255,255,255,.25);
-						}
-						&:hover{
-							color:		#fff;
-						}
-						&+button{
-							.margin-left(30);
-						}
-					}
-				}
-				&>s{
-					display:	block;
-					position:	absolute;
-					z-index:	2;
-					width:		100%;
-					height:		100%;
-					top:		0;
-					left:		0;
-					background:	no-repeat 50% 38.2% / cover;
-					background-attachment:	fixed;
-					//opacity:	.5;
-					&.fadein{
-						.fadein();
-					}
-					&:after{
-						content:	'';
-						position:	absolute;
-						top:		0;
-						left:		0;
-						width:		100%;
-						height:		100%;
-						z-index:	1;
-						background:	rgba(0, 0, 0, .5);
-					}
-				}
+				bottom:		0;
+				left:		0;
+				width:		100%;
+				.height(1);
+				background:	fade(#e5e5e5, 25%)
 			}
-			&>main{
-				display:	block;
-				position:	relative;
+			&>.logo{
+				position:	fixed;
+				overflow:	hidden;
+				top:		0;
+				left:		0;
 				width:		100%;
 				height:		100%;
-				z-index:	3;
-				overflow:	hidden;
-				.font-size(14);
-				line-height:1.5;
-				color:		#f2f2f2;
-				top:		100%;
-				.transition-property(top);
-				h1, h2, h3, h4, h5, h6{
-					color:		#73d3ff;
-					line-height:1.25em;
-					margin-bottom:0.5em;
-				}
-
-				&>.page{
+				pointer-events: none;
+				-webkit-app-region:	no-drag;
+				&:before{
+					content:	"";
 					position:	absolute;
-					width:		100%;
-					height:		100%;
-					overflow:	auto;
+					.animation(~"layout-loading-logo 1.2s ease-out infinite alternate");
 					top:		0;
 					left:		0;
-					z-index:	3;
-					//.transition-property(top);
-					.padding(20, @nav_height);
-					.fadein();
-					background:	rgba(0, 0, 0, .65);
-					&.off{
-						display:	none;
-					}
-				} // &>.page
-				&>s{
-					display:	block;
-					position:	absolute;
-					z-index:	1;
 					width:		100%;
 					height:		100%;
-					top:		0;
-					left:		0;
-					background:	no-repeat 50% 38.2% / cover;
-					background-attachment:	fixed;
-					//opacity:	.5;
-					&.fadein{
-						.fadein();
-					}
-					/*
-					&:after{
-						content:	'';
-						position:	absolute;
-						top:		0;
-						left:		0;
-						width:		100%;
-						height:		100%;
-						z-index:	1;
-						background:	fade( #20333c, 50% );
-					}*/
+					background:	~"url(@{folder_images}/boat.png) no-repeat 50% 50%";
 				}
 			}
-			&>.bgimg{
+			&>div{
+				z-index:	3;
+				position:	relative;
+				height:		100%;
+				//.padding(0, (@nav_height - 10));
+				-webkit-app-region:	no-drag;
+				display:	inline-block;
+				.margin-left(@nav_height - 10);
+				.padding(0, 10);
+				max-width:	~"calc(100% - @{nav_height} - 10)";
+				button{
+					.line-height(@nav_height);
+					.font-size(24);
+					font-weight:lighter;
+					color:		rgba(255,255,255,.5);
+					.transition-property(~"text-shadow, color");
+					.padding(0, 10);
+					&.on{
+						color:		#fff;
+						text-shadow:0 0 10px #fff
+									,0 0 10px rgba(255,255,255,.25);
+					}
+					&:hover{
+						color:		#fff;
+					}
+					&+button{
+						.margin-left(30);
+					}
+				}
+			}
+			&>s{
+				display:	block;
 				position:	absolute;
 				z-index:	2;
 				width:		100%;
 				height:		100%;
 				top:		0;
 				left:		0;
-				overflow:	hidden;
-				&>div{
+				background:	~"no-repeat 50% 38.2% / cover";
+				background-attachment:	fixed;
+				//opacity:	.5;
+				&.fadein{
+					.fadein();
+				}
+				&:after{
+					content:	'';
 					position:	absolute;
 					top:		0;
 					left:		0;
 					width:		100%;
 					height:		100%;
-					.fadein();
-					background:	~"no-repeat 50% 38.2% / cover";
+					z-index:	1;
+					background:	rgba(0, 0, 0, .5);
+					.enable-transition();
+					.transition-property(background-color);
+					.window-blured({
+						background:	rgba(0, 0, 0, .75);
+					});
 				}
 			}
+		}
+		&>main{
+			display:	block;
+			position:	relative;
+			width:		100%;
+			height:		100%;
+			z-index:	3;
+			overflow:	hidden;
+			.font-size(14);
+			line-height:1.5;
+			color:		#f2f2f2;
+			top:		100%;
+			.transition-property(top);
+			h1, h2, h3, h4, h5, h6{
+				color:		#73d3ff;
+				line-height:1.25em;
+				margin-bottom:0.5em;
+			}
 
-			&.ready{
-				&>nav{
-					top:	0;
-					&>.logo{
-						.animation(~"layout-ready-logo 1s ease-in-out");
-						.animation-iteration-count(1);
-						&.ready-animated{
-							display:	none;
-						}
+			&>.page{
+				position:	absolute;
+				width:		100%;
+				height:		100%;
+				overflow:	auto;
+				top:		0;
+				left:		0;
+				z-index:	3;
+				//.transition-property(top);
+				.padding(20, @nav_height);
+				.fadein();
+				background:	rgba(0, 0, 0, .65);
+				&.off{
+					display:	none;
+				}
+			} // &>.page
+			&>s{
+				display:	block;
+				position:	absolute;
+				z-index:	1;
+				width:		100%;
+				height:		100%;
+				top:		0;
+				left:		0;
+				background:	~"no-repeat 50% 38.2% / cover";
+				background-attachment:	fixed;
+				//opacity:	.5;
+				&.fadein{
+					.fadein();
+				}
+				/*
+				&:after{
+					content:	'';
+					position:	absolute;
+					top:		0;
+					left:		0;
+					width:		100%;
+					height:		100%;
+					z-index:	1;
+					background:	fade( #20333c, 50% );
+				}*/
+			}
+		}
+		&>.bgimg{
+			position:	absolute;
+			z-index:	2;
+			width:		100%;
+			height:		100%;
+			top:		0;
+			left:		0;
+			overflow:	hidden;
+			&>div{
+				position:	absolute;
+				top:		0;
+				left:		0;
+				width:		100%;
+				height:		100%;
+				.fadein();
+				background:	~"no-repeat 50% 38.2% / cover";
+			}
+		}
+
+		&.ready{
+			&>nav{
+				top:	0;
+				&>.logo{
+					.animation(~"layout-ready-logo 1s ease-in-out");
+					.animation-iteration-count(1);
+					&.ready-animated{
+						display:	none;
 					}
 				}
-				&>main{
-					top:	0;
-				}
 			}
+			&>main{
+				top:	0;
+			}
+		}
 
-			&.ready.hidecontent{
-			}
-		} // #layout
-	}
+		&.ready.hidecontent{
+		}
+	} // #layout
 }
 
 
