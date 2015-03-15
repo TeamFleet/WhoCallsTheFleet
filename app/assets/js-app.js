@@ -711,8 +711,8 @@ _tablelist.prototype.global_index = 0
 					}
 				} )
 			this.append_option( 'radio', 'viewtype', null, [
-					['list', ''],
-					['card', '']
+					['card', ''],
+					['list', '']
 				], null, {
 					'radio_default': _config.get( 'shiplist-viewtype' ),
 					'onchange': function( e, input ){
