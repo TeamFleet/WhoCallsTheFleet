@@ -29,6 +29,16 @@
 			"window": {
 				"frame": 	false
 			}
+		},
+		"osx": {
+			"window": {
+				"frame": 	true
+			}
+		},
+		"linux": {
+			"window": {
+				"frame": 	true
+			}
 		}
 	}
 }
