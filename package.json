@@ -1,0 +1,23 @@
+{
+	"name":		"Who Calls the Fleet",
+	"main":		"app/main.html",
+	"version":	"0.1.0",
+	"window": {
+		"width": 			1280,
+		"height":			720,
+		"toolbar":			false,
+		"icon": 			null,
+		"position":			"center",
+		"min_width":		640,
+		"min_height":		480,
+		"as_desktop":		false,
+		"resizable":		true,
+		"always-on-top":	false,
+		"fullscreen":		false,
+		"show_in_taskbar":	true,
+		"frame":			true,
+		"show":				false,
+		"kiosk":			false,
+		"transparent":		false
+	}
+}
