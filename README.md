@@ -1,12 +1,12 @@
-# WhoCallsTheFleet
+# WhoCallsTheFleet / 是谁呼叫舰队
 
-An offline guidebook for KanColle.
+针对网页游戏《艦隊これくしょん～艦これ～》（舰队收藏）的离线工具。
 
-This app is based on NW.js (http://nwjs.io/ | https://github.com/nwjs/nw.js)
+本工具基于NW.js开发 (http://nwjs.io/ | https://github.com/nwjs/nw.js)。
 
-This repository is source code, while you still need NW.js to launch this app.
+本REPO为源代码，需要NW.js来启动。
 
-## Dependence
+## 第三方库
 
 * NW.js (http://nwjs.io/ | https://github.com/nwjs/nw.js)
 * mkdirp (https://www.npmjs.com/package/mkdirp)
