@@ -193,7 +193,7 @@ _frame.app_main = {
 				setTimeout(function(){
 					if( _frame.app_main.is_loaded )
 						_frame.dom.layout.addClass('ready')
-				}, is_instant ? 0 : 1000)
+				}, is_instant ? 300 : 1000)
 				// 绑定onhashchange事件
 					$(window).on('hashchange.pagechange', function(){
 						_frame.app_main.load_page_func(_g.uriHash('page'))
