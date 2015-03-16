@@ -599,10 +599,11 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 						is_ascending = true
 
 				var sort = _tablelist.prototype.sort_column( index+1, is_ascending, rows )
+					,max = Math.min( 6, Math.ceil(rows.length / 2) )
 
-				if( sort.length > 1 && sort[0].length < 6 ){
+				if( sort.length > 1 && sort[0].length < max ){
 					sort[0].addClass('sort-first')
-					if( sort.length > 2 && sort[1].length < 6 )
+					if( sort.length > 2 && sort[1].length < max )
 						sort[1].addClass('sort-second')
 				}
 
