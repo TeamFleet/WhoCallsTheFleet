@@ -474,6 +474,9 @@ table{
 			border-bottom:	0;
 		}
 	}
+	td{
+		border-left:	1px solid transparent;
+	}
 	thead{
 		.font-size(12);
 		.line-height(@thead_height);
@@ -529,7 +532,11 @@ table{
 	&.hashover-column{
 		td.state-hover-column{
 			//background:	fade( @color_table_hover, 20% );
-			background:	rgba(0, 0, 0, .25);
+			//background:	rgba(0, 0, 0, .25);
+			background-color:	rgba(0, 0, 0, .2);
+			&:hover{
+				background-color:	transparent;
+			}
 		}
 	}
 }

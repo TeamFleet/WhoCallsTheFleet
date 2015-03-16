@@ -72,7 +72,7 @@ _tablelist.prototype.global_index = 0
 	]
 	_tablelist.prototype._ships_append_item = function( ship_data ){
 		var self = this
-			,tr = $('<tr data-shipid="'+ ship_data['id'] +'"'+ ( self.dom.container.hasClass('shiplist-edit') ? ' data-shipedit="true"' : '' ) +'/>')
+			,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'"'+ ( self.dom.container.hasClass('shiplist-edit') ? ' data-shipedit="true"' : '' ) +'/>')
 					.appendTo( this.dom.tbody )
 			,max_carry = 0
 			,name = ship_data['name']['zh_cn']
@@ -111,47 +111,74 @@ _tablelist.prototype.global_index = 0
 						.appendTo(tr)
 					break;
 				case 'fire':
-					$('<td class="stat-fire"/>').html(_val( ship_data['stat']['fire_max'] )).appendTo(tr)
+					$('<td class="stat-fire" data-value="' + ship_data['stat']['fire_max'] + '"/>')
+						.html( _val( ship_data['stat']['fire_max'] ) )
+						.appendTo(tr)
 					break;
 				case 'torpedo':
-					$('<td class="stat-torpedo"/>').html(_val( ship_data['stat']['torpedo_max'] )).appendTo(tr)
+					$('<td class="stat-torpedo" data-value="' + ship_data['stat']['torpedo_max'] + '"/>')
+						.html( _val( ship_data['stat']['torpedo_max'] ) )
+						.appendTo(tr)
 					break;
 				case 'aa':
-					$('<td class="stat-aa"/>').html(_val( ship_data['stat']['aa_max'] )).appendTo(tr)
+					$('<td class="stat-aa" data-value="' + ship_data['stat']['aa_max'] + '"/>')
+						.html( _val( ship_data['stat']['aa_max'] ) )
+						.appendTo(tr)
 					break;
 				case 'asw':
-					$('<td class="stat-asw"/>').html(_val( ship_data['stat']['asw_max'] )).appendTo(tr)
+					$('<td class="stat-asw" data-value="' + ship_data['stat']['asw_max'] + '"/>')
+						.html(_val( ship_data['stat']['asw_max'] ))
+						.appendTo(tr)
 					break;
 				case 'hp':
-					$('<td class="stat-hp"/>').html(_val( ship_data['stat']['hp'] )).appendTo(tr)
+					$('<td class="stat-hp" data-value="' + ship_data['stat']['hp'] + '"/>')
+						.html(_val( ship_data['stat']['hp'] ))
+						.appendTo(tr)
 					break;
 				case 'armor':
-					$('<td class="stat-armor"/>').html(_val( ship_data['stat']['armor_max'] )).appendTo(tr)
+					$('<td class="stat-armor" data-value="' + ship_data['stat']['armor_max'] + '"/>')
+						.html(_val( ship_data['stat']['armor_max'] ))
+						.appendTo(tr)
 					break;
 				case 'evasion':
-					$('<td class="stat-evasion"/>').html(_val( ship_data['stat']['evasion_max'] )).appendTo(tr)
+					$('<td class="stat-evasion" data-value="' + ship_data['stat']['evasion_max'] + '"/>')
+						.html(_val( ship_data['stat']['evasion_max'] ))
+						.appendTo(tr)
 					break;
 				case 'carry':
-					$('<td class="stat-carry"/>').html(_val( ship_data['stat']['carry'] )).appendTo(tr)
+					$('<td class="stat-carry" data-value="' + ship_data['stat']['carry'] + '"/>')
+						.html(_val( ship_data['stat']['carry'] ))
+						.appendTo(tr)
 					break;
 				case 'speed':
-					$('<td class="stat-speed"/>').html( _g.getStatSpeed( ship_data['stat']['speed'] ) ).appendTo(tr)
+					$('<td class="stat-speed" data-value="' + ship_data['stat']['speed'] + '"/>')
+						.html( _g.getStatSpeed( ship_data['stat']['speed'] ) )
+						.appendTo(tr)
 					break;
 				case 'range':
-					$('<td class="stat-range"/>').html( _g.getStatRange( ship_data['stat']['range'] ) ).appendTo(tr)
+					$('<td class="stat-range" data-value="' + ship_data['stat']['range'] + '"/>')
+						.html( _g.getStatRange( ship_data['stat']['range'] ) )
+						.appendTo(tr)
 					break;
 				case 'los':
-					$('<td class="stat-los"/>').html(_val( ship_data['stat']['los_max'] )).appendTo(tr)
-					//$('<td class="stat-los"/>').html(ship_data['stat']['los'] + '<sup>' + ship_data['stat']['los_max'] + '</sup>').appendTo(tr)
+					$('<td class="stat-los" data-value="' + ship_data['stat']['los_max'] + '"/>')
+						.html(_val( ship_data['stat']['los_max'] ))
+						.appendTo(tr)
 					break;
 				case 'luck':
-					$('<td class="stat-luck"/>').html(ship_data['stat']['luck'] + '<sup>' + ship_data['stat']['luck_max'] + '</sup>').appendTo(tr)
+					$('<td class="stat-luck" data-value="' + ship_data['stat']['luck'] + '"/>')
+						.html(ship_data['stat']['luck'] + '<sup>' + ship_data['stat']['luck_max'] + '</sup>')
+						.appendTo(tr)
 					break;
 				case 'consum_fuel':
-					$('<td class="stat-consum_fuel"/>').html(ship_data['consum']['fuel']).appendTo(tr)
+					$('<td class="stat-consum_fuel" data-value="' + ship_data['consum']['fuel'] + '"/>')
+						.html(ship_data['consum']['fuel'])
+						.appendTo(tr)
 					break;
 				case 'consum_ammo':
-					$('<td class="stat-consum_ammo"/>').html(ship_data['consum']['ammo']).appendTo(tr)
+					$('<td class="stat-consum_ammo" data-value="' + ship_data['consum']['ammo'] + '"/>')
+						.html(ship_data['consum']['ammo'])
+						.appendTo(tr)
 					break;
 			}
 		}
@@ -222,6 +249,7 @@ _tablelist.prototype.global_index = 0
 					}
 				}, 0)
 			}else{
+				self.mark_high()
 				_frame.app_main.loaded('tablelist_'+self._index, true)
 			}
 		}
@@ -241,17 +269,20 @@ _tablelist.prototype.global_index = 0
 		this._ships_last_viewtype = this.dom.filter_container.attr('viewtype')
 		this.dom.filter_container.attr('viewtype', 'compare')
 		_config.set( 'shiplist-viewtype', this._ships_last_viewtype )
+		this.mark_high()
 	}
 	_tablelist.prototype._ships_compare_end = function(){
 		this.dom.tbody.find('input[type="checkbox"].compare:checked').prop('checked', false).trigger('change')
 		this.dom.filter_container.attr('viewtype', this._ships_last_viewtype)
 		delete this._ships_last_viewtype
 		this.dom.msg_container.removeAttr('data-msgs')
+		this.mark_high()
 	}
 	_tablelist.prototype._ships_compare_continue = function(){
 		this.dom.filter_container.attr('viewtype', this._ships_last_viewtype)
 		delete this._ships_last_viewtype
 		this.dom.msg_container.attr('data-msgs', 'comparestart')
+		this.mark_high()
 	}
 	_tablelist.prototype._ships_init = function(){
 		var self = this
@@ -272,7 +303,7 @@ _tablelist.prototype.global_index = 0
 											})
 									)
 									.append(
-										$('<button icon="table"/>')
+										$('<button icon="checkbox-checked"/>')
 											.html('继续选择')
 											.on('click', function(){
 												self._ships_compare_continue()
@@ -478,6 +509,118 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 	_g.inputIndex++
 	return line
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 表格排序相关
+	// 排序表格中正在显示行中某一列(td:nth-of-type)，返回DOM Array
+	// 默认降序
+		_tablelist.prototype.sort_column = function( nth, is_ascending, rows ){
+			if( !rows ){
+				var tbody = this.dom.tbody
+				if( !tbody || !tbody.length )
+					tbody = this.dom.table.find('tbody')
+				rows = tbody.find('tr.row:visible')
+			}
+			nth = nth || 1
+
+			// 建立临时用对象，在函数结束时delete
+				this._tmp_values = []
+				this._tmp_value_map_cell = {}
+
+			var self = this
+
+			// 遍历，将值全部导出到 _tmp_values，_tmp_value_map_cell 中记录 值 -> jQuery DOM
+				rows.find('td:nth-of-type(' + nth + ')').each(function(index){
+					var cell = $(this)
+						,val = $(this).data('value')
+
+					val = parseFloat(val)
+
+					if( $.inArray( val, self._tmp_values ) < 0 )
+						self._tmp_values.push( val )
+
+					if( !self._tmp_value_map_cell[val] )
+						self._tmp_value_map_cell[val] = $()
+
+					self._tmp_value_map_cell[val] = self._tmp_value_map_cell[val].add( cell )
+				})
+
+			// 排序
+				this._tmp_values.sort(function(a, b){
+					if( is_ascending )
+						return a-b
+					else
+						return b-a
+				})
+
+			// 根据排序结果，整理返回结果
+				var return_array = []
+				for(var i in this._tmp_values){
+					return_array.push( this._tmp_value_map_cell[this._tmp_values[i]] )
+				}
+
+			// delete 临时对象
+				delete this._tmp_values
+				delete this._tmp_value_map_cell
+
+			return return_array
+		}
+
+	// 标记表格全部数据列中第一和第二高值的单元格
+		_tablelist.prototype.mark_high = function(){
+			var tbody = this.dom.tbody
+			if( !tbody || !tbody.length )
+				tbody = this.dom.table.find('tbody')
+			var rows = tbody.find('tr.row:visible')
+
+			rows.find('td[data-value]').removeClass('sort-first sort-second')
+
+			rows.eq(0).find('td[data-value]').each(function(index){
+				var is_ascending = false
+
+				// 以下属性不参与该计算
+					if( $(this).attr('class').match(/\bstat\-(speed|range)\b/ ) )
+						return
+
+				// 以下属性为升序
+					if( $(this).attr('class').match(/\bstat\-(consum_fuel|consum_fuel)\b/ ) )
+						is_ascending = true
+
+				var sort = _tablelist.prototype.sort_column( index+1, is_ascending, rows )
+
+				if( sort.length > 1 && sort[0].length < 6 ){
+					sort[0].addClass('sort-first')
+					if( sort.length > 2 && sort[1].length < 6 )
+						sort[1].addClass('sort-second')
+				}
+
+			})
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
