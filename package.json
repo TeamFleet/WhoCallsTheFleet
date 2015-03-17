@@ -26,16 +26,19 @@
 
 	"platformOverrides": {
 		"win": {
+			"debug": 	false,
 			"window": {
 				"frame": 	false
 			}
 		},
 		"osx": {
+			"debug": 	false,
 			"window": {
 				"frame": 	true
 			}
 		},
 		"linux": {
+			"debug": 	false,
 			"window": {
 				"frame": 	true
 			}
