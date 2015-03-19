@@ -1,7 +1,7 @@
 {
 	"name":		"Who Calls the Fleet",
 	"main":		"app/main.html",
-	"version":	"0.1.1",
+	"version":	"0.2.0",
 
 	"debug": 	true,
 

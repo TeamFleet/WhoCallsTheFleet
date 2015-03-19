@@ -38,6 +38,7 @@
 	_g.pathMakeObj( _g.path )
 
 	_g.data = {
+		'entities': {},
 		'ships': {},
 		'ship_id_by_type': [], 			// refer to _g.ship_type_order
 		'ship_types': {},
@@ -388,6 +389,13 @@ _frame.app_main = {
 						_db_loaded++
 
 						switch( db_name ){
+							case 'entities':
+								_db.entities.find({}, function(err, docs){
+									for(var i in docs ){
+										_g.data.entities[docs[i]['id']] = docs[i]
+									}
+								})
+								break;
 							case 'ship_namesuffix':
 								_db.ship_namesuffix.find({}).sort({ 'id': 1 }).exec(function(err, docs){
 									_g.data.ship_namesuffix = [{}].concat(docs)
@@ -507,7 +515,7 @@ _frame.app_main = {
 						'data-itemid': 	d['equip'][i],
 						'tooltip':		true
 					})
-					name.html( 'ID: ' + d['equip'][i] )
+					name.html( '装备#' + d['equip'][i] )
 					slot.html( d['slot'][i] )
 				}
 				i++
@@ -543,6 +551,20 @@ _frame.app_main = {
 
 			_add_stat( 'fuel', 		'', _val( d['consum']['fuel'] ),		stat_consum )
 			_add_stat( 'ammo', 		'', _val( d['consum']['ammo'] ),		stat_consum )
+
+		// 声优&画师_g.data.entities
+			$('<div class="entity"/>')
+				.html(
+					'<strong>声优</strong>'
+					+ '<span>' + _g['data']['entities'][d['rels']['cv']]['name'][_g.lang] + '</span>'
+				)
+				.appendTo(dom)
+			$('<div class="entity"/>')
+				.html(
+					'<strong>画师</strong>'
+					+ '<span>' + _g['data']['entities'][d['rels']['illustrator']]['name'][_g.lang] + '</span>'
+				)
+				.appendTo(dom)
 
 		_frame.modal.show(
 			dom,
