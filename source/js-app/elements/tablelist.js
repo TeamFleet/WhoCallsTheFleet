@@ -72,7 +72,7 @@ _tablelist.prototype.global_index = 0
 	]
 	_tablelist.prototype._ships_append_item = function( ship_data ){
 		var self = this
-			,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'"'+ ( self.dom.container.hasClass('shiplist-edit') ? ' data-shipedit="true"' : '' ) +'/>')
+			,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'"'+ ( self.dom.container.hasClass('shiplist-edit') ? ' data-shipedit="true"' : '' ) +' modal="true"/>')
 					.appendTo( this.dom.tbody )
 			,max_carry = 0
 			,name = ship_data['name']['zh_cn']
@@ -84,8 +84,8 @@ _tablelist.prototype.global_index = 0
 			max_carry+= ship_data['carry'][i]
 		}
 
-		function _val( val ){
-			if( val == 0 || val == '0' )
+		function _val( val, show_zero ){
+			if( !show_zero && (val == 0 || val == '0') )
 				return '<small class="zero">-</small>'
 			return val
 		}
@@ -127,7 +127,10 @@ _tablelist.prototype.global_index = 0
 					break;
 				case 'asw':
 					$('<td class="stat-asw" data-value="' + ship_data['stat']['asw_max'] + '"/>')
-						.html(_val( ship_data['stat']['asw_max'] ))
+						.html( _val(
+							ship_data['stat']['asw_max'],
+							/^[5,8,9]$/.test( ship_data['type'] )
+						) )
 						.appendTo(tr)
 					break;
 				case 'hp':
@@ -366,19 +369,21 @@ _tablelist.prototype.global_index = 0
 					}
 				}
 
+				/*
 				_db.ship_types.find({}, function(err2, docs2){
 					if( !err2 ){
 						for(var i in docs2 ){
 							_g.data.ship_types[docs2[i]['id']] = docs2[i]
 						}
 
-						if( docs && docs.length ){
-							self._ships_append_all_items()
-						}else{
-							$('<p/>').html('暂无数据...').appendTo( self.dom.table_container_inner )
-						}
 					}
 				})
+				*/
+				if( _g.data.ship_types ){
+					self._ships_append_all_items()
+				}else{
+					$('<p/>').html('暂无数据...').appendTo( self.dom.table_container_inner )
+				}
 			})
 
 		// 生成底部内容框架

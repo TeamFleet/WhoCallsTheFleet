@@ -12,6 +12,7 @@
 	_g.animate_duration_delay = 320;
 	_g.execPath = node.path.dirname(process.execPath)
 	_g.inputIndex = 0
+	_g.lang = 'zh_cn'
 
 	_g.path = {
 		'db': 		process.cwd() + '/data/',
@@ -39,7 +40,8 @@
 	_g.data = {
 		'ships': {},
 		'ship_id_by_type': [], 			// refer to _g.ship_type_order
-		'ship_types': {}
+		'ship_types': {},
+		'ship_classes': {}
 	}
 
 	var _db = {
@@ -148,6 +150,20 @@
 	_g.getStatRange = function( range ){
 		range = parseInt(range)
 		return _g.statRange[range]
+	}
+	_g.getName = function( nameObj, joint, lang ){
+		joint = joint || ''
+		if( !nameObj )
+			return null
+		return (
+				nameObj[ _g.lang ] || nameObj['ja_jp']
+				) + (
+				nameObj.suffix ? (
+						joint + (
+								_g.data['ship_namesuffix'][nameObj.suffix][ _g.lang ] || _g.data['ship_namesuffix'][nameObj.suffix]['ja_jp']
+							)
+					) : ''
+				)
 	}
 
 
@@ -378,6 +394,20 @@ _frame.app_main = {
 									_frame.app_main.loaded('db_namesuffix')
 								})
 								break;
+							case 'ship_types':
+								_db.ship_types.find({}, function(err, docs){
+									for(var i in docs ){
+										_g.data.ship_types[docs[i]['id']] = docs[i]
+									}
+								})
+								break;
+							case 'ship_classes':
+								_db.ship_classes.find({}, function(err, docs){
+									for(var i in docs ){
+										_g.data.ship_classes[docs[i]['id']] = docs[i]
+									}
+								})
+								break;
 						}
 
 						if( _db_loaded >= _db_size )
@@ -390,9 +420,7 @@ _frame.app_main = {
 			}
 
 		// 部分全局事件委托
-			$('html').on('click.openShipModal', '[data-shipid]', function(){
-				if( $(this).data('shipmodal') == 'false' )
-					return false
+			$('html').on('click.openShipModal', '[data-shipid][modal="true"]', function(){
 				if( $(this).data('shipedit') ){
 					try{
 						//_frame.app_main.page['ships'].show_ship_form( _g.data.ships[ $(this).data('shipid') ] )
@@ -407,6 +435,121 @@ _frame.app_main = {
 		_frame.app_main.is_init = true
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Modal: Ship
+	_frame.app_main.show_ship = function( d ){
+		function _val( val, show_zero ){
+			if( !show_zero && (val == 0 || val == '0') )
+				return '<small class="zero">-</small>'
+			return val
+		}
+		console.log(d)
+		var dom = $('<div class="ship"/>')
+
+		// 图鉴
+			var illusts = $('<div class="illustrations"/>')
+							.append(
+								$('<img src="' + _g.path.pics.ships + '/' + d['id'] + '/2.jpg' + '"/>')
+							)
+							.appendTo(dom)
+
+		// 舰种&舰级
+			$('<small/>')
+				.html(
+					( d['class'] ? _g['data']['ship_classes'][d['class']]['name_zh'] + '级' : '' )
+						+ ( d['class_no'] ? '<em>' + d['class_no'] + '</em>号舰' : '' )
+						+ ( d['type'] ? '<br/>' + _g['data']['ship_types'][d['type']]['full_zh'] : '' )
+				)
+				.appendTo(dom)
+
+		// 默认装备&搭载数
+			var equips = $('<div class="equipments"/>').appendTo(dom)
+				,i = 0
+			while( i < 4 ){
+				var equip = $('<button/>').appendTo(equips)
+					,icon = $('<i/>').appendTo( equip )
+					,name = $('<small/>').appendTo( equip )
+					,slot = $('<em/>').appendTo( equip )
+
+				if( typeof d['slot'][i] == 'undefined' ){
+					equip.addClass('no')
+				}else if( typeof d['equip'][i] == 'undefined' || !d['equip'][i] || d['equip'][i] === '' ){
+					equip.addClass('empty')
+					name.html( '--未装备--' )
+					slot.html( d['slot'][i] )
+				}else{
+					equip.attr({
+						'data-itemid': 	d['equip'][i],
+						'tooltip':		true
+					})
+					name.html( 'ID: ' + d['equip'][i] )
+					slot.html( d['slot'][i] )
+				}
+				i++
+			}
+
+		// 属性
+			var stat1 = $('<div class="stats"/>').appendTo(dom)
+				,stat2 = $('<div class="stats"/>').appendTo(dom)
+				,stat3 = $('<div class="stats"/>').appendTo(dom)
+				,stat_consum = $('<div class="stats consum"/>').html('<strong>消耗</strong>').appendTo(dom)
+			function _add_stat( name, title, val, tar ){
+				$('<span/>')
+					.html(
+						'<small class="stat-'+name+'">' + title + '</small>'
+						+ '<em>' + val + '</em>'
+					)
+					.appendTo(tar)
+			}
+			_add_stat( 'hp', 		'耐久', _val( d['stat']['hp'] ), 			stat1 )
+			_add_stat( 'armor', 	'装甲', _val( d['stat']['armor_max'] ),		stat1 )
+			_add_stat( 'evasion', 	'回避', _val( d['stat']['evasion_max'] ),	stat1 )
+			_add_stat( 'carry', 	'搭载', _val( d['stat']['carry'] ),			stat1 )
+
+			_add_stat( 'fire', 		'火力', _val( d['stat']['fire_max'] ),		stat2 )
+			_add_stat( 'torpedo', 	'雷装', _val( d['stat']['torpedo_max'] ),	stat2 )
+			_add_stat( 'aa', 		'对空', _val( d['stat']['aa_max'] ),		stat2 )
+			_add_stat( 'asw', 		'对潜', _val( d['stat']['asw_max'], /^[5,8,9]$/.test( d['type'] ) ),		stat2 )
+
+			_add_stat( 'speed', 	'航速', _g.getStatSpeed( d['stat']['speed'] ),		stat3 )
+			_add_stat( 'range', 	'射程', _g.getStatRange( d['stat']['range'] ),		stat3 )
+			_add_stat( 'los', 		'索敌', _val( d['stat']['los_max'] ),		stat3 )
+			_add_stat( 'luck', 		'运', 	d['stat']['luck'] + '<sup>' + d['stat']['luck_max'] + '</sup>',		stat3 )
+
+			_add_stat( 'fuel', 		'', _val( d['consum']['fuel'] ),		stat_consum )
+			_add_stat( 'ammo', 		'', _val( d['consum']['ammo'] ),		stat_consum )
+
+		_frame.modal.show(
+			dom,
+			_g.getName( d['name'], '・' ) || '舰娘',
+			{
+				'classname': 	'infos'
+			}
+		)
+	}
 
 _frame.app_main.page['ships'] = {}
 
@@ -494,7 +637,7 @@ _tablelist.prototype.global_index = 0
 	]
 	_tablelist.prototype._ships_append_item = function( ship_data ){
 		var self = this
-			,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'"'+ ( self.dom.container.hasClass('shiplist-edit') ? ' data-shipedit="true"' : '' ) +'/>')
+			,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'"'+ ( self.dom.container.hasClass('shiplist-edit') ? ' data-shipedit="true"' : '' ) +' modal="true"/>')
 					.appendTo( this.dom.tbody )
 			,max_carry = 0
 			,name = ship_data['name']['zh_cn']
@@ -506,8 +649,8 @@ _tablelist.prototype.global_index = 0
 			max_carry+= ship_data['carry'][i]
 		}
 
-		function _val( val ){
-			if( val == 0 || val == '0' )
+		function _val( val, show_zero ){
+			if( !show_zero && (val == 0 || val == '0') )
 				return '<small class="zero">-</small>'
 			return val
 		}
@@ -549,7 +692,10 @@ _tablelist.prototype.global_index = 0
 					break;
 				case 'asw':
 					$('<td class="stat-asw" data-value="' + ship_data['stat']['asw_max'] + '"/>')
-						.html(_val( ship_data['stat']['asw_max'] ))
+						.html( _val(
+							ship_data['stat']['asw_max'],
+							/^[5,8,9]$/.test( ship_data['type'] )
+						) )
 						.appendTo(tr)
 					break;
 				case 'hp':
@@ -788,19 +934,21 @@ _tablelist.prototype.global_index = 0
 					}
 				}
 
+				/*
 				_db.ship_types.find({}, function(err2, docs2){
 					if( !err2 ){
 						for(var i in docs2 ){
 							_g.data.ship_types[docs2[i]['id']] = docs2[i]
 						}
 
-						if( docs && docs.length ){
-							self._ships_append_all_items()
-						}else{
-							$('<p/>').html('暂无数据...').appendTo( self.dom.table_container_inner )
-						}
 					}
 				})
+				*/
+				if( _g.data.ship_types ){
+					self._ships_append_all_items()
+				}else{
+					$('<p/>').html('暂无数据...').appendTo( self.dom.table_container_inner )
+				}
 			})
 
 		// 生成底部内容框架
