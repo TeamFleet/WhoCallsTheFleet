@@ -600,7 +600,7 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 						return
 
 				// 以下属性为升序
-					if( $(this).attr('class').match(/\bstat\-(consum_fuel|consum_fuel)\b/ ) )
+					if( $(this).attr('class').match(/\bstat\-(consum_fuel|consum_ammo)\b/ ) )
 						is_ascending = true
 
 				var sort = _tablelist.prototype.sort_column( index+1, is_ascending, rows )
