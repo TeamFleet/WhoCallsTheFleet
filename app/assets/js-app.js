@@ -420,15 +420,17 @@ _frame.app_main = {
 			}
 
 		// 部分全局事件委托
-			$('html').on('click.openShipModal', '[data-shipid][modal="true"]', function(){
-				if( $(this).data('shipedit') ){
-					try{
-						//_frame.app_main.page['ships'].show_ship_form( _g.data.ships[ $(this).data('shipid') ] )
-					}catch(e){}
-				}else{
-					try{
-						_frame.app_main.show_ship( _g.data.ships[ $(this).data('shipid') ] )
-					}catch(e){}
+			$('html').on('click.openShipModal', '[data-shipid][modal="true"]', function(e){
+				if( !(e.target.tagName.toLowerCase() == 'input' && e.target.className == 'compare') ){
+					if( $(this).data('shipedit') ){
+						try{
+							//_frame.app_main.page['ships'].show_ship_form( _g.data.ships[ $(this).data('shipid') ] )
+						}catch(err){}
+					}else{
+						try{
+							_frame.app_main.show_ship( _g.data.ships[ $(this).data('shipid') ] )
+						}catch(err){}
+					}
 				}
 			})
 
