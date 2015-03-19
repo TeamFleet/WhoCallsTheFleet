@@ -490,7 +490,7 @@ _tablelist.prototype.global_index = 0
 		['索敌',	'los'],
 		['运',		'luck'],
 		['油耗',	'consum_fuel'],
-		['弹耗',	'consum_fuel']
+		['弹耗',	'consum_ammo']
 	]
 	_tablelist.prototype._ships_append_item = function( ship_data ){
 		var self = this
