@@ -175,6 +175,15 @@ body{
 				.margin-left(@nav_height - 10);
 				.padding(0, 10);
 				max-width:	~"calc(100% - @{nav_height} - 10)";
+				@media all and (max-width: 1152px ){
+					.margin-left(@nav_height - 10 - 20);
+				}
+				@media all and (max-width: 960px ){
+					.margin-left(@nav_height - 10 - 40);
+				}
+				@media all and (max-width: 800px ){
+					.margin-left(@nav_height - 10 - 55);
+				}
 				button{
 					.line-height(@nav_height);
 					.font-size(24);
@@ -494,6 +503,18 @@ table{
 			//@calc_number:	unit( ( @nav_height + @scrollbar_width ) / 2, px );
 			@calc_number:	unit( @nav_height / 2, px );
 			margin-left:	~"calc(-50% + @{calc_number})";
+			@media all and (max-width: 1152px ){
+				@calc_number:	unit( (@nav_height - 20) / 2, px );
+				margin-left:	~"calc(-50% + @{calc_number})";
+			}
+			@media all and (max-width: 960px ){
+				@calc_number:	unit( (@nav_height - 40) / 2, px );
+				margin-left:	~"calc(-50% + @{calc_number})";
+			}
+			@media all and (max-width: 800px ){
+				@calc_number:	unit( (@nav_height - 55) / 2, px );
+				margin-left:	~"calc(-50% + @{calc_number})";
+			}
 		}
 	}
 	tbody{

@@ -111,22 +111,22 @@ _tablelist.prototype.global_index = 0
 						.appendTo(tr)
 					break;
 				case 'fire':
-					$('<td class="stat-fire" data-value="' + ship_data['stat']['fire_max'] + '"/>')
+					$('<td data-stat="fire" data-value="' + ship_data['stat']['fire_max'] + '"/>')
 						.html( _val( ship_data['stat']['fire_max'] ) )
 						.appendTo(tr)
 					break;
 				case 'torpedo':
-					$('<td class="stat-torpedo" data-value="' + ship_data['stat']['torpedo_max'] + '"/>')
+					$('<td data-stat="torpedo" data-value="' + ship_data['stat']['torpedo_max'] + '"/>')
 						.html( _val( ship_data['stat']['torpedo_max'] ) )
 						.appendTo(tr)
 					break;
 				case 'aa':
-					$('<td class="stat-aa" data-value="' + ship_data['stat']['aa_max'] + '"/>')
+					$('<td data-stat="aa" data-value="' + ship_data['stat']['aa_max'] + '"/>')
 						.html( _val( ship_data['stat']['aa_max'] ) )
 						.appendTo(tr)
 					break;
 				case 'asw':
-					$('<td class="stat-asw" data-value="' + ship_data['stat']['asw_max'] + '"/>')
+					$('<td data-stat="asw" data-value="' + ship_data['stat']['asw_max'] + '"/>')
 						.html( _val(
 							ship_data['stat']['asw_max'],
 							/^[5,8,9]$/.test( ship_data['type'] )
@@ -134,52 +134,52 @@ _tablelist.prototype.global_index = 0
 						.appendTo(tr)
 					break;
 				case 'hp':
-					$('<td class="stat-hp" data-value="' + ship_data['stat']['hp'] + '"/>')
+					$('<td data-stat="hp" data-value="' + ship_data['stat']['hp'] + '"/>')
 						.html(_val( ship_data['stat']['hp'] ))
 						.appendTo(tr)
 					break;
 				case 'armor':
-					$('<td class="stat-armor" data-value="' + ship_data['stat']['armor_max'] + '"/>')
+					$('<td data-stat="armor" data-value="' + ship_data['stat']['armor_max'] + '"/>')
 						.html(_val( ship_data['stat']['armor_max'] ))
 						.appendTo(tr)
 					break;
 				case 'evasion':
-					$('<td class="stat-evasion" data-value="' + ship_data['stat']['evasion_max'] + '"/>')
+					$('<td data-stat="evasion" data-value="' + ship_data['stat']['evasion_max'] + '"/>')
 						.html(_val( ship_data['stat']['evasion_max'] ))
 						.appendTo(tr)
 					break;
 				case 'carry':
-					$('<td class="stat-carry" data-value="' + ship_data['stat']['carry'] + '"/>')
+					$('<td data-stat="carry" data-value="' + ship_data['stat']['carry'] + '"/>')
 						.html(_val( ship_data['stat']['carry'] ))
 						.appendTo(tr)
 					break;
 				case 'speed':
-					$('<td class="stat-speed" data-value="' + ship_data['stat']['speed'] + '"/>')
+					$('<td data-stat="speed" data-value="' + ship_data['stat']['speed'] + '"/>')
 						.html( _g.getStatSpeed( ship_data['stat']['speed'] ) )
 						.appendTo(tr)
 					break;
 				case 'range':
-					$('<td class="stat-range" data-value="' + ship_data['stat']['range'] + '"/>')
+					$('<td data-stat="range" data-value="' + ship_data['stat']['range'] + '"/>')
 						.html( _g.getStatRange( ship_data['stat']['range'] ) )
 						.appendTo(tr)
 					break;
 				case 'los':
-					$('<td class="stat-los" data-value="' + ship_data['stat']['los_max'] + '"/>')
+					$('<td data-stat="los" data-value="' + ship_data['stat']['los_max'] + '"/>')
 						.html(_val( ship_data['stat']['los_max'] ))
 						.appendTo(tr)
 					break;
 				case 'luck':
-					$('<td class="stat-luck" data-value="' + ship_data['stat']['luck'] + '"/>')
+					$('<td data-stat="luck" data-value="' + ship_data['stat']['luck'] + '"/>')
 						.html(ship_data['stat']['luck'] + '<sup>' + ship_data['stat']['luck_max'] + '</sup>')
 						.appendTo(tr)
 					break;
 				case 'consum_fuel':
-					$('<td class="stat-consum_fuel" data-value="' + ship_data['consum']['fuel'] + '"/>')
+					$('<td data-stat="consum_fuel" data-value="' + ship_data['consum']['fuel'] + '"/>')
 						.html(ship_data['consum']['fuel'])
 						.appendTo(tr)
 					break;
 				case 'consum_ammo':
-					$('<td class="stat-consum_ammo" data-value="' + ship_data['consum']['ammo'] + '"/>')
+					$('<td data-stat="consum_ammo" data-value="' + ship_data['consum']['ammo'] + '"/>')
 						.html(ship_data['consum']['ammo'])
 						.appendTo(tr)
 					break;
@@ -345,7 +345,7 @@ _tablelist.prototype.global_index = 0
 					,tr = $('<tr/>').appendTo(thead)
 				for(var i in arr){
 					if( typeof arr[i] == 'object' ){
-						$('<td class="stat-' + arr[i][1] + '"/>').html('<div class="th-inner">'+arr[i][0]+'</div>').appendTo(tr)
+						$('<td data-stat="' + arr[i][1] + '"/>').html('<div class="th-inner">'+arr[i][0]+'</div>').appendTo(tr)
 					}else{
 						$('<th/>').html('<div class="th-inner">'+arr[i]+'</div>').appendTo(tr)
 					}
@@ -596,11 +596,11 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 				var is_ascending = false
 
 				// 以下属性不参与该计算
-					if( $(this).attr('class').match(/\bstat\-(speed|range)\b/ ) )
+					if( $(this).data('stat').match(/\b(speed|range)\b/ ) )
 						return
 
 				// 以下属性为升序
-					if( $(this).attr('class').match(/\bstat\-(consum_fuel|consum_ammo)\b/ ) )
+					if( $(this).data('stat').match(/\b(consum_fuel|consum_ammo)\b/ ) )
 						is_ascending = true
 
 				var sort = _tablelist.prototype.sort_column( index+1, is_ascending, rows )

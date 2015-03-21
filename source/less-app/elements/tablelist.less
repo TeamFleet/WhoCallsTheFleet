@@ -29,8 +29,29 @@
 			.padding-left(@nav_height);
 			.padding-right(@nav_height - @scrollbar_width);
 			.padding-bottom(20);
+			@media all and (max-width: 1152px ){
+				.padding-left(@nav_height - 20);
+				.padding-right(@nav_height - @scrollbar_width - 20);
+			}
+			@media all and (max-width: 960px ){
+				.padding-left(@nav_height - 40);
+				.padding-right(@nav_height - @scrollbar_width - 40);
+			}
+			@media all and (max-width: 800px ){
+				.padding-left(@nav_height - 55);
+				.padding-right(@nav_height - @scrollbar_width - 55);
+			}
 			.window-noframe({
 				.padding-right(@nav_height - @scrollbar_width + 2);
+				@media all and (max-width: 1152px ){
+					.padding-right(@nav_height - @scrollbar_width - 20 + 2);
+				}
+				@media all and (max-width: 960px ){
+					.padding-right(@nav_height - @scrollbar_width - 40 + 2);
+				}
+				@media all and (max-width: 800px ){
+					.padding-right(@nav_height - @scrollbar_width - 55 + 2);
+				}
 			});
 			table{
 				thead{
@@ -152,7 +173,7 @@
 							&.stat-range{
 								text-align:	center;
 							}*/
-							&.stat-luck{
+							&[data-stat="luck"]{
 								.padding-right(20);
 							}
 						}
@@ -163,17 +184,18 @@
 						}
 					} // tr[data-shipid]
 				}
-				@media all and (max-width: 1152px ){
-					td.stat-consum_fuel,
-					td.stat-consum_ammo{
+				@media all and (max-width: 800px ){
+					td[data-stat="consum_fuel"],
+					td[data-stat="consum_ammo"]{
 						display:	none;
 					}
 				}
-				@media all and (max-width: 960px ){
-					td.stat-range{
+				@media all and (max-width: 720px ){
+					td[data-stat="range"]{
 						display:	none;
 					}
 				}
+				/*
 				@media all and (max-width: 900px ){
 					td.stat-los{
 						display:	none;
@@ -190,24 +212,15 @@
 					}
 				}
 				@media all and (max-width: 720px ){
-					tbody{
-						th{
-							//.padding-left(140);
-						}
-						td{
-							padding-right:	.25em;
-							padding-left:	.15em;
-						}
-					}/*
 					td.stat-evasion{
 						display:	none;
-					}*/
+					}
 				}
 				@media all and (max-width: 660px ){
 					td.stat-luck sup{
 						display:	none;
 					}
-				}
+				}*/
 
 				&.hashover{
 					tbody tr[data-shipid]:hover{
@@ -217,16 +230,16 @@
 				}
 				&.hashover-column{
 					td.state-hover-column{
-						&.stat-fire{
+						&[data-stat="fire"]{
 							background-color:	hsla(6, 85%, 40%, .25);
 						}
-						&.stat-torpedo{
+						&[data-stat="torpedo"]{
 							background-color:	hsla(207, 85%, 40%, .25);
 						}
-						&.stat-aa{
+						&[data-stat="aa"]{
 							background-color:	hsla(26, 85%, 40%, .25);
 						}
-						&.stat-armor{
+						&[data-stat="armor"]{
 							background-color:	hsla(39, 85%, 40%, .25);
 						}
 					}
@@ -257,6 +270,15 @@
 			color:		#f2f2f2;
 			font-weight:lighter;
 			.font-size(14);
+			@media all and (max-width: 1152px ){
+				.padding(0, (@nav_height - 20));
+			}
+			@media all and (max-width: 960px ){
+				.padding(0, (@nav_height - 40));
+			}
+			@media all and (max-width: 800px ){
+				.padding(0, (@nav_height - 55));
+			}
 		}
 
 		&>div.filters{
@@ -376,6 +398,15 @@
 				background-size:	100% 9px;
 				&>.fixed-table-container-inner{
 					.padding-left(@nav_height);
+					@media all and (max-width: 1152px ){
+						.padding-left(@nav_height - 20);
+					}
+					@media all and (max-width: 960px ){
+						.padding-left(@nav_height - 40);
+					}
+					@media all and (max-width: 800px ){
+						.padding-left(@nav_height - 55);
+					}
 					table{
 						display:	block;
 						thead{
@@ -440,7 +471,7 @@
 										.mask-image(~"linear-gradient(to right, transparent 0, transparent 50px, #000 58px, #000 calc(100% - 60px), transparent calc(100% - 10px))");
 									}
 								}
-								td[class^=stat-]{
+								td[data-stat]{
 									display:	none;
 								}
 							}
