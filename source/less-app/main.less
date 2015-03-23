@@ -625,6 +625,20 @@ table{
 		&:checked:before{
 			content:	"\e601";
 		}
+		&:indeterminate{
+			&:before{
+				content:	"\e603" !important;
+			}
+			&:after{
+				position:	absolute;
+				content:	'';
+				top:		4px;
+				left:		4px;
+				width:		8px;
+				height:		8px;
+				background:	rgba(255, 255, 255, .5);
+			}
+		}
 	}
 
 

@@ -542,7 +542,7 @@ _frame.app_main = {
 			_add_stat( 'fire', 		'火力', _val( d['stat']['fire_max'] ),		stat2 )
 			_add_stat( 'torpedo', 	'雷装', _val( d['stat']['torpedo_max'] ),	stat2 )
 			_add_stat( 'aa', 		'对空', _val( d['stat']['aa_max'] ),		stat2 )
-			_add_stat( 'asw', 		'对潜', _val( d['stat']['asw_max'], /^[5,8,9]$/.test( d['type'] ) ),		stat2 )
+			_add_stat( 'asw', 		'对潜', _val( d['stat']['asw_max'], /^(5|8|9|12)$/.test( d['type'] ) ),		stat2 )
 
 			_add_stat( 'speed', 	'航速', _g.getStatSpeed( d['stat']['speed'] ),		stat3 )
 			_add_stat( 'range', 	'射程', _g.getStatRange( d['stat']['range'] ),		stat3 )

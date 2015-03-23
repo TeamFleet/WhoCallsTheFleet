@@ -542,7 +542,7 @@ _frame.app_main = {
 			_add_stat( 'fire', 		'火力', _val( d['stat']['fire_max'] ),		stat2 )
 			_add_stat( 'torpedo', 	'雷装', _val( d['stat']['torpedo_max'] ),	stat2 )
 			_add_stat( 'aa', 		'对空', _val( d['stat']['aa_max'] ),		stat2 )
-			_add_stat( 'asw', 		'对潜', _val( d['stat']['asw_max'], /^[5,8,9]$/.test( d['type'] ) ),		stat2 )
+			_add_stat( 'asw', 		'对潜', _val( d['stat']['asw_max'], /^(5|8|9|12)$/.test( d['type'] ) ),		stat2 )
 
 			_add_stat( 'speed', 	'航速', _g.getStatSpeed( d['stat']['speed'] ),		stat3 )
 			_add_stat( 'range', 	'射程', _g.getStatRange( d['stat']['range'] ),		stat3 )
@@ -660,15 +660,34 @@ _tablelist.prototype.global_index = 0
 		['油耗',	'consum_fuel'],
 		['弹耗',	'consum_ammo']
 	]
-	_tablelist.prototype._ships_append_item = function( ship_data ){
+	_tablelist.prototype._ships_header_checkbox = []
+	_tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 		var self = this
-			,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'"'+ ( self.dom.container.hasClass('shiplist-edit') ? ' data-shipedit="true"' : '' ) +' modal="true"/>')
+			,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" modal="true"/>')
+					.attr({
+						'data-shipedit':self.dom.container.hasClass('shiplist-edit') ? 'true' : null
+					})
 					.appendTo( this.dom.tbody )
 			,max_carry = 0
 			,name = ship_data['name']['zh_cn']
 					+ (ship_data['name']['suffix']
 						? '<small>' + _g.data.ship_namesuffix[ship_data['name']['suffix']]['zh_cn'] + '</small>'
 						: '')
+			,checkbox = $('<input type="checkbox" class="compare"/>').on('click, change',function(e, not_trigger_check){
+								if( $(this).prop('checked') )
+									tr.attr('compare-checked', true )
+								else
+									tr.removeAttr('compare-checked')
+								self._ships_compare_btn_show( $(this).prop('checked') )
+								if( !not_trigger_check )
+									self._ships_header_checkbox[header_index].trigger('docheck')
+							})
+
+		self._ships_header_checkbox[header_index].data(
+				'ships', 
+				self._ships_header_checkbox[header_index].data('ships').add( tr )
+			)
+		tr.data('checkbox', checkbox)
 
 		for( var i in ship_data['carry'] ){
 			max_carry+= ship_data['carry'][i]
@@ -690,13 +709,7 @@ _tablelist.prototype.global_index = 0
 							//+ '<small>' + ship_data['pron'] + '</small>'
 						)
 						.prepend(
-							$('<input type="checkbox" class="compare"/>').on('click, change',function(){
-								if( $(this).prop('checked') )
-									tr.attr('compare-checked', true )
-								else
-									tr.removeAttr('compare-checked')
-								self._ships_compare_btn_show( $(this).prop('checked') )
-							})
+							checkbox
 						)
 						.appendTo(tr)
 					break;
@@ -719,7 +732,7 @@ _tablelist.prototype.global_index = 0
 					$('<td data-stat="asw" data-value="' + ship_data['stat']['asw_max'] + '"/>')
 						.html( _val(
 							ship_data['stat']['asw_max'],
-							/^[5,8,9]$/.test( ship_data['type'] )
+							/^(5|8|9|12)$/.test( ship_data['type'] )
 						) )
 						.appendTo(tr)
 					break;
@@ -821,13 +834,52 @@ _tablelist.prototype.global_index = 0
 					}else{
 						var data_shiptype = _g.data.ship_types[ _g.ship_type_order[i] ]
 					}
-					$('<tr class="typetitle"><th colspan="' + (self._ships_columns.length + 1) + '">'
-						+ data_shiptype['full_zh'] + '<small>[' + data_shiptype['code'] + ']</small>'
-						+ '</th></tr>')
-						.appendTo( self.dom.tbody )
+
+					var checkbox_id = '_input_g' + parseInt(_g.inputIndex)
+						,tr = $('<tr class="typetitle"><th colspan="' + (self._ships_columns.length + 1) + '">'
+								+ '<label for="' + checkbox_id + '">'
+								+ data_shiptype['full_zh'] + '<small>[' + data_shiptype['code'] + ']</small>'
+								+ '</label></th></tr>')
+								.appendTo( self.dom.tbody )
+
+					self._ships_header_checkbox[i]
+						= $('<input type="checkbox" id="' + checkbox_id + '"/>')
+							.on({
+								'change': function(){
+									var _checkbox = $(this)
+									_checkbox.data('ships').filter(':visible').each(function(){
+										$(this).data('checkbox').prop('checked', _checkbox.prop('checked')).trigger('change', [true])
+									})
+								},
+								'docheck': function(){
+									// ATTR: compare-checked
+									var trs = $(this).data('ships').filter(':visible')
+										,checked = trs.filter('[compare-checked=true]')
+									if( !checked.length ){
+										$(this).prop({
+											'checked': 			false,
+											'indeterminate': 	false
+										})
+									}else if( checked.length < trs.length ){
+										$(this).prop({
+											'checked': 			false,
+											'indeterminate': 	true
+										})
+									}else{
+										$(this).prop({
+											'checked': 			true,
+											'indeterminate': 	false
+										})
+									}
+								}
+							})
+							.data('ships', $())
+							.prependTo( tr.find('th') )
+
+					_g.inputIndex++
 				}
 
-				self._ships_append_item( _g.data.ships[ _g.data.ship_id_by_type[i][j] ] )
+				self._ships_append_item( _g.data.ships[ _g.data.ship_id_by_type[i][j] ], i )
 
 				setTimeout(function(){
 					if( j >= _g.data.ship_id_by_type[i].length - 1 ){
