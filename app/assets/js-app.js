@@ -212,7 +212,7 @@ _frame.app_main = {
 						_frame.dom.layout.addClass('ready')
 				}, is_instant ? 300 : 1000)
 				// 绑定onhashchange事件
-					$(window).on('hashchange.pagechange', function(){
+					$window.on('hashchange.pagechange', function(){
 						_frame.app_main.load_page_func(_g.uriHash('page'))
 					})
 
@@ -428,7 +428,7 @@ _frame.app_main = {
 			}
 
 		// 部分全局事件委托
-			$('html').on('click.openShipModal', '[data-shipid][modal="true"]', function(e){
+			$html.on('click.openShipModal', '[data-shipid][modal="true"]', function(e){
 				if( !(e.target.tagName.toLowerCase() == 'input' && e.target.className == 'compare') ){
 					if( $(this).data('shipedit') ){
 						try{
@@ -476,7 +476,7 @@ _frame.app_main = {
 				return '<small class="zero">-</small>'
 			return val
 		}
-		console.log(d)
+		//console.log(d)
 		var dom = $('<div class="ship"/>')
 
 		// 图鉴
@@ -570,7 +570,8 @@ _frame.app_main = {
 			dom,
 			_g.getName( d['name'], '・' ) || '舰娘',
 			{
-				'classname': 	'infos'
+				'classname': 		'infos',
+				'blank_to_close': 	true
 			}
 		)
 	}
@@ -600,7 +601,7 @@ _p.el.tablelist = {
 	},
 
 	init: function(tar, els){
-		tar = tar || $('body');
+		tar = tar || $body;
 		els = els || tar.find('.tablelist')
 
 		els.each(function(){

@@ -11,7 +11,7 @@ _p.el.tablelist = {
 	},
 
 	init: function(tar, els){
-		tar = tar || $('body');
+		tar = tar || $body;
 		els = els || tar.find('.tablelist')
 
 		els.each(function(){

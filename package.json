@@ -31,6 +31,13 @@
 				"frame": 	false
 			}
 		},
+		"win32": {
+			"debug": 	false,
+			"window": {
+				"show": 	true,
+				"frame": 	false
+			}
+		},
 		"osx": {
 			"debug": 	false,
 			"window": {
