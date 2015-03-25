@@ -114,7 +114,8 @@ _tablelist.prototype.global_index = 0
 				case ' ':
 					$('<th/>')
 						.html(
-							'<img src="../pics/ships/'+ship_data['id']+'/0.jpg"/>'
+							//'<img src="../pics/ships/'+ship_data['id']+'/0.jpg"/>'
+							'<img src="' + _g.path.pics.ships + '/' + ship_data['id']+'/0.jpg"/>'
 							+ '<strong>' + name + '</strong>'
 							//+ '<small>' + ship_data['pron'] + '</small>'
 						)

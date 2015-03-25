@@ -476,7 +476,12 @@ _frame.app_main = {
 				return '<small class="zero">-</small>'
 			return val
 		}
-		//console.log(d)
+
+		_frame.modal.resetContent()
+
+		if( debugmode )
+			console.log(d)
+
 		var dom = $('<div class="ship"/>')
 
 		// 图鉴
@@ -565,6 +570,60 @@ _frame.app_main = {
 					+ '<span>' + _g['data']['entities'][d['rels']['illustrator']]['name'][_g.lang] + '</span>'
 				)
 				.appendTo(dom)
+
+		// 改造信息
+			if( d['series'] ){
+				_db.ship_series.find({'id': d['series']}, function(err,docs){
+					if( !err && docs && docs.length ){
+						var prev_id = prev_lvl = prev_blueprint = next_id = next_lvl = next_blueprint = null
+						// 遍历 docs[0].ships，寻找该舰娘ID，确定改造前后版本
+							for(var i in docs[0].ships){
+								if( docs[0].ships[i]['id'] == d['id'] ){
+									var _i = parseInt(i)
+									// 如果 i > 0，表明有改造前版本
+										if( _i ){
+											prev_id 		= docs[0].ships[ _i - 1 ]['id']
+											prev_lvl 		= docs[0].ships[ _i - 1 ]['next_lvl']
+											prev_blueprint 	= docs[0].ships[ _i - 1 ]['next_blueprint'] ? true : false
+										}
+									// 如果 i < docs[0].ships.length-1，表明有改造后版本
+										if( _i < docs[0].ships.length-1 ){
+											next_id 		= docs[0].ships[ _i + 1 ]['id']
+											next_lvl 		= docs[0].ships[ _i ]['next_lvl']
+											next_blueprint 	= docs[0].ships[ _i ]['next_blueprint'] ? true : false
+										}
+								}
+							}
+						// 根据刚才获得的数据创建改造信息DOM
+							if( prev_id !== null || next_id !== null ){
+								var remodels = $('<div class="remodels"/>').appendTo(dom)
+								if( prev_id !== null ){
+									$('<div/>')
+										.addClass('prev' + (prev_blueprint ? ' blueprint' : '') )
+										.html('<span>' + prev_lvl + '</span>')
+										.append(
+											$('<button data-shipid="'+ prev_id +'" modal="true"/>')
+												.html('<img src="' + _g.path.pics.ships + '/' + prev_id+'/0.jpg"/>')
+										)
+										.appendTo(remodels)
+								}
+								if( next_id !== null ){
+									$('<div/>')
+										.addClass('next' + (next_blueprint ? ' blueprint' : '') )
+										.html('<span>' + next_lvl + '</span>')
+										.append(
+											$('<button data-shipid="'+ next_id +'" modal="true"/>')
+												.html('<img src="' + _g.path.pics.ships + '/' + next_id+'/0.jpg"/>')
+										)
+										.appendTo(remodels)
+								}
+							}
+					}
+				})
+			}
+
+		// 按钮
+			var buttons = $('<div class="buttons"/>').appendTo(dom)
 
 		_frame.modal.show(
 			dom,

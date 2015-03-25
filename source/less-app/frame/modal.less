@@ -1,4 +1,7 @@
 .modal.infos{
+	@illustrations_width:	218;
+	@illustrations_height:	300;
+	@buttons_height:		65;
 	&>div{
 		.width(640);
 		height:		auto;
@@ -39,12 +42,12 @@
 				position:	relative;
 				width:		100%;
 				.min-height(300);
-				.padding-right(218);
+				.padding-right(@illustrations_width);
 				&>.illustrations{
 					position:	absolute;
 					top:		0;
 					right:		0;
-					.width(218);
+					.width(@illustrations_width);
 					&>img{
 						position:	relative;
 						display:	block;
@@ -280,6 +283,110 @@
 						.line-height(20);
 						color:		#8fcc8f;
 					}
+				}
+				&>.remodels{
+					position:	absolute;
+					.top(@illustrations_height);
+					right:		0;
+					.width(@illustrations_width);
+					.height(@buttons_height);
+					text-align:	center;
+					overflow:	hidden;
+					&>div{
+						display:	inline-block;
+						width:		50%;
+						height:		100%;
+						position:	relative;
+						&:before, &:after, &>span, &>button{
+							position:	absolute;
+							display:	block;
+						}
+						&:before, &>span, &>button{
+							width:		100%;
+							left:		0;
+						}
+						&:before{
+							content:	'\e604';
+							font-family:icons;
+							top:		0;
+							text-align:	center;
+							.font-size(24);
+							color:		fade( #2cace8, 50% );
+							.line-height(35);
+							z-index:	1;
+						}
+						&>span{
+							z-index:	2;
+							padding-left:50%;
+							.font-size(18);
+							.line-height(18);
+							.top(12);
+							color:		#a3e1ff;
+							font-weight:bold;
+							&:before{
+								content:	'Lv.';
+								.font-size(14);
+								letter-spacing:	-.1em;
+								padding-right:	.15em;
+								font-weight:lighter;
+								font-style:	italic;
+							}
+						}
+						&>button{
+							bottom:		0;
+							overflow:	hidden;
+							&>img{
+								position:	relative;
+								min-width:	~"calc(100% + 15px)";
+								max-width:	~"calc(100% + 15px)";
+								display:	block;
+								.mask-repeat(no-repeat);
+								.mask-image(~"linear-gradient(to right, #000 0, #000 calc(100% - 50px), transparent calc(100% - 15px))");
+								.mask-position(0 0);
+								.mask-size(100% 100%);
+							}
+							&:before{
+								position:	absolute;
+								top:		0;
+								left:		0;
+								width:		100%;
+								height:		100%;
+								z-index:	2;
+								content:	'';
+								//background-blend-mode: overlay;
+								//mix-blend-mode: soft-light;
+								.enable-transition();
+								.transition-property(background);
+								.mask-repeat(no-repeat);
+								.mask-image(~"linear-gradient(to right, #000 0, #000 calc(100% - 35px), transparent 100%)");
+								.mask-position(0 0);
+								.mask-size(100% 100%);
+							}
+							&:hover:before{
+								background:		rgba(255,255,255,.25);
+								//mix-blend-mode: overlay;
+							}
+						}
+						&.next{
+							&:before{
+								content:	'\e605';
+							}
+						}
+						&.blueprint{
+							&:after{
+								content:	'';
+								.width(25);
+								.height(25);
+								.left(20);
+								.top(6);
+								background:	~"url(@{folder_images}/blueprint.png) no-repeat 0 0 / cover";
+							}
+						}
+					}
+				}
+				&>.buttons{
+					width:		100%;
+					.height(@buttons_height);
 				}
 			} // .ship
 		}

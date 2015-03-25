@@ -25,4 +25,6 @@
 <glyph unicode="&#xe601;" d="M0 960v-1024h1024v1024h-1024zM960 0h-896v896h896v-896zM160 448l96 96 160-160 352 352 96-96-448-448z" data-tags="checkbox-checked, checkbox, tick, checked, selected" />
 <glyph unicode="&#xe602;" d="M0 896v-896h1024v896h-1024zM384 320v192h256v-192h-256zM640 256v-192h-256v192h256zM640 768v-192h-256v192h256zM320 768v-192h-256v192h256zM64 512h256v-192h-256v192zM704 512h256v-192h-256v192zM704 576v192h256v-192h-256zM64 256h256v-192h-256v192zM704 64v192h256v-192h-256z" data-tags="table, wysiwyg" />
 <glyph unicode="&#xe603;" d="M0 960v-1024h1024v1024h-1024zM960 0h-896v896h896v-896z" data-tags="checkbox-unchecked, checkbox, unchecked, square" />
+<glyph unicode="&#xe604;" d="M320 0h384v-64h-384zM320 128h384v-64h-384zM320 256h384v-64h-384zM512 960l448-448h-256v-192h-384v192h-256z" data-tags="arrow-up, up, arrow-top, upload" />
+<glyph unicode="&#xe605;" d="M320 960h384v-64h-384zM320 832h384v-64h-384zM320 704h384v-64h-384zM512-64l448 448h-256v192h-384v-192h-256z" data-tags="arrow-down, down, arrow-bottom, download" />
 </font></defs></svg>
