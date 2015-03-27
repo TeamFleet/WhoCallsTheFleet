@@ -474,6 +474,8 @@ _frame.app_main = {
 		function _val( val, show_zero ){
 			if( !show_zero && (val == 0 || val == '0') )
 				return '<small class="zero">-</small>'
+			if( val == -1 || val == '-1' )
+				return '<small class="zero">?</small>'
 			return val
 		}
 

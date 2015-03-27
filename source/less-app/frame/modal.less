@@ -384,6 +384,13 @@
 								background:	~"url(@{folder_images}/blueprint.png) no-repeat 0 0 / cover";
 							}
 						}
+						&:last-child{
+							&>button{
+								&:before, &>img{
+									.mask(none);
+								}
+							}
+						}
 					}
 				}
 				&>.buttons{
