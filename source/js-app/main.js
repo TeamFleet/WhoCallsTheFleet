@@ -73,6 +73,9 @@
 		'item_types': new node.nedb({
 				filename: 	_g.path.db + '/item_types.json'
 			}),
+		'item_type_collections': new node.nedb({
+				filename: 	_g.path.db + '/item_type_collections.json'
+			}),
 		'entities': new node.nedb({
 				filename: 	_g.path.db + '/entities.json'
 			})
@@ -349,16 +352,21 @@ _frame.app_main = {
 			})
 
 		// 读取db
-			var _db_size = 0
-				,_db_loaded = 0
-			for( var i in _db )
-				_db_size++
-			function _db_load( db_name ){
+			//var _db_size = 0
+			//	,_db_loaded = 0
+			var _db_toload = []
+			for( var i in _db ){
+				//_db_size++
+				_db_toload.push(i)
+			}
+			function _db_load(){
+				var db_name = _db_toload[0]
+				_db_toload.shift()
+
 				_db[db_name].loadDatabase(function(err){
 					if( err ){
-
 					}else{
-						_db_loaded++
+						//_db_loaded++
 
 						switch( db_name ){
 							case 'entities':
@@ -413,14 +421,21 @@ _frame.app_main = {
 								break;
 						}
 
-						if( _db_loaded >= _db_size )
+						//if( _db_loaded >= _db_size )
+						if( _db_toload.length )
+							setTimeout(function(){
+								_db_load()
+							}, 50)
+						else
 							_frame.app_main.loaded('dbs')
+							
 					}
 				})
 			}
-			for( var i in _db ){
-				_db_load(i)
-			}
+			//for( var i in _db ){
+			//	_db_load(i)
+			//}
+			_db_load()
 
 		// 部分全局事件委托
 			$html.on('click.openShipModal', '[data-shipid][modal="true"]', function(e){
