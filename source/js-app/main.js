@@ -224,12 +224,13 @@ _frame.app_main = {
 
 	// 更换背景图
 		//change_bgimg_fadein: false,
-		change_bgimg: function(){
+		change_bgimg: function( bgimgs_new ){
 			// _frame.app_main.bgimgs 未生成，函数不予执行
 			if( !_frame.app_main.bgimgs.length )
 				return false
 
-			var img_new = _frame.app_main.bgimgs[_g.randInt(_frame.app_main.bgimgs.length)]
+			var bgimgs = bgimgs_new && bgimgs_new.length ? bgimgs_new : _frame.app_main.bgimgs
+				,img_new = bgimgs[_g.randInt(bgimgs.length)]
 				,img_old = _frame.app_main.cur_bgimg_el ? _frame.app_main.cur_bgimg_el.css('background-image') : null
 
 			img_old = img_old ? img_old.split('/') : null
@@ -237,7 +238,7 @@ _frame.app_main = {
 			img_old = img_old ? img_old[0] : null
 
 			while( img_new == img_old ){
-				img_new = _frame.app_main.bgimgs[_g.randInt(_frame.app_main.bgimgs.length - 1)]
+				img_new = bgimgs[_g.randInt(bgimgs.length - 1)]
 			}
 
 			var img_new_blured = '.' + _frame.app_main.bgimg_dir + '/blured/' + img_new
@@ -363,11 +364,20 @@ _frame.app_main = {
 
 		// 获取背景图列表，生成背景图
 			node.fs.readdir(_frame.app_main.bgimg_dir, function(err, files){
+				var bgimgs_last = _config.get('bgimgs').split(',')
+					,bgimgs_new = []
 				for( var i in files ){
-					if( !node.fs.lstatSync(_frame.app_main.bgimg_dir + '/' + files[i]).isDirectory() )
+					if( !node.fs.lstatSync(_frame.app_main.bgimg_dir + '/' + files[i]).isDirectory() ){
 						_frame.app_main.bgimgs.push( files[i] )
+						if( $.inArray( files[i], bgimgs_last ) < 0 )
+							bgimgs_new.push( files[i] )
+					}
 				}
-				_frame.app_main.change_bgimg();
+				_config.set(
+					'bgimgs',
+					_frame.app_main.bgimgs
+				)
+				_frame.app_main.change_bgimg( bgimgs_new );
 				_frame.app_main.loaded('bgimgs')
 				//if( !_g.uriHash('page') )
 				//	_frame.app_main.load_page( _frame.app_main.nav[0].page )
