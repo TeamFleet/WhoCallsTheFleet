@@ -52,6 +52,12 @@
 		'ship_types': new node.nedb({
 				filename: 	_g.path.db + '/ship_types.json'
 			}),
+		'ship_type_collections': new node.nedb({
+				filename: 	_g.path.db + '/ship_type_collections.json'
+			}),
+		'ship_type_order': new node.nedb({
+				filename: 	_g.path.db + '/ship_type_order.json'
+			}),
 		'ship_classes': new node.nedb({
 				filename: 	_g.path.db + '/ship_classes.json'
 			}),
@@ -71,52 +77,8 @@
 				filename: 	_g.path.db + '/entities.json'
 			})
 	}
-
-	_g.ship_type_order = [
-		//6,			// BB
-		//[7, 18],	// BB (Fast)
-		//20, 		// BB (Super Dreadnaught)
-		[6, 7, 18, 20],	// BB
-		8,			// BBV
-
-		10,			// CV
-		11,			// CV (Armored)
-		9,			// CVL
-
-		4,			// CA
-		23,			// CA (AA)
-		5,			// CAV
-
-		2,			// CL
-		3,			// CLT
-
-		1,			// DD
-		19,			// DD (AA)
-
-		13,			// SS
-		14,			// SSV
-
-		17,			// AS
-		12,			// AV
-		15,			// LHA
-		21,			// CT
-		16,			// AR
-	]
-	// ship type -> ship order
+	_g.ship_type_order = []
 	_g.ship_type_order_map = {}
-	_g.ship_type_order_map_do = function(){
-		for( var i in _g.ship_type_order ){
-			var index = parseInt(i)
-			if( typeof _g.ship_type_order[i] == 'object' ){
-				for( var j in _g.ship_type_order[i] ){
-					_g.ship_type_order_map[ _g.ship_type_order[i][j] ] = index
-				}
-			}else{
-				_g.ship_type_order_map[ _g.ship_type_order[i] ] = index
-			}
-		}
-	}
-	_g.ship_type_order_map_do()
 
 
 
@@ -406,6 +368,13 @@ _frame.app_main = {
 									}
 								})
 								break;
+							case 'ship_classes':
+								_db.ship_classes.find({}, function(err, docs){
+									for(var i in docs ){
+										_g.data.ship_classes[docs[i]['id']] = docs[i]
+									}
+								})
+								break;
 							case 'ship_namesuffix':
 								_db.ship_namesuffix.find({}).sort({ 'id': 1 }).exec(function(err, docs){
 									_g.data.ship_namesuffix = [{}].concat(docs)
@@ -419,11 +388,27 @@ _frame.app_main = {
 									}
 								})
 								break;
-							case 'ship_classes':
-								_db.ship_classes.find({}, function(err, docs){
-									for(var i in docs ){
-										_g.data.ship_classes[docs[i]['id']] = docs[i]
+							case 'ship_type_order':
+								// ship type -> ship order
+								function map_do(){
+									for( var i in _g.ship_type_order ){
+										var index = parseInt(i)
+										if( typeof _g.ship_type_order[i] == 'object' ){
+											for( var j in _g.ship_type_order[i] ){
+												_g.ship_type_order_map[ _g.ship_type_order[i][j] ] = index
+											}
+										}else{
+											_g.ship_type_order_map[ _g.ship_type_order[i] ] = index
+										}
 									}
+								}
+								_db.ship_type_order.find({}).sort({'id': 1}).exec(function(err, docs){
+									for(var i in docs ){
+										_g.ship_type_order.push(
+											docs[i]['types'].length > 1 ? docs[i]['types'] : docs[i]['types'][0]
+										)
+									}
+									map_do()
 								})
 								break;
 						}
