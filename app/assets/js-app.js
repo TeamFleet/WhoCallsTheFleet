@@ -335,15 +335,32 @@ _frame.app_main = {
 
 		// 获取背景图列表，生成背景图
 			node.fs.readdir(_frame.app_main.bgimg_dir, function(err, files){
-				var bgimgs_last = _config.get('bgimgs').split(',')
+				var bgimgs_last = _config.get('bgimgs')
 					,bgimgs_new = []
+				bgimgs_last = bgimgs_last ? bgimgs_last.split(',') : []
 				for( var i in files ){
-					if( !node.fs.lstatSync(_frame.app_main.bgimg_dir + '/' + files[i]).isDirectory() ){
+					var lstat = node.fs.lstatSync(_frame.app_main.bgimg_dir + '/' + files[i])
+					if( !lstat.isDirectory() ){
 						_frame.app_main.bgimgs.push( files[i] )
-						if( $.inArray( files[i], bgimgs_last ) < 0 )
-							bgimgs_new.push( files[i] )
+
+						// 存在bgimgs_last：直接比对
+						// 不存在bgimgs_last：比对每个文件，找出最新者
+						if( bgimgs_last.length ){
+							if( $.inArray( files[i], bgimgs_last ) < 0 )
+								bgimgs_new.push( files[i] )
+						}else{
+							var mtime = parseInt(lstat.mtime.valueOf())
+							if( bgimgs_new.length ){
+								if( mtime > bgimgs_new[1] )
+									bgimgs_new = [ files[i], mtime ]
+							}else{
+								bgimgs_new = [ files[i], mtime ]
+							}
+						}
 					}
 				}
+				if( !bgimgs_last.length )
+					bgimgs_new.pop()
 				_config.set(
 					'bgimgs',
 					_frame.app_main.bgimgs
