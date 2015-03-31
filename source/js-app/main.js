@@ -543,19 +543,50 @@ _frame.app_main = {
 					name.html( '--未装备--' )
 					slot.html( d['slot'][i] )
 				}else{
+					var item_data = _g.data.items[d['equip'][i]]
+						,item_icon = 'assets/images/itemicon/'
+										+ _g.data.item_types[item_data['type']]['icon']
+										+ '.png'
+					function _stat(stat, title){
+						if( item_data['stat'][stat] ){
+							switch(stat){
+								case 'range':
+									return '<span>射程: ' + _g.getStatRange( item_data['stat'][stat] ) + '</span>';
+									break;
+								default:
+									var val = parseInt( item_data['stat'][stat] )
+									return '<span>' + ( val > 0 ? '+' : '') + val + ' ' + title + '</span>'
+									break;
+							}
+						}else{
+							return ''
+						}
+					}
 					equip.attr({
 						'data-itemid': 	d['equip'][i],
-						'tooltip':		true
+						'data-tip':		'<h3 class="itemstat">'
+											+ '<s style="background-image: url(' + item_icon + ')"></s>'
+											+ '<strong data-itemname="' + item_data['name']['zh_cn'] + '">' + item_data['name']['zh_cn'] + '</strong>'
+											+ '<small>' + _g.data.item_types[item_data['type']]['name']['zh_cn'] + '</small>'
+										+ '</h3>'
+										+ _stat('fire', '火力')
+										+ _stat('torpedo', '雷装')
+										+ _stat('aa', '对空')
+										+ _stat('asw', '对潜')
+										+ _stat('bomb', '爆装')
+										+ _stat('hit', '命中')
+										+ _stat('armor', '装甲')
+										+ _stat('evasion', '回避')
+										+ _stat('los', '索敌')
+										+ _stat('range', '射程')
 					})
 					name.html(
-						_g.data.items[d['equip'][i]]['name']['zh_cn'].replace(/（([^（^）]+)）/g, '<small>($1)</small>')
+						item_data['name']['zh_cn'].replace(/（([^（^）]+)）/g, '<small>($1)</small>')
 					)
 					slot.html( d['slot'][i] )
 					icon.css(
 						'background-image',
-						'url(assets/images/itemicon/'
-							+ _g.data.item_types[_g.data.items[d['equip'][i]]['type']]['icon']
-							+ '.png)'
+						'url(' + item_icon + ')'
 					)
 				}
 				i++
