@@ -39,6 +39,10 @@
 
 	_g.data = {
 		'entities': {},
+
+		'items': {},
+		'item_types': {},
+
 		'ships': {},
 		'ship_id_by_type': [], 			// refer to _g.ship_type_order
 		'ship_types': {},
@@ -46,6 +50,20 @@
 	}
 
 	var _db = {
+		'entities': new node.nedb({
+				filename: 	_g.path.db + '/entities.json'
+			}),
+
+		'items': new node.nedb({
+				filename: 	_g.path.db + '/items.json'
+			}),
+		'item_types': new node.nedb({
+				filename: 	_g.path.db + '/item_types.json'
+			}),
+		'item_type_collections': new node.nedb({
+				filename: 	_g.path.db + '/item_type_collections.json'
+			}),
+
 		'ships': new node.nedb({
 				filename: 	_g.path.db + '/ships.json'
 			}),
@@ -66,18 +84,6 @@
 			}),
 		'ship_namesuffix': new node.nedb({
 				filename: 	_g.path.db + '/ship_namesuffix.json'
-			}),
-		'items': new node.nedb({
-				filename: 	_g.path.db + '/items.json'
-			}),
-		'item_types': new node.nedb({
-				filename: 	_g.path.db + '/item_types.json'
-			}),
-		'item_type_collections': new node.nedb({
-				filename: 	_g.path.db + '/item_type_collections.json'
-			}),
-		'entities': new node.nedb({
-				filename: 	_g.path.db + '/entities.json'
 			})
 	}
 	_g.ship_type_order = []
@@ -363,6 +369,18 @@ _frame.app_main = {
 				var db_name = _db_toload[0]
 				_db_toload.shift()
 
+				function _db_load_next(){
+					//if( _db_loaded >= _db_size )
+					if( _db_toload.length )
+						setTimeout(function(){
+							_db_load()
+						}, 50)
+					else
+						setTimeout(function(){
+							_frame.app_main.loaded('dbs')
+						}, 500)
+				}
+
 				_db[db_name].loadDatabase(function(err){
 					if( err ){
 					}else{
@@ -370,30 +388,22 @@ _frame.app_main = {
 
 						switch( db_name ){
 							case 'entities':
-								_db.entities.find({}, function(err, docs){
-									for(var i in docs ){
-										_g.data.entities[docs[i]['id']] = docs[i]
-									}
-								})
-								break;
+							case 'items':
+							case 'item_types':
 							case 'ship_classes':
-								_db.ship_classes.find({}, function(err, docs){
+							case 'ship_types':
+								_db[db_name].find({}, function(err, docs){
 									for(var i in docs ){
-										_g.data.ship_classes[docs[i]['id']] = docs[i]
+										_g.data[db_name][docs[i]['id']] = docs[i]
 									}
+									_db_load_next()
 								})
 								break;
 							case 'ship_namesuffix':
 								_db.ship_namesuffix.find({}).sort({ 'id': 1 }).exec(function(err, docs){
 									_g.data.ship_namesuffix = [{}].concat(docs)
 									_frame.app_main.loaded('db_namesuffix')
-								})
-								break;
-							case 'ship_types':
-								_db.ship_types.find({}, function(err, docs){
-									for(var i in docs ){
-										_g.data.ship_types[docs[i]['id']] = docs[i]
-									}
+									_db_load_next()
 								})
 								break;
 							case 'ship_type_order':
@@ -417,17 +427,22 @@ _frame.app_main = {
 										)
 									}
 									map_do()
+									_db.ships.find({}).sort({'type': 1, 'class': 1, 'class_no': 1, 'time_created': 1, 'name.suffix': 1}).exec(function(err, docs){
+										for(var i in docs){
+											_g.data.ships[docs[i]['id']] = docs[i]
+
+											if( typeof _g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] == 'undefined' )
+												_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] = []
+											_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ].push( docs[i]['id'] )
+										}
+										_db_load_next()
+									})
 								})
 								break;
+							default:
+								_db_load_next()
+								break;
 						}
-
-						//if( _db_loaded >= _db_size )
-						if( _db_toload.length )
-							setTimeout(function(){
-								_db_load()
-							}, 50)
-						else
-							_frame.app_main.loaded('dbs')
 							
 					}
 				})
@@ -1074,16 +1089,21 @@ _tablelist.prototype.global_index = 0
 		// 获取所有舰娘数据，按舰种顺序 (_g.ship_type_order / _g.ship_type_order_map) 排序
 		// -> 获取舰种名称
 		// -> 生成舰娘DOM
-			_db.ships.find({}).sort({'type': 1, 'class': 1, 'class_no': 1, 'time_created': 1, 'name.suffix': 1}).exec(function(err, docs){
-				if( !err ){
-					for(var i in docs){
-						_g.data.ships[docs[i]['id']] = docs[i]
+			if( _g.data.ship_types ){
+				self._ships_append_all_items()
+			}else{
+				$('<p/>').html('暂无数据...').appendTo( self.dom.table_container_inner )
+			}
+			//_db.ships.find({}).sort({'type': 1, 'class': 1, 'class_no': 1, 'time_created': 1, 'name.suffix': 1}).exec(function(err, docs){
+			//	if( !err ){
+			//		for(var i in docs){
+			//			_g.data.ships[docs[i]['id']] = docs[i]
 
-						if( typeof _g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] == 'undefined' )
-							_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] = []
-						_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ].push( docs[i]['id'] )
-					}
-				}
+			//			if( typeof _g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] == 'undefined' )
+			//				_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] = []
+			//			_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ].push( docs[i]['id'] )
+			//		}
+			//	}
 
 				/*
 				_db.ship_types.find({}, function(err2, docs2){
@@ -1095,12 +1115,12 @@ _tablelist.prototype.global_index = 0
 					}
 				})
 				*/
-				if( _g.data.ship_types ){
-					self._ships_append_all_items()
-				}else{
-					$('<p/>').html('暂无数据...').appendTo( self.dom.table_container_inner )
-				}
-			})
+			//	if( _g.data.ship_types ){
+			//		self._ships_append_all_items()
+			//	}else{
+			//		$('<p/>').html('暂无数据...').appendTo( self.dom.table_container_inner )
+			//	}
+			//})
 
 		// 生成底部内容框架
 			this.dom.msg_container = $('<div class="msgs"/>').appendTo( this.dom.container )
