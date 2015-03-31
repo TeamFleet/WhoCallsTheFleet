@@ -105,12 +105,20 @@
 							position:	relative;
 							width:		100%;
 							height:		100%;
-							.padding-left(38 - 16);
+							.padding-left(38 - 18);
 							background:	fade(#0a2937, 75%);
 							color:		#2cace8;
 							z-index:	1;
 							font-weight:lighter;
 							.padding-right(22);
+							.ellipsis();
+							sup{
+								.line-height(14);
+								.padding(0, 2);
+							}
+							small{
+								.padding(0, 2);
+							}
 						}
 						&>em{
 							display:	block;

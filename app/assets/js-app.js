@@ -547,8 +547,16 @@ _frame.app_main = {
 						'data-itemid': 	d['equip'][i],
 						'tooltip':		true
 					})
-					name.html( '装备#' + d['equip'][i] )
+					name.html(
+						_g.data.items[d['equip'][i]]['name']['zh_cn'].replace(/（([^（^）]+)）/g, '<small>($1)</small>')
+					)
 					slot.html( d['slot'][i] )
+					icon.css(
+						'background-image',
+						'url(assets/images/itemicon/'
+							+ _g.data.item_types[_g.data.items[d['equip'][i]]['type']]['icon']
+							+ '.png)'
+					)
 				}
 				i++
 			}
