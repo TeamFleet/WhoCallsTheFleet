@@ -583,7 +583,9 @@ _frame.app_main = {
 						'data-itemid': 	d['equip'][i],
 						'data-tip':		'<h3 class="itemstat">'
 											+ '<s style="background-image: url(' + item_icon + ')"></s>'
-											+ '<strong data-itemname="' + item_data['name']['zh_cn'] + '">' + item_data['name']['zh_cn'] + '</strong>'
+											+ '<strong data-content="' + item_data['name']['zh_cn'] + '">'
+												+ item_data['name']['zh_cn']
+											+ '</strong>'
 											+ '<small>' + _g.data.item_types[item_data['type']]['name']['zh_cn'] + '</small>'
 										+ '</h3>'
 										+ _stat('fire', '火力')
@@ -680,26 +682,37 @@ _frame.app_main = {
 						// 根据刚才获得的数据创建改造信息DOM
 							if( prev_id !== null || next_id !== null ){
 								var remodels = $('<div class="remodels"/>').appendTo(dom)
-								if( prev_id !== null ){
+								function shipDOM( ship_id, lvl, blueprint ){
+									var ship_data = _g.data.ships[ship_id]
+										,ship_name = ship_data['name']['zh_cn']
+														+ (ship_data['name']['suffix']
+															? '・' + _g.data.ship_namesuffix[ship_data['name']['suffix']]['zh_cn']
+															: '')
+										,tip = '<h3 class="shipinfo">'
+													+ '<strong data-content="' + ship_name + '">'
+														+ ship_name
+													+ '</strong>'
+													+ (
+														ship_data['type'] ?
+															'<small>' + _g['data']['ship_types'][ship_data['type']]['full_zh'] + '</span>'
+															: ''
+													)
+												+ '</h3>'
 									$('<div/>')
-										.addClass('prev' + (prev_blueprint ? ' blueprint' : '') )
-										.html('<span>' + prev_lvl + '</span>')
+										.addClass('prev' + (blueprint ? ' blueprint' : '') )
+										.html('<span>' + lvl + '</span>')
 										.append(
-											$('<button data-shipid="'+ prev_id +'" modal="true"/>')
-												.html('<img src="' + _g.path.pics.ships + '/' + prev_id+'/0.jpg"/>')
+											$('<button data-shipid="'+ ship_id +'" modal="true"/>')
+												.attr('data-tip', tip)
+												.html('<img src="' + _g.path.pics.ships + '/' + ship_id+'/0.jpg"/>')
 										)
 										.appendTo(remodels)
 								}
-								if( next_id !== null ){
-									$('<div/>')
-										.addClass('next' + (next_blueprint ? ' blueprint' : '') )
-										.html('<span>' + next_lvl + '</span>')
-										.append(
-											$('<button data-shipid="'+ next_id +'" modal="true"/>')
-												.html('<img src="' + _g.path.pics.ships + '/' + next_id+'/0.jpg"/>')
-										)
-										.appendTo(remodels)
-								}
+
+								if( prev_id !== null )
+									shipDOM(prev_id, prev_lvl, prev_blueprint)
+								if( next_id !== null )
+									shipDOM(next_id, next_lvl, next_blueprint)
 							}
 					}
 				})

@@ -43,12 +43,12 @@
 
 
 
-	h3.itemstat{
+	h3.itemstat,
+	h3.shipinfo{
 		display:	block;
 		position:	relative;
-		.padding-left(42);
 		&>s{
-			display:	block;
+			display:	inline-block;
 			.width(36);
 			.height(36);
 			position:	absolute;
@@ -67,7 +67,7 @@
 			font-weight:normal;
 			.padding-bottom(2);
 			&:before{
-				content:	attr(data-itemname);
+				content:	attr(data-content);
 				display:	block;
 				font:		inherit;
 				position:	absolute;
@@ -102,5 +102,8 @@
 		&~span{
 			display:	block;
 		}
+	}
+	h3.itemstat{
+		.padding-left(42);
 	}
 }
