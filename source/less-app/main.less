@@ -174,7 +174,12 @@ body{
 				display:	inline-block;
 				.margin-left(@nav_height - 10);
 				.padding(0, 10);
-				max-width:	~"calc(100% - @{nav_height} - 10)";
+				max-width:	~"calc(100% - @{nav_height} - 10px)";
+					/*
+				@media all and (min-width: 1920px ){
+					margin-left:	~"calc((100% - 1920px) / 2 + @{nav_height}px - 10px)";
+				}
+					*/
 				@media all and (max-width: 1152px ){
 					.margin-left(@nav_height - 10 - 20);
 				}
@@ -265,6 +270,7 @@ body{
 				.padding(20, @nav_height);
 				.fadein();
 				background:	rgba(0, 0, 0, .65);
+				.main-page;
 				&.off{
 					display:	none;
 				}
@@ -334,6 +340,106 @@ body{
 		&.ready.hidecontent{
 		}
 	} // #layout
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.main-page{
+	@media all and (max-width: 1152px ){
+		.padding-left(@nav_height - 20);
+		.padding-right(@nav_height - 20);
+	}
+	@media all and (max-width: 960px ){
+		.padding-left(@nav_height - 40);
+		.padding-right(@nav_height - 40);
+	}
+	@media all and (max-width: 800px ){
+		.padding-left(@nav_height - 55);
+		.padding-right(@nav_height - 55);
+	}
+	&[page="ships"],
+	&[page="items"]{
+		padding:	0 !important;
+	}
+	&>.tablelist{
+		&>.fixed-table-container{
+			&>.fixed-table-container-inner{
+				@media all and (max-width: 1152px ){
+					.padding-left(@nav_height - 20);
+					.padding-right(@nav_height - @scrollbar_width - 20);
+				}
+				@media all and (max-width: 960px ){
+					.padding-left(@nav_height - 40);
+					.padding-right(@nav_height - @scrollbar_width - 40);
+				}
+				@media all and (max-width: 800px ){
+					.padding-left(@nav_height - 55);
+					.padding-right(@nav_height - @scrollbar_width - 55);
+				}
+				.window-noframe({
+					@media all and (max-width: 1152px ){
+						.padding-right(@nav_height - @scrollbar_width - 20 + 2);
+					}
+					@media all and (max-width: 960px ){
+						.padding-right(@nav_height - @scrollbar_width - 40 + 2);
+					}
+					@media all and (max-width: 800px ){
+						.padding-right(@nav_height - @scrollbar_width - 55 + 2);
+					}
+				});
+			}
+		}
+		&>.options{
+			&>div{
+				@media all and (max-width: 1152px ){
+					.padding(0, (@nav_height - 20));
+				}
+				@media all and (max-width: 960px ){
+					.padding(0, (@nav_height - 40));
+				}
+				@media all and (max-width: 800px ){
+					.padding(0, (@nav_height - 55));
+				}
+			}
+			&[viewtype="card"]{
+				&~.fixed-table-container{
+					&>.fixed-table-container-inner{
+						@media all and (max-width: 1152px ){
+							.padding-left(@nav_height - 20);
+						}
+						@media all and (max-width: 960px ){
+							.padding-left(@nav_height - 40);
+						}
+						@media all and (max-width: 800px ){
+							.padding-left(@nav_height - 55);
+						}
+						table{
+							tbody{
+								tr{
+									@media all and (min-width: 1152px ){
+										.flex-basis(190px);
+									}
+									@media all and (min-width: 1680px ){
+										.flex-basis(200px);
+									}
+								}
+							}
+						} // table
+					} // &>.fixed-table-container-inner
+				}
+			} // &[viewtype="card"]
+		}
+	}
 }
 
 
