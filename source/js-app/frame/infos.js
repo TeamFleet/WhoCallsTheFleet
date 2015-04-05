@@ -284,7 +284,7 @@ _frame.infos.init = function(){
 											.addClass(docs[0].ships[i]['id'] == d['id'] ? 'on' : '')
 											.addClass(remodel_blueprint ? 'blueprint' : '')
 											.html(
-												'<i><img src="' + _g.path.pics.ships + '/' + docs[0].ships[i]['id']+'/0.jpg"/></i>'
+												'<i><img src="' + _g.path.pics.ships + '/' + docs[0].ships[i]['id']+'/0.webp"/></i>'
 												+ (remodel_lvl ? '<strong>' + remodel_lvl + '</strong>' : '')
 											)
 									)
@@ -331,8 +331,8 @@ _frame.infos.init = function(){
 								for( var i in illustrations ){
 									//if( i )
 									//	check_append( _g.path.pics.ships + '/' + illustrations[i] + '/2.jpg' )
-									check_append( _g.path.pics.ships + '/' + illustrations[i] + '/8.png' )
-									check_append( _g.path.pics.ships + '/' + illustrations[i] + '/9.png' )
+									check_append( _g.path.pics.ships + '/' + illustrations[i] + '/8.webp' )
+									check_append( _g.path.pics.ships + '/' + illustrations[i] + '/9.webp' )
 								}
 						}
 					})
