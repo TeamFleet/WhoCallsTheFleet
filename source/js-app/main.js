@@ -470,6 +470,7 @@ _frame.app_main = {
 			_db_load()
 
 		// 部分全局事件委托
+		/*
 			$html.on('click.openShipModal', '[data-shipid][modal="true"]', function(e){
 				if( !(e.target.tagName.toLowerCase() == 'input' && e.target.className == 'compare') ){
 					if( $(this).data('shipedit') ){
@@ -483,6 +484,7 @@ _frame.app_main = {
 					}
 				}
 			})
+		*/
 
 		_frame.app_main.is_init = true
 	}
@@ -512,6 +514,7 @@ _frame.app_main = {
 
 
 // Modal: Ship
+/*
 	_frame.app_main.show_ship = function( d ){
 		function _val( val, show_zero ){
 			if( !show_zero && (val == 0 || val == '0') )
@@ -730,3 +733,4 @@ _frame.app_main = {
 			}
 		)
 	}
+*/

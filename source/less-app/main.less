@@ -167,14 +167,16 @@ body{
 			}
 			&>div{
 				z-index:	3;
-				position:	relative;
+				position:	absolute;
 				height:		100%;
 				//.padding(0, (@nav_height - 10));
 				-webkit-app-region:	no-drag;
-				display:	inline-block;
+				display:	block;
 				.margin-left(@nav_height - 10);
 				.padding(0, 10);
-				max-width:	~"calc(100% - @{nav_height} - 10px)";
+				top:		0;
+				left:		0;
+				max-width:	~"calc(100% - @{nav_height}px - 10px)";
 					/*
 				@media all and (min-width: 1920px ){
 					margin-left:	~"calc((100% - 1920px) / 2 + @{nav_height}px - 10px)";
@@ -194,8 +196,11 @@ body{
 					.font-size(24);
 					font-weight:lighter;
 					color:		rgba(255,255,255,.5);
-					.transition-property(~"text-shadow, color");
 					.padding(0, 10);
+					position:	relative;
+					top:		0;
+					.transition-property(~"text-shadow, color, top");
+					.transition-duration(@transition_duration * 1.5);
 					&.on{
 						color:		#fff;
 						text-shadow:0 0 10px #fff
@@ -207,6 +212,14 @@ body{
 					&+button{
 						.margin-left(30);
 					}
+					.delays(@n, @i: 1) when (@i =< @n) {
+						&:nth-of-type(@{i}){
+							@delay:		(@transition_duration + (@i - 1) * 0.1s);
+							.transition-delay(~"0, 0, @{delay}");
+						}
+						.delays(@n, (@i + 1))
+					}
+					.delays(10);
 				}
 			}
 			&>s{
@@ -270,7 +283,8 @@ body{
 				.padding(20, @nav_height);
 				.fadein();
 				background:	rgba(0, 0, 0, .65);
-				.main-page;
+				.main-page();
+				.transition-property(opacity);
 				&.off{
 					display:	none;
 				}
@@ -339,6 +353,10 @@ body{
 
 		&.ready.hidecontent{
 		}
+
+		//&.infos{
+			.layout-infos();
+		//}
 	} // #layout
 }
 
@@ -439,6 +457,78 @@ body{
 				}
 			} // &[viewtype="card"]
 		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.layout-infos{
+	&>nav>div.infos{
+		display:	none;
+		button{
+			.top(0 - @nav_height);
+			.transition-delay(0)
+		}
+	} // &>nav>div.infos
+
+	&>main>div.page.infos{
+		display:	none;
+		opacity:	0;
+		//.transition-delay(@transition_duration);
+		.layout-infos-ship();
+	} // &>main>.div.page.infos
+
+	&.infos-show{
+		&>nav>div.infos,
+		&>main>div.page.infos{
+			display:	block;
+			z-index:	4;
+		}
+	}
+	&.infos-on{
+		&>nav>div{
+			button{
+				.top(0 - @nav_height);
+				.delays(@n, @i: 1) when (@i =< @n) {
+					&:nth-of-type(@{i}){
+						@delay:		((@i - 1) * 0.1s);
+						.transition-delay(~"0, 0, @{delay}");
+					}
+					.delays(@n, (@i + 1))
+				}
+				.delays(10);
+			}
+			&.infos button{
+				top:	0;
+				.delays(@n, @i: 1) when (@i =< @n) {
+					&:nth-of-type(@{i}){
+						@delay:		(@transition_duration + @i * 0.1s);
+						.transition-delay(~"0, 0, @{delay}");
+					}
+					.delays(@n, (@i + 1))
+				}
+				.delays(10);
+			}
+		}
+		&>main>div.page{
+			opacity:	0;
+			&.infos{
+				opacity:	1;
+			}
+		}
+	}
+	&.infos-ready{
+
 	}
 }
 

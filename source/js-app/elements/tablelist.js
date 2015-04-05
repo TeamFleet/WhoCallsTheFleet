@@ -73,7 +73,8 @@ _tablelist.prototype.global_index = 0
 	_tablelist.prototype._ships_header_checkbox = []
 	_tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 		var self = this
-			,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" modal="true"/>')
+			//,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" modal="true"/>')
+			,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" data-infos="__ship__"/>')
 					.attr({
 						'data-shipedit':self.dom.container.hasClass('shiplist-edit') ? 'true' : null
 					})
