@@ -19,11 +19,11 @@
 		'pics': {
 			'ships': 	process.cwd() + '/pics/ships/',
 			'items': 	process.cwd() + '/pics/items/'
-		},
+		}/*,
 		'illustrations': {
 			'ships': 	_g.execPath + '/illust/ships/',
 			'items': 	_g.execPath + '/illust/items/'
-		}
+		}*/
 	}
 
 	_g.pathMakeObj = function(obj){
