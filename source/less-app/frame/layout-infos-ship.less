@@ -533,17 +533,6 @@
 			&>div.remodels{
 				height:		auto;
 			}
-			&>div.stats{
-				&>div{
-					span{
-						.line-height(20);
-					}
-					& ~ div{
-						.padding-top(4);
-						.margin-top(4);
-					}
-				}
-			}
 			&>span.entity{
 				right:	0 !important;
 				&+.entity{
@@ -570,7 +559,7 @@
 					}
 					.checked(@n, @i: 1) when (@i =< @n) {
 						&[value="@{i}"]:checked~div{
-							@left:		(0 - ceil( (@i - 1) / 2) * 100%);
+							@left:		(0 - floor( (@i - 1) / 2) * 100%);
 							left:		@left;
 						}
 						.checked(@n, (@i + 1))
@@ -603,6 +592,19 @@
 				}
 				&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
 					width:	(50% * 10);
+				}
+			}
+		}
+		@media all and (min-height: 801px) and (max-height: 1024px) and (max-aspect-ratio: 5 / 4){
+			&>div.stats{
+				&>div{
+					span{
+						.line-height(20);
+					}
+					& ~ div{
+						.padding-top(4);
+						.margin-top(4);
+					}
 				}
 			}
 		}
