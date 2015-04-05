@@ -950,6 +950,7 @@ _frame.infos.init = function(){
 						}
 						equip.attr({
 							'data-itemid': 	d['equip'][i],
+							'data-tip-position': 'left',
 							'data-tip':		'<h3 class="itemstat">'
 												+ '<s style="background-image: url(' + item_icon + ')"></s>'
 												+ '<strong data-content="' + item_data['name']['zh_cn'] + '">'
@@ -1001,6 +1002,7 @@ _frame.infos.init = function(){
 
 			// 改造信息
 				var remodels = $('<div class="remodels"/>').html('<h4 data-content="改造">改造</h4>').appendTo(dom)
+					,remodels_container = _p.el.flexgrid.create().appendTo( remodels )
 				if( d['series'] ){
 					_db.ship_series.find({'id': d['series']}, function(err,docs){
 						if( !err && docs && docs.length ){
@@ -1025,15 +1027,16 @@ _frame.infos.init = function(){
 										,remodel_lvl = _i ? docs[0].ships[ _i - 1 ]['next_lvl'] : null
 										,remodel_blueprint = _i ? (docs[0].ships[ _i - 1 ]['next_blueprint']) : null
 
-									$('<button/>')
-										.attr('data-tip', tip)
-										.addClass(docs[0].ships[i]['id'] == d['id'] ? 'on' : '')
-										.addClass(remodel_blueprint ? 'blueprint' : '')
-										.html(
-											'<img src="' + _g.path.pics.ships + '/' + docs[0].ships[i]['id']+'/0.jpg"/>'
-											+ (remodel_lvl ? '<strong>' + remodel_lvl + '</strong>' : '')
-										)
-										.appendTo(remodels)
+									remodels_container.appendDOM(
+										$('<button class="unit" data-shipid="'+ docs[0].ships[i]['id'] +'" data-infos="__ship__"/>')
+											.attr('data-tip', tip)
+											.addClass(docs[0].ships[i]['id'] == d['id'] ? 'on' : '')
+											.addClass(remodel_blueprint ? 'blueprint' : '')
+											.html(
+												'<i><img src="' + _g.path.pics.ships + '/' + docs[0].ships[i]['id']+'/0.jpg"/></i>'
+												+ (remodel_lvl ? '<strong>' + remodel_lvl + '</strong>' : '')
+											)
+									)
 
 									// 处理图鉴信息
 										if( docs[0].ships[i]['id'] == d['id'] ){
@@ -1052,9 +1055,28 @@ _frame.infos.init = function(){
 											}
 										}
 								}
+								var index = 0
+								function check_append( file ){
+									file = file.replace(/\\/g, '/')
+									try{
+										var stat = node.fs.lstatSync(file)
+										if( stat && stat.isFile() ){
+											index++
+											$('<input type="radio" name="ship_'+d['id']+'_illustrations" value="'+index+'"/>')
+												.prop('checked', (index == 1))
+												.insertBefore(illusts_container)
+											$('<span/>')
+												.css('background-image', 'url(' + file + ')')
+												.appendTo(illusts_container)
+										}
+									}catch(e){}
+								}
+								console.log(illustrations)
 								for( var i in illustrations ){
-									$('<img src="' + _g.path.pics.ships + '/' + illustrations[i] + '/8.png' + '"/>').appendTo(illusts)
-									$('<img src="' + _g.path.pics.ships + '/' + illustrations[i] + '/9.png' + '"/>').appendTo(illusts)
+									//if( i )
+									//	check_append( _g.path.pics.ships + '/' + illustrations[i] + '/2.jpg' )
+									check_append( _g.path.pics.ships + '/' + illustrations[i] + '/8.png' )
+									check_append( _g.path.pics.ships + '/' + illustrations[i] + '/9.png' )
 								}
 						}
 					})
@@ -1062,7 +1084,8 @@ _frame.infos.init = function(){
 
 			// 图鉴
 				// illustrations
-				var illusts = $('<aside class="illustrations container"/>').appendTo(dom)
+				var illusts = $('<aside class="illustrations"/>').appendTo(dom)
+					,illusts_container = $('<div/>').appendTo(illusts)
 
 			return dom
 			/*

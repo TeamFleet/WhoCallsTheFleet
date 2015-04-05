@@ -245,6 +245,115 @@
 			}
 			&.remodels{
 				height:	20%;
+				.flexgrid{
+					.flex-flow(row nowrap);
+					.justify-content(flex-start);
+					.align-items(flex-start);
+					.margin-top(-30);
+					&>.unit{
+						flex: 	0 1 auto;
+						position:	relative;
+					}
+					&>button{
+						position:	relative;
+						z-index:	1;
+						.height(70);
+						.padding-top(30);
+						strong{
+							position:	absolute;
+							top:		0;
+							.left(4);
+							z-index:	2;
+							.font-size(16);
+							color:		#bde8fc;
+							font-weight:normal;
+							vertical-align: top;
+							.line-height(36);
+							&:before{
+								content:	'Lv.';
+								padding-right:	.15em;
+								font-size:	smaller;
+								font-style:	italic;
+								opacity:	.65;
+							}
+						}
+						i{
+							display:	block;
+							position:	relative;
+							z-index:	2;
+							width:		100%;
+							height:		100%;
+							overflow:	hidden;
+							.mask-repeat(no-repeat);
+							.mask-image(~"linear-gradient(to right, #000 0, #000 calc(100% - 35px), transparent 100%)");
+							.mask-position(0 0);
+							.mask-size(100% 100%);
+							img{
+								display:	block;
+								.min-height(40);
+								.max-height(40);
+								width:		auto;
+								height:		auto;
+							}
+						}
+						&:before,
+						&:after{
+							content:	'';
+							position:	absolute;
+							.top(30);
+							right:		0;
+							bottom:		0;
+							left:		0;
+							.enable-transition();
+						}
+						&:before{
+							z-index:	3;
+							.border(2, solid, transparent);
+							.transition-property(~"border-color, box-shadow");
+						}
+						&:after{
+							z-index:	1;
+							backgrond:	transparent;
+							.transition-property(~"background-color");
+						}
+						&.blueprint{
+							strong{
+								color:		hsl(0, 91%, 86%)
+							}
+							strong:after{
+								content:	'';
+								display:	inline-block;
+								.width(24);
+								.height(24);
+								.margin-left(8);
+								background:	~"url(@{folder_images}/blueprint.png) no-repeat 0 0 / cover";
+								position:	absolute;
+								.top(4);
+							}
+						}
+						&:hover{
+							&:before{
+								border-color:	fade(#9bbecf, 35%);
+								box-shadow:		inset 0 0 5px fade(#2cace8, 50%),
+												0 0 5px fade(#2cace8, 50%);
+							}
+							&:after{
+								background-color:	fade(#9bbecf, 35%);
+							}
+						}
+						&.on{
+							z-index:	2;
+							&:before{
+								border-color:	#9bbecf;
+								box-shadow:		inset 0 0 5px #2cace8,
+												0 0 5px #2cace8;
+							}
+							&:after{
+								background-color:	#9bbecf;
+							}
+						}
+					}
+				}
 			}
 		}
 		&>span{
@@ -288,6 +397,95 @@
 			top:		0;
 			right:		0;
 			overflow:	auto;
+			text-align:	center;
+			overflow:	hidden;
+			&>input[type="radio"]{
+				position:	relative;
+				margin:		0;
+				.appearance(none);
+				.width(30);
+				.height(30);
+				top:		~"calc( 100% - 60px )";
+				display:	inline-block;
+				z-index:	2;
+				.checked(@n, @i: 1) when (@i =< @n) {
+					&[value="@{i}"]:checked~div{
+						@left:		(0 - (@i - 1) * 100%);
+						left:		@left;
+					}
+					.checked(@n, (@i + 1))
+				}
+				.checked(10);
+				&:before{
+					@scale:	(10 / 30);
+					position:	absolute;
+					content:	'';
+					width:		100%;
+					height:		100%;
+					border-radius:50%;
+					background:	#fff;
+					background:	rgba(255, 255, 255, 25%);
+					transform:	~"scale(@{scale})";
+					.border(2, solid, transparent);
+					.enable-transition();
+					.transition-property(~"background-color, transform, border-color");
+				}
+				&:checked:before{
+					@scale:	(16 / 30);
+					background-color:	fade(#3fc0ff, 25%);
+					border-color:	fade(#3fc0ff, 50%);
+					transform:	~"scale(@{scale})";
+				}
+			}
+			&>div{
+				position:	absolute;
+				width:		100%;
+				height:		100%;
+				top:		0;
+				left:		0;
+				.transition-property(left);
+				.padding(10, 0, 70, 0);
+				&>span{
+					position:	relative;
+					width:		100%;
+					height:		100%;
+					display:	inline-block;
+					background:	~"no-repeat 50% 50% / contain";
+				}
+			}
+			.radio_number( @number ){
+				width:	percentage(@number);
+				&>span{
+					width:	percentage(1 / @number);
+				}
+			}
+			&>input[type="radio"]+input[type="radio"]~div{
+				.radio_number(2)
+			}
+			&>input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
+				.radio_number(3)
+			}
+			&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
+				.radio_number(4)
+			}
+			&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
+				.radio_number(5)
+			}
+			&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
+				.radio_number(6)
+			}
+			&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
+				.radio_number(7)
+			}
+			&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
+				.radio_number(8)
+			}
+			&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
+				.radio_number(9)
+			}
+			&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
+				.radio_number(10)
+			}
 		}
 
 		@media all and (max-width: 1152px ){
@@ -308,7 +506,7 @@
 				.flex(1 0 auto);
 				&.stats{
 					flex-basis:	auto;
-					padding-right:	0;
+					padding-right:	0 !important;
 					&>div{
 						display:	inline-block;
 						width:		30%;
@@ -378,11 +576,14 @@
 		@media all and (max-width: 960px ){
 			@size:	unit( @nav_height - 40, px );
 			padding-right:	~"calc( 20% + @{size} )";
+			&>div.stats{
+				padding-right:	@size;
+			}
 			&>span.entity{
 				right:	~"calc( 20% + @{size} )";
 				&+.entity{
 					right:	~"calc( 20% + @{size} )";
-					.top(64)
+					.top(60)
 				}
 			}
 			&>aside{
@@ -400,11 +601,14 @@
 				}
 			}
 			*/
-			padding-right:	@size;
+			padding-right:	0;
+			&>div.stats{
+				padding-right:	@size;
+			}
 			&>span.entity{
-				right:	@size;
+				right:	0;
 				&+.entity{
-					right:	@size;
+					right:	0;
 				}
 			}
 			&>aside{
