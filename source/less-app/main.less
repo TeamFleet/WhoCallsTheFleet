@@ -199,6 +199,7 @@ body{
 					.padding(0, 10);
 					position:	relative;
 					top:		0;
+					position:	relative;
 					.transition-property(~"text-shadow, color, top");
 					.transition-duration(@transition_duration * 1.5);
 					&.on{
@@ -220,6 +221,16 @@ body{
 						.delays(@n, (@i + 1))
 					}
 					.delays(10);
+					&[icon]{
+						.padding-left(46);
+						&:before{
+							position:	absolute;
+							.width(32);
+							text-align:	center;
+							.left(10);
+							.font-size(32);
+						}
+					}
 				}
 			}
 			&>s{
@@ -477,7 +488,11 @@ body{
 		display:	none;
 		button{
 			.top(0 - @nav_height);
-			.transition-delay(0)
+			.transition-delay(0);
+			color:	rgba(255, 255, 255, .65);
+			&:hover{
+				color:	#fff;
+			}
 		}
 	} // &>nav>div.infos
 

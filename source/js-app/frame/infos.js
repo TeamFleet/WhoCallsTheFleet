@@ -11,7 +11,7 @@ _frame.infos = {
 					'nav': 		$('<div class="infos"/>').appendTo( _frame.dom.nav ),
 					'main': 	$('<div class="page infos"/>').appendTo( _frame.dom.main )
 				}
-				_frame.infos.dom.back = $('<button class="back"/>')
+				_frame.infos.dom.back = $('<button class="back" icon="arrow-left"/>')
 						.html('返回')
 						.on('click', function(){
 							_frame.infos.hide()
