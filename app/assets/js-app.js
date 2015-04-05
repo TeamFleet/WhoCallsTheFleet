@@ -1044,13 +1044,19 @@ _frame.infos.init = function(){
 												if( _i ){
 													illustrations.push( docs[0].ships[_i - 1]['id'] )
 													if( docs[0].ships[_i - 1].illust_extra && docs[0].ships[_i - 1].illust_extra.length && docs[0].ships[_i - 1].illust_extra[0] ){
-														illustrations = illustrations.concat('extra_'+docs[0].ships[_i - 1].illust_extra)
+														//illustrations = illustrations.concat('extra_'+docs[0].ships[_i - 1].illust_extra)
+														for( var j in docs[0].ships[_i - 1].illust_extra ){
+															illustrations.push( 'extra_' + docs[0].ships[_i - 1].illust_extra[j] )
+														}
 													}
 												}
 											}else{
 												illustrations.push( docs[0].ships[i]['id'] )
 												if( docs[0].ships[i].illust_extra && docs[0].ships[i].illust_extra.length && docs[0].ships[i].illust_extra[0] ){
-													illustrations = illustrations.concat('extra_'+docs[0].ships[i].illust_extra)
+													for( var j in docs[0].ships[i].illust_extra ){
+														illustrations.push( 'extra_' + docs[0].ships[i].illust_extra[j] )
+													}
+													//illustrations = illustrations.concat('extra_'+docs[0].ships[i].illust_extra)
 												}
 											}
 										}
@@ -1071,7 +1077,6 @@ _frame.infos.init = function(){
 										}
 									}catch(e){}
 								}
-								console.log(illustrations)
 								for( var i in illustrations ){
 									//if( i )
 									//	check_append( _g.path.pics.ships + '/' + illustrations[i] + '/2.jpg' )
