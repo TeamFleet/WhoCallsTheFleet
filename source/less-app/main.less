@@ -484,6 +484,7 @@ body{
 	&>main>div.page.infos{
 		display:	none;
 		opacity:	0;
+		z-index:	2;
 		//.transition-delay(@transition_duration);
 		.layout-infos-ship();
 	} // &>main>.div.page.infos
@@ -492,10 +493,13 @@ body{
 		&>nav>div.infos,
 		&>main>div.page.infos{
 			display:	block;
-			z-index:	4;
 		}
 	}
 	&.infos-on{
+		&>nav>div.infos,
+		&>main>div.page.infos{
+			z-index:	4;
+		}
 		&>nav>div{
 			button{
 				.top(0 - @nav_height);

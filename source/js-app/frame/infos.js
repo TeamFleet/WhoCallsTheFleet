@@ -322,8 +322,9 @@ _frame.infos.init = function(){
 											$('<input type="radio" name="ship_'+d['id']+'_illustrations" value="'+index+'"/>')
 												.prop('checked', (index == 1))
 												.insertBefore(illusts_container)
-											$('<span/>')
-												.css('background-image', 'url(' + file + ')')
+											$('<span class="container"/>')
+												.html('<img src="'+file+'"/>')
+												//.css('background-image', 'url(' + file + ')')
 												.appendTo(illusts_container)
 										}
 									}catch(e){}
