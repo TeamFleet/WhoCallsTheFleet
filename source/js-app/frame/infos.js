@@ -114,11 +114,61 @@ _frame.infos.init = function(){
 					return '<small class="zero">?</small>'
 				return val
 			}
-			function _add_stat( name, title, val, tar ){
+			function _add_stat( name, title, tar ){
+				var val99 = 0
+					,val150 = null
+
+				function getStatOfLvl( lvl, base, max ){
+					return Math.floor( base + (max - base) * lvl / 99 )
+				}
+
+				switch( name ){
+					case 'hp':
+						val99 = _val( d['stat']['hp'] )
+						if (d['stat']['hp'] >= 90) val150 = d['stat']['hp'] + 9
+						else if (d['stat']['hp'] >= 70) val150 = d['stat']['hp'] + 8
+						else if (d['stat']['hp'] >= 50) val150 = d['stat']['hp'] + 7
+						else if (d['stat']['hp'] >= 40) val150 = d['stat']['hp'] + 6
+						else if (d['stat']['hp'] >= 30) val150 = d['stat']['hp'] + 5
+						else val150 = d['stat']['hp'] + 4
+						if (val150 > d['stat']['hp_max']) val150 = d['stat']['hp_max']
+						break;
+					case 'asw':
+						val99 = _val( getStatOfLvl( 99, d['stat']['asw'], d['stat']['asw_max'] ), /^(5|8|9|12)$/.test(d['type']) )
+						val150 = _val( getStatOfLvl( 150, d['stat']['asw'], d['stat']['asw_max'] ), /^(5|8|9|12)$/.test(d['type']) )
+						break;
+					case 'evasion':
+					case 'los':
+						val99 = _val( getStatOfLvl( 99, d['stat'][name], d['stat'][name + '_max'] ) )
+						val150 = _val( getStatOfLvl( 150, d['stat'][name], d['stat'][name + '_max'] ) )
+						break;
+					case 'speed':
+						val99 = _g.getStatSpeed( d['stat']['speed'] )
+						break;
+					case 'range':
+						val99 = _g.getStatRange( d['stat']['range'] )
+						break;
+					case 'luck':
+						val99 = d['stat']['luck'] + '<sup>' + d['stat']['luck_max'] + '</sup>'
+						val150 = (d['stat']['luck'] + 3) + '<sup>' + d['stat']['luck_max'] + '</sup>'
+						break;
+					case 'fuel':
+					case 'ammo':
+						val99 = _val( d['consum'][name] )
+						val150 = _val( Math.floor( d['consum'][name] * 0.85 ) )
+						break;
+					default:
+						val99 = _val( d['stat'][name + '_max'] || d['stat'][name] )
+						break;
+				}
+
 				$('<span/>')
 					.html(
 						'<small class="stat-'+name+'">' + title + '</small>'
-						+ '<em>' + val + '</em>'
+						+ '<em'+( val150 ? ' class="lvl99"' : '' )+'>' + val99 + '</em>'
+						+ ( val150 ? '<em class="lvl150">' + val150 + '</em>' : '' )
+						//+ '<em class="lvl99'+( !val150 ? ' lvl150' : '' )+'">' + val99 + '</em>'
+						//+ ( val150 ? '<em class="lvl150">' + val150 + '</em>' : '' )
 					)
 					.appendTo(tar)
 			}
@@ -141,28 +191,58 @@ _frame.infos.init = function(){
 					).appendTo(dom)
 
 			// 属性
-				var stats = $('<div class="stats"/>').html('<h4 data-content="基础属性">基础属性</h4>').appendTo(dom)
-					,stat1 = $('<div/>').appendTo(stats)
-					,stat2 = $('<div/>').appendTo(stats)
-					,stat3 = $('<div/>').appendTo(stats)
-					,stat_consum = $('<div class="consum"/>').appendTo(stats)
-				_add_stat( 'hp', 		'耐久', _val( d['stat']['hp'] ), 			stat1 )
-				_add_stat( 'armor', 	'装甲', _val( d['stat']['armor_max'] ),		stat1 )
-				_add_stat( 'evasion', 	'回避', _val( d['stat']['evasion_max'] ),	stat1 )
-				_add_stat( 'carry', 	'搭载', _val( d['stat']['carry'] ),			stat1 )
+				var lvlRadio99_id = '_input_g' + parseInt(_g.inputIndex)
+					,lvlRadio150_id = '_input_g' + (parseInt(_g.inputIndex) + 1)
+					,curLvl = parseInt(_config.get('ship_infos_lvl') || 99)
+					,stats = $('<div class="stats"/>')
+								.html(
+									'<div class="title">'
+										+ '<h4 data-content="基础属性">基础属性</h4>'
+										+ '<span>'
+											+ '<label for="'+lvlRadio99_id+'" class="lvl99">99</label>'
+											+ '<label for="'+lvlRadio150_id+'" class="lvl150">150</label>'
+										+ '</span>'
+									+ '</div>'
+								)
+								.prepend(
+									$('<input type="radio" name="ship_infos_lvl" id="'+lvlRadio99_id+'" value="99"/>')
+										.prop('checked', curLvl == 99)
+										.on('change', function(){
+											_config.set('ship_infos_lvl', $(this).val())
+										})
+								)
+								.prepend(
+									$('<input type="radio" name="ship_infos_lvl" id="'+lvlRadio150_id+'" value="150"/>')
+										.prop('checked', curLvl == 150)
+										.on('change', function(){
+											_config.set('ship_infos_lvl', $(this).val())
+										})
+								)
+								.appendTo(dom)
+					,stat1 = $('<div class="stat"/>').appendTo(stats)
+					,stat2 = $('<div class="stat"/>').appendTo(stats)
+					,stat3 = $('<div class="stat"/>').appendTo(stats)
+					,stat_consum = $('<div class="stat consum"/>').appendTo(stats)
 
-				_add_stat( 'fire', 		'火力', _val( d['stat']['fire_max'] ),		stat2 )
-				_add_stat( 'torpedo', 	'雷装', _val( d['stat']['torpedo_max'] ),	stat2 )
-				_add_stat( 'aa', 		'对空', _val( d['stat']['aa_max'] ),		stat2 )
-				_add_stat( 'asw', 		'对潜', _val( d['stat']['asw_max'], /^(5|8|9|12)$/.test( d['type'] ) ),		stat2 )
+				_g.inputIndex+=2
 
-				_add_stat( 'speed', 	'航速', _g.getStatSpeed( d['stat']['speed'] ),		stat3 )
-				_add_stat( 'range', 	'射程', _g.getStatRange( d['stat']['range'] ),		stat3 )
-				_add_stat( 'los', 		'索敌', _val( d['stat']['los_max'] ),		stat3 )
-				_add_stat( 'luck', 		'运', 	d['stat']['luck'] + '<sup>' + d['stat']['luck_max'] + '</sup>',		stat3 )
+				_add_stat( 'hp', 		'耐久',	stat1 )
+				_add_stat( 'armor', 	'装甲',	stat1 )
+				_add_stat( 'evasion', 	'回避',	stat1 )
+				_add_stat( 'carry', 	'搭载',	stat1 )
 
-				_add_stat( 'fuel', 		'油耗', _val( d['consum']['fuel'] ),		stat_consum )
-				_add_stat( 'ammo', 		'弹耗', _val( d['consum']['ammo'] ),		stat_consum )
+				_add_stat( 'fire', 		'火力',	stat2 )
+				_add_stat( 'torpedo', 	'雷装',	stat2 )
+				_add_stat( 'aa', 		'对空',	stat2 )
+				_add_stat( 'asw', 		'对潜',	stat2 )
+
+				_add_stat( 'speed', 	'航速',	stat3 )
+				_add_stat( 'range', 	'射程',	stat3 )
+				_add_stat( 'los', 		'索敌',	stat3 )
+				_add_stat( 'luck', 		'运',	stat3 )
+
+				_add_stat( 'fuel', 		'油耗',	stat_consum )
+				_add_stat( 'ammo', 		'弹耗',	stat_consum )
 
 			// 初始装备 & 搭载量
 				var equips = $('<div class="equipments"/>').html('<h4 data-content="初始装备 & 搭载量">初始装备 & 搭载量</h4>').appendTo(dom)
@@ -358,4 +438,7 @@ _frame.infos.init = function(){
 				}
 			)
 			*/
+		}
+		_frame.infos.__ship_stats = function( lvl, dom_stats ){
+
 		}

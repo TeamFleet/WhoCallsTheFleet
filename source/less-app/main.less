@@ -210,6 +210,9 @@ body{
 					&:hover{
 						color:		#fff;
 					}
+					&:first-child{
+						padding-left:	0;
+					}
 					&+button{
 						.margin-left(30);
 					}
@@ -229,6 +232,12 @@ body{
 							text-align:	center;
 							.left(10);
 							.font-size(32);
+						}
+						&:first-child{
+							.padding-left(36);
+							&:before{
+								left:	0;
+							}
 						}
 					}
 				}
