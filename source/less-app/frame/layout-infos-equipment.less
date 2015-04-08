@@ -2,7 +2,7 @@
 	.equipment{
 		position:		relative;
 		width:			100%;
-		height:			100%;
+		min-height:		100%;
 
 		h1, h2, h3, h4, h5, h6{
 			color:		hsl(149, 100%, 90%);
@@ -40,6 +40,7 @@
 			width:		100%;
 			&.title{
 				.margin-bottom(55);
+				.padding-right(280);
 				small{
 					display:	block;
 					.font-size(16);
@@ -54,6 +55,7 @@
 				}
 			}
 			&.stats{
+				.margin-bottom(55);
 				&>.stat{
 					display:	block;
 					vertical-align: top;
@@ -67,9 +69,6 @@
 				}
 			}
 			&.equipped{
-				position:	absolute;
-				.top(250);
-				.padding-bottom(20);
 				.flexgrid{
 					.flex-flow(row wrap);
 					.justify-content(flex-start);
@@ -91,6 +90,7 @@
 						background-image:	linear-gradient(to right, transparent 10px, rgba(0, 0, 0, .35) ~"calc(100% - 30px)", transparent);
 						.flexbox();
 						.align-items(center);
+						.transition-property(background-size);
 						img{
 							.margin-left(-50);
 							.mask-image(~"linear-gradient(to right, transparent 0, transparent 50px, #000 58px, #000 calc(100% - 60px), transparent calc(100% - 10px))");
@@ -110,6 +110,9 @@
 								.line-height(12);
 								.padding-bottom(2);
 							}
+						}
+						&:hover{
+							background-size:	~"calc(100% - 10px)" 100%;
 						}
 					}
 					&.no{

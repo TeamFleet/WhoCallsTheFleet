@@ -16,6 +16,11 @@ _frame.infos = {
 						.on('click', function(){
 							_frame.infos.hide()
 						}).appendTo( _frame.infos.dom.nav )
+				_frame.infos.dom.historyback = $('<button class="history"/>')
+						.html('HISTORY BACK')
+						.on('click', function(){
+							_frame.infos.historyback()
+						}).appendTo( _frame.infos.dom.nav )
 			}
 
 		// 先将内容区域设定为可见
@@ -34,11 +39,20 @@ _frame.infos = {
 			}
 			var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
 			if( _frame.infos.curContent != hashcode ){
-				_frame.infos.dom.main.empty()
+				if( history ){
+					_frame.infos.dom.main.children().slice(2).remove()
+					_frame.infos.dom.main.children().eq(0).addClass('off')
+					_frame.infos.dom.historyback.html(history).addClass('show')
+				}else{
+					_frame.infos.dom.historyback.removeClass('show')
+					_frame.infos.dom.main.empty()
+				}
+
 				if( cont.append )
 					cont.appendTo( _frame.infos.dom.main )
 				else
-					_frame.infos.dom.main.html(cont)
+					_frame.infos.dom.main.append($(cont))
+
 				_p.initDOM( _frame.infos.dom.main )
 				_frame.infos.curContent = hashcode
 			}
@@ -64,6 +78,17 @@ _frame.infos = {
 							$(this).off('transitionend.infos_hide')
 						}
 					})
+	},
+
+	historyback: function(){
+		_frame.infos.dom.main.children().slice(1).remove()
+		_frame.infos.dom.main.children().eq(0).removeClass('off').addClass('fadein')
+		_frame.infos.dom.historyback.removeClass('show')
+
+		if( _frame.infos.dom.main.children().eq(0).hasClass('ship') )
+			_frame.infos.dom.main.attr('data-infostype', 'shipinfo')
+		else if( _frame.infos.dom.main.children().eq(0).hasClass('equipment') )
+			_frame.infos.dom.main.attr('data-infostype', 'equipmentinfo')
 	}
 }
 
@@ -83,7 +108,8 @@ _frame.infos.init = function(){
 				var el = $(this)
 				_frame.infos.show(
 					el.attr('data-infos'),
-					el
+					el,
+					el.attr('data-infos-history')
 				)
 			}
 		})
@@ -512,7 +538,10 @@ _frame.infos.init = function(){
 								.attr({
 									'data-shipid': 	d.default_equipped_on[i],
 									'data-infos': 	'__ship__',
-									'data-infos-history': 	true
+									'data-infos-history': 	'<span class="equipment"><span>'
+																+ (d['type'] ? '<small>' + _g['data']['item_types'][d['type']]['name']['zh_cn'] + '</small><br/>' : '')
+																+ d['name']['zh_cn']
+															+ '</span></span>'
 								})
 								.html(
 									'<img src="' + _g.path.pics.ships + '/' + d.default_equipped_on[i]+'/0.webp"/>'
