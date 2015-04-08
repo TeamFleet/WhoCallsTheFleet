@@ -17,6 +17,7 @@
 	.padding(8, 10);
 	box-shadow:		none;
 	border-radius:	5px;
+	.max-width(330);
 
 	&[data-tip-indicator-pos = bottom]:before{
 		border-top-color:	#858153;
@@ -105,5 +106,22 @@
 	}
 	h3.itemstat{
 		.padding-left(42);
+	}
+
+	h4.item_equipable_on{
+		display:	block;
+		.font-size(16);
+		font-weight:normal;
+		color:		mix(@color1, @color2, 75%);
+		display:	block;
+		font-family:@font_famliy_Hei;
+		padding:	0;
+		.line-height(14);
+		.padding-bottom(8);
+		.margin-bottom(10);
+		.border-bottom(1, dashed, mix(@color1, @color2, 75%) );
+		&~span{
+			display:	inline-block;
+		}
 	}
 }

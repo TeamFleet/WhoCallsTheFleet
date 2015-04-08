@@ -437,7 +437,7 @@ _frame.infos.init = function(){
 												.prop('checked', (index == 1))
 												.insertBefore(illusts_container)
 											$('<span class="container"/>')
-												.html('<img src="'+file+'"/>')
+												.html('<img src="'+file+'" data-filename="'+ship_name+' - '+index+'.webp"/>')
 												//.css('background-image', 'url(' + file + ')')
 												.appendTo(illusts_container)
 										}
@@ -506,7 +506,10 @@ _frame.infos.init = function(){
 					.html(
 						'<h2 data-content="' + d['name']['zh_cn'] + '">' + d['name']['zh_cn'] + '</h2>'
 						+ '<small>'
-							+ ( d['type'] ? _g['data']['item_types'][d['type']]['name']['zh_cn'] : '' )
+							+ ( d['type']
+								? ( _g['data']['item_types'][d['type']]['name']['zh_cn']
+									+ _frame.app_main.page['equipments'].gen_helper_equipable_on( d['type'] )
+								): '' )
 						+ '</small>'
 					).appendTo(dom)
 

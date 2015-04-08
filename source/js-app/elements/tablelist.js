@@ -534,11 +534,12 @@ _tablelist.prototype.global_index = 0
 				if( !j ){
 					var data_equipmenttype = _g.data.item_types[ _g.item_type_order[i] ]
 					$('<tr class="typetitle" data-equipmentcollection="'+_g.data.item_id_by_type[i]['collection']+'">'
-								+ '<th colspan="' + (self._equipments_columns.length + 1) + '">'
+							+ '<th colspan="' + (self._equipments_columns.length + 1) + '">'
 								+ '<span style="background-image: url(../app/assets/images/itemicon/'+data_equipmenttype['icon']+'.png)"></span>'
 								+ data_equipmenttype['name']['zh_cn']
-								+ '</th></tr>'
-							).appendTo( self.dom.tbody )
+								+ _frame.app_main.page['equipments'].gen_helper_equipable_on( data_equipmenttype['id'] )
+							+ '</th></tr>'
+						).appendTo( self.dom.tbody )
 				}
 
 				self._equipments_append_item(
