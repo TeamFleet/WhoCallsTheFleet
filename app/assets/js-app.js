@@ -764,7 +764,7 @@ _frame.app_main.page['ships'].init = function( page ){
 _frame.infos = {
 	// curContent: 			null,			// 当前内容的hashCode
 
-	show: function(cont, el){
+	show: function(cont, el, history){
 		// 第一次运行，创建相关DOM和变量
 			if( !_frame.infos.dom ){
 				_frame.infos.dom = {
@@ -1047,8 +1047,9 @@ _frame.infos.init = function(){
 							}
 						}
 						equip.attr({
-							'data-itemid': 	d['equip'][i],
-							'data-tip-position': 'left',
+							//'data-equipmentid': 	d['equip'][i],
+							'data-tip-position': 	'left',
+							//'data-infos': 			"__equipment__",
 							'data-tip':		'<h3 class="itemstat">'
 												+ '<s style="background-image: url(' + item_icon + ')"></s>'
 												+ '<strong data-content="' + item_data['name']['zh_cn'] + '">'
@@ -1214,6 +1215,24 @@ _frame.infos.init = function(){
 			if( debugmode )
 				console.log(d)
 
+			function _stat(stat, title){
+				if( d['stat'][stat] ){
+					var value = ''
+					switch(stat){
+						case 'range':
+							value = '<span>射程: ' + _g.getStatRange( d['stat'][stat] ) + '</span>';
+							break;
+						default:
+							var val = parseInt( d['stat'][stat] )
+							value = '<span>' + ( val > 0 ? '+' : '') + val + ' ' + title + '</span>'
+							break;
+					}
+					$('<span/>').html(value).appendTo(stat_container)
+				}//else{
+				//	return ''
+				//}
+			}
+
 			var dom = $('<div class="equipment"/>')
 
 			// 名称 & 类型
@@ -1225,9 +1244,62 @@ _frame.infos.init = function(){
 						+ '</small>'
 					).appendTo(dom)
 
+			// 属性
+				var stats = $('<div class="stats"/>')
+								.html('<h4 data-content="属性">属性</h4>')
+								.appendTo(dom)
+					,stat_container = $('<div class="stat"/>').appendTo(stats)
+
+				_stat('fire', '火力')
+				_stat('torpedo', '雷装')
+				_stat('aa', '对空')
+				_stat('asw', '对潜')
+				_stat('bomb', '爆装')
+				_stat('hit', '命中')
+				_stat('armor', '装甲')
+				_stat('evasion', '回避')
+				_stat('los', '索敌')
+				_stat('range', '射程')
+
+			// 初始装备于
+				var equipped = $('<div class="equipped"/>').html('<h4 data-content="初始装备于">初始装备于</h4>').appendTo(dom)
+					,equipped_container = _p.el.flexgrid.create().appendTo( equipped )
+				if( d.default_equipped_on && d.default_equipped_on.length ){
+					for( var i in d.default_equipped_on ){
+						var ship_data = _g.data.ships[d.default_equipped_on[i]]
+						equipped_container.appendDOM(
+							$('<button class="unit" data-infos="__ship__"/>')
+								.attr({
+									'data-shipid': 	d.default_equipped_on[i],
+									'data-infos': 	'__ship__',
+									'data-infos-history': 	true
+								})
+								.html(
+									'<img src="' + _g.path.pics.ships + '/' + d.default_equipped_on[i]+'/0.webp"/>'
+									+ '<span>'
+										+ (d['type'] ? '<small>' + _g['data']['ship_types'][ship_data['type']]['full_zh'] + '</small>' : '' )
+										+ _g.getName( ship_data['name'], '・' )
+									+ '</span>'
+								)
+						)
+					}
+				}else{
+					equipped_container.addClass('no').html('暂无初始配置该装备的舰娘...')
+				}
+
+			// 图鉴
+				var illusts = $('<aside class="illustrations"/>').appendTo(dom)
+				try{
+					var file = _g.path.pics.items + '/' + d['id'] + '/card.webp'
+						,stat = node.fs.lstatSync(file)
+					if( stat && stat.isFile() ){
+						$('<img src="'+file+'"/>')
+							.appendTo(illusts)
+					}
+				}catch(e){}
+
 			return dom
 		}
-
 
 /*
  */
