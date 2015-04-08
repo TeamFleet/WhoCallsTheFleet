@@ -565,7 +565,7 @@ _frame.infos.init = function(){
 					var file = _g.path.pics.items + '/' + d['id'] + '/card.webp'
 						,stat = node.fs.lstatSync(file)
 					if( stat && stat.isFile() ){
-						$('<img src="'+file+'"/>')
+						$('<img src="'+file+'" data-filename="'+d['name']['zh_cn']+'.webp"/>')
 							.appendTo(illusts)
 					}
 				}catch(e){}
