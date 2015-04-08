@@ -73,6 +73,7 @@ _tablelist.prototype.global_index = 0
 		['弹耗',	'consum_ammo']
 	]
 	_tablelist.prototype._ships_header_checkbox = []
+	_tablelist.prototype._ships_last_item = null
 	_tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 		var self = this
 			//,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" modal="true"/>')
@@ -80,7 +81,8 @@ _tablelist.prototype.global_index = 0
 					.attr({
 						'data-shipedit':self.dom.container.hasClass('shiplist-edit') ? 'true' : null
 					})
-					.appendTo( this.dom.tbody )
+					//.appendTo( this.dom.tbody )
+					.insertAfter( self._ships_last_item )
 			,max_carry = 0
 			,name = ship_data['name']['zh_cn']
 					+ (ship_data['name']['suffix']
@@ -95,6 +97,8 @@ _tablelist.prototype.global_index = 0
 								if( !not_trigger_check )
 									self._ships_header_checkbox[header_index].trigger('docheck')
 							})
+
+		self._ships_last_item = tr
 
 		self._ships_header_checkbox[header_index].data(
 				'ships', 
@@ -129,21 +133,6 @@ _tablelist.prototype.global_index = 0
 						)
 						.appendTo(tr)
 					break;
-				case 'fire':
-					$('<td data-stat="fire" data-value="' + ship_data['stat']['fire_max'] + '"/>')
-						.html( _val( ship_data['stat']['fire_max'] ) )
-						.appendTo(tr)
-					break;
-				case 'torpedo':
-					$('<td data-stat="torpedo" data-value="' + ship_data['stat']['torpedo_max'] + '"/>')
-						.html( _val( ship_data['stat']['torpedo_max'] ) )
-						.appendTo(tr)
-					break;
-				case 'aa':
-					$('<td data-stat="aa" data-value="' + ship_data['stat']['aa_max'] + '"/>')
-						.html( _val( ship_data['stat']['aa_max'] ) )
-						.appendTo(tr)
-					break;
 				case 'asw':
 					$('<td data-stat="asw" data-value="' + ship_data['stat']['asw_max'] + '"/>')
 						.html( _val(
@@ -155,16 +144,6 @@ _tablelist.prototype.global_index = 0
 				case 'hp':
 					$('<td data-stat="hp" data-value="' + ship_data['stat']['hp'] + '"/>')
 						.html(_val( ship_data['stat']['hp'] ))
-						.appendTo(tr)
-					break;
-				case 'armor':
-					$('<td data-stat="armor" data-value="' + ship_data['stat']['armor_max'] + '"/>')
-						.html(_val( ship_data['stat']['armor_max'] ))
-						.appendTo(tr)
-					break;
-				case 'evasion':
-					$('<td data-stat="evasion" data-value="' + ship_data['stat']['evasion_max'] + '"/>')
-						.html(_val( ship_data['stat']['evasion_max'] ))
 						.appendTo(tr)
 					break;
 				case 'carry':
@@ -182,11 +161,6 @@ _tablelist.prototype.global_index = 0
 						.html( _g.getStatRange( ship_data['stat']['range'] ) )
 						.appendTo(tr)
 					break;
-				case 'los':
-					$('<td data-stat="los" data-value="' + ship_data['stat']['los_max'] + '"/>')
-						.html(_val( ship_data['stat']['los_max'] ))
-						.appendTo(tr)
-					break;
 				case 'luck':
 					$('<td data-stat="luck" data-value="' + ship_data['stat']['luck'] + '"/>')
 						.html(ship_data['stat']['luck'] + '<sup>' + ship_data['stat']['luck_max'] + '</sup>')
@@ -200,6 +174,13 @@ _tablelist.prototype.global_index = 0
 				case 'consum_ammo':
 					$('<td data-stat="consum_ammo" data-value="' + ship_data['consum']['ammo'] + '"/>')
 						.html(ship_data['consum']['ammo'])
+						.appendTo(tr)
+					break;
+				default:
+					$('<td data-stat="'+self._ships_columns[i][1]+'" data-value="'
+						+ ship_data['stat'][self._ships_columns[i][1] + '_max']
+					+ '"/>')
+						.html( _val( ship_data['stat'][self._ships_columns[i][1] + '_max'] ) )
 						.appendTo(tr)
 					break;
 			}
@@ -219,29 +200,6 @@ _tablelist.prototype.global_index = 0
 	}
 	_tablelist.prototype._ships_append_all_items = function(){
 		var self = this
-		/*
-		for( var i in _g.data.ship_id_by_type ){
-			if( typeof _g.ship_type_order[i] == 'object' ){
-				var data_shiptype = _g.data.ship_types[ _g.ship_type_order[i][0] ]
-			}else{
-				var data_shiptype = _g.data.ship_types[ _g.ship_type_order[i] ]
-			}
-			$('<tr class="typetitle"><th colspan="' + (self._ships_columns.length + 1) + '">'
-				+ data_shiptype['full_zh'] + '<small>[' + data_shiptype['code'] + ']</small>'
-				+ '</th></tr>')
-				.appendTo( this.dom.tbody )
-
-			for( var j in _g.data.ship_id_by_type[i] ){
-				self._ships_append_item( _g.data.ships[ _g.data.ship_id_by_type[i][j] ] )
-			}
-
-			var k = 0
-			while(k < 9){
-				$('<tr class="empty"/>').appendTo(this.dom.tbody)
-				k++
-			}
-		}
-		*/
 		function _do( i, j ){
 			if( _g.data.ship_id_by_type[i] ){
 				if( !j ){
@@ -252,11 +210,20 @@ _tablelist.prototype.global_index = 0
 					}
 
 					var checkbox_id = '_input_g' + parseInt(_g.inputIndex)
-						,tr = $('<tr class="typetitle"><th colspan="' + (self._ships_columns.length + 1) + '">'
+					
+					self._ships_last_item = 
+							$('<tr class="typetitle"><th colspan="' + (self._ships_columns.length + 1) + '">'
 								+ '<label for="' + checkbox_id + '">'
 								+ data_shiptype['full_zh'] + '<small>[' + data_shiptype['code'] + ']</small>'
 								+ '</label></th></tr>')
 								.appendTo( self.dom.tbody )
+
+					// 创建空DOM，欺骗flexbox layout排版
+						var k = 0
+						while(k < 9){
+							$('<tr class="empty"/>').appendTo(self.dom.tbody)
+							k++
+						}
 
 					self._ships_header_checkbox[i]
 						= $('<input type="checkbox" id="' + checkbox_id + '"/>')
@@ -290,7 +257,7 @@ _tablelist.prototype.global_index = 0
 								}
 							})
 							.data('ships', $())
-							.prependTo( tr.find('th') )
+							.prependTo( self._ships_last_item.find('th') )
 
 					_g.inputIndex++
 				}
@@ -299,11 +266,6 @@ _tablelist.prototype.global_index = 0
 
 				setTimeout(function(){
 					if( j >= _g.data.ship_id_by_type[i].length - 1 ){
-						var k = 0
-						while(k < 9){
-							$('<tr class="empty"/>').appendTo(self.dom.tbody)
-							k++
-						}
 						_do( i+1, 0 )
 					}else{
 						_do( i, j+1 )
@@ -312,6 +274,9 @@ _tablelist.prototype.global_index = 0
 			}else{
 				self.mark_high()
 				_frame.app_main.loaded('tablelist_'+self._index, true)
+				//console.log( self._ships_last_item )
+				delete( self._ships_last_item )
+				//console.log( self._ships_last_item )
 			}
 		}
 		_do( 0, 0 )
