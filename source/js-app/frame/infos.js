@@ -17,7 +17,7 @@ _frame.infos = {
 							_frame.infos.hide()
 						}).appendTo( _frame.infos.dom.nav )
 				_frame.infos.dom.historyback = $('<button class="history"/>')
-						.html('HISTORY BACK')
+						.html('')
 						.on('click', function(){
 							_frame.infos.historyback()
 						}).appendTo( _frame.infos.dom.nav )
@@ -39,21 +39,28 @@ _frame.infos = {
 			}
 			var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
 			if( _frame.infos.curContent != hashcode ){
+				var contentDOM = cont.append ? cont : $(cont)
+
+				if( el && el.attr('data-infos-history-skip-this') )
+					contentDOM.attr('data-infos-history-skip-this', true)
+
+				if( _frame.infos.dom.main.children().length )
+					contentDOM.addClass('fadein')
+
 				if( history ){
+					_frame.infos.dom.main.children().filter('[data-infos-history-skip-this="true"]').remove()
 					_frame.infos.dom.main.children().slice(2).remove()
 					_frame.infos.dom.main.children().eq(0).addClass('off')
 					_frame.infos.dom.historyback.html(history).addClass('show')
 				}else{
-					_frame.infos.dom.historyback.removeClass('show')
+					_frame.infos.dom.historyback.html('').removeClass('show')
 					_frame.infos.dom.main.empty()
 				}
+				//data-infos-history-skip-this
 
-				if( cont.append )
-					cont.appendTo( _frame.infos.dom.main )
-				else
-					_frame.infos.dom.main.append($(cont))
+				contentDOM.appendTo( _frame.infos.dom.main )
 
-				_p.initDOM( _frame.infos.dom.main )
+				_p.initDOM( contentDOM )
 				_frame.infos.curContent = hashcode
 			}
 
@@ -83,7 +90,7 @@ _frame.infos = {
 	historyback: function(){
 		_frame.infos.dom.main.children().slice(1).remove()
 		_frame.infos.dom.main.children().eq(0).removeClass('off').addClass('fadein')
-		_frame.infos.dom.historyback.removeClass('show')
+		_frame.infos.dom.historyback.empty().removeClass('show')
 
 		if( _frame.infos.dom.main.children().eq(0).hasClass('ship') )
 			_frame.infos.dom.main.attr('data-infostype', 'shipinfo')
@@ -394,7 +401,13 @@ _frame.infos.init = function(){
 
 									remodels_container.appendDOM(
 										$('<button class="unit" data-shipid="'+ docs[0].ships[i]['id'] +'" data-infos="__ship__"/>')
-											.attr('data-tip', tip)
+											.attr({
+												'data-tip': 	tip,
+												'data-infos-history': _frame.infos.dom.historyback.html()
+																		? _frame.infos.dom.historyback.html()
+																		: null,
+												'data-infos-history-skip-this': true
+											})
 											.addClass(docs[0].ships[i]['id'] == d['id'] ? 'on' : '')
 											.addClass(remodel_blueprint ? 'blueprint' : '')
 											.html(
@@ -544,7 +557,8 @@ _frame.infos.init = function(){
 									'data-infos-history': 	'<span class="equipment"><span>'
 																+ (d['type'] ? '<small>' + _g['data']['item_types'][d['type']]['name']['zh_cn'] + '</small><br/>' : '')
 																+ d['name']['zh_cn']
-															+ '</span></span>'
+															+ '</span></span>',
+									'data-infos-history-skip-this': true
 								})
 								.html(
 									'<img src="' + _g.path.pics.ships + '/' + d.default_equipped_on[i]+'/0.webp"/>'
