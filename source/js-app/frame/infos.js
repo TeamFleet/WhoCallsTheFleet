@@ -25,6 +25,11 @@ _frame.infos = {
 			switch(cont){
 				case '__ship__':
 					cont = _frame.infos.__ship(el)
+					_frame.infos.dom.main.attr('data-infostype', 'shipinfo')
+					break;
+				case '__equipment__':
+					cont = _frame.infos.__equipment(el)
+					_frame.infos.dom.main.attr('data-infostype', 'equipmentinfo')
 					break;
 			}
 			var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
@@ -52,9 +57,11 @@ _frame.infos = {
 		// transitionEnd 触发后，检查 top CSS，如果为 0，判断动画播放结束
 		// 将内容区域设定为不可见
 			_frame.dom.navlinks.children('button:last-of-type')
-					.on('transitionend', function(e){
+					.on('transitionend.infos_hide', function(e){
 						if( e.currentTarget == e.target && e.originalEvent.propertyName == 'top' && parseInt($(this).css('top')) == 0 ){
 							_frame.dom.layout.removeClass('infos-show')
+							_frame.infos.dom.main.attr('data-infostype', '')
+							$(this).off('transitionend.infos_hide')
 						}
 					})
 	}
@@ -439,6 +446,24 @@ _frame.infos.init = function(){
 			)
 			*/
 		}
-		_frame.infos.__ship_stats = function( lvl, dom_stats ){
 
+	// 装备信息
+		_frame.infos.__equipment = function( el ){
+			var d = _g.data.items[ el.data('equipmentid') ]
+
+			if( debugmode )
+				console.log(d)
+
+			var dom = $('<div class="equipment"/>')
+
+			// 名称 & 类型
+				$('<div class="title"/>')
+					.html(
+						'<h2 data-content="' + d['name']['zh_cn'] + '">' + d['name']['zh_cn'] + '</h2>'
+						+ '<small>'
+							+ ( d['type'] ? _g['data']['item_types'][d['type']]['name']['zh_cn'] : '' )
+						+ '</small>'
+					).appendTo(dom)
+
+			return dom
 		}

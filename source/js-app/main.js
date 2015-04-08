@@ -404,18 +404,22 @@ _frame.app_main = {
 						//_db_loaded++
 
 						switch( db_name ){
+							/*
 							case 'entities':
 							case 'items':
 							case 'item_types':
 							case 'ship_classes':
 							case 'ship_types':
 								_db[db_name].find({}, function(err, docs){
+									if( typeof _g.data[db_name] == 'undefined' )
+										_g.data[db_name] = {}
 									for(var i in docs ){
 										_g.data[db_name][docs[i]['id']] = docs[i]
 									}
 									_db_load_next()
 								})
 								break;
+								*/
 							case 'ship_namesuffix':
 								_db.ship_namesuffix.find({}).sort({ 'id': 1 }).exec(function(err, docs){
 									_g.data.ship_namesuffix = [{}].concat(docs)
@@ -457,7 +461,14 @@ _frame.app_main = {
 								})
 								break;
 							default:
-								_db_load_next()
+								_db[db_name].find({}, function(err, docs){
+									if( typeof _g.data[db_name] == 'undefined' )
+										_g.data[db_name] = {}
+									for(var i in docs ){
+										_g.data[db_name][docs[i]['id']] = docs[i]
+									}
+									_db_load_next()
+								})
 								break;
 						}
 							

@@ -2,6 +2,9 @@
 	.flexbox();
 	.flex-flow(column nowrap);
 	height:		100%;
+	&>input[type="radio"]{
+		display:	none;
+	}
 	&>.fixed-table-container{
 		height:		auto;
 		.flex(0 1 100%);
@@ -70,6 +73,14 @@
 								padding-left:	.5em;
 								font-size:		75%;
 								opacity:		.75;
+							}
+							span{
+								display:	inline-block;
+								.width(42);
+								.height(30);
+								background:	no-repeat 50% 50%;
+								float:		left;
+								.margin-top(-4)
 							}
 						}
 					}
@@ -180,47 +191,24 @@
 							}
 						}
 					} // tr[data-shipid]
+					tr[data-equipmentid]{
+						td, th{
+							.height(25);
+							.line-height(18)
+						}
+						th{
+							font-weight:	lighter;
+							.padding-left(42);
+						}
+						td{
+							.font-size(12)
+						}
+					} // tr[data-equipmentid]
 				}
-				@media all and (max-width: 800px ){
-					td[data-stat="consum_fuel"],
-					td[data-stat="consum_ammo"]{
-						display:	none;
-					}
-				}
-				@media all and (max-width: 720px ){
-					td[data-stat="range"]{
-						display:	none;
-					}
-				}
-				/*
-				@media all and (max-width: 900px ){
-					td.stat-los{
-						display:	none;
-					}
-				}
-				@media all and (max-width: 840px ){
-					td.stat-speed{
-						display:	none;
-					}
-				}
-				@media all and (max-width: 780px ){
-					td.stat-carry{
-						display:	none;
-					}
-				}
-				@media all and (max-width: 720px ){
-					td.stat-evasion{
-						display:	none;
-					}
-				}
-				@media all and (max-width: 660px ){
-					td.stat-luck sup{
-						display:	none;
-					}
-				}*/
 
 				&.hashover{
-					tbody tr[data-shipid]:hover{
+					tbody tr[data-shipid]:hover,
+					tbody tr[data-equipmentid]:hover{
 						//background-color:	rgba(0, 0, 0, .5);
 						background-color:	rgba(0,0,0,.2);
 					}
@@ -324,6 +312,53 @@
 						.transition-duration(.5s) !important;
 					}
 				}
+			}
+			&>.tab{
+				display:	inline-block;
+				opacity:	.75;
+				font-weight:lighter;
+				height:		100%;
+				position:	relative;
+				.padding(0, 6);
+				.font-size(12);
+				.line-height(14);
+				.transition-property(~"opacity, background-position");
+				background:	linear-gradient(to bottom, transparent, rgba(255, 255, 255, .35)) repeat-x 0 50px;
+				&>i{
+					.width(24);
+					.height(24);
+					background:	~"url(@{folder_images}/items.png) no-repeat 0 0";
+					.margin-right(6) !important;
+				}
+				span{
+					text-align:	left;
+				}
+				&>em{
+					content:	'';
+					position:	absolute !important;
+					.bottom(-7);
+					left:		0;
+					width:		100%;
+					.height(6);
+					.enable-transition();
+					.transition-property(~"background-position");
+					background:	linear-gradient(to top, transparent, rgba(255, 255, 255, .175)) repeat-x 0 -6px;
+				}
+				&:hover{
+					opacity:	1;
+					background-position:	0 25px;
+				}
+				&+.tab{
+					.margin-left(10);
+				}
+				.loop(@n, @i: 1) when (@i =< @n) {
+					//&:nth-child(@{n}):checked~.tabview-content:nth-child(@{n}){
+					&:nth-of-type(@{i}) > i{
+						background-position:	0 unit(0 - 24 * (@i - 1), px);
+					}
+					.loop(@n, (@i + 1))
+				}
+				.loop(10);
 			}
 		}
 
@@ -524,7 +559,8 @@
 			position:	absolute;
 			z-index:	1;
 			text-align:	center;
-			&.compareinfos{
+			&.compareinfos,
+			&.equipmentsinfos{
 				&>button{
 					position:	absolute;
 					top:		0;
@@ -562,6 +598,93 @@
 			opacity:	1;
 			z-index:	2;
 		}
+		&[data-msgs="equipmentsinfos"] > .equipmentsinfos{
+			opacity:	1;
+			z-index:	2;
+		}
+	}
+
+
+
+
+
+
+
+
+	&.ships{
+		@media all and (max-width: 800px ){
+			td[data-stat="consum_fuel"],
+			td[data-stat="consum_ammo"]{
+				display:	none;
+			}
+		}
+		@media all and (max-width: 720px ){
+			td[data-stat="range"]{
+				display:	none;
+			}
+		}
+		/*
+		@media all and (max-width: 900px ){
+			td.stat-los{
+				display:	none;
+			}
+		}
+		@media all and (max-width: 840px ){
+			td.stat-speed{
+				display:	none;
+			}
+		}
+		@media all and (max-width: 780px ){
+			td.stat-carry{
+				display:	none;
+			}
+		}
+		@media all and (max-width: 720px ){
+			td.stat-evasion{
+				display:	none;
+			}
+		}
+		@media all and (max-width: 660px ){
+			td.stat-luck sup{
+				display:	none;
+			}
+		}*/
+	}
+
+	&.equipments{
+		&>.msgs{
+			background:	fade(#16402a, 65%);
+			color:		#a3d9bd;
+			&>div{
+				&.equipmentsinfos{
+					&>button{
+						&:hover{
+							color:		hsl(149, 27%, 75%);
+						}
+					}
+				}
+			}
+		}
+		&>.fixed-table-container>.fixed-table-container-inner>table tbody tr{
+			display:	none;
+		}
+		.loop(@n, @i: 1) when (@i =< @n) {
+			//&:nth-child(@{n}):checked~.tabview-content:nth-child(@{n}){
+			&>input[type="radio"][value="@{i}"]:checked{
+				&~.options>.filters>label[data-equipmentcollection="@{i}"]{
+					opacity:	1;
+					background-position:	0 0;
+					&>em{
+						background-position:	0 0;
+					}
+				}
+				&~.fixed-table-container>.fixed-table-container-inner>table tbody tr[data-equipmentcollection="@{i}"]{
+					display:	table-row;
+				}
+			}
+			.loop(@n, (@i + 1))
+		}
+		.loop(10);
 	}
 }
 
