@@ -84,6 +84,13 @@
 							}
 						}
 					}
+					tr{
+						td{
+							&.negative{
+								color:		hsl(0, 90%, 70%);
+							}
+						}
+					}
 					tr[data-shipid]{
 						th{
 							.min-width(160);
@@ -324,11 +331,17 @@
 				.line-height(14);
 				.transition-property(~"opacity, background-position");
 				background:	linear-gradient(to bottom, transparent, rgba(255, 255, 255, .35)) repeat-x 0 50px;
+				@media all and (max-width: 800px ){
+					.padding(0, 4);
+				}
 				&>i{
 					.width(24);
 					.height(24);
 					background:	~"url(@{folder_images}/items.png) no-repeat 0 0";
 					.margin-right(6) !important;
+					@media all and (max-width: 800px ){
+						.margin-right(2) !important;
+					}
 				}
 				span{
 					text-align:	left;
@@ -350,6 +363,9 @@
 				}
 				&+.tab{
 					.margin-left(10);
+					@media all and (max-width: 800px ){
+						margin-left:	0;
+					}
 				}
 				.loop(@n, @i: 1) when (@i =< @n) {
 					//&:nth-child(@{n}):checked~.tabview-content:nth-child(@{n}){
