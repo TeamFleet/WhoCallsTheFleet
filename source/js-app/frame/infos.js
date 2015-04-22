@@ -305,9 +305,9 @@ _frame.infos.init = function(){
 											+ _g.data.item_types[item_data['type']]['icon']
 											+ '.png'
 						equip.attr({
-							//'data-equipmentid': 	d['equip'][i],
+							'data-equipmentid': 	d['equip'][i],
 							'data-tip-position': 	'left',
-							//'data-infos': 			"__equipment__",
+							'data-infos': 			"__equipment__",
 							'data-tip':		_p.tip.content_equipment(item_data)
 						})
 						name.html(
