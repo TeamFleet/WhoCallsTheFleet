@@ -304,42 +304,11 @@ _frame.infos.init = function(){
 							,item_icon = 'assets/images/itemicon/'
 											+ _g.data.item_types[item_data['type']]['icon']
 											+ '.png'
-						function _stat(stat, title){
-							if( item_data['stat'][stat] ){
-								switch(stat){
-									case 'range':
-										return '<span>射程: ' + _g.getStatRange( item_data['stat'][stat] ) + '</span>';
-										break;
-									default:
-										var val = parseInt( item_data['stat'][stat] )
-										return '<span>' + ( val > 0 ? '+' : '') + val + ' ' + title + '</span>'
-										break;
-								}
-							}else{
-								return ''
-							}
-						}
 						equip.attr({
 							//'data-equipmentid': 	d['equip'][i],
 							'data-tip-position': 	'left',
 							//'data-infos': 			"__equipment__",
-							'data-tip':		'<h3 class="itemstat">'
-												+ '<s style="background-image: url(' + item_icon + ')"></s>'
-												+ '<strong data-content="' + item_data['name']['zh_cn'] + '">'
-													+ item_data['name']['zh_cn']
-												+ '</strong>'
-												+ '<small>' + _g.data.item_types[item_data['type']]['name']['zh_cn'] + '</small>'
-											+ '</h3>'
-											+ _stat('fire', '火力')
-											+ _stat('torpedo', '雷装')
-											+ _stat('aa', '对空')
-											+ _stat('asw', '对潜')
-											+ _stat('bomb', '爆装')
-											+ _stat('hit', '命中')
-											+ _stat('armor', '装甲')
-											+ _stat('evasion', '回避')
-											+ _stat('los', '索敌')
-											+ _stat('range', '射程')
+							'data-tip':		_p.tip.content_equipment(item_data)
 						})
 						name.html(
 							item_data['name']['zh_cn'].replace(/（([^（^）]+)）/g, '<small>($1)</small>')
@@ -496,17 +465,17 @@ _frame.infos.init = function(){
 
 			function _stat(stat, title){
 				if( d['stat'][stat] ){
-					var value = ''
+					var html = '<small class="stat-'+stat+'">' + title + '</small>'
 					switch(stat){
 						case 'range':
-							value = '<span>射程: ' + _g.getStatRange( d['stat'][stat] ) + '</span>';
+							html+= '<em>' + _g.getStatRange( d['stat'][stat] ) + '</em>';
 							break;
 						default:
 							var val = parseInt( d['stat'][stat] )
-							value = '<span>' + ( val > 0 ? '+' : '') + val + ' ' + title + '</span>'
+							html+= '<em'+ (val < 0 ? ' class="negative"' : '') +'>' + ( val > 0 ? '+' : '') + val + '</em>'
 							break;
 					}
-					$('<span/>').html(value).appendTo(stat_container)
+					$('<span/>').html(html).appendTo(stat_container)
 				}//else{
 				//	return ''
 				//}
@@ -542,6 +511,84 @@ _frame.infos.init = function(){
 				_stat('evasion', '回避')
 				_stat('los', '索敌')
 				_stat('range', '射程')
+
+			// 开发 & 改修
+				var arsenal = $('<div class="stats"/>')
+								.html('<h4 data-content="开发改修">开发改修</h4>')
+								.appendTo(dom)
+					,arsenal1 = $('<div class="stat"/>').appendTo(arsenal)
+
+				$('<span/>')
+					.append(
+						$('<small class="indicator">')
+							.addClass( d['craftable'] ? 'true' : 'false' )
+							.html( d['craftable'] ? '可开发' : '不可开发' )
+					)
+					.appendTo( arsenal1 )
+				$('<span/>')
+					.append(
+						$('<small class="indicator">')
+							.addClass( d['improvable'] ? 'true' : 'false' )
+							.html( d['improvable'] ? '可改修' : '不可改修' )
+					)
+					.appendTo( arsenal1 )
+				if( d['improvable'] && !(d['upgrade_to'] && d['upgrade_to'].push && d['upgrade_to'].length) ){
+					$('<span/>').html('<small class="indicator false">不可升级</small>')
+						.appendTo( arsenal1 )
+				}
+
+				// 可升级为
+					if( d['upgrade_to'] && d['upgrade_to'].push && d['upgrade_to'].length ){
+						var arsenal_to = $('<div class="stat upgrade"/>')
+								.html('<span><small class="indicator true">可升级为</small></span>')
+								.appendTo(arsenal)
+						for( var i in d['upgrade_to'] ){
+							var equipment_data = _g.data.items[d['upgrade_to'][i][0]]
+								,equipment_icon = 'assets/images/itemicon/'
+												+ _g.data.item_types[equipment_data['type']]['icon']
+												+ '.png'
+							$('<button/>')
+								.attr({
+									'data-equipmentid': 	d['upgrade_to'][i][0],
+									'data-tip-position': 	'right',
+									'data-infos': 			"__equipment__",
+									'data-tip':				_p.tip.content_equipment(equipment_data)
+								})
+								.html(
+									'<i style="background-image:url('+equipment_icon+')"></i>'
+									+ '<small>' + equipment_data['name']['zh_cn'].replace(/（([^（^）]+)）/g, '<small>($1)</small>') + '</small>'
+									+ '<em' + (d['upgrade_to'][i][1]<=0 ? ' class="zero"' : '') + '>+' + d['upgrade_to'][i][1] + '</em>'
+								)
+								.appendTo( arsenal_to )
+						}
+					}
+
+			// 升级来源
+				if( d['upgrade_from'] && d['upgrade_from'].push && d['upgrade_from'].length ){
+					var upgrade_from = $('<div class="stats"/>')
+									.html('<h4 data-content="可由以下装备升级获得">可由以下装备升级获得</h4>')
+									.appendTo(dom)
+						,upgrade_from1 = $('<div class="stat upgrade"/>')
+							.appendTo(upgrade_from)
+					for( var i in d['upgrade_from'] ){
+						var equipment_data = _g.data.items[d['upgrade_from'][i]]
+							,equipment_icon = 'assets/images/itemicon/'
+											+ _g.data.item_types[equipment_data['type']]['icon']
+											+ '.png'
+						$('<button/>')
+							.attr({
+								'data-equipmentid': 	d['upgrade_from'][i],
+								'data-tip-position': 	'right',
+								'data-infos': 			"__equipment__",
+								'data-tip':				_p.tip.content_equipment(equipment_data)
+							})
+							.html(
+								'<i style="background-image:url('+equipment_icon+')"></i>'
+								+ '<small>' + equipment_data['name']['zh_cn'].replace(/（([^（^）]+)）/g, '<small>($1)</small>') + '</small>'
+							)
+							.appendTo( upgrade_from1 )
+					}
+				}
 
 			// 初始装备于
 				var equipped = $('<div class="equipped"/>').html('<h4 data-content="初始装备于">初始装备于</h4>').appendTo(dom)

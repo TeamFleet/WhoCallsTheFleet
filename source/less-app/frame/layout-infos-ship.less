@@ -1,6 +1,8 @@
 .layout-infos-ship(){
 	.ship{
 		@size:	unit( @nav_height, px );
+		.flexbox();
+		.flex-flow(row wrap);
 		padding-right:	~"calc( 30% + @{size} )";
 
 		h1, h2, h3, h4, h5, h6{
@@ -14,6 +16,7 @@
 		}
 
 		&>div{
+			.flex(1 0 100%);
 			&.title{
 				small{
 					color:		#8ddbff;
@@ -56,8 +59,8 @@
 						}
 					}
 					& ~ .stat{
-						border-color:	fade(#2cace8, 25%);
 						.border-top(2, solid);
+						border-color:	fade(#2cace8, 25%);
 						.padding-top(5);
 						.margin-top(5);
 						&.consum{

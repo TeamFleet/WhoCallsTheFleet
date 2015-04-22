@@ -484,6 +484,7 @@ _tablelist.prototype.global_index = 0
 					break;
 				default:
 					$('<td data-stat="'+self._equipments_columns[i][1]+'" data-value="' + equipment_data['stat'][self._equipments_columns[i][1]] + '"/>')
+						.addClass( equipment_data['stat'][self._equipments_columns[i][1]] < 0 ? 'negative' : '' )
 						.html( _val( equipment_data['stat'][self._equipments_columns[i][1]] ) )
 						.appendTo(tr)
 					break;

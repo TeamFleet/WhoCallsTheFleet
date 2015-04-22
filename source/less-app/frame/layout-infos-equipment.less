@@ -1,5 +1,9 @@
 .layout-infos-equipment(){
 	.equipment{
+		.flexbox();
+		.flex-flow(row wrap);
+		.justify-content(flex-start);
+		.align-items(flex-start);
 
 		h1, h2, h3, h4, h5, h6{
 			color:		hsl(149, 100%, 90%);
@@ -11,6 +15,7 @@
 		}
 
 		&>div{
+			.flex(1 0 auto);
 			&+div{
 				.padding-top(50);
 			}
@@ -57,10 +62,10 @@
 					}
 					&.upgrade{
 						.clearfix();
-						.padding-left(22);
+						.padding-left(16);
 						&>span{
 							display:	block;
-							.margin-left(-22);
+							.margin-left(-16);
 						}
 						&>button{
 							float:		left;
@@ -98,15 +103,20 @@
 						}
 					}
 				}
+				&+.stats{
+					width:	~"calc(50% - 130px)";
+					flex-grow:	0;
+				}
 			}
 			&.equipped{
-				min-height:	~"calc(45% + 40px)";
-				.padding-bottom(20);
+				//flex-basis:	50%;
+				min-height:	40%;
 				.flexgrid{
 					.flex-flow(row wrap);
 					.justify-content(flex-start);
 					.align-items(flex-start);
 					.margin-top(-10);
+					.padding-bottom(20);
 					&>.unit{
 						flex: 	1 0 190px;
 						position:	relative;
@@ -153,9 +163,6 @@
 						.font-size(16);
 					}
 				}
-				@media all and (max-height: 600px){
-					min-height:	0;
-				}
 			}
 		}
 		&>aside{
@@ -173,6 +180,16 @@
 			}
 		}
 
+		@media all and (max-width: 1152px){
+			&>div{
+				&.stats{
+					&+.stats{
+						width:	100%;
+						flex-grow:	1;
+					}
+				}
+			}
+		}
 		@media all and (max-width: 960px){
 			&>div{
 				&.title{

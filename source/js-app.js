@@ -4,5 +4,6 @@
 // @koala-prepend "js-app/page/equipments.js"
 
 // @koala-prepend "js-app/frame/infos.js"
+// @koala-prepend "js-app/frame/tip-equipment.js"
 
 // @koala-prepend "js-app/elements/tablelist.js"
