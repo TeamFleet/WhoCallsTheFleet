@@ -134,7 +134,13 @@ _tablelist.prototype.global_index = 0
 						.appendTo(tr)
 					break;
 				case 'asw':
-					$('<td data-stat="asw" data-value="' + ship_data['stat']['asw_max'] + '"/>')
+					$('<td data-stat="asw" />')
+						.attr(
+							'data-value',
+							ship_data['stat']['asw_max'] == -1 || ship_data['stat']['asw_max'] == '-1'
+								? null
+								: ship_data['stat']['asw_max']
+						)
 						.html( _val(
 							ship_data['stat']['asw_max'],
 							/^(5|8|9|12)$/.test( ship_data['type'] )
@@ -167,20 +173,37 @@ _tablelist.prototype.global_index = 0
 						.appendTo(tr)
 					break;
 				case 'consum_fuel':
-					$('<td data-stat="consum_fuel" data-value="' + ship_data['consum']['fuel'] + '"/>')
-						.html(ship_data['consum']['fuel'])
+					$('<td data-stat="consum_fuel"/>')
+						.attr(
+							'data-value',
+							ship_data['consum']['fuel'] == -1 || ship_data['consum']['fuel'] == '-1'
+								? null
+								: ship_data['consum']['fuel']
+						)
+						.html( _val(ship_data['consum']['fuel']) )
 						.appendTo(tr)
 					break;
 				case 'consum_ammo':
-					$('<td data-stat="consum_ammo" data-value="' + ship_data['consum']['ammo'] + '"/>')
-						.html(ship_data['consum']['ammo'])
+					$('<td data-stat="consum_ammo"/>')
+						.attr(
+							'data-value',
+							ship_data['consum']['ammo'] == -1 || ship_data['consum']['ammo'] == '-1'
+								? null
+								: ship_data['consum']['ammo']
+						)
+						.html( _val(ship_data['consum']['ammo']) )
 						.appendTo(tr)
 					break;
 				default:
-					$('<td data-stat="'+self._ships_columns[i][1]+'" data-value="'
-						+ ship_data['stat'][self._ships_columns[i][1] + '_max']
-					+ '"/>')
-						.html( _val( ship_data['stat'][self._ships_columns[i][1] + '_max'] ) )
+					var datavalue = ship_data['stat'][self._ships_columns[i][1] + '_max']
+					$('<td data-stat="'+self._ships_columns[i][1]+'"/>')
+						.attr(
+							'data-value',
+							datavalue == -1 || datavalue == '-1'
+								? null
+								: datavalue
+						)
+						.html( _val( datavalue ) )
 						.appendTo(tr)
 					break;
 			}

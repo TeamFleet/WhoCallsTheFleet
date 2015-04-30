@@ -326,13 +326,17 @@ _frame.infos.init = function(){
 				$('<span class="entity"/>')
 					.html(
 						'<strong>声优</strong>'
-						+ '<span>' + _g['data']['entities'][d['rels']['cv']]['name'][_g.lang] + '</span>'
+						+ '<span>' + ( d['rels']['cv']
+							? _g['data']['entities'][d['rels']['cv']]['name'][_g.lang]
+							: '?' ) + '</span>'
 					)
 					.appendTo(dom)
 				$('<span class="entity"/>')
 					.html(
 						'<strong>画师</strong>'
-						+ '<span>' + _g['data']['entities'][d['rels']['illustrator']]['name'][_g.lang] + '</span>'
+						+ '<span>' + ( d['rels']['illustrator']
+							? _g['data']['entities'][d['rels']['illustrator']]['name'][_g.lang]
+							: '?' ) + '</span>'
 					)
 					.appendTo(dom)
 					/*
