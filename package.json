@@ -19,7 +19,7 @@
 		"fullscreen":		false,
 		"show_in_taskbar":	true,
 		"frame":			false,
-		"show":				false,
+		"show":				true,
 		"kiosk":			false,
 		"transparent":		false
 	},
@@ -34,7 +34,6 @@
 		"win32": {
 			"debug": 	false,
 			"window": {
-				"show": 	true,
 				"frame": 	false
 			}
 		},

@@ -10,15 +10,20 @@
 
 // Global Variables
 	_g.animate_duration_delay = 320;
-	_g.execPath = node.path.dirname(process.execPath)
+	_g.execPath = node.path.dirname(process.execPath).split(node.path.sep)
+	_g.execPath = (_g.execPath[_g.execPath.length - 1] == 'nwjs' && node.path.basename( process.execPath ) == 'nw.exe')
+					? process.cwd()
+					: node.path.dirname(process.execPath)
 	_g.inputIndex = 0
 	_g.lang = 'zh_cn'
 
 	_g.path = {
-		'db': 		process.cwd() + '/data/',
+		'db': 		node.path.join(_g.execPath, '/app-db/'),
+		'page': 	node.path.join(_g.execPath, '/app/page/'),
+		'bgimg_dir':node.path.join(_g.execPath, '/app/assets/images/homebg/'),
 		'pics': {
-			'ships': 	process.cwd() + '/pics/ships/',
-			'items': 	process.cwd() + '/pics/items/'
+			'ships': 	node.path.join(_g.execPath, '/pics/ships/'),
+			'items': 	node.path.join(_g.execPath, '/pics/items/')
 		}/*,
 		'illustrations': {
 			'ships': 	_g.execPath + '/illust/ships/',
@@ -159,7 +164,7 @@ _frame.app_main = {
 	page_dom: {},
 
 	// is_init: false
-	bgimg_dir: 	'./app/assets/images/homebg',
+	//bgimg_dir: 	'./app/assets/images/homebg',
 	bgimgs: 	[],
 	// cur_bgimg_el: null
 
@@ -212,8 +217,8 @@ _frame.app_main = {
 				img_new = bgimgs[_g.randInt(bgimgs.length - 1)]
 			}
 
-			var img_new_blured = '.' + _frame.app_main.bgimg_dir + '/blured/' + img_new
-			img_new = '.' + _frame.app_main.bgimg_dir + '/' + img_new
+			var img_new_blured = 'file://' + encodeURI( node.path.join( _g.path.bgimg_dir , '/blured/' + img_new ).replace(/\\/g, '/') )
+			img_new = 'file://' + encodeURI( node.path.join( _g.path.bgimg_dir , '/' + img_new ).replace(/\\/g, '/') )
 
 			function delete_old_dom( old_dom ){
 				setTimeout(function(){
@@ -256,7 +261,7 @@ _frame.app_main = {
 
 			if( !_frame.app_main.page_dom[page] ){
 				_frame.app_main.page_dom[page] = $('<div class="page" page="'+page+'"/>').appendTo( _frame.dom.main )
-				node.fs.readFile('./app/page/' + page + '.html', 'utf8', function(err, data){
+				node.fs.readFile(_g.path.page + page + '.html', 'utf8', function(err, data){
 					if(err)
 						throw err
 					_frame.app_main.page_dom[page].html( data )
@@ -334,12 +339,12 @@ _frame.app_main = {
 			}
 
 		// 获取背景图列表，生成背景图
-			node.fs.readdir(_frame.app_main.bgimg_dir, function(err, files){
+			node.fs.readdir(_g.path.bgimg_dir, function(err, files){
 				var bgimgs_last = _config.get('bgimgs')
 					,bgimgs_new = []
 				bgimgs_last = bgimgs_last ? bgimgs_last.split(',') : []
 				for( var i in files ){
-					var lstat = node.fs.lstatSync(_frame.app_main.bgimg_dir + '/' + files[i])
+					var lstat = node.fs.lstatSync( node.path.join( _g.path.bgimg_dir , '/' + files[i]) )
 					if( !lstat.isDirectory() ){
 						_frame.app_main.bgimgs.push( files[i] )
 
