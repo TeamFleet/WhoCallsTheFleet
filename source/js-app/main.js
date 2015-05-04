@@ -17,6 +17,15 @@
 	_g.inputIndex = 0
 	_g.lang = 'zh_cn'
 
+	// 对app根目录再做检查，如果不存在，则指向到缓存目录
+	// 该情况通常发生于使用launcer启动时
+	try{
+		node.fs.lstatSync( node.path.join( _g.execPath , '/app/main.html' ) )
+	}catch(e){
+		_g.execPath	= node.path.join( node.gui.App.dataPath, '/Extracted Data/')
+
+	}
+
 	_g.path = {
 		'db': 		node.path.join(_g.execPath, '/app-db/'),
 		'page': 	node.path.join(_g.execPath, '/app/page/'),
@@ -354,12 +363,12 @@ _frame.app_main = {
 							if( $.inArray( files[i], bgimgs_last ) < 0 )
 								bgimgs_new.push( files[i] )
 						}else{
-							var mtime = parseInt(lstat.mtime.valueOf())
+							var ctime = parseInt(lstat.ctime.valueOf())
 							if( bgimgs_new.length ){
-								if( mtime > bgimgs_new[1] )
-									bgimgs_new = [ files[i], mtime ]
+								if( ctime > bgimgs_new[1] )
+									bgimgs_new = [ files[i], ctime ]
 							}else{
-								bgimgs_new = [ files[i], mtime ]
+								bgimgs_new = [ files[i], ctime ]
 							}
 						}
 					}

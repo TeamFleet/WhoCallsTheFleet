@@ -19,7 +19,7 @@
 		"fullscreen":		false,
 		"show_in_taskbar":	true,
 		"frame":			false,
-		"show":				true,
+		"show":				false,
 		"kiosk":			false,
 		"transparent":		false
 	},
