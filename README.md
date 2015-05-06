@@ -9,5 +9,7 @@
 ## 第三方库
 
 * NW.js (http://nwjs.io/ | https://github.com/nwjs/nw.js)
+* adm-zip (https://github.com/cthackers/adm-zip)
+* jsonfile (https://github.com/jprichardson/node-jsonfile)
 * mkdirp (https://www.npmjs.com/package/mkdirp)
 * NeDB (https://github.com/louischatriot/nedb)

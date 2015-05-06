@@ -1,7 +1,6 @@
 // node.js modules
 	node.require('fs')
 	node.require('nedb')
-	node.require('path')
 	node.require('mkdirp')
 
 
@@ -10,34 +9,17 @@
 
 // Global Variables
 	_g.animate_duration_delay = 320;
-	_g.execPath = node.path.dirname(process.execPath).split(node.path.sep)
-	_g.execPath = (_g.execPath[_g.execPath.length - 1] == 'nwjs' && node.path.basename( process.execPath ) == 'nw.exe')
-					? process.cwd()
-					: node.path.dirname(process.execPath)
 	_g.inputIndex = 0
 	_g.lang = 'zh_cn'
 
-	// 对app根目录再做检查，如果不存在，则指向到缓存目录
-	// 该情况通常发生于使用launcer启动时
-	try{
-		node.fs.lstatSync( node.path.join( _g.execPath , '/app/main.html' ) )
-	}catch(e){
-		_g.execPath	= node.path.join( node.gui.App.dataPath, '/Extracted Data/')
-
-	}
-
 	_g.path = {
-		'db': 		node.path.join(_g.execPath, '/app-db/'),
-		'page': 	node.path.join(_g.execPath, '/app/page/'),
-		'bgimg_dir':node.path.join(_g.execPath, '/app/assets/images/homebg/'),
+		'db': 		node.path.join(_g.root, '/app-db/'),
+		'page': 	node.path.join(_g.root, '/app/page/'),
+		'bgimg_dir':node.path.join(_g.root, '/app/assets/images/homebg/'),
 		'pics': {
-			'ships': 	node.path.join(_g.execPath, '/pics/ships/'),
-			'items': 	node.path.join(_g.execPath, '/pics/items/')
-		}/*,
-		'illustrations': {
-			'ships': 	_g.execPath + '/illust/ships/',
-			'items': 	_g.execPath + '/illust/items/'
-		}*/
+			'ships': 	node.path.join(_g.root, '/pics/ships/'),
+			'items': 	node.path.join(_g.root, '/pics/items/')
+		}
 	}
 
 	_g.pathMakeObj = function(obj){
@@ -485,7 +467,7 @@ _frame.app_main = {
 								})
 								break;
 						}
-							
+
 					}
 				})
 			}
