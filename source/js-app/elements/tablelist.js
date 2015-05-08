@@ -59,6 +59,7 @@ _tablelist.prototype.global_index = 0
 		'  ',
 		['火力',	'fire'],
 		['雷装',	'torpedo'],
+		['夜战',	'nightpower'],
 		['对空',	'aa'],
 		['对潜',	'asw'],
 		['耐久',	'hp'],
@@ -131,6 +132,19 @@ _tablelist.prototype.global_index = 0
 						.prepend(
 							checkbox
 						)
+						.appendTo(tr)
+					break;
+				case 'nightpower':
+					var datavalue = parseInt(ship_data['stat']['fire_max'] || 0)
+									+ parseInt(ship_data['stat']['torpedo_max'] || 0)
+					$('<td data-stat="nightpower"/>')
+						.attr(
+							'data-value',
+							datavalue == -1 || datavalue == '-1'
+								? null
+								: datavalue
+						)
+						.html( _val( datavalue ) )
 						.appendTo(tr)
 					break;
 				case 'asw':
