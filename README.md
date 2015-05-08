@@ -6,10 +6,14 @@
 
 本REPO为源代码，需要NW.js来启动。
 
-## 第三方库
+## 基础框架
 
-* NW.js (http://nwjs.io/ | https://github.com/nwjs/nw.js)
-* adm-zip (https://github.com/cthackers/adm-zip)
-* jsonfile (https://github.com/jprichardson/node-jsonfile)
-* mkdirp (https://www.npmjs.com/package/mkdirp)
-* NeDB (https://github.com/louischatriot/nedb)
+你或许注意到在 JavaScript 和 LESS 源代码中有许多“!Shared”目录的引用，这些都来自于我个人的 NW.js 项目基础框架：[nw.js-base-framework](https://github.com/Diablohu/nw.js-base-framework)
+
+## 第三方框架/库
+
+* [NW.js](https://github.com/nwjs/nw.js) (程序基础框架)
+* [adm-zip](https://github.com/cthackers/adm-zip) (简单的.zip文件解压缩操作)
+* [jsonfile](https://github.com/jprichardson/node-jsonfile) (简单的JSON文件读写操作)
+* [mkdirp](https://www.npmjs.com/package/mkdirp) (简单的无级创建目录操作)
+* [NeDB](https://github.com/louischatriot/nedb) (程序所用NoSQL数据库，对独立JSON文件进行读写操作)
