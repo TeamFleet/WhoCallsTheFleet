@@ -3,8 +3,16 @@
 		position:		relative;
 		width:			100%;
 		height:			100%;
-		.transition-property(opacity);
 		opacity:		0;
+		top:			0;
+		.transition-property(~"opacity, transform");
+		//transition-property:	-webkit-mask-size;
+		.transition-duration(.2s);
+		.transition-timing-function(ease-in);
+		//.mask-repeat(no-repeat);
+		//.mask-image(~"linear-gradient(to bottom, #000 calc(100% - 50px), transparent 100%)");
+		//.mask-position(0 0);
+		//.mask-size(100% ~"calc(100% + @{infos_mask_tail}px)");
 
 		h1, h2, h3, h4, h5, h6{
 			.font-size(48);

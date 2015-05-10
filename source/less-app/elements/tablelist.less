@@ -279,6 +279,15 @@
 				float:		left;
 				input{
 					.margin-right(8);
+					&, & ~ label{
+						color:	rgba(255,255,255,0.75);
+						.transition-property(color);
+					}
+					&:hover{
+						&, & ~ label{
+							color:	#fff;
+						}
+					}
 				}
 			}
 			&>.viewtype{

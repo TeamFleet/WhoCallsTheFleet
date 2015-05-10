@@ -4,6 +4,10 @@
 _frame.infos = {
 	// curContent: 			null,			// 当前内容的hashCode
 
+	// lastCurrentPage: null, 		// 进入 infos 框架之前显示的页面
+	historyLength: -1,
+	historyCurrent: -1,
+
 	show: function(cont, el, doNotPushHistory){
 		var exp			= /^\[\[([^\:]+)\:\:([0-9]+)\]\]$/.exec(cont)
 			,infosType 	= null
@@ -26,22 +30,26 @@ _frame.infos = {
 			if( this.curContent == infosType + '::' + infosId )
 				return _frame.infos.dom.container.children('div:first-child')
 
-		if( doNotPushHistory ){
-			this.show_func( infosType, infosId, doNotPushHistory )
-		}else{
-			history.pushState(
+		if( !doNotPushHistory ){
+		//}else{
+			this.historyCurrent++
+			this.historyLength = this.historyCurrent
+			_frame.app_main.pushState(
 				{
 					'infos':infosType,
-					'id': 	infosId
+					'id': 	infosId,
+					'infosHistoryIndex': _frame.infos.historyCurrent
 				},
 				null,
 				'?infos=' + infosType + '&id=' + infosId
 			)
 		}
+
+		this.show_func( infosType, infosId, doNotPushHistory )
 	},
 
 	//show_func: function(cont, el, history){
-	show_func: function(type, id, doNotPushHistory){
+	show_func: function(type, id, doNotPushHistorym, infosHistoryIndex){
 		if( !type || !id )
 			return false
 
@@ -60,10 +68,25 @@ _frame.infos = {
 					'main': 	$('<div class="page infos"/>').appendTo( _frame.dom.main )
 				}
 				_frame.infos.dom.container = $('<div class="wrapper"/>').appendTo( _frame.infos.dom.main )
-				_frame.infos.dom.back = $('<button class="back" icon="arrow-left"/>')
-						.html('返回')
+				_frame.infos.dom.back = $('<button class="back" icon="arrow-set2-left"/>')
+						.on({
+							'click': function(){
+								_frame.infos.dom.forward.removeClass('disabled')
+								history.back()
+								//_frame.infos.hide()
+							},
+							'transitionend.infos_hide': function(e){
+								if( e.currentTarget == e.target
+									&& e.originalEvent.propertyName == 'opacity'
+									&& parseInt(_frame.infos.dom.back.css('opacity')) == 0
+								){
+									_frame.infos.hide_finish()
+								}
+							}
+						}).appendTo( _frame.infos.dom.nav )
+				_frame.infos.dom.forward = $('<button class="forward disabled" icon="arrow-set2-right"/>')
 						.on('click', function(){
-							history.back()
+							history.forward()
 							//_frame.infos.hide()
 						}).appendTo( _frame.infos.dom.nav )
 				/*
@@ -74,6 +97,13 @@ _frame.infos = {
 						}).appendTo( _frame.infos.dom.nav )
 				*/
 			}
+
+		// 计算历史记录相关，确定 Back/Forward 按钮是否可用
+			infosHistoryIndex = typeof infosHistoryIndex != 'undefined' ? infosHistoryIndex : this.historyCurrent
+			this.historyCurrent = infosHistoryIndex
+			//console.log( this.historyCurrent, this.historyLength )
+			if( this.historyCurrent == this.historyLength && this.historyCurrent > -1 )
+				_frame.infos.dom.forward.addClass('disabled')
 
 		// 先将内容区域设定为可见
 			_frame.dom.layout.addClass('infos-show')
@@ -124,6 +154,13 @@ _frame.infos = {
 				this.curContent = type + '::' + id
 			//}
 
+		// 取消主导航上的当前项目状态
+			if( _frame.app_main.cur_page ){
+				this.lastCurrentPage = _frame.app_main.cur_page
+				_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
+				_frame.app_main.cur_page = null
+			}
+
 		setTimeout(function(){
 			// 显示内容
 				_frame.dom.layout.addClass('infos-on')
@@ -131,13 +168,20 @@ _frame.infos = {
 	},
 
 	hide: function(){
-		if( !_frame.infos.dom )
+		if( !_frame.infos.dom || !this.curContent )
 			return false
 
 		// 隐藏内容
 			_frame.dom.layout.removeClass('infos-on')
+			_frame.infos.dom.forward.addClass('disabled')
 			this.curContent = null
 
+		if( this.lastCurrentPage ){
+			_frame.dom.navs[this.lastCurrentPage].addClass('on')
+			_frame.app_main.cur_page = this.lastCurrentPage
+		}
+
+		/*
 		// 为主导航最后一个元素绑定 transitionEnd 事件
 		// transitionEnd 触发后，检查 top CSS，如果为 0，判断动画播放结束
 		// 将内容区域设定为不可见
@@ -149,6 +193,19 @@ _frame.infos = {
 							$(this).off('transitionend.infos_hide')
 						}
 					})
+		*/
+	},
+
+	hide_finish: function(){
+		// 仍在显示，不予执行
+			if( _frame.infos.curContent )
+				return false
+
+		_frame.dom.layout.removeClass('infos-show')
+		_frame.infos.dom.main.attr('data-infostype', '')
+		//$(this).off('transitionend.infos_hide')
+		this.historyLength = -1
+		this.historyCurrent = -1
 	},
 
 	historyback: function(){

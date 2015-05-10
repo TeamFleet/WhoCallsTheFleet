@@ -356,6 +356,8 @@ _tablelist.prototype.global_index = 0
 			_frame.app_main.loading.push('tablelist_'+this._index)
 			_frame.app_main.is_loaded = false
 
+			console.log( 'shiplist init', _frame.app_main.loading )
+
 		// 生成过滤器与选项
 			this.dom.filter_container = $('<div class="options"/>').appendTo( this.dom.container )
 			this.dom.filters = $('<div class="filters"/>').appendTo( this.dom.filter_container )

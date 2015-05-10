@@ -172,10 +172,16 @@ _frame.app_main = {
 	// 载入完毕一项内容，并检查其余内容是否载入完毕
 	// 如果全部载入完毕，#layout 添加 .ready
 		loaded: function( item, is_instant ){
-			_frame.app_main.loading.splice(_frame.app_main.loading.indexOf(item), 1)
+			if( item ){
+				var index = _frame.app_main.loading.indexOf(item)
+				if( index > -1 ){
+					_frame.app_main.loading.splice(_frame.app_main.loading.indexOf(item), 1)
+					_frame.app_main.is_loaded = false
+				}
+			}
 			if( !_frame.app_main.loading.length && !_frame.app_main.is_loaded ){
 				setTimeout(function(){
-					if( _frame.app_main.is_loaded ){
+					if( _frame.app_main.is_loaded && !_frame.app_main.loading.length ){
 						_frame.dom.layout.addClass('ready')
 						$html.addClass('app-ready')
 					}
@@ -199,6 +205,11 @@ _frame.app_main = {
 									var h=_uriGet[i].split('=')
 									uriGet[h[0]] = h[1] || true
 								}
+								// 首次运行，检查是否存在 page
+									if( !_frame.app_main.window_event_bound && !uriGet['page'] ){
+										_frame.app_main.load_page( _frame.app_main.nav[0]['page'] )
+										//uriGet['page'] = _frame.app_main.nav[0]['page']
+									}
 								_frame.app_main.state( uriGet )
 							}
 						}).trigger('popstate._global')
@@ -211,10 +222,20 @@ _frame.app_main = {
 		},
 
 
+	// pushState
+		pushState: function( stateObj, title, url ){
+			history.pushState( stateObj, title, url )
+
+			if( !stateObj['infos'] )
+				_frame.infos.hide()
+		},
+
+
 	// 根据 history state 运行相应函数
 		state: function( stateObj ){
+			//console.log( stateObj )
 			if( stateObj['infos'] ){
-				_frame.infos.show_func( stateObj['infos'], stateObj['id'] )
+				_frame.infos.show_func( stateObj['infos'], stateObj['id'], null, stateObj['infosHistoryIndex'] )
 			}else{
 				_frame.infos.hide()
 			}
@@ -282,30 +303,32 @@ _frame.app_main = {
 			if( _frame.app_main.cur_page == page || !page )
 				return page
 
-			history.pushState(
+			this.pushState(
 				{
 					'page': 	page
 				},
 				null,
 				'?page=' + page
 			)
-			//this.load_page_func( page )
+			this.load_page_func( page )
 			//_g.uriHash('page', page)
 		},
 		load_page_func: function( page ){
+			if( debugmode )
+				console.log( 'PREPARE LOADING: ' + page )
+
 			if( _frame.app_main.cur_page == page || !page )
 				return page
 
 			if( !_frame.app_main.page_dom[page] ){
 				_frame.app_main.page_dom[page] = $('<div class="page" page="'+page+'"/>').appendTo( _frame.dom.main )
-				node.fs.readFile(_g.path.page + page + '.html', 'utf8', function(err, data){
-					if(err)
-						throw err
+				var data = node.fs.readFileSync(_g.path.page + page + '.html', 'utf8')
+				if(data){
 					_frame.app_main.page_dom[page].html( data )
 					if( _frame.app_main.page[page] && _frame.app_main.page[page].init )
 						_frame.app_main.page[page].init(_frame.app_main.page_dom[page])
 					_p.initDOM(_frame.app_main.page_dom[page])
-				})
+				}
 			}
 
 			_frame.app_main.page_dom[page].removeClass('off')
@@ -322,6 +345,9 @@ _frame.app_main = {
 				_frame.app_main.change_bgimg()
 
 			_frame.app_main.cur_page = page
+
+			if( debugmode )
+				console.log( 'LOADED: ' + page )
 		},
 
 
@@ -369,9 +395,11 @@ _frame.app_main = {
 				for( var i in _frame.app_main.nav ){
 					var o = _frame.app_main.nav[i]
 					_frame.dom.navs[o.page] = navLink(o.page).html(o.title).appendTo( _frame.dom.navlinks )
-					if( i == 0 && !_g.uriHash('page') && !_g.uriSearch('page') ){
-						_frame.dom.navs[o.page].trigger('click')
-					}
+					//if( (i == 0 && !_g.uriHash('page') && !_g.uriSearch('page'))
+					//	|| o.page == _g.uriSearch('page')
+					//){
+					//	_frame.dom.navs[o.page].trigger('click')
+					//}
 				}
 			}
 
@@ -567,25 +595,23 @@ _frame.app_main = {
 						_frame.dom.hashbar.trigger('urlchanged')
 					}
 				})
-			}
-
-
-			// HACK: 在 history.pushstate() 同时，触发 window.onpopstate 事件
-			// http://felix-kling.de/blog/2011/01/06/how-to-detect-history-pushstate/
-			function hackHistory(history){
-				var pushState = history.pushState;
-				history.pushState = function(state) {
-					if (typeof history.onpushstate == "function") {
-						history.onpushstate({state: state});
+				// HACK: 在 history.pushstate() 同时，触发 window.onpopstate 事件
+				// http://felix-kling.de/blog/2011/01/06/how-to-detect-history-pushstate/
+				function hackHistory(history){
+					var pushState = history.pushState;
+					history.pushState = function(state) {
+						if (typeof history.onpushstate == "function") {
+							history.onpushstate({state: state});
+						}
+						setTimeout(function(){
+							//$window.trigger('popstate')
+							_frame.dom.hashbar.trigger('urlchanged')
+						}, 1)
+						return pushState.apply(history, arguments);
 					}
-					setTimeout(function(){
-						$window.trigger('popstate')
-						//_frame.dom.hashbar.trigger('urlchanged')
-					}, 1)
-					return pushState.apply(history, arguments);
 				}
+				hackHistory(window.history);
 			}
-			hackHistory(window.history);
 
 		_frame.app_main.is_init = true
 	}

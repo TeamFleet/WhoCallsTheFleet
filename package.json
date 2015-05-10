@@ -61,7 +61,7 @@
       "package.json"
     ],
     "dataVersion": {
-      "app": "0.5.0.1",
+      "app": "0.5.0.3",
       "app-db": "1.0.0",
       "pics": "1.0.0"
     },

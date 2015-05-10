@@ -172,10 +172,16 @@ _frame.app_main = {
 	// 载入完毕一项内容，并检查其余内容是否载入完毕
 	// 如果全部载入完毕，#layout 添加 .ready
 		loaded: function( item, is_instant ){
-			_frame.app_main.loading.splice(_frame.app_main.loading.indexOf(item), 1)
+			if( item ){
+				var index = _frame.app_main.loading.indexOf(item)
+				if( index > -1 ){
+					_frame.app_main.loading.splice(_frame.app_main.loading.indexOf(item), 1)
+					_frame.app_main.is_loaded = false
+				}
+			}
 			if( !_frame.app_main.loading.length && !_frame.app_main.is_loaded ){
 				setTimeout(function(){
-					if( _frame.app_main.is_loaded ){
+					if( _frame.app_main.is_loaded && !_frame.app_main.loading.length ){
 						_frame.dom.layout.addClass('ready')
 						$html.addClass('app-ready')
 					}
@@ -199,6 +205,11 @@ _frame.app_main = {
 									var h=_uriGet[i].split('=')
 									uriGet[h[0]] = h[1] || true
 								}
+								// 首次运行，检查是否存在 page
+									if( !_frame.app_main.window_event_bound && !uriGet['page'] ){
+										_frame.app_main.load_page( _frame.app_main.nav[0]['page'] )
+										//uriGet['page'] = _frame.app_main.nav[0]['page']
+									}
 								_frame.app_main.state( uriGet )
 							}
 						}).trigger('popstate._global')
@@ -211,10 +222,20 @@ _frame.app_main = {
 		},
 
 
+	// pushState
+		pushState: function( stateObj, title, url ){
+			history.pushState( stateObj, title, url )
+
+			if( !stateObj['infos'] )
+				_frame.infos.hide()
+		},
+
+
 	// 根据 history state 运行相应函数
 		state: function( stateObj ){
+			//console.log( stateObj )
 			if( stateObj['infos'] ){
-				_frame.infos.show_func( stateObj['infos'], stateObj['id'] )
+				_frame.infos.show_func( stateObj['infos'], stateObj['id'], null, stateObj['infosHistoryIndex'] )
 			}else{
 				_frame.infos.hide()
 			}
@@ -282,30 +303,32 @@ _frame.app_main = {
 			if( _frame.app_main.cur_page == page || !page )
 				return page
 
-			history.pushState(
+			this.pushState(
 				{
 					'page': 	page
 				},
 				null,
 				'?page=' + page
 			)
-			//this.load_page_func( page )
+			this.load_page_func( page )
 			//_g.uriHash('page', page)
 		},
 		load_page_func: function( page ){
+			if( debugmode )
+				console.log( 'PREPARE LOADING: ' + page )
+
 			if( _frame.app_main.cur_page == page || !page )
 				return page
 
 			if( !_frame.app_main.page_dom[page] ){
 				_frame.app_main.page_dom[page] = $('<div class="page" page="'+page+'"/>').appendTo( _frame.dom.main )
-				node.fs.readFile(_g.path.page + page + '.html', 'utf8', function(err, data){
-					if(err)
-						throw err
+				var data = node.fs.readFileSync(_g.path.page + page + '.html', 'utf8')
+				if(data){
 					_frame.app_main.page_dom[page].html( data )
 					if( _frame.app_main.page[page] && _frame.app_main.page[page].init )
 						_frame.app_main.page[page].init(_frame.app_main.page_dom[page])
 					_p.initDOM(_frame.app_main.page_dom[page])
-				})
+				}
 			}
 
 			_frame.app_main.page_dom[page].removeClass('off')
@@ -322,6 +345,9 @@ _frame.app_main = {
 				_frame.app_main.change_bgimg()
 
 			_frame.app_main.cur_page = page
+
+			if( debugmode )
+				console.log( 'LOADED: ' + page )
 		},
 
 
@@ -369,9 +395,11 @@ _frame.app_main = {
 				for( var i in _frame.app_main.nav ){
 					var o = _frame.app_main.nav[i]
 					_frame.dom.navs[o.page] = navLink(o.page).html(o.title).appendTo( _frame.dom.navlinks )
-					if( i == 0 && !_g.uriHash('page') && !_g.uriSearch('page') ){
-						_frame.dom.navs[o.page].trigger('click')
-					}
+					//if( (i == 0 && !_g.uriHash('page') && !_g.uriSearch('page'))
+					//	|| o.page == _g.uriSearch('page')
+					//){
+					//	_frame.dom.navs[o.page].trigger('click')
+					//}
 				}
 			}
 
@@ -567,25 +595,23 @@ _frame.app_main = {
 						_frame.dom.hashbar.trigger('urlchanged')
 					}
 				})
-			}
-
-
-			// HACK: 在 history.pushstate() 同时，触发 window.onpopstate 事件
-			// http://felix-kling.de/blog/2011/01/06/how-to-detect-history-pushstate/
-			function hackHistory(history){
-				var pushState = history.pushState;
-				history.pushState = function(state) {
-					if (typeof history.onpushstate == "function") {
-						history.onpushstate({state: state});
+				// HACK: 在 history.pushstate() 同时，触发 window.onpopstate 事件
+				// http://felix-kling.de/blog/2011/01/06/how-to-detect-history-pushstate/
+				function hackHistory(history){
+					var pushState = history.pushState;
+					history.pushState = function(state) {
+						if (typeof history.onpushstate == "function") {
+							history.onpushstate({state: state});
+						}
+						setTimeout(function(){
+							//$window.trigger('popstate')
+							_frame.dom.hashbar.trigger('urlchanged')
+						}, 1)
+						return pushState.apply(history, arguments);
 					}
-					setTimeout(function(){
-						$window.trigger('popstate')
-						//_frame.dom.hashbar.trigger('urlchanged')
-					}, 1)
-					return pushState.apply(history, arguments);
 				}
+				hackHistory(window.history);
 			}
-			hackHistory(window.history);
 
 		_frame.app_main.is_init = true
 	}
@@ -886,6 +912,10 @@ _frame.app_main.page['equipments'].gen_helper_equipable_on = function( type_id )
 _frame.infos = {
 	// curContent: 			null,			// 当前内容的hashCode
 
+	// lastCurrentPage: null, 		// 进入 infos 框架之前显示的页面
+	historyLength: -1,
+	historyCurrent: -1,
+
 	show: function(cont, el, doNotPushHistory){
 		var exp			= /^\[\[([^\:]+)\:\:([0-9]+)\]\]$/.exec(cont)
 			,infosType 	= null
@@ -908,22 +938,26 @@ _frame.infos = {
 			if( this.curContent == infosType + '::' + infosId )
 				return _frame.infos.dom.container.children('div:first-child')
 
-		if( doNotPushHistory ){
-			this.show_func( infosType, infosId, doNotPushHistory )
-		}else{
-			history.pushState(
+		if( !doNotPushHistory ){
+		//}else{
+			this.historyCurrent++
+			this.historyLength = this.historyCurrent
+			_frame.app_main.pushState(
 				{
 					'infos':infosType,
-					'id': 	infosId
+					'id': 	infosId,
+					'infosHistoryIndex': _frame.infos.historyCurrent
 				},
 				null,
 				'?infos=' + infosType + '&id=' + infosId
 			)
 		}
+
+		this.show_func( infosType, infosId, doNotPushHistory )
 	},
 
 	//show_func: function(cont, el, history){
-	show_func: function(type, id, doNotPushHistory){
+	show_func: function(type, id, doNotPushHistorym, infosHistoryIndex){
 		if( !type || !id )
 			return false
 
@@ -942,10 +976,25 @@ _frame.infos = {
 					'main': 	$('<div class="page infos"/>').appendTo( _frame.dom.main )
 				}
 				_frame.infos.dom.container = $('<div class="wrapper"/>').appendTo( _frame.infos.dom.main )
-				_frame.infos.dom.back = $('<button class="back" icon="arrow-left"/>')
-						.html('返回')
+				_frame.infos.dom.back = $('<button class="back" icon="arrow-set2-left"/>')
+						.on({
+							'click': function(){
+								_frame.infos.dom.forward.removeClass('disabled')
+								history.back()
+								//_frame.infos.hide()
+							},
+							'transitionend.infos_hide': function(e){
+								if( e.currentTarget == e.target
+									&& e.originalEvent.propertyName == 'opacity'
+									&& parseInt(_frame.infos.dom.back.css('opacity')) == 0
+								){
+									_frame.infos.hide_finish()
+								}
+							}
+						}).appendTo( _frame.infos.dom.nav )
+				_frame.infos.dom.forward = $('<button class="forward disabled" icon="arrow-set2-right"/>')
 						.on('click', function(){
-							history.back()
+							history.forward()
 							//_frame.infos.hide()
 						}).appendTo( _frame.infos.dom.nav )
 				/*
@@ -956,6 +1005,13 @@ _frame.infos = {
 						}).appendTo( _frame.infos.dom.nav )
 				*/
 			}
+
+		// 计算历史记录相关，确定 Back/Forward 按钮是否可用
+			infosHistoryIndex = typeof infosHistoryIndex != 'undefined' ? infosHistoryIndex : this.historyCurrent
+			this.historyCurrent = infosHistoryIndex
+			//console.log( this.historyCurrent, this.historyLength )
+			if( this.historyCurrent == this.historyLength && this.historyCurrent > -1 )
+				_frame.infos.dom.forward.addClass('disabled')
 
 		// 先将内容区域设定为可见
 			_frame.dom.layout.addClass('infos-show')
@@ -1006,6 +1062,13 @@ _frame.infos = {
 				this.curContent = type + '::' + id
 			//}
 
+		// 取消主导航上的当前项目状态
+			if( _frame.app_main.cur_page ){
+				this.lastCurrentPage = _frame.app_main.cur_page
+				_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
+				_frame.app_main.cur_page = null
+			}
+
 		setTimeout(function(){
 			// 显示内容
 				_frame.dom.layout.addClass('infos-on')
@@ -1013,13 +1076,20 @@ _frame.infos = {
 	},
 
 	hide: function(){
-		if( !_frame.infos.dom )
+		if( !_frame.infos.dom || !this.curContent )
 			return false
 
 		// 隐藏内容
 			_frame.dom.layout.removeClass('infos-on')
+			_frame.infos.dom.forward.addClass('disabled')
 			this.curContent = null
 
+		if( this.lastCurrentPage ){
+			_frame.dom.navs[this.lastCurrentPage].addClass('on')
+			_frame.app_main.cur_page = this.lastCurrentPage
+		}
+
+		/*
 		// 为主导航最后一个元素绑定 transitionEnd 事件
 		// transitionEnd 触发后，检查 top CSS，如果为 0，判断动画播放结束
 		// 将内容区域设定为不可见
@@ -1031,6 +1101,19 @@ _frame.infos = {
 							$(this).off('transitionend.infos_hide')
 						}
 					})
+		*/
+	},
+
+	hide_finish: function(){
+		// 仍在显示，不予执行
+			if( _frame.infos.curContent )
+				return false
+
+		_frame.dom.layout.removeClass('infos-show')
+		_frame.infos.dom.main.attr('data-infostype', '')
+		//$(this).off('transitionend.infos_hide')
+		this.historyLength = -1
+		this.historyCurrent = -1
 	},
 
 	historyback: function(){
@@ -1985,6 +2068,8 @@ _tablelist.prototype.global_index = 0
 		// 标记全局载入状态
 			_frame.app_main.loading.push('tablelist_'+this._index)
 			_frame.app_main.is_loaded = false
+
+			console.log( 'shiplist init', _frame.app_main.loading )
 
 		// 生成过滤器与选项
 			this.dom.filter_container = $('<div class="options"/>').appendTo( this.dom.container )
