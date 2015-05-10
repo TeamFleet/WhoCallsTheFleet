@@ -68,6 +68,10 @@
 								&:checked{
 									opacity:	1 !important;
 								}
+								&[disabled]{
+									opacity:	0 !important;
+									z-index:	-100;
+								}
 							}
 							small{
 								padding-left:	.5em;
@@ -132,6 +136,10 @@
 								&:checked:after{
 									background:	hsla(199, 65%, 35%, .85);
 									//background:	linear-gradient(to right, hsla(199, 50%, 18%, .65) 30px, transparent)
+								}
+								&[disabled]{
+									opacity:	0 !important;
+									z-index:	-100;
 								}
 							}
 							img{

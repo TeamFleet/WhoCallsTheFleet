@@ -1,16 +1,19 @@
 {"id":5,"code":"CAV","code_game":"航巡","full":"Aviation Cruiser","full_game":"航空巡洋艦","full_zh":"航空巡洋舰","_id":"0Hxc4oDbKj3MNwZd"}
 {"code":"AP","code_game":"補給","full":"Transport Ship","full_game":"輸送艦","full_zh":"运输船","id":22,"_id":"1IMEE4iMGfYgwFUy"}
+{"code":"BB","code_game":"戦","full":"The Fleet of Fog Battleship","full_game":"霧の艦隊大戦艦","full_zh":"海雾舰队大战舰","id":26,"_id":"3Wt9OCeDzykPY9D3","donotcompare":"on"}
 {"id":11,"code":"CV","code_game":"装母","full":"Armored Aircraft Carrier","full_game":"装甲空母","full_zh":"装甲航母","_id":"3gP0xyZODzyOmYAD"}
 {"id":9,"code":"CVL","code_game":"軽母","full":"Light Aircraft Carrier","full_game":"軽空母","full_zh":"轻型航母","_id":"6kgIvg7XgXsxciET"}
 {"id":16,"code":"AR","code_game":"工","full":"Repair Ship","full_game":"工作艦","full_zh":"维修舰","_id":"AFURy2WZIqq4CKUU"}
 {"id":6,"code":"BB","code_game":"戦","full":"Battleship","full_game":"戦艦","full_zh":"战列舰","_id":"BczYbfqkt4Ls7SjP"}
 {"id":15,"code":"LHA","code_game":"揚陸","full":"Amphibious Assault Ship","full_game":"揚陸艦","full_zh":"登陆突击舰","_id":"BjToFvya7RxsFQfd"}
 {"id":2,"code":"CL","code_game":"軽巡","full":"Light Cruiser","full_game":"軽巡洋艦","full_zh":"轻巡洋舰","_id":"CtjPGYnkHetTij9H"}
+{"code":"CA","code_game":"重巡","full":"The Fleet of Fog Heavy Cruiser","full_game":"霧の艦隊重巡洋艦","full_zh":"海雾舰队重巡洋舰","id":25,"_id":"DgRcE2Ez9sClji86","donotcompare":"on"}
 {"code":"AV","code_game":"水母","full":"Seaplane Tender (Large)","full_game":"飞行艇母舰","full_zh":"飞行艇母舰","id":24,"_id":"Eb002iRVxWDaoxfJ"}
 {"id":20,"code":"BB","code_game":"戦","full":"Super Dreadnaught","full_game":"大型戦艦","full_zh":"大型战列舰","_id":"J1AG7IarlOTILvDU"}
 {"id":8,"code":"BBV","code_game":"航戦","full":"Aviation Battleship","full_game":"航空戦艦","full_zh":"航空战列舰","_id":"MAzFpCIU30SDC0sz"}
 {"id":1,"code":"DD","code_game":"駆逐","full":"Destroyer","full_game":"駆逐艦","full_zh":"驱逐舰","_id":"NkAIZy0T53JXtl5i"}
 {"id":18,"code":"BB","code_game":"戦","full":"Fast Battleship (Torpedo)","full_game":"高速戦艦 (雷装)","full_zh":"高速战列舰 (雷装)","_id":"OjTTOwKy8NOi0hn7"}
+{"code":"SS","code_game":"潜","full":"The Fleet of Fog Battle-Submarine","full_game":"霧の艦隊攻撃型潜水艦","full_zh":"海雾舰队攻击型潜艇","id":27,"_id":"Pdeen1MBrbDLor8A","donotcompare":"on"}
 {"id":17,"code":"AS","code_game":"潜母艦","full":"Submarine Tender","full_game":"潜水母艦","full_zh":"潜艇补给舰","_id":"Ux0mZqyBxLsy5ZNH"}
 {"id":13,"code":"SS","code_game":"潜","full":"Submarine","full_game":"潜水艦","full_zh":"潜艇","_id":"VQCtCVBTtEZ7vIiA"}
 {"id":3,"code":"CLT","code_game":"雷巡","full":"Torpedo Cruiser","full_game":"重雷装巡洋艦","full_zh":"重雷装巡洋舰","_id":"Y9ZS4xMtWS793wNU"}

@@ -42,6 +42,7 @@
 		'ships': {},
 		'ship_id_by_type': [], 			// refer to _g.ship_type_order
 		'ship_types': {},
+		'ship_type_order': {},
 		'ship_classes': {}
 	}
 
@@ -516,6 +517,7 @@ _frame.app_main = {
 										_g.ship_type_order.push(
 											docs[i]['types'].length > 1 ? docs[i]['types'] : docs[i]['types'][0]
 										)
+										_g.data['ship_type_order'][docs[i]['id']] = docs[i]
 									}
 									map_do()
 									_db.ships.find({}).sort({'type': 1, 'class': 1, 'class_no': 1, 'time_created': 1, 'name.suffix': 1}).exec(function(err, docs){

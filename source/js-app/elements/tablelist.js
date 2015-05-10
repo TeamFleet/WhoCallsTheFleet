@@ -79,10 +79,12 @@ _tablelist.prototype.global_index = 0
 		var self = this
 			//,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" modal="true"/>')
 			//,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" data-infos="__ship__"/>')
+			,donotcompare = _g.data.ship_types[ship_data['type']]['donotcompare'] ? true : false
 			,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'"/>')
 					.attr({
 						'data-infos': 	'[[SHIP::'+ship_data['id']+']]',
-						'data-shipedit':self.dom.container.hasClass('shiplist-edit') ? 'true' : null
+						'data-shipedit':self.dom.container.hasClass('shiplist-edit') ? 'true' : null,
+						'data-donotcompare': donotcompare ? true : null
 					})
 					//.appendTo( this.dom.tbody )
 					.insertAfter( self._ships_last_item )
@@ -91,7 +93,9 @@ _tablelist.prototype.global_index = 0
 					+ (ship_data['name']['suffix']
 						? '<small>' + _g.data.ship_namesuffix[ship_data['name']['suffix']]['zh_cn'] + '</small>'
 						: '')
-			,checkbox = $('<input type="checkbox" class="compare"/>').on('click, change',function(e, not_trigger_check){
+			,checkbox = $('<input type="checkbox" class="compare"/>')
+							.prop('disabled', donotcompare)
+							.on('click, change',function(e, not_trigger_check){
 								if( $(this).prop('checked') )
 									tr.attr('compare-checked', true )
 								else
@@ -137,8 +141,11 @@ _tablelist.prototype.global_index = 0
 						.appendTo(tr)
 					break;
 				case 'nightpower':
-					var datavalue = parseInt(ship_data['stat']['fire_max'] || 0)
-									+ parseInt(ship_data['stat']['torpedo_max'] || 0)
+					// 航母没有夜战火力
+					var datavalue = /^(9|10|11)$/.test( ship_data['type'] )
+									? 0
+									: (parseInt(ship_data['stat']['fire_max'] || 0)
+										+ parseInt(ship_data['stat']['torpedo_max'] || 0) )
 					$('<td data-stat="nightpower"/>')
 						.attr(
 							'data-value',
@@ -249,11 +256,15 @@ _tablelist.prototype.global_index = 0
 					}
 
 					var checkbox_id = '_input_g' + parseInt(_g.inputIndex)
-					
 					self._ships_last_item = 
 							$('<tr class="typetitle"><th colspan="' + (self._ships_columns.length + 1) + '">'
 								+ '<label for="' + checkbox_id + '">'
-								+ data_shiptype['full_zh'] + '<small>[' + data_shiptype['code'] + ']</small>'
+								//+ data_shiptype['full_zh']
+								+ _g.data['ship_type_order'][i+1]['name']['zh_cn']
+								+ ( _g.data['ship_type_order'][i+1]['name']['zh_cn'] == data_shiptype['full_zh']
+									? ('<small>[' + data_shiptype['code'] + ']</small>')
+									: ''
+								)
 								+ '</label></th></tr>')
 								.appendTo( self.dom.tbody )
 
@@ -266,6 +277,7 @@ _tablelist.prototype.global_index = 0
 
 					self._ships_header_checkbox[i]
 						= $('<input type="checkbox" id="' + checkbox_id + '"/>')
+							.prop('disabled', _g.data['ship_type_order'][i+1]['donotcompare'] ? true : false)
 							.on({
 								'change': function(){
 									var _checkbox = $(this)
@@ -356,7 +368,7 @@ _tablelist.prototype.global_index = 0
 			_frame.app_main.loading.push('tablelist_'+this._index)
 			_frame.app_main.is_loaded = false
 
-			console.log( 'shiplist init', _frame.app_main.loading )
+			//console.log( 'shiplist init', _frame.app_main.loading )
 
 		// 生成过滤器与选项
 			this.dom.filter_container = $('<div class="options"/>').appendTo( this.dom.container )
@@ -791,7 +803,7 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 				var tbody = this.dom.tbody
 				if( !tbody || !tbody.length )
 					tbody = this.dom.table.find('tbody')
-				rows = tbody.find('tr.row:visible')
+				rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
 			}
 			nth = nth || 1
 
@@ -843,7 +855,7 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 			var tbody = this.dom.tbody
 			if( !tbody || !tbody.length )
 				tbody = this.dom.table.find('tbody')
-			var rows = tbody.find('tr.row:visible')
+			var rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
 
 			rows.find('td[data-value]').removeClass('sort-first sort-second')
 
