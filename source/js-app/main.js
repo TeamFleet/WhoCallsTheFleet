@@ -175,8 +175,10 @@ _frame.app_main = {
 			_frame.app_main.loading.splice(_frame.app_main.loading.indexOf(item), 1)
 			if( !_frame.app_main.loading.length && !_frame.app_main.is_loaded ){
 				setTimeout(function(){
-					if( _frame.app_main.is_loaded )
+					if( _frame.app_main.is_loaded ){
 						_frame.dom.layout.addClass('ready')
+						$html.addClass('app-ready')
+					}
 				}, is_instant ? 300 : 1000)
 				// 绑定onhashchange事件
 					$window.on('hashchange.pagechange', function(){
@@ -492,6 +494,24 @@ _frame.app_main = {
 				}
 			})
 		*/
+
+		// 鼠标侧键操作
+
+		// Debug Mode
+			if( debugmode ){
+				_frame.dom.hashbar = $('<input type="text"/>')
+						.val( location.hash )
+						.on('change', function(){
+							location.hash = _frame.dom.hashbar.blur().val()
+						})
+						.appendTo(
+							$('<div class="debug_hashbar"/>').appendTo(_frame.dom.layout)
+						)
+				_frame.dom.layout.addClass('debug-hashbar')
+				$window.on('hashchange.debug_mode_hashbar', function(){
+					_frame.dom.hashbar.val( location.hash )
+				})
+			}
 
 		_frame.app_main.is_init = true
 	}

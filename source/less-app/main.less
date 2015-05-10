@@ -213,6 +213,9 @@ body{
 					&:first-child{
 						padding-left:	0;
 					}
+					&:active, &:focus{
+						outline:	0;
+					}
 					&+button{
 						.margin-left(30);
 					}
@@ -951,6 +954,84 @@ table{
 		&:hover{
 			background-color:	transparent;
 			background-position: 0 -200%;
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// #titlebar
+	html{
+		#titlebar .buttons{
+			background:	rgba(0,0,0,.35);
+			.transition-property(background-color)
+		}
+		&.app-ready #titlebar .buttons{
+			background:	transparent
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// debugmode
+	body #layout.debug-hashbar{
+		@hashbar_height:	34;
+		.padding-top(@nav_height + @hashbar_height);
+		&>.debug_hashbar{
+			position:	absolute;
+			.top(0 - @hashbar_height);
+			left:		0;
+			width:		100%;
+			.height( @hashbar_height );
+			z-index:	2;
+			.padding-right(200);
+			background:	rgba(0,0,0,.85);
+			.transition-property(top);
+			.transition-duration(.75s);
+			input[type="text"]{
+				.height( @hashbar_height );
+				.line-height( @hashbar_height );
+				width:		100%;
+				background:	transparent;
+				border-color:	transparent;
+				color:		rgba(255,255,255,.5);
+				.padding(0, 10);
+			}
+		}
+		&.ready{
+			&>nav{
+				.top( @hashbar_height );
+			}
+			&>.debug_hashbar{
+				top:		0;
+			}
 		}
 	}
 
