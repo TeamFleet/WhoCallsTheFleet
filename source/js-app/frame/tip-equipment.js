@@ -1,4 +1,11 @@
 if( typeof _p.tip != 'undefined' ){
+
+_p.tip.filters.push( function(cont){
+	var exp = /^\[\[EQUIPMENT\:\:([0-9]+)\]\]$/.exec(cont)
+	if( exp && exp.length > 1 )
+		return _p.tip.content_equipment( _g.data.items[ parseInt(exp[1]) ] )
+} )
+
 _p.tip.content_equipment = function( d ){
 
 	function _stat(stat, title){

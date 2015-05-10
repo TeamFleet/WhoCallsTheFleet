@@ -308,7 +308,7 @@ _frame.infos.init = function(){
 							'data-equipmentid': 	d['equip'][i],
 							'data-tip-position': 	'left',
 							'data-infos': 			"__equipment__",
-							'data-tip':		_p.tip.content_equipment(item_data)
+							'data-tip':				'[[EQUIPMENT::'+d['equip'][i]+']]'
 						})
 						name.html(
 							item_data['name']['zh_cn'].replace(/（([^（^）]+)）/g, '<small>($1)</small>')
@@ -556,7 +556,7 @@ _frame.infos.init = function(){
 									'data-equipmentid': 	d['upgrade_to'][i][0],
 									'data-tip-position': 	'right',
 									'data-infos': 			"__equipment__",
-									'data-tip':				_p.tip.content_equipment(equipment_data)
+									'data-tip':				'[[EQUIPMENT::'+d['upgrade_to'][i][0]+']]'
 								})
 								.html(
 									'<i style="background-image:url('+equipment_icon+')"></i>'
@@ -584,7 +584,7 @@ _frame.infos.init = function(){
 								'data-equipmentid': 	d['upgrade_from'][i],
 								'data-tip-position': 	'right',
 								'data-infos': 			"__equipment__",
-								'data-tip':				_p.tip.content_equipment(equipment_data)
+								'data-tip':				'[[EQUIPMENT::'+d['upgrade_from'][i]+']]'
 							})
 							.html(
 								'<i style="background-image:url('+equipment_icon+')"></i>'

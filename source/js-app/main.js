@@ -180,13 +180,41 @@ _frame.app_main = {
 						$html.addClass('app-ready')
 					}
 				}, is_instant ? 300 : 1000)
-				// 绑定onhashchange事件
-					$window.on('hashchange.pagechange', function(){
-						_frame.app_main.load_page_func(_g.uriHash('page'))
-					})
 
-				_frame.app_main.load_page_func(_g.uriHash('page'))
+				// 绑定onhashchange事件
+				//	$window.on('hashchange.pagechange', function(){
+				//		_frame.app_main.load_page_func(_g.uriHash('page'))
+				//	})
+
+				// 初次检查 uriSearch
+					if( !this.window_event_bound ){
+						$window.on('popstate._global', function(e){
+							if( e.originalEvent && e.originalEvent.state ){
+								_frame.app_main.state( e.originalEvent.state )
+							}else{
+								var _uriGet = location.search ? location.search.split('?')[1] : ''
+									,uriGet = {}
+								_uriGet = _uriGet.split('&');
+								for(var i=0;i<_uriGet.length;i++){
+									var h=_uriGet[i].split('=')
+									uriGet[h[0]] = h[1] || true
+								}
+								_frame.app_main.state( uriGet )
+							}
+						}).trigger('popstate._global')
+						this.window_event_bound = true
+					}
+
+				//_frame.app_main.load_page_func(_g.uriHash('page'))
 				_frame.app_main.is_loaded = true
+			}
+		},
+
+
+	// 根据 history state 运行相应函数
+		state: function( stateObj ){
+			if( stateObj['page'] ){
+				this.load_page_func( stateObj['page'] )
 			}
 		},
 
@@ -246,7 +274,18 @@ _frame.app_main = {
 
 	// 更换页面
 		load_page: function( page ){
-			_g.uriHash('page', page)
+			if( _frame.app_main.cur_page == page || !page )
+				return page
+
+			history.pushState(
+				{
+					'page': 	page
+				},
+				null,
+				'?page=' + page
+			)
+			//this.load_page_func( page )
+			//_g.uriHash('page', page)
 		},
 		load_page_func: function( page ){
 			if( _frame.app_main.cur_page == page || !page )
@@ -325,7 +364,7 @@ _frame.app_main = {
 				for( var i in _frame.app_main.nav ){
 					var o = _frame.app_main.nav[i]
 					_frame.dom.navs[o.page] = navLink(o.page).html(o.title).appendTo( _frame.dom.navlinks )
-					if( i == 0 && !_g.uriHash('page') ){
+					if( i == 0 && !_g.uriHash('page') && !_g.uriSearch('page') ){
 						_frame.dom.navs[o.page].trigger('click')
 					}
 				}
@@ -500,18 +539,45 @@ _frame.app_main = {
 		// Debug Mode
 			if( debugmode ){
 				_frame.dom.hashbar = $('<input type="text"/>')
-						.val( location.hash )
-						.on('change', function(){
-							location.hash = _frame.dom.hashbar.blur().val()
+						.on({
+							'urlchanged': function(){
+								$(this).val(
+									location.href.substr( (location.origin + location.pathname).length )
+								)
+							},
+							'change': function(){
+								location.replace( location.origin + location.pathname + _frame.dom.hashbar.blur().val() )
+							}
 						})
 						.appendTo(
 							$('<div class="debug_hashbar"/>').appendTo(_frame.dom.layout)
 						)
+						.trigger( 'urlchanged' )
 				_frame.dom.layout.addClass('debug-hashbar')
-				$window.on('hashchange.debug_mode_hashbar', function(){
-					_frame.dom.hashbar.val( location.hash )
+				$window.on({
+					'hashchange.debug_mode_hashbar': function(){
+						_frame.dom.hashbar.trigger('urlchanged')
+					},
+					'popstate.debug_mode_hashbar': function(){
+						_frame.dom.hashbar.trigger('urlchanged')
+					}
 				})
 			}
+
+			function hackHistory(history){
+				var pushState = history.pushState;
+				history.pushState = function(state) {
+					if (typeof history.onpushstate == "function") {
+						history.onpushstate({state: state});
+					}
+					setTimeout(function(){
+						$window.trigger('popstate')
+						//_frame.dom.hashbar.trigger('urlchanged')
+					}, 1)
+					return pushState.apply(history, arguments);
+				}
+			}
+			hackHistory(window.history);
 
 		_frame.app_main.is_init = true
 	}
