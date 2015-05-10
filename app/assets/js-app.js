@@ -213,6 +213,11 @@ _frame.app_main = {
 
 	// 根据 history state 运行相应函数
 		state: function( stateObj ){
+			if( stateObj['infos'] ){
+				_frame.infos.show_func( stateObj['infos'], stateObj['id'] )
+			}else{
+				_frame.infos.hide()
+			}
 			if( stateObj['page'] ){
 				this.load_page_func( stateObj['page'] )
 			}
@@ -564,6 +569,9 @@ _frame.app_main = {
 				})
 			}
 
+
+			// HACK: 在 history.pushstate() 同时，触发 window.onpopstate 事件
+			// http://felix-kling.de/blog/2011/01/06/how-to-detect-history-pushstate/
 			function hackHistory(history){
 				var pushState = history.pushState;
 				history.pushState = function(state) {
@@ -878,49 +886,102 @@ _frame.app_main.page['equipments'].gen_helper_equipable_on = function( type_id )
 _frame.infos = {
 	// curContent: 			null,			// 当前内容的hashCode
 
-	show: function(cont, el, history){
+	show: function(cont, el, doNotPushHistory){
+		var exp			= /^\[\[([^\:]+)\:\:([0-9]+)\]\]$/.exec(cont)
+			,infosType 	= null
+			,infosId 	= null
+
+		if( exp && exp.length > 2 ){
+			infosType = exp[1].toLowerCase()
+			infosId = parseInt( exp[2] )
+			switch( infosType ){
+				case 'item':
+				case 'equip':
+					infosType = 'equipment'
+					break;
+			}
+		}else{
+			return false
+		}
+
+		// 如果为相同内容，不运行
+			if( this.curContent == infosType + '::' + infosId )
+				return _frame.infos.dom.container.children('div:first-child')
+
+		if( doNotPushHistory ){
+			this.show_func( infosType, infosId, doNotPushHistory )
+		}else{
+			history.pushState(
+				{
+					'infos':infosType,
+					'id': 	infosId
+				},
+				null,
+				'?infos=' + infosType + '&id=' + infosId
+			)
+		}
+	},
+
+	//show_func: function(cont, el, history){
+	show_func: function(type, id, doNotPushHistory){
+		if( !type || !id )
+			return false
+
+		// 如果为相同内容，不运行
+			if( this.curContent == type + '::' + id )
+				return _frame.infos.dom.container.children('div:first-child')
+
+		type = type.toLowerCase()
+		id = parseInt(id)
+		var cont = ''
+
 		// 第一次运行，创建相关DOM和变量
 			if( !_frame.infos.dom ){
 				_frame.infos.dom = {
 					'nav': 		$('<div class="infos"/>').appendTo( _frame.dom.nav ),
 					'main': 	$('<div class="page infos"/>').appendTo( _frame.dom.main )
 				}
+				_frame.infos.dom.container = $('<div class="wrapper"/>').appendTo( _frame.infos.dom.main )
 				_frame.infos.dom.back = $('<button class="back" icon="arrow-left"/>')
 						.html('返回')
 						.on('click', function(){
-							_frame.infos.hide()
+							history.back()
+							//_frame.infos.hide()
 						}).appendTo( _frame.infos.dom.nav )
+				/*
 				_frame.infos.dom.historyback = $('<button class="history"/>')
 						.html('')
 						.on('click', function(){
 							_frame.infos.historyback()
 						}).appendTo( _frame.infos.dom.nav )
+				*/
 			}
 
 		// 先将内容区域设定为可见
 			_frame.dom.layout.addClass('infos-show')
 
 		// 处理内容
-			switch(cont){
-				case '__ship__':
-					cont = _frame.infos.__ship(el)
+			switch(type){
+				case 'ship':
+					cont = _frame.infos.__ship( id )
 					_frame.infos.dom.main.attr('data-infostype', 'shipinfo')
 					break;
-				case '__equipment__':
-					cont = _frame.infos.__equipment(el)
+				case 'equipment':
+					cont = _frame.infos.__equipment( id )
 					_frame.infos.dom.main.attr('data-infostype', 'equipmentinfo')
 					break;
 			}
 			var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
-			if( _frame.infos.curContent != hashcode ){
+			//if( _frame.infos.curContent != hashcode ){
 				var contentDOM = cont.append ? cont : $(cont)
 
-				if( el && el.attr('data-infos-history-skip-this') )
-					contentDOM.attr('data-infos-history-skip-this', true)
+				//if( el && el.attr('data-infos-history-skip-this') )
+				//	contentDOM.attr('data-infos-history-skip-this', true)
 
-				if( _frame.infos.dom.main.children().length )
-					contentDOM.addClass('fadein')
+				//if( _frame.infos.dom.main.children().length )
+				//	contentDOM.addClass('fadein')
 
+				/*
 				if( history ){
 					_frame.infos.dom.main.children().filter('[data-infos-history-skip-this="true"]').remove()
 					_frame.infos.dom.main.children().slice(2).remove()
@@ -929,14 +990,21 @@ _frame.infos = {
 				}else{
 					_frame.infos.dom.historyback.html('').removeClass('show')
 					_frame.infos.dom.main.empty()
-				}
+				}*/
 				//data-infos-history-skip-this
 
-				contentDOM.appendTo( _frame.infos.dom.main )
+				contentDOM
+					.on('transitionend.hide', function(e){
+						if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(contentDOM.css('opacity')) == 0 ){
+							contentDOM.remove()
+						}
+					})
+					.prependTo( _frame.infos.dom.container )
 
 				_p.initDOM( contentDOM )
-				_frame.infos.curContent = hashcode
-			}
+				//_frame.infos.curContent = hashcode
+				this.curContent = type + '::' + id
+			//}
 
 		setTimeout(function(){
 			// 显示内容
@@ -945,8 +1013,12 @@ _frame.infos = {
 	},
 
 	hide: function(){
+		if( !_frame.infos.dom )
+			return false
+
 		// 隐藏内容
 			_frame.dom.layout.removeClass('infos-on')
+			this.curContent = null
 
 		// 为主导航最后一个元素绑定 transitionEnd 事件
 		// transitionEnd 触发后，检查 top CSS，如果为 0，判断动画播放结束
@@ -990,7 +1062,7 @@ _frame.infos.init = function(){
 				_frame.infos.show(
 					el.attr('data-infos'),
 					el,
-					el.attr('data-infos-history')
+					el.attr('data-infos-nohistory')
 				)
 			}
 		})
@@ -1015,8 +1087,8 @@ _frame.infos.init = function(){
 // 特殊内容
 
 	// 舰娘信息
-		_frame.infos.__ship = function( el ){
-			var d = _g.data.ships[ el.data('shipid') ]
+		_frame.infos.__ship = function( id ){
+			var d = _g.data.ships[ id ]
 
 			if( debugmode )
 				console.log(d)
@@ -1181,7 +1253,7 @@ _frame.infos.init = function(){
 						equip.attr({
 							'data-equipmentid': 	d['equip'][i],
 							'data-tip-position': 	'left',
-							'data-infos': 			"__equipment__",
+							'data-infos': 			'[[EQUIPMENT::'+d['equip'][i]+']]',
 							'data-tip':				'[[EQUIPMENT::'+d['equip'][i]+']]'
 						})
 						name.html(
@@ -1247,13 +1319,11 @@ _frame.infos.init = function(){
 										,remodel_blueprint = _i ? (docs[0].ships[ _i - 1 ]['next_blueprint']) : null
 
 									remodels_container.appendDOM(
-										$('<button class="unit" data-shipid="'+ docs[0].ships[i]['id'] +'" data-infos="__ship__"/>')
+										$('<button class="unit" data-shipid="'+ docs[0].ships[i]['id'] +'"/>')
 											.attr({
+												'data-infos': 	'[[SHIP::'+ docs[0].ships[i]['id'] +']]',
 												'data-tip': 	tip,
-												'data-infos-history': _frame.infos.dom.historyback.html()
-																		? _frame.infos.dom.historyback.html()
-																		: null,
-												'data-infos-history-skip-this': true
+												'data-infos-nohistory': true
 											})
 											.addClass(docs[0].ships[i]['id'] == d['id'] ? 'on' : '')
 											.addClass(remodel_blueprint ? 'blueprint' : '')
@@ -1335,8 +1405,8 @@ _frame.infos.init = function(){
 		}
 
 	// 装备信息
-		_frame.infos.__equipment = function( el ){
-			var d = _g.data.items[ el.data('equipmentid') ]
+		_frame.infos.__equipment = function( id ){
+			var d = _g.data.items[ id ]
 
 			if( debugmode )
 				console.log(d)
@@ -1429,7 +1499,7 @@ _frame.infos.init = function(){
 								.attr({
 									'data-equipmentid': 	d['upgrade_to'][i][0],
 									'data-tip-position': 	'right',
-									'data-infos': 			"__equipment__",
+									'data-infos': 			'[[EQUIPMENT::'+d['upgrade_to'][i][0]+']]',
 									'data-tip':				'[[EQUIPMENT::'+d['upgrade_to'][i][0]+']]'
 								})
 								.html(
@@ -1457,7 +1527,7 @@ _frame.infos.init = function(){
 							.attr({
 								'data-equipmentid': 	d['upgrade_from'][i],
 								'data-tip-position': 	'right',
-								'data-infos': 			"__equipment__",
+								'data-infos': 			'[[EQUIPMENT::'+d['upgrade_from'][i]+']]',
 								'data-tip':				'[[EQUIPMENT::'+d['upgrade_from'][i]+']]'
 							})
 							.html(
@@ -1475,15 +1545,10 @@ _frame.infos.init = function(){
 					for( var i in d.default_equipped_on ){
 						var ship_data = _g.data.ships[d.default_equipped_on[i]]
 						equipped_container.appendDOM(
-							$('<button class="unit" data-infos="__ship__"/>')
+							$('<button class="unit"/>')
 								.attr({
 									'data-shipid': 	d.default_equipped_on[i],
-									'data-infos': 	'__ship__',
-									'data-infos-history': 	'<span class="equipment"><span>'
-																+ (d['type'] ? '<small>' + _g['data']['item_types'][d['type']]['name']['zh_cn'] + '</small><br/>' : '')
-																+ d['name']['zh_cn']
-															+ '</span></span>',
-									'data-infos-history-skip-this': true
+									'data-infos': 	'[[SHIP::'+d.default_equipped_on[i]+']]'
 								})
 								.html(
 									'<img src="' + _g.path.pics.ships + '/' + d.default_equipped_on[i]+'/0.webp"/>'
@@ -1643,8 +1708,10 @@ _tablelist.prototype.global_index = 0
 	_tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 		var self = this
 			//,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" modal="true"/>')
-			,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" data-infos="__ship__"/>')
+			//,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" data-infos="__ship__"/>')
+			,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'"/>')
 					.attr({
+						'data-infos': 	'[[SHIP::'+ship_data['id']+']]',
 						'data-shipedit':self.dom.container.hasClass('shiplist-edit') ? 'true' : null
 					})
 					//.appendTo( this.dom.tbody )
@@ -2060,8 +2127,9 @@ _tablelist.prototype.global_index = 0
 	]
 	_tablelist.prototype._equipments_append_item = function( equipment_data, collection_id ){
 		var self = this
-			,tr = $('<tr class="row" data-equipmentid="'+ equipment_data['id'] +'" data-equipmentcollection="'+ collection_id +'" data-infos="__equipment__"/>')
+			,tr = $('<tr class="row" data-equipmentid="'+ equipment_data['id'] +'" data-equipmentcollection="'+ collection_id +'"/>')
 					.attr({
+						'data-infos': 		'[[EQUIPMENT::'+ equipment_data['id'] +']]',
 						'data-equipmentedit':self.dom.container.hasClass('equipmentlist-edit') ? 'true' : null
 					})
 					.appendTo( this.dom.tbody )

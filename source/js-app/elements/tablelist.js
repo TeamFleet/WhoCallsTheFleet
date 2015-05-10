@@ -78,8 +78,10 @@ _tablelist.prototype.global_index = 0
 	_tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 		var self = this
 			//,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" modal="true"/>')
-			,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" data-infos="__ship__"/>')
+			//,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" data-infos="__ship__"/>')
+			,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'"/>')
 					.attr({
+						'data-infos': 	'[[SHIP::'+ship_data['id']+']]',
 						'data-shipedit':self.dom.container.hasClass('shiplist-edit') ? 'true' : null
 					})
 					//.appendTo( this.dom.tbody )
@@ -495,8 +497,9 @@ _tablelist.prototype.global_index = 0
 	]
 	_tablelist.prototype._equipments_append_item = function( equipment_data, collection_id ){
 		var self = this
-			,tr = $('<tr class="row" data-equipmentid="'+ equipment_data['id'] +'" data-equipmentcollection="'+ collection_id +'" data-infos="__equipment__"/>')
+			,tr = $('<tr class="row" data-equipmentid="'+ equipment_data['id'] +'" data-equipmentcollection="'+ collection_id +'"/>')
 					.attr({
+						'data-infos': 		'[[EQUIPMENT::'+ equipment_data['id'] +']]',
 						'data-equipmentedit':self.dom.container.hasClass('equipmentlist-edit') ? 'true' : null
 					})
 					.appendTo( this.dom.tbody )

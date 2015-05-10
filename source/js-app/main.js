@@ -213,6 +213,11 @@ _frame.app_main = {
 
 	// 根据 history state 运行相应函数
 		state: function( stateObj ){
+			if( stateObj['infos'] ){
+				_frame.infos.show_func( stateObj['infos'], stateObj['id'] )
+			}else{
+				_frame.infos.hide()
+			}
 			if( stateObj['page'] ){
 				this.load_page_func( stateObj['page'] )
 			}
@@ -564,6 +569,9 @@ _frame.app_main = {
 				})
 			}
 
+
+			// HACK: 在 history.pushstate() 同时，触发 window.onpopstate 事件
+			// http://felix-kling.de/blog/2011/01/06/how-to-detect-history-pushstate/
 			function hackHistory(history){
 				var pushState = history.pushState;
 				history.pushState = function(state) {

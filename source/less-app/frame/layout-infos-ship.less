@@ -56,6 +56,10 @@
 						width:		50%;
 						&>em{
 							color:		#2cace8;
+							.fadein();
+							&.lvl99, &.lvl150{
+								display:	none;
+							}
 						}
 					}
 					& ~ .stat{
@@ -76,18 +80,18 @@
 					display:	none;
 					&[value="99"]:checked{
 						& ~ .title label.lvl99{
-							color:		#bde8fc
+							color:		#bde8fc;
 						}
-						& ~ .stat .lvl150{
-							display:	none;
+						& ~ .stat .lvl99{
+							display:	inline;
 						}
 					}
 					&[value="150"]:checked{
 						& ~ .title label.lvl150{
-							color:		#bde8fc
+							color:		#bde8fc;
 						}
-						& ~ .stat .lvl99{
-							display:	none;
+						& ~ .stat .lvl150{
+							display:	inline;
 						}
 					}
 				}
