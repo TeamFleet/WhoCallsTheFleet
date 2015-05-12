@@ -207,7 +207,7 @@ _frame.app_main = {
 									uriGet[h[0]] = h[1] || true
 								}
 								// 首次运行，检查是否存在 page
-									if( !_frame.app_main.window_event_bound && !uriGet['page'] ){
+									if( !_frame.app_main.window_event_bound && !(uriGet['page'] || uriGet['infos']) ){
 										_frame.app_main.load_page( _frame.app_main.nav[0]['page'] )
 										//uriGet['page'] = _frame.app_main.nav[0]['page']
 									}

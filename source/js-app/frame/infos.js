@@ -8,6 +8,19 @@ _frame.infos = {
 	historyLength: -1,
 	historyCurrent: -1,
 
+	contentCache: {},
+
+	getContent: function(type, id){
+		if( !this.contentCache[type] )
+			this.contentCache[type] = {}
+
+		if( !this.contentCache[type][id] ){
+			this.contentCache[type][id] = _p.initDOM( _frame.infos['__' + type]( id ) )
+		}
+
+		return this.contentCache[type][id]
+	},
+
 	show: function(cont, el, doNotPushHistory){
 		var exp			= /^\[\[([^\:]+)\:\:([0-9]+)\]\]$/.exec(cont)
 			,infosType 	= null
@@ -49,7 +62,7 @@ _frame.infos = {
 	},
 
 	//show_func: function(cont, el, history){
-	show_func: function(type, id, doNotPushHistorym, infosHistoryIndex){
+	show_func: function(type, id, doNotPushHistory, infosHistoryIndex){
 		if( !type || !id )
 			return false
 
@@ -59,6 +72,7 @@ _frame.infos = {
 
 		type = type.toLowerCase()
 		id = parseInt(id)
+
 		var cont = ''
 
 		// 第一次运行，创建相关DOM和变量
@@ -111,11 +125,11 @@ _frame.infos = {
 		// 处理内容
 			switch(type){
 				case 'ship':
-					cont = _frame.infos.__ship( id )
+					cont = this.getContent(type, id)
 					_frame.infos.dom.main.attr('data-infostype', 'shipinfo')
 					break;
 				case 'equipment':
-					cont = _frame.infos.__equipment( id )
+					cont = this.getContent(type, id)
 					_frame.infos.dom.main.attr('data-infostype', 'equipmentinfo')
 					break;
 			}
@@ -144,12 +158,12 @@ _frame.infos = {
 				contentDOM
 					.on('transitionend.hide', function(e){
 						if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(contentDOM.css('opacity')) == 0 ){
-							contentDOM.remove()
+							contentDOM.detach()
 						}
 					})
 					.prependTo( _frame.infos.dom.container )
 
-				_p.initDOM( contentDOM )
+				//_p.initDOM( contentDOM )
 				//_frame.infos.curContent = hashcode
 				this.curContent = type + '::' + id
 			//}
@@ -366,14 +380,14 @@ _frame.infos.init = function(){
 									+ '</div>'
 								)
 								.prepend(
-									$('<input type="radio" name="ship_infos_lvl" id="'+lvlRadio99_id+'" value="99"/>')
+									$('<input type="radio" name="ship_infos_lvl_'+id+'" id="'+lvlRadio99_id+'" value="99"/>')
 										.prop('checked', curLvl == 99)
 										.on('change', function(){
 											_config.set('ship_infos_lvl', $(this).val())
 										})
 								)
 								.prepend(
-									$('<input type="radio" name="ship_infos_lvl" id="'+lvlRadio150_id+'" value="150"/>')
+									$('<input type="radio" name="ship_infos_lvl_'+id+'" id="'+lvlRadio150_id+'" value="150"/>')
 										.prop('checked', curLvl == 150)
 										.on('change', function(){
 											_config.set('ship_infos_lvl', $(this).val())
