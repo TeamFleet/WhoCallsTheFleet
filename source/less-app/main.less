@@ -89,31 +89,40 @@ html, body{
 	overflow:	hidden;
 }
 body{
-	.font-size(14);
-	font-family:	@font_family_sans;
-	h1, h2, h3, h4, h5, h6{
-		font-family:@font_famliy_Song;
-		line-height:1.2em;
-		small{
-			font-size:	small;
-			opacity:	.75;
-			padding-left:1em;
-		}
-	}
-	h2{
-		.font-size(36);
-	}
-	h3{
-		.font-size(24);
-	}
-	h4{
-		.font-size(18);
-		font-weight:	normal;
-	}
-	h5{
+	// Base
 		.font-size(14);
-		font-weight:	normal;
-	}
+		font-family:	@font_family_sans;
+		button{
+			&:focus, &:active{
+				outline:	0;
+			}
+		}
+
+	// Title / Headers
+		h1, h2, h3, h4, h5, h6{
+			font-family:@font_famliy_Song;
+			line-height:1.2em;
+			small{
+				font-size:	small;
+				opacity:	.75;
+				padding-left:1em;
+			}
+		}
+		h2{
+			.font-size(36);
+		}
+		h3{
+			.font-size(24);
+		}
+		h4{
+			.font-size(18);
+			font-weight:	normal;
+		}
+		h5{
+			.font-size(14);
+			font-weight:	normal;
+		}
+
 	#layout{
 		.padding-top(@nav_height);
 		height:		100%;
@@ -221,9 +230,9 @@ body{
 						top:		1px;
 						//color:		rgba(255,255,255,.35) !important;
 					}
-					&:active, &:focus{
-						outline:	0;
-					}
+					//&:active, &:focus{
+					//	outline:	0;
+					//}
 					&+button{
 						.margin-left(30);
 					}
@@ -1035,12 +1044,20 @@ table{
 
 // #titlebar
 	html{
-		#titlebar .buttons{
+		#titlebar{
 			background:	rgba(0,0,0,.35);
-			.transition-property(background-color)
+			.transition-property(~"background-color, height");
+			.height(34);
 		}
-		&.app-ready #titlebar .buttons{
-			background:	transparent
+		&.app-ready #titlebar{
+			background:	transparent !important;
+			height:		0 !important;
+		}
+		&.window-maxmize,
+		&.window-fullscreen{
+			#titlebar{
+				.height(30);
+			}
 		}
 	}
 
