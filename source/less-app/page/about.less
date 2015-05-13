@@ -3,7 +3,16 @@
 	background:	hsla(0, 20%, 18%, .70);
 	h1, h2, h3, h4, h5, h6{
 		//color:	hsl(0, 100%, 73%);
-		color:		hsl(0, 100%, 76%);
+		//color:		hsl(0, 100%, 76%);
+		color:		hsl(0, 100%, 85%);
+		text-shadow:0 0 unit(5 / 30, em) hsl(0, 100%, 65%);
+		&[data-content]{
+			color:		hsl(0, 100%, 92.5%);
+			text-shadow:0 0 unit(5 / 30, em) hsl(0, 100%, 75%);
+		}
+		&[data-content]:before{
+			color: 		hsl(0, 100%, 75%);
+		}
 		small{
 			font-family:@font_family_sans;
 			font-weight:lighter;

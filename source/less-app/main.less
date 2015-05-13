@@ -102,10 +102,22 @@ body{
 		h1, h2, h3, h4, h5, h6{
 			font-family:@font_famliy_Song;
 			line-height:1.2em;
+			position:	relative;
 			small{
 				font-size:	small;
 				opacity:	.75;
 				padding-left:1em;
+			}
+			&[data-content]:before{
+				content:	attr(data-content);
+				display:	block;
+				font:		inherit;
+				position:	absolute;
+				top:		0;
+				left:		0;
+				z-index:	1;
+				text-shadow:0 0 1px #000;
+				.mask-image( ~"linear-gradient(to bottom, transparent, #000)" );
 			}
 		}
 		h2{

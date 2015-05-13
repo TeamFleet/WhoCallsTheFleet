@@ -17,7 +17,6 @@
 		h1, h2, h3, h4, h5, h6{
 			.font-size(48);
 			display:	block;
-			position:	relative;
 			//font-family:@font_famliy_Hei;
 			//font-weight:lighter;
 			font-weight:normal;
@@ -25,16 +24,6 @@
 			//text-shadow:0 0 5px fade(#25baff, 50%);
 			//text-shadow:0 0 unit(5 / 30, em) #25baff;
 			.margin-bottom(8);
-			&:before{
-				content:	attr(data-content);
-				display:	block;
-				font:		inherit;
-				position:	absolute;
-				top:		0;
-				left:		0;
-				z-index:	1;
-				text-shadow:0 0 1px #000;
-			}
 		}
 		h2{
 			.font-size(48)
