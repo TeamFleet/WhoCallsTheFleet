@@ -21,6 +21,10 @@
     "kiosk": false,
     "transparent": false
   },
+	"repositories": [{
+		"type": "git",
+		"url": "https://github.com/Diablohu/WhoCallsTheFleet"
+	}],
   "platformOverrides": {
     "win": {
       "debug": false,
@@ -48,6 +52,7 @@
     }
   },
   "nw-packager": {
+    "version": "0.12.1",
     "platforms": [
       "win32",
       "win64",
@@ -61,8 +66,8 @@
       "package.json"
     ],
     "dataVersion": {
-      "app": "0.5.0.4",
-      "app-db": "1.1.0",
+      "app": "0.5.0.5",
+      "app-db": "1.1.1",
       "pics": "1.1.0"
     },
     "buildDir": "N:\\nwbuild\\build",
