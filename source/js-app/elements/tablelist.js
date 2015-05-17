@@ -224,7 +224,7 @@ _tablelist.prototype.global_index = 0
 						.attr(
 							'data-value',
 							datavalue == -1 || datavalue == '-1'
-								? null
+								? -1
 								: datavalue
 						)
 						.html( _val( datavalue ) )
@@ -945,7 +945,10 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 				return false
 
 			var stat = cell.data('stat')
-				,i = stat == this.lastSortedStat ? sortData.length - 1 : 0
+				,order = (stat == this.lastSortedStat && this.lastSortedOrder == 'obverse')
+							? 'reverse'
+							: 'obverse'
+				,i = order == 'reverse' ? sortData.length - 1 : 0
 
 			this.sortedRow = $()
 
@@ -953,10 +956,11 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 				this._tmpDOM = sortData[i].parent()
 				this.sortedRow = this.sortedRow.add( this._tmpDOM )
 				this._tmpDOM.appendTo( this.dom.tbody )
-				i = stat == this.lastSortedStat ? i - 1 : i + 1
+				i = order == 'reverse' ? i - 1 : i + 1
 			}
 
 			this.lastSortedStat = stat
+			this.lastSortedOrder = order
 			delete this._tmpDOM
 		}
 
@@ -978,6 +982,7 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 
 			delete this.sortedRow
 			delete this.lastSortedStat
+			delete this.lastSortedOrder
 			return true
 		}
 
