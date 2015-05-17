@@ -37,20 +37,26 @@ _frame.app_main.page['about'].init = function( page ){
 
 	// 获取全部开发中的更新日志
 		.then(function(){
-			return _db.updates.find({'date': ""}).sort({'date': -1}).exec(function(err, docs){
+			var deferred = Q.defer()
+			_db.updates.find({'date': ""}).sort({'date': -1}).exec(function(err, docs){
 				for( var i in docs ){
 					addUpdateJournal(docs[i])
 				}
+				deferred.resolve(err)
 			})
+			return deferred.promise
 		})
 
 	// 获取全部已更新的更新日志
 		.then(function(){
-			return _db.updates.find({$not:{'date':""}}).sort({'date': -1}).exec(function(err, docs){
+			var deferred = Q.defer()
+			_db.updates.find({$not:{'date':""}}).sort({'date': -1}).exec(function(err, docs){
 				for( var i in docs ){
 					addUpdateJournal(docs[i])
 				}
+				deferred.resolve(err)
 			})
+			return deferred.promise
 		})
 
 }

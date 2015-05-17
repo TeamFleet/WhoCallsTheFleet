@@ -93,6 +93,10 @@
 							&.negative{
 								color:		hsl(0, 90%, 70%);
 							}
+							small.zero{
+								.font-size(11);
+								opacity:	.5;
+							}
 						}
 					}
 					tr[data-shipid]{
@@ -180,10 +184,6 @@
 								padding:	0 0 0 .25em;
 								vertical-align: super;
 								position:	absolute;
-							}
-							small.zero{
-								.font-size(11);
-								opacity:	.5;
 							}
 							&.sort-first{
 								background-image:	linear-gradient(to bottom, rgba(255,255,255,.5), rgba(255,255,255,.5) ~"calc(100% - 1px)", transparent ~"calc(100% - 1px)");

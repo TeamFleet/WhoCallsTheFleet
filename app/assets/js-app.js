@@ -338,12 +338,12 @@ _frame.app_main = {
 				}
 			}
 
-			_frame.app_main.page_dom[page].removeClass('off')
+			_frame.app_main.page_dom[page].removeClass('off').trigger('pageon')
 
 			// 关闭之前的页面
 				if( _frame.app_main.cur_page ){
 					_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
-					_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off')
+					_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff')
 				}
 
 			_frame.dom.navs[page].addClass('on')
@@ -969,6 +969,17 @@ _frame.app_main.page['ships'] = {}
 
 
 _frame.app_main.page['ships'].init = function( page ){
+	this.tablelist = page.find('.tablelist')
+	this.tablelistObj = this.tablelist.data('tablelist')
+
+	page.on('pageon', function(){
+		if( !_frame.app_main.page['ships'].tablelistObj )
+			_frame.app_main.page['ships'].tablelistObj
+				= _frame.app_main.page['ships'].tablelist.data('tablelist')
+
+		if( _frame.app_main.page['ships'].tablelistObj )
+			_frame.app_main.page['ships'].tablelistObj.thead_redraw()
+	})
 }
 
 _frame.app_main.page['equipments'] = {}
@@ -981,6 +992,17 @@ _frame.app_main.page['equipments'] = {}
 
 
 _frame.app_main.page['equipments'].init = function( page ){
+	this.tablelist = page.find('.tablelist')
+	this.tablelistObj = this.tablelist.data('tablelist')
+
+	page.on('pageon', function(){
+		if( !_frame.app_main.page['equipments'].tablelistObj )
+			_frame.app_main.page['equipments'].tablelistObj
+				= _frame.app_main.page['equipments'].tablelist.data('tablelist')
+
+		if( _frame.app_main.page['equipments'].tablelistObj )
+			_frame.app_main.page['equipments'].tablelistObj.thead_redraw()
+	})
 }
 
 
@@ -1041,20 +1063,26 @@ _frame.app_main.page['about'].init = function( page ){
 
 	// 获取全部开发中的更新日志
 		.then(function(){
-			return _db.updates.find({'date': ""}).sort({'date': -1}).exec(function(err, docs){
+			var deferred = Q.defer()
+			_db.updates.find({'date': ""}).sort({'date': -1}).exec(function(err, docs){
 				for( var i in docs ){
 					addUpdateJournal(docs[i])
 				}
+				deferred.resolve(err)
 			})
+			return deferred.promise
 		})
 
 	// 获取全部已更新的更新日志
 		.then(function(){
-			return _db.updates.find({$not:{'date':""}}).sort({'date': -1}).exec(function(err, docs){
+			var deferred = Q.defer()
+			_db.updates.find({$not:{'date':""}}).sort({'date': -1}).exec(function(err, docs){
 				for( var i in docs ){
 					addUpdateJournal(docs[i])
 				}
+				deferred.resolve(err)
 			})
+			return deferred.promise
 		})
 
 }
@@ -1917,7 +1945,7 @@ _tablelist.prototype.global_index = 0
 			//,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" modal="true"/>')
 			//,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" data-infos="__ship__"/>')
 			,donotcompare = _g.data.ship_types[ship_data['type']]['donotcompare'] ? true : false
-			,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'"/>')
+			,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" data-trindex="'+self.trIndex+'"/>')
 					.attr({
 						'data-infos': 	'[[SHIP::'+ship_data['id']+']]',
 						'data-shipedit':self.dom.container.hasClass('shiplist-edit') ? 'true' : null,
@@ -1943,6 +1971,7 @@ _tablelist.prototype.global_index = 0
 							})
 
 		self._ships_last_item = tr
+		self.trIndex++
 
 		self._ships_header_checkbox[header_index].data(
 				'ships', 
@@ -2094,7 +2123,8 @@ _tablelist.prototype.global_index = 0
 
 					var checkbox_id = '_input_g' + parseInt(_g.inputIndex)
 					self._ships_last_item = 
-							$('<tr class="typetitle"><th colspan="' + (self._ships_columns.length + 1) + '">'
+							$('<tr class="typetitle" data-trindex="'+self.trIndex+'">'
+								+ '<th colspan="' + (self._ships_columns.length + 1) + '">'
 								+ '<label for="' + checkbox_id + '">'
 								//+ data_shiptype['full_zh']
 								+ _g.data['ship_type_order'][i+1]['name']['zh_cn']
@@ -2104,11 +2134,13 @@ _tablelist.prototype.global_index = 0
 								)
 								+ '</label></th></tr>')
 								.appendTo( self.dom.tbody )
+					self.trIndex++
 
 					// 创建空DOM，欺骗flexbox layout排版
 						var k = 0
-						while(k < 9){
-							$('<tr class="empty"/>').appendTo(self.dom.tbody)
+						while(k < 10){
+							var _index = self.trIndex + _g.data.ship_id_by_type[i].length + k
+							$('<tr class="empty" data-trindex="'+_index+'"/>').appendTo(self.dom.tbody)
 							k++
 						}
 
@@ -2154,6 +2186,7 @@ _tablelist.prototype.global_index = 0
 
 				setTimeout(function(){
 					if( j >= _g.data.ship_id_by_type[i].length - 1 ){
+						self.trIndex+= 10
 						_do( i+1, 0 )
 					}else{
 						_do( i, j+1 )
@@ -2184,7 +2217,7 @@ _tablelist.prototype.global_index = 0
 		this._ships_last_viewtype = this.dom.filter_container.attr('viewtype')
 		this.dom.filter_container.attr('viewtype', 'compare')
 		_config.set( 'shiplist-viewtype', this._ships_last_viewtype )
-		this.mark_high()
+		this.mark_high( true )
 		this.thead_redraw( 500 )
 	}
 	_tablelist.prototype._ships_compare_end = function(){
@@ -2192,6 +2225,7 @@ _tablelist.prototype.global_index = 0
 		this.dom.filter_container.attr('viewtype', this._ships_last_viewtype)
 		delete this._ships_last_viewtype
 		this.dom.msg_container.removeAttr('data-msgs')
+		this.sort_table_restore()
 		this.mark_high()
 		this.thead_redraw( 500 )
 	}
@@ -2199,11 +2233,13 @@ _tablelist.prototype.global_index = 0
 		this.dom.filter_container.attr('viewtype', this._ships_last_viewtype)
 		delete this._ships_last_viewtype
 		this.dom.msg_container.attr('data-msgs', 'comparestart')
+		this.sort_table_restore()
 		this.mark_high()
 		this.thead_redraw( 500 )
 	}
 	_tablelist.prototype._ships_init = function(){
 		var self = this
+			this.trIndex = 0
 
 		// 标记全局载入状态
 			_frame.app_main.loading.push('tablelist_'+this._index)
@@ -2216,7 +2252,7 @@ _tablelist.prototype.global_index = 0
 			this.dom.filters = $('<div class="filters"/>').appendTo( this.dom.filter_container )
 			this.dom.exit_compare = $('<div class="exit_compare"/>')
 									.append(
-										$('<button icon="close"/>')
+										$('<button icon="arrow-set2-left"/>')
 											.html('结束对比')
 											.on('click', function(){
 												self._ships_compare_end()
@@ -2230,6 +2266,7 @@ _tablelist.prototype.global_index = 0
 											})
 									)
 									.appendTo( this.dom.filter_container )
+			this.dom.helper_compare_sort = $('<span/>').html('点击表格标题可排序').appendTo( this.dom.exit_compare )
 
 		// 初始化设置
 			this.append_option( 'checkbox', 'hide-premodel', '仅显示同种同名舰最终版本',
@@ -2260,16 +2297,23 @@ _tablelist.prototype.global_index = 0
 			this.dom.table_container_inner = $('<div class="fixed-table-container-inner"/>').appendTo( this.dom.table_container )
 			this.dom.table = $('<table class="ships hashover hashover-column"/>').appendTo( this.dom.table_container_inner )
 			function gen_thead(arr){
-				self.dom.table_thead = $('<thead/>')
-				var tr = $('<tr/>').appendTo(self.dom.table_thead)
+				self.dom.thead = $('<thead/>')
+				var tr = $('<tr/>').appendTo(self.dom.thead)
 				for(var i in arr){
-					if( typeof arr[i] == 'object' ){
-						$('<td data-stat="' + arr[i][1] + '"/>').html('<div class="th-inner"><span>'+arr[i][0]+'</span></div>').appendTo(tr)
-					}else{
-						$('<th/>').html('<div class="th-inner"><span>'+arr[i][0]+'</span></div>').appendTo(tr)
-					}
+					(function( obj ){
+						if( typeof obj == 'object' ){
+							var td = $('<td data-stat="' + obj[1] + '"/>')
+										.html('<div class="th-inner-wrapper"><span><span>'+obj[0]+'</span></span></div>')
+										.on('click', function(){
+											self.sort_table_from_theadcell(td)
+										})
+										.appendTo(tr)
+						}else{
+							$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+obj[0]+'</span></span></div>').appendTo(tr)
+						}
+					})(arr[i])
 				}
-				return self.dom.table_thead
+				return self.dom.thead
 			}
 			gen_thead( self._ships_columns ).appendTo( this.dom.table )
 			this.dom.tbody = $('<tbody/>').appendTo( this.dom.table )
@@ -2362,7 +2406,7 @@ _tablelist.prototype.global_index = 0
 					.appendTo( this.dom.tbody )
 
 		function _val( val, show_zero ){
-			if( !show_zero && (val == 0 || val == '0') )
+			if( !show_zero && (val == 0 || val === '0' || val === '') )
 				return '<small class="zero">-</small>'
 			//if( val > 0 )
 			//	return '+' + val
@@ -2376,7 +2420,11 @@ _tablelist.prototype.global_index = 0
 					break;
 				case 'range':
 					$('<td data-stat="range" data-value="' + equipment_data['stat']['range'] + '"/>')
-						.html( _g.getStatRange( equipment_data['stat']['range'] ) )
+						.html(
+							equipment_data['stat']['range']
+								? _g.getStatRange( equipment_data['stat']['range'] )
+								: '<small class="zero">-</small>'
+						)
 						.appendTo(tr)
 					break;
 				default:
@@ -2489,16 +2537,17 @@ _tablelist.prototype.global_index = 0
 			this.dom.table_container_inner = $('<div class="fixed-table-container-inner"/>').appendTo( this.dom.table_container )
 			this.dom.table = $('<table class="equipments hashover hashover-column"/>').appendTo( this.dom.table_container_inner )
 			function gen_thead(arr){
-				self.dom.table_thead = $('<thead/>')
-				var tr = $('<tr/>').appendTo(self.dom.table_thead)
+				self.dom.thead = $('<thead/>')
+				var tr = $('<tr/>').appendTo(self.dom.thead)
 				for(var i in arr){
 					if( typeof arr[i] == 'object' ){
-						$('<td data-stat="' + arr[i][1] + '"/>').html('<div class="th-inner"><span>'+arr[i][0]+'</span></div>').appendTo(tr)
+						$('<td data-stat="' + arr[i][1] + '"/>')
+							.html('<div class="th-inner-wrapper"><span><span>'+arr[i][0]+'</span></span></div>').appendTo(tr)
 					}else{
-						$('<th/>').html('<div class="th-inner"><span>'+arr[i][0]+'</span></div>').appendTo(tr)
+						$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+arr[i][0]+'</span></span></div>').appendTo(tr)
 					}
 				}
-				return self.dom.table_thead
+				return self.dom.thead
 			}
 			gen_thead( self._equipments_columns ).appendTo( this.dom.table )
 			this.dom.tbody = $('<tbody/>').appendTo( this.dom.table )
@@ -2633,8 +2682,8 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 
 // 强制 thead 重绘，以解决某些CSS计算延迟问题
 	_tablelist.prototype.thead_redraw = function( timeout_duration ){
-		if( this.dom.table_thead && this.dom.table_thead.length ){
-			var thead = this.dom.table_thead
+		if( this.dom.thead && this.dom.thead.length ){
+			var thead = this.dom.thead
 			setTimeout(function(){
 				thead.hide().show(0)
 			}, timeout_duration || 10)
@@ -2655,8 +2704,10 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 
 
 // 表格排序相关
-	// 排序表格中正在显示行中某一列(td:nth-of-type)，返回DOM Array
-	// 默认降序
+	// 排序表格中正在显示行中某一列(td:nth-of-type)
+	// 返回一个Array，每一个元素为jQuery DOM Object
+	// is_ascending 	是否为升序，默认降序
+	// rows				目标行，默认为全部可见行
 		_tablelist.prototype.sort_column = function( nth, is_ascending, rows ){
 			if( !rows ){
 				var tbody = this.dom.tbody
@@ -2710,8 +2761,9 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 		}
 
 	// 标记表格全部数据列中第一和第二高值的单元格
-		_tablelist.prototype.mark_high = function(){
+		_tablelist.prototype.mark_high = function( cacheSortData ){
 			var tbody = this.dom.tbody
+				,thead = this.dom.thead
 			if( !tbody || !tbody.length )
 				tbody = this.dom.table.find('tbody')
 			var rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
@@ -2720,26 +2772,80 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 
 			rows.eq(0).find('td[data-value]').each(function(index){
 				var is_ascending = false
+					,$this = $(this)
+					,stat = $this.data('stat')
 
-				// 以下属性不参与该计算
-					if( $(this).data('stat').match(/\b(speed|range)\b/ ) )
-						return
+				// 以下属性不进行标记，但仍计算排序
+					,noMark = stat.match(/\b(speed|range)\b/ )
 
 				// 以下属性为升序
-					if( $(this).data('stat').match(/\b(consum_fuel|consum_ammo)\b/ ) )
+					if( stat.match(/\b(consum_fuel|consum_ammo)\b/ ) )
 						is_ascending = true
 
 				var sort = _tablelist.prototype.sort_column( index+1, is_ascending, rows )
 					,max = Math.min( 6, Math.ceil(rows.length / 2) + 1 )
 
-				if( sort.length > 1 && sort[0].length < max ){
+				if( !noMark && sort.length > 1 && sort[0].length < max ){
 					sort[0].addClass('sort-first')
 					if( sort.length > 2 && sort[1].length < max )
 						sort[1].addClass('sort-second')
 				}
 
+				// 将排序结果存储到表头对应的列中
+					if( cacheSortData && thead && thead.length )
+						thead.find('[data-stat="'+stat+'"]').data('sortData', sort)
+					else
+						thead.find('[data-stat="'+stat+'"]').data('sortData', null)
+
 			})
+
+			return rows
 		}
+
+	// thead td, thead th
+	// 点击表头单元格，表格排序
+		_tablelist.prototype.sort_table_from_theadcell = function( cell ){
+			var sortData = cell.data('sortData')
+			if( !sortData )
+				return false
+
+			var stat = cell.data('stat')
+				,i = stat == this.lastSortedStat ? sortData.length - 1 : 0
+
+			this.sortedRow = $()
+
+			while( sortData[i] ){
+				this._tmpDOM = sortData[i].parent()
+				this.sortedRow = this.sortedRow.add( this._tmpDOM )
+				this._tmpDOM.appendTo( this.dom.tbody )
+				i = stat == this.lastSortedStat ? i - 1 : i + 1
+			}
+
+			this.lastSortedStat = stat
+			delete this._tmpDOM
+		}
+
+	// 重置表格排序
+		_tablelist.prototype.sort_table_restore = function(){
+			if( !this.sortedRow )
+				return true
+
+			// 还原所有DOM位置
+				var parent
+				this.sortedRow.each(function(){
+					var $this = $(this)
+						,trIndex = parseInt( $this.data('trindex') )
+					parent = parent || $this.parent()
+					$this.insertAfter(
+						parent.children('tr[data-trindex="' + (trIndex - 1) + '"]')
+					)
+				})
+
+			delete this.sortedRow
+			delete this.lastSortedStat
+			return true
+		}
+
 
 
 

@@ -1,16 +1,33 @@
 // Icons
-	[icon="close"]:before				{content: "×" !important; font-family: 'Gothic' !important; font-weight: lighter !important}
-	[icon="grid"]:before				{content: "\e600" !important;}
-	[icon="table"]:before				{content: "\e602" !important;}
-	[icon="checkbox-checked"]:before	{content: "\e601" !important;}
-	[icon="checkbox-uncheck"]:before	{content: "\e603" !important;}
+	@icon_code_close:				"×";
+
+	@icon_code_grid:				"\e600";
+	@icon_code_table:				"\e602";
+
+	@icon_code_checkbox-checked:	"\e601";
+	@icon_code_checkbox-uncheck:	"\e603";
 
 	// Arrow Set 1
-	[icon="arrow-left"]:before			{content: "\e604" !important;}
+		@icon_code_arrow-left:		"\e604";
 
 	// Arrow Set 2
-	[icon="arrow-set2-left"]:before		{content: "\e605" !important;}
-	[icon="arrow-set2-right"]:before	{content: "\e606" !important;}
+		@icon_code_arrow-set2-left:	"\e605";
+		@icon_code_arrow-set2-right:"\e606";
+
+
+
+	[icon="close"]:before				{content: @icon_code_close !important; font-family: 'Gothic' !important; font-weight: lighter !important}
+	[icon="grid"]:before				{content: @icon_code_grid !important;}
+	[icon="table"]:before				{content: @icon_code_table !important;}
+	[icon="checkbox-checked"]:before	{content: @icon_code_checkbox-checked !important;}
+	[icon="checkbox-uncheck"]:before	{content: @icon_code_checkbox-uncheck !important;}
+
+	// Arrow Set 1
+	[icon="arrow-left"]:before			{content: @icon_code_arrow-left !important;}
+
+	// Arrow Set 2
+	[icon="arrow-set2-left"]:before		{content: @icon_code_arrow-set2-left !important;}
+	[icon="arrow-set2-right"]:before	{content: @icon_code_arrow-set2-right !important;}
 
 // Scrapped
 	//[icon="arrow-up"]:before			{content: "\e604" !important;}

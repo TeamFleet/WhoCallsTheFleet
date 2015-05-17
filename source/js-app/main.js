@@ -338,12 +338,12 @@ _frame.app_main = {
 				}
 			}
 
-			_frame.app_main.page_dom[page].removeClass('off')
+			_frame.app_main.page_dom[page].removeClass('off').trigger('pageon')
 
 			// 关闭之前的页面
 				if( _frame.app_main.cur_page ){
 					_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
-					_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off')
+					_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff')
 				}
 
 			_frame.dom.navs[page].addClass('on')
