@@ -140,6 +140,10 @@
 					) : ''
 				)
 	}
+	_g.log = function(log){
+		if( debugmode )
+			console.log(log)
+	}
 
 
 
@@ -240,7 +244,7 @@ _frame.app_main = {
 
 	// 根据 history state 运行相应函数
 		state: function( stateObj ){
-			//console.log( stateObj )
+			//_g.log( stateObj )
 			if( stateObj['infos'] ){
 				_frame.infos.show_func( stateObj['infos'], stateObj['id'], null, stateObj['infosHistoryIndex'] )
 			}else{
@@ -321,8 +325,7 @@ _frame.app_main = {
 			//_g.uriHash('page', page)
 		},
 		load_page_func: function( page ){
-			if( debugmode )
-				console.log( 'PREPARE LOADING: ' + page )
+			_g.log( 'PREPARE LOADING: ' + page )
 
 			if( _frame.app_main.cur_page == page || !page )
 				return page
@@ -353,8 +356,7 @@ _frame.app_main = {
 
 			_frame.app_main.cur_page = page
 
-			if( debugmode )
-				console.log( 'LOADED: ' + page )
+			_g.log( 'LOADED: ' + page )
 		},
 
 
@@ -392,16 +394,15 @@ _frame.app_main = {
 			_frame.dom.bgimg = $('<div class="bgimg" />').appendTo( _frame.dom.layout )
 
 		// 创建主导航
-			function navLink(page){
-				return $('<button />').on('click', function(){
-						_frame.app_main.load_page(page)
-					})
-			}
 			if( _frame.app_main.nav && _frame.app_main.nav.length ){
 				_frame.dom.navs = {}
 				for( var i in _frame.app_main.nav ){
 					var o = _frame.app_main.nav[i]
-					_frame.dom.navs[o.page] = navLink(o.page).html(o.title).appendTo( _frame.dom.navlinks )
+					_frame.dom.navs[o.page] = (function(page){
+								return $('<button />').on('click', function(){
+										_frame.app_main.load_page(page)
+									})
+							})(o.page).html(o.title).appendTo( _frame.dom.navlinks )
 					//if( (i == 0 && !_g.uriHash('page') && !_g.uriSearch('page'))
 					//	|| o.page == _g.uriSearch('page')
 					//){
@@ -410,158 +411,190 @@ _frame.app_main = {
 				}
 			}
 
-		// 获取背景图列表，生成背景图
-			node.fs.readdir(_g.path.bgimg_dir, function(err, files){
-				var bgimgs_last = _config.get('bgimgs')
-					,bgimgs_new = []
-				bgimgs_last = bgimgs_last ? bgimgs_last.split(',') : []
-				for( var i in files ){
-					var lstat = node.fs.lstatSync( node.path.join( _g.path.bgimg_dir , '/' + files[i]) )
-					if( !lstat.isDirectory() ){
-						_frame.app_main.bgimgs.push( files[i] )
+		var promise_chain 	= Q.fcall(function(){})
 
-						// 存在bgimgs_last：直接比对
-						// 不存在bgimgs_last：比对每个文件，找出最新者
-						if( bgimgs_last.length ){
-							if( $.inArray( files[i], bgimgs_last ) < 0 )
-								bgimgs_new.push( files[i] )
-						}else{
-							var ctime = parseInt(lstat.ctime.valueOf())
-							if( bgimgs_new.length ){
-								if( ctime > bgimgs_new[1] )
-									bgimgs_new = [ files[i], ctime ]
-							}else{
-								bgimgs_new = [ files[i], ctime ]
+		// 开始异步函数链
+			promise_chain
+
+		// 获取背景图列表，生成背景图
+			.then(function(){
+				_g.log('背景图: START')
+				var deferred = Q.defer()
+				node.fs.readdir(_g.path.bgimg_dir, function(err, files){
+					if( err ){
+						deferred.reject(new Error(err))
+					}else{
+						var bgimgs_last = _config.get('bgimgs')
+							,bgimgs_new = []
+						bgimgs_last = bgimgs_last ? bgimgs_last.split(',') : []
+						for( var i in files ){
+							var lstat = node.fs.lstatSync( node.path.join( _g.path.bgimg_dir , '/' + files[i]) )
+							if( !lstat.isDirectory() ){
+								_frame.app_main.bgimgs.push( files[i] )
+
+								// 存在bgimgs_last：直接比对
+								// 不存在bgimgs_last：比对每个文件，找出最新者
+								if( bgimgs_last.length ){
+									if( $.inArray( files[i], bgimgs_last ) < 0 )
+										bgimgs_new.push( files[i] )
+								}else{
+									var ctime = parseInt(lstat.ctime.valueOf())
+									if( bgimgs_new.length ){
+										if( ctime > bgimgs_new[1] )
+											bgimgs_new = [ files[i], ctime ]
+									}else{
+										bgimgs_new = [ files[i], ctime ]
+									}
+								}
 							}
 						}
+						if( !bgimgs_last.length )
+							bgimgs_new.pop()
+						_config.set(
+							'bgimgs',
+							_frame.app_main.bgimgs
+						)
+						_frame.app_main.change_bgimg( bgimgs_new );
+						_frame.app_main.loaded('bgimgs')
+						//if( !_g.uriHash('page') )
+						//	_frame.app_main.load_page( _frame.app_main.nav[0].page )
+						//setTimeout(function(){
+						//	_frame.dom.layout.addClass('ready')
+						//}, 1000)
+						_g.log('背景图: DONE')
+						deferred.resolve()
 					}
-				}
-				if( !bgimgs_last.length )
-					bgimgs_new.pop()
-				_config.set(
-					'bgimgs',
-					_frame.app_main.bgimgs
-				)
-				_frame.app_main.change_bgimg( bgimgs_new );
-				_frame.app_main.loaded('bgimgs')
-				//if( !_g.uriHash('page') )
-				//	_frame.app_main.load_page( _frame.app_main.nav[0].page )
-				//setTimeout(function(){
-				//	_frame.dom.layout.addClass('ready')
-				//}, 1000)
+				})
+				return deferred.promise
 			})
 
 		// 读取db
-			//var _db_size = 0
-			//	,_db_loaded = 0
-			var _db_toload = []
-			for( var i in _db ){
-				//_db_size++
-				_db_toload.push(i)
-			}
-			function _db_load(){
-				var db_name = _db_toload[0]
-				_db_toload.shift()
+			.then(function(){
+				_g.log('Preload All DBs: START')
+				var the_promises = []
+					,dbs = []
+					,loaded_count = 0
 
-				function _db_load_next(){
-					//if( _db_loaded >= _db_size )
-					if( _db_toload.length )
-						setTimeout(function(){
-							_db_load()
-						}, 50)
-					else
-						setTimeout(function(){
-							_frame.app_main.loaded('dbs')
-						}, 500)
+				for( var db_name in _db ){
+					dbs.push(db_name)
 				}
 
-				_db[db_name].loadDatabase(function(err){
-					if( err ){
-					}else{
-						//_db_loaded++
-
-						switch( db_name ){
-							/*
-							case 'entities':
-							case 'items':
-							case 'item_types':
-							case 'ship_classes':
-							case 'ship_types':
-								_db[db_name].find({}, function(err, docs){
-									if( typeof _g.data[db_name] == 'undefined' )
-										_g.data[db_name] = {}
-									for(var i in docs ){
-										_g.data[db_name][docs[i]['id']] = docs[i]
-									}
-									_db_load_next()
-								})
-								break;
-								*/
-							case 'ship_namesuffix':
-								_db.ship_namesuffix.find({}).sort({ 'id': 1 }).exec(function(err, docs){
-									_g.data.ship_namesuffix = [{}].concat(docs)
-									_frame.app_main.loaded('db_namesuffix')
-									_db_load_next()
-								})
-								break;
-							case 'ship_type_order':
-								// ship type -> ship order
-								function map_do(){
-									for( var i in _g.ship_type_order ){
-										var index = parseInt(i)
-										if( typeof _g.ship_type_order[i] == 'object' ){
-											for( var j in _g.ship_type_order[i] ){
-												_g.ship_type_order_map[ _g.ship_type_order[i][j] ] = index
-											}
-										}else{
-											_g.ship_type_order_map[ _g.ship_type_order[i] ] = index
-										}
-									}
-								}
-								_db.ship_type_order.find({}).sort({'id': 1}).exec(function(err, docs){
-									for(var i in docs ){
-										_g.ship_type_order.push(
-											docs[i]['types'].length > 1 ? docs[i]['types'] : docs[i]['types'][0]
-										)
-										_g.data['ship_type_order'][docs[i]['id']] = docs[i]
-									}
-									map_do()
-									_db.ships.find({}).sort({'type': 1, 'class': 1, 'class_no': 1, 'time_created': 1, 'name.suffix': 1}).exec(function(err, docs){
-										for(var i in docs){
-											_g.data.ships[docs[i]['id']] = docs[i]
-
-											if( typeof _g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] == 'undefined' )
-												_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] = []
-											_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ].push( docs[i]['id'] )
-										}
-										_db_load_next()
-									})
-								})
-								break;
-							case 'updates':
-								if( typeof _g.data[db_name] == 'undefined' )
-									_g.data[db_name] = {}
-								_db_load_next()
-								break;
-							default:
-								_db[db_name].find({}, function(err, docs){
-									if( typeof _g.data[db_name] == 'undefined' )
-										_g.data[db_name] = {}
-									for(var i in docs ){
-										_g.data[db_name][docs[i]['id']] = docs[i]
-									}
-									_db_load_next()
-								})
-								break;
+				dbs.forEach(function(db_name){
+					var deferred = Q.defer()
+					function _done(_db_name){
+						_g.log('DB ' + _db_name + ' DONE')
+						deferred.resolve()
+						loaded_count++
+						if( loaded_count >= dbs.length ){
+							_g.log('Preload All DBs: DONE')
+							setTimeout(function(){
+								_frame.app_main.loaded('dbs')
+							}, 100)
 						}
-
 					}
+					_db[db_name].loadDatabase(function(err){
+						if( err ){
+							deferred.reject(new Error(err))
+						}else{
+							switch( db_name ){
+								/*
+									case 'entities':
+									case 'items':
+									case 'item_types':
+									case 'ship_classes':
+									case 'ship_types':
+										_db[db_name].find({}, function(err, docs){
+											if( typeof _g.data[db_name] == 'undefined' )
+												_g.data[db_name] = {}
+											for(var i in docs ){
+												_g.data[db_name][docs[i]['id']] = docs[i]
+											}
+											_db_load_next()
+										})
+										break;
+									*/
+								case 'ship_namesuffix':
+									_db.ship_namesuffix.find({}).sort({ 'id': 1 }).exec(function(dberr, docs){
+										if( dberr ){
+											deferred.reject(new Error(dberr))
+										}else{
+											_g.data.ship_namesuffix = [{}].concat(docs)
+											_frame.app_main.loaded('db_namesuffix')
+											_done(db_name)
+										}
+									})
+									break;
+								case 'ship_type_order':
+									_db.ship_type_order.find({}).sort({'id': 1}).exec(function(dberr, docs){
+										if( dberr ){
+											deferred.reject(new Error(dberr))
+										}else{
+											for(var i in docs ){
+												_g.ship_type_order.push(
+													docs[i]['types'].length > 1 ? docs[i]['types'] : docs[i]['types'][0]
+												)
+												_g.data['ship_type_order'][docs[i]['id']] = docs[i]
+											}
+											// ship type -> ship order
+												(function(){
+													for( var i in _g.ship_type_order ){
+														var index = parseInt(i)
+														if( typeof _g.ship_type_order[i] == 'object' ){
+															for( var j in _g.ship_type_order[i] ){
+																_g.ship_type_order_map[ _g.ship_type_order[i][j] ] = index
+															}
+														}else{
+															_g.ship_type_order_map[ _g.ship_type_order[i] ] = index
+														}
+													}
+												})()
+											_db.ships.find({}).sort({
+												'type': 1, 'class': 1, 'class_no': 1, 'time_created': 1, 'name.suffix': 1
+											}).exec(function(dberr2, docs){
+												if( dberr2 ){
+													deferred.reject(new Error(dberr))
+												}else{
+													for(var i in docs){
+														_g.data.ships[docs[i]['id']] = docs[i]
+
+														if( typeof _g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] == 'undefined' )
+															_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] = []
+														_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ].push( docs[i]['id'] )
+													}
+													_done(db_name)
+												}
+											})
+										}
+									})
+									break;
+								case 'updates':
+									if( typeof _g.data[db_name] == 'undefined' )
+										_g.data[db_name] = {}
+									_done(db_name)
+									break;
+								default:
+									_db[db_name].find({}, function(dberr, docs){
+										if( dberr ){
+											deferred.reject(new Error(dberr))
+										}else{
+											if( typeof _g.data[db_name] == 'undefined' )
+												_g.data[db_name] = {}
+											for(var i in docs ){
+												_g.data[db_name][docs[i]['id']] = docs[i]
+											}
+											_done(db_name)
+										}
+									})
+									break;
+							}
+
+						}
+					})
+					the_promises.push(deferred.promise)
 				})
-			}
-			//for( var i in _db ){
-			//	_db_load(i)
-			//}
-			_db_load()
+
+				return Q.all(the_promises);
+			})
 
 		// 部分全局事件委托
 		/*
@@ -583,50 +616,62 @@ _frame.app_main = {
 		// 鼠标侧键操作
 
 		// Debug Mode
-			if( debugmode ){
-				_frame.dom.hashbar = $('<input type="text"/>')
-						.on({
-							'urlchanged': function(){
-								$(this).val(
-									location.href.substr( (location.origin + location.pathname).length )
-								)
-							},
-							'change': function(){
-								location.replace( location.origin + location.pathname + _frame.dom.hashbar.blur().val() )
-							}
-						})
-						.appendTo(
-							$('<div class="debug_hashbar"/>').appendTo(_frame.dom.layout)
-						)
-						.trigger( 'urlchanged' )
-				_frame.dom.layout.addClass('debug-hashbar')
-				$window.on({
-					'hashchange.debug_mode_hashbar': function(){
-						_frame.dom.hashbar.trigger('urlchanged')
-					},
-					'popstate.debug_mode_hashbar': function(){
-						_frame.dom.hashbar.trigger('urlchanged')
-					}
-				})
-				// HACK: 在 history.pushstate() 同时，触发 window.onpopstate 事件
-				// http://felix-kling.de/blog/2011/01/06/how-to-detect-history-pushstate/
-				function hackHistory(history){
-					var pushState = history.pushState;
-					history.pushState = function(state) {
-						if (typeof history.onpushstate == "function") {
-							history.onpushstate({state: state});
-						}
-						setTimeout(function(){
-							//$window.trigger('popstate')
+			.then(function(){
+				if( debugmode ){
+					_frame.dom.hashbar = $('<input type="text"/>')
+							.on({
+								'urlchanged': function(){
+									$(this).val(
+										location.href.substr( (location.origin + location.pathname).length )
+									)
+								},
+								'change': function(){
+									location.replace( location.origin + location.pathname + _frame.dom.hashbar.blur().val() )
+								}
+							})
+							.appendTo(
+								$('<div class="debug_hashbar"/>').appendTo(_frame.dom.layout)
+							)
+							.trigger( 'urlchanged' )
+					_frame.dom.layout.addClass('debug-hashbar')
+					$window.on({
+						'hashchange.debug_mode_hashbar': function(){
 							_frame.dom.hashbar.trigger('urlchanged')
-						}, 1)
-						return pushState.apply(history, arguments);
+						},
+						'popstate.debug_mode_hashbar': function(){
+							_frame.dom.hashbar.trigger('urlchanged')
+						}
+					})
+					// HACK: 在 history.pushstate() 同时，触发 window.onpopstate 事件
+					// http://felix-kling.de/blog/2011/01/06/how-to-detect-history-pushstate/
+					function hackHistory(history){
+						var pushState = history.pushState;
+						history.pushState = function(state) {
+							if (typeof history.onpushstate == "function") {
+								history.onpushstate({state: state});
+							}
+							setTimeout(function(){
+								//$window.trigger('popstate')
+								_frame.dom.hashbar.trigger('urlchanged')
+							}, 1)
+							return pushState.apply(history, arguments);
+						}
 					}
+					hackHistory(window.history);
 				}
-				hackHistory(window.history);
-			}
+				return true
+			})
 
-		_frame.app_main.is_init = true
+		// 错误处理
+			.catch(function (err) {
+				_g.log(err)
+			})
+			.done(function(){
+				_g.log('Global initialization DONE')
+			})
+
+		// 标记已进行过初始化函数
+			_frame.app_main.is_init = true
 	}
 }
 

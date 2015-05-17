@@ -411,9 +411,10 @@
 				//background:	rgba(255, 255, 255, .1);
 				background:	rgba(0, 0, 0, .25);
 				.border(1, solid, rgba(255, 255, 255, .25) );
-				.transition-property(background);
+				.transition-property(~"background, color");
 				border-radius:	5px 0 0 5px;
 				overflow:		hidden;
+				border-right-color:	transparent;
 				&:hover{
 					background:	rgba(255, 255, 255, .1);
 				}
@@ -436,12 +437,17 @@
 				}
 				&+button{
 					border-radius:	0;
-					border-left:	0;
-					//.margin-left(-1);
+					//border-left:	0;
+					.margin-left(-1);
 				}
 				&:last-of-type{
 					border-top-right-radius:	5px !important;
 					border-bottom-right-radius:	5px !important;
+					border-right-color:	rgba(255, 255, 255, .25);
+				}
+				&.disabled{
+					background:	rgba(0,0,0,.35) !important;
+					color:		rgba(255,255,255,.35) !important;
 				}
 			}
 		}

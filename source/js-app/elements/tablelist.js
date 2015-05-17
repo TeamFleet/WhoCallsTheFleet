@@ -401,7 +401,12 @@ _tablelist.prototype.global_index = 0
 											})
 									)
 									.appendTo( this.dom.filter_container )
-			this.dom.helper_compare_sort = $('<span/>').html('点击表格标题可排序').appendTo( this.dom.exit_compare )
+			this.dom.btn_compare_sort = $('<button icon="sort-amount-desc" class="disabled"/>')
+												.html('点击表格标题可排序')
+												.on('click', function(){
+													if( !self.dom.btn_compare_sort.hasClass('disabled') )
+														self.sort_table_restore()
+												}).appendTo( this.dom.exit_compare )
 
 		// 初始化设置
 			this.append_option( 'checkbox', 'hide-premodel', '仅显示同种同名舰最终版本',
@@ -959,6 +964,9 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 				i = order == 'reverse' ? i - 1 : i + 1
 			}
 
+			// 修改排序提示按钮
+				this.dom.btn_compare_sort.removeClass('disabled').html('取消排序')
+
 			this.lastSortedStat = stat
 			this.lastSortedOrder = order
 			delete this._tmpDOM
@@ -970,15 +978,28 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 				return true
 
 			// 还原所有DOM位置
-				var parent
+				var parent, arr = []
 				this.sortedRow.each(function(){
 					var $this = $(this)
 						,trIndex = parseInt( $this.data('trindex') )
 					parent = parent || $this.parent()
-					$this.insertAfter(
-						parent.children('tr[data-trindex="' + (trIndex - 1) + '"]')
-					)
+					arr.push({
+						'index': 	trIndex,
+						'el': 		$this,
+						'prev': 	parent.children('tr[data-trindex="' + (trIndex - 1) + '"]')
+					})
 				})
+				// 如果在上一步直接将DOM移动到上一个index行的后方，可能会因为目标DOM也为排序目标同时在当前DOM顺序后，造成结果不正常
+				// 故需要两步操作
+				arr.sort(function(a, b){
+					return a['index']-b['index']
+				})
+				for(var i in arr){
+					arr[i].el.insertAfter( arr[i].prev )
+				}
+
+			// 修改排序提示按钮
+				this.dom.btn_compare_sort.addClass('disabled').html('点击表格标题可排序')
 
 			delete this.sortedRow
 			delete this.lastSortedStat
