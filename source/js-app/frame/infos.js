@@ -732,20 +732,8 @@ _frame.infos.init = function(){
 					,equipped_container = _p.el.flexgrid.create().appendTo( equipped )
 				if( d.default_equipped_on && d.default_equipped_on.length ){
 					for( var i in d.default_equipped_on ){
-						var ship_data = _g.data.ships[d.default_equipped_on[i]]
 						equipped_container.appendDOM(
-							$('<button class="unit"/>')
-								.attr({
-									'data-shipid': 	d.default_equipped_on[i],
-									'data-infos': 	'[[SHIP::'+d.default_equipped_on[i]+']]'
-								})
-								.html(
-									'<img src="' + _g.path.pics.ships + '/' + d.default_equipped_on[i]+'/0.webp"/>'
-									+ '<span>'
-										+ (d['type'] ? '<small>' + _g['data']['ship_types'][ship_data['type']]['full_zh'] + '</small>' : '' )
-										+ _g.getName( ship_data['name'], '・' )
-									+ '</span>'
-								)
+							_tmpl.link_ship(d.default_equipped_on[i])
 						)
 					}
 				}else{

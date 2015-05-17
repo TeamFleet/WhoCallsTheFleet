@@ -348,7 +348,7 @@ _tablelist.prototype.global_index = 0
 		this.dom.filter_container.attr('viewtype', 'compare')
 		_config.set( 'shiplist-viewtype', this._ships_last_viewtype )
 		this.mark_high()
-		this.thead_redraw()
+		this.thead_redraw( 500 )
 	}
 	_tablelist.prototype._ships_compare_end = function(){
 		this.dom.tbody.find('input[type="checkbox"].compare:checked').prop('checked', false).trigger('change')
@@ -356,12 +356,14 @@ _tablelist.prototype.global_index = 0
 		delete this._ships_last_viewtype
 		this.dom.msg_container.removeAttr('data-msgs')
 		this.mark_high()
+		this.thead_redraw( 500 )
 	}
 	_tablelist.prototype._ships_compare_continue = function(){
 		this.dom.filter_container.attr('viewtype', this._ships_last_viewtype)
 		delete this._ships_last_viewtype
 		this.dom.msg_container.attr('data-msgs', 'comparestart')
 		this.mark_high()
+		this.thead_redraw( 500 )
 	}
 	_tablelist.prototype._ships_init = function(){
 		var self = this
@@ -793,12 +795,12 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 }
 
 // 强制 thead 重绘，以解决某些CSS计算延迟问题
-	_tablelist.prototype.thead_redraw = function(){
+	_tablelist.prototype.thead_redraw = function( timeout_duration ){
 		if( this.dom.table_thead && this.dom.table_thead.length ){
 			var thead = this.dom.table_thead
 			setTimeout(function(){
 				thead.hide().show(0)
-			}, 10)
+			}, timeout_duration || 10)
 		}
 	}
 
