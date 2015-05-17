@@ -2,7 +2,7 @@ _tmpl.link_ship = function( ship, tagName, returnHTML ){
 	if( !ship )
 		return false
 
-	if( typeof tagName == 'object' )
+	if( tagName && typeof tagName == 'object' )
 		return _tmpl.link_ship(
 					ship,
 					tagName['tagName'] || null,

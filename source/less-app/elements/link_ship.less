@@ -2,33 +2,40 @@
 	display:	inline-block;
 	position:	relative;
 	overflow:	hidden;
+	text-align:	left;
 	.height(40);
 	background-size:	0 100%;
 	background-color:	transparent !important;
 	background-repeat:	no-repeat;
 	background-image:	linear-gradient(to right, transparent 10px, rgba(0, 0, 0, .35) ~"calc(100% - 30px)", transparent);
-	.flexbox();
-	.align-items(center);
+	//.flexbox();
+	//.align-items(center);
 	.transition-property(background-size);
+	.padding-right(10);
 	img{
 		.margin-left(-50);
 		.mask-image(~"linear-gradient(to right, transparent 0, transparent 50px, #000 58px, #000 calc(100% - 60px), transparent calc(100% - 10px))");
+		.margin-right(-20);
 		pointer-events: none;
+		float:			left;
 	}
 	span{
-		display:	inline-block;
-		.margin-left(-14);
+		//display:	inline-block;
 		position:	relative;
 		z-index:	2;
 		.font-size(15);
-		.line-height(18);
+		.line-height(15);
 		color:		#f2f2f2;
+		display: 	table-cell;
+		vertical-align: middle;
+		.height(40);
 		small{
 			color:		#e8e8e8;
 			display:	block;
 			.font-size(12);
 			.line-height(12);
 			.padding-bottom(2);
+			.padding-top(1);
 		}
 	}
 	&:hover{

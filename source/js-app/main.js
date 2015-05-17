@@ -2,6 +2,8 @@
 	node.require('fs')
 	node.require('nedb')
 	node.require('mkdirp')
+	var Q = node.require('q')
+		,markdown = node.require( "markdown" ).markdown
 
 
 
@@ -81,6 +83,10 @@
 			}),
 		'ship_namesuffix': new node.nedb({
 				filename: 	_g.path.db + '/ship_namesuffix.json'
+			}),
+
+		'updates': new node.nedb({
+				filename: 	_g.path.db + '/updates.json'
 			})
 	}
 	_g.ship_type_order = []
@@ -531,6 +537,11 @@ _frame.app_main = {
 										_db_load_next()
 									})
 								})
+								break;
+							case 'updates':
+								if( typeof _g.data[db_name] == 'undefined' )
+									_g.data[db_name] = {}
+								_db_load_next()
 								break;
 							default:
 								_db[db_name].find({}, function(err, docs){

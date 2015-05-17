@@ -37,7 +37,7 @@
 {"name":{"ja_jp":"竹達 彩奈","zh_cn":"竹达 彩奈"},"id":14,"_id":"dGSumSTyTT4apNhF","rels":{"cv":[132,301,133,302,134,303,135,304,131,136]}}
 {"name":{"ja_jp":"パセリ","zh_cn":"Parsley"},"id":43,"_id":"g7fYkGZQmHgEA2hD","rels":{"illustrator":[168,317,167,320,170,312,169,313,154,343,68,271,69,272,428,427]}}
 {"name":{"ja_jp":"玖条イチソ","zh_cn":"玖条ITISO"},"id":35,"_id":"ihWRR8AGXqkdibga","rels":{"illustrator":[42,242,43,243,145,44,244,45,245,144,405,323,184,185,318]}}
-{"name":{"ja_jp":"じじ","zh_cn":"JiJi"},"id":54,"_id":"j7en2RDFMlYrD2UQ","rels":{"illustrator":[446,441,442,447]}}
+{"name":{"ja_jp":"じじ","zh_cn":"JiJi"},"id":54,"_id":"j7en2RDFMlYrD2UQ","rels":{"illustrator":[446,441,442,447]},"links":[{"name":"Homepage","url":"http://aardvark.xii.jp/"},{"name":"Twitter","url":"https://twitter.com/Jiji_Aardvark"},{"name":"Pixiv","url":"http://www.pixiv.net/member.php?id=3911"}]}
 {"name":{"ja_jp":"山田 悠希","zh_cn":"山田 悠希"},"id":28,"_id":"jQhPwZMVIOGdgI0I","rels":{"cv":[137,305,138,306,139,307,140,314]}}
 {"name":{"ja_jp":"hatsuko","zh_cn":"hatsuko"},"id":44,"_id":"lIFNTBRMHll7JQxF","rels":{"illustrator":[61,264]}}
 {"name":{"ja_jp":"やどかり","zh_cn":"yadokari"},"id":48,"_id":"m5tAiq9xrPuHMkQ1","rels":{"illustrator":[28,256,29,257,6,258,30,259,7,260,31,261,34,234,35,235,147,36,236,37,237,40,240,41,241,419]}}
