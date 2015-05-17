@@ -202,7 +202,7 @@ _frame.app_main = {
 							for(var i in _frame.app_main.functions_on_ready){
 								_frame.app_main.functions_on_ready[i]()
 							}
-						}, 1100)
+						}, 1500)
 					}
 				}, is_instant ? 300 : 1000)
 
@@ -643,20 +643,24 @@ _frame.app_main = {
 							deferred.resolve()
 							done_count++
 							if( done_count >= updated.length ){
-								_g.log('数据更新检查: DONE')
-								_frame.app_main.functions_on_ready.push(function(){
-									_frame.modal.show(
-										$('<div class="updates"/>')
-											.html(html)
-											.on('click.infosHideModal', '[data-infos]', function(){
-												_frame.modal.hide()
-											}),
-										'<span>更新日志</span>',
-										{
-											'classname': 	'update_journal'
-										}
-									)
-								})
+								if( html ){
+									_g.log('数据更新检查: DONE')
+									_frame.app_main.functions_on_ready.push(function(){
+										_frame.modal.show(
+											$('<div class="updates"/>')
+												.html(html)
+												.on('click.infosHideModal', '[data-infos]', function(){
+													_frame.modal.hide()
+												}),
+											'<span>更新日志</span>',
+											{
+												'classname': 	'update_journal'
+											}
+										)
+									})
+								}else{
+									_g.log('数据更新检查: DONE，无更新日志')
+								}
 								//setTimeout(function(){
 								//}, 100)
 							}
