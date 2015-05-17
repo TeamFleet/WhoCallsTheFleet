@@ -1,7 +1,8 @@
 #layout>main>.page[page="about"]{
 	//background:	hsla(199, 30%, 18%, .65);
 	background:	hsla(0, 20%, 18%, .70);
-	//font-size:	unit( 13 / 12, em );
+	.font-size(14);
+	line-height:1.7em;
 	h1, h2, h3, h4, h5, h6{
 		//color:	hsl(0, 100%, 73%);
 		//color:		hsl(0, 100%, 76%);
@@ -18,12 +19,5 @@
 			font-family:@font_family_sans;
 			font-weight:lighter;
 		}
-	}
-	h3 ~ h3, section ~ h3, section ~ section{
-		margin-top:	3em;
-	}
-	ul>strong, p>strong{
-		font-size:	larger;
-		font-weight:lighter;
 	}
 }

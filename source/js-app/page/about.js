@@ -1,4 +1,19 @@
 _frame.app_main.page['about'] = {}
+
+_frame.app_main.page['about'].journal_parse = function( raw ){
+	var searchRes
+		,scrapePtrn = /\[\[([^\:]+)\:\:([0-9]+)\]\]/gi
+		,resultHTML = markdown.toHTML( raw )
+
+	while( (searchRes = scrapePtrn.exec(raw)) !== null ){
+		try{
+			resultHTML = resultHTML.replace( searchRes[0], _tmpl['link_'+searchRes[1].toLowerCase()](searchRes[2], null, true) )
+		}catch(e){}
+	}
+
+	return resultHTML
+}
+
 _frame.app_main.page['about'].init = function( page ){
 	/*
 	var latestVersionSection = $('[data-version-app]:first-of-type')
@@ -8,26 +23,19 @@ _frame.app_main.page['about'].init = function( page ){
 	//$('[data-version-app^="'+latestVersionSub+'"]')
 
 	function addUpdateJournal( updateData ){
-		var section = $('<section data-version-'+updateData['type']+'="'+updateData['version']+'"/>')
+		var section = $('<section class="update_journal" data-version-'+updateData['type']+'="'+updateData['version']+'"/>')
 						.html(
 							'<h3>'+updateData['version']
 							+ '<small>'+(updateData['date'] ? updateData['date'] : 'WIP')+'</small>'
 							+ '</h3>'
 						)
 						.appendTo(page)
-			,searchRes
-			,scrapePtrn = /\[\[([^\:]+)\:\:([0-9]+)\]\]/gi
-			,resultHTML = markdown.toHTML( updateData['journal'] )
-
-		while( (searchRes = scrapePtrn.exec(updateData['journal'])) !== null ){
-			try{
-				resultHTML = resultHTML.replace( searchRes[0], _tmpl['link_'+searchRes[1].toLowerCase()](searchRes[2], null, true) )
-			}catch(e){}
-		}
-
 		try{
-			$(resultHTML).appendTo( section )
-		}catch(e){}
+			$(_frame.app_main.page['about'].journal_parse(updateData['journal'])).appendTo( section )
+		}catch(e){
+			_g.log(e)
+			section.remove()
+		}
 	}
 
 	var promise_chain 	= Q.fcall(function(){})

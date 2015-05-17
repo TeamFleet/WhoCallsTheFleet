@@ -1087,6 +1087,30 @@ table{
 
 
 
+// 当 modal 显示时
+	body .modal.on ~ #layout{
+		&>nav{
+			.window-noframe({
+				-webkit-app-region:	no-drag;
+			});
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // debugmode
 	body #layout.debug-hashbar{

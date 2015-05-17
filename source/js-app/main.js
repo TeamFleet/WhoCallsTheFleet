@@ -180,6 +180,9 @@ _frame.app_main = {
 		],
 		// is_loaded: false,
 
+	// 页面初始化载入完毕后执行的函数组
+		functions_on_ready: [],
+
 	// 载入完毕一项内容，并检查其余内容是否载入完毕
 	// 如果全部载入完毕，#layout 添加 .ready
 		loaded: function( item, is_instant ){
@@ -192,9 +195,14 @@ _frame.app_main = {
 			}
 			if( !_frame.app_main.loading.length && !_frame.app_main.is_loaded ){
 				setTimeout(function(){
-					if( _frame.app_main.is_loaded && !_frame.app_main.loading.length ){
+					if( _frame.app_main.is_loaded && !_frame.app_main.loading.length && !$html.hasClass('app-ready') ){
 						_frame.dom.layout.addClass('ready')
 						$html.addClass('app-ready')
+						setTimeout(function(){
+							for(var i in _frame.app_main.functions_on_ready){
+								_frame.app_main.functions_on_ready[i]()
+							}
+						}, 1100)
 					}
 				}, is_instant ? 300 : 1000)
 
@@ -594,6 +602,87 @@ _frame.app_main = {
 				})
 
 				return Q.all(the_promises);
+			})
+		
+		// 如果从启动器载入，检查数据是否有更新
+			.then(function(){
+				_g.log('数据更新检查: START')
+				if( global.launcherOptions && global.launcherOptions["dataUpdated"] )
+					return global.launcherOptions["dataUpdated"]
+				return {}
+			})
+			.then(function(dataUpdated){
+				var the_promises = []
+					,updated = []
+					,done_count = 0
+					,html = ''
+
+				for(var i in dataUpdated){
+					var version = dataUpdated[i].split('.')
+						,_version = ''
+
+					for( var j = 0; j < Math.min(3, version.length); j++ )
+						_version+= '.' + version[j]
+
+					_version = _version.substr(1)
+					updated.push({
+						'type': 	i,
+						'version': 	_version
+					})
+				}
+
+				if( !updated.length ){
+					_g.log('数据更新检查: DONE，无数据更新')
+					return false
+				}else{
+					updated.forEach(function(obj){
+						var deferred = Q.defer()
+
+						function _done(item){
+							_g.log('数据更新检查: '+item+' DONE')
+							deferred.resolve()
+							done_count++
+							if( done_count >= updated.length ){
+								_g.log('数据更新检查: DONE')
+								_frame.app_main.functions_on_ready.push(function(){
+									_frame.modal.show(
+										$('<div class="updates"/>')
+											.html(html)
+											.on('click.infosHideModal', '[data-infos]', function(){
+												_frame.modal.hide()
+											}),
+										'<span>更新日志</span>',
+										{
+											'classname': 	'update_journal'
+										}
+									)
+								})
+								//setTimeout(function(){
+								//}, 100)
+							}
+						}
+
+						_db.updates.find(obj).sort({'date': -1}).exec(function(err, docs){
+							if( err ){
+								deferred.reject(new Error(err))
+							}else{
+								for( var i in docs ){
+									html+= '<h3>' + docs[i]['version']
+											+ '<small>'+(docs[i]['date'] ? docs[i]['date'] : 'WIP')+'</small>'
+											+ '</h3>'
+											+ '<section class="update_journal"/>'
+											+ _frame.app_main.page['about'].journal_parse(docs[i]['journal'])
+											+ '</section>'
+								}
+								_done(obj['type'] + ' - ' + obj['version'])
+							}
+						})
+
+						the_promises.push(deferred.promise)
+					})
+
+					return Q.all(the_promises);
+				}
 			})
 
 		// 部分全局事件委托

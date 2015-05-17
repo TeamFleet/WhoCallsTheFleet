@@ -115,7 +115,7 @@ _frame.infos = {
 		// 计算历史记录相关，确定 Back/Forward 按钮是否可用
 			infosHistoryIndex = typeof infosHistoryIndex != 'undefined' ? infosHistoryIndex : this.historyCurrent
 			this.historyCurrent = infosHistoryIndex
-			//console.log( this.historyCurrent, this.historyLength )
+			//_g.log( this.historyCurrent, this.historyLength )
 			if( this.historyCurrent == this.historyLength && this.historyCurrent > -1 )
 				_frame.infos.dom.forward.addClass('disabled')
 
@@ -279,8 +279,7 @@ _frame.infos.init = function(){
 		_frame.infos.__ship = function( id ){
 			var d = _g.data.ships[ id ]
 
-			if( debugmode )
-				console.log(d)
+			_g.log(d)
 
 			function _val( val, show_zero ){
 				if( !show_zero && (val == 0 || val == '0') )
@@ -597,8 +596,7 @@ _frame.infos.init = function(){
 		_frame.infos.__equipment = function( id ){
 			var d = _g.data.items[ id ]
 
-			if( debugmode )
-				console.log(d)
+			_g.log(d)
 
 			function _stat(stat, title){
 				if( d['stat'][stat] ){

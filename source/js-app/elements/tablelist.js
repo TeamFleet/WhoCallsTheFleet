@@ -42,6 +42,8 @@ var _tablelist = function( container, options ){
 }
 
 _tablelist.prototype.global_index = 0
+_tablelist.prototype.flexgrid_empty_count = 6
+_tablelist.prototype.sort_data_by_stat = {}
 
 
 
@@ -273,7 +275,7 @@ _tablelist.prototype.global_index = 0
 
 					// 创建空DOM，欺骗flexbox layout排版
 						var k = 0
-						while(k < 10){
+						while(k < self.flexgrid_empty_count){
 							var _index = self.trIndex + _g.data.ship_id_by_type[i].length + k
 							$('<tr class="empty" data-trindex="'+_index+'"/>').appendTo(self.dom.tbody)
 							k++
@@ -321,7 +323,7 @@ _tablelist.prototype.global_index = 0
 
 				setTimeout(function(){
 					if( j >= _g.data.ship_id_by_type[i].length - 1 ){
-						self.trIndex+= 10
+						self.trIndex+= self.flexgrid_empty_count
 						_do( i+1, 0 )
 					}else{
 						_do( i, j+1 )
@@ -329,11 +331,11 @@ _tablelist.prototype.global_index = 0
 				}, 0)
 			}else{
 				self.mark_high()
-				_frame.app_main.loaded('tablelist_'+self._index, true)
-				//console.log( self._ships_last_item )
-				delete( self._ships_last_item )
-				//console.log( self._ships_last_item )
 				self.thead_redraw()
+				_frame.app_main.loaded('tablelist_'+self._index, true)
+				//_g.log( self._ships_last_item )
+				delete( self._ships_last_item )
+				//_g.log( self._ships_last_item )
 			}
 		}
 		_do( 0, 0 )
@@ -380,7 +382,7 @@ _tablelist.prototype.global_index = 0
 			_frame.app_main.loading.push('tablelist_'+this._index)
 			_frame.app_main.is_loaded = false
 
-			//console.log( 'shiplist init', _frame.app_main.loading )
+			//_g.log( 'shiplist init', _frame.app_main.loading )
 
 		// 生成过滤器与选项
 			this.dom.filter_container = $('<div class="options"/>').appendTo( this.dom.container )
@@ -903,10 +905,12 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 	// 标记表格全部数据列中第一和第二高值的单元格
 		_tablelist.prototype.mark_high = function( cacheSortData ){
 			var tbody = this.dom.tbody
-				,thead = this.dom.thead
+
 			if( !tbody || !tbody.length )
 				tbody = this.dom.table.find('tbody')
+
 			var rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
+				,sort_data_by_stat = this.sort_data_by_stat
 
 			rows.find('td[data-value]').removeClass('sort-first sort-second')
 
@@ -932,10 +936,10 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 				}
 
 				// 将排序结果存储到表头对应的列中
-					if( cacheSortData && thead && thead.length )
-						thead.find('[data-stat="'+stat+'"]').data('sortData', sort)
+					if( cacheSortData )
+						sort_data_by_stat[stat] = sort
 					else
-						thead.find('[data-stat="'+stat+'"]').data('sortData', null)
+						delete( sort_data_by_stat[stat] )
 
 			})
 
@@ -945,12 +949,12 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 	// thead td, thead th
 	// 点击表头单元格，表格排序
 		_tablelist.prototype.sort_table_from_theadcell = function( cell ){
-			var sortData = cell.data('sortData')
-			if( !sortData )
+			var stat = cell.data('stat')
+				,sortData = this.sort_data_by_stat[stat]
+			if( !stat || !sortData )
 				return false
 
-			var stat = cell.data('stat')
-				,order = (stat == this.lastSortedStat && this.lastSortedOrder == 'obverse')
+			var order = (stat == this.lastSortedStat && this.lastSortedOrder == 'obverse')
 							? 'reverse'
 							: 'obverse'
 				,i = order == 'reverse' ? sortData.length - 1 : 0
