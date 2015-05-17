@@ -680,23 +680,7 @@ _frame.infos.init = function(){
 								.html('<span><small class="indicator true">可升级为</small></span>')
 								.appendTo(arsenal)
 						for( var i in d['upgrade_to'] ){
-							var equipment_data = _g.data.items[d['upgrade_to'][i][0]]
-								,equipment_icon = 'assets/images/itemicon/'
-												+ _g.data.item_types[equipment_data['type']]['icon']
-												+ '.png'
-							$('<button/>')
-								.attr({
-									'data-equipmentid': 	d['upgrade_to'][i][0],
-									'data-tip-position': 	'right',
-									'data-infos': 			'[[EQUIPMENT::'+d['upgrade_to'][i][0]+']]',
-									'data-tip':				'[[EQUIPMENT::'+d['upgrade_to'][i][0]+']]'
-								})
-								.html(
-									'<i style="background-image:url('+equipment_icon+')"></i>'
-									+ '<small>' + equipment_data['name']['zh_cn'].replace(/（([^（^）]+)）/g, '<small>($1)</small>') + '</small>'
-									+ '<em' + (d['upgrade_to'][i][1]<=0 ? ' class="zero"' : '') + '>+' + d['upgrade_to'][i][1] + '</em>'
-								)
-								.appendTo( arsenal_to )
+							_tmpl.link_equipment(d['upgrade_to'][i][0], null, null, d['upgrade_to'][i][1]).appendTo( arsenal_to )
 						}
 					}
 
@@ -708,22 +692,7 @@ _frame.infos.init = function(){
 						,upgrade_from1 = $('<div class="stat upgrade"/>')
 							.appendTo(upgrade_from)
 					for( var i in d['upgrade_from'] ){
-						var equipment_data = _g.data.items[d['upgrade_from'][i]]
-							,equipment_icon = 'assets/images/itemicon/'
-											+ _g.data.item_types[equipment_data['type']]['icon']
-											+ '.png'
-						$('<button/>')
-							.attr({
-								'data-equipmentid': 	d['upgrade_from'][i],
-								'data-tip-position': 	'right',
-								'data-infos': 			'[[EQUIPMENT::'+d['upgrade_from'][i]+']]',
-								'data-tip':				'[[EQUIPMENT::'+d['upgrade_from'][i]+']]'
-							})
-							.html(
-								'<i style="background-image:url('+equipment_icon+')"></i>'
-								+ '<small>' + equipment_data['name']['zh_cn'].replace(/（([^（^）]+)）/g, '<small>($1)</small>') + '</small>'
-							)
-							.appendTo( upgrade_from1 )
+						_tmpl.link_equipment(d['upgrade_from'][i]).appendTo( upgrade_from1 )
 					}
 				}
 
@@ -733,7 +702,7 @@ _frame.infos.init = function(){
 				if( d.default_equipped_on && d.default_equipped_on.length ){
 					for( var i in d.default_equipped_on ){
 						equipped_container.appendDOM(
-							_tmpl.link_ship(d.default_equipped_on[i])
+							_tmpl.link_ship(d.default_equipped_on[i]).addClass('unit')
 						)
 					}
 				}else{

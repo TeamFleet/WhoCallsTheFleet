@@ -7,28 +7,6 @@ _frame.app_main.page['about'].init = function( page ){
 	*/
 	//$('[data-version-app^="'+latestVersionSub+'"]')
 
-	// 选择所有节点
-	/*
-		page.contents().
-		each(function(i, el){ 
-			var $el = $(el) // take the text node as a jQuery element
-				,texts = $el.html()
-			//var replaced = $el.text().replace(/\[\[SHIP\:\:([0-9]+)\]\]/g, _tmpl.link_ship("$1", null, true) ) // wrap
-			//$el.replaceWith(replaced); // and replace
-
-			var searchRes
-				,scrapePtrn = /\[\[([^\:]+)\:\:([0-9]+)\]\]/gi
-
-			while( (searchRes = scrapePtrn.exec(texts)) !== null ){
-				console.log( el, searchRes )
-				$el.replaceWith(
-					texts.replace( searchRes[0], _tmpl.link_ship(searchRes[2], null, true) )
-				)
-			}
-
-		});
-	*/
-
 	function addUpdateJournal( updateData ){
 		var section = $('<section data-version-'+updateData['type']+'="'+updateData['version']+'"/>')
 						.html(
