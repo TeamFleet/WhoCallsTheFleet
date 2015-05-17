@@ -843,15 +843,13 @@ table{
 			border-bottom:	0;
 		}
 	}
-	td{
-		border-left:	1px solid transparent;
-	}
 	thead{
 		.font-size(12);
 		.line-height(@thead_height);
 		td{
 			text-align:		center;
 		}
+		/*
 		.th-inner{
 			//line-height:	@thead_height;
 			width:			100%;
@@ -870,7 +868,7 @@ table{
 				@calc_number:	unit( (@nav_height - 55) / 2, px );
 				margin-left:	~"calc(-50% + @{calc_number})";
 			}
-		}
+		}*/
 	}
 	tbody{
 		tr{
@@ -886,6 +884,7 @@ table{
 			text-align:	left;
 		}
 		td{
+			border-left:1px solid transparent;
 			text-align:	right;
 			padding:	.25em .5em .25em .25em;
 			//.border-left(1, solid, fade(#d3c9db, 25%));

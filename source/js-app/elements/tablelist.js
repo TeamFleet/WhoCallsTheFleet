@@ -328,6 +328,7 @@ _tablelist.prototype.global_index = 0
 				//console.log( self._ships_last_item )
 				delete( self._ships_last_item )
 				//console.log( self._ships_last_item )
+				self.thead_redraw()
 			}
 		}
 		_do( 0, 0 )
@@ -347,6 +348,7 @@ _tablelist.prototype.global_index = 0
 		this.dom.filter_container.attr('viewtype', 'compare')
 		_config.set( 'shiplist-viewtype', this._ships_last_viewtype )
 		this.mark_high()
+		this.thead_redraw()
 	}
 	_tablelist.prototype._ships_compare_end = function(){
 		this.dom.tbody.find('input[type="checkbox"].compare:checked').prop('checked', false).trigger('change')
@@ -396,6 +398,7 @@ _tablelist.prototype.global_index = 0
 					'onchange': function( e, input ){
 						_config.set( 'shiplist-filter-hide-premodel', input.prop('checked') )
 						self.dom.filter_container.attr('filter-hide-premodel', input.prop('checked'))
+						self.thead_redraw()
 					}
 				} )
 			this.append_option( 'radio', 'viewtype', null, [
@@ -407,6 +410,7 @@ _tablelist.prototype.global_index = 0
 						if( input.is(':checked') ){
 							_config.set( 'shiplist-viewtype', input.val() )
 							self.dom.filter_container.attr('viewtype', input.val())
+							self.thead_redraw()
 						}
 					}
 				} )
@@ -417,16 +421,16 @@ _tablelist.prototype.global_index = 0
 			this.dom.table_container_inner = $('<div class="fixed-table-container-inner"/>').appendTo( this.dom.table_container )
 			this.dom.table = $('<table class="ships hashover hashover-column"/>').appendTo( this.dom.table_container_inner )
 			function gen_thead(arr){
-				var thead = $('<thead/>')
-					,tr = $('<tr/>').appendTo(thead)
+				self.dom.table_thead = $('<thead/>')
+				var tr = $('<tr/>').appendTo(self.dom.table_thead)
 				for(var i in arr){
 					if( typeof arr[i] == 'object' ){
-						$('<td data-stat="' + arr[i][1] + '"/>').html('<div class="th-inner">'+arr[i][0]+'</div>').appendTo(tr)
+						$('<td data-stat="' + arr[i][1] + '"/>').html('<div class="th-inner"><span>'+arr[i][0]+'</span></div>').appendTo(tr)
 					}else{
-						$('<th/>').html('<div class="th-inner">'+arr[i]+'</div>').appendTo(tr)
+						$('<th/>').html('<div class="th-inner"><span>'+arr[i][0]+'</span></div>').appendTo(tr)
 					}
 				}
-				return thead
+				return self.dom.table_thead
 			}
 			gen_thead( self._ships_columns ).appendTo( this.dom.table )
 			this.dom.tbody = $('<tbody/>').appendTo( this.dom.table )
@@ -576,6 +580,8 @@ _tablelist.prototype.global_index = 0
 				}, 0)
 			}else{
 				//self.mark_high()
+				// force thead redraw
+					self.thead_redraw()
 				_frame.app_main.loaded('tablelist_'+self._index, true)
 			}
 		}
@@ -624,6 +630,10 @@ _tablelist.prototype.global_index = 0
 				var radio_id = '_input_g' + parseInt(_g.inputIndex)
 				$('<input type="radio" name="equipmentcollection" id="'+radio_id+'" value="'+i+'"/>')
 					.prop('checked', !checked )
+					.on('change', function(){
+						// force thead redraw
+						self.thead_redraw()
+					})
 					.prependTo( this.dom.container )
 				$('<label class="tab container" for="'+radio_id+'" data-equipmentcollection="'+i+'"/>')
 					.html(
@@ -640,16 +650,16 @@ _tablelist.prototype.global_index = 0
 			this.dom.table_container_inner = $('<div class="fixed-table-container-inner"/>').appendTo( this.dom.table_container )
 			this.dom.table = $('<table class="equipments hashover hashover-column"/>').appendTo( this.dom.table_container_inner )
 			function gen_thead(arr){
-				var thead = $('<thead/>')
-					,tr = $('<tr/>').appendTo(thead)
+				self.dom.table_thead = $('<thead/>')
+				var tr = $('<tr/>').appendTo(self.dom.table_thead)
 				for(var i in arr){
 					if( typeof arr[i] == 'object' ){
-						$('<td data-stat="' + arr[i][1] + '"/>').html('<div class="th-inner">'+arr[i][0]+'</div>').appendTo(tr)
+						$('<td data-stat="' + arr[i][1] + '"/>').html('<div class="th-inner"><span>'+arr[i][0]+'</span></div>').appendTo(tr)
 					}else{
-						$('<th/>').html('<div class="th-inner">'+arr[i]+'</div>').appendTo(tr)
+						$('<th/>').html('<div class="th-inner"><span>'+arr[i][0]+'</span></div>').appendTo(tr)
 					}
 				}
-				return thead
+				return self.dom.table_thead
 			}
 			gen_thead( self._equipments_columns ).appendTo( this.dom.table )
 			this.dom.tbody = $('<tbody/>').appendTo( this.dom.table )
@@ -781,6 +791,16 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 	_g.inputIndex++
 	return line
 }
+
+// 强制 thead 重绘，以解决某些CSS计算延迟问题
+	_tablelist.prototype.thead_redraw = function(){
+		if( this.dom.table_thead && this.dom.table_thead.length ){
+			var thead = this.dom.table_thead
+			setTimeout(function(){
+				thead.hide().show(0)
+			}, 10)
+		}
+	}
 
 
 
