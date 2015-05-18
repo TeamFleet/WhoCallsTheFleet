@@ -21,7 +21,7 @@ _tmpl.link_ship = function( ship, tagName, returnHTML ){
 
 	return _tmpl.export(
 			'<' + tagName + ' class="link_ship" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">'
-				+ '<img src="' + _g.path.pics.ships + '/' + shipId + '/0.webp"/>'
+				+ '<img src="' + node.path.normalize(_g.path.pics.ships + '/' + shipId) + '/0.webp"/>'
 				+ '<span>'
 					+ (ship['type'] ? '<small>' + _g['data']['ship_types'][ship['type']]['full_zh'] + '</small>' : '' )
 					+ _g.getName( ship['name'], '・' )

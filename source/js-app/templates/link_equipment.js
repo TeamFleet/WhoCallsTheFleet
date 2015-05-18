@@ -31,6 +31,11 @@ _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar
 				+ '<i style="background-image:url(assets/images/itemicon/'
 					+ _g.data.item_types[equipment['type']]['icon']
 					+ '.png)"></i>'
+				/*
+				+ '<i style="background-image:url('
+					+ node.path.normalize('assets/images/itemicon/' + _g.data.item_types[equipment['type']]['icon'] + '.png')
+					+ ')"></i>'
+				*/
 				+ '<small>'
 					+ equipment['name']['zh_cn'].replace(/（([^（^）]+)）/g, '<small>($1)</small>')
 				+ '</small>'

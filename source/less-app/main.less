@@ -341,6 +341,15 @@ body{
 				.transition-property(~"opacity, background-color");
 				//.transition-delay(@transition_duration * 2);
 				.transition-duration(@transition_duration * 2);
+				.border-top(1, solid, transparent);
+				.border-bottom(2, solid, transparent);
+				.window-noframe({
+					.border-right(2, solid, transparent);
+				});
+				.window-maxmize({
+					.border-right-width(1) !important;
+					.border-bottom-width(1) !important;
+				});
 				&.off{
 					display:	none;
 				}
