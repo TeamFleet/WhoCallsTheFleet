@@ -308,8 +308,8 @@ _frame.infos.init = function(){
 						if (val150 > d['stat']['hp_max']) val150 = d['stat']['hp_max']
 						break;
 					case 'asw':
-						val99 = _val( getStatOfLvl( 99, d['stat']['asw'], d['stat']['asw_max'] ), /^(5|8|9|12)$/.test(d['type']) )
-						val150 = _val( getStatOfLvl( 150, d['stat']['asw'], d['stat']['asw_max'] ), /^(5|8|9|12)$/.test(d['type']) )
+						val99 = _val( getStatOfLvl( 99, d['stat']['asw'], d['stat']['asw_max'] ), /^(5|8|9|12|24)$/.test(d['type']) )
+						val150 = _val( getStatOfLvl( 150, d['stat']['asw'], d['stat']['asw_max'] ), /^(5|8|9|12|24)$/.test(d['type']) )
 						break;
 					case 'evasion':
 					case 'los':

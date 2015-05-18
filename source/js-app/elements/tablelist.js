@@ -169,7 +169,7 @@ _tablelist.prototype.sort_data_by_stat = {}
 						)
 						.html( _val(
 							ship_data['stat']['asw_max'],
-							/^(5|8|9|12)$/.test( ship_data['type'] )
+							/^(5|8|9|12|24)$/.test( ship_data['type'] )
 						) )
 						.appendTo(tr)
 					break;
