@@ -2,7 +2,7 @@ _frame.app_main.page['about'] = {}
 
 _frame.app_main.page['about'].journal_parse = function( raw ){
 	var searchRes
-		,scrapePtrn = /\[\[([^\:]+)\:\:([0-9]+)\]\]/gi
+		,scrapePtrn = /\[\[([^\:]+)\:([0-9]+)\]\]/gi
 		,resultHTML = markdown.toHTML( raw )
 
 	while( (searchRes = scrapePtrn.exec(raw)) !== null ){
