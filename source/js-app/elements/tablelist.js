@@ -350,29 +350,39 @@ _tablelist.prototype.sort_data_by_stat = {}
 		}
 	}
 	_tablelist.prototype._ships_compare_start = function(){
-		this.dom.msg_container.removeAttr('data-msgs')
-		this._ships_last_viewtype = this.dom.filter_container.attr('viewtype')
-		this.dom.filter_container.attr('viewtype', 'compare')
-		_config.set( 'shiplist-viewtype', this._ships_last_viewtype )
-		this.mark_high( true )
+		// 隐藏底部提示信息
+			this.dom.msg_container.removeAttr('data-msgs')
+
+		// 存储当前状态
+			this._ships_last_viewtype = this.dom.filter_container.attr('viewtype')
+			_config.set( 'shiplist-viewtype', this._ships_last_viewtype )
+			this._ships_last_scrollTop = this.dom.table_container_inner.scrollTop()
+
+		// 更改视图
+			this.dom.filter_container.attr('viewtype', 'compare')
+			this.dom.table_container_inner.scrollTop( 0 )
+
+		// 计算数据排序排序
+			this.mark_high( true )
+			this.thead_redraw( 500 )
+	}
+	_tablelist.prototype._ships_compare_off = function(){
+		this.dom.filter_container.attr('viewtype', this._ships_last_viewtype)
+		this.sort_table_restore()
+		this.mark_high()
 		this.thead_redraw( 500 )
+		this.dom.table_container_inner.scrollTop( this._ships_last_scrollTop )
+		delete this._ships_last_viewtype
+		delete this._ships_last_scrollTop
 	}
 	_tablelist.prototype._ships_compare_end = function(){
 		this.dom.tbody.find('input[type="checkbox"].compare:checked').prop('checked', false).trigger('change')
-		this.dom.filter_container.attr('viewtype', this._ships_last_viewtype)
-		delete this._ships_last_viewtype
 		this.dom.msg_container.removeAttr('data-msgs')
-		this.sort_table_restore()
-		this.mark_high()
-		this.thead_redraw( 500 )
+		this._ships_compare_off()
 	}
 	_tablelist.prototype._ships_compare_continue = function(){
-		this.dom.filter_container.attr('viewtype', this._ships_last_viewtype)
-		delete this._ships_last_viewtype
 		this.dom.msg_container.attr('data-msgs', 'comparestart')
-		this.sort_table_restore()
-		this.mark_high()
-		this.thead_redraw( 500 )
+		this._ships_compare_off()
 	}
 	_tablelist.prototype._ships_init = function(){
 		var self = this
