@@ -59,16 +59,14 @@
       "win32",
       "win64",
       "osx32",
-      "osx64",
-      "linux32",
-      "linux64"
+      "osx64"
     ],
     "filesRelative": [
       "node_modules",
       "package.json"
     ],
     "dataVersion": {
-      "app": "0.5.0.16",
+      "app": "0.5.1.0",
       "app-db": "1.2.0.0",
       "pics": "1.2.0.0"
     },
