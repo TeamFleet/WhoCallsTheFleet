@@ -293,6 +293,8 @@ _frame.infos.init = function(){
 					,val150 = null
 
 				function getStatOfLvl( lvl, base, max ){
+					if( base < 0 || max < 0 )
+						return -1
 					return Math.floor( base + (max - base) * lvl / 99 )
 				}
 
