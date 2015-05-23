@@ -1,0 +1,15 @@
+{
+	"versions": {
+		"app":		"0.5.2",
+		"app-db":	"1.2.0",
+		"pics":		"1.2.0"
+	},
+	"data-url":{
+		"app":		null,
+		"app-db":	null,
+		"pics":		null
+	},
+	"homepage": "http://fleet.diablohu.com/",
+	"release-notes": "https://github.com/Diablohu/WhoCallsTheFleet/releases",
+	"forum": "http://bbs.ngacn.cc/read.php?tid=7959995"
+}
