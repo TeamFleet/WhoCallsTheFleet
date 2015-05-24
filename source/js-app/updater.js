@@ -239,10 +239,10 @@ var _updater = {
 								})
 								//deferred.reject(new Error(err))
 							}).on('progress',function(state){
+								_updater.update_indicator.addClass('on')
 								_g.log('    ' + state.received + ' / ' + state.total + ' (' + state.percent + '%)'
 									+ ' | ' + Math.floor( (size_received + state.received) / size_total * 100 ) + '%'
 								)
-								_updater.update_indicator.addClass('on')
 								_updater.update_indicator_bar.css('width', Math.floor( (size_received + state.received) / size_total * 100 ) + '%')
 							}).pipe(
 								node.fs.createWriteStream(tempfile)
