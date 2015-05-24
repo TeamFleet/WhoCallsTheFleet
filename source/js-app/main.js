@@ -2,6 +2,8 @@
 	node.require('fs')
 	node.require('nedb')
 	node.require('mkdirp')
+	node.require('request')
+	node.require('semver')
 	var Q = node.require('q')
 		,markdown = node.require( "markdown" ).markdown
 
