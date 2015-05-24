@@ -4,6 +4,7 @@
 	node.require('mkdirp')
 	node.require('request')
 	node.require('semver')
+	node.require('url')
 	var Q = node.require('q')
 		,markdown = node.require( "markdown" ).markdown
 
