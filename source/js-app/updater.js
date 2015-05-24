@@ -129,9 +129,26 @@ var _updater = {
 
 // 更新数据包流程
 	_updater.update = function(){
-		_updater.get_local_version()
-
 		var promise_chain 	= Q.fcall(function(){})
+			,dirRoot = node.path.dirname(process.execPath).split(node.path.sep)
+			,datadir_exists = false
+		dirRoot = (process.platform == 'darwin' || (dirRoot[dirRoot.length - 1] == 'nwjs' && node.path.basename( process.execPath ) == 'nw.exe') )
+					? process.cwd()
+					: node.path.dirname(process.execPath)
+
+		// 检查数据包目录是否存在
+		try {
+			stats = node.fs.lstatSync(node.path.join( dirRoot, 'data' ))
+			if (stats.isDirectory())
+				datadir_exists = true
+		}catch (e){}
+
+		if( !datadir_exists ){
+			_g.log('数据包目录不存在, 不进行自动更新')
+			return false
+		}
+
+		_updater.get_local_version()
 
 		// 开始异步函数链
 			promise_chain
@@ -144,11 +161,6 @@ var _updater = {
 				_g.log('自动更新过程开始 (' + updated.join(', ') + ')')
 				_updater.create_update_indicator()
 				var promise_chain_update = Q.fcall(function(){})
-						.catch(function (err) {
-							_g.log(err)
-							_g.log('自动更新失败')
-							_updater.update_indicator.remove()
-						})
 					,count = 0
 					,permission = true
 					,size_total = 0
@@ -161,11 +173,6 @@ var _updater = {
 						promise_chain_update = promise_chain_update.then(function(){
 							var deferred = Q.defer()
 								,savefile = false
-								,dirRoot = node.path.dirname(process.execPath).split(node.path.sep)
-
-							dirRoot = (process.platform == 'darwin' || (dirRoot[dirRoot.length - 1] == 'nwjs' && node.path.basename( process.execPath ) == 'nw.exe') )
-										? process.cwd()
-										: node.path.dirname(process.execPath)
 
 							var tempfile = node.path.join(
 										dirRoot,
@@ -210,25 +217,24 @@ var _updater = {
 							)
 
 							node['request-progress'](
-								node.request({
-									'uri': 		node.url.format(
-													_updater.remote_root + '/'
-													+ _updater.remote_data.packages[package_name].path
-												),
-									'method': 	'GET'
-								}).on('error',function(err){
-									_g.log('    下载数据包出错')
-									node.fs.unlink(tempfile, function(err2){
-										deferred.reject(new Error(err))
-									})
-									//deferred.reject(new Error(err))
-								})/*.on('response', function(response){
-									if( response.statusCode == 200
-										&& parseInt(response.headers['content-length']) == _updater.remote_data.packages[package_name].bytes
-									)
-										savefile = true
-								})*/
-							).on('error',function(err){
+							node.request({
+								'uri': 		node.url.format(
+												_updater.remote_root + '/'
+												+ _updater.remote_data.packages[package_name].path
+											),
+								'method': 	'GET'
+							}).on('error',function(err){
+								_g.log('    下载数据包出错')
+								node.fs.unlink(tempfile, function(err2){
+									deferred.reject(new Error(err))
+								})
+								//deferred.reject(new Error(err))
+							})/*.on('response', function(response){
+								if( response.statusCode == 200
+									&& parseInt(response.headers['content-length']) == _updater.remote_data.packages[package_name].bytes
+								)
+									savefile = true
+							})*/).on('error',function(err){
 								_g.log('    下载数据包出错')
 								node.fs.unlink(tempfile, function(err2){
 									deferred.reject(new Error(err))
@@ -285,6 +291,11 @@ var _updater = {
 					count++
 				})
 				promise_chain_update = promise_chain_update
+					.catch(function (err) {
+						_g.log(err)
+						_g.log('自动更新失败')
+						_updater.update_indicator.remove()
+					})
 					.done(function(){
 						_g.log('')
 						if( size_received >= size_total ){
@@ -296,7 +307,7 @@ var _updater = {
 						}else{
 							_g.log('========== ' + updated.length + '/' + updated.length + ' ==========')
 							_g.log('')
-							_g.log('自动更新失败')
+							_g.log('自动更新失败, 结束流程')
 							_updater.update_indicator.remove()
 						}
 					})
