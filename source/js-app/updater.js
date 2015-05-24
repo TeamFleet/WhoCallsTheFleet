@@ -189,19 +189,25 @@ var _updater = {
 														: _updater.remote_data.packages[package_name])
 							)
 
-							node.request({
-								'uri': 		node.url.format(
-												_updater.remote_root + '/'
-												+ _updater.remote_data.packages[package_name].path
-											),
-								'method': 	'GET'
-							}).on('error',function(err){
+							node['request-progress'](
+								node.request({
+									'uri': 		node.url.format(
+													_updater.remote_root + '/'
+													+ _updater.remote_data.packages[package_name].path
+												),
+									'method': 	'GET'
+								}).on('error',function(err){
+									deferred.reject(new Error(err))
+								}).on('response', function(response){
+									if( response.statusCode == 200
+										&& parseInt(response.headers['content-length']) == _updater.remote_data.packages[package_name].bytes
+									)
+										savefile = true
+								})
+							).on('error',function(err){
 								deferred.reject(new Error(err))
-							}).on('response', function(response){
-								if( response.statusCode == 200
-									&& parseInt(response.headers['content-length']) == _updater.remote_data.packages[package_name].bytes
-								)
-									savefile = true
+							}).on('progress',function(state){
+								_g.log('    ' + state.received + ' / ' + state.total + ' (' + state.percent + '%)')
 							}).pipe(
 								node.fs.createWriteStream(tempfile)
 								.on('finish', function(){
