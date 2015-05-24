@@ -119,12 +119,10 @@ var _updater = {
 
 // 创建更新器提示
 	_updater.create_update_indicator = function(){
-		if( _updater.update_indicator && _updater.update_indicator.length ){
-			_updater.update_indicator.remove()
-			_updater.update_indicator_bar.remove()
+		if( !_updater.update_indicator || !_updater.update_indicator.length ){
+			_updater.update_indicator = $('<button class="update_progress" icon="stairs-up" data-tip="检测到新版本<br>更新中..."/>').appendTo( _frame.dom.globaloptions )
+			_updater.update_indicator_bar = $('<s/>').appendTo( _updater.update_indicator )
 		}
-		_updater.update_indicator = $('<button class="update_progress" icon="stairs-up" data-tip="检测到新版本<br>更新中..."/>').appendTo( _frame.dom.globaloptions )
-		_updater.update_indicator_bar = $('<s/>').appendTo( _updater.update_indicator )
 	}
 
 // 更新数据包流程
@@ -244,6 +242,7 @@ var _updater = {
 								_g.log('    ' + state.received + ' / ' + state.total + ' (' + state.percent + '%)'
 									+ ' | ' + Math.floor( (size_received + state.received) / size_total * 100 ) + '%'
 								)
+								_updater.update_indicator.addClass('on')
 								_updater.update_indicator_bar.css('width', Math.floor( (size_received + state.received) / size_total * 100 ) + '%')
 							}).pipe(
 								node.fs.createWriteStream(tempfile)
@@ -265,7 +264,6 @@ var _updater = {
 															_g.log('    跳过')
 														}else{
 															_g.log('    该数据包更新完成')
-															_updater.update_indicator.addClass('on')
 														}
 														deferred.resolve()
 													}
@@ -294,7 +292,7 @@ var _updater = {
 					.catch(function (err) {
 						_g.log(err)
 						_g.log('自动更新失败')
-						_updater.update_indicator.remove()
+						_updater.update_indicator.removeClass('on')
 					})
 					.done(function(){
 						_g.log('')
@@ -308,7 +306,7 @@ var _updater = {
 							_g.log('========== ' + updated.length + '/' + updated.length + ' ==========')
 							_g.log('')
 							_g.log('自动更新失败, 结束流程')
-							_updater.update_indicator.remove()
+							_updater.update_indicator.removeClass('on')
 						}
 					})
 			})
