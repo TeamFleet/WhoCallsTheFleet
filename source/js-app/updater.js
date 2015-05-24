@@ -119,7 +119,7 @@ var _updater = {
 
 // 创建更新器提示
 	_updater.create_update_indicator = function(){
-		if( _updater.update_indicator.length ){
+		if( _updater.update_indicator && _updater.update_indicator.length ){
 			_updater.update_indicator.remove()
 			_updater.update_indicator_bar.remove()
 		}
