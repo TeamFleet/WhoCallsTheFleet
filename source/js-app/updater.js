@@ -32,13 +32,15 @@
 */
 
 var _updater = {
+	'local_versions':{},
 	'remote_url': 	'http://fleet.diablohu.com/versions.json',
 	'remote_data': 	{}
 }
 
 // 获取本地版本
 	_updater.get_local_version = function(){
-		return JSON.parse( _config.get['nwjs-data-version'] || '{}' )
+		_updater.local_versions = JSON.parse( _config.get['nwjs-data-version'] || '{}' )
+		return _updater.local_versions
 	}
 
 // 获取远端版本
@@ -54,9 +56,8 @@ var _updater = {
 				_g.log(response.statusCode)
 				deferred.reject(new Error(err))
 			}else{
-				_g.log(body)
-				_updater.remote_data = body
-				deferred.resolve()
+				_updater.remote_data = JSON.parse( body || '{}' ) || {}
+				deferred.resolve( _updater.remote_data )
 			}
 		})
 		return deferred.promise
@@ -64,6 +65,22 @@ var _updater = {
 
 // 对比各数据包版本
 	_updater.compare_versions = function(){
+		var updated = []
+
+		for( var i in _updater.local_versions ){
+			if( _updater.remote_data.packages && _updater.remote_data.packages[i] ){
+				var remote_version = _updater.remote_data.packages[i].version
+										? _updater.remote_data.packages[i].version
+										: _updater.remote_data.packages[i]
+				if( node.semver.gt(
+							node.semver.clean( remote_version ),
+							node.semver.clean( _updater.local_versions[i] )
+						) )
+					updated.push(i)
+			}
+		}
+
+		return updated
 	}
 
 // 创建更新器提示
