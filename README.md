@@ -20,4 +20,5 @@
 * [mkdirp](https://www.npmjs.com/package/mkdirp): 简单的无级创建目录操作
 * [NeDB](https://github.com/louischatriot/nedb): 程序所用NoSQL数据库，对独立JSON文件进行读写操作
 * [Q](https://github.com/kriskowal/q): 异步函数步骤/Promise框架
-* [Request](https://github.com/request/request): HTTP请求框架
+* [request](https://github.com/request/request): HTTP请求框架
+* [sevmer](https://github.com/npm/node-semver): 简单的版本号对比
