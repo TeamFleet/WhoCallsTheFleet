@@ -119,6 +119,10 @@ var _updater = {
 
 // 创建更新器提示
 	_updater.create_update_indicator = function(){
+		if( _updater.update_indicator.length ){
+			_updater.update_indicator.remove()
+			_updater.update_indicator_bar.remove()
+		}
 		_updater.update_indicator = $('<button class="update_progress" icon="stairs-up" data-tip="检测到新版本<br>更新中..."/>').appendTo( _frame.dom.globaloptions )
 		_updater.update_indicator_bar = $('<s/>').appendTo( _updater.update_indicator )
 	}
@@ -142,6 +146,8 @@ var _updater = {
 				var promise_chain_update = Q.fcall(function(){})
 						.catch(function (err) {
 							_g.log(err)
+							_g.log('自动更新失败')
+							_updater.update_indicator.remove()
 						})
 					,count = 0
 					,permission = true
@@ -211,15 +217,23 @@ var _updater = {
 												),
 									'method': 	'GET'
 								}).on('error',function(err){
-									deferred.reject(new Error(err))
-								}).on('response', function(response){
+									_g.log('    下载数据包出错')
+									node.fs.unlink(tempfile, function(err2){
+										deferred.reject(new Error(err))
+									})
+									//deferred.reject(new Error(err))
+								})/*.on('response', function(response){
 									if( response.statusCode == 200
 										&& parseInt(response.headers['content-length']) == _updater.remote_data.packages[package_name].bytes
 									)
 										savefile = true
-								})
+								})*/
 							).on('error',function(err){
-								deferred.reject(new Error(err))
+								_g.log('    下载数据包出错')
+								node.fs.unlink(tempfile, function(err2){
+									deferred.reject(new Error(err))
+								})
+								//deferred.reject(new Error(err))
 							}).on('progress',function(state){
 								_g.log('    ' + state.received + ' / ' + state.total + ' (' + state.percent + '%)'
 									+ ' | ' + Math.floor( (size_received + state.received) / size_total * 100 ) + '%'
@@ -228,7 +242,7 @@ var _updater = {
 							}).pipe(
 								node.fs.createWriteStream(tempfile)
 								.on('finish', function(){
-									if( savefile ){
+									//if( savefile ){
 										size_received+= _updater.remote_data.packages[package_name].bytes
 										node.fs.unlink(targetFile, function(err){
 											if( err ){
@@ -252,12 +266,12 @@ var _updater = {
 												)
 											}
 										})
-									}else{
-										_g.log('    下载数据包出错')
-										node.fs.unlink(tempfile, function(err){
-											deferred.resolve()
-										})
-									}
+									//}else{
+									//	_g.log('    下载数据包出错')
+									//	node.fs.unlink(tempfile, function(err){
+									//		deferred.resolve()
+									//	})
+									//}
 								}).on('error', function(err){
 									err_handler(err, '写入文件')
 									_g.log('    流程结束')
@@ -291,6 +305,8 @@ var _updater = {
 		// 错误处理
 			.catch(function (err) {
 				_g.log(err)
+				_g.log('自动更新失败')
+				_updater.update_indicator.remove()
 			})
 			.done(function(){
 				_g.log('自动更新过程初始化完毕')
