@@ -3,6 +3,7 @@
 	node.require('nedb')
 	node.require('mkdirp')
 	node.require('request')
+	node.require('request-progress')
 	node.require('semver')
 	node.require('url')
 	var Q = node.require('q')
