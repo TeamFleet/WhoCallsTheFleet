@@ -496,8 +496,9 @@ _frame.app_main = {
 									.appendTo( _frame.dom.nav )
 				*/
 				_frame.dom.navlinks = $('<div/>').appendTo( _frame.dom.nav )
+				_frame.dom.globaloptions = $('<section class="options"/>').appendTo( _frame.dom.nav )
 				_frame.dom.btnShowOnlyBg = $('<button class="show_only_bg" icon="images"/>')
-										.on('click', function(){_frame.app_main.only_bg_toggle()}).appendTo( _frame.dom.nav )
+										.on('click', function(){_frame.app_main.only_bg_toggle()}).appendTo( _frame.dom.globaloptions )
 				_frame.dom.btnShowOnlyBgBack = $('<button class="show_only_bg_back" icon="arrow-set2-left"/>')
 										.on('click', function(){_frame.app_main.only_bg_off()}).appendTo( _frame.dom.nav )
 			_frame.dom.main = $('<main/>').appendTo( _frame.dom.layout )
