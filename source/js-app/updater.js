@@ -129,32 +129,70 @@ var _updater = {
 	_updater.update = function(){
 		var promise_chain 	= Q.fcall(function(){})
 			,dirRoot = node.path.dirname(process.execPath).split(node.path.sep)
+			,dirData = ''
 			,datadir_exists = false
 		dirRoot = (process.platform == 'darwin' || (dirRoot[dirRoot.length - 1] == 'nwjs' && node.path.basename( process.execPath ) == 'nw.exe') )
 					? process.cwd()
 					: node.path.dirname(process.execPath)
-
-		// 检查数据包目录是否存在
-		try {
-			stats = node.fs.lstatSync(node.path.join( dirRoot, 'data' ))
-			if (stats.isDirectory())
-				datadir_exists = true
-		}catch (e){}
-
-		if( !datadir_exists ){
-			_g.log('数据包目录不存在, 不进行自动更新')
-			return false
-		}
-
-		_updater.get_local_version()
+		dirData = node.path.join( dirRoot, 'data' )
 
 		// 开始异步函数链
 			promise_chain
+
+		// 检查数据包目录是否存在
+			.then(function(){
+				var deferred = Q.defer()
+				node.fs.lstat(dirData, function(err, stats){
+					if( err || !stats.isDirectory() ){
+						deferred.reject( '数据包目录不存在, 不进行自动更新' )
+					}else{
+						datadir_exists = true
+						deferred.resolve( true )
+					}
+				})
+				return deferred.promise
+			})
+
+		// 获取数据包目录下的文件列表，并筛选 .updated 文件
+			.then(function(){
+				var deferred = Q.defer()
+				node.fs.readdir(dirData, function(err, files){
+					if( err ){
+						deferred.reject( err )
+					}else{
+						var selected = []
+						for(var i in files){
+							if( node.path.extname(files[i]) == '.updated' )
+								selected.push(files[i])
+						}
+						deferred.resolve( selected )
+					}
+				})
+				return deferred.promise
+			})
+
+		// 清理数据包目录下所有的 .updated 文件
+			.then(function(files){
+				var the_promises = []
+				files.forEach(function(filename){
+					var deferred = Q.defer()
+					node.fs.unlink( node.path.join( dirData, filename ), function(err){
+						deferred.resolve()
+					} )
+					the_promises.push(deferred.promise)
+				})
+				return Q.all(the_promises);
+			})
+
+		// 其余流程
+			.then(_updater.get_local_version())
 			.then(_updater.get_remote)
 			.then(_updater.get_packages_updated)
 			.then(function(updated){
-				if( !updated.length )
+				if( !updated.length ){
+					_g.log('所有数据包均为最新')
 					return false
+				}
 
 				_g.log('自动更新过程开始 (' + updated.join(', ') + ')')
 				_updater.create_update_indicator()
@@ -173,15 +211,13 @@ var _updater = {
 								,savefile = false
 
 							var tempfile = node.path.join(
-										dirRoot,
-										'data',
+										dirData,
 										package_name
 										+ node.path.extname(_updater.remote_data.packages[package_name].path)
 										+ '.updated'
 									)
 								,targetFile = node.path.join(
-										dirRoot,
-										'data',
+										dirData,
 										package_name
 										+ node.path.extname(_updater.remote_data.packages[package_name].path)
 									)
@@ -315,7 +351,8 @@ var _updater = {
 			.catch(function (err) {
 				_g.log(err)
 				_g.log('自动更新失败')
-				_updater.update_indicator.remove()
+				if( _updater.update_indicator && _updater.update_indicator.length )
+					_updater.update_indicator.remove()
 			})
 			.done(function(){
 				_g.log('自动更新过程初始化完毕')
