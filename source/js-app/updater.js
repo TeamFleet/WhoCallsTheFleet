@@ -177,6 +177,7 @@ var _updater = {
 				files.forEach(function(filename){
 					var deferred = Q.defer()
 					node.fs.unlink( node.path.join( dirData, filename ), function(err){
+						_g.log('已删除更新残留文件 ' + filename)
 						deferred.resolve()
 					} )
 					the_promises.push(deferred.promise)
