@@ -254,17 +254,75 @@
 					}
 				}
 			} // table
+			&>.nocontent{
+				position:	absolute;
+				top:		0;
+				right:		0;
+				.bottom(20);
+				left:		0;
+				color:		rgba(255,255,255,.2);
+				.fadein();
+				display:	none;
+				&>div{
+					&>span{
+						.font-size(60);
+						.line-height(70);
+						letter-spacing:	.15em;
+						display:	block;
+						font-weight:lighter;
+					}
+					&>button{
+						.height(40);
+						.font-size(16);
+						color:		rgba(255,255,255, .5);
+						letter-spacing:	.1em;
+						padding:	0 5em;
+						background:	rgba(0,0,0, .25);
+						border-radius:	5px;
+						.border(1, solid, rgba(255,255,255, .2));
+						.transition-property(~"background-color, border-color, color");
+						&:hover{
+							background:	rgba(0,0,0, .6);
+							color:		rgba(255,255,255, .85);
+						}
+						&:active{
+							background:	rgba(0,0,0, .325);
+							color:		rgba(255,255,255, .75);
+						}
+					}
+					&>span + button{
+						.margin-top(14);
+					}
+				}
+			} // &>.nocontent
 		}
 	}
 
 
 
 	&>.options{
-		.height(50);
+		@options_height:	50;
+
+		.height(@options_height);
 		max-height:	~"calc(100% - 280px)";
 		.flex(1 0 auto);
 		.transition-property(height);
 		position:	relative;
+		color:		#f2f2f2;
+
+		button{
+			color:		rgba(255,255,255, .75);
+			.transition-property(color);
+			&[icon]:before{
+				opacity:1;
+			}
+			&:hover{
+				color:	#fff;
+			}
+			&:active{
+				color:	rgba(255,255,255, .6);
+			}
+		}
 
 		&>div{
 			position:	absolute;
@@ -276,7 +334,6 @@
 			.transition-property(opacity);
 			.transition-duration(.35s);
 			z-index:	1;
-			color:		#f2f2f2;
 			font-weight:lighter;
 			.font-size(14);
 		}
@@ -289,6 +346,22 @@
 			&>.viewtype{
 				.padding-top(15);
 			}
+			button{
+				display:	inline-block;
+				font-weight:lighter;
+				.font-size(14);
+				.line-height(35);
+				.margin-top( (@options_height - 35) / 2 );
+				&[icon]:before{
+					.font-size(16);
+					.padding-right(8);
+					.width(16 + 8);
+					text-align:	center;
+				}
+			}
+			&>button{
+				float:		left;
+			}
 			&>.hide-premodel{
 				float:		left;
 				input{
@@ -300,6 +373,11 @@
 					&:hover{
 						&, & ~ label{
 							color:	#fff;
+						}
+					}
+					&:active{
+						&, & ~ label{
+							color:	rgba(255,255,255,0.6);
 						}
 					}
 				}
@@ -334,6 +412,9 @@
 						color:		rgba(255, 255, 255, .625);
 						//.transition-duration(.2s);
 					}
+					&:active{
+						color:		rgba(255, 255, 255, .275);
+					}
 				}
 				label ~ label:before{
 						content:	"\e602";
@@ -345,6 +426,9 @@
 						.transition-duration(.5s) !important;
 					}
 				}
+			}
+			&>.buttons_right{
+				float:		right;
 			}
 			&>.tab{
 				display:	inline-block;
@@ -734,6 +818,14 @@
 		}
 		.loop(10);
 	}
+}
+
+
+
+
+
+.nocontent .nocontent{
+	display:	block !important;
 }
 
 

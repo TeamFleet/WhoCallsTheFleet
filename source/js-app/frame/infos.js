@@ -22,13 +22,16 @@ _frame.infos = {
 	},
 
 	show: function(cont, el, doNotPushHistory){
-		var exp			= /^\[\[([^\:]+)\:\:([0-9]+)\]\]$/.exec(cont)
+		var exp			= /^\[\[([^\:]+)\:\:(.+)\]\]$/.exec(cont)
 			,infosType 	= null
 			,infosId 	= null
 
 		if( exp && exp.length > 2 ){
 			infosType = exp[1].toLowerCase()
-			infosId = parseInt( exp[2] )
+			if( isNaN(exp[2]) )
+				infosId = encodeURI(JSON.stringify( exp[2] ))
+			else
+				infosId = parseInt( exp[2] )
 			switch( infosType ){
 				case 'item':
 				case 'equip':
@@ -71,7 +74,10 @@ _frame.infos = {
 				return _frame.infos.dom.container.children('div:first-child')
 
 		type = type.toLowerCase()
-		id = parseInt(id)
+		if( isNaN(id) )
+			id = decodeURI( id )
+		else
+			id = parseInt(id)
 
 		var cont = ''
 
@@ -131,6 +137,10 @@ _frame.infos = {
 				case 'equipment':
 					cont = this.getContent(type, id)
 					_frame.infos.dom.main.attr('data-infostype', 'equipmentinfo')
+					break;
+				case 'fleet':
+					cont = this.getContent(type, id)
+					_frame.infos.dom.main.attr('data-infostype', 'fleetinfo')
 					break;
 			}
 			var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
@@ -719,6 +729,18 @@ _frame.infos.init = function(){
 							.appendTo(illusts)
 					}
 				}catch(e){}
+
+			return dom
+		}
+
+	// 舰队信息
+		_frame.infos.__fleet = function( id ){
+			var d = eval(id)
+			eval('d='+d)
+
+			_g.log(d)
+
+			var dom = $('<div class="fleet"/>')
 
 			return dom
 		}

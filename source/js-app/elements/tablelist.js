@@ -46,6 +46,7 @@ var _tablelist = function( container, options ){
 _tablelist.prototype.global_index = 0
 _tablelist.prototype.flexgrid_empty_count = 6
 _tablelist.prototype.sort_data_by_stat = {}
+_tablelist.prototype.trIndex = 0
 
 
 
@@ -388,7 +389,6 @@ _tablelist.prototype.sort_data_by_stat = {}
 	}
 	_tablelist.prototype._ships_init = function(){
 		var self = this
-			this.trIndex = 0
 
 		// 标记全局载入状态
 			_frame.app_main.loading.push('tablelist_'+this._index)
@@ -878,7 +878,7 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 			var self = this
 
 			// 遍历，将值全部导出到 _tmp_values，_tmp_value_map_cell 中记录 值 -> jQuery DOM
-				rows.find('td:nth-of-type(' + nth + ')').each(function(index){
+				rows.find('[data-value]:nth-of-type(' + nth + ')').each(function(index){
 					var cell = $(this)
 						,val = $(this).data('value')
 
@@ -924,9 +924,9 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 			var rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
 				,sort_data_by_stat = this.sort_data_by_stat
 
-			rows.find('td[data-value]').removeClass('sort-first sort-second')
+			rows.find('th[data-value], td[data-value]').removeClass('sort-first sort-second')
 
-			rows.eq(0).find('td[data-value]').each(function(index){
+			rows.eq(0).find('th[data-value], td[data-value]').each(function(index){
 				var is_ascending = false
 					,$this = $(this)
 					,stat = $this.data('stat')
