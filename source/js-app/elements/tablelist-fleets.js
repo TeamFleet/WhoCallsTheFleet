@@ -109,9 +109,9 @@
 			var k = 0
 			while(k < self.flexgrid_empty_count){
 				if( !k )
-					self.flexgrid_ph = $('<tr class="empty" data-trindex="99999"/>').appendTo(self.dom.tbody)
+					self.flexgrid_ph = $('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(self.dom.tbody)
 				else
-					$('<tr class="empty" data-trindex="99999"/>').appendTo(self.dom.tbody)
+					$('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(self.dom.tbody)
 				k++
 			}
 

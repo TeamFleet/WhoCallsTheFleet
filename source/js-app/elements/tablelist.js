@@ -280,7 +280,7 @@ _tablelist.prototype.trIndex = 0
 						var k = 0
 						while(k < self.flexgrid_empty_count){
 							var _index = self.trIndex + _g.data.ship_id_by_type[i].length + k
-							$('<tr class="empty" data-trindex="'+_index+'"/>').appendTo(self.dom.tbody)
+							$('<tr class="empty" data-shipid="-1" data-trindex="'+_index+'"/>').appendTo(self.dom.tbody)
 							k++
 						}
 

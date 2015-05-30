@@ -107,6 +107,9 @@
 					tr.row{
 						.fadein()
 					}
+					tr.empty, tr:empty{
+						pointer-events: none;
+					}
 					tr[data-shipid]{
 						th{
 							.min-width(160);
@@ -572,9 +575,7 @@
 								display:	inline-block;
 								position:	relative;
 								&:empty{
-									display:	inline-block;
 									height:		0 !important;
-									.margin-left(20);
 								}
 							}
 							tr.typetitle{
@@ -622,6 +623,9 @@
 								}
 								td[data-stat]{
 									display:	none;
+								}
+								&:empty{
+									margin-top:	0;
 								}
 							}
 							.tablelist-fleet-tr-viewtype-card()

@@ -11,11 +11,9 @@
 		@color:		#fff2a6;
 		@color2:	fade(@color, 80%);
 		@color3:	fade(@color, 15%);
-		tr{
+		tr[data-fleetid]{
 			.flex-basis(500) !important;
 			.margin-right(5);
-		}
-		tr[data-fleetid]{
 			.height(40);
 			.margin-top(10);
 			.padding-right(20);
@@ -104,8 +102,11 @@
 				//	opacity:	1;
 				//}
 			}
-		}
-		tr:empty{
-			margin-left:	0
+			&:empty{
+				&:before{
+					display:	none;
+				}
+				margin-top:	0;
+			}
 		}
 	}
