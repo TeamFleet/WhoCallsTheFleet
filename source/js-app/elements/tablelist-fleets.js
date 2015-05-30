@@ -1,3 +1,23 @@
+/*
+	使用 NeDB (localstorage)
+	每个舰队配置拥有独立ID
+	舰队详情界面内，在每个操作后都自动计算并更新配置数据
+
+	新建
+		新建空舰队
+		导入字符串/组
+		导入舰载机厨URL/用户名/字符串
+		加载配置文件
+
+	导出
+		配置文件
+		配置字符串
+
+	分享
+		图片
+		文本
+*/
+
 	_tablelist.prototype._fleets_columns = [
 		'  ',
 		['创建者',	'user'],
@@ -55,6 +75,11 @@
 						arr.push( self._fleets_parse_kancolle_calc_data(data['results'][i]) )
 					}
 				}
+				arr.sort(function(a, b){
+					if (a['name'] < b['name']) return -1;
+					if (a['name'] > b['name']) return 1;
+					return 0;
+				})
 				deferred.resolve( arr )
 			},
 			'error': function( jqXHR, textStatus, errorThrown ){
