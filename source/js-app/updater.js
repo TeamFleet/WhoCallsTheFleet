@@ -102,7 +102,7 @@ var _updater = {
 				var remote_version = _updater.remote_data.packages[i].version
 										? _updater.remote_data.packages[i].version
 										: _updater.remote_data.packages[i]
-				if( compareVersion( remote_version , _updater.local_versions[i] ) )
+				if( compareVersion( remote_version , _updater.local_versions[i] ) > 0 )
 					updated.push(i)
 			}
 		}

@@ -25,7 +25,11 @@ _frame.app_main.page['about'].init = function( page ){
 	function addUpdateJournal( updateData ){
 		var section = $('<section class="update_journal" data-version-'+updateData['type']+'="'+updateData['version']+'"/>')
 						.html(
-							'<h3>'+updateData['version']
+							'<h3>'
+							+ (updateData['type'] == 'app'
+								? ''
+								: (updateData['type'] == 'app-db' ? 'DB' : updateData['type']).toUpperCase() + ' / ')
+							+ updateData['version']
 							+ '<small>'+(updateData['date'] ? updateData['date'] : 'WIP')+'</small>'
 							+ '</h3>'
 						)

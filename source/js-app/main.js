@@ -774,7 +774,11 @@ _frame.app_main = {
 								deferred.reject(new Error(err))
 							}else{
 								for( var i in docs ){
-									html+= '<h3>' + docs[i]['version']
+									html+= '<h3>'
+											+ (docs[i]['type'] == 'app'
+												? ''
+												: (docs[i]['type'] == 'app-db' ? 'DB' : docs[i]['type']).toUpperCase() + ' / ')
+											+ docs[i]['version']
 											+ '<small>'+(docs[i]['date'] ? docs[i]['date'] : 'WIP')+'</small>'
 											+ '</h3>'
 											+ '<section class="update_journal"/>'
