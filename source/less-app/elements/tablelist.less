@@ -104,6 +104,9 @@
 							}
 						}
 					}
+					tr.row{
+						.fadein()
+					}
 					tr[data-shipid]{
 						th{
 							.min-width(160);
@@ -225,11 +228,13 @@
 							.font-size(12)
 						}
 					} // tr[data-equipmentid]
+					.tablelist-fleet-tr-default();
 				}
 
 				&.hashover{
-					tbody tr[data-shipid]:hover,
-					tbody tr[data-equipmentid]:hover{
+					//tbody tr[data-shipid]:hover,
+					//tbody tr[data-equipmentid]:hover
+					tbody tr.row:hover{
 						//background-color:	rgba(0, 0, 0, .5);
 						background-color:	rgba(0,0,0,.2);
 					}
@@ -564,6 +569,8 @@
 							tr{
 								//overflow:	hidden;
 								.flex(1 0 170px);
+								display:	inline-block;
+								position:	relative;
 								&:empty{
 									display:	inline-block;
 									height:		0 !important;
@@ -581,10 +588,8 @@
 								}
 							}
 							tr[data-shipid]{
-								display:	inline-block;
 								//.border-top(1, solid, #d3c9db);
 								border-bottom:	0;
-								position:	relative;
 								.margin-left(20);
 								.margin-top(10);
 								.height(40);
@@ -619,6 +624,7 @@
 									display:	none;
 								}
 							}
+							.tablelist-fleet-tr-viewtype-card()
 						}
 						&.hashover{
 							tbody tr[data-shipid]:hover{

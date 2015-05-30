@@ -56,6 +56,12 @@
 					}
 				}
 				deferred.resolve( arr )
+			},
+			'error': function( jqXHR, textStatus, errorThrown ){
+				_g.log(jqXHR)
+				_g.log(textStatus)
+				_g.log(errorThrown)
+				deferred.resolve([])
 			}
 		})
 		return deferred.promise
@@ -138,6 +144,7 @@
 			,tr = $('<tr class="row"/>')
 				.attr({
 					'data-trindex': index,
+					'data-fleetid': 'PLACEHOLDER',
 					'data-infos': 	'[[FLEET::'+JSON.stringify(data)+']]'
 				})
 				.insertBefore( this.flexgrid_ph )
@@ -145,11 +152,17 @@
 		for( var i in self._fleets_columns ){
 			switch( self._fleets_columns[i][1] ){
 				case ' ':
-					var html = ''
+					var html = '<i>'
 						,ships = data['data'][0] || []
-					for( var j in ships ){
-						html+='<img src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0.webp" contextmenu="disabled"/>'
+						,j = 0;
+					while( j < 6 ){
+						if( ships[j] )
+							html+='<img src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0.webp" contextmenu="disabled"/>'
+						else
+							html+='<s/>'
+						j++
 					}
+					html+='</i>'
 					$('<th/>')
 						.attr(
 							'data-value',
