@@ -66,8 +66,8 @@
       "package.json"
     ],
     "dataVersion": {
-      "app": "0.5.3.0",
-      "app-db": "1.2.3.1",
+      "app": "0.5.4.0",
+      "app-db": "1.2.3.2",
       "pics": "1.2.1.0"
     },
     "buildDir": "N:\\nwbuild\\build",
