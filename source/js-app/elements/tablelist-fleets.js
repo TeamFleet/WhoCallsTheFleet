@@ -75,11 +75,6 @@
 						arr.push( self._fleets_parse_kancolle_calc_data(data['results'][i]) )
 					}
 				}
-				arr.sort(function(a, b){
-					if (a['name'] < b['name']) return -1;
-					if (a['name'] > b['name']) return 1;
-					return 0;
-				})
 				deferred.resolve( arr )
 			},
 			'error': function( jqXHR, textStatus, errorThrown ){
@@ -125,6 +120,11 @@
 // 创建全部数据行内容
 	_tablelist.prototype._fleets_append_all_items = function(arr){
 		arr = arr || []
+		arr.sort(function(a, b){
+			if (a['name'] < b['name']) return -1;
+			if (a['name'] > b['name']) return 1;
+			return 0;
+		})
 		_g.log(arr)
 
 		var self = this
