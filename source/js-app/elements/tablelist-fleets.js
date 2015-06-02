@@ -37,6 +37,7 @@
 // 检查并读取已保存数据
 	_tablelist.prototype._fleets_loaddata = function(){
 		var self = this
+		return []
 	// PLACEHOLDER START
 		var deferred = Q.defer()
 		var data = $.extend( self.kancolle_calc, {
@@ -45,25 +46,6 @@
 					'owner': 	'Diablohu'
 				}
 			})
-		/*
-		var req = node.request({
-			'url': 		node.url.parse('https://api.parse.com/1/classes/Deck'),
-			'method': 	'POST',
-			'headers': {
-				'Origin': 	'http://www.kancolle-calc.net',
-				'Referer': 	'http://www.kancolle-calc.net/deckbuilder.html'
-			},
-			'body': JSON.stringify(data)
-		}, function(err, response, body){
-			_g.log(err, response, body)
-			if (!err && response.statusCode == 200) {
-				deferred.resolve(body)
-			}
-		}).on('error', function(err){
-			_g.log(err)
-		})
-		console.log(data, req)
-		*/
 		$.ajax({
 			'url': 	'https://api.parse.com/1/classes/Deck',
 			'data': JSON.stringify(data),
@@ -219,6 +201,27 @@
 // [按钮操作] 新建/导入配置
 	_tablelist.prototype._fleets_btn_new = function(){
 		_g.log('CLICK: 新建/导入配置')
+
+		var self = this
+
+		if( !this._fleets_menu_new )
+			this._fleets_menu_new = new _menu({
+				'target': 	self.dom.btn_new,
+				'items': [
+					$('<div class="menu_fleets_new"/>')
+						.append(
+							$('<menuitem/>').html('新建配置')
+						)
+						.append(
+							$('<menuitem/>').html('导入配置代码')
+						)
+						.append(
+							$('<menuitem/>').html('导入配置文件')
+						)
+				]
+			})
+
+		this._fleets_menu_new.show()
 	}
 
 
