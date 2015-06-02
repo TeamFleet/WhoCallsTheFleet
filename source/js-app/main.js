@@ -152,6 +152,11 @@
 		if( debugmode )
 			console.log(log)
 	}
+	_g.error = function(err){
+		if( typeof err != 'object' )
+			err = new Error(err)
+		throw err
+	}
 
 
 

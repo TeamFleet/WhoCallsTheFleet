@@ -19,17 +19,35 @@
 */
 
 	_tablelist.prototype._fleets_columns = [
-		'  ',
-		['创建者',	'user'],
-		['修改时间','time_modify'],
-		['评价',	'rating'],
-		['',		'options']
-	]
+			'  ',
+			['创建者',	'user'],
+			['修改时间','time_modify'],
+			['评价',	'rating'],
+			['',		'options']
+		]
+
 	_tablelist.prototype.kancolle_calc = {
 		'_ApplicationId': 	'l1aps8iaIfcq2ZzhOHJWNUU2XrNySIzRahodijXW',
 		'_ClientVersion': 	'js1.2.19',
 		'_InstallationId': 	'62522018-ec82-b434-f5a5-08c3ab61d932',
 		'_JavaScriptKey': 	'xOrFpWEQZFxUDK2fN1DwbKoj3zTKAEkgJHzwTuZ4'
+	}
+
+
+
+// 新建数据
+	_tablelist.prototype._fleets_new_data = function(obj){
+		return $.extend({
+			'data': 		[],
+			'time_create': 	(new Date()).valueOf(),
+			'time_modify': 	(new Date()).valueOf(),
+			'hq_lv': 		-1,
+			'name': 		'',
+			'note': 		'',
+			'user': 		{},
+			'rating': 		-1,
+			'theme': 		1
+		}, obj || {})
 	}
 
 
@@ -143,16 +161,19 @@
 	_tablelist.prototype._fleets_append_item = function( data, index ){
 		if( !data )
 			return false
+
 		if( typeof index == 'undefined' ){
 			index = this.trIndex
 			this.trIndex++
 		}
+
 		var self = this
 			,tr = $('<tr class="row"/>')
 				.attr({
 					'data-trindex': index,
 					'data-fleetid': 'PLACEHOLDER',
-					'data-infos': 	'[[FLEET::'+JSON.stringify(data)+']]'
+					//'data-infos': 	'[[FLEET::'+JSON.stringify(data)+']]'
+					'data-infos': 	'[[FLEET::'+data._id+']]'
 				})
 				.insertBefore( this.flexgrid_ph )
 
@@ -200,8 +221,6 @@
 
 // [按钮操作] 新建/导入配置
 	_tablelist.prototype._fleets_btn_new = function(){
-		_g.log('CLICK: 新建/导入配置')
-
 		var self = this
 
 		if( !this._fleets_menu_new )
@@ -211,6 +230,9 @@
 					$('<div class="menu_fleets_new"/>')
 						.append(
 							$('<menuitem/>').html('新建配置')
+								.on('click', function(){
+									self._fleets_action_new()
+								})
 						)
 						.append(
 							$('<menuitem/>').html('导入配置代码')
@@ -232,21 +254,17 @@
 	}
 
 
+// [操作] 新建配置
+	_tablelist.prototype._fleets_action_new = function(){
+		_frame.infos.show('[[FLEET::__NEW__]]')
+		this._fleets_menu_new.hide()
+	}
+
+
 
 // 处理舰载机厨的单项数据，返回新格式
 	_tablelist.prototype._fleets_parse_kancolle_calc_data = function(obj){
-		obj = obj || {}
-		return {
-			'data': 		eval(obj['data'] || '[]') || [],
-			'time_create': 	(new Date(obj['createdAt'])).valueOf(),
-			'time_modify': 	(new Date(obj['updatedAt'])).valueOf(),
-			'hq_lv': 		obj['hq_lv'] || -1,
-			'name': 		obj['name'] || '',
-			'note': 		obj['note'] || '',
-			'kancolle_calc':obj['objectId'] || '',
-			'user': 		{},
-			'rating': 		-1
-		}
+		return this._fleets_new_data(obj)
 	}
 
 

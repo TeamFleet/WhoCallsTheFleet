@@ -14,6 +14,9 @@ _frame.infos = {
 		if( !this.contentCache[type] )
 			this.contentCache[type] = {}
 
+		if( id == '__NEW__' )
+			return _p.initDOM( _frame.infos['__' + type]( id ) )
+
 		if( !this.contentCache[type][id] ){
 			this.contentCache[type][id] = _p.initDOM( _frame.infos['__' + type]( id ) )
 		}
@@ -29,7 +32,8 @@ _frame.infos = {
 		if( exp && exp.length > 2 ){
 			infosType = exp[1].toLowerCase()
 			if( isNaN(exp[2]) )
-				infosId = encodeURI(JSON.stringify( exp[2] ))
+				//infosId = encodeURI(JSON.stringify( exp[2] ))
+				infosId = exp[2]
 			else
 				infosId = parseInt( exp[2] )
 			switch( infosType ){
@@ -75,7 +79,7 @@ _frame.infos = {
 
 		type = type.toLowerCase()
 		if( isNaN(id) )
-			id = decodeURI( id )
+			id = id
 		else
 			id = parseInt(id)
 
@@ -143,7 +147,7 @@ _frame.infos = {
 					_frame.infos.dom.main.attr('data-infostype', 'fleetinfo')
 					break;
 			}
-			var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
+			//var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
 			//if( _frame.infos.curContent != hashcode ){
 				var contentDOM = cont.append ? cont : $(cont)
 
@@ -198,6 +202,7 @@ _frame.infos = {
 		// 隐藏内容
 			_frame.dom.layout.removeClass('infos-on')
 			_frame.infos.dom.forward.addClass('disabled')
+			_frame.infos.dom.main.attr('data-theme', '')
 			this.curContent = null
 
 		if( this.lastCurrentPage ){
@@ -733,14 +738,3 @@ _frame.infos.init = function(){
 			return dom
 		}
 
-	// 舰队信息
-		_frame.infos.__fleet = function( id ){
-			var d = eval(id)
-			eval('d='+d)
-
-			_g.log(d)
-
-			var dom = $('<div class="fleet"/>')
-
-			return dom
-		}

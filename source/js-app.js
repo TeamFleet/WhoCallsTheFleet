@@ -9,6 +9,7 @@
 // @koala-prepend "js-app/page/about.js"
 
 // @koala-prepend "js-app/frame/infos.js"
+// @koala-prepend "js-app/frame/infos-fleet.js"
 // @koala-prepend "js-app/frame/tip-equipment.js"
 
 // @koala-prepend "js-app/elements/tablelist.js"
