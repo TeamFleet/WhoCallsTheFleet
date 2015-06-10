@@ -16,6 +16,11 @@
 	分享
 		图片
 		文本
+
+	fleet list update (_id, data)
+		no argument: update all
+		if _id not find, add new line
+		delete empty lines
 */
 
 	_tablelist.prototype._fleets_columns = [
