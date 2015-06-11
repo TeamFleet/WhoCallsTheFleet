@@ -202,7 +202,6 @@ _frame.infos = {
 		// 隐藏内容
 			_frame.dom.layout.removeClass('infos-on')
 			_frame.infos.dom.forward.addClass('disabled')
-			_frame.infos.dom.main.attr('data-theme', '')
 			this.curContent = null
 
 		if( this.lastCurrentPage ){
@@ -231,7 +230,10 @@ _frame.infos = {
 				return false
 
 		_frame.dom.layout.removeClass('infos-show')
-		_frame.infos.dom.main.attr('data-infostype', '')
+		_frame.infos.dom.main.attr({
+			'data-infostype': 	'',
+			'data-theme': 		''
+		})
 		//$(this).off('transitionend.infos_hide')
 		this.historyLength = -1
 		this.historyCurrent = -1

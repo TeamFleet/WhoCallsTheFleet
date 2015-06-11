@@ -116,24 +116,32 @@ var fleetInfos = function( id ){
 		this.doms['ships'] = $('<div class="ships"/>').appendTo(self.dom)
 
 		while(i < 4){
+			i++
+
 			$('<input/>',{
 					'type': 	'radio',
 					'name': 	'fleet_' + d._id + '_tab',
-					'id': 		'fleet_' + d._id + '_tab_' + (i+1),
-					'value': 	(i+1)
-				}).prop('checked', (i == 0)).prependTo( self.dom )
+					'id': 		'fleet_' + d._id + '_tab_' + i,
+					'value': 	i
+				}).prop('checked', (i == 1)).prependTo( self.dom )
 
 			$('<label/>',{
-					'for': 		'fleet_' + d._id + '_tab_' + (i+1),
-					'data-fleet':(i+1),
-					'html': 	'#' + (i+1)
+					'for': 		'fleet_' + d._id + '_tab_' + i,
+					'data-fleet':i,
+					'html': 	'#' + i
 				}).appendTo( self.doms['tabs'] )
 
-			$('<dl/>',{
-					'data-fleet':(i+1)
+			self.doms['fleet' + i] = $('<dl/>',{
+					'data-fleet':i
 				}).appendTo( self.doms['ships'] )
 
-			i++
+			var j = 0
+			while( j < 6 ){
+				j++
+				self.doms['ship' + i + '-' + j] = $('<dd/>')
+					.html('ship' + i + '-' + j)
+					.appendTo( self.doms['fleet' + i] )
+			}
 		}
 
 		this.update( d )
