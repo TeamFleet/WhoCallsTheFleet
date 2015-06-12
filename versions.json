@@ -6,9 +6,9 @@
 			"bytes":	15741978
 		},
 		"app-db": {
-			"version":	"1.2.4.0",
-			"path":		"data/2015-06-12/app-db.nwjs-data",
-			"bytes":	98831
+			"version":	"1.2.5.0",
+			"path":		"data/2015-06-12-2/app-db.nwjs-data",
+			"bytes":	98994
 		},
 		"pics": {
 			"version":	"1.2.4.0",
