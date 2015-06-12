@@ -264,8 +264,10 @@ _tablelist.prototype.sort_data_by_stat = {}
 								+ '<th colspan="' + (self._ships_columns.length + 1) + '">'
 								+ '<label for="' + checkbox_id + '">'
 								//+ data_shiptype['full_zh']
-								+ _g.data['ship_type_order'][i+1]['name']['zh_cn']
-								+ ( _g.data['ship_type_order'][i+1]['name']['zh_cn'] == data_shiptype['full_zh']
+								//+ _g.data['ship_type_order'][i+1]['name']['zh_cn']
+								+ _g.data['ship_type_order'][i]['name']['zh_cn']
+								//+ ( _g.data['ship_type_order'][i+1]['name']['zh_cn'] == data_shiptype['full_zh']
+								+ ( _g.data['ship_type_order'][i]['name']['zh_cn'] == data_shiptype['full_zh']
 									? ('<small>[' + data_shiptype['code'] + ']</small>')
 									: ''
 								)
@@ -283,7 +285,8 @@ _tablelist.prototype.sort_data_by_stat = {}
 
 					self._ships_header_checkbox[i]
 						= $('<input type="checkbox" id="' + checkbox_id + '"/>')
-							.prop('disabled', _g.data['ship_type_order'][i+1]['donotcompare'] ? true : false)
+							//.prop('disabled', _g.data['ship_type_order'][i+1]['donotcompare'] ? true : false)
+							.prop('disabled', _g.data['ship_type_order'][i]['donotcompare'] ? true : false)
 							.on({
 								'change': function(){
 									var _checkbox = $(this)

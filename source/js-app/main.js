@@ -644,7 +644,8 @@ _frame.app_main = {
 												_g.ship_type_order.push(
 													docs[i]['types'].length > 1 ? docs[i]['types'] : docs[i]['types'][0]
 												)
-												_g.data['ship_type_order'][docs[i]['id']] = docs[i]
+												//_g.data['ship_type_order'][docs[i]['id']] = docs[i]
+												_g.data['ship_type_order'][i] = docs[i]
 											}
 											// ship type -> ship order
 												(function(){
@@ -660,6 +661,7 @@ _frame.app_main = {
 													}
 												})()
 											_db.ships.find({}).sort({
+												//'class': 1, 'class_no': 1, 'series': 1, 'type': 1, 'time_created': 1, 'name.suffix': 1
 												'type': 1, 'class': 1, 'class_no': 1, 'time_created': 1, 'name.suffix': 1
 											}).exec(function(dberr2, docs){
 												if( dberr2 ){
@@ -672,6 +674,44 @@ _frame.app_main = {
 															_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] = []
 														_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ].push( docs[i]['id'] )
 													}
+													function __(i){
+														var j=0
+														while(
+															_g.data.ship_id_by_type[i]
+															&& _g.data.ship_id_by_type[i][j]
+														){
+															var i_remodel
+															if( _g.data.ships[_g.data.ship_id_by_type[i][j]].remodel_next
+																&& _g.data.ships[_g.data.ships[_g.data.ship_id_by_type[i][j]].remodel_next]
+																&& _g.data.ships[_g.data.ship_id_by_type[i][j]].remodel_next != _g.data.ship_id_by_type[i][j+1]
+																&& (i_remodel = $.inArray(_g.data.ships[_g.data.ship_id_by_type[i][j]].remodel_next, _g.data.ship_id_by_type[i])) > -1
+															){
+																_g.log(
+																	_g.data.ship_id_by_type[i][j]
+																	+ ', ' + _g.data.ships[_g.data.ship_id_by_type[i][j]].remodel_next
+																	+ ', ' + i_remodel
+																)
+																_g.data.ship_id_by_type[i].splice(
+																	i_remodel,
+																	1
+																)
+																_g.data.ship_id_by_type[i].splice(
+																	j+1,
+																	0,
+																	_g.data.ships[_g.data.ship_id_by_type[i][j]].remodel_next
+																)
+																__(i)
+																break
+															}
+															if( j >= _g.data.ship_id_by_type[i].length - 2 ){
+																i++
+																j=0
+															}else{
+																j++
+															}
+														}
+													}
+													__(0)
 													_done(db_name)
 												}
 											})
