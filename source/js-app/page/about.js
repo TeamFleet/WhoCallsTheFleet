@@ -11,6 +11,14 @@ _frame.app_main.page['about'].journal_parse = function( raw ){
 		}catch(e){}
 	}
 
+	searchRes = null
+	scrapePtrn = /\[\[([^\:]+)\:([0-9]+)\:TEXT\]\]/gi
+	while( (searchRes = scrapePtrn.exec(raw)) !== null ){
+		try{
+			resultHTML = resultHTML.replace( searchRes[0], _tmpl['textlink_'+searchRes[1].toLowerCase()](searchRes[2], null, true) )
+		}catch(e){}
+	}
+
 	return resultHTML
 }
 

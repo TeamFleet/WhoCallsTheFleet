@@ -758,7 +758,7 @@ _frame.app_main = {
 				var the_promises = []
 					,updated = []
 					,done_count = 0
-					,html = ''
+					,doms = $()
 
 				for(var i in dataUpdated){
 					var version = dataUpdated[i].split('.')
@@ -786,12 +786,12 @@ _frame.app_main = {
 							deferred.resolve()
 							done_count++
 							if( done_count >= updated.length ){
-								if( html ){
+								if( doms.length ){
 									_g.log('数据更新检查: DONE')
 									_frame.app_main.functions_on_ready.push(function(){
 										_frame.modal.show(
 											$('<div class="updates"/>')
-												.html(html)
+												.append(doms)
 												.on('click.infosHideModal', '[data-infos]', function(){
 													_frame.modal.hide()
 												}),
@@ -814,16 +814,23 @@ _frame.app_main = {
 								deferred.reject(new Error(err))
 							}else{
 								for( var i in docs ){
-									html+= '<h3>'
-											+ (docs[i]['type'] == 'app'
-												? ''
-												: (docs[i]['type'] == 'app-db' ? 'DB' : docs[i]['type']).toUpperCase() + ' / ')
-											+ docs[i]['version']
-											+ '<small>'+(docs[i]['date'] ? docs[i]['date'] : 'WIP')+'</small>'
-											+ '</h3>'
-											+ '<section class="update_journal"/>'
-											+ _frame.app_main.page['about'].journal_parse(docs[i]['journal'])
-											+ '</section>'
+									var section = $('<section class="update_journal" data-version-'+docs[i]['type']+'="'+docs[i]['version']+'"/>')
+												.html(
+													'<h3>'
+													+ (docs[i]['type'] == 'app'
+														? ''
+														: (docs[i]['type'] == 'app-db' ? 'DB' : docs[i]['type']).toUpperCase() + ' / ')
+													+ docs[i]['version']
+													+ '<small>'+(docs[i]['date'] ? docs[i]['date'] : 'WIP')+'</small>'
+													+ '</h3>'
+												)
+									try{
+										$(_frame.app_main.page['about'].journal_parse(docs[i]['journal'])).appendTo( section )
+									}catch(e){
+										_g.log(e)
+										section.remove()
+									}
+									doms = doms.add(section)
 								}
 								_done(obj['type'] + ' - ' + obj['version'])
 							}
@@ -1618,6 +1625,36 @@ _tmpl.link_ship = function( ship, tagName, returnHTML ){
 		)
 }
 
+_tmpl.textlink_ship = function( ship, tagName, returnHTML ){
+	if( !ship )
+		return false
+
+	if( tagName && typeof tagName == 'object' )
+		return _tmpl.link_ship(
+					ship,
+					tagName['tagName'] || null,
+					tagName['returnHTML'] || null
+				)
+
+	tagName = tagName || 'a'
+	returnHTML = returnHTML || false
+
+	if( typeof ship != 'object' ){
+		var shipId = parseInt(ship)
+		ship = _g.data.ships[shipId]
+	}else{
+		var shipId = ship['id']
+	}
+
+	return _tmpl.export(
+			'<' + tagName + ' href="?infos=ship&id=' + shipId + '" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">'
+				+ (ship['type'] ? '[' + _g['data']['ship_types'][ship['type']]['full_zh'] + '] ' : '' )
+				+ _g.getName( ship['name'], '・' )
+			+ '</' + tagName + '>',
+			returnHTML
+		)
+}
+
 _frame.app_main.page['ships'] = {}
 
 
@@ -1693,6 +1730,14 @@ _frame.app_main.page['about'].journal_parse = function( raw ){
 	while( (searchRes = scrapePtrn.exec(raw)) !== null ){
 		try{
 			resultHTML = resultHTML.replace( searchRes[0], _tmpl['link_'+searchRes[1].toLowerCase()](searchRes[2], null, true) )
+		}catch(e){}
+	}
+
+	searchRes = null
+	scrapePtrn = /\[\[([^\:]+)\:([0-9]+)\:TEXT\]\]/gi
+	while( (searchRes = scrapePtrn.exec(raw)) !== null ){
+		try{
+			resultHTML = resultHTML.replace( searchRes[0], _tmpl['textlink_'+searchRes[1].toLowerCase()](searchRes[2], null, true) )
 		}catch(e){}
 	}
 
@@ -2013,6 +2058,9 @@ _frame.infos.init = function(){
 					el,
 					el.attr('data-infos-nohistory')
 				)
+
+				if( e.target.tagName.toLowerCase() == 'a' )
+					e.preventDefault()
 			}
 		})
 
@@ -3594,6 +3642,7 @@ _tablelist.prototype.init = function(){
 
 // @koala-prepend "js-app/templates/link_equipment.js"
 // @koala-prepend "js-app/templates/link_ship.js"
+// @koala-prepend "js-app/templates/textlink_ship.js"
 
 // @koala-prepend "js-app/page/ships.js"
 // @koala-prepend "js-app/page/equipments.js"

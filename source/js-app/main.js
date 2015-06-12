@@ -758,7 +758,7 @@ _frame.app_main = {
 				var the_promises = []
 					,updated = []
 					,done_count = 0
-					,html = ''
+					,doms = $()
 
 				for(var i in dataUpdated){
 					var version = dataUpdated[i].split('.')
@@ -786,12 +786,12 @@ _frame.app_main = {
 							deferred.resolve()
 							done_count++
 							if( done_count >= updated.length ){
-								if( html ){
+								if( doms.length ){
 									_g.log('数据更新检查: DONE')
 									_frame.app_main.functions_on_ready.push(function(){
 										_frame.modal.show(
 											$('<div class="updates"/>')
-												.html(html)
+												.append(doms)
 												.on('click.infosHideModal', '[data-infos]', function(){
 													_frame.modal.hide()
 												}),
@@ -814,16 +814,23 @@ _frame.app_main = {
 								deferred.reject(new Error(err))
 							}else{
 								for( var i in docs ){
-									html+= '<h3>'
-											+ (docs[i]['type'] == 'app'
-												? ''
-												: (docs[i]['type'] == 'app-db' ? 'DB' : docs[i]['type']).toUpperCase() + ' / ')
-											+ docs[i]['version']
-											+ '<small>'+(docs[i]['date'] ? docs[i]['date'] : 'WIP')+'</small>'
-											+ '</h3>'
-											+ '<section class="update_journal"/>'
-											+ _frame.app_main.page['about'].journal_parse(docs[i]['journal'])
-											+ '</section>'
+									var section = $('<section class="update_journal" data-version-'+docs[i]['type']+'="'+docs[i]['version']+'"/>')
+												.html(
+													'<h3>'
+													+ (docs[i]['type'] == 'app'
+														? ''
+														: (docs[i]['type'] == 'app-db' ? 'DB' : docs[i]['type']).toUpperCase() + ' / ')
+													+ docs[i]['version']
+													+ '<small>'+(docs[i]['date'] ? docs[i]['date'] : 'WIP')+'</small>'
+													+ '</h3>'
+												)
+									try{
+										$(_frame.app_main.page['about'].journal_parse(docs[i]['journal'])).appendTo( section )
+									}catch(e){
+										_g.log(e)
+										section.remove()
+									}
+									doms = doms.add(section)
 								}
 								_done(obj['type'] + ' - ' + obj['version'])
 							}

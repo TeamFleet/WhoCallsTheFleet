@@ -253,6 +253,9 @@ _frame.infos.init = function(){
 					el,
 					el.attr('data-infos-nohistory')
 				)
+
+				if( e.target.tagName.toLowerCase() == 'a' )
+					e.preventDefault()
 			}
 		})
 
