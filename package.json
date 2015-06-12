@@ -66,9 +66,9 @@
       "package.json"
     ],
     "dataVersion": {
-      "app": "0.5.4.0",
-      "app-db": "1.2.3.2",
-      "pics": "1.2.1.0"
+      "app": "0.5.5.0",
+      "app-db": "1.2.4.0",
+      "pics": "1.2.4.0"
     },
     "buildDir": "N:\\nwbuild\\build",
     "winIco": "N:\\OneDrive\\Projects\\Apps-nw.js\\KCB\\!design\\appicon.ico",
