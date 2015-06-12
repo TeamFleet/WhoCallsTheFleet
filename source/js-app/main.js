@@ -680,15 +680,16 @@ _frame.app_main = {
 															_g.data.ship_id_by_type[i]
 															&& _g.data.ship_id_by_type[i][j]
 														){
-															var i_remodel
-															if( _g.data.ships[_g.data.ship_id_by_type[i][j]].remodel_next
-																&& _g.data.ships[_g.data.ships[_g.data.ship_id_by_type[i][j]].remodel_next]
-																&& _g.data.ships[_g.data.ship_id_by_type[i][j]].remodel_next != _g.data.ship_id_by_type[i][j+1]
-																&& (i_remodel = $.inArray(_g.data.ships[_g.data.ship_id_by_type[i][j]].remodel_next, _g.data.ship_id_by_type[i])) > -1
+															var id = _g.data.ship_id_by_type[i][j]
+																,i_remodel
+															if( _g.data.ships[id].remodel_next
+																&& _g.data.ships[_g.data.ships[id].remodel_next]
+																&& _g.data.ships[id].remodel_next != _g.data.ship_id_by_type[i][j+1]
+																&& (i_remodel = $.inArray(_g.data.ships[id].remodel_next, _g.data.ship_id_by_type[i])) > -1
 															){
 																_g.log(
-																	_g.data.ship_id_by_type[i][j]
-																	+ ', ' + _g.data.ships[_g.data.ship_id_by_type[i][j]].remodel_next
+																	id
+																	+ ', ' + _g.data.ships[id].remodel_next
 																	+ ', ' + i_remodel
 																)
 																_g.data.ship_id_by_type[i].splice(
@@ -696,10 +697,11 @@ _frame.app_main = {
 																	1
 																)
 																_g.data.ship_id_by_type[i].splice(
-																	j+1,
+																	$.inArray(id, _g.data.ship_id_by_type[i])+1,
 																	0,
-																	_g.data.ships[_g.data.ship_id_by_type[i][j]].remodel_next
+																	_g.data.ships[id].remodel_next
 																)
+																console.log(_g.data.ship_id_by_type[i])
 																__(i)
 																break
 															}
