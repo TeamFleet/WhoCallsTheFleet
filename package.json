@@ -1,7 +1,20 @@
 {
   "name": "Who Calls the Fleet",
   "main": "app/main.html",
-  "version": "0.2.0",
+  "version": "0.5.6",
+  "description": "An offline guidebook for KanColle. Based on NW.JS",
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/Diablohu/WhoCallsTheFleet"
+    }
+  ],
+  "author": {
+    "name": "Diablohu",
+    "email": "diablohudream@gmail.com"
+  },
+  "readmeFilename": "README.md",
+
   "debug": true,
   "window": {
     "width": 1280,
@@ -21,12 +34,7 @@
     "kiosk": false,
     "transparent": false
   },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/Diablohu/WhoCallsTheFleet"
-    }
-  ],
+
   "platformOverrides": {
     "win": {
       "debug": false,
@@ -66,8 +74,8 @@
       "package.json"
     ],
     "dataVersion": {
-      "app": "0.5.5.0",
-      "app-db": "1.2.5.0",
+      "app": "0.5.6.1",
+      "app-db": "1.2.6.1",
       "pics": "1.2.4.0"
     },
     "buildDir": "N:\\nwbuild\\build",
