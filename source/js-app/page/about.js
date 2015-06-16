@@ -22,6 +22,22 @@ _frame.app_main.page['about'].journal_parse = function( raw ){
 	return resultHTML
 }
 
+_frame.app_main.page['about'].journaltitle = function( d, tagName ){
+	d = d || {}
+	tagName = tagName || 'h3'
+
+	return 	'<h3>'
+			+ (d['hotfix']
+				? 'HOTFIX - '
+				: '')
+			+ (d['type'] == 'app'
+				? ''
+				: (d['type'] == 'app-db' ? 'DB' : d['type']).toUpperCase() + ' / ')
+			+ d['version']
+			+ '<small>'+(d['date'] ? d['date'] : 'WIP')+'</small>'
+			+ '</h3>'
+}
+
 _frame.app_main.page['about'].init = function( page ){
 	/*
 	var latestVersionSection = $('[data-version-app]:first-of-type')
@@ -32,15 +48,7 @@ _frame.app_main.page['about'].init = function( page ){
 
 	function addUpdateJournal( updateData ){
 		var section = $('<section class="update_journal" data-version-'+updateData['type']+'="'+updateData['version']+'"/>')
-						.html(
-							'<h3>'
-							+ (updateData['type'] == 'app'
-								? ''
-								: (updateData['type'] == 'app-db' ? 'DB' : updateData['type']).toUpperCase() + ' / ')
-							+ updateData['version']
-							+ '<small>'+(updateData['date'] ? updateData['date'] : 'WIP')+'</small>'
-							+ '</h3>'
-						)
+						.html(_frame.app_main.page['about'].journaltitle(updateData))
 						.appendTo(page)
 		try{
 			$(_frame.app_main.page['about'].journal_parse(updateData['journal'])).appendTo( section )

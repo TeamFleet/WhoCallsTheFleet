@@ -817,15 +817,7 @@ _frame.app_main = {
 							}else{
 								for( var i in docs ){
 									var section = $('<section class="update_journal" data-version-'+docs[i]['type']+'="'+docs[i]['version']+'"/>')
-												.html(
-													'<h3>'
-													+ (docs[i]['type'] == 'app'
-														? ''
-														: (docs[i]['type'] == 'app-db' ? 'DB' : docs[i]['type']).toUpperCase() + ' / ')
-													+ docs[i]['version']
-													+ '<small>'+(docs[i]['date'] ? docs[i]['date'] : 'WIP')+'</small>'
-													+ '</h3>'
-												)
+												.html(_frame.app_main.page['about'].journaltitle(docs[i]))
 									try{
 										$(_frame.app_main.page['about'].journal_parse(docs[i]['journal'])).appendTo( section )
 									}catch(e){
