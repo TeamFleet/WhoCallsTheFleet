@@ -1,9 +1,5 @@
 /*
 
-updater
-	cancel when not 200
-	continue when delete old package
-
 自动更新流程
 	获取本地版本
 		JSON.parse( _config.get['nwjs-data-version'] )
