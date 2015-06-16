@@ -3,6 +3,7 @@
 
 // @koala-prepend "js-app/templates/link_equipment.js"
 // @koala-prepend "js-app/templates/link_ship.js"
+// @koala-prepend "js-app/templates/textlink_ship.js"
 
 // @koala-prepend "js-app/page/ships.js"
 // @koala-prepend "js-app/page/equipments.js"

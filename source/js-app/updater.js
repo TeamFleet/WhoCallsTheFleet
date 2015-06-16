@@ -1,4 +1,5 @@
 /*
+
 自动更新流程
 	获取本地版本
 		JSON.parse( _config.get['nwjs-data-version'] )
@@ -264,12 +265,12 @@ var _updater = {
 									deferred.reject(new Error(err))
 								})
 								//deferred.reject(new Error(err))
-							})/*.on('response', function(response){
+							}).on('response', function(response){
 								if( response.statusCode == 200
 									&& parseInt(response.headers['content-length']) == _updater.remote_data.packages[package_name].bytes
 								)
 									savefile = true
-							})*/).on('error',function(err){
+							})).on('error',function(err){
 								_g.log('    下载数据包出错')
 								node.fs.unlink(tempfile, function(err2){
 									deferred.reject(new Error(err))
@@ -284,14 +285,14 @@ var _updater = {
 							}).pipe(
 								node.fs.createWriteStream(tempfile)
 								.on('finish', function(){
-									//if( savefile ){
+									if( savefile ){
 										size_received+= _updater.remote_data.packages[package_name].bytes
 										node.fs.unlink(targetFile, function(err){
 											if( err ){
 												err_handler(err, '删除原有数据包')
 												_g.log('    跳过')
-												deferred.resolve()
-											}else{
+												//deferred.resolve()
+											}//else{
 												node.fs.rename(
 													tempfile,
 													targetFile,
@@ -305,14 +306,14 @@ var _updater = {
 														deferred.resolve()
 													}
 												)
-											}
+											//}
 										})
-									//}else{
-									//	_g.log('    下载数据包出错')
-									//	node.fs.unlink(tempfile, function(err){
-									//		deferred.resolve()
-									//	})
-									//}
+									}else{
+										_g.log('    下载数据包出错')
+										node.fs.unlink(tempfile, function(err){
+											deferred.resolve()
+										})
+									}
 								}).on('error', function(err){
 									err_handler(err, '写入文件')
 									_g.log('    流程结束')

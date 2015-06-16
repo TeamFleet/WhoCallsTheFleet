@@ -653,7 +653,8 @@ _frame.app_main = {
 												_g.ship_type_order.push(
 													docs[i]['types'].length > 1 ? docs[i]['types'] : docs[i]['types'][0]
 												)
-												_g.data['ship_type_order'][docs[i]['id']] = docs[i]
+												//_g.data['ship_type_order'][docs[i]['id']] = docs[i]
+												_g.data['ship_type_order'][i] = docs[i]
 											}
 											// ship type -> ship order
 												(function(){
@@ -669,6 +670,7 @@ _frame.app_main = {
 													}
 												})()
 											_db.ships.find({}).sort({
+												//'class': 1, 'class_no': 1, 'series': 1, 'type': 1, 'time_created': 1, 'name.suffix': 1
 												'type': 1, 'class': 1, 'class_no': 1, 'time_created': 1, 'name.suffix': 1
 											}).exec(function(dberr2, docs){
 												if( dberr2 ){
@@ -681,6 +683,46 @@ _frame.app_main = {
 															_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] = []
 														_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ].push( docs[i]['id'] )
 													}
+													function __(i){
+														var j=0
+														while(
+															_g.data.ship_id_by_type[i]
+															&& _g.data.ship_id_by_type[i][j]
+														){
+															var id = _g.data.ship_id_by_type[i][j]
+																,i_remodel
+															if( _g.data.ships[id].remodel_next
+																&& _g.data.ships[_g.data.ships[id].remodel_next]
+																&& _g.data.ships[id].remodel_next != _g.data.ship_id_by_type[i][j+1]
+																&& (i_remodel = $.inArray(_g.data.ships[id].remodel_next, _g.data.ship_id_by_type[i])) > -1
+															){
+																_g.log(
+																	id
+																	+ ', ' + _g.data.ships[id].remodel_next
+																	+ ', ' + i_remodel
+																)
+																_g.data.ship_id_by_type[i].splice(
+																	i_remodel,
+																	1
+																)
+																_g.data.ship_id_by_type[i].splice(
+																	$.inArray(id, _g.data.ship_id_by_type[i])+1,
+																	0,
+																	_g.data.ships[id].remodel_next
+																)
+																console.log(_g.data.ship_id_by_type[i])
+																__(i)
+																break
+															}
+															if( j >= _g.data.ship_id_by_type[i].length - 2 ){
+																i++
+																j=0
+															}else{
+																j++
+															}
+														}
+													}
+													__(0)
 													_done(db_name)
 												}
 											})
@@ -727,7 +769,7 @@ _frame.app_main = {
 				var the_promises = []
 					,updated = []
 					,done_count = 0
-					,html = ''
+					,doms = $()
 
 				for(var i in dataUpdated){
 					var version = dataUpdated[i].split('.')
@@ -755,12 +797,12 @@ _frame.app_main = {
 							deferred.resolve()
 							done_count++
 							if( done_count >= updated.length ){
-								if( html ){
+								if( doms.length ){
 									_g.log('数据更新检查: DONE')
 									_frame.app_main.functions_on_ready.push(function(){
 										_frame.modal.show(
 											$('<div class="updates"/>')
-												.html(html)
+												.append(doms)
 												.on('click.infosHideModal', '[data-infos]', function(){
 													_frame.modal.hide()
 												}),
@@ -783,16 +825,15 @@ _frame.app_main = {
 								deferred.reject(new Error(err))
 							}else{
 								for( var i in docs ){
-									html+= '<h3>'
-											+ (docs[i]['type'] == 'app'
-												? ''
-												: (docs[i]['type'] == 'app-db' ? 'DB' : docs[i]['type']).toUpperCase() + ' / ')
-											+ docs[i]['version']
-											+ '<small>'+(docs[i]['date'] ? docs[i]['date'] : 'WIP')+'</small>'
-											+ '</h3>'
-											+ '<section class="update_journal"/>'
-											+ _frame.app_main.page['about'].journal_parse(docs[i]['journal'])
-											+ '</section>'
+									var section = $('<section class="update_journal" data-version-'+docs[i]['type']+'="'+docs[i]['version']+'"/>')
+												.html(_frame.app_main.page['about'].journaltitle(docs[i]))
+									try{
+										$(_frame.app_main.page['about'].journal_parse(docs[i]['journal'])).appendTo( section )
+									}catch(e){
+										_g.log(e)
+										section.remove()
+									}
+									doms = doms.add(section)
 								}
 								_done(obj['type'] + ' - ' + obj['version'])
 							}
