@@ -6,14 +6,14 @@
 			"bytes":	15727176
 		},
 		"app-db": {
-			"version":	"1.2.7.0",
-			"path":		"data/2015-06-16/app-db.nwjs-data",
-			"bytes":	99235
+			"version":	"1.2.7.1",
+			"path":		"data/2015-06-19/app-db.nwjs-data",
+			"bytes":	99296
 		},
 		"pics": {
-			"version":	"1.2.4.0",
-			"path":		"data/2015-06-12/pics.nwjs-data",
-			"bytes":	37673590
+			"version":	"1.2.5.0",
+			"path":		"data/2015-06-19/pics.nwjs-data",
+			"bytes":	37689847
 		}
 	},
 	"homepage": "http://fleet.diablohu.com/",
