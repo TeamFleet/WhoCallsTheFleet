@@ -365,6 +365,7 @@ _tablelist.prototype.sort_default_order_by_stat = {}
 		// 更改视图
 			this.dom.filter_container.attr('viewtype', 'compare')
 			this.dom.table_container_inner.scrollTop( 0 )
+			this.dom.table.addClass('sortable')
 
 		// 计算数据排序排序
 			this.mark_high( true )
@@ -376,6 +377,7 @@ _tablelist.prototype.sort_default_order_by_stat = {}
 		this.mark_high()
 		this.thead_redraw( 500 )
 		this.dom.table_container_inner.scrollTop( this._ships_last_scrollTop )
+		this.dom.table.removeClass('sortable')
 		delete this._ships_last_viewtype
 		delete this._ships_last_scrollTop
 	}
@@ -451,7 +453,7 @@ _tablelist.prototype.sort_default_order_by_stat = {}
 		// 生成表格框架
 			this.dom.table_container = $('<div class="fixed-table-container"/>').appendTo( this.dom.container )
 			this.dom.table_container_inner = $('<div class="fixed-table-container-inner"/>').appendTo( this.dom.table_container )
-			this.dom.table = $('<table class="ships hashover hashover-column sortable"/>').appendTo( this.dom.table_container_inner )
+			this.dom.table = $('<table class="ships hashover hashover-column"/>').appendTo( this.dom.table_container_inner )
 			function gen_thead(arr){
 				self.dom.thead = $('<thead/>')
 				var tr = $('<tr/>').appendTo(self.dom.thead)
