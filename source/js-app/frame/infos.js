@@ -357,12 +357,19 @@ _frame.infos.init = function(){
 			var dom = $('<div class="ship"/>')
 				,ship_name = _g.getName( d['name'], '・' ) || '舰娘'
 				,illustrations = []
+				,has_no = d['no'] && parseInt(d['no']) < 500 ? true : false
 
 			// 名称 & 舰种 & 舰级
 				$('<div class="title"/>')
 					.html(
 						'<h2 data-content="' + ship_name + '">' + ship_name + '</h2>'
 						+ '<small>'
+							+ '<span data-tip="' + (has_no ? '图鉴编号' : '无图鉴编号') + '">No.'
+								+ ( has_no
+									? d['no']
+									: '-'
+								)
+							+ '</span>'
 							+ ( d['class'] ? _g['data']['ship_classes'][d['class']]['name_zh'] + '级' : '' )
 							+ ( d['class_no'] ? '<em>' + d['class_no'] + '</em>号舰' : '' )
 							+ ( d['type'] ? ' / ' + _g['data']['ship_types'][d['type']]['full_zh'] : '' )
@@ -628,6 +635,7 @@ _frame.infos.init = function(){
 					.html(
 						'<h2 data-content="' + d['name']['zh_cn'] + '">' + d['name']['zh_cn'] + '</h2>'
 						+ '<small>'
+							+ '<span data-tip="图鉴编号">No.' + d['id'] + '</span>'
 							+ ( d['type']
 								? ( _g['data']['item_types'][d['type']]['name']['zh_cn']
 									+ _frame.app_main.page['equipments'].gen_helper_equipable_on( d['type'] )

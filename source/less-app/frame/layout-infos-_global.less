@@ -45,9 +45,20 @@
 					font-weight:lighter;
 					//.padding-left(4);
 					.padding-left(2);
+					position:	relative;
 					em{
 						font-style:	normal;
 						padding:	0 .25em;
+					}
+					span{
+						display:	inline-block;
+						margin:		0 .65em 0 0;
+						padding:	0 .3em;
+						border-radius:	3px;
+						font-size:	smaller;
+						position:	relative;
+						top:		-0.1em;
+						min-width:	2.7em;
 					}
 				}
 			}
@@ -167,6 +178,16 @@
 			}
 			h4{
 				.font-size(24 * 0.8)
+			}
+
+			&>div{
+				&.title{
+					small{
+						.font-size(14);
+						.line-height(16);
+						.padding-left(1);
+					}
+				}
 			}
 		}
 	}
