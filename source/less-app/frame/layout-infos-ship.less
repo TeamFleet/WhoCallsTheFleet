@@ -313,13 +313,13 @@
 				//width:		15%;
 				.width(140);
 				vertical-align:top;
-				background:	fade(#0a380a, 32.5%);
-				border-radius:	5px;
+				background:	hsla(180, 70%, 13%, 0.325);
+				border-radius:	0 5px 5px 0;
 				.height(54);
 				&>strong{
 					.font-size(13);
 					.line-height(20);
-					color:		#cfd1cf;
+					color:		hsl(180, 25%, 80%);
 					font-weight:normal;
 					display:	block;
 				}
@@ -327,11 +327,12 @@
 					.padding-top(2);
 					.font-size(14);
 					.line-height(20);
-					color:		#8fcc8f;
+					color:		hsl(180, 40%, 70%);
 					display:	block;
 				}
 				&+.entity{
-					right:	~"calc( 30% + @{size} + 140px + 10px )";
+					right:	~"calc( 30% + @{size} + 140px + 2px )";
+					border-radius: 	5px 0 0 5px
 				}
 			}
 		}
@@ -450,7 +451,7 @@
 			&>span.entity{
 				right:	~"calc( 20% + @{size} )";
 				&+.entity{
-					right:	~"calc( 20% + @{size} + 140px + 10px )";
+					right:	~"calc( 20% + @{size} + 140px + 2px )";
 				}
 			}
 			&>aside{
@@ -470,9 +471,11 @@
 			}
 			&>span.entity{
 				right:	0 !important;
+				border-radius:	0 5px 5px 0 !important;
 				&+.entity{
 					top:	0 !important;
-					.right(145) !important;
+					.right(142) !important;
+					border-radius:	5px 0 0 5px !important;
 				}
 			}
 			&>aside{
@@ -643,14 +646,19 @@
 		@media all and (max-width: 960px ){
 			@size:	unit( @nav_height - 40, px );
 			padding-right:	~"calc( 20% + @{size} )";
+			&>div h4{
+				.font-size(22);
+			}
 			&>div.stats{
 				padding-right:	@size;
 			}
 			&>span.entity{
 				right:	~"calc( 20% + @{size} )";
+				border-radius:	5px 5px 0 0;
 				&+.entity{
 					right:	~"calc( 20% + @{size} )";
-					.top(60)
+					.top(56);
+					border-radius:	0 0 5px 5px;
 				}
 			}
 			&>aside{
@@ -678,9 +686,11 @@
 			}
 			&>span.entity{
 				right:	0;
+				border-radius:	0 5px 5px 0;
 				&+.entity{
 					top:	0;
-					.right(145);
+					.right(142);
+					border-radius:	5px 0 0 5px;
 				}
 			}
 			&>aside{
@@ -692,7 +702,7 @@
 			&>span.entity{
 				right:		~"calc( 45% + 80px )";
 				&+.entity{
-					right:	~"calc( 45% + 80px + 140px + 10px )";
+					right:	~"calc( 45% + 80px + 140px + 2px )";
 				}
 			}
 			&>aside{
@@ -704,7 +714,7 @@
 			&>span.entity{
 				right:		~"calc( 50% + 80px )";
 				&+.entity{
-					right:	~"calc( 50% + 80px + 140px + 10px )";
+					right:	~"calc( 50% + 80px + 140px + 2px )";
 				}
 			}
 			&>aside{
