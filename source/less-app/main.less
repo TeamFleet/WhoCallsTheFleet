@@ -652,6 +652,10 @@ body{
 				z-index:	-1;
 			}
 		}
+		@media all and (max-height: 600px){
+			.padding-top(10);
+			.padding-bottom(10);
+		}
 	} // &>main>.div.page.infos
 
 	&.infos-show{
@@ -1144,8 +1148,10 @@ table{
 		}
 		td{
 			border-left:1px solid transparent;
-			text-align:	right;
-			padding:	.25em .5em .25em .25em;
+			//text-align:	right;
+			text-align:	center;
+			//padding:	.25em .5em .25em .25em;
+			padding:	.25em;
 			//.border-left(1, solid, fade(#d3c9db, 25%));
 		}
 	}
@@ -1175,6 +1181,15 @@ table{
 			background-color:	rgba(0, 0, 0, .2);
 			&:hover{
 				background-color:	transparent;
+			}
+		}
+	}
+
+	&.sortable{
+		thead{
+			.user-select(none);
+			td{
+				.transition-property(~"color, text-shadow");
 			}
 		}
 	}

@@ -20,6 +20,10 @@
 			&.title{
 				small{
 					color:		#8ddbff;
+					span{
+						background:	hsla(199, 80%, 75%, .75);
+						color:		hsl(199, 20%, 20%);
+					}
 				}
 			}
 			&.stats{
@@ -98,6 +102,7 @@
 			}
 			&.equipments{
 				flex-basis:	35%;
+				position:	relative;
 				&>button{
 					display:	block;
 					width:		100%;
@@ -175,6 +180,29 @@
 						&>small{
 							background:	fade( lighten(#0a2937, 15%), 75%);
 							color:		lighten(#2cace8, 15%);
+						}
+					}
+				}
+			}
+			&.equipments>.modernization{
+				.flexbox();
+				.margin-top(24);
+				h4{
+					margin:		0;
+					flex:		0 0 auto;
+				}
+				&>.stats{
+					flex:		1 0 auto;
+					text-align:	right;
+					&>span{
+						.line-height(18);
+						position:	relative;
+						display:	inline-block;
+						margin-left:.35em;
+						color:		#2cace8;
+						.padding-left(20);
+						&:before{
+							top:		0;
 						}
 					}
 				}
@@ -313,13 +341,13 @@
 				//width:		15%;
 				.width(140);
 				vertical-align:top;
-				background:	fade(#0a380a, 32.5%);
-				border-radius:	5px;
+				background:	hsla(180, 70%, 25%, 0.325);
+				border-radius:	0 5px 5px 0;
 				.height(54);
 				&>strong{
 					.font-size(13);
 					.line-height(20);
-					color:		#cfd1cf;
+					color:		hsl(180, 25%, 80%);
 					font-weight:normal;
 					display:	block;
 				}
@@ -327,11 +355,12 @@
 					.padding-top(2);
 					.font-size(14);
 					.line-height(20);
-					color:		#8fcc8f;
+					color:		hsl(180, 50%, 70%);
 					display:	block;
 				}
 				&+.entity{
-					right:	~"calc( 30% + @{size} + 140px + 10px )";
+					right:	~"calc( 30% + @{size} + 140px + 2px )";
+					border-radius: 	5px 0 0 5px
 				}
 			}
 		}
@@ -450,7 +479,7 @@
 			&>span.entity{
 				right:	~"calc( 20% + @{size} )";
 				&+.entity{
-					right:	~"calc( 20% + @{size} + 140px + 10px )";
+					right:	~"calc( 20% + @{size} + 140px + 2px )";
 				}
 			}
 			&>aside{
@@ -465,14 +494,30 @@
 					.margin-top(26) !important;
 				}
 			}
+			&>div.equipments{
+				//h4{
+				//	.margin-bottom(4);
+				//}
+				&>button~button{
+					.margin-top(4);
+				}
+			}
+			&>div.equipments>.modernization{
+				.margin-top(12);
+				h4{
+					margin-top:	0 !important;
+				}
+			}
 			&>div.remodels{
 				height:		auto;
 			}
 			&>span.entity{
 				right:	0 !important;
+				border-radius:	0 5px 5px 0 !important;
 				&+.entity{
 					top:	0 !important;
-					.right(145) !important;
+					.right(142) !important;
+					border-radius:	5px 0 0 5px !important;
 				}
 			}
 			&>aside{
@@ -556,12 +601,16 @@
 				margin-bottom:	0;
 			}
 		}
-		@media all and (max-width: 960px) and (max-height: 600px), (min-width: 961px) and (max-height: 560px){
+		//@media all and (max-width: 960px) and (max-height: 600px), (min-width: 961px) and (max-height: 560px){
+		@media all and (max-width: 800px) and (max-height: 600px), (min-width: 801px) and (max-width: 960px) and (max-height: 690px), (min-width: 961px) and (max-height: 600px){
 			.flex-flow(column nowrap);
 			.justify-content(flex-start);
 			.align-items(flex-start);
 			&>div{
 				.flex(1 0 auto);
+				h4{
+					.font-size(20) !important;
+				}
 				&.stats{
 					flex-basis:	auto;
 					padding-right:	0 !important;
@@ -626,8 +675,18 @@
 						}
 					}
 				}
+				&.equipments>.modernization{
+					position:	absolute;
+					top:		0;
+					right:		0;
+					margin-top:	0;
+					h4{
+						margin-right:	.35em;
+					}
+				}
 				&.remodels{
 					flex:	0 0 76px;
+					.margin-bottom(-6);
 				}
 			}
 			&>aside{
@@ -643,14 +702,19 @@
 		@media all and (max-width: 960px ){
 			@size:	unit( @nav_height - 40, px );
 			padding-right:	~"calc( 20% + @{size} )";
+			&>div h4{
+				.font-size(22);
+			}
 			&>div.stats{
 				padding-right:	@size;
 			}
 			&>span.entity{
 				right:	~"calc( 20% + @{size} )";
+				border-radius:	5px 5px 0 0;
 				&+.entity{
 					right:	~"calc( 20% + @{size} )";
-					.top(60)
+					.top(56);
+					border-radius:	0 0 5px 5px;
 				}
 			}
 			&>aside{
@@ -678,9 +742,11 @@
 			}
 			&>span.entity{
 				right:	0;
+				border-radius:	0 5px 5px 0;
 				&+.entity{
 					top:	0;
-					.right(145);
+					.right(142);
+					border-radius:	5px 0 0 5px;
 				}
 			}
 			&>aside{
@@ -692,7 +758,7 @@
 			&>span.entity{
 				right:		~"calc( 45% + 80px )";
 				&+.entity{
-					right:	~"calc( 45% + 80px + 140px + 10px )";
+					right:	~"calc( 45% + 80px + 140px + 2px )";
 				}
 			}
 			&>aside{
@@ -704,7 +770,7 @@
 			&>span.entity{
 				right:		~"calc( 50% + 80px )";
 				&+.entity{
-					right:	~"calc( 50% + 80px + 140px + 10px )";
+					right:	~"calc( 50% + 80px + 140px + 2px )";
 				}
 			}
 			&>aside{
