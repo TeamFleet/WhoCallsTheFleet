@@ -34,6 +34,8 @@ var _tablelist = function( container, options ){
 		this.listtype = 'ships'
 	else if( container.hasClass('equipments') )
 		this.listtype = 'equipments'
+	else if( container.hasClass('fleets') )
+		this.listtype = 'fleets'
 
 	this._index = this.global_index
 	this.global_index++
