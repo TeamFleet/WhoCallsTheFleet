@@ -44,6 +44,7 @@ var _tablelist = function( container, options ){
 _tablelist.prototype.global_index = 0
 _tablelist.prototype.flexgrid_empty_count = 6
 _tablelist.prototype.sort_data_by_stat = {}
+_tablelist.prototype.sort_default_order_by_stat = {}
 
 
 
@@ -450,7 +451,7 @@ _tablelist.prototype.sort_data_by_stat = {}
 		// 生成表格框架
 			this.dom.table_container = $('<div class="fixed-table-container"/>').appendTo( this.dom.container )
 			this.dom.table_container_inner = $('<div class="fixed-table-container-inner"/>').appendTo( this.dom.table_container )
-			this.dom.table = $('<table class="ships hashover hashover-column"/>').appendTo( this.dom.table_container_inner )
+			this.dom.table = $('<table class="ships hashover hashover-column sortable"/>').appendTo( this.dom.table_container_inner )
 			function gen_thead(arr){
 				self.dom.thead = $('<thead/>')
 				var tr = $('<tr/>').appendTo(self.dom.thead)
@@ -923,6 +924,7 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 				tbody = this.dom.table.find('tbody')
 
 			var rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
+				,self = this
 				,sort_data_by_stat = this.sort_data_by_stat
 
 			rows.find('td[data-value]').removeClass('sort-first sort-second')
@@ -935,9 +937,14 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 				// 以下属性不进行标记，但仍计算排序
 					,noMark = stat.match(/\b(speed|range)\b/ )
 
-				// 以下属性为升序
-					if( stat.match(/\b(consum_fuel|consum_ammo)\b/ ) )
-						is_ascending = true
+				if( typeof self.sort_default_order_by_stat[stat] == 'undefined' ){
+					// 以下属性为升序
+						if( stat.match(/\b(consum_fuel|consum_ammo)\b/ ) )
+							is_ascending = true
+					self.sort_default_order_by_stat[stat] = is_ascending ? 'asc' : 'desc'
+				}else{
+					is_ascending = self.sort_default_order_by_stat[stat] == 'asc' ? true : false
+				}
 
 				var sort = _tablelist.prototype.sort_column( index+1, is_ascending, rows )
 					,max = Math.min( 6, Math.ceil(rows.length / 2) + 1 )
@@ -967,10 +974,25 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 			if( !stat || !sortData )
 				return false
 
+			if( stat != this.lastSortedStat ){
+				if( this.lastSortedHeader )
+					this.lastSortedHeader.removeClass('sorting desc asc')
+				cell.addClass('sorting')
+			}
+
 			var order = (stat == this.lastSortedStat && this.lastSortedOrder == 'obverse')
 							? 'reverse'
 							: 'obverse'
 				,i = order == 'reverse' ? sortData.length - 1 : 0
+
+			if( this.sort_default_order_by_stat[stat] ){
+				var reverse = this.sort_default_order_by_stat[stat] == 'asc' ? 'desc' : 'asc'
+				if( order == 'obverse' ){
+					cell.removeClass(reverse).addClass(this.sort_default_order_by_stat[stat])
+				}else{
+					cell.removeClass(this.sort_default_order_by_stat[stat]).addClass(reverse)
+				}
+			}
 
 			this.sortedRow = $()
 
@@ -986,6 +1008,7 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 
 			this.lastSortedStat = stat
 			this.lastSortedOrder = order
+			this.lastSortedHeader = cell
 			delete this._tmpDOM
 		}
 
@@ -1018,9 +1041,13 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 			// 修改排序提示按钮
 				this.dom.btn_compare_sort.addClass('disabled').html('点击表格标题可排序')
 
+			// 重置其他样式
+				this.lastSortedHeader.removeClass('sorting desc asc')
+
 			delete this.sortedRow
 			delete this.lastSortedStat
 			delete this.lastSortedOrder
+			delete this.lastSortedHeader
 			return true
 		}
 
