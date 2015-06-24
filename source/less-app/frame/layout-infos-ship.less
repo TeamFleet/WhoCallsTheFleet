@@ -102,6 +102,7 @@
 			}
 			&.equipments{
 				flex-basis:	35%;
+				position:	relative;
 				&>button{
 					display:	block;
 					width:		100%;
@@ -179,6 +180,29 @@
 						&>small{
 							background:	fade( lighten(#0a2937, 15%), 75%);
 							color:		lighten(#2cace8, 15%);
+						}
+					}
+				}
+			}
+			&.equipments>.modernization{
+				.flexbox();
+				.margin-top(24);
+				h4{
+					margin:		0;
+					flex:		0 0 auto;
+				}
+				&>.stats{
+					flex:		1 0 auto;
+					text-align:	right;
+					&>span{
+						.line-height(18);
+						position:	relative;
+						display:	inline-block;
+						margin-left:.35em;
+						color:		#2cace8;
+						.padding-left(20);
+						&:before{
+							top:		0;
 						}
 					}
 				}
@@ -470,6 +494,20 @@
 					.margin-top(26) !important;
 				}
 			}
+			&>div.equipments{
+				//h4{
+				//	.margin-bottom(4);
+				//}
+				&>button~button{
+					.margin-top(4);
+				}
+			}
+			&>div.equipments>.modernization{
+				.margin-top(12);
+				h4{
+					margin-top:	0 !important;
+				}
+			}
 			&>div.remodels{
 				height:		auto;
 			}
@@ -637,8 +675,18 @@
 						}
 					}
 				}
+				&.equipments>.modernization{
+					position:	absolute;
+					top:		0;
+					right:		0;
+					margin-top:	0;
+					h4{
+						margin-right:	.35em;
+					}
+				}
 				&.remodels{
 					flex:	0 0 76px;
+					.margin-bottom(-6);
 				}
 			}
 			&>aside{

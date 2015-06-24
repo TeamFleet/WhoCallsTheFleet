@@ -35,6 +35,68 @@
 			.font-size(24)
 		}
 
+		.stats [class^="stat-"]{
+			.padding-left(22);
+			font-weight:lighter;
+			&:before{
+				content:	'';
+				position:	absolute;
+				left:		0;
+				.top( (26 - 18) / 2 - 1 );
+				.width(18);
+				.height(18);
+				background:	~"url(@{folder_images}/stats.png) no-repeat 0 0";
+			}
+			&.stat-hp:before{
+				background-position:	0 0;
+			}
+			&.stat-armor:before{
+				background-position:	0 unit( (0 - 18 * 1), px );
+			}
+			&.stat-evasion:before{
+				background-position:	0 unit( (0 - 18 * 2), px );
+			}
+			&.stat-carry:before{
+				background-position:	0 unit( (0 - 18 * 3), px );
+			}
+			&.stat-fire:before{
+				background-position:	0 unit( (0 - 18 * 4), px );
+			}
+			&.stat-torpedo:before{
+				background-position:	0 unit( (0 - 18 * 5), px );
+			}
+			&.stat-aa:before{
+				background-position:	0 unit( (0 - 18 * 6), px );
+			}
+			&.stat-asw:before{
+				background-position:	0 unit( (0 - 18 * 7), px );
+			}
+			&.stat-speed:before{
+				background-position:	0 unit( (0 - 18 * 8), px );
+			}
+			&.stat-range:before{
+				background-position:	0 unit( (0 - 18 * 9), px );
+			}
+			&.stat-los:before{
+				background-position:	0 unit( (0 - 18 * 10), px );
+			}
+			&.stat-luck:before{
+				background-position:	0 unit( (0 - 18 * 11), px );
+			}
+			&.stat-fuel:before{
+				background-position:	0 unit( (0 - 18 * 12), px );
+			}
+			&.stat-ammo:before{
+				background-position:	0 unit( (0 - 18 * 13), px );
+			}
+			&.stat-bomb:before{
+				background-position:	0 unit( (0 - 18 * 14), px );
+			}
+			&.stat-hit:before{
+				background-position:	0 unit( (0 - 18 * 15), px );
+			}
+		}
+
 		&>div{
 			width:		100%;
 			&.title{
@@ -74,65 +136,6 @@
 						overflow:	visible;
 						vertical-align: top;
 						&>small{
-							.padding-left(22);
-							font-weight:lighter;
-							&:before{
-								content:	'';
-								position:	absolute;
-								left:		0;
-								.top( (26 - 18) / 2 - 1 );
-								.width(18);
-								.height(18);
-								background:	~"url(@{folder_images}/stats.png) no-repeat 0 0";
-							}
-							&.stat-hp:before{
-								background-position:	0 0;
-							}
-							&.stat-armor:before{
-								background-position:	0 unit( (0 - 18 * 1), px );
-							}
-							&.stat-evasion:before{
-								background-position:	0 unit( (0 - 18 * 2), px );
-							}
-							&.stat-carry:before{
-								background-position:	0 unit( (0 - 18 * 3), px );
-							}
-							&.stat-fire:before{
-								background-position:	0 unit( (0 - 18 * 4), px );
-							}
-							&.stat-torpedo:before{
-								background-position:	0 unit( (0 - 18 * 5), px );
-							}
-							&.stat-aa:before{
-								background-position:	0 unit( (0 - 18 * 6), px );
-							}
-							&.stat-asw:before{
-								background-position:	0 unit( (0 - 18 * 7), px );
-							}
-							&.stat-speed:before{
-								background-position:	0 unit( (0 - 18 * 8), px );
-							}
-							&.stat-range:before{
-								background-position:	0 unit( (0 - 18 * 9), px );
-							}
-							&.stat-los:before{
-								background-position:	0 unit( (0 - 18 * 10), px );
-							}
-							&.stat-luck:before{
-								background-position:	0 unit( (0 - 18 * 11), px );
-							}
-							&.stat-fuel:before{
-								background-position:	0 unit( (0 - 18 * 12), px );
-							}
-							&.stat-ammo:before{
-								background-position:	0 unit( (0 - 18 * 13), px );
-							}
-							&.stat-bomb:before{
-								background-position:	0 unit( (0 - 18 * 14), px );
-							}
-							&.stat-hit:before{
-								background-position:	0 unit( (0 - 18 * 15), px );
-							}
 							&.indicator{
 								&:before{
 									border-radius:	50%;

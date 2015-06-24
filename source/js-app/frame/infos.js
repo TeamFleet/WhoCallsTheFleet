@@ -468,6 +468,31 @@ _frame.infos.init = function(){
 					i++
 				}
 
+			// 近代化改修（合成）
+				var modernization = $('<div class="modernization"/>').html('<h4 data-content="合成">合成</h4>').appendTo(equips)
+					,stats = $('<div class="stats"/>').appendTo(modernization)
+					,has_modernization = false
+				for( var i in d['modernization'] ){
+					if( d['modernization'][i] ){
+						has_modernization = true
+						var stat
+						switch(parseInt(i)){
+							case 0: stat = 'fire'; break;
+							case 1: stat = 'torpedo'; break;
+							case 2: stat = 'aa'; break;
+							case 3: stat = 'armor'; break;
+						}
+						$('<span class="stat-' + stat + '"/>').html('+' + d['modernization'][i]).appendTo(stats)
+					}
+				}
+				// まるゆ
+					if( d['id'] == 163 )
+						$('<span class="stat-luck"/>').html('+1.2').appendTo(stats)
+					if( d['id'] == 402 )
+						$('<span class="stat-luck"/>').html('+1.6').appendTo(stats)
+				if( !has_modernization )
+					modernization.addClass('no').append($('<em/>').html('-'))
+
 			// 声优 & 画师 & 消耗
 				$('<span class="entity"/>')
 					.html(
