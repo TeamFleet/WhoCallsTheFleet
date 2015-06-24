@@ -461,6 +461,26 @@ body{
 			.layout-infos();
 		//}
 		.layout-only_bg();
+
+		&[in-development]{
+			&:after{
+				content:	'[IN DEVELOPMENT] ' attr(in-development);
+				position:	absolute;
+				z-index:	10;
+				left:		0;
+				bottom:		0;
+				padding:	.5em .75em;
+				background:	rgba(0, 0, 0, .625);
+				//color:		rgba(255, 255, 255, .75);
+				color:		#fff;
+				text-shadow:0 0 10px #000,
+							0 0 10px #000,
+							0 0 2px #000,
+							0 0 1px #000;
+				.user-select(none);
+				pointer-events:	none;
+			}
+		}
 	} // #layout
 }
 
