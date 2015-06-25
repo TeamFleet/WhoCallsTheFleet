@@ -22,4 +22,4 @@
 * [Q](https://github.com/kriskowal/q): 异步函数步骤/Promise框架
 * [request](https://github.com/request/request): HTTP请求框架
 * [request-progress](https://github.com/request/request): request请求的进度
-* [sevmer](https://github.com/npm/node-semver): 简单的版本号对比
+* [semver](https://github.com/npm/node-semver): 简单的版本号对比
