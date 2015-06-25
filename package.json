@@ -1,7 +1,7 @@
 {
-  "name": "Who Calls the Fleet",
+  "name": "WhoCallsTheFleet",
   "main": "app/main.html",
-  "version": "0.5.6",
+  "version": "0.5.8",
   "description": "An offline guidebook for KanColle. Based on NW.JS",
   "repositories": [
     {
@@ -78,7 +78,7 @@
       "package.json"
     ],
     "dataVersion": {
-      "app": "0.5.7.0",
+      "app": "0.5.7.1",
       "app-db": "1.2.7.1",
       "pics": "1.2.5.0"
     },
@@ -92,5 +92,16 @@
     ],
     "launcherSplash": "N:\\OneDrive\\Projects\\Apps-nw.js\\KCB\\!design\\launcher.webp",
     "macIcns": "N:\\OneDrive\\Projects\\Apps-nw.js\\KCB\\!design\\appicon.icns"
+  },
+  "dependencies": {
+    "adm-zip": "^0.4.7",
+    "jsonfile": "^2.2.1",
+    "markdown": "^0.5.0",
+    "mkdirp": "^0.5.1",
+    "nedb": "^1.1.1",
+    "q": "^1.4.1",
+    "request": "^2.58.0",
+    "request-progress": "^0.3.1",
+    "semver": "^4.3.6"
   }
 }
