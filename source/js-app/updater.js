@@ -328,7 +328,7 @@ var _updater = {
 				})
 				promise_chain_update = promise_chain_update
 					.catch(function (err) {
-						_g.log(err)
+						_g.error(err)
 						_g.log('自动更新失败')
 						_updater.update_indicator.removeClass('on')
 					})
@@ -351,7 +351,7 @@ var _updater = {
 		
 		// 错误处理
 			.catch(function (err) {
-				_g.log(err)
+				_g.error(err)
 				_g.log('自动更新失败')
 				if( _updater.update_indicator && _updater.update_indicator.length )
 					_updater.update_indicator.remove()

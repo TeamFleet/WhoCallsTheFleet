@@ -53,7 +53,7 @@ _frame.app_main.page['about'].init = function( page ){
 		try{
 			$(_frame.app_main.page['about'].journal_parse(updateData['journal'])).appendTo( section )
 		}catch(e){
-			_g.log(e)
+			_g.error(e)
 			section.remove()
 		}
 	}
