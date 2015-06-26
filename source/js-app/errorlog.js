@@ -5,7 +5,7 @@ _g.error = function( err ){
 	node.fs.appendFileSync(
 		node.path.join(_g.execPath, 'errorlog.txt'),
 		new Date()
-		+ '  |  '
+		+ "\r\n"
 		+ ( (err instanceof Error)
 			? err.message || ''
 			: err
