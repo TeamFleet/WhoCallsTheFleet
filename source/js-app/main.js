@@ -830,7 +830,7 @@ _frame.app_main = {
 									try{
 										$(_frame.app_main.page['about'].journal_parse(docs[i]['journal'])).appendTo( section )
 									}catch(e){
-										_g.log(e)
+										_g.error(e)
 										section.remove()
 									}
 									doms = doms.add(section)
@@ -917,7 +917,7 @@ _frame.app_main = {
 
 		// 错误处理
 			.catch(function (err) {
-				_g.log(err)
+				_g.error(err)
 			})
 			.done(function(){
 				_g.log('Global initialization DONE')
