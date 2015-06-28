@@ -91,6 +91,10 @@
 
 		'updates': new node.nedb({
 				filename: 	_g.path.db + '/updates.json'
+			}),
+
+		'arsenal_weekay': new node.nedb({
+				filename: 	_g.path.db + '/arsenal_weekay.json'
 			})
 	}
 	_g.ship_type_order = []
@@ -748,7 +752,7 @@ _frame.app_main = {
 
 				return Q.all(the_promises);
 			})
-		
+
 		// 如果从启动器载入，检查数据是否有更新
 			.then(function(){
 				_g.log('数据更新检查: START')
