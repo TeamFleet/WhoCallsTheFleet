@@ -372,22 +372,23 @@ body{
 				left:		0;
 				z-index:	3;
 				//.transition-property(top);
-				.padding(20, @nav_height);
+				.padding-top(20);
+				.padding-bottom(20);
 				.fadein();
 				background:	rgba(0, 0, 0, .65);
 				.main-page();
 				.transition-property(~"opacity, background-color");
 				//.transition-delay(@transition_duration * 2);
 				.transition-duration(@transition_duration * 2);
-				.border-top(1, solid, transparent);
-				.border-bottom(2, solid, transparent);
-				.window-noframe({
-					.border-right(2, solid, transparent);
-				});
-				.window-maxmize({
-					.border-right-width(1) !important;
-					.border-bottom-width(1) !important;
-				});
+			    .border-top(1, solid, transparent);
+			    .border-bottom(2, solid, transparent);
+			    .window-noframe({
+			        .border-right(2, solid, transparent);
+			    });
+			    .window-maxmize({
+			        .border-right-width(1) !important;
+			        .border-bottom-width(1) !important;
+			    });
 				&.off{
 					display:	none;
 				}
@@ -497,18 +498,7 @@ body{
 
 
 .main-page{
-	@media all and (max-width: 1152px ){
-		.padding-left(@nav_height - 20);
-		.padding-right(@nav_height - 20);
-	}
-	@media all and (max-width: 960px ){
-		.padding-left(@nav_height - 40);
-		.padding-right(@nav_height - 40);
-	}
-	@media all and (max-width: 800px ){
-		.padding-left(@nav_height - 55);
-		.padding-right(@nav_height - 55);
-	}
+	.main-sizing-padding();
 	&[page="ships"],
 	&[page="equipments"]{
 		padding:	0 !important;
@@ -542,32 +532,9 @@ body{
 			}
 		}
 		&>.options{
-			&>div{
-				@media all and (max-width: 1152px ){
-					.padding-left(@nav_height - 20);
-					.padding-right(@nav_height - 20);
-				}
-				@media all and (max-width: 960px ){
-					.padding-left(@nav_height - 40);
-					.padding-right(@nav_height - 40);
-				}
-				@media all and (max-width: 800px ){
-					.padding-left(@nav_height - 55);
-					.padding-right(@nav_height - 55);
-				}
-			}
 			&[viewtype="card"]{
 				&~.fixed-table-container{
 					&>.fixed-table-container-inner{
-						@media all and (max-width: 1152px ){
-							.padding-left(@nav_height - 20);
-						}
-						@media all and (max-width: 960px ){
-							.padding-left(@nav_height - 40);
-						}
-						@media all and (max-width: 800px ){
-							.padding-left(@nav_height - 55);
-						}
 						table{
 							tbody{
 								tr{
