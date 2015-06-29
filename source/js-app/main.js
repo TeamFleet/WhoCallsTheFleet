@@ -53,48 +53,8 @@
 	}
 
 	var _db = {
-		'entities': new node.nedb({
-				filename: 	node.path.join(_g.path.db, '/entities.json')
-			}),
-
 		'fleets': new node.nedb({
 				filename: 	node.path.join(node.gui.App.dataPath, 'NeDB/fleets.json')
-			}),
-
-		'items': new node.nedb({
-				filename: 	node.path.join(_g.path.db, '/items.json')
-			}),
-		'item_types': new node.nedb({
-				filename: 	node.path.join(_g.path.db, '/item_types.json')
-			}),
-		'item_type_collections': new node.nedb({
-				filename: 	node.path.join(_g.path.db, '/item_type_collections.json')
-			}),
-
-		'ships': new node.nedb({
-				filename: 	node.path.join(_g.path.db, '/ships.json')
-			}),
-		'ship_types': new node.nedb({
-				filename: 	node.path.join(_g.path.db, '/ship_types.json')
-			}),
-		'ship_type_collections': new node.nedb({
-				filename: 	node.path.join(_g.path.db, '/ship_type_collections.json')
-			}),
-		'ship_type_order': new node.nedb({
-				filename: 	node.path.join(_g.path.db, '/ship_type_order.json')
-			}),
-		'ship_classes': new node.nedb({
-				filename: 	node.path.join(_g.path.db, '/ship_classes.json')
-			}),
-		'ship_series': new node.nedb({
-				filename: 	node.path.join(_g.path.db, '/ship_series.json')
-			}),
-		'ship_namesuffix': new node.nedb({
-				filename: 	node.path.join(_g.path.db, '/ship_namesuffix.json')
-			}),
-
-		'updates': new node.nedb({
-				filename: 	node.path.join(_g.path.db, '/updates.json')
 			})
 	}
 	_g.ship_type_order = []
@@ -151,11 +111,6 @@
 	_g.log = function(log){
 		if( debugmode )
 			console.log(log)
-	}
-	_g.error = function(err){
-		if( typeof err != 'object' )
-			err = new Error(err)
-		throw err
 	}
 
 
@@ -535,6 +490,25 @@ _frame.app_main = {
 
 		// 开始异步函数链
 			promise_chain
+
+		// 检查 aap-db 目录，预加载全部数据库
+			.then(function(){
+				var deferred = Q.defer()
+				node.fs.readdir(_g.path.db, function(err, files){
+					if( err ){
+						deferred.reject(new Error(err))
+					}else{
+						for(var i in files){
+							_db[ node.path.parse(files[i])['name'] ]
+								= new node.nedb({
+										filename: 	node.path.join(_g.path.db, '/' + files[i])
+									})
+						}
+						deferred.resolve(files)
+					}
+				})
+				return deferred.promise
+			})
 
 		// 获取背景图列表，生成背景图
 			.then(function(){
