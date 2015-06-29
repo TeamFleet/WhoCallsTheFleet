@@ -338,7 +338,9 @@
 			left:		0;
 			width:		100%;
 			height:		100%;
-			.padding(0, @nav_height);
+			padding-top:	0;
+			padding-bottom:	0;
+			.main-sizing-padding();
 			.transition-property(opacity);
 			.transition-duration(.35s);
 			z-index:	1;
@@ -439,16 +441,9 @@
 				float:		right;
 			}
 			&>.tab{
-				display:	inline-block;
-				opacity:	.75;
-				font-weight:lighter;
-				height:		100%;
-				position:	relative;
-				.padding(0, 6);
 				.font-size(12);
 				.line-height(14);
-				.transition-property(~"opacity, background-position");
-				background:	linear-gradient(to bottom, transparent, rgba(255, 255, 255, .35)) repeat-x 0 50px;
+				.padding(0, 6);
 				@media all and (max-width: 800px ){
 					.padding(0, 4);
 				}
@@ -474,10 +469,6 @@
 					//.enable-transition();
 					.transition-property(~"background-position");
 					background:	linear-gradient(to top, transparent, rgba(255, 255, 255, .175)) repeat-x 0 -6px;
-				}
-				&:hover{
-					opacity:	1;
-					background-position:	0 25px;
 				}
 				&+.tab{
 					.margin-left(10);
@@ -606,7 +597,7 @@
 									&:after{
 										top:	0;
 										height:	100%;
-									}	
+									}
 								}
 								th, td{
 									display:	block;
@@ -815,8 +806,7 @@
 			//&:nth-child(@{n}):checked~.tabview-content:nth-child(@{n}){
 			&>input[type="radio"][value="@{i}"]:checked{
 				&~.options>.filters>label[data-equipmentcollection="@{i}"]{
-					opacity:	1;
-					background-position:	0 0;
+					.tab-on();
 					&>em{
 						background-position:	0 0;
 					}

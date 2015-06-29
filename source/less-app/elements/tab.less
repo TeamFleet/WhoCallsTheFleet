@@ -1,0 +1,21 @@
+.tab{
+    display:	inline-block;
+    opacity:	.75;
+    font-weight:lighter;
+    height:		100%;
+    position:	relative;
+    .transition-property(~"opacity, background-position");
+    background:	linear-gradient(to bottom, transparent, rgba(255, 255, 255, .35)) repeat-x 0 50px;
+    &:hover{
+        opacity:	1;
+        background-position:	0 25px;
+    }
+    &.on{
+        .tab-on();
+    }
+}
+
+.tab-on(){
+    opacity:	1;
+    background-position:	0 0;
+}

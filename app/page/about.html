@@ -21,8 +21,6 @@
 <h2 data-content="更新历史">更新历史</h2>
 <!-- COMING
 综合
-	检查更新
-	自动更新
 	右键菜单
 		tablelist item -> 详情、图鉴、加入对比
 		图片 -> 复制
@@ -34,6 +32,14 @@
 		修改“位移”类动画/转场/样式为 transform: translate
 			主框架
 			舰娘详情 - 图鉴
+	缩放
+		保存缩放值
+	顶部导航
+		新导航逻辑
+			舰队
+			资料 -> 舰娘、装备、改修工厂、声优&画师
+			功能 (仅图标) -> 关于、查看背景图
+	可更改首页
 
 舰娘 / 装备
 	搜索
@@ -45,7 +51,7 @@
 			__id		NeDB ID
 		search twice
 			normal
-			hepburn
+			hepburn		https://github.com/lovell/hepburn
 	仅选择一个舰娘时，对比功能变为对比该舰娘改造系列下所有舰娘
 	舰娘详情
 		图鉴支持鼠标滚轮
@@ -54,21 +60,27 @@
 		信息
 			链接
 			分解所得资源
+			可改修装备
 	装备详情
-		dismantle	废弃资源
 		上一个/下一个
+		信息
+			dismantle	废弃资源
 
-舰队<br />模拟
+舰队
 
-提督室<br />模拟
+提督室
 
 声优&画师
+	图片直接归入数据库
+		Base64 Encoding 	http://www.hacksparrow.com/base64-encoding-decoding-in-node-js.html
 
 改修工厂
-	根据星期查询
-	根据装备查询
-	舰娘
-		可改修的装备列表
+	每日改修 (根据星期查询)
+	改修明细 (全部可改修装备)
+	特效
+		明石眨眼	http://codepen.io/Diablohu/pen/RPjBgG/
+	装备详情
+		改修表
 
 活动记录
 	舰娘奖励/掉落

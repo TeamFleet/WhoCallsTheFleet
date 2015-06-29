@@ -757,7 +757,7 @@ _frame.app_main = {
 
 				return Q.all(the_promises);
 			})
-		
+
 		// 如果从启动器载入，检查数据是否有更新
 			.then(function(){
 				_g.log('数据更新检查: START')
