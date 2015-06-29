@@ -199,7 +199,7 @@ body{
 				top:		0;
 				left:		0;
 				max-width:	~"calc(100% - @{nav_height}px - 10px)";
-				.transition-property(~"left, top");
+				.transition-property(~"transform, top");
 				.transition-timing-function(~"cubic-bezier(0.175, 0.885, 0.320, 1.275)");
 				.transition-duration(.3s);
 					/*
@@ -629,6 +629,7 @@ body{
 			.layout-infos-_global();
 			.layout-infos-ship();
 			.layout-infos-equipment();
+			.layout-infos-fleet();
 			&>div+div{
 				position:	absolute;
 				top:		0;
@@ -659,7 +660,7 @@ body{
 			z-index:	4;
 		}
 		&>nav>div{
-			.left(120);
+			transform:	translateX(120px);
 			button{
 				@media all and (max-width: 800px ){
 					.font-size(20);
@@ -677,7 +678,7 @@ body{
 				*/
 			}
 			&.infos{
-				left:		0;
+				transform:	none;
 				button{
 					opacity:	1;
 				/*
