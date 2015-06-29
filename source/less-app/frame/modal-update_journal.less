@@ -5,20 +5,7 @@
 		.padding-top(@nav_height + 2) !important;
 		//background:		rgba(255,255,255,.1);
 		&>header, &>section{
-			.padding-left(@nav_height);
-			.padding-right(@nav_height);
-			@media all and (max-width: 1152px ){
-				.padding-left(@nav_height - 20);
-				.padding-right(@nav_height - 20);
-			}
-			@media all and (max-width: 960px ){
-				.padding-left(@nav_height - 40);
-				.padding-right(@nav_height - 40);
-			}
-			@media all and (max-width: 800px ){
-				.padding-left(@nav_height - 55);
-				.padding-right(@nav_height - 55);
-			}
+			.main-sizing-padding();
 		}
 		&>header{
 			.line-height(@nav_height);
@@ -58,16 +45,7 @@
 			&:active{
 				top:		1px;
 			}
-			.left(@nav_height);
-			@media all and (max-width: 1152px ){
-				.left(@nav_height - 20);
-			}
-			@media all and (max-width: 960px ){
-				.left(@nav_height - 40);
-			}
-			@media all and (max-width: 800px ){
-				.left(@nav_height - 55);
-			}
+			.main-sizing-left();
 		}
 		&>section{
 			background:		transparent;
