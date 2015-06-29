@@ -1,3 +1,240 @@
 #layout>main>.page[page="arsenal"]{
 	background:	hsla(100, 20%, 18%, .70);
+
+	&>input[type="radio"]{
+		display:	none;
+		.loop(@n, @i: 1) when (@i =< @n) {
+			&#arsenal_headtab-@{i}:checked{
+				&~.tabs .akashi span{
+					background-position:	0 unit( (@i - 1) * -77, px );
+				}
+				&~.tabs label[for="arsenal_headtab-@{i}"]{
+					.tab-on();
+				}
+				&~.main>.body-@{i}{
+					display:	block;
+				}
+			}
+			.loop(@n, (@i + 1))
+		}
+		.loop(2);
+	}
+
+	&>.tabs, &>.main{
+		.main-sizing-padding();
+	}
+
+	&>.tabs{
+		.height(59);
+		.padding-bottom(9);
+		@theader-background:	linear-gradient(
+									to bottom,
+									rgba(255, 255, 255, .35) 1px,
+									fade(#e6e6e6, 25%) 1px,
+									fade(#e6e6e6, 25%) ~"calc(100% - 1px)",
+									rgba(255, 255, 255, .35)  ~"calc(100% - 1px)"
+								);
+		background:	@theader-background no-repeat 0 100%;
+		background-size:	100% 9px;
+
+		label{
+			.line-height(50);
+			.font-size(18);
+			padding:	0 1em;
+		}
+
+		.akashi{
+			.width(165);
+			.height(50);
+			overflow:	hidden;
+			display:	inline-block;
+			vertical-align: top;
+			span{
+				display:	block;
+				transform:	scale(0.649);
+				transform-origin:	0 0;
+				background:	~"url(@{folder_images}/akashi.png) no-repeat 0 0";
+				position:	relative;
+				.width(214);
+				.height(77);
+				&:before{
+				    content:	'';
+				    background: ~"url(@{folder_images}/akashi-eye.png) no-repeat 0 0";
+				    display:	block;
+				    position:	absolute;
+				    .width(55);
+				    .height(34);
+				    .top(19);
+				    .left(22);
+				    .animation(~"3s steps(1) infinite");
+					.animation-delay(5s);
+				}
+				.loop(@n, @i: 1) when (@i =< @n) {
+					&[animation="@{i}"]:before{
+						.animation-name(~"akashi-blink-@{i}");
+					}
+					.loop(@n, (@i + 1))
+				}
+				.loop(3);
+			}
+		}
+	}
+
+	&>.main{
+		&>.body{
+			display:	none;
+			.fadein();
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+@keyframes akashi-blink-1{
+	0%{
+		background-position: 0 0
+	}
+	3%{
+		background-position: 0 -34px;
+	}
+	6%{
+		background-position: 0 -68px;
+	}
+	9%{
+		background-position: 0 -34px;
+	}
+	12%{
+		background-position: 0 0
+	}
+}
+@-webkit-keyframes akashi-blink-1{
+	0%{
+		background-position: 0 0
+	}
+	3%{
+		background-position: 0 -34px;
+	}
+	6%{
+		background-position: 0 -68px;
+	}
+	9%{
+		background-position: 0 -34px;
+	}
+	12%{
+		background-position: 0 0
+	}
+}
+
+@keyframes akashi-blink-2{
+	0%{
+		background-position: 0 0
+	}
+	3%{
+		background-position: 0 -34px;
+	}
+	6%{
+		background-position: 0 -68px;
+	}
+	9%{
+		background-position: 0 -34px;
+	}
+	12%{
+		background-position: 0 -68px;
+	}
+	15%{
+		background-position: 0 -34px;
+	}
+	18%{
+		background-position: 0 0
+	}
+}
+@-webkit-keyframes akashi-blink-2{
+	0%{
+		background-position: 0 0
+	}
+	3%{
+		background-position: 0 -34px;
+	}
+	6%{
+		background-position: 0 -68px;
+	}
+	9%{
+		background-position: 0 -34px;
+	}
+	12%{
+		background-position: 0 -68px;
+	}
+	15%{
+		background-position: 0 -34px;
+	}
+	18%{
+		background-position: 0 0
+	}
+}
+
+@keyframes akashi-blink-3{
+	0%{
+		background-position: 0 0
+	}
+	2%{
+		background-position: 0 -34px;
+	}
+	4%{
+		background-position: 0 -68px;
+	}
+	6%{
+		background-position: 0 -102px;
+	}
+	8%{
+		background-position: 0 -136px;
+	}
+	40%{
+		background-position: 0 -102px;
+	}
+	42%{
+		background-position: 0 -68px;
+	}
+	44%{
+		background-position: 0 -34px;
+	}
+	46%{
+		background-position: 0 0
+	}
+}
+@-webkit-keyframes akashi-blink-3{
+	0%{
+		background-position: 0 0
+	}
+	2%{
+		background-position: 0 -34px;
+	}
+	4%{
+		background-position: 0 -68px;
+	}
+	6%{
+		background-position: 0 -102px;
+	}
+	8%{
+		background-position: 0 -136px;
+	}
+	40%{
+		background-position: 0 -102px;
+	}
+	42%{
+		background-position: 0 -68px;
+	}
+	44%{
+		background-position: 0 -34px;
+	}
+	46%{
+		background-position: 0 0
+	}
 }

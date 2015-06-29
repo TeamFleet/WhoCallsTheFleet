@@ -459,17 +459,6 @@
 				span{
 					text-align:	left;
 				}
-				&>em{
-					//content:	'';
-					position:	absolute !important;
-					.bottom(-7);
-					left:		0;
-					width:		100%;
-					.height(6);
-					//.enable-transition();
-					.transition-property(~"background-position");
-					background:	linear-gradient(to top, transparent, rgba(255, 255, 255, .175)) repeat-x 0 -6px;
-				}
 				&+.tab{
 					.margin-left(10);
 					@media all and (max-width: 800px ){
@@ -807,9 +796,6 @@
 			&>input[type="radio"][value="@{i}"]:checked{
 				&~.options>.filters>label[data-equipmentcollection="@{i}"]{
 					.tab-on();
-					&>em{
-						background-position:	0 0;
-					}
 				}
 				&~.fixed-table-container>.fixed-table-container-inner>table tbody tr[data-equipmentcollection="@{i}"]{
 					display:	table-row;

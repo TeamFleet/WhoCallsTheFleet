@@ -114,7 +114,7 @@ _tablelist.prototype.sort_default_order_by_stat = {}
 		self.trIndex++
 
 		self._ships_header_checkbox[header_index].data(
-				'ships', 
+				'ships',
 				self._ships_header_checkbox[header_index].data('ships').add( tr )
 			)
 		tr.data('checkbox', checkbox)
@@ -262,7 +262,7 @@ _tablelist.prototype.sort_default_order_by_stat = {}
 					}
 
 					var checkbox_id = '_input_g' + parseInt(_g.inputIndex)
-					self._ships_last_item = 
+					self._ships_last_item =
 							$('<tr class="typetitle" data-trindex="'+self.trIndex+'">'
 								+ '<th colspan="' + (self._ships_columns.length + 1) + '">'
 								+ '<label for="' + checkbox_id + '">'
@@ -684,7 +684,7 @@ _tablelist.prototype.sort_default_order_by_stat = {}
 					.prependTo( this.dom.container )
 				$('<label class="tab container" for="'+radio_id+'" data-equipmentcollection="'+i+'"/>')
 					.html(
-						'<i></i><em></em>'
+						'<i></i>'
 						+ '<span>' + _g.data.item_type_collections[i]['name']['zh_cn'].replace(/\&/g, '<br/>') + '</span>'
 					)
 					.appendTo( self.dom.filters )
