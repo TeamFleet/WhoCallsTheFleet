@@ -708,6 +708,16 @@ _frame.app_main = {
 										_g.data[db_name] = {}
 									_done(db_name)
 									break;
+								case 'arsenal_weekday':
+									_g.data['arsenal_weekday'] = {}
+									_db.arsenal_weekday.find({}).sort({
+										'weekday': 1
+									}).exec(function(err, docs){
+										for(var i in docs){
+											_g.data['arsenal_weekday'][parseInt(i)]
+												= docs[i].improvements
+										}
+									})
 								default:
 									_db[db_name].find({}, function(dberr, docs){
 										if( dberr ){
