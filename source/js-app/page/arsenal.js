@@ -27,7 +27,6 @@ _frame.app_main.page['arsenal'].init = function( page ){
 								'animation':	Math.floor((Math.random() * 3) + 1)
 							})
 							.on('animationiteration, webkitAnimationIteration', function(){
-								_g.log('animationiteration')
 								akashi.attr(
 									'animation',
 									Math.floor((Math.random() * 3) + 1)
@@ -43,23 +42,81 @@ _frame.app_main.page['arsenal'].init = function( page ){
 }
 
 
-_frame.app_main.page['arsenal'].init_weekday = function(){
-	var body = $('<div class="body body-1"/>')
-
-	$('<h2/>',{
-		'html':	'WEEKDAY'
-	}).appendTo(body)
-
-	return body
-}
 
 
-_frame.app_main.page['arsenal'].init_all = function(){
-	var body = $('<div class="body body-2"/>')
+// 每日改修
+	_frame.app_main.page['arsenal'].init_weekday = function(){
+		var body = $('<div class="body body-1 body-weekday"/>')
+			,weekday = $('<div class="weekday"/>').appendTo(body)
+			,radios = []
 
-	$('<h2/>',{
-		'html':	'ALL'
-	}).appendTo(body)
+		for(var i=0; i<7; i++){
+			var text
 
-	return body
-}
+			switch(i){
+				case 0: text = '日'; break;
+				case 1: text = '一'; break;
+				case 2: text = '二'; break;
+				case 3: text = '三'; break;
+				case 4: text = '四'; break;
+				case 5: text = '五'; break;
+				case 6: text = '六'; break;
+			}
+
+			radios[i] = $('<input/>',{
+					'id':	'arsenal_weekday-' + i,
+					'type':	'radio',
+					'name':	'arsenal_weekday'
+				}).prependTo(body)
+
+			$('<label/>',{
+					'html':	text,
+					'for':	'arsenal_weekday-' + i
+				}).appendTo(weekday)
+
+			$('<div class="content content-'+i+'"/>')
+				.append(function(){
+					var o = $()
+					for(var j in _g.data.arsenal_weekday[i]){
+						var d = _g.data.arsenal_weekday[i][j]
+						o = o.add(
+							$('<div/>',{
+								'html':	'ID: '
+										+ d[0]
+										+ ', Improvement: '
+										+ d[1]
+										+ ', Requirement: '
+										+ d[2]
+							})
+						)
+					}
+					return o
+				})
+				.appendTo(body)
+		}
+
+		$('<span/>',{
+			'html':	'<b>*</b>日本东京时间'
+		}).appendTo(weekday)
+
+		// 获取当前日本东京时间，选择星期
+			var date = new Date()
+			date.setTime( date.getTime() + date.getTimezoneOffset()*60*1000 )
+			date.setTime( date.getTime() + 9*60*60*1000 )
+			radios[date.getDay()].prop('checked', true)
+
+		return body
+	}
+
+
+
+// 明细表
+	_frame.app_main.page['arsenal'].init_all = function(){
+		var body = $('<div class="body body-2"/>')
+
+		$('<h2/>',{
+			'html':	'ALL'
+		}).appendTo(body)
+
+		return body
+	}

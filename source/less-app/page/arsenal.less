@@ -1,6 +1,9 @@
 #layout>main>.page[page="arsenal"]{
 	background:	hsla(100, 20%, 18%, .70);
 
+	display:	flex;
+	flex-flow:	column nowrap;
+
 	&>input[type="radio"]{
 		display:	none;
 		.loop(@n, @i: 1) when (@i =< @n) {
@@ -25,6 +28,7 @@
 	}
 
 	&>.tabs{
+		flex:	none;
 		.height(59);
 		.padding-bottom(9);
 		@theader-background:	linear-gradient(
@@ -81,10 +85,95 @@
 	}
 
 	&>.main{
+		flex:		1 0 auto;
+		overflow-y:	auto;
 		&>.body{
 			display:	none;
 			.fadein();
+			position:	relative;
 		}
+	}
+}
+
+
+
+
+
+
+
+
+
+#layout>main>.page[page="arsenal"]>.main>.body-weekday{
+	.padding-left(110);
+
+	&>input[type="radio"]{
+		display:	none;
+		.loop(@n, @i: 0) when (@i =< @n) {
+			&#arsenal_weekday-@{i}:checked{
+				&~.weekday label[for="arsenal_weekday-@{i}"]{
+					background-color:	hsla(100, 100%, 35%, .5);
+					color:		hsl(100, 100%, 83%);
+				}
+				&~.content-@{i}{
+					display:	block;
+				}
+			}
+			.loop(@n, (@i + 1))
+		}
+		.loop(6);
+	}
+
+	&>.weekday{
+		position:	absolute;
+		.top(10);
+		left:		0;
+		.width(100);
+		border-radius:	5px;
+		&:before{
+			content:	'';
+			position:	absolute;
+			z-index:	2;
+			display:	block;
+			top:		0;
+			right:		0;
+			bottom:		0;
+			left:		0;
+			.border(1, solid, rgba(255, 255, 255, .1));
+			background:	rgba(255, 255, 255, .1);
+			border-radius:	5px;
+			pointer-events:	none;
+		}
+		label{
+			display:	block;
+			text-align:	center;
+			.line-height(30);
+			.font-size(14);
+			color:		rgba(255, 255, 255, .65);
+			.transition-property(~"color, background-color");
+			&:hover{
+				background-color:	hsla(100, 100%, 35%, .25);
+				color:		hsl(100, 100%, 83%);
+			}
+		}
+		&>span{
+			position:	absolute;
+			left:		0;
+			bottom:		-2.5em;
+			line-height:2em;
+			.font-size(12);
+			width:		100%;
+			color:		rgba(255, 255, 255, .35);
+			text-align:	center;
+			b{
+				padding-right:	.25em;
+				color:	hsl(100, 54%, 56%);
+			}
+		}
+	}
+
+	&>.content{
+		display:	none;
+		.fadein();
 	}
 }
 
