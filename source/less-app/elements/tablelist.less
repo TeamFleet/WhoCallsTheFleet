@@ -104,6 +104,12 @@
 							}
 						}
 					}
+					tr.row{
+						.fadein()
+					}
+					tr.empty, tr:empty{
+						pointer-events: none;
+					}
 					tr[data-shipid]{
 						th{
 							.min-width(160);
@@ -225,11 +231,13 @@
 							.font-size(12)
 						}
 					} // tr[data-equipmentid]
+					.tablelist-fleet-tr-default();
 				}
 
 				&.hashover{
-					tbody tr[data-shipid]:hover,
-					tbody tr[data-equipmentid]:hover{
+					//tbody tr[data-shipid]:hover,
+					//tbody tr[data-equipmentid]:hover
+					tbody tr.row:hover{
 						//background-color:	rgba(0, 0, 0, .5);
 						background-color:	rgba(0,0,0,.2);
 					}
@@ -254,17 +262,75 @@
 					}
 				}
 			} // table
+			&>.nocontent{
+				position:	absolute;
+				top:		0;
+				right:		0;
+				.bottom(20);
+				left:		0;
+				color:		rgba(255,255,255,.2);
+				.fadein();
+				display:	none;
+				&>div{
+					&>span{
+						.font-size(60);
+						.line-height(70);
+						letter-spacing:	.15em;
+						display:	block;
+						font-weight:lighter;
+					}
+					&>button{
+						.height(40);
+						.font-size(16);
+						color:		rgba(255,255,255, .5);
+						letter-spacing:	.1em;
+						padding:	0 5em;
+						background:	rgba(0,0,0, .25);
+						border-radius:	5px;
+						.border(1, solid, rgba(255,255,255, .2));
+						.transition-property(~"background-color, border-color, color");
+						&:hover{
+							background:	rgba(0,0,0, .6);
+							color:		rgba(255,255,255, .85);
+						}
+						&:active{
+							background:	rgba(0,0,0, .325);
+							color:		rgba(255,255,255, .75);
+						}
+					}
+					&>span + button{
+						.margin-top(14);
+					}
+				}
+			} // &>.nocontent
 		}
 	}
 
 
 
 	&>.options{
-		.height(50);
+		@options_height:	50;
+
+		.height(@options_height);
 		max-height:	~"calc(100% - 280px)";
 		.flex(1 0 auto);
 		.transition-property(height);
 		position:	relative;
+		color:		#f2f2f2;
+
+		button{
+			color:		rgba(255,255,255, .75);
+			.transition-property(color);
+			&[icon]:before{
+				opacity:1;
+			}
+			&:hover{
+				color:	#fff;
+			}
+			&:active{
+				color:	rgba(255,255,255, .6);
+			}
+		}
 
 		&>div{
 			position:	absolute;
@@ -278,7 +344,6 @@
 			.transition-property(opacity);
 			.transition-duration(.35s);
 			z-index:	1;
-			color:		#f2f2f2;
 			font-weight:lighter;
 			.font-size(14);
 		}
@@ -291,6 +356,22 @@
 			&>.viewtype{
 				.padding-top(15);
 			}
+			button{
+				display:	inline-block;
+				font-weight:lighter;
+				.font-size(14);
+				.line-height(35);
+				.margin-top( (@options_height - 35) / 2 );
+				&[icon]:before{
+					.font-size(16);
+					.padding-right(8);
+					.width(16 + 8);
+					text-align:	center;
+				}
+			}
+			&>button{
+				float:		left;
+			}
 			&>.hide-premodel{
 				float:		left;
 				input{
@@ -302,6 +383,11 @@
 					&:hover{
 						&, & ~ label{
 							color:	#fff;
+						}
+					}
+					&:active{
+						&, & ~ label{
+							color:	rgba(255,255,255,0.6);
 						}
 					}
 				}
@@ -336,6 +422,9 @@
 						color:		rgba(255, 255, 255, .625);
 						//.transition-duration(.2s);
 					}
+					&:active{
+						color:		rgba(255, 255, 255, .275);
+					}
 				}
 				label ~ label:before{
 						content:	"\e602";
@@ -347,6 +436,9 @@
 						.transition-duration(.5s) !important;
 					}
 				}
+			}
+			&>.buttons_right{
+				float:		right;
 			}
 			&>.tab{
 				.font-size(12);
@@ -368,13 +460,13 @@
 					text-align:	left;
 				}
 				&>em{
-					content:	'';
+					//content:	'';
 					position:	absolute !important;
 					.bottom(-7);
 					left:		0;
 					width:		100%;
 					.height(6);
-					.enable-transition();
+					//.enable-transition();
 					.transition-property(~"background-position");
 					background:	linear-gradient(to top, transparent, rgba(255, 255, 255, .175)) repeat-x 0 -6px;
 				}
@@ -471,8 +563,9 @@
 							tr{
 								//overflow:	hidden;
 								.flex(1 0 170px);
+								display:	inline-block;
+								position:	relative;
 								&:empty{
-									display:	inline-block;
 									height:		0 !important;
 									.margin-left(20);
 								}
@@ -488,10 +581,8 @@
 								}
 							}
 							tr[data-shipid]{
-								display:	inline-block;
 								//.border-top(1, solid, #d3c9db);
 								border-bottom:	0;
-								position:	relative;
 								.margin-left(20);
 								.margin-top(10);
 								.height(40);
@@ -525,7 +616,11 @@
 								td[data-stat]{
 									display:	none;
 								}
+								&:empty{
+									margin-top:	0;
+								}
 							}
+							.tablelist-fleet-tr-viewtype-card()
 						}
 						&.hashover{
 							tbody tr[data-shipid]:hover{
@@ -724,6 +819,14 @@
 		}
 		.loop(10);
 	}
+}
+
+
+
+
+
+.nocontent .nocontent{
+	display:	block !important;
 }
 
 

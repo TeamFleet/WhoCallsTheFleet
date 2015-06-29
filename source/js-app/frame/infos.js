@@ -14,6 +14,9 @@ _frame.infos = {
 		if( !this.contentCache[type] )
 			this.contentCache[type] = {}
 
+		if( id == '__NEW__' )
+			return _p.initDOM( _frame.infos['__' + type]( id ) )
+
 		if( !this.contentCache[type][id] ){
 			this.contentCache[type][id] = _p.initDOM( _frame.infos['__' + type]( id ) )
 		}
@@ -22,13 +25,17 @@ _frame.infos = {
 	},
 
 	show: function(cont, el, doNotPushHistory){
-		var exp			= /^\[\[([^\:]+)\:\:([0-9]+)\]\]$/.exec(cont)
+		var exp			= /^\[\[([^\:]+)\:\:(.+)\]\]$/.exec(cont)
 			,infosType 	= null
 			,infosId 	= null
 
 		if( exp && exp.length > 2 ){
 			infosType = exp[1].toLowerCase()
-			infosId = parseInt( exp[2] )
+			if( isNaN(exp[2]) )
+				//infosId = encodeURI(JSON.stringify( exp[2] ))
+				infosId = exp[2]
+			else
+				infosId = parseInt( exp[2] )
 			switch( infosType ){
 				case 'item':
 				case 'equip':
@@ -71,7 +78,10 @@ _frame.infos = {
 				return _frame.infos.dom.container.children('div:first-child')
 
 		type = type.toLowerCase()
-		id = parseInt(id)
+		if( isNaN(id) )
+			id = id
+		else
+			id = parseInt(id)
 
 		var cont = ''
 
@@ -132,8 +142,12 @@ _frame.infos = {
 					cont = this.getContent(type, id)
 					_frame.infos.dom.main.attr('data-infostype', 'equipmentinfo')
 					break;
+				case 'fleet':
+					cont = this.getContent(type, id)
+					_frame.infos.dom.main.attr('data-infostype', 'fleetinfo')
+					break;
 			}
-			var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
+			//var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
 			//if( _frame.infos.curContent != hashcode ){
 				var contentDOM = cont.append ? cont : $(cont)
 
@@ -216,7 +230,10 @@ _frame.infos = {
 				return false
 
 		_frame.dom.layout.removeClass('infos-show')
-		_frame.infos.dom.main.attr('data-infostype', '')
+		_frame.infos.dom.main.attr({
+			'data-infostype': 	'',
+			'data-theme': 		''
+		})
 		//$(this).off('transitionend.infos_hide')
 		this.historyLength = -1
 		this.historyCurrent = -1
@@ -758,3 +775,4 @@ _frame.infos.init = function(){
 
 			return dom
 		}
+

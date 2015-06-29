@@ -15,6 +15,26 @@
 	}
 }
 
+<<<<<<< HEAD
+=======
+.main-sizing-border(){
+    .border-left(@nav_height, solid, transparent);
+    .border-right(@nav_height, solid, transparent);
+    @media all and (max-width: 1152px ){
+        .border-left-width(@nav_height - 20);
+        .border-right-width(@nav_height - 20);
+    }
+    @media all and (max-width: 960px ){
+        .border-left-width(@nav_height - 40);
+        .border-right-width(@nav_height - 40);
+    }
+    @media all and (max-width: 800px ){
+        .border-left-width(@nav_height - 55);
+        .border-right-width(@nav_height - 55);
+    }
+}
+
+>>>>>>> origin/FEATURE-FleetBuilder
 .main-sizing-left(){
     .left(@nav_height);
     @media all and (max-width: 1152px ){

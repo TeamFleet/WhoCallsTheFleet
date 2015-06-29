@@ -53,48 +53,48 @@
 	}
 
 	var _db = {
+		'fleets': new node.nedb({
+				filename: 	node.path.join(node.gui.App.dataPath, 'NeDB/fleets.json')
+			}),
+
 		'entities': new node.nedb({
-				filename: 	_g.path.db + '/entities.json'
+				filename: 	node.path.join(_g.path.db, '/entities.json')
 			}),
 
 		'items': new node.nedb({
-				filename: 	_g.path.db + '/items.json'
+				filename: 	node.path.join(_g.path.db, '/items.json')
 			}),
 		'item_types': new node.nedb({
-				filename: 	_g.path.db + '/item_types.json'
+				filename: 	node.path.join(_g.path.db, '/item_types.json')
 			}),
 		'item_type_collections': new node.nedb({
-				filename: 	_g.path.db + '/item_type_collections.json'
+				filename: 	node.path.join(_g.path.db, '/item_type_collections.json')
 			}),
 
 		'ships': new node.nedb({
-				filename: 	_g.path.db + '/ships.json'
+				filename: 	node.path.join(_g.path.db, '/ships.json')
 			}),
 		'ship_types': new node.nedb({
-				filename: 	_g.path.db + '/ship_types.json'
+				filename: 	node.path.join(_g.path.db, '/ship_types.json')
 			}),
 		'ship_type_collections': new node.nedb({
-				filename: 	_g.path.db + '/ship_type_collections.json'
+				filename: 	node.path.join(_g.path.db, '/ship_type_collections.json')
 			}),
 		'ship_type_order': new node.nedb({
-				filename: 	_g.path.db + '/ship_type_order.json'
+				filename: 	node.path.join(_g.path.db, '/ship_type_order.json')
 			}),
 		'ship_classes': new node.nedb({
-				filename: 	_g.path.db + '/ship_classes.json'
+				filename: 	node.path.join(_g.path.db, '/ship_classes.json')
 			}),
 		'ship_series': new node.nedb({
-				filename: 	_g.path.db + '/ship_series.json'
+				filename: 	node.path.join(_g.path.db, '/ship_series.json')
 			}),
 		'ship_namesuffix': new node.nedb({
-				filename: 	_g.path.db + '/ship_namesuffix.json'
+				filename: 	node.path.join(_g.path.db, '/ship_namesuffix.json')
 			}),
 
 		'updates': new node.nedb({
-				filename: 	_g.path.db + '/updates.json'
-			}),
-
-		'arsenal_weekay': new node.nedb({
-				filename: 	_g.path.db + '/arsenal_weekay.json'
+				filename: 	node.path.join(_g.path.db, '/updates.json')
 			})
 	}
 	_g.ship_type_order = []
@@ -151,6 +151,11 @@
 	_g.log = function(log){
 		if( debugmode )
 			console.log(log)
+	}
+	_g.error = function(err){
+		if( typeof err != 'object' )
+			err = new Error(err)
+		throw err
 	}
 
 
