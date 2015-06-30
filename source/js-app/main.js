@@ -708,6 +708,17 @@ _frame.app_main = {
 										_g.data[db_name] = {}
 									_done(db_name)
 									break;
+								case 'arsenal_all':
+									_g.data['arsenal_all'] = []
+									_db.arsenal_all.find({}).sort({
+										'sort': 1
+									}).exec(function(err, docs){
+										for(var i in docs){
+											_g.data['arsenal_all'].push(docs[i]['id'])
+										}
+										_done(db_name)
+									})
+									break;
 								case 'arsenal_weekday':
 									_g.data['arsenal_weekday'] = {}
 									_db.arsenal_weekday.find({}).sort({
@@ -717,7 +728,9 @@ _frame.app_main = {
 											_g.data['arsenal_weekday'][parseInt(i)]
 												= docs[i].improvements
 										}
+										_done(db_name)
 									})
+									break;
 								default:
 									_db[db_name].find({}, function(dberr, docs){
 										if( dberr ){

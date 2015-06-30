@@ -48,7 +48,7 @@ _frame.app_main.page['arsenal'].init = function( page ){
 	_frame.app_main.page['arsenal'].init_weekday = function(){
 		var body = $('<div class="body body-1 body-weekday"/>')
 			,weekday = $('<div class="weekday"/>').appendTo(body)
-			,weekday_select = $('<div/>').appendTo(weekday)
+			,weekday_select = $('<div/>').html('<span>星期</span>').appendTo(weekday)
 			,radios = []
 
 		$('<input/>',{
@@ -122,11 +122,12 @@ _frame.app_main.page['arsenal'].init = function( page ){
 
 // 明细表
 	_frame.app_main.page['arsenal'].init_all = function(){
-		var body = $('<div class="body body-2"/>')
+		var body = $('<div class="body body-2 body-all"/>')
 
-		$('<h2/>',{
-			'html':	'ALL'
-		}).appendTo(body)
+		for(var i in _g.data.arsenal_all){
+			var d = _g.data.arsenal_all[i]
+			_tmpl.improvement_detail(d).appendTo(body)
+		}
 
 		return body
 	}
