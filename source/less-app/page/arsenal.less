@@ -125,65 +125,117 @@
 		.loop(6);
 	}
 
+	&>input[type="checkbox"]{
+		display:	none;
+	}
+
 	&>.weekday{
 		position:	absolute;
 		.top(70);
 		.margin-left(-110);
 		.width(100);
-		border-radius:	5px;
-		&:before{
-			content:	'';
-			position:	absolute;
-			z-index:	2;
-			display:	block;
-			top:		0;
-			right:		0;
-			bottom:		0;
-			left:		0;
-			.border(1, solid, rgba(255, 255, 255, .1));
-			background:	rgba(255, 255, 255, .1);
+		.user-select(none);
+		&>div{
+			position:	relative;
+			width:		100%;
 			border-radius:	5px;
-			pointer-events:	none;
-		}
-		label{
-			display:	block;
-			text-align:	center;
-			.line-height(30);
-			.font-size(14);
-			color:		rgba(255, 255, 255, .65);
-			.transition-property(~"color, background-color");
-			&:hover{
-				background-color:	hsla(100, 100%, 35%, .25);
-				color:		hsl(100, 100%, 83%);
+			margin-bottom:	10px;
+			&:before{
+				content:	'';
+				position:	absolute;
+				z-index:	2;
+				display:	block;
+				top:		0;
+				right:		0;
+				bottom:		0;
+				left:		0;
+				.border(1, solid, rgba(255, 255, 255, .1));
+				background:	rgba(255, 255, 255, .1);
+				border-radius:	5px;
+				pointer-events:	none;
+			}
+			label{
+				display:	block;
+				text-align:	center;
+				.line-height(30);
+				.font-size(14);
+				color:		rgba(255, 255, 255, .65);
+				.transition-property(~"color, background-color");
+				&:hover{
+					background-color:	hsla(100, 100%, 35%, .25);
+					color:		hsl(100, 100%, 83%);
+				}
 			}
 		}
-		&>span{
-			position:	absolute;
-			left:		0;
-			bottom:		-2.5em;
-			line-height:2em;
-			.font-size(12);
+		&>label, &>span{
+			display:	block;
+			line-height:1.7em;
+			font-size:	12px;
 			width:		100%;
-			color:		rgba(255, 255, 255, .35);
 			text-align:	center;
+			color:		rgba(255, 255, 255, .45);
+			.transition-property(color);
+		}
+		&>label:before, &>span>b{
+			display:	inline-block;
+			width:		20px;
+			padding-right:	4px;
+			font-size:	16px;
+			line-height:inherit;
+			text-align:	center;
+			font-weight:normal;
+			vertical-align:	top;
+		}
+		&>span{
 			b{
-				padding-right:	.25em;
-				color:	hsl(100, 54%, 56%);
+				color:		hsl(100, 54%, 56%);
+			}
+		}
+		&>label{
+			&:hover{
+				color:		rgba(255, 255, 255, .75);
+			}
+			&:before{
+				font-family:icons;
+				content:	@iconcode-checkbox-uncheck;
 			}
 		}
 	}
 
 	&>.content{
 		display:	none;
+		padding-bottom:	20px;
 		.fadein();
 		&>.flexgrid{
 			&>.unit{
 				flex:		1 0 490px;
 				margin-right:	10px;
 				&.improvement{
-					height:		175px;
+					height:		75px;
 					padding-top:10px;
+					overflow:	hidden;
+					.transition-property(height);
+					&>span{
+						//display:	none;
+						opacity:	0;
+						.transition-property(opacity);
+					}
 				}
+			}
+		}
+	}
+
+	&>#arsenal_weekday-showmeterials:checked{
+		& ~ .weekday>label[for="arsenal_weekday-showmeterials"]:before{
+			content:	@iconcode-checkbox-checked;
+		}
+		& ~ .content>.flexgrid>.improvement.unit{
+			height:		175px;
+			overflow:	visible;
+			&>span{
+				//display:	block;
+				opacity:	1;
+				//.fadein();
 			}
 		}
 	}

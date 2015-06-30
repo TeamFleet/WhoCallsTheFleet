@@ -48,7 +48,15 @@ _frame.app_main.page['arsenal'].init = function( page ){
 	_frame.app_main.page['arsenal'].init_weekday = function(){
 		var body = $('<div class="body body-1 body-weekday"/>')
 			,weekday = $('<div class="weekday"/>').appendTo(body)
+			,weekday_select = $('<div/>').appendTo(weekday)
 			,radios = []
+
+		$('<input/>',{
+			'type':	'checkbox',
+			'id': 	'arsenal_weekday-showmeterials'
+		}).prop(
+			'checked', true
+		).prependTo(body)
 
 		for(var i=0; i<7; i++){
 			var text
@@ -72,7 +80,7 @@ _frame.app_main.page['arsenal'].init = function( page ){
 			$('<label/>',{
 					'html':	text,
 					'for':	'arsenal_weekday-' + i
-				}).appendTo(weekday)
+				}).appendTo(weekday_select)
 
 			$('<div class="content content-'+i+'"/>')
 				.append(
@@ -94,6 +102,11 @@ _frame.app_main.page['arsenal'].init = function( page ){
 
 		$('<span/>',{
 			'html':	'<b>*</b>日本东京时间'
+		}).appendTo(weekday)
+
+		$('<label/>',{
+			'for': 	'arsenal_weekday-showmeterials',
+			'html': '显示资源消耗'
 		}).appendTo(weekday)
 
 		// 获取当前日本东京时间，选择星期

@@ -41,6 +41,7 @@ _tmpl.improvement = function( equipment, improvement_index, requirement_index, r
 			names.push(
 				'<span'
 				+ ' data-infos="[[SHIP::'+req_ships[i]+']]"'
+				+ ' data-tip="[[SHIP::'+req_ships[i]+']]"'
 				+ '>'
 				+ _g.getName( _g.data.ships[req_ships[i]]['name'], '' )
 				+ '</span>'
@@ -83,8 +84,11 @@ _tmpl.improvement = function( equipment, improvement_index, requirement_index, r
 									? (
 										'<i class="equipment"'
 											+ ' style="background-image:url(../app/assets/images/itemicon/'
-											+ _g.data.item_types[_g.data.items[improvement['resource'][i][4]]['type']]
-											+ '.png)">'
+											+ _g.data.item_types[_g.data.items[improvement['resource'][i][4]]['type']]['icon']
+											+ '.png)"'
+											+ ' data-infos="[[EQUIPMENT::'+improvement['resource'][i][4]+']]"'
+											+ ' data-tip="[[EQUIPMENT::'+improvement['resource'][i][4]+']]"'
+										+ '>'
 										+ getItemName(improvement['resource'][i][4])
 										+ '<i>x' + getValue(improvement['resource'][i][5]) + '</i>'
 										+ '</i>'
@@ -122,10 +126,13 @@ _tmpl.improvement = function( equipment, improvement_index, requirement_index, r
 				+ '</strong>'
 
 				+ requirement
-				+ resource['all']
-				+ resource['1']
-				+ resource['2']
-				+ resource['3']
+
+				+ '<span>'
+					+ resource['all']
+					+ resource['1']
+					+ resource['2']
+					+ resource['3']
+				+ '</span>'
 
 			+ '</span>',
 			returnHTML

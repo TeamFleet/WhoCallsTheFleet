@@ -1,11 +1,13 @@
 .improvement{
 	display:	inline-block;
 	position:	relative;
+	//overflow:	hidden;
 
 	@color_disabled:	rgba(255, 255, 255, .35);
 	@color_accent:		hsl(100, 100%, 75%);
+	@color_accent2:		hsl(100, 54%, 56%);
 
-	&>strong, &>font, &>span{
+	&>strong, &>font, &>span, &>span>span{
 		display:	block;
 		position:	relative;
 	}
@@ -17,6 +19,7 @@
 		line-height:32px;
 		vertical-align:	top;
 		font-weight:lighter;
+		z-index:	1;
 		&>em{
 			position:	relative;
 			display:	inline-block;
@@ -55,7 +58,8 @@
 	&>font, &>span{
 		padding-left:	36px;
 		font-size:		14px;
-		line-height:	22px;
+		line-height:	26px;
+		z-index:		2;
 	}
 
 	&>font{
@@ -65,6 +69,7 @@
 			color:		@color_disabled;
 		}
 		&>span{
+			display:	inline-block;
 			.transition-property(color);
 			&:hover{
 				color:		@color_accent;
@@ -78,9 +83,73 @@
 			font-style:	normal;
 			display:	inline-block;
 		}
-		&>em{
-			color:		@color_disabled;
-			width:		80px;
+		&>span{
+			line-height:	18px;
+			padding:		2px 0;
+			&>em{
+				color:		@color_disabled;
+				width:		80px;
+			}
+			&>i{
+				background:		~"url(@{folder_images}/stats.png) no-repeat 0 0";
+				min-width:		75px;
+				padding-left:	20px;
+				vertical-align: top;
+				&>i{
+					color:		@color_accent2;
+					padding-left:	.25em;
+				}
+				&.fuel{
+					background-position:	0 unit((12 * -18), px);
+					color:		@color_fuel;
+				}
+				&.ammo{
+					background-position:	0 unit((13 * -18), px);
+					color:		@color_ammo;
+				}
+				&.steel{
+					background-position:	0 unit((16 * -18), px);
+					color:		@color_steel;
+				}
+				&.bauxite{
+					background-position:	0 unit((17 * -18), px);
+					color:		@color_bauxite;
+				}
+				&.dev_mat{
+					background-position:	0 unit((18 * -18), px);
+				}
+				&.imp_mat{
+					background-position:	0 unit((19 * -18), px);
+				}
+				&.equipment{
+					background-position:	-2px 50%;
+					background-size:		22px 22px;
+					width:		auto;
+					.transition-property(color);
+					/*
+					position:	relative;
+					&:before{
+						content:	'';
+						position:	absolute;
+						top:		-1px;
+						left:		-1px;
+						width:		20px;
+						height:		20px;
+						background:	rgba(0, 0, 0, .35);
+						z-index:	-1;
+						border-radius:	50%;
+					}
+					*/
+					&:hover{
+						color:		@color_accent;
+					}
+				}
+				&.no{
+					color:		@color_disabled;
+					background:	none;
+					padding-left:	6px;
+				}
+			}
 		}
 	}
 }
