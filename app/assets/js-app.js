@@ -359,8 +359,12 @@ _frame.app_main = {
 									uriGet[h[0]] = h[1] || true
 								}
 								// 首次运行，检查是否存在 page
+								// 如果URI未指定，自动加载 Lockr.get('last_page') || 第一个导航页
 									if( !_frame.app_main.window_event_bound && !(uriGet['page'] || uriGet['infos']) ){
-										_frame.app_main.load_page( _frame.app_main.nav[0]['page'] )
+										_frame.app_main.load_page(
+											Lockr.get('last_page', _frame.app_main.nav[0]['page'])
+										)
+										//_frame.app_main.load_page( _frame.app_main.nav[0]['page'] )
 										//uriGet['page'] = _frame.app_main.nav[0]['page']
 									}
 								_frame.app_main.state( uriGet )
@@ -502,6 +506,9 @@ _frame.app_main = {
 				_frame.app_main.change_bgimg()
 
 			_frame.app_main.cur_page = page
+
+			if( page != 'about' )
+				Lockr.set('last_page', page)
 
 			_g.log( 'LOADED: ' + page )
 		},
