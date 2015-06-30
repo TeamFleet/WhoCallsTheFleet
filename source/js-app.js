@@ -2,6 +2,7 @@
 // @koala-prepend "js-app/errorlog.js"
 // @koala-prepend "js-app/updater.js"
 
+// @koala-prepend "js-app/templates/improvement.js"
 // @koala-prepend "js-app/templates/link_equipment.js"
 // @koala-prepend "js-app/templates/link_ship.js"
 // @koala-prepend "js-app/templates/textlink_ship.js"

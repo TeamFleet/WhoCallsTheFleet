@@ -1,8 +1,8 @@
 #layout>main>.page[page="arsenal"]{
 	background:	hsla(100, 20%, 18%, .70);
 
-	display:	flex;
-	flex-flow:	column nowrap;
+	//display:	flex;
+	//flex-flow:	column nowrap;
 
 	&>input[type="radio"]{
 		display:	none;
@@ -28,7 +28,7 @@
 	}
 
 	&>.tabs{
-		flex:	none;
+		//flex:	none;
 		.height(59);
 		.padding-bottom(9);
 		@theader-background:	linear-gradient(
@@ -85,12 +85,13 @@
 	}
 
 	&>.main{
-		flex:		1 0 auto;
+		//flex:		1 0 auto;
+		height:		~"calc(100% - 61px)";
+		margin-top:	1px;
 		overflow-y:	auto;
 		&>.body{
 			display:	none;
 			.fadein();
-			position:	relative;
 		}
 	}
 }
@@ -105,6 +106,7 @@
 
 #layout>main>.page[page="arsenal"]>.main>.body-weekday{
 	.padding-left(110);
+	margin-right:	-10px;
 
 	&>input[type="radio"]{
 		display:	none;
@@ -125,8 +127,8 @@
 
 	&>.weekday{
 		position:	absolute;
-		.top(10);
-		left:		0;
+		.top(70);
+		.margin-left(-110);
 		.width(100);
 		border-radius:	5px;
 		&:before{
@@ -174,6 +176,16 @@
 	&>.content{
 		display:	none;
 		.fadein();
+		&>.flexgrid{
+			&>.unit{
+				flex:		1 0 490px;
+				margin-right:	10px;
+				&.improvement{
+					height:		175px;
+					padding-top:10px;
+				}
+			}
+		}
 	}
 }
 

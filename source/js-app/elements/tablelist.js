@@ -637,32 +637,6 @@ _tablelist.prototype.sort_default_order_by_stat = {}
 	_tablelist.prototype._equipments_init = function(){
 		var self = this
 
-		// 根据装备大类和类型排序整理装备ID
-			if( !_g.data.item_id_by_type ){
-				_g.data.item_id_by_type = []
-				_g.item_type_order = []
-				var type_by_collection = {}
-					,type_order_map = {}
-				// 遍历大类
-					for(var i in _g.data.item_type_collections){
-						for(var j in _g.data.item_type_collections[i]['types']){
-							type_by_collection[ _g.data.item_type_collections[i]['types'][j] ] = i
-							_g.item_type_order.push( _g.data.item_type_collections[i]['types'][j] )
-							type_order_map[ _g.data.item_type_collections[i]['types'][j] ] = _g.item_type_order.length - 1
-						}
-					}
-				// 遍历装备数据
-					for(var i in _g.data.items){
-						var order = type_order_map[ _g.data.items[i]['type'] ]
-						if( !_g.data.item_id_by_type[order] )
-							_g.data.item_id_by_type[order] = {
-								'collection': type_by_collection[_g.data.items[i]['type']],
-								'equipments': []
-							}
-						_g.data.item_id_by_type[order]['equipments'].push( _g.data.items[i]['id'] )
-					}
-			}
-
 		// 标记全局载入状态
 			_frame.app_main.loading.push('tablelist_'+this._index)
 			_frame.app_main.is_loaded = false

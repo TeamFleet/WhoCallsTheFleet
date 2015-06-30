@@ -75,23 +75,20 @@ _frame.app_main.page['arsenal'].init = function( page ){
 				}).appendTo(weekday)
 
 			$('<div class="content content-'+i+'"/>')
-				.append(function(){
-					var o = $()
-					for(var j in _g.data.arsenal_weekday[i]){
-						var d = _g.data.arsenal_weekday[i][j]
-						o = o.add(
-							$('<div/>',{
-								'html':	'ID: '
-										+ d[0]
-										+ ', Improvement: '
-										+ d[1]
-										+ ', Requirement: '
-										+ d[2]
-							})
-						)
-					}
-					return o
-				})
+				.append(
+					_p.el.flexgrid.create()
+						.appendDOM(function(){
+							var o = $()
+							for(var j in _g.data.arsenal_weekday[i]){
+								var d = _g.data.arsenal_weekday[i][j]
+								o = o.add(
+									_tmpl.improvement(d[0], d[1], d[2])
+										.addClass('unit')
+								)
+							}
+							return o
+						})
+				)
 				.appendTo(body)
 		}
 

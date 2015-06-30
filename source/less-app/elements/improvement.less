@@ -1,0 +1,35 @@
+.improvement{
+    display:	inline-block;
+    position:	relative;
+
+    &>strong, &>font, &>span{
+        display:	block;
+        position:	relative;
+    }
+
+    &>strong{
+        font-family:@font_famliy_Song;
+        text-shadow:0 1px 0 #000;
+        font-size:	18px;
+        height:		32px;
+        line-height:32px;
+        vertical-align:	top;
+        &>em{
+            position:	relative;
+            display:	inline-block;
+            padding-left:36px;
+            height:		32px;
+            background:	no-repeat 0 50%;
+            vertical-align:	top;
+            font-style: normal;
+        }
+        &>b{
+            padding:		0 .1em 0 .5em;
+            font-weight:	normal;
+        }
+    }
+
+    &>font, &>span{
+        padding-left:   36px;
+    }
+}
