@@ -96,6 +96,7 @@
   "dependencies": {
     "adm-zip": "^0.4.7",
     "jsonfile": "^2.2.1",
+    "lockr": "^0.8.2",
     "markdown": "^0.5.0",
     "mkdirp": "^0.5.1",
     "nedb": "^1.1.1",
