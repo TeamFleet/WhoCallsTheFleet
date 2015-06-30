@@ -55,8 +55,13 @@ _frame.app_main.page['arsenal'].init = function( page ){
 			'type':	'checkbox',
 			'id': 	'arsenal_weekday-showmeterials'
 		}).prop(
-			'checked', true
-		).prependTo(body)
+			'checked', Lockr.get('arsenal_weekday-showmeterials', true) ? true : false
+		).on('change', function(){
+			Lockr.set(
+				'arsenal_weekday-showmeterials',
+				$(this).prop('checked') ? 1 : 0
+			)
+		}).prependTo(body)
 
 		for(var i=0; i<7; i++){
 			var text

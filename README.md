@@ -16,6 +16,7 @@
 * [jQuery](https://github.com/jquery/jquery): JavaScript前端框架
 * [adm-zip](https://github.com/cthackers/adm-zip): 简单的.zip文件解压缩操作
 * [jsonfile](https://github.com/jprichardson/node-jsonfile): 简单的JSON文件读写操作
+* [Lockr](https://github.com/tsironis/lockr): localStorage操作
 * [markdown](https://github.com/evilstreak/markdown-js): Markdown解析
 * [mkdirp](https://www.npmjs.com/package/mkdirp): 简单的无级创建目录操作
 * [NeDB](https://github.com/louischatriot/nedb): 程序所用NoSQL数据库，对独立JSON文件进行读写操作

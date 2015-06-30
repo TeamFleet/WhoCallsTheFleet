@@ -1,3 +1,5 @@
+// @koala-prepend "js-app/lib/lockr.js"
+
 // @koala-prepend "js-app/main.js"
 // @koala-prepend "js-app/errorlog.js"
 // @koala-prepend "js-app/updater.js"

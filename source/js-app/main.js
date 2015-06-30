@@ -9,7 +9,6 @@
 
 	var Q = node.require('q')
 		,markdown = node.require( "markdown" ).markdown
-		,Lockr = node.require('lockr');
 
 
 
