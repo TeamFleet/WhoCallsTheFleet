@@ -149,7 +149,7 @@ _tmpl.improvement__title = function(equipment, upgrade_to, upgrade_to_star){
 			+ ' data-tip="[[EQUIPMENT::'+equipment['id']+']]"'
 		+ '">' + _tmpl.improvement__getItemName(equipment) + '</em>'
 		+ ( upgrade_to
-			? '<b>➝</b>'
+			? '<b></b>'
 				+ '<em style="background-image:url(../app/assets/images/itemicon/'
 					+ _g.data.item_types[upgrade_to['type']]['icon']
 					+ '.png)"'

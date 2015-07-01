@@ -37,11 +37,22 @@
 			&:hover{
 				color:		@color_accent;
 			}
+			&:active{
+				color:		@color_accent2;
+			}
 		}
 		&>b{
-			padding:		0 .1em 0 .25em;
-			font-weight:	normal;
-			color:			hsl(100,100%,65%);
+			//padding:		0 .1em 0 .25em;
+			//font-weight:	normal;
+			//color:			hsl(100,100%,65%);
+			display:	inline-block;
+			height:		12px;
+			width:		20px;
+			margin:		0 .2em 0 .35em;
+			background:	hsl(100,100%,65%);
+			vertical-align: top;
+			transform:	translateY(10px);
+			.clip-path(~"polygon(0% 35%, 60% 35%, 60% 0%, 100% 50%, 60% 100%, 60% 65%, 0% 65%)");
 		}
 		&>i{
 			font-size:		14px;
@@ -74,6 +85,9 @@
 			.transition-property(color);
 			&:hover{
 				color:		@color_accent;
+			}
+			&:active{
+				color:		@color_accent2;
 			}
 		}
 	}
@@ -144,6 +158,9 @@
 					&:hover{
 						color:		@color_accent;
 					}
+					&:active{
+						color:		@color_accent2;
+					}
 				}
 				&.no{
 					color:		@color_disabled;
@@ -195,6 +212,9 @@
 					.transition-property(color);
 					&:hover{
 						color:		@color_accent;
+					}
+					&:active{
+						color:		@color_accent2;
 					}
 				}
 				&>b{
