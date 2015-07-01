@@ -185,7 +185,7 @@ _tmpl.improvement__resource = function(improvement, upgradable){
 	for(var i=1; i<4; i++){
 		var title = ''
 		switch(i){
-			case 1: title = '★+0 ~ +5'; break;
+			case 1: title = '★+0 ~ +6'; break;
 			case 2: title = '★+6 ~ MAX'; break;
 			case 3: title = '升级'; break;
 		}
