@@ -29,7 +29,7 @@ _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar
 				+ ' data-tip="[[EQUIPMENT::' + equipmentId + ']]"'
 			+ '>'
 				+ '<i style="background-image:url(assets/images/itemicon/'
-					+ _g.data.item_types[equipment['type']]['icon']
+					+ equipment.getIconId()
 					+ '.png)"></i>'
 				/*
 				+ '<i style="background-image:url('
@@ -37,7 +37,7 @@ _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar
 					+ ')"></i>'
 				*/
 				+ '<small>'
-					+ equipment['name']['zh_cn'].replace(/（([^（^）]+)）/g, '<small>($1)</small>')
+					+ equipment.getName(true)
 				+ '</small>'
 				+ ( improvementStar !== null
 					? '<em' + (improvementStar<=0 ? ' class="zero"' : '') + '>+' + improvementStar + '</em>'

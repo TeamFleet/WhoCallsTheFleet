@@ -465,7 +465,7 @@ _frame.infos.init = function(){
 					}else{
 						var item_data = _g.data.items[d['equip'][i]]
 							,item_icon = 'assets/images/itemicon/'
-											+ _g.data.item_types[item_data['type']]['icon']
+											+ item_data.getIconId()
 											+ '.png'
 						equip.attr({
 							'data-equipmentid': 	d['equip'][i],
@@ -474,7 +474,7 @@ _frame.infos.init = function(){
 							'data-tip':				'[[EQUIPMENT::'+d['equip'][i]+']]'
 						})
 						name.html(
-							item_data['name']['zh_cn'].replace(/（([^（^）]+)）/g, '<small>($1)</small>')
+							item_data.getName(true)
 						)
 						slot.html( d['slot'][i] )
 						icon.css(
@@ -659,11 +659,11 @@ _frame.infos.init = function(){
 			// 名称 & 类型
 				$('<div class="title"/>')
 					.html(
-						'<h2 data-content="' + d['name']['zh_cn'] + '">' + d['name']['zh_cn'] + '</h2>'
+						'<h2 data-content="' + d.getName() + '">' + d.getName() + '</h2>'
 						+ '<small>'
 							+ '<span data-tip="图鉴编号">No.' + d['id'] + '</span>'
 							+ ( d['type']
-								? ( _g['data']['item_types'][d['type']]['name']['zh_cn']
+								? ( d.getType()
 									+ _frame.app_main.page['equipments'].gen_helper_equipable_on( d['type'] )
 								): '' )
 						+ '</small>'
@@ -752,7 +752,7 @@ _frame.infos.init = function(){
 					var file = _g.path.pics.items + '/' + d['id'] + '/card.webp'
 						,stat = node.fs.lstatSync(file)
 					if( stat && stat.isFile() ){
-						$('<img src="'+file+'" data-filename="'+d['name']['zh_cn']+'.webp"/>')
+						$('<img src="'+file+'" data-filename="'+d.getName()+'.webp"/>')
 							.appendTo(illusts)
 					}
 				}catch(e){}

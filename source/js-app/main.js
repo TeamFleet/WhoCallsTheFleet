@@ -619,6 +619,9 @@ _frame.app_main = {
 										})
 										break;
 									*/
+								case 'ships':
+									_done(db_name);
+									break;
 								case 'ship_namesuffix':
 									_db.ship_namesuffix.find({}).sort({ 'id': 1 }).exec(function(dberr, docs){
 										if( dberr ){
@@ -663,7 +666,7 @@ _frame.app_main = {
 													deferred.reject(new Error(dberr))
 												}else{
 													for(var i in docs){
-														_g.data.ships[docs[i]['id']] = docs[i]
+														_g.data.ships[docs[i]['id']] = new Ship(docs[i])
 
 														if( typeof _g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] == 'undefined' )
 															_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] = []
@@ -752,8 +755,8 @@ _frame.app_main = {
 												_g.data[db_name] = {}
 											for(var i in docs ){
 												switch( db_name ){
-													case 'ships':
-														_g.data[db_name][docs[i]['id']] = new Ship(docs[i])
+													case 'items':
+														_g.data[db_name][docs[i]['id']] = new Equipment(docs[i])
 														break;
 													default:
 														_g.data[db_name][docs[i]['id']] = docs[i]

@@ -137,25 +137,22 @@ _tmpl.improvement_detail = function( equipment, returnHTML ){
 
 
 
-_tmpl.improvement__getItemName = function(equipment){
-	return equipment['name']['zh_cn'].replace(/（([^（^）]+)）/g, '<small>($1)</small>')
-}
 _tmpl.improvement__title = function(equipment, upgrade_to, upgrade_to_star){
 	return '<strong>'
 		+ '<em style="background-image:url(../app/assets/images/itemicon/'
-			+ _g.data.item_types[equipment['type']]['icon']
+			+ equipment.getIconId()
 			+ '.png)"'
 			+ ' data-infos="[[EQUIPMENT::'+equipment['id']+']]"'
 			+ ' data-tip="[[EQUIPMENT::'+equipment['id']+']]"'
-		+ '">' + _tmpl.improvement__getItemName(equipment) + '</em>'
+		+ '">' + equipment.getName(true) + '</em>'
 		+ ( upgrade_to
 			? '<b></b>'
 				+ '<em style="background-image:url(../app/assets/images/itemicon/'
-					+ _g.data.item_types[upgrade_to['type']]['icon']
+					+ upgrade_to.getIconId()
 					+ '.png)"'
 					+ ' data-infos="[[EQUIPMENT::'+upgrade_to['id']+']]"'
 					+ ' data-tip="[[EQUIPMENT::'+upgrade_to['id']+']]"'
-				+ '">' + _tmpl.improvement__getItemName(upgrade_to) + '</em>'
+				+ '">' + upgrade_to.getName(true) + '</em>'
 				+ ( upgrade_to_star
 					? '<i>+'+upgrade_to_star+'</i>'
 					: ''
@@ -206,12 +203,12 @@ _tmpl.improvement__resource = function(improvement, upgradable){
 									? (
 										'<i class="equipment"'
 											+ ' style="background-image:url(../app/assets/images/itemicon/'
-											+ _g.data.item_types[_g.data.items[improvement['resource'][i][4]]['type']]['icon']
+											+ _g.data.items[improvement['resource'][i][4]].getIconId()
 											+ '.png)"'
 											+ ' data-infos="[[EQUIPMENT::'+improvement['resource'][i][4]+']]"'
 											+ ' data-tip="[[EQUIPMENT::'+improvement['resource'][i][4]+']]"'
 										+ '>'
-										+ _tmpl.improvement__getItemName(_g.data.items[improvement['resource'][i][4]])
+										+ _g.data.items[improvement['resource'][i][4]].getName(true)
 										+ '<i>x' + getValue(improvement['resource'][i][5]) + '</i>'
 										+ '</i>'
 									)

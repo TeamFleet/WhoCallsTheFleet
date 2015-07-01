@@ -576,7 +576,7 @@ _tablelist.prototype.sort_default_order_by_stat = {}
 		for( var i in self._equipments_columns ){
 			switch( self._equipments_columns[i][1] ){
 				case ' ':
-					$('<th/>').html(equipment_data['name']['zh_cn']).appendTo(tr)
+					$('<th/>').html(equipment_data.getName()).appendTo(tr)
 					break;
 				case 'range':
 					$('<td data-stat="range" data-value="' + equipment_data['stat']['range'] + '"/>')

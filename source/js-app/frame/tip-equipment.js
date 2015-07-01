@@ -25,12 +25,13 @@ _p.tip.content_equipment = function( d ){
 	}
 
 	var item_icon = 'assets/images/itemicon/'
-						+ _g.data.item_types[d['type']]['icon']
+						+ d.getIconId()
 						+ '.png'
+		,item_name = d.getName()
 		,html = '<h3 class="itemstat">'
 					+ '<s style="background-image: url(' + item_icon + ')"></s>'
-					+ '<strong data-content="' + d['name']['zh_cn'] + '">'
-						+ d['name']['zh_cn']
+					+ '<strong data-content="' + item_name + '">'
+						+ item_name
 					+ '</strong>'
 					+ '<small>' + _g.data.item_types[d['type']]['name']['zh_cn'] + '</small>'
 				+ '</h3>'

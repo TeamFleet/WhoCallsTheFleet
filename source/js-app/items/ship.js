@@ -1,7 +1,7 @@
 var Ship = function( data ){
 	$.extend(true, this, data)
-	this.prototype = Object.create(ITEM.prototype)
 }
+Ship.prototype = Object.create(ITEM.prototype)
 
 Ship.prototype.getName = function(joint, language){
 	joint = joint || ''

@@ -166,6 +166,7 @@
 var ITEM = function(){}
 
 ITEM.prototype.getName = function(language){
+	language = language || _g.lang
 	return this['name']
 			? (this['name'][language] || this['name'])
 			: null
@@ -173,8 +174,8 @@ ITEM.prototype.getName = function(language){
 
 var Ship = function( data ){
 	$.extend(true, this, data)
-	this.prototype = Object.create(ITEM.prototype)
 }
+Ship.prototype = Object.create(ITEM.prototype)
 
 Ship.prototype.getName = function(joint, language){
 	joint = joint || ''
@@ -196,6 +197,31 @@ Ship.prototype.getType = function(language){
 	return this['type']
 			? _g['data']['ship_types'][this['type']]['full_zh']
 			: null
+}
+
+var Equipment = function( data ){
+	$.extend(true, this, data)
+}
+Equipment.prototype = Object.create(ITEM.prototype)
+
+Equipment.prototype.getName = function(small_brackets, language){
+	language = language || _g.lang
+	var result = ITEM.prototype.getName.call(this, language)
+		,small_brackets_tag = small_brackets && !small_brackets === true ? small_brackets : 'small'
+	return small_brackets
+			? result.replace(/（([^（^）]+)）/g, '<'+small_brackets_tag+'>($1)</'+small_brackets_tag+'>')
+			: result
+}
+
+Equipment.prototype.getType = function(language){
+	language = language || _g.lang
+	return this['type']
+			? _g['data']['item_types'][this['type']]['name'][language]
+			: null
+}
+
+Equipment.prototype.getIconId = function(){
+	return _g.data.item_types[this['type']]['icon']
 }
 
 // node.js modules
@@ -819,6 +845,9 @@ _frame.app_main = {
 										})
 										break;
 									*/
+								case 'ships':
+									_done(db_name);
+									break;
 								case 'ship_namesuffix':
 									_db.ship_namesuffix.find({}).sort({ 'id': 1 }).exec(function(dberr, docs){
 										if( dberr ){
@@ -863,7 +892,7 @@ _frame.app_main = {
 													deferred.reject(new Error(dberr))
 												}else{
 													for(var i in docs){
-														_g.data.ships[docs[i]['id']] = docs[i]
+														_g.data.ships[docs[i]['id']] = new Ship(docs[i])
 
 														if( typeof _g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] == 'undefined' )
 															_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] = []
@@ -952,8 +981,8 @@ _frame.app_main = {
 												_g.data[db_name] = {}
 											for(var i in docs ){
 												switch( db_name ){
-													case 'ships':
-														_g.data[db_name][docs[i]['id']] = new Ship(docs[i])
+													case 'items':
+														_g.data[db_name][docs[i]['id']] = new Equipment(docs[i])
 														break;
 													default:
 														_g.data[db_name][docs[i]['id']] = docs[i]
@@ -1704,25 +1733,22 @@ _tmpl.improvement_detail = function( equipment, returnHTML ){
 
 
 
-_tmpl.improvement__getItemName = function(equipment){
-	return equipment['name']['zh_cn'].replace(/（([^（^）]+)）/g, '<small>($1)</small>')
-}
 _tmpl.improvement__title = function(equipment, upgrade_to, upgrade_to_star){
 	return '<strong>'
 		+ '<em style="background-image:url(../app/assets/images/itemicon/'
-			+ _g.data.item_types[equipment['type']]['icon']
+			+ equipment.getIconId()
 			+ '.png)"'
 			+ ' data-infos="[[EQUIPMENT::'+equipment['id']+']]"'
 			+ ' data-tip="[[EQUIPMENT::'+equipment['id']+']]"'
-		+ '">' + _tmpl.improvement__getItemName(equipment) + '</em>'
+		+ '">' + equipment.getName(true) + '</em>'
 		+ ( upgrade_to
 			? '<b></b>'
 				+ '<em style="background-image:url(../app/assets/images/itemicon/'
-					+ _g.data.item_types[upgrade_to['type']]['icon']
+					+ upgrade_to.getIconId()
 					+ '.png)"'
 					+ ' data-infos="[[EQUIPMENT::'+upgrade_to['id']+']]"'
 					+ ' data-tip="[[EQUIPMENT::'+upgrade_to['id']+']]"'
-				+ '">' + _tmpl.improvement__getItemName(upgrade_to) + '</em>'
+				+ '">' + upgrade_to.getName(true) + '</em>'
 				+ ( upgrade_to_star
 					? '<i>+'+upgrade_to_star+'</i>'
 					: ''
@@ -1773,12 +1799,12 @@ _tmpl.improvement__resource = function(improvement, upgradable){
 									? (
 										'<i class="equipment"'
 											+ ' style="background-image:url(../app/assets/images/itemicon/'
-											+ _g.data.item_types[_g.data.items[improvement['resource'][i][4]]['type']]['icon']
+											+ _g.data.items[improvement['resource'][i][4]].getIconId()
 											+ '.png)"'
 											+ ' data-infos="[[EQUIPMENT::'+improvement['resource'][i][4]+']]"'
 											+ ' data-tip="[[EQUIPMENT::'+improvement['resource'][i][4]+']]"'
 										+ '>'
-										+ _tmpl.improvement__getItemName(_g.data.items[improvement['resource'][i][4]])
+										+ _g.data.items[improvement['resource'][i][4]].getName(true)
 										+ '<i>x' + getValue(improvement['resource'][i][5]) + '</i>'
 										+ '</i>'
 									)
@@ -1829,7 +1855,7 @@ _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar
 				+ ' data-tip="[[EQUIPMENT::' + equipmentId + ']]"'
 			+ '>'
 				+ '<i style="background-image:url(assets/images/itemicon/'
-					+ _g.data.item_types[equipment['type']]['icon']
+					+ equipment.getIconId()
 					+ '.png)"></i>'
 				/*
 				+ '<i style="background-image:url('
@@ -1837,7 +1863,7 @@ _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar
 					+ ')"></i>'
 				*/
 				+ '<small>'
-					+ equipment['name']['zh_cn'].replace(/（([^（^）]+)）/g, '<small>($1)</small>')
+					+ equipment.getName(true)
 				+ '</small>'
 				+ ( improvementStar !== null
 					? '<em' + (improvementStar<=0 ? ' class="zero"' : '') + '>+' + improvementStar + '</em>'
@@ -2683,7 +2709,7 @@ _frame.infos.init = function(){
 					}else{
 						var item_data = _g.data.items[d['equip'][i]]
 							,item_icon = 'assets/images/itemicon/'
-											+ _g.data.item_types[item_data['type']]['icon']
+											+ item_data.getIconId()
 											+ '.png'
 						equip.attr({
 							'data-equipmentid': 	d['equip'][i],
@@ -2692,7 +2718,7 @@ _frame.infos.init = function(){
 							'data-tip':				'[[EQUIPMENT::'+d['equip'][i]+']]'
 						})
 						name.html(
-							item_data['name']['zh_cn'].replace(/（([^（^）]+)）/g, '<small>($1)</small>')
+							item_data.getName(true)
 						)
 						slot.html( d['slot'][i] )
 						icon.css(
@@ -2877,11 +2903,11 @@ _frame.infos.init = function(){
 			// 名称 & 类型
 				$('<div class="title"/>')
 					.html(
-						'<h2 data-content="' + d['name']['zh_cn'] + '">' + d['name']['zh_cn'] + '</h2>'
+						'<h2 data-content="' + d.getName() + '">' + d.getName() + '</h2>'
 						+ '<small>'
 							+ '<span data-tip="图鉴编号">No.' + d['id'] + '</span>'
 							+ ( d['type']
-								? ( _g['data']['item_types'][d['type']]['name']['zh_cn']
+								? ( d.getType()
 									+ _frame.app_main.page['equipments'].gen_helper_equipable_on( d['type'] )
 								): '' )
 						+ '</small>'
@@ -2970,7 +2996,7 @@ _frame.infos.init = function(){
 					var file = _g.path.pics.items + '/' + d['id'] + '/card.webp'
 						,stat = node.fs.lstatSync(file)
 					if( stat && stat.isFile() ){
-						$('<img src="'+file+'" data-filename="'+d['name']['zh_cn']+'.webp"/>')
+						$('<img src="'+file+'" data-filename="'+d.getName()+'.webp"/>')
 							.appendTo(illusts)
 					}
 				}catch(e){}
@@ -3203,12 +3229,13 @@ _p.tip.content_equipment = function( d ){
 	}
 
 	var item_icon = 'assets/images/itemicon/'
-						+ _g.data.item_types[d['type']]['icon']
+						+ d.getIconId()
 						+ '.png'
+		,item_name = d.getName()
 		,html = '<h3 class="itemstat">'
 					+ '<s style="background-image: url(' + item_icon + ')"></s>'
-					+ '<strong data-content="' + d['name']['zh_cn'] + '">'
-						+ d['name']['zh_cn']
+					+ '<strong data-content="' + item_name + '">'
+						+ item_name
 					+ '</strong>'
 					+ '<small>' + _g.data.item_types[d['type']]['name']['zh_cn'] + '</small>'
 				+ '</h3>'
@@ -3831,7 +3858,7 @@ _tablelist.prototype.sort_default_order_by_stat = {}
 		for( var i in self._equipments_columns ){
 			switch( self._equipments_columns[i][1] ){
 				case ' ':
-					$('<th/>').html(equipment_data['name']['zh_cn']).appendTo(tr)
+					$('<th/>').html(equipment_data.getName()).appendTo(tr)
 					break;
 				case 'range':
 					$('<td data-stat="range" data-value="' + equipment_data['stat']['range'] + '"/>')
@@ -4687,6 +4714,7 @@ _tablelist.prototype.init = function(){
 
 // @koala-prepend "js-app/items/!.js"
 // @koala-prepend "js-app/items/ship.js"
+// @koala-prepend "js-app/items/equipment.js"
 
 // @koala-prepend "js-app/main.js"
 // @koala-prepend "js-app/errorlog.js"
