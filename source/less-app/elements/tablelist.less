@@ -579,6 +579,7 @@
 								background-color:	transparent !important;
 								background-repeat:	no-repeat;
 								background-image:	linear-gradient(to right, transparent 10px, rgba(0, 0, 0, .35) ~"calc(100% - 30px)", transparent);
+								.transition-property(~"background, color, opacity");
 								input[type="checkbox"].compare{
 									position:	absolute;
 									.left(-15);
@@ -615,6 +616,9 @@
 							tbody tr[data-shipid]:hover{
 								background-size:	100% 100%;
 								//background:	rgba(0, 0, 0, .35);
+							}
+							tbody tr[data-shipid]:active{
+								opacity:	.5;
 							}
 						}
 					} // table
