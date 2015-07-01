@@ -1,3 +1,5 @@
+[![Dependencies](https://david-dm.org/Diablohu/WhoCallsTheFleet.svg)](https://david-dm.org/Diablohu/WhoCallsTheFleet.svg)
+
 # WhoCallsTheFleet / 是谁呼叫舰队
 
 针对网页游戏《艦隊これくしょん～艦これ～》（舰队收藏）的离线工具。
