@@ -30,7 +30,7 @@ _tmpl.improvement = function( equipment, improvement_index, requirement_index, r
 				+ ' data-infos="[[SHIP::'+req_ships[i]+']]"'
 				+ ' data-tip="[[SHIP::'+req_ships[i]+']]"'
 				+ '>'
-				+ _g.getName( _g.data.ships[req_ships[i]]['name'], '' )
+				+ _g.data.ships[req_ships[i]].getName()
 				+ '</span>'
 			)
 		}
@@ -102,7 +102,7 @@ _tmpl.improvement_detail = function( equipment, returnHTML ){
 						+ ' data-infos="[[SHIP::'+req[1][k]+']]"'
 						+ ' data-tip="[[SHIP::'+req[1][k]+']]"'
 						+ '>'
-						+ _g.getName( _g.data.ships[req[1][k]]['name'], '' )
+						+ _g.data.ships[req[1][k]].getName()
 						+ '</span>'
 					)
 				}

@@ -7,10 +7,7 @@ _p.tip.filters.push( function(cont){
 } )
 
 _p.tip.content_ship = function( d ){
-	var ship_name = d['name']['zh_cn']
-					+ (d['name']['suffix']
-						? '・' + _g.data.ship_namesuffix[d['name']['suffix']]['zh_cn']
-						: '')
+	var ship_name = d.getName(_g.joint)
 		,html = '<h3 class="shipinfo">'
 				+ '<img src="' + _g.path.pics.ships + '/' + d['id']+'/0.webp"/>'
 				+ '<strong data-content="' + ship_name + '">'

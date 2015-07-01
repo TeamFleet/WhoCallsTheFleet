@@ -18,6 +18,7 @@
 	_g.animate_duration_delay = 320;
 	_g.inputIndex = 0
 	_g.lang = 'zh_cn'
+	_g.joint = '・'
 
 	_g.path = {
 		'db': 		node.path.join(_g.root, '/app-db/'),
@@ -95,6 +96,8 @@
 		range = parseInt(range)
 		return _g.statRange[range]
 	}
+	/*
+		moved to Ship.getName()
 	_g.getName = function( nameObj, joint, lang ){
 		joint = joint || ''
 		if( !nameObj )
@@ -109,6 +112,7 @@
 					) : ''
 				)
 	}
+	*/
 	_g.log = function(log){
 		if( debugmode )
 			console.log(log)
@@ -747,7 +751,14 @@ _frame.app_main = {
 											if( typeof _g.data[db_name] == 'undefined' )
 												_g.data[db_name] = {}
 											for(var i in docs ){
-												_g.data[db_name][docs[i]['id']] = docs[i]
+												switch( db_name ){
+													case 'ships':
+														_g.data[db_name][docs[i]['id']] = new Ship(docs[i])
+														break;
+													default:
+														_g.data[db_name][docs[i]['id']] = docs[i]
+														break;
+												}
 											}
 											_done(db_name)
 										}
@@ -963,248 +974,3 @@ _frame.app_main = {
 			_frame.app_main.is_init = true
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Modal: Ship
-/*
-	_frame.app_main.show_ship = function( d ){
-		function _val( val, show_zero ){
-			if( !show_zero && (val == 0 || val == '0') )
-				return '<small class="zero">-</small>'
-			if( val == -1 || val == '-1' )
-				return '<small class="zero">?</small>'
-			return val
-		}
-
-		_frame.modal.resetContent()
-
-		if( debugmode )
-			console.log(d)
-
-		var dom = $('<div class="ship"/>')
-
-		// 图鉴
-			var illusts = $('<div class="illustrations"/>')
-							.append(
-								$('<img src="' + _g.path.pics.ships + '/' + d['id'] + '/2.jpg' + '"/>')
-							)
-							.appendTo(dom)
-
-		// 舰种&舰级
-			$('<small/>')
-				.html(
-					( d['class'] ? _g['data']['ship_classes'][d['class']]['name_zh'] + '级' : '' )
-						+ ( d['class_no'] ? '<em>' + d['class_no'] + '</em>号舰' : '' )
-						+ ( d['type'] ? '<br/>' + _g['data']['ship_types'][d['type']]['full_zh'] : '' )
-				)
-				.appendTo(dom)
-
-		// 默认装备&搭载数
-			var equips = $('<div class="equipments"/>').appendTo(dom)
-				,i = 0
-			while( i < 4 ){
-				var equip = $('<button/>').appendTo(equips)
-					,icon = $('<i/>').appendTo( equip )
-					,name = $('<small/>').appendTo( equip )
-					,slot = $('<em/>').appendTo( equip )
-
-				if( typeof d['slot'][i] == 'undefined' ){
-					equip.addClass('no')
-				}else if( typeof d['equip'][i] == 'undefined' || !d['equip'][i] || d['equip'][i] === '' ){
-					equip.addClass('empty')
-					name.html( '--未装备--' )
-					slot.html( d['slot'][i] )
-				}else{
-					var item_data = _g.data.items[d['equip'][i]]
-						,item_icon = 'assets/images/itemicon/'
-										+ _g.data.item_types[item_data['type']]['icon']
-										+ '.png'
-					function _stat(stat, title){
-						if( item_data['stat'][stat] ){
-							switch(stat){
-								case 'range':
-									return '<span>射程: ' + _g.getStatRange( item_data['stat'][stat] ) + '</span>';
-									break;
-								default:
-									var val = parseInt( item_data['stat'][stat] )
-									return '<span>' + ( val > 0 ? '+' : '') + val + ' ' + title + '</span>'
-									break;
-							}
-						}else{
-							return ''
-						}
-					}
-					equip.attr({
-						'data-itemid': 	d['equip'][i],
-						'data-tip':		'<h3 class="itemstat">'
-											+ '<s style="background-image: url(' + item_icon + ')"></s>'
-											+ '<strong data-content="' + item_data['name']['zh_cn'] + '">'
-												+ item_data['name']['zh_cn']
-											+ '</strong>'
-											+ '<small>' + _g.data.item_types[item_data['type']]['name']['zh_cn'] + '</small>'
-										+ '</h3>'
-										+ _stat('fire', '火力')
-										+ _stat('torpedo', '雷装')
-										+ _stat('aa', '对空')
-										+ _stat('asw', '对潜')
-										+ _stat('bomb', '爆装')
-										+ _stat('hit', '命中')
-										+ _stat('armor', '装甲')
-										+ _stat('evasion', '回避')
-										+ _stat('los', '索敌')
-										+ _stat('range', '射程')
-					})
-					name.html(
-						item_data['name']['zh_cn'].replace(/（([^（^）]+)）/g, '<small>($1)</small>')
-					)
-					slot.html( d['slot'][i] )
-					icon.css(
-						'background-image',
-						'url(' + item_icon + ')'
-					)
-				}
-				i++
-			}
-
-		// 属性
-			var stat1 = $('<div class="stats"/>').appendTo(dom)
-				,stat2 = $('<div class="stats"/>').appendTo(dom)
-				,stat3 = $('<div class="stats"/>').appendTo(dom)
-				,stat_consum = $('<div class="stats consum"/>').html('<strong>消耗</strong>').appendTo(dom)
-			function _add_stat( name, title, val, tar ){
-				$('<span/>')
-					.html(
-						'<small class="stat-'+name+'">' + title + '</small>'
-						+ '<em>' + val + '</em>'
-					)
-					.appendTo(tar)
-			}
-			_add_stat( 'hp', 		'耐久', _val( d['stat']['hp'] ), 			stat1 )
-			_add_stat( 'armor', 	'装甲', _val( d['stat']['armor_max'] ),		stat1 )
-			_add_stat( 'evasion', 	'回避', _val( d['stat']['evasion_max'] ),	stat1 )
-			_add_stat( 'carry', 	'搭载', _val( d['stat']['carry'] ),			stat1 )
-
-			_add_stat( 'fire', 		'火力', _val( d['stat']['fire_max'] ),		stat2 )
-			_add_stat( 'torpedo', 	'雷装', _val( d['stat']['torpedo_max'] ),	stat2 )
-			_add_stat( 'aa', 		'对空', _val( d['stat']['aa_max'] ),		stat2 )
-			_add_stat( 'asw', 		'对潜', _val( d['stat']['asw_max'], /^(5|8|9|12)$/.test( d['type'] ) ),		stat2 )
-
-			_add_stat( 'speed', 	'航速', _g.getStatSpeed( d['stat']['speed'] ),		stat3 )
-			_add_stat( 'range', 	'射程', _g.getStatRange( d['stat']['range'] ),		stat3 )
-			_add_stat( 'los', 		'索敌', _val( d['stat']['los_max'] ),		stat3 )
-			_add_stat( 'luck', 		'运', 	d['stat']['luck'] + '<sup>' + d['stat']['luck_max'] + '</sup>',		stat3 )
-
-			_add_stat( 'fuel', 		'', _val( d['consum']['fuel'] ),		stat_consum )
-			_add_stat( 'ammo', 		'', _val( d['consum']['ammo'] ),		stat_consum )
-
-		// 声优&画师_g.data.entities
-			$('<div class="entity"/>')
-				.html(
-					'<strong>声优</strong>'
-					+ '<span>' + _g['data']['entities'][d['rels']['cv']]['name'][_g.lang] + '</span>'
-				)
-				.appendTo(dom)
-			$('<div class="entity"/>')
-				.html(
-					'<strong>画师</strong>'
-					+ '<span>' + _g['data']['entities'][d['rels']['illustrator']]['name'][_g.lang] + '</span>'
-				)
-				.appendTo(dom)
-
-		// 改造信息
-			if( d['series'] ){
-				_db.ship_series.find({'id': d['series']}, function(err,docs){
-					if( !err && docs && docs.length ){
-						var prev_id = prev_lvl = prev_blueprint = next_id = next_lvl = next_blueprint = null
-						// 遍历 docs[0].ships，寻找该舰娘ID，确定改造前后版本
-							for(var i in docs[0].ships){
-								if( docs[0].ships[i]['id'] == d['id'] ){
-									var _i = parseInt(i)
-									// 如果 i > 0，表明有改造前版本
-										if( _i ){
-											prev_id 		= docs[0].ships[ _i - 1 ]['id']
-											prev_lvl 		= docs[0].ships[ _i - 1 ]['next_lvl']
-											prev_blueprint 	= docs[0].ships[ _i - 1 ]['next_blueprint'] ? true : false
-										}
-									// 如果 i < docs[0].ships.length-1，表明有改造后版本
-										if( _i < docs[0].ships.length-1 ){
-											next_id 		= docs[0].ships[ _i + 1 ]['id']
-											next_lvl 		= docs[0].ships[ _i ]['next_lvl']
-											next_blueprint 	= docs[0].ships[ _i ]['next_blueprint'] ? true : false
-										}
-								}
-							}
-						// 根据刚才获得的数据创建改造信息DOM
-							if( prev_id !== null || next_id !== null ){
-								var remodels = $('<div class="remodels"/>').appendTo(dom)
-								function shipDOM( ship_id, lvl, blueprint ){
-									var ship_data = _g.data.ships[ship_id]
-										,ship_name = ship_data['name']['zh_cn']
-														+ (ship_data['name']['suffix']
-															? '・' + _g.data.ship_namesuffix[ship_data['name']['suffix']]['zh_cn']
-															: '')
-										,tip = '<h3 class="shipinfo">'
-													+ '<strong data-content="' + ship_name + '">'
-														+ ship_name
-													+ '</strong>'
-													+ (
-														ship_data['type'] ?
-															'<small>' + _g['data']['ship_types'][ship_data['type']]['full_zh'] + '</span>'
-															: ''
-													)
-												+ '</h3>'
-									$('<div/>')
-										.addClass('prev' + (blueprint ? ' blueprint' : '') )
-										.html('<span>' + lvl + '</span>')
-										.append(
-											$('<button data-shipid="'+ ship_id +'" modal="true"/>')
-												.attr('data-tip', tip)
-												.html('<img src="' + _g.path.pics.ships + '/' + ship_id+'/0.jpg"/>')
-										)
-										.appendTo(remodels)
-								}
-
-								if( prev_id !== null )
-									shipDOM(prev_id, prev_lvl, prev_blueprint)
-								if( next_id !== null )
-									shipDOM(next_id, next_lvl, next_blueprint)
-							}
-					}
-				})
-			}
-
-		// 按钮
-			var buttons = $('<div class="buttons"/>').appendTo(dom)
-
-		_frame.modal.show(
-			dom,
-			_g.getName( d['name'], '・' ) || '舰娘',
-			{
-				'classname': 		'infos',
-				'blank_to_close': 	true
-			}
-		)
-	}
-*/

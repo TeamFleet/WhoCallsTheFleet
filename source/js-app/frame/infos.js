@@ -372,7 +372,7 @@ _frame.infos.init = function(){
 			//_frame.modal.resetContent()
 
 			var dom = $('<div class="ship"/>')
-				,ship_name = _g.getName( d['name'], '・' ) || '舰娘'
+				,ship_name = d.getName(_g.joint) || '舰娘'
 				,illustrations = []
 				,has_no = d['no'] && parseInt(d['no']) < 500 ? true : false
 
@@ -543,10 +543,7 @@ _frame.infos.init = function(){
 								for(var i in docs[0].ships){
 									var _i = parseInt(i)
 										,remodel_ship_data = _g.data.ships[docs[0].ships[i]['id']]
-										,remodel_ship_name = remodel_ship_data['name']['zh_cn']
-														+ (remodel_ship_data['name']['suffix']
-															? '・' + _g.data.ship_namesuffix[remodel_ship_data['name']['suffix']]['zh_cn']
-															: '')
+										,remodel_ship_name = remodel_ship_data.getName(_g.joint)
 										,tip = '<h3 class="shipinfo">'
 													+ '<strong data-content="' + remodel_ship_name + '">'
 														+ remodel_ship_name
@@ -631,19 +628,6 @@ _frame.infos.init = function(){
 					,illusts_container = $('<div/>').appendTo(illusts)
 
 			return dom
-			/*
-			// 按钮
-				var buttons = $('<div class="buttons"/>').appendTo(dom)
-
-			_frame.modal.show(
-				dom,
-				_g.getName( d['name'], '・' ) || '舰娘',
-				{
-					'classname': 		'infos',
-					'blank_to_close': 	true
-				}
-			)
-			*/
 		}
 
 	// 装备信息

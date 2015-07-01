@@ -94,9 +94,9 @@ _tablelist.prototype.sort_default_order_by_stat = {}
 					//.appendTo( this.dom.tbody )
 					.insertAfter( self._ships_last_item )
 			,max_carry = 0
-			,name = ship_data['name']['zh_cn']
+			,name = ship_data['name'][_g.lang]
 					+ (ship_data['name']['suffix']
-						? '<small>' + _g.data.ship_namesuffix[ship_data['name']['suffix']]['zh_cn'] + '</small>'
+						? '<small>' + _g.data.ship_namesuffix[ship_data['name']['suffix']][_g.lang] + '</small>'
 						: '')
 			,checkbox = $('<input type="checkbox" class="compare"/>')
 							.prop('disabled', donotcompare)
