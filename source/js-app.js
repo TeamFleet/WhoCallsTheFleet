@@ -1,4 +1,5 @@
 // @koala-prepend "js-app/lib/lockr.js"
+// @koala-prepend "js-app/lib/SmoothScroll.js"
 
 // @koala-prepend "js-app/items/!.js"
 // @koala-prepend "js-app/items/ship.js"
