@@ -5,9 +5,16 @@
 		@color_disabled:	rgba(255, 255, 255, .35);
 
 		.flexbox();
-		.flex-flow(row wrap);
+		//.flex-flow(row wrap);
+		.flex-flow(column nowrap);
 		.justify-content(flex-start);
 		.align-items(flex-start);
+
+		&:after{
+			content:	'';
+			display:	block;
+			flex:		0 1 20%;
+		}
 
 		h1, h2, h3, h4, h5, h6{
 			color:		hsl(149, 100%, 90%);
@@ -228,6 +235,9 @@
 				right: 0;
 				top: 260px;
 				*/
+				button.link_equipment + button.link_equipment{
+					margin-top:	-.35em;
+				}
 			}
 			&.equipped{
 				//flex-basis:	50%;
@@ -267,12 +277,6 @@
 				max-width:	100%;
 				max-height:	100%;
 			}
-		}
-
-		&:after{
-			content:	'';
-			display:	block;
-			flex:		0 1 40%;
 		}
 
 		@media all and (max-width: 1152px){

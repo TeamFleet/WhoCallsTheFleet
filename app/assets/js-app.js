@@ -3737,7 +3737,7 @@ _frame.infos.init = function(){
 
 		// 升级来源
 			if( d['upgrade_from'] && d['upgrade_from'].push && d['upgrade_from'].length ){
-				var upgrade_from = $('<div class="stats upgrade-from"/>')
+				var upgrade_from = $('<div class="upgrade-from"/>')
 								.html('<h4 data-content="可由以下装备升级获得">可由以下装备升级获得</h4>')
 								.appendTo(dom)
 					,upgrade_from1 = $('<div class="stat upgrade"/>')
