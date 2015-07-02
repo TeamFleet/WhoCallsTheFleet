@@ -26,3 +26,4 @@
 * [request](https://github.com/request/request): HTTP请求框架
 * [request-progress](https://github.com/request/request): request请求的进度
 * [semver](https://github.com/npm/node-semver): 简单的版本号对比
+* [SmoothScroll](https://github.com/galambalazs/smoothscroll): 针对鼠标滚轮的平滑页面滚动
