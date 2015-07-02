@@ -130,8 +130,7 @@ _frame.app_main.page['arsenal'].init = function( page ){
 		var body = $('<div class="body body-2 body-all"/>')
 
 		for(var i in _g.data.arsenal_all){
-			var d = _g.data.arsenal_all[i]
-			_tmpl.improvement_detail(d).appendTo(body)
+			_tmpl.improvement_detail(_g.data.arsenal_all[i]).appendTo(body)
 		}
 
 		return body
