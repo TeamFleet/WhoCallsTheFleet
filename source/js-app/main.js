@@ -480,6 +480,17 @@ _frame.app_main = {
 			_frame.dom.main = $('<main/>').appendTo( _frame.dom.layout )
 			_frame.dom.bgimg = $('<div class="bgimg" />').appendTo( _frame.dom.layout )
 
+		// 功能按钮：反馈信息
+		/*
+			$('#titlebar>.buttons')
+				.prepend(
+					$('<button/>',{
+						'icon': 	'cog',
+						'html': 	'反馈信息'
+					})
+				)
+		*/
+
 		// 创建主导航
 			if( _frame.app_main.nav && _frame.app_main.nav.length ){
 				_frame.dom.navs = {}
