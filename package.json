@@ -78,8 +78,8 @@
       "package.json"
     ],
     "dataVersion": {
-      "app": "0.6.0.1",
-      "app-db": "1.6.0.1",
+      "app": "0.6.0.2",
+      "app-db": "1.6.0.2",
       "pics": "1.2.8.0"
     },
     "buildDir": "N:\\nwbuild\\build",
