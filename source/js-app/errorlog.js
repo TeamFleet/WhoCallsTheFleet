@@ -17,5 +17,5 @@ _g.error = function( err ){
 		+ "\r\n"
 	)
 
-	throw err
+	//throw err
 }

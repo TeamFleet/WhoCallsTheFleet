@@ -349,6 +349,10 @@ _frame.app_main = {
 			if( page != 'about' )
 				Lockr.set('last_page', page)
 
+			ga.counter(
+				location.search
+			)
+
 			_g.log( 'LOADED: ' + page )
 		},
 
