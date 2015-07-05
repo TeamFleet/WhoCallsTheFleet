@@ -372,7 +372,7 @@ _frame.infos.init = function(){
 			//_frame.modal.resetContent()
 
 			var dom = $('<div class="ship"/>')
-				,ship_name = _g.getName( d['name'], '・' ) || '舰娘'
+				,ship_name = d.getName(_g.joint) || '舰娘'
 				,illustrations = []
 				,has_no = d['no'] && parseInt(d['no']) < 500 ? true : false
 
@@ -465,7 +465,7 @@ _frame.infos.init = function(){
 					}else{
 						var item_data = _g.data.items[d['equip'][i]]
 							,item_icon = 'assets/images/itemicon/'
-											+ _g.data.item_types[item_data['type']]['icon']
+											+ item_data.getIconId()
 											+ '.png'
 						equip.attr({
 							'data-equipmentid': 	d['equip'][i],
@@ -474,7 +474,7 @@ _frame.infos.init = function(){
 							'data-tip':				'[[EQUIPMENT::'+d['equip'][i]+']]'
 						})
 						name.html(
-							item_data['name']['zh_cn'].replace(/（([^（^）]+)）/g, '<small>($1)</small>')
+							item_data.getName(true)
 						)
 						slot.html( d['slot'][i] )
 						icon.css(
@@ -543,10 +543,7 @@ _frame.infos.init = function(){
 								for(var i in docs[0].ships){
 									var _i = parseInt(i)
 										,remodel_ship_data = _g.data.ships[docs[0].ships[i]['id']]
-										,remodel_ship_name = remodel_ship_data['name']['zh_cn']
-														+ (remodel_ship_data['name']['suffix']
-															? '・' + _g.data.ship_namesuffix[remodel_ship_data['name']['suffix']]['zh_cn']
-															: '')
+										,remodel_ship_name = remodel_ship_data.getName(_g.joint)
 										,tip = '<h3 class="shipinfo">'
 													+ '<strong data-content="' + remodel_ship_name + '">'
 														+ remodel_ship_name
@@ -631,148 +628,4 @@ _frame.infos.init = function(){
 					,illusts_container = $('<div/>').appendTo(illusts)
 
 			return dom
-			/*
-			// 按钮
-				var buttons = $('<div class="buttons"/>').appendTo(dom)
-
-			_frame.modal.show(
-				dom,
-				_g.getName( d['name'], '・' ) || '舰娘',
-				{
-					'classname': 		'infos',
-					'blank_to_close': 	true
-				}
-			)
-			*/
 		}
-
-	// 装备信息
-		_frame.infos.__equipment = function( id ){
-			var d = _g.data.items[ id ]
-
-			_g.log(d)
-
-			function _stat(stat, title){
-				if( d['stat'][stat] ){
-					var html = '<small class="stat-'+stat+'">' + title + '</small>'
-					switch(stat){
-						case 'range':
-							html+= '<em>' + _g.getStatRange( d['stat'][stat] ) + '</em>';
-							break;
-						default:
-							var val = parseInt( d['stat'][stat] )
-							html+= '<em'+ (val < 0 ? ' class="negative"' : '') +'>' + ( val > 0 ? '+' : '') + val + '</em>'
-							break;
-					}
-					$('<span/>').html(html).appendTo(stat_container)
-				}//else{
-				//	return ''
-				//}
-			}
-
-			var dom = $('<div class="equipment"/>')
-
-			// 名称 & 类型
-				$('<div class="title"/>')
-					.html(
-						'<h2 data-content="' + d['name']['zh_cn'] + '">' + d['name']['zh_cn'] + '</h2>'
-						+ '<small>'
-							+ '<span data-tip="图鉴编号">No.' + d['id'] + '</span>'
-							+ ( d['type']
-								? ( _g['data']['item_types'][d['type']]['name']['zh_cn']
-									+ _frame.app_main.page['equipments'].gen_helper_equipable_on( d['type'] )
-								): '' )
-						+ '</small>'
-					).appendTo(dom)
-
-			// 属性
-				var stats = $('<div class="stats"/>')
-								.html('<h4 data-content="属性">属性</h4>')
-								.appendTo(dom)
-					,stat_container = $('<div class="stat"/>').appendTo(stats)
-
-				_stat('fire', '火力')
-				_stat('torpedo', '雷装')
-				_stat('aa', '对空')
-				_stat('asw', '对潜')
-				_stat('bomb', '爆装')
-				_stat('hit', '命中')
-				_stat('armor', '装甲')
-				_stat('evasion', '回避')
-				_stat('los', '索敌')
-				_stat('range', '射程')
-
-			// 开发 & 改修
-				var arsenal = $('<div class="stats"/>')
-								.html('<h4 data-content="开发改修">开发改修</h4>')
-								.appendTo(dom)
-					,arsenal1 = $('<div class="stat"/>').appendTo(arsenal)
-
-				$('<span/>')
-					.append(
-						$('<small class="indicator">')
-							.addClass( d['craftable'] ? 'true' : 'false' )
-							.html( d['craftable'] ? '可开发' : '不可开发' )
-					)
-					.appendTo( arsenal1 )
-				$('<span/>')
-					.append(
-						$('<small class="indicator">')
-							.addClass( d['improvable'] ? 'true' : 'false' )
-							.html( d['improvable'] ? '可改修' : '不可改修' )
-					)
-					.appendTo( arsenal1 )
-				if( d['improvable'] && !(d['upgrade_to'] && d['upgrade_to'].push && d['upgrade_to'].length) ){
-					$('<span/>').html('<small class="indicator false">不可升级</small>')
-						.appendTo( arsenal1 )
-				}
-
-				// 可升级为
-					if( d['upgrade_to'] && d['upgrade_to'].push && d['upgrade_to'].length ){
-						var arsenal_to = $('<div class="stat upgrade"/>')
-								.html('<span><small class="indicator true">可升级为</small></span>')
-								.appendTo(arsenal)
-						for( var i in d['upgrade_to'] ){
-							_tmpl.link_equipment(d['upgrade_to'][i][0], null, null, d['upgrade_to'][i][1]).appendTo( arsenal_to )
-						}
-					}
-
-			// 升级来源
-				if( d['upgrade_from'] && d['upgrade_from'].push && d['upgrade_from'].length ){
-					var upgrade_from = $('<div class="stats"/>')
-									.html('<h4 data-content="可由以下装备升级获得">可由以下装备升级获得</h4>')
-									.appendTo(dom)
-						,upgrade_from1 = $('<div class="stat upgrade"/>')
-							.appendTo(upgrade_from)
-					for( var i in d['upgrade_from'] ){
-						_tmpl.link_equipment(d['upgrade_from'][i]).appendTo( upgrade_from1 )
-					}
-				}
-
-			// 初始装备于
-				var equipped = $('<div class="equipped"/>').html('<h4 data-content="初始装备于">初始装备于</h4>').appendTo(dom)
-					,equipped_container = _p.el.flexgrid.create().appendTo( equipped )
-				if( d.default_equipped_on && d.default_equipped_on.length ){
-					for( var i in d.default_equipped_on ){
-						equipped_container.appendDOM(
-							_tmpl.link_ship(d.default_equipped_on[i]).addClass('unit')
-						)
-					}
-				}else{
-					equipped_container.addClass('no').html('暂无初始配置该装备的舰娘...')
-				}
-
-			// 图鉴
-				var illusts = $('<aside class="illustrations"/>').appendTo(dom)
-				try{
-					var file = _g.path.pics.items + '/' + d['id'] + '/card.webp'
-						,stat = node.fs.lstatSync(file)
-					if( stat && stat.isFile() ){
-						$('<img src="'+file+'" data-filename="'+d['name']['zh_cn']+'.webp"/>')
-							.appendTo(illusts)
-					}
-				}catch(e){}
-
-			return dom
-		}
-

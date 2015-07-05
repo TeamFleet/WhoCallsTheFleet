@@ -3,7 +3,7 @@ _tmpl.textlink_ship = function( ship, tagName, returnHTML ){
 		return false
 
 	if( tagName && typeof tagName == 'object' )
-		return _tmpl.link_ship(
+		return _tmpl.textlink_ship(
 					ship,
 					tagName['tagName'] || null,
 					tagName['returnHTML'] || null
@@ -18,11 +18,13 @@ _tmpl.textlink_ship = function( ship, tagName, returnHTML ){
 	}else{
 		var shipId = ship['id']
 	}
+	
+	var shipType = ship.getType()
 
 	return _tmpl.export(
 			'<' + tagName + ' href="?infos=ship&id=' + shipId + '" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">'
-				+ (ship['type'] ? '[' + _g['data']['ship_types'][ship['type']]['full_zh'] + '] ' : '' )
-				+ _g.getName( ship['name'], '・' )
+				+ (shipType ? '[' + shipType + '] ' : '' )
+				+ ship.getName(_g.joint)
 			+ '</' + tagName + '>',
 			returnHTML
 		)

@@ -6,6 +6,17 @@
     position:	relative;
     .transition-property(~"opacity, background-position");
     background:	linear-gradient(to bottom, transparent, rgba(255, 255, 255, .35)) repeat-x 0 50px;
+    &:before{
+        content:	'';
+        position:	absolute !important;
+        .bottom(-7);
+        left:		0;
+        width:		100%;
+        .height(6);
+        .enable-transition();
+        .transition-property(~"background-position");
+        background:	linear-gradient(to top, transparent, rgba(255, 255, 255, .175)) repeat-x 0 -6px;
+    }
     &:hover{
         opacity:	1;
         background-position:	0 25px;
@@ -18,4 +29,7 @@
 .tab-on(){
     opacity:	1;
     background-position:	0 0;
+    &:before{
+        background-position:	0 0;
+    }
 }

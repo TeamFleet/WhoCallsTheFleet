@@ -94,9 +94,9 @@ _tablelist.prototype.sort_default_order_by_stat = {}
 					//.appendTo( this.dom.tbody )
 					.insertAfter( self._ships_last_item )
 			,max_carry = 0
-			,name = ship_data['name']['zh_cn']
+			,name = ship_data['name'][_g.lang]
 					+ (ship_data['name']['suffix']
-						? '<small>' + _g.data.ship_namesuffix[ship_data['name']['suffix']]['zh_cn'] + '</small>'
+						? '<small>' + _g.data.ship_namesuffix[ship_data['name']['suffix']][_g.lang] + '</small>'
 						: '')
 			,checkbox = $('<input type="checkbox" class="compare"/>')
 							.prop('disabled', donotcompare)
@@ -114,7 +114,7 @@ _tablelist.prototype.sort_default_order_by_stat = {}
 		self.trIndex++
 
 		self._ships_header_checkbox[header_index].data(
-				'ships', 
+				'ships',
 				self._ships_header_checkbox[header_index].data('ships').add( tr )
 			)
 		tr.data('checkbox', checkbox)
@@ -262,7 +262,7 @@ _tablelist.prototype.sort_default_order_by_stat = {}
 					}
 
 					var checkbox_id = '_input_g' + parseInt(_g.inputIndex)
-					self._ships_last_item = 
+					self._ships_last_item =
 							$('<tr class="typetitle" data-trindex="'+self.trIndex+'">'
 								+ '<th colspan="' + (self._ships_columns.length + 1) + '">'
 								+ '<label for="' + checkbox_id + '">'
@@ -576,7 +576,7 @@ _tablelist.prototype.sort_default_order_by_stat = {}
 		for( var i in self._equipments_columns ){
 			switch( self._equipments_columns[i][1] ){
 				case ' ':
-					$('<th/>').html(equipment_data['name']['zh_cn']).appendTo(tr)
+					$('<th/>').html(equipment_data.getName()).appendTo(tr)
 					break;
 				case 'range':
 					$('<td data-stat="range" data-value="' + equipment_data['stat']['range'] + '"/>')
@@ -637,32 +637,6 @@ _tablelist.prototype.sort_default_order_by_stat = {}
 	_tablelist.prototype._equipments_init = function(){
 		var self = this
 
-		// 根据装备大类和类型排序整理装备ID
-			if( !_g.data.item_id_by_type ){
-				_g.data.item_id_by_type = []
-				_g.item_type_order = []
-				var type_by_collection = {}
-					,type_order_map = {}
-				// 遍历大类
-					for(var i in _g.data.item_type_collections){
-						for(var j in _g.data.item_type_collections[i]['types']){
-							type_by_collection[ _g.data.item_type_collections[i]['types'][j] ] = i
-							_g.item_type_order.push( _g.data.item_type_collections[i]['types'][j] )
-							type_order_map[ _g.data.item_type_collections[i]['types'][j] ] = _g.item_type_order.length - 1
-						}
-					}
-				// 遍历装备数据
-					for(var i in _g.data.items){
-						var order = type_order_map[ _g.data.items[i]['type'] ]
-						if( !_g.data.item_id_by_type[order] )
-							_g.data.item_id_by_type[order] = {
-								'collection': type_by_collection[_g.data.items[i]['type']],
-								'equipments': []
-							}
-						_g.data.item_id_by_type[order]['equipments'].push( _g.data.items[i]['id'] )
-					}
-			}
-
 		// 标记全局载入状态
 			_frame.app_main.loading.push('tablelist_'+this._index)
 			_frame.app_main.is_loaded = false
@@ -684,7 +658,7 @@ _tablelist.prototype.sort_default_order_by_stat = {}
 					.prependTo( this.dom.container )
 				$('<label class="tab container" for="'+radio_id+'" data-equipmentcollection="'+i+'"/>')
 					.html(
-						'<i></i><em></em>'
+						'<i></i>'
 						+ '<span>' + _g.data.item_type_collections[i]['name']['zh_cn'].replace(/\&/g, '<br/>') + '</span>'
 					)
 					.appendTo( self.dom.filters )

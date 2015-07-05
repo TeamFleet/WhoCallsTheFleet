@@ -35,14 +35,14 @@
 			.font-size(24)
 		}
 
-		.stats [class^="stat-"], .stats>.stat span>small{
+		.stats [class^="stat-"], .stats>.stat span>small, .indicator{
 			.padding-left(22);
 			font-weight:lighter;
+			position:	relative;
 			&:before{
 				content:	'';
 				position:	absolute;
 				left:		0;
-				.top( (26 - 18) / 2 - 1 );
 				.width(18);
 				.height(18);
 				background:	~"url(@{folder_images}/stats.png) no-repeat 0 0";
@@ -96,11 +96,38 @@
 				background-position:	0 unit( (0 - 18 * 15), px );
 			}
 		}
+		.stats [class^="stat-"], .stats>.stat span>small{
+			&:before{
+				//.top( (26 - 18) / 2 - 1 );
+				.top( (18 - 18) / 2 - 1 );
+			}
+		}
+		.indicator{
+			&:before{
+				border-radius:	50%;
+				text-align:		center;
+				.line-height(18);
+			}
+			&.true{
+				&:before{
+					background:		#aaa;
+				}
+			}
+			&.false{
+				color:		fade(#aaa, 75%) !important;
+				&:before{
+					background:		fade(#aaa, 45%);
+					//content:		'×';
+					//font-family:	'Gothic';
+					.font-size(18);
+				}
+			}
+		}
 
 		&>div{
 			width:		100%;
 			&.title{
-				small{
+				&>small{
 					display:	block;
 					.font-size(16);
 					.line-height(18);
@@ -122,6 +149,14 @@
 						top:		-0.1em;
 						min-width:	2.7em;
 					}
+					small{
+						&+small{
+							margin-left:	1.5em;
+						}
+					}
+					&~small{
+						.margin-top(10);
+					}
 				}
 			}
 			&.stats{
@@ -135,29 +170,6 @@
 						position:	relative;
 						overflow:	visible;
 						vertical-align: top;
-						&>small{
-							&.indicator{
-								&:before{
-									border-radius:	50%;
-									text-align:		center;
-									.line-height(18);
-								}
-								&.true{
-									&:before{
-										background:		#aaa;
-									}
-								}
-								&.false{
-									color:		fade(#aaa, 65%);
-									&:before{
-										background:		fade(#aaa, 35%);
-										//content:		'×';
-										//font-family:	'Gothic';
-										.font-size(18);
-									}
-								}
-							}
-						}
 						&>em{
 							font-style:	normal;
 							.padding-left(8);
@@ -185,7 +197,7 @@
 
 			&>div{
 				&.title{
-					small{
+					&>small{
 						.font-size(14);
 						.line-height(16);
 						.padding-left(1);

@@ -351,8 +351,11 @@ var _updater = {
 		
 		// 错误处理
 			.catch(function (err) {
-				_g.error(err)
 				_g.log('自动更新失败')
+				if( err == '数据包目录不存在, 不进行自动更新' )
+					console.warn(err)
+				else
+					_g.error(err)
 				if( _updater.update_indicator && _updater.update_indicator.length )
 					_updater.update_indicator.remove()
 			})

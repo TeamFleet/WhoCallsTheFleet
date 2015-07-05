@@ -459,17 +459,6 @@
 				span{
 					text-align:	left;
 				}
-				&>em{
-					//content:	'';
-					position:	absolute !important;
-					.bottom(-7);
-					left:		0;
-					width:		100%;
-					.height(6);
-					//.enable-transition();
-					.transition-property(~"background-position");
-					background:	linear-gradient(to top, transparent, rgba(255, 255, 255, .175)) repeat-x 0 -6px;
-				}
 				&+.tab{
 					.margin-left(10);
 					@media all and (max-width: 800px ){
@@ -590,6 +579,7 @@
 								background-color:	transparent !important;
 								background-repeat:	no-repeat;
 								background-image:	linear-gradient(to right, transparent 10px, rgba(0, 0, 0, .35) ~"calc(100% - 30px)", transparent);
+								.transition-property(~"background, color, opacity");
 								input[type="checkbox"].compare{
 									position:	absolute;
 									.left(-15);
@@ -626,6 +616,9 @@
 							tbody tr[data-shipid]:hover{
 								background-size:	100% 100%;
 								//background:	rgba(0, 0, 0, .35);
+							}
+							tbody tr[data-shipid]:active{
+								opacity:	.5;
 							}
 						}
 					} // table
@@ -807,9 +800,6 @@
 			&>input[type="radio"][value="@{i}"]:checked{
 				&~.options>.filters>label[data-equipmentcollection="@{i}"]{
 					.tab-on();
-					&>em{
-						background-position:	0 0;
-					}
 				}
 				&~.fixed-table-container>.fixed-table-container-inner>table tbody tr[data-equipmentcollection="@{i}"]{
 					display:	table-row;

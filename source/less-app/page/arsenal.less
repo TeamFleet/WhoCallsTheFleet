@@ -1,0 +1,455 @@
+#layout>main>.page[page="arsenal"]{
+	background:	hsla(100, 20%, 18%, .70);
+
+	//display:	flex;
+	//flex-flow:	column nowrap;
+
+	&>input[type="radio"]{
+		display:	none;
+		.loop(@n, @i: 1) when (@i =< @n) {
+			&#arsenal_headtab-@{i}:checked{
+				&~.tabs .akashi span{
+					background-position:	0 unit( (@i - 1) * -77, px );
+				}
+				&~.tabs label[for="arsenal_headtab-@{i}"]{
+					.tab-on();
+				}
+				&~.main>.body-@{i}{
+					display:	block;
+				}
+			}
+			.loop(@n, (@i + 1))
+		}
+		.loop(2);
+	}
+
+	&>.tabs, &>.main{
+		.main-sizing-padding();
+	}
+
+	&>.tabs{
+		//flex:	none;
+		.height(59);
+		.padding-bottom(9);
+		@theader-background:	linear-gradient(
+									to bottom,
+									rgba(255, 255, 255, .35) 1px,
+									fade(#e6e6e6, 25%) 1px,
+									fade(#e6e6e6, 25%) ~"calc(100% - 1px)",
+									rgba(255, 255, 255, .35)  ~"calc(100% - 1px)"
+								);
+		background:	@theader-background no-repeat 0 100%;
+		background-size:	100% 9px;
+
+		label{
+			.line-height(50);
+			.font-size(18);
+			padding:	0 1em;
+		}
+
+		.akashi{
+			.width(165);
+			.height(50);
+			overflow:	hidden;
+			display:	inline-block;
+			vertical-align: top;
+			span{
+				display:	block;
+				transform:	scale(0.649);
+				transform-origin:	0 0;
+				background:	~"url(@{folder_images}/akashi.png) no-repeat 0 0";
+				position:	relative;
+				.width(214);
+				.height(77);
+				&:before{
+				    content:	'';
+				    background: ~"url(@{folder_images}/akashi-eye.png) no-repeat 0 0";
+				    display:	block;
+				    position:	absolute;
+				    .width(55);
+				    .height(34);
+				    .top(19);
+				    .left(22);
+				    .animation(~"3s steps(1) infinite");
+					.animation-delay(3s);
+				}
+				.loop(@n, @i: 1) when (@i =< @n) {
+					&[animation="@{i}"]:before{
+						.animation-name(~"akashi-blink-@{i}");
+					}
+					.loop(@n, (@i + 1))
+				}
+				.loop(3);
+			}
+		}
+	}
+
+	&>.main{
+		//flex:		1 0 auto;
+		height:		~"calc(100% - 61px)";
+		margin-top:	1px;
+		overflow-y:	auto;
+		&>.body{
+			display:	none;
+			.fadein();
+			padding-bottom:	20px;
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+#layout>main>.page[page="arsenal"]>.main>.body-weekday{
+	.padding-left(110);
+	margin-right:	-10px;
+
+	&>input[type="radio"]{
+		display:	none;
+		.loop(@n, @i: 0) when (@i =< @n) {
+			&#arsenal_weekday-@{i}:checked{
+				&~.weekday label[for="arsenal_weekday-@{i}"]{
+					background-color:	hsla(100, 100%, 35%, .5);
+					color:		hsl(100, 100%, 83%);
+				}
+				&~.content-@{i}{
+					display:	block;
+				}
+			}
+			.loop(@n, (@i + 1))
+		}
+		.loop(6);
+	}
+
+	&>input[type="checkbox"]{
+		display:	none;
+	}
+
+	&>.weekday{
+		position:	absolute;
+		.top(70);
+		.margin-left(-110);
+		.width(100);
+		.user-select(none);
+		&>div{
+			position:	relative;
+			width:		100%;
+			border-radius:	5px;
+			margin-bottom:	10px;
+			&:before{
+				content:	'';
+				position:	absolute;
+				z-index:	2;
+				display:	block;
+				top:		0;
+				right:		0;
+				bottom:		0;
+				left:		0;
+				.border(1, solid, rgba(255, 255, 255, .1));
+				background:	rgba(255, 255, 255, .1);
+				border-radius:	5px;
+				pointer-events:	none;
+			}
+			&>span, &>label{
+				display:	block;
+				text-align:	center;
+				.line-height(30);
+				.font-size(14);
+				&:first-child{
+					border-radius:	5px 5px 0 0
+				}
+				&:last-child{
+					border-radius: 0 0 5px 5px;
+				}
+			}
+			&>span{
+				color:		rgba(255, 255, 255, .65);
+				background:	rgba(0, 0, 0, .5);
+				.border(1, solid, rgba(255, 255, 255, .2));
+				border-bottom:	0;
+			}
+			&>label{
+				color:		rgba(255, 255, 255, .65);
+				.transition-property(~"color, background-color");
+				&:hover{
+					background-color:	hsla(100, 100%, 35%, .25);
+					color:		hsl(100, 100%, 83%);
+				}
+			}
+		}
+		&>label, &>span{
+			display:	block;
+			line-height:1.7em;
+			font-size:	12px;
+			width:		100%;
+			text-align:	center;
+			color:		rgba(255, 255, 255, .45);
+			.transition-property(color);
+		}
+		&>label:before, &>span>b{
+			display:	inline-block;
+			width:		20px;
+			padding-right:	4px;
+			font-size:	16px;
+			line-height:inherit;
+			text-align:	center;
+			font-weight:normal;
+			vertical-align:	top;
+		}
+		&>span{
+			b{
+				color:		hsl(100, 54%, 56%);
+			}
+		}
+		&>label{
+			&:hover{
+				color:		rgba(255, 255, 255, .75);
+			}
+			&:before{
+				font-family:icons;
+				content:	@iconcode-checkbox-uncheck;
+			}
+		}
+	}
+
+	&>.content{
+		display:	none;
+		.fadein();
+		&>.flexgrid{
+			&>.unit{
+				flex:		1 0 490px;
+				margin-right:	10px;
+				&.improvement{
+					height:		75px;
+					padding-top:10px;
+					overflow:	hidden;
+					.transition-property(height);
+					&>span{
+						//display:	none;
+						opacity:	0;
+						.transition-property(opacity);
+					}
+				}
+			}
+		}
+	}
+
+	&>#arsenal_weekday-showmeterials:checked{
+		& ~ .weekday>label[for="arsenal_weekday-showmeterials"]:before{
+			content:	@iconcode-checkbox-checked;
+		}
+		& ~ .content>.flexgrid>.improvement.unit{
+			height:		175px;
+			overflow:	visible;
+			&>span{
+				//display:	block;
+				opacity:	1;
+				//.fadein();
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+#layout>main>.page[page="arsenal"]>.main>.body-all{
+	&>.improvement{
+		height:		100px;
+		border-bottom:	1px solid rgba(255, 255, 255, .1);
+		padding-top:	6px;
+		.transition-property(~"background, padding");
+		&>font{
+			margin-top:	0;
+		}
+		&>span{
+			.transition-property(bottom);
+			&>span{
+				padding-top:	1px;
+				padding-bottom:	1px;
+			}
+		}
+		@media all and (max-width: 1152px ){
+			height:		auto;
+			padding-top:10px !important;
+			padding-bottom:	15px;
+			&>span{
+				position:	relative;
+				width:		100%;
+				left:		auto;
+				bottom:		auto !important;
+				margin-top:	10px;
+			}
+		}
+		&:hover{
+			background:		rgba(0, 0, 0, .2);
+			padding-top:	2px;
+			&>span{
+				bottom:		10px;
+			}
+		}
+		&:last-of-type{
+			border-bottom:	0;
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+@keyframes akashi-blink-1{
+	0%{
+		background-position: 0 0
+	}
+	3%{
+		background-position: 0 -34px;
+	}
+	6%{
+		background-position: 0 -68px;
+	}
+	9%{
+		background-position: 0 -34px;
+	}
+	12%{
+		background-position: 0 0
+	}
+}
+@-webkit-keyframes akashi-blink-1{
+	0%{
+		background-position: 0 0
+	}
+	3%{
+		background-position: 0 -34px;
+	}
+	6%{
+		background-position: 0 -68px;
+	}
+	9%{
+		background-position: 0 -34px;
+	}
+	12%{
+		background-position: 0 0
+	}
+}
+
+@keyframes akashi-blink-2{
+	0%{
+		background-position: 0 0
+	}
+	3%{
+		background-position: 0 -34px;
+	}
+	6%{
+		background-position: 0 -68px;
+	}
+	9%{
+		background-position: 0 -34px;
+	}
+	12%{
+		background-position: 0 -68px;
+	}
+	15%{
+		background-position: 0 -34px;
+	}
+	18%{
+		background-position: 0 0
+	}
+}
+@-webkit-keyframes akashi-blink-2{
+	0%{
+		background-position: 0 0
+	}
+	3%{
+		background-position: 0 -34px;
+	}
+	6%{
+		background-position: 0 -68px;
+	}
+	9%{
+		background-position: 0 -34px;
+	}
+	12%{
+		background-position: 0 -68px;
+	}
+	15%{
+		background-position: 0 -34px;
+	}
+	18%{
+		background-position: 0 0
+	}
+}
+
+@keyframes akashi-blink-3{
+	0%{
+		background-position: 0 0
+	}
+	2%{
+		background-position: 0 -34px;
+	}
+	4%{
+		background-position: 0 -68px;
+	}
+	6%{
+		background-position: 0 -102px;
+	}
+	8%{
+		background-position: 0 -136px;
+	}
+	40%{
+		background-position: 0 -102px;
+	}
+	42%{
+		background-position: 0 -68px;
+	}
+	44%{
+		background-position: 0 -34px;
+	}
+	46%{
+		background-position: 0 0
+	}
+}
+@-webkit-keyframes akashi-blink-3{
+	0%{
+		background-position: 0 0
+	}
+	2%{
+		background-position: 0 -34px;
+	}
+	4%{
+		background-position: 0 -68px;
+	}
+	6%{
+		background-position: 0 -102px;
+	}
+	8%{
+		background-position: 0 -136px;
+	}
+	40%{
+		background-position: 0 -102px;
+	}
+	42%{
+		background-position: 0 -68px;
+	}
+	44%{
+		background-position: 0 -34px;
+	}
+	46%{
+		background-position: 0 0
+	}
+}

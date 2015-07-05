@@ -11,7 +11,7 @@
 	//.flexbox();
 	//.align-items(center);
 	.min-width(150);
-	.transition-property(background-size);
+	.transition-property(~"background-size, opacity");
 	.padding-right(40);
 	vertical-align: middle;
 	img{
@@ -42,5 +42,8 @@
 	}
 	&:hover{
 		background-size:	~"calc(100% - 10px)" 100%;
+	}
+	&:active{
+		opacity:	.5;
 	}
 }
