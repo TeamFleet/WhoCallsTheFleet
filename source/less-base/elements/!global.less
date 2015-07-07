@@ -1,0 +1,122 @@
+// Global/Base Elements
+html{
+	line-height:	(170% * 10 / @base_size);
+	cursor:			default;
+}
+
+body, button{
+	font-family:	@font_family_sans;
+	font-weight: 	300;
+}
+
+.none{
+	display:	none;
+}
+
+.none-visible{
+	display:	block;
+	z-index:	-1;
+	position:	absolute;
+	width:		0;
+	left:		0;
+	overflow:	hidden;
+	left:		-100%;
+	top:		-100%;
+}
+
+iframe{
+	border:		0;
+}
+
+table{
+	border-collapse:	collapse;
+	border-spacing:		0
+}
+table, td{
+	padding:	0;
+	border:		0 none
+}
+
+.container{
+	display:		inline-block;
+	text-align:		center !important;
+	vertical-align:	middle !important;
+	&>*{
+		position:		relative;
+		display:		inline-block !important;
+		max-width:		100% !important;
+		max-height:		100% !important;
+		vertical-align:	middle !important;
+		margin:			0 auto !important;
+		padding:		0 !important;
+		border:			0 !important;
+	}
+	//&>i, &:before{
+	&:after{
+		content:		"";
+		display:		inline-block;
+		vertical-align:	middle;
+		width:			0;
+		height:			100%;
+	}
+}
+
+button{
+	.appearance(none);
+	background:	none transparent;
+	border:		0;
+	padding:	0;
+	display:	inline-block;
+	text-align:	center;
+}
+
+[icon]:before{
+	font-family:	'icons';
+	content:		attr(icon);
+	speak:			none;
+	vertical-align:	text-middle;
+	//vertical-align:	middle;
+	opacity:		0.75;
+	display:		inline-block;
+	padding-right:	0.15em;
+	font-size:		0.9em;
+	font-weight:	lighter !important;
+	font-style:		normal !important;
+	min-width:		0.7em;
+}
+
+ul{
+	li{
+		margin-left:	2em;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+.debugbtns{
+	position:	fixed;
+	.top(5);
+	.right(5);
+	.font-size(12) !important;
+	padding:	0;
+	z-index:	(@z_modal + 1);
+	button{
+		line-height:	1.25em;
+		padding:		.25em .5em;
+		margin-left:	.5em;
+		color:			#fff;
+		background:		linear-gradient( to bottom, rgba(0,0,0,.35) 0%, rgba(0,0,0,.25) 100% );
+		.transition-property(background);
+		&:hover{
+			background-color:	rgba(0, 0, 0, .75);
+		}
+	}
+}

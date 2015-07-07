@@ -1,0 +1,117 @@
+﻿// Tooltip
+
+@tooltip_border_color:	#808080;
+
+
+#tip{
+	z-index:		@z_tip;
+	position:		absolute;
+	display:		none;
+	top:			-1000px;
+	left:			-1000px;
+	color:			#f2f2f2;
+	background:		#333;
+	background:		rgba(0, 0, 0, .85);
+	.border(2, solid, @tooltip_border_color);
+	line-height:	150%;
+	.font-size(14);
+	.padding(4, 6);
+	opacity:		0;
+	cursor:			default !important;
+	.transition-property(opacity);
+	.user-select(none);
+	pointer-events: none;
+	box-shadow:		0 unit((5 * @base_multiper),rem) unit((5 * @base_multiper),rem) rgba(0,0,0,0.35);
+
+	/*
+	&>.body{
+		display:	block;
+		position:	relative;
+		z-index:	1;
+		//overflow:	auto;
+		//max-width:	100%;
+		//max-height:	100%;
+	}
+	&>s.bluredbg{
+		display:	block;
+		position:	absolute;
+		z-index:	-2;
+		.top(-10);
+		.right(-10);
+		.bottom(-10);
+		.left(-10);
+		background:	~"no-repeat 50% 50% / cover";
+		background-attachment:	fixed;
+	}
+	&:after{
+		display:	block;
+		position:	absolute;
+		z-index:	-1;
+		content:	'';
+		top:		0;
+		right:		0;
+		bottom:		0;
+		left:		0;
+		background:	#333;
+		background:	rgba(0, 0, 0, .5);
+	}
+	*/
+
+	&.on{
+		opacity:	1;
+	}
+	&.show{
+		display:	block;
+		//&>s.bluredbg{
+			//-webkit-filter:	~"blur(10px)";
+			//-webkit-filter:	~"blur(5px)";
+		//}
+	}
+
+	&:before{
+		position:	absolute;
+		width:		0;
+		height:		0;
+		overflow:	hidden;
+		content:	"";
+		.border(5, solid, transparent);
+		//border:		5px solid transparent;
+		//border-width:.5rem;
+	}
+
+	&[data-tip-indicator-pos = bottom]:before{
+		@minus:	unit((4 * @base_multiper),rem);
+		border-top-color:	@tooltip_border_color;
+		left:				50%;
+		left:				~"-webkit-calc(50% - @{minus})";
+		left:				~"calc(50% - @{minus})";
+		.bottom(-10);
+	}
+	&[data-tip-indicator-pos = bottom]{
+		box-shadow:		0 unit((-5 * @base_multiper),rem) unit((5 * @base_multiper),rem) rgba(0,0,0,0.35);
+	}
+	&[data-tip-indicator-pos = top]:before{
+		@minus:	unit((4 * @base_multiper),rem);
+		border-bottom-color:@tooltip_border_color;
+		left:				50%;
+		left:				~"-webkit-calc(50% - @{minus})";
+		left:				~"calc(50% - @{minus})";
+		.top(-10);
+	}
+	&[data-tip-indicator-pos = left]:before{
+		@minus:	unit((4 * @base_multiper),rem);
+		border-right-color:	@tooltip_border_color;
+		top:				50%;
+		top:				~"-webkit-calc(50% - @{minus})";
+		top:				~"calc(50% - @{minus})";
+		.left(-10);
+	}
+	&[data-tip-indicator-pos = right]:before{
+		@minus:	unit((4 * @base_multiper),rem);
+		border-left-color:	@tooltip_border_color;
+		top:				50%;
+		top:				~"-webkit-calc(50% - @{minus})";
+		top:				~"calc(50% - @{minus})";
+		.right(-10);
+	}
+}

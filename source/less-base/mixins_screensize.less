@@ -1,0 +1,71 @@
+.screen_tablet2( @rules ){
+	@media screen and ( max-width: (@screenwidth_tablet2) ) {
+		&{
+			@rules();
+		}
+	}
+}
+.screen_tablet( @rules ){
+	@media screen and ( max-width: (@screenwidth_tablet) ) {
+		&{
+			@rules();
+		}
+	}
+}
+.screen_smartphone( @rules ){
+	@media screen and ( max-width: (@screenwidth_smartphone) ) {
+		&{
+			@rules();
+		}
+	}
+}
+.screen_iphone( @rules ){
+	@media screen and ( max-width: (@screenwidth_iphone) ) {
+		&{
+			@rules();
+		}
+	}
+}
+
+.screen_large( @rules ){
+	@media screen and ( min-width: (@screenwidth_largescreen2) ) {
+		&{
+			@rules();
+		}
+	}
+}
+
+.screen_largeheight( @rules ){
+	@media screen and ( min-height: (@largescreen_height_2) ) {
+		&{
+			@rules();
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+.window-noframe( @rules ){
+	html.window-noframe &{
+		@rules();
+	}
+}
+
+.window-blured( @rules ){
+	html.window-blured &{
+		@rules();
+	}
+}
+
+.window-maxmize( @rules ){
+	html.window-maxmize &{
+		@rules();
+	}
+}
