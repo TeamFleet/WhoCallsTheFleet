@@ -1,11 +1,12 @@
 class Equipment extends ITEM{
 	constructor(data) {
 		$.extend(true, this, data)
+		super()
 	}
 	
 	getName(small_brackets, language){
 		language = language || _g.lang
-		var result = ITEM.prototype.getName.call(this, language)
+		var result = ITEM.getName.call(this, language)
 			,small_brackets_tag = small_brackets && !small_brackets === true ? small_brackets : 'small'
 		return small_brackets
 				? result.replace(/（([^（^）]+)）/g, '<'+small_brackets_tag+'>($1)</'+small_brackets_tag+'>')

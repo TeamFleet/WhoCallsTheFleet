@@ -915,7 +915,7 @@ class ITEM {
 	constructor() {
 	}
 	
-	getName(language){
+	static getName(language){
 		language = language || _g.lang
 		return this['name']
 				? (this['name'][language] || this['name'])
@@ -926,6 +926,7 @@ class ITEM {
 class Ship extends ITEM{
 	constructor(data){
 		$.extend(true, this, data)
+		super()
 	}
 	
 	getName(joint, language){
@@ -954,11 +955,12 @@ class Ship extends ITEM{
 class Equipment extends ITEM{
 	constructor(data) {
 		$.extend(true, this, data)
+		super()
 	}
 	
 	getName(small_brackets, language){
 		language = language || _g.lang
-		var result = ITEM.prototype.getName.call(this, language)
+		var result = ITEM.getName.call(this, language)
 			,small_brackets_tag = small_brackets && !small_brackets === true ? small_brackets : 'small'
 		return small_brackets
 				? result.replace(/（([^（^）]+)）/g, '<'+small_brackets_tag+'>($1)</'+small_brackets_tag+'>')
