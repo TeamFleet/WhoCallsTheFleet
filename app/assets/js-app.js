@@ -914,8 +914,8 @@ var ga = {
 class ITEM {
 	constructor() {
 	}
-	
-	static getName(language){
+
+	getName(language){
 		language = language || _g.lang
 		return this['name']
 				? (this['name'][language] || this['name'])
@@ -925,8 +925,8 @@ class ITEM {
 
 class Ship extends ITEM{
 	constructor(data){
-		$.extend(true, this, data)
 		super()
+		$.extend(true, this, data)
 	}
 	
 	getName(joint, language){
@@ -954,13 +954,13 @@ class Ship extends ITEM{
 
 class Equipment extends ITEM{
 	constructor(data) {
-		$.extend(true, this, data)
 		super()
+		$.extend(true, this, data)
 	}
 	
 	getName(small_brackets, language){
 		language = language || _g.lang
-		var result = ITEM.getName.call(this, language)
+		var result = ITEM.prototype.getName.call(this, language)
 			,small_brackets_tag = small_brackets && !small_brackets === true ? small_brackets : 'small'
 		return small_brackets
 				? result.replace(/（([^（^）]+)）/g, '<'+small_brackets_tag+'>($1)</'+small_brackets_tag+'>')
@@ -976,6 +976,33 @@ class Equipment extends ITEM{
 
 	getIconId(){
 		return _g.data.item_types[this['type']]['icon']
+	}
+	
+	getCaliber(){
+		let name = this.getName(false, 'ja_jp')
+			,caliber = parseFloat(name)
+		
+		return caliber
+	}
+	
+	getPower(){
+		return this.stat[
+			_g.data['item_types'][this['type']]['main_attribute'] || 'fire'
+		]
+		/*
+		switch( this['type'] ){
+			// Guns
+				case 1:
+				case 2:
+				case 3:
+				case 4:
+				case 5:
+				case 6:
+				case 7:
+				case 8:
+				case 9:
+		}
+		*/
 	}
 }
 
@@ -1794,9 +1821,25 @@ _frame.app_main = {
 						if( !_g.data.item_id_by_type[order] )
 							_g.data.item_id_by_type[order] = {
 								'collection': type_by_collection[_g.data.items[i]['type']],
-								'equipments': []
+								'equipments': [],
+								'names': []
 							}
 						_g.data.item_id_by_type[order]['equipments'].push( _g.data.items[i]['id'] )
+						_g.data.item_id_by_type[order]['names'].push( _g.data.items[i].getName() )
+					}
+				// 排序
+					for(let i in _g.data.item_id_by_type){
+						_g.data.item_id_by_type[i]['equipments'].sort(function(a, b){
+							let diff = _g.data.items[a].getPower() - _g.data.items[b].getPower()
+							if( diff === 0 ){
+								let diff_aa = _g.data.items[a]['stat']['aa'] - _g.data.items[b]['stat']['aa']
+								if( diff_aa === 0 ){
+									return _g.data.items[a]['stat']['hit'] - _g.data.items[b]['stat']['hit']
+								}
+								return diff_aa
+							}
+							return diff
+						})
 					}
 				setTimeout(function(){
 					deferred.resolve()

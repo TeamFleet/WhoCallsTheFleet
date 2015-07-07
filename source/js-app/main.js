@@ -813,9 +813,25 @@ _frame.app_main = {
 						if( !_g.data.item_id_by_type[order] )
 							_g.data.item_id_by_type[order] = {
 								'collection': type_by_collection[_g.data.items[i]['type']],
-								'equipments': []
+								'equipments': [],
+								'names': []
 							}
 						_g.data.item_id_by_type[order]['equipments'].push( _g.data.items[i]['id'] )
+						_g.data.item_id_by_type[order]['names'].push( _g.data.items[i].getName() )
+					}
+				// 排序
+					for(let i in _g.data.item_id_by_type){
+						_g.data.item_id_by_type[i]['equipments'].sort(function(a, b){
+							let diff = _g.data.items[a].getPower() - _g.data.items[b].getPower()
+							if( diff === 0 ){
+								let diff_aa = _g.data.items[a]['stat']['aa'] - _g.data.items[b]['stat']['aa']
+								if( diff_aa === 0 ){
+									return _g.data.items[a]['stat']['hit'] - _g.data.items[b]['stat']['hit']
+								}
+								return diff_aa
+							}
+							return diff
+						})
 					}
 				setTimeout(function(){
 					deferred.resolve()
