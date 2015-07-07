@@ -6,6 +6,12 @@
 #tip{
 	@color1:	#e8dfc2;
 	@color2:	#6b6836;
+	.font-size(14);
+	.max-width(330);
+	&>.body{
+		.padding(8, 10);
+	}
+	/*
 	//background:		rgba(0, 0, 0, .75);
 	//background:		fade( darken(@color2, 20%), 85% );
 	background:		hsla( 51, 0%, 15%, .9 );
@@ -14,11 +20,8 @@
 	border-image:	linear-gradient(to bottom left, @color1, @color2);
 	border-image-slice: 1;
 	line-height:	150%;
-	.font-size(14);
-	.padding(8, 10);
 	box-shadow:		none;
 	border-radius:	5px;
-	.max-width(330);
 
 	&[data-tip-indicator-pos = bottom]:before{
 		border-top-color:	#858153;
@@ -34,7 +37,7 @@
 	}
 	&[data-tip-indicator-pos = right]:before{
 		border-left-color:	#e8dfc2;
-	}
+	}*/
 
 
 

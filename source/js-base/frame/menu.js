@@ -133,13 +133,20 @@ _frame.menu = {
 		
 		// 创建顶级DOM，用于承载各menu
 			this.dom.container = $('<div class="menus"/>')
-				.on('click', function(){
-					_frame.menu.timeout_hideall = setTimeout(function(){
-						for(var i in _frame.menu.menus){
-							if( _frame.menu.menus[i].hide )
-								_frame.menu.menus[i].hide()
-						}
-					}, 1)
+				.on({
+					'click': function(e, ms){
+						_frame.menu.timeout_hideall = setTimeout(function(){
+							for(var i in _frame.menu.menus){
+								if( _frame.menu.menus[i].hide )
+									_frame.menu.menus[i].hide()
+							}
+							_frame.menu.timeout_hideall = null
+						}, ms || 1)
+					}/*,
+					'mousemove': function(){
+						if( !_frame.menu.timeout_hideall )
+							_frame.menu.dom.container.trigger('click', [500])
+					}*/
 				})
 				.appendTo($body)
 

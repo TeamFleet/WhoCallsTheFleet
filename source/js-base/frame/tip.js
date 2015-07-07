@@ -39,13 +39,13 @@ _p.tip = {
 										'data-tip-indicator-offset-x':	'',
 										'data-tip-indicator-offset-y':	''
 									})
-								//_p.tip.dom_bluredbg.css('background-image', '')
+								_p.tip.dom_bluredbg.css('background-image', '')
 							}
 						})
 						.appendTo($body)
 
-		//_p.tip.dom_body = $('<div class="body"/>').appendTo(_p.tip.dom)
-		//_p.tip.dom_bluredbg = $('<s class="bluredbg"/>').appendTo(_p.tip.dom)
+		_p.tip.dom_body = $('<div class="body"/>').appendTo(_p.tip.dom)
+		_p.tip.dom_bluredbg = $('<div/>').appendTo($('<div class="bluredbg"/>').appendTo(_p.tip.dom))
 
 		// 注册ESC热键
 		//_frame.global.esc_register(function(){
@@ -85,14 +85,12 @@ _p.tip = {
 		_p.tip.init_global();
 
 		if( !_p.tip.dom.hasClass('show') ){
-			/*
 			node.win.capturePage(function(datauri){
 				_p.tip.dom_bluredbg.css(
 					'background-image',
 					'url('+datauri+')'
 				)
 			}, 'jpg', 'datauri')
-			*/
 			_p.tip.dom.addClass('show')
 		}
 
@@ -106,19 +104,19 @@ _p.tip = {
 		var hashcode = cont.hashCode()
 
 		if( _p.tip.curContent != hashcode ){
-			/*
 			_p.tip.dom.css({
 					top:	'-1000px',
 					left:	'-1000px'
 				})
 			_p.tip.dom_body.html(cont)
 			_p.initDOM( _p.tip.dom_body )
-			*/
+			/*
 			_p.tip.dom.css({
 					top:	'-1000px',
 					left:	'-1000px'
 				}).html(cont)
 			_p.initDOM( _p.tip.dom )
+			*/
 
 			_p.tip.curContent = hashcode
 		}
