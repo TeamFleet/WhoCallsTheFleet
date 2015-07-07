@@ -1,0 +1,17 @@
+.tabview{
+	&>input.tabview-switch[type="radio"]{
+		display:	none;
+		.checked_class(@n, @i: 1) when (@i =< @n) {
+			//&:nth-child(@{n}):checked~.tabview-content:nth-child(@{n}){
+			&[value="@{i}"]:checked~section:nth-of-type(@{i}){
+				display:	block;
+			}
+			.checked_class(@n, (@i + 1))
+		}
+		.checked_class(50);
+	}
+	&>section{
+		display:	none;
+		.fadein()
+	}
+}
