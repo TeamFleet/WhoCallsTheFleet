@@ -1,7 +1,7 @@
 class Ship extends ITEM{
 	constructor(data){
-		$.extend(true, this, data)
 		super()
+		$.extend(true, this, data)
 	}
 	
 	getName(joint, language){
