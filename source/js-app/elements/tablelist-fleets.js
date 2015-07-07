@@ -261,8 +261,20 @@
 
 // [操作] 新建配置
 	_tablelist.prototype._fleets_action_new = function(){
-		_frame.infos.show('[[FLEET::__NEW__]]')
-		this._fleets_menu_new.hide()
+		var self = this
+		//_frame.infos.show('[[FLEET::__NEW__]]')
+
+		_db.fleets.insert( _tablelist.prototype._fleets_new_data(), function(err, newDoc){
+			if(err){
+				_g.error(err)
+			}else{
+				if( _frame.app_main.cur_page == 'fleets' ){
+					_frame.infos.show('[[FLEET::' + newDoc['_id'] + ']]')
+					self._fleets_menu_new.hide()
+					//self.init(newDoc)
+				}
+			}
+		})
 	}
 
 

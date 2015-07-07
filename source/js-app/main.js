@@ -314,7 +314,7 @@ _frame.app_main = {
 			this.load_page_func( page )
 			//_g.uriHash('page', page)
 		},
-		load_page_func: function( page ){
+		load_page_func: function( page, callback_modeSelection ){
 			_g.log( 'PREPARE LOADING: ' + page )
 
 			if( _frame.app_main.cur_page == page || !page )
@@ -341,17 +341,19 @@ _frame.app_main = {
 
 			_frame.dom.navs[page].addClass('on')
 
-			if( _frame.dom.layout.hasClass('ready') )
-				_frame.app_main.change_bgimg()
+			if( !callback_modeSelection ){
+				if( _frame.dom.layout.hasClass('ready') )
+					_frame.app_main.change_bgimg()
+
+				if( page != 'about' )
+					Lockr.set('last_page', page)
+	
+				ga.counter(
+					location.search
+				)
+			}
 
 			_frame.app_main.cur_page = page
-
-			if( page != 'about' )
-				Lockr.set('last_page', page)
-
-			ga.counter(
-				location.search
-			)
 
 			_g.log( 'LOADED: ' + page )
 		},
