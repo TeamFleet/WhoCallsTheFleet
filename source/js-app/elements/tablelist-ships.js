@@ -337,17 +337,24 @@ _tablelist.prototype._ships_compare_continue = function(){
 }
 
 _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
+	if( this.dom.filter_container.attr('viewtype') == 'compare' )
+		return false
+
 	this._ships_contextmenu_curid = shipId || $el.data('shipid')
+	this._ships_contextmenu_curel = $el
 
 	let self = this
-		,items = [
+
+	if( !self._ships_contextmenu )
+		self._ships_contextmenu = new _menu({
+			'items': [
 				$('<menuitem/>').html('查看资料')
 					.on({
 						'click': function(e){
 							if( _frame.app_main.is_mode_selection() )
 								_frame.app_main.mode_selection_callback(self._ships_contextmenu_curid)
 							else
-								$el.trigger('click')
+								self._ships_contextmenu_curel.trigger('click')
 						},
 						'show': function(){
 							if( _frame.app_main.is_mode_selection() )
@@ -423,14 +430,9 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 					}
 				})
 			]
-
-	if( !self._ships_contextmenu )
-		self._ships_contextmenu = new _menu({
-			'items': items
 		})
-							
-	if( self.dom.filter_container.attr('viewtype') != 'compare' )
-		self._ships_contextmenu.show($el)
+
+	self._ships_contextmenu.show($el)
 }
 
 
