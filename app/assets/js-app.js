@@ -936,7 +936,8 @@ class Ship extends ITEM{
 				this['name'][language] || this['name']['ja_jp']
 				) + (
 				this['name'].suffix ? (
-						joint + (
+						(joint === true ? _g.joint : joint)
+						+ (
 								_g.data['ship_namesuffix'][this['name'].suffix][language]
 								|| _g.data['ship_namesuffix'][this['name'].suffix]['ja_jp']
 							)
@@ -952,7 +953,9 @@ class Ship extends ITEM{
 	}
 	
 	getSeriesData(){
-		
+		return this['series']
+				? _g['data']['ship_series'][this['series']]['ships']
+				: []
 	}
 }
 
@@ -4508,6 +4511,10 @@ _frame.app_main.is_mode_selection = function(){
 	return $html.hasClass('mode-selection')
 }
 
+_frame.app_main.mode_selection_callback = function(){
+	
+}
+
 if( typeof _p.tip != 'undefined' ){
 
 _p.tip.filters.push( function(cont){
@@ -5884,17 +5891,15 @@ _tablelist.prototype._ships_compare_continue = function(){
 }
 
 _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
-	let self = this
-	self._ships_contextmenu_curid = shipId || $el.data('shipid')
+	this._ships_contextmenu_curid = shipId || $el.data('shipid')
 
-	if( !self._ships_contextmenu )
-		self._ships_contextmenu = new _menu({
-			'items': [
+	let self = this
+		,items = [
 				$('<menuitem/>').html('查看资料')
 					.on({
 						'click': function(e){
 							if( _frame.app_main.is_mode_selection() )
-								_g.log('selected: ship #' + self._ships_contextmenu_curid)
+								_frame.app_main.mode_selection_callback(self._ships_contextmenu_curid)
 							else
 								$el.trigger('click')
 						},
@@ -5910,6 +5915,7 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 						'click': function(e){
 							self._ships_checkbox[self._ships_contextmenu_curid]
 								.prop('checked', !self._ships_checkbox[self._ships_contextmenu_curid].prop('checked'))
+								.trigger('change')
 						},
 						'show': function(e){
 							if( !self._ships_contextmenu_curid )
@@ -5921,11 +5927,60 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 								$(this).html('将该舰娘加入对比')
 						}
 					}),
-					
-				'separator',
 				
-				$('<menuitem/>').html('SERIES #1')
+				$('<div/>').on('show', function(){
+					var $div = $(this).empty()
+					if( self._ships_contextmenu_curid ){
+						var series = _g['data']['ships'][self._ships_contextmenu_curid].getSeriesData() || []
+						for(let i in series){
+							if( i == '0' )
+								$div.append($('<hr/>'))
+							$div.append(
+								$('<div class="item"/>')
+									.html('<span>' + _g['data']['ships'][series[i]['id']].getName(true) + '</span>')
+									.append(
+										$('<div class="group"/>')
+											.append(
+												$('<menuitem data-infos="[[SHIP::'+series[i]['id']+']]"/>')
+													.html(
+														_frame.app_main.is_mode_selection()
+															? '选择'
+															: '查看资料'
+													)
+													.on({
+														'click': function(e){
+															if( _frame.app_main.is_mode_selection() ){
+																_frame.app_main.mode_selection_callback(series[i]['id'])
+																e.preventDefault()
+															}
+														}
+													})
+											)
+											.append(
+												$('<menuitem/>')
+													.html(
+														self._ships_checkbox[series[i]['id']].prop('checked')
+															? '取消对比'
+															: '加入对比'
+													)
+													.on({
+														'click': function(e){
+															self._ships_checkbox[series[i]['id']]
+																.prop('checked', !self._ships_checkbox[series[i]['id']].prop('checked'))
+																.trigger('change')
+														}
+													})
+											)
+									)
+							)
+						}
+					}
+				})
 			]
+
+	if( !self._ships_contextmenu )
+		self._ships_contextmenu = new _menu({
+			'items': items
 		})
 							
 	if( self.dom.filter_container.attr('viewtype') != 'compare' )

@@ -95,8 +95,8 @@ _menu.prototype.show = function( targetEl ){
 			this.dom.menu.addClass('on')
 		}
 	
-	// 触发所有menuitem的onshow事件
-		this.dom.body.find('menuitem, .menuitem').trigger('show')
+	// 触发所有子元素的onshow事件
+		this.dom.body.children().trigger('show')
 }
 
 _menu.prototype.hide = function(){

@@ -11,7 +11,8 @@ class Ship extends ITEM{
 				this['name'][language] || this['name']['ja_jp']
 				) + (
 				this['name'].suffix ? (
-						joint + (
+						(joint === true ? _g.joint : joint)
+						+ (
 								_g.data['ship_namesuffix'][this['name'].suffix][language]
 								|| _g.data['ship_namesuffix'][this['name'].suffix]['ja_jp']
 							)
@@ -27,6 +28,8 @@ class Ship extends ITEM{
 	}
 	
 	getSeriesData(){
-		
+		return this['series']
+				? _g['data']['ship_series'][this['series']]['ships']
+				: []
 	}
 }
