@@ -1946,6 +1946,10 @@ _frame.app_main = {
 
 		// 部分全局事件委托
 			.then(function(){
+				$body.on('click.pagechange', 'a[href^="?page="]', function(e){
+					e.preventDefault()
+					_frame.app_main.load_page($(this).attr('href').substr('?page='.length))
+				})
 				/*
 					$html.on('click.openShipModal', '[data-shipid][modal="true"]', function(e){
 						if( !(e.target.tagName.toLowerCase() == 'input' && e.target.className == 'compare') ){
