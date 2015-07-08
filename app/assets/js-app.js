@@ -4862,7 +4862,7 @@ _tablelist.prototype.sort_default_order_by_stat = {}
 						var k = 0
 						while(k < self.flexgrid_empty_count){
 							var _index = self.trIndex + _g.data.ship_id_by_type[i].length + k
-							$('<tr class="empty" data-trindex="'+_index+'"/>').appendTo(self.dom.tbody)
+							$('<tr class="empty" data-trindex="'+_index+'" data-shipid/>').appendTo(self.dom.tbody)
 							k++
 						}
 
