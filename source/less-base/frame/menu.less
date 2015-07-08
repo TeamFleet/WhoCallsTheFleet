@@ -68,7 +68,7 @@ body > .menus{
 							inset 0 0 10px rgba(255, 255, 255, .5);
 			}
 			*/
-			menuitem, .menuitem{
+			menuitem, .menuitem, .item{
 				display:	block;
 				.line-height(40);
 				.height(40);
@@ -76,13 +76,19 @@ body > .menus{
 				color:		#f2f2f2;
 				font-weight:lighter;
 				.transition-property(~"color, background-color");
-				//&+menuitem, &+.menuitem{
-				//	.border-top(1, solid, rgba(255, 255, 255, .25));
-				//}
+			}
+			menuitem, .menuitem{
 				&:hover{
 					background-color:	rgba(255, 255, 255, .15);
 					color:		#fff;
 				}
+			}
+			
+			hr{
+				display: 	block;
+				border: 	0 solid transparent;
+				.border-top(1, solid, rgba(255,255,255,.2));
+				margin: 	8px 0;
 			}
 		}
 

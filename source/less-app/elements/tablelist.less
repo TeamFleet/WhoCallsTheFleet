@@ -478,23 +478,8 @@
 							tr.typetitle{
 								display:	none;
 							}
-							tr[data-shipid]{
-								display:	none;
-								input[type="checkbox"].compare{
-									display:	none;
-								}
-								&[compare-checked]{
-									display:	table-row;
-									th{
-										.padding-left(146);
-										img{
-											left:	0;
-											.mask-image(~"linear-gradient(to right, #000 50px, #000 calc(100% - 60px), transparent calc(100% - 10px))");
-										}
-									}
-								}
-							}
 						}
+						.tablelist-ships-table-viewtype-compare();
 					} // table
 				} // &>.fixed-table-container-inner
 			}

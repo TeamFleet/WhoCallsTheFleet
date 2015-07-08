@@ -77,6 +77,37 @@
 								padding:	0 0 0 .25em;
 							}
 						}
+						&>em{
+							display: 	none;
+							position: 	absolute;
+							right: 		0;
+							top: 		0;
+							width: 		30px;
+							height: 	100%;
+							color: 		rgba(255, 255, 255, .075);
+							font-style: normal;
+							font-weight:lighter;
+							.transition-property(color);
+							&:before{
+								content: 	@iconcode-more;
+								font-family:icons;
+								position: 	absolute;
+								display: 	block;
+								width: 		100%;
+								height: 	0;
+								top: 		50%;
+								left: 		0;
+								text-align: center;
+								line-height:0;
+								font-size: 	24px;
+							}
+							&:hover{
+								color: 		rgba(255, 255, 255, .8) !important;
+							}
+							@media all and (min-width: 1152px ){
+								display: 	block;
+							}
+						}
 					}
 					td{
 						position:	relative;
@@ -108,11 +139,16 @@
 						input[type="checkbox"].compare{
 							opacity:	.9;
 						}
+						th>em{
+							color: 	rgba(255, 255, 255, .4);
+						}
 					}
 				} // tr[data-shipid]
 			}
 		}
 	}
+
+
 
 // viewtype: card
 	.tablelist-ships-table-viewtype-card(){
@@ -179,6 +215,35 @@
 				}
 				tbody tr[data-shipid]:active{
 					opacity:	.5;
+				}
+			}
+		}
+	}
+
+
+
+// viewtype: compare
+	.tablelist-ships-table-viewtype-compare(){
+		&.ships{
+			tbody{
+				tr[data-shipid]{
+					display:	none;
+					input[type="checkbox"].compare{
+						display:	none;
+					}
+					&[compare-checked]{
+						display:	table-row;
+						th{
+							.padding-left(146);
+							img{
+								left:	0;
+								.mask-image(~"linear-gradient(to right, #000 50px, #000 calc(100% - 60px), transparent calc(100% - 10px))");
+							}
+						}
+					}
+					th>em{
+						display: 	none !important;
+					}
 				}
 			}
 		}

@@ -25,4 +25,8 @@ class Ship extends ITEM{
 				? _g['data']['ship_types'][this['type']]['full_zh']
 				: null
 	}
+	
+	getSeriesData(){
+		
+	}
 }

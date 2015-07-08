@@ -27,7 +27,12 @@ _menu.prototype.init = function(){
 
 	// 创建DOM
 		this.dom = {}
-		this.dom.menu 	= $('<div class="menu"/>').addClass(this.settings.className).appendTo(_frame.menu.dom.container)
+		this.dom.menu 	= $('<div class="menu"/>')
+							.addClass(this.settings.className)
+							.on('click', function(){
+								self.hide()
+							})
+							.appendTo(_frame.menu.dom.container)
 		this.dom.body 	= $('<div class="body"/>').appendTo(this.dom.menu)
 	
 	// 绑定transitionend事件，自动触发隐藏函数
@@ -43,17 +48,25 @@ _menu.prototype.init = function(){
 		})
 	
 	// 创建全部菜单项目
-		for(var i in this.settings.items)
-			this.appendItem( this.settings.items[i] )
+		for(var i in this.settings.items){
+			var menuitem = this.settings.items[i]
+			switch( menuitem ){
+				case 'separator':
+					menuitem = $('<hr/>')
+					break;
+			}
+			this.appendItem( menuitem )
+		}
 
 	_frame.menu.menus.push(this)
 }
 
-_menu.prototype.show = function(){
+_menu.prototype.show = function( targetEl ){
 	if( this.showing )
 		return this
 
 	var self = this
+	targetEl = targetEl || this.settings.target
 
 	// addClass: show
 		this.dom.menu.addClass('show')
@@ -63,10 +76,10 @@ _menu.prototype.show = function(){
 		this.showing = true
 
 	// 计算并设置位置
-		if( this.settings.target instanceof jQuery ){
-			var offset = this.settings.target.offset()
+		if( targetEl instanceof jQuery ){
+			var offset = targetEl.offset()
 			this.dom.menu.css({
-				'top': 		offset.top + self.settings.target.height() - $body.scrollTop(),
+				'top': 		offset.top + targetEl.height() - $body.scrollTop(),
 				'left': 	offset.left - $body.scrollLeft()
 			})
 		}
@@ -81,6 +94,9 @@ _menu.prototype.show = function(){
 		}else{
 			this.dom.menu.addClass('on')
 		}
+	
+	// 触发所有menuitem的onshow事件
+		this.dom.body.find('menuitem, .menuitem').trigger('show')
 }
 
 _menu.prototype.hide = function(){
@@ -142,6 +158,9 @@ _frame.menu = {
 							}
 							_frame.menu.timeout_hideall = null
 						}, ms || 1)
+					},
+					'contextmenu': function(){
+						_frame.menu.dom.container.trigger('click')
 					}/*,
 					'mousemove': function(){
 						if( !_frame.menu.timeout_hideall )

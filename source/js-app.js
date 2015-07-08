@@ -26,9 +26,11 @@
 // @koala-prepend "js-app/frame/infos.js"
 // @koala-prepend "js-app/frame/infos-equipment.js"
 // @koala-prepend "js-app/frame/infos-fleet.js"
+// @koala-prepend "js-app/frame/mode-selection.js"
 // @koala-prepend "js-app/frame/tip-equipment.js"
 // @koala-prepend "js-app/frame/tip-ship.js"
 
 // @koala-prepend "js-app/elements/tablelist.js"
 // @koala-prepend "js-app/elements/tablelist-equipments.js"
 // @koala-prepend "js-app/elements/tablelist-fleets.js"
+// @koala-prepend "js-app/elements/tablelist-ships.js"
