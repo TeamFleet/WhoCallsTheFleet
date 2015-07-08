@@ -3627,6 +3627,9 @@ _menu.prototype.show = function( targetEl ){
 
 	var self = this
 	targetEl = targetEl || this.settings.target
+	
+	clearTimeout(_frame.menu.timeout_hideall)
+	_frame.menu.timeout_hideall = null
 
 	// addClass: show
 		this.dom.menu.addClass('show')
@@ -3634,12 +3637,20 @@ _menu.prototype.show = function( targetEl ){
 	
 	// 设置状态
 		this.showing = true
+	
+	// 触发所有子元素的onshow事件
+		this.dom.body.children().trigger('show')
 
 	// 计算并设置位置
 		if( targetEl instanceof jQuery ){
 			var offset = targetEl.offset()
+				,top	= offset.top + targetEl.height() - $body.scrollTop()
+				,viewport_height	= $window.height()
+				,menu_height		= this.dom.menu.outerHeight()
 			this.dom.menu.css({
-				'top': 		offset.top + targetEl.height() - $body.scrollTop(),
+				'top': 		top + menu_height > viewport_height
+								? viewport_height - menu_height
+								: top,
 				'left': 	offset.left - $body.scrollLeft()
 			})
 		}
@@ -3654,9 +3665,6 @@ _menu.prototype.show = function( targetEl ){
 		}else{
 			this.dom.menu.addClass('on')
 		}
-	
-	// 触发所有子元素的onshow事件
-		this.dom.body.children().trigger('show')
 }
 
 _menu.prototype.hide = function(){
