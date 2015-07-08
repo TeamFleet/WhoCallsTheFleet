@@ -89,7 +89,7 @@ _frame.modal = {
 		_frame.modal.dom.container.off('transitionend.modal_hide').on({
 										'transitionend.modal_hide': function(e){
 											if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' ){
-												switch( parseInt($(this).css('opacity')) ){
+												switch( parseFloat($(this).css('opacity')) ){
 													case 0:
 														_frame.modal.hide_timeout = setTimeout(function(){
 															_frame.modal.reset()

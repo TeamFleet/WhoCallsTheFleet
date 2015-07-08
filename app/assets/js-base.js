@@ -3564,7 +3564,8 @@ var _menu = function( settings ){
 
 	this.settings = $.extend(
 			true,
-			$.extend({}, this.defaults),
+			{},
+			this.defaults,
 			settings || {}
 		)
 	
@@ -3600,8 +3601,10 @@ _menu.prototype.init = function(){
 			'transitionend.menu_hide': function(e){
 				if( e.currentTarget == e.target
 					&& e.originalEvent.propertyName == 'opacity'
-					&& parseInt($(this).css('opacity')) === 0
+					&& parseFloat(self.dom.menu.css('opacity')) === 0
 				){
+					_g.log(e)
+					_g.log(self.dom.menu.css('opacity'))
 					self.hideTrue()
 				}
 			}
@@ -3609,13 +3612,13 @@ _menu.prototype.init = function(){
 	
 	// 创建全部菜单项目
 		for(var i in this.settings.items){
-			var menuitem = this.settings.items[i]
+			var menuitem = self.settings.items[i]
 			switch( menuitem ){
 				case 'separator':
 					menuitem = $('<hr/>')
 					break;
 			}
-			this.appendItem( menuitem )
+			self.appendItem( menuitem )
 		}
 
 	_frame.menu.menus.push(this)
@@ -3838,7 +3841,7 @@ _frame.modal = {
 		_frame.modal.dom.container.off('transitionend.modal_hide').on({
 										'transitionend.modal_hide': function(e){
 											if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' ){
-												switch( parseInt($(this).css('opacity')) ){
+												switch( parseFloat($(this).css('opacity')) ){
 													case 0:
 														_frame.modal.hide_timeout = setTimeout(function(){
 															_frame.modal.reset()
@@ -3938,7 +3941,7 @@ _p.tip = {
 
 		_p.tip.dom = $('<div id="tip"/>')
 						.on('transitionend', function(e){
-							if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(_p.tip.dom.css('opacity')) == 0 ){
+							if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseFloat(_p.tip.dom.css('opacity')) == 0 ){
 								_p.tip.dom
 									.removeClass('show')
 									.css({
