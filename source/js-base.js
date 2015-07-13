@@ -13,6 +13,7 @@
 // @koala-prepend "js-base/libs/visibility/visibility.core.js"
 // @koala-prepend "js-base/libs/jquery.mousewheel.js"
 
+// @koala-prepend "js-base/prototype/Array.js"
 // @koala-prepend "js-base/prototype/date.js"
 // @koala-prepend "js-base/prototype/object.js"
 // @koala-prepend "js-base/prototype/string.js"

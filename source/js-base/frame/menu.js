@@ -43,8 +43,6 @@ _menu.prototype.init = function(){
 					&& e.originalEvent.propertyName == 'opacity'
 					&& parseFloat(self.dom.menu.css('opacity')) === 0
 				){
-					_g.log(e)
-					_g.log(self.dom.menu.css('opacity'))
 					self.hideTrue()
 				}
 			}

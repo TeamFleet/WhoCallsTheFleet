@@ -2272,6 +2272,40 @@ _p.removeEmptyTextNode = function( el ){
 }));
 
 
+/* Extra properties & methods for Array
+ *******************************************************************
+
+Array.mergeFrom( array2 )
+	merge array2 into Array
+	returns merged Array
+	unlike concat, this method will not create a new Array
+
+ *******************************************************************
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+Object.defineProperty(Array.prototype, 'mergeFrom', {
+	enumerable:	false,
+	//writable:	false,
+	value: function( arr2 ){
+		Array.prototype.push.apply(
+			this,
+			(arr2 instanceof Array) ? arr2 : [arr2]
+		)
+		return this
+	}
+})
+
 /*******************************************************************
  Function shortcut for DATE
 
@@ -2418,7 +2452,7 @@ _g.formatTime = function( time, pattern, set ){
 
  *******************************************************************
 
- OBJECT.getSize()
+ Oebjet._size
  	-> 返回第一级项目数量
 
 
@@ -2437,14 +2471,17 @@ _g.formatTime = function( time, pattern, set ){
 
 
 
-/*Object.prototype.getSize = function(){
-	var size = 0
-	for( var i in this ){
-		size++
+Object.defineProperty(Object.prototype, '_size', {
+	enumerable:	false,
+	//writable:	false,
+	get: function(){
+		var size = 0
+		for( var i in this ){
+			size++
+		}
+		return size
 	}
-	return size
-};
-*/
+})
 
 /*******************************************************************
  Function shortcut for STRING
@@ -3618,8 +3655,6 @@ _menu.prototype.init = function(){
 					&& e.originalEvent.propertyName == 'opacity'
 					&& parseFloat(self.dom.menu.css('opacity')) === 0
 				){
-					_g.log(e)
-					_g.log(self.dom.menu.css('opacity'))
 					self.hideTrue()
 				}
 			}
@@ -5069,6 +5104,7 @@ $document.ready(function(){
 // @koala-prepend "js-base/libs/visibility/visibility.core.js"
 // @koala-prepend "js-base/libs/jquery.mousewheel.js"
 
+// @koala-prepend "js-base/prototype/Array.js"
 // @koala-prepend "js-base/prototype/date.js"
 // @koala-prepend "js-base/prototype/object.js"
 // @koala-prepend "js-base/prototype/string.js"
