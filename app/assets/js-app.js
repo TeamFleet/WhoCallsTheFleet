@@ -921,6 +921,10 @@ class ITEM {
 				? (this['name'][language] || this['name'])
 				: null
 	}
+	
+	get _name(){
+		return this.getName()
+	}
 }
 
 class Ship extends ITEM{
@@ -967,7 +971,8 @@ class Equipment extends ITEM{
 	
 	getName(small_brackets, language){
 		language = language || _g.lang
-		var result = super.getName(language)
+		var result = ITEM.prototype.getName.call(this, language)
+			//,result = super.getName(language)
 			,small_brackets_tag = small_brackets && !small_brackets === true ? small_brackets : 'small'
 		return small_brackets
 				? result.replace(/（([^（^）]+)）/g, '<'+small_brackets_tag+'>($1)</'+small_brackets_tag+'>')

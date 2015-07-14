@@ -8,4 +8,8 @@ class ITEM {
 				? (this['name'][language] || this['name'])
 				: null
 	}
+	
+	get _name(){
+		return this.getName()
+	}
 }
