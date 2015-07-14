@@ -1258,6 +1258,7 @@ _frame.app_main = {
 
 	// 更换背景图
 		//change_bgimg_fadein: false,
+		//change_bgimg_oldEl: null,
 		change_bgimg: function( bgimgs_new ){
 			// _frame.app_main.bgimgs 未生成，函数不予执行
 			if( !_frame.app_main.bgimgs.length )
@@ -1279,14 +1280,15 @@ _frame.app_main = {
 			this.bgimg_path = node.path.join( _g.path.bgimg_dir , '/' + img_new )
 			img_new = 'file://' + encodeURI( this.bgimg_path.replace(/\\/g, '/') )
 
-			function delete_old_dom( old_dom ){
-				setTimeout(function(){
-					old_dom.remove()
-				}, _g.animate_duration_delay)
-			}
+			//function delete_old_dom( old_dom ){
+			//	setTimeout(function(){
+			//		old_dom.remove()
+			//	}, _g.animate_duration_delay)
+			//}
 
 			if( img_old ){
-				delete_old_dom( _frame.app_main.cur_bgimg_el )
+				this.change_bgimg_oldEl = _frame.app_main.cur_bgimg_el
+				//delete_old_dom( _frame.app_main.cur_bgimg_el )
 			}
 
 			//_frame.app_main.cur_bgimg_el = $('<img src="' + img_new + '" />').appendTo( _frame.dom.bgimg )
@@ -1299,6 +1301,14 @@ _frame.app_main = {
 											.add( $('<s'+( _frame.app_main.change_bgimg_fadein ? ' class="fadein"' : '' )+'/>').css('background-image','url('+img_new_blured+')').appendTo( _frame.dom.bg_controls) )
 
 			_frame.app_main.change_bgimg_fadein = true
+		},
+		change_bgimg_after: function(oldEl){
+			console.log(123)
+			oldEl = oldEl || this.change_bgimg_oldEl
+			if( oldEl ){
+				this.change_bgimg_oldEl.remove()
+				this.change_bgimg_oldEl = null
+			}
 		},
 
 
@@ -1950,6 +1960,9 @@ _frame.app_main = {
 					e.preventDefault()
 					_frame.app_main.load_page($(this).attr('href').substr('?page='.length))
 				})
+				_frame.dom.bgimg.on('animationend, webkitAnimationEnd', 'div', function(){
+					_frame.app_main.change_bgimg_after()
+				})
 				/*
 					$html.on('click.openShipModal', '[data-shipid][modal="true"]', function(e){
 						if( !(e.target.tagName.toLowerCase() == 'input' && e.target.className == 'compare') ){
@@ -2445,7 +2458,8 @@ _tmpl.improvement = function( equipment, improvement_index, requirement_index, r
 	for(var i in requirement_index){
 		var req = improvement['req'][requirement_index[i]]
 		if( req[1] )
-			req_ships = req_ships.concat(req[1])
+			req_ships.mergeFrom(req[1])
+			//req_ships = req_ships.concat(req[1])
 	}
 	if( req_ships.length ){
 		var names = []
