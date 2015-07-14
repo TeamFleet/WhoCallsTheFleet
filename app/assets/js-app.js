@@ -1303,7 +1303,6 @@ _frame.app_main = {
 			_frame.app_main.change_bgimg_fadein = true
 		},
 		change_bgimg_after: function(oldEl){
-			console.log(123)
 			oldEl = oldEl || this.change_bgimg_oldEl
 			if( oldEl ){
 				this.change_bgimg_oldEl.remove()
@@ -1325,9 +1324,11 @@ _frame.app_main = {
 
 
 	// 更换页面
-		load_page: function( page ){
+		load_page: function( page, options ){
 			if( _frame.app_main.cur_page == page || !page )
 				return page
+
+			options = options || {}
 
 			this.pushState(
 				{
@@ -1336,11 +1337,19 @@ _frame.app_main = {
 				null,
 				'?page=' + page
 			)
-			this.load_page_func( page )
+			
+			this.load_page_func( page, options )
+
+			if( options.callback_modeSelection_select ){
+				_frame.app_main.page_dom[page].trigger('modeSelectionEnter', [
+					options.callback_modeSelection_select || function(){}
+				])
+			}
 			//_g.uriHash('page', page)
 		},
-		load_page_func: function( page, callback_modeSelection ){
+		load_page_func: function( page, options ){
 			_g.log( 'PREPARE LOADING: ' + page )
+			options = options || {}
 
 			if( _frame.app_main.cur_page == page || !page )
 				return page
@@ -1366,7 +1375,7 @@ _frame.app_main = {
 
 			_frame.dom.navs[page].addClass('on')
 
-			if( !callback_modeSelection ){
+			if( !options.callback_modeSelection_select ){
 				if( _frame.dom.layout.hasClass('ready') )
 					_frame.app_main.change_bgimg()
 
@@ -1741,7 +1750,7 @@ _frame.app_main = {
 																	0,
 																	_g.data.ships[id].remodel_next
 																)
-																console.log(_g.data.ship_id_by_type[i])
+																//console.log(_g.data.ship_id_by_type[i])
 																__(i)
 																break
 															}
@@ -2851,27 +2860,88 @@ _tmpl.textlink_ship = function( ship, tagName, returnHTML ){
 		)
 }
 
-_frame.app_main.page['ships'] = {}
+class PAGE {
+	constructor( $page ) {
+	}
+	
+	modeSelectionEnter(callback_select){
+		console.log('modeSelectionEnter')
+		
+		let self = this
+			,_callback_select
+		
+		callback_select = callback_select || function(){}
+		_callback_select = function(){
+			//callback_select.apply( callback_select, arguments )
+			callback_select(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6], arguments[7], arguments[8], arguments[9], arguments[10])
+			self.modeSelectionExit()
+		}
+		
+		_frame.app_main.mode_selection_callback = _callback_select
+		
+		_frame.dom.layout.addClass('mode-selection')
+		
+		return _callback_select
+	}
+	
+	modeSelectionExit(){
+		if( !_frame.dom.layout.hasClass('mode-selection') )
+			return false
 
+		console.log('modeSelectionExit')
+		
+		_frame.dom.layout.removeClass('mode-selection')
+	}
+}
 
+//class PageShips extends PAGE
 
-
-
-
-
-
-_frame.app_main.page['ships'].init = function( page ){
-	this.tablelist = page.find('.tablelist')
-	this.tablelistObj = this.tablelist.data('tablelist')
-
-	page.on('pageon', function(){
-		if( !_frame.app_main.page['ships'].tablelistObj )
-			_frame.app_main.page['ships'].tablelistObj
-				= _frame.app_main.page['ships'].tablelist.data('tablelist')
-
-		if( _frame.app_main.page['ships'].tablelistObj )
-			_frame.app_main.page['ships'].tablelistObj.thead_redraw()
-	})
+_frame.app_main.page['ships'] = {
+	init: function( $page ){
+		/*
+		this.tablelist = page.find('.tablelist')
+		this.tablelistObj = this.tablelist.data('tablelist')
+	
+		page.on('pageon', function(){
+			if( !_frame.app_main.page['ships'].tablelistObj )
+				_frame.app_main.page['ships'].tablelistObj
+					= _frame.app_main.page['ships'].tablelist.data('tablelist')
+	
+			if( _frame.app_main.page['ships'].tablelistObj )
+				_frame.app_main.page['ships'].tablelistObj.thead_redraw()
+		})
+		*/
+		
+		this.object = new class extends PAGE{
+			constructor( $page ){
+				super( $page )
+				
+				let self = this
+				
+				this.tablelist = $page.find('.tablelist')
+				this.tablelistObj = this.tablelist.data('tablelist')
+			
+				$page.on({
+					'pageon': function(){
+						if( !self.tablelistObj )
+							self.tablelistObj
+								= self.tablelist.data('tablelist')
+				
+						if( self.tablelistObj )
+							self.tablelistObj.thead_redraw()
+					},
+					'modeSelectionEnter': function(e, callback_select){
+						self.modeSelectionEnter(callback_select)
+					}
+				})
+			}
+			
+			//modeSelectionEnter(callback_select){
+			//	callback_select = super.modeSelectionEnter(callback_select)
+			//	console.log(callback_select)
+			//}
+		}( $page )
+	}
 }
 
 _frame.app_main.page['equipments'] = {}
@@ -3955,6 +4025,7 @@ class InfosFleet{
 		
 		this.dom = $('<div class="fleet loading"/>')
 		this.doms = {}
+		this.fleets = []
 	
 		if( id == '__NEW__' ){
 			_db.fleets.insert( _tablelist.prototype._fleets_new_data(), function(err, newDoc){
@@ -4059,36 +4130,7 @@ class InfosFleet{
 		// 4个分舰队
 			while(i < 4){
 				i++
-	
-				$('<input/>',{
-						'type': 	'radio',
-						'name': 	'fleet_' + d._id + '_tab',
-						'id': 		'fleet_' + d._id + '_tab_' + i,
-						'value': 	i
-					}).prop('checked', (i == 1)).prependTo( self.dom )
-	
-				$('<label/>',{
-						'for': 		'fleet_' + d._id + '_tab_' + i,
-						'data-fleet':i,
-						'html': 	'#' + i
-					}).appendTo( self.doms['tabs'] )
-	
-				self.doms['fleet' + i] = $('<dl/>',{
-						'data-fleet':i
-					}).appendTo( self.doms['ships'] )
-	
-				// 6个舰娘
-					let j = 0
-					while( j < 6 ){
-						j++
-						self.doms['ship' + i + '-' + j]
-							= (new InfosFleetShip()).getEl()
-							.appendTo( self.doms['fleet' + i] )
-						$('<s/>').appendTo( self.doms['fleet' + i] )
-					}
-				
-				// 舰队综合属性
-					self.doms['fleetsummary' + i] = $('<span/>').appendTo( self.doms['fleet' + i] )
+				self.fleets[i] = new InfosFleetSubFleet(self, i)
 			}
 
 		// 更新DOM
@@ -4136,52 +4178,44 @@ class InfosFleet{
 
 // 类：子舰队
 class InfosFleetSubFleet{
-	constructor(objectInfosFleet, d){
+	constructor(infosFleet, index, d){
 		const self = this
 
 		d = d || []
 		this.data = d
-
-		if( this.el )
-			return this.el
 		
 		$('<input/>',{
 				'type': 	'radio',
 				'name': 	'fleet_' + d._id + '_tab',
-				'id': 		'fleet_' + d._id + '_tab_' + i,
-				'value': 	i
-			}).prop('checked', (i == 1)).prependTo( objectInfosFleet.dom )
+				'id': 		'fleet_' + d._id + '_tab_' + index,
+				'value': 	index
+			}).prop('checked', (index == 1)).prependTo( infosFleet.dom )
 
 		$('<label/>',{
-				'for': 		'fleet_' + d._id + '_tab_' + i,
-				'data-fleet':i,
-				'html': 	'#' + i
-			}).appendTo( objectInfosFleet.doms['tabs'] )
+				'for': 		'fleet_' + d._id + '_tab_' + index,
+				'data-fleet':index,
+				'html': 	'#' + index
+			}).appendTo( infosFleet.doms['tabs'] )
 
-		objectInfosFleet.doms['fleet' + i] = $('<dl/>',{
-				'data-fleet':i
-			}).appendTo( objectInfosFleet.doms['ships'] )
+		infosFleet.doms['fleet' + index] = $('<dl/>',{
+				'data-fleet':index
+			}).appendTo( infosFleet.doms['ships'] )
 
 		// 6个舰娘
 			let j = 0
 			while( j < 6 ){
 				j++
-				objectInfosFleet.doms['ship' + i + '-' + j]
-					= (new InfosFleetShip(objectInfosFleet, self)).getEl()
-					.appendTo( objectInfosFleet.doms['fleet' + i] )
-				$('<s/>').appendTo( objectInfosFleet.doms['fleet' + i] )
+				infosFleet.doms['ship' + index + '-' + j]
+					= (new InfosFleetShip(infosFleet, self)).getEl()
+					.appendTo( infosFleet.doms['fleet' + index] )
+				$('<s/>').appendTo( infosFleet.doms['fleet' + index] )
 			}
 		
 		// 舰队综合属性
-			objectInfosFleet.doms['fleetsummary' + i] = $('<span/>').appendTo( objectInfosFleet.doms['fleet' + i] )
+			infosFleet.doms['fleetsummary' + index] = $('<span/>').appendTo( infosFleet.doms['fleet' + index] )
 
 		this.updateEl()
 	}
-	
-	// 返回页面元素
-		getEl(){
-			return this.el
-		}
 
 	// 更新元数据
 	
@@ -4204,7 +4238,7 @@ class InfosFleetSubFleet{
 
 // 类：舰娘
 class InfosFleetShip{
-	constructor(objectInfosFleet, objectInfosFleetSubFleet, d){
+	constructor(infosFleet, infosFleetSubFleet, d){
 		// 数据结构
 		/* [
 				STRING 舰娘ID,
@@ -4231,6 +4265,7 @@ class InfosFleetShip{
 
 		d = d || [null, [null, -1], [], []]
 		this.data = d
+		this.infosFleet = infosFleet
 
 		if( this.el )
 			return this.el
@@ -4270,24 +4305,17 @@ class InfosFleetShip{
 	// 开始选择
 		selectShipStart(){
 			_g.log('开始选择舰娘')
+			let self = this
 
-			_frame.infos.hide()
-			_frame.app_main.load_page_func('ships', this.selectShip)
-		}
-	
-	// 已选择
-		selectShip(id){
-			this.data[0] = id
-		}
-	
-	// 删除
-		removeShip(){
-			this.data[0] = null
-		}
-	
-	// 更改等级
-		changeLv(lv){
-			this.data[1][0] = lv || -1
+			//_frame.infos.hide()
+			//_frame.app_main.cur_page = null
+			_frame.app_main.load_page('ships', {
+				callback_modeSelection_select:		function(id){
+					history.back()
+					_frame.infos.dom.main.attr('data-theme', self.infosFleet.data['theme'])
+					self.shipId = id
+				}
+			})
 		}
 	
 	// 更改运
@@ -4329,6 +4357,42 @@ class InfosFleetShip{
 		getData(){
 			return this.data
 		}
+	
+	
+	
+	// 舰娘ID
+		get shipId(){
+			return this.data[0]
+		}
+		set shipId( value ){
+			this.data[0] = value
+			
+			this.el.attr('data-shipId', value)
+			
+			if( value ){
+				let picpath = node.path.join(_g.path.pics.ships, value + '/10.webp')
+				this.el.removeClass('noship')
+				this.elAvatar.html('<img src="' + picpath + '"/>')
+			}else{
+				this.el.addClass('noship')
+				this.elAvatar.html('')
+			}
+		}
+	
+	// 舰娘等级
+		get shipLv(){
+			return this.data[1][0]
+		}
+		set shipLv( value ){
+			this.data[1][0] = lv || -1
+			this.el.attr('data-shipLv', value)
+		}
+	
+	// 舰娘运
+	
+	// 某位置装备
+	
+	// 某位置装备等级
 }
 
 
@@ -4526,12 +4590,10 @@ var fleetInfos = function( id ){
 */
 
 _frame.app_main.is_mode_selection = function(){
-	return $html.hasClass('mode-selection')
+	return $html.hasClass('mode-selection') || _frame.dom.layout.hasClass('mode-selection')
 }
 
-_frame.app_main.mode_selection_callback = function(){
-	
-}
+_frame.app_main.mode_selection_callback = null
 
 if( typeof _p.tip != 'undefined' ){
 
@@ -5603,6 +5665,14 @@ _tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 					'data-shipedit':self.dom.container.hasClass('shiplist-edit') ? 'true' : null,
 					'data-donotcompare': donotcompare ? true : null
 				})
+				.on('click', function(e){
+					if( _frame.app_main.is_mode_selection() ){
+						e.preventDefault()
+						e.stopImmediatePropagation()
+						e.stopPropagation()
+						_frame.app_main.mode_selection_callback(ship_data['id'])
+					}
+				})
 				//.appendTo( this.dom.tbody )
 				.insertAfter( self._ships_last_item )
 		,max_carry = 0
@@ -5919,20 +5989,25 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 
 	if( !self._ships_contextmenu )
 		self._ships_contextmenu = new _menu({
+			'className': 'contextmenu-ship',
 			'items': [
-				$('<menuitem/>').html('查看资料')
+				$('<menuitem/>').html('选择')
 					.on({
 						'click': function(e){
 							if( _frame.app_main.is_mode_selection() )
 								_frame.app_main.mode_selection_callback(self._ships_contextmenu_curid)
-							else
-								self._ships_contextmenu_curel.trigger('click')
 						},
 						'show': function(){
 							if( _frame.app_main.is_mode_selection() )
-								$(this).html('选择')
+								$(this).show()
 							else
-								$(this).html('查看资料')
+								$(this).hide()
+						}
+					}),
+				$('<menuitem/>').html('查看资料')
+					.on({
+						'click': function(e){
+							self._ships_contextmenu_curel.trigger('click')
 						}
 					}),
 				$('<menuitem/>').html('将该舰娘加入对比')
@@ -5965,21 +6040,27 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 									.html('<span>' + _g['data']['ships'][series[i]['id']].getName(true) + '</span>')
 									.append(
 										$('<div class="group"/>')
+											.append(function(){
+												var els = $()
+												
+												if( _frame.app_main.is_mode_selection() ){
+													els = els.add(
+														$('<menuitem/>')
+															.html('选择')
+															.on({
+																'click': function(){
+																	if( _frame.app_main.is_mode_selection() )
+																		_frame.app_main.mode_selection_callback(series[i]['id'])
+																}
+															})
+													)
+												}
+												
+												return els
+											})
 											.append(
 												$('<menuitem data-infos="[[SHIP::'+series[i]['id']+']]"/>')
-													.html(
-														_frame.app_main.is_mode_selection()
-															? '选择'
-															: '查看资料'
-													)
-													.on({
-														'click': function(e){
-															if( _frame.app_main.is_mode_selection() ){
-																_frame.app_main.mode_selection_callback(series[i]['id'])
-																e.preventDefault()
-															}
-														}
-													})
+													.html('查看资料')
 											)
 											.append(
 												$('<menuitem/>')
@@ -6178,6 +6259,7 @@ _tablelist.prototype._ships_init = function(){
 // @koala-prepend "js-app/templates/link_ship.js"
 // @koala-prepend "js-app/templates/textlink_ship.js"
 
+// @koala-prepend "js-app/page/!.js"
 // @koala-prepend "js-app/page/ships.js"
 // @koala-prepend "js-app/page/equipments.js"
 // @koala-prepend "js-app/page/arsenal.js"

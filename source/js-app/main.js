@@ -288,7 +288,6 @@ _frame.app_main = {
 			_frame.app_main.change_bgimg_fadein = true
 		},
 		change_bgimg_after: function(oldEl){
-			console.log(123)
 			oldEl = oldEl || this.change_bgimg_oldEl
 			if( oldEl ){
 				this.change_bgimg_oldEl.remove()
@@ -310,9 +309,11 @@ _frame.app_main = {
 
 
 	// 更换页面
-		load_page: function( page ){
+		load_page: function( page, options ){
 			if( _frame.app_main.cur_page == page || !page )
 				return page
+
+			options = options || {}
 
 			this.pushState(
 				{
@@ -321,11 +322,19 @@ _frame.app_main = {
 				null,
 				'?page=' + page
 			)
-			this.load_page_func( page )
+			
+			this.load_page_func( page, options )
+
+			if( options.callback_modeSelection_select ){
+				_frame.app_main.page_dom[page].trigger('modeSelectionEnter', [
+					options.callback_modeSelection_select || function(){}
+				])
+			}
 			//_g.uriHash('page', page)
 		},
-		load_page_func: function( page, callback_modeSelection ){
+		load_page_func: function( page, options ){
 			_g.log( 'PREPARE LOADING: ' + page )
+			options = options || {}
 
 			if( _frame.app_main.cur_page == page || !page )
 				return page
@@ -351,7 +360,7 @@ _frame.app_main = {
 
 			_frame.dom.navs[page].addClass('on')
 
-			if( !callback_modeSelection ){
+			if( !options.callback_modeSelection_select ){
 				if( _frame.dom.layout.hasClass('ready') )
 					_frame.app_main.change_bgimg()
 
@@ -726,7 +735,7 @@ _frame.app_main = {
 																	0,
 																	_g.data.ships[id].remodel_next
 																)
-																console.log(_g.data.ship_id_by_type[i])
+																//console.log(_g.data.ship_id_by_type[i])
 																__(i)
 																break
 															}

@@ -250,8 +250,9 @@
 								display: 	block;
 								position: 	relative;
 								flex: 		1 1 150px;
-								background: no-repeat 50% 50% / cover;
+								//background: no-repeat 50% 50% / cover;
 								z-index: 	1;
+								.mask(~"linear-gradient(to right, #000 70%, transparent)");
 								&:after{
 									content: 	'';
 									position: 	absolute;
@@ -262,6 +263,16 @@
 									left: 		0;
 									background: linear-gradient(to right, rgba(255, 255, 255, .5) 25%, transparent) repeat-y 0 0;
 								}
+								img{
+									position: 	absolute;
+									display: 	block;
+									height: 	auto;
+									width: 		auto;
+									max-height: 100%;
+									min-height: 100%;
+									top: 		0;
+									left: 		-10%;
+								}
 							}
 							&>font{
 								.flexbox;
@@ -270,11 +281,6 @@
 								flex: 		3 1 190px;
 								z-index: 	2;
 								.justify-content(center);
-							}
-						}
-						&:hover{
-							&:after{
-								opacity: 1;
 							}
 						}
 						&.noship{
@@ -308,6 +314,9 @@
 									&>font{
 										opacity: .5;
 									}
+								}
+								&:after{
+									opacity: 1;
 								}
 							}
 						}
@@ -390,8 +399,6 @@
 									&:after{
 										background: linear-gradient(to right, hsla(51, 100%, 95%, .5) 25%, transparent) repeat-y 0 0;
 									}
-								}
-								&>font{
 								}
 							}
 							&.noship{
