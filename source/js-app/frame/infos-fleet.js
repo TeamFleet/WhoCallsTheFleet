@@ -304,8 +304,9 @@ class InfosFleetShip{
 			_frame.app_main.load_page('ships', {
 				callback_modeSelection_select:		function(id){
 					history.back()
-					_frame.infos.dom.main.attr('data-theme', self.infosFleet.data['theme'])
 					self.shipId = id
+					if( self.infosFleet )
+						_frame.infos.dom.main.attr('data-theme', self.infosFleet.data['theme'])
 				}
 			})
 		}
@@ -362,12 +363,12 @@ class InfosFleetShip{
 			this.el.attr('data-shipId', value)
 			
 			if( value ){
-				let picpath = node.path.join(_g.path.pics.ships, value + '/10.webp')
 				this.el.removeClass('noship')
-				this.elAvatar.html('<img src="' + picpath + '"/>')
+				this.elAvatar.html('<img src="' + node.path.join(_g.path.pics.ships, value + '/10.webp') + '"/>')
 			}else{
 				this.el.addClass('noship')
 				this.elAvatar.html('')
+				this.elInfos.html('选择舰娘...')
 			}
 		}
 	

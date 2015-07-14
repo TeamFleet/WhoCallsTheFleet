@@ -967,7 +967,7 @@ class Equipment extends ITEM{
 	
 	getName(small_brackets, language){
 		language = language || _g.lang
-		var result = ITEM.prototype.getName.call(this, language)
+		var result = super.getName(language)
 			,small_brackets_tag = small_brackets && !small_brackets === true ? small_brackets : 'small'
 		return small_brackets
 				? result.replace(/（([^（^）]+)）/g, '<'+small_brackets_tag+'>($1)</'+small_brackets_tag+'>')
@@ -4312,8 +4312,9 @@ class InfosFleetShip{
 			_frame.app_main.load_page('ships', {
 				callback_modeSelection_select:		function(id){
 					history.back()
-					_frame.infos.dom.main.attr('data-theme', self.infosFleet.data['theme'])
 					self.shipId = id
+					if( self.infosFleet )
+						_frame.infos.dom.main.attr('data-theme', self.infosFleet.data['theme'])
 				}
 			})
 		}
@@ -4370,12 +4371,12 @@ class InfosFleetShip{
 			this.el.attr('data-shipId', value)
 			
 			if( value ){
-				let picpath = node.path.join(_g.path.pics.ships, value + '/10.webp')
 				this.el.removeClass('noship')
-				this.elAvatar.html('<img src="' + picpath + '"/>')
+				this.elAvatar.html('<img src="' + node.path.join(_g.path.pics.ships, value + '/10.webp') + '"/>')
 			}else{
 				this.el.addClass('noship')
 				this.elAvatar.html('')
+				this.elInfos.html('选择舰娘...')
 			}
 		}
 	
@@ -5665,8 +5666,8 @@ _tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 					'data-shipedit':self.dom.container.hasClass('shiplist-edit') ? 'true' : null,
 					'data-donotcompare': donotcompare ? true : null
 				})
-				.on('click', function(e){
-					if( _frame.app_main.is_mode_selection() ){
+				.on('click', function(e, forceInfos){
+					if( !forceInfos && e.target.tagName.toLowerCase() != 'em' && _frame.app_main.is_mode_selection() ){
 						e.preventDefault()
 						e.stopImmediatePropagation()
 						e.stopPropagation()
@@ -6007,9 +6008,10 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 				$('<menuitem/>').html('查看资料')
 					.on({
 						'click': function(e){
-							self._ships_contextmenu_curel.trigger('click')
+							self._ships_contextmenu_curel.trigger('click', [true])
 						}
 					}),
+
 				$('<menuitem/>').html('将该舰娘加入对比')
 					.on({
 						'click': function(e){
@@ -6020,6 +6022,11 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 						'show': function(e){
 							if( !self._ships_contextmenu_curid )
 								return false
+							
+							if( _g.data.ship_types[_g['data']['ships'][self._ships_contextmenu_curid]['type']]['donotcompare'] )
+								$(this).hide()
+							else
+								$(this).show()
 								
 							if( self._ships_checkbox[self._ships_contextmenu_curid].prop('checked') )
 								$(this).html('取消对比')

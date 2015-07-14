@@ -31,8 +31,8 @@ _tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 					'data-shipedit':self.dom.container.hasClass('shiplist-edit') ? 'true' : null,
 					'data-donotcompare': donotcompare ? true : null
 				})
-				.on('click', function(e){
-					if( _frame.app_main.is_mode_selection() ){
+				.on('click', function(e, forceInfos){
+					if( !forceInfos && e.target.tagName.toLowerCase() != 'em' && _frame.app_main.is_mode_selection() ){
 						e.preventDefault()
 						e.stopImmediatePropagation()
 						e.stopPropagation()
@@ -373,9 +373,10 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 				$('<menuitem/>').html('查看资料')
 					.on({
 						'click': function(e){
-							self._ships_contextmenu_curel.trigger('click')
+							self._ships_contextmenu_curel.trigger('click', [true])
 						}
 					}),
+
 				$('<menuitem/>').html('将该舰娘加入对比')
 					.on({
 						'click': function(e){
@@ -386,6 +387,11 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 						'show': function(e){
 							if( !self._ships_contextmenu_curid )
 								return false
+							
+							if( _g.data.ship_types[_g['data']['ships'][self._ships_contextmenu_curid]['type']]['donotcompare'] )
+								$(this).hide()
+							else
+								$(this).show()
 								
 							if( self._ships_checkbox[self._ships_contextmenu_curid].prop('checked') )
 								$(this).html('取消对比')
