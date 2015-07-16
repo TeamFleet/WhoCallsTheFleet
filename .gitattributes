@@ -15,3 +15,8 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+
+# Merge Strategies
+app/main.html	merge=ours
+app/assets/*	merge=theirs
+app/assets/*.*	merge=theirs
