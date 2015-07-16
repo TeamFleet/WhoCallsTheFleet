@@ -3,8 +3,6 @@ class PAGE {
 	}
 	
 	modeSelectionEnter(callback_select){
-		console.log('modeSelectionEnter')
-		
 		let self = this
 			,_callback_select
 		
@@ -17,7 +15,7 @@ class PAGE {
 		
 		_frame.app_main.mode_selection_callback = _callback_select
 		
-		_frame.dom.layout.addClass('mode-selection')
+		_frame.app_main.mode_selection_on()
 		
 		return _callback_select
 	}
@@ -26,8 +24,6 @@ class PAGE {
 		if( !_frame.dom.layout.hasClass('mode-selection') )
 			return false
 
-		console.log('modeSelectionExit')
-		
-		_frame.dom.layout.removeClass('mode-selection')
+		_frame.app_main.mode_selection_off()
 	}
 }

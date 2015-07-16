@@ -329,6 +329,8 @@ _frame.app_main = {
 				_frame.app_main.page_dom[page].trigger('modeSelectionEnter', [
 					options.callback_modeSelection_select || function(){}
 				])
+			}else{
+				_frame.app_main.mode_selection_off()
 			}
 			//_g.uriHash('page', page)
 		},
@@ -496,12 +498,24 @@ _frame.app_main = {
 									})
 									.appendTo( _frame.dom.nav )
 				*/
-				_frame.dom.navlinks = $('<div/>').appendTo( _frame.dom.nav )
-				_frame.dom.globaloptions = $('<section class="options"/>').appendTo( _frame.dom.nav )
-				_frame.dom.btnShowOnlyBg = $('<button class="show_only_bg" icon="images"/>')
-										.on('click', function(){_frame.app_main.only_bg_toggle()}).appendTo( _frame.dom.globaloptions )
-				_frame.dom.btnShowOnlyBgBack = $('<button class="show_only_bg_back" icon="arrow-set2-left"/>')
-										.on('click', function(){_frame.app_main.only_bg_off()}).appendTo( _frame.dom.nav )
+				_frame.dom.navlinks = $('<div class="pages"/>').appendTo( _frame.dom.nav )
+					_frame.dom.globaloptions = $('<section class="options"/>').appendTo( _frame.dom.nav )
+						_frame.dom.btnShowOnlyBg = $('<button class="show_only_bg" icon="images"/>')
+												.on('click', function(){_frame.app_main.only_bg_toggle()}).appendTo( _frame.dom.globaloptions )
+					_frame.dom.btnShowOnlyBgBack = $('<button class="show_only_bg_back" icon="arrow-set2-left"/>')
+											.on('click', function(){_frame.app_main.only_bg_off()}).appendTo( _frame.dom.nav )
+				_frame.dom.btnsHistory = $('<div class="history"/>').appendTo( _frame.dom.nav )
+					_frame.dom.btnHistoryBack = $('<button class="back" icon="arrow-set2-left"/>')
+							.on({
+								'click': function(){
+									_frame.dom.btnHistoryForward.removeClass('disabled')
+									history.back()
+								}
+							}).appendTo( _frame.dom.btnsHistory )
+					_frame.dom.btnHistoryForward = $('<button class="forward disabled" icon="arrow-set2-right"/>')
+							.on('click', function(){
+								history.forward()
+							}).appendTo( _frame.dom.btnsHistory )
 			_frame.dom.main = $('<main/>').appendTo( _frame.dom.layout )
 			_frame.dom.bgimg = $('<div class="bgimg" />').appendTo( _frame.dom.layout )
 

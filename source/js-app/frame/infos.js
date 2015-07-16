@@ -88,10 +88,11 @@ _frame.infos = {
 		// 第一次运行，创建相关DOM和变量
 			if( !_frame.infos.dom ){
 				_frame.infos.dom = {
-					'nav': 		$('<div class="infos"/>').appendTo( _frame.dom.nav ),
+					//'nav': 		$('<div class="infos"/>').appendTo( _frame.dom.nav ),
 					'main': 	$('<div class="page infos"/>').appendTo( _frame.dom.main )
 				}
 				_frame.infos.dom.container = $('<div class="wrapper"/>').appendTo( _frame.infos.dom.main )
+				/*
 				_frame.infos.dom.back = $('<button class="back" icon="arrow-set2-left"/>')
 						.on({
 							'click': function(){
@@ -113,13 +114,17 @@ _frame.infos = {
 							history.forward()
 							//_frame.infos.hide()
 						}).appendTo( _frame.infos.dom.nav )
-				/*
-				_frame.infos.dom.historyback = $('<button class="history"/>')
-						.html('')
-						.on('click', function(){
-							_frame.infos.historyback()
-						}).appendTo( _frame.infos.dom.nav )
 				*/
+				_frame.dom.btnHistoryBack.on({
+							'transitionend.infos_hide': function(e){
+								if( e.currentTarget == e.target
+									&& e.originalEvent.propertyName == 'opacity'
+									&& parseFloat(_frame.dom.btnHistoryBack.css('opacity')) == 0
+								){
+									_frame.infos.hide_finish()
+								}
+							}
+						})
 			}
 
 		// 计算历史记录相关，确定 Back/Forward 按钮是否可用
@@ -127,7 +132,7 @@ _frame.infos = {
 			this.historyCurrent = infosHistoryIndex
 			//_g.log( this.historyCurrent, this.historyLength )
 			if( this.historyCurrent == this.historyLength && this.historyCurrent > -1 )
-				_frame.infos.dom.forward.addClass('disabled')
+				_frame.dom.btnHistoryForward.addClass('disabled')
 
 		// 先将内容区域设定为可见
 			_frame.dom.layout.addClass('infos-show')
@@ -185,6 +190,8 @@ _frame.infos = {
 		// 取消主导航上的当前项目状态
 			if( _frame.app_main.cur_page ){
 				this.lastCurrentPage = _frame.app_main.cur_page
+				// exit selection mode
+					_frame.app_main.mode_selection_off()
 				_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
 				_frame.app_main.cur_page = null
 			}
@@ -201,7 +208,7 @@ _frame.infos = {
 
 		// 隐藏内容
 			_frame.dom.layout.removeClass('infos-on')
-			_frame.infos.dom.forward.addClass('disabled')
+			_frame.dom.btnHistoryForward.addClass('disabled')
 			this.curContent = null
 
 		if( this.lastCurrentPage ){

@@ -252,7 +252,6 @@
 								flex: 		1 1 150px;
 								//background: no-repeat 50% 50% / cover;
 								z-index: 	1;
-								.mask(~"linear-gradient(to right, #000 70%, transparent)");
 								&:after{
 									content: 	'';
 									position: 	absolute;
@@ -329,6 +328,13 @@
 								}
 								&:after{
 									opacity: 1;
+								}
+							}
+						}
+						&[data-shipid]{
+							&>dt{
+								&>s{
+									.mask(~"linear-gradient(to right, #000 70%, transparent)")									
 								}
 							}
 						}

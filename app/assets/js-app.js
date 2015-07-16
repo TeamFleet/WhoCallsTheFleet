@@ -1349,6 +1349,8 @@ _frame.app_main = {
 				_frame.app_main.page_dom[page].trigger('modeSelectionEnter', [
 					options.callback_modeSelection_select || function(){}
 				])
+			}else{
+				_frame.app_main.mode_selection_off()
 			}
 			//_g.uriHash('page', page)
 		},
@@ -1516,12 +1518,24 @@ _frame.app_main = {
 									})
 									.appendTo( _frame.dom.nav )
 				*/
-				_frame.dom.navlinks = $('<div/>').appendTo( _frame.dom.nav )
-				_frame.dom.globaloptions = $('<section class="options"/>').appendTo( _frame.dom.nav )
-				_frame.dom.btnShowOnlyBg = $('<button class="show_only_bg" icon="images"/>')
-										.on('click', function(){_frame.app_main.only_bg_toggle()}).appendTo( _frame.dom.globaloptions )
-				_frame.dom.btnShowOnlyBgBack = $('<button class="show_only_bg_back" icon="arrow-set2-left"/>')
-										.on('click', function(){_frame.app_main.only_bg_off()}).appendTo( _frame.dom.nav )
+				_frame.dom.navlinks = $('<div class="pages"/>').appendTo( _frame.dom.nav )
+					_frame.dom.globaloptions = $('<section class="options"/>').appendTo( _frame.dom.nav )
+						_frame.dom.btnShowOnlyBg = $('<button class="show_only_bg" icon="images"/>')
+												.on('click', function(){_frame.app_main.only_bg_toggle()}).appendTo( _frame.dom.globaloptions )
+					_frame.dom.btnShowOnlyBgBack = $('<button class="show_only_bg_back" icon="arrow-set2-left"/>')
+											.on('click', function(){_frame.app_main.only_bg_off()}).appendTo( _frame.dom.nav )
+				_frame.dom.btnsHistory = $('<div class="history"/>').appendTo( _frame.dom.nav )
+					_frame.dom.btnHistoryBack = $('<button class="back" icon="arrow-set2-left"/>')
+							.on({
+								'click': function(){
+									_frame.dom.btnHistoryForward.removeClass('disabled')
+									history.back()
+								}
+							}).appendTo( _frame.dom.btnsHistory )
+					_frame.dom.btnHistoryForward = $('<button class="forward disabled" icon="arrow-set2-right"/>')
+							.on('click', function(){
+								history.forward()
+							}).appendTo( _frame.dom.btnsHistory )
 			_frame.dom.main = $('<main/>').appendTo( _frame.dom.layout )
 			_frame.dom.bgimg = $('<div class="bgimg" />').appendTo( _frame.dom.layout )
 
@@ -2870,8 +2884,6 @@ class PAGE {
 	}
 	
 	modeSelectionEnter(callback_select){
-		console.log('modeSelectionEnter')
-		
 		let self = this
 			,_callback_select
 		
@@ -2884,7 +2896,7 @@ class PAGE {
 		
 		_frame.app_main.mode_selection_callback = _callback_select
 		
-		_frame.dom.layout.addClass('mode-selection')
+		_frame.app_main.mode_selection_on()
 		
 		return _callback_select
 	}
@@ -2893,9 +2905,7 @@ class PAGE {
 		if( !_frame.dom.layout.hasClass('mode-selection') )
 			return false
 
-		console.log('modeSelectionExit')
-		
-		_frame.dom.layout.removeClass('mode-selection')
+		_frame.app_main.mode_selection_off()
 	}
 }
 
@@ -3311,10 +3321,11 @@ _frame.infos = {
 		// 第一次运行，创建相关DOM和变量
 			if( !_frame.infos.dom ){
 				_frame.infos.dom = {
-					'nav': 		$('<div class="infos"/>').appendTo( _frame.dom.nav ),
+					//'nav': 		$('<div class="infos"/>').appendTo( _frame.dom.nav ),
 					'main': 	$('<div class="page infos"/>').appendTo( _frame.dom.main )
 				}
 				_frame.infos.dom.container = $('<div class="wrapper"/>').appendTo( _frame.infos.dom.main )
+				/*
 				_frame.infos.dom.back = $('<button class="back" icon="arrow-set2-left"/>')
 						.on({
 							'click': function(){
@@ -3336,13 +3347,17 @@ _frame.infos = {
 							history.forward()
 							//_frame.infos.hide()
 						}).appendTo( _frame.infos.dom.nav )
-				/*
-				_frame.infos.dom.historyback = $('<button class="history"/>')
-						.html('')
-						.on('click', function(){
-							_frame.infos.historyback()
-						}).appendTo( _frame.infos.dom.nav )
 				*/
+				_frame.dom.btnHistoryBack.on({
+							'transitionend.infos_hide': function(e){
+								if( e.currentTarget == e.target
+									&& e.originalEvent.propertyName == 'opacity'
+									&& parseFloat(_frame.dom.btnHistoryBack.css('opacity')) == 0
+								){
+									_frame.infos.hide_finish()
+								}
+							}
+						})
 			}
 
 		// 计算历史记录相关，确定 Back/Forward 按钮是否可用
@@ -3350,7 +3365,7 @@ _frame.infos = {
 			this.historyCurrent = infosHistoryIndex
 			//_g.log( this.historyCurrent, this.historyLength )
 			if( this.historyCurrent == this.historyLength && this.historyCurrent > -1 )
-				_frame.infos.dom.forward.addClass('disabled')
+				_frame.dom.btnHistoryForward.addClass('disabled')
 
 		// 先将内容区域设定为可见
 			_frame.dom.layout.addClass('infos-show')
@@ -3408,6 +3423,8 @@ _frame.infos = {
 		// 取消主导航上的当前项目状态
 			if( _frame.app_main.cur_page ){
 				this.lastCurrentPage = _frame.app_main.cur_page
+				// exit selection mode
+					_frame.app_main.mode_selection_off()
 				_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
 				_frame.app_main.cur_page = null
 			}
@@ -3424,7 +3441,7 @@ _frame.infos = {
 
 		// 隐藏内容
 			_frame.dom.layout.removeClass('infos-on')
-			_frame.infos.dom.forward.addClass('disabled')
+			_frame.dom.btnHistoryForward.addClass('disabled')
 			this.curContent = null
 
 		if( this.lastCurrentPage ){
@@ -4378,6 +4395,7 @@ class InfosFleetShip{
 			if( value ){
 				this.el.removeClass('noship')
 				this.elAvatar.html('<img src="' + node.path.join(_g.path.pics.ships, value + '/10.webp') + '"/>')
+				this.elInfos.html(_g.data.ships[value]._name)
 			}else{
 				this.el.addClass('noship')
 				this.elAvatar.html('')
@@ -4600,6 +4618,19 @@ _frame.app_main.is_mode_selection = function(){
 }
 
 _frame.app_main.mode_selection_callback = null
+
+_frame.app_main.mode_selection_on = function(){
+	if( !_frame.dom.navSelectionInfo ){
+		_frame.dom.navSelectionInfo = $('<div class="selection-info"/>').html('请选择……').appendTo( _frame.dom.nav )
+	}
+	_frame.dom.layout.addClass('mode-selection')
+}
+
+_frame.app_main.mode_selection_off = function(){
+	if( _frame.app_main.cur_page )
+		_frame.app_main.page_dom[_frame.app_main.cur_page].trigger('modeSelectionExit')
+	_frame.dom.layout.removeClass('mode-selection')
+}
 
 if( typeof _p.tip != 'undefined' ){
 

@@ -365,6 +365,7 @@ class InfosFleetShip{
 			if( value ){
 				this.el.removeClass('noship')
 				this.elAvatar.html('<img src="' + node.path.join(_g.path.pics.ships, value + '/10.webp') + '"/>')
+				this.elInfos.html(_g.data.ships[value]._name)
 			}else{
 				this.el.addClass('noship')
 				this.elAvatar.html('')
