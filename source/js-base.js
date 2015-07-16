@@ -2,14 +2,18 @@
  my base framework for nw.js project: https://github.com/Diablohu/nw.js-base-framework
  */
 
+// @koala-prepend "js-base/!.js"
+
 // @koala-prepend "js-base/libs/jquery-2.1.3.min.js"
 
+// @koala-prepend "js-base/_g-variables.js"
 // @koala-prepend "js-base/_g.js"
 // @koala-prepend "js-base/_p.js"
 
 // @koala-prepend "js-base/libs/visibility/visibility.core.js"
 // @koala-prepend "js-base/libs/jquery.mousewheel.js"
 
+// @koala-prepend "js-base/prototype/Array.js"
 // @koala-prepend "js-base/prototype/date.js"
 // @koala-prepend "js-base/prototype/object.js"
 // @koala-prepend "js-base/prototype/string.js"

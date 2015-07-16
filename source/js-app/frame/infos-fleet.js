@@ -1,6 +1,6 @@
 // 舰队配置
 	_frame.infos.__fleet = function( id ){
-		return (new InfosFleet(id)).dom
+		return (new InfosFleet(id)).el
 	}
 
 
@@ -15,8 +15,10 @@ class InfosFleet{
 	constructor( id ){
 		var self = this
 		
-		this.dom = $('<div class="fleet loading"/>')
+		this.el = $('<div class="fleet loading"/>')
 		this.doms = {}
+
+		this.fleets = []
 	
 		if( id == '__NEW__' ){
 			_db.fleets.insert( _tablelist.prototype._fleets_new_data(), function(err, newDoc){
@@ -49,111 +51,94 @@ class InfosFleet{
 		if( !d )
 			return false
 
-		_g.log(d)
-		this.data = d
+		$.extend(true, this, d)
+		_g.log(this)
 
 		let self = this
 			,i = 0
 
-		this.dom.attr('data-fleetid', d._id)
-			.data('fleet', d)
+		this.el.attr('data-fleetid', d._id)
+			//.data('fleet', d)
 			.removeClass('loading')
-
-		$('<header/>')
-			.append(
-				self.doms['name'] = $('<h3 contenteditable/>')
-					.html('点击编辑标题')
-					.on({
-						'input': function(){
-							self.update_data({})
-							self.doms['name'].trigger('namechange')
-						},
-						'focus': function(){
-							if( self.doms['name'].text() == '点击编辑标题' )
-								self.doms['name'].html('')
-						},
-						'blur': function(){
-							if( !self.doms['name'].text() )
-								self.doms['name'].html('点击编辑标题')
-						},
-						'namechange': function(e, content){
-							if( typeof content == 'undefined' ){
-								content = self.doms['name'].text()
-							}else{
-								self.doms['name'].html(content)
+		
+		// 创建DOM
+			$('<header/>')
+				.append(
+					self.doms['name'] = $('<h3 contenteditable/>')
+						.html('点击编辑标题')
+						.on({
+							'input': function(){
+								self.update_data({})
+								self.doms['name'].trigger('namechange')
+							},
+							'focus': function(){
+								if( self.doms['name'].text() == '点击编辑标题' )
+									self.doms['name'].html('')
+							},
+							'blur': function(){
+								if( !self.doms['name'].text() )
+									self.doms['name'].html('点击编辑标题')
+							},
+							'namechange': function(e, content){
+								if( typeof content == 'undefined' ){
+									content = self.doms['name'].text()
+								}
+								
+								self._name = content
+								return self.doms['name']
 							}
-
-							if( content ){
-								self.doms['name'].attr('data-content', content)
-							}else{
-								self.doms['name'].removeAttr('data-content')
-							}
-
-							return self.doms['name']
-						}
-					})
-			)
-			.append(
-				self.doms['user'] = $('<button/>')
-			)
-			.appendTo(self.dom)
-
-		$('<div class="fleets"/>')
-			.append(
-				self.doms['tabs'] = $('<div class="tabs"/>')
-			)
-			.append(
-				self.doms['options'] = $('<div class="options"/>')
-					.append(
-						$('<span/>').html('[PH] 阵型')
-					)
-					.append(
-						$('<span/>').html('[PH] 颜色')
-					)
-					.append(
-						$('<span/>').html('[PH] 分享')
-					)
-			)
-			.appendTo(self.dom)
-
-		this.doms['ships'] = $('<div class="ships"/>').appendTo(self.dom)
-
-		// 4个分舰队
-			while(i < 4){
-				i++
+						})
+				)
+				.append(
+					self.doms['user'] = $('<button/>')
+				)
+				.appendTo(self.el)
 	
-				$('<input/>',{
-						'type': 	'radio',
-						'name': 	'fleet_' + d._id + '_tab',
-						'id': 		'fleet_' + d._id + '_tab_' + i,
-						'value': 	i
-					}).prop('checked', (i == 1)).prependTo( self.dom )
+			$('<div class="fleets"/>')
+				.append(
+					self.doms['tabs'] = $('<div class="tabs"/>')
+				)
+				.append(
+					self.doms['options'] = $('<div class="options"/>')
+						.append(
+							$('<span/>').html('[PH] 阵型')
+						)
+						.append(
+							$('<span/>').html('[PH] 颜色')
+						)
+						.append(
+							$('<span/>').html('[PH] 分享')
+						)
+				)
+				.appendTo(self.el)
 	
-				$('<label/>',{
-						'for': 		'fleet_' + d._id + '_tab_' + i,
-						'data-fleet':i,
-						'html': 	'#' + i
-					}).appendTo( self.doms['tabs'] )
+			this.doms['ships'] = $('<div class="ships"/>').appendTo(self.el)
 	
-				self.doms['fleet' + i] = $('<dl/>',{
-						'data-fleet':i
-					}).appendTo( self.doms['ships'] )
-	
-				// 6个舰娘
-					let j = 0
-					while( j < 6 ){
-						j++
-						self.doms['ship' + i + '-' + j]
-							= (new InfosFleetShip()).getEl()
-							.appendTo( self.doms['fleet' + i] )
-						$('<s/>').appendTo( self.doms['fleet' + i] )
-					}
-				
-				// 舰队综合属性
-					self.doms['fleetsummary' + i] = $('<span/>').appendTo( self.doms['fleet' + i] )
-			}
+			// 4个分舰队
+				while(i < 4){
+					self.fleets[i] = new InfosFleetSubFleet(self, self.data[i] || [])
 
-		// 更新DOM
+					$('<input/>',{
+							'type': 	'radio',
+							'name': 	'fleet_' + d._id + '_tab',
+							'id': 		'fleet_' + d._id + '_tab_' + i,
+							'value': 	i
+						}).prop('checked', (i == 0)).prependTo( self.el )
+			
+					$('<label/>',{
+							'for': 		'fleet_' + d._id + '_tab_' + i,
+							'data-fleet':i,
+							'html': 	'#' + i
+						}).appendTo( self.doms['tabs'] )
+
+					self.fleets[i].el
+						.attr('data-fleet', i)
+						.appendTo( self.doms['ships'] )
+
+					i++
+				}
+
+		// 根据数据更新DOM
 			this.update( d )
 	}
 
@@ -162,7 +147,6 @@ class InfosFleet{
 	// 根据数据更新内容
 	update( d ){
 		d = d || {}
-		let self = this
 
 		// 主题颜色
 			if( typeof d['theme'] != 'undefined' )
@@ -188,6 +172,33 @@ class InfosFleet{
 
 
 	// 更新数据库
+
+
+
+	
+	// 舰队名
+		get _name(){
+			return this['name']
+		}
+		set _name( value ){
+			this['name'] = value
+			this.doms['name'].html(value)
+
+			if( value ){
+				this.doms['name'].attr('data-content', value)
+			}else{
+				this.doms['name'].removeAttr('data-content')
+			}
+		}
+	
+	// 保存
+		save(){
+			for(let i in this.fleets){
+				this.data[i] = this.fleets[i].data
+			}
+			_g.log(this)
+			return this
+		}
 }
 
 
@@ -198,52 +209,32 @@ class InfosFleet{
 
 // 类：子舰队
 class InfosFleetSubFleet{
-	constructor(objectInfosFleet, d){
+	constructor(infosFleet, d){
 		const self = this
 
 		d = d || []
 		this.data = d
 
-		if( this.el )
-			return this.el
+		this.el = $('<dl/>')
 		
-		$('<input/>',{
-				'type': 	'radio',
-				'name': 	'fleet_' + d._id + '_tab',
-				'id': 		'fleet_' + d._id + '_tab_' + i,
-				'value': 	i
-			}).prop('checked', (i == 1)).prependTo( objectInfosFleet.dom )
-
-		$('<label/>',{
-				'for': 		'fleet_' + d._id + '_tab_' + i,
-				'data-fleet':i,
-				'html': 	'#' + i
-			}).appendTo( objectInfosFleet.doms['tabs'] )
-
-		objectInfosFleet.doms['fleet' + i] = $('<dl/>',{
-				'data-fleet':i
-			}).appendTo( objectInfosFleet.doms['ships'] )
+		this.ships = []
 
 		// 6个舰娘
-			let j = 0
-			while( j < 6 ){
-				j++
-				objectInfosFleet.doms['ship' + i + '-' + j]
-					= (new InfosFleetShip(objectInfosFleet, self)).getEl()
-					.appendTo( objectInfosFleet.doms['fleet' + i] )
-				$('<s/>').appendTo( objectInfosFleet.doms['fleet' + i] )
+			let i = 0
+			while( i < 6 ){
+				self.ships[i] = new InfosFleetShip(infosFleet, self, self.data[i] || null)
+				self.ships[i].getEl().appendTo( self.el )
+				$('<s/>').appendTo( self.el )
+				i++
 			}
 		
 		// 舰队综合属性
-			objectInfosFleet.doms['fleetsummary' + i] = $('<span/>').appendTo( objectInfosFleet.doms['fleet' + i] )
+			this.elSummary = $('<span/>').appendTo( this.el )
+		
+		this.infosFleet = infosFleet
 
 		this.updateEl()
 	}
-	
-	// 返回页面元素
-		getEl(){
-			return this.el
-		}
 
 	// 更新元数据
 	
@@ -256,6 +247,19 @@ class InfosFleetSubFleet{
 		getData(){
 			return this.data
 		}
+
+
+
+	
+	// 保存
+		save(){
+			for(let i in this.ships){
+				this.data[i] = this.ships[i].data
+			}
+			
+			if( this.infosFleet )
+				this.infosFleet.save()
+		}
 }
 
 
@@ -266,7 +270,7 @@ class InfosFleetSubFleet{
 
 // 类：舰娘
 class InfosFleetShip{
-	constructor(objectInfosFleet, objectInfosFleetSubFleet, d){
+	constructor(infosFleet, infosFleetSubFleet, d){
 		// 数据结构
 		/* [
 				STRING 舰娘ID,
@@ -293,6 +297,8 @@ class InfosFleetShip{
 
 		d = d || [null, [null, -1], [], []]
 		this.data = d
+		this.infosFleet = infosFleet
+		this.infosFleetSubFleet = infosFleetSubFleet
 
 		if( this.el )
 			return this.el
@@ -332,24 +338,18 @@ class InfosFleetShip{
 	// 开始选择
 		selectShipStart(){
 			_g.log('开始选择舰娘')
+			let self = this
 
-			_frame.infos.hide()
-			_frame.app_main.load_page_func('ships', this.selectShip)
-		}
-	
-	// 已选择
-		selectShip(id){
-			this.data[0] = id
-		}
-	
-	// 删除
-		removeShip(){
-			this.data[0] = null
-		}
-	
-	// 更改等级
-		changeLv(lv){
-			this.data[1][0] = lv || -1
+			//_frame.infos.hide()
+			//_frame.app_main.cur_page = null
+			_frame.app_main.load_page('ships', {
+				callback_modeSelection_select:		function(id){
+					history.back()
+					self.shipId = id
+					if( self.infosFleet )
+						_frame.infos.dom.main.attr('data-theme', self.infosFleet.data['theme'])
+				}
+			})
 		}
 	
 	// 更改运
@@ -390,6 +390,51 @@ class InfosFleetShip{
 	// 获取当前状态的元数据
 		getData(){
 			return this.data
+		}
+	
+	
+	
+	// 舰娘ID
+		get shipId(){
+			return this.data[0]
+		}
+		set shipId( value ){
+			this.data[0] = value
+			
+			this.el.attr('data-shipId', value)
+			
+			if( value ){
+				this.el.removeClass('noship')
+				this.elAvatar.html('<img src="' + node.path.join(_g.path.pics.ships, value + '/10.webp') + '"/>')
+				this.elInfos.html(_g.data.ships[value]._name)
+			}else{
+				this.el.addClass('noship')
+				this.elAvatar.html('')
+				this.elInfos.html('选择舰娘...')
+			}
+			
+			this.save()
+		}
+	
+	// 舰娘等级
+		get shipLv(){
+			return this.data[1][0]
+		}
+		set shipLv( value ){
+			this.data[1][0] = lv || -1
+			this.el.attr('data-shipLv', value)
+		}
+	
+	// 舰娘运
+	
+	// 某位置装备
+	
+	// 某位置装备等级
+	
+	// 保存
+		save(){
+			if( this.infosFleetSubFleet )
+				this.infosFleetSubFleet.save()
 		}
 }
 

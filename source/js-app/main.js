@@ -243,6 +243,7 @@ _frame.app_main = {
 
 	// 更换背景图
 		//change_bgimg_fadein: false,
+		//change_bgimg_oldEl: null,
 		change_bgimg: function( bgimgs_new ){
 			// _frame.app_main.bgimgs 未生成，函数不予执行
 			if( !_frame.app_main.bgimgs.length )
@@ -264,14 +265,15 @@ _frame.app_main = {
 			this.bgimg_path = node.path.join( _g.path.bgimg_dir , '/' + img_new )
 			img_new = 'file://' + encodeURI( this.bgimg_path.replace(/\\/g, '/') )
 
-			function delete_old_dom( old_dom ){
-				setTimeout(function(){
-					old_dom.remove()
-				}, _g.animate_duration_delay)
-			}
+			//function delete_old_dom( old_dom ){
+			//	setTimeout(function(){
+			//		old_dom.remove()
+			//	}, _g.animate_duration_delay)
+			//}
 
 			if( img_old ){
-				delete_old_dom( _frame.app_main.cur_bgimg_el )
+				this.change_bgimg_oldEl = _frame.app_main.cur_bgimg_el
+				//delete_old_dom( _frame.app_main.cur_bgimg_el )
 			}
 
 			//_frame.app_main.cur_bgimg_el = $('<img src="' + img_new + '" />').appendTo( _frame.dom.bgimg )
@@ -284,6 +286,13 @@ _frame.app_main = {
 											.add( $('<s'+( _frame.app_main.change_bgimg_fadein ? ' class="fadein"' : '' )+'/>').css('background-image','url('+img_new_blured+')').appendTo( _frame.dom.bg_controls) )
 
 			_frame.app_main.change_bgimg_fadein = true
+		},
+		change_bgimg_after: function(oldEl){
+			oldEl = oldEl || this.change_bgimg_oldEl
+			if( oldEl ){
+				this.change_bgimg_oldEl.remove()
+				this.change_bgimg_oldEl = null
+			}
 		},
 
 
@@ -300,9 +309,11 @@ _frame.app_main = {
 
 
 	// 更换页面
-		load_page: function( page ){
+		load_page: function( page, options ){
 			if( _frame.app_main.cur_page == page || !page )
 				return page
+
+			options = options || {}
 
 			this.pushState(
 				{
@@ -311,14 +322,42 @@ _frame.app_main = {
 				null,
 				'?page=' + page
 			)
-			this.load_page_func( page )
+			
+			this.load_page_func( page, options )
+
+			if( options.callback_modeSelection_select ){
+				_frame.app_main.page_dom[page].trigger('modeSelectionEnter', [
+					options.callback_modeSelection_select || function(){}
+				])
+			}else{
+				_frame.app_main.mode_selection_off()
+			}
 			//_g.uriHash('page', page)
 		},
-		load_page_func: function( page, callback_modeSelection ){
+		load_page_func: function( page, options ){
 			_g.log( 'PREPARE LOADING: ' + page )
+			options = options || {}
 
 			if( _frame.app_main.cur_page == page || !page )
 				return page
+			
+			// 检查page合法性，如果失效，读取第一个导航项
+				let checked = false
+					
+				if( !_frame.app_main.cur_page ){
+					for(let i in _frame.app_main.nav){
+						if( page == _frame.app_main.nav[i].page )
+							checked = true
+					}
+				}else{
+					checked = true
+				}
+				
+				if( !checked ){
+					page = _frame.app_main.nav[0].page
+					_frame.app_main.load_page(page, options)
+					return page
+				}
 
 			if( !_frame.app_main.page_dom[page] ){
 				_frame.app_main.page_dom[page] = $('<div class="page" page="'+page+'"/>').appendTo( _frame.dom.main )
@@ -341,7 +380,7 @@ _frame.app_main = {
 
 			_frame.dom.navs[page].addClass('on')
 
-			if( !callback_modeSelection ){
+			if( !options.callback_modeSelection_select ){
 				if( _frame.dom.layout.hasClass('ready') )
 					_frame.app_main.change_bgimg()
 
@@ -477,12 +516,24 @@ _frame.app_main = {
 									})
 									.appendTo( _frame.dom.nav )
 				*/
-				_frame.dom.navlinks = $('<div/>').appendTo( _frame.dom.nav )
-				_frame.dom.globaloptions = $('<section class="options"/>').appendTo( _frame.dom.nav )
-				_frame.dom.btnShowOnlyBg = $('<button class="show_only_bg" icon="images"/>')
-										.on('click', function(){_frame.app_main.only_bg_toggle()}).appendTo( _frame.dom.globaloptions )
-				_frame.dom.btnShowOnlyBgBack = $('<button class="show_only_bg_back" icon="arrow-set2-left"/>')
-										.on('click', function(){_frame.app_main.only_bg_off()}).appendTo( _frame.dom.nav )
+				_frame.dom.navlinks = $('<div class="pages"/>').appendTo( _frame.dom.nav )
+					_frame.dom.globaloptions = $('<section class="options"/>').appendTo( _frame.dom.nav )
+						_frame.dom.btnShowOnlyBg = $('<button class="show_only_bg" icon="images"/>')
+												.on('click', function(){_frame.app_main.only_bg_toggle()}).appendTo( _frame.dom.globaloptions )
+					_frame.dom.btnShowOnlyBgBack = $('<button class="show_only_bg_back" icon="arrow-set2-left"/>')
+											.on('click', function(){_frame.app_main.only_bg_off()}).appendTo( _frame.dom.nav )
+				_frame.dom.btnsHistory = $('<div class="history"/>').appendTo( _frame.dom.nav )
+					_frame.dom.btnHistoryBack = $('<button class="back" icon="arrow-set2-left"/>')
+							.on({
+								'click': function(){
+									_frame.dom.btnHistoryForward.removeClass('disabled')
+									history.back()
+								}
+							}).appendTo( _frame.dom.btnsHistory )
+					_frame.dom.btnHistoryForward = $('<button class="forward disabled" icon="arrow-set2-right"/>')
+							.on('click', function(){
+								history.forward()
+							}).appendTo( _frame.dom.btnsHistory )
 			_frame.dom.main = $('<main/>').appendTo( _frame.dom.layout )
 			_frame.dom.bgimg = $('<div class="bgimg" />').appendTo( _frame.dom.layout )
 
@@ -716,7 +767,7 @@ _frame.app_main = {
 																	0,
 																	_g.data.ships[id].remodel_next
 																)
-																console.log(_g.data.ship_id_by_type[i])
+																//console.log(_g.data.ship_id_by_type[i])
 																__(i)
 																break
 															}
@@ -934,6 +985,9 @@ _frame.app_main = {
 				$body.on('click.pagechange', 'a[href^="?page="]', function(e){
 					e.preventDefault()
 					_frame.app_main.load_page($(this).attr('href').substr('?page='.length))
+				})
+				_frame.dom.bgimg.on('animationend, webkitAnimationEnd', 'div', function(){
+					_frame.app_main.change_bgimg_after()
 				})
 				/*
 					$html.on('click.openShipModal', '[data-shipid][modal="true"]', function(e){

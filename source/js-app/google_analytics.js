@@ -1,4 +1,5 @@
 var ga = {
+	/*
 	defaults: {
 		'v': 		1,					// Version
 		'tid': 		'UA-63582858-1',	// Tracking ID / Property ID
@@ -59,5 +60,17 @@ var ga = {
 			})
 			ga.is_init = true
 		}
+	}*/
+	
+	counter: function(path, title, screenName){
+		_frame.dom.hiddenIframe.attr({
+			'src':	node.url.format(
+						'http://fleet.diablohu.com/ga.html?path=' + encodeURIComponent(path)
+						+ ( title
+							? ('&title=' + encodeURIComponent(title))
+							: ''
+						)
+					)
+		})
 	}
 }

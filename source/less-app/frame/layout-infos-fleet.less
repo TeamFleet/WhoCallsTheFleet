@@ -245,12 +245,12 @@
 							width: 		~"calc(30% - 15px)";
 							top: 		0;
 							left: 		0;
-							.border-bottom(1, solid, rgba(255, 255, 255, .2));
+							//.border-bottom(1, solid, rgba(255, 255, 255, .2));
 							&>s{
 								display: 	block;
 								position: 	relative;
 								flex: 		1 1 150px;
-								background: no-repeat 50% 50% / cover;
+								//background: no-repeat 50% 50% / cover;
 								z-index: 	1;
 								&:after{
 									content: 	'';
@@ -262,6 +262,18 @@
 									left: 		0;
 									background: linear-gradient(to right, rgba(255, 255, 255, .5) 25%, transparent) repeat-y 0 0;
 								}
+								img{
+									position: 	absolute;
+									display: 	block;
+									height: 	auto;
+									width: 		auto;
+									max-height: 100%;
+									min-height: 100%;
+									top: 		0;
+									left: 		50%;
+									transform: 	translateX(-27.5%);
+									.mask(~"linear-gradient(to right, transparent, #000 5%)");
+								}
 							}
 							&>font{
 								.flexbox;
@@ -271,10 +283,15 @@
 								z-index: 	2;
 								.justify-content(center);
 							}
-						}
-						&:hover{
 							&:after{
-								opacity: 1;
+								content: 	'';
+								position: 	absolute;
+								bottom: 	0;
+								right: 		0;
+								left: 		0;
+								height: 	1px;
+								z-index: 	10;
+								background: rgba(255, 255, 255, .2);
 							}
 						}
 						&.noship{
@@ -309,6 +326,16 @@
 										opacity: .5;
 									}
 								}
+								&:after{
+									opacity: 1;
+								}
+							}
+						}
+						&[data-shipid]{
+							&>dt{
+								&>s{
+									.mask(~"linear-gradient(to right, #000 70%, transparent)")									
+								}
 							}
 						}
 					} // dd
@@ -326,7 +353,7 @@
 
 			&>input[type="radio"]{
 				display:	none;
-				.loop(@n, @i: 1) when (@i =< @n) {
+				.loop(@n, @i: 0) when (@i =< @n) {
 					//&:nth-child(@{n}):checked~.tabview-content:nth-child(@{n}){
 					&[value="@{i}"]:checked{
 						&~.fleets .tabs label[data-fleet="@{i}"]{
@@ -385,14 +412,14 @@
 								background:	linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.3)) repeat-x 0 0;
 							}
 							&>dt{
-								.border-bottom(1, solid, rgba(255, 255, 255, .2));
 								&>s{
 									&:after{
 										background: linear-gradient(to right, hsla(51, 100%, 95%, .5) 25%, transparent) repeat-y 0 0;
 									}
 								}
-								&>font{
-								}
+								//&:after{
+								//	background-color: rgba(255, 255, 255, .2);
+								//}
 							}
 							&.noship{
 								&>dt{

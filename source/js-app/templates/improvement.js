@@ -20,7 +20,8 @@ _tmpl.improvement = function( equipment, improvement_index, requirement_index, r
 	for(var i in requirement_index){
 		var req = improvement['req'][requirement_index[i]]
 		if( req[1] )
-			req_ships = req_ships.concat(req[1])
+			req_ships.mergeFrom(req[1])
+			//req_ships = req_ships.concat(req[1])
 	}
 	if( req_ships.length ){
 		var names = []

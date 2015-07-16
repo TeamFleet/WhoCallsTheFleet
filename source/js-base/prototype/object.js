@@ -3,7 +3,7 @@
 
  *******************************************************************
 
- OBJECT.getSize()
+ Oebjet._size
  	-> 返回第一级项目数量
 
 
@@ -22,11 +22,14 @@
 
 
 
-/*Object.prototype.getSize = function(){
-	var size = 0
-	for( var i in this ){
-		size++
+Object.defineProperty(Object.prototype, '_size', {
+	enumerable:	false,
+	//writable:	false,
+	get: function(){
+		var size = 0
+		for( var i in this ){
+			size++
+		}
+		return size
 	}
-	return size
-};
-*/
+})

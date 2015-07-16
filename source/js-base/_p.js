@@ -1,5 +1,37 @@
-/* Page Functions -----------------------------------------------------------------------------------------
+/* page elements/components
 */
+
+
+// indicate whether _p.init_document_ready() run
+	//_p.is_init_document_ready = false
+
+//
+	_p.initDOM = function(tar){
+		//tar = tar || ( _frame.dom.layout || ( $('#layout') || $body ) );
+		tar = tar || ( _frame.dom.layout || ( _frame.dom.layout || $body ) );
+
+		return tar.initAll()
+	}
+	_p.initAll = _p.initDOM
+	$.fn.initDOM = function(){
+		// call init() function in all _p.el
+			for(var i in _p.el){
+				if( _p.el[i].init )
+					_p.el[i].init(this)
+			}
+
+		//_p.hashlinks(tar);
+		return this
+	};
+	$.fn.initAll = $.fn.initDOM
+
+//
+	_p.init_document_ready = function(){
+		if( !_p.is_init_document_ready ){
+			_p.initDOM($body);
+			_p.is_init_document_ready = true
+		}
+	}
 
 
 
@@ -81,7 +113,7 @@ _p.get_lines = function(el, el_lineheight){
 // 处理时间元素
 _p.el.time = {
 	init: function(tar){
-		els = _p.get_tar(tar, '.time');
+		var els = _p.get_tar(tar, '.time');
 		els.each(function(){
 			var o = $(this),
 				str = o.text()
@@ -100,7 +132,7 @@ _p.el.time = {
 // 处理时间元素：秒
 _p.el.timeSec = {
 	init: function(tar){
-		els = _p.get_tar(tar, '.time-sec');
+		var els = _p.get_tar(tar, '.time-sec');
 		els.each(function(){
 			var o = $(this)
 

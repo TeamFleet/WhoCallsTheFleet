@@ -28,7 +28,7 @@ _p.tip = {
 
 		_p.tip.dom = $('<div id="tip"/>')
 						.on('transitionend', function(e){
-							if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(_p.tip.dom.css('opacity')) == 0 ){
+							if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseFloat(_p.tip.dom.css('opacity')) == 0 ){
 								_p.tip.dom
 									.removeClass('show')
 									.css({

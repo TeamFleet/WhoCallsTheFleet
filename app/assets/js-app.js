@@ -848,6 +848,7 @@ if (wheelEvent) {
 })();
 
 var ga = {
+	/*
 	defaults: {
 		'v': 		1,					// Version
 		'tid': 		'UA-63582858-1',	// Tracking ID / Property ID
@@ -908,6 +909,18 @@ var ga = {
 			})
 			ga.is_init = true
 		}
+	}*/
+	
+	counter: function(path, title, screenName){
+		_frame.dom.hiddenIframe.attr({
+			'src':	node.url.format(
+						'http://fleet.diablohu.com/ga.html?path=' + encodeURIComponent(path)
+						+ ( title
+							? ('&title=' + encodeURIComponent(title))
+							: ''
+						)
+					)
+		})
 	}
 }
 
@@ -920,6 +933,10 @@ class ITEM {
 		return this['name']
 				? (this['name'][language] || this['name'])
 				: null
+	}
+	
+	get _name(){
+		return this.getName()
 	}
 }
 
@@ -968,6 +985,7 @@ class Equipment extends ITEM{
 	getName(small_brackets, language){
 		language = language || _g.lang
 		var result = ITEM.prototype.getName.call(this, language)
+			//,result = super.getName(language)
 			,small_brackets_tag = small_brackets && !small_brackets === true ? small_brackets : 'small'
 		return small_brackets
 				? result.replace(/（([^（^）]+)）/g, '<'+small_brackets_tag+'>($1)</'+small_brackets_tag+'>')
@@ -1258,6 +1276,7 @@ _frame.app_main = {
 
 	// 更换背景图
 		//change_bgimg_fadein: false,
+		//change_bgimg_oldEl: null,
 		change_bgimg: function( bgimgs_new ){
 			// _frame.app_main.bgimgs 未生成，函数不予执行
 			if( !_frame.app_main.bgimgs.length )
@@ -1279,14 +1298,15 @@ _frame.app_main = {
 			this.bgimg_path = node.path.join( _g.path.bgimg_dir , '/' + img_new )
 			img_new = 'file://' + encodeURI( this.bgimg_path.replace(/\\/g, '/') )
 
-			function delete_old_dom( old_dom ){
-				setTimeout(function(){
-					old_dom.remove()
-				}, _g.animate_duration_delay)
-			}
+			//function delete_old_dom( old_dom ){
+			//	setTimeout(function(){
+			//		old_dom.remove()
+			//	}, _g.animate_duration_delay)
+			//}
 
 			if( img_old ){
-				delete_old_dom( _frame.app_main.cur_bgimg_el )
+				this.change_bgimg_oldEl = _frame.app_main.cur_bgimg_el
+				//delete_old_dom( _frame.app_main.cur_bgimg_el )
 			}
 
 			//_frame.app_main.cur_bgimg_el = $('<img src="' + img_new + '" />').appendTo( _frame.dom.bgimg )
@@ -1299,6 +1319,13 @@ _frame.app_main = {
 											.add( $('<s'+( _frame.app_main.change_bgimg_fadein ? ' class="fadein"' : '' )+'/>').css('background-image','url('+img_new_blured+')').appendTo( _frame.dom.bg_controls) )
 
 			_frame.app_main.change_bgimg_fadein = true
+		},
+		change_bgimg_after: function(oldEl){
+			oldEl = oldEl || this.change_bgimg_oldEl
+			if( oldEl ){
+				this.change_bgimg_oldEl.remove()
+				this.change_bgimg_oldEl = null
+			}
 		},
 
 
@@ -1315,9 +1342,11 @@ _frame.app_main = {
 
 
 	// 更换页面
-		load_page: function( page ){
+		load_page: function( page, options ){
 			if( _frame.app_main.cur_page == page || !page )
 				return page
+
+			options = options || {}
 
 			this.pushState(
 				{
@@ -1326,14 +1355,42 @@ _frame.app_main = {
 				null,
 				'?page=' + page
 			)
-			this.load_page_func( page )
+			
+			this.load_page_func( page, options )
+
+			if( options.callback_modeSelection_select ){
+				_frame.app_main.page_dom[page].trigger('modeSelectionEnter', [
+					options.callback_modeSelection_select || function(){}
+				])
+			}else{
+				_frame.app_main.mode_selection_off()
+			}
 			//_g.uriHash('page', page)
 		},
-		load_page_func: function( page, callback_modeSelection ){
+		load_page_func: function( page, options ){
 			_g.log( 'PREPARE LOADING: ' + page )
+			options = options || {}
 
 			if( _frame.app_main.cur_page == page || !page )
 				return page
+			
+			// 检查page合法性，如果失效，读取第一个导航项
+				let checked = false
+					
+				if( !_frame.app_main.cur_page ){
+					for(let i in _frame.app_main.nav){
+						if( page == _frame.app_main.nav[i].page )
+							checked = true
+					}
+				}else{
+					checked = true
+				}
+				
+				if( !checked ){
+					page = _frame.app_main.nav[0].page
+					_frame.app_main.load_page(page, options)
+					return page
+				}
 
 			if( !_frame.app_main.page_dom[page] ){
 				_frame.app_main.page_dom[page] = $('<div class="page" page="'+page+'"/>').appendTo( _frame.dom.main )
@@ -1356,7 +1413,7 @@ _frame.app_main = {
 
 			_frame.dom.navs[page].addClass('on')
 
-			if( !callback_modeSelection ){
+			if( !options.callback_modeSelection_select ){
 				if( _frame.dom.layout.hasClass('ready') )
 					_frame.app_main.change_bgimg()
 
@@ -1492,12 +1549,24 @@ _frame.app_main = {
 									})
 									.appendTo( _frame.dom.nav )
 				*/
-				_frame.dom.navlinks = $('<div/>').appendTo( _frame.dom.nav )
-				_frame.dom.globaloptions = $('<section class="options"/>').appendTo( _frame.dom.nav )
-				_frame.dom.btnShowOnlyBg = $('<button class="show_only_bg" icon="images"/>')
-										.on('click', function(){_frame.app_main.only_bg_toggle()}).appendTo( _frame.dom.globaloptions )
-				_frame.dom.btnShowOnlyBgBack = $('<button class="show_only_bg_back" icon="arrow-set2-left"/>')
-										.on('click', function(){_frame.app_main.only_bg_off()}).appendTo( _frame.dom.nav )
+				_frame.dom.navlinks = $('<div class="pages"/>').appendTo( _frame.dom.nav )
+					_frame.dom.globaloptions = $('<section class="options"/>').appendTo( _frame.dom.nav )
+						_frame.dom.btnShowOnlyBg = $('<button class="show_only_bg" icon="images"/>')
+												.on('click', function(){_frame.app_main.only_bg_toggle()}).appendTo( _frame.dom.globaloptions )
+					_frame.dom.btnShowOnlyBgBack = $('<button class="show_only_bg_back" icon="arrow-set2-left"/>')
+											.on('click', function(){_frame.app_main.only_bg_off()}).appendTo( _frame.dom.nav )
+				_frame.dom.btnsHistory = $('<div class="history"/>').appendTo( _frame.dom.nav )
+					_frame.dom.btnHistoryBack = $('<button class="back" icon="arrow-set2-left"/>')
+							.on({
+								'click': function(){
+									_frame.dom.btnHistoryForward.removeClass('disabled')
+									history.back()
+								}
+							}).appendTo( _frame.dom.btnsHistory )
+					_frame.dom.btnHistoryForward = $('<button class="forward disabled" icon="arrow-set2-right"/>')
+							.on('click', function(){
+								history.forward()
+							}).appendTo( _frame.dom.btnsHistory )
 			_frame.dom.main = $('<main/>').appendTo( _frame.dom.layout )
 			_frame.dom.bgimg = $('<div class="bgimg" />').appendTo( _frame.dom.layout )
 
@@ -1731,7 +1800,7 @@ _frame.app_main = {
 																	0,
 																	_g.data.ships[id].remodel_next
 																)
-																console.log(_g.data.ship_id_by_type[i])
+																//console.log(_g.data.ship_id_by_type[i])
 																__(i)
 																break
 															}
@@ -1949,6 +2018,9 @@ _frame.app_main = {
 				$body.on('click.pagechange', 'a[href^="?page="]', function(e){
 					e.preventDefault()
 					_frame.app_main.load_page($(this).attr('href').substr('?page='.length))
+				})
+				_frame.dom.bgimg.on('animationend, webkitAnimationEnd', 'div', function(){
+					_frame.app_main.change_bgimg_after()
 				})
 				/*
 					$html.on('click.openShipModal', '[data-shipid][modal="true"]', function(e){
@@ -2445,7 +2517,8 @@ _tmpl.improvement = function( equipment, improvement_index, requirement_index, r
 	for(var i in requirement_index){
 		var req = improvement['req'][requirement_index[i]]
 		if( req[1] )
-			req_ships = req_ships.concat(req[1])
+			req_ships.mergeFrom(req[1])
+			//req_ships = req_ships.concat(req[1])
 	}
 	if( req_ships.length ){
 		var names = []
@@ -2837,27 +2910,84 @@ _tmpl.textlink_ship = function( ship, tagName, returnHTML ){
 		)
 }
 
-_frame.app_main.page['ships'] = {}
+class PAGE {
+	constructor( $page ) {
+	}
+	
+	modeSelectionEnter(callback_select){
+		let self = this
+			,_callback_select
+		
+		callback_select = callback_select || function(){}
+		_callback_select = function(){
+			//callback_select.apply( callback_select, arguments )
+			callback_select(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6], arguments[7], arguments[8], arguments[9], arguments[10])
+			self.modeSelectionExit()
+		}
+		
+		_frame.app_main.mode_selection_callback = _callback_select
+		
+		_frame.app_main.mode_selection_on()
+		
+		return _callback_select
+	}
+	
+	modeSelectionExit(){
+		if( !_frame.dom.layout.hasClass('mode-selection') )
+			return false
 
+		_frame.app_main.mode_selection_off()
+	}
+}
 
+//class PageShips extends PAGE
 
-
-
-
-
-
-_frame.app_main.page['ships'].init = function( page ){
-	this.tablelist = page.find('.tablelist')
-	this.tablelistObj = this.tablelist.data('tablelist')
-
-	page.on('pageon', function(){
-		if( !_frame.app_main.page['ships'].tablelistObj )
-			_frame.app_main.page['ships'].tablelistObj
-				= _frame.app_main.page['ships'].tablelist.data('tablelist')
-
-		if( _frame.app_main.page['ships'].tablelistObj )
-			_frame.app_main.page['ships'].tablelistObj.thead_redraw()
-	})
+_frame.app_main.page['ships'] = {
+	init: function( $page ){
+		/*
+		this.tablelist = page.find('.tablelist')
+		this.tablelistObj = this.tablelist.data('tablelist')
+	
+		page.on('pageon', function(){
+			if( !_frame.app_main.page['ships'].tablelistObj )
+				_frame.app_main.page['ships'].tablelistObj
+					= _frame.app_main.page['ships'].tablelist.data('tablelist')
+	
+			if( _frame.app_main.page['ships'].tablelistObj )
+				_frame.app_main.page['ships'].tablelistObj.thead_redraw()
+		})
+		*/
+		
+		this.object = new class extends PAGE{
+			constructor( $page ){
+				super( $page )
+				
+				let self = this
+				
+				this.tablelist = $page.find('.tablelist')
+				this.tablelistObj = this.tablelist.data('tablelist')
+			
+				$page.on({
+					'pageon': function(){
+						if( !self.tablelistObj )
+							self.tablelistObj
+								= self.tablelist.data('tablelist')
+				
+						if( self.tablelistObj )
+							self.tablelistObj.thead_redraw()
+					},
+					'modeSelectionEnter': function(e, callback_select){
+						self.modeSelectionEnter(callback_select)
+					}
+				})
+			}
+			
+			//modeSelectionEnter(callback_select){
+			//	callback_select = super.modeSelectionEnter(callback_select)
+			//	console.log(callback_select)
+			//}
+		}( $page )
+	}
 }
 
 _frame.app_main.page['equipments'] = {}
@@ -3222,10 +3352,11 @@ _frame.infos = {
 		// 第一次运行，创建相关DOM和变量
 			if( !_frame.infos.dom ){
 				_frame.infos.dom = {
-					'nav': 		$('<div class="infos"/>').appendTo( _frame.dom.nav ),
+					//'nav': 		$('<div class="infos"/>').appendTo( _frame.dom.nav ),
 					'main': 	$('<div class="page infos"/>').appendTo( _frame.dom.main )
 				}
 				_frame.infos.dom.container = $('<div class="wrapper"/>').appendTo( _frame.infos.dom.main )
+				/*
 				_frame.infos.dom.back = $('<button class="back" icon="arrow-set2-left"/>')
 						.on({
 							'click': function(){
@@ -3247,13 +3378,17 @@ _frame.infos = {
 							history.forward()
 							//_frame.infos.hide()
 						}).appendTo( _frame.infos.dom.nav )
-				/*
-				_frame.infos.dom.historyback = $('<button class="history"/>')
-						.html('')
-						.on('click', function(){
-							_frame.infos.historyback()
-						}).appendTo( _frame.infos.dom.nav )
 				*/
+				_frame.dom.btnHistoryBack.on({
+							'transitionend.infos_hide': function(e){
+								if( e.currentTarget == e.target
+									&& e.originalEvent.propertyName == 'opacity'
+									&& parseFloat(_frame.dom.btnHistoryBack.css('opacity')) == 0
+								){
+									_frame.infos.hide_finish()
+								}
+							}
+						})
 			}
 
 		// 计算历史记录相关，确定 Back/Forward 按钮是否可用
@@ -3261,7 +3396,7 @@ _frame.infos = {
 			this.historyCurrent = infosHistoryIndex
 			//_g.log( this.historyCurrent, this.historyLength )
 			if( this.historyCurrent == this.historyLength && this.historyCurrent > -1 )
-				_frame.infos.dom.forward.addClass('disabled')
+				_frame.dom.btnHistoryForward.addClass('disabled')
 
 		// 先将内容区域设定为可见
 			_frame.dom.layout.addClass('infos-show')
@@ -3319,6 +3454,10 @@ _frame.infos = {
 		// 取消主导航上的当前项目状态
 			if( _frame.app_main.cur_page ){
 				this.lastCurrentPage = _frame.app_main.cur_page
+
+				// exit selection mode
+					//_frame.app_main.mode_selection_off()
+
 				_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
 				_frame.app_main.cur_page = null
 			}
@@ -3335,7 +3474,7 @@ _frame.infos = {
 
 		// 隐藏内容
 			_frame.dom.layout.removeClass('infos-on')
-			_frame.infos.dom.forward.addClass('disabled')
+			_frame.dom.btnHistoryForward.addClass('disabled')
 			this.curContent = null
 
 		if( this.lastCurrentPage ){
@@ -3924,7 +4063,7 @@ _frame.infos.init = function(){
 
 // 舰队配置
 	_frame.infos.__fleet = function( id ){
-		return (new InfosFleet(id)).dom
+		return (new InfosFleet(id)).el
 	}
 
 
@@ -3939,8 +4078,10 @@ class InfosFleet{
 	constructor( id ){
 		var self = this
 		
-		this.dom = $('<div class="fleet loading"/>')
+		this.el = $('<div class="fleet loading"/>')
 		this.doms = {}
+
+		this.fleets = []
 	
 		if( id == '__NEW__' ){
 			_db.fleets.insert( _tablelist.prototype._fleets_new_data(), function(err, newDoc){
@@ -3973,111 +4114,94 @@ class InfosFleet{
 		if( !d )
 			return false
 
-		_g.log(d)
-		this.data = d
+		$.extend(true, this, d)
+		_g.log(this)
 
 		let self = this
 			,i = 0
 
-		this.dom.attr('data-fleetid', d._id)
-			.data('fleet', d)
+		this.el.attr('data-fleetid', d._id)
+			//.data('fleet', d)
 			.removeClass('loading')
-
-		$('<header/>')
-			.append(
-				self.doms['name'] = $('<h3 contenteditable/>')
-					.html('点击编辑标题')
-					.on({
-						'input': function(){
-							self.update_data({})
-							self.doms['name'].trigger('namechange')
-						},
-						'focus': function(){
-							if( self.doms['name'].text() == '点击编辑标题' )
-								self.doms['name'].html('')
-						},
-						'blur': function(){
-							if( !self.doms['name'].text() )
-								self.doms['name'].html('点击编辑标题')
-						},
-						'namechange': function(e, content){
-							if( typeof content == 'undefined' ){
-								content = self.doms['name'].text()
-							}else{
-								self.doms['name'].html(content)
+		
+		// 创建DOM
+			$('<header/>')
+				.append(
+					self.doms['name'] = $('<h3 contenteditable/>')
+						.html('点击编辑标题')
+						.on({
+							'input': function(){
+								self.update_data({})
+								self.doms['name'].trigger('namechange')
+							},
+							'focus': function(){
+								if( self.doms['name'].text() == '点击编辑标题' )
+									self.doms['name'].html('')
+							},
+							'blur': function(){
+								if( !self.doms['name'].text() )
+									self.doms['name'].html('点击编辑标题')
+							},
+							'namechange': function(e, content){
+								if( typeof content == 'undefined' ){
+									content = self.doms['name'].text()
+								}
+								
+								self._name = content
+								return self.doms['name']
 							}
-
-							if( content ){
-								self.doms['name'].attr('data-content', content)
-							}else{
-								self.doms['name'].removeAttr('data-content')
-							}
-
-							return self.doms['name']
-						}
-					})
-			)
-			.append(
-				self.doms['user'] = $('<button/>')
-			)
-			.appendTo(self.dom)
-
-		$('<div class="fleets"/>')
-			.append(
-				self.doms['tabs'] = $('<div class="tabs"/>')
-			)
-			.append(
-				self.doms['options'] = $('<div class="options"/>')
-					.append(
-						$('<span/>').html('[PH] 阵型')
-					)
-					.append(
-						$('<span/>').html('[PH] 颜色')
-					)
-					.append(
-						$('<span/>').html('[PH] 分享')
-					)
-			)
-			.appendTo(self.dom)
-
-		this.doms['ships'] = $('<div class="ships"/>').appendTo(self.dom)
-
-		// 4个分舰队
-			while(i < 4){
-				i++
+						})
+				)
+				.append(
+					self.doms['user'] = $('<button/>')
+				)
+				.appendTo(self.el)
 	
-				$('<input/>',{
-						'type': 	'radio',
-						'name': 	'fleet_' + d._id + '_tab',
-						'id': 		'fleet_' + d._id + '_tab_' + i,
-						'value': 	i
-					}).prop('checked', (i == 1)).prependTo( self.dom )
+			$('<div class="fleets"/>')
+				.append(
+					self.doms['tabs'] = $('<div class="tabs"/>')
+				)
+				.append(
+					self.doms['options'] = $('<div class="options"/>')
+						.append(
+							$('<span/>').html('[PH] 阵型')
+						)
+						.append(
+							$('<span/>').html('[PH] 颜色')
+						)
+						.append(
+							$('<span/>').html('[PH] 分享')
+						)
+				)
+				.appendTo(self.el)
 	
-				$('<label/>',{
-						'for': 		'fleet_' + d._id + '_tab_' + i,
-						'data-fleet':i,
-						'html': 	'#' + i
-					}).appendTo( self.doms['tabs'] )
+			this.doms['ships'] = $('<div class="ships"/>').appendTo(self.el)
 	
-				self.doms['fleet' + i] = $('<dl/>',{
-						'data-fleet':i
-					}).appendTo( self.doms['ships'] )
-	
-				// 6个舰娘
-					let j = 0
-					while( j < 6 ){
-						j++
-						self.doms['ship' + i + '-' + j]
-							= (new InfosFleetShip()).getEl()
-							.appendTo( self.doms['fleet' + i] )
-						$('<s/>').appendTo( self.doms['fleet' + i] )
-					}
-				
-				// 舰队综合属性
-					self.doms['fleetsummary' + i] = $('<span/>').appendTo( self.doms['fleet' + i] )
-			}
+			// 4个分舰队
+				while(i < 4){
+					self.fleets[i] = new InfosFleetSubFleet(self, self.data[i] || [])
 
-		// 更新DOM
+					$('<input/>',{
+							'type': 	'radio',
+							'name': 	'fleet_' + d._id + '_tab',
+							'id': 		'fleet_' + d._id + '_tab_' + i,
+							'value': 	i
+						}).prop('checked', (i == 0)).prependTo( self.el )
+			
+					$('<label/>',{
+							'for': 		'fleet_' + d._id + '_tab_' + i,
+							'data-fleet':i,
+							'html': 	'#' + i
+						}).appendTo( self.doms['tabs'] )
+
+					self.fleets[i].el
+						.attr('data-fleet', i)
+						.appendTo( self.doms['ships'] )
+
+					i++
+				}
+
+		// 根据数据更新DOM
 			this.update( d )
 	}
 
@@ -4086,7 +4210,6 @@ class InfosFleet{
 	// 根据数据更新内容
 	update( d ){
 		d = d || {}
-		let self = this
 
 		// 主题颜色
 			if( typeof d['theme'] != 'undefined' )
@@ -4112,6 +4235,33 @@ class InfosFleet{
 
 
 	// 更新数据库
+
+
+
+	
+	// 舰队名
+		get _name(){
+			return this['name']
+		}
+		set _name( value ){
+			this['name'] = value
+			this.doms['name'].html(value)
+
+			if( value ){
+				this.doms['name'].attr('data-content', value)
+			}else{
+				this.doms['name'].removeAttr('data-content')
+			}
+		}
+	
+	// 保存
+		save(){
+			for(let i in this.fleets){
+				this.data[i] = this.fleets[i].data
+			}
+			_g.log(this)
+			return this
+		}
 }
 
 
@@ -4122,52 +4272,32 @@ class InfosFleet{
 
 // 类：子舰队
 class InfosFleetSubFleet{
-	constructor(objectInfosFleet, d){
+	constructor(infosFleet, d){
 		const self = this
 
 		d = d || []
 		this.data = d
 
-		if( this.el )
-			return this.el
+		this.el = $('<dl/>')
 		
-		$('<input/>',{
-				'type': 	'radio',
-				'name': 	'fleet_' + d._id + '_tab',
-				'id': 		'fleet_' + d._id + '_tab_' + i,
-				'value': 	i
-			}).prop('checked', (i == 1)).prependTo( objectInfosFleet.dom )
-
-		$('<label/>',{
-				'for': 		'fleet_' + d._id + '_tab_' + i,
-				'data-fleet':i,
-				'html': 	'#' + i
-			}).appendTo( objectInfosFleet.doms['tabs'] )
-
-		objectInfosFleet.doms['fleet' + i] = $('<dl/>',{
-				'data-fleet':i
-			}).appendTo( objectInfosFleet.doms['ships'] )
+		this.ships = []
 
 		// 6个舰娘
-			let j = 0
-			while( j < 6 ){
-				j++
-				objectInfosFleet.doms['ship' + i + '-' + j]
-					= (new InfosFleetShip(objectInfosFleet, self)).getEl()
-					.appendTo( objectInfosFleet.doms['fleet' + i] )
-				$('<s/>').appendTo( objectInfosFleet.doms['fleet' + i] )
+			let i = 0
+			while( i < 6 ){
+				self.ships[i] = new InfosFleetShip(infosFleet, self, self.data[i] || null)
+				self.ships[i].getEl().appendTo( self.el )
+				$('<s/>').appendTo( self.el )
+				i++
 			}
 		
 		// 舰队综合属性
-			objectInfosFleet.doms['fleetsummary' + i] = $('<span/>').appendTo( objectInfosFleet.doms['fleet' + i] )
+			this.elSummary = $('<span/>').appendTo( this.el )
+		
+		this.infosFleet = infosFleet
 
 		this.updateEl()
 	}
-	
-	// 返回页面元素
-		getEl(){
-			return this.el
-		}
 
 	// 更新元数据
 	
@@ -4180,6 +4310,19 @@ class InfosFleetSubFleet{
 		getData(){
 			return this.data
 		}
+
+
+
+	
+	// 保存
+		save(){
+			for(let i in this.ships){
+				this.data[i] = this.ships[i].data
+			}
+			
+			if( this.infosFleet )
+				this.infosFleet.save()
+		}
 }
 
 
@@ -4190,7 +4333,7 @@ class InfosFleetSubFleet{
 
 // 类：舰娘
 class InfosFleetShip{
-	constructor(objectInfosFleet, objectInfosFleetSubFleet, d){
+	constructor(infosFleet, infosFleetSubFleet, d){
 		// 数据结构
 		/* [
 				STRING 舰娘ID,
@@ -4217,6 +4360,8 @@ class InfosFleetShip{
 
 		d = d || [null, [null, -1], [], []]
 		this.data = d
+		this.infosFleet = infosFleet
+		this.infosFleetSubFleet = infosFleetSubFleet
 
 		if( this.el )
 			return this.el
@@ -4256,24 +4401,18 @@ class InfosFleetShip{
 	// 开始选择
 		selectShipStart(){
 			_g.log('开始选择舰娘')
+			let self = this
 
-			_frame.infos.hide()
-			_frame.app_main.load_page_func('ships', this.selectShip)
-		}
-	
-	// 已选择
-		selectShip(id){
-			this.data[0] = id
-		}
-	
-	// 删除
-		removeShip(){
-			this.data[0] = null
-		}
-	
-	// 更改等级
-		changeLv(lv){
-			this.data[1][0] = lv || -1
+			//_frame.infos.hide()
+			//_frame.app_main.cur_page = null
+			_frame.app_main.load_page('ships', {
+				callback_modeSelection_select:		function(id){
+					history.back()
+					self.shipId = id
+					if( self.infosFleet )
+						_frame.infos.dom.main.attr('data-theme', self.infosFleet.data['theme'])
+				}
+			})
 		}
 	
 	// 更改运
@@ -4314,6 +4453,51 @@ class InfosFleetShip{
 	// 获取当前状态的元数据
 		getData(){
 			return this.data
+		}
+	
+	
+	
+	// 舰娘ID
+		get shipId(){
+			return this.data[0]
+		}
+		set shipId( value ){
+			this.data[0] = value
+			
+			this.el.attr('data-shipId', value)
+			
+			if( value ){
+				this.el.removeClass('noship')
+				this.elAvatar.html('<img src="' + node.path.join(_g.path.pics.ships, value + '/10.webp') + '"/>')
+				this.elInfos.html(_g.data.ships[value]._name)
+			}else{
+				this.el.addClass('noship')
+				this.elAvatar.html('')
+				this.elInfos.html('选择舰娘...')
+			}
+			
+			this.save()
+		}
+	
+	// 舰娘等级
+		get shipLv(){
+			return this.data[1][0]
+		}
+		set shipLv( value ){
+			this.data[1][0] = lv || -1
+			this.el.attr('data-shipLv', value)
+		}
+	
+	// 舰娘运
+	
+	// 某位置装备
+	
+	// 某位置装备等级
+	
+	// 保存
+		save(){
+			if( this.infosFleetSubFleet )
+				this.infosFleetSubFleet.save()
 		}
 }
 
@@ -4512,11 +4696,22 @@ var fleetInfos = function( id ){
 */
 
 _frame.app_main.is_mode_selection = function(){
-	return $html.hasClass('mode-selection')
+	return $html.hasClass('mode-selection') || _frame.dom.layout.hasClass('mode-selection')
 }
 
-_frame.app_main.mode_selection_callback = function(){
-	
+_frame.app_main.mode_selection_callback = null
+
+_frame.app_main.mode_selection_on = function(){
+	if( !_frame.dom.navSelectionInfo ){
+		_frame.dom.navSelectionInfo = $('<div class="selection-info"/>').html('请选择……').appendTo( _frame.dom.nav )
+	}
+	_frame.dom.layout.addClass('mode-selection')
+}
+
+_frame.app_main.mode_selection_off = function(){
+	if( _frame.app_main.cur_page )
+		_frame.app_main.page_dom[_frame.app_main.cur_page].trigger('modeSelectionExit')
+	_frame.dom.layout.removeClass('mode-selection')
 }
 
 if( typeof _p.tip != 'undefined' ){
@@ -5589,6 +5784,14 @@ _tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 					'data-shipedit':self.dom.container.hasClass('shiplist-edit') ? 'true' : null,
 					'data-donotcompare': donotcompare ? true : null
 				})
+				.on('click', function(e, forceInfos){
+					if( !forceInfos && e.target.tagName.toLowerCase() != 'em' && _frame.app_main.is_mode_selection() ){
+						e.preventDefault()
+						e.stopImmediatePropagation()
+						e.stopPropagation()
+						_frame.app_main.mode_selection_callback(ship_data['id'])
+					}
+				})
 				//.appendTo( this.dom.tbody )
 				.insertAfter( self._ships_last_item )
 		,max_carry = 0
@@ -5905,22 +6108,28 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 
 	if( !self._ships_contextmenu )
 		self._ships_contextmenu = new _menu({
+			'className': 'contextmenu-ship',
 			'items': [
-				$('<menuitem/>').html('查看资料')
+				$('<menuitem/>').html('选择')
 					.on({
 						'click': function(e){
 							if( _frame.app_main.is_mode_selection() )
 								_frame.app_main.mode_selection_callback(self._ships_contextmenu_curid)
-							else
-								self._ships_contextmenu_curel.trigger('click')
 						},
 						'show': function(){
 							if( _frame.app_main.is_mode_selection() )
-								$(this).html('选择')
+								$(this).show()
 							else
-								$(this).html('查看资料')
+								$(this).hide()
 						}
 					}),
+				$('<menuitem/>').html('查看资料')
+					.on({
+						'click': function(e){
+							self._ships_contextmenu_curel.trigger('click', [true])
+						}
+					}),
+
 				$('<menuitem/>').html('将该舰娘加入对比')
 					.on({
 						'click': function(e){
@@ -5931,6 +6140,11 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 						'show': function(e){
 							if( !self._ships_contextmenu_curid )
 								return false
+							
+							if( _g.data.ship_types[_g['data']['ships'][self._ships_contextmenu_curid]['type']]['donotcompare'] )
+								$(this).hide()
+							else
+								$(this).show()
 								
 							if( self._ships_checkbox[self._ships_contextmenu_curid].prop('checked') )
 								$(this).html('取消对比')
@@ -5951,21 +6165,27 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 									.html('<span>' + _g['data']['ships'][series[i]['id']].getName(true) + '</span>')
 									.append(
 										$('<div class="group"/>')
+											.append(function(){
+												var els = $()
+												
+												if( _frame.app_main.is_mode_selection() ){
+													els = els.add(
+														$('<menuitem/>')
+															.html('选择')
+															.on({
+																'click': function(){
+																	if( _frame.app_main.is_mode_selection() )
+																		_frame.app_main.mode_selection_callback(series[i]['id'])
+																}
+															})
+													)
+												}
+												
+												return els
+											})
 											.append(
 												$('<menuitem data-infos="[[SHIP::'+series[i]['id']+']]"/>')
-													.html(
-														_frame.app_main.is_mode_selection()
-															? '选择'
-															: '查看资料'
-													)
-													.on({
-														'click': function(e){
-															if( _frame.app_main.is_mode_selection() ){
-																_frame.app_main.mode_selection_callback(series[i]['id'])
-																e.preventDefault()
-															}
-														}
-													})
+													.html('查看资料')
 											)
 											.append(
 												$('<menuitem/>')
@@ -6164,6 +6384,7 @@ _tablelist.prototype._ships_init = function(){
 // @koala-prepend "js-app/templates/link_ship.js"
 // @koala-prepend "js-app/templates/textlink_ship.js"
 
+// @koala-prepend "js-app/page/!.js"
 // @koala-prepend "js-app/page/ships.js"
 // @koala-prepend "js-app/page/equipments.js"
 // @koala-prepend "js-app/page/arsenal.js"
