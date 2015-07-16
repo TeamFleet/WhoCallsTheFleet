@@ -24,8 +24,24 @@
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
   ga('create', 'UA-63582858-2', 'auto');
-  ga('send', 'pageview');
+  //ga('send', 'pageview');
+  
+  var fragments = (location.search[0] == '?' ? location.search.substr(1) : location.search).split('&')
+  		,o = []
+		,page = '/?'
+		,title = ''
 
+  for(var i in fragments){
+	  var t = fragments[i].split('=')
+	  if( t[0] == 'title' )
+	  	title = t[1] ? decodeURIComponent(t[1]) : null
+	  else
+	  	page+= fragments[i]
+  }
+  ga('send', 'pageview', {
+	  'page': 	page,
+	  'title': 	title
+  });
 </script>
 
 </body>
