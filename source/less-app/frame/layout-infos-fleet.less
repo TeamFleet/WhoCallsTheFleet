@@ -353,7 +353,7 @@
 
 			&>input[type="radio"]{
 				display:	none;
-				.loop(@n, @i: 1) when (@i =< @n) {
+				.loop(@n, @i: 0) when (@i =< @n) {
 					//&:nth-child(@{n}):checked~.tabview-content:nth-child(@{n}){
 					&[value="@{i}"]:checked{
 						&~.fleets .tabs label[data-fleet="@{i}"]{

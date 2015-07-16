@@ -190,8 +190,10 @@ _frame.infos = {
 		// 取消主导航上的当前项目状态
 			if( _frame.app_main.cur_page ){
 				this.lastCurrentPage = _frame.app_main.cur_page
+
 				// exit selection mode
-					_frame.app_main.mode_selection_off()
+					//_frame.app_main.mode_selection_off()
+
 				_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
 				_frame.app_main.cur_page = null
 			}
