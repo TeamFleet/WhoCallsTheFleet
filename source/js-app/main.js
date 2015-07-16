@@ -340,6 +340,24 @@ _frame.app_main = {
 
 			if( _frame.app_main.cur_page == page || !page )
 				return page
+			
+			// 检查page合法性，如果失效，读取第一个导航项
+				let checked = false
+					
+				if( !_frame.app_main.cur_page ){
+					for(let i in _frame.app_main.nav){
+						if( page == _frame.app_main.nav[i].page )
+							checked = true
+					}
+				}else{
+					checked = true
+				}
+				
+				if( !checked ){
+					page = _frame.app_main.nav[0].page
+					_frame.app_main.load_page(page, options)
+					return page
+				}
 
 			if( !_frame.app_main.page_dom[page] ){
 				_frame.app_main.page_dom[page] = $('<div class="page" page="'+page+'"/>').appendTo( _frame.dom.main )
