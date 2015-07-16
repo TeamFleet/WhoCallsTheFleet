@@ -4083,8 +4083,8 @@ class InfosFleet{
 		if( !d )
 			return false
 
-		_g.log(d)
-		this.data = d
+		$.extend(true, this, d)
+		_g.log(this)
 
 		let self = this
 			,i = 0
@@ -4116,7 +4116,7 @@ class InfosFleet{
 									content = self.doms['name'].text()
 								}
 								
-								self.name = content
+								self._name = content
 								return self.doms['name']
 							}
 						})
@@ -4148,7 +4148,7 @@ class InfosFleet{
 	
 			// 4个分舰队
 				while(i < 4){
-					self.fleets[i] = new InfosFleetSubFleet(self, i)
+					self.fleets[i] = new InfosFleetSubFleet(self, self.data[i] || [])
 
 					$('<input/>',{
 							'type': 	'radio',
@@ -4179,7 +4179,6 @@ class InfosFleet{
 	// 根据数据更新内容
 	update( d ){
 		d = d || {}
-		let self = this
 
 		// 主题颜色
 			if( typeof d['theme'] != 'undefined' )
@@ -4210,11 +4209,11 @@ class InfosFleet{
 
 	
 	// 舰队名
-		get name(){
-			return this.data['name']
+		get _name(){
+			return this['name']
 		}
-		set name( value ){
-			this.data['name'] = value
+		set _name( value ){
+			this['name'] = value
 			this.doms['name'].html(value)
 
 			if( value ){
@@ -4224,15 +4223,13 @@ class InfosFleet{
 			}
 		}
 	
-	// 元数据
-		get _data(){
-			return []
-		}
-	
 	// 保存
 		save(){
-			return this._data
-			// 更新数据库
+			for(let i in this.fleets){
+				this.data[i] = this.fleets[i].data
+			}
+			_g.log(this)
+			return this
 		}
 }
 
@@ -4255,13 +4252,12 @@ class InfosFleetSubFleet{
 		this.ships = []
 
 		// 6个舰娘
-			let j = 0
-			while( j < 6 ){
-				j++
-				self.ships[j]
-					= (new InfosFleetShip(infosFleet, self)).getEl()
-					.appendTo( self.el )
+			let i = 0
+			while( i < 6 ){
+				self.ships[i] = new InfosFleetShip(infosFleet, self, self.data[i] || null)
+				self.ships[i].getEl().appendTo( self.el )
 				$('<s/>').appendTo( self.el )
+				i++
 			}
 		
 		// 舰队综合属性
@@ -4287,14 +4283,12 @@ class InfosFleetSubFleet{
 
 
 	
-	// 元数据
-		get _data(){
-			return []
-		}
-	
 	// 保存
 		save(){
-			return this._data
+			for(let i in this.ships){
+				this.data[i] = this.ships[i].data
+			}
+			
 			if( this.infosFleet )
 				this.infosFleet.save()
 		}
@@ -4469,14 +4463,8 @@ class InfosFleetShip{
 	
 	// 某位置装备等级
 	
-	// 元数据
-		get _data(){
-			return []
-		}
-	
 	// 保存
 		save(){
-			return this._data
 			if( this.infosFleetSubFleet )
 				this.infosFleetSubFleet.save()
 		}
