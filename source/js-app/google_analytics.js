@@ -65,7 +65,7 @@ var ga = {
 	counter: function(path, title, screenName){
 		_frame.dom.hiddenIframe.attr({
 			'src':	node.url.format(
-						'http://fleet.diablohu.com/ga.html?path=' + encodeURIComponent(path)
+						'http://fleet.diablohu.com/ga.html' + path
 						+ ( title
 							? ('&title=' + encodeURIComponent(title))
 							: ''

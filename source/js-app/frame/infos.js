@@ -201,6 +201,9 @@ _frame.infos = {
 		setTimeout(function(){
 			// 显示内容
 				_frame.dom.layout.addClass('infos-on')
+			ga.counter(
+				location.search
+			)
 		}, 1)
 	},
 
