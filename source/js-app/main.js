@@ -386,8 +386,10 @@ _frame.app_main = {
 
 				if( page != 'about' )
 					Lockr.set('last_page', page)
+				
+				_frame.app_main.title = _frame.app_main.navtitle[page]
 	
-				ga.counter(
+				_ga.counter(
 					location.search
 				)
 			}
@@ -551,8 +553,10 @@ _frame.app_main = {
 		// 创建主导航
 			if( _frame.app_main.nav && _frame.app_main.nav.length ){
 				_frame.dom.navs = {}
+				_frame.app_main.navtitle = {}
 				for( var i in _frame.app_main.nav ){
 					var o = _frame.app_main.nav[i]
+					_frame.app_main.navtitle[o.page] = o.title
 					_frame.dom.navs[o.page] = (function(page){
 								return $('<button />').on('click', function(){
 										_frame.app_main.load_page(page)

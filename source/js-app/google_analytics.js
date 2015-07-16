@@ -1,4 +1,4 @@
-var ga = {
+var _ga = {
 	/*
 	defaults: {
 		'v': 		1,					// Version
@@ -62,15 +62,25 @@ var ga = {
 		}
 	}*/
 	
+	//hiddenIframe: false,
+	
 	counter: function(path, title, screenName){
-		_frame.dom.hiddenIframe.attr({
-			'src':	node.url.format(
+		/*
+		ga('send', 'pageview', {
+				'location':	'http://fleet.diablohu.com/ga.html',
+				'page': 	'/' + path,
+				'title': 	title || _frame.app_main.title
+			});
+		*/
+
+		title = _frame.app_main.title
+
+		_frame.dom.hiddenIframe[0].contentWindow.location.replace(node.url.format(
 						'http://fleet.diablohu.com/ga.html' + path
 						+ ( title
 							? ('&title=' + encodeURIComponent(title))
 							: ''
 						)
-					)
-		})
+					))
 	}
 }

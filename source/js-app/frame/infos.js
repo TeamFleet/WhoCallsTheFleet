@@ -84,6 +84,7 @@ _frame.infos = {
 			id = parseInt(id)
 
 		var cont = ''
+			,title = null
 
 		// 第一次运行，创建相关DOM和变量
 			if( !_frame.infos.dom ){
@@ -142,14 +143,17 @@ _frame.infos = {
 				case 'ship':
 					cont = this.getContent(type, id)
 					_frame.infos.dom.main.attr('data-infostype', 'shipinfo')
+					title = '资料 - 舰娘 - ' + _g.data.ships[id]._name
 					break;
 				case 'equipment':
 					cont = this.getContent(type, id)
 					_frame.infos.dom.main.attr('data-infostype', 'equipmentinfo')
+					title = '资料 - 装备 - ' + _g.data.items[id]._name
 					break;
 				case 'fleet':
 					cont = this.getContent(type, id)
 					_frame.infos.dom.main.attr('data-infostype', 'fleetinfo')
+					title = '舰队 - ' + id
 					break;
 			}
 			//var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
@@ -201,7 +205,10 @@ _frame.infos = {
 		setTimeout(function(){
 			// 显示内容
 				_frame.dom.layout.addClass('infos-on')
-			ga.counter(
+				
+			_frame.app_main.title = title
+			
+			_ga.counter(
 				location.search
 			)
 		}, 1)

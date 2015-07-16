@@ -847,7 +847,7 @@ if (wheelEvent) {
  
 })();
 
-var ga = {
+var _ga = {
 	/*
 	defaults: {
 		'v': 		1,					// Version
@@ -911,16 +911,26 @@ var ga = {
 		}
 	}*/
 	
+	//hiddenIframe: false,
+	
 	counter: function(path, title, screenName){
-		_frame.dom.hiddenIframe.attr({
-			'src':	node.url.format(
+		/*
+		ga('send', 'pageview', {
+				'location':	'http://fleet.diablohu.com/ga.html',
+				'page': 	'/' + path,
+				'title': 	title || _frame.app_main.title
+			});
+		*/
+
+		title = _frame.app_main.title
+
+		_frame.dom.hiddenIframe[0].contentWindow.location.replace(node.url.format(
 						'http://fleet.diablohu.com/ga.html' + path
 						+ ( title
 							? ('&title=' + encodeURIComponent(title))
 							: ''
 						)
-					)
-		})
+					))
 	}
 }
 
@@ -1419,8 +1429,10 @@ _frame.app_main = {
 
 				if( page != 'about' )
 					Lockr.set('last_page', page)
+				
+				_frame.app_main.title = _frame.app_main.navtitle[page]
 	
-				ga.counter(
+				_ga.counter(
 					location.search
 				)
 			}
@@ -1584,8 +1596,10 @@ _frame.app_main = {
 		// 创建主导航
 			if( _frame.app_main.nav && _frame.app_main.nav.length ){
 				_frame.dom.navs = {}
+				_frame.app_main.navtitle = {}
 				for( var i in _frame.app_main.nav ){
 					var o = _frame.app_main.nav[i]
+					_frame.app_main.navtitle[o.page] = o.title
 					_frame.dom.navs[o.page] = (function(page){
 								return $('<button />').on('click', function(){
 										_frame.app_main.load_page(page)
@@ -3348,6 +3362,7 @@ _frame.infos = {
 			id = parseInt(id)
 
 		var cont = ''
+			,title = null
 
 		// 第一次运行，创建相关DOM和变量
 			if( !_frame.infos.dom ){
@@ -3406,14 +3421,17 @@ _frame.infos = {
 				case 'ship':
 					cont = this.getContent(type, id)
 					_frame.infos.dom.main.attr('data-infostype', 'shipinfo')
+					title = '资料 - 舰娘 - ' + _g.data.ships[id]._name
 					break;
 				case 'equipment':
 					cont = this.getContent(type, id)
 					_frame.infos.dom.main.attr('data-infostype', 'equipmentinfo')
+					title = '资料 - 装备 - ' + _g.data.items[id]._name
 					break;
 				case 'fleet':
 					cont = this.getContent(type, id)
 					_frame.infos.dom.main.attr('data-infostype', 'fleetinfo')
+					title = '舰队 - ' + id
 					break;
 			}
 			//var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
@@ -3465,7 +3483,10 @@ _frame.infos = {
 		setTimeout(function(){
 			// 显示内容
 				_frame.dom.layout.addClass('infos-on')
-			ga.counter(
+				
+			_frame.app_main.title = title
+			
+			_ga.counter(
 				location.search
 			)
 		}, 1)
