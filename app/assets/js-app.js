@@ -3806,6 +3806,24 @@ _frame.infos.init = function(){
 						$('<span class="stat-luck"/>').html('+1.6').appendTo(stats)
 				if( !has_modernization )
 					modernization.addClass('no').append($('<em/>').html('-'))
+			
+			// 可额外装备
+				if( d['additional_item_types'] && d['additional_item_types'].length ){
+					var additional_equipment_types = $('<div class="add_equip"/>').appendTo(dom)
+						,_additional_equipment_types = $('<div/>').html('<h4 data-content="特有装备类型">特有装备类型</h4>').appendTo(additional_equipment_types)
+					for( let i in d['additional_item_types'] ){
+						let _d = _g['data']['item_types'][d['additional_item_types'][i]]
+						_additional_equipment_types.append(
+							$('<span/>')
+								.html(_d['name'][_g.lang])
+								.css({
+									'background-image': 'url(assets/images/itemicon/'
+											+ _d['icon']
+											+ '.png'+')'
+								})
+						)
+					}
+				}
 
 			// 声优 & 画师 & 消耗
 				$('<span class="entity"/>')
