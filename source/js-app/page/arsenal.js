@@ -34,11 +34,15 @@ _frame.app_main.page['arsenal'].init = function( page ){
 							})
 							.appendTo($('<div class="akashi"/>').prependTo(tabs))
 
-	// contens
-		$('<div class="main"/>')
+	// contents
+		this.elMain = $('<div class="main"/>')
 			.append(this.init_weekday())
 			.append(this.init_all())
 			.appendTo(page)
+			
+		page.find('input[type="radio"]').on('change', function(){
+				_frame.app_main.page['arsenal'].elMain.scrollTop(0)
+			})
 }
 
 

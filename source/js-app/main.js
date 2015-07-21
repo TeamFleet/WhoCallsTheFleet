@@ -941,7 +941,7 @@ _frame.app_main = {
 										_frame.modal.show(
 											$('<div class="updates"/>')
 												.append(doms)
-												.on('click.infosHideModal', '[data-infos]', function(){
+												.on('click.infosHideModal', '[data-infos], a[href^="?page="]', function(){
 													_frame.modal.hide()
 												}),
 											'<span>更新日志</span>',

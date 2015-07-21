@@ -1,7 +1,7 @@
 {
   "name": "WhoCallsTheFleet",
   "main": "app/main.html",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "An offline guidebook for KanColle. Based on NW.JS",
   "repositories": [
     {
