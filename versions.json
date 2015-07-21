@@ -1,19 +1,19 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.6.1.1",
-			"path":		"data/2015-07-17/app.nwjs-data",
-			"bytes":	15868229
+			"version":	"0.6.2.0",
+			"path":		"data/2015-07-21/app.nwjs-data",
+			"bytes":	15868278
 		},
 		"app-db": {
-			"version":	"1.6.1.2",
-			"path":		"data/2015-07-18/app-db.nwjs-data",
-			"bytes":	131822
+			"version":	"1.6.2.0",
+			"path":		"data/2015-07-21/app-db.nwjs-data",
+			"bytes":	132188
 		},
 		"pics": {
-			"version":	"1.6.1.0",
-			"path":		"data/2015-07-17/pics.nwjs-data",
-			"bytes":	41380039
+			"version":	"1.6.2.0",
+			"path":		"data/2015-07-21/pics.nwjs-data",
+			"bytes":	41397749
 		}
 	},
 	"homepage": "http://fleet.diablohu.com/",
