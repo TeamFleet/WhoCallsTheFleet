@@ -51,8 +51,9 @@ class InfosFleet{
 		if( !d )
 			return false
 
-		$.extend(true, this, d)
-		_g.log(this)
+		//$.extend(true, this, d)
+		//_g.log(this)
+		this.data = d
 
 		let self = this
 			,i = 0
@@ -178,10 +179,10 @@ class InfosFleet{
 	
 	// 舰队名
 		get _name(){
-			return this['name']
+			return this.data['name']
 		}
 		set _name( value ){
-			this['name'] = value
+			this.data['name'] = value
 			this.doms['name'].html(value)
 
 			if( value ){
@@ -194,7 +195,7 @@ class InfosFleet{
 	// 保存
 		save(){
 			for(let i in this.fleets){
-				this.data[i] = this.fleets[i].data
+				this.data.data[i] = this.fleets[i].data
 			}
 			_g.log(this)
 			return this
