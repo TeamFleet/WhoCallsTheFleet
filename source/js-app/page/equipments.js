@@ -11,7 +11,7 @@ _frame.app_main.page['equipments'].init = function( page ){
 	this.tablelist = page.find('.tablelist')
 	this.tablelistObj = this.tablelist.data('tablelist')
 
-	page.on('pageon', function(){
+	page.on('on', function(){
 		if( !_frame.app_main.page['equipments'].tablelistObj )
 			_frame.app_main.page['equipments'].tablelistObj
 				= _frame.app_main.page['equipments'].tablelist.data('tablelist')
