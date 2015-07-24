@@ -403,8 +403,8 @@ _frame.app_main = {
 		load_page_func: function( page, options ){
 			_g.log( 'PREPARE LOADING: ' + page )
 			options = options || {}
-
-			if( _frame.app_main.cur_page == page || !page )
+			
+			if( !page )
 				return page
 			
 			// 检查page合法性，如果失效，读取第一个导航项
@@ -435,8 +435,13 @@ _frame.app_main = {
 					_p.initDOM(_frame.app_main.page_dom[page])
 				}
 			}
+			
+			_frame.app_main.page_dom[page].trigger('show')
 
-			_frame.app_main.page_dom[page].removeClass('off').trigger('pageon')
+			if( _frame.app_main.cur_page == page )
+				return page
+
+			_frame.app_main.page_dom[page].removeClass('off').trigger('on')
 
 			// 关闭之前的页面
 				if( _frame.app_main.cur_page ){

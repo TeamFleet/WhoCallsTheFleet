@@ -26,7 +26,7 @@ _frame.app_main.page['ships'] = {
 				this.tablelistObj = this.tablelist.data('tablelist')
 			
 				$page.on({
-					'pageon': function(){
+					'on': function(){
 						if( !self.tablelistObj )
 							self.tablelistObj
 								= self.tablelist.data('tablelist')
