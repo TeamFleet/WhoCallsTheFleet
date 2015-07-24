@@ -216,7 +216,7 @@
 							,ships = data['data'][0] || []
 							,j = 0;
 						while( j < 6 ){
-							if( ships[j] )
+							if( ships[j] && ships[j][0] )
 								html+='<img src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0.webp" contextmenu="disabled"/>'
 							else
 								html+='<s/>'
