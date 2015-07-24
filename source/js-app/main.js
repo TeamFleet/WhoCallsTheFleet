@@ -758,6 +758,7 @@ _frame.app_main = {
 										break;
 									*/
 								case 'ships':
+								case 'fleets':
 									_done(db_name);
 									break;
 								case 'ship_namesuffix':
