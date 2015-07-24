@@ -914,6 +914,8 @@ var _ga = {
 	//hiddenIframe: false,
 	
 	counter: function(path, title, screenName){
+		if( debugmode )
+			return true
 		/*
 		ga('send', 'pageview', {
 				'location':	'http://fleet.diablohu.com/ga.html',

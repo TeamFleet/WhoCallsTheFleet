@@ -79,19 +79,19 @@
     ],
     "dataVersion": {
       "app": "0.6.2.0",
-      "app-db": "1.6.2.0",
+      "app-db": "1.6.2.1",
       "pics": "1.6.2.0"
     },
     "buildDir": "N:\\nwbuild\\build",
-    "winIco": "N:\\OneDrive\\Projects\\Apps-nw.js\\WhoCallsTheFleet\\!design\\appicon.ico",
+    "winIco": "L:\\Projects\\Apps-nw.js\\WhoCallsTheFleet\\!design\\appicon.ico",
     "enableLauncher": true,
     "dataRelative": [
       "app",
       "app-db",
       "pics"
     ],
-    "launcherSplash": "N:\\OneDrive\\Projects\\Apps-nw.js\\WhoCallsTheFleet\\!design\\launcher.webp",
-    "macIcns": "N:\\OneDrive\\Projects\\Apps-nw.js\\WhoCallsTheFleet\\!design\\appicon.icns"
+    "launcherSplash": "L:\\Projects\\Apps-nw.js\\WhoCallsTheFleet\\!design\\launcher.webp",
+    "macIcns": "L:\\Projects\\Apps-nw.js\\WhoCallsTheFleet\\!design\\appicon.icns"
   },
   "dependencies": {
     "adm-zip": "^0.4.7",
