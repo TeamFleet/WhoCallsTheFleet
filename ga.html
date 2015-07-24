@@ -36,7 +36,7 @@
 	  if( t[0] == 'title' )
 	  	title = t[1] ? decodeURIComponent(t[1]) : null
 	  else
-	  	page+= fragments[i]
+	  	page+= (i != '0' ? '&' : '') + fragments[i]
   }
   ga('send', 'pageview', {
 	  'page': 	page,
