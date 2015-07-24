@@ -62,6 +62,7 @@
 		var self = this
 		return []
 	// PLACEHOLDER START
+	/*
 		var deferred = Q.defer()
 		var data = $.extend( self.kancolle_calc, {
 				'_method': 	'GET',
@@ -90,6 +91,7 @@
 			}
 		})
 		return deferred.promise
+	*/
 	// PLACEHOLDER END
 	// PLACEHOLDER START
 	/*

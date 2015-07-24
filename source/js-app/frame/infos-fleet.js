@@ -159,6 +159,10 @@ class InfosFleet{
 
 		// 分舰队
 			if( d['data'] && d['data'].push ){
+				for(let i in d['data']){
+					//_g.log(d['data'][i])
+					this.fleets[i].updateEl(d['data'][i])
+				}
 			}
 	}
 
@@ -197,7 +201,14 @@ class InfosFleet{
 			for(let i in this.fleets){
 				this.data.data[i] = this.fleets[i].data
 			}
-			_g.log(this)
+			
+			// 更新时间
+			this.data.time_modify = _g.timeNow()
+			
+			//_g.log(this)
+			_db.fleets.updateById(this.data._id, this.data, function(){
+				_g.log('saved')
+			})
 			return this
 		}
 }
@@ -237,11 +248,15 @@ class InfosFleetSubFleet{
 		this.updateEl()
 	}
 
+
 	// 更新元数据
 	
 	// 根据元数据更新页面元素
 		updateEl(d){
 			this.data = d || this.data
+			for(let i in d){
+				this.ships[i].updateEl(d[i])
+			}
 		}
 	
 	// 获取当前状态的元数据
@@ -300,6 +315,9 @@ class InfosFleetShip{
 		this.data = d
 		this.infosFleet = infosFleet
 		this.infosFleetSubFleet = infosFleetSubFleet
+		
+		// 数据正在更新中，禁止触发任何存储操作
+		//this._updating = false
 
 		if( this.el )
 			return this.el
@@ -383,9 +401,13 @@ class InfosFleetShip{
 	
 	// 根据元数据更新页面元素
 		updateEl(d){
-			this.data = d || this.data
-
+			this._updating = true
+			
+			this.data = d || this.data			
+			this.shipId = this.data[0]
 			this.updateAttrs()
+			
+			this._updating = false
 		}
 	
 	// 获取当前状态的元数据
@@ -414,7 +436,8 @@ class InfosFleetShip{
 				this.elInfos.html('选择舰娘...')
 			}
 			
-			this.save()
+			if( !this._updating )
+				this.save()
 		}
 	
 	// 舰娘等级
