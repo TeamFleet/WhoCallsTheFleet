@@ -1117,6 +1117,72 @@ class Equipment extends ITEM{
 
 
 
+// extend NeDB
+	// 根据 _id 更新数据，替换为新内容 docReplace，并执行 callback
+	// 该方法会采用队列，即上一个更新操作正在进行时，新的更新操作会进入队列
+		// 此时如果又有新的更新操作，之前队列的更新操作会被替换
+		// 注：前一个callback将不会执行 
+		node.nedb.prototype.updateById = function( _id, docReplace, callback ){
+			if( !this._updateByIdQueue ){
+				this._updateByIdQueue = {}
+				Object.defineProperty(this._updateByIdQueue, 'running', {
+					enumerable: false,
+					value: false,
+					writable: true
+				})
+			}
+			
+			docReplace = docReplace || {}
+			docReplace._id = _id
+			
+			this._updateByIdQueue[_id] = {
+				docReplace: docReplace,
+				callback: callback || function(){}
+			}
+			
+			this._updateById()
+		}
+		node.nedb.prototype._updateById = function(){
+			if( !this._updateByIdQueue || this._updateByIdQueue.running )
+				return false
+
+			let _id
+			for(let i in this._updateByIdQueue){
+				if( this._updateByIdQueue[i] ){
+					_id = i
+					break;
+				}
+			}
+			
+			if( !_id )
+				return false
+			
+			let queue = this._updateByIdQueue[_id]
+				,self = this
+			this._updateByIdQueue[_id] = null
+			delete this._updateByIdQueue[_id]
+			
+			this._updateByIdQueue.running = true
+			
+			this.update({
+				_id: _id
+			}, queue.docReplace, {}, function (err, numReplaced) {
+				queue.callback.call(self, err, numReplaced)
+				self._updateByIdQueue.running = false
+				self._updateById()
+			})
+		}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
