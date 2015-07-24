@@ -4197,6 +4197,7 @@ class InfosFleet{
 		this.doms = {}
 
 		this.fleets = []
+		//this._updating = false
 	
 		if( id == '__NEW__' ){
 			_db.fleets.insert( _tablelist.prototype._fleets_new_data(), function(err, newDoc){
@@ -4325,6 +4326,7 @@ class InfosFleet{
 
 	// 根据数据更新内容
 	update( d ){
+		this._updating = true
 		d = d || {}
 
 		// 主题颜色
@@ -4342,6 +4344,8 @@ class InfosFleet{
 					this.fleets[i].updateEl(d['data'][i])
 				}
 			}
+		
+		this._updating = false
 	}
 
 
@@ -4372,16 +4376,28 @@ class InfosFleet{
 			}else{
 				this.doms['name'].removeAttr('data-content')
 			}
+			
+			this.save()
 		}
 	
 	// 保存
 		save(){
+			if( this._updating )
+				return this
+			
 			for(let i in this.fleets){
 				this.data.data[i] = this.fleets[i].data
 			}
 			
 			// 更新时间
 			this.data.time_modify = _g.timeNow()
+			
+			// 更新TablelistFleetItem
+			try{
+				for(let i in _g.data.fleets_tablelist.items[this.data._id]){
+					_g.data.fleets_tablelist.items[this.data._id][i].update(this.data)
+				}
+			}catch(e){}
 			
 			//_g.log(this)
 			_db.fleets.updateById(this.data._id, this.data, function(){
@@ -5548,6 +5564,11 @@ _tablelist.prototype._equipments_init = function(){
 		'_InstallationId': 	'62522018-ec82-b434-f5a5-08c3ab61d932',
 		'_JavaScriptKey': 	'xOrFpWEQZFxUDK2fN1DwbKoj3zTKAEkgJHzwTuZ4'
 	}
+	
+	_g.data.fleets_tablelist = {
+		lists: [],
+		items: {}
+	}
 
 
 
@@ -5570,8 +5591,22 @@ _tablelist.prototype._equipments_init = function(){
 
 // 检查并读取已保存数据
 	_tablelist.prototype._fleets_loaddata = function(){
-		var self = this
-		return []
+		var deferred = Q.defer()
+			,arr = []
+		
+		_db.fleets.find({}).sort({name: 1}).exec(function(err, docs){
+			if( err ){
+				deferred.resolve(arr)
+			}else{
+				for(let i in docs){
+					arr.push( docs[i] )
+				}
+				deferred.resolve( arr )
+			}
+		})
+		
+		return deferred.promise
+		//return []
 	// PLACEHOLDER START
 	/*
 		var deferred = Q.defer()
@@ -5675,8 +5710,78 @@ _tablelist.prototype._equipments_init = function(){
 
 
 
+// 单行数据行类
+	class TablelistItemFleet{
+		constructor( data, index ){
+			var self = this
+			
+			this.el = $('<tr class="row"/>')
+					.attr({
+						'data-trindex': index,
+						'data-fleetid': 'PLACEHOLDER',
+						//'data-infos': 	'[[FLEET::'+JSON.stringify(data)+']]'
+						'data-infos': 	'[[FLEET::'+data._id+']]'
+					})
+			
+			if( !_g.data.fleets_tablelist.items[data._id] )
+				_g.data.fleets_tablelist.items[data._id] = []
+			
+			_g.data.fleets_tablelist.items[data._id].push(this)
+			
+			this.update( data )
+		}
+		
+		update( data ){
+			this.el.empty()
+			
+			let self = this
+			
+			for( var i in _tablelist.prototype._fleets_columns ){
+				switch( _tablelist.prototype._fleets_columns[i][1] ){
+					case ' ':
+						var html = '<i>'
+							,ships = data['data'][0] || []
+							,j = 0;
+						while( j < 6 ){
+							if( ships[j] )
+								html+='<img src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0.webp" contextmenu="disabled"/>'
+							else
+								html+='<s/>'
+							j++
+						}
+						html+='</i>'
+						$('<th/>')
+							.attr(
+								'data-value',
+								data['name']
+							)
+							.html(
+								html
+								+ '<strong>' + data['name'] + '</strong>'
+							)
+							.appendTo(self.el)
+						break;
+					default:
+						var datavalue = data[_tablelist.prototype._fleets_columns[i][1]]
+						$('<td/>')
+							.attr(
+								'data-value',
+								datavalue
+							)
+							.html( datavalue )
+							.appendTo(self.el)
+						break;
+				}
+			}
+			
+			return this.el
+		}
+	}
+
+
+
 // 创建单行数据行内容
-	_tablelist.prototype._fleets_append_item = function( data, index ){
+	_tablelist.prototype._fleets_append_item = function( data, index, isPrepend ){
 		if( !data )
 			return false
 
@@ -5684,54 +5789,12 @@ _tablelist.prototype._equipments_init = function(){
 			index = this.trIndex
 			this.trIndex++
 		}
-
-		var self = this
-			,tr = $('<tr class="row"/>')
-				.attr({
-					'data-trindex': index,
-					'data-fleetid': 'PLACEHOLDER',
-					//'data-infos': 	'[[FLEET::'+JSON.stringify(data)+']]'
-					'data-infos': 	'[[FLEET::'+data._id+']]'
-				})
-				.insertBefore( this.flexgrid_ph )
-
-		for( var i in self._fleets_columns ){
-			switch( self._fleets_columns[i][1] ){
-				case ' ':
-					var html = '<i>'
-						,ships = data['data'][0] || []
-						,j = 0;
-					while( j < 6 ){
-						if( ships[j] )
-							html+='<img src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0.webp" contextmenu="disabled"/>'
-						else
-							html+='<s/>'
-						j++
-					}
-					html+='</i>'
-					$('<th/>')
-						.attr(
-							'data-value',
-							data['name']
-						)
-						.html(
-							html
-							+ '<strong>' + data['name'] + '</strong>'
-						)
-						.appendTo(tr)
-					break;
-				default:
-					var datavalue = data[self._fleets_columns[i][1]]
-					$('<td/>')
-						.attr(
-							'data-value',
-							datavalue
-						)
-						.html( datavalue )
-						.appendTo(tr)
-					break;
-			}
-		}
+		
+		var tr = (new TablelistItemFleet( data, index )).el
+		if( isPrepend )
+			tr.prependTo( this.dom.tbody )
+		else
+			tr.insertBefore( this.flexgrid_ph )
 
 		return tr
 	}
@@ -5785,6 +5848,10 @@ _tablelist.prototype._equipments_init = function(){
 					_frame.infos.show('[[FLEET::' + newDoc['_id'] + ']]')
 					self._fleets_menu_new.hide()
 					//self.init(newDoc)
+					
+					for(let i in _g.data.fleets_tablelist.lists){
+						_g.data.fleets_tablelist.lists[i]._fleets_append_item( newDoc, null, true )
+					}
 				}
 			}
 		})
@@ -5807,6 +5874,7 @@ _tablelist.prototype._equipments_init = function(){
 		// 标记全局载入状态
 			_frame.app_main.loading.push('tablelist_'+this._index)
 			_frame.app_main.is_loaded = false
+			_g.data.fleets_tablelist.lists.push(this)
 
 		// [创建] 过滤器与选项
 			this.dom.filter_container = $('<div class="options" viewtype="card"/>').appendTo( this.dom.container )

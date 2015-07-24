@@ -19,6 +19,7 @@ class InfosFleet{
 		this.doms = {}
 
 		this.fleets = []
+		//this._updating = false
 	
 		if( id == '__NEW__' ){
 			_db.fleets.insert( _tablelist.prototype._fleets_new_data(), function(err, newDoc){
@@ -147,6 +148,7 @@ class InfosFleet{
 
 	// 根据数据更新内容
 	update( d ){
+		this._updating = true
 		d = d || {}
 
 		// 主题颜色
@@ -164,6 +166,8 @@ class InfosFleet{
 					this.fleets[i].updateEl(d['data'][i])
 				}
 			}
+		
+		this._updating = false
 	}
 
 
@@ -194,16 +198,28 @@ class InfosFleet{
 			}else{
 				this.doms['name'].removeAttr('data-content')
 			}
+			
+			this.save()
 		}
 	
 	// 保存
 		save(){
+			if( this._updating )
+				return this
+			
 			for(let i in this.fleets){
 				this.data.data[i] = this.fleets[i].data
 			}
 			
 			// 更新时间
 			this.data.time_modify = _g.timeNow()
+			
+			// 更新TablelistFleetItem
+			try{
+				for(let i in _g.data.fleets_tablelist.items[this.data._id]){
+					_g.data.fleets_tablelist.items[this.data._id][i].update(this.data)
+				}
+			}catch(e){}
 			
 			//_g.log(this)
 			_db.fleets.updateById(this.data._id, this.data, function(){
