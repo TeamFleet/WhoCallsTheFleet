@@ -351,20 +351,29 @@ class InfosFleetShip{
 						self.elAvatar = $('<s/>')
 					)
 					.append(
-						self.elInfos = $('<font/>').html('选择舰娘...')
+						self.elInfos = $('<div/>').html('选择舰娘...')
 					)
 			)
 			// 装备
 			.append(
-				$('<span class="equipments"/>')
+				$('<span class="equipments"/>').html('装备')
 			)
 			// 属性
 			.append(
-				$('<span class="attributes"/>')
+				$('<span class="attributes"/>').html('属性')
 			)
 			// 选项/操作
 			.append(
 				$('<span class="options"/>')
+					.append(
+						$('<button/>',{
+							'html':			'i',
+							'data-tip':		'查看资料'
+						}).on('click', function(e){
+								_frame.infos.show('[[SHIP::'+self.shipId+']]', $(this))
+								e.stopPropagation()
+							})
+					)
 					.append(
 						$('<button/>').html('×')
 							.on('click', function(e){
@@ -460,9 +469,28 @@ class InfosFleetShip{
 			this.el.attr('data-shipId', value)
 			
 			if( value ){
+				let ship = _g.data.ships[value]
+					,suffix = ship['name'].suffix
+								? ( _g.data['ship_namesuffix'][ship['name'].suffix][_g.lang]
+									 || _g.data['ship_namesuffix'][ship['name'].suffix]['ja_jp']
+									 || null
+								) : null
 				this.el.removeClass('noship')
 				this.elAvatar.html('<img src="' + node.path.join(_g.path.pics.ships, value + '/10.webp') + '"/>')
-				this.elInfos.html(_g.data.ships[value]._name)
+				this.elInfos.html('')
+					.append(
+						$('<div/>',{
+							'class':	'title',
+							'html':		'<h4 data-content="'+ship['name'][_g.lang]+'">' +ship['name'][_g.lang]+'</h4>'
+										+ ( suffix
+											? '<h5 data-content="'+suffix+'">' +suffix+'</h5>'
+											: ''
+										)
+						})
+					)
+					.append(
+						$('<div class="info"/>')
+					)
 			}else{
 				this.el.addClass('noship')
 				this.elAvatar.html('')

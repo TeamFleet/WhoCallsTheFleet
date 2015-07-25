@@ -9,14 +9,23 @@
 
 
 
-#layout>main>.page.infos[data-infostype="fleetinfo"]{
-	padding:	0 !important;
-	border:		0 !important;
-
+//#layout>main>.page.infos[data-infostype="fleetinfo"]{
+//	padding:	0 !important;
+//	border:		0 !important;
+//}
+#layout>main>.page.infos{
 	&>.wrapper{
 		&>.fleet{
 			.flexbox();
 			.flex-flow(~"column nowrap");
+			
+			.main-sizing-anti-padding();
+			top: 	-20px;
+			height: ~"calc(100% + 40px)";
+			@media all and (max-height: 600px){
+				top: 	-10px;
+				height: ~"calc(100% + 20px)";
+			}
 			
 			&:before{
 				content: 	'';
@@ -146,6 +155,7 @@
 				height:				auto;
 				overflow:			hidden;
 				border:				0 solid transparent;
+				/*
 				.window-noframe({
 					.border-right-width(2);
 					.border-bottom-width(2);
@@ -156,6 +166,7 @@
 					.border-bottom-width(1) !important;
 					.border-left-width(0) !important;
 				});
+				*/
 				&>dl{
 					position:		absolute;
 					.top(10);
@@ -263,7 +274,7 @@
 									.mask(~"linear-gradient(to right, transparent, #000 5%)");
 								}
 							}
-							&>font{
+							&>div{
 								.flexbox;
 								.flex-flow(~"column nowrap");
 								position: 	relative;
@@ -291,25 +302,35 @@
 							top: 		0;
 							left: 		30%;
 							height: 	~"calc(100% - 26px - 8px)";
-							padding-right: 50px;
+							padding-right: 70px;
 							z-index: 	1;
 						}
 						&>.attributes{
 							bottom: 	4px;
 							height: 	22px;
+							line-height:22px;
+							font-size: 	12px;
 							//background: rgba(0,0,0,.025);
-							transform: 	skew(-30deg);
-							transform-origin: 0 0;
 							//border-top: 	1px solid rgba(255, 255, 255, .1);
 							//border-bottom: 	1px solid rgba(255, 255, 255, .05);
-							background: 	rgba(0,0,0,.1);
-							border-top: 	1px solid rgba(255, 255, 255, .2);
-							border-bottom:	1px solid rgba(255, 255, 255, .1);
+							&:after{
+								content: 	"";
+								position: 	absolute;
+								top: 		0;
+								right: 		0;
+								bottom: 	0;
+								left: 		0;
+								transform: 	skew(-30deg);
+								transform-origin: 0 0;
+								background: 	rgba(0,0,0,.1);
+								border-top: 	1px solid rgba(255, 255, 255, .2);
+								border-bottom:	1px solid rgba(255, 255, 255, .1);
+							}
 						}
 						&>.options{
 							right: 		0;
 							top: 		0;
-							width: 		50px;
+							width: 		70px;
 							z-index: 	2;
 							height: 	~"calc(100% - 26px - 8px)";
 							text-align: center;
@@ -319,9 +340,9 @@
 							button{
 								color: 		rgba(255, 255, 255, .2);
 								transition-property: color, background-color;
-								font-size: 	30px;
-								width: 		30px;
-								line-height:30px;
+								font-size: 	25px;
+								width: 		25px;
+								line-height:25px;
 								text-align: center;
 								border-radius: 	3px;
 								font-family: Gothic;
@@ -351,7 +372,7 @@
 										opacity: .65;
 									}
 								}
-								&>font{
+								&>div{
 									color: 	#fff;
 									opacity: .25;
 									.font-size(20);
@@ -466,6 +487,7 @@
 				} // &>header
 				&>.ships{
 					&>dl{
+						color: 	hsl(51, 100%, 93%);
 						dd{
 							&:before{
 								border-right-color:	hsla(51, 100%, 97%, .8);
@@ -491,8 +513,21 @@
 											color: 		hsla(51, 20%, 86%, .75)
 										}
 									}
-									&>font{
+									&>div{
 										color: 	hsl(51, 100%, 93%)
+									}
+								}
+							}
+							&[data-shipid]{
+								&>dt{
+									&>div{
+										h4, h5{
+											color:		hsl(51, 24%, 91%);
+											text-shadow:0 0 unit(5 / 30, em) hsla(51, 100%, 57%, .5);
+											&:before{
+												color: 		hsl(51, 84%, 83%);
+											}
+										}
 									}
 								}
 							}
