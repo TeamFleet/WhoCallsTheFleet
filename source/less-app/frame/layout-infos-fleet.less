@@ -217,30 +217,18 @@
 							.enable-transition();
 							.transition-property(opacity);
 							background:	linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.3)) repeat-x 0 0;
-							@mask-image-main-bg:	linear-gradient(to right, #000, #000)
-													,linear-gradient(to right, #000, #000)
-													,linear-gradient(-60deg, transparent 50%, #000 50%)
-													,linear-gradient(to right, transparent, transparent);
-							@mask-position-main-bg:	0 0
-													,0 100%
-													,~"calc(30% - 15px)" 100%
-													,100% 100%;
-							@mask-size-main-bg:		100% ~"calc(100% - 26px)"
-													,~"calc(30% - 15px)" 26px
-													,40px 26px
-													,70% 26px;
+							@mask-image-main-bg:	linear-gradient(to right, #000 50%, transparent);
 							.mask-image(~"@{mask-image-main-bg}");
-							.mask-position(~"@{mask-position-main-bg}");
-							.mask-size(~"@{mask-size-main-bg}");
-							.mask-repeat(no-repeat);
 						}
-						&>dt, &>ul, &>span{
-							display: 	block;
-							.flexbox();
+						&>dt, &>span{
 							.flex-flow(~"row nowrap");
 							position: 	absolute;
 						}
+						&>span{
+							display: 	none;
+						}
 						&>dt{
+							display: 	flex;
 							height: 	100%;
 							width: 		~"calc(30% - 15px)";
 							top: 		0;
@@ -287,14 +275,64 @@
 								content: 	'';
 								position: 	absolute;
 								bottom: 	0;
-								right: 		0;
+								right: 		-150%;
 								left: 		0;
 								height: 	1px;
 								z-index: 	10;
-								background: rgba(255, 255, 255, .2);
+								background: linear-gradient(to right, rgba(255, 255, 255, .2) 25%, transparent);
+								display: 	block;
+							}
+						}
+						&>.equipments, &>.attributes{
+							left: 	30%;
+							width: 	70%;
+						}
+						&>.equipments{
+							top: 		0;
+							left: 		30%;
+							height: 	~"calc(100% - 26px - 8px)";
+							padding-right: 50px;
+							z-index: 	1;
+						}
+						&>.attributes{
+							bottom: 	4px;
+							height: 	22px;
+							//background: rgba(0,0,0,.025);
+							transform: 	skew(-30deg);
+							transform-origin: 0 0;
+							//border-top: 	1px solid rgba(255, 255, 255, .1);
+							//border-bottom: 	1px solid rgba(255, 255, 255, .05);
+							background: 	rgba(0,0,0,.1);
+							border-top: 	1px solid rgba(255, 255, 255, .2);
+							border-bottom:	1px solid rgba(255, 255, 255, .1);
+						}
+						&>.options{
+							right: 		0;
+							top: 		0;
+							width: 		50px;
+							z-index: 	2;
+							height: 	~"calc(100% - 26px - 8px)";
+							text-align: center;
+							justify-content:flex-end;
+							align-items: 	center;
+							padding-right: 	10px;
+							button{
+								color: 		rgba(255, 255, 255, .2);
+								transition-property: color, background-color;
+								font-size: 	30px;
+								width: 		30px;
+								line-height:30px;
+								text-align: center;
+								border-radius: 	3px;
+								font-family: Gothic;
+								&:hover{
+									color: 	rgba(255 ,255 ,255, .75);
+									background: rgba(0, 0, 0, .15);
+								}
 							}
 						}
 						&.noship{
+							//border-bottom: 1px solid rgba(255, 255, 255, .25);
 							&>dt{
 								&>s{
 									&:before{
@@ -327,15 +365,40 @@
 									}
 								}
 								&:after{
-									opacity: 1;
+									opacity: .5;
 								}
 							}
 						}
 						&[data-shipid]{
+							&:after{
+								@mask-image-main-bg:	linear-gradient(to right, #000, #000)
+														,linear-gradient(to right, #000, #000)
+														,linear-gradient(-60deg, transparent 50%, #000 50%)
+														,linear-gradient(to right, transparent, transparent);
+								@mask-position-main-bg:	0 0
+														,0 100%
+														,~"calc(30% - 15px)" 100%
+														,100% 100%;
+								@mask-size-main-bg:		100% ~"calc(100% - 26px)"
+														,~"calc(30% - 15px)" 26px
+														,40px 26px
+														,70% 26px;
+								.mask-image(~"@{mask-image-main-bg}");
+								.mask-position(~"@{mask-position-main-bg}");
+								.mask-size(~"@{mask-size-main-bg}");
+								.mask-repeat(no-repeat);
+							}
 							&>dt{
 								&>s{
 									.mask(~"linear-gradient(to right, #000 70%, transparent)")									
 								}
+								&:after{
+									right: 		0;
+									background: rgba(255, 255, 255, .2);
+								}
+							}
+							&>span{
+								display: flex;
 							}
 						}
 					} // dd

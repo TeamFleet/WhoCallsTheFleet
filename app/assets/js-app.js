@@ -4344,7 +4344,7 @@ class InfosFleet{
 					$('<label/>',{
 							'for': 		'fleet_' + d._id + '_tab_' + i,
 							'data-fleet':i,
-							'html': 	'#' + i
+							'html': 	'#' + (i+1)
 						}).appendTo( self.doms['tabs'] )
 
 					self.fleets[i].el
@@ -4567,11 +4567,23 @@ class InfosFleetShip{
 			)
 			// 装备
 			.append(
-				$('<ul/>')
+				$('<span class="equipments"/>')
 			)
 			// 属性
 			.append(
-				$('<span/>')
+				$('<span class="attributes"/>')
+			)
+			// 选项/操作
+			.append(
+				$('<span class="options"/>')
+					.append(
+						$('<button/>').html('×')
+							.on('click', function(e){
+								self.shipId = null
+								e.preventDefault()
+								e.stopPropagation()
+							})
+					)
 			)
 			.on('click', function(){
 				if( self.el.hasClass('noship') )
