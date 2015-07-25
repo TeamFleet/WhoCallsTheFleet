@@ -20,6 +20,17 @@ class Ship extends ITEM{
 				)
 	}
 	
+	getSuffix(language){
+		language = language || _g.lang
+		return this['name'].suffix
+					? (
+						_g.data['ship_namesuffix'][this['name'].suffix][language]
+						|| _g.data['ship_namesuffix'][this['name'].suffix]['ja_jp']
+						|| ''
+					)
+					: ''
+	}
+	
 	getType(language){
 		language = language || _g.lang
 		return this['type']
