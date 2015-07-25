@@ -470,11 +470,7 @@ class InfosFleetShip{
 			
 			if( value ){
 				let ship = _g.data.ships[value]
-					,suffix = ship['name'].suffix
-								? ( _g.data['ship_namesuffix'][ship['name'].suffix][_g.lang]
-									 || _g.data['ship_namesuffix'][ship['name'].suffix]['ja_jp']
-									 || null
-								) : null
+					,suffix = ship.getSuffix()
 				this.el.removeClass('noship')
 				this.elAvatar.html('<img src="' + node.path.join(_g.path.pics.ships, value + '/10.webp') + '"/>')
 				this.elInfos.html('')
@@ -489,7 +485,7 @@ class InfosFleetShip{
 						})
 					)
 					.append(
-						$('<div class="info"/>')
+						$('<div class="info"/>').html(ship.getType())
 					)
 			}else{
 				this.el.addClass('noship')

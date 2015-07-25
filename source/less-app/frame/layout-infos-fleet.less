@@ -417,6 +417,27 @@
 									right: 		0;
 									background: rgba(255, 255, 255, .2);
 								}
+								&>div{
+									align-content: center;
+									&>.title{
+										h4, h5{
+											display: 	inline-block;
+											vertical-align: baseline;
+											margin-bottom: 0;
+										}
+										h4{
+											font-size: 	30px;
+											line-height:35px;
+										}
+										h5{
+											font-size: 	18px;
+											margin-left:.5em;
+										}
+									}
+									&>.info{
+										line-height: 	22px;
+									}
+								}
 							}
 							&>span{
 								display: flex;
@@ -487,7 +508,7 @@
 				} // &>header
 				&>.ships{
 					&>dl{
-						color: 	hsl(51, 100%, 93%);
+						color: 	hsla(51, 100%, 93%, .75);
 						dd{
 							&:before{
 								border-right-color:	hsla(51, 100%, 97%, .8);
@@ -522,10 +543,10 @@
 								&>dt{
 									&>div{
 										h4, h5{
-											color:		hsl(51, 24%, 91%);
+											color:		hsl(51, 24%, 92%);
 											text-shadow:0 0 unit(5 / 30, em) hsla(51, 100%, 57%, .5);
 											&:before{
-												color: 		hsl(51, 84%, 83%);
+												color: 		hsl(51, 87%, 80%);
 											}
 										}
 									}
