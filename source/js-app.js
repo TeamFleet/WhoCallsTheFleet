@@ -19,6 +19,7 @@
 // @koala-prepend "js-app/templates/textlink_ship.js"
 
 // @koala-prepend "js-app/page/!.js"
+// @koala-prepend "js-app/page/fleets.js"
 // @koala-prepend "js-app/page/ships.js"
 // @koala-prepend "js-app/page/equipments.js"
 // @koala-prepend "js-app/page/arsenal.js"

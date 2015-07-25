@@ -38,10 +38,10 @@
 		'_JavaScriptKey': 	'xOrFpWEQZFxUDK2fN1DwbKoj3zTKAEkgJHzwTuZ4'
 	}
 	
-	_g.data.fleets_tablelist = {
-		lists: [],
-		items: {}
-	}
+	//_g.data.fleets_tablelist = {
+	//	lists: [],
+	//	items: {}
+	//}
 
 
 
@@ -184,6 +184,7 @@
 
 
 // 单行数据行类
+/*
 	class TablelistItemFleet{
 		constructor( data, index ){
 			var self = this
@@ -200,6 +201,8 @@
 				_g.data.fleets_tablelist.items[data._id] = []
 			
 			_g.data.fleets_tablelist.items[data._id].push(this)
+			
+			//this.dom.container.removeClass('nocontent')
 			
 			this.update( data )
 		}
@@ -250,6 +253,7 @@
 			return this.el
 		}
 	}
+*/
 
 
 
@@ -263,7 +267,52 @@
 			this.trIndex++
 		}
 		
-		var tr = (new TablelistItemFleet( data, index )).el
+		var tr = $('<tr class="row"/>')
+					.attr({
+						'data-trindex': index,
+						'data-fleetid': 'PLACEHOLDER',
+						//'data-infos': 	'[[FLEET::'+JSON.stringify(data)+']]'
+						'data-infos': 	'[[FLEET::'+data._id+']]'
+					})
+		
+		for( var i in _tablelist.prototype._fleets_columns ){
+			switch( _tablelist.prototype._fleets_columns[i][1] ){
+				case ' ':
+					var html = '<i>'
+						,ships = data['data'][0] || []
+						,j = 0;
+					while( j < 6 ){
+						if( ships[j] && ships[j][0] )
+							html+='<img src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0.webp" contextmenu="disabled"/>'
+						else
+							html+='<s/>'
+						j++
+					}
+					html+='</i>'
+					$('<th/>')
+						.attr(
+							'data-value',
+							data['name']
+						)
+						.html(
+							html
+							+ '<strong>' + data['name'] + '</strong>'
+						)
+						.appendTo(tr)
+					break;
+				default:
+					var datavalue = data[_tablelist.prototype._fleets_columns[i][1]]
+					$('<td/>')
+						.attr(
+							'data-value',
+							datavalue
+						)
+						.html( datavalue )
+						.appendTo(tr)
+					break;
+			}
+		}
+
 		if( isPrepend )
 			tr.prependTo( this.dom.tbody )
 		else
@@ -322,9 +371,9 @@
 					self._fleets_menu_new.hide()
 					//self.init(newDoc)
 					
-					for(let i in _g.data.fleets_tablelist.lists){
-						_g.data.fleets_tablelist.lists[i]._fleets_append_item( newDoc, null, true )
-					}
+					//for(let i in _g.data.fleets_tablelist.lists){
+					//	_g.data.fleets_tablelist.lists[i]._fleets_append_item( newDoc, null, true )
+					//}
 				}
 			}
 		})
@@ -347,7 +396,7 @@
 		// 标记全局载入状态
 			_frame.app_main.loading.push('tablelist_'+this._index)
 			_frame.app_main.is_loaded = false
-			_g.data.fleets_tablelist.lists.push(this)
+			//_g.data.fleets_tablelist.lists.push(this)
 
 		// [创建] 过滤器与选项
 			this.dom.filter_container = $('<div class="options" viewtype="card"/>').appendTo( this.dom.container )

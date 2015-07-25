@@ -201,6 +201,11 @@ _frame.infos = {
 				_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
 				_frame.app_main.cur_page = null
 			}
+		
+		// 确定 theme
+			_frame.infos.dom.main.attr({
+				'data-theme': 		cont.attr('data-theme')
+			})
 
 		setTimeout(function(){
 			// 显示内容

@@ -59,7 +59,10 @@ class InfosFleet{
 		let self = this
 			,i = 0
 
-		this.el.attr('data-fleetid', d._id)
+		this.el.attr({
+				'data-fleetid': d._id,
+				'data-theme':	d.theme
+			})
 			//.data('fleet', d)
 			.removeClass('loading')
 		
@@ -215,11 +218,13 @@ class InfosFleet{
 			this.data.time_modify = _g.timeNow()
 			
 			// 更新TablelistFleetItem
+			/*
 			try{
 				for(let i in _g.data.fleets_tablelist.items[this.data._id]){
 					_g.data.fleets_tablelist.items[this.data._id][i].update(this.data)
 				}
 			}catch(e){}
+			*/
 			
 			//_g.log(this)
 			_db.fleets.updateById(this.data._id, this.data, function(){
