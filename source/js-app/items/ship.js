@@ -44,13 +44,13 @@ class Ship extends ITEM{
 				: []
 	}
 	
-	getIllust(illustId){
+	getPic(picId){
 		let series = this.getSeriesData()
-		illustId = parseInt(illustId)
+		picId = parseInt(picId)
 		
 		for(let i in series){
 			if( series[i].id == this.id ){
-				switch(illustId){
+				switch(picId){
 					case 0:
 					case 1:
 					case 2:
@@ -58,13 +58,13 @@ class Ship extends ITEM{
 					case 12:
 					case 13:
 					case 14:
-						return node.path.join(_g.path.pics.ships, this.id + '/' +illustId+ '.webp')
+						return node.path.join(_g.path.pics.ships, this.id + '/' +picId+ '.webp')
 						break;
 					default:
 						if( series[i].illust_delete ){
-							return node.path.join(_g.path.pics.ships, series[i-1].id + '/' +illustId+ '.webp')
+							return node.path.join(_g.path.pics.ships, series[i-1].id + '/' +picId+ '.webp')
 						}else{
-							return node.path.join(_g.path.pics.ships, this.id + '/' +illustId+ '.webp')
+							return node.path.join(_g.path.pics.ships, this.id + '/' +picId+ '.webp')
 						}
 						break;
 				}
@@ -72,10 +72,10 @@ class Ship extends ITEM{
 			}
 		}
 	}
-	get _illustrations(){
+	get _pics(){
 		let arr = []
 		for(let i=0; i<15; i++){
-			arr.push( this.getIllust(i) )
+			arr.push( this.getPic(i) )
 		}
 		return arr
 	}
