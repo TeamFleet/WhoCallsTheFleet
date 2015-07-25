@@ -43,4 +43,40 @@ class Ship extends ITEM{
 				? _g['data']['ship_series'][this['series']]['ships']
 				: []
 	}
+	
+	getPic(picId){
+		let series = this.getSeriesData()
+		picId = parseInt(picId)
+		
+		for(let i in series){
+			if( series[i].id == this.id ){
+				switch(picId){
+					case 0:
+					case 1:
+					case 2:
+					case 3:
+					case 12:
+					case 13:
+					case 14:
+						return node.path.join(_g.path.pics.ships, this.id + '/' +picId+ '.webp')
+						break;
+					default:
+						if( series[i].illust_delete ){
+							return node.path.join(_g.path.pics.ships, series[i-1].id + '/' +picId+ '.webp')
+						}else{
+							return node.path.join(_g.path.pics.ships, this.id + '/' +picId+ '.webp')
+						}
+						break;
+				}
+				break;
+			}
+		}
+	}
+	get _pics(){
+		let arr = []
+		for(let i=0; i<15; i++){
+			arr.push( this.getPic(i) )
+		}
+		return arr
+	}
 }
