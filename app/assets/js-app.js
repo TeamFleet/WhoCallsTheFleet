@@ -4730,7 +4730,7 @@ class InfosFleetShip{
 				let ship = _g.data.ships[value]
 					,suffix = ship.getSuffix()
 				this.el.removeClass('noship')
-				this.elAvatar.html('<img src="' + node.path.join(_g.path.pics.ships, value + '/10.webp') + '"/>')
+				this.elAvatar.html('<img src="' + ship.getPic(10) + '"/>')
 				this.elInfos.html('')
 					.append(
 						$('<div/>',{
