@@ -4364,6 +4364,24 @@ class InfosFleet{
 				.append(
 					self.doms['options'] = $('<div class="options"/>')
 						.append(
+							self.doms['theme'] = $('<select class="option-theme"/>')
+								.on('change', function(){
+									self._theme = self.doms['theme'].val()
+								})
+								.append(function(){
+									let els = $()
+									for( let j=1; j<11; j++ ){
+										els = els.add(
+											$('<option/>',{
+												'value':	j,
+												'html':		'主题-'+j
+											})
+										)
+									}
+									return els
+								})
+						)
+						.append(
 							$('<span/>').html('[PH] 阵型')
 						)
 						.append(
@@ -4413,8 +4431,10 @@ class InfosFleet{
 		d = d || {}
 
 		// 主题颜色
-			if( typeof d['theme'] != 'undefined' )
+			if( typeof d['theme'] != 'undefined' ){
 				_frame.infos.dom.main.attr('data-theme', d['theme'])
+				this.doms['theme'].val(d['theme'])
+			}
 
 		// 标题
 			if( typeof d['name'] != 'undefined' )
@@ -4460,6 +4480,16 @@ class InfosFleet{
 				this.doms['name'].removeAttr('data-content')
 			}
 			
+			this.save()
+		}
+
+	// 主题
+		get _theme(){
+			return this.data['theme']
+		}
+		set _theme( value ){
+			this.data['theme'] = value || 1
+			_frame.infos.dom.main.attr('data-theme', value)			
 			this.save()
 		}
 	
@@ -5920,7 +5950,8 @@ _tablelist.prototype._equipments_init = function(){
 						'data-trindex': index,
 						'data-fleetid': 'PLACEHOLDER',
 						//'data-infos': 	'[[FLEET::'+JSON.stringify(data)+']]'
-						'data-infos': 	'[[FLEET::'+data._id+']]'
+						'data-infos': 	'[[FLEET::'+data._id+']]',
+						'data-theme':	data.theme
 					})
 		
 		for( var i in _tablelist.prototype._fleets_columns ){
@@ -6040,6 +6071,8 @@ _tablelist.prototype._equipments_init = function(){
 	_tablelist.prototype._fleets_init = function(){
 		var self = this
 			,promise_chain 	= Q.fcall(function(){})
+		
+		this.trIndex = 0
 
 		// 标记全局载入状态
 			_frame.app_main.loading.push('tablelist_'+this._index)

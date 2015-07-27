@@ -106,6 +106,24 @@ class InfosFleet{
 				.append(
 					self.doms['options'] = $('<div class="options"/>')
 						.append(
+							self.doms['theme'] = $('<select class="option-theme"/>')
+								.on('change', function(){
+									self._theme = self.doms['theme'].val()
+								})
+								.append(function(){
+									let els = $()
+									for( let j=1; j<11; j++ ){
+										els = els.add(
+											$('<option/>',{
+												'value':	j,
+												'html':		'主题-'+j
+											})
+										)
+									}
+									return els
+								})
+						)
+						.append(
 							$('<span/>').html('[PH] 阵型')
 						)
 						.append(
@@ -155,8 +173,10 @@ class InfosFleet{
 		d = d || {}
 
 		// 主题颜色
-			if( typeof d['theme'] != 'undefined' )
+			if( typeof d['theme'] != 'undefined' ){
 				_frame.infos.dom.main.attr('data-theme', d['theme'])
+				this.doms['theme'].val(d['theme'])
+			}
 
 		// 标题
 			if( typeof d['name'] != 'undefined' )
@@ -202,6 +222,16 @@ class InfosFleet{
 				this.doms['name'].removeAttr('data-content')
 			}
 			
+			this.save()
+		}
+
+	// 主题
+		get _theme(){
+			return this.data['theme']
+		}
+		set _theme( value ){
+			this.data['theme'] = value || 1
+			_frame.infos.dom.main.attr('data-theme', value)			
 			this.save()
 		}
 	

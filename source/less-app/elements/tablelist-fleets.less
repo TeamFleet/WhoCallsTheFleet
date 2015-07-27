@@ -9,10 +9,10 @@
 		&.fleets{
 			tbody{
 				.margin-right(-5);
-				@color:		#fff2a6;
-				@color2:	fade(@color, 80%);
-				@color3:	fade(@color, 15%);
 				tr[data-fleetid]{
+					@color:		hsl(50, 0%, 90%);
+					@color2:	fade(@color, 80%);
+					@color3:	fade(@color, 15%);
 					.flex-basis(500) !important;
 					.margin-right(5);
 					.height(40);
@@ -108,6 +108,45 @@
 							display:	none;
 						}
 						margin-top:	0;
+					}
+					
+					.theme(@color){
+						@color2:	fade(@color, 80%);
+						@color3:	fade(@color, 15%);
+						&:before{
+							border-right-color: 	@color2;
+							.filter( ~"drop-shadow(0 0 10px @{color})" );
+						}
+						&:hover{
+							background:	@color3 !important;
+						}
+					}
+					&[data-theme="2"]{
+						.theme( hsl(11, 100%, 83%) );
+					}
+					&[data-theme="3"]{
+						.theme( hsl(51, 100%, 83%) );
+					}
+					&[data-theme="4"]{
+						.theme( hsl(91, 100%, 83%) );
+					}
+					&[data-theme="5"]{
+						.theme( hsl(131, 100%, 83%) );
+					}
+					&[data-theme="6"]{
+						.theme( hsl(171, 100%, 83%) );
+					}
+					&[data-theme="7"]{
+						.theme( hsl(211, 100%, 83%) );
+					}
+					&[data-theme="8"]{
+						.theme( hsl(251, 100%, 83%) );
+					}
+					&[data-theme="9"]{
+						.theme( hsl(291, 100%, 83%) );
+					}
+					&[data-theme="10"]{
+						.theme( hsl(331, 100%, 83%) );
 					}
 				}
 			}

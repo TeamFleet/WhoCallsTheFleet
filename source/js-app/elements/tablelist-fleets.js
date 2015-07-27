@@ -272,7 +272,8 @@
 						'data-trindex': index,
 						'data-fleetid': 'PLACEHOLDER',
 						//'data-infos': 	'[[FLEET::'+JSON.stringify(data)+']]'
-						'data-infos': 	'[[FLEET::'+data._id+']]'
+						'data-infos': 	'[[FLEET::'+data._id+']]',
+						'data-theme':	data.theme
 					})
 		
 		for( var i in _tablelist.prototype._fleets_columns ){
@@ -392,6 +393,8 @@
 	_tablelist.prototype._fleets_init = function(){
 		var self = this
 			,promise_chain 	= Q.fcall(function(){})
+		
+		this.trIndex = 0
 
 		// 标记全局载入状态
 			_frame.app_main.loading.push('tablelist_'+this._index)
