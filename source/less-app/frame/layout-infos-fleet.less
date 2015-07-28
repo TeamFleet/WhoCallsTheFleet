@@ -527,10 +527,13 @@
 		.convertColor(@_color){
 			@color: darken( lighten( desaturate( saturate(@_color, @saturationInc), @saturationDec), @lightnessInc), @lightnessDec);
 		}
+		.convertColor2(@_color){
+			@color2: darken( lighten( desaturate( saturate(@_color, @saturationInc), @saturationDec), @lightnessInc), @lightnessDec);
+		}
 		
-		.convertColor(hsla(@hue, 35%, 10%, .7));
-		background:	@color;
-		//background:	hsla(51, 21%, 29%, .70);
+		.convertColor(hsla(@hue, 40%, 40%, .65));
+		.convertColor2(hsla(@hue, 30%, 20%, .65));
+		background:		@color2;
 		&>.wrapper{
 			&>.fleet{
 				&>header{
@@ -634,7 +637,7 @@
 		.theme(171, 0%, 0%, 0%, 0%);
 	}
 	&[data-theme="7"]{
-		.theme(211, 0%, 0%, 0%, 0%);
+		.theme(211, 5%, 0%, 0%, 0%);
 	}
 	&[data-theme="8"]{
 		.theme(251, 0%, 0%, 5%, 0%);
