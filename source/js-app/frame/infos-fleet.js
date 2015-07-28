@@ -515,7 +515,9 @@ class InfosFleetShip{
 						})
 					)
 					.append(
-						$('<div class="info"/>').html(ship.getType())
+						$('<div class="info"/>').html(
+							ship._speed + ' / ' + ship._type
+						)
 					)
 			}else{
 				this.el.addClass('noship')
