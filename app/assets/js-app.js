@@ -4692,17 +4692,18 @@ class InfosFleetShip{
 		// ["403",[83,-1],[127,58],[0,0]]
 
 		const self = this
-
-		d = d || [null, [null, -1], [], []]
-		this.data = d
-		this.infosFleet = infosFleet
-		this.infosFleetSubFleet = infosFleetSubFleet
 		
 		// 数据正在更新中，禁止触发任何存储操作
 		//this._updating = false
 
 		if( this.el )
 			return this.el
+
+		d = d || [null, [null, -1], [], []]
+		this.data = d
+		this.infosFleet = infosFleet
+		this.infosFleetSubFleet = infosFleetSubFleet		
+		this.equipments = []
 		
 		this.el = $('<dd class="noship"/>')
 			// 头像 & 名称
@@ -4743,15 +4744,22 @@ class InfosFleetShip{
 			)
 			// 装备
 			.append(
-				$('<span class="equipments"/>').html('装备')
+				$('<div class="equipments"/>').append(function(){
+					let els = $()
+					for( let i=0; i<4; i++ ){
+						self.equipments[i] = new InfosFleetShipEquipment(self, i)
+						els = els.add(self.equipments[i].el)
+					}
+					return els
+				})
 			)
 			// 属性
 			.append(
-				$('<span class="attributes"/>').html('属性')
+				$('<div class="attributes"/>').html('属性')
 			)
 			// 选项/操作
 			.append(
-				$('<span class="options"/>')
+				$('<div class="options"/>')
 					.append(
 						$('<button/>',{
 							'html':			'i',
@@ -4805,22 +4813,6 @@ class InfosFleetShip{
 			this.data[1][1] = luck || -1
 		}
 	
-	// 添加装备
-		addEquipment(slotIndex, id){
-			this.data[2][slotIndex] = id
-			this.data[3][slotIndex] = 0
-		}
-	
-	// 删除装备
-		removeEquipment(slotIndex){
-			this.data[2][slotIndex] = null
-		}
-	
-	// 更改改修星级
-		changeEquipmentStar(slotIndex, star){
-			this.data[3][slotIndex] = star
-		}
-	
 	// 计算并显示属性
 		updateAttrs(){
 			
@@ -4839,6 +4831,11 @@ class InfosFleetShip{
 			
 			if( this.data[1][0] )
 				this.shipLv = this.data[1][0]
+			
+			for( let i=0; i<4; i++ ){
+				this.equipments[i].id = this.data[2][i]
+				this.equipments[i].star = this.data[3][i]
+			}
 			
 			this.updateAttrs()
 			
@@ -4877,6 +4874,12 @@ class InfosFleetShip{
 										)
 									)
 				this.elInfosInfo.html( speed + ' ' + stype )
+				
+				// 装备栏数据
+					for( let i=0; i<4; i++ ){
+						this.equipments[i].carry = ship.slot[i]
+						console.log(this.equipments[i])
+					}
 			}else{
 				this.el.removeAttr('data-shipId')
 				this.el.addClass('noship')
@@ -4900,16 +4903,148 @@ class InfosFleetShip{
 	
 	// 舰娘运
 	
-	// 某位置装备
-	
-	// 某位置装备等级
-	
 	// 保存
 		save(){
 			if( this._updating )
 				return false
 			if( this.infosFleetSubFleet )
 				this.infosFleetSubFleet.save()
+		}
+}
+
+
+
+
+
+
+
+// 类：装备
+class InfosFleetShipEquipment{
+	constructor(infosFleetShip, index){
+		// 数据结构
+		/* [
+				STRING 舰娘ID,
+				[
+					NUMBER 等级,
+					NUMBER 运，如果没有特殊指定则为 -1
+				],
+				[
+					NUMBER 装备ID,	// 实际装备
+					...
+				],
+				[
+					NUMBER 改修星级,	// 实际装备
+					...
+				]
+			]*/
+		// 数据实例
+		// ["319",[91,40],[50,58,58,101],[7,6,0,0]]
+		// ["144",[96,-1],[122,29,88],[1,0,0]
+		// ["145",[96,-1],[122,29,29],[]]
+		// ["403",[83,-1],[127,58],[0,0]]
+
+		// 直接对 infosFleetShip.data 相关数据进行读写 
+
+		const self = this
+		
+		this.index = index || 0
+		this.infosFleetShip = infosFleetShip
+		
+		// 数据正在更新中，禁止触发任何存储操作
+		//this._updating = false
+
+		if( this.el )
+			return this.el
+		
+		this.el = $('<div class="equipment"/>')
+	}
+	
+	// 返回页面元素
+		getEl(){
+			return this.el
+		}
+	
+	// 开始选择
+		selectEquipmentStart(){
+			_g.log('开始选择装备')
+			let self = this
+
+			_frame.app_main.load_page('equipments', {
+				callback_modeSelection_select:		function(id){
+					history.back()
+					self.id = id
+					if( self.infosFleetShip.infosFleet )
+						_frame.infos.dom.main.attr('data-theme', self.infosFleetShip.infosFleet.data['theme'])
+				}
+			})
+		}
+	
+	// 获取当前状态的元数据
+		getData(){
+			return this.data
+		}
+	
+	
+	
+	// 装备ID
+		get id(){
+			return this.infosFleetShip.data[2][this.index]
+		}
+		set id( value ){
+			value = parseInt(value)
+			
+			if( this.infosFleetShip.data[2][this.index] != value ){
+				this.star = 0
+				
+				if( value && !isNaN(value) ){
+					this.infosFleetShip.data[2][this.index] = value
+					this.el.attr('data-equipmentId', value)
+				}else{
+					this.infosFleetShip.data[2][this.index] = null
+					this.el.removeAttr('data-equipmentId')
+				}
+				
+				this.save()
+			}
+		}
+	
+	// 改修星级
+		get star(){
+			return this.infosFleetShip.data[3][this.index]
+		}
+		set star( value ){
+			value = parseInt(value)
+			
+			if( this.infosFleetShip.data[3][this.index] != value ){
+				if( value && !isNaN(value) ){
+					this.infosFleetShip.data[3][this.index] = value
+				}else{
+					this.infosFleetShip.data[3][this.index] = null
+				}
+				
+				this.save()
+			}
+		}
+	
+	// 搭载数 & 是否可用
+		set carry(value){
+			if( typeof value == 'undefined' ){
+				this.el.removeAttr('data-carry')
+			}else{
+				value = parseInt(value) || 0
+				this.el.attr('data-carry', value)
+			}
+		}
+	
+	// 保存
+		save(){
+			if( this._updating )
+				return false
+			if( this.infosFleetShip ){
+				//this.infosFleetShip.data[2][this.index] = this.id
+				//this.infosFleetShip.data[3][this.index] = this.star
+				this.infosFleetShip.save()
+			}
 		}
 }
 

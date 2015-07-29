@@ -243,11 +243,11 @@
 							@mask-image-main-bg:	linear-gradient(to right, #000 50%, transparent);
 							.mask-image(~"@{mask-image-main-bg}");
 						}
-						&>dt, &>span{
+						&>dt, &>div{
 							.flex-flow(~"row nowrap");
 							position: 	absolute;
 						}
-						&>span{
+						&>div{
 							display: 	none;
 						}
 						&>dt{
@@ -366,6 +366,40 @@
 							height: 	~"calc(100% - 26px - 8px)";
 							padding-right: 70px;
 							z-index: 	1;
+							&>.equipment{
+								flex: 		1 0 auto;
+								background: rgba(0, 0, 0, .1);
+								margin: 	0 2px 0 0;
+								transition-property: background-color;
+								position: 	relative;
+								&:first-child{
+									border-radius: 	5px 0 0 5px;
+								}
+								&:last-child{
+									border-radius: 	0 5px 5px 0;
+								}
+								&:before{
+									position: 	absolute;
+									top: 		50%;
+									right: 		0;
+									left: 		0;
+									line-height:0;
+									font-family:icons;
+									content: 	@iconcode-lock;
+									text-align: center;
+									z-index: 	10;
+									opacity: 	0.2;
+									font-size: 	20px;
+								}
+								&[data-carry]{
+									&:hover{
+										background: rgba(0,0,0,.35);
+									}
+									&:before{
+										display: 	none;
+									}
+								}
+							}
 						}
 						&>.attributes{
 							bottom: 	5px;
@@ -508,7 +542,7 @@
 									}
 								}
 							}
-							&>span{
+							&>div{
 								display: flex;
 							}
 						}
@@ -567,7 +601,7 @@
 		
 		//.convertColor(hsla(@hue, 40%, 40%, .65));
 		.convertColor(hsla(@hue, 20%, 18%, .7));
-		.convertColor2(hsl(@hue, 100%, 75%));
+		.convertColor2(hsl(@hue, 100%, 80%));
 		.convertColor3(hsla(@hue, 100%, 75%, .2));
 		background-color:	@color;
 		background-image: 	linear-gradient(to bottom, @color2 4px, @color3 4px, transparent 25%);
