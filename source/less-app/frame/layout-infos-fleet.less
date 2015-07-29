@@ -293,6 +293,9 @@
 								flex: 		3 1 190px;
 								z-index: 	2;
 								.justify-content(center);
+								&>div{
+									display: 	none;
+								}
 								&>.title{
 									h4, h5{
 										display: 	inline-block;
@@ -316,7 +319,29 @@
 									}
 								}
 								&>.info{
-									line-height: 	22px;
+									line-height: 	20px;
+									padding-left: 	2px;
+									margin-top: 	4px;
+									margin-right: 	-10px;
+									label{
+										display: 	line-block;
+										font-size: 	14px;
+										input{
+											height: 	20px;
+											width: 		34px;
+											padding: 	0;
+											text-align: center;
+											min-width: 	0;
+											margin: 	0 8px 0 4px;
+											&::-webkit-inner-spin-button{
+												display: 	none;
+											}
+										}
+									}
+									span{
+										font-size: 	13px;
+										font-weight:lighter;
+									}
 								}
 							}
 							&:after{
@@ -475,6 +500,12 @@
 								}
 								&>div{
 									align-content: center;
+									&>span{
+										display: 	none;
+									}
+									&>div{
+										display: 	block;
+									}
 								}
 							}
 							&>span{
@@ -530,10 +561,18 @@
 		.convertColor2(@_color){
 			@color2: darken( lighten( desaturate( saturate(@_color, @saturationInc), @saturationDec), @lightnessInc), @lightnessDec);
 		}
+		.convertColor3(@_color){
+			@color3: darken( lighten( desaturate( saturate(@_color, @saturationInc), @saturationDec), @lightnessInc), @lightnessDec);
+		}
 		
-		.convertColor(hsla(@hue, 40%, 40%, .65));
-		.convertColor2(hsla(@hue, 30%, 20%, .65));
-		background:		@color2;
+		//.convertColor(hsla(@hue, 40%, 40%, .65));
+		.convertColor(hsla(@hue, 20%, 18%, .7));
+		.convertColor2(hsl(@hue, 100%, 75%));
+		.convertColor3(hsla(@hue, 100%, 75%, .2));
+		background-color:	@color;
+		background-image: 	linear-gradient(to bottom, @color2 4px, @color3 4px, transparent 25%);
+		background-repeat: 	repeat-x;
+		background-position:0 0;
 		&>.wrapper{
 			&>.fleet{
 				&>header{
@@ -556,7 +595,9 @@
 				} // &>header
 				&>.ships{
 					&>dl{
-						.convertColor(hsla(@hue, 100%, 93%, .75));
+						//.convertColor(hsla(@hue, 100%, 93%, .75));
+						.convertColor(hsla(@hue, 100%, 95%, .75));
+						//.convertColor(hsl(@hue, 100%, 93%));
 						color: 	@color;
 						dd{
 							&:before{
@@ -574,12 +615,13 @@
 								}
 								&>div{
 									h4, h5{
-										.convertColor(hsl(@hue, 24%, 92%));
+										.convertColor(hsl(@hue, 24%, 97%));
 										color:		@color;
 										//.convertColor(hsla(@hue, 100%, 57%, .5));
 										//text-shadow:0 0 unit(5 / 30, em) rgba(255, 255, 255, .25);
 										&:before{
-											.convertColor(hsl(@hue, 87%, 80%));
+											//.convertColor(hsl(@hue, 87%, 80%));
+											.convertColor(hsl(@hue, 90%, 75%));
 											color: 		@color;
 										}
 									}
@@ -590,16 +632,18 @@
 									.convertColor(hsla(@hue, 100%, 80%, .95));
 									border-right-color:	@color;
 								}
+								/*
 								&>dt{
 									&>div{
 										h4, h5{
 											&:before{
-												.convertColor(hsl(@hue, 80%, 70%));
+												.convertColor(hsl(@hue, 95%, 70%));
 												color: 		@color;
 											}
 										}
 									}
 								}
+								*/
 							}
 							&.noship{
 								&>dt{

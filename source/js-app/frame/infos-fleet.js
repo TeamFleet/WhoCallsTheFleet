@@ -381,7 +381,33 @@ class InfosFleetShip{
 						self.elAvatar = $('<s/>')
 					)
 					.append(
-						self.elInfos = $('<div/>').html('选择舰娘...')
+						self.elInfos = $('<div/>').html('<span>选择舰娘...</span>')
+							.append(
+								self.elInfosTitle = $('<div class="title"/>')
+							)
+							.append(
+								$('<div class="info"/>')
+									.append(
+										$('<label/>').html('Lv.')
+											.append(
+												self.elInputLevel = $('<input/>',{
+													'type':	'number',
+													'min':	0,
+													'max':	150
+												}).on({
+													'change': function(e){
+														let value = parseInt(self.elInputLevel.val())
+														console.log(value, isNaN(value))
+														if( !isNaN(value) && self.data[1][0] != value )
+															self.shipLv = value
+													}
+												})
+											)
+									)
+									.append(
+										self.elInfosInfo = $('<span/>')
+									)
+							)
 					)
 			)
 			// 装备
@@ -475,8 +501,14 @@ class InfosFleetShip{
 		updateEl(d){
 			this._updating = true
 			
-			this.data = d || this.data			
-			this.shipId = this.data[0]
+			this.data = d || this.data		
+			
+			if( this.data[0] )	
+				this.shipId = this.data[0]
+			
+			if( this.data[1][0] )
+				this.shipLv = this.data[1][0]
+			
 			this.updateAttrs()
 			
 			this._updating = false
@@ -496,37 +528,31 @@ class InfosFleetShip{
 		set shipId( value ){
 			this.data[0] = value
 			
-			this.el.attr('data-shipId', value)
-			
 			if( value ){
 				let ship = _g.data.ships[value]
 					,suffix = ship.getSuffix()
+					,speed = ship._speed
+					,stype = ship._type
+				
+				stype = stype.replace(speed, '')
+					
+				this.el.attr('data-shipId', value)
 				this.el.removeClass('noship')
 				this.elAvatar.html('<img src="' + ship.getPic(10) + '"/>')
-				this.elInfos.html('')
-					.append(
-						$('<div/>',{
-							'class':	'title',
-							'html':		'<h4 data-content="'+ship['name'][_g.lang]+'">' +ship['name'][_g.lang]+'</h4>'
+				this.elInfosTitle.html('<h4 data-content="'+ship['name'][_g.lang]+'">' +ship['name'][_g.lang]+'</h4>'
 										+ ( suffix
 											? '<h5 data-content="'+suffix+'">' +suffix+'</h5>'
 											: ''
 										)
-						})
-					)
-					.append(
-						$('<div class="info"/>').html(
-							ship._speed + ' / ' + ship._type
-						)
-					)
+									)
+				this.elInfosInfo.html( speed + ' ' + stype )
 			}else{
+				this.el.removeAttr('data-shipId')
 				this.el.addClass('noship')
 				this.elAvatar.html('')
-				this.elInfos.html('选择舰娘...')
 			}
 			
-			if( !this._updating )
-				this.save()
+			this.save()
 		}
 	
 	// 舰娘等级
@@ -534,8 +560,11 @@ class InfosFleetShip{
 			return this.data[1][0]
 		}
 		set shipLv( value ){
-			this.data[1][0] = lv || -1
-			this.el.attr('data-shipLv', value)
+			this.data[1][0] = value || -1
+			this.elInputLevel.val( value ).trigger('change')
+			//this.el.attr('data-shipLv', value)
+			
+			this.save()
 		}
 	
 	// 舰娘运
@@ -546,6 +575,8 @@ class InfosFleetShip{
 	
 	// 保存
 		save(){
+			if( this._updating )
+				return false
 			if( this.infosFleetSubFleet )
 				this.infosFleetSubFleet.save()
 		}
