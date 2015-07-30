@@ -62,7 +62,7 @@
 
 
 
-// 检查并读取已保存数据
+// 读取已保存数据
 	_tablelist.prototype._fleets_loaddata = function(){
 		var deferred = Q.defer()
 			,arr = []
@@ -131,7 +131,53 @@
 
 
 
-// 检测数据，如果没有，标记样式
+// 检测数据，删除空数据条目
+	_tablelist.prototype._fleets_validdata = function(arr){
+		let deferred = Q.defer()
+			,to_remove = []
+			,i = 0
+			,valid = function( fleetdata ){
+				if( fleetdata['hq_lv'] > -1
+					|| fleetdata['name']
+					|| fleetdata['note']
+					|| fleetdata['rating'] > -1
+				){
+					return true
+				}
+				for( let i in fleetdata.data ){
+					for( let j in fleetdata.data[i] ){
+						if( typeof fleetdata.data[i][j] != 'undefined' && typeof fleetdata.data[i][j][0] != 'undefined' && fleetdata.data[i][j][0] )
+							return true
+					}
+				}
+				return false
+			}
+			
+		while( i < arr.length ){
+			if( valid( arr[i] ) ){
+				i++
+			}else{
+				to_remove.push( arr[i]._id )
+				arr.splice(i, 1)
+			}
+		}
+		
+		if( to_remove.length ){
+			_db.fleets.remove({
+				_id: { $in: to_remove }
+			}, { multi: true }, function (err, numRemoved) {
+				deferred.resolve( arr )
+			});
+		}else{
+			deferred.resolve( arr )
+		}
+		
+		return deferred.promise
+	}
+
+
+
+// 检测已处理数据，如果没有条目，标记样式
 	_tablelist.prototype._fleets_datacheck = function(arr){
 		arr = arr || []
 
@@ -453,9 +499,15 @@
 				.appendTo( this.dom.table_container_inner )
 
 			promise_chain
-		// 检查并读取已保存数据
+
+		// 读取已保存数据
 			.then(function(){
 				return self._fleets_loaddata()
+			})
+		
+		// 检查每条数据
+			.then(function(arr){
+				return self._fleets_validdata(arr)
 			})
 
 		// 如果没有数据，标记状态
