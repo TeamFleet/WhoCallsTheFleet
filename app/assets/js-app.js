@@ -3653,6 +3653,7 @@ _frame.infos = {
 					cont = this.getContent(type, id)
 					_frame.infos.dom.main.attr('data-infostype', 'fleetinfo')
 					title = '舰队 - ' + id
+					_frame.app_main.mode_selection_off()
 					break;
 			}
 			//var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
