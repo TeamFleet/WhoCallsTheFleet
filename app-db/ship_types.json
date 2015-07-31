@@ -5,6 +5,7 @@
 {"id":9,"code":"CVL","code_game":"軽母","full":"Light Aircraft Carrier","full_game":"軽空母","full_zh":"轻型航母","_id":"6kgIvg7XgXsxciET"}
 {"id":16,"code":"AR","code_game":"工","full":"Repair Ship","full_game":"工作艦","full_zh":"维修舰","_id":"AFURy2WZIqq4CKUU"}
 {"id":6,"code":"BB","code_game":"戦","full":"Battleship","full_game":"戦艦","full_zh":"战列舰","_id":"BczYbfqkt4Ls7SjP"}
+{"code":"CL","code_game":"轻巡","full":"Anti-Air Light Cruiser","full_game":"防空軽巡洋艦","full_zh":"防空轻巡洋舰","id":28,"_id":"Bib8DbFYAMz6wfDb"}
 {"id":15,"code":"LHA","code_game":"揚陸","full":"Amphibious Assault Ship","full_game":"揚陸艦","full_zh":"登陆突击舰","_id":"BjToFvya7RxsFQfd"}
 {"id":2,"code":"CL","code_game":"軽巡","full":"Light Cruiser","full_game":"軽巡洋艦","full_zh":"轻巡洋舰","_id":"CtjPGYnkHetTij9H"}
 {"code":"CA","code_game":"重巡","full":"The Fleet of Fog Heavy Cruiser","full_game":"霧の艦隊重巡洋艦","full_zh":"海雾舰队重巡洋舰","id":25,"_id":"DgRcE2Ez9sClji86","donotcompare":"on"}
