@@ -120,6 +120,7 @@ _tablelist.prototype._equipments_init = function(){
 				.prop('checked', !checked )
 				.on('change', function(){
 					// force thead redraw
+					self.dom.table_container_inner.scrollTop(0)
 					self.thead_redraw()
 				})
 				.prependTo( this.dom.container )
