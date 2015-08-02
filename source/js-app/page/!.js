@@ -2,7 +2,7 @@ class PAGE {
 	constructor( $page ) {
 	}
 	
-	modeSelectionEnter(callback_select){
+	modeSelectionEnter(callback_select, callback_enter){
 		let self = this
 			,_callback_select
 		
@@ -15,7 +15,7 @@ class PAGE {
 		
 		_frame.app_main.mode_selection_callback = _callback_select
 		
-		_frame.app_main.mode_selection_on()
+		_frame.app_main.mode_selection_on(callback_enter)
 		
 		return _callback_select
 	}
