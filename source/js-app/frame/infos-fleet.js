@@ -557,18 +557,21 @@ class InfosFleetShip{
 						var $div = InfosFleetShip.menuItems[2].empty()
 						if( InfosFleetShip.menuCurObj.shipId ){
 							var series = _g['data']['ships'][InfosFleetShip.menuCurObj.shipId].getSeriesData() || []
-							for(let i in series){
-								if( i == '0' )
-									$div.append($('<hr/>'))
-								$div.append(
-									$('<menuitem/>')
-										.html('替换为 ' + _g['data']['ships'][series[i]['id']].getName(true))
-										.on({
-											'click': function(){
-												InfosFleetShip.menuCurObj.shipId = series[i]['id']
-											}
-										})
-								)
+							if( series.length > 1 ){
+								for(let i in series){
+									if( i == '0' )
+										$div.append($('<hr/>'))
+									if( series[i]['id'] != InfosFleetShip.menuCurObj.shipId )
+									$div.append(
+										$('<menuitem/>')
+											.html('替换为 ' + _g['data']['ships'][series[i]['id']].getName(true))
+											.on({
+												'click': function(){
+													InfosFleetShip.menuCurObj.shipId = series[i]['id']
+												}
+											})
+									)
+								}
 							}
 						}
 					})
