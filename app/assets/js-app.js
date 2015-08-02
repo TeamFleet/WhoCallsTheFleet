@@ -5580,7 +5580,7 @@ var _tablelist = function( container, options ){
 }
 
 _tablelist.prototype.global_index = 0
-_tablelist.prototype.flexgrid_empty_count = 6
+_tablelist.prototype.flexgrid_empty_count = 8
 _tablelist.prototype.sort_data_by_stat = {}
 _tablelist.prototype.sort_default_order_by_stat = {}
 
