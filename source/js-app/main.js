@@ -393,7 +393,8 @@ _frame.app_main = {
 
 			if( options.callback_modeSelection_select ){
 				_frame.app_main.page_dom[page].trigger('modeSelectionEnter', [
-					options.callback_modeSelection_select || function(){}
+					options.callback_modeSelection_select || function(){},
+					options.callback_modeSelection_enter || function(){}
 				])
 			}else{
 				_frame.app_main.mode_selection_off()
