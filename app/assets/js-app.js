@@ -5976,12 +5976,14 @@ _tablelist.prototype.apply_types = function(){
 _tablelist.prototype.apply_types_check = function(){
 	if( TablelistEquipments.types.length ){
 		let k = 0
-			,collection = 0
+			,el
 			,self = this
 		while( $.inArray((parseInt(self.dom.types[k++].attr('data-type')) || null), TablelistEquipments.types) <= -1 ){
-			collection = parseInt(self.dom.types[k].attr('data-equipmentcollection')) || 1
+			el = self.dom.types[k]
 		}
-		self.dom.type_radios[collection].prop('checked', true).trigger('change')
+		
+		self.dom.type_radios[parseInt(el.attr('data-equipmentcollection')) || 1].prop('checked', true).trigger('change')
+		self.dom.table_container_inner.scrollTop(el[0].offsetTop)
 	}
 }
 
