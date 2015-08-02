@@ -386,28 +386,32 @@
 								&>.equipment-layer{
 									z-index: 	1;
 									display: 	none;
+									top: 		0;
+									bottom: 	0;
 								}
-								&:before, &>.equipment-add{
+								&:before{
+									font-family:icons;
+									content: 	@iconcode-lock;
+									opacity: 	.15;
 									top: 		50%;
 									line-height:0;
 									text-align: center;
 									z-index: 	10;
 									font-size: 	20px;
 								}
-								&:before{
-									font-family:icons;
-									content: 	@iconcode-lock;
-									opacity: 	.15;
-								}
 								&>.equipment-add{
 									opacity: 	.25;
+									font-size: 	20px;
+									text-align: center;
+									flex-flow: 	row nowrap;
+									justify-content: center;
+									align-items: 	center;
 									&:before{
-										content: 	'+';
-										font-size: 	40px;
-										vertical-align: bottom;
+										font-family:icons;
+										content: 	@iconcode-plus;
+										vertical-align: top;
 										font-weight:lighter;
 										padding-right: 	.25em;
-										font-family: 	Gothic;
 									}
 								}
 								
@@ -419,7 +423,7 @@
 										display: 	none;
 									}
 									&>.equipment-add{
-										display: 	block;
+										display: 	flex;
 										z-index: 	10;
 									}
 								}

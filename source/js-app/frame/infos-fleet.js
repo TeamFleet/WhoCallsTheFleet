@@ -636,6 +636,9 @@ class InfosFleetShipEquipment{
 		this.el = $('<div class="equipment"/>')
 					.append(
 						self.elCarry = $('<div class="equipment-layer equipment-add"/>')
+										.on('click', function(){
+											self.selectEquipmentStart()
+										})
 					)
 					.append(
 						$('<div class="equipment-layer equipment-infos"/>')
