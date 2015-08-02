@@ -213,12 +213,14 @@
 					left:			0;
 					z-index:		1;
 					overflow:		auto;
-					opacity:		0;
-					transform:		translateY(20px);
 					.padding-bottom(10);
-					.transition-property(~"opacity, transform");
+					//opacity:		0;
+					//transform:		translateY(20px);
+					//.transition-property(~"opacity, transform");
+					display: 		none;
+					.fadein();
 					.main-sizing-padding();
-					.flexbox();
+					//.flexbox();
 					.flex-flow(~"column nowrap");
 					&:before{
 						content: 	'';
@@ -264,10 +266,12 @@
 							right: 		0;
 							bottom: 	0;
 							left: 		0;
-							opacity: 	.25;
+							//opacity: 	.25;
 							.enable-transition();
-							.transition-property(opacity);
-							background:	linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.3)) repeat-x 0 0;
+							.transition-property(background-size);
+							//background:	linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.3)) repeat-x 0 0;
+							background:	linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.225)) repeat-x 0 0;
+							background-size: 100% 200%;
 							@mask-image-main-bg:	linear-gradient(to right, #000 50%, transparent);
 							.mask-image(~"@{mask-image-main-bg}");
 						}
@@ -506,7 +510,7 @@
 										margin-right:4px;
 									}
 									button{
-										transition-property: 	opacity;
+										//transition-property: 	opacity;
 										opacity: 	.45;
 										flex: 		1 0 26px;
 										height: 	100%;
@@ -514,6 +518,9 @@
 										vertical-align: bottom;
 										&:hover{
 											opacity: 	1;
+										}
+										&:active{
+											opacity: 	.3;
 										}
 										&.remove{
 											font-family:Gothic;
@@ -524,6 +531,7 @@
 								}
 								
 								&[data-carry]{
+									will-change:background-color;
 									&:hover{
 										background-color: rgba(0,0,0,.35);
 									}
@@ -541,6 +549,7 @@
 										}
 										&>.equipment-infos, &>.equipment-options{
 											display: 	flex;
+											//will-change:opacity;
 										}
 										&>.equipment-infos{
 											opacity: 	1;
@@ -554,6 +563,9 @@
 											&>.equipment-options{
 												opacity: 	1;
 												z-index: 	10;
+												//button{
+												//	will-change:opacity;
+												//}
 											}
 										}
 									}
@@ -649,7 +661,7 @@
 						}
 						&:hover{
 							&:after{
-								opacity: .75;
+								background-size: 100% 100%;
 							}
 							&>dt{
 								&>div{
@@ -686,7 +698,7 @@
 										color: 		rgba(255, 255, 255, .75)
 									}
 									&:after{
-										opacity: .65;
+										background-size: 	100% 150%;
 									}
 								}
 								&>div{
@@ -773,8 +785,9 @@
 							}
 						} // &>.fleets
 						&~.ships dl[data-fleet="@{i}"]{
-							opacity:	1;
-							transform:	translateY(0);
+							//opacity:	1;
+							//transform:	translateY(0);
+							display: 	flex;
 							z-index:	2;
 						}
 					}
