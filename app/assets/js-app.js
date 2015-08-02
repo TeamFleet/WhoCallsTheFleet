@@ -4902,7 +4902,6 @@ class InfosFleetShip{
 					for( let i=0; i<4; i++ ){
 						this.equipments[i].carry = ship.slot[i]
 						this.equipments[i].id = this.data[2][i]
-						console.log(this.equipments[i])
 					}
 			}else{
 				this.el.removeAttr('data-shipId')
@@ -5037,11 +5036,16 @@ class InfosFleetShipEquipment{
 			let self = this
 
 			_frame.app_main.load_page('equipments', {
-				callback_modeSelection_select:		function(id){
+				callback_modeSelection_select: function(id){
 					history.back()
 					self.id = id
+					TablelistEquipments.types = []
 					if( self.infosFleetShip.infosFleet )
 						_frame.infos.dom.main.attr('data-theme', self.infosFleetShip.infosFleet.data['theme'])
+				},
+				callback_modeSelection_enter: function(){
+					TablelistEquipments.types = _g.data.ships[self.infosFleetShip.shipId].getEquipmentTypes()
+					_frame.app_main.page['equipments'].object.tablelistObj.apply_types()
 				}
 			})
 		}
@@ -5064,10 +5068,12 @@ class InfosFleetShipEquipment{
 			if( value && !isNaN(value) ){
 				this.infosFleetShip.data[2][this.index] = value
 				this.el.attr('data-equipmentId', value)
+						.css('background-image', 'url('+_g.data.items[value]._icon+')')
 				this.elName.html(_g.data.items[value]._name)
 			}else{
 				this.infosFleetShip.data[2][this.index] = null
 				this.el.removeAttr('data-equipmentId')
+						.css('background-image', '')
 				this.elName.html('')
 			}
 			

@@ -369,10 +369,11 @@
 							z-index: 	1;
 							&>.equipment{
 								flex: 		1 0 auto;
-								background: rgba(0, 0, 0, .1);
+								background: rgba(0, 0, 0, .1) no-repeat 0 50%;
 								margin: 	0 2px 0 0;
 								transition-property: background-color;
 								position: 	relative;
+								overflow: 	hidden;
 								&:first-child{
 									border-radius: 	5px 0 0 5px;
 								}
@@ -422,6 +423,7 @@
 									padding-right: 	32px;
 									&>.equipment-name{
 										flex: 		1 0 100%;
+										line-height:1.2em;
 									}
 									&>.equipment-star, &>.equipment-carry{
 										position: 	absolute;
@@ -434,7 +436,7 @@
 										font-size: 	13px;
 										opacity: 	.25;
 										&:before{
-											padding-right: 	.2em;
+											padding-right: 	3px;
 											vertical-align: top;
 											font-size: 	15px;
 										}
@@ -456,7 +458,7 @@
 								
 								&[data-carry]{
 									&:hover{
-										background: rgba(0,0,0,.35);
+										background-color: rgba(0,0,0,.35);
 									}
 									&:before{
 										display: 	none;
