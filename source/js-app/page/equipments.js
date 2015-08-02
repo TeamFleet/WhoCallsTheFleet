@@ -1,32 +1,38 @@
-_frame.app_main.page['equipments'] = {}
+//class PageEquipments extends PAGE
 
-
-
-
-
-
-
-
-_frame.app_main.page['equipments'].init = function( page ){
-	this.tablelist = page.find('.tablelist')
-	this.tablelistObj = this.tablelist.data('tablelist')
-
-	page.on('on', function(){
-		if( !_frame.app_main.page['equipments'].tablelistObj )
-			_frame.app_main.page['equipments'].tablelistObj
-				= _frame.app_main.page['equipments'].tablelist.data('tablelist')
-
-		if( _frame.app_main.page['equipments'].tablelistObj )
-			_frame.app_main.page['equipments'].tablelistObj.thead_redraw()
-	})
+_frame.app_main.page['equipments'] = {
+	init: function( $page ){
+		this.object = new class extends PAGE{
+			constructor( $page ){
+				super( $page )
+				
+				let self = this
+				
+				this.tablelist = $page.find('.tablelist')
+				this.tablelistObj = this.tablelist.data('tablelist')
+			
+				$page.on({
+					'on': function(){
+						if( !self.tablelistObj )
+							self.tablelistObj
+								= self.tablelist.data('tablelist')
+				
+						if( self.tablelistObj )
+							self.tablelistObj.thead_redraw()
+					},
+					'modeSelectionEnter': function(e, callback_select){
+						self.modeSelectionEnter(callback_select)
+					}
+				})
+			}
+			
+			//modeSelectionEnter(callback_select){
+			//	callback_select = super.modeSelectionEnter(callback_select)
+			//	console.log(callback_select)
+			//}
+		}( $page )
+	}
 }
-
-
-
-
-
-
-
 
 _frame.app_main.page['equipments'].gen_helper_equipable_on = function( type_id ){
 	var equipable_on = ''
