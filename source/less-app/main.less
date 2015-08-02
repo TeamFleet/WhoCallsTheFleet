@@ -1209,8 +1209,8 @@ table{
 	input[type="text"],
 	input[type="number"],
 	select{
-		background:	rgba(255,255,255,.65);
-		.border(1, solid, fade(#008583, 65%));
+		background:	rgba(0,0,0,.1);
+		.border(1, solid, rgba(255, 255, 255, .15));
 		.border-radius(4);
 		.height(20);
 		.line-height(20);
@@ -1222,8 +1222,8 @@ table{
 		.transition-property(~"border,background,color");
 		&:not([disabled]){
 			&:hover, &:focus{
-				background:		rgba(255,255,255,.9);
-				border-color:	#008583
+				background:		rgba(0,0,0,.25);
+				border-color:	rgba(255, 255, 255, .3)
 			}
 		}
 	}
