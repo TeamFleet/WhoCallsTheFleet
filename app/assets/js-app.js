@@ -4729,8 +4729,12 @@ class InfosFleetShip{
 													'max':	150
 												}).on({
 													'change': function(e){
-														let value = parseInt(self.elInputLevel.val())
-														console.log(value, isNaN(value))
+														let value = self.elInputLevel.val()
+														
+														if( (typeof value == 'undefined' || value === '') && self.data[1][0] )
+															self.shipLv = null
+														
+														value = parseInt(value)
 														if( !isNaN(value) && self.data[1][0] != value )
 															self.shipLv = value
 													}
@@ -4895,8 +4899,12 @@ class InfosFleetShip{
 			return this.data[1][0]
 		}
 		set shipLv( value ){
-			this.data[1][0] = value || -1
-			this.elInputLevel.val( value ).trigger('change')
+			this.data[1][0] = value || null
+			if( value ){
+				this.elInputLevel.val( value ).trigger('change')
+			}else{
+				this.elInputLevel.val('').trigger('change')
+			}
 			//this.el.attr('data-shipLv', value)
 			
 			this.save()
@@ -4958,6 +4966,42 @@ class InfosFleetShipEquipment{
 			return this.el
 		
 		this.el = $('<div class="equipment"/>')
+					.append(
+						self.elCarry = $('<div class="equipment-layer equipment-add"/>')
+					)
+					.append(
+						$('<div class="equipment-layer equipment-infos"/>')
+							.append(
+								self.elName = $('<span class="equipment-name"/>')
+							)
+							.append(
+								self.elStar = $('<span class="equipment-star"/>').html(0)
+							)
+							.append(function(){
+								let el = $('<span class="equipment-carry"/>').html(0)
+								self.elCarry = self.elCarry.add( el )
+								return el
+							})
+					)
+					.append(
+						$('<div class="equipment-layer equipment-options"/>')
+							.append(
+								self.elInputStar = $('<input/>',{
+									'class':		'equipment-starinput',
+									'type':			'number',
+									'placeholder':	0
+								}).on('change', function(){
+									let value = self.elInputStar.val()
+									
+									if( (typeof value == 'undefined' || value === '') && self.star )
+										self.star = null
+									
+									value = parseInt(value)
+									if( !isNaN(value) && self.star != value )
+										self.star = value
+								})				
+							)
+					)
 	}
 	
 	// 返回页面元素
@@ -5014,26 +5058,34 @@ class InfosFleetShipEquipment{
 			return this.infosFleetShip.data[3][this.index]
 		}
 		set star( value ){
-			value = parseInt(value)
+			value = parseInt(value) || null
 			
 			if( this.infosFleetShip.data[3][this.index] != value ){
-				if( value && !isNaN(value) ){
+				if( value && isNaN(value) ){
 					this.infosFleetShip.data[3][this.index] = value
+					this.elInputStar.val( value ).trigger('change')
+					this.elStar.html(value)
 				}else{
 					this.infosFleetShip.data[3][this.index] = null
+					this.elInputStar.val('').trigger('change')
+					this.elStar.html(0)
 				}
 				
 				this.save()
 			}
+			
+			this.save()
 		}
 	
 	// 搭载数 & 是否可用
 		set carry(value){
 			if( typeof value == 'undefined' ){
 				this.el.removeAttr('data-carry')
+				this.elCarry.html(0)
 			}else{
 				value = parseInt(value) || 0
 				this.el.attr('data-carry', value)
+				this.elCarry.html(value)
 			}
 		}
 	

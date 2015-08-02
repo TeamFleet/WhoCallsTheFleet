@@ -378,25 +378,49 @@
 								&:last-child{
 									border-radius: 	0 5px 5px 0;
 								}
-								&:before{
+								&:before, &>.equipment-layer{
 									position: 	absolute;
-									top: 		50%;
 									right: 		0;
 									left: 		0;
+								}
+								&>.equipment-layer{
+									z-index: 	1;
+									display: 	none;
+								}
+								&:before, &>.equipment-add{
+									top: 		50%;
 									line-height:0;
-									font-family:icons;
-									content: 	@iconcode-lock;
 									text-align: center;
 									z-index: 	10;
-									opacity: 	0.2;
 									font-size: 	20px;
 								}
+								&:before{
+									font-family:icons;
+									content: 	@iconcode-lock;
+									opacity: 	.15;
+								}
+								&>.equipment-add{
+									opacity: 	.25;
+									&:before{
+										content: 	'+';
+										font-size: 	40px;
+										vertical-align: bottom;
+										font-weight:lighter;
+										padding-right: 	.25em;
+										font-family: 	Gothic;
+									}
+								}
+								
 								&[data-carry]{
 									&:hover{
 										background: rgba(0,0,0,.35);
 									}
 									&:before{
 										display: 	none;
+									}
+									&>.equipment-add{
+										display: 	block;
+										z-index: 	10;
 									}
 								}
 							}
