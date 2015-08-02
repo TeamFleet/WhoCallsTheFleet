@@ -1106,6 +1106,12 @@ class Ship extends ITEM{
 	get _range(){
 		return this.getRange()
 	}
+	
+	getEquipmentTypes(){
+		return _g.data.ship_types[this['type']].equipable.concat( ( this.additional_item_types || [] ) ).sort(function(a, b){
+			return a-b
+		})
+	}
 }
 
 class Equipment extends ITEM{
