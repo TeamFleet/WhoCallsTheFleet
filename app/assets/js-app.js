@@ -3131,7 +3131,7 @@ class PAGE {
 	constructor( $page ) {
 	}
 	
-	modeSelectionEnter(callback_select){
+	modeSelectionEnter(callback_select, callback_enter){
 		let self = this
 			,_callback_select
 		
@@ -3144,7 +3144,7 @@ class PAGE {
 		
 		_frame.app_main.mode_selection_callback = _callback_select
 		
-		_frame.app_main.mode_selection_on()
+		_frame.app_main.mode_selection_on(callback_enter)
 		
 		return _callback_select
 	}
@@ -3231,8 +3231,8 @@ _frame.app_main.page['equipments'] = {
 							self.tablelistObj.apply_types()
 						}
 					},
-					'modeSelectionEnter': function(e, callback_select){
-						self.modeSelectionEnter(callback_select)
+					'modeSelectionEnter': function(e, callback_select, callback_enter){
+						self.modeSelectionEnter(callback_select, callback_enter)
 					}
 				})
 			}
@@ -4958,10 +4958,12 @@ _frame.app_main.is_mode_selection = function(){
 
 _frame.app_main.mode_selection_callback = null
 
-_frame.app_main.mode_selection_on = function(){
+_frame.app_main.mode_selection_on = function( callback ){
 	if( !_frame.dom.navSelectionInfo ){
 		_frame.dom.navSelectionInfo = $('<div class="selection-info"/>').html('请选择……').appendTo( _frame.dom.nav )
 	}
+	callback = callback || function(){}
+	callback()
 	_frame.dom.layout.addClass('mode-selection')
 }
 

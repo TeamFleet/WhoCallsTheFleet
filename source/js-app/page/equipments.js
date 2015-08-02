@@ -22,8 +22,8 @@ _frame.app_main.page['equipments'] = {
 							self.tablelistObj.apply_types()
 						}
 					},
-					'modeSelectionEnter': function(e, callback_select){
-						self.modeSelectionEnter(callback_select)
+					'modeSelectionEnter': function(e, callback_select, callback_enter){
+						self.modeSelectionEnter(callback_select, callback_enter)
 					}
 				})
 			}
