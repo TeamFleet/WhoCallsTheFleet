@@ -569,6 +569,19 @@
 												//}
 											}
 										}
+										
+										&.is-aircraft{
+											.equipment-carry{
+												opacity: 1;
+												color: 	hsla(149, 100%, 59%, .65);
+											}
+											&[data-carry="0"]{
+												color: 	hsl(5, 100%, 75%);
+												.equipment-carry{
+													color: 	inherit;
+												}
+											}
+										}
 									}
 								}
 								

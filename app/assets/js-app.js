@@ -5266,12 +5266,18 @@ class InfosFleetShipEquipment{
 						})
 						.css('background-image', 'url('+_g.data.items[value]._icon+')')
 				this.elName.html(_g.data.items[value]._name)
+				// 如果装备为飞行器，标记样式
+					if( $.inArray(_g.data.items[value].type, _g.data.item_type_collections[3].types) > -1 )
+						this.el.addClass('is-aircraft')
+					else
+						this.el.removeClass('is-aircraft')
 			}else{
 				this.infosFleetShip.data[2][this.index] = null
 				this.improvable = false
 				this.el.removeAttr('data-equipmentId')
 						.removeAttr('data-tip')
 						.css('background-image', '')
+						.removeClass('is-aircraft')
 				this.elName.html('')
 			}
 			
