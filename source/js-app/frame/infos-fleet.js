@@ -551,6 +551,7 @@ class InfosFleetShip{
 				// 装备栏数据
 					for( let i=0; i<4; i++ ){
 						this.equipments[i].carry = ship.slot[i]
+						this.equipments[i].id = this.data[2][i]
 						console.log(this.equipments[i])
 					}
 			}else{
@@ -707,21 +708,20 @@ class InfosFleetShipEquipment{
 			return this.infosFleetShip.data[2][this.index]
 		}
 		set id( value ){
-			value = parseInt(value)
+			value = parseInt(value) || null
+			this.star = 0
 			
-			if( this.infosFleetShip.data[2][this.index] != value ){
-				this.star = 0
-				
-				if( value && !isNaN(value) ){
-					this.infosFleetShip.data[2][this.index] = value
-					this.el.attr('data-equipmentId', value)
-				}else{
-					this.infosFleetShip.data[2][this.index] = null
-					this.el.removeAttr('data-equipmentId')
-				}
-				
-				this.save()
+			if( value && !isNaN(value) ){
+				this.infosFleetShip.data[2][this.index] = value
+				this.el.attr('data-equipmentId', value)
+				this.elName.html(_g.data.items[value]._name)
+			}else{
+				this.infosFleetShip.data[2][this.index] = null
+				this.el.removeAttr('data-equipmentId')
+				this.elName.html('')
 			}
+			
+			this.save()
 		}
 	
 	// 改修星级

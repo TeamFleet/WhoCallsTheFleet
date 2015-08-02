@@ -180,6 +180,7 @@
 				&>dl{
 					position:		absolute;
 					.top(10);
+					color: 			rgba(255, 255, 255, .75);
 					right:			0;
 					bottom:			0;
 					left:			0;
@@ -388,6 +389,10 @@
 									display: 	none;
 									top: 		0;
 									bottom: 	0;
+									height: 	100%;
+									flex-flow: 	row nowrap;
+									justify-content: center;
+									align-items: 	center;
 								}
 								&:before{
 									font-family:icons;
@@ -402,16 +407,50 @@
 								&>.equipment-add{
 									opacity: 	.25;
 									font-size: 	20px;
-									text-align: center;
-									flex-flow: 	row nowrap;
-									justify-content: center;
-									align-items: 	center;
 									&:before{
 										font-family:icons;
 										content: 	@iconcode-plus;
 										vertical-align: top;
 										font-weight:lighter;
 										padding-right: 	.25em;
+									}
+								}
+								&>.equipment-infos, &>.equipment-options{
+									padding-left: 	36px;
+								}
+								&>.equipment-infos{
+									padding-right: 	32px;
+									&>.equipment-name{
+										flex: 		1 0 100%;
+									}
+									&>.equipment-star, &>.equipment-carry{
+										position: 	absolute;
+										right: 		6px;
+										flex: 		none;
+										text-align: right;
+										top: 		50%;
+										line-height:0;
+										height: 	45%;
+										font-size: 	13px;
+										opacity: 	.25;
+										&:before{
+											padding-right: 	.2em;
+											vertical-align: top;
+											font-size: 	15px;
+										}
+									}
+									&>.equipment-star{
+										transform: 	translateY(-50%);
+										&:before{
+											content: 	'★';
+										}
+									}
+									&>.equipment-carry{
+										transform: 	translateY(50%);
+										&:before{
+											content: 	'×';
+											font-size: 	18px;
+										}
 									}
 								}
 								
@@ -425,6 +464,15 @@
 									&>.equipment-add{
 										display: 	flex;
 										z-index: 	10;
+									}
+									
+									&[data-equipmentid]{
+										&>.equipment-add{
+											display: 	none;
+										}
+										&>.equipment-infos{
+											display: 	flex;
+										}
 									}
 								}
 							}
