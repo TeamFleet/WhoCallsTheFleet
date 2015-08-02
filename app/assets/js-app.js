@@ -5854,14 +5854,6 @@ _tablelist.prototype._equipments_append_item = function( equipment_data, collect
 							_frame.app_main.mode_selection_callback(equipment_data['id'])
 					}
 				})
-				.on('click', function(e, forceInfos){
-					if( !forceInfos && e.target.tagName.toLowerCase() != 'em' && _frame.app_main.is_mode_selection() ){
-						e.preventDefault()
-						e.stopImmediatePropagation()
-						e.stopPropagation()
-						_frame.app_main.mode_selection_callback(equipment_data['id'])
-					}
-				})
 				.appendTo( this.dom.tbody )
 
 	function _val( val, show_zero ){
