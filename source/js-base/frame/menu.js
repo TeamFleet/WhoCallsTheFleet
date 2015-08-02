@@ -1,15 +1,14 @@
 var _menu = function( settings ){
-	if( this.settings )
-		return this
-
-	this.settings = $.extend(
-			true,
-			{},
-			this.defaults,
-			settings || {}
-		)
-	
-	this.init()
+	if( !this.settings ){
+		this.settings = $.extend(
+				true,
+				{},
+				this.defaults,
+				settings || {}
+			)
+		
+		this.init()
+	}
 }
 
 _menu.prototype.defaults = {
@@ -86,13 +85,22 @@ _menu.prototype.show = function( targetEl ){
 		if( targetEl instanceof jQuery ){
 			var offset = targetEl.offset()
 				,top	= offset.top + targetEl.height() - $body.scrollTop()
-				,viewport_height	= $window.height()
+				,left 	= offset.left - $body.scrollLeft()
+				
+				,viewport_height	= $window.height() - 10
+				,viewport_width		= $window.width() - 10
+				
 				,menu_height		= this.dom.menu.outerHeight()
+				,menu_width			= this.dom.menu.outerWidth()
+
 			this.dom.menu.css({
 				'top': 		top + menu_height > viewport_height
 								? viewport_height - menu_height
 								: top,
-				'left': 	offset.left - $body.scrollLeft()
+				//'left': 	offset.left - $body.scrollLeft()
+				'left': 	left + menu_width > viewport_width
+								? viewport_width - menu_width
+								: left
 			})
 		}
 
