@@ -155,6 +155,7 @@ _frame.infos = {
 					_frame.infos.dom.main.attr('data-infostype', 'fleetinfo')
 					title = '舰队 - ' + id
 					_frame.app_main.mode_selection_off()
+					TablelistEquipments.types = []
 					break;
 			}
 			//var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()

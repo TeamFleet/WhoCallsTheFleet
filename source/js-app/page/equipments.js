@@ -24,6 +24,12 @@ _frame.app_main.page['equipments'] = {
 					},
 					'modeSelectionEnter': function(e, callback_select, callback_enter){
 						self.modeSelectionEnter(callback_select, callback_enter)
+					},
+					'show': function(){
+						if( self.tablelistObj ){
+							self.tablelistObj.thead_redraw()
+							self.tablelistObj.apply_types()
+						}
 					}
 				})
 			}

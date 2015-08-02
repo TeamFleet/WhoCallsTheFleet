@@ -55,7 +55,11 @@
 			
 			h3, h4, h5{
 				&[data-content]{
+					color:		hsl(50, 100%, 100%);
 					text-shadow:0 0 unit(5 / 30, em) rgba(255, 255, 255, .5);
+					&:before{
+						color: 		hsl(50, 10%, 70%);
+					}
 				}
 			}
 			
@@ -333,10 +337,7 @@
 										display: 	inline-block;
 										vertical-align: baseline;
 										margin-bottom: 0;
-										color:		hsl(50, 100%, 100%);
-										//text-shadow:0 0 unit(5 / 30, em) hsla(50, 20%, 57%, .5);
 										&:before{
-											color: 		hsl(50, 10%, 70%);
 											.enable-transition();
 											transition-property: color;
 										}
@@ -690,6 +691,7 @@
 							&:after{
 								background-size: 100% 100%;
 							}
+							/*
 							&>dt{
 								&>div{
 									h4, h5{
@@ -699,6 +701,7 @@
 									}
 								}
 							}
+							*/
 							&>.attributes{
 								&:after{
 									background: 	rgba(0,0,0,.2);
@@ -790,10 +793,35 @@
 						display: 	block;
 						flex: 		0.25 0 auto;
 					}
-					&>span{
-						display: 	block;
-						flex: 		0.5 0 30px;
+					&>.summary{
+						display: 		flex;
+						flex: 			0.5 0 30px;
 						.margin-top(10);
+						text-align: 	center;
+						justify-content:center;
+						align-items: 	center;
+						font-size: 		percentage(14 / @base_font_size);
+						font-weight: 	lighter;
+						margin-right: 	-1em;
+						h3, h4, h5{
+							display: 	inline-block;
+						}
+						.summary-item{
+							margin-right: 	1em;
+							line-height: 	unit( 25 / 14, em );
+							display: 		inline-block;
+							background: 	rgba(255, 255, 255, .1);
+							padding: 		0 0 0 .5em;
+							border: 		1px solid rgba(255, 255, 255, .1);
+							strong{
+								display: 	inline-block;
+								padding: 	0 .5em;
+								margin: 	0 0 0 .5em;
+								line-height:inherit;
+								background: rgba(0, 0, 0, .25);
+								font-weight:normal;
+							}
+						}
 					}
 				}
 			} // &>.ships
@@ -849,6 +877,19 @@
 		background-position:0 0;
 		&>.wrapper{
 			&>.fleet{
+				h3, h4, h5{
+					&[data-content]{
+						.convertColor(hsl(@hue, 24%, 97%));
+						color:		@color;
+						//.convertColor(hsla(@hue, 100%, 57%, .5));
+						//text-shadow:0 0 unit(5 / 30, em) rgba(255, 255, 255, .25);
+						&:before{
+							//.convertColor(hsl(@hue, 87%, 80%));
+							.convertColor(hsl(@hue, 90%, 75%));
+							color: 		@color;
+						}
+					}
+				}
 				&>header{
 					h3{
 						&:not([data-content]){
@@ -887,6 +928,7 @@
 										background: linear-gradient(to right, @color 25%, transparent) repeat-y 0 0;
 									}
 								}
+								/*
 								&>div{
 									h4, h5{
 										.convertColor(hsl(@hue, 24%, 97%));
@@ -899,7 +941,7 @@
 											color: 		@color;
 										}
 									}
-								}
+								}*/
 							}
 							&:hover{
 								&:before{

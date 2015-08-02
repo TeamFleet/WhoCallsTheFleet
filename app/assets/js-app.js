@@ -3257,6 +3257,12 @@ _frame.app_main.page['equipments'] = {
 					},
 					'modeSelectionEnter': function(e, callback_select, callback_enter){
 						self.modeSelectionEnter(callback_select, callback_enter)
+					},
+					'show': function(){
+						if( self.tablelistObj ){
+							self.tablelistObj.thead_redraw()
+							self.tablelistObj.apply_types()
+						}
 					}
 				})
 			}
@@ -3672,6 +3678,7 @@ _frame.infos = {
 					_frame.infos.dom.main.attr('data-infostype', 'fleetinfo')
 					title = '舰队 - ' + id
 					_frame.app_main.mode_selection_off()
+					TablelistEquipments.types = []
 					break;
 			}
 			//var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
@@ -4644,7 +4651,31 @@ class InfosFleetSubFleet{
 			}
 		
 		// 舰队综合属性
-			this.elSummary = $('<span/>').appendTo( this.el )
+			this.elSummary = $('<span class="summary"/>')
+				//.html('<h4 data-content="舰队数据">舰队数据</h4>')
+				.appendTo( this.el )
+				.append(
+					$('<span class="summary-item"/>')
+						.html('航速')
+						.append(
+							self.elSummarySpeed = $('<strong/>').html('-')
+						)
+				)
+				.append(
+					$('<span class="summary-item"/>')
+						.html('制空战力')
+						.append(
+							self.elSummaryFlightPower = $('<strong/>').html('-')
+						)
+				)
+				/*
+				.append(
+					$('<span class="summary-item"/>')
+						.html('索敌能力')
+						.append(
+							self.elSummaryLOS = $('<strong/>')
+						)
+				)*/
 		
 		this.infosFleet = infosFleet
 
@@ -4666,15 +4697,89 @@ class InfosFleetSubFleet{
 		getData(){
 			return this.data
 		}
+	
+	// 遍历该子舰队下全部装备，计算相关舰队数据
+		summaryCalc(){
+			if( this.summaryCalculating )
+				return false
+			
+			let self = this
+			this.summaryCalculating = setTimeout(function(){
+				let flightPower = 0
+					,fleetSpeet = 'fast'
+					//,flightPowerEquipmentTypes = _g.data.item_type_collections[3].types
+					
+					,typeReconSeaplane = 15		// 水上侦察机
+					,typeReconSeaplaneNight = 16// 夜侦
+					,typeSeaplaneBomber = 17	// 水上轰炸机
+					,typeTorpedoBomber = 19 	// 舰攻
+					,typeDiveBomber = 20 		// 舰爆
+					,typeRecon = 21 			// 舰侦
+					,typeSearchlight = 39		// 探照灯
+					,typeSearchlightLarge = 46	// 大型探照灯
+					,typeFighters = [
+							typeSeaplaneBomber,
+							18, // 舰战
+							typeTorpedoBomber,
+							typeDiveBomber,
+							typeRecon
+						]
+					,typeSearchlights = [
+							typeSearchlight,
+							typeSearchlightLarge
+						]
+				
+				for(let i in self.ships){
+					if( self.ships[i].data[0] ){
+						let ship = _g.data.ships[self.ships[i].data[0]]
+						
+						// 计算：航速
+							if( ship.stat.speed < 10 )
+								fleetSpeet = 'slow'
+						
+						// 遍历装备
+						for( let j in self.ships[i].data[2] || [] ){
+							if( self.ships[i].data[2][j] ){
+								let equipment = _g.data.items[self.ships[i].data[2][j]]
+								
+								// 计算：总制空战力
+									if( $.inArray(equipment.type, typeFighters) > -1 ){
+										//flightPowerNumbers.push( equipment.stat.aa )
+										flightPower+= Math.floor(Math.sqrt(ship.slot[j]) * equipment.stat.aa)
+									}
+							}
+						}
+					}
+				}
+				
+				self.elSummarySpeed.html( fleetSpeet == 'fast' ? '高速' : '低速' )
+				
+				self.elSummaryFlightPower.html( flightPower )
+				if( flightPower > 0 )
+					self.elSummaryFlightPower.removeClass('empty')
+				else
+					self.elSummaryFlightPower.addClass('empty')
+
+				self.summaryCalculating = null
+			}, 10)
+		}
 
 
 
 	
 	// 保存
 		save(){
+			// 如果该子舰队下没有任何数据，则存储数据时不传输该子舰队数据
+			let allEmpty = true
 			for(let i in this.ships){
 				this.data[i] = this.ships[i].data
+				
+				if( this.ships[i].data[0] )
+					allEmpty = false
 			}
+			
+			if( allEmpty )
+				this.data = null
 			
 			if( this.infosFleet )
 				this.infosFleet.save()
@@ -5170,6 +5275,7 @@ class InfosFleetShipEquipment{
 				this.elName.html('')
 			}
 			
+			this.infosFleetShip.infosFleetSubFleet.summaryCalc()
 			this.save()
 		}
 	
@@ -5203,6 +5309,7 @@ class InfosFleetShipEquipment{
 			}else{
 				this.el.removeAttr('data-star')
 			}
+			this.infosFleetShip.infosFleetSubFleet.summaryCalc()
 		}
 	
 	// 搭载数 & 是否可用
@@ -6239,7 +6346,7 @@ _tablelist.prototype._equipments_init = function(){
 			'note': 		'',
 			'user': 		{},
 			'rating': 		-1,
-			'theme': 		1
+			'theme': 		_g.randNumber(10)
 		}, obj || {})
 	}
 
@@ -6568,10 +6675,10 @@ _tablelist.prototype._equipments_init = function(){
 								})
 						)
 						.append(
-							$('<menuitem/>').html('导入配置代码')
+							$('<menuitem/>').html('[NYI] 导入配置代码')
 						)
 						.append(
-							$('<menuitem/>').html('导入配置文件')
+							$('<menuitem/>').html('[NYI] 导入配置文件')
 						)
 				]
 			})

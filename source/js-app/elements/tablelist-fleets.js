@@ -56,7 +56,7 @@
 			'note': 		'',
 			'user': 		{},
 			'rating': 		-1,
-			'theme': 		1
+			'theme': 		_g.randNumber(10)
 		}, obj || {})
 	}
 
@@ -385,10 +385,10 @@
 								})
 						)
 						.append(
-							$('<menuitem/>').html('导入配置代码')
+							$('<menuitem/>').html('[NYI] 导入配置代码')
 						)
 						.append(
-							$('<menuitem/>').html('导入配置文件')
+							$('<menuitem/>').html('[NYI] 导入配置文件')
 						)
 				]
 			})
