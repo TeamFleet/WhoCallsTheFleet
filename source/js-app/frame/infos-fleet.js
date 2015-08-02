@@ -435,6 +435,11 @@ class InfosFleetShip{
 			// 选项/操作
 			.append(
 				$('<div class="options"/>')
+					.append(
+						self.elBtnOptions = $('<button class="options"/>').on('click', function(e){
+								self.showMenu()
+							})
+					)
 				/*
 					.append(
 						$('<button/>',{
@@ -521,6 +526,60 @@ class InfosFleetShip{
 	// 获取当前状态的元数据
 		getData(){
 			return this.data
+		}
+	
+	// 显示舰娘相关操作菜单
+		showMenu(){
+			InfosFleetShip.menuCurObj = this
+		
+			if( !InfosFleetShip.menu ){
+				InfosFleetShip.menuItems = [
+					$('<menuitem/>').html('查看资料')
+						.on({
+							'click': function(e){
+							},
+							'show': function(){
+								InfosFleetShip.menuItems[0].attr(
+									'data-infos',
+									'[[SHIP::'+InfosFleetShip.menuCurObj.shipId+']]'
+								)
+							}
+						}),
+						
+					$('<menuitem/>').html('移除')
+						.on({
+							'click': function(e){
+								InfosFleetShip.menuCurObj.shipId = null
+							}
+						}),
+						
+					$('<div/>').on('show', function(){
+						var $div = InfosFleetShip.menuItems[2].empty()
+						if( InfosFleetShip.menuCurObj.shipId ){
+							var series = _g['data']['ships'][InfosFleetShip.menuCurObj.shipId].getSeriesData() || []
+							for(let i in series){
+								if( i == '0' )
+									$div.append($('<hr/>'))
+								$div.append(
+									$('<menuitem/>')
+										.html('替换为 ' + _g['data']['ships'][series[i]['id']].getName(true))
+										.on({
+											'click': function(){
+												InfosFleetShip.menuCurObj.shipId = series[i]['id']
+											}
+										})
+								)
+							}
+						}
+					})
+				]
+				InfosFleetShip.menu = new _menu({
+					'className': 'contextmenu-ship',
+					'items': InfosFleetShip.menuItems
+				})
+			}
+		
+			InfosFleetShip.menu.show(this.elBtnOptions)
 		}
 	
 	

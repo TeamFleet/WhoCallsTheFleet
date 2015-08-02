@@ -407,6 +407,10 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 						for(let i in series){
 							if( i == '0' )
 								$div.append($('<hr/>'))
+							let checkbox = null
+							try{
+								checkbox = self._ships_checkbox[series[i]['id']]
+							}catch(e){}
 							$div.append(
 								$('<div class="item"/>')
 									.html('<span>' + _g['data']['ships'][series[i]['id']].getName(true) + '</span>')
@@ -437,15 +441,17 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 											.append(
 												$('<menuitem/>')
 													.html(
-														self._ships_checkbox[series[i]['id']].prop('checked')
+														checkbox && checkbox.prop('checked')
 															? '取消对比'
 															: '加入对比'
 													)
 													.on({
 														'click': function(e){
-															self._ships_checkbox[series[i]['id']]
-																.prop('checked', !self._ships_checkbox[series[i]['id']].prop('checked'))
-																.trigger('change')
+															if( checkbox ){
+																self._ships_checkbox[series[i]['id']]
+																	.prop('checked', !checkbox.prop('checked'))
+																	.trigger('change')
+															}
 														}
 													})
 											)
