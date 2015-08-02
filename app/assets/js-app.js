@@ -4459,6 +4459,7 @@ class InfosFleet{
 							self.doms['theme'] = $('<select class="option-theme"/>')
 								.on('change', function(){
 									self._theme = self.doms['theme'].val()
+									self.el.attr('data-theme', self._theme)
 								})
 								.append(function(){
 									let els = $()
@@ -4607,6 +4608,7 @@ class InfosFleet{
 			*/
 			
 			//_g.log(this)
+			_g.log(this.data)
 			_db.fleets.updateById(this.data._id, this.data, function(){
 				_g.log('saved')
 			})
@@ -4783,6 +4785,7 @@ class InfosFleetShip{
 			// 选项/操作
 			.append(
 				$('<div class="options"/>')
+				/*
 					.append(
 						$('<button/>',{
 							'html':			'i',
@@ -4799,14 +4802,14 @@ class InfosFleetShip{
 								e.preventDefault()
 								e.stopPropagation()
 							})
-					)
+					)*/
 			)
 			.on('click', function(){
 				if( self.el.hasClass('noship') )
 					self.selectShipStart()
 			})
 
-		this.updateEl()
+		//this.updateEl()
 	}
 	
 	// 返回页面元素
@@ -4847,9 +4850,9 @@ class InfosFleetShip{
 		updateEl(d){
 			this._updating = true
 			
-			this.data = d || this.data		
+			this.data = d || this.data
 			
-			if( this.data[0] )	
+			if( this.data[0] )
 				this.shipId = this.data[0]
 			
 			if( this.data[1][0] )
@@ -4901,7 +4904,10 @@ class InfosFleetShip{
 				// 装备栏数据
 					for( let i=0; i<4; i++ ){
 						this.equipments[i].carry = ship.slot[i]
-						this.equipments[i].id = this.data[2][i]
+						if( !this._updating ){
+							this.equipments[i].id = null
+							//this.equipments[i].star = this.data[3][i]
+						}
 					}
 			}else{
 				this.el.removeAttr('data-shipId')
@@ -4918,10 +4924,10 @@ class InfosFleetShip{
 		}
 		set shipLv( value ){
 			this.data[1][0] = value || null
-			if( value ){
-				this.elInputLevel.val( value ).trigger('change')
+			if( value && value > 0 ){
+				this.elInputLevel.val( value )
 			}else{
-				this.elInputLevel.val('').trigger('change')
+				this.elInputLevel.val('')
 			}
 			//this.el.attr('data-shipLv', value)
 			
@@ -5011,7 +5017,7 @@ class InfosFleetShipEquipment{
 									'class':		'equipment-starinput',
 									'type':			'number',
 									'placeholder':	0
-								}).on('change', function(){
+								}).on('input', function(){
 									let value = self.elInputStar.val()
 									
 									if( (typeof value == 'undefined' || value === '') && self.star )
@@ -5023,15 +5029,18 @@ class InfosFleetShipEquipment{
 								})				
 							)
 							.append(
-								self.elButtonInspect = $('<button class="inspect"/>').html('Infos')
+								self.elButtonInspect = $('<button class="inspect"/>').html('资料').on('click', function(){
+									if( self.id )
+										_frame.infos.show('[[EQUIPMENT::' + self.id + ']]')
+								})
 							)
 							.append(
-								$('<button class="change"/>').html('Change').on('click',function(){
+								$('<button class="change"/>').html('更变').on('click',function(){
 									self.selectEquipmentStart()
 								})
 							)
 							.append(
-								$('<button class="remove"/>').html('Remove').on('click',function(){
+								$('<button class="remove"/>').html('×').on('click',function(){
 									self.id = null
 								})
 							)
@@ -5052,6 +5061,7 @@ class InfosFleetShipEquipment{
 				callback_modeSelection_select: function(id){
 					history.back()
 					self.id = id
+					self.star = 0
 					TablelistEquipments.types = []
 					if( self.infosFleetShip.infosFleet )
 						_frame.infos.dom.main.attr('data-theme', self.infosFleetShip.infosFleet.data['theme'])
@@ -5076,26 +5086,26 @@ class InfosFleetShipEquipment{
 		}
 		set id( value ){
 			value = parseInt(value) || null
-			this.star = 0
+			//this.star = 0
 			_p.tip.hide()
 			this.el.removeData(['tip', 'tip-filtered'])
 			
 			if( value && !isNaN(value) ){
 				this.infosFleetShip.data[2][this.index] = value
+				this.improvable = _g.data.items[value].improvable || false
 				this.el.attr({
 							'data-equipmentid': value,
 							'data-tip':			'[[EQUIPMENT::' +value+ ']]'
 						})
 						.css('background-image', 'url('+_g.data.items[value]._icon+')')
 				this.elName.html(_g.data.items[value]._name)
-				this.improvable = _g.data.items[value].improvable
 			}else{
 				this.infosFleetShip.data[2][this.index] = null
+				this.improvable = false
 				this.el.removeAttr('data-equipmentId')
 						.removeAttr('data-tip')
 						.css('background-image', '')
 				this.elName.html('')
-				this.improvable = false
 			}
 			
 			this.save()
@@ -5109,20 +5119,22 @@ class InfosFleetShipEquipment{
 			if( this._improvable ){
 				value = parseInt(value) || null
 				
-				if( this.infosFleetShip.data[3][this.index] != value ){
-					if( value && isNaN(value) ){
-						this.infosFleetShip.data[3][this.index] = value
-						this.elInputStar.val( value ).trigger('change')
-						this.elStar.html(value)
-						this.el.attr('data-star', value)
-					}else{
-						this.infosFleetShip.data[3][this.index] = null
-						this.elInputStar.val('').trigger('change')
-						this.elStar.html(0)
-						this.el.attr('data-star', '')
-					}
-					
-					this.save()
+				if( value > 10 )
+					value = 10
+				
+				if( value < 0 )
+					value = 0
+				
+				if( value ){
+					this.infosFleetShip.data[3][this.index] = value
+					this.elInputStar.val( value )
+					this.elStar.html(value)
+					this.el.attr('data-star', value)
+				}else{
+					this.infosFleetShip.data[3][this.index] = null
+					this.elInputStar.val('')
+					this.elStar.html(0)
+					this.el.attr('data-star', '')
 				}
 				
 				this.save()
@@ -5145,14 +5157,15 @@ class InfosFleetShipEquipment{
 	
 	// 是否可改修
 		set improvable(value){
-			if( typeof value == 'undefined' ){
+			if( !value ){
 				this.el.removeAttr('data-star')
 				this.elInputStar.prop('disabled', true)
+								.attr('placeholder', '--')
 				this._improvable = false
 			}else{
-				value = parseInt(value) || 0
 				this.el.attr('data-star', '')
 				this.elInputStar.prop('disabled', false)
+								.attr('placeholder', '0')
 				this._improvable = true
 			}
 		}
