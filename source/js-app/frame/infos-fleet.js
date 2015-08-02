@@ -672,6 +672,19 @@ class InfosFleetShipEquipment{
 										self.star = value
 								})				
 							)
+							.append(
+								self.elButtonInspect = $('<button class="inspect"/>').html('Infos')
+							)
+							.append(
+								$('<button class="change"/>').html('Change').on('click',function(){
+									self.selectEquipmentStart()
+								})
+							)
+							.append(
+								$('<button class="remove"/>').html('Remove').on('click',function(){
+									self.id = null
+								})
+							)
 					)
 	}
 	
@@ -714,17 +727,25 @@ class InfosFleetShipEquipment{
 		set id( value ){
 			value = parseInt(value) || null
 			this.star = 0
+			_p.tip.hide()
+			this.el.removeData(['tip', 'tip-filtered'])
 			
 			if( value && !isNaN(value) ){
 				this.infosFleetShip.data[2][this.index] = value
-				this.el.attr('data-equipmentId', value)
+				this.el.attr({
+							'data-equipmentid': value,
+							'data-tip':			'[[EQUIPMENT::' +value+ ']]'
+						})
 						.css('background-image', 'url('+_g.data.items[value]._icon+')')
 				this.elName.html(_g.data.items[value]._name)
+				this.improvable = _g.data.items[value].improvable
 			}else{
 				this.infosFleetShip.data[2][this.index] = null
 				this.el.removeAttr('data-equipmentId')
+						.removeAttr('data-tip')
 						.css('background-image', '')
 				this.elName.html('')
+				this.improvable = false
 			}
 			
 			this.save()
@@ -735,23 +756,29 @@ class InfosFleetShipEquipment{
 			return this.infosFleetShip.data[3][this.index]
 		}
 		set star( value ){
-			value = parseInt(value) || null
-			
-			if( this.infosFleetShip.data[3][this.index] != value ){
-				if( value && isNaN(value) ){
-					this.infosFleetShip.data[3][this.index] = value
-					this.elInputStar.val( value ).trigger('change')
-					this.elStar.html(value)
-				}else{
-					this.infosFleetShip.data[3][this.index] = null
-					this.elInputStar.val('').trigger('change')
-					this.elStar.html(0)
+			if( this._improvable ){
+				value = parseInt(value) || null
+				
+				if( this.infosFleetShip.data[3][this.index] != value ){
+					if( value && isNaN(value) ){
+						this.infosFleetShip.data[3][this.index] = value
+						this.elInputStar.val( value ).trigger('change')
+						this.elStar.html(value)
+						this.el.attr('data-star', value)
+					}else{
+						this.infosFleetShip.data[3][this.index] = null
+						this.elInputStar.val('').trigger('change')
+						this.elStar.html(0)
+						this.el.attr('data-star', '')
+					}
+					
+					this.save()
 				}
 				
 				this.save()
+			}else{
+				this.el.removeAttr('data-star')
 			}
-			
-			this.save()
 		}
 	
 	// 搭载数 & 是否可用
@@ -763,6 +790,20 @@ class InfosFleetShipEquipment{
 				value = parseInt(value) || 0
 				this.el.attr('data-carry', value)
 				this.elCarry.html(value)
+			}
+		}
+	
+	// 是否可改修
+		set improvable(value){
+			if( typeof value == 'undefined' ){
+				this.el.removeAttr('data-star')
+				this.elInputStar.prop('disabled', true)
+				this._improvable = false
+			}else{
+				value = parseInt(value) || 0
+				this.el.attr('data-star', '')
+				this.elInputStar.prop('disabled', false)
+				this._improvable = true
 			}
 		}
 	
