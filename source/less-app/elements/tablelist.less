@@ -637,6 +637,25 @@
 			.loop(@n, (@i + 1))
 		}
 		.loop(10);
+		
+		&>input[type="hidden"][name="types"][class]{
+			& ~ .fixed-table-container{
+				tr.typetitle,
+				tr.row[data-equipmentid]{
+					opacity: 	.35;
+				}
+			}
+			.loop(@n, @i: 1) when (@i =< @n) {
+				&.type@{i} ~ .fixed-table-container{
+					tr.typetitle[data-type="@{i}"],
+					tr.row[data-equipmenttype="@{i}"]{
+						opacity: 	1;
+					}
+				}
+				.loop(@n, (@i + 1))
+			}
+			.loop(50);
+		}
 	}
 }
 

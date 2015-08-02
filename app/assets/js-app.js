@@ -1134,6 +1134,9 @@ class Equipment extends ITEM{
 	getIconId(){
 		return _g.data.item_types[this['type']]['icon']
 	}
+	get _icon(){
+		return 'assets/images/itemicon/' + this.getIconId() + '.png'
+	}
 	
 	getCaliber(){
 		let name = this.getName(false, 'ja_jp')
@@ -3240,8 +3243,10 @@ _frame.app_main.page['equipments'] = {
 							self.tablelistObj
 								= self.tablelist.data('tablelist')
 				
-						if( self.tablelistObj )
+						if( self.tablelistObj ){
 							self.tablelistObj.thead_redraw()
+							self.tablelistObj.apply_types()
+						}
 					},
 					'modeSelectionEnter': function(e, callback_select){
 						self.modeSelectionEnter(callback_select)
@@ -5810,6 +5815,13 @@ _tablelist.prototype.init = function(){
 
 // Equipments
 
+class TablelistEquipments extends _tablelist{
+	constructor(){
+		super()
+	}
+}
+TablelistEquipments.types = []
+
 _tablelist.prototype._equipments_columns = [
 	'  ',
 	['火力',	'fire'],
@@ -5829,7 +5841,18 @@ _tablelist.prototype._equipments_append_item = function( equipment_data, collect
 		,tr = $('<tr class="row" data-equipmentid="'+ equipment_data['id'] +'" data-equipmentcollection="'+ collection_id +'"/>')
 				.attr({
 					'data-infos': 		'[[EQUIPMENT::'+ equipment_data['id'] +']]',
-					'data-equipmentedit':self.dom.container.hasClass('equipmentlist-edit') ? 'true' : null
+					'data-equipmentedit':self.dom.container.hasClass('equipmentlist-edit') ? 'true' : null,
+					'data-equipmenttype':equipment_data.type
+				})
+				.on('click', function(e, forceInfos){
+					if( !forceInfos && _frame.app_main.is_mode_selection() ){
+						e.preventDefault()
+						e.stopImmediatePropagation()
+						e.stopPropagation()
+						
+						if( $.inArray(equipment_data.type, TablelistEquipments.types) > -1 )
+							_frame.app_main.mode_selection_callback(equipment_data['id'])
+					}
 				})
 				.on('click', function(e, forceInfos){
 					if( !forceInfos && e.target.tagName.toLowerCase() != 'em' && _frame.app_main.is_mode_selection() ){
@@ -5885,17 +5908,21 @@ _tablelist.prototype._equipments_append_item = function( equipment_data, collect
 }
 _tablelist.prototype._equipments_append_all_items = function(){
 	var self = this
+	this.generated = false
+	this.dom.types = []
 	function _do( i, j ){
 		if( _g.data.item_id_by_type[i] ){
 			if( !j ){
 				var data_equipmenttype = _g.data.item_types[ _g.item_type_order[i] ]
-				$('<tr class="typetitle" data-equipmentcollection="'+_g.data.item_id_by_type[i]['collection']+'">'
-						+ '<th colspan="' + (self._equipments_columns.length + 1) + '">'
-							+ '<span style="background-image: url(../app/assets/images/itemicon/'+data_equipmenttype['icon']+'.png)"></span>'
-							+ data_equipmenttype['name']['zh_cn']
-							+ _frame.app_main.page['equipments'].gen_helper_equipable_on( data_equipmenttype['id'] )
-						+ '</th></tr>'
-					).appendTo( self.dom.tbody )
+				self.dom.types.push(
+					$('<tr class="typetitle" data-equipmentcollection="'+_g.data.item_id_by_type[i]['collection']+'" data-type="'+data_equipmenttype.id+'">'
+							+ '<th colspan="' + (self._equipments_columns.length + 1) + '">'
+								+ '<span style="background-image: url(../app/assets/images/itemicon/'+data_equipmenttype['icon']+'.png)"></span>'
+								+ data_equipmenttype['name']['zh_cn']
+								+ _frame.app_main.page['equipments'].gen_helper_equipable_on( data_equipmenttype['id'] )
+							+ '</th></tr>'
+						).appendTo( self.dom.tbody )
+				)
 			}
 
 			self._equipments_append_item(
@@ -5914,11 +5941,46 @@ _tablelist.prototype._equipments_append_all_items = function(){
 			//self.mark_high()
 			// force thead redraw
 				self.thead_redraw()
+				self.generated = true
+				self.apply_types_check()
 			_frame.app_main.loaded('tablelist_'+self._index, true)
 		}
 	}
 	_do( 0, 0 )
 }
+
+
+
+
+_tablelist.prototype.apply_types = function(){
+	console.log('types: ' + TablelistEquipments.types)
+	
+	if( TablelistEquipments.types.length ){
+		this.dom.filter_types.addClass('type' + TablelistEquipments.types.join(' type'))
+		if( this.generated )
+			this.apply_types_check()
+	}else
+		this.dom.filter_types.removeAttr('class')
+}
+
+
+
+
+_tablelist.prototype.apply_types_check = function(){
+	if( TablelistEquipments.types.length ){
+		let k = 0
+			,collection = 0
+			,self = this
+		while( $.inArray((parseInt(self.dom.types[k++].attr('data-type')) || null), TablelistEquipments.types) <= -1 ){
+			collection = parseInt(self.dom.types[k].attr('data-equipmentcollection')) || 1
+		}
+		self.dom.type_radios[collection].prop('checked', true).trigger('change')
+	}
+}
+
+
+
+
 _tablelist.prototype._equipments_init = function(){
 	var self = this
 
@@ -5932,9 +5994,10 @@ _tablelist.prototype._equipments_init = function(){
 
 	// 装备大类切换
 		var checked = false
+		this.dom.type_radios = {}
 		for(var i in _g.data.item_type_collections){
 			var radio_id = '_input_g' + parseInt(_g.inputIndex)
-			$('<input type="radio" name="equipmentcollection" id="'+radio_id+'" value="'+i+'"/>')
+			this.dom.type_radios[i] = $('<input type="radio" name="equipmentcollection" id="'+radio_id+'" value="'+i+'"/>')
 				.prop('checked', !checked )
 				.on('change', function(){
 					// force thead redraw
@@ -5951,6 +6014,9 @@ _tablelist.prototype._equipments_init = function(){
 			checked = true
 			_g.inputIndex++
 		}
+	
+	// 装备类型过滤
+		this.dom.filter_types = $('<input name="types" type="hidden"/>').prependTo( this.dom.container )
 
 	// 生成表格框架
 		this.dom.table_container = $('<div class="fixed-table-container"/>').appendTo( this.dom.container )
