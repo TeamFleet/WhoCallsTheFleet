@@ -152,8 +152,10 @@ _tablelist.prototype.apply_types_check = function(){
 			el = self.dom.types[k]
 		}
 		
+		el = el || self.dom.types[0]
+		
 		self.dom.type_radios[parseInt(el.attr('data-equipmentcollection')) || 1].prop('checked', true).trigger('change')
-		self.dom.table_container_inner.scrollTop(el[0].offsetTop)
+		self.dom.table_container_inner.scrollTop(el[0].offsetTop || 0)
 	}
 }
 
