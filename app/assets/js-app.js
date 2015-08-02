@@ -1134,6 +1134,9 @@ class Equipment extends ITEM{
 	getIconId(){
 		return _g.data.item_types[this['type']]['icon']
 	}
+	get _icon(){
+		return 'assets/images/itemicon/' + this.getIconId() + '.png'
+	}
 	
 	getCaliber(){
 		let name = this.getName(false, 'ja_jp')
