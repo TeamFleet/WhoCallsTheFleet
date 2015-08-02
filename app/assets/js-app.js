@@ -5592,13 +5592,13 @@ _tablelist.prototype._equipments_append_all_items = function(){
 
 _tablelist.prototype.apply_types = function(){
 	console.log('types: ' + TablelistEquipments.types)
+	this.dom.filter_types.removeAttr('class')
 	
 	if( TablelistEquipments.types.length ){
 		this.dom.filter_types.addClass('type' + TablelistEquipments.types.join(' type'))
 		if( this.generated )
 			this.apply_types_check()
-	}else
-		this.dom.filter_types.removeAttr('class')
+	}
 }
 
 
