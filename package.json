@@ -78,9 +78,9 @@
       "package.json"
     ],
     "dataVersion": {
-      "app": "0.6.3.0",
-      "app-db": "1.6.3.0",
-      "pics": "1.6.3.0"
+      "app": "0.6.3.1",
+      "app-db": "1.6.3.1",
+      "pics": "1.6.3.1"
     },
     "buildDir": "N:\\nwbuild\\build",
     "winIco": "L:\\Projects\\Apps-nw.js\\WhoCallsTheFleet\\!design\\appicon.ico",
