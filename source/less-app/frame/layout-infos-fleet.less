@@ -399,7 +399,7 @@
 							z-index: 	1;
 							&>.equipment{
 								flex: 		1 0 auto;
-								background: rgba(0, 0, 0, .1) no-repeat 2px 50%;
+								background: rgba(0, 0, 0, .125) no-repeat 2px 50%;
 								margin: 	0 2px 0 0;
 								transition-property: background-color;
 								position: 	relative;
@@ -915,7 +915,8 @@
 		}
 		
 		//.convertColor(hsla(@hue, 40%, 40%, .65));
-		.convertColor(hsla(@hue, 20%, 18%, .7));
+		//.convertColor(hsla(@hue, 20%, 18%, .8));
+		.convertColor(hsla(@hue, 30%, 18%, .65));
 		.convertColor2(hsl(@hue, 100%, 80%));
 		.convertColor3(hsla(@hue, 100%, 75%, .2));
 		background-color:	@color;
@@ -994,7 +995,7 @@
 								&>.equipment{
 									&>.equipment-infos{
 										&>.equipment-name{
-											.convertColor(hsl(@hue, 100%, 92%));
+											.convertColor(hsl(@hue, 100%, 94%));
 											color:	@color;
 										}
 									}
