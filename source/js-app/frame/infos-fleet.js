@@ -280,7 +280,7 @@ class InfosFleetSubFleet{
 		d = d || []
 		this.data = d
 
-		this.el = $('<dl/>')
+		this.el = $('<dl class="fleetinfos-ships"/>')
 		
 		this.ships = []
 
@@ -308,7 +308,7 @@ class InfosFleetSubFleet{
 					$('<span class="summary-item"/>')
 						.html('制空战力')
 						.append(
-							self.elSummaryFlightPower = $('<strong/>').html('-')
+							self.elSummaryFighterPower = $('<strong/>').html('-')
 						)
 				)
 				/*
@@ -348,29 +348,8 @@ class InfosFleetSubFleet{
 			
 			let self = this
 			this.summaryCalculating = setTimeout(function(){
-				let flightPower = 0
+				let fighterPower = 0
 					,fleetSpeet = 'fast'
-					//,flightPowerEquipmentTypes = _g.data.item_type_collections[3].types
-					
-					,typeReconSeaplane = 15		// 水上侦察机
-					,typeReconSeaplaneNight = 16// 夜侦
-					,typeSeaplaneBomber = 17	// 水上轰炸机
-					,typeTorpedoBomber = 19 	// 舰攻
-					,typeDiveBomber = 20 		// 舰爆
-					,typeRecon = 21 			// 舰侦
-					,typeSearchlight = 39		// 探照灯
-					,typeSearchlightLarge = 46	// 大型探照灯
-					,typeFighters = [
-							typeSeaplaneBomber,
-							18, // 舰战
-							typeTorpedoBomber,
-							typeDiveBomber,
-							typeRecon
-						]
-					,typeSearchlights = [
-							typeSearchlight,
-							typeSearchlightLarge
-						]
 				
 				for(let i in self.ships){
 					if( self.ships[i].data[0] ){
@@ -380,28 +359,18 @@ class InfosFleetSubFleet{
 							if( ship.stat.speed < 10 )
 								fleetSpeet = 'slow'
 						
-						// 遍历装备
-						for( let j in self.ships[i].data[2] || [] ){
-							if( self.ships[i].data[2][j] ){
-								let equipment = _g.data.items[self.ships[i].data[2][j]]
-								
-								// 计算：总制空战力
-									if( $.inArray(equipment.type, typeFighters) > -1 ){
-										//flightPowerNumbers.push( equipment.stat.aa )
-										flightPower+= Math.floor(Math.sqrt(ship.slot[j]) * equipment.stat.aa)
-									}
-							}
-						}
+						// 计算：制空战力
+							fighterPower+= self.ships[i].calculate('fighterPower')
 					}
 				}
 				
 				self.elSummarySpeed.html( fleetSpeet == 'fast' ? '高速' : '低速' )
 				
-				self.elSummaryFlightPower.html( flightPower )
-				if( flightPower > 0 )
-					self.elSummaryFlightPower.removeClass('empty')
+				self.elSummaryFighterPower.html( fighterPower )
+				if( fighterPower > 0 )
+					self.elSummaryFighterPower.removeClass('empty')
 				else
-					self.elSummaryFlightPower.addClass('empty')
+					self.elSummaryFighterPower.addClass('empty')
 
 				self.summaryCalculating = null
 			}, 10)
@@ -528,7 +497,10 @@ class InfosFleetShip{
 			)
 			// 属性
 			.append(
-				$('<div class="attributes"/>').html('属性')
+				$('<div class="attributes"/>')
+					.append($('<span class="shelling"/>').html('炮击力').append(
+						self.elAttrShelling = $('<strong/>').html('-')
+					))
 			)
 			// 选项/操作
 			.append(
@@ -594,7 +566,14 @@ class InfosFleetShip{
 	
 	// 计算并显示属性
 		updateAttrs(){
-			
+			this.elAttrShelling.html( this.calculate('shellingDamage') )
+		}
+	
+	// 单项属性计算
+		calculate(type){
+			if( Formula[type] )
+				return Formula[type]( this.shipId, this.data[2], this.data[3] )
+			return null
 		}
 
 	// 更新元数据
@@ -750,8 +729,20 @@ class InfosFleetShip{
 		save(){
 			if( this._updating )
 				return false
-			if( this.infosFleetSubFleet )
-				this.infosFleetSubFleet.save()
+
+			if( this._saveTimeout )
+				return false
+			
+			let self = this
+			this._saveTimeout = setTimeout(function(){
+				// 计算属性
+					self.updateAttrs()
+				
+				if( self.infosFleetSubFleet )
+					self.infosFleetSubFleet.save()
+				
+				self._saveTimeout = null
+			}, 10)
 		}
 }
 

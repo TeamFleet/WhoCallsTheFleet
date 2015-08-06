@@ -2344,6 +2344,156 @@ _g.error = function( err ){
 }
 
 
+
+let Formula = {
+	// 装备类型
+		equipmentType: {
+			LargeCaliber:		5,		// 大口径主炮
+			SuperCaliber:		6,		// 超大口径主炮
+			SecondaryGun:		7,		// 副炮
+			SecondaryGunHigh:	8,		// 副炮（高角）
+			SecondaryGunAA:		9,		// 副炮（高射）
+			ReconSeaplane:		15,		// 水上侦察机
+			ReconSeaplaneNight:	16,		// 夜侦
+			SeaplaneBomber:		17,		// 水上轰炸机
+			CarrierFighter:		18,		// 舰战 / 舰载战斗机
+			TorpedoBomber:		19,		// 舰攻 / 舰载鱼雷轰炸机
+			DiveBomber:			20,		// 舰爆 / 舰载俯冲轰炸机
+			CarrierRecon:		21,		// 舰侦 / 舰载侦察机
+			Searchlight:		39,		// 探照灯
+			SearchlightLarge:	46		// 大型探照灯
+		},
+	
+	// 舰种
+		shipType: {
+			// 航空母舰
+			Carrier: [
+				9,
+				10,
+				11
+			],
+			// 潜艇
+			Submarines: [
+				13,
+				14
+			]
+		},
+	
+	calculate: function( type, ship, equipments_by_slot, star_by_slot, options ){
+		if( !type || !ship )
+			return 0
+		
+		if( !(ship instanceof Ship) )
+			ship = _g.data.ships[ship]
+		
+		equipments_by_slot = equipments_by_slot.map(function(equipment){
+				if( !equipment )
+					return null
+				if( equipment instanceof Equipment )
+					return equipment
+				return _g.data.items[equipment]
+			}) || []
+		star_by_slot = star_by_slot || []
+		options = options || {}
+		
+		let result = 0
+		
+		switch(type){
+
+			// 制空战力，装备须为战斗机类型 Formula.type.typeFighters
+			case 'fighterPower':
+				ship.slot.map(function(carry, index){
+					if( equipments_by_slot[index]
+						&& $.inArray( equipments_by_slot[index].type, Formula.equipmentType.Fighters ) > -1
+					)
+						result+= Math.floor(Math.sqrt(carry) * equipments_by_slot[index].stat.aa)
+				})
+				return result
+				break;
+			
+			// 炮击威力，除潜艇外
+			case 'shelling':
+			case 'shellingDamage':
+				if( $.inArray(ship.type, Formula.shipType.Submarines) > -1 ){
+					return '-'
+				}else if( $.inArray(ship.type, Formula.shipType.Carrier) > -1 ){
+					// 航母
+					let torpedoDamage = 0
+						,bombDamage = 0
+					ship.slot.map(function(carry, index){
+						if( equipments_by_slot[index] ){
+							result+= equipments_by_slot[index].stat.fire
+							
+							if( equipments_by_slot[index].type == Formula.equipmentType.TorpedoBomber )
+								torpedoDamage+= equipments_by_slot[index].stat.torpedo
+								
+							if( equipments_by_slot[index].type == Formula.equipmentType.DiveBomber )
+								bombDamage+= equipments_by_slot[index].stat.bomb
+							
+							if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.SecondaryGuns ) > -1 )
+								result+= Math.sqrt((star_by_slot[index] || 0) * 1.5)
+						}
+					})
+					if( !torpedoDamage && !bombDamage )
+						return '-'
+					else
+						result+= ( bombDamage * 1.3 + torpedoDamage + ship.stat.fire_max ) * 1.5 + 55
+					return Math.floor(result)
+				}else{
+					// 其他舰种
+					result = ship.stat.fire_max + 5
+					ship.slot.map(function(carry, index){
+						if( equipments_by_slot[index] )
+							result+= equipments_by_slot[index].stat.fire
+									+ Math.sqrt(
+										(star_by_slot[index] || 0)
+										* ( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.LargeCalibers ) > -1
+												? 1.5
+												: 1
+											)
+									)
+					})
+					return Math.floor(result)
+				}
+				break;
+		}
+	}
+}
+
+Formula.equipmentType.LargeCalibers = [
+		Formula.equipmentType.LargeCaliber,
+		Formula.equipmentType.HeavyCaliber
+	]
+
+Formula.equipmentType.SecondaryGuns = [
+		Formula.equipmentType.SecondaryGun,
+		Formula.equipmentType.SecondaryGunHigh,
+		Formula.equipmentType.SecondaryGunAA
+	]
+
+Formula.equipmentType.Fighters = [
+		Formula.equipmentType.SeaplaneBomber,
+		Formula.equipmentType.CarrierFighter,
+		Formula.equipmentType.TorpedoBomber,
+		Formula.equipmentType.DiveBomber,
+		Formula.equipmentType.CarrierRecon
+	]
+
+Formula.equipmentType.Searchlights = [
+		Formula.equipmentType.Searchlight,
+		Formula.equipmentType.SearchlightLarge
+	]
+
+
+
+
+Formula.fighterPower = function(ship, equipments_by_slot){
+	return this.calculate( 'fighterPower', ship, equipments_by_slot )
+}
+Formula.shellingDamage = function(ship, equipments_by_slot, star_by_slot){
+	return this.calculate( 'shellingDamage', ship, equipments_by_slot, star_by_slot )
+}
+
 /*
 
 自动更新流程
@@ -4637,7 +4787,7 @@ class InfosFleetSubFleet{
 		d = d || []
 		this.data = d
 
-		this.el = $('<dl/>')
+		this.el = $('<dl class="fleetinfos-ships"/>')
 		
 		this.ships = []
 
@@ -4665,7 +4815,7 @@ class InfosFleetSubFleet{
 					$('<span class="summary-item"/>')
 						.html('制空战力')
 						.append(
-							self.elSummaryFlightPower = $('<strong/>').html('-')
+							self.elSummaryFighterPower = $('<strong/>').html('-')
 						)
 				)
 				/*
@@ -4705,29 +4855,8 @@ class InfosFleetSubFleet{
 			
 			let self = this
 			this.summaryCalculating = setTimeout(function(){
-				let flightPower = 0
+				let fighterPower = 0
 					,fleetSpeet = 'fast'
-					//,flightPowerEquipmentTypes = _g.data.item_type_collections[3].types
-					
-					,typeReconSeaplane = 15		// 水上侦察机
-					,typeReconSeaplaneNight = 16// 夜侦
-					,typeSeaplaneBomber = 17	// 水上轰炸机
-					,typeTorpedoBomber = 19 	// 舰攻
-					,typeDiveBomber = 20 		// 舰爆
-					,typeRecon = 21 			// 舰侦
-					,typeSearchlight = 39		// 探照灯
-					,typeSearchlightLarge = 46	// 大型探照灯
-					,typeFighters = [
-							typeSeaplaneBomber,
-							18, // 舰战
-							typeTorpedoBomber,
-							typeDiveBomber,
-							typeRecon
-						]
-					,typeSearchlights = [
-							typeSearchlight,
-							typeSearchlightLarge
-						]
 				
 				for(let i in self.ships){
 					if( self.ships[i].data[0] ){
@@ -4737,28 +4866,18 @@ class InfosFleetSubFleet{
 							if( ship.stat.speed < 10 )
 								fleetSpeet = 'slow'
 						
-						// 遍历装备
-						for( let j in self.ships[i].data[2] || [] ){
-							if( self.ships[i].data[2][j] ){
-								let equipment = _g.data.items[self.ships[i].data[2][j]]
-								
-								// 计算：总制空战力
-									if( $.inArray(equipment.type, typeFighters) > -1 ){
-										//flightPowerNumbers.push( equipment.stat.aa )
-										flightPower+= Math.floor(Math.sqrt(ship.slot[j]) * equipment.stat.aa)
-									}
-							}
-						}
+						// 计算：制空战力
+							fighterPower+= self.ships[i].calculate('fighterPower')
 					}
 				}
 				
 				self.elSummarySpeed.html( fleetSpeet == 'fast' ? '高速' : '低速' )
 				
-				self.elSummaryFlightPower.html( flightPower )
-				if( flightPower > 0 )
-					self.elSummaryFlightPower.removeClass('empty')
+				self.elSummaryFighterPower.html( fighterPower )
+				if( fighterPower > 0 )
+					self.elSummaryFighterPower.removeClass('empty')
 				else
-					self.elSummaryFlightPower.addClass('empty')
+					self.elSummaryFighterPower.addClass('empty')
 
 				self.summaryCalculating = null
 			}, 10)
@@ -4885,7 +5004,10 @@ class InfosFleetShip{
 			)
 			// 属性
 			.append(
-				$('<div class="attributes"/>').html('属性')
+				$('<div class="attributes"/>')
+					.append($('<span class="shelling"/>').html('炮击力').append(
+						self.elAttrShelling = $('<strong/>').html('-')
+					))
 			)
 			// 选项/操作
 			.append(
@@ -4951,7 +5073,14 @@ class InfosFleetShip{
 	
 	// 计算并显示属性
 		updateAttrs(){
-			
+			this.elAttrShelling.html( this.calculate('shellingDamage') )
+		}
+	
+	// 单项属性计算
+		calculate(type){
+			if( Formula[type] )
+				return Formula[type]( this.shipId, this.data[2], this.data[3] )
+			return null
 		}
 
 	// 更新元数据
@@ -5107,8 +5236,20 @@ class InfosFleetShip{
 		save(){
 			if( this._updating )
 				return false
-			if( this.infosFleetSubFleet )
-				this.infosFleetSubFleet.save()
+
+			if( this._saveTimeout )
+				return false
+			
+			let self = this
+			this._saveTimeout = setTimeout(function(){
+				// 计算属性
+					self.updateAttrs()
+				
+				if( self.infosFleetSubFleet )
+					self.infosFleetSubFleet.save()
+				
+				self._saveTimeout = null
+			}, 10)
 		}
 }
 
@@ -7465,6 +7606,7 @@ _tablelist.prototype._ships_init = function(){
 
 // @koala-prepend "js-app/main.js"
 // @koala-prepend "js-app/errorlog.js"
+// @koala-prepend "js-app/formula.js"
 // @koala-prepend "js-app/updater.js"
 
 // @koala-prepend "js-app/templates/improvement.js"
