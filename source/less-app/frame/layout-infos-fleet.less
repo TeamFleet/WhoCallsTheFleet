@@ -576,7 +576,12 @@
 												color: 	hsla(149, 100%, 59%, .65);
 											}
 											&[data-carry="0"]{
-												color: 	hsl(5, 100%, 75%);
+												color: 	hsl(5, 100%, 75%) !important;
+												&>.equipment-infos{
+													&>.equipment-name{
+														color:	inherit !important;
+													}
+												}
 												.equipment-carry{
 													color: 	inherit;
 												}
@@ -627,7 +632,7 @@
 						&>.attributes{
 							bottom: 	5px;
 							height: 	23px;
-							line-height:22px;
+							line-height:23px;
 							//font-size: 	12px;
 							//background: rgba(0,0,0,.025);
 							border-top: 	1px solid rgba(255, 255, 255, .1);
@@ -645,6 +650,35 @@
 								border-bottom:	1px solid rgba(255, 255, 255, .1);
 								//.enable-transition();
 								//transition-property: background-color;
+							}
+							&>span{
+								display: 	inline-block;
+								font-size: 	unit( 12 / @base_font_size, em );
+								padding: 	0 8px 0 28px;
+								position: 	relative;
+								font-weight:lighter;
+								min-width: 	~"calc(2.25em + 28px)";
+								opacity: 	.85;
+								&:before{
+									content: 	"";
+									background: ~"url(@{folder_images}/stats.png) no-repeat 0 0";
+									position: 	absolute;
+									top: 		50%;
+									left: 		6px;
+									width: 		18px;
+									height: 	18px;
+									transform: 	translateY(-9px);
+									opacity: 	.65;
+								}
+								&.shelling:before{
+									background-position-y: 	unit(4 * -18, px);
+								}
+								&.torpedo:before{
+									background-position-y: 	unit(5 * -18, px);
+								}
+								&.hitsum:before{
+									background-position-y: 	unit(15 * -18, px);
+								}
 							}
 						}
 						&>.options{
@@ -955,6 +989,16 @@
 										}
 									}
 								}*/
+							}
+							&>.equipments{
+								&>.equipment{
+									&>.equipment-infos{
+										&>.equipment-name{
+											.convertColor(hsl(@hue, 100%, 92%));
+											color:	@color;
+										}
+									}
+								}
 							}
 							&:hover{
 								&:before{

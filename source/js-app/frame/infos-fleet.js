@@ -498,9 +498,20 @@ class InfosFleetShip{
 			// 属性
 			.append(
 				$('<div class="attributes"/>')
+					.append(
+						self.elAttrShelling = $('<span class="shelling"/>').html('-')
+					)
+					.append(
+						self.elAttrTorpedo = $('<span class="torpedo"/>').html('-')
+					)
+					.append(
+						self.elAttrHitSum = $('<span class="hitsum"/>').html('-')
+					)
+				/*
 					.append($('<span class="shelling"/>').html('炮击力').append(
 						self.elAttrShelling = $('<strong/>').html('-')
 					))
+					*/
 			)
 			// 选项/操作
 			.append(
@@ -567,6 +578,8 @@ class InfosFleetShip{
 	// 计算并显示属性
 		updateAttrs(){
 			this.elAttrShelling.html( this.calculate('shellingDamage') )
+			this.elAttrTorpedo.html( this.calculate('torpedoDamage') )
+			this.elAttrHitSum.html( this.calculate('hitSum') )
 		}
 	
 	// 单项属性计算
