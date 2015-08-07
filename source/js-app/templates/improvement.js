@@ -17,24 +17,24 @@ _tmpl.improvement = function( equipment, improvement_index, requirement_index, r
 		,req_ships = []
 		,requirement = ''
 
-	for(var i in requirement_index){
-		var req = improvement['req'][requirement_index[i]]
+	requirement_index.forEach(function(currentValue){
+		var req = improvement['req'][currentValue]
 		if( req[1] )
 			req_ships.mergeFrom(req[1])
 			//req_ships = req_ships.concat(req[1])
-	}
+	})
 	if( req_ships.length ){
 		var names = []
-		for(var i in req_ships){
+		req_ships.forEach(function(currentValue){
 			names.push(
 				'<span'
-				+ ' data-infos="[[SHIP::'+req_ships[i]+']]"'
-				+ ' data-tip="[[SHIP::'+req_ships[i]+']]"'
+				+ ' data-infos="[[SHIP::'+currentValue+']]"'
+				+ ' data-tip="[[SHIP::'+currentValue+']]"'
 				+ '>'
-				+ _g.data.ships[req_ships[i]].getName()
+				+ _g.data.ships[currentValue].getName()
 				+ '</span>'
 			)
-		}
+		})
 		requirement = '<font>'+names.join(' / ')+'</font>'
 	}else{
 		requirement = '<font class="no">无秘书舰要求</font>'
@@ -67,11 +67,11 @@ _tmpl.improvement_detail = function( equipment, returnHTML ){
 		if( !(equipment = _g.data.items[equipment]) )
 			return false
 
-	var html = ''
+	let html = ''
+		,data = equipment['improvement'] || []
 
-	for( var i in (equipment['improvement'] || [])){
-		var improvement = equipment['improvement'][i]
-			,upgrade_to = improvement['upgrade']
+	data.forEach(function(improvement){
+		let upgrade_to = improvement['upgrade']
 							? _g.data.items[improvement['upgrade'][0]]
 							: false
 			,requirements = this.improvement__reqdetails(improvement.req)
@@ -81,7 +81,7 @@ _tmpl.improvement_detail = function( equipment, returnHTML ){
 					+ requirements
 					+ _tmpl.improvement__resource(improvement, upgrade_to ? true : false)
 				+ '</span>'
-	}
+	},this)
 
 	return _tmpl.export(
 			html,
@@ -106,11 +106,11 @@ _tmpl.improvement_inEquipmentInfos = function( equipment, returnHTML ){
 		if( !(equipment = _g.data.items[equipment]) )
 			return false
 
-	var html = ''
+	let html = ''
+		,data = equipment['improvement'] || []
 
-	for( var i in (equipment['improvement'] || [])){
-		var improvement = equipment['improvement'][i]
-			,upgrade_to = improvement['upgrade']
+	data.forEach(function(improvement){
+		let upgrade_to = improvement['upgrade']
 							? _g.data.items[improvement['upgrade'][0]]
 							: false
 			,requirements = this.improvement__reqdetails(improvement.req)
@@ -135,7 +135,7 @@ _tmpl.improvement_inEquipmentInfos = function( equipment, returnHTML ){
 					+ requirements
 					+ _tmpl.improvement__resource(improvement, upgrade_to ? true : false)
 				+ '</span>'
-	}
+	}, this)
 
 	return _tmpl.export(
 			html,
@@ -247,9 +247,8 @@ _tmpl.improvement__reqdetails = function(reqdata){
 
 	var requirements = '<font>'
 
-	for( var j in reqdata ){
-		var req = reqdata[j]
-			,names = []
+	reqdata.forEach(function(req){
+		var names = []
 			,text
 
 		requirements+= '<b>'
@@ -268,23 +267,23 @@ _tmpl.improvement__reqdetails = function(reqdata){
 		}
 
 		if( req[1] ){
-			for(var k in req[1]){
+			req[1].forEach(function(shipid){
 				names.push(
 					'<span'
-					+ ' data-infos="[[SHIP::'+req[1][k]+']]"'
-					+ ' data-tip="[[SHIP::'+req[1][k]+']]"'
+					+ ' data-infos="[[SHIP::'+shipid+']]"'
+					+ ' data-tip="[[SHIP::'+shipid+']]"'
 					+ '>'
-					+ _g.data.ships[req[1][k]].getName()
+					+ _g.data.ships[shipid].getName()
 					+ '</span>'
 				)
-			}
+			})
 			requirements+= names.join(' / ')
 		}else{
 			requirements+= '<b>无秘书舰要求</b>'
 		}
 
 		requirements+= '</b>'
-	}
+	})
 
 	requirements+= '</font>'
 

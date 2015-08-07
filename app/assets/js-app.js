@@ -1059,7 +1059,7 @@ class Ship extends ITEM{
 		let series = this.getSeriesData()
 		picId = parseInt(picId || 0)
 		
-		for(let i in series){
+		for(let i=0; i<series.length; i++){
 			if( series[i].id == this.id ){
 				switch(picId){
 					case 0:
@@ -1413,7 +1413,7 @@ _frame.app_main = {
 						_frame.dom.layout.addClass('ready')
 						$html.addClass('app-ready')
 						setTimeout(function(){
-							for(var i in _frame.app_main.functions_on_ready){
+							for(let i=0; i<_frame.app_main.functions_on_ready.length; i++){
 								_frame.app_main.functions_on_ready[i]()
 							}
 						}, 1500)
@@ -1587,10 +1587,10 @@ _frame.app_main = {
 				let checked = false
 					
 				if( !_frame.app_main.cur_page ){
-					for(let i in _frame.app_main.nav){
-						if( page == _frame.app_main.nav[i].page )
+					_frame.app_main.nav.forEach(function(currentValue){
+						if( page == currentValue.page )
 							checked = true
-					}
+					})
 				}else{
 					checked = true
 				}
@@ -1801,7 +1801,7 @@ _frame.app_main = {
 			if( _frame.app_main.nav && _frame.app_main.nav.length ){
 				_frame.dom.navs = {}
 				_frame.app_main.navtitle = {}
-				for( var i in _frame.app_main.nav ){
+				_frame.app_main.nav.forEach(function(currentValue, i){
 					var o = _frame.app_main.nav[i]
 					_frame.app_main.navtitle[o.page] = o.title
 					_frame.dom.navs[o.page] = (function(page){
@@ -1814,7 +1814,7 @@ _frame.app_main = {
 					//){
 					//	_frame.dom.navs[o.page].trigger('click')
 					//}
-				}
+				})
 			}
 
 		var promise_chain 	= Q.fcall(function(){})
@@ -1829,12 +1829,12 @@ _frame.app_main = {
 					if( err ){
 						deferred.reject(new Error(err))
 					}else{
-						for(var i in files){
-							_db[ node.path.parse(files[i])['name'] ]
+						files.forEach(function(file){
+							_db[ node.path.parse(file)['name'] ]
 								= new node.nedb({
-										filename: 	node.path.join(_g.path.db, '/' + files[i])
+										filename: 	node.path.join(_g.path.db, '/' + file)
 									})
-						}
+						})
 						deferred.resolve(files)
 					}
 				})
@@ -1852,27 +1852,27 @@ _frame.app_main = {
 						var bgimgs_last = _config.get('bgimgs')
 							,bgimgs_new = []
 						bgimgs_last = bgimgs_last ? bgimgs_last.split(',') : []
-						for( var i in files ){
-							var lstat = node.fs.lstatSync( node.path.join( _g.path.bgimg_dir , '/' + files[i]) )
+						files.forEach(function(file){
+							var lstat = node.fs.lstatSync( node.path.join( _g.path.bgimg_dir , '/' + file) )
 							if( !lstat.isDirectory() ){
-								_frame.app_main.bgimgs.push( files[i] )
+								_frame.app_main.bgimgs.push( file )
 
 								// 存在bgimgs_last：直接比对
 								// 不存在bgimgs_last：比对每个文件，找出最新者
 								if( bgimgs_last.length ){
-									if( $.inArray( files[i], bgimgs_last ) < 0 )
-										bgimgs_new.push( files[i] )
+									if( $.inArray( file, bgimgs_last ) < 0 )
+										bgimgs_new.push( file )
 								}else{
 									var ctime = parseInt(lstat.ctime.valueOf())
 									if( bgimgs_new.length ){
 										if( ctime > bgimgs_new[1] )
-											bgimgs_new = [ files[i], ctime ]
+											bgimgs_new = [ file, ctime ]
 									}else{
-										bgimgs_new = [ files[i], ctime ]
+										bgimgs_new = [ file, ctime ]
 									}
 								}
 							}
-						}
+						})
 						if( !bgimgs_last.length )
 							bgimgs_new.pop()
 						_config.set(
@@ -1958,26 +1958,23 @@ _frame.app_main = {
 										if( dberr ){
 											deferred.reject(new Error(dberr))
 										}else{
-											for(var i in docs ){
+											docs.forEach(function(doc,i){
 												_g.ship_type_order.push(
-													docs[i]['types'].length > 1 ? docs[i]['types'] : docs[i]['types'][0]
+													doc['types'].length > 1 ? doc['types'] : doc['types'][0]
 												)
-												//_g.data['ship_type_order'][docs[i]['id']] = docs[i]
-												_g.data['ship_type_order'][i] = docs[i]
-											}
+												//_g.data['ship_type_order'][doc['id']] = doc
+												_g.data['ship_type_order'][i] = doc
+											})
 											// ship type -> ship order
-												(function(){
-													for( var i in _g.ship_type_order ){
-														var index = parseInt(i)
-														if( typeof _g.ship_type_order[i] == 'object' ){
-															for( var j in _g.ship_type_order[i] ){
-																_g.ship_type_order_map[ _g.ship_type_order[i][j] ] = index
-															}
-														}else{
-															_g.ship_type_order_map[ _g.ship_type_order[i] ] = index
-														}
+												_g.ship_type_order.forEach(function(currentValue, i){
+													if( typeof _g.ship_type_order[i] == 'object' ){
+														_g.ship_type_order[i].forEach(function(cur, j){
+															_g.ship_type_order_map[ _g.ship_type_order[i][j] ] = i
+														})
+													}else{
+														_g.ship_type_order_map[ _g.ship_type_order[i] ] = i
 													}
-												})()
+												})
 											_db.ships.find({}).sort({
 												//'class': 1, 'class_no': 1, 'series': 1, 'type': 1, 'time_created': 1, 'name.suffix': 1
 												'type': 1, 'class': 1, 'class_no': 1, 'time_created': 1, 'name.suffix': 1
@@ -1985,13 +1982,13 @@ _frame.app_main = {
 												if( dberr2 ){
 													deferred.reject(new Error(dberr))
 												}else{
-													for(var i in docs){
-														_g.data.ships[docs[i]['id']] = new Ship(docs[i])
+													docs.forEach(function(doc){
+														_g.data.ships[doc['id']] = new Ship(doc)
 
-														if( typeof _g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] == 'undefined' )
-															_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] = []
-														_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ].push( docs[i]['id'] )
-													}
+														if( typeof _g.data.ship_id_by_type[ _g.ship_type_order_map[doc['type']] ] == 'undefined' )
+															_g.data.ship_id_by_type[ _g.ship_type_order_map[doc['type']] ] = []
+														_g.data.ship_id_by_type[ _g.ship_type_order_map[doc['type']] ].push( doc['id'] )
+													})
 													function __(i){
 														var j=0
 														while(
@@ -2048,9 +2045,9 @@ _frame.app_main = {
 									_db.arsenal_all.find({}).sort({
 										'sort': 1
 									}).exec(function(err, docs){
-										for(var i in docs){
-											_g.data['arsenal_all'].push(docs[i]['id'])
-										}
+										docs.forEach(function(doc){
+											_g.data['arsenal_all'].push(doc['id'])
+										})
 										_done(db_name)
 									})
 									break;
@@ -2059,10 +2056,10 @@ _frame.app_main = {
 									_db.arsenal_weekday.find({}).sort({
 										'weekday': 1
 									}).exec(function(err, docs){
-										for(var i in docs){
-											_g.data['arsenal_weekday'][parseInt(i)]
-												= docs[i].improvements
-										}
+										docs.forEach(function(doc, i){
+											_g.data['arsenal_weekday'][i]
+												= doc.improvements
+										})
 										_done(db_name)
 									})
 									break;
@@ -2073,16 +2070,16 @@ _frame.app_main = {
 										}else{
 											if( typeof _g.data[db_name] == 'undefined' )
 												_g.data[db_name] = {}
-											for(var i in docs ){
+											docs.forEach(function(doc){
 												switch( db_name ){
 													case 'items':
-														_g.data[db_name][docs[i]['id']] = new Equipment(docs[i])
+														_g.data[db_name][doc['id']] = new Equipment(doc)
 														break;
 													default:
-														_g.data[db_name][docs[i]['id']] = docs[i]
+														_g.data[db_name][doc['id']] = doc
 														break;
 												}
-											}
+											})
 											_done(db_name)
 										}
 									})
@@ -2125,8 +2122,8 @@ _frame.app_main = {
 						_g.data.item_id_by_type[order]['names'].push( _g.data.items[i].getName() )
 					}
 				// 排序
-					for(let i in _g.data.item_id_by_type){
-						_g.data.item_id_by_type[i]['equipments'].sort(function(a, b){
+					_g.data.item_id_by_type.forEach(function(currentValue){
+						currentValue['equipments'].sort(function(a, b){
 							let diff = _g.data.items[a].getPower() - _g.data.items[b].getPower()
 							if( diff === 0 ){
 								let diff_aa = _g.data.items[a]['stat']['aa'] - _g.data.items[b]['stat']['aa']
@@ -2137,7 +2134,7 @@ _frame.app_main = {
 							}
 							return diff
 						})
-					}
+					})
 				setTimeout(function(){
 					deferred.resolve()
 				}, 100)
@@ -2210,17 +2207,17 @@ _frame.app_main = {
 							if( err ){
 								deferred.reject(new Error(err))
 							}else{
-								for( var i in docs ){
-									var section = $('<section class="update_journal" data-version-'+docs[i]['type']+'="'+docs[i]['version']+'"/>')
-												.html(_frame.app_main.page['about'].journaltitle(docs[i]))
+								docs.forEach(function(doc){
+									var section = $('<section class="update_journal" data-version-'+docs['type']+'="'+docs['version']+'"/>')
+												.html(_frame.app_main.page['about'].journaltitle(docs))
 									try{
-										$(_frame.app_main.page['about'].journal_parse(docs[i]['journal'])).appendTo( section )
+										$(_frame.app_main.page['about'].journal_parse(docs['journal'])).appendTo( section )
 									}catch(e){
 										_g.error(e)
 										section.remove()
 									}
 									doms = doms.add(section)
-								}
+								})
 								_done(obj['type'] + ' - ' + obj['version'])
 							}
 						})
@@ -2766,10 +2763,10 @@ var _updater = {
 						deferred.reject( err )
 					}else{
 						var selected = []
-						for(var i in files){
-							if( node.path.extname(files[i]) == '.updated' )
-								selected.push(files[i])
-						}
+						files.forEach(function(file){
+							if( node.path.extname(file) == '.updated' )
+								selected.push(file)
+						})
 						deferred.resolve( selected )
 					}
 				})
@@ -2991,24 +2988,24 @@ _tmpl.improvement = function( equipment, improvement_index, requirement_index, r
 		,req_ships = []
 		,requirement = ''
 
-	for(var i in requirement_index){
-		var req = improvement['req'][requirement_index[i]]
+	requirement_index.forEach(function(currentValue){
+		var req = improvement['req'][currentValue]
 		if( req[1] )
 			req_ships.mergeFrom(req[1])
 			//req_ships = req_ships.concat(req[1])
-	}
+	})
 	if( req_ships.length ){
 		var names = []
-		for(var i in req_ships){
+		req_ships.forEach(function(currentValue){
 			names.push(
 				'<span'
-				+ ' data-infos="[[SHIP::'+req_ships[i]+']]"'
-				+ ' data-tip="[[SHIP::'+req_ships[i]+']]"'
+				+ ' data-infos="[[SHIP::'+currentValue+']]"'
+				+ ' data-tip="[[SHIP::'+currentValue+']]"'
 				+ '>'
-				+ _g.data.ships[req_ships[i]].getName()
+				+ _g.data.ships[currentValue].getName()
 				+ '</span>'
 			)
-		}
+		})
 		requirement = '<font>'+names.join(' / ')+'</font>'
 	}else{
 		requirement = '<font class="no">无秘书舰要求</font>'
@@ -3041,11 +3038,11 @@ _tmpl.improvement_detail = function( equipment, returnHTML ){
 		if( !(equipment = _g.data.items[equipment]) )
 			return false
 
-	var html = ''
+	let html = ''
+		,data = equipment['improvement'] || []
 
-	for( var i in (equipment['improvement'] || [])){
-		var improvement = equipment['improvement'][i]
-			,upgrade_to = improvement['upgrade']
+	data.forEach(function(improvement){
+		let upgrade_to = improvement['upgrade']
 							? _g.data.items[improvement['upgrade'][0]]
 							: false
 			,requirements = this.improvement__reqdetails(improvement.req)
@@ -3055,7 +3052,7 @@ _tmpl.improvement_detail = function( equipment, returnHTML ){
 					+ requirements
 					+ _tmpl.improvement__resource(improvement, upgrade_to ? true : false)
 				+ '</span>'
-	}
+	},this)
 
 	return _tmpl.export(
 			html,
@@ -3080,11 +3077,11 @@ _tmpl.improvement_inEquipmentInfos = function( equipment, returnHTML ){
 		if( !(equipment = _g.data.items[equipment]) )
 			return false
 
-	var html = ''
+	let html = ''
+		,data = equipment['improvement'] || []
 
-	for( var i in (equipment['improvement'] || [])){
-		var improvement = equipment['improvement'][i]
-			,upgrade_to = improvement['upgrade']
+	data.forEach(function(improvement){
+		let upgrade_to = improvement['upgrade']
 							? _g.data.items[improvement['upgrade'][0]]
 							: false
 			,requirements = this.improvement__reqdetails(improvement.req)
@@ -3109,7 +3106,7 @@ _tmpl.improvement_inEquipmentInfos = function( equipment, returnHTML ){
 					+ requirements
 					+ _tmpl.improvement__resource(improvement, upgrade_to ? true : false)
 				+ '</span>'
-	}
+	}, this)
 
 	return _tmpl.export(
 			html,
@@ -3221,9 +3218,8 @@ _tmpl.improvement__reqdetails = function(reqdata){
 
 	var requirements = '<font>'
 
-	for( var j in reqdata ){
-		var req = reqdata[j]
-			,names = []
+	reqdata.forEach(function(req){
+		var names = []
 			,text
 
 		requirements+= '<b>'
@@ -3242,23 +3238,23 @@ _tmpl.improvement__reqdetails = function(reqdata){
 		}
 
 		if( req[1] ){
-			for(var k in req[1]){
+			req[1].forEach(function(shipid){
 				names.push(
 					'<span'
-					+ ' data-infos="[[SHIP::'+req[1][k]+']]"'
-					+ ' data-tip="[[SHIP::'+req[1][k]+']]"'
+					+ ' data-infos="[[SHIP::'+shipid+']]"'
+					+ ' data-tip="[[SHIP::'+shipid+']]"'
 					+ '>'
-					+ _g.data.ships[req[1][k]].getName()
+					+ _g.data.ships[shipid].getName()
 					+ '</span>'
 				)
-			}
+			})
 			requirements+= names.join(' / ')
 		}else{
 			requirements+= '<b>无秘书舰要求</b>'
 		}
 
 		requirements+= '</b>'
-	}
+	})
 
 	requirements+= '</font>'
 
@@ -3535,13 +3531,13 @@ _frame.app_main.page['equipments'] = {
 
 _frame.app_main.page['equipments'].gen_helper_equipable_on = function( type_id ){
 	var equipable_on = ''
-	for( var i in _g.data.item_types[type_id]['equipable_on_type'] ){
+	_g.data.item_types[type_id]['equipable_on_type'].forEach(function(currentValue, i){
 		var item_type_id = _g.data.item_types[type_id]['equipable_on_type'][i]
 		equipable_on+= '<span>'
 							+ _g['data']['ship_types'][item_type_id]['full_zh']
-							+ ( parseInt(i) < _g.data.item_types[type_id]['equipable_on_type'].length-1 ? ',&nbsp;' : '' )
+							+ ( i < _g.data.item_types[type_id]['equipable_on_type'].length-1 ? ',&nbsp;' : '' )
 						+ '</span>'
-	}
+	})
 	return '<em class="helper" data-tip="<h4 class=item_equipable_on>可装备于</h4>' + equipable_on + '">?</em>'
 }
 
@@ -3680,9 +3676,9 @@ _frame.app_main.page['arsenal'].init = function( page ){
 	_frame.app_main.page['arsenal'].init_all = function(){
 		var body = $('<div class="body body-2 body-all"/>')
 
-		for(var i in _g.data.arsenal_all){
-			_tmpl.improvement_detail(_g.data.arsenal_all[i]).appendTo(body)
-		}
+		_g.data.arsenal_all.forEach(function(currentValue){
+			_tmpl.improvement_detail(currentValue).appendTo(body)
+		})
 
 		return body
 	}
@@ -3757,9 +3753,9 @@ _frame.app_main.page['about'].init = function( page ){
 		.then(function(){
 			var deferred = Q.defer()
 			_db.updates.find({'date': ""}).sort({'date': -1}).exec(function(err, docs){
-				for( var i in docs ){
-					addUpdateJournal(docs[i])
-				}
+				docs.forEach(function(doc){
+					addUpdateJournal(doc)
+				})
 				deferred.resolve(err)
 			})
 			return deferred.promise
@@ -3769,9 +3765,9 @@ _frame.app_main.page['about'].init = function( page ){
 		.then(function(){
 			var deferred = Q.defer()
 			_db.updates.find({$not:{'date':""}}).sort({'date': -1}).exec(function(err, docs){
-				for( var i in docs ){
-					addUpdateJournal(docs[i])
-				}
+				docs.forEach(function(doc){
+					addUpdateJournal(doc)
+				})
 				deferred.resolve(err)
 			})
 			return deferred.promise
@@ -4296,19 +4292,19 @@ _frame.infos.init = function(){
 				var modernization = $('<div class="modernization"/>').html('<h4 data-content="合成">合成</h4>').appendTo(equips)
 					,stats = $('<div class="stats"/>').appendTo(modernization)
 					,has_modernization = false
-				for( var i in d['modernization'] ){
-					if( d['modernization'][i] ){
+				d['modernization'].forEach(function(currentValue, i){
+					if( currentValue ){
 						has_modernization = true
 						var stat
-						switch(parseInt(i)){
+						switch(i){
 							case 0: stat = 'fire'; break;
 							case 1: stat = 'torpedo'; break;
 							case 2: stat = 'aa'; break;
 							case 3: stat = 'armor'; break;
 						}
-						$('<span class="stat-' + stat + '"/>').html('+' + d['modernization'][i]).appendTo(stats)
+						$('<span class="stat-' + stat + '"/>').html('+' + currentValue).appendTo(stats)
 					}
-				}
+				})
 				// まるゆ
 					if( d['id'] == 163 )
 						$('<span class="stat-luck"/>').html('+1.2').appendTo(stats)
@@ -4321,8 +4317,8 @@ _frame.infos.init = function(){
 				if( d['additional_item_types'] && d['additional_item_types'].length ){
 					var additional_equipment_types = $('<div class="add_equip"/>').appendTo(dom)
 						,_additional_equipment_types = $('<div/>').html('<h4 data-content="特有装备类型">特有装备类型</h4>').appendTo(additional_equipment_types)
-					for( let i in d['additional_item_types'] ){
-						let _d = _g['data']['item_types'][d['additional_item_types'][i]]
+					d['additional_item_types'].forEach(function(currentValue){
+						let _d = _g['data']['item_types'][currentValue]
 						_additional_equipment_types.append(
 							$('<span/>')
 								.html(_d['name'][_g.lang])
@@ -4332,7 +4328,7 @@ _frame.infos.init = function(){
 											+ '.png'+')'
 								})
 						)
-					}
+					})
 				}
 
 			// 声优 & 画师 & 消耗
@@ -4358,11 +4354,94 @@ _frame.infos.init = function(){
 				_add_stat( 'ammo', 		'', _val( d['consum']['ammo'] ),		consum )
 				*/
 
+			// 图鉴
+				// illustrations
+				var illusts = $('<aside class="illustrations"/>').appendTo(dom)
+					,illusts_container = $('<div/>').appendTo(illusts)
+
 			// 改造信息
 				var remodels = $('<div class="remodels"/>').html('<h4 data-content="改造">改造</h4>').appendTo(dom)
 					,remodels_container = _p.el.flexgrid.create().appendTo( remodels )
 				if( d['series'] ){
+					let seriesData = d.getSeriesData()
+					d.getSeriesData().forEach(function(currentValue, i){
+						let remodel_ship_data = _g.data.ships[currentValue['id']]
+							,remodel_ship_name = remodel_ship_data.getName(_g.joint)
+							,tip = '<h3 class="shipinfo">'
+										+ '<strong data-content="' + remodel_ship_name + '">'
+											+ remodel_ship_name
+										+ '</strong>'
+										+ (
+											remodel_ship_data['type'] ?
+												'<small>' + _g['data']['ship_types'][remodel_ship_data['type']]['full_zh'] + '</span>'
+												: ''
+										)
+									+ '</h3>'
+							,data_prev = i ? seriesData[ i - 1 ] : null
+							,remodel_lvl = data_prev ? data_prev['next_lvl'] : null
+							,remodel_blueprint = data_prev ? (data_prev['next_blueprint']) : null
+
+						remodels_container.appendDOM(
+							$('<button class="unit" data-shipid="'+ currentValue['id'] +'"/>')
+								.attr({
+									'data-infos': 	'[[SHIP::'+ currentValue['id'] +']]',
+									'data-tip': 	tip,
+									'data-infos-nohistory': true
+								})
+								.addClass(currentValue['id'] == d['id'] ? 'on' : '')
+								.addClass(remodel_blueprint ? 'blueprint' : '')
+								.html(
+									'<i><img src="' + _g.path.pics.ships + '/' + currentValue['id']+'/0.webp"/></i>'
+									+ (remodel_lvl ? '<strong>' + remodel_lvl + '</strong>' : '')
+								)
+						)
+
+						// 处理图鉴信息
+							if( currentValue['id'] == d['id'] ){
+								if( currentValue.illust_delete ){
+									if( data_prev ){
+										illustrations.push( data_prev['id'] )
+										if( data_prev.illust_extra && data_prev.illust_extra.length && data_prev.illust_extra[0] ){
+											data_prev.illust_extra.forEach(function(cur){
+												illustrations.push( 'extra_' + cur )
+											})
+										}
+									}
+								}else{
+									illustrations.push( currentValue['id'] )
+									if( currentValue.illust_extra && currentValue.illust_extra.length && currentValue.illust_extra[0] ){
+										currentValue.illust_extra.forEach(function(cur){
+											illustrations.push( 'extra_' + cur )
+										})
+									}
+								}
+							}
+					})
+					
+					let index = 0
+					function check_append( file ){
+						file = file.replace(/\\/g, '/')
+						try{
+							let stat = node.fs.lstatSync(file)
+							if( stat && stat.isFile() ){
+								index++
+								$('<input type="radio" name="ship_'+d['id']+'_illustrations" value="'+index+'"/>')
+									.prop('checked', (index == 1))
+									.insertBefore(illusts_container)
+								$('<span class="container"/>')
+									.html('<img src="'+file+'" data-filename="'+ship_name+' - '+index+'.webp"/>')
+									//.css('background-image', 'url(' + file + ')')
+									.appendTo(illusts_container)
+							}
+						}catch(e){}
+					}
+					illustrations.forEach(function(currentValue){
+						check_append( _g.path.pics.ships + '/' + currentValue + '/8.webp' )
+						check_append( _g.path.pics.ships + '/' + currentValue + '/9.webp' )
+					})
+					/*
 					_db.ship_series.find({'id': d['series']}, function(err,docs){
+						console.log(docs, d.getSeriesData())
 						if( !err && docs && docs.length ){
 							// 遍历 docs[0].ships
 								for(var i in docs[0].ships){
@@ -4444,13 +4523,8 @@ _frame.infos.init = function(){
 									check_append( _g.path.pics.ships + '/' + illustrations[i] + '/9.webp' )
 								}
 						}
-					})
+					})*/
 				}
-
-			// 图鉴
-				// illustrations
-				var illusts = $('<aside class="illustrations"/>').appendTo(dom)
-					,illusts_container = $('<div/>').appendTo(illusts)
 
 			return dom
 		}
@@ -4580,20 +4654,20 @@ _frame.infos.init = function(){
 								.appendTo(dom)
 					,upgrade_from1 = $('<div class="stat upgrade"/>')
 						.appendTo(upgrade_from)
-				for( var i in d['upgrade_from'] ){
-					_tmpl.link_equipment(d['upgrade_from'][i]).appendTo( upgrade_from1 )
-				}
+				d['upgrade_from'].forEach(function(currentValue){
+					_tmpl.link_equipment(currentValue).appendTo( upgrade_from1 )
+				})
 			}
 
 		// 初始装备于
 			var equipped = $('<div class="equipped"/>').html('<h4 data-content="初始装备于">初始装备于</h4>').appendTo(dom)
 				,equipped_container = _p.el.flexgrid.create().appendTo( equipped )
 			if( d.default_equipped_on && d.default_equipped_on.length ){
-				for( var i in d.default_equipped_on ){
+				d.default_equipped_on.forEach(function(currentValue){
 					equipped_container.appendDOM(
-						_tmpl.link_ship(d.default_equipped_on[i]).addClass('unit')
+						_tmpl.link_ship(currentValue).addClass('unit')
 					)
-				}
+				})
 			}else{
 				equipped_container.addClass('no').html('暂无初始配置该装备的舰娘...')
 			}
@@ -4612,6 +4686,28 @@ _frame.infos.init = function(){
 		return dom
 	}
 
+
+/*
+舰队数据
+	舰娘
+		菜单项：替换
+	综合选项
+		更改舰队模式：单舰队阵型，联合舰队阵型，影响属性计算
+	移除/替换舰娘后重置装备ID和改修星级
+	移除/替换装备后重置改修星级
+
+图片输出
+	允许编辑文字
+
+装备选择
+	可用装备类型在分页最前方
+	舰娘不变时，记住上次分页
+	航母系默认进入飞行器页
+
+其他
+	声纳 -> 水母
+	大型声纳 -??> 水母
+*/
 
 // 舰队配置
 	_frame.infos.__fleet = function( id ){
@@ -4800,10 +4896,10 @@ class InfosFleet{
 
 		// 分舰队
 			if( d['data'] && d['data'].push ){
-				for(let i in d['data']){
-					//_g.log(d['data'][i])
-					this.fleets[i].updateEl(d['data'][i])
-				}
+				d['data'].forEach(function(currentValue, i){
+					//_g.log(currentValue)
+					this.fleets[i].updateEl(currentValue)
+				}, this)
 			}
 		
 		this._updating = false
@@ -4856,21 +4952,12 @@ class InfosFleet{
 			if( this._updating )
 				return this
 			
-			for(let i in this.fleets){
-				this.data.data[i] = this.fleets[i].data
-			}
+			this.fleets.forEach(function(currentValue, i){
+				this.data.data[i] = currentValue.data
+			}, this)
 			
 			// 更新时间
 			this.data.time_modify = _g.timeNow()
-			
-			// 更新TablelistFleetItem
-			/*
-			try{
-				for(let i in _g.data.fleets_tablelist.items[this.data._id]){
-					_g.data.fleets_tablelist.items[this.data._id][i].update(this.data)
-				}
-			}catch(e){}
-			*/
 			
 			//_g.log(this)
 			_g.log(this.data)
@@ -4946,9 +5033,10 @@ class InfosFleetSubFleet{
 	// 根据元数据更新页面元素
 		updateEl(d){
 			this.data = d || this.data
-			for(let i in d){
-				this.ships[i].updateEl(d[i])
-			}
+			if( d )
+				d.forEach(function(currentValue, i){
+					this.ships[i].updateEl(currentValue)
+				}, this)
 		}
 	
 	// 获取当前状态的元数据
@@ -4966,18 +5054,18 @@ class InfosFleetSubFleet{
 				let fighterPower = 0
 					,fleetSpeet = 'fast'
 				
-				for(let i in self.ships){
-					if( self.ships[i].data[0] ){
-						let ship = _g.data.ships[self.ships[i].data[0]]
+				self.ships.forEach(function(shipdata){
+					if( shipdata.data[0] ){
+						let ship = _g.data.ships[shipdata.data[0]]
 						
 						// 计算：航速
 							if( ship.stat.speed < 10 )
 								fleetSpeet = 'slow'
 						
 						// 计算：制空战力
-							fighterPower+= self.ships[i].calculate('fighterPower')
+							fighterPower+= shipdata.calculate('fighterPower')
 					}
-				}
+				})
 				
 				self.elSummarySpeed.html( fleetSpeet == 'fast' ? '高速' : '低速' )
 				
@@ -4998,12 +5086,14 @@ class InfosFleetSubFleet{
 		save(){
 			// 如果该子舰队下没有任何数据，则存储数据时不传输该子舰队数据
 			let allEmpty = true
-			for(let i in this.ships){
-				this.data[i] = this.ships[i].data
+			this.data = this.data || []
+			
+			this.ships.forEach(function(currentValue,i){
+				this.data[i] = currentValue.data
 				
-				if( this.ships[i].data[0] )
+				if( currentValue.data[0] )
 					allEmpty = false
-			}
+			}, this)
 			
 			if( allEmpty )
 				this.data = null
@@ -5263,20 +5353,20 @@ class InfosFleetShip{
 						if( InfosFleetShip.menuCurObj.shipId ){
 							var series = _g['data']['ships'][InfosFleetShip.menuCurObj.shipId].getSeriesData() || []
 							if( series.length > 1 ){
-								for(let i in series){
-									if( i == '0' )
+								series.forEach(function(currentValue, i){
+									if( !i )
 										$div.append($('<hr/>'))
-									if( series[i]['id'] != InfosFleetShip.menuCurObj.shipId )
+									if( currentValue['id'] != InfosFleetShip.menuCurObj.shipId )
 									$div.append(
 										$('<menuitem/>')
-											.html('替换为 ' + _g['data']['ships'][series[i]['id']].getName(true))
+											.html('替换为 ' + _g['data']['ships'][currentValue['id']].getName(true))
 											.on({
 												'click': function(){
-													InfosFleetShip.menuCurObj.shipId = series[i]['id']
+													InfosFleetShip.menuCurObj.shipId = currentValue['id']
 												}
 											})
 									)
-								}
+								})
 							}
 						}
 					})
@@ -5298,6 +5388,7 @@ class InfosFleetShip{
 		}
 		set shipId( value ){
 			this.data[0] = value
+			this.shipLv = null
 			
 			if( value ){
 				let ship = _g.data.ships[value]
@@ -5323,13 +5414,16 @@ class InfosFleetShip{
 						this.equipments[i].carry = ship.slot[i]
 						if( !this._updating ){
 							this.equipments[i].id = null
-							//this.equipments[i].star = this.data[3][i]
+							this.equipments[i].star = null
 						}
 					}
 			}else{
 				this.el.removeAttr('data-shipId')
 				this.el.addClass('noship')
 				this.elAvatar.html('')
+				this.data[2] = []
+				this.data[3] = []
+				// [null, [null, -1], [], []]
 			}
 			
 			this.save()
@@ -5370,7 +5464,7 @@ class InfosFleetShip{
 					self.infosFleetSubFleet.save()
 				
 				self._saveTimeout = null
-			}, 10)
+			}, 100)
 		}
 }
 
@@ -5983,20 +6077,20 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 			case 'select':
 				var input = $('<select name="'+name+'" id="'+id+'" />')
 				var option_empty = $('<option value=""/>').html('').appendTo( input )
-				for( var i in value ){
-					if( typeof value[i] == 'object' ){
-						var o_el = $('<option value="' + (typeof value[i].val == 'undefined' ? value[i]['value'] : value[i].val) + '"/>')
-							.html(value[i]['title'] || value[i]['name'])
+				value.forEach(function(currentValue, i){
+					if( typeof currentValue == 'object' ){
+						var o_el = $('<option value="' + (typeof currentValue.val == 'undefined' ? currentValue['value'] : currentValue.val) + '"/>')
+							.html(currentValue['title'] || currentValue['name'])
 							.appendTo( input )
 					}else{
-						var o_el = $('<option value="' + value[i] + '"/>')
-							.html(value[i])
+						var o_el = $('<option value="' + currentValue + '"/>')
+							.html(currentValue)
 							.appendTo( input )
 					}
 					if( typeof options['default'] != 'undefined' && o_el.val() == options['default'] ){
 						o_el.prop('selected', true)
 					}
-				}
+				})
 				if( !value || !value.length ){
 					option_empty.remove()
 					$('<option value=""/>').html('...').appendTo( input )
@@ -6018,7 +6112,7 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 				break;
 			case 'radio':
 				var input = $();
-				for( var i in value ){
+				value.forEach(function(currentValue, i){
 					var title, val
 						,checked = false
 					if( value[i].push ){
@@ -6036,7 +6130,7 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 							.prop('checked', (checked || (!checked && i == 0) ))
 						)
 					input = input.add($('<label for="'+id+'-'+val+'"/>').html( title ))
-				}
+				})
 				break;
 		}
 
@@ -6143,9 +6237,9 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 
 			// 根据排序结果，整理返回结果
 				var return_array = []
-				for(var i in this._tmp_values){
-					return_array.push( this._tmp_value_map_cell[this._tmp_values[i]] )
-				}
+				this._tmp_values.forEach(function(currentValue){
+					return_array.push( this._tmp_value_map_cell[currentValue] )
+				}, this)
 
 			// delete 临时对象
 				delete this._tmp_values
@@ -6272,9 +6366,9 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 				arr.sort(function(a, b){
 					return a['index']-b['index']
 				})
-				for(var i in arr){
-					arr[i].el.insertAfter( arr[i].prev )
-				}
+				arr.forEach(function(currentValue){
+					currentValue.el.insertAfter( currentValue.prev )
+				})
 
 			// 修改排序提示按钮
 				this.dom.btn_compare_sort.addClass('disabled').html('点击表格标题可排序')
@@ -6370,8 +6464,8 @@ _tablelist.prototype._equipments_append_item = function( equipment_data, collect
 		return val
 	}
 
-	for( var i in self._equipments_columns ){
-		switch( self._equipments_columns[i][1] ){
+	self._equipments_columns.forEach(function(currentValue){
+		switch( currentValue[1] ){
 			case ' ':
 				$('<th/>').html(equipment_data.getName()).appendTo(tr)
 				break;
@@ -6394,13 +6488,13 @@ _tablelist.prototype._equipments_append_item = function( equipment_data, collect
 					.appendTo(tr)
 				break;
 			default:
-				$('<td data-stat="'+self._equipments_columns[i][1]+'" data-value="' + equipment_data['stat'][self._equipments_columns[i][1]] + '"/>')
-					.addClass( equipment_data['stat'][self._equipments_columns[i][1]] < 0 ? 'negative' : '' )
-					.html( _val( equipment_data['stat'][self._equipments_columns[i][1]] ) )
+				$('<td data-stat="'+currentValue[1]+'" data-value="' + equipment_data['stat'][currentValue[1]] + '"/>')
+					.addClass( equipment_data['stat'][currentValue[1]] < 0 ? 'negative' : '' )
+					.html( _val( equipment_data['stat'][currentValue[1]] ) )
 					.appendTo(tr)
 				break;
 		}
-	}
+	})
 
 	return tr
 }
@@ -6527,14 +6621,14 @@ _tablelist.prototype._equipments_init = function(){
 		function gen_thead(arr){
 			self.dom.thead = $('<thead/>')
 			var tr = $('<tr/>').appendTo(self.dom.thead)
-			for(var i in arr){
-				if( typeof arr[i] == 'object' ){
-					$('<td data-stat="' + arr[i][1] + '"/>')
-						.html('<div class="th-inner-wrapper"><span><span>'+arr[i][0]+'</span></span></div>').appendTo(tr)
+			arr.forEach(function(currentValue){
+				if( typeof currentValue == 'object' ){
+					$('<td data-stat="' + currentValue[1] + '"/>')
+						.html('<div class="th-inner-wrapper"><span><span>'+currentValue[0]+'</span></span></div>').appendTo(tr)
 				}else{
-					$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+arr[i][0]+'</span></span></div>').appendTo(tr)
+					$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+currentValue[0]+'</span></span></div>').appendTo(tr)
 				}
-			}
+			})
 			return self.dom.thead
 		}
 		gen_thead( self._equipments_columns ).appendTo( this.dom.table )
@@ -6623,16 +6717,12 @@ _tablelist.prototype._equipments_init = function(){
 // 读取已保存数据
 	_tablelist.prototype._fleets_loaddata = function(){
 		var deferred = Q.defer()
-			,arr = []
 		
 		_db.fleets.find({}).sort({name: 1}).exec(function(err, docs){
 			if( err ){
-				deferred.resolve(arr)
+				deferred.resolve( [] )
 			}else{
-				for(let i in docs){
-					arr.push( docs[i] )
-				}
-				deferred.resolve( arr )
+				deferred.resolve( docs )
 			}
 		})
 		
@@ -6702,12 +6792,12 @@ _tablelist.prototype._equipments_init = function(){
 				){
 					return true
 				}
-				for( let i in fleetdata.data ){
-					for( let j in fleetdata.data[i] ){
-						if( typeof fleetdata.data[i][j] != 'undefined' && typeof fleetdata.data[i][j][0] != 'undefined' && fleetdata.data[i][j][0] )
+				fleetdata.data.forEach(function(fleet){
+					fleet.forEach(function(shipdata){
+						if( typeof shipdata != 'undefined' && typeof shipdata[0] != 'undefined' && shipdata[0] )
 							return true
-					}
-				}
+					})
+				})
 				return false
 			}
 			
@@ -6771,93 +6861,19 @@ _tablelist.prototype._equipments_init = function(){
 			}
 
 		// 创建数据行
-			for( var i in arr ){
+			arr.forEach(function(currentValue, i){
 				setTimeout((function(i){
 					self._fleets_append_item( arr[i] )
 					if( i >= arr.length -1 )
 						deferred.resolve()
 				})(i), 0)
-			}
+			})
 
 		if( !arr.length )
 			deferred.resolve()
 
 		return deferred.promise
 	}
-
-
-
-// 单行数据行类
-/*
-	class TablelistItemFleet{
-		constructor( data, index ){
-			var self = this
-			
-			this.el = $('<tr class="row"/>')
-					.attr({
-						'data-trindex': index,
-						'data-fleetid': 'PLACEHOLDER',
-						//'data-infos': 	'[[FLEET::'+JSON.stringify(data)+']]'
-						'data-infos': 	'[[FLEET::'+data._id+']]'
-					})
-			
-			if( !_g.data.fleets_tablelist.items[data._id] )
-				_g.data.fleets_tablelist.items[data._id] = []
-			
-			_g.data.fleets_tablelist.items[data._id].push(this)
-			
-			//this.dom.container.removeClass('nocontent')
-			
-			this.update( data )
-		}
-		
-		update( data ){
-			this.el.empty()
-			
-			let self = this
-			
-			for( var i in _tablelist.prototype._fleets_columns ){
-				switch( _tablelist.prototype._fleets_columns[i][1] ){
-					case ' ':
-						var html = '<i>'
-							,ships = data['data'][0] || []
-							,j = 0;
-						while( j < 6 ){
-							if( ships[j] && ships[j][0] )
-								html+='<img src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0.webp" contextmenu="disabled"/>'
-							else
-								html+='<s/>'
-							j++
-						}
-						html+='</i>'
-						$('<th/>')
-							.attr(
-								'data-value',
-								data['name']
-							)
-							.html(
-								html
-								+ '<strong>' + data['name'] + '</strong>'
-							)
-							.appendTo(self.el)
-						break;
-					default:
-						var datavalue = data[_tablelist.prototype._fleets_columns[i][1]]
-						$('<td/>')
-							.attr(
-								'data-value',
-								datavalue
-							)
-							.html( datavalue )
-							.appendTo(self.el)
-						break;
-				}
-			}
-			
-			return this.el
-		}
-	}
-*/
 
 
 
@@ -6880,8 +6896,8 @@ _tablelist.prototype._equipments_init = function(){
 						'data-theme':	data.theme
 					})
 		
-		for( var i in _tablelist.prototype._fleets_columns ){
-			switch( _tablelist.prototype._fleets_columns[i][1] ){
+		_tablelist.prototype._fleets_columns.forEach(function(column){
+			switch( column[1] ){
 				case ' ':
 					var html = '<i>'
 						,ships = data['data'][0] || []
@@ -6906,7 +6922,7 @@ _tablelist.prototype._equipments_init = function(){
 						.appendTo(tr)
 					break;
 				default:
-					var datavalue = data[_tablelist.prototype._fleets_columns[i][1]]
+					var datavalue = data[column[1]]
 					$('<td/>')
 						.attr(
 							'data-value',
@@ -6916,7 +6932,7 @@ _tablelist.prototype._equipments_init = function(){
 						.appendTo(tr)
 					break;
 			}
-		}
+		})
 
 		if( isPrepend )
 			tr.prependTo( this.dom.tbody )
@@ -7029,14 +7045,14 @@ _tablelist.prototype._equipments_init = function(){
 			function gen_thead(arr){
 				self.dom.thead = $('<thead/>')
 				var tr = $('<tr/>').appendTo(self.dom.thead)
-				for(var i in arr){
-					if( typeof arr[i] == 'object' ){
-						$('<td data-stat="' + arr[i][1] + '"/>')
-							.html('<div class="th-inner-wrapper"><span><span>'+arr[i][0]+'</span></span></div>').appendTo(tr)
+				arr.forEach(function(column){
+					if( typeof column == 'object' ){
+						$('<td data-stat="' + column[1] + '"/>')
+							.html('<div class="th-inner-wrapper"><span><span>'+column[0]+'</span></span></div>').appendTo(tr)
 					}else{
-						$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+arr[i][0]+'</span></span></div>').appendTo(tr)
+						$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+column[0]+'</span></span></div>').appendTo(tr)
 					}
-				}
+				})
 				return self.dom.thead
 			}
 			gen_thead( self._fleets_columns ).appendTo( this.dom.table )
@@ -7138,7 +7154,6 @@ _tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 				})
 				//.appendTo( this.dom.tbody )
 				.insertAfter( self._ships_last_item )
-		,max_carry = 0
 		,name = ship_data['name'][_g.lang]
 				+ (ship_data['name']['suffix']
 					? '<small>' + _g.data.ship_namesuffix[ship_data['name']['suffix']][_g.lang] + '</small>'
@@ -7166,10 +7181,6 @@ _tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 	
 	self._ships_checkbox[ship_data['id']] = checkbox
 
-	for( var i in ship_data['carry'] ){
-		max_carry+= ship_data['carry'][i]
-	}
-
 	function _val( val, show_zero ){
 		if( !show_zero && (val == 0 || val == '0') )
 			return '<small class="zero">-</small>'
@@ -7178,8 +7189,8 @@ _tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 		return val
 	}
 
-	for( var i in self._ships_columns ){
-		switch( self._ships_columns[i][1] ){
+	self._ships_columns.forEach(function(currentValue, i){
+		switch( currentValue[1] ){
 			case ' ':
 				$('<th/>')
 					.html(
@@ -7199,11 +7210,12 @@ _tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 				var datavalue = /^(9|10|11)$/.test( ship_data['type'] )
 								? 0
 								: (parseInt(ship_data['stat']['fire_max'] || 0)
-									+ parseInt(ship_data['stat']['torpedo_max'] || 0) )
+									+ parseInt(ship_data['stat']['torpedo_max'] || 0)
+								)
 				$('<td data-stat="nightpower"/>')
 					.attr(
 						'data-value',
-						datavalue == -1 || datavalue == '-1'
+						datavalue == -1
 							? null
 							: datavalue
 					)
@@ -7272,8 +7284,8 @@ _tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 					.appendTo(tr)
 				break;
 			default:
-				var datavalue = ship_data['stat'][self._ships_columns[i][1] + '_max']
-				$('<td data-stat="'+self._ships_columns[i][1]+'"/>')
+				var datavalue = ship_data['stat'][currentValue[1] + '_max']
+				$('<td data-stat="'+currentValue[1]+'"/>')
 					.attr(
 						'data-value',
 						datavalue == -1 || datavalue == '-1'
@@ -7284,7 +7296,7 @@ _tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 					.appendTo(tr)
 				break;
 		}
-	}
+	})
 
 	// 检查数据是否存在 remodel_next
 	// 如果 remodel_next 与当前数据 type & name 相同，标记当前为可改造前版本
@@ -7501,16 +7513,16 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 					var $div = $(this).empty()
 					if( self._ships_contextmenu_curid ){
 						var series = _g['data']['ships'][self._ships_contextmenu_curid].getSeriesData() || []
-						for(let i in series){
-							if( i == '0' )
+						series.forEach(function(currentValue, i){
+							if( !i )
 								$div.append($('<hr/>'))
 							let checkbox = null
 							try{
-								checkbox = self._ships_checkbox[series[i]['id']]
+								checkbox = self._ships_checkbox[currentValue['id']]
 							}catch(e){}
 							$div.append(
 								$('<div class="item"/>')
-									.html('<span>' + _g['data']['ships'][series[i]['id']].getName(true) + '</span>')
+									.html('<span>' + _g['data']['ships'][currentValue['id']].getName(true) + '</span>')
 									.append(
 										$('<div class="group"/>')
 											.append(function(){
@@ -7523,7 +7535,7 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 															.on({
 																'click': function(){
 																	if( _frame.app_main.is_mode_selection() )
-																		_frame.app_main.mode_selection_callback(series[i]['id'])
+																		_frame.app_main.mode_selection_callback(currentValue['id'])
 																}
 															})
 													)
@@ -7532,7 +7544,7 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 												return els
 											})
 											.append(
-												$('<menuitem data-infos="[[SHIP::'+series[i]['id']+']]"/>')
+												$('<menuitem data-infos="[[SHIP::'+currentValue['id']+']]"/>')
 													.html('查看资料')
 											)
 											.append(
@@ -7545,7 +7557,7 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 													.on({
 														'click': function(e){
 															if( checkbox ){
-																self._ships_checkbox[series[i]['id']]
+																self._ships_checkbox[currentValue['id']]
 																	.prop('checked', !checkbox.prop('checked'))
 																	.trigger('change')
 															}
@@ -7554,7 +7566,7 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 											)
 									)
 							)
-						}
+						})
 					}
 				})
 			]
@@ -7633,7 +7645,7 @@ _tablelist.prototype._ships_init = function(){
 		function gen_thead(arr){
 			self.dom.thead = $('<thead/>')
 			var tr = $('<tr/>').appendTo(self.dom.thead)
-			for(var i in arr){
+			arr.forEach(function(currentValue, i){
 				(function( obj ){
 					if( typeof obj == 'object' ){
 						var td = $('<td data-stat="' + obj[1] + '"/>')
@@ -7645,8 +7657,8 @@ _tablelist.prototype._ships_init = function(){
 					}else{
 						$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+obj[0]+'</span></span></div>').appendTo(tr)
 					}
-				})(arr[i])
-			}
+				})(currentValue)
+			})
 			return self.dom.thead
 		}
 		gen_thead( self._ships_columns ).appendTo( this.dom.table )

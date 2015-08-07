@@ -133,9 +133,9 @@ _frame.app_main.page['arsenal'].init = function( page ){
 	_frame.app_main.page['arsenal'].init_all = function(){
 		var body = $('<div class="body body-2 body-all"/>')
 
-		for(var i in _g.data.arsenal_all){
-			_tmpl.improvement_detail(_g.data.arsenal_all[i]).appendTo(body)
-		}
+		_g.data.arsenal_all.forEach(function(currentValue){
+			_tmpl.improvement_detail(currentValue).appendTo(body)
+		})
 
 		return body
 	}

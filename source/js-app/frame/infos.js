@@ -515,19 +515,19 @@ _frame.infos.init = function(){
 				var modernization = $('<div class="modernization"/>').html('<h4 data-content="合成">合成</h4>').appendTo(equips)
 					,stats = $('<div class="stats"/>').appendTo(modernization)
 					,has_modernization = false
-				for( var i in d['modernization'] ){
-					if( d['modernization'][i] ){
+				d['modernization'].forEach(function(currentValue, i){
+					if( currentValue ){
 						has_modernization = true
 						var stat
-						switch(parseInt(i)){
+						switch(i){
 							case 0: stat = 'fire'; break;
 							case 1: stat = 'torpedo'; break;
 							case 2: stat = 'aa'; break;
 							case 3: stat = 'armor'; break;
 						}
-						$('<span class="stat-' + stat + '"/>').html('+' + d['modernization'][i]).appendTo(stats)
+						$('<span class="stat-' + stat + '"/>').html('+' + currentValue).appendTo(stats)
 					}
-				}
+				})
 				// まるゆ
 					if( d['id'] == 163 )
 						$('<span class="stat-luck"/>').html('+1.2').appendTo(stats)
@@ -540,8 +540,8 @@ _frame.infos.init = function(){
 				if( d['additional_item_types'] && d['additional_item_types'].length ){
 					var additional_equipment_types = $('<div class="add_equip"/>').appendTo(dom)
 						,_additional_equipment_types = $('<div/>').html('<h4 data-content="特有装备类型">特有装备类型</h4>').appendTo(additional_equipment_types)
-					for( let i in d['additional_item_types'] ){
-						let _d = _g['data']['item_types'][d['additional_item_types'][i]]
+					d['additional_item_types'].forEach(function(currentValue){
+						let _d = _g['data']['item_types'][currentValue]
 						_additional_equipment_types.append(
 							$('<span/>')
 								.html(_d['name'][_g.lang])
@@ -551,7 +551,7 @@ _frame.infos.init = function(){
 											+ '.png'+')'
 								})
 						)
-					}
+					})
 				}
 
 			// 声优 & 画师 & 消耗
@@ -577,11 +577,94 @@ _frame.infos.init = function(){
 				_add_stat( 'ammo', 		'', _val( d['consum']['ammo'] ),		consum )
 				*/
 
+			// 图鉴
+				// illustrations
+				var illusts = $('<aside class="illustrations"/>').appendTo(dom)
+					,illusts_container = $('<div/>').appendTo(illusts)
+
 			// 改造信息
 				var remodels = $('<div class="remodels"/>').html('<h4 data-content="改造">改造</h4>').appendTo(dom)
 					,remodels_container = _p.el.flexgrid.create().appendTo( remodels )
 				if( d['series'] ){
+					let seriesData = d.getSeriesData()
+					d.getSeriesData().forEach(function(currentValue, i){
+						let remodel_ship_data = _g.data.ships[currentValue['id']]
+							,remodel_ship_name = remodel_ship_data.getName(_g.joint)
+							,tip = '<h3 class="shipinfo">'
+										+ '<strong data-content="' + remodel_ship_name + '">'
+											+ remodel_ship_name
+										+ '</strong>'
+										+ (
+											remodel_ship_data['type'] ?
+												'<small>' + _g['data']['ship_types'][remodel_ship_data['type']]['full_zh'] + '</span>'
+												: ''
+										)
+									+ '</h3>'
+							,data_prev = i ? seriesData[ i - 1 ] : null
+							,remodel_lvl = data_prev ? data_prev['next_lvl'] : null
+							,remodel_blueprint = data_prev ? (data_prev['next_blueprint']) : null
+
+						remodels_container.appendDOM(
+							$('<button class="unit" data-shipid="'+ currentValue['id'] +'"/>')
+								.attr({
+									'data-infos': 	'[[SHIP::'+ currentValue['id'] +']]',
+									'data-tip': 	tip,
+									'data-infos-nohistory': true
+								})
+								.addClass(currentValue['id'] == d['id'] ? 'on' : '')
+								.addClass(remodel_blueprint ? 'blueprint' : '')
+								.html(
+									'<i><img src="' + _g.path.pics.ships + '/' + currentValue['id']+'/0.webp"/></i>'
+									+ (remodel_lvl ? '<strong>' + remodel_lvl + '</strong>' : '')
+								)
+						)
+
+						// 处理图鉴信息
+							if( currentValue['id'] == d['id'] ){
+								if( currentValue.illust_delete ){
+									if( data_prev ){
+										illustrations.push( data_prev['id'] )
+										if( data_prev.illust_extra && data_prev.illust_extra.length && data_prev.illust_extra[0] ){
+											data_prev.illust_extra.forEach(function(cur){
+												illustrations.push( 'extra_' + cur )
+											})
+										}
+									}
+								}else{
+									illustrations.push( currentValue['id'] )
+									if( currentValue.illust_extra && currentValue.illust_extra.length && currentValue.illust_extra[0] ){
+										currentValue.illust_extra.forEach(function(cur){
+											illustrations.push( 'extra_' + cur )
+										})
+									}
+								}
+							}
+					})
+					
+					let index = 0
+					function check_append( file ){
+						file = file.replace(/\\/g, '/')
+						try{
+							let stat = node.fs.lstatSync(file)
+							if( stat && stat.isFile() ){
+								index++
+								$('<input type="radio" name="ship_'+d['id']+'_illustrations" value="'+index+'"/>')
+									.prop('checked', (index == 1))
+									.insertBefore(illusts_container)
+								$('<span class="container"/>')
+									.html('<img src="'+file+'" data-filename="'+ship_name+' - '+index+'.webp"/>')
+									//.css('background-image', 'url(' + file + ')')
+									.appendTo(illusts_container)
+							}
+						}catch(e){}
+					}
+					illustrations.forEach(function(currentValue){
+						check_append( _g.path.pics.ships + '/' + currentValue + '/8.webp' )
+						check_append( _g.path.pics.ships + '/' + currentValue + '/9.webp' )
+					})
+					/*
 					_db.ship_series.find({'id': d['series']}, function(err,docs){
+						console.log(docs, d.getSeriesData())
 						if( !err && docs && docs.length ){
 							// 遍历 docs[0].ships
 								for(var i in docs[0].ships){
@@ -663,13 +746,8 @@ _frame.infos.init = function(){
 									check_append( _g.path.pics.ships + '/' + illustrations[i] + '/9.webp' )
 								}
 						}
-					})
+					})*/
 				}
-
-			// 图鉴
-				// illustrations
-				var illusts = $('<aside class="illustrations"/>').appendTo(dom)
-					,illusts_container = $('<div/>').appendTo(illusts)
 
 			return dom
 		}

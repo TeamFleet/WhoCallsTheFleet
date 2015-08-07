@@ -67,9 +67,9 @@ _frame.app_main.page['about'].init = function( page ){
 		.then(function(){
 			var deferred = Q.defer()
 			_db.updates.find({'date': ""}).sort({'date': -1}).exec(function(err, docs){
-				for( var i in docs ){
-					addUpdateJournal(docs[i])
-				}
+				docs.forEach(function(doc){
+					addUpdateJournal(doc)
+				})
 				deferred.resolve(err)
 			})
 			return deferred.promise
@@ -79,9 +79,9 @@ _frame.app_main.page['about'].init = function( page ){
 		.then(function(){
 			var deferred = Q.defer()
 			_db.updates.find({$not:{'date':""}}).sort({'date': -1}).exec(function(err, docs){
-				for( var i in docs ){
-					addUpdateJournal(docs[i])
-				}
+				docs.forEach(function(doc){
+					addUpdateJournal(doc)
+				})
 				deferred.resolve(err)
 			})
 			return deferred.promise

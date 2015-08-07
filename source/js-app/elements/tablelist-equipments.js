@@ -49,8 +49,8 @@ _tablelist.prototype._equipments_append_item = function( equipment_data, collect
 		return val
 	}
 
-	for( var i in self._equipments_columns ){
-		switch( self._equipments_columns[i][1] ){
+	self._equipments_columns.forEach(function(currentValue){
+		switch( currentValue[1] ){
 			case ' ':
 				$('<th/>').html(equipment_data.getName()).appendTo(tr)
 				break;
@@ -73,13 +73,13 @@ _tablelist.prototype._equipments_append_item = function( equipment_data, collect
 					.appendTo(tr)
 				break;
 			default:
-				$('<td data-stat="'+self._equipments_columns[i][1]+'" data-value="' + equipment_data['stat'][self._equipments_columns[i][1]] + '"/>')
-					.addClass( equipment_data['stat'][self._equipments_columns[i][1]] < 0 ? 'negative' : '' )
-					.html( _val( equipment_data['stat'][self._equipments_columns[i][1]] ) )
+				$('<td data-stat="'+currentValue[1]+'" data-value="' + equipment_data['stat'][currentValue[1]] + '"/>')
+					.addClass( equipment_data['stat'][currentValue[1]] < 0 ? 'negative' : '' )
+					.html( _val( equipment_data['stat'][currentValue[1]] ) )
 					.appendTo(tr)
 				break;
 		}
-	}
+	})
 
 	return tr
 }
@@ -206,14 +206,14 @@ _tablelist.prototype._equipments_init = function(){
 		function gen_thead(arr){
 			self.dom.thead = $('<thead/>')
 			var tr = $('<tr/>').appendTo(self.dom.thead)
-			for(var i in arr){
-				if( typeof arr[i] == 'object' ){
-					$('<td data-stat="' + arr[i][1] + '"/>')
-						.html('<div class="th-inner-wrapper"><span><span>'+arr[i][0]+'</span></span></div>').appendTo(tr)
+			arr.forEach(function(currentValue){
+				if( typeof currentValue == 'object' ){
+					$('<td data-stat="' + currentValue[1] + '"/>')
+						.html('<div class="th-inner-wrapper"><span><span>'+currentValue[0]+'</span></span></div>').appendTo(tr)
 				}else{
-					$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+arr[i][0]+'</span></span></div>').appendTo(tr)
+					$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+currentValue[0]+'</span></span></div>').appendTo(tr)
 				}
-			}
+			})
 			return self.dom.thead
 		}
 		gen_thead( self._equipments_columns ).appendTo( this.dom.table )

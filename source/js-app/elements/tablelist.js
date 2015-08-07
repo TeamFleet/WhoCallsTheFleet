@@ -69,20 +69,20 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 			case 'select':
 				var input = $('<select name="'+name+'" id="'+id+'" />')
 				var option_empty = $('<option value=""/>').html('').appendTo( input )
-				for( var i in value ){
-					if( typeof value[i] == 'object' ){
-						var o_el = $('<option value="' + (typeof value[i].val == 'undefined' ? value[i]['value'] : value[i].val) + '"/>')
-							.html(value[i]['title'] || value[i]['name'])
+				value.forEach(function(currentValue, i){
+					if( typeof currentValue == 'object' ){
+						var o_el = $('<option value="' + (typeof currentValue.val == 'undefined' ? currentValue['value'] : currentValue.val) + '"/>')
+							.html(currentValue['title'] || currentValue['name'])
 							.appendTo( input )
 					}else{
-						var o_el = $('<option value="' + value[i] + '"/>')
-							.html(value[i])
+						var o_el = $('<option value="' + currentValue + '"/>')
+							.html(currentValue)
 							.appendTo( input )
 					}
 					if( typeof options['default'] != 'undefined' && o_el.val() == options['default'] ){
 						o_el.prop('selected', true)
 					}
-				}
+				})
 				if( !value || !value.length ){
 					option_empty.remove()
 					$('<option value=""/>').html('...').appendTo( input )
@@ -104,7 +104,7 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 				break;
 			case 'radio':
 				var input = $();
-				for( var i in value ){
+				value.forEach(function(currentValue, i){
 					var title, val
 						,checked = false
 					if( value[i].push ){
@@ -122,7 +122,7 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 							.prop('checked', (checked || (!checked && i == 0) ))
 						)
 					input = input.add($('<label for="'+id+'-'+val+'"/>').html( title ))
-				}
+				})
 				break;
 		}
 
@@ -229,9 +229,9 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 
 			// 根据排序结果，整理返回结果
 				var return_array = []
-				for(var i in this._tmp_values){
-					return_array.push( this._tmp_value_map_cell[this._tmp_values[i]] )
-				}
+				this._tmp_values.forEach(function(currentValue){
+					return_array.push( this._tmp_value_map_cell[currentValue] )
+				}, this)
 
 			// delete 临时对象
 				delete this._tmp_values
@@ -358,9 +358,9 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 				arr.sort(function(a, b){
 					return a['index']-b['index']
 				})
-				for(var i in arr){
-					arr[i].el.insertAfter( arr[i].prev )
-				}
+				arr.forEach(function(currentValue){
+					currentValue.el.insertAfter( currentValue.prev )
+				})
 
 			// 修改排序提示按钮
 				this.dom.btn_compare_sort.addClass('disabled').html('点击表格标题可排序')

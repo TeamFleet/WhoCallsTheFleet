@@ -1,3 +1,25 @@
+/*
+舰队数据
+	舰娘
+		菜单项：替换
+	综合选项
+		更改舰队模式：单舰队阵型，联合舰队阵型，影响属性计算
+	移除/替换舰娘后重置装备ID和改修星级
+	移除/替换装备后重置改修星级
+
+图片输出
+	允许编辑文字
+
+装备选择
+	可用装备类型在分页最前方
+	舰娘不变时，记住上次分页
+	航母系默认进入飞行器页
+
+其他
+	声纳 -> 水母
+	大型声纳 -??> 水母
+*/
+
 // 舰队配置
 	_frame.infos.__fleet = function( id ){
 		return (new InfosFleet(id)).el
@@ -185,10 +207,10 @@ class InfosFleet{
 
 		// 分舰队
 			if( d['data'] && d['data'].push ){
-				for(let i in d['data']){
-					//_g.log(d['data'][i])
-					this.fleets[i].updateEl(d['data'][i])
-				}
+				d['data'].forEach(function(currentValue, i){
+					//_g.log(currentValue)
+					this.fleets[i].updateEl(currentValue)
+				}, this)
 			}
 		
 		this._updating = false
@@ -241,21 +263,12 @@ class InfosFleet{
 			if( this._updating )
 				return this
 			
-			for(let i in this.fleets){
-				this.data.data[i] = this.fleets[i].data
-			}
+			this.fleets.forEach(function(currentValue, i){
+				this.data.data[i] = currentValue.data
+			}, this)
 			
 			// 更新时间
 			this.data.time_modify = _g.timeNow()
-			
-			// 更新TablelistFleetItem
-			/*
-			try{
-				for(let i in _g.data.fleets_tablelist.items[this.data._id]){
-					_g.data.fleets_tablelist.items[this.data._id][i].update(this.data)
-				}
-			}catch(e){}
-			*/
 			
 			//_g.log(this)
 			_g.log(this.data)
@@ -331,9 +344,10 @@ class InfosFleetSubFleet{
 	// 根据元数据更新页面元素
 		updateEl(d){
 			this.data = d || this.data
-			for(let i in d){
-				this.ships[i].updateEl(d[i])
-			}
+			if( d )
+				d.forEach(function(currentValue, i){
+					this.ships[i].updateEl(currentValue)
+				}, this)
 		}
 	
 	// 获取当前状态的元数据
@@ -351,18 +365,18 @@ class InfosFleetSubFleet{
 				let fighterPower = 0
 					,fleetSpeet = 'fast'
 				
-				for(let i in self.ships){
-					if( self.ships[i].data[0] ){
-						let ship = _g.data.ships[self.ships[i].data[0]]
+				self.ships.forEach(function(shipdata){
+					if( shipdata.data[0] ){
+						let ship = _g.data.ships[shipdata.data[0]]
 						
 						// 计算：航速
 							if( ship.stat.speed < 10 )
 								fleetSpeet = 'slow'
 						
 						// 计算：制空战力
-							fighterPower+= self.ships[i].calculate('fighterPower')
+							fighterPower+= shipdata.calculate('fighterPower')
 					}
-				}
+				})
 				
 				self.elSummarySpeed.html( fleetSpeet == 'fast' ? '高速' : '低速' )
 				
@@ -383,12 +397,14 @@ class InfosFleetSubFleet{
 		save(){
 			// 如果该子舰队下没有任何数据，则存储数据时不传输该子舰队数据
 			let allEmpty = true
-			for(let i in this.ships){
-				this.data[i] = this.ships[i].data
+			this.data = this.data || []
+			
+			this.ships.forEach(function(currentValue,i){
+				this.data[i] = currentValue.data
 				
-				if( this.ships[i].data[0] )
+				if( currentValue.data[0] )
 					allEmpty = false
-			}
+			}, this)
 			
 			if( allEmpty )
 				this.data = null
@@ -648,20 +664,20 @@ class InfosFleetShip{
 						if( InfosFleetShip.menuCurObj.shipId ){
 							var series = _g['data']['ships'][InfosFleetShip.menuCurObj.shipId].getSeriesData() || []
 							if( series.length > 1 ){
-								for(let i in series){
-									if( i == '0' )
+								series.forEach(function(currentValue, i){
+									if( !i )
 										$div.append($('<hr/>'))
-									if( series[i]['id'] != InfosFleetShip.menuCurObj.shipId )
+									if( currentValue['id'] != InfosFleetShip.menuCurObj.shipId )
 									$div.append(
 										$('<menuitem/>')
-											.html('替换为 ' + _g['data']['ships'][series[i]['id']].getName(true))
+											.html('替换为 ' + _g['data']['ships'][currentValue['id']].getName(true))
 											.on({
 												'click': function(){
-													InfosFleetShip.menuCurObj.shipId = series[i]['id']
+													InfosFleetShip.menuCurObj.shipId = currentValue['id']
 												}
 											})
 									)
-								}
+								})
 							}
 						}
 					})
@@ -683,6 +699,7 @@ class InfosFleetShip{
 		}
 		set shipId( value ){
 			this.data[0] = value
+			this.shipLv = null
 			
 			if( value ){
 				let ship = _g.data.ships[value]
@@ -708,13 +725,16 @@ class InfosFleetShip{
 						this.equipments[i].carry = ship.slot[i]
 						if( !this._updating ){
 							this.equipments[i].id = null
-							//this.equipments[i].star = this.data[3][i]
+							this.equipments[i].star = null
 						}
 					}
 			}else{
 				this.el.removeAttr('data-shipId')
 				this.el.addClass('noship')
 				this.elAvatar.html('')
+				this.data[2] = []
+				this.data[3] = []
+				// [null, [null, -1], [], []]
 			}
 			
 			this.save()
@@ -755,7 +775,7 @@ class InfosFleetShip{
 					self.infosFleetSubFleet.save()
 				
 				self._saveTimeout = null
-			}, 10)
+			}, 100)
 		}
 }
 

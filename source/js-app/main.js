@@ -239,7 +239,7 @@ _frame.app_main = {
 						_frame.dom.layout.addClass('ready')
 						$html.addClass('app-ready')
 						setTimeout(function(){
-							for(var i in _frame.app_main.functions_on_ready){
+							for(let i=0; i<_frame.app_main.functions_on_ready.length; i++){
 								_frame.app_main.functions_on_ready[i]()
 							}
 						}, 1500)
@@ -413,10 +413,10 @@ _frame.app_main = {
 				let checked = false
 					
 				if( !_frame.app_main.cur_page ){
-					for(let i in _frame.app_main.nav){
-						if( page == _frame.app_main.nav[i].page )
+					_frame.app_main.nav.forEach(function(currentValue){
+						if( page == currentValue.page )
 							checked = true
-					}
+					})
 				}else{
 					checked = true
 				}
@@ -627,7 +627,7 @@ _frame.app_main = {
 			if( _frame.app_main.nav && _frame.app_main.nav.length ){
 				_frame.dom.navs = {}
 				_frame.app_main.navtitle = {}
-				for( var i in _frame.app_main.nav ){
+				_frame.app_main.nav.forEach(function(currentValue, i){
 					var o = _frame.app_main.nav[i]
 					_frame.app_main.navtitle[o.page] = o.title
 					_frame.dom.navs[o.page] = (function(page){
@@ -640,7 +640,7 @@ _frame.app_main = {
 					//){
 					//	_frame.dom.navs[o.page].trigger('click')
 					//}
-				}
+				})
 			}
 
 		var promise_chain 	= Q.fcall(function(){})
@@ -655,12 +655,12 @@ _frame.app_main = {
 					if( err ){
 						deferred.reject(new Error(err))
 					}else{
-						for(var i in files){
-							_db[ node.path.parse(files[i])['name'] ]
+						files.forEach(function(file){
+							_db[ node.path.parse(file)['name'] ]
 								= new node.nedb({
-										filename: 	node.path.join(_g.path.db, '/' + files[i])
+										filename: 	node.path.join(_g.path.db, '/' + file)
 									})
-						}
+						})
 						deferred.resolve(files)
 					}
 				})
@@ -678,27 +678,27 @@ _frame.app_main = {
 						var bgimgs_last = _config.get('bgimgs')
 							,bgimgs_new = []
 						bgimgs_last = bgimgs_last ? bgimgs_last.split(',') : []
-						for( var i in files ){
-							var lstat = node.fs.lstatSync( node.path.join( _g.path.bgimg_dir , '/' + files[i]) )
+						files.forEach(function(file){
+							var lstat = node.fs.lstatSync( node.path.join( _g.path.bgimg_dir , '/' + file) )
 							if( !lstat.isDirectory() ){
-								_frame.app_main.bgimgs.push( files[i] )
+								_frame.app_main.bgimgs.push( file )
 
 								// 存在bgimgs_last：直接比对
 								// 不存在bgimgs_last：比对每个文件，找出最新者
 								if( bgimgs_last.length ){
-									if( $.inArray( files[i], bgimgs_last ) < 0 )
-										bgimgs_new.push( files[i] )
+									if( $.inArray( file, bgimgs_last ) < 0 )
+										bgimgs_new.push( file )
 								}else{
 									var ctime = parseInt(lstat.ctime.valueOf())
 									if( bgimgs_new.length ){
 										if( ctime > bgimgs_new[1] )
-											bgimgs_new = [ files[i], ctime ]
+											bgimgs_new = [ file, ctime ]
 									}else{
-										bgimgs_new = [ files[i], ctime ]
+										bgimgs_new = [ file, ctime ]
 									}
 								}
 							}
-						}
+						})
 						if( !bgimgs_last.length )
 							bgimgs_new.pop()
 						_config.set(
@@ -784,26 +784,23 @@ _frame.app_main = {
 										if( dberr ){
 											deferred.reject(new Error(dberr))
 										}else{
-											for(var i in docs ){
+											docs.forEach(function(doc,i){
 												_g.ship_type_order.push(
-													docs[i]['types'].length > 1 ? docs[i]['types'] : docs[i]['types'][0]
+													doc['types'].length > 1 ? doc['types'] : doc['types'][0]
 												)
-												//_g.data['ship_type_order'][docs[i]['id']] = docs[i]
-												_g.data['ship_type_order'][i] = docs[i]
-											}
+												//_g.data['ship_type_order'][doc['id']] = doc
+												_g.data['ship_type_order'][i] = doc
+											})
 											// ship type -> ship order
-												(function(){
-													for( var i in _g.ship_type_order ){
-														var index = parseInt(i)
-														if( typeof _g.ship_type_order[i] == 'object' ){
-															for( var j in _g.ship_type_order[i] ){
-																_g.ship_type_order_map[ _g.ship_type_order[i][j] ] = index
-															}
-														}else{
-															_g.ship_type_order_map[ _g.ship_type_order[i] ] = index
-														}
+												_g.ship_type_order.forEach(function(currentValue, i){
+													if( typeof _g.ship_type_order[i] == 'object' ){
+														_g.ship_type_order[i].forEach(function(cur, j){
+															_g.ship_type_order_map[ _g.ship_type_order[i][j] ] = i
+														})
+													}else{
+														_g.ship_type_order_map[ _g.ship_type_order[i] ] = i
 													}
-												})()
+												})
 											_db.ships.find({}).sort({
 												//'class': 1, 'class_no': 1, 'series': 1, 'type': 1, 'time_created': 1, 'name.suffix': 1
 												'type': 1, 'class': 1, 'class_no': 1, 'time_created': 1, 'name.suffix': 1
@@ -811,13 +808,13 @@ _frame.app_main = {
 												if( dberr2 ){
 													deferred.reject(new Error(dberr))
 												}else{
-													for(var i in docs){
-														_g.data.ships[docs[i]['id']] = new Ship(docs[i])
+													docs.forEach(function(doc){
+														_g.data.ships[doc['id']] = new Ship(doc)
 
-														if( typeof _g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] == 'undefined' )
-															_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] = []
-														_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ].push( docs[i]['id'] )
-													}
+														if( typeof _g.data.ship_id_by_type[ _g.ship_type_order_map[doc['type']] ] == 'undefined' )
+															_g.data.ship_id_by_type[ _g.ship_type_order_map[doc['type']] ] = []
+														_g.data.ship_id_by_type[ _g.ship_type_order_map[doc['type']] ].push( doc['id'] )
+													})
 													function __(i){
 														var j=0
 														while(
@@ -874,9 +871,9 @@ _frame.app_main = {
 									_db.arsenal_all.find({}).sort({
 										'sort': 1
 									}).exec(function(err, docs){
-										for(var i in docs){
-											_g.data['arsenal_all'].push(docs[i]['id'])
-										}
+										docs.forEach(function(doc){
+											_g.data['arsenal_all'].push(doc['id'])
+										})
 										_done(db_name)
 									})
 									break;
@@ -885,10 +882,10 @@ _frame.app_main = {
 									_db.arsenal_weekday.find({}).sort({
 										'weekday': 1
 									}).exec(function(err, docs){
-										for(var i in docs){
-											_g.data['arsenal_weekday'][parseInt(i)]
-												= docs[i].improvements
-										}
+										docs.forEach(function(doc, i){
+											_g.data['arsenal_weekday'][i]
+												= doc.improvements
+										})
 										_done(db_name)
 									})
 									break;
@@ -899,16 +896,16 @@ _frame.app_main = {
 										}else{
 											if( typeof _g.data[db_name] == 'undefined' )
 												_g.data[db_name] = {}
-											for(var i in docs ){
+											docs.forEach(function(doc){
 												switch( db_name ){
 													case 'items':
-														_g.data[db_name][docs[i]['id']] = new Equipment(docs[i])
+														_g.data[db_name][doc['id']] = new Equipment(doc)
 														break;
 													default:
-														_g.data[db_name][docs[i]['id']] = docs[i]
+														_g.data[db_name][doc['id']] = doc
 														break;
 												}
-											}
+											})
 											_done(db_name)
 										}
 									})
@@ -951,8 +948,8 @@ _frame.app_main = {
 						_g.data.item_id_by_type[order]['names'].push( _g.data.items[i].getName() )
 					}
 				// 排序
-					for(let i in _g.data.item_id_by_type){
-						_g.data.item_id_by_type[i]['equipments'].sort(function(a, b){
+					_g.data.item_id_by_type.forEach(function(currentValue){
+						currentValue['equipments'].sort(function(a, b){
 							let diff = _g.data.items[a].getPower() - _g.data.items[b].getPower()
 							if( diff === 0 ){
 								let diff_aa = _g.data.items[a]['stat']['aa'] - _g.data.items[b]['stat']['aa']
@@ -963,7 +960,7 @@ _frame.app_main = {
 							}
 							return diff
 						})
-					}
+					})
 				setTimeout(function(){
 					deferred.resolve()
 				}, 100)
@@ -1036,17 +1033,17 @@ _frame.app_main = {
 							if( err ){
 								deferred.reject(new Error(err))
 							}else{
-								for( var i in docs ){
-									var section = $('<section class="update_journal" data-version-'+docs[i]['type']+'="'+docs[i]['version']+'"/>')
-												.html(_frame.app_main.page['about'].journaltitle(docs[i]))
+								docs.forEach(function(doc){
+									var section = $('<section class="update_journal" data-version-'+docs['type']+'="'+docs['version']+'"/>')
+												.html(_frame.app_main.page['about'].journaltitle(docs))
 									try{
-										$(_frame.app_main.page['about'].journal_parse(docs[i]['journal'])).appendTo( section )
+										$(_frame.app_main.page['about'].journal_parse(docs['journal'])).appendTo( section )
 									}catch(e){
 										_g.error(e)
 										section.remove()
 									}
 									doms = doms.add(section)
-								}
+								})
 								_done(obj['type'] + ' - ' + obj['version'])
 							}
 						})

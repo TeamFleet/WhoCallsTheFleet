@@ -105,7 +105,7 @@ class Ship extends ITEM{
 		let series = this.getSeriesData()
 		picId = parseInt(picId || 0)
 		
-		for(let i in series){
+		for(let i=0; i<series.length; i++){
 			if( series[i].id == this.id ){
 				switch(picId){
 					case 0:

@@ -122,20 +122,20 @@
 								.appendTo(dom)
 					,upgrade_from1 = $('<div class="stat upgrade"/>')
 						.appendTo(upgrade_from)
-				for( var i in d['upgrade_from'] ){
-					_tmpl.link_equipment(d['upgrade_from'][i]).appendTo( upgrade_from1 )
-				}
+				d['upgrade_from'].forEach(function(currentValue){
+					_tmpl.link_equipment(currentValue).appendTo( upgrade_from1 )
+				})
 			}
 
 		// 初始装备于
 			var equipped = $('<div class="equipped"/>').html('<h4 data-content="初始装备于">初始装备于</h4>').appendTo(dom)
 				,equipped_container = _p.el.flexgrid.create().appendTo( equipped )
 			if( d.default_equipped_on && d.default_equipped_on.length ){
-				for( var i in d.default_equipped_on ){
+				d.default_equipped_on.forEach(function(currentValue){
 					equipped_container.appendDOM(
-						_tmpl.link_ship(d.default_equipped_on[i]).addClass('unit')
+						_tmpl.link_ship(currentValue).addClass('unit')
 					)
-				}
+				})
 			}else{
 				equipped_container.addClass('no').html('暂无初始配置该装备的舰娘...')
 			}

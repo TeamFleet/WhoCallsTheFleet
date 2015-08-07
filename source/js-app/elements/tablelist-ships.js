@@ -41,7 +41,6 @@ _tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 				})
 				//.appendTo( this.dom.tbody )
 				.insertAfter( self._ships_last_item )
-		,max_carry = 0
 		,name = ship_data['name'][_g.lang]
 				+ (ship_data['name']['suffix']
 					? '<small>' + _g.data.ship_namesuffix[ship_data['name']['suffix']][_g.lang] + '</small>'
@@ -69,10 +68,6 @@ _tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 	
 	self._ships_checkbox[ship_data['id']] = checkbox
 
-	for( var i in ship_data['carry'] ){
-		max_carry+= ship_data['carry'][i]
-	}
-
 	function _val( val, show_zero ){
 		if( !show_zero && (val == 0 || val == '0') )
 			return '<small class="zero">-</small>'
@@ -81,8 +76,8 @@ _tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 		return val
 	}
 
-	for( var i in self._ships_columns ){
-		switch( self._ships_columns[i][1] ){
+	self._ships_columns.forEach(function(currentValue, i){
+		switch( currentValue[1] ){
 			case ' ':
 				$('<th/>')
 					.html(
@@ -102,11 +97,12 @@ _tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 				var datavalue = /^(9|10|11)$/.test( ship_data['type'] )
 								? 0
 								: (parseInt(ship_data['stat']['fire_max'] || 0)
-									+ parseInt(ship_data['stat']['torpedo_max'] || 0) )
+									+ parseInt(ship_data['stat']['torpedo_max'] || 0)
+								)
 				$('<td data-stat="nightpower"/>')
 					.attr(
 						'data-value',
-						datavalue == -1 || datavalue == '-1'
+						datavalue == -1
 							? null
 							: datavalue
 					)
@@ -175,8 +171,8 @@ _tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 					.appendTo(tr)
 				break;
 			default:
-				var datavalue = ship_data['stat'][self._ships_columns[i][1] + '_max']
-				$('<td data-stat="'+self._ships_columns[i][1]+'"/>')
+				var datavalue = ship_data['stat'][currentValue[1] + '_max']
+				$('<td data-stat="'+currentValue[1]+'"/>')
 					.attr(
 						'data-value',
 						datavalue == -1 || datavalue == '-1'
@@ -187,7 +183,7 @@ _tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 					.appendTo(tr)
 				break;
 		}
-	}
+	})
 
 	// 检查数据是否存在 remodel_next
 	// 如果 remodel_next 与当前数据 type & name 相同，标记当前为可改造前版本
@@ -404,16 +400,16 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 					var $div = $(this).empty()
 					if( self._ships_contextmenu_curid ){
 						var series = _g['data']['ships'][self._ships_contextmenu_curid].getSeriesData() || []
-						for(let i in series){
-							if( i == '0' )
+						series.forEach(function(currentValue, i){
+							if( !i )
 								$div.append($('<hr/>'))
 							let checkbox = null
 							try{
-								checkbox = self._ships_checkbox[series[i]['id']]
+								checkbox = self._ships_checkbox[currentValue['id']]
 							}catch(e){}
 							$div.append(
 								$('<div class="item"/>')
-									.html('<span>' + _g['data']['ships'][series[i]['id']].getName(true) + '</span>')
+									.html('<span>' + _g['data']['ships'][currentValue['id']].getName(true) + '</span>')
 									.append(
 										$('<div class="group"/>')
 											.append(function(){
@@ -426,7 +422,7 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 															.on({
 																'click': function(){
 																	if( _frame.app_main.is_mode_selection() )
-																		_frame.app_main.mode_selection_callback(series[i]['id'])
+																		_frame.app_main.mode_selection_callback(currentValue['id'])
 																}
 															})
 													)
@@ -435,7 +431,7 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 												return els
 											})
 											.append(
-												$('<menuitem data-infos="[[SHIP::'+series[i]['id']+']]"/>')
+												$('<menuitem data-infos="[[SHIP::'+currentValue['id']+']]"/>')
 													.html('查看资料')
 											)
 											.append(
@@ -448,7 +444,7 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 													.on({
 														'click': function(e){
 															if( checkbox ){
-																self._ships_checkbox[series[i]['id']]
+																self._ships_checkbox[currentValue['id']]
 																	.prop('checked', !checkbox.prop('checked'))
 																	.trigger('change')
 															}
@@ -457,7 +453,7 @@ _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
 											)
 									)
 							)
-						}
+						})
 					}
 				})
 			]
@@ -536,7 +532,7 @@ _tablelist.prototype._ships_init = function(){
 		function gen_thead(arr){
 			self.dom.thead = $('<thead/>')
 			var tr = $('<tr/>').appendTo(self.dom.thead)
-			for(var i in arr){
+			arr.forEach(function(currentValue, i){
 				(function( obj ){
 					if( typeof obj == 'object' ){
 						var td = $('<td data-stat="' + obj[1] + '"/>')
@@ -548,8 +544,8 @@ _tablelist.prototype._ships_init = function(){
 					}else{
 						$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+obj[0]+'</span></span></div>').appendTo(tr)
 					}
-				})(arr[i])
-			}
+				})(currentValue)
+			})
 			return self.dom.thead
 		}
 		gen_thead( self._ships_columns ).appendTo( this.dom.table )

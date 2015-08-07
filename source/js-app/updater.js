@@ -162,10 +162,10 @@ var _updater = {
 						deferred.reject( err )
 					}else{
 						var selected = []
-						for(var i in files){
-							if( node.path.extname(files[i]) == '.updated' )
-								selected.push(files[i])
-						}
+						files.forEach(function(file){
+							if( node.path.extname(file) == '.updated' )
+								selected.push(file)
+						})
 						deferred.resolve( selected )
 					}
 				})

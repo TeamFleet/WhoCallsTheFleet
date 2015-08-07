@@ -65,16 +65,12 @@
 // 读取已保存数据
 	_tablelist.prototype._fleets_loaddata = function(){
 		var deferred = Q.defer()
-			,arr = []
 		
 		_db.fleets.find({}).sort({name: 1}).exec(function(err, docs){
 			if( err ){
-				deferred.resolve(arr)
+				deferred.resolve( [] )
 			}else{
-				for(let i in docs){
-					arr.push( docs[i] )
-				}
-				deferred.resolve( arr )
+				deferred.resolve( docs )
 			}
 		})
 		
@@ -144,12 +140,12 @@
 				){
 					return true
 				}
-				for( let i in fleetdata.data ){
-					for( let j in fleetdata.data[i] ){
-						if( typeof fleetdata.data[i][j] != 'undefined' && typeof fleetdata.data[i][j][0] != 'undefined' && fleetdata.data[i][j][0] )
+				fleetdata.data.forEach(function(fleet){
+					fleet.forEach(function(shipdata){
+						if( typeof shipdata != 'undefined' && typeof shipdata[0] != 'undefined' && shipdata[0] )
 							return true
-					}
-				}
+					})
+				})
 				return false
 			}
 			
@@ -213,93 +209,19 @@
 			}
 
 		// 创建数据行
-			for( var i in arr ){
+			arr.forEach(function(currentValue, i){
 				setTimeout((function(i){
 					self._fleets_append_item( arr[i] )
 					if( i >= arr.length -1 )
 						deferred.resolve()
 				})(i), 0)
-			}
+			})
 
 		if( !arr.length )
 			deferred.resolve()
 
 		return deferred.promise
 	}
-
-
-
-// 单行数据行类
-/*
-	class TablelistItemFleet{
-		constructor( data, index ){
-			var self = this
-			
-			this.el = $('<tr class="row"/>')
-					.attr({
-						'data-trindex': index,
-						'data-fleetid': 'PLACEHOLDER',
-						//'data-infos': 	'[[FLEET::'+JSON.stringify(data)+']]'
-						'data-infos': 	'[[FLEET::'+data._id+']]'
-					})
-			
-			if( !_g.data.fleets_tablelist.items[data._id] )
-				_g.data.fleets_tablelist.items[data._id] = []
-			
-			_g.data.fleets_tablelist.items[data._id].push(this)
-			
-			//this.dom.container.removeClass('nocontent')
-			
-			this.update( data )
-		}
-		
-		update( data ){
-			this.el.empty()
-			
-			let self = this
-			
-			for( var i in _tablelist.prototype._fleets_columns ){
-				switch( _tablelist.prototype._fleets_columns[i][1] ){
-					case ' ':
-						var html = '<i>'
-							,ships = data['data'][0] || []
-							,j = 0;
-						while( j < 6 ){
-							if( ships[j] && ships[j][0] )
-								html+='<img src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0.webp" contextmenu="disabled"/>'
-							else
-								html+='<s/>'
-							j++
-						}
-						html+='</i>'
-						$('<th/>')
-							.attr(
-								'data-value',
-								data['name']
-							)
-							.html(
-								html
-								+ '<strong>' + data['name'] + '</strong>'
-							)
-							.appendTo(self.el)
-						break;
-					default:
-						var datavalue = data[_tablelist.prototype._fleets_columns[i][1]]
-						$('<td/>')
-							.attr(
-								'data-value',
-								datavalue
-							)
-							.html( datavalue )
-							.appendTo(self.el)
-						break;
-				}
-			}
-			
-			return this.el
-		}
-	}
-*/
 
 
 
@@ -322,8 +244,8 @@
 						'data-theme':	data.theme
 					})
 		
-		for( var i in _tablelist.prototype._fleets_columns ){
-			switch( _tablelist.prototype._fleets_columns[i][1] ){
+		_tablelist.prototype._fleets_columns.forEach(function(column){
+			switch( column[1] ){
 				case ' ':
 					var html = '<i>'
 						,ships = data['data'][0] || []
@@ -348,7 +270,7 @@
 						.appendTo(tr)
 					break;
 				default:
-					var datavalue = data[_tablelist.prototype._fleets_columns[i][1]]
+					var datavalue = data[column[1]]
 					$('<td/>')
 						.attr(
 							'data-value',
@@ -358,7 +280,7 @@
 						.appendTo(tr)
 					break;
 			}
-		}
+		})
 
 		if( isPrepend )
 			tr.prependTo( this.dom.tbody )
@@ -471,14 +393,14 @@
 			function gen_thead(arr){
 				self.dom.thead = $('<thead/>')
 				var tr = $('<tr/>').appendTo(self.dom.thead)
-				for(var i in arr){
-					if( typeof arr[i] == 'object' ){
-						$('<td data-stat="' + arr[i][1] + '"/>')
-							.html('<div class="th-inner-wrapper"><span><span>'+arr[i][0]+'</span></span></div>').appendTo(tr)
+				arr.forEach(function(column){
+					if( typeof column == 'object' ){
+						$('<td data-stat="' + column[1] + '"/>')
+							.html('<div class="th-inner-wrapper"><span><span>'+column[0]+'</span></span></div>').appendTo(tr)
 					}else{
-						$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+arr[i][0]+'</span></span></div>').appendTo(tr)
+						$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+column[0]+'</span></span></div>').appendTo(tr)
 					}
-				}
+				})
 				return self.dom.thead
 			}
 			gen_thead( self._fleets_columns ).appendTo( this.dom.table )
