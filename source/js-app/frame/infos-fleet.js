@@ -4,16 +4,9 @@
 		菜单项：替换
 	综合选项
 		更改舰队模式：单舰队阵型，联合舰队阵型，影响属性计算
-	移除/替换舰娘后重置装备ID和改修星级
-	移除/替换装备后重置改修星级
 
 图片输出
 	允许编辑文字
-
-装备选择
-	可用装备类型在分页最前方
-	舰娘不变时，记住上次分页
-	航母系默认进入飞行器页
 
 其他
 	声纳 -> 水母
@@ -897,11 +890,13 @@ class InfosFleetShipEquipment{
 					self.id = id
 					self.star = 0
 					TablelistEquipments.types = []
+					TablelistEquipments.shipId = null
 					if( self.infosFleetShip.infosFleet )
 						_frame.infos.dom.main.attr('data-theme', self.infosFleetShip.infosFleet.data['theme'])
 				},
 				callback_modeSelection_enter: function(){
 					TablelistEquipments.types = _g.data.ships[self.infosFleetShip.shipId].getEquipmentTypes()
+					TablelistEquipments.shipId = self.infosFleetShip.shipId
 					_frame.app_main.page['equipments'].object.tablelistObj.apply_types()
 				}
 			})

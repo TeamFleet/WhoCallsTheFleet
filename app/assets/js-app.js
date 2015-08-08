@@ -4693,16 +4693,9 @@ _frame.infos.init = function(){
 		菜单项：替换
 	综合选项
 		更改舰队模式：单舰队阵型，联合舰队阵型，影响属性计算
-	移除/替换舰娘后重置装备ID和改修星级
-	移除/替换装备后重置改修星级
 
 图片输出
 	允许编辑文字
-
-装备选择
-	可用装备类型在分页最前方
-	舰娘不变时，记住上次分页
-	航母系默认进入飞行器页
 
 其他
 	声纳 -> 水母
@@ -5586,11 +5579,13 @@ class InfosFleetShipEquipment{
 					self.id = id
 					self.star = 0
 					TablelistEquipments.types = []
+					TablelistEquipments.shipId = null
 					if( self.infosFleetShip.infosFleet )
 						_frame.infos.dom.main.attr('data-theme', self.infosFleetShip.infosFleet.data['theme'])
 				},
 				callback_modeSelection_enter: function(){
 					TablelistEquipments.types = _g.data.ships[self.infosFleetShip.shipId].getEquipmentTypes()
+					TablelistEquipments.shipId = self.infosFleetShip.shipId
 					_frame.app_main.page['equipments'].object.tablelistObj.apply_types()
 				}
 			})
@@ -6421,6 +6416,8 @@ class TablelistEquipments extends _tablelist{
 	}
 }
 TablelistEquipments.types = []
+TablelistEquipments.shipId = null
+TablelistEquipments.shipIdLast = null
 
 _tablelist.prototype._equipments_columns = [
 	'  ',
@@ -6559,6 +6556,30 @@ _tablelist.prototype.apply_types = function(){
 
 
 _tablelist.prototype.apply_types_check = function(){
+	if( TablelistEquipments.shipIdLast && TablelistEquipments.shipIdLast == TablelistEquipments.shipId )
+		return
+	
+	TablelistEquipments.shipIdLast = TablelistEquipments.shipId
+	
+	// 航母：直接进入飞行器页
+	if( TablelistEquipments.shipId
+		&& $.inArray(_g.data.ships[TablelistEquipments.shipId].type, [9, 10, 11] ) > -1
+	){
+		let k = 0
+			,el
+			,self = this
+		while( self.dom.types[k++].attr('data-equipmentcollection') != 3
+			|| $.inArray((parseInt(self.dom.types[k].attr('data-type')) || null), TablelistEquipments.types) <= -1 ){
+			el = self.dom.types[k+1]
+		}
+		
+		el = el || self.dom.types[0]
+		
+		this.dom.type_radios[3].prop('checked', true).trigger('change')
+		this.dom.table_container_inner.scrollTop(el[0].offsetTop || 0)
+		return
+	}
+	
 	if( TablelistEquipments.types.length ){
 		let k = 0
 			,el

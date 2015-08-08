@@ -6,6 +6,8 @@ class TablelistEquipments extends _tablelist{
 	}
 }
 TablelistEquipments.types = []
+TablelistEquipments.shipId = null
+TablelistEquipments.shipIdLast = null
 
 _tablelist.prototype._equipments_columns = [
 	'  ',
@@ -144,6 +146,30 @@ _tablelist.prototype.apply_types = function(){
 
 
 _tablelist.prototype.apply_types_check = function(){
+	if( TablelistEquipments.shipIdLast && TablelistEquipments.shipIdLast == TablelistEquipments.shipId )
+		return
+	
+	TablelistEquipments.shipIdLast = TablelistEquipments.shipId
+	
+	// 航母：直接进入飞行器页
+	if( TablelistEquipments.shipId
+		&& $.inArray(_g.data.ships[TablelistEquipments.shipId].type, [9, 10, 11] ) > -1
+	){
+		let k = 0
+			,el
+			,self = this
+		while( self.dom.types[k++].attr('data-equipmentcollection') != 3
+			|| $.inArray((parseInt(self.dom.types[k].attr('data-type')) || null), TablelistEquipments.types) <= -1 ){
+			el = self.dom.types[k+1]
+		}
+		
+		el = el || self.dom.types[0]
+		
+		this.dom.type_radios[3].prop('checked', true).trigger('change')
+		this.dom.table_container_inner.scrollTop(el[0].offsetTop || 0)
+		return
+	}
+	
 	if( TablelistEquipments.types.length ){
 		let k = 0
 			,el

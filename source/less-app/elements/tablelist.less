@@ -640,17 +640,33 @@
 		
 		&>input[type="hidden"][name="types"][class]{
 			& ~ .fixed-table-container{
-				tr.typetitle,
-				tr.row[data-equipmentid]{
+				tr.typetitle{
 					opacity: 	.35;
+				}
+				tr.row[data-equipmentid]{
+					//opacity: 	.35;
+					display: 	none !important;
 				}
 			}
 			.loop(@n, @i: 1) when (@i =< @n) {
-				&.type@{i} ~ .fixed-table-container{
-					tr.typetitle[data-type="@{i}"],
-					tr.row[data-equipmenttype="@{i}"]{
-						opacity: 	1;
+				&.type@{i}{
+					& ~ .fixed-table-container{
+						tr.typetitle[data-type="@{i}"]{
+							opacity: 	1;
+						}
+						//tr.row[data-equipmenttype="@{i}"]{
+							//opacity: 	1;
+						//}
 					}
+					.loop2(@n2, @j: 1) when (@j =< @n2) {
+						&~input[type="radio"][value="@{j}"]:checked{
+							&~.fixed-table-container>.fixed-table-container-inner>table tbody tr[data-equipmentcollection="@{j}"][data-equipmenttype="@{i}"]{
+								display:	table-row !important;
+							}
+						}
+						.loop2(@n2, (@j + 1))
+					}
+					.loop2(10);
 				}
 				.loop(@n, (@i + 1))
 			}
