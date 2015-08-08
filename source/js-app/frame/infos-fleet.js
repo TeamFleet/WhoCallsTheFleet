@@ -158,7 +158,9 @@ class InfosFleet{
 												})
 										)
 								}
-								InfosFleet.modalExportTextarea.val(JSON.stringify(self.data.data))
+								InfosFleet.modalExportTextarea.val(
+									JSON.stringify(self.data.data)//.replace(/null/g, '').replace(/\,\]/g, '')
+								)
 								_frame.modal.show(
 									InfosFleet.modalExport,
 									'导出配置代码',
@@ -289,8 +291,26 @@ class InfosFleet{
 			// 更新时间
 			this.data.time_modify = _g.timeNow()
 			
+			// 清理Array中的null值
+			/*
+			let deleteNull = function(arr){
+				if( arr && arr.length && arr.push ){
+					arr.forEach(function(value, i){
+						if( value === null ){
+							delete arr[i]
+							console.log(arr)
+						}
+						if( value && value.length && value.push )
+							deleteNull(value)
+					})
+				}
+			}
+			deleteNull(this.data.data)
+			
 			//_g.log(this)
-			_g.log(this.data)
+			_g.log(JSON.stringify(this.data.data))
+			*/
+
 			_db.fleets.updateById(this.data._id, this.data, function(){
 				_g.log('saved')
 			})
@@ -962,6 +982,9 @@ class InfosFleetShipEquipment{
 			_p.tip.hide()
 			this.el.removeData(['tip', 'tip-filtered'])
 			
+			if( value != this.infosFleetShip.data[2][this.index] )
+				this.star = 0
+			
 			if( value && !isNaN(value) ){
 				this.infosFleetShip.data[2][this.index] = value
 				this.improvable = _g.data.items[value].improvable || false
@@ -1018,6 +1041,7 @@ class InfosFleetShipEquipment{
 				
 				this.save()
 			}else{
+				this.infosFleetShip.data[3][this.index] = null
 				this.el.removeAttr('data-star')
 			}
 			this.infosFleetShip.infosFleetSubFleet.summaryCalc()
