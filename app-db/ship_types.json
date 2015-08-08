@@ -9,7 +9,7 @@
 {"id":15,"code":"LHA","code_game":"揚陸","full":"Amphibious Assault Ship","full_game":"揚陸艦","full_zh":"登陆突击舰","_id":"BjToFvya7RxsFQfd","equipable":[1,2,3,7,8,9,18,22,23,24,29,30,31,32,35,38,41,43,44]}
 {"id":2,"code":"CL","code_game":"軽巡","full":"Light Cruiser","full_game":"軽巡洋艦","full_zh":"轻巡洋舰","_id":"CtjPGYnkHetTij9H","equipable":[1,2,3,4,7,8,9,12,15,16,24,25,26,27,29,30,31,32,35,37,39,40,41,43,44]}
 {"code":"CA","code_game":"重巡","full":"The Fleet of Fog Heavy Cruiser","full_game":"霧の艦隊重巡洋艦","full_zh":"海雾舰队重巡洋舰","id":25,"_id":"DgRcE2Ez9sClji86","donotcompare":"on"}
-{"code":"AV","code_game":"水母","full":"Seaplane Tender (Large)","full_game":"飞行艇母舰","full_zh":"飞行艇母舰","id":24,"_id":"Eb002iRVxWDaoxfJ","equipable":[1,2,3,7,8,9,15,16,17,24,25,26,27,28,29,30,31,32,33,35,37,39,40,41,43,45]}
+{"code":"AV","code_game":"水母","full":"Seaplane Tender (Large)","full_game":"飞行艇母舰","full_zh":"飞行艇母舰","id":24,"_id":"Eb002iRVxWDaoxfJ","equipable":[1,2,3,7,8,9,15,16,17,24,25,26,27,28,29,30,31,32,33,35,36,37,39,40,41,43,44,45]}
 {"id":20,"code":"BB","code_game":"戦","full":"Super Dreadnaught","full_game":"大型戦艦","full_zh":"大型战列舰","_id":"J1AG7IarlOTILvDU","equipable":[4,5,6,7,8,9,10,11,15,16,24,25,28,29,30,31,32,34,35,37,39,40,43,46,47]}
 {"id":8,"code":"BBV","code_game":"航戦","full":"Aviation Battleship","full_game":"航空戦艦","full_zh":"航空战列舰","_id":"MAzFpCIU30SDC0sz","equipable":[4,5,7,8,9,10,11,15,16,17,22,24,25,28,29,30,31,32,34,35,36,37,39,40,43,44,46]}
 {"id":1,"code":"DD","code_game":"駆逐","full":"Destroyer","full_game":"駆逐艦","full_zh":"驱逐舰","_id":"NkAIZy0T53JXtl5i","equipable":[1,2,3,12,24,26,27,29,30,31,32,35,37,39,40,41,44]}
