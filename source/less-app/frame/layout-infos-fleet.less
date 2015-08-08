@@ -168,10 +168,12 @@
 					right:		0;
 					.line-height(@tab_height);
 					color:		rgba(255, 255, 255, .5);
-					font-size: 	percentage(14 / @base_font_size);
+					font-size: 	percentage(13 / @base_font_size);
 					&>.option{
 						display:	inline-block;
 						margin-right:	1em;
+						position: 	relative;
+						.line-height(@tab_height);
 						&:last-child{
 							margin-right:	0;
 						}
@@ -180,11 +182,69 @@
 						color:		rgba(255, 255, 255, 0.2625);
 					}
 					&>button.option{
+						transition-property: color;
 						&:hover{
 							color: 	rgba(255, 255, 255, .75);
 						}
 						&:active{
 							color: 	rgba(255, 255, 255, .35);
+						}
+					}
+					&>.option-theme{
+						padding-left: 	20px;
+						padding-right: 	16px;
+						&:before, &:after{
+							content: 	'';
+							display: 	block;
+							top: 		50%;
+							position: 	absolute;
+							line-height:0;
+						}
+						&:before{
+							width: 		16px;
+							height: 	16px;
+							border: 	1px solid rgba(255, 255, 255, .35);
+							background: rgba(0,0,0, .25);
+							left: 		0;
+							transform: 	translateY(-8px);
+						}
+						&:after{
+							width: 		0;
+							height: 	0;
+							border: 	5px solid transparent;
+							border-top-color: inherit;
+							right: 		0;
+							transform: 	translateY(-2.5px);
+						}
+					}
+					&>.option-theme-value{
+						display: 	none;
+						&[value="2"]+.option-theme:before{
+							background: hsla(11,100%,50%, .35);
+						}
+						&[value="3"]+.option-theme:before{
+							background: hsla(51,100%,50%, .35);
+						}
+						&[value="4"]+.option-theme:before{
+							background: hsla(91,100%,50%, .35);
+						}
+						&[value="5"]+.option-theme:before{
+							background: hsla(131,100%,50%, .35);
+						}
+						&[value="6"]+.option-theme:before{
+							background: hsla(171,100%,50%, .35);
+						}
+						&[value="7"]+.option-theme:before{
+							background: hsla(211,100%,50%, .35);
+						}
+						&[value="8"]+.option-theme:before{
+							background: hsla(251,100%,50%, .35);
+						}
+						&[value="9"]+.option-theme:before{
+							background: hsla(291,100%,50%, .35);
+						}
+						&[value="10"]+.option-theme:before{
+							background: hsla(331,100%,50%, .35);
 						}
 					}
 				}
@@ -1081,5 +1141,79 @@
 	}
 	&[data-theme="10"]{
 		.theme(331, 0%, 0%, 5%, 0%);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.menu.contextmenu-infos_fleet_themes>.body>div{
+	padding: 	5px;
+	width: 		235px;
+	button{
+		display: 	inline-block;
+		width: 		35px;
+		height: 	35px;
+		border: 	1px solid rgba(255, 255, 255, .25);
+		background: rgba(0, 0, 0, .25);
+		margin: 	5px;
+		text-align: right;
+		font-size: 	12px;
+		line-height:14px;
+		padding: 	17px 3px 0 0;
+		color: 		rgba(255, 255, 255, .65);
+		font-style: italic;
+		position: 	relative;
+		&:before{
+			content: 	'';
+			background: transparent;
+			top: 		-5px;
+			right: 		-5px;
+			bottom: 	-5px;
+			left: 		-5px;
+			display: 	block;
+			z-index: 	-1;
+			position: 	absolute;
+		}
+		&:hover:before{
+			background: rgba(255, 255, 255, .15);
+		}
+		&.theme-2{
+			background: hsla(11,100%,65%, .35);
+		}
+		&.theme-3{
+			background: hsla(51,100%,65%, .35);
+		}
+		&.theme-4{
+			background: hsla(91,100%,65%, .35);
+		}
+		&.theme-5{
+			background: hsla(131,100%,65%, .35);
+		}
+		&.theme-6{
+			background: hsla(171,100%,65%, .35);
+		}
+		&.theme-7{
+			background: hsla(211,100%,65%, .35);
+		}
+		&.theme-8{
+			background: hsla(251,100%,65%, .35);
+		}
+		&.theme-9{
+			background: hsla(291,100%,65%, .35);
+		}
+		&.theme-10{
+			background: hsla(331,100%,65%, .35);
+		}
 	}
 }

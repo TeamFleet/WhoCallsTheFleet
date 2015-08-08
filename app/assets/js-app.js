@@ -4811,10 +4811,9 @@ class InfosFleet{
 				.append(
 					self.doms['options'] = $('<div class="options"/>')
 						.append(
-							self.doms['theme'] = $('<select class="option option-theme"/>')
+							self.doms['theme'] = $('<select class="option option-theme-value"/>')
 								.on('change', function(){
 									self._theme = self.doms['theme'].val()
-									self.el.attr('data-theme', self._theme)
 								})
 								.append(function(){
 									let els = $()
@@ -4828,6 +4827,27 @@ class InfosFleet{
 									}
 									return els
 								})
+						)
+						.append(
+							self.doms['themeOption'] = $('<button class="option option-theme"/>').html('主题').on('click', function(){
+								if( !InfosFleet.menuTheme ){
+									InfosFleet.menuThemeItems = $('<div/>')
+									for(let i=1; i<11; i++){
+										$('<button class="theme-' + i + '"/>').html(i)
+											.on('click', function(){
+												InfosFleet.menuThemeCur._theme = i
+												self.el.attr('data-theme', self._theme)
+											})
+											.appendTo(InfosFleet.menuThemeItems)
+									}
+									InfosFleet.menuTheme = new _menu({
+										'className': 'contextmenu-infos_fleet_themes',
+										'items': [InfosFleet.menuThemeItems]
+									})
+								}
+								InfosFleet.menuThemeCur = self
+								InfosFleet.menuTheme.show(self.doms['themeOption'])
+							})
 						)
 						.append(
 							$('<button class="option"/>').html('导出配置').on('click', function(){
@@ -4909,7 +4929,7 @@ class InfosFleet{
 		// 主题颜色
 			if( typeof d['theme'] != 'undefined' ){
 				_frame.infos.dom.main.attr('data-theme', d['theme'])
-				this.doms['theme'].val(d['theme'])
+				this.doms['theme'].val(d['theme']).attr('value', d['theme'])
 			}
 
 		// 标题
@@ -4965,7 +4985,9 @@ class InfosFleet{
 		}
 		set _theme( value ){
 			this.data['theme'] = value || 1
-			_frame.infos.dom.main.attr('data-theme', value)			
+			this.doms['theme'].val(this.data['theme']).attr('value', this.data['theme'])
+			_frame.infos.dom.main.attr('data-theme', this.data['theme'])
+			this.el.attr('data-theme', this.data['theme'])
 			this.save()
 		}
 	
