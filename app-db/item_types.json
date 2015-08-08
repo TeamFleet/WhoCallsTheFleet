@@ -29,7 +29,7 @@
 {"name":{"ja_jp":"小口径主砲","zh_cn":"小口径主炮"},"icon":1,"equipable_on_type":[1,2,3,12,15,16,17,19,21,24,28],"id":1,"_id":"bgLFzURF7FAaZw7q","main_attribute":"fire"}
 {"name":{"ja_jp":"照明弾","zh_cn":"照明弹"},"icon":27,"equipable_on_type":[1,2,3,4,5,6,7,8,12,16,17,19,20,23,24,28],"id":40,"_id":"gNvf0mx3qKQtg0Aw","main_attribute":"los"}
 {"name":{"ja_jp":"応急修理要員","zh_cn":"损害管制要员"},"icon":14,"equipable_on_type":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,19,20,21,23,24,28],"id":35,"_id":"glEmGrJIdN3jnNsE","main_attribute":"evasion"}
-{"name":{"ja_jp":"オートジャイロ","zh_cn":"旋翼机"},"icon":21,"equipable_on_type":[5,8,9,15,16],"id":22,"_id":"grGXaf1exLThGrxs","main_attribute":"asw"}
+{"name":{"ja_jp":"オートジャイロ","zh_cn":"旋翼机"},"icon":21,"equipable_on_type":[5,8,9,15,16,17],"id":22,"_id":"grGXaf1exLThGrxs","main_attribute":"asw"}
 {"name":{"ja_jp":"対艦強化弾","zh_cn":"对舰强化弹"},"icon":13,"equipable_on_type":[6,7,8,20],"id":11,"_id":"hfCnPeUwzio7aMUt","main_attribute":"fire"}
 {"name":{"ja_jp":"大型電探/レーダー","zh_cn":"大型电探/雷达"},"icon":11,"equipable_on_type":[2,3,4,5,6,7,8,9,10,11,12,20,21,23,24,28],"id":25,"_id":"j7Lzw9kUu2rls8H7","main_attribute":"hit"}
 {"name":{"ja_jp":"追加装甲(大型)","zh_cn":"增设装甲板 (大型)"},"equipable_on_type":[6,7,8,10,11,20],"id":34,"_id":"jWhfMp8xKDqPSOC1","icon":23,"main_attribute":"armor"}
