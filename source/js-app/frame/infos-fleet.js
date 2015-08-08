@@ -53,6 +53,8 @@ class InfosFleet{
 				if(err || !docs){
 					_g.error(err)
 				}else{
+					_g.log(docs[0])
+					_g.log(docs[0].data[0][0][1])
 					if( _frame.infos.curContent == 'fleet::' + id )
 						self.init(docs[0])
 				}
@@ -68,8 +70,9 @@ class InfosFleet{
 			return false
 
 		//$.extend(true, this, d)
-		//_g.log(this)
 		this.data = d
+		_g.log(this.data)
+		_g.log(this.data.data[0][0][1])
 
 		let self = this
 			,i = 0
@@ -121,7 +124,7 @@ class InfosFleet{
 				.append(
 					self.doms['options'] = $('<div class="options"/>')
 						.append(
-							self.doms['theme'] = $('<select class="option-theme"/>')
+							self.doms['theme'] = $('<select class="option option-theme"/>')
 								.on('change', function(){
 									self._theme = self.doms['theme'].val()
 									self.el.attr('data-theme', self._theme)
@@ -140,13 +143,39 @@ class InfosFleet{
 								})
 						)
 						.append(
-							$('<span/>').html('[PH] 阵型')
+							$('<button class="option"/>').html('导出配置').on('click', function(){
+								if( !InfosFleet.modalExport ){
+									InfosFleet.modalExport = $('<div/>')
+										.append(
+											InfosFleet.modalExportTextarea = $('<textarea/>',{
+												'readonly': true
+											})
+										)
+										.append(
+											$('<p/>').html('* 该配置代码可用于<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
+										)
+										.append(
+											$('<button class="button"/>').html('复制到剪切板')
+												.on('click', function(){
+													node.clipboard.set(InfosFleet.modalExportTextarea.val(), 'text');													
+												})
+										)
+								}
+								InfosFleet.modalExportTextarea.val(JSON.stringify(self.data.data))
+								_frame.modal.show(
+									InfosFleet.modalExport,
+									'导出配置代码',
+									{
+										'classname': 	'infos_fleet infos_fleet_export'
+									}
+								)
+							})
 						)
 						.append(
-							$('<span/>').html('[PH] 颜色')
+							$('<span class="option"/>').html('[PH] 阵型')
 						)
 						.append(
-							$('<span/>').html('[PH] 分享')
+							$('<span class="option"/>').html('[PH] 导出图片')
 						)
 				)
 				.appendTo(self.el)
@@ -155,7 +184,7 @@ class InfosFleet{
 	
 			// 4个分舰队
 				while(i < 4){
-					self.fleets[i] = new InfosFleetSubFleet(self, self.data[i] || [])
+					self.fleets[i] = new InfosFleetSubFleet(self, [])
 
 					$('<input/>',{
 							'type': 	'radio',
@@ -293,7 +322,7 @@ class InfosFleetSubFleet{
 		// 6个舰娘
 			let i = 0
 			while( i < 6 ){
-				self.ships[i] = new InfosFleetShip(infosFleet, self, self.data[i] || null)
+				self.ships[i] = new InfosFleetShip(infosFleet, self)
 				self.ships[i].getEl().appendTo( self.el )
 				$('<s/>').appendTo( self.el )
 				i++
@@ -573,6 +602,7 @@ class InfosFleetShip{
 				callback_modeSelection_select:		function(id){
 					history.back()
 					self.shipId = id
+					self.shipLv = null
 					if( self.infosFleet )
 						_frame.infos.dom.main.attr('data-theme', self.infosFleet.data['theme'])
 				}
@@ -699,7 +729,6 @@ class InfosFleetShip{
 		}
 		set shipId( value ){
 			this.data[0] = value
-			this.shipLv = null
 			
 			if( value ){
 				let ship = _g.data.ships[value]
@@ -732,6 +761,7 @@ class InfosFleetShip{
 				this.el.removeAttr('data-shipId')
 				this.el.addClass('noship')
 				this.elAvatar.html('')
+				this.shipLv = null
 				this.data[2] = []
 				this.data[3] = []
 				// [null, [null, -1], [], []]

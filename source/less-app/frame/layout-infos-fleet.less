@@ -167,12 +167,24 @@
 					top:		0;
 					right:		0;
 					.line-height(@tab_height);
-					color:		rgba(255, 255, 255, 0.2625);
-					&>span{
+					color:		rgba(255, 255, 255, .5);
+					font-size: 	percentage(14 / @base_font_size);
+					&>.option{
 						display:	inline-block;
 						margin-right:	1em;
 						&:last-child{
 							margin-right:	0;
+						}
+					}
+					&>span.option{
+						color:		rgba(255, 255, 255, 0.2625);
+					}
+					&>button.option{
+						&:hover{
+							color: 	rgba(255, 255, 255, .75);
+						}
+						&:active{
+							color: 	rgba(255, 255, 255, .35);
 						}
 					}
 				}
@@ -403,7 +415,7 @@
 								margin: 	0 2px 0 0;
 								transition-property: background-color;
 								position: 	relative;
-								overflow: 	hidden;
+								//overflow: 	hidden;
 								&:first-child{
 									border-radius: 	5px 0 0 5px;
 								}
@@ -449,8 +461,9 @@
 									}
 								}
 								&>.equipment-infos, &>.equipment-options{
-									transition-property: opacity;
-									opacity: 		0;
+									//transition-property: opacity;
+									display: 	none;
+									.fadein();
 								}
 								&>.equipment-infos{
 									padding-left: 	38px;
@@ -548,21 +561,24 @@
 										&>.equipment-add{
 											display: 	none;
 										}
-										&>.equipment-infos, &>.equipment-options{
-											display: 	flex;
+										//&>.equipment-infos, &>.equipment-options{
+											//display: 	flex;
 											//will-change:opacity;
-										}
+										//}
 										&>.equipment-infos{
-											opacity: 	1;
+											//opacity: 	1;
+											display: 	flex;
 											z-index: 	10;
 										}
 										&:hover{
 											&>.equipment-infos{
-												opacity: 	0;
+												display: 	none;
+												//opacity: 	0;
 												z-index: 	1;
 											}
 											&>.equipment-options{
-												opacity: 	1;
+												display: 	flex;
+												//opacity: 	1;
 												z-index: 	10;
 												//button{
 												//	will-change:opacity;

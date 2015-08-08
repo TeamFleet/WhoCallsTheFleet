@@ -4,6 +4,9 @@
 		height:		100%;
 		.padding-top(@nav_height + 2) !important;
 		//background:		rgba(255,255,255,.1);
+		border: 	0;
+		background: rgba(0,0,0,0.35);
+		box-shadow: 0 none;
 		&>header, &>section{
 			.main-sizing-padding();
 		}
@@ -18,6 +21,8 @@
 			font-weight:lighter;
 			color:		rgba(255,255,255,.85);
 			//color:		rgba(255,255,255,.5);
+			height: 	auto;
+			font-family:inherit;
 			.window-noframe({
 				-webkit-app-region:	drag;
 			});
@@ -62,6 +67,10 @@
 				height:			~"calc(100% - 2px)";
 			});
 		}
+	}
+	
+	&.hastitle>div{
+		.padding-top(@nav_height + 2) !important;
 	}
 }
 

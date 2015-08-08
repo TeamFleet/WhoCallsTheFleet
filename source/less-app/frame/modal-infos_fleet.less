@@ -1,0 +1,92 @@
+.modal.infos_fleet{
+	&.on>div{
+		.animation(~"scale-in .5s");
+	}
+	&>div>section{
+		text-align: 	center;
+		color: 			rgba(255, 255, 255, .75);
+		textarea{
+			display: 	block;
+			height: 	4em;
+			width: 		100%;
+			background: rgba(0, 0, 0, .5);
+			color: 		rgba(255, 255, 255, .75);
+			border: 	1px solid rgba(255, 255, 255, .15);
+			resize: 	none;
+			margin-bottom: 1em;
+		}
+		p{
+			margin-bottom: 1em;
+			line-height: 	1.5em;
+		}
+		a{
+			display:	inline-block;
+			color:		#e0e0e0;
+			margin:		0.4px .15em;
+			padding:	0 .35em;
+			background:	rgba(0, 0, 0, .25);
+			text-decoration:	none;
+			border-radius:	3px;
+			cursor:		default;
+			.transition-property(~"color, background");
+			border-top:		1px solid rgba(0,0,0,.45);
+			border-bottom:	1px solid rgba(255,255,255,.35);
+			&:hover{
+				color:		#fff;
+				background:	rgba(255, 255, 255, .2);
+			}
+			&:active{
+				color:		#fff;
+				background:	rgba(255, 255, 255, .1);
+			}
+		}
+		button.button{
+			line-height: 	20px;
+			padding: 		8px 10px;
+			border: 		1px solid rgba(255, 255, 255, .25);
+			color: 			rgba(255, 255, 255, .75);
+			font-size: 		16px;
+			background: 	rgba(255, 255, 255, .15);
+			transition-property: background, color;
+			&:hover{
+				background: 	rgba(255, 255, 255, .25);
+				color: 			rgb(255, 255, 255);
+			}
+			&:active{
+				background: 	rgba(255, 255, 255, .05);
+			}
+		}
+	}
+	
+	&.infos_fleet_export>div{
+		height: 	auto;
+		width: 		480px;
+	}
+}
+
+
+
+
+
+
+
+@keyframes scale-in{
+	0% {
+		opacity: 	0;
+		transform: 	scale(1.5);
+	}
+	100% {
+		opacity: 	1;
+		transform: 	scale(1);
+	}
+}
+@-webkit-keyframes scale-in{
+	0% {
+		opacity: 	0;
+		transform: 	scale(1.5);
+	}
+	100% {
+		opacity: 	1;
+		transform: 	scale(1);
+	}
+}

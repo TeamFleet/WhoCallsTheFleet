@@ -235,6 +235,8 @@
 			this.trIndex++
 		}
 		
+		_g.log(data)
+		
 		var tr = $('<tr class="row"/>')
 					.attr({
 						'data-trindex': index,
