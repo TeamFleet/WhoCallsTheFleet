@@ -18,7 +18,7 @@
 {"name":{"ja_jp":"対空機銃","zh_cn":"对空机枪"},"icon":15,"equipable_on_type":[1,2,3,4,5,6,7,8,9,10,11,12,15,16,17,19,20,21,23,24,28],"id":29,"_id":"KitoBZheDePnSsti","main_attribute":"aa"}
 {"name":{"ja_jp":"艦上攻撃機","zh_cn":"舰载鱼雷机"},"icon":8,"equipable_on_type":[9,10,11],"id":19,"_id":"MO26fa2foUJSkgtJ","main_attribute":"torpedo"}
 {"name":{"ja_jp":"中口径主砲","zh_cn":"中口径主炮"},"icon":2,"equipable_on_type":[2,3,4,5,6,8,20,21,23,28],"id":4,"_id":"NW98LmCNgea0iggm","main_attribute":"fire"}
-{"name":{"ja_jp":"簡易輸送部材","zh_cn":"简易运输罐"},"icon":25,"equipable_on_type":[1,2,5,12,15,19,21,24,28],"id":41,"_id":"PVgL1rXjfrATc6Ka","main_attribute":"fire"}
+{"name":{"ja_jp":"簡易輸送部材","zh_cn":"简易运输罐"},"icon":25,"equipable_on_type":[1,2,5,12,15,19,24,28],"id":41,"_id":"PVgL1rXjfrATc6Ka","main_attribute":"fire"}
 {"name":{"ja_jp":"小口径高角主砲＋高射装置","zh_cn":"小口径高角主炮 + 高射装置"},"icon":16,"equipable_on_type":[1,2,3,12,15,16,17,19,21,24,28],"id":3,"_id":"R6WfkXVxzAtKJ34p","main_attribute":"fire"}
 {"name":{"ja_jp":"追加装甲(中型)","zh_cn":"增设装甲板 (中型)"},"icon":23,"equipable_on_type":[4,5,9,12,16,17,23,24],"id":33,"_id":"U43AUs91eNKJuhCB","main_attribute":"armor"}
 {"name":{"ja_jp":"大型探照灯","zh_cn":"大型探照灯"},"icon":24,"equipable_on_type":[6,7,8,20],"id":46,"_id":"UQE5VA4awY2flU2S","main_attribute":"los"}
