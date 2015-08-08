@@ -4743,8 +4743,6 @@ class InfosFleet{
 				if(err || !docs){
 					_g.error(err)
 				}else{
-					_g.log(docs[0])
-					_g.log(docs[0].data[0][0][1])
 					if( _frame.infos.curContent == 'fleet::' + id )
 						self.init(docs[0])
 				}
@@ -4761,8 +4759,7 @@ class InfosFleet{
 
 		//$.extend(true, this, d)
 		this.data = d
-		_g.log(this.data)
-		_g.log(this.data.data[0][0][1])
+		//_g.log(this.data)
 
 		let self = this
 			,i = 0
@@ -4847,7 +4844,7 @@ class InfosFleet{
 										.append(
 											$('<button class="button"/>').html('复制到剪切板')
 												.on('click', function(){
-													node.clipboard.set(InfosFleet.modalExportTextarea.val(), 'text');													
+													node.clipboard.set(InfosFleet.modalExportTextarea.val(), 'text');
 												})
 										)
 								}
@@ -5325,6 +5322,13 @@ class InfosFleetShip{
 			this._updating = true
 			
 			this.data = d || this.data
+		
+			if( typeof this.data[0] == 'string' )
+				this.data[0] = parseInt(this.data[0])
+			if( !this.data[2] )
+				this.data[2] = []
+			if( !this.data[3] )
+				this.data[3] = []
 			
 			if( this.data[0] )
 				this.shipId = this.data[0]
@@ -6709,30 +6713,22 @@ _tablelist.prototype._equipments_init = function(){
 			}).appendTo( equipmentsinfos )
 }
 
-/*
-	使用 NeDB (localstorage)
-	每个舰队配置拥有独立ID
-	舰队详情界面内，在每个操作后都自动计算并更新配置数据
-
+/* TODO
 	新建
-		新建空舰队
-		导入字符串/组
 		导入舰载机厨URL/用户名/字符串
 		加载配置文件
-
 	导出
 		配置文件
-		配置字符串
-
 	分享
 		图片
 		文本
-
-	fleet list update (_id, data)
-		no argument: update all
-		if _id not find, add new line
-		delete empty lines
 */
+
+class TablelistFleets extends _tablelist{
+	constructor(){
+		super()
+	}
+}
 
 	_tablelist.prototype._fleets_columns = [
 			'  ',
@@ -6851,12 +6847,14 @@ _tablelist.prototype._equipments_init = function(){
 				){
 					return true
 				}
-				fleetdata.data.forEach(function(fleet){
-					fleet.forEach(function(shipdata){
+				if( !fleetdata.data || !fleetdata.data.length || !fleetdata.data.push )
+					return false
+				for( let fleet of fleetdata.data ){
+					for( let shipdata of fleet ){
 						if( typeof shipdata != 'undefined' && typeof shipdata[0] != 'undefined' && shipdata[0] )
 							return true
-					})
-				})
+					}
+				}
 				return false
 			}
 			
@@ -7020,7 +7018,39 @@ _tablelist.prototype._equipments_init = function(){
 								})
 						)
 						.append(
-							$('<menuitem/>').html('[NYI] 导入配置代码')
+							$('<menuitem/>').html('导入配置代码')
+								.on('click', function(){
+									if( !TablelistFleets.modalImport ){
+										TablelistFleets.modalImport = $('<div/>')
+											.append(
+												TablelistFleets.modalImportTextarea = $('<textarea/>',{
+													'placeholder': '输入配置代码...'
+												})
+											)
+											.append(
+												$('<p/>').html('* 配置代码兼容<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
+											)
+											.append(
+												$('<button class="button"/>').html('新建')
+													.on('click', function(){
+														let val = TablelistFleets.modalImportTextarea.val()
+														if( val ){
+															self._fleets_action_new({
+																'data': 	JSON.parse(TablelistFleets.modalImportTextarea.val())
+															})
+															_frame.modal.hide()
+														}
+													})
+											)
+									}
+									_frame.modal.show(
+										TablelistFleets.modalImport,
+										'导入配置代码',
+										{
+											'classname': 	'infos_fleet infos_fleet_import'
+										}
+									)
+								})
 						)
 						.append(
 							$('<menuitem/>').html('[NYI] 导入配置文件')
@@ -7040,11 +7070,12 @@ _tablelist.prototype._equipments_init = function(){
 
 
 // [操作] 新建配置
-	_tablelist.prototype._fleets_action_new = function(){
+	_tablelist.prototype._fleets_action_new = function( dataDefault ){
 		var self = this
+		dataDefault = dataDefault || {}
 		//_frame.infos.show('[[FLEET::__NEW__]]')
 
-		_db.fleets.insert( _tablelist.prototype._fleets_new_data(), function(err, newDoc){
+		_db.fleets.insert( _tablelist.prototype._fleets_new_data(dataDefault), function(err, newDoc){
 			if(err){
 				_g.error(err)
 			}else{

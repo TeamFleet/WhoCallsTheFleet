@@ -53,8 +53,6 @@ class InfosFleet{
 				if(err || !docs){
 					_g.error(err)
 				}else{
-					_g.log(docs[0])
-					_g.log(docs[0].data[0][0][1])
 					if( _frame.infos.curContent == 'fleet::' + id )
 						self.init(docs[0])
 				}
@@ -71,8 +69,7 @@ class InfosFleet{
 
 		//$.extend(true, this, d)
 		this.data = d
-		_g.log(this.data)
-		_g.log(this.data.data[0][0][1])
+		//_g.log(this.data)
 
 		let self = this
 			,i = 0
@@ -157,7 +154,7 @@ class InfosFleet{
 										.append(
 											$('<button class="button"/>').html('复制到剪切板')
 												.on('click', function(){
-													node.clipboard.set(InfosFleet.modalExportTextarea.val(), 'text');													
+													node.clipboard.set(InfosFleet.modalExportTextarea.val(), 'text');
 												})
 										)
 								}
@@ -635,6 +632,13 @@ class InfosFleetShip{
 			this._updating = true
 			
 			this.data = d || this.data
+		
+			if( typeof this.data[0] == 'string' )
+				this.data[0] = parseInt(this.data[0])
+			if( !this.data[2] )
+				this.data[2] = []
+			if( !this.data[3] )
+				this.data[3] = []
 			
 			if( this.data[0] )
 				this.shipId = this.data[0]
