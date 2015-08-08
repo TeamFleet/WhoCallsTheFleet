@@ -5422,7 +5422,10 @@ class InfosFleetShip{
 			return this.data[0]
 		}
 		set shipId( value ){
-			this.data[0] = value
+			if( value != this.data[0] ){
+				this.data[0] = value
+				this.shipLv = null
+			}
 			
 			if( value ){
 				let ship = _g.data.ships[value]
@@ -5455,7 +5458,6 @@ class InfosFleetShip{
 				this.el.removeAttr('data-shipId')
 				this.el.addClass('noship')
 				this.elAvatar.html('')
-				this.shipLv = null
 				this.data[2] = []
 				this.data[3] = []
 				// [null, [null, -1], [], []]
