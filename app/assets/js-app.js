@@ -4292,19 +4292,20 @@ _frame.infos.init = function(){
 				var modernization = $('<div class="modernization"/>').html('<h4 data-content="合成">合成</h4>').appendTo(equips)
 					,stats = $('<div class="stats"/>').appendTo(modernization)
 					,has_modernization = false
-				d['modernization'].forEach(function(currentValue, i){
-					if( currentValue ){
-						has_modernization = true
-						var stat
-						switch(i){
-							case 0: stat = 'fire'; break;
-							case 1: stat = 'torpedo'; break;
-							case 2: stat = 'aa'; break;
-							case 3: stat = 'armor'; break;
+				if( d['modernization'] )
+					d['modernization'].forEach(function(currentValue, i){
+						if( currentValue ){
+							has_modernization = true
+							var stat
+							switch(i){
+								case 0: stat = 'fire'; break;
+								case 1: stat = 'torpedo'; break;
+								case 2: stat = 'aa'; break;
+								case 3: stat = 'armor'; break;
+							}
+							$('<span class="stat-' + stat + '"/>').html('+' + currentValue).appendTo(stats)
 						}
-						$('<span class="stat-' + stat + '"/>').html('+' + currentValue).appendTo(stats)
-					}
-				})
+					})
 				// まるゆ
 					if( d['id'] == 163 )
 						$('<span class="stat-luck"/>').html('+1.2').appendTo(stats)
@@ -7177,7 +7178,8 @@ _tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 						e.preventDefault()
 						e.stopImmediatePropagation()
 						e.stopPropagation()
-						_frame.app_main.mode_selection_callback(ship_data['id'])
+						if(!donotcompare)
+							_frame.app_main.mode_selection_callback(ship_data['id'])
 					}
 				})
 				//.appendTo( this.dom.tbody )
@@ -7482,7 +7484,7 @@ _tablelist.prototype._ships_compare_continue = function(){
 }
 
 _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
-	if( this.dom.filter_container.attr('viewtype') == 'compare' )
+	if( this.dom.filter_container.attr('viewtype') == 'compare' || $el.attr('data-donotcompare') == 'true' )
 		return false
 
 	this._ships_contextmenu_curid = shipId || $el.data('shipid')

@@ -515,19 +515,20 @@ _frame.infos.init = function(){
 				var modernization = $('<div class="modernization"/>').html('<h4 data-content="合成">合成</h4>').appendTo(equips)
 					,stats = $('<div class="stats"/>').appendTo(modernization)
 					,has_modernization = false
-				d['modernization'].forEach(function(currentValue, i){
-					if( currentValue ){
-						has_modernization = true
-						var stat
-						switch(i){
-							case 0: stat = 'fire'; break;
-							case 1: stat = 'torpedo'; break;
-							case 2: stat = 'aa'; break;
-							case 3: stat = 'armor'; break;
+				if( d['modernization'] )
+					d['modernization'].forEach(function(currentValue, i){
+						if( currentValue ){
+							has_modernization = true
+							var stat
+							switch(i){
+								case 0: stat = 'fire'; break;
+								case 1: stat = 'torpedo'; break;
+								case 2: stat = 'aa'; break;
+								case 3: stat = 'armor'; break;
+							}
+							$('<span class="stat-' + stat + '"/>').html('+' + currentValue).appendTo(stats)
 						}
-						$('<span class="stat-' + stat + '"/>').html('+' + currentValue).appendTo(stats)
-					}
-				})
+					})
 				// まるゆ
 					if( d['id'] == 163 )
 						$('<span class="stat-luck"/>').html('+1.2').appendTo(stats)

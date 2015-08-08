@@ -36,7 +36,8 @@ _tablelist.prototype._ships_append_item = function( ship_data, header_index ){
 						e.preventDefault()
 						e.stopImmediatePropagation()
 						e.stopPropagation()
-						_frame.app_main.mode_selection_callback(ship_data['id'])
+						if(!donotcompare)
+							_frame.app_main.mode_selection_callback(ship_data['id'])
 					}
 				})
 				//.appendTo( this.dom.tbody )
@@ -341,7 +342,7 @@ _tablelist.prototype._ships_compare_continue = function(){
 }
 
 _tablelist.prototype._ships_contextmenu_show = function($el, shipId){
-	if( this.dom.filter_container.attr('viewtype') == 'compare' )
+	if( this.dom.filter_container.attr('viewtype') == 'compare' || $el.attr('data-donotcompare') == 'true' )
 		return false
 
 	this._ships_contextmenu_curid = shipId || $el.data('shipid')
