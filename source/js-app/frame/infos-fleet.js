@@ -652,8 +652,15 @@ class InfosFleetShip{
 							}
 						}),
 						
+					$('<menuitem/>').html('替换为 ...')
+						.on({
+							'click': function(e){
+								InfosFleetShip.menuCurObj.selectShipStart()
+							}
+						}),
+						
 					$('<div/>').on('show', function(){
-						var $div = InfosFleetShip.menuItems[2].empty()
+						var $div = InfosFleetShip.menuItems[3].empty()
 						if( InfosFleetShip.menuCurObj.shipId ){
 							var series = _g['data']['ships'][InfosFleetShip.menuCurObj.shipId].getSeriesData() || []
 							if( series.length > 1 ){
