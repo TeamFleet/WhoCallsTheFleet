@@ -290,6 +290,21 @@ body{
 						}
 					}
 				}
+				&[mod-state]{
+					&:after{
+						font-size: 	9px;
+						content: 	attr(mod-state);
+						position: 	absolute;
+						top: 		50%;
+						left: 		0;
+						transform: 	translateY(-28px);
+						line-height:12px;
+						padding: 	0 3px;
+						border-radius:2px;
+						background: rgba(255, 255, 255, .45);
+						color: 		#000;
+					}
+				}
 			}
 			&.history{
 				display:	none;

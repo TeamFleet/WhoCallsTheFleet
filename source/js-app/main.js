@@ -627,14 +627,15 @@ _frame.app_main = {
 			if( _frame.app_main.nav && _frame.app_main.nav.length ){
 				_frame.dom.navs = {}
 				_frame.app_main.navtitle = {}
-				_frame.app_main.nav.forEach(function(currentValue, i){
-					var o = _frame.app_main.nav[i]
+				_frame.app_main.nav.forEach(function(o, i){
 					_frame.app_main.navtitle[o.page] = o.title
 					_frame.dom.navs[o.page] = (function(page){
 								return $('<button />').on('click', function(){
 										_frame.app_main.load_page(page)
 									})
 							})(o.page).html(o.title).appendTo( _frame.dom.navlinks )
+					if( o.state )
+						_frame.dom.navs[o.page].attr('mod-state', o.state)
 					//if( (i == 0 && !_g.uriHash('page') && !_g.uriSearch('page'))
 					//	|| o.page == _g.uriSearch('page')
 					//){
