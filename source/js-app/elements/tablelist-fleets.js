@@ -135,6 +135,8 @@ class TablelistFleets extends _tablelist{
 				if( !fleetdata.data || !fleetdata.data.length || !fleetdata.data.push )
 					return false
 				for( let fleet of fleetdata.data ){
+					if( !fleet || !fleet.length || !fleet.push )
+						return false
 					for( let shipdata of fleet ){
 						if( typeof shipdata != 'undefined' && typeof shipdata[0] != 'undefined' && shipdata[0] )
 							return true
@@ -229,15 +231,18 @@ class TablelistFleets extends _tablelist{
 			this.trIndex++
 		}
 		
-		_g.log(data)
+		//_g.log(data)
 		
 		var tr = $('<tr class="row"/>')
 					.attr({
 						'data-trindex': index,
-						'data-fleetid': 'PLACEHOLDER',
+						'data-fleetid': data._id || 'PLACEHOLDER',
 						//'data-infos': 	'[[FLEET::'+JSON.stringify(data)+']]'
 						'data-infos': 	'[[FLEET::'+data._id+']]',
 						'data-theme':	data.theme
+					})
+					.data({
+						'initdata': 	data
 					})
 		
 		_tablelist.prototype._fleets_columns.forEach(function(column){
@@ -262,6 +267,7 @@ class TablelistFleets extends _tablelist{
 						.html(
 							html
 							+ '<strong>' + data['name'] + '</strong>'
+							+ '<em></em>'
 						)
 						.appendTo(tr)
 					break;
@@ -316,7 +322,7 @@ class TablelistFleets extends _tablelist{
 												$('<p/>').html('* 配置代码兼容<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
 											)
 											.append(
-												$('<button class="button"/>').html('新建')
+												$('<button class="button"/>').html('导入')
 													.on('click', function(){
 														let val = TablelistFleets.modalImportTextarea.val()
 														if( val ){
@@ -386,6 +392,50 @@ class TablelistFleets extends _tablelist{
 
 
 
+// 菜单
+	_tablelist.prototype._fleets_contextmenu_show = function($tr, $em){
+		this._ships_contextmenu_curel = $tr
+			
+		let self = this
+	
+		if( !self._fleets_contextmenu )
+			self._fleets_contextmenu = new _menu({
+				'className': 'contextmenu-fleet',
+				'items': [
+					$('<menuitem/>').html('详情')
+						.on({
+							'click': function(e){
+								self._ships_contextmenu_curel.trigger('click', [true])
+							}
+						}),
+						
+					$('<menuitem/>').html('导出配置')
+						.on({
+							'click': function(e){
+								InfosFleet.modalExport_show(self._ships_contextmenu_curel.data('initdata'))
+							}
+						}),
+						
+					$('<menuitem/>').html('移除')
+						.on({
+							'click': function(e){
+								let id = self._ships_contextmenu_curel.attr('data-fleetid')
+								_db.fleets.remove({
+									_id: id
+								}, { multi: true }, function (err, numRemoved) {
+									_g.log('Fleet ' + id + ' removed.')
+								});
+								self._ships_contextmenu_curel.remove()
+							}
+						})
+				]
+			})
+	
+		self._fleets_contextmenu.show($em || $tr)
+	}
+
+
+
 // 初始化函数
 	_tablelist.prototype._fleets_init = function(){
 		var self = this
@@ -409,11 +459,13 @@ class TablelistFleets extends _tablelist{
 									.appendTo(self.dom.filters)
 			// 右 - 选项组
 				this.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(self.dom.filters)
+				/*
 				this.dom.btn_settings = $('<button icon="cog"/>')
 									.on('click',function(){
 										self._fleets_btn_settings()
 									})
 									.appendTo(self.dom.buttons_right)
+				*/
 
 		// [创建] 表格框架
 			this.dom.table_container = $('<div class="fixed-table-container"/>').appendTo( this.dom.container )
@@ -448,6 +500,15 @@ class TablelistFleets extends _tablelist{
 					)
 				)
 				.appendTo( this.dom.table_container_inner )
+	
+		// 右键菜单事件
+			this.dom.table.on('contextmenu.contextmenu_fleet', 'tr[data-fleetid]', function(e){
+				self._fleets_contextmenu_show($(this))
+			}).on('click.contextmenu_fleet', 'tr[data-fleetid]>th>em', function(e){
+				self._fleets_contextmenu_show($(this).parent().parent(), $(this))
+				e.stopImmediatePropagation()
+				e.stopPropagation()
+			})
 
 			promise_chain
 

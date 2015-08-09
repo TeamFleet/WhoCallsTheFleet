@@ -87,6 +87,37 @@
 							font-weight:lighter;
 							.line-height(16);
 						}
+						&>em{
+							display: 	none;
+							position: 	absolute;
+							right: 		0;
+							top: 		0;
+							width: 		30px;
+							height: 	100%;
+							color: 		rgba(255, 255, 255, .075);
+							font-style: normal;
+							font-weight:lighter;
+							.transition-property(color);
+							&:before{
+								content: 	@iconcode-more;
+								font-family:icons;
+								position: 	absolute;
+								display: 	block;
+								width: 		100%;
+								height: 	0;
+								top: 		50%;
+								left: 		0;
+								text-align: center;
+								line-height:0;
+								font-size: 	24px;
+							}
+							&:hover{
+								color: 		rgba(255, 255, 255, .8) !important;
+							}
+							@media all and (min-width: 1152px ){
+								display: 	block;
+							}
+						}
 					}
 					td{
 						display:	none;

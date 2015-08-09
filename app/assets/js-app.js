@@ -4690,17 +4690,11 @@ _frame.infos.init = function(){
 
 /*
 舰队数据
-	舰娘
-		菜单项：替换
 	综合选项
 		更改舰队模式：单舰队阵型，联合舰队阵型，影响属性计算
 
 图片输出
 	允许编辑文字
-
-其他
-	声纳 -> 水母
-	大型声纳 -??> 水母
 */
 
 // 舰队配置
@@ -4851,41 +4845,17 @@ class InfosFleet{
 						)
 						.append(
 							$('<button class="option"/>').html('导出配置').on('click', function(){
-								if( !InfosFleet.modalExport ){
-									InfosFleet.modalExport = $('<div/>')
-										.append(
-											InfosFleet.modalExportTextarea = $('<textarea/>',{
-												'readonly': true
-											})
-										)
-										.append(
-											$('<p/>').html('* 该配置代码可用于<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
-										)
-										.append(
-											$('<button class="button"/>').html('复制到剪切板')
-												.on('click', function(){
-													node.clipboard.set(InfosFleet.modalExportTextarea.val(), 'text');
-												})
-										)
-								}
-								InfosFleet.modalExportTextarea.val(
-									JSON.stringify(self.data.data)//.replace(/null/g, '').replace(/\,\]/g, '')
-								)
-								_frame.modal.show(
-									InfosFleet.modalExport,
-									'导出配置代码',
-									{
-										'classname': 	'infos_fleet infos_fleet_export'
-									}
-								)
+								InfosFleet.modalExport_show(self.data)
 							})
 						)
+						/*
 						.append(
 							$('<span class="option"/>').html('[PH] 阵型')
 						)
 						.append(
 							$('<span class="option"/>').html('[PH] 导出图片')
 						)
+						*/
 				)
 				.appendTo(self.el)
 	
@@ -5028,6 +4998,46 @@ class InfosFleet{
 			})
 			return this
 		}
+}
+
+InfosFleet.modalExport_show = function(data){
+	if( !data )
+		return false
+	
+	if( data.data )
+		data = data.data
+
+	data = JSON.stringify(data)
+	while( data.indexOf(',null]') > -1 )
+		data = data.replace(/\,null\]/g,']')
+	while( data.indexOf('[null]') > -1 )
+		data = data.replace(/\[null\]/g,'[]')
+
+	if( !InfosFleet.modalExport ){
+		InfosFleet.modalExport = $('<div/>')
+			.append(
+				InfosFleet.modalExportTextarea = $('<textarea/>',{
+					'readonly': true
+				})
+			)
+			.append(
+				$('<p/>').html('* 该配置代码可用于<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
+			)
+			.append(
+				$('<button class="button"/>').html('复制到剪切板')
+					.on('click', function(){
+						node.clipboard.set(InfosFleet.modalExportTextarea.val(), 'text');
+					})
+			)
+	}
+	InfosFleet.modalExportTextarea.val(data)
+	_frame.modal.show(
+		InfosFleet.modalExport,
+		'导出配置代码',
+		{
+			'classname': 	'infos_fleet infos_fleet_export'
+		}
+	)
 }
 
 
@@ -5528,6 +5538,8 @@ class InfosFleetShip{
 	
 	// 保存
 		save(){
+			this.infosFleetSubFleet.summaryCalc()
+
 			if( this._updating )
 				return false
 
@@ -5751,12 +5763,12 @@ class InfosFleetShipEquipment{
 					this.el.attr('data-star', '')
 				}
 				
-				this.save()
 			}else{
 				this.infosFleetShip.data[3][this.index] = null
 				this.el.removeAttr('data-star')
 			}
 			this.infosFleetShip.infosFleetSubFleet.summaryCalc()
+			this.save()
 		}
 	
 	// 搭载数 & 是否可用
@@ -6898,6 +6910,8 @@ class TablelistFleets extends _tablelist{
 				if( !fleetdata.data || !fleetdata.data.length || !fleetdata.data.push )
 					return false
 				for( let fleet of fleetdata.data ){
+					if( !fleet || !fleet.length || !fleet.push )
+						return false
 					for( let shipdata of fleet ){
 						if( typeof shipdata != 'undefined' && typeof shipdata[0] != 'undefined' && shipdata[0] )
 							return true
@@ -6992,15 +7006,18 @@ class TablelistFleets extends _tablelist{
 			this.trIndex++
 		}
 		
-		_g.log(data)
+		//_g.log(data)
 		
 		var tr = $('<tr class="row"/>')
 					.attr({
 						'data-trindex': index,
-						'data-fleetid': 'PLACEHOLDER',
+						'data-fleetid': data._id || 'PLACEHOLDER',
 						//'data-infos': 	'[[FLEET::'+JSON.stringify(data)+']]'
 						'data-infos': 	'[[FLEET::'+data._id+']]',
 						'data-theme':	data.theme
+					})
+					.data({
+						'initdata': 	data
 					})
 		
 		_tablelist.prototype._fleets_columns.forEach(function(column){
@@ -7025,6 +7042,7 @@ class TablelistFleets extends _tablelist{
 						.html(
 							html
 							+ '<strong>' + data['name'] + '</strong>'
+							+ '<em></em>'
 						)
 						.appendTo(tr)
 					break;
@@ -7079,7 +7097,7 @@ class TablelistFleets extends _tablelist{
 												$('<p/>').html('* 配置代码兼容<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
 											)
 											.append(
-												$('<button class="button"/>').html('新建')
+												$('<button class="button"/>').html('导入')
 													.on('click', function(){
 														let val = TablelistFleets.modalImportTextarea.val()
 														if( val ){
@@ -7149,6 +7167,50 @@ class TablelistFleets extends _tablelist{
 
 
 
+// 菜单
+	_tablelist.prototype._fleets_contextmenu_show = function($tr, $em){
+		this._ships_contextmenu_curel = $tr
+			
+		let self = this
+	
+		if( !self._fleets_contextmenu )
+			self._fleets_contextmenu = new _menu({
+				'className': 'contextmenu-fleet',
+				'items': [
+					$('<menuitem/>').html('详情')
+						.on({
+							'click': function(e){
+								self._ships_contextmenu_curel.trigger('click', [true])
+							}
+						}),
+						
+					$('<menuitem/>').html('导出配置')
+						.on({
+							'click': function(e){
+								InfosFleet.modalExport_show(self._ships_contextmenu_curel.data('initdata'))
+							}
+						}),
+						
+					$('<menuitem/>').html('移除')
+						.on({
+							'click': function(e){
+								let id = self._ships_contextmenu_curel.attr('data-fleetid')
+								_db.fleets.remove({
+									_id: id
+								}, { multi: true }, function (err, numRemoved) {
+									_g.log('Fleet ' + id + ' removed.')
+								});
+								self._ships_contextmenu_curel.remove()
+							}
+						})
+				]
+			})
+	
+		self._fleets_contextmenu.show($em || $tr)
+	}
+
+
+
 // 初始化函数
 	_tablelist.prototype._fleets_init = function(){
 		var self = this
@@ -7172,11 +7234,13 @@ class TablelistFleets extends _tablelist{
 									.appendTo(self.dom.filters)
 			// 右 - 选项组
 				this.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(self.dom.filters)
+				/*
 				this.dom.btn_settings = $('<button icon="cog"/>')
 									.on('click',function(){
 										self._fleets_btn_settings()
 									})
 									.appendTo(self.dom.buttons_right)
+				*/
 
 		// [创建] 表格框架
 			this.dom.table_container = $('<div class="fixed-table-container"/>').appendTo( this.dom.container )
@@ -7211,6 +7275,15 @@ class TablelistFleets extends _tablelist{
 					)
 				)
 				.appendTo( this.dom.table_container_inner )
+	
+		// 右键菜单事件
+			this.dom.table.on('contextmenu.contextmenu_fleet', 'tr[data-fleetid]', function(e){
+				self._fleets_contextmenu_show($(this))
+			}).on('click.contextmenu_fleet', 'tr[data-fleetid]>th>em', function(e){
+				self._fleets_contextmenu_show($(this).parent().parent(), $(this))
+				e.stopImmediatePropagation()
+				e.stopPropagation()
+			})
 
 			promise_chain
 

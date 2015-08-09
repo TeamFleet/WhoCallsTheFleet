@@ -1,16 +1,10 @@
 /*
 舰队数据
-	舰娘
-		菜单项：替换
 	综合选项
 		更改舰队模式：单舰队阵型，联合舰队阵型，影响属性计算
 
 图片输出
 	允许编辑文字
-
-其他
-	声纳 -> 水母
-	大型声纳 -??> 水母
 */
 
 // 舰队配置
@@ -161,41 +155,17 @@ class InfosFleet{
 						)
 						.append(
 							$('<button class="option"/>').html('导出配置').on('click', function(){
-								if( !InfosFleet.modalExport ){
-									InfosFleet.modalExport = $('<div/>')
-										.append(
-											InfosFleet.modalExportTextarea = $('<textarea/>',{
-												'readonly': true
-											})
-										)
-										.append(
-											$('<p/>').html('* 该配置代码可用于<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
-										)
-										.append(
-											$('<button class="button"/>').html('复制到剪切板')
-												.on('click', function(){
-													node.clipboard.set(InfosFleet.modalExportTextarea.val(), 'text');
-												})
-										)
-								}
-								InfosFleet.modalExportTextarea.val(
-									JSON.stringify(self.data.data)//.replace(/null/g, '').replace(/\,\]/g, '')
-								)
-								_frame.modal.show(
-									InfosFleet.modalExport,
-									'导出配置代码',
-									{
-										'classname': 	'infos_fleet infos_fleet_export'
-									}
-								)
+								InfosFleet.modalExport_show(self.data)
 							})
 						)
+						/*
 						.append(
 							$('<span class="option"/>').html('[PH] 阵型')
 						)
 						.append(
 							$('<span class="option"/>').html('[PH] 导出图片')
 						)
+						*/
 				)
 				.appendTo(self.el)
 	
@@ -338,6 +308,46 @@ class InfosFleet{
 			})
 			return this
 		}
+}
+
+InfosFleet.modalExport_show = function(data){
+	if( !data )
+		return false
+	
+	if( data.data )
+		data = data.data
+
+	data = JSON.stringify(data)
+	while( data.indexOf(',null]') > -1 )
+		data = data.replace(/\,null\]/g,']')
+	while( data.indexOf('[null]') > -1 )
+		data = data.replace(/\[null\]/g,'[]')
+
+	if( !InfosFleet.modalExport ){
+		InfosFleet.modalExport = $('<div/>')
+			.append(
+				InfosFleet.modalExportTextarea = $('<textarea/>',{
+					'readonly': true
+				})
+			)
+			.append(
+				$('<p/>').html('* 该配置代码可用于<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
+			)
+			.append(
+				$('<button class="button"/>').html('复制到剪切板')
+					.on('click', function(){
+						node.clipboard.set(InfosFleet.modalExportTextarea.val(), 'text');
+					})
+			)
+	}
+	InfosFleet.modalExportTextarea.val(data)
+	_frame.modal.show(
+		InfosFleet.modalExport,
+		'导出配置代码',
+		{
+			'classname': 	'infos_fleet infos_fleet_export'
+		}
+	)
 }
 
 
@@ -838,6 +848,8 @@ class InfosFleetShip{
 	
 	// 保存
 		save(){
+			this.infosFleetSubFleet.summaryCalc()
+
 			if( this._updating )
 				return false
 
@@ -1061,12 +1073,12 @@ class InfosFleetShipEquipment{
 					this.el.attr('data-star', '')
 				}
 				
-				this.save()
 			}else{
 				this.infosFleetShip.data[3][this.index] = null
 				this.el.removeAttr('data-star')
 			}
 			this.infosFleetShip.infosFleetSubFleet.summaryCalc()
+			this.save()
 		}
 	
 	// 搭载数 & 是否可用
