@@ -914,6 +914,8 @@ var _ga = {
 	//hiddenIframe: false,
 	
 	counter: function(path, title, screenName){
+		_g.log('ga')
+		
 		if( debugmode )
 			return true
 		/*
@@ -1614,6 +1616,15 @@ _frame.app_main = {
 			
 			_frame.app_main.page_dom[page].trigger('show')
 
+			if( !options.callback_modeSelection_select ){
+				_frame.app_main.title = _frame.app_main.navtitle[page]
+				_frame.infos.last = null
+	
+				_ga.counter(
+					location.search
+				)
+			}
+
 			if( _frame.app_main.cur_page == page )
 				return page
 
@@ -1633,12 +1644,6 @@ _frame.app_main = {
 
 				if( page != 'about' )
 					Lockr.set('last_page', page)
-				
-				_frame.app_main.title = _frame.app_main.navtitle[page]
-	
-				_ga.counter(
-					location.search
-				)
 			}
 
 			_frame.app_main.cur_page = page
@@ -3783,6 +3788,7 @@ _frame.infos = {
 	// curContent: 			null,			// 当前内容的hashCode
 
 	// lastCurrentPage: null, 		// 进入 infos 框架之前显示的页面
+	// last: null, 					// 上一次 infos，通常进入其他页面后会被重置
 	historyLength: -1,
 	historyCurrent: -1,
 
@@ -3993,9 +3999,14 @@ _frame.infos = {
 				
 			_frame.app_main.title = title
 			
-			_ga.counter(
-				location.search
-			)
+			console.log( _frame.infos.last )
+			
+			if( _frame.infos.last != title )
+				_ga.counter(
+					location.search
+				)
+			
+			_frame.infos.last = title
 		}, 1)
 	},
 
@@ -4696,6 +4707,9 @@ _frame.infos.init = function(){
 
 图片输出
 	允许编辑文字
+
+更新日志自动显示bug？
+换装、换舰娘时和之后的重复流量统计
 */
 
 // 舰队配置

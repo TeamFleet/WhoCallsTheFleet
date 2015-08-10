@@ -5,6 +5,7 @@ _frame.infos = {
 	// curContent: 			null,			// 当前内容的hashCode
 
 	// lastCurrentPage: null, 		// 进入 infos 框架之前显示的页面
+	// last: null, 					// 上一次 infos，通常进入其他页面后会被重置
 	historyLength: -1,
 	historyCurrent: -1,
 
@@ -215,9 +216,14 @@ _frame.infos = {
 				
 			_frame.app_main.title = title
 			
-			_ga.counter(
-				location.search
-			)
+			console.log( _frame.infos.last )
+			
+			if( _frame.infos.last != title )
+				_ga.counter(
+					location.search
+				)
+			
+			_frame.infos.last = title
 		}, 1)
 	},
 

@@ -440,6 +440,15 @@ _frame.app_main = {
 			
 			_frame.app_main.page_dom[page].trigger('show')
 
+			if( !options.callback_modeSelection_select ){
+				_frame.app_main.title = _frame.app_main.navtitle[page]
+				_frame.infos.last = null
+	
+				_ga.counter(
+					location.search
+				)
+			}
+
 			if( _frame.app_main.cur_page == page )
 				return page
 
@@ -459,12 +468,6 @@ _frame.app_main = {
 
 				if( page != 'about' )
 					Lockr.set('last_page', page)
-				
-				_frame.app_main.title = _frame.app_main.navtitle[page]
-	
-				_ga.counter(
-					location.search
-				)
 			}
 
 			_frame.app_main.cur_page = page
