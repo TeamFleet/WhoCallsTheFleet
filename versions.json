@@ -3,17 +3,17 @@
 		"app": {
 			"version":	"0.7.1.0",
 			"path":		"data/2015-08-11/app.nwjs-data",
-			"bytes":	
+			"bytes":	15893543
 		},
 		"app-db": {
 			"version":	"1.7.1.0",
 			"path":		"data/2015-08-11/app-db.nwjs-data",
-			"bytes":	
+			"bytes":	138271
 		},
 		"pics": {
 			"version":	"1.7.1.0",
 			"path":		"data/2015-08-11/pics.nwjs-data",
-			"bytes":	
+			"bytes":	40842815
 		}
 	},
 	"packages-beta": {},
