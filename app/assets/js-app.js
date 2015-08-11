@@ -914,7 +914,7 @@ var _ga = {
 	//hiddenIframe: false,
 	
 	counter: function(path, title, screenName){
-		_g.log('ga')
+		//_g.log('ga')
 		
 		if( debugmode )
 			return true
