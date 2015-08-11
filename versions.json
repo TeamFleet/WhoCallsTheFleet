@@ -1,19 +1,19 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.7.0.0",
-			"path":		"data/2015-08-09/app.nwjs-data",
-			"bytes":	15891742
+			"version":	"0.7.1.0",
+			"path":		"data/2015-08-11/app.nwjs-data",
+			"bytes":	
 		},
 		"app-db": {
-			"version":	"1.7.0.1",
-			"path":		"data/2015-08-09-2/app-db.nwjs-data",
-			"bytes":	133110
+			"version":	"1.7.1.0",
+			"path":		"data/2015-08-11/app-db.nwjs-data",
+			"bytes":	
 		},
 		"pics": {
-			"version":	"1.7.0.0",
-			"path":		"data/2015-08-09/pics.nwjs-data",
-			"bytes":	39814690
+			"version":	"1.7.1.0",
+			"path":		"data/2015-08-11/pics.nwjs-data",
+			"bytes":	
 		}
 	},
 	"packages-beta": {},
