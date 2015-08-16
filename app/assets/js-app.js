@@ -4727,8 +4727,6 @@ _frame.infos.init = function(){
 
 class InfosFleet{
 	constructor( id ){
-		var self = this
-		
 		this.el = $('<div class="fleet loading"/>')
 		this.doms = {}
 
@@ -4742,9 +4740,9 @@ class InfosFleet{
 				}else{
 					if( _frame.infos.curContent == 'fleet::__NEW__' )
 						_frame.infos.show('[[FLEET::' + newDoc['_id'] + ']]')
-						//self.init(newDoc)
+						//this.init(newDoc)
 				}
-			})
+			}.bind(this))
 		}else{
 			_db.fleets.find({
 				'_id': 		id
@@ -4753,9 +4751,9 @@ class InfosFleet{
 					_g.error(err)
 				}else{
 					if( _frame.infos.curContent == 'fleet::' + id )
-						self.init(docs[0])
+						this.init(docs[0])
 				}
-			})
+			}.bind(this))
 		}
 	}
 
@@ -4770,8 +4768,7 @@ class InfosFleet{
 		this.data = d
 		//_g.log(this.data)
 
-		let self = this
-			,i = 0
+		let i = 0
 
 		this.el.attr({
 				'data-fleetid': d._id,
@@ -4783,47 +4780,47 @@ class InfosFleet{
 		// 创建DOM
 			$('<header/>')
 				.append(
-					self.doms['name'] = $('<h3 contenteditable/>')
+					this.doms['name'] = $('<h3 contenteditable/>')
 						.html('点击编辑标题')
 						.on({
 							'input': function(){
-								self.update_data({})
-								self.doms['name'].trigger('namechange')
-							},
+								this.update_data({})
+								this.doms['name'].trigger('namechange')
+							}.bind(this),
 							'focus': function(){
-								if( self.doms['name'].text() == '点击编辑标题' )
-									self.doms['name'].html('')
-							},
+								if( this.doms['name'].text() == '点击编辑标题' )
+									this.doms['name'].html('')
+							}.bind(this),
 							'blur': function(){
-								if( !self.doms['name'].text() )
-									self.doms['name'].html('点击编辑标题')
-							},
+								if( !this.doms['name'].text() )
+									this.doms['name'].html('点击编辑标题')
+							}.bind(this),
 							'namechange': function(e, content){
 								if( typeof content == 'undefined' ){
-									content = self.doms['name'].text()
+									content = this.doms['name'].text()
 								}
 								
-								self._name = content
-								return self.doms['name']
-							}
+								this._name = content
+								return this.doms['name']
+							}.bind(this)
 						})
 				)
 				.append(
-					self.doms['user'] = $('<button/>')
+					this.doms['user'] = $('<button/>')
 				)
-				.appendTo(self.el)
+				.appendTo(this.el)
 	
 			$('<div class="fleets"/>')
 				.append(
-					self.doms['tabs'] = $('<div class="tabs"/>')
+					this.doms['tabs'] = $('<div class="tabs"/>')
 				)
 				.append(
-					self.doms['options'] = $('<div class="options"/>')
+					this.doms['options'] = $('<div class="options"/>')
 						.append(
-							self.doms['theme'] = $('<select class="option option-theme-value"/>')
+							this.doms['theme'] = $('<select class="option option-theme-value"/>')
 								.on('change', function(){
-									self._theme = self.doms['theme'].val()
-								})
+									this._theme = this.doms['theme'].val()
+								}.bind(this))
 								.append(function(){
 									let els = $()
 									for( let j=1; j<11; j++ ){
@@ -4838,15 +4835,15 @@ class InfosFleet{
 								})
 						)
 						.append(
-							self.doms['themeOption'] = $('<button class="option option-theme"/>').html('主题').on('click', function(){
+							this.doms['themeOption'] = $('<button class="option option-theme"/>').html('主题').on('click', function(){
 								if( !InfosFleet.menuTheme ){
 									InfosFleet.menuThemeItems = $('<div/>')
 									for(let i=1; i<11; i++){
 										$('<button class="theme-' + i + '"/>').html(i)
 											.on('click', function(){
 												InfosFleet.menuThemeCur._theme = i
-												self.el.attr('data-theme', self._theme)
-											})
+												this.el.attr('data-theme', this._theme)
+											}.bind(this))
 											.appendTo(InfosFleet.menuThemeItems)
 									}
 									InfosFleet.menuTheme = new _menu({
@@ -4854,14 +4851,14 @@ class InfosFleet{
 										'items': [InfosFleet.menuThemeItems]
 									})
 								}
-								InfosFleet.menuThemeCur = self
-								InfosFleet.menuTheme.show(self.doms['themeOption'])
-							})
+								InfosFleet.menuThemeCur = this
+								InfosFleet.menuTheme.show(this.doms['themeOption'])
+							}.bind(this))
 						)
 						.append(
 							$('<button class="option"/>').html('导出配置').on('click', function(){
-								InfosFleet.modalExport_show(self.data)
-							})
+								InfosFleet.modalExport_show(this.data)
+							}.bind(this))
 						)
 						/*
 						.append(
@@ -4872,30 +4869,30 @@ class InfosFleet{
 						)
 						*/
 				)
-				.appendTo(self.el)
+				.appendTo(this.el)
 	
-			this.doms['ships'] = $('<div class="ships"/>').appendTo(self.el)
+			this.doms['ships'] = $('<div class="ships"/>').appendTo(this.el)
 	
 			// 4个分舰队
 				while(i < 4){
-					self.fleets[i] = new InfosFleetSubFleet(self, [])
+					this.fleets[i] = new InfosFleetSubFleet(this, [])
 
 					$('<input/>',{
 							'type': 	'radio',
 							'name': 	'fleet_' + d._id + '_tab',
 							'id': 		'fleet_' + d._id + '_tab_' + i,
 							'value': 	i
-						}).prop('checked', (i == 0)).prependTo( self.el )
+						}).prop('checked', (i == 0)).prependTo( this.el )
 			
 					$('<label/>',{
 							'for': 		'fleet_' + d._id + '_tab_' + i,
 							'data-fleet':i,
 							'html': 	'#' + (i+1)
-						}).appendTo( self.doms['tabs'] )
+						}).appendTo( this.doms['tabs'] )
 
-					self.fleets[i].el
+					this.fleets[i].el
 						.attr('data-fleet', i)
-						.appendTo( self.doms['ships'] )
+						.appendTo( this.doms['ships'] )
 
 					i++
 				}
@@ -5064,8 +5061,6 @@ InfosFleet.modalExport_show = function(data){
 // 类：子舰队
 class InfosFleetSubFleet{
 	constructor(infosFleet, d){
-		const self = this
-
 		d = d || []
 		this.data = d
 
@@ -5076,9 +5071,9 @@ class InfosFleetSubFleet{
 		// 6个舰娘
 			let i = 0
 			while( i < 6 ){
-				self.ships[i] = new InfosFleetShip(infosFleet, self)
-				self.ships[i].getEl().appendTo( self.el )
-				$('<s/>').appendTo( self.el )
+				this.ships[i] = new InfosFleetShip(infosFleet, this)
+				this.ships[i].getEl().appendTo( this.el )
+				$('<s/>').appendTo( this.el )
 				i++
 			}
 		
@@ -5090,14 +5085,14 @@ class InfosFleetSubFleet{
 					$('<span class="summary-item"/>')
 						.html('航速')
 						.append(
-							self.elSummarySpeed = $('<strong/>').html('-')
+							this.elSummarySpeed = $('<strong/>').html('-')
 						)
 				)
 				.append(
 					$('<span class="summary-item"/>')
 						.html('制空战力')
 						.append(
-							self.elSummaryFighterPower = $('<strong/>').html('-')
+							this.elSummaryFighterPower = $('<strong/>').html('-')
 						)
 				)
 				/*
@@ -5105,7 +5100,7 @@ class InfosFleetSubFleet{
 					$('<span class="summary-item"/>')
 						.html('索敌能力')
 						.append(
-							self.elSummaryLOS = $('<strong/>')
+							this.elSummaryLOS = $('<strong/>')
 						)
 				)*/
 		
@@ -5136,12 +5131,11 @@ class InfosFleetSubFleet{
 			if( this.summaryCalculating )
 				return false
 			
-			let self = this
 			this.summaryCalculating = setTimeout(function(){
 				let fighterPower = 0
 					,fleetSpeet = 'fast'
 				
-				self.ships.forEach(function(shipdata){
+				this.ships.forEach(function(shipdata){
 					if( shipdata.data[0] ){
 						let ship = _g.data.ships[shipdata.data[0]]
 						
@@ -5154,16 +5148,16 @@ class InfosFleetSubFleet{
 					}
 				})
 				
-				self.elSummarySpeed.html( fleetSpeet == 'fast' ? '高速' : '低速' )
+				this.elSummarySpeed.html( fleetSpeet == 'fast' ? '高速' : '低速' )
 				
-				self.elSummaryFighterPower.html( fighterPower )
+				this.elSummaryFighterPower.html( fighterPower )
 				if( fighterPower > 0 )
-					self.elSummaryFighterPower.removeClass('empty')
+					this.elSummaryFighterPower.removeClass('empty')
 				else
-					self.elSummaryFighterPower.addClass('empty')
+					this.elSummaryFighterPower.addClass('empty')
 
-				self.summaryCalculating = null
-			}, 10)
+				this.summaryCalculating = null
+			}.bind(this), 10)
 		}
 
 
@@ -5220,8 +5214,6 @@ class InfosFleetShip{
 		// ["144",[96,-1],[122,29,88],[1,0,0]
 		// ["145",[96,-1],[122,29,29],[]]
 		// ["403",[83,-1],[127,58],[0,0]]
-
-		const self = this
 		
 		// 数据正在更新中，禁止触发任何存储操作
 		//this._updating = false
@@ -5240,38 +5232,38 @@ class InfosFleetShip{
 			.append(
 				$('<dt/>')
 					.append(
-						self.elAvatar = $('<s/>')
+						this.elAvatar = $('<s/>')
 					)
 					.append(
-						self.elInfos = $('<div/>').html('<span>选择舰娘...</span>')
+						this.elInfos = $('<div/>').html('<span>选择舰娘...</span>')
 							.append(
-								self.elInfosTitle = $('<div class="title"/>')
+								this.elInfosTitle = $('<div class="title"/>')
 							)
 							.append(
 								$('<div class="info"/>')
 									.append(
 										$('<label/>').html('Lv.')
 											.append(
-												self.elInputLevel = $('<input/>',{
+												this.elInputLevel = $('<input/>',{
 													'type':	'number',
 													'min':	0,
 													'max':	150
 												}).on({
 													'change': function(e){
-														let value = self.elInputLevel.val()
+														let value = this.elInputLevel.val()
 														
-														if( (typeof value == 'undefined' || value === '') && self.data[1][0] )
-															self.shipLv = null
+														if( (typeof value == 'undefined' || value === '') && this.data[1][0] )
+															this.shipLv = null
 														
 														value = parseInt(value)
-														if( !isNaN(value) && self.data[1][0] != value )
-															self.shipLv = value
-													}
+														if( !isNaN(value) && this.data[1][0] != value )
+															this.shipLv = value
+													}.bind(this)
 												})
 											)
 									)
 									.append(
-										self.elInfosInfo = $('<span/>')
+										this.elInfosInfo = $('<span/>')
 									)
 							)
 					)
@@ -5281,27 +5273,27 @@ class InfosFleetShip{
 				$('<div class="equipments"/>').append(function(){
 					let els = $()
 					for( let i=0; i<4; i++ ){
-						self.equipments[i] = new InfosFleetShipEquipment(self, i)
-						els = els.add(self.equipments[i].el)
+						this.equipments[i] = new InfosFleetShipEquipment(this, i)
+						els = els.add(this.equipments[i].el)
 					}
 					return els
-				})
+				}.bind(this))
 			)
 			// 属性
 			.append(
 				$('<div class="attributes"/>')
 					.append(
-						self.elAttrShelling = $('<span class="shelling"/>').html('-')
+						this.elAttrShelling = $('<span class="shelling"/>').html('-')
 					)
 					.append(
-						self.elAttrTorpedo = $('<span class="torpedo"/>').html('-')
+						this.elAttrTorpedo = $('<span class="torpedo"/>').html('-')
 					)
 					.append(
-						self.elAttrHitSum = $('<span class="hitsum"/>').html('-')
+						this.elAttrHitSum = $('<span class="hitsum"/>').html('-')
 					)
 				/*
 					.append($('<span class="shelling"/>').html('炮击力').append(
-						self.elAttrShelling = $('<strong/>').html('-')
+						this.elAttrShelling = $('<strong/>').html('-')
 					))
 					*/
 			)
@@ -5309,9 +5301,9 @@ class InfosFleetShip{
 			.append(
 				$('<div class="options"/>')
 					.append(
-						self.elBtnOptions = $('<button class="options"/>').on('click', function(e){
-								self.showMenu()
-							})
+						this.elBtnOptions = $('<button class="options"/>').on('click', function(e){
+								this.showMenu()
+							}.bind(this))
 					)
 				/*
 					.append(
@@ -5319,23 +5311,23 @@ class InfosFleetShip{
 							'html':			'i',
 							'data-tip':		'查看资料'
 						}).on('click', function(e){
-								_frame.infos.show('[[SHIP::'+self.shipId+']]', $(this))
+								_frame.infos.show('[[SHIP::'+this.shipId+']]', $(this))
 								e.stopPropagation()
-							})
+							}.bind(this))
 					)
 					.append(
 						$('<button/>').html('×')
 							.on('click', function(e){
-								self.shipId = null
+								this.shipId = null
 								e.preventDefault()
 								e.stopPropagation()
-							})
+							}.bind(this))
 					)*/
 			)
 			.on('click', function(){
-				if( self.el.hasClass('noship') )
-					self.selectShipStart()
-			})
+				if( this.el.hasClass('noship') )
+					this.selectShipStart()
+			}.bind(this))
 
 		//this.updateEl()
 	}
@@ -5348,18 +5340,17 @@ class InfosFleetShip{
 	// 开始选择
 		selectShipStart(){
 			_g.log('开始选择舰娘')
-			let self = this
 
 			//_frame.infos.hide()
 			//_frame.app_main.cur_page = null
 			_frame.app_main.load_page('ships', {
 				callback_modeSelection_select:		function(id){
 					history.back()
-					self.shipId = id
-					self.shipLv = null
-					if( self.infosFleet )
-						_frame.infos.dom.main.attr('data-theme', self.infosFleet.data['theme'])
-				}
+					this.shipId = id
+					this.shipLv = null
+					if( this.infosFleet )
+						_frame.infos.dom.main.attr('data-theme', this.infosFleet.data['theme'])
+				}.bind(this)
 			})
 		}
 	
@@ -5561,16 +5552,15 @@ class InfosFleetShip{
 			if( this._saveTimeout )
 				return false
 			
-			let self = this
 			this._saveTimeout = setTimeout(function(){
 				// 计算属性
-					self.updateAttrs()
+					this.updateAttrs()
 				
-				if( self.infosFleetSubFleet )
-					self.infosFleetSubFleet.save()
+				if( this.infosFleetSubFleet )
+					this.infosFleetSubFleet.save()
 				
-				self._saveTimeout = null
-			}, 100)
+				this._saveTimeout = null
+			}.bind(this), 100)
 		}
 }
 
@@ -5606,8 +5596,6 @@ class InfosFleetShipEquipment{
 		// ["403",[83,-1],[127,58],[0,0]]
 
 		// 直接对 infosFleetShip.data 相关数据进行读写 
-
-		const self = this
 		
 		this.index = index || 0
 		this.infosFleetShip = infosFleetShip
@@ -5620,58 +5608,58 @@ class InfosFleetShipEquipment{
 		
 		this.el = $('<div class="equipment"/>')
 					.append(
-						self.elCarry = $('<div class="equipment-layer equipment-add"/>')
+						this.elCarry = $('<div class="equipment-layer equipment-add"/>')
 										.on('click', function(){
-											self.selectEquipmentStart()
-										})
+											this.selectEquipmentStart()
+										}.bind(this))
 					)
 					.append(
 						$('<div class="equipment-layer equipment-infos"/>')
 							.append(
-								self.elName = $('<span class="equipment-name"/>')
+								this.elName = $('<span class="equipment-name"/>')
 							)
 							.append(
-								self.elStar = $('<span class="equipment-star"/>').html(0)
+								this.elStar = $('<span class="equipment-star"/>').html(0)
 							)
 							.append(function(){
 								let el = $('<span class="equipment-carry"/>').html(0)
-								self.elCarry = self.elCarry.add( el )
+								this.elCarry = this.elCarry.add( el )
 								return el
-							})
+							}.bind(this))
 					)
 					.append(
 						$('<div class="equipment-layer equipment-options"/>')
 							.append(
-								self.elInputStar = $('<input/>',{
+								this.elInputStar = $('<input/>',{
 									'class':		'equipment-starinput',
 									'type':			'number',
 									'placeholder':	0
 								}).on('input', function(){
-									let value = self.elInputStar.val()
+									let value = this.elInputStar.val()
 									
-									if( (typeof value == 'undefined' || value === '') && self.star )
-										self.star = null
+									if( (typeof value == 'undefined' || value === '') && this.star )
+										this.star = null
 									
 									value = parseInt(value)
-									if( !isNaN(value) && self.star != value )
-										self.star = value
-								})				
+									if( !isNaN(value) && this.star != value )
+										this.star = value
+								}.bind(this))				
 							)
 							.append(
-								self.elButtonInspect = $('<button class="inspect"/>').html('资料').on('click', function(){
-									if( self.id )
-										_frame.infos.show('[[EQUIPMENT::' + self.id + ']]')
-								})
+								this.elButtonInspect = $('<button class="inspect"/>').html('资料').on('click', function(){
+									if( this.id )
+										_frame.infos.show('[[EQUIPMENT::' + this.id + ']]')
+								}.bind(this))
 							)
 							.append(
 								$('<button class="change"/>').html('更变').on('click',function(){
-									self.selectEquipmentStart()
-								})
+									this.selectEquipmentStart()
+								}.bind(this))
 							)
 							.append(
 								$('<button class="remove"/>').html('×').on('click',function(){
-									self.id = null
-								})
+									this.id = null
+								}.bind(this))
 							)
 					)
 	}
@@ -5684,23 +5672,22 @@ class InfosFleetShipEquipment{
 	// 开始选择
 		selectEquipmentStart(){
 			_g.log('开始选择装备')
-			let self = this
 
 			_frame.app_main.load_page('equipments', {
 				callback_modeSelection_select: function(id){
 					history.back()
-					self.id = id
-					self.star = 0
+					this.id = id
+					this.star = 0
 					TablelistEquipments.types = []
 					TablelistEquipments.shipId = null
-					if( self.infosFleetShip.infosFleet )
-						_frame.infos.dom.main.attr('data-theme', self.infosFleetShip.infosFleet.data['theme'])
-				},
+					if( this.infosFleetShip.infosFleet )
+						_frame.infos.dom.main.attr('data-theme', this.infosFleetShip.infosFleet.data['theme'])
+				}.bind(this),
 				callback_modeSelection_enter: function(){
-					TablelistEquipments.types = _g.data.ships[self.infosFleetShip.shipId].getEquipmentTypes()
-					TablelistEquipments.shipId = self.infosFleetShip.shipId
+					TablelistEquipments.types = _g.data.ships[this.infosFleetShip.shipId].getEquipmentTypes()
+					TablelistEquipments.shipId = this.infosFleetShip.shipId
 					_frame.app_main.page['equipments'].object.tablelistObj.apply_types()
-				}
+				}.bind(this)
 			})
 		}
 	
@@ -5824,200 +5811,6 @@ class InfosFleetShipEquipment{
 			}
 		}
 }
-
-
-
-
-
-
-/*
-var fleetInfos = function( id ){
-	var self = this
-
-	this.dom = $('<div class="fleet loading"/>')
-	this.doms = {}
-
-	if( id == '__NEW__' ){
-		_db.fleets.insert(_tablelist.prototype._fleets_new_data(), function(err, newDoc){
-			if(err){
-				_g.error(err)
-			}else{
-				if( _frame.infos.curContent == 'fleet::__NEW__' )
-					self.init(newDoc)
-			}
-		})
-	}else{
-		_db.fleets.find({
-			'_id': 		id
-		}, function(err, docs){
-			if(err || !docs){
-				_g.error(err)
-			}else{
-				if( _frame.infos.curContent == 'fleet::' + id )
-					self.init(docs[i])
-			}
-		})
-	}
-}
-
-
-
-// 初始化内容
-	fleetInfos.prototype.init = function( d ){
-		if( !d )
-			return false
-
-		_g.log(d)
-
-		var self = this
-			,i = 0
-
-		this.dom.attr('data-fleetid', d._id)
-			.data('fleet', d)
-			.removeClass('loading')
-
-		$('<header/>')
-			.append(
-				self.doms['name'] = $('<h3 contenteditable/>')
-					.html('点击编辑标题')
-					.on({
-						'input': function(){
-							self.update_data({})
-							self.doms['name'].trigger('namechange')
-						},
-						'focus': function(){
-							if( self.doms['name'].text() == '点击编辑标题' )
-								self.doms['name'].html('')
-						},
-						'blur': function(){
-							if( !self.doms['name'].text() )
-								self.doms['name'].html('点击编辑标题')
-						},
-						'namechange': function(e, content){
-							if( typeof content == 'undefined' ){
-								content = self.doms['name'].text()
-							}else{
-								self.doms['name'].html(content)
-							}
-
-							if( content ){
-								self.doms['name'].attr('data-content', content)
-							}else{
-								self.doms['name'].removeAttr('data-content')
-							}
-
-							return self.doms['name']
-						}
-					})
-			)
-			.append(
-				self.doms['user'] = $('<button/>')
-			)
-			.appendTo(self.dom)
-
-		$('<div class="fleets"/>')
-			.append(
-				self.doms['tabs'] = $('<div class="tabs"/>')
-			)
-			.append(
-				self.doms['options'] = $('<div class="options"/>')
-					.append(
-						$('<span/>').html('[PH] 阵型')
-					)
-					.append(
-						$('<span/>').html('[PH] 颜色')
-					)
-					.append(
-						$('<span/>').html('[PH] 分享')
-					)
-			)
-			.appendTo(self.dom)
-
-		this.doms['ships'] = $('<div class="ships"/>').appendTo(self.dom)
-
-		// 4个分舰队
-			while(i < 4){
-				i++
-	
-				$('<input/>',{
-						'type': 	'radio',
-						'name': 	'fleet_' + d._id + '_tab',
-						'id': 		'fleet_' + d._id + '_tab_' + i,
-						'value': 	i
-					}).prop('checked', (i == 1)).prependTo( self.dom )
-	
-				$('<label/>',{
-						'for': 		'fleet_' + d._id + '_tab_' + i,
-						'data-fleet':i,
-						'html': 	'#' + i
-					}).appendTo( self.doms['tabs'] )
-	
-				self.doms['fleet' + i] = $('<dl/>',{
-						'data-fleet':i
-					}).appendTo( self.doms['ships'] )
-	
-				// 6个舰娘
-					let j = 0
-					while( j < 6 ){
-						j++
-						self.doms['ship' + i + '-' + j] = $('<dd/>',{
-								'class':	'noship',
-								'id':		'ship_' + d._id + '_' + i + '_' + 'j'
-							})
-							.html('ship' + i + '-' + j)
-							.appendTo( self.doms['fleet' + i] )
-					}
-			}
-	
-			this.update( d )
-		}
-
-
-
-// 添加舰队tab
-	fleetInfos.prototype.fleettab_add = function( is_click ){
-
-	}
-
-
-
-// 根据数据更新内容
-	fleetInfos.prototype.update = function( d ){
-		d = d || {}
-		var self = this
-
-		// 主题颜色
-			if( typeof d['theme'] != 'undefined' )
-				_frame.infos.dom.main.attr('data-theme', d['theme'])
-
-		// 标题
-			if( typeof d['name'] != 'undefined' )
-				this.doms['name'].trigger('namechange',[d['name']]).trigger('blur')
-
-		// 舰队
-			if( d['data'] && d['data'].push ){
-				if( !d['data'].length ){
-					self.fleettab_add()
-				}else{
-					for(var i in d['data']){
-						self.fleettab_add()
-					}
-				}
-			}
-	}
-
-
-
-// 每个操作都会更新数据，并触发更新数据库倒计时
-	fleetInfos.prototype.update_data = function( d ){
-		d = d || {}
-		this.update(d)
-	}
-
-
-
-// 更新数据库
-*/
 
 _frame.app_main.is_mode_selection = function(){
 	return $html.hasClass('mode-selection') || _frame.dom.layout.hasClass('mode-selection')
