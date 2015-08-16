@@ -20,23 +20,21 @@ _frame.app_main.page['ships'] = {
 			constructor( $page ){
 				super( $page )
 				
-				let self = this
-				
 				this.tablelist = $page.find('.tablelist')
 				this.tablelistObj = this.tablelist.data('tablelist')
 			
 				$page.on({
 					'on': function(){
-						if( !self.tablelistObj )
-							self.tablelistObj
-								= self.tablelist.data('tablelist')
+						if( !this.tablelistObj )
+							this.tablelistObj
+								= this.tablelist.data('tablelist')
 				
-						if( self.tablelistObj )
-							self.tablelistObj.thead_redraw()
-					},
+						if( this.tablelistObj )
+							this.tablelistObj.thead_redraw()
+					}.bind(this),
 					'modeSelectionEnter': function(e, callback_select){
-						self.modeSelectionEnter(callback_select)
-					}
+						this.modeSelectionEnter(callback_select)
+					}.bind(this)
 				})
 			}
 			

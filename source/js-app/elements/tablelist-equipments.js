@@ -24,11 +24,12 @@ _tablelist.prototype._equipments_columns = [
 	['可改修','improvable']
 ]
 _tablelist.prototype._equipments_append_item = function( equipment_data, collection_id ){
-	var self = this
-		,tr = $('<tr class="row" data-equipmentid="'+ equipment_data['id'] +'" data-equipmentcollection="'+ collection_id +'"/>')
-				.attr({
+	let tr = $('<tr/>',{
+					'class':			'row',
+					'data-equipmentid':	equipment_data['id'],
+					'data-equipmentcollection':	collection_id,
 					'data-infos': 		'[[EQUIPMENT::'+ equipment_data['id'] +']]',
-					'data-equipmentedit':self.dom.container.hasClass('equipmentlist-edit') ? 'true' : null,
+					'data-equipmentedit':this.dom.container.hasClass('equipmentlist-edit') ? 'true' : null,
 					'data-equipmenttype':equipment_data.type
 				})
 				.on('click', function(e, forceInfos){
@@ -51,7 +52,7 @@ _tablelist.prototype._equipments_append_item = function( equipment_data, collect
 		return val
 	}
 
-	self._equipments_columns.forEach(function(currentValue){
+	this._equipments_columns.forEach(function(currentValue){
 		switch( currentValue[1] ){
 			case ' ':
 				$('<th/>').html(equipment_data.getName()).appendTo(tr)
@@ -86,25 +87,24 @@ _tablelist.prototype._equipments_append_item = function( equipment_data, collect
 	return tr
 }
 _tablelist.prototype._equipments_append_all_items = function(){
-	var self = this
 	this.generated = false
 	this.dom.types = []
 	function _do( i, j ){
 		if( _g.data.item_id_by_type[i] ){
 			if( !j ){
 				var data_equipmenttype = _g.data.item_types[ _g.item_type_order[i] ]
-				self.dom.types.push(
+				this.dom.types.push(
 					$('<tr class="typetitle" data-equipmentcollection="'+_g.data.item_id_by_type[i]['collection']+'" data-type="'+data_equipmenttype.id+'">'
-							+ '<th colspan="' + (self._equipments_columns.length + 1) + '">'
+							+ '<th colspan="' + (this._equipments_columns.length + 1) + '">'
 								+ '<span style="background-image: url(../app/assets/images/itemicon/'+data_equipmenttype['icon']+'.png)"></span>'
 								+ data_equipmenttype['name']['zh_cn']
 								+ _frame.app_main.page['equipments'].gen_helper_equipable_on( data_equipmenttype['id'] )
 							+ '</th></tr>'
-						).appendTo( self.dom.tbody )
+						).appendTo( this.dom.tbody )
 				)
 			}
 
-			self._equipments_append_item(
+			this._equipments_append_item(
 				_g.data.items[ _g.data.item_id_by_type[i]['equipments'][j] ],
 				_g.data.item_id_by_type[i]['collection']
 			)
@@ -117,14 +117,15 @@ _tablelist.prototype._equipments_append_all_items = function(){
 				}
 			}, 0)
 		}else{
-			//self.mark_high()
+			//this.mark_high()
 			// force thead redraw
-				self.thead_redraw()
-				self.generated = true
-				self.apply_types_check()
-			_frame.app_main.loaded('tablelist_'+self._index, true)
+				this.thead_redraw()
+				this.generated = true
+				this.apply_types_check()
+			_frame.app_main.loaded('tablelist_'+this._index, true)
 		}
 	}
+	_do = _do.bind(this)
 	_do( 0, 0 )
 }
 
@@ -157,13 +158,13 @@ _tablelist.prototype.apply_types_check = function(){
 	){
 		let k = 0
 			,el
-			,self = this
-		while( self.dom.types[k++].attr('data-equipmentcollection') != 3
-			|| $.inArray((parseInt(self.dom.types[k].attr('data-type')) || null), TablelistEquipments.types) <= -1 ){
-			el = self.dom.types[k+1]
+
+		while( this.dom.types[k++].attr('data-equipmentcollection') != 3
+			|| $.inArray((parseInt(this.dom.types[k].attr('data-type')) || null), TablelistEquipments.types) <= -1 ){
+			el = this.dom.types[k+1]
 		}
 		
-		el = el || self.dom.types[0]
+		el = el || this.dom.types[0]
 		
 		this.dom.type_radios[3].prop('checked', true).trigger('change')
 		this.dom.table_container_inner.scrollTop(el[0].offsetTop || 0)
@@ -173,15 +174,15 @@ _tablelist.prototype.apply_types_check = function(){
 	if( TablelistEquipments.types.length ){
 		let k = 0
 			,el
-			,self = this
-		while( $.inArray((parseInt(self.dom.types[k++].attr('data-type')) || null), TablelistEquipments.types) <= -1 ){
-			el = self.dom.types[k]
+
+		while( $.inArray((parseInt(this.dom.types[k++].attr('data-type')) || null), TablelistEquipments.types) <= -1 ){
+			el = this.dom.types[k]
 		}
 		
-		el = el || self.dom.types[0]
+		el = el || this.dom.types[0]
 		
-		self.dom.type_radios[parseInt(el.attr('data-equipmentcollection')) || 1].prop('checked', true).trigger('change')
-		self.dom.table_container_inner.scrollTop(el[0].offsetTop || 0)
+		this.dom.type_radios[parseInt(el.attr('data-equipmentcollection')) || 1].prop('checked', true).trigger('change')
+		this.dom.table_container_inner.scrollTop(el[0].offsetTop || 0)
 	}
 }
 
@@ -189,8 +190,6 @@ _tablelist.prototype.apply_types_check = function(){
 
 
 _tablelist.prototype._equipments_init = function(){
-	var self = this
-
 	// 标记全局载入状态
 		_frame.app_main.loading.push('tablelist_'+this._index)
 		_frame.app_main.is_loaded = false
@@ -208,16 +207,16 @@ _tablelist.prototype._equipments_init = function(){
 				.prop('checked', !checked )
 				.on('change', function(){
 					// force thead redraw
-					self.dom.table_container_inner.scrollTop(0)
-					self.thead_redraw()
-				})
+					this.dom.table_container_inner.scrollTop(0)
+					this.thead_redraw()
+				}.bind(this))
 				.prependTo( this.dom.container )
 			$('<label class="tab container" for="'+radio_id+'" data-equipmentcollection="'+i+'"/>')
 				.html(
 					'<i></i>'
 					+ '<span>' + _g.data.item_type_collections[i]['name']['zh_cn'].replace(/\&/g, '<br/>') + '</span>'
 				)
-				.appendTo( self.dom.filters )
+				.appendTo( this.dom.filters )
 			checked = true
 			_g.inputIndex++
 		}
@@ -230,8 +229,8 @@ _tablelist.prototype._equipments_init = function(){
 		this.dom.table_container_inner = $('<div class="fixed-table-container-inner"/>').appendTo( this.dom.table_container )
 		this.dom.table = $('<table class="equipments hashover hashover-column"/>').appendTo( this.dom.table_container_inner )
 		function gen_thead(arr){
-			self.dom.thead = $('<thead/>')
-			var tr = $('<tr/>').appendTo(self.dom.thead)
+			this.dom.thead = $('<thead/>')
+			var tr = $('<tr/>').appendTo(this.dom.thead)
 			arr.forEach(function(currentValue){
 				if( typeof currentValue == 'object' ){
 					$('<td data-stat="' + currentValue[1] + '"/>')
@@ -240,13 +239,14 @@ _tablelist.prototype._equipments_init = function(){
 					$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+currentValue[0]+'</span></span></div>').appendTo(tr)
 				}
 			})
-			return self.dom.thead
+			return this.dom.thead
 		}
-		gen_thead( self._equipments_columns ).appendTo( this.dom.table )
+		gen_thead = gen_thead.bind(this)
+		gen_thead( this._equipments_columns ).appendTo( this.dom.table )
 		this.dom.tbody = $('<tbody/>').appendTo( this.dom.table )
 
 	// 生成装备数据DOM
-		self._equipments_append_all_items()
+		this._equipments_append_all_items()
 
 	// 生成底部内容框架
 		this.dom.msg_container = $('<div class="msgs"/>').appendTo( this.dom.container )
@@ -256,7 +256,7 @@ _tablelist.prototype._equipments_init = function(){
 	// 生成部分底部内容
 		var equipmentsinfos = $('<div class="equipmentsinfos"/>').html('点击装备查询初装舰娘等信息').appendTo( this.dom.msg_container )
 			$('<button/>').html('&times;').on('click', function(){
-				self.dom.msg_container.removeAttr('data-msgs')
+				this.dom.msg_container.removeAttr('data-msgs')
 				_config.set( 'hide-equipmentsinfos', true )
-			}).appendTo( equipmentsinfos )
+			}.bind(this)).appendTo( equipmentsinfos )
 }

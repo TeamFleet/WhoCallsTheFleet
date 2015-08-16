@@ -113,7 +113,7 @@
 				return false
 			
 			let queue = this._updateByIdQueue[_id]
-				,self = this
+			
 			this._updateByIdQueue[_id] = null
 			delete this._updateByIdQueue[_id]
 			
@@ -122,10 +122,10 @@
 			this.update({
 				_id: _id
 			}, queue.docReplace, {}, function (err, numReplaced) {
-				queue.callback.call(self, err, numReplaced)
-				self._updateByIdQueue.running = false
-				self._updateById()
-			})
+				queue.callback.call(this, err, numReplaced)
+				this._updateByIdQueue.running = false
+				this._updateById()
+			}.bind(this))
 		}
 
 

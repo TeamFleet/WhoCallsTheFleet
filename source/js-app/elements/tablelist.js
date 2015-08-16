@@ -190,7 +190,7 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 	// rows				目标行，默认为全部可见行
 		_tablelist.prototype.sort_column = function( nth, is_ascending, rows ){
 			if( !rows ){
-				var tbody = this.dom.tbody
+				let tbody = this.dom.tbody
 				if( !tbody || !tbody.length )
 					tbody = this.dom.table.find('tbody')
 				rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
@@ -201,23 +201,21 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 				this._tmp_values = []
 				this._tmp_value_map_cell = {}
 
-			var self = this
-
 			// 遍历，将值全部导出到 _tmp_values，_tmp_value_map_cell 中记录 值 -> jQuery DOM
-				rows.find('td:nth-of-type(' + nth + ')').each(function(index){
-					var cell = $(this)
-						,val = $(this).data('value')
+				rows.find('td:nth-of-type(' + nth + ')').each(function(index, element){
+					let cell = $(element)
+						,val = cell.data('value')
 
 					val = parseFloat(val)
 
-					if( $.inArray( val, self._tmp_values ) < 0 )
-						self._tmp_values.push( val )
+					if( $.inArray( val, this._tmp_values ) < 0 )
+						this._tmp_values.push( val )
 
-					if( !self._tmp_value_map_cell[val] )
-						self._tmp_value_map_cell[val] = $()
+					if( !this._tmp_value_map_cell[val] )
+						this._tmp_value_map_cell[val] = $()
 
-					self._tmp_value_map_cell[val] = self._tmp_value_map_cell[val].add( cell )
-				})
+					this._tmp_value_map_cell[val] = this._tmp_value_map_cell[val].add( cell )
+				}.bind(this))
 
 			// 排序
 				this._tmp_values.sort(function(a, b){
@@ -228,7 +226,7 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 				})
 
 			// 根据排序结果，整理返回结果
-				var return_array = []
+				let return_array = []
 				this._tmp_values.forEach(function(currentValue){
 					return_array.push( this._tmp_value_map_cell[currentValue] )
 				}, this)
@@ -242,35 +240,34 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 
 	// 标记表格全部数据列中第一和第二高值的单元格
 		_tablelist.prototype.mark_high = function( cacheSortData ){
-			var tbody = this.dom.tbody
+			let tbody = this.dom.tbody
 
 			if( !tbody || !tbody.length )
 				tbody = this.dom.table.find('tbody')
 
-			var rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
-				,self = this
+			let rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
 				,sort_data_by_stat = this.sort_data_by_stat
 
 			rows.find('td[data-value]').removeClass('sort-first sort-second')
 
-			rows.eq(0).find('td[data-value]').each(function(index){
-				var is_ascending = false
-					,$this = $(this)
+			rows.eq(0).find('td[data-value]').each(function(index, element){
+				let is_ascending = false
+					,$this = $(element)
 					,stat = $this.data('stat')
 
 				// 以下属性不进行标记，但仍计算排序
 					,noMark = stat.match(/\b(speed|range)\b/ )
 
-				if( typeof self.sort_default_order_by_stat[stat] == 'undefined' ){
+				if( typeof this.sort_default_order_by_stat[stat] == 'undefined' ){
 					// 以下属性为升序
 						if( stat.match(/\b(consum_fuel|consum_ammo)\b/ ) )
 							is_ascending = true
-					self.sort_default_order_by_stat[stat] = is_ascending ? 'asc' : 'desc'
+					this.sort_default_order_by_stat[stat] = is_ascending ? 'asc' : 'desc'
 				}else{
-					is_ascending = self.sort_default_order_by_stat[stat] == 'asc' ? true : false
+					is_ascending = this.sort_default_order_by_stat[stat] == 'asc' ? true : false
 				}
 
-				var sort = _tablelist.prototype.sort_column( index+1, is_ascending, rows )
+				let sort = _tablelist.prototype.sort_column( index+1, is_ascending, rows )
 					,max = Math.min( 6, Math.ceil(rows.length / 2) + 1 )
 
 				if( !noMark && sort.length > 1 && sort[0].length < max ){
@@ -285,7 +282,7 @@ _tablelist.prototype.append_option = function( type, name, label, value, suffix,
 					else
 						delete( sort_data_by_stat[stat] )
 
-			})
+			}.bind(this))
 
 			return rows
 		}

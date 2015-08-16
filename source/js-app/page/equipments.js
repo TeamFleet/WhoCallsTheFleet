@@ -6,31 +6,29 @@ _frame.app_main.page['equipments'] = {
 			constructor( $page ){
 				super( $page )
 				
-				let self = this
-				
 				this.tablelist = $page.find('.tablelist')
 				this.tablelistObj = this.tablelist.data('tablelist')
 			
 				$page.on({
 					'on': function(){
-						if( !self.tablelistObj )
-							self.tablelistObj
-								= self.tablelist.data('tablelist')
+						if( !this.tablelistObj )
+							this.tablelistObj
+								= this.tablelist.data('tablelist')
 				
-						if( self.tablelistObj ){
-							self.tablelistObj.thead_redraw()
-							self.tablelistObj.apply_types()
+						if( this.tablelistObj ){
+							this.tablelistObj.thead_redraw()
+							this.tablelistObj.apply_types()
 						}
-					},
+					}.bind(this),
 					'modeSelectionEnter': function(e, callback_select, callback_enter){
-						self.modeSelectionEnter(callback_select, callback_enter)
-					},
+						this.modeSelectionEnter(callback_select, callback_enter)
+					}.bind(this),
 					'show': function(){
-						if( self.tablelistObj ){
-							self.tablelistObj.thead_redraw()
-							self.tablelistObj.apply_types()
+						if( this.tablelistObj ){
+							this.tablelistObj.thead_redraw()
+							this.tablelistObj.apply_types()
 						}
-					}
+					}.bind(this)
 				})
 			}
 			
