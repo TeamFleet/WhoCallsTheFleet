@@ -9,6 +9,7 @@ _p.tip = {
 	//is_showing:				false,
 	//dom:					null,
 	//el:						null,
+	//el_pending:			null,
 	pos:					'bottom',
 	size_indicator:			8,
 	//timeout_fade:			null,
@@ -133,6 +134,8 @@ _p.tip = {
 		if( !_p.tip.is_init || !_p.tip.is_showing )
 			return false
 
+		//_p.tip.el_pending = null
+
 		_p.tip.timeout_fade = setTimeout(function(){
 			_p.tip.el = null
 
@@ -246,7 +249,7 @@ _p.tip = {
 
 		// 超出X轴右边界
 		if ((x + w) > clientWidth ){
-			if( w > el.offset().left ){
+			if( w > offset.left ){
 				pos = {
 					'x': clientWidth - w - 2,
 					'y': y
@@ -312,19 +315,25 @@ _p.el.tip = {
 					,cont 		= el.data('tip')
 
 				if( !el.data('tip-filtered') ){
-					for( var i in _p.tip.filters )
-						cont = _p.tip.filters[i](cont) || cont
+					_p.tip.filters.forEach(function(filter){
+						cont = filter(cont) || cont
+					})
 					el.data({
 						'tip': 				cont,
 						'tip-filtered': 	true
 					})
 				}
 
-				_p.tip.show(
-					cont,
-					el,
-					el.data('tip-position')
-				)
+				//_p.tip.el_pending = el
+				
+				//setTimeout(function(){
+				//	if( _p.tip.el_pending == el )
+						_p.tip.show(
+							cont,
+							el,
+							el.data('tip-position')
+						)
+				//}, 100)
 			})
 			.on( 'mouseleave._tip', '[data-tip]', function(){
 				_p.tip.hide()

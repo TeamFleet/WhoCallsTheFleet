@@ -4797,6 +4797,10 @@ class InfosFleet{
 								
 								this._name = content
 								return this.doms['name']
+							}.bind(this),
+							'keydown': function(e){
+								if( e.keyCode == 13 )
+									this.doms['name'].blur()
 							}.bind(this)
 						})
 				)
