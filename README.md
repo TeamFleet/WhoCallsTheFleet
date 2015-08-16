@@ -8,6 +8,10 @@
 
 本REPO为源代码，需要NW.js来启动。
 
+## 最新版下载
+
+[GitHub](https://github.com/Diablohu/WhoCallsTheFleet/releases) | [百度网盘](http://pan.baidu.com/s/1kT09CWJ#path=%252FWhoCallsTheFleet)
+
 ## 基础框架
 
 你或许注意到在 JavaScript 和 LESS 源代码中有许多“!Shared”目录的引用，这些都来自于我个人的 NW.js 项目基础框架：[nw.js-base-framework](https://github.com/Diablohu/nw.js-base-framework)
