@@ -6654,7 +6654,7 @@ class TablelistFleets extends _tablelist{
 	// PLACEHOLDER START
 	/*
 		var deferred = Q.defer()
-		var data = $.extend( self.kancolle_calc, {
+		var data = $.extend( this.kancolle_calc, {
 				'_method': 	'GET',
 				'where': {
 					'owner': 	'Diablohu'
@@ -6668,11 +6668,11 @@ class TablelistFleets extends _tablelist{
 				var arr = []
 				if( data && data['results'] ){
 					for(var i in data['results']){
-						arr.push( self._fleets_parse_kancolle_calc_data(data['results'][i]) )
+						arr.push( this._fleets_parse_kancolle_calc_data(data['results'][i]) )
 					}
 				}
 				deferred.resolve( arr )
-			},
+			}.bind(this),
 			'error': function( jqXHR, textStatus, errorThrown ){
 				_g.log(jqXHR)
 				_g.log(textStatus)
@@ -6774,27 +6774,26 @@ class TablelistFleets extends _tablelist{
 		})
 		_g.log(arr)
 
-		var self = this
-			,deferred = Q.defer()
+		var deferred = Q.defer()
 
 		// 创建flexgrid placeholder
 			var k = 0
-			while(k < self.flexgrid_empty_count){
+			while(k < this.flexgrid_empty_count){
 				if( !k )
-					self.flexgrid_ph = $('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(self.dom.tbody)
+					this.flexgrid_ph = $('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
 				else
-					$('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(self.dom.tbody)
+					$('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
 				k++
 			}
 
 		// 创建数据行
 			arr.forEach(function(currentValue, i){
 				setTimeout((function(i){
-					self._fleets_append_item( arr[i] )
+					this._fleets_append_item( arr[i] )
 					if( i >= arr.length -1 )
 						deferred.resolve()
-				})(i), 0)
-			})
+				}.bind(this))(i), 0)
+			}.bind(this))
 
 		if( !arr.length )
 			deferred.resolve()
@@ -6878,18 +6877,16 @@ class TablelistFleets extends _tablelist{
 
 // [按钮操作] 新建/导入配置
 	_tablelist.prototype._fleets_btn_new = function(){
-		var self = this
-
 		if( !this._fleets_menu_new )
 			this._fleets_menu_new = new _menu({
-				'target': 	self.dom.btn_new,
+				'target': 	this.dom.btn_new,
 				'items': [
 					$('<div class="menu_fleets_new"/>')
 						.append(
 							$('<menuitem/>').html('新建配置')
 								.on('click', function(){
-									self._fleets_action_new()
-								})
+									this._fleets_action_new()
+								}.bind(this))
 						)
 						.append(
 							$('<menuitem/>').html('导入配置代码')
@@ -6905,18 +6902,22 @@ class TablelistFleets extends _tablelist{
 												$('<p/>').html('* 配置代码兼容<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
 											)
 											.append(
-												$('<button class="button"/>').html('导入')
-													.on('click', function(){
-														let val = TablelistFleets.modalImportTextarea.val()
-														if( val ){
-															self._fleets_action_new({
-																'data': 	JSON.parse(TablelistFleets.modalImportTextarea.val())
-															})
-															_frame.modal.hide()
-														}
-													})
+												TablelistFleets.modalImportBtn = $('<button class="button"/>').html('导入')
 											)
 									}
+									TablelistFleets.modalImportTextarea.val('')
+									TablelistFleets.modalImportBtn.off('click.import')
+										.on('click', function(){
+											let val = TablelistFleets.modalImportTextarea.val()
+											console.log(val)
+											if( val ){
+												this._fleets_action_new({
+													'data': 	JSON.parse(TablelistFleets.modalImportTextarea.val())
+												})
+												_frame.modal.hide()
+												TablelistFleets.modalImportTextarea.val('')
+											}
+										}.bind(this))
 									_frame.modal.show(
 										TablelistFleets.modalImport,
 										'导入配置代码',
@@ -6924,7 +6925,7 @@ class TablelistFleets extends _tablelist{
 											'classname': 	'infos_fleet infos_fleet_import'
 										}
 									)
-								})
+								}.bind(this))
 						)
 						.append(
 							$('<menuitem/>').html('[NYI] 导入配置文件')
@@ -6945,25 +6946,26 @@ class TablelistFleets extends _tablelist{
 
 // [操作] 新建配置
 	_tablelist.prototype._fleets_action_new = function( dataDefault ){
-		var self = this
 		dataDefault = dataDefault || {}
 		//_frame.infos.show('[[FLEET::__NEW__]]')
+		console.log(dataDefault)
 
-		_db.fleets.insert( _tablelist.prototype._fleets_new_data(dataDefault), function(err, newDoc){
+		_db.fleets.insert( this._fleets_new_data(dataDefault), function(err, newDoc){
+			console.log(err, newDoc)
 			if(err){
 				_g.error(err)
 			}else{
 				if( _frame.app_main.cur_page == 'fleets' ){
 					_frame.infos.show('[[FLEET::' + newDoc['_id'] + ']]')
-					self._fleets_menu_new.hide()
-					//self.init(newDoc)
+					this._fleets_menu_new.hide()
+					//this.init(newDoc)
 					
 					//for(let i in _g.data.fleets_tablelist.lists){
 					//	_g.data.fleets_tablelist.lists[i]._fleets_append_item( newDoc, null, true )
 					//}
 				}
 			}
-		})
+		}.bind(this))
 	}
 
 
@@ -6978,51 +6980,48 @@ class TablelistFleets extends _tablelist{
 // 菜单
 	_tablelist.prototype._fleets_contextmenu_show = function($tr, $em){
 		this._ships_contextmenu_curel = $tr
-			
-		let self = this
 	
-		if( !self._fleets_contextmenu )
-			self._fleets_contextmenu = new _menu({
+		if( !this._fleets_contextmenu )
+			this._fleets_contextmenu = new _menu({
 				'className': 'contextmenu-fleet',
 				'items': [
 					$('<menuitem/>').html('详情')
 						.on({
 							'click': function(e){
-								self._ships_contextmenu_curel.trigger('click', [true])
-							}
+								this._ships_contextmenu_curel.trigger('click', [true])
+							}.bind(this)
 						}),
 						
 					$('<menuitem/>').html('导出配置')
 						.on({
 							'click': function(e){
-								InfosFleet.modalExport_show(self._ships_contextmenu_curel.data('initdata'))
-							}
+								InfosFleet.modalExport_show(this._ships_contextmenu_curel.data('initdata'))
+							}.bind(this)
 						}),
 						
 					$('<menuitem/>').html('移除')
 						.on({
 							'click': function(e){
-								let id = self._ships_contextmenu_curel.attr('data-fleetid')
+								let id = this._ships_contextmenu_curel.attr('data-fleetid')
 								_db.fleets.remove({
 									_id: id
 								}, { multi: true }, function (err, numRemoved) {
 									_g.log('Fleet ' + id + ' removed.')
 								});
-								self._ships_contextmenu_curel.remove()
-							}
+								this._ships_contextmenu_curel.remove()
+							}.bind(this)
 						})
 				]
 			})
 	
-		self._fleets_contextmenu.show($em || $tr)
+		this._fleets_contextmenu.show($em || $tr)
 	}
 
 
 
 // 初始化函数
 	_tablelist.prototype._fleets_init = function(){
-		var self = this
-			,promise_chain 	= Q.fcall(function(){})
+		var promise_chain 	= Q.fcall(function(){})
 		
 		this.trIndex = 0
 
@@ -7037,17 +7036,17 @@ class TablelistFleets extends _tablelist{
 			// 左 - 新建
 				this.dom.btn_new = $('<button class="new" icon="import"/>').html('新建/导入')
 									.on('click',function(){
-										self._fleets_btn_new()
-									})
-									.appendTo(self.dom.filters)
+										this._fleets_btn_new()
+									}.bind(this))
+									.appendTo(this.dom.filters)
 			// 右 - 选项组
-				this.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(self.dom.filters)
+				this.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(this.dom.filters)
 				/*
 				this.dom.btn_settings = $('<button icon="cog"/>')
 									.on('click',function(){
-										self._fleets_btn_settings()
-									})
-									.appendTo(self.dom.buttons_right)
+										this._fleets_btn_settings()
+									}.bind(this))
+									.appendTo(this.dom.buttons_right)
 				*/
 
 		// [创建] 表格框架
@@ -7055,8 +7054,8 @@ class TablelistFleets extends _tablelist{
 			this.dom.table_container_inner = $('<div class="fixed-table-container-inner"/>').appendTo( this.dom.table_container )
 			this.dom.table = $('<table class="fleets hashover hashover-column"/>').appendTo( this.dom.table_container_inner )
 			function gen_thead(arr){
-				self.dom.thead = $('<thead/>')
-				var tr = $('<tr/>').appendTo(self.dom.thead)
+				this.dom.thead = $('<thead/>')
+				var tr = $('<tr/>').appendTo(this.dom.thead)
 				arr.forEach(function(column){
 					if( typeof column == 'object' ){
 						$('<td data-stat="' + column[1] + '"/>')
@@ -7065,9 +7064,10 @@ class TablelistFleets extends _tablelist{
 						$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+column[0]+'</span></span></div>').appendTo(tr)
 					}
 				})
-				return self.dom.thead
+				return this.dom.thead
 			}
-			gen_thead( self._fleets_columns ).appendTo( this.dom.table )
+			gen_thead = gen_thead.bind(this)
+			gen_thead( this._fleets_columns ).appendTo( this.dom.table )
 			this.dom.tbody = $('<tbody/>').appendTo( this.dom.table )
 
 		// [创建] 无内容时的新建提示框架
@@ -7077,8 +7077,8 @@ class TablelistFleets extends _tablelist{
 						.append($('<span>').html('暂无舰队配置'))
 						.append($('<button>').html('新建/导入')
 									.on('click',function(){
-										self.dom.btn_new.click()
-									})
+										this.dom.btn_new.click()
+									}.bind(this))
 								)
 					)
 				)
@@ -7086,41 +7086,41 @@ class TablelistFleets extends _tablelist{
 	
 		// 右键菜单事件
 			this.dom.table.on('contextmenu.contextmenu_fleet', 'tr[data-fleetid]', function(e){
-				self._fleets_contextmenu_show($(this))
-			}).on('click.contextmenu_fleet', 'tr[data-fleetid]>th>em', function(e){
-				self._fleets_contextmenu_show($(this).parent().parent(), $(this))
+				this._fleets_contextmenu_show($(this))
+			}.bind(this)).on('click.contextmenu_fleet', 'tr[data-fleetid]>th>em', function(e){
+				this._fleets_contextmenu_show($(this).parent().parent(), $(this))
 				e.stopImmediatePropagation()
 				e.stopPropagation()
-			})
+			}.bind(this))
 
 			promise_chain
 
 		// 读取已保存数据
 			.then(function(){
-				return self._fleets_loaddata()
-			})
+				return this._fleets_loaddata()
+			}.bind(this))
 		
 		// 检查每条数据
 			.then(function(arr){
-				return self._fleets_validdata(arr)
-			})
+				return this._fleets_validdata(arr)
+			}.bind(this))
 
 		// 如果没有数据，标记状态
 			.then(function(arr){
-				return self._fleets_datacheck(arr)
-			})
+				return this._fleets_datacheck(arr)
+			}.bind(this))
 
 		// [创建] 全部数据行
 			.then(function(arr){
-				return self._fleets_append_all_items(arr)
-			})
+				return this._fleets_append_all_items(arr)
+			}.bind(this))
 
 		// [框架] 标记读取完成
 			.then(function(){
 				setTimeout(function(){
-					_frame.app_main.loaded('tablelist_'+self._index, true)
-				}, 100)
-			})
+					_frame.app_main.loaded('tablelist_'+this._index, true)
+				}.bind(this), 100)
+			}.bind(this))
 
 		// 错误处理
 			.catch(function (err) {
