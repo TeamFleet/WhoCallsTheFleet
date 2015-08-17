@@ -556,9 +556,9 @@ _tablelist.prototype._ships_init = function(){
 	
 	// 右键菜单事件
 		this.dom.table.on('contextmenu.contextmenu_ship', 'tr[data-shipid]', function(e){
-			this._ships_contextmenu_show($(this))
+			this._ships_contextmenu_show($(e.currentTarget))
 		}.bind(this)).on('click.contextmenu_ship', 'tr[data-shipid]>th>em', function(e){
-			this._ships_contextmenu_show($(this).parent().parent())
+			this._ships_contextmenu_show($(e.currentTarget).parent().parent())
 			e.stopImmediatePropagation()
 			e.stopPropagation()
 		}.bind(this))
