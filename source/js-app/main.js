@@ -1038,10 +1038,10 @@ _frame.app_main = {
 								deferred.reject(new Error(err))
 							}else{
 								docs.forEach(function(doc){
-									var section = $('<section class="update_journal" data-version-'+docs['type']+'="'+docs['version']+'"/>')
-												.html(_frame.app_main.page['about'].journaltitle(docs))
+									var section = $('<section class="update_journal" data-version-'+doc['type']+'="'+doc['version']+'"/>')
+												.html(_frame.app_main.page['about'].journaltitle(doc))
 									try{
-										$(_frame.app_main.page['about'].journal_parse(docs['journal'])).appendTo( section )
+										$(_frame.app_main.page['about'].journal_parse(doc['journal'])).appendTo( section )
 									}catch(e){
 										_g.error(e)
 										section.remove()

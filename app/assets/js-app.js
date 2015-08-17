@@ -2214,10 +2214,10 @@ _frame.app_main = {
 								deferred.reject(new Error(err))
 							}else{
 								docs.forEach(function(doc){
-									var section = $('<section class="update_journal" data-version-'+docs['type']+'="'+docs['version']+'"/>')
-												.html(_frame.app_main.page['about'].journaltitle(docs))
+									var section = $('<section class="update_journal" data-version-'+doc['type']+'="'+doc['version']+'"/>')
+												.html(_frame.app_main.page['about'].journaltitle(doc))
 									try{
-										$(_frame.app_main.page['about'].journal_parse(docs['journal'])).appendTo( section )
+										$(_frame.app_main.page['about'].journal_parse(doc['journal'])).appendTo( section )
 									}catch(e){
 										_g.error(e)
 										section.remove()
@@ -2429,6 +2429,7 @@ let Formula = {
 				ship.slot.map(function(carry, index){
 					if( equipments_by_slot[index]
 						&& $.inArray( equipments_by_slot[index].type, Formula.equipmentType.Fighters ) > -1
+						&& carry
 					){
 						result+= Math.sqrt(carry) * (equipments_by_slot[index].stat.aa || 0)
 						if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.Recons ) == -1 )
@@ -5705,13 +5706,15 @@ class InfosFleetShipEquipment{
 								}.bind(this))				
 							)
 							.append(
-								this.elButtonInspect = $('<button class="inspect"/>').html('资料').on('click', function(){
+								//this.elButtonInspect = $('<button class="inspect"/>').html('资料').on('click', function(){
+								this.elButtonInspect = $('<button class="inspect" icon="search"/>').on('click', function(){
 									if( this.id )
 										_frame.infos.show('[[EQUIPMENT::' + this.id + ']]')
 								}.bind(this))
 							)
 							.append(
-								$('<button class="change"/>').html('更变').on('click',function(){
+								//$('<button class="change"/>').html('更变').on('click',function(){
+								$('<button class="change" icon="loop"/>').on('click',function(){
 									this.selectEquipmentStart()
 								}.bind(this))
 							)

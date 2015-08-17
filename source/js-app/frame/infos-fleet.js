@@ -983,13 +983,15 @@ class InfosFleetShipEquipment{
 								}.bind(this))				
 							)
 							.append(
-								this.elButtonInspect = $('<button class="inspect"/>').html('资料').on('click', function(){
+								//this.elButtonInspect = $('<button class="inspect"/>').html('资料').on('click', function(){
+								this.elButtonInspect = $('<button class="inspect" icon="search"/>').on('click', function(){
 									if( this.id )
 										_frame.infos.show('[[EQUIPMENT::' + this.id + ']]')
 								}.bind(this))
 							)
 							.append(
-								$('<button class="change"/>').html('更变').on('click',function(){
+								//$('<button class="change"/>').html('更变').on('click',function(){
+								$('<button class="change" icon="loop"/>').on('click',function(){
 									this.selectEquipmentStart()
 								}.bind(this))
 							)

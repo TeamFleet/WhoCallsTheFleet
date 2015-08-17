@@ -572,6 +572,7 @@ main>.page.infos{
 								}
 								&>.equipment-options{
 									padding-left: 	42px;
+									padding-right: 	4px;
 									&:before{
 										content: 	'★';
 										position: 	absolute;
@@ -586,7 +587,7 @@ main>.page.infos{
 										height: 	75%;
 										flex: 		2 0 40px;
 										padding-left:16px;
-										margin-right:4px;
+										margin-right:10%;
 									}
 									.equipment-rankselect{
 										.inputstyle();
@@ -608,7 +609,7 @@ main>.page.infos{
 									button{
 										//transition-property: 	opacity;
 										opacity: 	.45;
-										flex: 		1 0 26px;
+										flex: 		1 0 20px;
 										height: 	100%;
 										text-align: center;
 										vertical-align: bottom;
@@ -620,8 +621,11 @@ main>.page.infos{
 										}
 										&.remove{
 											font-family:Gothic;
-											font-size: 	percentage(22 / @base_font_size);
+											font-size: 	percentage(24 / @base_font_size);
 											font-weight:bold;
+										}
+										&[icon]{
+											font-size: 	percentage(16 / @base_font_size);
 										}
 									}
 								}

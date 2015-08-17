@@ -80,6 +80,7 @@ let Formula = {
 				ship.slot.map(function(carry, index){
 					if( equipments_by_slot[index]
 						&& $.inArray( equipments_by_slot[index].type, Formula.equipmentType.Fighters ) > -1
+						&& carry
 					){
 						result+= Math.sqrt(carry) * (equipments_by_slot[index].stat.aa || 0)
 						if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.Recons ) == -1 )
