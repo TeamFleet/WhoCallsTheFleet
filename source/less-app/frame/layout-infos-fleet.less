@@ -13,7 +13,7 @@
 //	padding:	0 !important;
 //	border:		0 !important;
 //}
-#layout>main>.page.infos{
+main>.page.infos{
 	&>.wrapper{
 		&>.fleet{
 			.flexbox();
@@ -533,7 +533,7 @@
 										line-height:1.2em;
 										font-size: 	percentage(13 / @base_font_size);
 									}
-									&>.equipment-star, &>.equipment-carry{
+									&>.equipment-star, &>.equipment-rank, &>.equipment-carry{
 										position: 	absolute;
 										right: 		6px;
 										flex: 		none;
@@ -550,11 +550,16 @@
 											font-size: 	percentage(15 / @base_font_size);
 										}
 									}
-									&>.equipment-star{
+									&>.equipment-star, &>.equipment-rank{
 										transform: 	translateY(-50%);
 										&:before{
 											content: 	'★';
 										}
+									}
+									&>.equipment-rank{
+										width: 		12px;
+										height: 	16px;
+										display: 	none;
 									}
 									&>.equipment-carry{
 										transform: 	translateY(50%);
@@ -577,11 +582,28 @@
 										opacity: 	.5;
 										pointer-events: none;
 									}
-									.equipment-starinput{
+									.equipment-starinput, .equipment-rankselect{
 										height: 	75%;
 										flex: 		2 0 40px;
 										padding-left:16px;
 										margin-right:4px;
+									}
+									.equipment-rankselect{
+										.inputstyle();
+										display: 	none;
+										position: 	relative;
+										text-align: center;
+										span{
+											height: 	32px;
+											width: 		24px;
+											text-align: center;
+											display: 	inline-block;
+											line-height:34px;
+											position: 	absolute;
+											top: 		50%;
+											left: 		50%;
+											transform: 	translateY(-50%);
+										}
 									}
 									button{
 										//transition-property: 	opacity;
@@ -662,6 +684,45 @@
 													color: 	inherit;
 												}
 											}
+											&>.equipment-infos{
+												&>.equipment-star{
+													display: 	none;
+												}
+												&>.equipment-rank{
+													display: 	block;
+													background: ~"url(@{folder_images}/Aircraft_Proficiency.png) no-repeat 50% 224px / cover";
+												}
+											}
+											&>.equipment-options{
+												.equipment-starinput{
+													display: 	none;
+												}
+												.equipment-rankselect{
+													display: 	block;
+													span{
+														background: ~"url(@{folder_images}/Aircraft_Proficiency.png) no-repeat 50% 224px / cover";
+													}
+												}
+											}
+											
+											.loop(@n, @i: 1) when (@i =< @n) {
+												&[data-rank="@{i}"]{
+													&>.equipment-infos>.equipment-rank{
+														background-position-y: unit( ((@i - 1) * -16px ), px );
+														opacity: 	1;
+														transform: 	translateY( ~"calc(-50% - 8px)");
+														&:before{
+															display: 	none;
+														}
+													}
+													&>.equipment-options .equipment-rankselect span{
+														color: transparent;
+														background-position-y: unit( ((@i - 1) * -32px ), px );
+													}
+												}
+												.loop(@n, (@i + 1))
+											}
+											.loop(8);
 										}
 									}
 								}
@@ -1215,5 +1276,39 @@
 		&.theme-10{
 			background: hsla(331,100%,65%, .35);
 		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+.menu.contextmenu-infos_fleet_rank_select>.body>div{
+	button{
+		width: 		32px;
+		height: 	32px;
+		background: ~"url(@{folder_images}/Aircraft_Proficiency.png) no-repeat 50% 0 / 24px 224px";
+		text-align: center;
+		color: 		rgba(255, 255, 255, .5);
+		vertical-align: top;
+		&:hover{
+			background-color: rgba(255, 255, 255, .15);
+		}
+		&.rank-0{
+			background-image: none;
+		}
+		.loop(@n, @i: 1) when (@i =< @n) {
+			&.rank-@{i}{
+				background-position-y: unit( ((@i - 1) * -32 ), px );
+			}
+			.loop(@n, (@i + 1))
+		}
+		.loop(8);
 	}
 }

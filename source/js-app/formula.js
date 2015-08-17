@@ -53,7 +53,7 @@ let Formula = {
 			]
 		},
 	
-	calculate: function( type, ship, equipments_by_slot, star_by_slot, options ){
+	calculate: function( type, ship, equipments_by_slot, star_by_slot, rank_by_slot, options ){
 		if( !type || !ship )
 			return 0
 		
@@ -68,6 +68,7 @@ let Formula = {
 				return _g.data.items[equipment]
 			}) || []
 		star_by_slot = star_by_slot || []
+		rank_by_slot = rank_by_slot || []
 		options = options || {}
 		
 		let result = 0
@@ -79,10 +80,28 @@ let Formula = {
 				ship.slot.map(function(carry, index){
 					if( equipments_by_slot[index]
 						&& $.inArray( equipments_by_slot[index].type, Formula.equipmentType.Fighters ) > -1
-					)
-						result+= Math.floor(Math.sqrt(carry) * (equipments_by_slot[index].stat.aa || 0))
+					){
+						result+= Math.sqrt(carry) * (equipments_by_slot[index].stat.aa || 0)
+						if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.Recons ) == -1 )
+							switch( rank_by_slot[index] ){
+								case 1: case '1':
+									result+= equipments_by_slot[index].type == 18 ? 1 : (3 / 7 * 1 ); break;
+								case 2: case '2':
+									result+= equipments_by_slot[index].type == 18 ? 4 : (3 / 7 * 2 ); break;
+								case 3: case '3':
+									result+= equipments_by_slot[index].type == 18 ? 6 : (3 / 7 * 3 ); break;
+								case 4: case '4':
+									result+= equipments_by_slot[index].type == 18 ? 11 : (3 / 7 * 4 ); break;
+								case 5: case '5':
+									result+= equipments_by_slot[index].type == 18 ? 16 : (3 / 7 * 5 ); break;
+								case 6: case '6':
+									result+= equipments_by_slot[index].type == 18 ? 17 : (3 / 7 * 6 ); break;
+								case 7: case '7':
+									result+= equipments_by_slot[index].type == 18 ? 25 : (3 / 7 * 7 ); break;
+							}
+					}
 				})
-				return result
+				return Math.floor(result)
 				break;
 			
 			// 炮击威力，除潜艇外
@@ -218,6 +237,12 @@ Formula.equipmentType.Fighters = [
 		Formula.equipmentType.CarrierRecon
 	]
 
+Formula.equipmentType.Recons = [
+		Formula.equipmentType.ReconSeaplane,
+		Formula.equipmentType.ReconSeaplaneNight,
+		Formula.equipmentType.CarrierRecon
+	]
+
 Formula.equipmentType.Radars = [
 		Formula.equipmentType.SmallRadar,
 		Formula.equipmentType.LargeRadar,
@@ -243,15 +268,15 @@ Formula.equipmentType.Searchlights = [
 
 
 
-Formula.shellingDamage = function(ship, equipments_by_slot, star_by_slot){
-	return this.calculate( 'shellingDamage', ship, equipments_by_slot, star_by_slot )
+Formula.shellingDamage = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
+	return this.calculate( 'shellingDamage', ship, equipments_by_slot, star_by_slot, rank_by_slot )
 }
-Formula.torpedoDamage = function(ship, equipments_by_slot, star_by_slot){
-	return this.calculate( 'torpedoDamage', ship, equipments_by_slot, star_by_slot )
+Formula.torpedoDamage = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
+	return this.calculate( 'torpedoDamage', ship, equipments_by_slot, star_by_slot, rank_by_slot )
 }
-Formula.hitSum = function(ship, equipments_by_slot, star_by_slot){
-	return this.calculate( 'hitSum', ship, equipments_by_slot, star_by_slot )
+Formula.hitSum = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
+	return this.calculate( 'hitSum', ship, equipments_by_slot, star_by_slot, rank_by_slot )
 }
-Formula.fighterPower = function(ship, equipments_by_slot){
-	return this.calculate( 'fighterPower', ship, equipments_by_slot )
+Formula.fighterPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
+	return this.calculate( 'fighterPower', ship, equipments_by_slot, star_by_slot, rank_by_slot )
 }

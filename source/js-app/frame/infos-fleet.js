@@ -25,7 +25,7 @@
 
 class InfosFleet{
 	constructor( id ){
-		this.el = $('<div class="fleet loading"/>')
+		this.el = $('<div class="fleet infos-fleet-body loading"/>')
 		this.doms = {}
 
 		this.fleets = []
@@ -509,6 +509,9 @@ class InfosFleetShip{
 				[
 					NUMBER 改修星级,	// 实际装备
 					...
+				],
+				[
+					NUMBER 熟练度, 	// 实际装备
 				]
 			]*/
 		// 数据实例
@@ -523,7 +526,7 @@ class InfosFleetShip{
 		if( this.el )
 			return this.el
 
-		d = d || [null, [null, -1], [], []]
+		d = d || [null, [null, -1], [], [], []]
 		this.data = d
 		this.infosFleet = infosFleet
 		this.infosFleetSubFleet = infosFleetSubFleet		
@@ -671,7 +674,7 @@ class InfosFleetShip{
 	// 单项属性计算
 		calculate(type){
 			if( Formula[type] )
-				return Formula[type]( this.shipId, this.data[2], this.data[3] )
+				return Formula[type]( this.shipId, this.data[2], this.data[3], this.data[4] )
 			return null
 		}
 
@@ -689,6 +692,8 @@ class InfosFleetShip{
 				this.data[2] = []
 			if( !this.data[3] )
 				this.data[3] = []
+			if( !this.data[4] )
+				this.data[4] = []
 			
 			if( this.data[0] )
 				this.shipId = this.data[0]
@@ -699,6 +704,7 @@ class InfosFleetShip{
 			for( let i=0; i<4; i++ ){
 				this.equipments[i].id = this.data[2][i]
 				this.equipments[i].star = this.data[3][i]
+				this.equipments[i].rank = this.data[4][i]
 			}
 			
 			this.updateAttrs()
@@ -812,6 +818,7 @@ class InfosFleetShip{
 						if( !this._updating ){
 							this.equipments[i].id = null
 							this.equipments[i].star = null
+							this.equipments[i].rank = null
 						}
 					}
 			}else{
@@ -820,7 +827,8 @@ class InfosFleetShip{
 				this.elAvatar.html('')
 				this.data[2] = []
 				this.data[3] = []
-				// [null, [null, -1], [], []]
+				this.data[4] = []
+				// [null, [null, -1], [], [], []]
 			}
 			
 			this.save()
@@ -923,6 +931,9 @@ class InfosFleetShipEquipment{
 							.append(
 								this.elStar = $('<span class="equipment-star"/>').html(0)
 							)
+							.append(
+								this.elRank = $('<span class="equipment-rank"/>')
+							)
 							.append(function(){
 								let el = $('<span class="equipment-carry"/>').html(0)
 								this.elCarry = this.elCarry.add( el )
@@ -945,6 +956,30 @@ class InfosFleetShipEquipment{
 									value = parseInt(value)
 									if( !isNaN(value) && this.star != value )
 										this.star = value
+								}.bind(this))				
+							)
+							.append(
+								this.elSelectRank = $('<div/>',{
+									'class':	'equipment-rankselect',
+									'html': 	'<span>无</span>'
+								}).on('click', function(){
+									if( !InfosFleet.menuRankSelect ){
+										InfosFleet.menuRankSelectItems = $('<div/>')
+										for(let i=0; i<8; i++){
+											$('<button class="rank-' + i + '"/>')
+												.html( !i ? '无' : '' )
+												.on('click', function(){
+													InfosFleet.menuRankSelectCur.rank = i
+												})
+												.appendTo(InfosFleet.menuRankSelectItems)
+										}
+										InfosFleet.menuRankSelect = new _menu({
+											'className': 'contextmenu-infos_fleet_rank_select',
+											'items': [InfosFleet.menuRankSelectItems]
+										})
+									}
+									InfosFleet.menuRankSelectCur = this
+									InfosFleet.menuRankSelect.show(this.elSelectRank)
 								}.bind(this))				
 							)
 							.append(
@@ -1070,6 +1105,36 @@ class InfosFleetShipEquipment{
 			}else{
 				this.infosFleetShip.data[3][this.index] = null
 				this.el.removeAttr('data-star')
+			}
+			this.infosFleetShip.infosFleetSubFleet.summaryCalc()
+			this.save()
+		}
+	
+	// 熟练度
+		get rank(){
+			return this.infosFleetShip.data[4][this.index]
+		}
+		set rank( value ){
+			if( this.id && $.inArray(_g.data.items[this.id].type, _g.data.item_type_collections[3].types) > -1 ){
+				value = parseInt(value) || null
+				
+				if( value > 7 )
+					value = 7
+				
+				if( value < 0 )
+					value = 0
+				
+				if( value ){
+					this.infosFleetShip.data[4][this.index] = value
+					this.el.attr('data-rank', value)
+				}else{
+					this.infosFleetShip.data[4][this.index] = null
+					this.el.attr('data-rank', '')
+				}
+				
+			}else{
+				this.infosFleetShip.data[4][this.index] = null
+				this.el.removeAttr('data-rank')
 			}
 			this.infosFleetShip.infosFleetSubFleet.summaryCalc()
 			this.save()

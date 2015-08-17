@@ -2402,7 +2402,7 @@ let Formula = {
 			]
 		},
 	
-	calculate: function( type, ship, equipments_by_slot, star_by_slot, options ){
+	calculate: function( type, ship, equipments_by_slot, star_by_slot, rank_by_slot, options ){
 		if( !type || !ship )
 			return 0
 		
@@ -2417,6 +2417,7 @@ let Formula = {
 				return _g.data.items[equipment]
 			}) || []
 		star_by_slot = star_by_slot || []
+		rank_by_slot = rank_by_slot || []
 		options = options || {}
 		
 		let result = 0
@@ -2428,10 +2429,28 @@ let Formula = {
 				ship.slot.map(function(carry, index){
 					if( equipments_by_slot[index]
 						&& $.inArray( equipments_by_slot[index].type, Formula.equipmentType.Fighters ) > -1
-					)
-						result+= Math.floor(Math.sqrt(carry) * (equipments_by_slot[index].stat.aa || 0))
+					){
+						result+= Math.sqrt(carry) * (equipments_by_slot[index].stat.aa || 0)
+						if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.Recons ) == -1 )
+							switch( rank_by_slot[index] ){
+								case 1: case '1':
+									result+= equipments_by_slot[index].type == 18 ? 1 : (3 / 7 * 1 ); break;
+								case 2: case '2':
+									result+= equipments_by_slot[index].type == 18 ? 4 : (3 / 7 * 2 ); break;
+								case 3: case '3':
+									result+= equipments_by_slot[index].type == 18 ? 6 : (3 / 7 * 3 ); break;
+								case 4: case '4':
+									result+= equipments_by_slot[index].type == 18 ? 11 : (3 / 7 * 4 ); break;
+								case 5: case '5':
+									result+= equipments_by_slot[index].type == 18 ? 16 : (3 / 7 * 5 ); break;
+								case 6: case '6':
+									result+= equipments_by_slot[index].type == 18 ? 17 : (3 / 7 * 6 ); break;
+								case 7: case '7':
+									result+= equipments_by_slot[index].type == 18 ? 25 : (3 / 7 * 7 ); break;
+							}
+					}
 				})
-				return result
+				return Math.floor(result)
 				break;
 			
 			// 炮击威力，除潜艇外
@@ -2567,6 +2586,12 @@ Formula.equipmentType.Fighters = [
 		Formula.equipmentType.CarrierRecon
 	]
 
+Formula.equipmentType.Recons = [
+		Formula.equipmentType.ReconSeaplane,
+		Formula.equipmentType.ReconSeaplaneNight,
+		Formula.equipmentType.CarrierRecon
+	]
+
 Formula.equipmentType.Radars = [
 		Formula.equipmentType.SmallRadar,
 		Formula.equipmentType.LargeRadar,
@@ -2592,17 +2617,17 @@ Formula.equipmentType.Searchlights = [
 
 
 
-Formula.shellingDamage = function(ship, equipments_by_slot, star_by_slot){
-	return this.calculate( 'shellingDamage', ship, equipments_by_slot, star_by_slot )
+Formula.shellingDamage = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
+	return this.calculate( 'shellingDamage', ship, equipments_by_slot, star_by_slot, rank_by_slot )
 }
-Formula.torpedoDamage = function(ship, equipments_by_slot, star_by_slot){
-	return this.calculate( 'torpedoDamage', ship, equipments_by_slot, star_by_slot )
+Formula.torpedoDamage = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
+	return this.calculate( 'torpedoDamage', ship, equipments_by_slot, star_by_slot, rank_by_slot )
 }
-Formula.hitSum = function(ship, equipments_by_slot, star_by_slot){
-	return this.calculate( 'hitSum', ship, equipments_by_slot, star_by_slot )
+Formula.hitSum = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
+	return this.calculate( 'hitSum', ship, equipments_by_slot, star_by_slot, rank_by_slot )
 }
-Formula.fighterPower = function(ship, equipments_by_slot){
-	return this.calculate( 'fighterPower', ship, equipments_by_slot )
+Formula.fighterPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
+	return this.calculate( 'fighterPower', ship, equipments_by_slot, star_by_slot, rank_by_slot )
 }
 
 /*
@@ -4722,7 +4747,7 @@ _frame.infos.init = function(){
 
 class InfosFleet{
 	constructor( id ){
-		this.el = $('<div class="fleet loading"/>')
+		this.el = $('<div class="fleet infos-fleet-body loading"/>')
 		this.doms = {}
 
 		this.fleets = []
@@ -5206,6 +5231,9 @@ class InfosFleetShip{
 				[
 					NUMBER 改修星级,	// 实际装备
 					...
+				],
+				[
+					NUMBER 熟练度, 	// 实际装备
 				]
 			]*/
 		// 数据实例
@@ -5220,7 +5248,7 @@ class InfosFleetShip{
 		if( this.el )
 			return this.el
 
-		d = d || [null, [null, -1], [], []]
+		d = d || [null, [null, -1], [], [], []]
 		this.data = d
 		this.infosFleet = infosFleet
 		this.infosFleetSubFleet = infosFleetSubFleet		
@@ -5368,7 +5396,7 @@ class InfosFleetShip{
 	// 单项属性计算
 		calculate(type){
 			if( Formula[type] )
-				return Formula[type]( this.shipId, this.data[2], this.data[3] )
+				return Formula[type]( this.shipId, this.data[2], this.data[3], this.data[4] )
 			return null
 		}
 
@@ -5386,6 +5414,8 @@ class InfosFleetShip{
 				this.data[2] = []
 			if( !this.data[3] )
 				this.data[3] = []
+			if( !this.data[4] )
+				this.data[4] = []
 			
 			if( this.data[0] )
 				this.shipId = this.data[0]
@@ -5396,6 +5426,7 @@ class InfosFleetShip{
 			for( let i=0; i<4; i++ ){
 				this.equipments[i].id = this.data[2][i]
 				this.equipments[i].star = this.data[3][i]
+				this.equipments[i].rank = this.data[4][i]
 			}
 			
 			this.updateAttrs()
@@ -5509,6 +5540,7 @@ class InfosFleetShip{
 						if( !this._updating ){
 							this.equipments[i].id = null
 							this.equipments[i].star = null
+							this.equipments[i].rank = null
 						}
 					}
 			}else{
@@ -5517,7 +5549,8 @@ class InfosFleetShip{
 				this.elAvatar.html('')
 				this.data[2] = []
 				this.data[3] = []
-				// [null, [null, -1], [], []]
+				this.data[4] = []
+				// [null, [null, -1], [], [], []]
 			}
 			
 			this.save()
@@ -5620,6 +5653,9 @@ class InfosFleetShipEquipment{
 							.append(
 								this.elStar = $('<span class="equipment-star"/>').html(0)
 							)
+							.append(
+								this.elRank = $('<span class="equipment-rank"/>')
+							)
 							.append(function(){
 								let el = $('<span class="equipment-carry"/>').html(0)
 								this.elCarry = this.elCarry.add( el )
@@ -5642,6 +5678,30 @@ class InfosFleetShipEquipment{
 									value = parseInt(value)
 									if( !isNaN(value) && this.star != value )
 										this.star = value
+								}.bind(this))				
+							)
+							.append(
+								this.elSelectRank = $('<div/>',{
+									'class':	'equipment-rankselect',
+									'html': 	'<span>无</span>'
+								}).on('click', function(){
+									if( !InfosFleet.menuRankSelect ){
+										InfosFleet.menuRankSelectItems = $('<div/>')
+										for(let i=0; i<8; i++){
+											$('<button class="rank-' + i + '"/>')
+												.html( !i ? '无' : '' )
+												.on('click', function(){
+													InfosFleet.menuRankSelectCur.rank = i
+												})
+												.appendTo(InfosFleet.menuRankSelectItems)
+										}
+										InfosFleet.menuRankSelect = new _menu({
+											'className': 'contextmenu-infos_fleet_rank_select',
+											'items': [InfosFleet.menuRankSelectItems]
+										})
+									}
+									InfosFleet.menuRankSelectCur = this
+									InfosFleet.menuRankSelect.show(this.elSelectRank)
 								}.bind(this))				
 							)
 							.append(
@@ -5767,6 +5827,36 @@ class InfosFleetShipEquipment{
 			}else{
 				this.infosFleetShip.data[3][this.index] = null
 				this.el.removeAttr('data-star')
+			}
+			this.infosFleetShip.infosFleetSubFleet.summaryCalc()
+			this.save()
+		}
+	
+	// 熟练度
+		get rank(){
+			return this.infosFleetShip.data[4][this.index]
+		}
+		set rank( value ){
+			if( this.id && $.inArray(_g.data.items[this.id].type, _g.data.item_type_collections[3].types) > -1 ){
+				value = parseInt(value) || null
+				
+				if( value > 7 )
+					value = 7
+				
+				if( value < 0 )
+					value = 0
+				
+				if( value ){
+					this.infosFleetShip.data[4][this.index] = value
+					this.el.attr('data-rank', value)
+				}else{
+					this.infosFleetShip.data[4][this.index] = null
+					this.el.attr('data-rank', '')
+				}
+				
+			}else{
+				this.infosFleetShip.data[4][this.index] = null
+				this.el.removeAttr('data-rank')
 			}
 			this.infosFleetShip.infosFleetSubFleet.summaryCalc()
 			this.save()
