@@ -6010,9 +6010,18 @@ _p.el.tablelist = {
 		if( el.data('tablelist') )
 			return true
 
-		el.data({
-			'tablelist': new _tablelist( el )
-		})
+		/*if( container.hasClass('ships') )
+			this.listtype = 'ships'
+		else if( container.hasClass('equipments') )
+			this.listtype = 'equipments'
+		else */if( el.hasClass('fleets') )
+			el.data({
+				'tablelist': new TablelistFleets( el )
+			})
+		else
+			el.data({
+				'tablelist': new _tablelist( el )
+			})
 	},
 
 	init: function(tar, els){
@@ -6024,6 +6033,346 @@ _p.el.tablelist = {
 		})
 	}
 }
+
+
+
+
+
+class Tablelist{
+	constructor( container, options ){
+		this.dom = {
+			'container': container
+		}
+		
+		options = options || {}
+		
+		this.trIndex = 0
+		this.flexgrid_empty_count = options.flexgrid_empty_count || 8
+		this.sort_data_by_stat = options.sort_data_by_stat || {}
+		this.sort_default_order_by_stat = options.sort_default_order_by_stat || {}
+		/*
+		if( this.is_init )
+			return true
+	
+		if( this['_' + this.listtype + '_init'] )
+			this['_' + this.listtype + '_init']()
+	
+		this.is_init = true
+		*/
+	}
+
+	// 添加选项
+		append_option( type, name, label, value, suffix, options ){
+			options = options || {}
+			function gen_input(){
+				let input
+					,option_empty
+					,o_el
+					,id = null
+				switch( type ){
+					case 'text':
+					case 'number':
+					case 'hidden':
+						input = $('<input type="'+type+'" name="'+name+'" id="'+id+'" />').val(value)
+						break;
+					case 'select':
+						input = $('<select name="'+name+'" id="'+id+'" />')
+						option_empty = $('<option value=""/>').html('').appendTo( input )
+						value.forEach(function(currentValue, i){
+							if( typeof currentValue == 'object' ){
+								o_el = $('<option value="' + (typeof currentValue.val == 'undefined' ? currentValue['value'] : currentValue.val) + '"/>')
+									.html(currentValue['title'] || currentValue['name'])
+									.appendTo( input )
+							}else{
+								o_el = $('<option value="' + currentValue + '"/>')
+									.html(currentValue)
+									.appendTo( input )
+							}
+							if( typeof options['default'] != 'undefined' && o_el.val() == options['default'] ){
+								o_el.prop('selected', true)
+							}
+						})
+						if( !value || !value.length ){
+							option_empty.remove()
+							$('<option value=""/>').html('...').appendTo( input )
+						}
+						if( options['new'] ){
+							$('<option value=""/>').html('==========').insertAfter( option_empty )
+							$('<option value="___new___"/>').html('+ 新建').insertAfter( option_empty )
+							input.on('change.___new___', function(){
+								var select = $(this)
+								if( select.val() == '___new___' ){
+									select.val('')
+									options['new']( input )
+								}
+							})
+						}
+						break;
+					case 'checkbox':
+						input = $('<input type="'+type+'" name="'+name+'" id="'+id+'" />').prop('checked', value)
+						break;
+					case 'radio':
+						input = $();
+						value.forEach(function(currentValue, i){
+							var title, val
+								,checked = false
+							if( value[i].push ){
+								val = value[i][0]
+								title = value[i][1]
+							}else{
+								val = value[i].val || value[i].value
+								title = value[i].title || value[i].name
+							}
+							if( options.radio_default && options.radio_default == val )
+								checked = true
+							input = input.add(
+								$('<input type="radio" name="'+name+'" id="'+id+'-'+val+'" ischecked="'+checked+'" />')
+									.val(val)
+									.prop('checked', (checked || (!checked && i == 0) ))
+								)
+							input = input.add($('<label for="'+id+'-'+val+'"/>').html( title ))
+						})
+						break;
+				}
+		
+				if( options.required ){
+					input.prop('required', true)
+				}
+		
+				if( options.onchange ){
+					input.on('change.___onchange___', function(e){
+						options.onchange( e, $(this) )
+					})
+					if( options['default'] )
+						input.trigger('change')
+				}
+		
+				if( !name )
+					input.attr('name', null)
+		
+				return input
+			}
+		
+			let line = $('<p/>').addClass(name).appendTo( this.dom.filters )
+				,id = '_input_g' + parseInt(_g.inputIndex)
+				,input = gen_input().appendTo(line)
+		
+			label = label ? $('<label for="'+id+'"/>').html( label ).appendTo(line) : null
+		
+			if( type == 'checkbox' && label )
+				label.insertAfter(input)
+		
+			if( suffix )
+				$('<label for="'+id+'"/>').html(suffix).appendTo(line)
+		
+			_g.inputIndex++
+			return line
+		}
+
+		// 强制 thead 重绘，以解决某些CSS计算延迟问题
+			thead_redraw( timeout_duration ){
+				if( this.dom.thead && this.dom.thead.length ){
+					var thead = this.dom.thead
+					setTimeout(function(){
+						thead.hide().show(0)
+					}, timeout_duration || 10)
+				}
+			}
+
+		// 表格排序相关
+			// 排序表格中正在显示行中某一列(td:nth-of-type)
+			// 返回一个Array，每一个元素为jQuery DOM Object
+			// is_ascending 	是否为升序，默认降序
+			// rows				目标行，默认为全部可见行
+				sort_column( nth, is_ascending, rows ){
+					if( !rows ){
+						let tbody = this.dom.tbody
+						if( !tbody || !tbody.length )
+							tbody = this.dom.table.find('tbody')
+						rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
+					}
+					nth = nth || 1
+		
+					// 建立临时用对象，在函数结束时delete
+						this._tmp_values = []
+						this._tmp_value_map_cell = {}
+		
+					// 遍历，将值全部导出到 _tmp_values，_tmp_value_map_cell 中记录 值 -> jQuery DOM
+						rows.find('td:nth-of-type(' + nth + ')').each(function(index, element){
+							let cell = $(element)
+								,val = cell.data('value')
+		
+							val = parseFloat(val)
+		
+							if( $.inArray( val, this._tmp_values ) < 0 )
+								this._tmp_values.push( val )
+		
+							if( !this._tmp_value_map_cell[val] )
+								this._tmp_value_map_cell[val] = $()
+		
+							this._tmp_value_map_cell[val] = this._tmp_value_map_cell[val].add( cell )
+						}.bind(this))
+		
+					// 排序
+						this._tmp_values.sort(function(a, b){
+							if( is_ascending )
+								return a-b
+							else
+								return b-a
+						})
+		
+					// 根据排序结果，整理返回结果
+						let return_array = []
+						this._tmp_values.forEach(function(currentValue){
+							return_array.push( this._tmp_value_map_cell[currentValue] )
+						}, this)
+		
+					// delete 临时对象
+						delete this._tmp_values
+						delete this._tmp_value_map_cell
+		
+					return return_array
+				}
+
+			// 标记表格全部数据列中第一和第二高值的单元格
+				mark_high( cacheSortData ){
+					let tbody = this.dom.tbody
+		
+					if( !tbody || !tbody.length )
+						tbody = this.dom.table.find('tbody')
+		
+					let rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
+						,sort_data_by_stat = this.sort_data_by_stat
+		
+					rows.find('td[data-value]').removeClass('sort-first sort-second')
+		
+					rows.eq(0).find('td[data-value]').each(function(index, element){
+						let is_ascending = false
+							,$this = $(element)
+							,stat = $this.data('stat')
+		
+						// 以下属性不进行标记，但仍计算排序
+							,noMark = stat.match(/\b(speed|range)\b/ )
+		
+						if( typeof this.sort_default_order_by_stat[stat] == 'undefined' ){
+							// 以下属性为升序
+								if( stat.match(/\b(consum_fuel|consum_ammo)\b/ ) )
+									is_ascending = true
+							this.sort_default_order_by_stat[stat] = is_ascending ? 'asc' : 'desc'
+						}else{
+							is_ascending = this.sort_default_order_by_stat[stat] == 'asc' ? true : false
+						}
+		
+						let sort = _tablelist.prototype.sort_column( index+1, is_ascending, rows )
+							,max = Math.min( 6, Math.ceil(rows.length / 2) + 1 )
+		
+						if( !noMark && sort.length > 1 && sort[0].length < max ){
+							sort[0].addClass('sort-first')
+							if( sort.length > 2 && sort[1].length < max )
+								sort[1].addClass('sort-second')
+						}
+		
+						// 将排序结果存储到表头对应的列中
+							if( cacheSortData )
+								sort_data_by_stat[stat] = sort
+							else
+								delete( sort_data_by_stat[stat] )
+		
+					}.bind(this))
+		
+					return rows
+				}
+
+			// thead td, thead th
+			// 点击表头单元格，表格排序
+				sort_table_from_theadcell( cell ){
+					if( !cell )
+						return
+					
+					let stat = cell.data('stat')
+						,sortData = this.sort_data_by_stat[stat]
+						
+					if( !stat || !sortData )
+						return false
+		
+					if( stat != this.lastSortedStat ){
+						if( this.lastSortedHeader )
+							this.lastSortedHeader.removeClass('sorting desc asc')
+						cell.addClass('sorting')
+					}
+		
+					let order = (stat == this.lastSortedStat && this.lastSortedOrder == 'obverse')
+									? 'reverse'
+									: 'obverse'
+						,i = order == 'reverse' ? sortData.length - 1 : 0
+		
+					if( this.sort_default_order_by_stat[stat] ){
+						let reverse = this.sort_default_order_by_stat[stat] == 'asc' ? 'desc' : 'asc'
+						if( order == 'obverse' ){
+							cell.removeClass(reverse).addClass(this.sort_default_order_by_stat[stat])
+						}else{
+							cell.removeClass(this.sort_default_order_by_stat[stat]).addClass(reverse)
+						}
+					}
+		
+					this.sortedRow = $()
+		
+					while( sortData[i] ){
+						this._tmpDOM = sortData[i].parent()
+						this.sortedRow = this.sortedRow.add( this._tmpDOM )
+						this._tmpDOM.appendTo( this.dom.tbody )
+						i = order == 'reverse' ? i - 1 : i + 1
+					}
+		
+					// 修改排序提示按钮
+						this.dom.btn_compare_sort.removeClass('disabled').html('取消排序')
+		
+					this.lastSortedStat = stat
+					this.lastSortedOrder = order
+					this.lastSortedHeader = cell
+					delete this._tmpDOM
+				}
+
+			// 重置表格排序
+				sort_table_restore(){
+					if( !this.sortedRow )
+						return true
+		
+					// 还原所有DOM位置
+						let parent, arr = []
+						this.sortedRow.each(function(index, element){
+							var $this = $(element)
+								,trIndex = parseInt( $this.data('trindex') )
+							parent = parent || $this.parent()
+							arr.push({
+								'index': 	trIndex,
+								'el': 		$this,
+								'prev': 	parent.children('tr[data-trindex="' + (trIndex - 1) + '"]')
+							})
+						})
+						// 如果在上一步直接将DOM移动到上一个index行的后方，可能会因为目标DOM也为排序目标同时在当前DOM顺序后，造成结果不正常
+						// 故需要两步操作
+						arr.sort(function(a, b){
+							return a['index']-b['index']
+						})
+						arr.forEach(function(currentValue){
+							currentValue.el.insertAfter( currentValue.prev )
+						})
+		
+					// 修改排序提示按钮
+						this.dom.btn_compare_sort.addClass('disabled').html('点击表格标题可排序')
+		
+					// 重置其他样式
+						this.lastSortedHeader.removeClass('sorting desc asc')
+		
+					delete this.sortedRow
+					delete this.lastSortedStat
+					delete this.lastSortedOrder
+					delete this.lastSortedHeader
+					return true
+				}
+}
+Tablelist.index = 0
 
 
 
@@ -6681,439 +7030,31 @@ _tablelist.prototype._equipments_init = function(){
 		文本
 */
 
-class TablelistFleets extends _tablelist{
-	constructor(){
-		super()
-	}
-}
-
-	_tablelist.prototype._fleets_columns = [
-			'  ',
-			['创建者',	'user'],
-			['修改时间','time_modify'],
-			['评价',	'rating'],
-			['',		'options']
-		]
-
-	_tablelist.prototype.kancolle_calc = {
-		'_ApplicationId': 	'l1aps8iaIfcq2ZzhOHJWNUU2XrNySIzRahodijXW',
-		'_ClientVersion': 	'js1.2.19',
-		'_InstallationId': 	'62522018-ec82-b434-f5a5-08c3ab61d932',
-		'_JavaScriptKey': 	'xOrFpWEQZFxUDK2fN1DwbKoj3zTKAEkgJHzwTuZ4'
-	}
+class TablelistFleets extends Tablelist{
+	constructor( container, options ){
+		super( container, options )
+		
+		this.columns = [
+				'  ',
+				['创建者',	'user'],
+				['修改时间','time_modify'],
+				['评价',	'rating'],
+				['',		'options']
+			]
 	
-	//_g.data.fleets_tablelist = {
-	//	lists: [],
-	//	items: {}
-	//}
-
-
-
-// 新建数据
-	_tablelist.prototype._fleets_new_data = function(obj){
-		return $.extend({
-			'data': 		[],
-			'time_create': 	(new Date()).valueOf(),
-			'time_modify': 	(new Date()).valueOf(),
-			'hq_lv': 		-1,
-			'name': 		'',
-			'note': 		'',
-			'user': 		{},
-			'rating': 		-1,
-			'theme': 		_g.randNumber(10)
-		}, obj || {})
-	}
-
-
-
-// 读取已保存数据
-	_tablelist.prototype._fleets_loaddata = function(){
-		var deferred = Q.defer()
-		
-		_db.fleets.find({}).sort({name: 1}).exec(function(err, docs){
-			if( err ){
-				deferred.resolve( [] )
-			}else{
-				deferred.resolve( docs )
-			}
-		})
-		
-		return deferred.promise
-		//return []
-	// PLACEHOLDER START
-	/*
-		var deferred = Q.defer()
-		var data = $.extend( this.kancolle_calc, {
-				'_method': 	'GET',
-				'where': {
-					'owner': 	'Diablohu'
-				}
-			})
-		$.ajax({
-			'url': 	'https://api.parse.com/1/classes/Deck',
-			'data': JSON.stringify(data),
-			'method': 'POST',
-			'success': function( data ){
-				var arr = []
-				if( data && data['results'] ){
-					for(var i in data['results']){
-						arr.push( this._fleets_parse_kancolle_calc_data(data['results'][i]) )
-					}
-				}
-				deferred.resolve( arr )
-			}.bind(this),
-			'error': function( jqXHR, textStatus, errorThrown ){
-				_g.log(jqXHR)
-				_g.log(textStatus)
-				_g.log(errorThrown)
-				deferred.resolve([])
-			}
-		})
-		return deferred.promise
-	*/
-	// PLACEHOLDER END
-	// PLACEHOLDER START
-	/*
-		return [
-			{
-				'name': 	'1-5',
-				'owner': 	'Diablohu',
-				'hq_lv': 	101,
-				'note': 	'',
-				'createdAt':'2014-09-30T21:06:44.046Z',
-				'updatedAt':'2015-05-20T03:04:51.898Z',
-				'ojbectId': 'XU9DFdVoVQ',
-				'data': 	'[[["408",[83,-1],[94,64,100,54]],["82",[58,-1],[79,79,79,26]],["321",[88,-1],[47,47,34,45]],["293",[54,-1],[47,47,87,45]]]]'
-			}
-		]*/
-	// PLACEHOLDER END
-	}
-
-
-
-// 检测数据，删除空数据条目
-	_tablelist.prototype._fleets_validdata = function(arr){
-		let deferred = Q.defer()
-			,to_remove = []
-			,i = 0
-			,valid = function( fleetdata ){
-				if( fleetdata['hq_lv'] > -1
-					|| fleetdata['name']
-					|| fleetdata['note']
-					|| fleetdata['rating'] > -1
-				){
-					return true
-				}
-				if( !fleetdata.data || !fleetdata.data.length || !fleetdata.data.push )
-					return false
-				for( let fleet of fleetdata.data ){
-					if( !fleet || !fleet.length || !fleet.push )
-						return false
-					for( let shipdata of fleet ){
-						if( typeof shipdata != 'undefined' && typeof shipdata[0] != 'undefined' && shipdata[0] )
-							return true
-					}
-				}
-				return false
-			}
-			
-		while( i < arr.length ){
-			if( valid( arr[i] ) ){
-				i++
-			}else{
-				to_remove.push( arr[i]._id )
-				arr.splice(i, 1)
-			}
+		this.kancolle_calc = {
+			'_ApplicationId': 	'l1aps8iaIfcq2ZzhOHJWNUU2XrNySIzRahodijXW',
+			'_ClientVersion': 	'js1.2.19',
+			'_InstallationId': 	'62522018-ec82-b434-f5a5-08c3ab61d932',
+			'_JavaScriptKey': 	'xOrFpWEQZFxUDK2fN1DwbKoj3zTKAEkgJHzwTuZ4'
 		}
 		
-		if( to_remove.length ){
-			_db.fleets.remove({
-				_id: { $in: to_remove }
-			}, { multi: true }, function (err, numRemoved) {
-				deferred.resolve( arr )
-			});
-		}else{
-			deferred.resolve( arr )
-		}
-		
-		return deferred.promise
-	}
+		//_g.data.fleets_tablelist = {
+		//	lists: [],
+		//	items: {}
+		//}
 
-
-
-// 检测已处理数据，如果没有条目，标记样式
-	_tablelist.prototype._fleets_datacheck = function(arr){
-		arr = arr || []
-
-		if( !arr.length )
-			this.dom.container.addClass('nocontent')
-
-		return arr
-	}
-
-
-
-// 创建全部数据行内容
-	_tablelist.prototype._fleets_append_all_items = function(arr){
-		arr = arr || []
-		arr.sort(function(a, b){
-			if (a['name'] < b['name']) return -1;
-			if (a['name'] > b['name']) return 1;
-			return 0;
-		})
-		_g.log(arr)
-
-		var deferred = Q.defer()
-
-		// 创建flexgrid placeholder
-			var k = 0
-			while(k < this.flexgrid_empty_count){
-				if( !k )
-					this.flexgrid_ph = $('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
-				else
-					$('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
-				k++
-			}
-
-		// 创建数据行
-			arr.forEach(function(currentValue, i){
-				setTimeout((function(i){
-					this._fleets_append_item( arr[i] )
-					if( i >= arr.length -1 )
-						deferred.resolve()
-				}.bind(this))(i), 0)
-			}.bind(this))
-
-		if( !arr.length )
-			deferred.resolve()
-
-		return deferred.promise
-	}
-
-
-
-// 创建单行数据行内容
-	_tablelist.prototype._fleets_append_item = function( data, index, isPrepend ){
-		if( !data )
-			return false
-
-		if( typeof index == 'undefined' ){
-			index = this.trIndex
-			this.trIndex++
-		}
-		
-		//_g.log(data)
-		
-		var tr = $('<tr class="row"/>')
-					.attr({
-						'data-trindex': index,
-						'data-fleetid': data._id || 'PLACEHOLDER',
-						//'data-infos': 	'[[FLEET::'+JSON.stringify(data)+']]'
-						'data-infos': 	'[[FLEET::'+data._id+']]',
-						'data-theme':	data.theme
-					})
-					.data({
-						'initdata': 	data
-					})
-		
-		_tablelist.prototype._fleets_columns.forEach(function(column){
-			switch( column[1] ){
-				case ' ':
-					var html = '<i>'
-						,ships = data['data'][0] || []
-						,j = 0;
-					while( j < 6 ){
-						if( ships[j] && ships[j][0] )
-							html+='<img src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0.webp" contextmenu="disabled"/>'
-						else
-							html+='<s/>'
-						j++
-					}
-					html+='</i>'
-					$('<th/>')
-						.attr(
-							'data-value',
-							data['name']
-						)
-						.html(
-							html
-							+ '<strong>' + data['name'] + '</strong>'
-							+ '<em></em>'
-						)
-						.appendTo(tr)
-					break;
-				default:
-					var datavalue = data[column[1]]
-					$('<td/>')
-						.attr(
-							'data-value',
-							datavalue
-						)
-						.html( datavalue )
-						.appendTo(tr)
-					break;
-			}
-		})
-
-		if( isPrepend )
-			tr.prependTo( this.dom.tbody )
-		else
-			tr.insertBefore( this.flexgrid_ph )
-
-		return tr
-	}
-
-
-// [按钮操作] 新建/导入配置
-	_tablelist.prototype._fleets_btn_new = function(){
-		if( !this._fleets_menu_new )
-			this._fleets_menu_new = new _menu({
-				'target': 	this.dom.btn_new,
-				'items': [
-					$('<div class="menu_fleets_new"/>')
-						.append(
-							$('<menuitem/>').html('新建配置')
-								.on('click', function(){
-									this._fleets_action_new()
-								}.bind(this))
-						)
-						.append(
-							$('<menuitem/>').html('导入配置代码')
-								.on('click', function(){
-									if( !TablelistFleets.modalImport ){
-										TablelistFleets.modalImport = $('<div/>')
-											.append(
-												TablelistFleets.modalImportTextarea = $('<textarea/>',{
-													'placeholder': '输入配置代码...'
-												})
-											)
-											.append(
-												$('<p/>').html('* 配置代码兼容<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
-											)
-											.append(
-												TablelistFleets.modalImportBtn = $('<button class="button"/>').html('导入')
-											)
-									}
-									TablelistFleets.modalImportTextarea.val('')
-									TablelistFleets.modalImportBtn.off('click.import')
-										.on('click', function(){
-											let val = TablelistFleets.modalImportTextarea.val()
-											console.log(val)
-											if( val ){
-												this._fleets_action_new({
-													'data': 	JSON.parse(TablelistFleets.modalImportTextarea.val())
-												})
-												_frame.modal.hide()
-												TablelistFleets.modalImportTextarea.val('')
-											}
-										}.bind(this))
-									_frame.modal.show(
-										TablelistFleets.modalImport,
-										'导入配置代码',
-										{
-											'classname': 	'infos_fleet infos_fleet_import'
-										}
-									)
-								}.bind(this))
-						)
-						.append(
-							$('<menuitem/>').html('[NYI] 导入配置文件')
-						)
-				]
-			})
-
-		this._fleets_menu_new.show()
-	}
-
-
-
-// [按钮操作] 选项设置
-	_tablelist.prototype._fleets_btn_settings = function(){
-		_g.log('CLICK: 选项设置')
-	}
-
-
-// [操作] 新建配置
-	_tablelist.prototype._fleets_action_new = function( dataDefault ){
-		dataDefault = dataDefault || {}
-		//_frame.infos.show('[[FLEET::__NEW__]]')
-		console.log(dataDefault)
-
-		_db.fleets.insert( this._fleets_new_data(dataDefault), function(err, newDoc){
-			console.log(err, newDoc)
-			if(err){
-				_g.error(err)
-			}else{
-				if( _frame.app_main.cur_page == 'fleets' ){
-					_frame.infos.show('[[FLEET::' + newDoc['_id'] + ']]')
-					this._fleets_menu_new.hide()
-					//this.init(newDoc)
-					
-					//for(let i in _g.data.fleets_tablelist.lists){
-					//	_g.data.fleets_tablelist.lists[i]._fleets_append_item( newDoc, null, true )
-					//}
-				}
-			}
-		}.bind(this))
-	}
-
-
-
-// 处理舰载机厨的单项数据，返回新格式
-	_tablelist.prototype._fleets_parse_kancolle_calc_data = function(obj){
-		return this._fleets_new_data(obj)
-	}
-
-
-
-// 菜单
-	_tablelist.prototype._fleets_contextmenu_show = function($tr, $em){
-		this._ships_contextmenu_curel = $tr
-	
-		if( !this._fleets_contextmenu )
-			this._fleets_contextmenu = new _menu({
-				'className': 'contextmenu-fleet',
-				'items': [
-					$('<menuitem/>').html('详情')
-						.on({
-							'click': function(e){
-								this._ships_contextmenu_curel.trigger('click', [true])
-							}.bind(this)
-						}),
-						
-					$('<menuitem/>').html('导出配置')
-						.on({
-							'click': function(e){
-								InfosFleet.modalExport_show(this._ships_contextmenu_curel.data('initdata'))
-							}.bind(this)
-						}),
-						
-					$('<menuitem/>').html('移除')
-						.on({
-							'click': function(e){
-								let id = this._ships_contextmenu_curel.attr('data-fleetid')
-								_db.fleets.remove({
-									_id: id
-								}, { multi: true }, function (err, numRemoved) {
-									_g.log('Fleet ' + id + ' removed.')
-								});
-								this._ships_contextmenu_curel.remove()
-							}.bind(this)
-						})
-				]
-			})
-	
-		console.log( $em || $tr )
-		this._fleets_contextmenu.show($em || $tr)
-	}
-
-
-
-// 初始化函数
-	_tablelist.prototype._fleets_init = function(){
-		var promise_chain 	= Q.fcall(function(){})
-		
-		this.trIndex = 0
+		let promise_chain 	= Q.fcall(function(){})
 
 		// 标记全局载入状态
 			_frame.app_main.loading.push('tablelist_'+this._index)
@@ -7126,7 +7067,7 @@ class TablelistFleets extends _tablelist{
 			// 左 - 新建
 				this.dom.btn_new = $('<button class="new" icon="import"/>').html('新建/导入')
 									.on('click',function(){
-										this._fleets_btn_new()
+										this.btn_new()
 									}.bind(this))
 									.appendTo(this.dom.filters)
 			// 右 - 选项组
@@ -7134,7 +7075,7 @@ class TablelistFleets extends _tablelist{
 				/*
 				this.dom.btn_settings = $('<button icon="cog"/>')
 									.on('click',function(){
-										this._fleets_btn_settings()
+										this.btn_settings()
 									}.bind(this))
 									.appendTo(this.dom.buttons_right)
 				*/
@@ -7157,7 +7098,7 @@ class TablelistFleets extends _tablelist{
 				return this.dom.thead
 			}
 			gen_thead = gen_thead.bind(this)
-			gen_thead( this._fleets_columns ).appendTo( this.dom.table )
+			gen_thead( this.columns ).appendTo( this.dom.table )
 			this.dom.tbody = $('<tbody/>').appendTo( this.dom.table )
 
 		// [创建] 无内容时的新建提示框架
@@ -7176,9 +7117,9 @@ class TablelistFleets extends _tablelist{
 	
 		// 右键菜单事件
 			this.dom.table.on('contextmenu.contextmenu_fleet', 'tr[data-fleetid]', function(e){
-				this._fleets_contextmenu_show($(e.currentTarget))
+				this.contextmenu_show($(e.currentTarget))
 			}.bind(this)).on('click.contextmenu_fleet', 'tr[data-fleetid]>th>em', function(e){
-				this._fleets_contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget))
+				this.contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget))
 				e.stopImmediatePropagation()
 				e.stopPropagation()
 			}.bind(this))
@@ -7187,22 +7128,22 @@ class TablelistFleets extends _tablelist{
 
 		// 读取已保存数据
 			.then(function(){
-				return this._fleets_loaddata()
+				return this.loaddata()
 			}.bind(this))
 		
 		// 检查每条数据
 			.then(function(arr){
-				return this._fleets_validdata(arr)
+				return this.validdata(arr)
 			}.bind(this))
 
 		// 如果没有数据，标记状态
 			.then(function(arr){
-				return this._fleets_datacheck(arr)
+				return this.datacheck(arr)
 			}.bind(this))
 
 		// [创建] 全部数据行
 			.then(function(arr){
-				return this._fleets_append_all_items(arr)
+				return this.append_all_items(arr)
 			}.bind(this))
 
 		// [框架] 标记读取完成
@@ -7220,7 +7161,386 @@ class TablelistFleets extends _tablelist{
 				_g.log('Fleets list DONE')
 			})
 	}
+	
+	// 新建数据
+		new_data(obj){
+			return $.extend({
+				'data': 		[],
+				'time_create': 	(new Date()).valueOf(),
+				'time_modify': 	(new Date()).valueOf(),
+				'hq_lv': 		-1,
+				'name': 		'',
+				'note': 		'',
+				'user': 		{},
+				'rating': 		-1,
+				'theme': 		_g.randNumber(10)
+			}, obj || {})
+		}
 
+	// 读取已保存数据
+		loaddata(){
+			let deferred = Q.defer()
+			
+			_db.fleets.find({}).sort({name: 1}).exec(function(err, docs){
+				if( err ){
+					deferred.resolve( [] )
+				}else{
+					deferred.resolve( docs )
+				}
+			})
+			
+			return deferred.promise
+			//return []
+			// PLACEHOLDER START
+			/*
+				var deferred = Q.defer()
+				var data = $.extend( this.kancolle_calc, {
+						'_method': 	'GET',
+						'where': {
+							'owner': 	'Diablohu'
+						}
+					})
+				$.ajax({
+					'url': 	'https://api.parse.com/1/classes/Deck',
+					'data': JSON.stringify(data),
+					'method': 'POST',
+					'success': function( data ){
+						var arr = []
+						if( data && data['results'] ){
+							for(var i in data['results']){
+								arr.push( this.parse_kancolle_calc_data(data['results'][i]) )
+							}
+						}
+						deferred.resolve( arr )
+					}.bind(this),
+					'error': function( jqXHR, textStatus, errorThrown ){
+						_g.log(jqXHR)
+						_g.log(textStatus)
+						_g.log(errorThrown)
+						deferred.resolve([])
+					}
+				})
+				return deferred.promise
+			*/
+			// PLACEHOLDER END
+			// PLACEHOLDER START
+			/*
+				return [
+					{
+						'name': 	'1-5',
+						'owner': 	'Diablohu',
+						'hq_lv': 	101,
+						'note': 	'',
+						'createdAt':'2014-09-30T21:06:44.046Z',
+						'updatedAt':'2015-05-20T03:04:51.898Z',
+						'ojbectId': 'XU9DFdVoVQ',
+						'data': 	'[[["408",[83,-1],[94,64,100,54]],["82",[58,-1],[79,79,79,26]],["321",[88,-1],[47,47,34,45]],["293",[54,-1],[47,47,87,45]]]]'
+					}
+				]*/
+			// PLACEHOLDER END
+		}
+
+	// 检测数据，删除空数据条目
+		validdata(arr){
+			let deferred = Q.defer()
+				,to_remove = []
+				,i = 0
+				,valid = function( fleetdata ){
+					if( fleetdata['hq_lv'] > -1
+						|| fleetdata['name']
+						|| fleetdata['note']
+						|| fleetdata['rating'] > -1
+					){
+						return true
+					}
+					if( !fleetdata.data || !fleetdata.data.length || !fleetdata.data.push )
+						return false
+					for( let fleet of fleetdata.data ){
+						if( !fleet || !fleet.length || !fleet.push )
+							return false
+						for( let shipdata of fleet ){
+							if( typeof shipdata != 'undefined' && typeof shipdata[0] != 'undefined' && shipdata[0] )
+								return true
+						}
+					}
+					return false
+				}
+				
+			while( i < arr.length ){
+				if( valid( arr[i] ) ){
+					i++
+				}else{
+					to_remove.push( arr[i]._id )
+					arr.splice(i, 1)
+				}
+			}
+			
+			if( to_remove.length ){
+				_db.fleets.remove({
+					_id: { $in: to_remove }
+				}, { multi: true }, function (err, numRemoved) {
+					deferred.resolve( arr )
+				});
+			}else{
+				deferred.resolve( arr )
+			}
+			
+			return deferred.promise
+		}
+
+	// 检测已处理数据，如果没有条目，标记样式
+		datacheck(arr){
+			arr = arr || []
+	
+			if( !arr.length )
+				this.dom.container.addClass('nocontent')
+	
+			return arr
+		}
+
+	// 创建全部数据行内容
+		append_all_items(arr){
+			arr = arr || []
+			arr.sort(function(a, b){
+				if (a['name'] < b['name']) return -1;
+				if (a['name'] > b['name']) return 1;
+				return 0;
+			})
+			_g.log(arr)
+	
+			let deferred = Q.defer()
+				,k = 0
+	
+			// 创建flexgrid placeholder
+				while(k < this.flexgrid_empty_count){
+					if( !k )
+						this.flexgrid_ph = $('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
+					else
+						$('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
+					k++
+				}
+	
+			// 创建数据行
+				arr.forEach(function(currentValue, i){
+					setTimeout((function(i){
+						this.append_item( arr[i] )
+						if( i >= arr.length -1 )
+							deferred.resolve()
+					}.bind(this))(i), 0)
+				}.bind(this))
+	
+			if( !arr.length )
+				deferred.resolve()
+	
+			return deferred.promise
+		}
+
+	// 创建单行数据行内容
+		append_item( data, index, isPrepend ){
+			if( !data )
+				return false
+	
+			if( typeof index == 'undefined' ){
+				index = this.trIndex
+				this.trIndex++
+			}
+			
+			//_g.log(data)
+			
+			let tr = $('<tr class="row"/>')
+						.attr({
+							'data-trindex': index,
+							'data-fleetid': data._id || 'PLACEHOLDER',
+							//'data-infos': 	'[[FLEET::'+JSON.stringify(data)+']]'
+							'data-infos': 	'[[FLEET::'+data._id+']]',
+							'data-theme':	data.theme
+						})
+						.data({
+							'initdata': 	data
+						})
+			
+			this.columns.forEach(function(column){
+				switch( column[1] ){
+					case ' ':
+						var html = '<i>'
+							,ships = data['data'][0] || []
+							,j = 0;
+						while( j < 6 ){
+							if( ships[j] && ships[j][0] )
+								html+='<img src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0.webp" contextmenu="disabled"/>'
+							else
+								html+='<s/>'
+							j++
+						}
+						html+='</i>'
+						$('<th/>')
+							.attr(
+								'data-value',
+								data['name']
+							)
+							.html(
+								html
+								+ '<strong>' + data['name'] + '</strong>'
+								+ '<em></em>'
+							)
+							.appendTo(tr)
+						break;
+					default:
+						var datavalue = data[column[1]]
+						$('<td/>')
+							.attr(
+								'data-value',
+								datavalue
+							)
+							.html( datavalue )
+							.appendTo(tr)
+						break;
+				}
+			})
+	
+			if( isPrepend )
+				tr.prependTo( this.dom.tbody )
+			else
+				tr.insertBefore( this.flexgrid_ph )
+	
+			return tr
+		}
+
+	// [按钮操作] 新建/导入配置
+		btn_new(){
+			if( !this.menu_new )
+				this.menu_new = new _menu({
+					'target': 	this.dom.btn_new,
+					'items': [
+						$('<div class="menu_fleets_new"/>')
+							.append(
+								$('<menuitem/>').html('新建配置')
+									.on('click', function(){
+										this.action_new()
+									}.bind(this))
+							)
+							.append(
+								$('<menuitem/>').html('导入配置代码')
+									.on('click', function(){
+										if( !TablelistFleets.modalImport ){
+											TablelistFleets.modalImport = $('<div/>')
+												.append(
+													TablelistFleets.modalImportTextarea = $('<textarea/>',{
+														'placeholder': '输入配置代码...'
+													})
+												)
+												.append(
+													$('<p/>').html('* 配置代码兼容<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
+												)
+												.append(
+													TablelistFleets.modalImportBtn = $('<button class="button"/>').html('导入')
+												)
+										}
+										TablelistFleets.modalImportTextarea.val('')
+										TablelistFleets.modalImportBtn.off('click.import')
+											.on('click', function(){
+												let val = TablelistFleets.modalImportTextarea.val()
+												console.log(val)
+												if( val ){
+													this.action_new({
+														'data': 	JSON.parse(TablelistFleets.modalImportTextarea.val())
+													})
+													_frame.modal.hide()
+													TablelistFleets.modalImportTextarea.val('')
+												}
+											}.bind(this))
+										_frame.modal.show(
+											TablelistFleets.modalImport,
+											'导入配置代码',
+											{
+												'classname': 	'infos_fleet infos_fleet_import'
+											}
+										)
+									}.bind(this))
+							)
+							.append(
+								$('<menuitem/>').html('[NYI] 导入配置文件')
+							)
+					]
+				})
+	
+			this.menu_new.show()
+		}
+
+	// [按钮操作] 选项设置
+		btn_settings(){
+			_g.log('CLICK: 选项设置')
+		}
+
+	// [操作] 新建配置
+		action_new( dataDefault ){
+			dataDefault = dataDefault || {}
+			//_frame.infos.show('[[FLEET::__NEW__]]')
+			console.log(dataDefault)
+	
+			_db.fleets.insert( this.new_data(dataDefault), function(err, newDoc){
+				console.log(err, newDoc)
+				if(err){
+					_g.error(err)
+				}else{
+					if( _frame.app_main.cur_page == 'fleets' ){
+						_frame.infos.show('[[FLEET::' + newDoc['_id'] + ']]')
+						this.menu_new.hide()
+						//this.init(newDoc)
+						
+						//for(let i in _g.data.fleets_tablelist.lists){
+						//	_g.data.fleets_tablelist.lists[i].append_item( newDoc, null, true )
+						//}
+					}
+				}
+			}.bind(this))
+		}
+
+	// 处理舰载机厨的单项数据，返回新格式
+		parse_kancolle_calc_data(obj){
+			return this.new_data(obj)
+		}
+
+	// 菜单
+		contextmenu_show($tr, $em){
+			this._ships_contextmenu_curel = $tr
+		
+			if( !TablelistFleets.contextmenu )
+				TablelistFleets.contextmenu = new _menu({
+					'className': 'contextmenu-fleet',
+					'items': [
+						$('<menuitem/>').html('详情')
+							.on({
+								'click': function(e){
+									this._ships_contextmenu_curel.trigger('click', [true])
+								}.bind(this)
+							}),
+							
+						$('<menuitem/>').html('导出配置')
+							.on({
+								'click': function(e){
+									InfosFleet.modalExport_show(this._ships_contextmenu_curel.data('initdata'))
+								}.bind(this)
+							}),
+							
+						$('<menuitem/>').html('移除')
+							.on({
+								'click': function(e){
+									let id = this._ships_contextmenu_curel.attr('data-fleetid')
+									_db.fleets.remove({
+										_id: id
+									}, { multi: true }, function (err, numRemoved) {
+										_g.log('Fleet ' + id + ' removed.')
+									});
+									this._ships_contextmenu_curel.remove()
+								}.bind(this)
+							})
+					]
+				})
+
+			TablelistFleets.contextmenu.show($em || $tr)
+		}
+}
 
 // Ships
 _tablelist.prototype._ships_columns = [
