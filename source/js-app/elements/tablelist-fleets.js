@@ -482,7 +482,7 @@ class TablelistFleets extends Tablelist{
 
 	// 菜单
 		contextmenu_show($tr, $em){
-			this._ships_contextmenu_curel = $tr
+			TablelistFleets.contextmenu_curel = $tr
 		
 			if( !TablelistFleets.contextmenu )
 				TablelistFleets.contextmenu = new _menu({
@@ -491,28 +491,28 @@ class TablelistFleets extends Tablelist{
 						$('<menuitem/>').html('详情')
 							.on({
 								'click': function(e){
-									this._ships_contextmenu_curel.trigger('click', [true])
-								}.bind(this)
+									TablelistFleets.contextmenu_curel.trigger('click', [true])
+								}
 							}),
 							
 						$('<menuitem/>').html('导出配置')
 							.on({
 								'click': function(e){
-									InfosFleet.modalExport_show(this._ships_contextmenu_curel.data('initdata'))
-								}.bind(this)
+									InfosFleet.modalExport_show(TablelistFleets.contextmenu_curel.data('initdata'))
+								}
 							}),
 							
 						$('<menuitem/>').html('移除')
 							.on({
 								'click': function(e){
-									let id = this._ships_contextmenu_curel.attr('data-fleetid')
+									let id = TablelistFleets.contextmenu_curel.attr('data-fleetid')
 									_db.fleets.remove({
 										_id: id
 									}, { multi: true }, function (err, numRemoved) {
 										_g.log('Fleet ' + id + ' removed.')
 									});
-									this._ships_contextmenu_curel.remove()
-								}.bind(this)
+									TablelistFleets.contextmenu_curel.remove()
+								}
 							})
 					]
 				})

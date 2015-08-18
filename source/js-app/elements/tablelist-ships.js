@@ -506,8 +506,8 @@ class TablelistShips extends Tablelist{
 		if( this.dom.filter_container.attr('viewtype') == 'compare' || $el.attr('data-donotcompare') == 'true' )
 			return false
 	
-		this.contextmenu_curid = shipId || $el.data('shipid')
-		this.contextmenu_curel = $el
+		TablelistShips.contextmenu_curid = shipId || $el.data('shipid')
+		TablelistShips.contextmenu_curel = $el
 	
 		if( !TablelistShips.contextmenu )
 			TablelistShips.contextmenu = new _menu({
@@ -517,8 +517,8 @@ class TablelistShips extends Tablelist{
 						.on({
 							'click': function(e){
 								if( _frame.app_main.is_mode_selection() )
-									_frame.app_main.mode_selection_callback(this.contextmenu_curid)
-							}.bind(this),
+									_frame.app_main.mode_selection_callback(TablelistShips.contextmenu_curid)
+							},
 							'show': function(){
 								if( _frame.app_main.is_mode_selection() )
 									$(this).show()
@@ -529,27 +529,27 @@ class TablelistShips extends Tablelist{
 					$('<menuitem/>').html('查看资料')
 						.on({
 							'click': function(e){
-								this.contextmenu_curel.trigger('click', [true])
-							}.bind(this)
+								TablelistShips.contextmenu_curel.trigger('click', [true])
+							}
 						}),
 	
 					$('<menuitem/>').html('将该舰娘加入对比')
 						.on({
 							'click': function(e){
-								this.checkbox[this.contextmenu_curid]
-									.prop('checked', !this.checkbox[this.contextmenu_curid].prop('checked'))
+								this.checkbox[TablelistShips.contextmenu_curid]
+									.prop('checked', !this.checkbox[TablelistShips.contextmenu_curid].prop('checked'))
 									.trigger('change')
 							}.bind(this),
 							'show': function(e){
-								if( !this.contextmenu_curid )
+								if( !TablelistShips.contextmenu_curid )
 									return false
 								
-								if( _g.data.ship_types[_g['data']['ships'][this.contextmenu_curid]['type']]['donotcompare'] )
+								if( _g.data.ship_types[_g['data']['ships'][TablelistShips.contextmenu_curid]['type']]['donotcompare'] )
 									$(e.target).hide()
 								else
 									$(e.target).show()
 									
-								if( this.checkbox[this.contextmenu_curid].prop('checked') )
+								if( this.checkbox[TablelistShips.contextmenu_curid].prop('checked') )
 									$(e.target).html('取消对比')
 								else
 									$(e.target).html('将该舰娘加入对比')
@@ -558,8 +558,8 @@ class TablelistShips extends Tablelist{
 					
 					$('<div/>').on('show', function(e){
 						var $div = $(e.target).empty()
-						if( this.contextmenu_curid ){
-							var series = _g['data']['ships'][this.contextmenu_curid].getSeriesData() || []
+						if( TablelistShips.contextmenu_curid ){
+							var series = _g['data']['ships'][TablelistShips.contextmenu_curid].getSeriesData() || []
 							series.forEach(function(currentValue, i){
 								if( !i )
 									$div.append($('<hr/>'))
