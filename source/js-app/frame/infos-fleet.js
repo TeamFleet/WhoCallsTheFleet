@@ -1017,6 +1017,7 @@ class InfosFleetShipEquipment{
 					history.back()
 					this.id = id
 					this.star = 0
+					this.rank = 0
 					TablelistEquipments.types = []
 					TablelistEquipments.shipId = null
 					if( this.infosFleetShip.infosFleet )
