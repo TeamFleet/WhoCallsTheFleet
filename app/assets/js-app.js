@@ -2432,26 +2432,35 @@ let Formula = {
 						&& carry
 					){
 						result+= Math.sqrt(carry) * (equipments_by_slot[index].stat.aa || 0)
-						if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.Recons ) == -1 )
+						if( equipments_by_slot[index].type == Formula.equipmentType.CarrierFighter ){
 							switch( rank_by_slot[index] ){
 								case 1: case '1':
-									result+= equipments_by_slot[index].type == 18 ? 1 : (3 / 7 * 1 ); break;
+									result+= 1; break;
 								case 2: case '2':
-									result+= equipments_by_slot[index].type == 18 ? 4 : (3 / 7 * 2 ); break;
+									result+= 4; break;
 								case 3: case '3':
-									result+= equipments_by_slot[index].type == 18 ? 6 : (3 / 7 * 3 ); break;
+									result+= 6; break;
 								case 4: case '4':
-									result+= equipments_by_slot[index].type == 18 ? 11 : (3 / 7 * 4 ); break;
+									result+= 11; break;
 								case 5: case '5':
-									result+= equipments_by_slot[index].type == 18 ? 16 : (3 / 7 * 5 ); break;
+									result+= 16; break;
 								case 6: case '6':
-									result+= equipments_by_slot[index].type == 18 ? 17 : (3 / 7 * 6 ); break;
+									result+= 17; break;
 								case 7: case '7':
-									result+= equipments_by_slot[index].type == 18 ? 25 : (3 / 7 * 7 ); break;
+									result+= 25; break;
 							}
+						}else if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.Recons ) == -1 ){
+							let max_per_slot = equipments_by_slot[index].type == Formula.equipmentType.SeaplaneBomber
+												? 9
+												: 3
+							result+= rank_by_slot[index] == 1
+										? 1
+										: max_per_slot / 6 * (rank_by_slot[index] - 1)
+						}
 					}
 				})
-				return Math.floor(result)
+				return result
+				//return Math.floor(result)
 				break;
 			
 			// 炮击威力，除潜艇外
@@ -5175,7 +5184,7 @@ class InfosFleetSubFleet{
 				
 				this.elSummarySpeed.html( fleetSpeet == 'fast' ? '高速' : '低速' )
 				
-				this.elSummaryFighterPower.html( fighterPower )
+				this.elSummaryFighterPower.html( Math.floor(fighterPower) )
 				if( fighterPower > 0 )
 					this.elSummaryFighterPower.removeClass('empty')
 				else

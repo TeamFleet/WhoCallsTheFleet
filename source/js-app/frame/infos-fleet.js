@@ -452,7 +452,7 @@ class InfosFleetSubFleet{
 				
 				this.elSummarySpeed.html( fleetSpeet == 'fast' ? '高速' : '低速' )
 				
-				this.elSummaryFighterPower.html( fighterPower )
+				this.elSummaryFighterPower.html( Math.floor(fighterPower) )
 				if( fighterPower > 0 )
 					this.elSummaryFighterPower.removeClass('empty')
 				else
