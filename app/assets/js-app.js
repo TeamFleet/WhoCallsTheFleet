@@ -6277,6 +6277,8 @@ class Tablelist{
 							if( sort.length > 2 && sort[1].length < max )
 								sort[1].addClass('sort-second')
 						}
+						
+						console.log(is_ascending, sort)
 		
 						// 将排序结果存储到表头对应的列中
 							if( cacheSortData )
@@ -7415,9 +7417,7 @@ class TablelistShips extends Tablelist{
 					$('<td data-stat="nightpower"/>')
 						.attr(
 							'data-value',
-							datavalue == -1
-								? null
-								: datavalue
+							datavalue
 						)
 						.html( _val( datavalue ) )
 						.appendTo(tr)
@@ -7426,9 +7426,7 @@ class TablelistShips extends Tablelist{
 					$('<td data-stat="asw" />')
 						.attr(
 							'data-value',
-							ship_data['stat']['asw_max'] == -1 || ship_data['stat']['asw_max'] == '-1'
-								? null
-								: ship_data['stat']['asw_max']
+							ship_data['stat']['asw_max']
 						)
 						.html( _val(
 							ship_data['stat']['asw_max'],
@@ -7465,9 +7463,7 @@ class TablelistShips extends Tablelist{
 					$('<td data-stat="consum_fuel"/>')
 						.attr(
 							'data-value',
-							ship_data['consum']['fuel'] == -1 || ship_data['consum']['fuel'] == '-1'
-								? null
-								: ship_data['consum']['fuel']
+							ship_data['consum']['fuel'] == -1
 						)
 						.html( _val(ship_data['consum']['fuel']) )
 						.appendTo(tr)
@@ -7476,9 +7472,7 @@ class TablelistShips extends Tablelist{
 					$('<td data-stat="consum_ammo"/>')
 						.attr(
 							'data-value',
-							ship_data['consum']['ammo'] == -1 || ship_data['consum']['ammo'] == '-1'
-								? null
-								: ship_data['consum']['ammo']
+							ship_data['consum']['ammo'] == -1
 						)
 						.html( _val(ship_data['consum']['ammo']) )
 						.appendTo(tr)
@@ -7487,9 +7481,7 @@ class TablelistShips extends Tablelist{
 					$('<td data-stat="'+currentValue[1]+'"/>')
 						.attr(
 							'data-value',
-							ship_data['stat'][currentValue[1] + '_max'] == -1 || ship_data['stat'][currentValue[1] + '_max'] == '-1'
-								? -1
-								: ship_data['stat'][currentValue[1] + '_max']
+							ship_data['stat'][currentValue[1] + '_max']
 						)
 						.html( _val( ship_data['stat'][currentValue[1] + '_max'] ) )
 						.appendTo(tr)

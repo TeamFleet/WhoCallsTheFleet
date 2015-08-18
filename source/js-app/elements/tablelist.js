@@ -271,6 +271,8 @@ class Tablelist{
 							if( sort.length > 2 && sort[1].length < max )
 								sort[1].addClass('sort-second')
 						}
+						
+						console.log(is_ascending, sort)
 		
 						// 将排序结果存储到表头对应的列中
 							if( cacheSortData )
