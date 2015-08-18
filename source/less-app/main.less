@@ -175,8 +175,10 @@ body{
 	}
 }
 
-nav, main{
-	.transition-duration(@transition_duration_main);
+html.ready{
+	nav, main{
+		.transition-duration(@transition_duration_main);
+	}
 }
 nav{
 	display:	block;
@@ -238,7 +240,7 @@ nav{
 		max-width:	~"calc(100% - @{nav_height}px - 10px)";
 		.transition-property(~"transform, top, opacity");
 		.transition-timing-function(~"cubic-bezier(0.175, 0.885, 0.320, 1.275)");
-		.transition-duration(.3s);
+		.transition-duration(.3s)!important;
 			/*
 		@media all and (min-width: 1920px ){
 			margin-left:	~"calc((100% - 1920px) / 2 + @{nav_height}px - 10px)";
