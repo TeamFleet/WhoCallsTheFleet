@@ -5,11 +5,13 @@ _p.el.tablelist = {
 		if( el.data('tablelist') )
 			return true
 
-		/*if( container.hasClass('ships') )
-			this.listtype = 'ships'
-		else if( container.hasClass('equipments') )
-			this.listtype = 'equipments'
-		else */if( el.hasClass('fleets') )
+		if( el.hasClass('ships') )
+			el.data({
+				'tablelist': new TablelistShips( el )
+			})
+		/*else if( container.hasClass('equipments') )
+			this.listtype = 'equipments' */
+		else if( el.hasClass('fleets') )
 			el.data({
 				'tablelist': new TablelistFleets( el )
 			})
