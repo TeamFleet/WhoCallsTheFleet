@@ -595,8 +595,8 @@ class InfosFleetShip{
 			.append(
 				$('<dt/>')
 					.append(
-						this.elAvatar = $('<s draggable="true"/>').on({
-							'dragstart': function(e){
+						this.elAvatar = $('<s/>').on({
+							'mousedown': function(e){
 								e.preventDefault()
 								if( this.data[0] )
 									InfosFleetShip.dragStart( this )
