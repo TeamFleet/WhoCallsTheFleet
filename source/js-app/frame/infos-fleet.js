@@ -5,9 +5,6 @@
 
 图片输出
 	允许编辑文字
-
-更新日志自动显示bug？
-换装、换舰娘时和之后的重复流量统计
 */
 
 // 舰队配置
@@ -158,8 +155,13 @@ class InfosFleet{
 							}.bind(this))
 						)
 						.append(
-							$('<button class="option"/>').html('导出配置').on('click', function(){
-								InfosFleet.modalExport_show(this.data)
+							$('<button class="option"/>').html('导出配置代码').on('click', function(){
+								this.modalExport_show()
+							}.bind(this))
+						)
+						.append(
+							$('<button class="option"/>').html('导出配置文本').on('click', function(){
+								this.modalExportText_show()
 							}.bind(this))
 						)
 						/*
@@ -312,46 +314,92 @@ class InfosFleet{
 			})
 			return this
 		}
-}
-
-InfosFleet.modalExport_show = function(data){
-	if( !data )
-		return false
 	
-	if( data.data )
-		data = data.data
+	// 浮动窗口
+		modalExport_show(){
+			let data = this.data.data
+		
+			data = JSON.stringify(data)
+			while( data.indexOf(',null]') > -1 )
+				data = data.replace(/\,null\]/g,']')
+			while( data.indexOf('[null]') > -1 )
+				data = data.replace(/\[null\]/g,'[]')
 
-	data = JSON.stringify(data)
-	while( data.indexOf(',null]') > -1 )
-		data = data.replace(/\,null\]/g,']')
-	while( data.indexOf('[null]') > -1 )
-		data = data.replace(/\[null\]/g,'[]')
+			_frame.modal.show(
+				InfosFleet.modalExport(data),
+				'导出配置代码',
+				{
+					'classname': 	'infos_fleet infos_fleet_export'
+				}
+			)
+		}
+		modalExportText_show(){
+			let text = ''
+				
+			console.log(this.data)
+			
+			text+= this.data.name || ''
+			
+			this.data.data.filter(function(value){
+				return value.length
+			}).forEach(function(fleet, i){
+				console.log(fleet)
+				text+=  (text ? '\n\n' : '')
+					+ '第 ' + (i+1) + ' 舰队'
+				fleet.filter(function(value){
+					return value.length > 0 && value[0] 
+				}).forEach(function(ship, j){
+					text+= '\n'
+						+ '(' + (i ? (i+1) + '-' : '') + (j+1) + ')'
+						+ _g.data.ships[ship[0]]._name
+						+ ( ship[1] && ship[1][0] ? ' Lv.' + ship[1][0] : '' )
+					let equipments = ship[2] || []
+						,stars = ship[3] || []
+						,ranks = ship[4] || []
+					equipments.filter(function(value){
+						return value
+					}).forEach(function(equipment, k){
+						text+= (!k ? ' | ' : ', ')
+							+ _g.data.items[equipment]._name
+							+ (stars[k] ? '★'+stars[k] : '')
+							+ (ranks[k] ? '['+_g.textRank[ranks[k]]+']' : '')
+					})
+				})
+			})
+			
+			text+= (text ? '\n\n' : '')
+				+ '* 创建自 是谁呼叫舰队 (fleet.diablohu.com)'
 
-	if( !InfosFleet.modalExport ){
-		InfosFleet.modalExport = $('<div/>')
+			_frame.modal.show(
+				InfosFleet.modalExport(text),
+				'导出配置文本',
+				{
+					'classname': 	'infos_fleet infos_fleet_export mod-text'
+				}
+			)
+		}
+}
+InfosFleet.modalExport = function(curval){
+	if( !InfosFleet.elModalExport ){
+		InfosFleet.elModalExport = $('<div/>')
 			.append(
-				InfosFleet.modalExportTextarea = $('<textarea/>',{
+				InfosFleet.elModalExportTextarea = $('<textarea/>',{
 					'readonly': true
 				})
 			)
 			.append(
-				$('<p/>').html('* 该配置代码可用于<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
+				$('<p class="note-codeusage"/>').html('* 该配置代码可用于<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
 			)
 			.append(
 				$('<button class="button"/>').html('复制到剪切板')
 					.on('click', function(){
-						node.clipboard.set(InfosFleet.modalExportTextarea.val(), 'text');
+						node.clipboard.set(InfosFleet.elModalExportTextarea.val(), 'text');
 					})
 			)
 	}
-	InfosFleet.modalExportTextarea.val(data)
-	_frame.modal.show(
-		InfosFleet.modalExport,
-		'导出配置代码',
-		{
-			'classname': 	'infos_fleet infos_fleet_export'
-		}
-	)
+	InfosFleet.elModalExportTextarea.val(curval || '')
+	
+	return InfosFleet.elModalExport
 }
 
 

@@ -154,6 +154,15 @@
 		3: 	'长',
 		4: 	'超长'
 	}
+	_g.textRank = {
+		1:	'|',
+		2:	'||',
+		3:	'|||',
+		4:	'\\',
+		5:	'\\\\',
+		6:	'\\\\\\',
+		7:	'》'
+	}
 	_g.getStatSpeed = function( speed ){
 		speed = parseInt(speed)
 		return _g.statSpeed[speed]
