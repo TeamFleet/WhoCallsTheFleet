@@ -51,13 +51,11 @@ class TablelistFleets extends Tablelist{
 									.appendTo(this.dom.filters)
 			// 右 - 选项组
 				this.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(this.dom.filters)
-				/*
 				this.dom.btn_settings = $('<button icon="cog"/>')
 									.on('click',function(){
 										this.btn_settings()
 									}.bind(this))
 									.appendTo(this.dom.buttons_right)
-				*/
 
 		// [创建] 表格框架
 			this.dom.table_container = $('<div class="fixed-table-container"/>').appendTo( this.dom.container )

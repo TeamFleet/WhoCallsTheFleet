@@ -465,11 +465,14 @@ _frame.app_main = {
 
 			// 关闭之前的页面
 				if( _frame.app_main.cur_page ){
-					_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
-					_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff')
+					if( _frame.dom.navs[_frame.app_main.cur_page] )
+						_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
+					if( _frame.app_main.page_dom[_frame.app_main.cur_page] )
+						_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff')
 				}
 
-			_frame.dom.navs[page].addClass('on')
+			if( _frame.dom.navs[page] )
+				_frame.dom.navs[page].addClass('on')
 
 			if( !options.callback_modeSelection_select ){
 				if( _frame.dom.layout.hasClass('ready') )
@@ -605,6 +608,8 @@ _frame.app_main = {
 				*/
 				_frame.dom.navlinks = $('<div class="pages"/>').appendTo( _frame.dom.nav )
 					_frame.dom.globaloptions = $('<section class="options"/>').appendTo( _frame.dom.nav )
+						_frame.dom.btnDonates = $('<button class="donate" icon="heart4"/>')
+												.on('click', function(){_frame.app_main.load_page('donate')}).appendTo( _frame.dom.globaloptions )
 						_frame.dom.btnShowOnlyBg = $('<button class="show_only_bg" icon="images"/>')
 												.on('click', function(){_frame.app_main.only_bg_toggle()}).appendTo( _frame.dom.globaloptions )
 					_frame.dom.btnShowOnlyBgBack = $('<button class="show_only_bg_back" icon="arrow-set2-left"/>')

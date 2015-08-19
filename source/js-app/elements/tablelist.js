@@ -68,7 +68,8 @@ class Tablelist{
 				let input
 					,option_empty
 					,o_el
-					,id = null
+					,id = '_input_g' + (_g.inputIndex++)
+				//_g.inputIndex++
 				switch( type ){
 					case 'text':
 					case 'number':

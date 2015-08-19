@@ -1641,11 +1641,14 @@ _frame.app_main = {
 
 			// 关闭之前的页面
 				if( _frame.app_main.cur_page ){
-					_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
-					_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff')
+					if( _frame.dom.navs[_frame.app_main.cur_page] )
+						_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
+					if( _frame.app_main.page_dom[_frame.app_main.cur_page] )
+						_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff')
 				}
 
-			_frame.dom.navs[page].addClass('on')
+			if( _frame.dom.navs[page] )
+				_frame.dom.navs[page].addClass('on')
 
 			if( !options.callback_modeSelection_select ){
 				if( _frame.dom.layout.hasClass('ready') )
@@ -1781,6 +1784,8 @@ _frame.app_main = {
 				*/
 				_frame.dom.navlinks = $('<div class="pages"/>').appendTo( _frame.dom.nav )
 					_frame.dom.globaloptions = $('<section class="options"/>').appendTo( _frame.dom.nav )
+						_frame.dom.btnDonates = $('<button class="donate" icon="heart4"/>')
+												.on('click', function(){_frame.app_main.load_page('donate')}).appendTo( _frame.dom.globaloptions )
 						_frame.dom.btnShowOnlyBg = $('<button class="show_only_bg" icon="images"/>')
 												.on('click', function(){_frame.app_main.only_bg_toggle()}).appendTo( _frame.dom.globaloptions )
 					_frame.dom.btnShowOnlyBgBack = $('<button class="show_only_bg_back" icon="arrow-set2-left"/>')
@@ -2772,7 +2777,8 @@ var _updater = {
 // 创建更新器提示
 	_updater.create_update_indicator = function(){
 		if( !_updater.update_indicator || !_updater.update_indicator.length ){
-			_updater.update_indicator = $('<button class="update_progress" icon="stairs-up" data-tip="检测到新版本<br>更新中..."/>').appendTo( _frame.dom.globaloptions )
+			_updater.update_indicator = $('<button class="update_progress" icon="stairs-up" data-tip="检测到新版本<br>更新中..."/>')
+											.prependTo( _frame.dom.globaloptions )
 			_updater.update_indicator_bar = $('<s/>').appendTo( _updater.update_indicator )
 		}
 	}
@@ -6257,7 +6263,8 @@ class Tablelist{
 				let input
 					,option_empty
 					,o_el
-					,id = null
+					,id = '_input_g' + (_g.inputIndex++)
+				//_g.inputIndex++
 				switch( type ){
 					case 'text':
 					case 'number':
@@ -6873,13 +6880,11 @@ class TablelistFleets extends Tablelist{
 									.appendTo(this.dom.filters)
 			// 右 - 选项组
 				this.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(this.dom.filters)
-				/*
 				this.dom.btn_settings = $('<button icon="cog"/>')
 									.on('click',function(){
 										this.btn_settings()
 									}.bind(this))
 									.appendTo(this.dom.buttons_right)
-				*/
 
 		// [创建] 表格框架
 			this.dom.table_container = $('<div class="fixed-table-container"/>').appendTo( this.dom.container )

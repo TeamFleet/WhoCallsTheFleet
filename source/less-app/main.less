@@ -93,50 +93,52 @@ body{
 	// Base
 		.font-size(14);
 		font-family:	@font_family_sans;
-		button, input, textarea, select{
-			&:focus, &:active{
-				outline:	0;
-			}
-		}
-
-	// Title / Headers
-		h1, h2, h3, h4, h5, h6{
-			font-family:@font_famliy_Song;
-			line-height:1.2em;
-			position:	relative;
-			small{
-				font-size:	small;
-				opacity:	.75;
-				padding-left:1em;
-			}
-			&[data-content]:before{
-				content:	attr(data-content);
-				display:	block;
-				font:		inherit;
-				position:	absolute;
-				top:		0;
-				left:		0;
-				z-index:	1;
-				text-shadow:0 0 1px #000;
-				.mask-image( ~"linear-gradient(to bottom, transparent, #000)" );
-			}
-		}
-		h2{
-			.font-size(36);
-		}
-		h3{
-			.font-size(24);
-		}
-		h4{
-			.font-size(18);
-			font-weight:	normal;
-		}
-		h5{
-			.font-size(14);
-			font-weight:	normal;
-		}
 }
 
+button, input, textarea, select{
+	&:focus, &:active{
+		outline:	0;
+	}
+}
+
+// Title / Headers
+h1, h2, h3, h4, h5, h6{
+	font-family:@font_famliy_Song;
+	line-height:1.2em;
+	position:	relative;
+	color: 		hsl(46, 25%, 85%);
+	small{
+		font-size:	small;
+		opacity:	.75;
+		padding-left:1em;
+	}
+	&[data-content]:before{
+		color: 		hsl(46, 33%, 32%);
+		content:	attr(data-content);
+		display:	block;
+		font:		inherit;
+		position:	absolute;
+		top:		0;
+		left:		0;
+		z-index:	1;
+		text-shadow:0 0 1px #000;
+		.mask-image( ~"linear-gradient(to bottom, transparent, #000)" );
+	}
+}
+h2{
+	.font-size(36);
+}
+h3{
+	.font-size(24);
+}
+h4{
+	.font-size(18);
+	font-weight:	normal;
+}
+h5{
+	.font-size(14);
+	font-weight:	normal;
+}
 
 
 
@@ -287,6 +289,9 @@ nav{
 			//}
 			&+button{
 				margin-left:	unit( 30 / 24, em );
+				@media all and (max-width: 800px ){
+					margin-left:	unit( 16 / 24, em );
+				}
 			}
 			/*
 			.delays(@n, @i: 1) when (@i =< @n) {
@@ -421,7 +426,7 @@ nav{
 			.font-size(22);
 			.transition-property(color);
 			.transition-duration(@transition_duration_main);
-			float:		right;
+			//float:		right;
 			.fadein();
 			position:	relative;
 			&:hover{
@@ -452,7 +457,7 @@ main{
 	top:		100%;
 	.transition-property(top);
 	h1, h2, h3, h4, h5, h6{
-		color:		#73d3ff;
+		//color:		#73d3ff;
 		line-height:1.25em;
 		margin-bottom:0.5em;
 	}
@@ -623,6 +628,14 @@ main{
 				}
 			} // &[viewtype="card"]
 		}*/
+	}
+	&>.container{
+		width: 	100%;
+		height: 100%;
+		&>*{
+			text-align: left;
+			max-width: 	~"calc(100% - 4px)" !important;
+		}
 	}
 }
 
