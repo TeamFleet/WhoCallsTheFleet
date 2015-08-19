@@ -179,13 +179,22 @@ main>.page.infos{
 							margin-right:	0;
 						}
 					}
+					&>.icon{
+						line-height:inherit;
+						width: 		unit(@tab_height, px);
+						position: 	relative;
+						text-align: center;
+						&[icon]:before{
+							font-size: 	16px;
+						}
+					}
 					&>span.option{
 						color:		rgba(255, 255, 255, 0.2625);
 					}
-					&>button.option{
+					&>button{
 						transition-property: color;
 						&:hover{
-							color: 	rgba(255, 255, 255, .75);
+							color: 	rgba(255, 255, 255, .95);
 						}
 						&:active{
 							color: 	rgba(255, 255, 255, .35);

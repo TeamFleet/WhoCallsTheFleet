@@ -30,7 +30,11 @@ _menu.prototype.init = function(){
 		this.dom.menu 	= $('<div class="menu"/>')
 							.addClass(this.settings.className)
 							.on('click', function(){
-								self.hide()
+								if( !self.timeout_hideself )
+									self.timeout_hideself = setTimeout(function(){
+										self.timeout_hideself = null
+										self.hide()
+									}, 10)
 							})
 							.appendTo(_frame.menu.dom.container)
 		this.dom.body 	= $('<div class="body"/>').appendTo(this.dom.menu)
@@ -54,6 +58,14 @@ _menu.prototype.init = function(){
 				case 'separator':
 					menuitem = $('<hr/>')
 					break;
+			}
+			if( menuitem.hasClass('donot_hide') ){
+				menuitem.on('click', function(){
+					setTimeout(function(){
+						clearTimeout(self.timeout_hideself)
+						self.timeout_hideself = null
+					}, 1)
+				})
 			}
 			self.appendItem( menuitem )
 		}

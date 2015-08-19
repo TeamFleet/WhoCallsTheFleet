@@ -115,5 +115,24 @@ body > .menus{
 			.transition-property(transform);
 			transform:	translateY(10px);
 		}
+		
+		&.mod-checkbox{
+			&>.body{
+				menuitem{
+					position: 	relative;
+					padding: 	0;
+					input[type=checkbox]{
+						position: 	absolute;
+						.top(10);
+						.left(10);
+					}
+					label{
+						display: 	block;
+						.padding-left(40);
+						padding-right: 1.5em;
+					}
+				}
+			}
+		}
 	}
 }

@@ -32,9 +32,7 @@ class TablelistFleets extends Tablelist{
 		//	lists: [],
 		//	items: {}
 		//}
-
-		let promise_chain 	= Q.fcall(function(){})
-
+	
 		// 标记全局载入状态
 			_frame.app_main.loading.push('tablelist_'+this._index)
 			_frame.app_main.is_loaded = false
@@ -101,42 +99,7 @@ class TablelistFleets extends Tablelist{
 				e.stopPropagation()
 			}.bind(this))
 
-			promise_chain
-
-		// 读取已保存数据
-			.then(function(){
-				return this.loaddata()
-			}.bind(this))
-		
-		// 检查每条数据
-			.then(function(arr){
-				return this.validdata(arr)
-			}.bind(this))
-
-		// 如果没有数据，标记状态
-			.then(function(arr){
-				return this.datacheck(arr)
-			}.bind(this))
-
-		// [创建] 全部数据行
-			.then(function(arr){
-				return this.append_all_items(arr)
-			}.bind(this))
-
-		// [框架] 标记读取完成
-			.then(function(){
-				setTimeout(function(){
-					_frame.app_main.loaded('tablelist_'+this._index, true)
-				}.bind(this), 100)
-			}.bind(this))
-
-		// 错误处理
-			.catch(function (err) {
-				_g.log(err)
-			})
-			.done(function(){
-				_g.log('Fleets list DONE')
-			})
+		this.genlist()
 	}
 	
 	// 新建数据
@@ -284,27 +247,75 @@ class TablelistFleets extends Tablelist{
 				return 0;
 			})
 			_g.log(arr)
+			
+			this.trIndex = 0
+			
+			// 处理“按主题颜色分组”选项默认值
+				if( typeof Lockr.get( 'fleetlist-option-groupbytheme' ) == 'undefined' )
+					Lockr.set( 'fleetlist-option-groupbytheme', true )
 	
 			let deferred = Q.defer()
 				,k = 0
-	
-			// 创建flexgrid placeholder
-				while(k < this.flexgrid_empty_count){
-					if( !k )
-						this.flexgrid_ph = $('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
-					else
-						$('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
-					k++
-				}
-	
-			// 创建数据行
-				arr.forEach(function(currentValue, i){
-					setTimeout((function(i){
-						this.append_item( arr[i] )
-						if( i >= arr.length -1 )
-							deferred.resolve()
-					}.bind(this))(i), 0)
-				}.bind(this))
+			
+			if( Lockr.get( 'fleetlist-option-groupbytheme' ) ){
+				// 按主题颜色分组array
+				let sorted = {}
+					,count = 0
+				arr.forEach(function(cur,i){
+					if( !sorted[cur.theme] )
+						sorted[cur.theme] = []
+					sorted[cur.theme].push(i)
+				})
+				console.log(sorted)
+				
+				// 根据主题颜色遍历
+					for( let i in sorted ){
+						k = 0
+						// 创建flexgrid placeholder
+							while(k < this.flexgrid_empty_count){
+								if( !k )
+									this.flexgrid_ph = $('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
+								else
+									$('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
+								k++
+							}
+
+						// 创建数据行
+							sorted[i].forEach(function(index){
+								setTimeout((function(i){
+									this.append_item( arr[i] )
+									count++
+									if( count >= arr.length -1 )
+										deferred.resolve()
+								}.bind(this))(index), 0)
+							}.bind(this))
+
+						// 创建强制换行
+							$('<tr class="typetitle" data-trindex="'+(++this.trIndex)+'">'
+								+ '<th colspan="' + (this.columns.length + 1) + '">'
+								+ '</th></tr>')
+								.appendTo( this.dom.tbody )
+							this.trIndex++
+					}
+			}else{
+				// 创建flexgrid placeholder
+					while(k < this.flexgrid_empty_count){
+						if( !k )
+							this.flexgrid_ph = $('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
+						else
+							$('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
+						k++
+					}
+		
+				// 创建数据行
+					arr.forEach(function(currentValue, i){
+						setTimeout((function(i){
+							this.append_item( arr[i] )
+							if( i >= arr.length -1 )
+								deferred.resolve()
+						}.bind(this))(i), 0)
+					}.bind(this))
+			}
 	
 			if( !arr.length )
 				deferred.resolve()
@@ -446,7 +457,7 @@ class TablelistFleets extends Tablelist{
 
 	// [按钮操作] 选项设置
 		btn_settings(){
-			_g.log('CLICK: 选项设置')
+			TablelistFleets.menuOptions_show(this.dom.btn_settings, this)
 		}
 
 	// [操作] 新建配置
@@ -524,4 +535,92 @@ class TablelistFleets extends Tablelist{
 
 			TablelistFleets.contextmenu.show($em || $tr)
 		}
+	
+	
+	// 生成列表
+		genlist(){
+			let promise_chain 	= Q.fcall(function(){})
+	
+				promise_chain
+	
+			// 读取已保存数据
+				.then(function(){
+					return this.loaddata()
+				}.bind(this))
+			
+			// 检查每条数据
+				.then(function(arr){
+					return this.validdata(arr)
+				}.bind(this))
+	
+			// 如果没有数据，标记状态
+				.then(function(arr){
+					return this.datacheck(arr)
+				}.bind(this))
+	
+			// [创建] 全部数据行
+				.then(function(arr){
+					return this.append_all_items(arr)
+				}.bind(this))
+	
+			// [框架] 标记读取完成
+				.then(function(){
+					setTimeout(function(){
+						_frame.app_main.loaded('tablelist_'+this._index, true)
+					}.bind(this), 100)
+				}.bind(this))
+	
+			// 错误处理
+				.catch(function (err) {
+					_g.log(err)
+				})
+				.done(function(){
+					_g.log('Fleets list DONE')
+				})
+		}
+}
+TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
+	TablelistFleets.menuOptions_curTablelist = $el_tablelist || null
+
+	if( !TablelistFleets.menuOptions )
+		TablelistFleets.menuOptions = new _menu({
+			'className':	'mod-checkbox menu-tablelistfleets-options',
+			'items': [
+				$('<menuitem class="donot_hide option-groupbytheme"/>')
+					.append($('<input/>',{
+							'type':	'checkbox',
+							'id':	'_input_g' + _g.inputIndex
+						}).prop('checked', Lockr.get( 'fleetlist-option-groupbytheme' ))
+						.on('change', function(e){
+							Lockr.set( 'fleetlist-option-groupbytheme', e.target.checked )
+							if( TablelistFleets.menuOptions_curTablelist ){
+								TablelistFleets.menuOptions_curTablelist.dom.tbody.empty()
+								TablelistFleets.menuOptions_curTablelist.genlist()
+							}
+						}))
+					.append($('<label/>',{
+							'for':	'_input_g' + (_g.inputIndex++),
+							'html':	'按主题颜色进行分组'
+						})),
+
+				$('<menuitem class="donot_hide option-aircraftdefaultmax"/>')
+					.append($('<input/>',{
+							'type':	'checkbox',
+							'id':	'_input_g' + _g.inputIndex
+						}).prop('checked', Lockr.get( 'fleetlist-option-aircraftdefaultmax' ))
+						.on('change', function(e){
+							Lockr.set( 'fleetlist-option-aircraftdefaultmax', e.target.checked )
+						}))
+					.append($('<label/>',{
+							'for':	'_input_g' + (_g.inputIndex++),
+							'html':	'新增飞行器熟练度默认为'
+						}))
+			]
+		})
+	
+	if( $el_tablelist )
+		TablelistFleets.menuOptions.dom.menu.addClass('is-tablelist')
+	else
+		TablelistFleets.menuOptions.dom.menu.removeClass('is-tablelist')
+	TablelistFleets.menuOptions.show($el)
 }

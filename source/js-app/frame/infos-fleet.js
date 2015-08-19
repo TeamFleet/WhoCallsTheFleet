@@ -164,6 +164,11 @@ class InfosFleet{
 								this.modalExportText_show()
 							}.bind(this))
 						)
+						.append(
+							this.doms['optionOptions'] = $('<button class="icon" icon="cog"/>').on('click', function(){
+								TablelistFleets.menuOptions_show(this.doms['optionOptions'])
+							}.bind(this))
+						)
 						/*
 						.append(
 							$('<span class="option"/>').html('[PH] 阵型')
@@ -1182,7 +1187,10 @@ class InfosFleetShipEquipment{
 					history.back()
 					this.id = id
 					this.star = 0
-					this.rank = 0
+					this.rank = (Lockr.get( 'fleetlist-option-aircraftdefaultmax' )
+									&& id
+									&& $.inArray(_g.data.items[id].type, _g.data.item_type_collections[3].types) > -1
+								) ? 7 : 0
 					TablelistEquipments.types = []
 					TablelistEquipments.shipId = null
 					if( this.infosFleetShip.infosFleet )
