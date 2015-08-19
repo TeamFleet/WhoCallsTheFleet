@@ -5019,7 +5019,7 @@ class InfosFleet{
 		}
 	
 	// 保存
-		save(){
+		save( not_save_to_file ){
 			if( this._updating )
 				return this
 			
@@ -5049,75 +5049,20 @@ class InfosFleet{
 			//_g.log(this)
 			_g.log(JSON.stringify(this.data.data))
 			*/
-
-			_db.fleets.updateById(this.data._id, this.data, function(){
-				_g.log('saved')
-			})
+			
+			if( !not_save_to_file )
+				_db.fleets.updateById(this.data._id, this.data, function(){
+					_g.log('saved')
+				})
 			return this
 		}
 	
 	// 浮动窗口
 		modalExport_show(){
-			let data = this.data.data
-		
-			data = JSON.stringify(data)
-			while( data.indexOf(',null]') > -1 )
-				data = data.replace(/\,null\]/g,']')
-			while( data.indexOf('[null]') > -1 )
-				data = data.replace(/\[null\]/g,'[]')
-
-			_frame.modal.show(
-				InfosFleet.modalExport(data),
-				'导出配置代码',
-				{
-					'classname': 	'infos_fleet infos_fleet_export'
-				}
-			)
+			InfosFleet.modalExport_show(this.data)
 		}
 		modalExportText_show(){
-			let text = ''
-				
-			console.log(this.data)
-			
-			text+= this.data.name || ''
-			
-			this.data.data.filter(function(value){
-				return value.length
-			}).forEach(function(fleet, i){
-				console.log(fleet)
-				text+=  (text ? '\n\n' : '')
-					+ '第 ' + (i+1) + ' 舰队'
-				fleet.filter(function(value){
-					return value.length > 0 && value[0] 
-				}).forEach(function(ship, j){
-					text+= '\n'
-						+ '(' + (i ? (i+1) + '-' : '') + (j+1) + ')'
-						+ _g.data.ships[ship[0]]._name
-						+ ( ship[1] && ship[1][0] ? ' Lv.' + ship[1][0] : '' )
-					let equipments = ship[2] || []
-						,stars = ship[3] || []
-						,ranks = ship[4] || []
-					equipments.filter(function(value){
-						return value
-					}).forEach(function(equipment, k){
-						text+= (!k ? ' | ' : ', ')
-							+ _g.data.items[equipment]._name
-							+ (stars[k] ? '★'+stars[k] : '')
-							+ (ranks[k] ? '['+_g.textRank[ranks[k]]+']' : '')
-					})
-				})
-			})
-			
-			text+= (text ? '\n\n' : '')
-				+ '* 创建自 是谁呼叫舰队 (fleet.diablohu.com)'
-
-			_frame.modal.show(
-				InfosFleet.modalExport(text),
-				'导出配置文本',
-				{
-					'classname': 	'infos_fleet infos_fleet_export mod-text'
-				}
-			)
+			InfosFleet.modalExportText_show(this.data)
 		}
 }
 InfosFleet.modalExport = function(curval){
@@ -5142,6 +5087,70 @@ InfosFleet.modalExport = function(curval){
 	
 	return InfosFleet.elModalExport
 }
+InfosFleet.modalExport_show = function(data){
+	data = data.data || []
+
+	data = JSON.stringify(data)
+	while( data.indexOf(',null]') > -1 )
+		data = data.replace(/\,null\]/g,']')
+	while( data.indexOf('[null]') > -1 )
+		data = data.replace(/\[null\]/g,'[]')
+
+	_frame.modal.show(
+		InfosFleet.modalExport(data),
+		'导出配置代码',
+		{
+			'classname': 	'infos_fleet infos_fleet_export'
+		}
+	)
+}
+InfosFleet.modalExportText_show = function(data){
+	if( !data )
+		return false
+	
+	let text = ''
+		,fleets = data.data.filter(function(value){
+						return value.length
+					}) || []
+	
+	text+= data.name || ''
+	
+	fleets.forEach(function(fleet, i){
+		console.log(fleet)
+		text+= (text ? '\n' : '')
+			+ ( fleets.length > 1 ? '\n第 ' + (i+1) + ' 舰队' : '')
+		fleet.filter(function(value){
+			return value.length > 0 && value[0] 
+		}).forEach(function(ship, j){
+			text+= '\n'
+				+ '(' + (i ? (i+1) + '-' : '') + (j+1) + ')'
+				+ _g.data.ships[ship[0]]._name
+				+ ( ship[1] && ship[1][0] ? ' Lv.' + ship[1][0] : '' )
+			let equipments = ship[2] || []
+				,stars = ship[3] || []
+				,ranks = ship[4] || []
+			equipments.filter(function(value){
+				return value
+			}).forEach(function(equipment, k){
+				text+= (!k ? ' | ' : ', ')
+					+ _g.data.items[equipment]._name
+					+ (stars[k] ? '★'+stars[k] : '')
+					+ (ranks[k] ? '['+_g.textRank[ranks[k]]+']' : '')
+			})
+		})
+	})
+	
+	text+= (text ? '\n\n' : '')
+		+ '* 创建自 是谁呼叫舰队 (fleet.diablohu.com)'
+
+	_frame.modal.show(
+		InfosFleet.modalExport(text),
+		'导出配置文本',
+		{
+			'classname': 	'infos_fleet infos_fleet_export mod-text'
+		}
+	)
+}
 
 
 
@@ -5162,9 +5171,9 @@ class InfosFleetSubFleet{
 		// 6个舰娘
 			let i = 0
 			while( i < 6 ){
-				this.ships[i] = new InfosFleetShip(infosFleet, this)
+				this.ships[i] = new InfosFleetShip(infosFleet, this, i)
 				this.ships[i].getEl().appendTo( this.el )
-				$('<s/>').appendTo( this.el )
+				//$('<s/>').appendTo( this.el )
 				i++
 			}
 		
@@ -5283,7 +5292,7 @@ class InfosFleetSubFleet{
 
 // 类：舰娘
 class InfosFleetShip{
-	constructor(infosFleet, infosFleetSubFleet, d){
+	constructor(infosFleet, infosFleetSubFleet, index, d){
 		// 数据结构
 		/* [
 				STRING 舰娘ID,
@@ -5320,13 +5329,20 @@ class InfosFleetShip{
 		this.infosFleet = infosFleet
 		this.infosFleetSubFleet = infosFleetSubFleet		
 		this.equipments = []
+		this.index = index
 		
 		this.el = $('<dd class="noship"/>')
 			// 头像 & 名称
 			.append(
 				$('<dt/>')
 					.append(
-						this.elAvatar = $('<s/>')
+						this.elAvatar = $('<s draggable="true"/>').on({
+							'dragstart': function(e){
+								e.preventDefault()
+								if( this.data[0] )
+									InfosFleetShip.dragStart( this )
+							}.bind(this)
+						})
 					)
 					.append(
 						this.elInfos = $('<div/>').html('<span>选择舰娘...</span>')
@@ -5418,17 +5434,29 @@ class InfosFleetShip{
 							}.bind(this))
 					)*/
 			)
-			.on('click', function(){
-				if( this.el.hasClass('noship') )
-					this.selectShipStart()
-			}.bind(this))
+			// 事件
+			.on({
+				// [点击] 无舰娘时，选择舰娘
+					'click': function(){
+						if( !this.data[0] )
+							this.selectShipStart()
+					}.bind(this),
+					
+					'mouseenter': function(e){
+						InfosFleetShip.dragEnter(this)
+					}.bind(this)
+			})
+		
+		this.after = $('<s/>')
+		
+		this.els = this.el.add(this.after)
 
 		//this.updateEl()
 	}
 	
 	// 返回页面元素
 		getEl(){
-			return this.el
+			return this.els
 		}
 	
 	// 开始选择
@@ -5661,6 +5689,51 @@ class InfosFleetShip{
 				this._saveTimeout = null
 			}.bind(this), 100)
 		}
+}
+InfosFleetShip.dragStart = function(infosFleetShip){
+	if( InfosFleetShip.dragging || !infosFleetShip )
+		return false
+
+	InfosFleetShip.dragging = infosFleetShip
+	infosFleetShip.el.css('opacity', '.5')
+	
+	if( !InfosFleetShip.isInit ){
+		$body.on({
+			'mouseup.InfosFleetShip_dragend': function(){
+				if( InfosFleetShip.dragging ){
+					InfosFleetShip.dragging.el.css('opacity', '')
+					InfosFleetShip.dragging.save()
+					InfosFleetShip.dragging = null
+				}
+			}
+		})
+		InfosFleetShip.isInit = true
+	}
+}
+InfosFleetShip.dragEnter = function(infosFleetShip_enter){
+	if( !InfosFleetShip.dragging || !infosFleetShip_enter || InfosFleetShip.dragging == infosFleetShip_enter )
+		return false
+	
+	if( InfosFleetShip.dragging.index > infosFleetShip_enter.index ){
+		InfosFleetShip.dragging.el.insertBefore(infosFleetShip_enter.el)
+	}else{
+		InfosFleetShip.dragging.el.insertAfter(infosFleetShip_enter.after)
+	}
+	InfosFleetShip.dragging.after.insertAfter(InfosFleetShip.dragging.el)
+	
+	let newIndex_dragging = infosFleetShip_enter.index
+		,newIndex_enter = InfosFleetShip.dragging.index
+		,infosFleetSubFleet = infosFleetShip_enter.infosFleetSubFleet
+		//,infosFleet = infosFleetSubFleet.infosFleet
+	
+	console.log(newIndex_dragging, newIndex_enter)
+	
+	InfosFleetShip.dragging.index = newIndex_dragging
+	infosFleetShip_enter.index = newIndex_enter
+	infosFleetSubFleet.ships[newIndex_dragging] = InfosFleetShip.dragging
+	infosFleetSubFleet.ships[newIndex_enter] = infosFleetShip_enter
+	
+	//infosFleet.save(true)
 }
 
 
@@ -6344,7 +6417,7 @@ class Tablelist{
 								sort[1].addClass('sort-second')
 						}
 						
-						console.log(is_ascending, sort)
+						//console.log(is_ascending, sort)
 		
 						// 将排序结果存储到表头对应的列中
 							if( cacheSortData )
@@ -7200,10 +7273,17 @@ class TablelistFleets extends Tablelist{
 								}
 							}),
 							
-						$('<menuitem/>').html('导出配置')
+						$('<menuitem/>').html('导出配置代码')
 							.on({
 								'click': function(e){
 									InfosFleet.modalExport_show(TablelistFleets.contextmenu_curel.data('initdata'))
+								}
+							}),
+							
+						$('<menuitem/>').html('导出配置文本')
+							.on({
+								'click': function(e){
+									InfosFleet.modalExportText_show(TablelistFleets.contextmenu_curel.data('initdata'))
 								}
 							}),
 							

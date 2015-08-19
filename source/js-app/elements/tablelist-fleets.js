@@ -495,10 +495,17 @@ class TablelistFleets extends Tablelist{
 								}
 							}),
 							
-						$('<menuitem/>').html('导出配置')
+						$('<menuitem/>').html('导出配置代码')
 							.on({
 								'click': function(e){
 									InfosFleet.modalExport_show(TablelistFleets.contextmenu_curel.data('initdata'))
+								}
+							}),
+							
+						$('<menuitem/>').html('导出配置文本')
+							.on({
+								'click': function(e){
+									InfosFleet.modalExportText_show(TablelistFleets.contextmenu_curel.data('initdata'))
 								}
 							}),
 							
