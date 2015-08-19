@@ -5540,12 +5540,37 @@ class InfosFleetShip{
 		
 			if( !InfosFleetShip.menu ){
 				InfosFleetShip.menuItems = [
-					$('<menuitem/>').html('查看资料')
+					$('<menuitem class="move move-up"/>').html(' ')
 						.on({
 							'click': function(e){
+								InfosFleetShip.menuCurObj.moveUp()
 							},
 							'show': function(){
-								InfosFleetShip.menuItems[0].attr(
+								if( InfosFleetShip.menuCurObj.index )
+									InfosFleetShip.menuItems[0].removeClass('disabled')
+								else
+									InfosFleetShip.menuItems[0].addClass('disabled')
+							}
+						}),
+					$('<menuitem class="move move-down"/>').html(' ')
+						.on({
+							'click': function(e){
+								InfosFleetShip.menuCurObj.moveDown()
+							},
+							'show': function(){
+								if( InfosFleetShip.menuCurObj.index < 5 )
+									InfosFleetShip.menuItems[1].removeClass('disabled')
+								else
+									InfosFleetShip.menuItems[1].addClass('disabled')
+							}
+						}),
+					
+					$('<hr/>'),
+					
+					$('<menuitem/>').html('查看资料')
+						.on({
+							'show': function(){
+								InfosFleetShip.menuItems[3].attr(
 									'data-infos',
 									'[[SHIP::'+InfosFleetShip.menuCurObj.shipId+']]'
 								)
@@ -5567,7 +5592,7 @@ class InfosFleetShip{
 						}),
 						
 					$('<div/>').on('show', function(){
-						var $div = InfosFleetShip.menuItems[3].empty()
+						var $div = InfosFleetShip.menuItems[6].empty()
 						if( InfosFleetShip.menuCurObj.shipId ){
 							var series = _g['data']['ships'][InfosFleetShip.menuCurObj.shipId].getSeriesData() || []
 							if( series.length > 1 ){
@@ -5596,6 +5621,44 @@ class InfosFleetShip{
 			}
 		
 			InfosFleetShip.menu.show(this.elBtnOptions)
+		}
+	
+	// 移动
+		swap(target, save){
+			if( typeof target == 'number' )
+				target = this.infosFleetSubFleet.ships[target]
+
+			if( this.index > target.index ){
+				this.el.insertBefore(target.el)
+			}else{
+				this.el.insertAfter(target.after)
+			}
+			this.after.insertAfter(this.el)
+			
+			let newIndex_dragging = target.index
+				,newIndex_enter = this.index
+			
+			console.log(newIndex_dragging, newIndex_enter)
+			
+			this.index = newIndex_dragging
+			target.index = newIndex_enter
+			this.infosFleetSubFleet.ships[newIndex_dragging] = this
+			this.infosFleetSubFleet.ships[newIndex_enter] = target
+			
+			if( save )
+				this.save()
+		}
+		moveUp(){
+			if( this.index <= 0 )
+				return
+			
+			this.swap( this.index - 1, true )
+		}
+		moveDown(){
+			if( this.index >= 5 )
+				return
+			
+			this.swap( this.index + 1, true )
 		}
 	
 	
@@ -5714,26 +5777,7 @@ InfosFleetShip.dragEnter = function(infosFleetShip_enter){
 	if( !InfosFleetShip.dragging || !infosFleetShip_enter || InfosFleetShip.dragging == infosFleetShip_enter )
 		return false
 	
-	if( InfosFleetShip.dragging.index > infosFleetShip_enter.index ){
-		InfosFleetShip.dragging.el.insertBefore(infosFleetShip_enter.el)
-	}else{
-		InfosFleetShip.dragging.el.insertAfter(infosFleetShip_enter.after)
-	}
-	InfosFleetShip.dragging.after.insertAfter(InfosFleetShip.dragging.el)
-	
-	let newIndex_dragging = infosFleetShip_enter.index
-		,newIndex_enter = InfosFleetShip.dragging.index
-		,infosFleetSubFleet = infosFleetShip_enter.infosFleetSubFleet
-		//,infosFleet = infosFleetSubFleet.infosFleet
-	
-	console.log(newIndex_dragging, newIndex_enter)
-	
-	InfosFleetShip.dragging.index = newIndex_dragging
-	infosFleetShip_enter.index = newIndex_enter
-	infosFleetSubFleet.ships[newIndex_dragging] = InfosFleetShip.dragging
-	infosFleetSubFleet.ships[newIndex_enter] = infosFleetShip_enter
-	
-	//infosFleet.save(true)
+	InfosFleetShip.dragging.swap(infosFleetShip_enter)
 }
 
 
