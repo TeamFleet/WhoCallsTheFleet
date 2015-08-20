@@ -630,8 +630,18 @@ class InfosFleetShip{
 															this.shipLv = null
 														
 														value = parseInt(value)
+														if( value < 0 ){
+															value = 0
+															this.elInputLevel.val(0)
+														}else if( value > 150 ){
+															value = 150
+															this.elInputLevel.val(150)
+														}
 														if( !isNaN(value) && this.data[1][0] != value )
 															this.shipLv = value
+													}.bind(this),
+													'input': function(){
+														this.elInputLevel.trigger('change')
 													}.bind(this)
 												})
 											)
@@ -664,6 +674,15 @@ class InfosFleetShip{
 					)
 					.append(
 						this.elAttrHitSum = $('<span class="hitsum"/>').html('-')
+					)
+					.append(
+						this.elAttrHp = $('<span class="hp"/>').html('-')
+					)
+					.append(
+						this.elAttrArmor = $('<span class="armor"/>').html('-')
+					)
+					.append(
+						this.elAttrEvasion = $('<span class="evasion"/>').html('-')
 					)
 				/*
 					.append($('<span class="shelling"/>').html('炮击力').append(
@@ -755,10 +774,15 @@ class InfosFleetShip{
 				else
 					this.elAttrHitSum.addClass('negative')
 				this.elAttrHitSum.html( hitSum )
+			this.elAttrHp.html( this.calculate('attribute', 'hp') )
+			this.elAttrArmor.html( this.calculate('attribute', 'armor') )
+			this.elAttrEvasion.html( this.calculate('attribute', 'evasion') )
 		}
 	
 	// 单项属性计算
-		calculate(type){
+		calculate(type, attr){
+			if( type == 'attribute' )
+				return _g.data.ships[this.shipId].getAttribute(attr, this.shipLv)
 			if( Formula[type] )
 				return Formula[type]( this.shipId, this.data[2], this.data[3], this.data[4] )
 			return null
@@ -1003,7 +1027,9 @@ class InfosFleetShip{
 	
 	// 保存
 		save(){
-			this.infosFleetSubFleet.summaryCalc()
+			// 计算属性
+				this.updateAttrs()
+				this.infosFleetSubFleet.summaryCalc()
 
 			if( this._updating )
 				return false
@@ -1012,14 +1038,12 @@ class InfosFleetShip{
 				return false
 			
 			this._saveTimeout = setTimeout(function(){
-				// 计算属性
-					this.updateAttrs()
 				
 				if( this.infosFleetSubFleet )
 					this.infosFleetSubFleet.save()
 				
 				this._saveTimeout = null
-			}.bind(this), 100)
+			}.bind(this), 1000)
 		}
 }
 InfosFleetShip.dragStart = function(infosFleetShip){
