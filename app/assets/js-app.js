@@ -1114,6 +1114,59 @@ class Ship extends ITEM{
 			return a-b
 		})
 	}
+	
+	getAttribute(attr, lvl){
+		lvl = lvl || 1
+		if( lvl > 150 )
+			lvl = 150
+		
+		let getStatOfLvl = function( lvl, base, max ){
+			lvl = lvl || 1
+			base = parseFloat(base)
+			max = parseFloat(max) || base
+			if( base < 0 || max < 0 )
+				return -1
+			return Math.floor( base + (max - base) * lvl / 99 )
+		}
+		
+		let value
+		
+		switch(attr){
+			case 'hp':
+				value = this['stat']['hp']
+				if( lvl > 99 ){
+					if (this['stat']['hp'] >= 90) value = this['stat']['hp'] + 9
+					else if (this['stat']['hp'] >= 70) value = this['stat']['hp'] + 8
+					else if (this['stat']['hp'] >= 50) value = this['stat']['hp'] + 7
+					else if (this['stat']['hp'] >= 40) value = this['stat']['hp'] + 6
+					else if (this['stat']['hp'] >= 30) value = this['stat']['hp'] + 5
+					else value = this['stat']['hp'] + 4
+					if (value > this['stat']['hp_max']) value = this['stat']['hp_max']
+				}
+				return value
+				break;
+			case 'speed':
+				return _g.getStatSpeed( this['stat']['speed'] )
+				break;
+			case 'range':
+				return _g.getStatRange( this['stat']['range'] )
+				break;
+			case 'luck':
+				if( lvl > 99 )
+					return (this['stat']['luck'] + 3)
+				return this['stat']['luck']
+				break;
+			case 'fuel':
+			case 'ammo':
+				if( lvl > 99 )
+					return Math.floor( this['consum'][attr] * 0.85 )
+				return this['consum'][attr]
+				break;
+			default:
+				return getStatOfLvl( lvl, this['stat'][attr], this['stat'][attr + '_max'] )
+				break;
+		}
+	}
 }
 
 class Equipment extends ITEM{
@@ -2578,7 +2631,7 @@ let Formula = {
 					if( equipments_by_slot[index] )
 						result+= equipments_by_slot[index].stat.hit || 0
 				})
-				return '+'+result
+				return result>=0 ? '+'+result : result
 				break;
 		}
 		
@@ -4180,23 +4233,17 @@ _frame.infos.init = function(){
 
 				switch( name ){
 					case 'hp':
-						val99 = _val( d['stat']['hp'] )
-						if (d['stat']['hp'] >= 90) val150 = d['stat']['hp'] + 9
-						else if (d['stat']['hp'] >= 70) val150 = d['stat']['hp'] + 8
-						else if (d['stat']['hp'] >= 50) val150 = d['stat']['hp'] + 7
-						else if (d['stat']['hp'] >= 40) val150 = d['stat']['hp'] + 6
-						else if (d['stat']['hp'] >= 30) val150 = d['stat']['hp'] + 5
-						else val150 = d['stat']['hp'] + 4
-						if (val150 > d['stat']['hp_max']) val150 = d['stat']['hp_max']
+						val99 = d.getAttribute('hp', 99)
+						val150 = d.getAttribute('hp', 150)
 						break;
 					case 'asw':
-						val99 = _val( getStatOfLvl( 99, d['stat']['asw'], d['stat']['asw_max'] ), /^(5|8|9|12|24)$/.test(d['type']) )
-						val150 = _val( getStatOfLvl( 150, d['stat']['asw'], d['stat']['asw_max'] ), /^(5|8|9|12|24)$/.test(d['type']) )
+						val99 = _val( d.getAttribute('asw', 99), /^(5|8|9|12|24)$/.test(d['type']) )
+						val150 = _val( d.getAttribute('asw', 150), /^(5|8|9|12|24)$/.test(d['type']) )
 						break;
 					case 'evasion':
 					case 'los':
-						val99 = _val( getStatOfLvl( 99, d['stat'][name], d['stat'][name + '_max'] ) )
-						val150 = _val( getStatOfLvl( 150, d['stat'][name], d['stat'][name + '_max'] ) )
+						val99 = d.getAttribute(name, 99)
+						val150 = d.getAttribute(name, 150)
 						break;
 					case 'speed':
 						val99 = _g.getStatSpeed( d['stat']['speed'] )
@@ -4210,11 +4257,11 @@ _frame.infos.init = function(){
 						break;
 					case 'fuel':
 					case 'ammo':
-						val99 = _val( d['consum'][name] )
-						val150 = _val( Math.floor( d['consum'][name] * 0.85 ) )
+						val99 = d.getAttribute(name, 99)
+						val150 = d.getAttribute(name, 150)
 						break;
 					default:
-						val99 = _val( d['stat'][name + '_max'] || d['stat'][name] )
+						val99 = _val( d.getAttribute(name, 99) )
 						break;
 				}
 
@@ -5496,7 +5543,12 @@ class InfosFleetShip{
 		updateAttrs(){
 			this.elAttrShelling.html( this.calculate('shellingDamage') )
 			this.elAttrTorpedo.html( this.calculate('torpedoDamage') )
-			this.elAttrHitSum.html( this.calculate('hitSum') )
+			let hitSum = this.calculate('hitSum')
+				if( hitSum >= 0 )
+					this.elAttrHitSum.removeClass('negative')
+				else
+					this.elAttrHitSum.addClass('negative')
+				this.elAttrHitSum.html( hitSum )
 		}
 	
 	// 单项属性计算

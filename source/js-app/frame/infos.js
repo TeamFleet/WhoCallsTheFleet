@@ -352,23 +352,17 @@ _frame.infos.init = function(){
 
 				switch( name ){
 					case 'hp':
-						val99 = _val( d['stat']['hp'] )
-						if (d['stat']['hp'] >= 90) val150 = d['stat']['hp'] + 9
-						else if (d['stat']['hp'] >= 70) val150 = d['stat']['hp'] + 8
-						else if (d['stat']['hp'] >= 50) val150 = d['stat']['hp'] + 7
-						else if (d['stat']['hp'] >= 40) val150 = d['stat']['hp'] + 6
-						else if (d['stat']['hp'] >= 30) val150 = d['stat']['hp'] + 5
-						else val150 = d['stat']['hp'] + 4
-						if (val150 > d['stat']['hp_max']) val150 = d['stat']['hp_max']
+						val99 = d.getAttribute('hp', 99)
+						val150 = d.getAttribute('hp', 150)
 						break;
 					case 'asw':
-						val99 = _val( getStatOfLvl( 99, d['stat']['asw'], d['stat']['asw_max'] ), /^(5|8|9|12|24)$/.test(d['type']) )
-						val150 = _val( getStatOfLvl( 150, d['stat']['asw'], d['stat']['asw_max'] ), /^(5|8|9|12|24)$/.test(d['type']) )
+						val99 = _val( d.getAttribute('asw', 99), /^(5|8|9|12|24)$/.test(d['type']) )
+						val150 = _val( d.getAttribute('asw', 150), /^(5|8|9|12|24)$/.test(d['type']) )
 						break;
 					case 'evasion':
 					case 'los':
-						val99 = _val( getStatOfLvl( 99, d['stat'][name], d['stat'][name + '_max'] ) )
-						val150 = _val( getStatOfLvl( 150, d['stat'][name], d['stat'][name + '_max'] ) )
+						val99 = d.getAttribute(name, 99)
+						val150 = d.getAttribute(name, 150)
 						break;
 					case 'speed':
 						val99 = _g.getStatSpeed( d['stat']['speed'] )
@@ -382,11 +376,11 @@ _frame.infos.init = function(){
 						break;
 					case 'fuel':
 					case 'ammo':
-						val99 = _val( d['consum'][name] )
-						val150 = _val( Math.floor( d['consum'][name] * 0.85 ) )
+						val99 = d.getAttribute(name, 99)
+						val150 = d.getAttribute(name, 150)
 						break;
 					default:
-						val99 = _val( d['stat'][name + '_max'] || d['stat'][name] )
+						val99 = _val( d.getAttribute(name, 99) )
 						break;
 				}
 

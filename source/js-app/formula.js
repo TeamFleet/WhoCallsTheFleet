@@ -215,7 +215,7 @@ let Formula = {
 					if( equipments_by_slot[index] )
 						result+= equipments_by_slot[index].stat.hit || 0
 				})
-				return '+'+result
+				return result>=0 ? '+'+result : result
 				break;
 		}
 		

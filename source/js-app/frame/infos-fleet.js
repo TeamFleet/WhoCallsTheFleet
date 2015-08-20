@@ -749,7 +749,12 @@ class InfosFleetShip{
 		updateAttrs(){
 			this.elAttrShelling.html( this.calculate('shellingDamage') )
 			this.elAttrTorpedo.html( this.calculate('torpedoDamage') )
-			this.elAttrHitSum.html( this.calculate('hitSum') )
+			let hitSum = this.calculate('hitSum')
+				if( hitSum >= 0 )
+					this.elAttrHitSum.removeClass('negative')
+				else
+					this.elAttrHitSum.addClass('negative')
+				this.elAttrHitSum.html( hitSum )
 		}
 	
 	// 单项属性计算

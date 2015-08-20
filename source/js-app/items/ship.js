@@ -158,4 +158,57 @@ class Ship extends ITEM{
 			return a-b
 		})
 	}
+	
+	getAttribute(attr, lvl){
+		lvl = lvl || 1
+		if( lvl > 150 )
+			lvl = 150
+		
+		let getStatOfLvl = function( lvl, base, max ){
+			lvl = lvl || 1
+			base = parseFloat(base)
+			max = parseFloat(max) || base
+			if( base < 0 || max < 0 )
+				return -1
+			return Math.floor( base + (max - base) * lvl / 99 )
+		}
+		
+		let value
+		
+		switch(attr){
+			case 'hp':
+				value = this['stat']['hp']
+				if( lvl > 99 ){
+					if (this['stat']['hp'] >= 90) value = this['stat']['hp'] + 9
+					else if (this['stat']['hp'] >= 70) value = this['stat']['hp'] + 8
+					else if (this['stat']['hp'] >= 50) value = this['stat']['hp'] + 7
+					else if (this['stat']['hp'] >= 40) value = this['stat']['hp'] + 6
+					else if (this['stat']['hp'] >= 30) value = this['stat']['hp'] + 5
+					else value = this['stat']['hp'] + 4
+					if (value > this['stat']['hp_max']) value = this['stat']['hp_max']
+				}
+				return value
+				break;
+			case 'speed':
+				return _g.getStatSpeed( this['stat']['speed'] )
+				break;
+			case 'range':
+				return _g.getStatRange( this['stat']['range'] )
+				break;
+			case 'luck':
+				if( lvl > 99 )
+					return (this['stat']['luck'] + 3)
+				return this['stat']['luck']
+				break;
+			case 'fuel':
+			case 'ammo':
+				if( lvl > 99 )
+					return Math.floor( this['consum'][attr] * 0.85 )
+				return this['consum'][attr]
+				break;
+			default:
+				return getStatOfLvl( lvl, this['stat'][attr], this['stat'][attr + '_max'] )
+				break;
+		}
+	}
 }
