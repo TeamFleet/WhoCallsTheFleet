@@ -669,22 +669,25 @@ class InfosFleetShip{
 			.append(
 				$('<div class="attributes"/>')
 					.append(
-						this.elAttrShelling = $('<span class="shelling"/>').html('-')
+						this.elAttrShelling = $('<span class="shelling"/>')
 					)
 					.append(
-						this.elAttrTorpedo = $('<span class="torpedo"/>').html('-')
+						this.elAttrTorpedo = $('<span class="torpedo"/>')
 					)
 					.append(
-						this.elAttrHitSum = $('<span class="hitsum"/>').html('-')
+						this.elAttrHitSum = $('<span class="hitsum"/>')
 					)
 					.append(
-						this.elAttrHp = $('<span class="hp"/>').html('-')
+						this.elAttrHp = $('<span class="hp"/>')
 					)
 					.append(
-						this.elAttrArmor = $('<span class="armor"/>').html('-')
+						this.elAttrArmor = $('<span class="armor"/>')
 					)
 					.append(
-						this.elAttrEvasion = $('<span class="evasion"/>').html('-')
+						this.elAttrEvasion = $('<span class="evasion"/>')
+					)
+					.append(
+						this.elAttrNightBattle = $('<span class="nightbattle" data-text="夜战"/>')
 					)
 				/*
 					.append($('<span class="shelling"/>').html('炮击力').append(
@@ -779,17 +782,18 @@ class InfosFleetShip{
 			this.elAttrHp.html( this.calculate('attribute', 'hp') )
 			this.elAttrArmor.html( this.calculate('attribute', 'armor') )
 			this.elAttrEvasion.html( this.shipLv ? this.calculate('attribute', 'evasion') : '-' )
+			this.elAttrNightBattle.html( this.calculate('nightBattle') )
 		}
 	
 	// 单项属性计算
 		calculate(type, attr){
 			if( !this.shipId )
-				return null
+				return '-'
 			if( type == 'attribute' )
 				return _g.data.ships[this.shipId].getAttribute(attr, this.shipLv)
 			if( Formula[type] )
 				return Formula[type]( this.shipId, this.data[2], this.data[3], this.data[4] )
-			return null
+			return '-'
 		}
 
 	// 更新元数据
@@ -1031,23 +1035,26 @@ class InfosFleetShip{
 	
 	// 保存
 		save(){
-			// 计算属性
-				this.updateAttrs()
-				this.infosFleetSubFleet.summaryCalc()
-
 			if( this._updating )
 				return false
 
-			if( this._saveTimeout )
-				return false
-			
-			this._saveTimeout = setTimeout(function(){
-				
-				if( this.infosFleetSubFleet )
-					this.infosFleetSubFleet.save()
-				
-				this._saveTimeout = null
-			}.bind(this), 1000)
+			// 计算属性
+				if( !this._updateTimeout ){
+					this._updateTimeout = setTimeout(function(){
+						this.updateAttrs()
+						this.infosFleetSubFleet.summaryCalc()
+						this._updateTimeout = null
+					}.bind(this), 10)
+				}
+
+			if( !this._saveTimeout ){
+				this._saveTimeout = setTimeout(function(){
+					if( this.infosFleetSubFleet )
+						this.infosFleetSubFleet.save()
+					
+					this._saveTimeout = null
+				}.bind(this), 1000)
+			}
 		}
 }
 InfosFleetShip.dragStart = function(infosFleetShip){

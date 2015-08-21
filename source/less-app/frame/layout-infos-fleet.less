@@ -816,7 +816,7 @@ main>.page.infos{
 								padding: 	0 8px 0 28px;
 								position: 	relative;
 								font-weight:lighter;
-								min-width: 	~"calc(2.25em + 28px)";
+								min-width: 	~"calc(2.5em + 28px)";
 								//opacity: 	.85;
 								&:before{
 									content: 	"";
@@ -826,8 +826,10 @@ main>.page.infos{
 									left: 		6px;
 									width: 		18px;
 									height: 	18px;
+									line-height:0;
 									transform: 	translateY(-9px);
 									opacity: 	.65;
+									display: 	inline-block;
 								}
 								&.negative{
 									color: 		hsl(5, 100%, 75%);
@@ -846,6 +848,36 @@ main>.page.infos{
 								}
 								&.evasion:before{
 									background-position-y: 	unit(2 * -18, px);
+								}
+								&+[data-text]{
+									margin-left: 	1em;
+								}
+								&[data-text]{
+									&:before, &:after{
+										content: 	attr(data-text);
+										font-size: 	12px;
+										width: 		auto;
+										padding: 	0 8px;
+										height: 	auto;
+										line-height:inherit;
+									}
+									&:before{
+										background: none transparent;
+										position: 	relative;
+										margin: 	0 4px 0 -28px;
+										top: 		auto;
+										left: 		auto;
+										transform: 	none;
+									}
+									&:after{
+										background: linear-gradient(to bottom, rgba(0,0,0,.35), transparent);
+										position: 	absolute;
+										top: 		0;
+										left: 		0;
+										transform: 	skew(-30deg);
+										z-index: 	-1;
+										color: 		transparent;
+									}
 								}
 							}
 						}
@@ -1091,7 +1123,8 @@ main>.page.infos{
 		
 		//.convertColor(hsla(@hue, 40%, 40%, .65));
 		//.convertColor(hsla(@hue, 20%, 18%, .8));
-		.convertColor(hsla(@hue, 30%, 18%, .65));
+		//.convertColor(hsla(@hue, 30%, 18%, .65));
+		.convertColor(hsla(@hue, 10%, 20%, .8));
 		.convertColor2(hsl(@hue, 100%, 80%));
 		.convertColor3(hsla(@hue, 100%, 75%, .2));
 		background-color:	@color;
@@ -1213,6 +1246,9 @@ main>.page.infos{
 				} // &>.ships
 			}
 		}
+	}
+	&[data-theme]{
+		background-color:	hsla(0, 0%, 10%, .8);
 	}
 	&[data-theme="2"]{
 		.theme(11, 0%, 5%, 0%, 0%);
