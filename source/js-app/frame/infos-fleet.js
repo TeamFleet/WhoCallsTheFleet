@@ -660,6 +660,8 @@ class InfosFleetShip{
 						this.equipments[i] = new InfosFleetShipEquipment(this, i)
 						els = els.add(this.equipments[i].el)
 					}
+					//this.elAttrbutes = $('<div class="equipment"/>')
+					//els = els.add(this.elAttrbutes)
 					return els
 				}.bind(this))
 			)
@@ -776,11 +778,13 @@ class InfosFleetShip{
 				this.elAttrHitSum.html( hitSum )
 			this.elAttrHp.html( this.calculate('attribute', 'hp') )
 			this.elAttrArmor.html( this.calculate('attribute', 'armor') )
-			this.elAttrEvasion.html( this.calculate('attribute', 'evasion') )
+			this.elAttrEvasion.html( this.shipLv ? this.calculate('attribute', 'evasion') : '-' )
 		}
 	
 	// 单项属性计算
 		calculate(type, attr){
+			if( !this.shipId )
+				return null
 			if( type == 'attribute' )
 				return _g.data.ships[this.shipId].getAttribute(attr, this.shipLv)
 			if( Formula[type] )
