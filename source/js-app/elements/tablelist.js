@@ -68,7 +68,8 @@ class Tablelist{
 				let input
 					,option_empty
 					,o_el
-					,id = '_input_g' + (_g.inputIndex++)
+					//,id = '_input_g' + (_g.inputIndex++)
+					,id = Tablelist.genId()
 				//_g.inputIndex++
 				switch( type ){
 					case 'text':
@@ -155,7 +156,8 @@ class Tablelist{
 			}
 		
 			let line = $('<p/>').addClass(name).appendTo( this.dom.filters )
-				,id = '_input_g' + parseInt(_g.inputIndex)
+				//,id = '_input_g' + parseInt(_g.inputIndex)
+				,id = Tablelist.genId()
 				,input = gen_input().appendTo(line)
 		
 			label = label ? $('<label for="'+id+'"/>').html( label ).appendTo(line) : null
@@ -166,7 +168,7 @@ class Tablelist{
 			if( suffix )
 				$('<label for="'+id+'"/>').html(suffix).appendTo(line)
 		
-			_g.inputIndex++
+			//_g.inputIndex++
 			return line
 		}
 
@@ -376,3 +378,17 @@ class Tablelist{
 				}
 }
 Tablelist.index = 0
+Tablelist.genId = function(text){
+	var hash = 0
+		, i
+		, chr
+		, len
+	text = text || (new Date()).toISOString();
+	if (text.length == 0) return hash;
+	for (i = 0, len = text.length; i < len; i++) {
+		chr   = text.charCodeAt(i);
+		hash  = ((hash << 5) - hash) + chr;
+		hash |= 0; // Convert to 32bit integer
+	}
+	return 'tablelist'+hash;
+}
