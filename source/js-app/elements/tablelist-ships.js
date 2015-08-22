@@ -301,7 +301,7 @@ class TablelistShips extends Tablelist{
 					$('<td data-stat="consum_fuel"/>')
 						.attr(
 							'data-value',
-							ship_data['consum']['fuel'] == -1
+							ship_data['consum']['fuel']
 						)
 						.html( _val(ship_data['consum']['fuel']) )
 						.appendTo(tr)
@@ -310,7 +310,7 @@ class TablelistShips extends Tablelist{
 					$('<td data-stat="consum_ammo"/>')
 						.attr(
 							'data-value',
-							ship_data['consum']['ammo'] == -1
+							ship_data['consum']['ammo']
 						)
 						.html( _val(ship_data['consum']['ammo']) )
 						.appendTo(tr)

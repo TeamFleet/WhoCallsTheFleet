@@ -5946,13 +5946,13 @@ InfosFleetShip.dragStart = function(infosFleetShip){
 		return false
 
 	InfosFleetShip.dragging = infosFleetShip
-	infosFleetShip.el.css('opacity', '.5')
+	infosFleetShip.el.addClass('moving')
 	
 	if( !InfosFleetShip.isInit ){
 		$body.on({
 			'mouseup.InfosFleetShip_dragend': function(){
 				if( InfosFleetShip.dragging ){
-					InfosFleetShip.dragging.el.css('opacity', '')
+					InfosFleetShip.dragging.el.removeClass('moving')
 					InfosFleetShip.dragging.save()
 					InfosFleetShip.dragging = null
 				}
@@ -7942,7 +7942,7 @@ class TablelistShips extends Tablelist{
 					$('<td data-stat="consum_fuel"/>')
 						.attr(
 							'data-value',
-							ship_data['consum']['fuel'] == -1
+							ship_data['consum']['fuel']
 						)
 						.html( _val(ship_data['consum']['fuel']) )
 						.appendTo(tr)
@@ -7951,7 +7951,7 @@ class TablelistShips extends Tablelist{
 					$('<td data-stat="consum_ammo"/>')
 						.attr(
 							'data-value',
-							ship_data['consum']['ammo'] == -1
+							ship_data['consum']['ammo']
 						)
 						.html( _val(ship_data['consum']['ammo']) )
 						.appendTo(tr)

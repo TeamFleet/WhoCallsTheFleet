@@ -1062,13 +1062,13 @@ InfosFleetShip.dragStart = function(infosFleetShip){
 		return false
 
 	InfosFleetShip.dragging = infosFleetShip
-	infosFleetShip.el.css('opacity', '.5')
+	infosFleetShip.el.addClass('moving')
 	
 	if( !InfosFleetShip.isInit ){
 		$body.on({
 			'mouseup.InfosFleetShip_dragend': function(){
 				if( InfosFleetShip.dragging ){
-					InfosFleetShip.dragging.el.css('opacity', '')
+					InfosFleetShip.dragging.el.removeClass('moving')
 					InfosFleetShip.dragging.save()
 					InfosFleetShip.dragging = null
 				}
