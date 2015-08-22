@@ -1029,11 +1029,12 @@ main>.page.infos{
 										position: 	absolute;
 										top: 		50%;
 										line-height:0;
-										width: 		100%;
-										left: 		0;
-										text-align: center;
-										font-size: 	percentage(48 / @base_font_size);
+										width: 		35%;
+										left: 		-40px;
+										font-size: 	percentage(40 / @base_font_size);
 										z-index: 	2;
+										.enable-transition();
+										transition-property: 	left;
 									}
 								}
 								&:after{
@@ -1056,8 +1057,10 @@ main>.page.infos{
 							&:hover{
 								&>dt>s:before{
 									content: 	@iconcode-move-vertical-alt2;
-									color: 		rgba(255, 255, 255, .65);
-									text-shadow:0 0 20px #000;
+									color: 		#fff;
+									text-shadow:0 0 30px #000;
+									opacity: 	.75;
+									left: 		-12px;
 								}
 							}
 							&.moving{
@@ -1066,6 +1069,7 @@ main>.page.infos{
 									display: 	none;
 								}
 							}
+							/*
 							@media all and (min-width: 1680px) and (min-height: 900px){
 								// 27.5% | 58% | 14.5% | 48px
 								&:after{
@@ -1130,7 +1134,7 @@ main>.page.infos{
 									top: 	10px;
 									height: ~"calc(100% - 20px)";
 								}
-							}
+							}*/
 						}
 					} // dd
 					&>s{

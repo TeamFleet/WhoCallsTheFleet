@@ -786,7 +786,9 @@ class TablelistShips extends Tablelist{
 					})
 
 				checkbox.prop('disabled', donotcompare)
-					.on('click, change',function(e, not_trigger_check){
+					.on('click change',function(e, not_trigger_check){
+						e.stopImmediatePropagation()
+						e.stopPropagation()
 						if( checkbox.prop('checked') )
 							tr.attr('compare-checked', true )
 						else
@@ -795,7 +797,7 @@ class TablelistShips extends Tablelist{
 						if( !not_trigger_check )
 							this.header_checkbox[title_index].trigger('docheck')
 					}.bind(this))
-		
+	
 				this.header_checkbox[title_index].data(
 						'ships',
 						this.header_checkbox[title_index].data('ships').add( tr )

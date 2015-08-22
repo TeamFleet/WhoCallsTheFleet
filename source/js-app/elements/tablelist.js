@@ -383,7 +383,7 @@ Tablelist.genId = function(text){
 		, i
 		, chr
 		, len
-	text = text || (new Date()).toISOString();
+	text = text || ((new Date()).toISOString() + _g.randInt(10000));
 	if (text.length == 0) return hash;
 	for (i = 0, len = text.length; i < len; i++) {
 		chr   = text.charCodeAt(i);

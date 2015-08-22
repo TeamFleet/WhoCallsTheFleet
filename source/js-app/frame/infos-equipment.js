@@ -32,7 +32,7 @@
 						+ '<span data-tip="图鉴编号">No.' + d['id'] + '</span>'
 						+ ( d['type']
 							? ( d.getType()
-								+ _frame.app_main.page['equipments'].gen_helper_equipable_on( d['type'] )
+								+ TablelistEquipments.gen_helper_equipable_on( d['type'] )
 							): '' )
 					+ '</small>'
 					+ '<small>'
