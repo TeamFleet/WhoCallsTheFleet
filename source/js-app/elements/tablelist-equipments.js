@@ -331,7 +331,7 @@ class TablelistEquipments extends Tablelist{
 				header_index++
 				this.dom.types[header_index] = tr
 			}else{
-				let equipment_data = _g.data.ships[ tr.attr('data-equipmentid') ]
+				let equipment_data = _g.data.items[ tr.attr('data-equipmentid') ]
 				tr.on('click', function(e, forceInfos){
 						if( !forceInfos && _frame.app_main.is_mode_selection() ){
 							e.preventDefault()
