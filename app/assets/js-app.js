@@ -1162,6 +1162,12 @@ class Ship extends ITEM{
 					return Math.floor( this['consum'][attr] * 0.85 )
 				return this['consum'][attr]
 				break;
+			case 'aa':
+			case 'armor':
+			case 'fire':
+			case 'torpedo':
+				return this['stat'][attr+'_max'] || this['stat'][attr]
+				break;
 			default:
 				return getStatOfLvl( lvl, this['stat'][attr], this['stat'][attr + '_max'] )
 				break;
