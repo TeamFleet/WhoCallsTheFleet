@@ -188,9 +188,9 @@
 				)
 	}
 	*/
-	_g.log = function(log){
+	_g.log = function(){
 		if( debugmode )
-			console.log(log)
+			console.log.apply(console, arguments)
 	}
 
 

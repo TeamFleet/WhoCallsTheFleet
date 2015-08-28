@@ -41,11 +41,17 @@ class TablelistFleets extends Tablelist{
 		// [创建] 过滤器与选项
 			this.dom.filter_container = $('<div class="options" viewtype="card"/>').appendTo( this.dom.container )
 			this.dom.filters = $('<div class="filters"/>').appendTo( this.dom.filter_container )
-			// 左 - 新建
+			// 左
 				this.dom.btn_new = $('<button class="new" icon="import"/>').html('新建/导入')
 									.on('click',function(){
 										this.btn_new()
 									}.bind(this))
+									.appendTo(this.dom.filters)
+				this.dom.btn_exportFile = $('<button class="export" icon="floppy-disk"/>').html('导出配置文件')
+									.on('click',function(){
+										_db.fleets.persistence.compactDatafile()
+										_g.file_save_as(_db.fleets.filename, 'fleets.json')
+									})
 									.appendTo(this.dom.filters)
 			// 右 - 选项组
 				this.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(this.dom.filters)
