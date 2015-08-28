@@ -402,7 +402,7 @@ class TablelistFleets extends Tablelist{
 
 	// [按钮操作] 新建/导入配置
 		btn_new(){
-			if( !this.menu_new )
+			if( !this.menu_new ){
 				this.menu_new = new _menu({
 					'target': 	this.dom.btn_new,
 					'items': [
@@ -453,10 +453,98 @@ class TablelistFleets extends Tablelist{
 									}.bind(this))
 							)
 							.append(
-								$('<menuitem/>').html('[NYI] 导入配置文件')
+								$('<menuitem/>').html('导入配置文件').on('click', function(){
+									this.dbfile_selector.trigger('click')
+								}.bind(this))
 							)
 					]
 				})
+				this.dbfile_selector = $('<input type="file" class="none"/>')
+					.on('change', function(){
+						let file = this.dbfile_selector.val()
+							,promise_chain 	= Q.fcall(function(){})
+
+						this.dbfile_selector.val('')
+						
+						promise_chain
+						
+						// 载入文件
+							.then(function(){
+								let deferred = Q.defer()
+								node.fs.readFile(file, 'utf8', function(err, data){
+									if( err )
+										deferred.reject('文件载入失败', new Error(err))
+									else
+										deferred.resolve(data)
+								})
+								return deferred.promise
+							})
+						
+						// 处理文件内容，以换行符为准创建Array
+							.then(function(data){
+								let array = []
+									,deferred = Q.defer()
+								data.split('\n').forEach(function(line){
+									if( line ){
+										try{
+											array.push(JSON.parse(line))
+										}catch(e){
+											deferred.reject('文件格式错误', e)
+										}
+										deferred.resolve(array)
+									}else{
+										deferred.reject('文件无内容')
+									}
+								})
+								return deferred.promise
+							})
+						
+						// 已处理JSON，导入
+							.then(function(array){
+								let the_promises = []
+									,complete = 0
+								
+								array.forEach(function(data){
+									let deferred = Q.defer()
+									the_promises.push(deferred.promise)
+									
+									_db.fleets.insert(data, function(err){
+										complete++
+										if(err && err.errorType == "uniqueViolated"){
+											//if( confirm('舰队 [' + (data['name']||'无标题') + '] 已经存在，是否更新？') ){
+												_db.fleets.update({
+													_id: data._id
+												}, data, {}, function(err, numReplaced){
+													deferred.resolve()
+													if( err )
+														_g.log(err)
+													else
+														_g.log(numReplaced)
+												})
+											//}else{
+											//	deferred.resolve()
+											//}
+										}else{
+											deferred.resolve()
+										}
+									})
+								})
+								
+								return Q.all(the_promises);
+							})
+						
+						// 错误处理
+							.catch(function(msg, err) {
+								_g.log(msg)
+								_g.error(err)
+							})
+							.done(function(){
+								_g.log('import complete')
+								this.refresh()
+							}.bind(this))
+					}.bind(this))
+					.appendTo(this.dom.filters)
+			}
 	
 			this.menu_new.show()
 		}
@@ -583,6 +671,13 @@ class TablelistFleets extends Tablelist{
 				.done(function(){
 					_g.log('Fleets list DONE')
 				})
+		}
+	
+	
+	// 重新生成列表
+		refresh(){
+			this.dom.tbody.empty()
+			this.genlist()
 		}
 }
 TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
