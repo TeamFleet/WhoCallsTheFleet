@@ -773,15 +773,18 @@ class InfosFleetShip{
 		updateAttrs(){
 			this.elAttrShelling.html( this.calculate('shellingDamage') )
 			this.elAttrTorpedo.html( this.calculate('torpedoDamage') )
-			let hitSum = this.calculate('hitSum')
+			let hitSum = this.calculate('addHit')
 				if( hitSum >= 0 )
 					this.elAttrHitSum.removeClass('negative')
 				else
 					this.elAttrHitSum.addClass('negative')
 				this.elAttrHitSum.html( hitSum )
 			this.elAttrHp.html( this.calculate('attribute', 'hp') )
-			this.elAttrArmor.html( this.calculate('attribute', 'armor') )
-			this.elAttrEvasion.html( this.shipLv ? this.calculate('attribute', 'evasion') : '-' )
+			this.elAttrArmor.html( this.calculate('attribute', 'armor') + this.calculate('addArmor') )
+			this.elAttrEvasion.html( this.shipLv
+										? this.calculate('attribute', 'evasion') + this.calculate('addEvasion')
+										: '-'
+									)
 			this.elAttrNightBattle.html( this.calculate('nightBattle') )
 		}
 	

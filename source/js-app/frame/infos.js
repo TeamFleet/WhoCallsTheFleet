@@ -341,19 +341,12 @@ _frame.infos.init = function(){
 				return val
 			}
 			function _add_stat( name, title, tar ){
-				var val99 = 0
-					,val150 = null
-
-				function getStatOfLvl( lvl, base, max ){
-					if( base < 0 || max < 0 )
-						return -1
-					return Math.floor( base + (max - base) * lvl / 99 )
-				}
+				let val99, val150
 
 				switch( name ){
 					case 'hp':
-						val99 = d.getAttribute('hp', 99)
-						val150 = d.getAttribute('hp', 150)
+						val99 = _val( d.getAttribute('hp', 99) )
+						val150 = _val( d.getAttribute('hp', 150) )
 						break;
 					case 'asw':
 						val99 = _val( d.getAttribute('asw', 99), /^(5|8|9|12|24)$/.test(d['type']) )
@@ -361,8 +354,8 @@ _frame.infos.init = function(){
 						break;
 					case 'evasion':
 					case 'los':
-						val99 = d.getAttribute(name, 99)
-						val150 = d.getAttribute(name, 150)
+						val99 = _val( d.getAttribute(name, 99) )
+						val150 = _val( d.getAttribute(name, 150) )
 						break;
 					case 'speed':
 						val99 = _g.getStatSpeed( d['stat']['speed'] )

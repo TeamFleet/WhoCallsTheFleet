@@ -75,13 +75,25 @@ let Formula = {
 				}
 			,powerFire = function(){
 					let result = 0
-					if( $.inArray(ship.type, Formula.shipType.Carriers) > -1 ){
-						// 航母
+						,isCV = false
+					
+					// 检查是否为航母攻击模式
+						if( $.inArray(ship.type, Formula.shipType.Carriers) > -1 ){
+							isCV = true
+						}else{
+							equipments_by_slot.forEach(function(equipment){
+								if( equipment && !isCV && $.inArray(equipment.type, Formula.equipmentType.AircraftBased) > -1 )
+									isCV = true
+							})
+						}
+					
+					if( isCV ){
+						// 航母攻击模式
 						let torpedoDamage = 0
 							,bombDamage = 0
 						ship.slot.map(function(carry, index){
 							if( equipments_by_slot[index] ){
-								result+= equipments_by_slot[index].stat.fire || 0
+								result+= (equipments_by_slot[index].stat.fire * 1.5) || 0
 								
 								if( equipments_by_slot[index].type == Formula.equipmentType.TorpedoBomber )
 									torpedoDamage+= equipments_by_slot[index].stat.torpedo || 0
@@ -143,7 +155,9 @@ let Formula = {
 						result = ship.stat.torpedo_max || 0
 						ship.slot.map(function(carry, index){
 							if( equipments_by_slot[index] ){
-								result+= equipments_by_slot[index].stat.torpedo || 0
+								result+= equipments_by_slot[index].type == Formula.equipmentType.TorpedoBomber
+											? 0
+											: (equipments_by_slot[index].stat.torpedo || 0)
 									
 								// 改修加成
 									if( star_by_slot[index] ){
@@ -253,15 +267,6 @@ let Formula = {
 				return '-'
 				break;
 			
-			// 命中总和
-			case 'hitSum':
-				ship.slot.map(function(carry, index){
-					if( equipments_by_slot[index] )
-						result+= equipments_by_slot[index].stat.hit || 0
-				})
-				return result>=0 ? '+'+result : result
-				break;
-			
 			// 夜战模式 & 伤害力
 			case 'nightBattle':
 				if( $.inArray(ship.type, Formula.shipType.Carriers) > -1 ){
@@ -288,6 +293,33 @@ let Formula = {
 						return '通常 ' + Math.floor( result ) + ''
 					}
 				}
+				break;
+			
+			// 命中总和
+			case 'addHit':
+				ship.slot.map(function(carry, index){
+					if( equipments_by_slot[index] )
+						result+= equipments_by_slot[index].stat.hit || 0
+				})
+				return result>=0 ? '+'+result : result
+				break;
+			
+			// 装甲总和
+			case 'addArmor':
+				ship.slot.map(function(carry, index){
+					if( equipments_by_slot[index] )
+						result+= equipments_by_slot[index].stat.armor || 0
+				})
+				return result
+				break;
+			
+			// 回避总和
+			case 'addEvasion':
+				ship.slot.map(function(carry, index){
+					if( equipments_by_slot[index] )
+						result+= equipments_by_slot[index].stat.evasion || 0
+				})
+				return result
 				break;
 		}
 		
@@ -340,6 +372,13 @@ Formula.equipmentType.Recons = [
 		Formula.equipmentType.CarrierRecon
 	]
 
+Formula.equipmentType.AircraftBased = [
+		Formula.equipmentType.CarrierFighter,
+		Formula.equipmentType.TorpedoBomber,
+		Formula.equipmentType.DiveBomber,
+		Formula.equipmentType.CarrierRecon
+	]
+
 Formula.equipmentType.Radars = [
 		Formula.equipmentType.SmallRadar,
 		Formula.equipmentType.LargeRadar,
@@ -371,12 +410,18 @@ Formula.shellingDamage = function(ship, equipments_by_slot, star_by_slot, rank_b
 Formula.torpedoDamage = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
 	return this.calculate( 'torpedoDamage', ship, equipments_by_slot, star_by_slot, rank_by_slot )
 }
-Formula.hitSum = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
-	return this.calculate( 'hitSum', ship, equipments_by_slot, star_by_slot, rank_by_slot )
-}
 Formula.fighterPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
 	return this.calculate( 'fighterPower', ship, equipments_by_slot, star_by_slot, rank_by_slot )
 }
 Formula.nightBattle = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
 	return this.calculate( 'nightBattle', ship, equipments_by_slot, star_by_slot, rank_by_slot )
+}
+Formula.addHit = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
+	return this.calculate( 'addHit', ship, equipments_by_slot, star_by_slot, rank_by_slot )
+}
+Formula.addArmor = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
+	return this.calculate( 'addArmor', ship, equipments_by_slot, star_by_slot, rank_by_slot )
+}
+Formula.addEvasion = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
+	return this.calculate( 'addEvasion', ship, equipments_by_slot, star_by_slot, rank_by_slot )
 }
