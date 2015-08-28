@@ -1151,15 +1151,15 @@ main>.page.infos{
 						.margin-top(10);
 						text-align: 	center;
 						justify-content:center;
-						align-items: 	center;
+						align-items: 	flex-end;
 						font-size: 		percentage(14 / @base_font_size);
 						font-weight: 	lighter;
-						margin-right: 	-1em;
+						margin-right: 	-1.5em;
 						h3, h4, h5{
 							display: 	inline-block;
 						}
 						.summary-item{
-							margin-right: 	1em;
+							margin-right: 	1.5em;
 							line-height: 	unit( 25 / 14, em );
 							display: 		inline-block;
 							background: 	rgba(255, 255, 255, .1);
@@ -1172,6 +1172,34 @@ main>.page.infos{
 								line-height:inherit;
 								background: rgba(0, 0, 0, .25);
 								font-weight:normal;
+							}
+						}
+						.summary-item-consummation{
+							.fuel, .ammo{
+								position: 	relative;
+								padding: 	0 0 0 20px;
+								display: 	inline-block;
+								&:before{
+									display: 	block;
+									position: 	absolute;
+									background: ~"url(@{folder_images}/stats.png) no-repeat 0 0";
+									width: 		18px;
+									height: 	18px;
+									top: 		50%;
+									left: 		0;
+									margin-top: -9px;
+									content: 	"";
+									opacity: 	.5;
+								}
+								&+.fuel, &+.ammo{
+									margin-left: 	.25em;
+								}
+							}
+							.fuel:before{
+								background-position-y: 	unit(12 * -18, px);
+							}
+							.ammo:before{
+								background-position-y: 	unit(13 * -18, px);
 							}
 						}
 					}

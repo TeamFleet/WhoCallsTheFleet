@@ -29,12 +29,6 @@
 <!-- COMING
 Tip
 	?? hover delay
-	
-Update Core
-	Sample
-		https://github.com/edjafarov/node-webkit-updater
-	Node.js Modules
-		https://github.com/request/request/blob/master/CHANGELOG.md
 
 
 Unit Test
@@ -43,11 +37,7 @@ Unit Test
 
 
 综合/核心
-	模板/页面
-		ships.html / equipments.html
-			直接将内容写入HTML
 	右键菜单
-		tablelist item -> 详情、图鉴、加入对比
 		图片 -> 复制
 	[Mac OS X] MenuBar
 	Page切换
@@ -65,9 +55,15 @@ Unit Test
 			资料 -> 舰娘、装备、改修工厂、声优&画师
 			功能 (仅图标) -> 选项（关于、查看背景图、etc...）、用户
 	可更改首页
+	input[type=number]
+		可使用鼠标滚轮调整数字
 	在线更新
 		可更新核心exe
 			versions.json -> 'core' : {'version', 'path', 'bytes'}
+			Sample
+				https://github.com/edjafarov/node-webkit-updater
+			Node.js Modules
+				https://github.com/request/request/blob/master/CHANGELOG.md
 	用户系统
 		注册、登陆
 			仅限第三方账号登陆
@@ -123,6 +119,16 @@ Unit Test
 		最新舰队（近期热度）
 		我的舰队
 		我的关注
+	舰队信息
+		选项
+			查看：查看装备+重要属性 | 仅查看装备 | 仅查看属性
+			舰队：出击舰队（独立舰队） | 出击舰队（联合舰队） | 支援舰队 | 远征队
+				影响
+					联合舰队配置检查
+					重要属性显示
+						支援舰队和远征队：不显示耐久、装甲、回避、夜战
+						联合舰队第一队不显示夜战
+					支援舰队不计算改修、熟练度
 
 提督室
 

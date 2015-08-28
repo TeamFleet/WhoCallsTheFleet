@@ -99,8 +99,12 @@ class InfosFleet{
 								return this.doms['name']
 							}.bind(this),
 							'keydown': function(e){
-								if( e.keyCode == 13 )
+								if( e.keyCode == 13 ){
 									this.doms['name'].blur()
+									setTimeout(function(){
+										this.doms['name'].blur()
+									}.bind(this), 1)
+								}
 							}.bind(this)
 						})
 				)
@@ -459,6 +463,13 @@ class InfosFleetSubFleet{
 							this.elSummaryFighterPower = $('<strong/>').html('-')
 						)
 				)
+				.append(
+					$('<span class="summary-item summary-item-consummation"/>')
+						.html('总消耗')
+						.append(
+							this.elSummaryConsummation = $('<strong/>').html('-')
+						)
+				)
 				/*
 				.append(
 					$('<span class="summary-item"/>')
@@ -498,27 +509,39 @@ class InfosFleetSubFleet{
 			this.summaryCalculating = setTimeout(function(){
 				let fighterPower = 0
 					,fleetSpeet = 'fast'
+					,consumFuel = 0
+					,consumAmmo = 0
 				
 				this.ships.forEach(function(shipdata){
 					if( shipdata.data[0] ){
 						let ship = _g.data.ships[shipdata.data[0]]
 						
-						// 计算：航速
+						// 航速
 							if( ship.stat.speed < 10 )
 								fleetSpeet = 'slow'
 						
-						// 计算：制空战力
+						// 制空战力
 							fighterPower+= shipdata.calculate('fighterPower')
+						
+						// 总消耗
+							consumFuel+= ship.getAttribute('fuel', shipdata.shipLv) || 0
+							consumAmmo+= ship.getAttribute('ammo', shipdata.shipLv) || 0
 					}
 				})
 				
 				this.elSummarySpeed.html( fleetSpeet == 'fast' ? '高速' : '低速' )
 				
-				this.elSummaryFighterPower.html( Math.floor(fighterPower) )
+				this.elSummaryFighterPower.html( fighterPower > 0 ? Math.floor(fighterPower) : '-' )
 				if( fighterPower > 0 )
 					this.elSummaryFighterPower.removeClass('empty')
 				else
 					this.elSummaryFighterPower.addClass('empty')
+				
+				this.elSummaryConsummation.html(
+					(consumFuel || consumAmmo)
+						? '<span class="fuel">' + consumFuel + '</span><span class="ammo">' + consumAmmo + '</span>'
+						: '-'
+				)
 
 				this.summaryCalculating = null
 			}.bind(this), 10)
