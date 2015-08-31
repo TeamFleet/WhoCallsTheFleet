@@ -176,6 +176,7 @@ let Formula = {
 					}
 					return (ship.stat.torpedo_max || 0)
 				}
+			,value = 0
 		
 		equipments_by_slot = equipments_by_slot.map(function(equipment){
 				if( !equipment )
@@ -208,37 +209,39 @@ let Formula = {
 		switch(type){
 			// 制空战力，装备须为战斗机类型 Formula.type.typeFighters
 			case 'fighterPower':
+				value = 0
 				ship.slot.map(function(carry, index){
 					if( equipments_by_slot[index]
 						&& $.inArray( equipments_by_slot[index].type, Formula.equipmentType.Fighters ) > -1
 						&& carry
 					){
-						result+= Math.sqrt(carry) * (equipments_by_slot[index].stat.aa || 0)
+						value = Math.sqrt(carry) * (equipments_by_slot[index].stat.aa || 0)
 						if( equipments_by_slot[index].type == Formula.equipmentType.CarrierFighter ){
 							switch( rank_by_slot[index] ){
 								case 1: case '1':
-									result+= 1; break;
+									value+= 1; break;
 								case 2: case '2':
-									result+= 4; break;
+									value+= 4; break;
 								case 3: case '3':
-									result+= 6; break;
+									value+= 6; break;
 								case 4: case '4':
-									result+= 11; break;
+									value+= 11; break;
 								case 5: case '5':
-									result+= 16; break;
+									value+= 16; break;
 								case 6: case '6':
-									result+= 17; break;
+									value+= 17; break;
 								case 7: case '7':
-									result+= 25; break;
+									value+= 25; break;
 							}
 						}else if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.Recons ) == -1 ){
 							let max_per_slot = equipments_by_slot[index].type == Formula.equipmentType.SeaplaneBomber
 												? 9
 												: 3
-							result+= rank_by_slot[index] == 1
+							value+= rank_by_slot[index] == 1
 										? 1
 										: max_per_slot / 6 * (rank_by_slot[index] - 1)
 						}
+						result+= Math.floor(value)
 					}
 				})
 				return result
