@@ -159,13 +159,18 @@ class InfosFleet{
 							}.bind(this))
 						)
 						.append(
-							$('<button class="option"/>').html('导出配置代码').on('click', function(){
+							$('<button class="option"/>').html('导出代码').on('click', function(){
 								this.modalExport_show()
 							}.bind(this))
 						)
 						.append(
-							$('<button class="option"/>').html('导出配置文本').on('click', function(){
+							$('<button class="option"/>').html('导出文本').on('click', function(){
 								this.modalExportText_show()
+							}.bind(this))
+						)
+						.append(
+							$('<button class="option"/>').html('导出图片').on('click', function(){
+								this.exportPic()
 							}.bind(this))
 						)
 						.append(
@@ -331,6 +336,67 @@ class InfosFleet{
 		}
 		modalExportText_show(){
 			InfosFleet.modalExportText_show(this.data)
+		}
+	
+	// 导出图片
+		exportPic(){
+			if( !InfosFleet.fileDialog_export ){
+				InfosFleet.fileDialog_export = $('<input type="file" accept=".png" nwsaveas/>')
+					.on({
+						'click': function(e, windowWidth, windowHeight){
+							InfosFleet.fileDialog_export.data({
+									'windowWidth':	windowWidth,
+									'windowHeight': windowHeight
+								})
+							InfosFleet.fileDialog_export_showing = true
+						},
+						'change': function(){
+							let path = InfosFleet.fileDialog_export.val()
+							InfosFleet.fileDialog_export.val('')
+							
+							_g.log('changed')
+							
+							setTimeout(function(){
+								node.win.capturePage(function(buffer){
+									let wstream = node.fs.createWriteStream(path);
+									wstream.write(buffer);
+									wstream.end();
+								}, { format : 'png', datatype : 'buffer'})
+							}, 0)
+						},
+						'resetCaptureMode': function(){
+							if( !InfosFleet.fileDialog_export.val() && $body.hasClass('mod-capture') ){
+								$body.removeClass('mod-capture')
+								node.win.resizeTo(
+									InfosFleet.fileDialog_export.data('windowWidth'),
+									InfosFleet.fileDialog_export.data('windowHeight')
+								)
+								InfosFleet.fileDialog_export.data({
+										'windowWidth':	null,
+										'windowHeight': null
+									})
+							}
+						}
+					})
+					.appendTo(_frame.dom.hidden)
+				$window.on('focus.resetCaptureMode', function(){
+					if( InfosFleet.fileDialog_export_showing )
+						setTimeout(function(){
+							InfosFleet.fileDialog_export.trigger('resetCaptureMode')
+							InfosFleet.fileDialog_export_showing = false
+						}, 100)
+				})
+			}
+			// 存储当前窗口尺寸
+				let windowWidth = $window.width()
+					,windowHeight = $window.height()
+			
+			// 改变样式
+				$body.addClass('mod-capture')
+				node.win.resizeTo( 1280, 720 )
+			
+			// 选择文件
+				InfosFleet.fileDialog_export.trigger('click', [windowWidth, windowHeight])
 		}
 }
 InfosFleet.modalExport = function(curval){

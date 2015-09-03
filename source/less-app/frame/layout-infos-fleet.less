@@ -122,6 +122,30 @@ main>.page.infos{
 					right:		0;
 					top:		0;
 				}
+				.mod-capture({
+					@size: 48px;
+					&:before,
+					&:after{
+						position: 	absolute;
+						top: 		50%;
+						right: 		0;
+						height: 	@size;
+						line-height:@size;
+						transform: 	translateY(-50%);
+					}
+					&:before{
+						content: 	'fleet.diablohu.com';
+						padding: 	0 (@size + 4) 0 0;
+						mix-blend-mode: overlay;
+						font-size: 	16px;
+						letter-spacing:.1em;
+					}
+					&:after{
+						content: 	'';
+						background: ~"url(@{folder_images}/appicon.png) no-repeat 100% 50% / contain";
+						width: 		@size;
+					}
+				});
 			} // &>header
 
 			&>.fleets{
@@ -170,6 +194,9 @@ main>.page.infos{
 					.line-height(@tab_height);
 					color:		rgba(255, 255, 255, .5);
 					font-size: 	percentage(13 / @base_font_size);
+					.mod-capture({
+						display: 	none;
+					});
 					&>.option{
 						display:	inline-block;
 						margin-right:	1.25em;

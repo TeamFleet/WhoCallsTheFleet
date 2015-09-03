@@ -1416,7 +1416,7 @@ table{
 
 
 // 当 modal 显示时
-	body .modal.on ~ #layout{
+	.modal.on ~ #layout{
 		&>nav{
 			.window-noframe({
 				-webkit-app-region:	no-drag;
@@ -1438,10 +1438,43 @@ table{
 
 
 
+// Capture Mode
+	body.mod-capture{
+		pointer-events:	none;
+		#layout.ready{
+			padding-top: 	0;
+			&>nav, &>.debug_hashbar{
+				display: 	none;
+			}
+			//&>main>.page{
+			//	padding-top: 4%;
+			//}
+		}
+		#titlebar,
+		&>.menus,
+		#tip{
+			display: 	none;
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // debugmode
-	body #layout.debug-hashbar{
+	#layout.debug-hashbar{
 		@hashbar_height:	34;
 		.padding-top(@nav_height + @hashbar_height);
 		&>.debug_hashbar{
