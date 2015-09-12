@@ -11,13 +11,14 @@ ship instanceof Ship
 
 ship.getName( joint, language )
 	获取舰名
-	joint		[OPTIONAL]
-		String		连接符，如果存在后缀名，则在舰名和后缀名之间插入该字符串
-		Boolean		如果为 true，则添加默认连接符
-					如果为 false，则不添加连接符
-		null		不添加连接符
-	language	[OPTIONAL]
-		String		语言代码，默认为 _g.lang
+	变量
+		joint		[OPTIONAL]
+			String		连接符，如果存在后缀名，则在舰名和后缀名之间插入该字符串
+			Boolean		如果为 true，则添加默认连接符
+						如果为 false，则不添加连接符
+			null		不添加连接符
+		language	[OPTIONAL]
+			String		语言代码，默认为 _g.lang
 	返回值
 		String		舰名 + 连接符（如果有） + 后缀名（如果有）
 	快捷方式
@@ -25,15 +26,17 @@ ship.getName( joint, language )
 
 ship.getSuffix( language )
 	获取后缀名
-	language	[OPTIONAL]
-		String		语言代码，默认为 _g.lang
+	变量
+		language	[OPTIONAL]
+			String		语言代码，默认为 _g.lang
 	返回值
 		String		后缀名
 
 ship.getType( language )
 	获取舰种
-	language	[OPTIONAL]
-		String		语言代码，默认为 _g.lang
+	变量
+		language	[OPTIONAL]
+			String		语言代码，默认为 _g.lang
 	返回值
 		String		舰种
 	快捷方式
@@ -46,12 +49,42 @@ ship.getSeriesData()
 
 ship.getPic( picId )
 	获取图鉴uri/path
-	picId	[OPTIONAL]
-		Number		图鉴Id，默认 0
+	变量
+		picId	[OPTIONAL]
+			Number		图鉴Id，默认 0
 	返回值
 		String		uri/path
 	快捷方式
 		ship._pics	获取全部图鉴，Array
+
+ship.getRel( relation )
+	获取关系
+	变量
+		relation	[OPTIONAL]
+			String		关系名
+	返回值
+		Object			如果没有给出 relation，返回关系对象
+		String||Number	如果给出 relation，返回值，默认读取 rels 下的属性，如果不存在，读取上一个改造版本的对应关系
+
+ship.getCV( language )
+	获取声优
+	变量
+		language	[OPTIONAL]
+			String		语言代码，默认为 _g.lang
+	返回值
+		String		声优名
+	快捷方式
+		ship._cv	默认语言
+
+ship.getIllustrator( language )
+	获取画师
+	变量
+		language	[OPTIONAL]
+			String		语言代码，默认为 _g.lang
+	返回值
+		String		画师名
+	快捷方式
+		ship._illustrator	默认语言
 
  */
 
@@ -216,5 +249,44 @@ class Ship extends ITEM{
 				return getStatOfLvl( lvl, this['stat'][attr], this['stat'][attr + '_max'] )
 				break;
 		}
+	}
+	
+	getRel( relation ){
+		if( relation ){
+			if( !this.rels[relation] && this.remodel && this.remodel.prev ){
+				let prev = _g.data.ships[this.remodel.prev]
+				while( prev ){
+					if( prev.rels && prev.rels[relation] )
+						return prev.rels[relation]
+					if( !prev.remodel || !prev.remodel.prev )
+						prev = null
+					else
+						prev = _g.data.ships[prev.remodel.prev]
+				}
+			}
+			return this.rels[relation]
+		}else{
+			return this.rels
+		}
+	}
+	
+	getCV(language){
+		let entity = this.getRel('cv')
+		if( entity )
+			return _g.data.entities[entity].getName(language || _g.lang)
+		return
+	}
+	get _cv(){
+		return this.getCV()
+	}
+	
+	getIllustrator(language){
+		let entity = this.getRel('illustrator')
+		if( entity )
+			return _g.data.entities[entity].getName(language || _g.lang)
+		return
+	}
+	get _illustrator(){
+		return this.getIllustrator()
 	}
 }

@@ -197,12 +197,12 @@ class TablelistShips extends Tablelist{
 			}
 		})
 	
-		// 检查数据是否存在 remodel_next
-		// 如果 remodel_next 与当前数据 type & name 相同，标记当前为可改造前版本
-		if( ship_data.remodel_next
-			&& _g.data.ships[ ship_data.remodel_next ]
-			&& _g.ship_type_order_map[ship_data['type']] == _g.ship_type_order_map[_g.data.ships[ ship_data.remodel_next ]['type']]
-			&& ship_data['name']['ja_jp'] == _g.data.ships[ ship_data.remodel_next ]['name']['ja_jp']
+		// 检查数据是否存在 remodel.next
+		// 如果 remodel.next 与当前数据 type & name 相同，标记当前为可改造前版本
+		if( ship_data.remodel && ship_data.remodel.next
+			&& _g.data.ships[ ship_data.remodel.next ]
+			&& _g.ship_type_order_map[ship_data['type']] == _g.ship_type_order_map[_g.data.ships[ ship_data.remodel.next ]['type']]
+			&& ship_data['name']['ja_jp'] == _g.data.ships[ ship_data.remodel.next ]['name']['ja_jp']
 		){
 			tr.addClass('premodeled')
 		}

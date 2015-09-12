@@ -954,6 +954,71 @@ class ITEM {
 	}
 }
 
+class Entity extends ITEM{
+	constructor(data) {
+		super()
+		$.extend(true, this, data)
+	}
+}
+
+class Equipment extends ITEM{
+	constructor(data) {
+		super()
+		$.extend(true, this, data)
+	}
+	
+	getName(small_brackets, language){
+		language = language || _g.lang
+		var result = ITEM.prototype.getName.call(this, language)
+			//,result = super.getName(language)
+			,small_brackets_tag = small_brackets && !small_brackets === true ? small_brackets : 'small'
+		return small_brackets
+				? result.replace(/（([^（^）]+)）/g, '<'+small_brackets_tag+'>($1)</'+small_brackets_tag+'>')
+				: result
+	}
+	
+	getType(language){
+		language = language || _g.lang
+		return this['type']
+				? _g['data']['item_types'][this['type']]['name'][language]
+				: null
+	}
+
+	getIconId(){
+		return _g.data.item_types[this['type']]['icon']
+	}
+	get _icon(){
+		return 'assets/images/itemicon/' + this.getIconId() + '.png'
+	}
+	
+	getCaliber(){
+		let name = this.getName(false, 'ja_jp')
+			,caliber = parseFloat(name)
+		
+		return caliber
+	}
+	
+	getPower(){
+		return this.stat[
+			_g.data['item_types'][this['type']]['main_attribute'] || 'fire'
+		]
+		/*
+		switch( this['type'] ){
+			// Guns
+				case 1:
+				case 2:
+				case 3:
+				case 4:
+				case 5:
+				case 6:
+				case 7:
+				case 8:
+				case 9:
+		}
+		*/
+	}
+}
+
 /* Class: Ship / 舰娘
 
  *******************************************************************
@@ -967,13 +1032,14 @@ ship instanceof Ship
 
 ship.getName( joint, language )
 	获取舰名
-	joint		[OPTIONAL]
-		String		连接符，如果存在后缀名，则在舰名和后缀名之间插入该字符串
-		Boolean		如果为 true，则添加默认连接符
-					如果为 false，则不添加连接符
-		null		不添加连接符
-	language	[OPTIONAL]
-		String		语言代码，默认为 _g.lang
+	变量
+		joint		[OPTIONAL]
+			String		连接符，如果存在后缀名，则在舰名和后缀名之间插入该字符串
+			Boolean		如果为 true，则添加默认连接符
+						如果为 false，则不添加连接符
+			null		不添加连接符
+		language	[OPTIONAL]
+			String		语言代码，默认为 _g.lang
 	返回值
 		String		舰名 + 连接符（如果有） + 后缀名（如果有）
 	快捷方式
@@ -981,15 +1047,17 @@ ship.getName( joint, language )
 
 ship.getSuffix( language )
 	获取后缀名
-	language	[OPTIONAL]
-		String		语言代码，默认为 _g.lang
+	变量
+		language	[OPTIONAL]
+			String		语言代码，默认为 _g.lang
 	返回值
 		String		后缀名
 
 ship.getType( language )
 	获取舰种
-	language	[OPTIONAL]
-		String		语言代码，默认为 _g.lang
+	变量
+		language	[OPTIONAL]
+			String		语言代码，默认为 _g.lang
 	返回值
 		String		舰种
 	快捷方式
@@ -1002,12 +1070,42 @@ ship.getSeriesData()
 
 ship.getPic( picId )
 	获取图鉴uri/path
-	picId	[OPTIONAL]
-		Number		图鉴Id，默认 0
+	变量
+		picId	[OPTIONAL]
+			Number		图鉴Id，默认 0
 	返回值
 		String		uri/path
 	快捷方式
 		ship._pics	获取全部图鉴，Array
+
+ship.getRel( relation )
+	获取关系
+	变量
+		relation	[OPTIONAL]
+			String		关系名
+	返回值
+		Object			如果没有给出 relation，返回关系对象
+		String||Number	如果给出 relation，返回值，默认读取 rels 下的属性，如果不存在，读取上一个改造版本的对应关系
+
+ship.getCV( language )
+	获取声优
+	变量
+		language	[OPTIONAL]
+			String		语言代码，默认为 _g.lang
+	返回值
+		String		声优名
+	快捷方式
+		ship._cv	默认语言
+
+ship.getIllustrator( language )
+	获取画师
+	变量
+		language	[OPTIONAL]
+			String		语言代码，默认为 _g.lang
+	返回值
+		String		画师名
+	快捷方式
+		ship._illustrator	默认语言
 
  */
 
@@ -1173,63 +1271,44 @@ class Ship extends ITEM{
 				break;
 		}
 	}
-}
-
-class Equipment extends ITEM{
-	constructor(data) {
-		super()
-		$.extend(true, this, data)
-	}
 	
-	getName(small_brackets, language){
-		language = language || _g.lang
-		var result = ITEM.prototype.getName.call(this, language)
-			//,result = super.getName(language)
-			,small_brackets_tag = small_brackets && !small_brackets === true ? small_brackets : 'small'
-		return small_brackets
-				? result.replace(/（([^（^）]+)）/g, '<'+small_brackets_tag+'>($1)</'+small_brackets_tag+'>')
-				: result
-	}
-	
-	getType(language){
-		language = language || _g.lang
-		return this['type']
-				? _g['data']['item_types'][this['type']]['name'][language]
-				: null
-	}
-
-	getIconId(){
-		return _g.data.item_types[this['type']]['icon']
-	}
-	get _icon(){
-		return 'assets/images/itemicon/' + this.getIconId() + '.png'
-	}
-	
-	getCaliber(){
-		let name = this.getName(false, 'ja_jp')
-			,caliber = parseFloat(name)
-		
-		return caliber
-	}
-	
-	getPower(){
-		return this.stat[
-			_g.data['item_types'][this['type']]['main_attribute'] || 'fire'
-		]
-		/*
-		switch( this['type'] ){
-			// Guns
-				case 1:
-				case 2:
-				case 3:
-				case 4:
-				case 5:
-				case 6:
-				case 7:
-				case 8:
-				case 9:
+	getRel( relation ){
+		if( relation ){
+			if( !this.rels[relation] && this.remodel && this.remodel.prev ){
+				let prev = _g.data.ships[this.remodel.prev]
+				while( prev ){
+					if( prev.rels && prev.rels[relation] )
+						return prev.rels[relation]
+					if( !prev.remodel || !prev.remodel.prev )
+						prev = null
+					else
+						prev = _g.data.ships[prev.remodel.prev]
+				}
+			}
+			return this.rels[relation]
+		}else{
+			return this.rels
 		}
-		*/
+	}
+	
+	getCV(language){
+		let entity = this.getRel('cv')
+		if( entity )
+			return _g.data.entities[entity].getName(language || _g.lang)
+		return
+	}
+	get _cv(){
+		return this.getCV()
+	}
+	
+	getIllustrator(language){
+		let entity = this.getRel('illustrator')
+		if( entity )
+			return _g.data.entities[entity].getName(language || _g.lang)
+		return
+	}
+	get _illustrator(){
+		return this.getIllustrator()
 	}
 }
 
@@ -2076,14 +2155,14 @@ _frame.app_main = {
 														){
 															var id = _g.data.ship_id_by_type[i][j]
 																,i_remodel
-															if( _g.data.ships[id].remodel_next
-																&& _g.data.ships[_g.data.ships[id].remodel_next]
-																&& _g.data.ships[id].remodel_next != _g.data.ship_id_by_type[i][j+1]
-																&& (i_remodel = $.inArray(_g.data.ships[id].remodel_next, _g.data.ship_id_by_type[i])) > -1
+															if( _g.data.ships[id].remodel && _g.data.ships[id].remodel.next
+																&& _g.data.ships[_g.data.ships[id].remodel.next]
+																&& _g.data.ships[id].remodel.next != _g.data.ship_id_by_type[i][j+1]
+																&& (i_remodel = $.inArray(_g.data.ships[id].remodel.next, _g.data.ship_id_by_type[i])) > -1
 															){
 																_g.log(
 																	id
-																	+ ', ' + _g.data.ships[id].remodel_next
+																	+ ', ' + _g.data.ships[id].remodel.next
 																	+ ', ' + i_remodel
 																)
 																_g.data.ship_id_by_type[i].splice(
@@ -2093,7 +2172,7 @@ _frame.app_main = {
 																_g.data.ship_id_by_type[i].splice(
 																	$.inArray(id, _g.data.ship_id_by_type[i])+1,
 																	0,
-																	_g.data.ships[id].remodel_next
+																	_g.data.ships[id].remodel.next
 																)
 																//console.log(_g.data.ship_id_by_type[i])
 																__(i)
@@ -2153,6 +2232,9 @@ _frame.app_main = {
 												switch( db_name ){
 													case 'items':
 														_g.data[db_name][doc['id']] = new Equipment(doc)
+														break;
+													case 'entities':
+														_g.data[db_name][doc['id']] = new Entity(doc)
 														break;
 													default:
 														_g.data[db_name][doc['id']] = doc
@@ -3798,6 +3880,35 @@ _tmpl.link_ship = function( ship, tagName, returnHTML ){
 		)
 }
 
+_tmpl.textlink_entity = function( entity, tagName, returnHTML ){
+	if( !entity )
+		return false
+
+	if( tagName && typeof tagName == 'object' )
+		return _tmpl.textlink_entity(
+					entity,
+					tagName['tagName'] || null,
+					tagName['returnHTML'] || null
+				)
+
+	tagName = tagName || 'a'
+	returnHTML = returnHTML || false
+
+	if( typeof entity != 'object' ){
+		var entityId = parseInt(entity)
+		entity = _g.data.ships[entityId]
+	}else{
+		var entityId = entity['id']
+	}
+
+	return _tmpl.export(
+			'<' + tagName + ' href="?infos=entity&id=' + entityId + '" data-entityid="' + entityId + '" data-infos="[[ENTITY::' + entityId + ']]">'
+				+ entity._name
+			+ '</' + tagName + '>',
+			returnHTML
+		)
+}
+
 _tmpl.textlink_ship = function( ship, tagName, returnHTML ){
 	if( !ship )
 		return false
@@ -4759,17 +4870,13 @@ _frame.infos.init = function(){
 				$('<span class="entity"/>')
 					.html(
 						'<strong>声优</strong>'
-						+ '<span>' + ( d['rels']['cv']
-							? _g['data']['entities'][d['rels']['cv']]['name'][_g.lang]
-							: '?' ) + '</span>'
+						+ '<span>' + ( d._cv || '?' ) + '</span>'
 					)
 					.appendTo(dom)
 				$('<span class="entity"/>')
 					.html(
 						'<strong>画师</strong>'
-						+ '<span>' + ( d['rels']['illustrator']
-							? _g['data']['entities'][d['rels']['illustrator']]['name'][_g.lang]
-							: '?' ) + '</span>'
+						+ '<span>' + ( d._illustrator || '?' ) + '</span>'
 					)
 					.appendTo(dom)
 					/*
@@ -4784,7 +4891,8 @@ _frame.infos.init = function(){
 					,illusts_container = $('<div/>').appendTo(illusts)
 
 			// 改造信息
-				var remodels = $('<div class="remodels"/>').html('<h4 data-content="改造">改造</h4>').appendTo(dom)
+				//var remodels = $('<div class="remodels"/>').html('<h4 data-content="改造">改造</h4>').appendTo(dom)
+				var remodels = $('<div class="remodels"/>').html('<h4 data-content="改造">改造</h4>').insertBefore(illusts)
 					,remodels_container = _p.el.flexgrid.create().appendTo( remodels )
 				if( d['series'] ){
 					let seriesData = d.getSeriesData()
@@ -6861,9 +6969,9 @@ class Tablelist{
 			}
 		
 			let line = $('<p/>').addClass(name).appendTo( this.dom.filters )
-				//,id = '_input_g' + parseInt(_g.inputIndex)
-				,id = Tablelist.genId()
 				,input = gen_input().appendTo(line)
+				//,id = '_input_g' + parseInt(_g.inputIndex)
+				,id = input.attr('id') || Tablelist.genId()
 		
 			label = label ? $('<label for="'+id+'"/>').html( label ).appendTo(line) : null
 		
@@ -8398,12 +8506,12 @@ class TablelistShips extends Tablelist{
 			}
 		})
 	
-		// 检查数据是否存在 remodel_next
-		// 如果 remodel_next 与当前数据 type & name 相同，标记当前为可改造前版本
-		if( ship_data.remodel_next
-			&& _g.data.ships[ ship_data.remodel_next ]
-			&& _g.ship_type_order_map[ship_data['type']] == _g.ship_type_order_map[_g.data.ships[ ship_data.remodel_next ]['type']]
-			&& ship_data['name']['ja_jp'] == _g.data.ships[ ship_data.remodel_next ]['name']['ja_jp']
+		// 检查数据是否存在 remodel.next
+		// 如果 remodel.next 与当前数据 type & name 相同，标记当前为可改造前版本
+		if( ship_data.remodel && ship_data.remodel.next
+			&& _g.data.ships[ ship_data.remodel.next ]
+			&& _g.ship_type_order_map[ship_data['type']] == _g.ship_type_order_map[_g.data.ships[ ship_data.remodel.next ]['type']]
+			&& ship_data['name']['ja_jp'] == _g.data.ships[ ship_data.remodel.next ]['name']['ja_jp']
 		){
 			tr.addClass('premodeled')
 		}
@@ -9025,8 +9133,9 @@ class TablelistShips extends Tablelist{
 // @koala-prepend "js-app/google_analytics.js"
 
 // @koala-prepend "js-app/items/!.js"
-// @koala-prepend "js-app/items/ship.js"
+// @koala-prepend "js-app/items/entity.js"
 // @koala-prepend "js-app/items/equipment.js"
+// @koala-prepend "js-app/items/ship.js"
 
 // @koala-prepend "js-app/main.js"
 // @koala-prepend "js-app/errorlog.js"
@@ -9038,6 +9147,7 @@ class TablelistShips extends Tablelist{
 // @koala-prepend "js-app/templates/improvement.js"
 // @koala-prepend "js-app/templates/link_equipment.js"
 // @koala-prepend "js-app/templates/link_ship.js"
+// @koala-prepend "js-app/templates/textlink_entity.js"
 // @koala-prepend "js-app/templates/textlink_ship.js"
 
 // @koala-prepend "js-app/page/!.js"

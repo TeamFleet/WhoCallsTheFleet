@@ -156,9 +156,9 @@ class Tablelist{
 			}
 		
 			let line = $('<p/>').addClass(name).appendTo( this.dom.filters )
-				//,id = '_input_g' + parseInt(_g.inputIndex)
-				,id = Tablelist.genId()
 				,input = gen_input().appendTo(line)
+				//,id = '_input_g' + parseInt(_g.inputIndex)
+				,id = input.attr('id') || Tablelist.genId()
 		
 			label = label ? $('<label for="'+id+'"/>').html( label ).appendTo(line) : null
 		

@@ -6,8 +6,9 @@
 // @koala-prepend "js-app/google_analytics.js"
 
 // @koala-prepend "js-app/items/!.js"
-// @koala-prepend "js-app/items/ship.js"
+// @koala-prepend "js-app/items/entity.js"
 // @koala-prepend "js-app/items/equipment.js"
+// @koala-prepend "js-app/items/ship.js"
 
 // @koala-prepend "js-app/main.js"
 // @koala-prepend "js-app/errorlog.js"
@@ -19,6 +20,7 @@
 // @koala-prepend "js-app/templates/improvement.js"
 // @koala-prepend "js-app/templates/link_equipment.js"
 // @koala-prepend "js-app/templates/link_ship.js"
+// @koala-prepend "js-app/templates/textlink_entity.js"
 // @koala-prepend "js-app/templates/textlink_ship.js"
 
 // @koala-prepend "js-app/page/!.js"

@@ -841,14 +841,14 @@ _frame.app_main = {
 														){
 															var id = _g.data.ship_id_by_type[i][j]
 																,i_remodel
-															if( _g.data.ships[id].remodel_next
-																&& _g.data.ships[_g.data.ships[id].remodel_next]
-																&& _g.data.ships[id].remodel_next != _g.data.ship_id_by_type[i][j+1]
-																&& (i_remodel = $.inArray(_g.data.ships[id].remodel_next, _g.data.ship_id_by_type[i])) > -1
+															if( _g.data.ships[id].remodel && _g.data.ships[id].remodel.next
+																&& _g.data.ships[_g.data.ships[id].remodel.next]
+																&& _g.data.ships[id].remodel.next != _g.data.ship_id_by_type[i][j+1]
+																&& (i_remodel = $.inArray(_g.data.ships[id].remodel.next, _g.data.ship_id_by_type[i])) > -1
 															){
 																_g.log(
 																	id
-																	+ ', ' + _g.data.ships[id].remodel_next
+																	+ ', ' + _g.data.ships[id].remodel.next
 																	+ ', ' + i_remodel
 																)
 																_g.data.ship_id_by_type[i].splice(
@@ -858,7 +858,7 @@ _frame.app_main = {
 																_g.data.ship_id_by_type[i].splice(
 																	$.inArray(id, _g.data.ship_id_by_type[i])+1,
 																	0,
-																	_g.data.ships[id].remodel_next
+																	_g.data.ships[id].remodel.next
 																)
 																//console.log(_g.data.ship_id_by_type[i])
 																__(i)
@@ -918,6 +918,9 @@ _frame.app_main = {
 												switch( db_name ){
 													case 'items':
 														_g.data[db_name][doc['id']] = new Equipment(doc)
+														break;
+													case 'entities':
+														_g.data[db_name][doc['id']] = new Entity(doc)
 														break;
 													default:
 														_g.data[db_name][doc['id']] = doc

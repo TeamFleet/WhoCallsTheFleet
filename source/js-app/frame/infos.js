@@ -552,17 +552,13 @@ _frame.infos.init = function(){
 				$('<span class="entity"/>')
 					.html(
 						'<strong>声优</strong>'
-						+ '<span>' + ( d['rels']['cv']
-							? _g['data']['entities'][d['rels']['cv']]['name'][_g.lang]
-							: '?' ) + '</span>'
+						+ '<span>' + ( d._cv || '?' ) + '</span>'
 					)
 					.appendTo(dom)
 				$('<span class="entity"/>')
 					.html(
 						'<strong>画师</strong>'
-						+ '<span>' + ( d['rels']['illustrator']
-							? _g['data']['entities'][d['rels']['illustrator']]['name'][_g.lang]
-							: '?' ) + '</span>'
+						+ '<span>' + ( d._illustrator || '?' ) + '</span>'
 					)
 					.appendTo(dom)
 					/*
@@ -577,7 +573,8 @@ _frame.infos.init = function(){
 					,illusts_container = $('<div/>').appendTo(illusts)
 
 			// 改造信息
-				var remodels = $('<div class="remodels"/>').html('<h4 data-content="改造">改造</h4>').appendTo(dom)
+				//var remodels = $('<div class="remodels"/>').html('<h4 data-content="改造">改造</h4>').appendTo(dom)
+				var remodels = $('<div class="remodels"/>').html('<h4 data-content="改造">改造</h4>').insertBefore(illusts)
 					,remodels_container = _p.el.flexgrid.create().appendTo( remodels )
 				if( d['series'] ){
 					let seriesData = d.getSeriesData()

@@ -510,6 +510,9 @@ main>.page.infos{
 							height: 	~"calc(100% - 27px - 8px)";
 							padding-right: unit( 45 / @base_font_size, em );
 							z-index: 	1;
+							.mod-capture({
+								padding-right: 4px;
+							});
 							&>.equipment{
 								flex: 		1 0 auto;
 								background: rgba(0, 0, 0, .125) no-repeat 2px 50%;
@@ -938,6 +941,9 @@ main>.page.infos{
 									background: rgba(0, 0, 0, .15);
 								}
 							}*/
+							.mod-capture({
+								display: none;
+							});
 							button{
 								@font-size: 20;
 								color: 		rgba(255, 255, 255, .2);
