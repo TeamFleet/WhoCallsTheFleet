@@ -434,10 +434,13 @@ class TablelistFleets extends Tablelist{
 										TablelistFleets.modalImportBtn.off('click.import')
 											.on('click', function(){
 												let val = TablelistFleets.modalImportTextarea.val()
-												console.log(val)
+												//console.log(val)
 												if( val ){
+													val = JSON.parse(val)
+													if( !val.length || !val.push )
+														val = _g.kancolle_calc.decode(val)
 													this.action_new({
-														'data': 	JSON.parse(TablelistFleets.modalImportTextarea.val())
+														'data': 	val
 													})
 													_frame.modal.hide()
 													TablelistFleets.modalImportTextarea.val('')

@@ -424,11 +424,15 @@ InfosFleet.modalExport = function(curval){
 InfosFleet.modalExport_show = function(data){
 	data = data.data || []
 
+	/*
 	data = JSON.stringify(data)
 	while( data.indexOf(',null]') > -1 )
 		data = data.replace(/\,null\]/g,']')
 	while( data.indexOf('[null]') > -1 )
 		data = data.replace(/\[null\]/g,'[]')
+	*/
+	
+	data = JSON.stringify( _g.kancolle_calc.encode(data) )
 
 	_frame.modal.show(
 		InfosFleet.modalExport(data),

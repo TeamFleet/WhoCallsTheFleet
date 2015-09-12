@@ -14,6 +14,8 @@
 // @koala-prepend "js-app/formula.js"
 // @koala-prepend "js-app/updater.js"
 
+// @koala-prepend "js-app/utilities/kancolle-calc.js"
+
 // @koala-prepend "js-app/templates/improvement.js"
 // @koala-prepend "js-app/templates/link_equipment.js"
 // @koala-prepend "js-app/templates/link_ship.js"
