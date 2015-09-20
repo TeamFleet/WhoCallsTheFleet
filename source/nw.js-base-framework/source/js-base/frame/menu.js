@@ -73,13 +73,16 @@ _menu.prototype.init = function(){
 	_frame.menu.menus.push(this)
 }
 
-_menu.prototype.show = function( targetEl ){
+_menu.prototype.show = function( targetEl, mouseX, mouseY ){
 	if( this.showing )
 		return this
-
-	var self = this
-	targetEl = targetEl || this.settings.target
 	
+	if( typeof targetEl == 'number' )
+		return this.show( 'mouse', targetEl, mouseX )
+
+	var top, left, viewport_height, viewport_width, menu_height, menu_width
+	targetEl = targetEl || this.settings.target
+
 	clearTimeout(_frame.menu.timeout_hideall)
 	_frame.menu.timeout_hideall = null
 
@@ -94,35 +97,34 @@ _menu.prototype.show = function( targetEl ){
 		this.dom.body.children().trigger('show')
 
 	// 计算并设置位置
-		if( targetEl instanceof jQuery ){
-			var offset = targetEl.offset()
-				,top	= offset.top + targetEl.height() - $body.scrollTop()
-				,left 	= offset.left - $body.scrollLeft()
-				
-				,viewport_height	= $window.height() - 10
-				,viewport_width		= $window.width() - 10
-				
-				,menu_height		= this.dom.menu.outerHeight()
-				,menu_width			= this.dom.menu.outerWidth()
-
-			this.dom.menu.css({
-				'top': 		top + menu_height > viewport_height
-								? viewport_height - menu_height
-								: top,
-				//'left': 	offset.left - $body.scrollLeft()
-				'left': 	left + menu_width > viewport_width
-								? viewport_width - menu_width
-								: left
-			})
+		if( targetEl && targetEl instanceof jQuery ){
+			var offset 	= targetEl.offset()
+			top		= offset.top + targetEl.height() - $body.scrollTop()
+			left 	= offset.left - $body.scrollLeft()
+		}else if( targetEl == 'mouse' || (!targetEl && typeof mouseX == 'number') ){
+			left	= mouseX || 0
+			top 	= (mouseY + 5) || 0
 		}
+				
+		viewport_height		= $window.height() - 10
+		viewport_width		= $window.width() - 10
+			
+		menu_height			= this.dom.menu.outerHeight()
+		menu_width			= this.dom.menu.outerWidth()
+
+		this.dom.menu.css({
+			'top': 		top + menu_height > viewport_height
+							? viewport_height - menu_height
+							: top,
+			//'left': 	offset.left - $body.scrollLeft()
+			'left': 	left + menu_width > viewport_width
+							? viewport_width - menu_width
+							: left
+		})
 
 	// 虚化背景
 		if( this.settings.showBlured ){
-			node.win.capturePage(function(datauri){
-				if( self.showing ){
-					self.dom.blured = $('<s class="blured"/>').css('background-image', 'url('+datauri+')').appendTo( self.dom.menu.addClass('on') )
-				}
-			}, 'jpg', 'datauri')
+			node.win.capturePage(this.capturePage_callback.bind(this), 'jpg', 'datauri')
 		}else{
 			this.dom.menu.addClass('on')
 		}
@@ -158,6 +160,13 @@ _menu.prototype.hideTrue = function(){
 _menu.prototype.appendItem = function(item){
 	if( item instanceof jQuery )
 		return item.appendTo( this.dom.body )
+}
+
+_menu.prototype.capturePage_callback = function( datauri ){
+	console.log(this)
+	if( this.showing ){
+		this.dom.blured = $('<s class="blured"/>').css('background-image', 'url('+datauri+')').appendTo( this.dom.menu.addClass('on') )
+	}
 }
 
 

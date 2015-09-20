@@ -363,12 +363,9 @@ class TablelistShips extends Tablelist{
 		this.compare_off()
 	}
 	
-	contextmenu_show($el, shipId){
+	contextmenu_show($el, shipId, is_rightclick){
 		if( this.dom.filter_container.attr('viewtype') == 'compare' || $el.attr('data-donotcompare') == 'true' )
 			return false
-	
-		TablelistShips.contextmenu_curid = shipId || $el.data('shipid')
-		TablelistShips.contextmenu_curel = $el
 	
 		if( !TablelistShips.contextmenu )
 			TablelistShips.contextmenu = new _menu({
@@ -378,7 +375,7 @@ class TablelistShips extends Tablelist{
 						.on({
 							'click': function(e){
 								if( _frame.app_main.is_mode_selection() )
-									_frame.app_main.mode_selection_callback(TablelistShips.contextmenu_curid)
+									_frame.app_main.mode_selection_callback(TablelistShips.contextmenu._curid)
 							},
 							'show': function(){
 								if( _frame.app_main.is_mode_selection() )
@@ -390,27 +387,27 @@ class TablelistShips extends Tablelist{
 					$('<menuitem/>').html('查看资料')
 						.on({
 							'click': function(e){
-								TablelistShips.contextmenu_curel.trigger('click', [true])
+								TablelistShips.contextmenu._curel.trigger('click', [true])
 							}
 						}),
 	
 					$('<menuitem/>').html('将该舰娘加入对比')
 						.on({
 							'click': function(e){
-								this.checkbox[TablelistShips.contextmenu_curid]
-									.prop('checked', !this.checkbox[TablelistShips.contextmenu_curid].prop('checked'))
+								this.checkbox[TablelistShips.contextmenu._curid]
+									.prop('checked', !this.checkbox[TablelistShips.contextmenu._curid].prop('checked'))
 									.trigger('change')
 							}.bind(this),
 							'show': function(e){
-								if( !TablelistShips.contextmenu_curid )
+								if( !TablelistShips.contextmenu._curid )
 									return false
 								
-								if( _g.data.ship_types[_g['data']['ships'][TablelistShips.contextmenu_curid]['type']]['donotcompare'] )
+								if( _g.data.ship_types[_g['data']['ships'][TablelistShips.contextmenu._curid]['type']]['donotcompare'] )
 									$(e.target).hide()
 								else
 									$(e.target).show()
 									
-								if( this.checkbox[TablelistShips.contextmenu_curid].prop('checked') )
+								if( this.checkbox[TablelistShips.contextmenu._curid].prop('checked') )
 									$(e.target).html('取消对比')
 								else
 									$(e.target).html('将该舰娘加入对比')
@@ -419,8 +416,8 @@ class TablelistShips extends Tablelist{
 					
 					$('<div/>').on('show', function(e){
 						var $div = $(e.target).empty()
-						if( TablelistShips.contextmenu_curid ){
-							var series = _g['data']['ships'][TablelistShips.contextmenu_curid].getSeriesData() || []
+						if( TablelistShips.contextmenu._curid ){
+							var series = _g['data']['ships'][TablelistShips.contextmenu._curid].getSeriesData() || []
 							series.forEach(function(currentValue, i){
 								if( !i )
 									$div.append($('<hr/>'))
@@ -479,8 +476,14 @@ class TablelistShips extends Tablelist{
 					}.bind(this))
 				]
 			})
+	
+		TablelistShips.contextmenu._curid = shipId || $el.data('shipid')
+		TablelistShips.contextmenu._curel = $el
 
-		TablelistShips.contextmenu.show($el)
+		if( is_rightclick )
+			TablelistShips.contextmenu.show(is_rightclick.clientX, is_rightclick.clientY)
+		else
+			TablelistShips.contextmenu.show($el)
 	}
 	
 	
@@ -569,7 +572,7 @@ class TablelistShips extends Tablelist{
 		
 		// 右键菜单事件
 			this.dom.table.on('contextmenu.contextmenu_ship', 'tr[data-shipid]', function(e){
-				this.contextmenu_show($(e.currentTarget))
+				this.contextmenu_show($(e.currentTarget), null, e)
 			}.bind(this)).on('click.contextmenu_ship', 'tr[data-shipid]>th>em', function(e){
 				this.contextmenu_show($(e.currentTarget).parent().parent())
 				e.stopImmediatePropagation()
@@ -639,53 +642,44 @@ class TablelistShips extends Tablelist{
 	
 	init_parse(){
 		// 生成过滤器与选项
-			this.dom.filter_container = this.dom.container.children('.options').empty()
-			this.dom.filters = $('<div class="filters"/>').appendTo( this.dom.filter_container )
-			this.dom.exit_compare = $('<div class="exit_compare"/>')
-									.append(
-										$('<button icon="arrow-set2-left"/>')
-											.html('结束对比')
-											.on('click', function(){
-												this.compare_end()
-											}.bind(this))
-									)
-									.append(
-										$('<button icon="checkbox-checked"/>')
-											.html('继续选择')
-											.on('click', function(){
-												this.compare_continue()
-											}.bind(this))
-									)
-									.appendTo( this.dom.filter_container )
-			this.dom.btn_compare_sort = $('<button icon="sort-amount-desc" class="disabled"/>')
-												.html('点击表格标题可排序')
-												.on('click', function(){
-													if( !this.dom.btn_compare_sort.hasClass('disabled') )
-														this.sort_table_restore()
-												}.bind(this)).appendTo( this.dom.exit_compare )
-	
-		// 初始化设置
-			this.append_option( 'checkbox', 'hide-premodel', '仅显示同种同名舰最终版本',
-				_config.get( 'shiplist-filter-hide-premodel' ) === 'false' ? null : true, null, {
-					'onchange': function( e, input ){
-						_config.set( 'shiplist-filter-hide-premodel', input.prop('checked') )
-						this.dom.filter_container.attr('filter-hide-premodel', input.prop('checked'))
+			this.dom.filter_container = this.dom.container.children('.options')
+			this.dom.filters = this.dom.filter_container.children('.filters')
+			this.dom.exit_compare = this.dom.filter_container.children('.exit_compare')
+			// 结束对比
+				this.dom.exit_compare.children('button[icon="arrow-set2-left"]').on('click', function(){
+						this.compare_end()
+					}.bind(this))
+			// 继续选择
+				this.dom.exit_compare.children('button[icon="checkbox-checked"]').on('click', function(){
+						this.compare_continue()
+					}.bind(this))
+			// 点击表格标题可排序
+				this.dom.btn_compare_sort = this.dom.exit_compare.children('button[icon="sort-amount-desc"]')
+					.on('click', function(){
+						if( !this.dom.btn_compare_sort.hasClass('disabled') )
+							this.sort_table_restore()
+					}.bind(this))
+			// 仅显示同种同名舰最终版本
+				this.dom.btn_hide_premodel = this.dom.filters.find('[name="hide-premodel"]')
+					.prop('checked', _config.get( 'shiplist-filter-hide-premodel' ) === 'false' ? null : true)
+					.on('change', function( e ){
+						_config.set( 'shiplist-filter-hide-premodel', this.dom.btn_hide_premodel.prop('checked') )
+						this.dom.filter_container.attr('filter-hide-premodel', this.dom.btn_hide_premodel.prop('checked'))
 						this.thead_redraw()
-					}.bind(this)
-				} )
-			this.append_option( 'radio', 'viewtype', null, [
-					['card', ''],
-					['list', '']
-				], null, {
-					'radio_default': _config.get( 'shiplist-viewtype' ),
-					'onchange': function( e, input ){
-						if( input.is(':checked') ){
-							_config.set( 'shiplist-viewtype', input.val() )
-							this.dom.filter_container.attr('viewtype', input.val())
+					}.bind(this))
+			// 视图切换
+				this.dom.filters.find('[name="viewtype"]').each(function(index, $el){
+					$el = $($el)
+					if( $el.val() == _config.get( 'shiplist-viewtype' ) )
+						$el.prop('checked', true)
+					$el.on('change', function( e ){
+						if( $el.is(':checked') ){
+							_config.set( 'shiplist-viewtype', $el.val() )
+							this.dom.filter_container.attr('viewtype', $el.val())
 							this.thead_redraw()
 						}
-					}.bind(this)
-				} )
+					}.bind(this))
+				}.bind(this))
 			this.dom.filters.find('input').trigger('change')
 	
 		// 生成表格框架
@@ -699,7 +693,7 @@ class TablelistShips extends Tablelist{
 		
 		// 右键菜单事件
 			this.dom.table.on('contextmenu.contextmenu_ship', 'tr[data-shipid]', function(e){
-				this.contextmenu_show($(e.currentTarget))
+				this.contextmenu_show($(e.currentTarget), null, e)
 			}.bind(this)).on('click.contextmenu_ship', 'tr[data-shipid]>th>em', function(e){
 				this.contextmenu_show($(e.currentTarget).parent().parent())
 				e.stopImmediatePropagation()

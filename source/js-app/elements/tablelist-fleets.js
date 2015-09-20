@@ -98,7 +98,7 @@ class TablelistFleets extends Tablelist{
 	
 		// 右键菜单事件
 			this.dom.table.on('contextmenu.contextmenu_fleet', 'tr[data-fleetid]', function(e){
-				this.contextmenu_show($(e.currentTarget))
+				this.contextmenu_show($(e.currentTarget), null , e)
 			}.bind(this)).on('click.contextmenu_fleet', 'tr[data-fleetid]>th>em', function(e){
 				this.contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget))
 				e.stopImmediatePropagation()
@@ -587,9 +587,7 @@ class TablelistFleets extends Tablelist{
 		}
 
 	// 菜单
-		contextmenu_show($tr, $em){
-			TablelistFleets.contextmenu_curel = $tr
-		
+		contextmenu_show($tr, $em, is_rightclick){		
 			if( !TablelistFleets.contextmenu )
 				TablelistFleets.contextmenu = new _menu({
 					'className': 'contextmenu-fleet',
@@ -597,40 +595,45 @@ class TablelistFleets extends Tablelist{
 						$('<menuitem/>').html('详情')
 							.on({
 								'click': function(e){
-									TablelistFleets.contextmenu_curel.trigger('click', [true])
+									TablelistFleets.contextmenu.curel.trigger('click', [true])
 								}
 							}),
 							
 						$('<menuitem/>').html('导出配置代码')
 							.on({
 								'click': function(e){
-									InfosFleet.modalExport_show(TablelistFleets.contextmenu_curel.data('initdata'))
+									InfosFleet.modalExport_show(TablelistFleets.contextmenu.curel.data('initdata'))
 								}
 							}),
 							
 						$('<menuitem/>').html('导出配置文本')
 							.on({
 								'click': function(e){
-									InfosFleet.modalExportText_show(TablelistFleets.contextmenu_curel.data('initdata'))
+									InfosFleet.modalExportText_show(TablelistFleets.contextmenu.curel.data('initdata'))
 								}
 							}),
 							
 						$('<menuitem/>').html('移除')
 							.on({
 								'click': function(e){
-									let id = TablelistFleets.contextmenu_curel.attr('data-fleetid')
+									let id = TablelistFleets.contextmenu.curel.attr('data-fleetid')
 									_db.fleets.remove({
 										_id: id
 									}, { multi: true }, function (err, numRemoved) {
 										_g.log('Fleet ' + id + ' removed.')
 									});
-									TablelistFleets.contextmenu_curel.remove()
+									TablelistFleets.contextmenu.curel.remove()
 								}
 							})
 					]
 				})
 
-			TablelistFleets.contextmenu.show($em || $tr)
+			TablelistFleets.contextmenu.curel = $tr
+
+			if( is_rightclick )
+				TablelistFleets.contextmenu.show(is_rightclick.clientX, is_rightclick.clientY)
+			else
+				TablelistFleets.contextmenu.show($em || $tr)
 		}
 	
 	
@@ -684,8 +687,6 @@ class TablelistFleets extends Tablelist{
 		}
 }
 TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
-	TablelistFleets.menuOptions_curTablelist = $el_tablelist || null
-
 	if( !TablelistFleets.menuOptions )
 		TablelistFleets.menuOptions = new _menu({
 			'className':	'mod-checkbox menu-tablelistfleets-options',
@@ -697,9 +698,9 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 						}).prop('checked', Lockr.get( 'fleetlist-option-groupbytheme' ))
 						.on('change', function(e){
 							Lockr.set( 'fleetlist-option-groupbytheme', e.target.checked )
-							if( TablelistFleets.menuOptions_curTablelist ){
-								TablelistFleets.menuOptions_curTablelist.dom.tbody.empty()
-								TablelistFleets.menuOptions_curTablelist.genlist()
+							if( TablelistFleets.menuOptions.curTablelist ){
+								TablelistFleets.menuOptions.curTablelist.dom.tbody.empty()
+								TablelistFleets.menuOptions.curTablelist.genlist()
 							}
 						}))
 					.append($('<label/>',{
@@ -721,6 +722,8 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 						}))
 			]
 		})
+
+	TablelistFleets.menuOptions.curTablelist = $el_tablelist || null
 	
 	if( $el_tablelist )
 		TablelistFleets.menuOptions.dom.menu.addClass('is-tablelist')
