@@ -96,7 +96,7 @@ ship.getIllustrator( language )
 
  */
 
-class Ship extends ITEM{
+class Ship extends ItemBase{
 	constructor(data){
 		super()
 		$.extend(true, this, data)

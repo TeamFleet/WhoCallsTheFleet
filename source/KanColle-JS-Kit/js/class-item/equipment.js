@@ -1,4 +1,4 @@
-class Equipment extends ITEM{
+class Equipment extends ItemBase{
 	constructor(data) {
 		super()
 		$.extend(true, this, data)
@@ -6,7 +6,7 @@ class Equipment extends ITEM{
 	
 	getName(small_brackets, language){
 		language = language || _g.lang
-		var result = ITEM.prototype.getName.call(this, language)
+		var result = ItemBase.prototype.getName.call(this, language)
 			//,result = super.getName(language)
 			,small_brackets_tag = small_brackets && !small_brackets === true ? small_brackets : 'small'
 		return small_brackets

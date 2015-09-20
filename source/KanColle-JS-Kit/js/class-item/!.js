@@ -1,4 +1,4 @@
-class ITEM {
+class ItemBase {
 	constructor() {
 	}
 

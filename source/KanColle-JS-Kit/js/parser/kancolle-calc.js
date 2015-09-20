@@ -1,4 +1,28 @@
-/* Utilities for kancolle-calc.net
+/* Perser for kancolle-calc.net
+
+ *******************************************************************
+
+_g.kancolle_calc.decode( data, version )
+	解析舰载机厨格式为是谁呼叫舰队格式
+	变量
+		data
+			String		字符串化的（stringify）JSON
+			Object		JSON，原数据
+		version		[OPTIONAL]
+			Number		代码版本，目前支持：3；如果不填，默认为当前支持的最新版本
+	返回值
+		Array		是谁呼叫舰队的存储格式
+
+_g.kancolle_calc.encode( data, version )
+	将是谁呼叫舰队格式编码为舰载机厨格式
+	变量
+		data
+			String		字符串化的（stringify）Array
+			Array		原数据
+		version		[OPTIONAL]
+			Number		代码版本，目前支持：3；如果不填，默认为当前支持的最新版本
+	返回值
+		Object		舰载机厨格式
 
  *******************************************************************
 
