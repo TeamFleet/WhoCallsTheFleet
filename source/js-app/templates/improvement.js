@@ -27,12 +27,13 @@ _tmpl.improvement = function( equipment, improvement_index, requirement_index, r
 		var names = []
 		req_ships.forEach(function(currentValue){
 			names.push(
-				'<span'
+				'<a'
+				+ ' href="?infos=ship&id='+currentValue+'"'
 				+ ' data-infos="[[SHIP::'+currentValue+']]"'
 				+ ' data-tip="[[SHIP::'+currentValue+']]"'
 				+ '>'
 				+ _g.data.ships[currentValue].getName()
-				+ '</span>'
+				+ '</a>'
 			)
 		})
 		requirement = '<font>'+names.join(' / ')+'</font>'
@@ -119,12 +120,13 @@ _tmpl.improvement_inEquipmentInfos = function( equipment, returnHTML ){
 					+ '<b>'
 						+ ( upgrade_to
 							? '<span class="indicator true">可升级为</span>'
-								+ '<em style="background-image:url(../app/assets/images/itemicon/'
+								+ '<a style="background-image:url(../app/assets/images/itemicon/'
 									+ upgrade_to.getIconId()
 									+ '.png)"'
+									+ ' href="?infos=equipment&id='+upgrade_to['id']+'"'
 									+ ' data-infos="[[EQUIPMENT::'+upgrade_to['id']+']]"'
 									+ ' data-tip="[[EQUIPMENT::'+upgrade_to['id']+']]"'
-								+ '">' + upgrade_to.getName(true) + '</em>'
+								+ '">' + upgrade_to.getName(true) + '</a>'
 								+ ( improvement['upgrade'][1]
 									? '<i>+'+improvement['upgrade'][1]+'</i>'
 									: ''
@@ -153,20 +155,22 @@ _tmpl.improvement_inEquipmentInfos = function( equipment, returnHTML ){
 
 _tmpl.improvement__title = function(equipment, upgrade_to, upgrade_to_star){
 	return '<strong>'
-		+ '<em style="background-image:url(../app/assets/images/itemicon/'
+		+ '<a style="background-image:url(../app/assets/images/itemicon/'
 			+ equipment.getIconId()
 			+ '.png)"'
+			+ ' href="?infos=equipment&id='+equipment['id']+'"'
 			+ ' data-infos="[[EQUIPMENT::'+equipment['id']+']]"'
 			+ ' data-tip="[[EQUIPMENT::'+equipment['id']+']]"'
-		+ '">' + equipment.getName(true) + '</em>'
+		+ '">' + equipment.getName(true) + '</a>'
 		+ ( upgrade_to
 			? '<b></b>'
-				+ '<em style="background-image:url(../app/assets/images/itemicon/'
+				+ '<a style="background-image:url(../app/assets/images/itemicon/'
 					+ upgrade_to.getIconId()
 					+ '.png)"'
+					+ ' href="?infos=equipment&id='+upgrade_to['id']+'"'
 					+ ' data-infos="[[EQUIPMENT::'+upgrade_to['id']+']]"'
 					+ ' data-tip="[[EQUIPMENT::'+upgrade_to['id']+']]"'
-				+ '">' + upgrade_to.getName(true) + '</em>'
+				+ '">' + upgrade_to.getName(true) + '</a>'
 				+ ( upgrade_to_star
 					? '<i>+'+upgrade_to_star+'</i>'
 					: ''
@@ -215,16 +219,17 @@ _tmpl.improvement__resource = function(improvement, upgradable){
 								+ '</i>'
 								+ ( improvement['resource'][i][4]
 									? (
-										'<i class="equipment"'
+										'<a class="equipment"'
 											+ ' style="background-image:url(../app/assets/images/itemicon/'
 											+ _g.data.items[improvement['resource'][i][4]].getIconId()
 											+ '.png)"'
+											+ ' href="?infos=equipment&id='+improvement['resource'][i][4]+'"'
 											+ ' data-infos="[[EQUIPMENT::'+improvement['resource'][i][4]+']]"'
 											+ ' data-tip="[[EQUIPMENT::'+improvement['resource'][i][4]+']]"'
 										+ '>'
 										+ _g.data.items[improvement['resource'][i][4]].getName(true)
 										+ '<i>x' + getValue(improvement['resource'][i][5]) + '</i>'
-										+ '</i>'
+										+ '</a>'
 									)
 									: ''
 								)
@@ -269,12 +274,13 @@ _tmpl.improvement__reqdetails = function(reqdata){
 		if( req[1] ){
 			req[1].forEach(function(shipid){
 				names.push(
-					'<span'
+					'<a'
+					+ ' href="?infos=ship&id='+shipid+'"'
 					+ ' data-infos="[[SHIP::'+shipid+']]"'
 					+ ' data-tip="[[SHIP::'+shipid+']]"'
 					+ '>'
 					+ _g.data.ships[shipid].getName()
-					+ '</span>'
+					+ '</a>'
 				)
 			})
 			requirements+= names.join(' / ')

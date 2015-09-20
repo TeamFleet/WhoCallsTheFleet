@@ -1078,10 +1078,21 @@ _frame.app_main = {
 
 		// 部分全局事件委托
 			.then(function(){
-				$body.on('click.pagechange', 'a[href^="?page="]', function(e){
-					e.preventDefault()
-					_frame.app_main.load_page($(this).attr('href').substr('?page='.length))
-				})
+				let link_page = function(e){
+							e.preventDefault()
+							_frame.app_main.load_page($(this).attr('href').substr('?page='.length))
+						},
+					link_infos = function(e){
+							e.preventDefault()
+							let el = $(this)
+							if( !el.attr('data-infos') ){
+								let exp = /^[\?]{0,1}infos\=([^\&]+)\&id\=([^\&]+)/ig.exec(el.attr('href'))
+								el.attr('data-infos', '[[' + exp[1].toUpperCase() + '::' + exp[2] + ']]')
+								el.trigger('click')
+							}
+						}
+				$body.on('click.pagechange', 'a[href^="?page="]', link_page)
+					.on('click.pagechange', 'a[href^="?infos="]', link_infos)
 				_frame.dom.bgimg.on('animationend, webkitAnimationEnd', 'div', function(){
 					_frame.app_main.change_bgimg_after()
 				})

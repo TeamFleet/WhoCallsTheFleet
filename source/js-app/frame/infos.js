@@ -470,7 +470,7 @@ _frame.infos.init = function(){
 				var equips = $('<div class="equipments"/>').html('<h4 data-content="初始装备 & 搭载量">初始装备 & 搭载量</h4>').appendTo(dom)
 					,i = 0
 				while( i < 4 ){
-					var equip = $('<button/>').appendTo(equips)
+					var equip = $('<a/>').appendTo(equips)
 						,icon = $('<i/>').appendTo( equip )
 						,name = $('<small/>').appendTo( equip )
 						,slot = $('<em/>').appendTo( equip )
@@ -490,7 +490,8 @@ _frame.infos.init = function(){
 							'data-equipmentid': 	d['equip'][i],
 							'data-tip-position': 	'left',
 							'data-infos': 			'[[EQUIPMENT::'+d['equip'][i]+']]',
-							'data-tip':				'[[EQUIPMENT::'+d['equip'][i]+']]'
+							'data-tip':				'[[EQUIPMENT::'+d['equip'][i]+']]',
+							'href':					'?infos=equipment&id=' + d['equip'][i]
 						})
 						name.html(
 							item_data.getName(true)
@@ -596,8 +597,10 @@ _frame.infos.init = function(){
 							,remodel_blueprint = data_prev ? (data_prev['next_blueprint']) : null
 
 						remodels_container.appendDOM(
-							$('<button class="unit" data-shipid="'+ currentValue['id'] +'"/>')
-								.attr({
+							$('<a/>',{
+									'class':		'unit',
+									'href':			'?infos=ship&id=' + currentValue['id'],
+									'data-shipid':	currentValue['id'],
 									'data-infos': 	'[[SHIP::'+ currentValue['id'] +']]',
 									'data-tip': 	tip,
 									'data-infos-nohistory': true

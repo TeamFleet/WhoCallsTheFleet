@@ -10,7 +10,7 @@ _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar
 					typeof tagName['improvementStar'] == 'undefined' ? null : tagName['improvementStar']
 				)
 
-	tagName = tagName || 'button'
+	tagName = tagName || 'a'
 	returnHTML = returnHTML || false
 	improvementStar = typeof improvementStar == 'undefined' ? null : improvementStar
 
@@ -22,7 +22,9 @@ _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar
 	}
 
 	return _tmpl.export(
-			'<' + tagName + ' class="link_equipment"'
+			'<' + tagName
+				+ (tagName == 'a' ? ' href="?infos=equipment&id='+equipmentId+'"' : '')
+				+ ' class="link_equipment"'
 				+ ' data-equipmentid="' + equipmentId + '"'
 				+ ' data-tip-position="right"'
 				+ ' data-infos="[[EQUIPMENT::' + equipmentId + ']]"'

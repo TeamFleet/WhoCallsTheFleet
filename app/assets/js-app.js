@@ -2394,10 +2394,21 @@ _frame.app_main = {
 
 		// 部分全局事件委托
 			.then(function(){
-				$body.on('click.pagechange', 'a[href^="?page="]', function(e){
-					e.preventDefault()
-					_frame.app_main.load_page($(this).attr('href').substr('?page='.length))
-				})
+				let link_page = function(e){
+							e.preventDefault()
+							_frame.app_main.load_page($(this).attr('href').substr('?page='.length))
+						},
+					link_infos = function(e){
+							e.preventDefault()
+							let el = $(this)
+							if( !el.attr('data-infos') ){
+								let exp = /^[\?]{0,1}infos\=([^\&]+)\&id\=([^\&]+)/ig.exec(el.attr('href'))
+								el.attr('data-infos', '[[' + exp[1].toUpperCase() + '::' + exp[2] + ']]')
+								el.trigger('click')
+							}
+						}
+				$body.on('click.pagechange', 'a[href^="?page="]', link_page)
+					.on('click.pagechange', 'a[href^="?infos="]', link_infos)
 				_frame.dom.bgimg.on('animationend, webkitAnimationEnd', 'div', function(){
 					_frame.app_main.change_bgimg_after()
 				})
@@ -3529,12 +3540,13 @@ _tmpl.improvement = function( equipment, improvement_index, requirement_index, r
 		var names = []
 		req_ships.forEach(function(currentValue){
 			names.push(
-				'<span'
+				'<a'
+				+ ' href="?infos=ship&id='+currentValue+'"'
 				+ ' data-infos="[[SHIP::'+currentValue+']]"'
 				+ ' data-tip="[[SHIP::'+currentValue+']]"'
 				+ '>'
 				+ _g.data.ships[currentValue].getName()
-				+ '</span>'
+				+ '</a>'
 			)
 		})
 		requirement = '<font>'+names.join(' / ')+'</font>'
@@ -3621,12 +3633,13 @@ _tmpl.improvement_inEquipmentInfos = function( equipment, returnHTML ){
 					+ '<b>'
 						+ ( upgrade_to
 							? '<span class="indicator true">可升级为</span>'
-								+ '<em style="background-image:url(../app/assets/images/itemicon/'
+								+ '<a style="background-image:url(../app/assets/images/itemicon/'
 									+ upgrade_to.getIconId()
 									+ '.png)"'
+									+ ' href="?infos=equipment&id='+upgrade_to['id']+'"'
 									+ ' data-infos="[[EQUIPMENT::'+upgrade_to['id']+']]"'
 									+ ' data-tip="[[EQUIPMENT::'+upgrade_to['id']+']]"'
-								+ '">' + upgrade_to.getName(true) + '</em>'
+								+ '">' + upgrade_to.getName(true) + '</a>'
 								+ ( improvement['upgrade'][1]
 									? '<i>+'+improvement['upgrade'][1]+'</i>'
 									: ''
@@ -3655,20 +3668,22 @@ _tmpl.improvement_inEquipmentInfos = function( equipment, returnHTML ){
 
 _tmpl.improvement__title = function(equipment, upgrade_to, upgrade_to_star){
 	return '<strong>'
-		+ '<em style="background-image:url(../app/assets/images/itemicon/'
+		+ '<a style="background-image:url(../app/assets/images/itemicon/'
 			+ equipment.getIconId()
 			+ '.png)"'
+			+ ' href="?infos=equipment&id='+equipment['id']+'"'
 			+ ' data-infos="[[EQUIPMENT::'+equipment['id']+']]"'
 			+ ' data-tip="[[EQUIPMENT::'+equipment['id']+']]"'
-		+ '">' + equipment.getName(true) + '</em>'
+		+ '">' + equipment.getName(true) + '</a>'
 		+ ( upgrade_to
 			? '<b></b>'
-				+ '<em style="background-image:url(../app/assets/images/itemicon/'
+				+ '<a style="background-image:url(../app/assets/images/itemicon/'
 					+ upgrade_to.getIconId()
 					+ '.png)"'
+					+ ' href="?infos=equipment&id='+upgrade_to['id']+'"'
 					+ ' data-infos="[[EQUIPMENT::'+upgrade_to['id']+']]"'
 					+ ' data-tip="[[EQUIPMENT::'+upgrade_to['id']+']]"'
-				+ '">' + upgrade_to.getName(true) + '</em>'
+				+ '">' + upgrade_to.getName(true) + '</a>'
 				+ ( upgrade_to_star
 					? '<i>+'+upgrade_to_star+'</i>'
 					: ''
@@ -3717,16 +3732,17 @@ _tmpl.improvement__resource = function(improvement, upgradable){
 								+ '</i>'
 								+ ( improvement['resource'][i][4]
 									? (
-										'<i class="equipment"'
+										'<a class="equipment"'
 											+ ' style="background-image:url(../app/assets/images/itemicon/'
 											+ _g.data.items[improvement['resource'][i][4]].getIconId()
 											+ '.png)"'
+											+ ' href="?infos=equipment&id='+improvement['resource'][i][4]+'"'
 											+ ' data-infos="[[EQUIPMENT::'+improvement['resource'][i][4]+']]"'
 											+ ' data-tip="[[EQUIPMENT::'+improvement['resource'][i][4]+']]"'
 										+ '>'
 										+ _g.data.items[improvement['resource'][i][4]].getName(true)
 										+ '<i>x' + getValue(improvement['resource'][i][5]) + '</i>'
-										+ '</i>'
+										+ '</a>'
 									)
 									: ''
 								)
@@ -3771,12 +3787,13 @@ _tmpl.improvement__reqdetails = function(reqdata){
 		if( req[1] ){
 			req[1].forEach(function(shipid){
 				names.push(
-					'<span'
+					'<a'
+					+ ' href="?infos=ship&id='+shipid+'"'
 					+ ' data-infos="[[SHIP::'+shipid+']]"'
 					+ ' data-tip="[[SHIP::'+shipid+']]"'
 					+ '>'
 					+ _g.data.ships[shipid].getName()
-					+ '</span>'
+					+ '</a>'
 				)
 			})
 			requirements+= names.join(' / ')
@@ -3804,7 +3821,7 @@ _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar
 					typeof tagName['improvementStar'] == 'undefined' ? null : tagName['improvementStar']
 				)
 
-	tagName = tagName || 'button'
+	tagName = tagName || 'a'
 	returnHTML = returnHTML || false
 	improvementStar = typeof improvementStar == 'undefined' ? null : improvementStar
 
@@ -3816,7 +3833,9 @@ _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar
 	}
 
 	return _tmpl.export(
-			'<' + tagName + ' class="link_equipment"'
+			'<' + tagName
+				+ (tagName == 'a' ? ' href="?infos=equipment&id='+equipmentId+'"' : '')
+				+ ' class="link_equipment"'
 				+ ' data-equipmentid="' + equipmentId + '"'
 				+ ' data-tip-position="right"'
 				+ ' data-infos="[[EQUIPMENT::' + equipmentId + ']]"'
@@ -3853,7 +3872,7 @@ _tmpl.link_ship = function( ship, tagName, returnHTML ){
 					tagName['returnHTML'] || null
 				)
 
-	tagName = tagName || 'button'
+	tagName = tagName || 'a'
 	returnHTML = returnHTML || false
 
 	if( typeof ship != 'object' ){
@@ -3866,7 +3885,9 @@ _tmpl.link_ship = function( ship, tagName, returnHTML ){
 	var shipType = ship.getType()
 
 	return _tmpl.export(
-			'<' + tagName + ' class="link_ship" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">'
+			'<' + tagName
+				+ (tagName == 'a' ? ' href="?infos=ship&id='+shipId+'"' : '')
+				+ ' class="link_ship" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">'
 				+ '<img src="' + node.path.normalize(_g.path.pics.ships + '/' + shipId) + '/0.webp"/>'
 				+ '<span>'
 					+ (shipType ? '<small>' + shipType + '</small>' : '' )
@@ -4790,7 +4811,7 @@ _frame.infos.init = function(){
 				var equips = $('<div class="equipments"/>').html('<h4 data-content="初始装备 & 搭载量">初始装备 & 搭载量</h4>').appendTo(dom)
 					,i = 0
 				while( i < 4 ){
-					var equip = $('<button/>').appendTo(equips)
+					var equip = $('<a/>').appendTo(equips)
 						,icon = $('<i/>').appendTo( equip )
 						,name = $('<small/>').appendTo( equip )
 						,slot = $('<em/>').appendTo( equip )
@@ -4810,7 +4831,8 @@ _frame.infos.init = function(){
 							'data-equipmentid': 	d['equip'][i],
 							'data-tip-position': 	'left',
 							'data-infos': 			'[[EQUIPMENT::'+d['equip'][i]+']]',
-							'data-tip':				'[[EQUIPMENT::'+d['equip'][i]+']]'
+							'data-tip':				'[[EQUIPMENT::'+d['equip'][i]+']]',
+							'href':					'?infos=equipment&id=' + d['equip'][i]
 						})
 						name.html(
 							item_data.getName(true)
@@ -4916,8 +4938,10 @@ _frame.infos.init = function(){
 							,remodel_blueprint = data_prev ? (data_prev['next_blueprint']) : null
 
 						remodels_container.appendDOM(
-							$('<button class="unit" data-shipid="'+ currentValue['id'] +'"/>')
-								.attr({
+							$('<a/>',{
+									'class':		'unit',
+									'href':			'?infos=ship&id=' + currentValue['id'],
+									'data-shipid':	currentValue['id'],
 									'data-infos': 	'[[SHIP::'+ currentValue['id'] +']]',
 									'data-tip': 	tip,
 									'data-infos-nohistory': true

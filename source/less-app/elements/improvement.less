@@ -20,7 +20,7 @@
 		vertical-align:	top;
 		font-weight:lighter;
 		z-index:	1;
-		&>em{
+		&>a{
 			position:	relative;
 			display:	inline-block;
 			padding-left:36px;
@@ -80,7 +80,7 @@
 		&.no{
 			color:		@color_disabled;
 		}
-		&>span{
+		&>a{
 			display:	inline-block;
 			.transition-property(color);
 			&:hover{
@@ -94,7 +94,7 @@
 
 	&>span{
 		font-weight:	lighter;
-		em, i{
+		em, a, i{
 			font-style:	normal;
 			display:	inline-block;
 		}
@@ -105,7 +105,7 @@
 				color:		@color_disabled;
 				width:		80px;
 			}
-			&>i{
+			&>i, &>a{
 				background:		~"url(@{folder_images}/stats.png) no-repeat 0 0";
 				min-width:		75px;
 				padding-left:	20px;
@@ -210,7 +210,7 @@
 						margin-right:	.5em;
 					}
 				}
-				&>span{
+				&>a{
 					display:	inline-block;
 					.transition-property(color);
 					&:hover{
