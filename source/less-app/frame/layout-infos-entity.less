@@ -1,0 +1,26 @@
+.layout-infos-entity(){
+	&>.entity{
+		@color_accent:		hsl(180, 100%, 78%);
+		@color_accent2:		hsl(180, 54%, 56%);
+		@color_disabled:	rgba(255, 255, 255, .35);
+
+		h1, h2, h3, h4, h5, h6{
+			color:		hsl(180, 100%, 90%);
+			text-shadow:0 0 unit(5 / 30, em) hsl(180, 100%, 65%);
+			&:before{
+				color: 		hsl(180, 100%, 65%);
+				//.mask-image( ~"linear-gradient(to bottom, transparent, #000)" );
+			}
+		}
+		
+		&>.title{
+			small{
+				color: 	@color_accent2;
+			}
+		}
+
+		.entity-info{
+			padding-top: 	3em;
+		}
+	}
+}

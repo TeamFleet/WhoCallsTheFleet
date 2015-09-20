@@ -184,6 +184,27 @@
 			}
 		}
 
+		.flexgrid.list-ship{
+			.flex-flow(row wrap);
+			.justify-content(flex-start);
+			.align-items(flex-start);
+			.margin-top(-10);
+			.padding-bottom(20);
+			&>.unit{
+				flex: 	1 0 195px;
+				position:	relative;
+			}
+			&>a{
+				.margin-top(10);
+				padding-right:	0;
+			}
+			&.no{
+				margin-top:	0;
+				.font-size(16);
+				color:		fade(#aaa, 65%);
+			}
+		}
+
 		@media all and (max-width: 800px ){
 			h2{
 				.font-size(48 * 0.8)

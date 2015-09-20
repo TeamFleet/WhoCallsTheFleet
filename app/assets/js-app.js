@@ -1045,6 +1045,14 @@ ship.getName( joint, language )
 	快捷方式
 		ship._name	默认连接符，默认语言
 
+ship.getNameNoSuffix( language )
+	获取舰名，不包括后缀
+	变量
+		language	[OPTIONAL]
+			String		语言代码，默认为 _g.lang
+	返回值
+		String		舰名，不包括后缀
+
 ship.getSuffix( language )
 	获取后缀名
 	变量
@@ -1126,6 +1134,11 @@ class Ship extends ITEM{
 						+ suffix
 					) : ''
 				)
+	}
+	
+	getNameNoSuffix(language){
+		language = language || _g.lang
+		return this['name'][language] || this['name']['ja_jp']
 	}
 	
 	getSuffix(language){
@@ -3861,7 +3874,7 @@ _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar
 		)
 }
 
-_tmpl.link_ship = function( ship, tagName, returnHTML ){
+_tmpl.link_ship = function( ship, tagName, returnHTML, mode ){
 	if( !ship )
 		return false
 
@@ -3869,11 +3882,13 @@ _tmpl.link_ship = function( ship, tagName, returnHTML ){
 		return _tmpl.link_ship(
 					ship,
 					tagName['tagName'] || null,
-					tagName['returnHTML'] || null
+					tagName['returnHTML'] || null,
+					tagName['mode'] || null
 				)
 
 	tagName = tagName || 'a'
 	returnHTML = returnHTML || false
+	mode = mode || 'default'
 
 	if( typeof ship != 'object' ){
 		var shipId = parseInt(ship)
@@ -3882,7 +3897,24 @@ _tmpl.link_ship = function( ship, tagName, returnHTML ){
 		var shipId = ship['id']
 	}
 	
-	var shipType = ship.getType()
+	let content = ''
+		,shipType = ship.getType()
+	
+	switch(mode){
+		case 'names':
+			var names = []
+			ship.getSeriesData().forEach(function(thisSeries){
+				let thisName = _g.data.ships[thisSeries.id].getNameNoSuffix()
+				if( $.inArray( thisName, names ) < 0 )
+					names.push( thisName )
+			})
+			content = names.join(' / ')
+			break;
+		default:
+			content = (shipType ? '<small>' + shipType + '</small>' : '' )
+						+ ship.getName(_g.joint)
+			break;
+	}
 
 	return _tmpl.export(
 			'<' + tagName
@@ -3890,8 +3922,7 @@ _tmpl.link_ship = function( ship, tagName, returnHTML ){
 				+ ' class="link_ship" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">'
 				+ '<img src="' + node.path.normalize(_g.path.pics.ships + '/' + shipId) + '/0.webp"/>'
 				+ '<span>'
-					+ (shipType ? '<small>' + shipType + '</small>' : '' )
-					+ ship.getName(_g.joint)
+					+ content
 				+ '</span>'
 			+ '</' + tagName + '>',
 			/*
@@ -3919,13 +3950,15 @@ _tmpl.textlink_entity = function( entity, tagName, returnHTML ){
 
 	if( typeof entity != 'object' ){
 		var entityId = parseInt(entity)
-		entity = _g.data.ships[entityId]
+		entity = _g.data.entities[entityId]
 	}else{
 		var entityId = entity['id']
 	}
 
 	return _tmpl.export(
-			'<' + tagName + ' href="?infos=entity&id=' + entityId + '" data-entityid="' + entityId + '" data-infos="[[ENTITY::' + entityId + ']]">'
+			'<' + tagName
+				+ (tagName == 'a' ? ' href="?infos=entity&id='+entityId+'"' : '')
+				+ ' data-entityid="' + entityId + '" data-infos="[[ENTITY::' + entityId + ']]">'
 				+ entity._name
 			+ '</' + tagName + '>',
 			returnHTML
@@ -3956,7 +3989,9 @@ _tmpl.textlink_ship = function( ship, tagName, returnHTML ){
 	var shipType = ship.getType()
 
 	return _tmpl.export(
-			'<' + tagName + ' href="?infos=ship&id=' + shipId + '" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">'
+			'<' + tagName
+				+ (tagName == 'a' ? ' href="?infos=ship&id='+shipId+'"' : '')
+				+ ' data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">'
 				+ (shipType ? '[' + shipType + '] ' : '' )
 				+ ship.getName(_g.joint)
 			+ '</' + tagName + '>',
@@ -4499,6 +4534,11 @@ _frame.infos = {
 					_frame.app_main.mode_selection_off()
 					TablelistEquipments.types = []
 					break;
+				case 'entity':
+					cont = this.getContent(type, id)
+					_frame.infos.dom.main.attr('data-infostype', 'entityinfo')
+					title = '资料 - 人物团体 - ' + _g.data.entities[id]._name
+					break;
 			}
 			//var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
 			//if( _frame.infos.curContent != hashcode ){
@@ -4891,18 +4931,34 @@ _frame.infos.init = function(){
 				}
 
 			// 声优 & 画师 & 消耗
-				$('<span class="entity"/>')
-					.html(
-						'<strong>声优</strong>'
-						+ '<span>' + ( d._cv || '?' ) + '</span>'
-					)
-					.appendTo(dom)
-				$('<span class="entity"/>')
-					.html(
-						'<strong>画师</strong>'
-						+ '<span>' + ( d._illustrator || '?' ) + '</span>'
-					)
-					.appendTo(dom)
+				let cvId = d.getRel('cv')
+					,illustratorId = d.getRel('illustrator')
+					,cvLink = $('<a/>',{
+							'class':		'entity'
+						})
+						.html(
+							'<strong>声优</strong>'
+							+ '<span>' + ( d._cv || '?' ) + '</span>'
+						)
+						.appendTo(dom)
+					,illustratorLink = $('<a/>',{
+							'class':		'entity'
+						})
+						.html(
+							'<strong>画师</strong>'
+							+ '<span>' + ( d._illustrator || '?' ) + '</span>'
+						)
+						.appendTo(dom)
+				if( cvId )
+					cvLink.attr({
+						'href':			'?infos=entity&id=' + cvId,
+						'data-infos':	'[[ENTITY::' + cvId + ']]'
+					})
+				if( illustratorId )
+					illustratorLink.attr({
+						'href':			'?infos=entity&id=' + illustratorId,
+						'data-infos':	'[[ENTITY::' + illustratorId + ']]'
+					})
 					/*
 				var consum = $('<span class="consum"/>').html('<strong>消耗</strong>').appendTo(dom)
 				_add_stat( 'fuel', 		'', _val( d['consum']['fuel'] ),		consum )
@@ -5088,6 +5144,66 @@ _frame.infos.init = function(){
 		}
 
 
+// 实体信息
+
+_frame.infos.__entity = function( id ){
+	let d = _g.data.entities[ id ]
+		,dom = $('<div class="entity"/>')
+		,serieses = []
+		,seriesCV = []
+		,seriesIllustrator = []
+
+	_g.log(d)
+	
+	// 标题
+		$('<div class="title"/>')
+			.html(
+				'<h2 data-content="' + d.getName() + '">' + d.getName() + '</h2>'
+				+ '<small>' + d.getName('ja_jp') + '</small>'
+			).appendTo(dom)
+	
+	// 遍历全部舰娘，分析声优、画师数据
+	// 缓存舰娘所属系列，目前每一个系列只会有一位声优、画师
+		_g.data.ship_id_by_type.forEach(function(thisType){
+			thisType.forEach(function(thisShip){
+				thisShip = _g.data.ships[thisShip]
+				if( !thisShip.series || $.inArray( thisShip.series, serieses ) < 0 ){
+					if( thisShip.series )
+						serieses.push( thisShip.series )
+					
+					let seriesData = thisShip.getSeriesData()
+
+					if( thisShip.getRel('cv') == id )
+						seriesCV.push(seriesData)
+
+					if( thisShip.getRel('illustrator') == id )
+						seriesIllustrator.push(seriesData)
+				}
+			})
+		})
+	
+	let appendInfos = function(title, seriesArray){
+		if( !seriesArray.length )
+			return
+
+		let container = $('<div class="entity-info"/>').html('<h4 data-content="'+title+'">'+title+'</h4>').appendTo(dom)
+			,flexgrid = _p.el.flexgrid.create().appendTo( container ).addClass('list-ship')
+		
+		seriesArray.forEach(function(seriesData){
+			flexgrid.appendDOM(
+				_tmpl.link_ship(seriesData[seriesData.length-1].id, {
+					mode:	'names'
+				}).addClass('unit')
+			)
+		})
+	}
+	
+	appendInfos('配音', seriesCV)
+	appendInfos('绘制', seriesIllustrator)
+	
+	return dom
+}
+
 // 装备信息
 	_frame.infos.__equipment = function( id ){
 		var d = _g.data.items[ id ]
@@ -5219,7 +5335,7 @@ _frame.infos.init = function(){
 
 		// 初始装备于
 			var equipped = $('<div class="equipped"/>').html('<h4 data-content="初始装备于">初始装备于</h4>').appendTo(dom)
-				,equipped_container = _p.el.flexgrid.create().appendTo( equipped )
+				,equipped_container = _p.el.flexgrid.create().appendTo( equipped ).addClass('list-ship')
 			if( d.default_equipped_on && d.default_equipped_on.length ){
 				d.default_equipped_on.forEach(function(currentValue){
 					equipped_container.appendDOM(
@@ -9181,6 +9297,7 @@ class TablelistShips extends Tablelist{
 // @koala-prepend "js-app/page/about.js"
 
 // @koala-prepend "js-app/frame/infos.js"
+// @koala-prepend "js-app/frame/infos-entity.js"
 // @koala-prepend "js-app/frame/infos-equipment.js"
 // @koala-prepend "js-app/frame/infos-fleet.js"
 // @koala-prepend "js-app/frame/mode-selection.js"

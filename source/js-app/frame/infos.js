@@ -158,6 +158,11 @@ _frame.infos = {
 					_frame.app_main.mode_selection_off()
 					TablelistEquipments.types = []
 					break;
+				case 'entity':
+					cont = this.getContent(type, id)
+					_frame.infos.dom.main.attr('data-infostype', 'entityinfo')
+					title = '资料 - 人物团体 - ' + _g.data.entities[id]._name
+					break;
 			}
 			//var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
 			//if( _frame.infos.curContent != hashcode ){
@@ -550,18 +555,34 @@ _frame.infos.init = function(){
 				}
 
 			// 声优 & 画师 & 消耗
-				$('<span class="entity"/>')
-					.html(
-						'<strong>声优</strong>'
-						+ '<span>' + ( d._cv || '?' ) + '</span>'
-					)
-					.appendTo(dom)
-				$('<span class="entity"/>')
-					.html(
-						'<strong>画师</strong>'
-						+ '<span>' + ( d._illustrator || '?' ) + '</span>'
-					)
-					.appendTo(dom)
+				let cvId = d.getRel('cv')
+					,illustratorId = d.getRel('illustrator')
+					,cvLink = $('<a/>',{
+							'class':		'entity'
+						})
+						.html(
+							'<strong>声优</strong>'
+							+ '<span>' + ( d._cv || '?' ) + '</span>'
+						)
+						.appendTo(dom)
+					,illustratorLink = $('<a/>',{
+							'class':		'entity'
+						})
+						.html(
+							'<strong>画师</strong>'
+							+ '<span>' + ( d._illustrator || '?' ) + '</span>'
+						)
+						.appendTo(dom)
+				if( cvId )
+					cvLink.attr({
+						'href':			'?infos=entity&id=' + cvId,
+						'data-infos':	'[[ENTITY::' + cvId + ']]'
+					})
+				if( illustratorId )
+					illustratorLink.attr({
+						'href':			'?infos=entity&id=' + illustratorId,
+						'data-infos':	'[[ENTITY::' + illustratorId + ']]'
+					})
 					/*
 				var consum = $('<span class="consum"/>').html('<strong>消耗</strong>').appendTo(dom)
 				_add_stat( 'fuel', 		'', _val( d['consum']['fuel'] ),		consum )

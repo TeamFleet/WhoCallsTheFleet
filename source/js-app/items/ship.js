@@ -24,6 +24,14 @@ ship.getName( joint, language )
 	快捷方式
 		ship._name	默认连接符，默认语言
 
+ship.getNameNoSuffix( language )
+	获取舰名，不包括后缀
+	变量
+		language	[OPTIONAL]
+			String		语言代码，默认为 _g.lang
+	返回值
+		String		舰名，不包括后缀
+
 ship.getSuffix( language )
 	获取后缀名
 	变量
@@ -105,6 +113,11 @@ class Ship extends ITEM{
 						+ suffix
 					) : ''
 				)
+	}
+	
+	getNameNoSuffix(language){
+		language = language || _g.lang
+		return this['name'][language] || this['name']['ja_jp']
 	}
 	
 	getSuffix(language){

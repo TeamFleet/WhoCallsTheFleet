@@ -1,4 +1,4 @@
-_tmpl.link_ship = function( ship, tagName, returnHTML ){
+_tmpl.link_ship = function( ship, tagName, returnHTML, mode ){
 	if( !ship )
 		return false
 
@@ -6,11 +6,13 @@ _tmpl.link_ship = function( ship, tagName, returnHTML ){
 		return _tmpl.link_ship(
 					ship,
 					tagName['tagName'] || null,
-					tagName['returnHTML'] || null
+					tagName['returnHTML'] || null,
+					tagName['mode'] || null
 				)
 
 	tagName = tagName || 'a'
 	returnHTML = returnHTML || false
+	mode = mode || 'default'
 
 	if( typeof ship != 'object' ){
 		var shipId = parseInt(ship)
@@ -19,7 +21,24 @@ _tmpl.link_ship = function( ship, tagName, returnHTML ){
 		var shipId = ship['id']
 	}
 	
-	var shipType = ship.getType()
+	let content = ''
+		,shipType = ship.getType()
+	
+	switch(mode){
+		case 'names':
+			var names = []
+			ship.getSeriesData().forEach(function(thisSeries){
+				let thisName = _g.data.ships[thisSeries.id].getNameNoSuffix()
+				if( $.inArray( thisName, names ) < 0 )
+					names.push( thisName )
+			})
+			content = names.join(' / ')
+			break;
+		default:
+			content = (shipType ? '<small>' + shipType + '</small>' : '' )
+						+ ship.getName(_g.joint)
+			break;
+	}
 
 	return _tmpl.export(
 			'<' + tagName
@@ -27,8 +46,7 @@ _tmpl.link_ship = function( ship, tagName, returnHTML ){
 				+ ' class="link_ship" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">'
 				+ '<img src="' + node.path.normalize(_g.path.pics.ships + '/' + shipId) + '/0.webp"/>'
 				+ '<span>'
-					+ (shipType ? '<small>' + shipType + '</small>' : '' )
-					+ ship.getName(_g.joint)
+					+ content
 				+ '</span>'
 			+ '</' + tagName + '>',
 			/*

@@ -22,7 +22,9 @@ _tmpl.textlink_ship = function( ship, tagName, returnHTML ){
 	var shipType = ship.getType()
 
 	return _tmpl.export(
-			'<' + tagName + ' href="?infos=ship&id=' + shipId + '" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">'
+			'<' + tagName
+				+ (tagName == 'a' ? ' href="?infos=ship&id='+shipId+'"' : '')
+				+ ' data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">'
 				+ (shipType ? '[' + shipType + '] ' : '' )
 				+ ship.getName(_g.joint)
 			+ '</' + tagName + '>',

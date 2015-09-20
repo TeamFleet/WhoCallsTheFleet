@@ -31,6 +31,7 @@
 // @koala-prepend "js-app/page/about.js"
 
 // @koala-prepend "js-app/frame/infos.js"
+// @koala-prepend "js-app/frame/infos-entity.js"
 // @koala-prepend "js-app/frame/infos-equipment.js"
 // @koala-prepend "js-app/frame/infos-fleet.js"
 // @koala-prepend "js-app/frame/mode-selection.js"

@@ -129,7 +129,7 @@
 
 		// 初始装备于
 			var equipped = $('<div class="equipped"/>').html('<h4 data-content="初始装备于">初始装备于</h4>').appendTo(dom)
-				,equipped_container = _p.el.flexgrid.create().appendTo( equipped )
+				,equipped_container = _p.el.flexgrid.create().appendTo( equipped ).addClass('list-ship')
 			if( d.default_equipped_on && d.default_equipped_on.length ){
 				d.default_equipped_on.forEach(function(currentValue){
 					equipped_container.appendDOM(

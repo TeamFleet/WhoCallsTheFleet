@@ -14,13 +14,15 @@ _tmpl.textlink_entity = function( entity, tagName, returnHTML ){
 
 	if( typeof entity != 'object' ){
 		var entityId = parseInt(entity)
-		entity = _g.data.ships[entityId]
+		entity = _g.data.entities[entityId]
 	}else{
 		var entityId = entity['id']
 	}
 
 	return _tmpl.export(
-			'<' + tagName + ' href="?infos=entity&id=' + entityId + '" data-entityid="' + entityId + '" data-infos="[[ENTITY::' + entityId + ']]">'
+			'<' + tagName
+				+ (tagName == 'a' ? ' href="?infos=entity&id='+entityId+'"' : '')
+				+ ' data-entityid="' + entityId + '" data-infos="[[ENTITY::' + entityId + ']]">'
 				+ entity._name
 			+ '</' + tagName + '>',
 			returnHTML
