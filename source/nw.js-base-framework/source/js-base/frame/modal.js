@@ -86,23 +86,7 @@ _frame.modal = {
 
 		clearTimeout( _frame.modal.hide_timeout )
 		_frame.modal.hide_timeout = null
-		_frame.modal.dom.container.off('transitionend.modal_hide').on({
-										'transitionend.modal_hide': function(e){
-											if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' ){
-												switch( parseFloat($(this).css('opacity')) ){
-													case 0:
-														_frame.modal.hide_timeout = setTimeout(function(){
-															_frame.modal.reset()
-															_frame.modal.dom.container
-																.removeClass('show')
-																.off('transitionend.modal_hide')
-															_frame.modal.showing = false
-														}, 10)
-														break;
-												}
-											}
-										}
-									}).removeClass('on')
+		_frame.modal.dom.container.removeClass('on')
 	},
 	//hide_timeout,
 
@@ -140,7 +124,19 @@ _frame.modal.init = function(){
 	if( _frame.modal.is_init )
 		return true
 
-	_frame.modal.dom.container = $('<div class="container modal" />').prependTo($body)
+	_frame.modal.dom.container = $('<div class="container modal" />').on({
+										'transitionend.modal_hide': function(e){
+											if( _frame.modal.showing && e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseFloat($(this).css('opacity')) == 0 ){
+												_frame.modal.hide_timeout = setTimeout(function(){
+													_frame.modal.reset()
+													_frame.modal.dom.container
+														.removeClass('show')
+														.off('transitionend.modal_hide')
+													_frame.modal.showing = false
+												}, 10)
+											}
+										}
+									}).prependTo($body)
 		_frame.modal.dom.box = $('<div/>').appendTo(_frame.modal.dom.container)
 			_frame.modal.dom.titlebar = $('<header/>').appendTo(_frame.modal.dom.box)
 			_frame.modal.dom.content = $('<section/>').appendTo(_frame.modal.dom.box)

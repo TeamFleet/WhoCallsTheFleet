@@ -437,7 +437,7 @@ _frame.app_main = {
 				}
 
 			if( !_frame.app_main.page_dom[page] ){
-				_frame.app_main.page_dom[page] = $('<div class="page" page="'+page+'"/>').appendTo( _frame.dom.main )
+				_frame.app_main.page_dom[page] = $('<div class="page-container" page="'+page+'"/>').appendTo( _frame.dom.main )
 				this.page_html[page] = node.fs.readFileSync(_g.path.page + page + '.html', 'utf8')
 				if(this.page_html[page]){
 					_frame.app_main.page_dom[page].html( this.page_html[page] )

@@ -131,7 +131,9 @@ class Ship extends ITEM{
 	getSeriesData(){
 		return this['series']
 				? _g['data']['ship_series'][this['series']]['ships']
-				: []
+				: [{
+						'id':	this.id
+					}]
 	}
 	
 	getPic(picId){

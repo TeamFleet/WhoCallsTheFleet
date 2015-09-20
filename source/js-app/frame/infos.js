@@ -91,7 +91,7 @@ _frame.infos = {
 			if( !_frame.infos.dom ){
 				_frame.infos.dom = {
 					//'nav': 		$('<div class="infos"/>').appendTo( _frame.dom.nav ),
-					'main': 	$('<div class="page infos"/>').appendTo( _frame.dom.main )
+					'main': 	$('<div class="page-container infos"/>').appendTo( _frame.dom.main )
 				}
 				_frame.infos.dom.container = $('<div class="wrapper"/>').appendTo( _frame.infos.dom.main )
 				/*
@@ -137,7 +137,7 @@ _frame.infos = {
 				_frame.dom.btnHistoryForward.addClass('disabled')
 
 		// 先将内容区域设定为可见
-			_frame.dom.layout.addClass('infos-show')
+			_frame.dom.layout.addClass('is-infos-show')
 
 		// 处理内容
 			switch(type){
@@ -212,7 +212,7 @@ _frame.infos = {
 
 		setTimeout(function(){
 			// 显示内容
-				_frame.dom.layout.addClass('infos-on')
+				_frame.dom.layout.addClass('is-infos-on')
 				
 			_frame.app_main.title = title
 			
@@ -232,7 +232,7 @@ _frame.infos = {
 			return false
 
 		// 隐藏内容
-			_frame.dom.layout.removeClass('infos-on')
+			_frame.dom.layout.removeClass('is-infos-on')
 			_frame.dom.btnHistoryForward.addClass('disabled')
 			this.curContent = null
 
@@ -248,7 +248,7 @@ _frame.infos = {
 			_frame.dom.navlinks.children('button:last-of-type')
 					.on('transitionend.infos_hide', function(e){
 						if( e.currentTarget == e.target && e.originalEvent.propertyName == 'top' && parseInt($(this).css('top')) == 0 ){
-							_frame.dom.layout.removeClass('infos-show')
+							_frame.dom.layout.removeClass('is-infos-show')
 							_frame.infos.dom.main.attr('data-infostype', '')
 							$(this).off('transitionend.infos_hide')
 						}
@@ -261,7 +261,7 @@ _frame.infos = {
 			if( _frame.infos.curContent )
 				return false
 
-		_frame.dom.layout.removeClass('infos-show')
+		_frame.dom.layout.removeClass('is-infos-show')
 		_frame.infos.dom.main.attr({
 			'data-infostype': 	'',
 			'data-theme': 		''
@@ -574,11 +574,11 @@ _frame.infos.init = function(){
 
 			// 改造信息
 				//var remodels = $('<div class="remodels"/>').html('<h4 data-content="改造">改造</h4>').appendTo(dom)
-				var remodels = $('<div class="remodels"/>').html('<h4 data-content="改造">改造</h4>').insertBefore(illusts)
+				let remodels = $('<div class="remodels"/>').html('<h4 data-content="改造">改造</h4>').insertBefore(illusts)
 					,remodels_container = _p.el.flexgrid.create().appendTo( remodels )
-				if( d['series'] ){
-					let seriesData = d.getSeriesData()
-					d.getSeriesData().forEach(function(currentValue, i){
+					,seriesData = d.getSeriesData()
+				if( seriesData ){
+					seriesData.forEach(function(currentValue, i){
 						let remodel_ship_data = _g.data.ships[currentValue['id']]
 							,remodel_ship_name = remodel_ship_data.getName(_g.joint)
 							,tip = '<h3 class="shipinfo">'
