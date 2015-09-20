@@ -40,7 +40,8 @@ _frame.infos.__entity = function( id ){
 		if( !seriesArray.length )
 			return
 
-		let container = $('<div class="entity-info"/>').html('<h4 data-content="'+title+'">'+title+'</h4>').appendTo(dom)
+
+		let container = $('<div class="entity-info"/>').html('<h4 data-content="'+title+'">'+title + '<small>(' + seriesArray.length + ')</small>'+'</h4>').appendTo(dom)
 			,flexgrid = _p.el.flexgrid.create().appendTo( container ).addClass('list-ship')
 		
 		seriesArray.forEach(function(seriesData){
