@@ -1,3 +1,5 @@
+@size_avatar: 	200px;
+
 .layout-infos-entity(){
 	&>.entity{
 		@color_accent:		hsl(180, 100%, 78%);
@@ -27,6 +29,20 @@
 
 		.entity-info{
 			padding-top: 	3em;
+		}
+		
+		&.is-hasavatar{
+			padding-right: 	(@size_avatar + 20);
+			img.avatar{
+				display: 	block;
+				position: 	absolute;
+				top: 		0;
+				right: 		0;
+				width: 		auto;
+				height: 	auto;
+				min-width: 	@size_avatar;
+				max-width: 	@size_avatar;
+			}
 		}
 	}
 }

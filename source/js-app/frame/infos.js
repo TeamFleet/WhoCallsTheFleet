@@ -627,7 +627,7 @@ _frame.infos.init = function(){
 									'data-infos-nohistory': true
 								})
 								.addClass(currentValue['id'] == d['id'] ? 'on' : '')
-								.addClass(remodel_blueprint ? 'blueprint' : '')
+								.addClass(remodel_blueprint ? 'mod-blueprint' : '')
 								.html(
 									'<i><img src="' + _g.path.pics.ships + '/' + currentValue['id']+'/0.webp"/></i>'
 									+ (remodel_lvl ? '<strong>' + remodel_lvl + '</strong>' : '')

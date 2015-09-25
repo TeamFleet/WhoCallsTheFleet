@@ -5038,7 +5038,7 @@ _frame.infos.init = function(){
 									'data-infos-nohistory': true
 								})
 								.addClass(currentValue['id'] == d['id'] ? 'on' : '')
-								.addClass(remodel_blueprint ? 'blueprint' : '')
+								.addClass(remodel_blueprint ? 'mod-blueprint' : '')
 								.html(
 									'<i><img src="' + _g.path.pics.ships + '/' + currentValue['id']+'/0.webp"/></i>'
 									+ (remodel_lvl ? '<strong>' + remodel_lvl + '</strong>' : '')
@@ -5184,9 +5184,9 @@ _frame.infos.init = function(){
 _frame.infos.__entity = function( id ){
 	let d = _g.data.entities[ id ]
 		,dom = $('<div class="entity"/>')
-		,serieses = []
-		,seriesCV = []
-		,seriesIllustrator = []
+		//,serieses = []
+		//,seriesCV = []
+		//,seriesIllustrator = []
 
 	_g.log(d)
 	
@@ -5197,6 +5197,17 @@ _frame.infos.__entity = function( id ){
 				+ '<small>' + d.getName('ja_jp') + '</small>'
 			).appendTo(dom)
 	
+	// 图片
+		if( d.picture && d.picture.avatar ){
+			dom.addClass('is-hasavatar')
+			$('<img/>',{
+				'src':			d.picture.avatar,
+				'class':		'avatar'//,
+				//'data-filename':d.getName() + '.jpg'
+			}).appendTo(dom)
+		}
+
+	/*
 	// 遍历全部舰娘，分析声优、画师数据
 	// 缓存舰娘所属系列，目前每一个系列只会有一位声优、画师
 		_g.data.ship_id_by_type.forEach(function(thisType){
@@ -5221,7 +5232,6 @@ _frame.infos.__entity = function( id ){
 		if( !seriesArray.length )
 			return
 
-
 		let container = $('<div class="entity-info"/>').html('<h4 data-content="'+title+'">'+title + '<small>(' + seriesArray.length + ')</small>'+'</h4>').appendTo(dom)
 			,flexgrid = _p.el.flexgrid.create().appendTo( container ).addClass('list-ship')
 		
@@ -5236,6 +5246,28 @@ _frame.infos.__entity = function( id ){
 	
 	appendInfos('配音', seriesCV)
 	appendInfos('绘制', seriesIllustrator)
+	*/
+	
+	let appendInfos = function(title, t){
+		if( !d.relation || !d.relation[t] || !d.relation[t].length )
+			return
+
+		let container = $('<div class="entity-info"/>')
+						.html('<h4 data-content="'+title+'">'+title + '<small>(' + d.relation[t].length + ')</small>'+'</h4>')
+						.appendTo(dom)
+			,flexgrid = _p.el.flexgrid.create().appendTo( container ).addClass('list-ship')
+		
+		d.relation[t].forEach(function(seriesShipIds){
+			flexgrid.appendDOM(
+				_tmpl.link_ship(seriesShipIds[seriesShipIds.length-1], {
+					mode:	'names'
+				}).addClass('unit')
+			)
+		})
+	}
+	
+	appendInfos('配音', 'cv')
+	appendInfos('绘制', 'illustrator')
 	
 	return dom
 }

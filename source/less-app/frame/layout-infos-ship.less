@@ -313,10 +313,7 @@
 							backgrond:	transparent;
 							.transition-property(~"background-color");
 						}
-						&.blueprint{
-							strong{
-								color:		hsl(0, 91%, 86%)
-							}
+						&.mod-blueprint, .mod-catapult{
 							strong:after{
 								content:	'';
 								display:	inline-block;
@@ -326,6 +323,30 @@
 								background:	~"url(@{folder_images}/blueprint.png) no-repeat 0 0 / cover";
 								position:	absolute;
 								.top(4);
+							}
+						}
+						&.mod-blueprint{
+							strong{
+								color:		hsl(0, 91%, 86%)
+							}
+							strong:after{
+								background-image:	~"url(@{folder_images}/blueprint.png)";
+							}
+						}
+						&.mod-catapult{
+							strong{
+								color:		hsl(80, 91%, 86%)
+							}
+							strong:after{
+								background-image:	~"url(@{folder_images}/catapult.png)";
+							}
+						}
+						&.mod-blueprint.mod-catapult{
+							strong{
+								color:		hsl(40, 91%, 86%)
+							}
+							strong:after{
+								background-image:	~"url(@{folder_images}/blueprint.png)";
 							}
 						}
 						&:hover{
