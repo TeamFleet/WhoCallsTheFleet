@@ -99,13 +99,27 @@
 			padding:	0;
 			.line-height(14);
 		}
+		&~span{
+			display:	block;
+			&.requirement{
+				padding-left: 	22px;
+				background: 	no-repeat 0 50%;
+				background-size:16px 16px;
+				&.is-blueprint{
+					background-image:	~"url(@{folder_images}/blueprint.png)";
+				}
+				&.is-catapult{
+					background-image:	~"url(@{folder_images}/catapult.png)";
+				}
+			}
+		}
 		&+span{
 			.border-top(1, dashed, mix(@color1, @color2, 75%) );
 			.padding-top(8);
 			.margin-top(10);
-		}
-		&~span{
-			display:	block;
+			&.requirement{
+				background-position-y: 	~"calc(50% + 4px)";
+			}
 		}
 	}
 	h3.shipinfo{

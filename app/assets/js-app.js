@@ -5020,13 +5020,21 @@ _frame.infos.init = function(){
 										+ '</strong>'
 										+ (
 											remodel_ship_data['type'] ?
-												'<small>' + _g['data']['ship_types'][remodel_ship_data['type']]['full_zh'] + '</span>'
+												'<small>' + _g['data']['ship_types'][remodel_ship_data['type']]['full_zh'] + '</small>'
 												: ''
 										)
 									+ '</h3>'
 							,data_prev = i ? seriesData[ i - 1 ] : null
 							,remodel_lvl = data_prev ? data_prev['next_lvl'] : null
 							,remodel_blueprint = data_prev ? (data_prev['next_blueprint']) : null
+							,remodel_catapult = data_prev ? (data_prev['next_catapult']) : null
+						
+						if( remodel_blueprint || remodel_catapult ){
+							if( remodel_blueprint )
+								tip+= '<span class="requirement is-blueprint">需要：改装设计图</span>'
+							if( remodel_catapult )
+								tip+= '<span class="requirement is-catapult">需要：试制甲板弹射器</span>'
+						}
 
 						remodels_container.appendDOM(
 							$('<a/>',{
@@ -5039,11 +5047,17 @@ _frame.infos.init = function(){
 								})
 								.addClass(currentValue['id'] == d['id'] ? 'on' : '')
 								.addClass(remodel_blueprint ? 'mod-blueprint' : '')
+								.addClass(remodel_catapult ? 'mod-catapult' : '')
 								.html(
 									'<i><img src="' + _g.path.pics.ships + '/' + currentValue['id']+'/0.webp"/></i>'
 									+ (remodel_lvl ? '<strong>' + remodel_lvl + '</strong>' : '')
 								)
 						)
+						
+						if( currentValue.next_loop )
+							remodels_container.appendDOM(
+								$('<span class="unit" icon="loop-alt3" data-tip="可在两个改造版本间切换"/>').html(' ')
+							)
 
 						// 处理图鉴信息
 							if( currentValue['id'] == d['id'] ){
