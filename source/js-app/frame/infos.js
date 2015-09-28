@@ -143,24 +143,24 @@ _frame.infos = {
 			switch(type){
 				case 'ship':
 					cont = this.getContent(type, id)
-					_frame.infos.dom.main.attr('data-infostype', 'shipinfo')
+					_frame.infos.dom.main.attr('data-infostype', 'ship')
 					title = '资料 - 舰娘 - ' + _g.data.ships[id]._name
 					break;
 				case 'equipment':
 					cont = this.getContent(type, id)
-					_frame.infos.dom.main.attr('data-infostype', 'equipmentinfo')
+					_frame.infos.dom.main.attr('data-infostype', 'equipment')
 					title = '资料 - 装备 - ' + _g.data.items[id]._name
 					break;
 				case 'fleet':
 					cont = this.getContent(type, id)
-					_frame.infos.dom.main.attr('data-infostype', 'fleetinfo')
+					_frame.infos.dom.main.attr('data-infostype', 'fleet')
 					title = '舰队 - ' + id
 					_frame.app_main.mode_selection_off()
 					TablelistEquipments.types = []
 					break;
 				case 'entity':
 					cont = this.getContent(type, id)
-					_frame.infos.dom.main.attr('data-infostype', 'entityinfo')
+					_frame.infos.dom.main.attr('data-infostype', 'entity')
 					title = '资料 - 人物团体 - ' + _g.data.entities[id]._name
 					break;
 			}
@@ -205,8 +205,9 @@ _frame.infos = {
 
 				// exit selection mode
 					//_frame.app_main.mode_selection_off()
-
-				_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
+				
+				if( _frame.dom.navs[_frame.app_main.cur_page] )
+					_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
 				_frame.app_main.cur_page = null
 			}
 		
@@ -242,7 +243,8 @@ _frame.infos = {
 			this.curContent = null
 
 		if( this.lastCurrentPage ){
-			_frame.dom.navs[this.lastCurrentPage].addClass('on')
+			if( _frame.dom.navs[this.lastCurrentPage] )
+				_frame.dom.navs[this.lastCurrentPage].addClass('on')
 			_frame.app_main.cur_page = this.lastCurrentPage
 		}
 
@@ -282,9 +284,13 @@ _frame.infos = {
 		_frame.infos.dom.historyback.empty().removeClass('show')
 
 		if( _frame.infos.dom.main.children().eq(0).hasClass('ship') )
-			_frame.infos.dom.main.attr('data-infostype', 'shipinfo')
+			_frame.infos.dom.main.attr('data-infostype', 'ship')
 		else if( _frame.infos.dom.main.children().eq(0).hasClass('equipment') )
-			_frame.infos.dom.main.attr('data-infostype', 'equipmentinfo')
+			_frame.infos.dom.main.attr('data-infostype', 'equipment')
+		else if( _frame.infos.dom.main.children().eq(0).hasClass('fleet') )
+			_frame.infos.dom.main.attr('data-infostype', 'fleet')
+		else if( _frame.infos.dom.main.children().eq(0).hasClass('entity') )
+			_frame.infos.dom.main.attr('data-infostype', 'entity')
 	}
 }
 
@@ -395,7 +401,7 @@ _frame.infos.init = function(){
 
 			//_frame.modal.resetContent()
 
-			var dom = $('<div class="ship"/>')
+			var dom = $('<div class="infos-ship"/>')
 				,ship_name = d.getName(_g.joint) || '舰娘'
 				,illustrations = []
 				,has_no = d['no'] && parseInt(d['no']) < 500 ? true : false

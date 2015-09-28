@@ -2,7 +2,7 @@
 
 _frame.infos.__entity = function( id ){
 	let d = _g.data.entities[ id ]
-		,dom = $('<div class="entity"/>')
+		,dom = $('<div class="infos-entity"/>')
 		//,serieses = []
 		//,seriesCV = []
 		//,seriesIllustrator = []

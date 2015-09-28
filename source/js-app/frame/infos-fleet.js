@@ -22,7 +22,7 @@
 
 class InfosFleet{
 	constructor( id ){
-		this.el = $('<div class="fleet infos-fleet-body loading"/>')
+		this.el = $('<div class="infos-fleet infos-fleet-body loading"/>')
 		this.doms = {}
 
 		this.fleets = []

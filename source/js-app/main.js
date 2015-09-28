@@ -421,7 +421,9 @@ _frame.app_main = {
 			// 检查page合法性，如果失效，读取第一个导航项
 				let checked = false
 					
-				if( !_frame.app_main.cur_page ){
+				if( page == 'donate' ){
+					checked = true
+				}if( !_frame.app_main.cur_page ){
 					_frame.app_main.nav.forEach(function(currentValue){
 						if( page == currentValue.page )
 							checked = true

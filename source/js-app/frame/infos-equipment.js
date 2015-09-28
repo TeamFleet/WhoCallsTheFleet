@@ -22,7 +22,7 @@
 			//}
 		}
 
-		var dom = $('<div class="equipment"/>')
+		var dom = $('<div class="infos-equipment"/>')
 
 		// 名称 & 类型 & 开发改修
 			$('<div class="title"/>')

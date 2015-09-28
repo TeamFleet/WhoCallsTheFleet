@@ -2410,7 +2410,9 @@ _frame.app_main = {
 			// 检查page合法性，如果失效，读取第一个导航项
 				let checked = false
 					
-				if( !_frame.app_main.cur_page ){
+				if( page == 'donate' ){
+					checked = true
+				}if( !_frame.app_main.cur_page ){
 					_frame.app_main.nav.forEach(function(currentValue){
 						if( page == currentValue.page )
 							checked = true
@@ -4554,24 +4556,24 @@ _frame.infos = {
 			switch(type){
 				case 'ship':
 					cont = this.getContent(type, id)
-					_frame.infos.dom.main.attr('data-infostype', 'shipinfo')
+					_frame.infos.dom.main.attr('data-infostype', 'ship')
 					title = '资料 - 舰娘 - ' + _g.data.ships[id]._name
 					break;
 				case 'equipment':
 					cont = this.getContent(type, id)
-					_frame.infos.dom.main.attr('data-infostype', 'equipmentinfo')
+					_frame.infos.dom.main.attr('data-infostype', 'equipment')
 					title = '资料 - 装备 - ' + _g.data.items[id]._name
 					break;
 				case 'fleet':
 					cont = this.getContent(type, id)
-					_frame.infos.dom.main.attr('data-infostype', 'fleetinfo')
+					_frame.infos.dom.main.attr('data-infostype', 'fleet')
 					title = '舰队 - ' + id
 					_frame.app_main.mode_selection_off()
 					TablelistEquipments.types = []
 					break;
 				case 'entity':
 					cont = this.getContent(type, id)
-					_frame.infos.dom.main.attr('data-infostype', 'entityinfo')
+					_frame.infos.dom.main.attr('data-infostype', 'entity')
 					title = '资料 - 人物团体 - ' + _g.data.entities[id]._name
 					break;
 			}
@@ -4616,8 +4618,9 @@ _frame.infos = {
 
 				// exit selection mode
 					//_frame.app_main.mode_selection_off()
-
-				_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
+				
+				if( _frame.dom.navs[_frame.app_main.cur_page] )
+					_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
 				_frame.app_main.cur_page = null
 			}
 		
@@ -4653,7 +4656,8 @@ _frame.infos = {
 			this.curContent = null
 
 		if( this.lastCurrentPage ){
-			_frame.dom.navs[this.lastCurrentPage].addClass('on')
+			if( _frame.dom.navs[this.lastCurrentPage] )
+				_frame.dom.navs[this.lastCurrentPage].addClass('on')
 			_frame.app_main.cur_page = this.lastCurrentPage
 		}
 
@@ -4693,9 +4697,13 @@ _frame.infos = {
 		_frame.infos.dom.historyback.empty().removeClass('show')
 
 		if( _frame.infos.dom.main.children().eq(0).hasClass('ship') )
-			_frame.infos.dom.main.attr('data-infostype', 'shipinfo')
+			_frame.infos.dom.main.attr('data-infostype', 'ship')
 		else if( _frame.infos.dom.main.children().eq(0).hasClass('equipment') )
-			_frame.infos.dom.main.attr('data-infostype', 'equipmentinfo')
+			_frame.infos.dom.main.attr('data-infostype', 'equipment')
+		else if( _frame.infos.dom.main.children().eq(0).hasClass('fleet') )
+			_frame.infos.dom.main.attr('data-infostype', 'fleet')
+		else if( _frame.infos.dom.main.children().eq(0).hasClass('entity') )
+			_frame.infos.dom.main.attr('data-infostype', 'entity')
 	}
 }
 
@@ -4806,7 +4814,7 @@ _frame.infos.init = function(){
 
 			//_frame.modal.resetContent()
 
-			var dom = $('<div class="ship"/>')
+			var dom = $('<div class="infos-ship"/>')
 				,ship_name = d.getName(_g.joint) || '舰娘'
 				,illustrations = []
 				,has_no = d['no'] && parseInt(d['no']) < 500 ? true : false
@@ -5197,7 +5205,7 @@ _frame.infos.init = function(){
 
 _frame.infos.__entity = function( id ){
 	let d = _g.data.entities[ id ]
-		,dom = $('<div class="entity"/>')
+		,dom = $('<div class="infos-entity"/>')
 		//,serieses = []
 		//,seriesCV = []
 		//,seriesIllustrator = []
@@ -5310,7 +5318,7 @@ _frame.infos.__entity = function( id ){
 			//}
 		}
 
-		var dom = $('<div class="equipment"/>')
+		var dom = $('<div class="infos-equipment"/>')
 
 		// 名称 & 类型 & 开发改修
 			$('<div class="title"/>')
@@ -5467,7 +5475,7 @@ _frame.infos.__entity = function( id ){
 
 class InfosFleet{
 	constructor( id ){
-		this.el = $('<div class="fleet infos-fleet-body loading"/>')
+		this.el = $('<div class="infos-fleet infos-fleet-body loading"/>')
 		this.doms = {}
 
 		this.fleets = []
