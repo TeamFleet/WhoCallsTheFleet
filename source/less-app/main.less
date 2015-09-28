@@ -652,19 +652,6 @@ main{
 				height:		100%;
 				//margin-left: 	0;
 				//margin-right: 	0;
-				.layout-infos-_global();
-				//.layout-infos-ship();
-				//.layout-infos-equipment();
-				//.layout-infos-fleet();
-				//.layout-infos-entity();
-				&>div+div{
-					position:	absolute;
-					top:		0;
-					left:		0;
-					//width:		auto;
-					//height:		auto;
-					z-index:	-1;
-				}
 			}
 			@media all and (max-height: 600px){
 				.padding-top(10);
@@ -672,6 +659,21 @@ main{
 			}
 		} // &>main>.div.page.infos
 } // .page-container
+.infosbody{
+	.layout-infos-_global();
+	//.layout-infos-ship();
+	//.layout-infos-equipment();
+	//.layout-infos-fleet();
+	//.layout-infos-entity();
+	&+.infosbody{
+		position:	absolute;
+		top:		0;
+		left:		0;
+		//width:		auto;
+		//height:		auto;
+		z-index:	-1;
+	}
+}
 
 
 

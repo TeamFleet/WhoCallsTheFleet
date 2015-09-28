@@ -16,10 +16,10 @@ _frame.infos = {
 			this.contentCache[type] = {}
 
 		if( id == '__NEW__' )
-			return _p.initDOM( _frame.infos['__' + type]( id ) )
+			return _p.initDOM( _frame.infos['__' + type]( id ).addClass('infosbody') )
 
 		if( !this.contentCache[type][id] ){
-			this.contentCache[type][id] = _p.initDOM( _frame.infos['__' + type]( id ) )
+			this.contentCache[type][id] = _p.initDOM( _frame.infos['__' + type]( id ).addClass('infosbody') )
 		}
 
 		return this.contentCache[type][id]
