@@ -26,7 +26,7 @@ _frame.app_main.page['arsenal'].init = function( page ){
 			var akashi = $('<span/>',{
 								'animation':	Math.floor((Math.random() * 3) + 1)
 							})
-							.on('animationiteration, webkitAnimationIteration', function(){
+							.on('animationiteration webkitAnimationIteration', function(){
 								akashi.attr(
 									'animation',
 									Math.floor((Math.random() * 3) + 1)

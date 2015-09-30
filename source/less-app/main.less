@@ -320,6 +320,9 @@ nav{
 				@media all and (max-width: 800px ){
 					margin-left:	unit( 16 / 24, em );
 				}
+				@media all and (max-width: 700px ){
+					margin-left:	unit( 4 / 24, em );
+				}
 			}
 			/*
 			.delays(@n, @i: 1) when (@i =< @n) {
@@ -576,7 +579,8 @@ main{
 	.main-sizing-padding();
 	&[page="ships"],
 	&[page="equipments"],
-	&[page="arsenal"]{
+	&[page="arsenal"],
+	&[page="entities"]{
 		padding:	0 !important;
 	}
 	&>.tablelist{
@@ -825,8 +829,11 @@ main{
 	nav>div{
 		transform:	translateX(@left-nav-pages-history-on);
 		button{
-			@media all and (max-width: 800px ){
+			@media all and (max-width: 900px ){
 				.font-size(20);
+			}
+			@media all and (max-width: 800px ){
+				.font-size(18);
 			}
 			/*
 			.top(0 - @nav_height);
@@ -839,6 +846,11 @@ main{
 			}
 			.delays(10);
 			*/
+		}
+		&.pages{			
+			@media all and (max-width: 700px ){
+				margin-left: 	0;
+			}
 		}
 		&.history{
 			transform:	none;

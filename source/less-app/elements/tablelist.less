@@ -2,6 +2,18 @@
 	.flexbox();
 	.flex-flow(column nowrap);
 	height:		100%;
+
+	.typetitle{
+		font-family:@font_famliy_Song;
+		text-shadow:0 1px 0 #000;
+		.font-size(18);
+		small{
+			padding-left:	.5em;
+			font-size:		75%;
+			opacity:		.75;
+		}
+	}
+
 	&>input[type="radio"]{
 		display:	none;
 	}
@@ -52,9 +64,6 @@
 					}
 					tr.typetitle{
 						th{
-							font-family:@font_famliy_Song;
-							text-shadow:0 1px 0 #000;
-							.font-size(18);
 							.padding-top(18);
 							input[type="checkbox"]{
 								opacity:	.175;
@@ -77,11 +86,6 @@
 									opacity:	0 !important;
 									z-index:	-100;
 								}
-							}
-							small{
-								padding-left:	.5em;
-								font-size:		75%;
-								opacity:		.75;
 							}
 							span{
 								display:	inline-block;

@@ -17,6 +17,10 @@ _p.el.tablelist = {
 			el.data({
 				'tablelist': new TablelistFleets( el )
 			})
+		else if( el.hasClass('entities') )
+			el.data({
+				'tablelist': new TablelistEntities( el )
+			})
 		/*
 		else
 			el.data({
