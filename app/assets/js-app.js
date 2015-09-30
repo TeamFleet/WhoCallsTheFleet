@@ -3152,13 +3152,28 @@ _frame.app_main = {
 					}
 					hackHistory(window.history);
 					
+					let title_buttons = $('#titlebar > .buttons')
+					
 					// 在标题栏添加hashbar开关
-						$('#titlebar > .buttons').prepend( $('<button/>',{
+						title_buttons.prepend( $('<button/>',{
 							'class':	'console',
 							'html':		'Toggle Hashbar'
 						}).on('click', function(){
 							_frame.dom.layout.toggleClass('debug-hashbar')
 						}) )
+					
+					// 在标题栏添加Web输出入口
+						$.getScript('../dev-output/output.js', function(){
+							title_buttons.prepend( $('<button/>',{
+								'class':	'console',
+								'html':		'Output to Web'
+							}).on('click', function(){
+								_frame.modal.show(
+									dev_output_form(),
+									'Output to Web'
+								)
+							}) )
+						})
 				}
 				return true
 			})
