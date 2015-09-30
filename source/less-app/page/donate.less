@@ -1,6 +1,12 @@
 .page-container[page="donate"]{
-	section{
-		background: 	~"url(@{folder_images}/alipay.png) no-repeat 100% 100% / 180px 180px";
-		padding-right: 	200px !important;
+	&>.container{
+		width: 	100%;
+		height: 100%;
+		&>section{
+			background: 	~"url(@{folder_images}/alipay.png) no-repeat 100% 100% / 180px 180px";
+			padding-right: 	200px !important;
+			text-align: left;
+			max-width: 	~"calc(100% - 4px)" !important;
+		}
 	}
 }

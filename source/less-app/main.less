@@ -701,6 +701,7 @@ main{
 			z-index:	4;
 			//.transition-delay(@transition_duration * 2);
 			//&>div+div,
+			/*
 			&>.wrapper{
 				&>div{
 					opacity:	1;
@@ -715,6 +716,19 @@ main{
 					}
 				}
 			}
+			*/
+		}
+	}
+	.infosbody{
+		opacity:	1;
+		.fadein(.2s);
+		&+.infosbody{
+			//.mask-image(~"linear-gradient(to bottom, transparent, #000 @{infos_mask_tail}px)");
+			//.mask-position(100% ~"calc(100% - @{infos_mask_tail}px)");
+			//.mask-size(100% 0);
+			//.top(20);
+			//transform:	scale(.85);
+			opacity:	0;
 		}
 	}
 }

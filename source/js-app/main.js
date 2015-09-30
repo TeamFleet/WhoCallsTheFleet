@@ -1137,7 +1137,7 @@ _frame.app_main = {
 								$('<div class="debug_hashbar"/>').appendTo(_frame.dom.layout)
 							)
 							.trigger( 'urlchanged' )
-					_frame.dom.layout.addClass('debug-hashbar')
+					//_frame.dom.layout.addClass('debug-hashbar')
 					$window.on({
 						'hashchange.debug_mode_hashbar': function(){
 							_frame.dom.hashbar.trigger('urlchanged')
@@ -1162,6 +1162,14 @@ _frame.app_main = {
 						}
 					}
 					hackHistory(window.history);
+					
+					// 在标题栏添加hashbar开关
+						$('#titlebar > .buttons').prepend( $('<button/>',{
+							'class':	'console',
+							'html':		'Toggle Hashbar'
+						}).on('click', function(){
+							_frame.dom.layout.toggleClass('debug-hashbar')
+						}) )
 				}
 				return true
 			})
