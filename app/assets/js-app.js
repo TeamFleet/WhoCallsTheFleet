@@ -2825,21 +2825,22 @@ _frame.app_main = {
 														_g.data.ship_id_by_type[ _g.ship_type_order_map[doc['type']] ].push( doc['id'] )
 													})
 													function __(i){
-														var j=0
+														let j=0
 														while(
 															_g.data.ship_id_by_type[i]
 															&& _g.data.ship_id_by_type[i][j]
 														){
-															var id = _g.data.ship_id_by_type[i][j]
+															let id = _g.data.ship_id_by_type[i][j]
 																,i_remodel
-															if( _g.data.ships[id].remodel && _g.data.ships[id].remodel.next
-																&& _g.data.ships[_g.data.ships[id].remodel.next]
-																&& _g.data.ships[id].remodel.next != _g.data.ship_id_by_type[i][j+1]
-																&& (i_remodel = $.inArray(_g.data.ships[id].remodel.next, _g.data.ship_id_by_type[i])) > -1
+																,next_id = _g.data.ships[id].remodel ? _g.data.ships[id].remodel.next : null
+															if( next_id
+																&& _g.data.ships[next_id]
+																&& next_id != _g.data.ship_id_by_type[i][j+1]
+																&& (i_remodel = $.inArray(next_id, _g.data.ship_id_by_type[i])) > -1
 															){
 																_g.log(
 																	id
-																	+ ', ' + _g.data.ships[id].remodel.next
+																	+ ', ' + next_id
 																	+ ', ' + i_remodel
 																)
 																_g.data.ship_id_by_type[i].splice(
@@ -2849,7 +2850,7 @@ _frame.app_main = {
 																_g.data.ship_id_by_type[i].splice(
 																	$.inArray(id, _g.data.ship_id_by_type[i])+1,
 																	0,
-																	_g.data.ships[id].remodel.next
+																	next_id
 																)
 																//console.log(_g.data.ship_id_by_type[i])
 																__(i)
