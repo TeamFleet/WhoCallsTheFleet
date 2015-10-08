@@ -938,6 +938,7 @@ var _ga = {
 	}
 }
 
+
 // put this file before all js files when compile with a builder
 
 "use strict";
@@ -1277,7 +1278,7 @@ let Formula = {
 		
 		return '-'
 	}
-}
+};
 
 Formula.equipmentType.MainGuns = [
 		Formula.equipmentType.SmallCaliber,
@@ -1286,29 +1287,29 @@ Formula.equipmentType.MainGuns = [
 		Formula.equipmentType.MediumCaliber,
 		Formula.equipmentType.LargeCaliber,
 		Formula.equipmentType.SuperCaliber
-	]
+	];
 
 Formula.equipmentType.LargeCalibers = [
 		Formula.equipmentType.LargeCaliber,
 		Formula.equipmentType.SuperCaliber
-	]
+	];
 
 Formula.equipmentType.SecondaryGuns = [
 		Formula.equipmentType.SecondaryGun,
 		Formula.equipmentType.SecondaryGunHigh,
 		Formula.equipmentType.SecondaryGunAA
-	]
+	];
 
 Formula.equipmentType.Torpedos = [
 		Formula.equipmentType.Torpedo,
 		Formula.equipmentType.SubmarineTorpedo
-	]
+	];
 
 Formula.equipmentType.Seaplanes = [
 		Formula.equipmentType.ReconSeaplane,
 		Formula.equipmentType.ReconSeaplaneNight,
 		Formula.equipmentType.SeaplaneBomber
-	]
+	];
 
 Formula.equipmentType.Fighters = [
 		Formula.equipmentType.SeaplaneBomber,
@@ -1316,67 +1317,68 @@ Formula.equipmentType.Fighters = [
 		Formula.equipmentType.TorpedoBomber,
 		Formula.equipmentType.DiveBomber,
 		Formula.equipmentType.CarrierRecon
-	]
+	];
 
 Formula.equipmentType.Recons = [
 		Formula.equipmentType.ReconSeaplane,
 		Formula.equipmentType.ReconSeaplaneNight,
 		Formula.equipmentType.CarrierRecon
-	]
+	];
 
 Formula.equipmentType.AircraftBased = [
 		Formula.equipmentType.CarrierFighter,
 		Formula.equipmentType.TorpedoBomber,
 		Formula.equipmentType.DiveBomber,
 		Formula.equipmentType.CarrierRecon
-	]
+	];
 
 Formula.equipmentType.Radars = [
 		Formula.equipmentType.SmallRadar,
 		Formula.equipmentType.LargeRadar,
 		Formula.equipmentType.SuparRadar
-	]
+	];
 
 Formula.equipmentType.AntiSubmarines = [
 		Formula.equipmentType.DepthCharge,
 		Formula.equipmentType.Sonar,
 		Formula.equipmentType.LargeSonar
-	]
+	];
 
 Formula.equipmentType.AAGuns = [
 		Formula.equipmentType.AAGun,
 		Formula.equipmentType.AAGunConcentrated
-	]
+	];
 
 Formula.equipmentType.Searchlights = [
 		Formula.equipmentType.Searchlight,
 		Formula.equipmentType.SearchlightLarge
-	]
+	];
 
 
 
 
 Formula.shellingDamage = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
 	return this.calculate( 'shellingDamage', ship, equipments_by_slot, star_by_slot, rank_by_slot )
-}
+};
 Formula.torpedoDamage = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
 	return this.calculate( 'torpedoDamage', ship, equipments_by_slot, star_by_slot, rank_by_slot )
-}
+};
 Formula.fighterPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
 	return this.calculate( 'fighterPower', ship, equipments_by_slot, star_by_slot, rank_by_slot )
-}
+};
 Formula.nightBattle = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
 	return this.calculate( 'nightBattle', ship, equipments_by_slot, star_by_slot, rank_by_slot )
-}
+};
 Formula.addHit = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
 	return this.calculate( 'addHit', ship, equipments_by_slot, star_by_slot, rank_by_slot )
-}
+};
 Formula.addArmor = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
 	return this.calculate( 'addArmor', ship, equipments_by_slot, star_by_slot, rank_by_slot )
-}
+};
 Formula.addEvasion = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
 	return this.calculate( 'addEvasion', ship, equipments_by_slot, star_by_slot, rank_by_slot )
-}
+};
+
 
 class ItemBase {
 	constructor() {
@@ -3883,6 +3885,7 @@ _tmpl.improvement__reqdetails = function(reqdata){
 	return requirements
 }
 
+
 _tmpl.link_entity = function( entity, tagName, returnHTML, count ){
 	if( !entity )
 		return false
@@ -3925,6 +3928,7 @@ _tmpl.link_entity = function( entity, tagName, returnHTML, count ){
 			returnHTML
 		)
 }
+
 
 _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar ){
 	if( !equipment )
@@ -3977,6 +3981,7 @@ _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar
 			returnHTML
 		)
 }
+
 
 _tmpl.link_ship = function( ship, tagName, returnHTML, mode ){
 	if( !ship )
@@ -4038,6 +4043,7 @@ _tmpl.link_ship = function( ship, tagName, returnHTML, mode ){
 		)
 }
 
+
 _tmpl.textlink_entity = function( entity, tagName, returnHTML ){
 	if( !entity )
 		return false
@@ -4068,6 +4074,7 @@ _tmpl.textlink_entity = function( entity, tagName, returnHTML ){
 			returnHTML
 		)
 }
+
 
 _tmpl.textlink_ship = function( ship, tagName, returnHTML ){
 	if( !ship )
@@ -4103,6 +4110,7 @@ _tmpl.textlink_ship = function( ship, tagName, returnHTML ){
 		)
 }
 
+
 class PAGE {
 	constructor( $page ) {
 	}
@@ -4132,6 +4140,7 @@ class PAGE {
 	}
 }
 
+
 //class PageFleets extends PAGE
 
 _frame.app_main.page['fleets'] = {
@@ -4153,6 +4162,7 @@ _frame.app_main.page['fleets'] = {
 		}( $page )
 	}
 }
+
 
 //class PageShips extends PAGE
 
@@ -4202,6 +4212,7 @@ _frame.app_main.page['ships'] = {
 	}
 }
 
+
 //class PageEquipments extends PAGE
 
 _frame.app_main.page['equipments'] = {
@@ -4243,6 +4254,7 @@ _frame.app_main.page['equipments'] = {
 		}( $page )
 	}
 }
+
 
 _frame.app_main.page['arsenal'] = {}
 _frame.app_main.page['arsenal'].init = function( page ){
@@ -4477,6 +4489,7 @@ _frame.app_main.page['about'].init = function( page ){
 		})
 
 }
+
 
 /* 
  */
@@ -5362,6 +5375,7 @@ _frame.infos.__entity = function( id ){
 	
 	return dom
 }
+
 
 // 装备信息
 	_frame.infos.__equipment = function( id ){
@@ -7013,6 +7027,7 @@ class InfosFleetShipEquipment{
 		}
 }
 
+
 _frame.app_main.is_mode_selection = function(){
 	return $html.hasClass('mode-selection') || _frame.dom.layout.hasClass('mode-selection')
 }
@@ -7033,6 +7048,7 @@ _frame.app_main.mode_selection_off = function(){
 		_frame.app_main.page_dom[_frame.app_main.cur_page].trigger('modeSelectionExit')
 	_frame.dom.layout.removeClass('mode-selection')
 }
+
 
 if( typeof _p.tip != 'undefined' ){
 
@@ -7086,6 +7102,7 @@ _p.tip.content_equipment = function( d ){
 
 }}
 
+
 if( typeof _p.tip != 'undefined' ){
 
 _p.tip.filters.push( function(cont){
@@ -7111,6 +7128,7 @@ _p.tip.content_ship = function( d ){
 	return html
 
 }}
+
 
 /*
  */
@@ -7511,6 +7529,7 @@ Tablelist.genId = function(text){
 	return 'tablelist'+hash;
 }
 
+
 // Entities
 
 class TablelistEntities extends Tablelist{
@@ -7612,6 +7631,7 @@ class TablelistEntities extends Tablelist{
 	init_parse(){
 	}
 }
+
 
 // Equipments
 
@@ -7946,15 +7966,20 @@ class TablelistEquipments extends Tablelist{
 				header_index++
 				this.dom.types[header_index] = tr
 			}else{
-				let equipment_data = _g.data.items[ tr.attr('data-equipmentid') ]
+				//let equipment_data = _g.data.items[ tr.attr('data-equipmentid') ]
+				let etype = tr.attr('data-equipmenttype')
+					,eid = tr.attr('data-equipmentid')
 				tr.on('click', function(e, forceInfos){
 						if( !forceInfos && _frame.app_main.is_mode_selection() ){
 							e.preventDefault()
 							e.stopImmediatePropagation()
 							e.stopPropagation()
 							
-							if( $.inArray(equipment_data.type, TablelistEquipments.types) > -1 )
-								_frame.app_main.mode_selection_callback(equipment_data['id'])
+							if( $.inArray(etype, TablelistEquipments.types) > -1 )
+								_frame.app_main.mode_selection_callback(eid)
+							
+							//if( $.inArray(equipment_data.type, TablelistEquipments.types) > -1 )
+							//	_frame.app_main.mode_selection_callback(equipment_data['id'])
 						}
 					})
 			}
@@ -7982,6 +8007,7 @@ TablelistEquipments.gen_helper_equipable_on = function( type_id ){
 TablelistEquipments.types = []
 TablelistEquipments.shipId = null
 TablelistEquipments.shipIdLast = null
+
 
 /* TODO
 	新建
@@ -8716,6 +8742,7 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 		TablelistFleets.menuOptions.dom.menu.removeClass('is-tablelist')
 	TablelistFleets.menuOptions.show($el)
 }
+
 
 
 
@@ -9528,6 +9555,7 @@ class TablelistShips extends Tablelist{
 		delete( this.last_item )
 	}
 }
+
 
 // @koala-prepend "js-app/!.js"
 

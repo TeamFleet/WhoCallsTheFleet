@@ -1,5 +1,7 @@
 "use strict";
 
+var babel = require("../dev-output/js-source/node_modules/babel-core")
+
 let dev_output_steps = []
 	,dev_output_tmpl
 	,dev_output_dir
@@ -19,6 +21,16 @@ function dev_output_gen_title(){
 }
 
 function dev_output_filter(output, pagetype, name){
+	if( pagetype == 'javascript' ){
+		output = babel.transform(output, {
+			'highlightCode':	false,
+			'comments':			false,
+			'compact':			false,
+			'ast':				false
+		})
+		output = output.code
+	}
+
 	let searchRes
 		,scrapePtrn = /\.\.\/\.\.\/app\//gi
 		while( (searchRes = scrapePtrn.exec(output)) !== null ){
@@ -168,10 +180,11 @@ function dev_output_form(){
 							,btnDonates = $('<a class="donate" icon="heart4" href="/donate/"/>').appendTo( globaloptions )
 						_frame.app_main.nav.forEach(function(o, i){
 							(function(page){
-										return $('<a class="button" href="/'+page+'/"/>')
+										let $el = $('<a class="button" href="/'+page+'/"/>')
+										if( o.state )
+											$el.attr('mod-state', o.state)
+										return $el
 									})(o.page).html(o.title).appendTo( navlinks )
-							if( o.state )
-								_frame.dom.navs[o.page].attr('mod-state', o.state)
 						})
 					
 						while( (searchRes = scrapePtrn.exec(dev_output_tmpl)) !== null ){
@@ -882,7 +895,7 @@ dev_output_log(msg)
 
 
 dev_output_steps.push(function(){
-	function copyFile(source, target, cb) {
+	function copyFile(source, target, cb, t) {
 		Q.fcall(function(){
 			let deferred = Q.defer()
 			node.fs.readFile(source, 'utf8', function(err, data){
@@ -897,8 +910,8 @@ dev_output_steps.push(function(){
 		.then(function(data){
 			let deferred = Q.defer()
 			//data = dev_output_filter(data)
-			data = dev_output_filter(data)
-			data = data.replace(/_g\.bgimg_count[\t]*=[\t]*0\;/g, '_g.bgimg_count='+ bgimg_count +';')
+			data = dev_output_filter(data, t)
+			data = data.replace(/_g\.bgimg_count[\t ]*=[\t ]*0\;/g, '_g.bgimg_count='+ bgimg_count +';')
 			node.fs.writeFile(
 				target,
 				data,
@@ -1034,7 +1047,8 @@ dev_output_steps.push(function(){
 								dev_output_log('生成文件: ' + outputPath)
 								_deferred.resolve()
 							}
-						}
+						},
+						/\.js$/g.test(file) && !/^libs/g.test(file) ? 'javascript' : ''
 					)
 					return _deferred.promise
 				});

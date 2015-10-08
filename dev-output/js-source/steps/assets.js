@@ -20,7 +20,7 @@ dev_output_log(msg)
 
 
 dev_output_steps.push(function(){
-	function copyFile(source, target, cb) {
+	function copyFile(source, target, cb, t) {
 		Q.fcall(function(){
 			let deferred = Q.defer()
 			node.fs.readFile(source, 'utf8', function(err, data){
@@ -35,8 +35,8 @@ dev_output_steps.push(function(){
 		.then(function(data){
 			let deferred = Q.defer()
 			//data = dev_output_filter(data)
-			data = dev_output_filter(data)
-			data = data.replace(/_g\.bgimg_count[\t]*=[\t]*0\;/g, '_g.bgimg_count='+ bgimg_count +';')
+			data = dev_output_filter(data, t)
+			data = data.replace(/_g\.bgimg_count[\t ]*=[\t ]*0\;/g, '_g.bgimg_count='+ bgimg_count +';')
 			node.fs.writeFile(
 				target,
 				data,
@@ -172,7 +172,8 @@ dev_output_steps.push(function(){
 								dev_output_log('生成文件: ' + outputPath)
 								_deferred.resolve()
 							}
-						}
+						},
+						/\.js$/g.test(file) && !/^libs/g.test(file) ? 'javascript' : ''
 					)
 					return _deferred.promise
 				});

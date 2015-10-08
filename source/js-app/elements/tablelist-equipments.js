@@ -331,15 +331,20 @@ class TablelistEquipments extends Tablelist{
 				header_index++
 				this.dom.types[header_index] = tr
 			}else{
-				let equipment_data = _g.data.items[ tr.attr('data-equipmentid') ]
+				//let equipment_data = _g.data.items[ tr.attr('data-equipmentid') ]
+				let etype = tr.attr('data-equipmenttype')
+					,eid = tr.attr('data-equipmentid')
 				tr.on('click', function(e, forceInfos){
 						if( !forceInfos && _frame.app_main.is_mode_selection() ){
 							e.preventDefault()
 							e.stopImmediatePropagation()
 							e.stopPropagation()
 							
-							if( $.inArray(equipment_data.type, TablelistEquipments.types) > -1 )
-								_frame.app_main.mode_selection_callback(equipment_data['id'])
+							if( $.inArray(etype, TablelistEquipments.types) > -1 )
+								_frame.app_main.mode_selection_callback(eid)
+							
+							//if( $.inArray(equipment_data.type, TablelistEquipments.types) > -1 )
+							//	_frame.app_main.mode_selection_callback(equipment_data['id'])
 						}
 					})
 			}

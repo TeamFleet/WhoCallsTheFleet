@@ -27,7 +27,7 @@
 	_g.data = {}
 
 	var _db = {
-		'fleets': new nedb({
+		'fleets': new Nedb({
 				filename: 	'fleets'
 			})
 	}
@@ -42,12 +42,12 @@
 
 
 
-// extend NeDB
+// extend Nedb
 	// 根据 _id 更新数据，替换为新内容 docReplace，并执行 callback
 	// 该方法会采用队列，即上一个更新操作正在进行时，新的更新操作会进入队列
 		// 此时如果又有新的更新操作，之前队列的更新操作会被替换
 		// 注：前一个callback将不会执行 
-		nedb.prototype.updateById = function( _id, docReplace, callback ){
+		Nedb.prototype.updateById = function( _id, docReplace, callback ){
 			if( !this._updateByIdQueue ){
 				this._updateByIdQueue = {}
 				Object.defineProperty(this._updateByIdQueue, 'running', {
@@ -67,7 +67,7 @@
 			
 			this._updateById()
 		}
-		nedb.prototype._updateById = function(){
+		Nedb.prototype._updateById = function(){
 			if( !this._updateByIdQueue || this._updateByIdQueue.running )
 				return false
 
@@ -144,6 +144,48 @@
 	_g.log = function(){
 		console.log.apply(console, arguments)
 	}
+	
+	_g.parseURI = function(uri){
+		uri = uri || location.pathname
+		let parts = uri.split('/').filter(function(c){return c})
+		
+		if( parts.length == 1 ){
+			return {
+				'page':		parts[0]
+			}
+		}else if( parts.length == 2 ){
+			let t = parts[0]
+			switch( t ){
+				case 'ships':		t = 'ship';			break;
+				case 'equipments':	t = 'equipment';	break;
+				case 'entities':	t = 'entity';		break;
+				case 'fleets':		t = 'fleet';		break;
+			}
+			return {
+				'infos':	t,
+				'id':		parts[1]
+			}
+		}
+	}
+	
+	_g.state2URI = function(state){
+		if( !state )
+			return '/'
+			
+		if( state.page )
+			return '/' + state.page + '/'
+			
+		if( state.infos ){
+			var t = state.infos
+			switch(t){
+				case 'ship':		t = 'ships';		break;
+				case 'equipment':	t = 'equipments';	break;
+				case 'entity':		t = 'entities';		break;
+				case 'fleet':		t = 'fleets';		break;
+			}
+			return '/' + t + '/' + state.id + '/'
+		}
+	}
 
 
 
@@ -212,29 +254,13 @@ _frame.app_main = {
 				//		_frame.app_main.load_page_func(_g.uriHash('page'))
 				//	})
 
-				// 初次检查 uriSearch
+				// 初次进入
 					if( !this.window_event_bound ){
 						$window.on('popstate._global', function(e){
 							if( e.originalEvent && e.originalEvent.state ){
 								_frame.app_main.state( e.originalEvent.state )
 							}else{
-								var _uriGet = location.search ? location.search.split('?')[1] : ''
-									,uriGet = {}
-								_uriGet = _uriGet.split('&');
-								for(var i=0;i<_uriGet.length;i++){
-									var h=_uriGet[i].split('=')
-									uriGet[h[0]] = h[1] || true
-								}
-								// 首次运行，检查是否存在 page
-								// 如果URI未指定，自动加载 Lockr.get('last_page') || 第一个导航页
-									if( !_frame.app_main.window_event_bound && !(uriGet['page'] || uriGet['infos']) ){
-										_frame.app_main.load_page(
-											Lockr.get('last_page', _frame.app_main.nav[0]['page'])
-										)
-										//_frame.app_main.load_page( _frame.app_main.nav[0]['page'] )
-										//uriGet['page'] = _frame.app_main.nav[0]['page']
-									}
-								_frame.app_main.state( uriGet )
+								_frame.app_main.state( _g.parseURI() )
 							}
 						}).trigger('popstate._global')
 						this.window_event_bound = true
@@ -289,9 +315,9 @@ _frame.app_main = {
 				img_new = bgimgs[_g.randInt(bgimgs.length - 1)]
 			}
 
-			var img_new_blured = 'file://' + encodeURI( node.path.join( _g.path.bgimg_dir , '/blured/' + img_new ).replace(/\\/g, '/') )
-			this.bgimg_path = node.path.join( _g.path.bgimg_dir , '/' + img_new )
-			img_new = 'file://' + encodeURI( this.bgimg_path.replace(/\\/g, '/') )
+			var img_new_blured = _g.path.bgimg_dir + 'blured/' + img_new
+			this.bgimg_path = _g.path.bgimg_dir + img_new
+			img_new = this.bgimg_path
 
 			//function delete_old_dom( old_dom ){
 			//	setTimeout(function(){
@@ -348,7 +374,10 @@ _frame.app_main = {
 					'page': 	page
 				},
 				null,
-				'?page=' + page
+				_g.state2URI({
+					'page': 	page
+				})
+				//'?page=' + page
 			)
 			
 			this.load_page_func( page, options )
@@ -391,13 +420,16 @@ _frame.app_main = {
 				}
 
 			if( !_frame.app_main.page_dom[page] ){
-				_frame.app_main.page_dom[page] = $('<div class="page-container" page="'+page+'"/>').appendTo( _frame.dom.main )
-				this.page_html[page] = node.fs.readFileSync(_g.path.page + page + '.html', 'utf8')
-				if(this.page_html[page]){
-					_frame.app_main.page_dom[page].html( this.page_html[page] )
-					if( _frame.app_main.page[page] && _frame.app_main.page[page].init )
-						_frame.app_main.page[page].init(_frame.app_main.page_dom[page])
-					_p.initDOM(_frame.app_main.page_dom[page])
+				_frame.app_main.page_dom[page] = _frame.dom.main.find('.page-container[page="'+page+'"]')
+				if( _frame.app_main.page_dom[page].length ){
+					_frame.app_main.page_init(page)
+				}else{
+					_frame.app_main.page_dom[page] = $('<div class="page-container" page="'+page+'"/>').appendTo( _frame.dom.main )
+					this.page_html[page] = node.fs.readFileSync(_g.path.page + page + '.html', 'utf8')
+					if(this.page_html[page]){
+						_frame.app_main.page_dom[page].html( this.page_html[page] )
+						_frame.app_main.page_init(page)
+					}
 				}
 			}
 			
@@ -588,11 +620,31 @@ _frame.app_main = {
 
 		// 开始异步函数链
 			promise_chain
+		
+		// 处理导航项信息
+			.then(function(){
+				_frame.app_main.nav = []
+				_frame.app_main.navtitle = {}
+				_frame.dom.navs = {}
+				_frame.dom.navlinks.children('a').each(function(index, $el){
+					$el = $($el)
+					let p = _g.parseURI($el.attr('href')).page
+						,t = $el.text()
+					_frame.app_main.nav.push({
+						'title':	t,
+						'state':	$el.attr('mod-state'),
+						'page':		p
+					})
+					_frame.app_main.navtitle[p] = t
+					_frame.dom.navs[p] = $el
+				})
+				return _frame.app_main.nav
+			})
 
 		// 预加载 _g.dbs 数据库
 			.then(function(){
 				_g.dbs.forEach(function(dbname){
-					_db[dbname] = new nedb({
+					_db[dbname] = new Nedb({
 						filename:	_g.path.db + dbname + '.json'
 					})
 				})
@@ -601,12 +653,14 @@ _frame.app_main = {
 
 		// 获取背景图列表，生成背景图
 			.then(function(){
-				for( let i=0; i++; i<_g.bgimg_count ){
+				for( let i=0; i<_g.bgimg_count; i++ ){
 					_frame.app_main.bgimgs.push( i + '.jpg' )
 				}
 				
 				_frame.app_main.change_bgimg();
 				_frame.app_main.loaded('bgimgs')
+				
+				_g.log('BGs: ' + _frame.app_main.bgimgs.join(', '))
 				
 				return _frame.app_main.bgimgs
 			})
@@ -980,25 +1034,21 @@ _frame.app_main = {
 					link_default = function(e){
 							e.preventDefault()
 							let el = $(this)
+								,parse = _g.parseURI(el.attr('href'))
 								,href_parts = el.attr('href').split('/').filter(function(c){return c})
 							
-							if( href_parts.length == 1 ){
-								_frame.app_main.load_page( href_parts[0] )
-							}else if( href_parts.length == 2 ){
-								let t = href_parts[0]
-								switch( t ){
-									case 'ships':		t = 'ship';			break;
-									case 'equipments':	t = 'equipment';	break;
-									case 'entities':	t = 'entity';		break;
-									case 'fleets':		t = 'fleet';		break;
-								}
-								el.attr('data-infos', '[[' + t.toUpperCase() + '::' + exp[1] + ']]')
+							if( parse.page ){
+								_frame.app_main.load_page( parse.page )
+							}else if( parse.infos ){
+								el.attr('data-infos', '[[' + parse.infos.toUpperCase() + '::' + parse.id + ']]')
 								el.trigger('click')
 							}
 						}
+
 				$body.on('click.pagechange', 'a[href^="?page="]', link_page)
 					.on('click.pagechange', 'a[href^="?infos="]', link_infos)
 					.on('click.pagechange', 'a[href^="/"]', link_default)
+
 				_frame.dom.bgimg.on('animationend, webkitAnimationEnd', 'div', function(){
 					_frame.app_main.change_bgimg_after()
 				})
@@ -1105,7 +1155,7 @@ _frame.app_main = {
 		// 标记已进行过初始化函数
 			_frame.app_main.is_init = true
 	}
-}
+};
 
 
 
@@ -1124,4 +1174,10 @@ _g.error = function(err){
 		err = new Error(err)
 
 	_g.log(err)
-}
+};
+
+
+
+
+
+var debugmode = false
