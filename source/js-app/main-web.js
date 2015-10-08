@@ -1,18 +1,3 @@
-// node.js modules
-	node.require('fs')
-	node.require('nedb')
-	node.require('mkdirp')
-	node.require('request')
-	node.require('request-progress')
-	node.require('semver')
-	node.require('url')
-
-	var Q = node.require('q')
-		,markdown = node.require( "markdown" ).markdown
-
-
-
-
 
 // Global Variables
 	_g.animate_duration_delay = 320;
@@ -21,46 +6,31 @@
 	_g.joint = '・'
 
 	_g.path = {
-		'db': 		node.path.join(_g.root, '/app-db/'),
-		'page': 	node.path.join(_g.root, '/app/page/'),
-		'bgimg_dir':node.path.join(_g.root, '/app/assets/images/homebg/'),
+		'db': 		'/!/db/',
+		'bgimg_dir':'/!/assets/images/homebg/',
 		'pics': {
-			'ships': 	node.path.join(_g.root, '/pics/ships/'),
-			'items': 	node.path.join(_g.root, '/pics/items/')
+			'ships': 	'/!/pics/ships/',
+			'items': 	'/!/pics/items/'
 		}
 	}
+	
+	_g.dbs = [
+		'ships',
+		'ship_types',
+		'ship_series',
+		'ship_namesuffix',
+		
+		'items',
+		'item_types'
+	]
 
-	_g.pathMakeObj = function(obj){
-		for( var i in obj ){
-			if( typeof obj[i] == 'object' ){
-				_g.pathMakeObj( obj[i] )
-			}else{
-				node.mkdirp.sync( obj[i] )
-			}
-		}
-	}
-	_g.pathMakeObj( _g.path )
-
-	_g.data = {
-		'entities': {},
-
-		'items': {},
-		'item_types': {},
-
-		'ships': {},
-		'ship_id_by_type': [], 			// refer to _g.ship_type_order
-		'ship_types': {},
-		'ship_type_order': {},
-		'ship_classes': {}
-	}
+	_g.data = {}
 
 	var _db = {
-		'fleets': new node.nedb({
-				filename: 	node.path.join(node.gui.App.dataPath, 'NeDB/fleets.json')
+		'fleets': new nedb({
+				filename: 	'fleets'
 			})
 	}
-	_g.ship_type_order = []
-	_g.ship_type_order_map = {}
 
 
 
@@ -77,7 +47,7 @@
 	// 该方法会采用队列，即上一个更新操作正在进行时，新的更新操作会进入队列
 		// 此时如果又有新的更新操作，之前队列的更新操作会被替换
 		// 注：前一个callback将不会执行 
-		node.nedb.prototype.updateById = function( _id, docReplace, callback ){
+		nedb.prototype.updateById = function( _id, docReplace, callback ){
 			if( !this._updateByIdQueue ){
 				this._updateByIdQueue = {}
 				Object.defineProperty(this._updateByIdQueue, 'running', {
@@ -97,7 +67,7 @@
 			
 			this._updateById()
 		}
-		node.nedb.prototype._updateById = function(){
+		nedb.prototype._updateById = function(){
 			if( !this._updateByIdQueue || this._updateByIdQueue.running )
 				return false
 
@@ -171,26 +141,8 @@
 		range = parseInt(range)
 		return _g.statRange[range]
 	}
-	/*
-		moved to Ship.getName()
-	_g.getName = function( nameObj, joint, lang ){
-		joint = joint || ''
-		if( !nameObj )
-			return null
-		return (
-				nameObj[ _g.lang ] || nameObj['ja_jp']
-				) + (
-				nameObj.suffix ? (
-						joint + (
-								_g.data['ship_namesuffix'][nameObj.suffix][ _g.lang ] || _g.data['ship_namesuffix'][nameObj.suffix]['ja_jp']
-							)
-					) : ''
-				)
-	}
-	*/
 	_g.log = function(){
-		if( debugmode )
-			console.log.apply(console, arguments)
+		console.log.apply(console, arguments)
 	}
 
 
@@ -588,34 +540,23 @@ _frame.app_main = {
 			return true
 
 		// 创建基础框架
-			_frame.dom.nav = $('<nav/>').appendTo( _frame.dom.layout )
-				_frame.dom.logo = $('<button class="logo" />')
+			_frame.dom.nav = _frame.dom.layout.children('nav')
+				_frame.dom.logo = $('<button class="logo"/>')
 									.on({
 										'animationend, webkitAnimationEnd': function(e){
-											$(this).addClass('ready-animated')
+											_frame.dom.logo.addClass('ready-animated')
 										}
 									})
 									.appendTo( _frame.dom.nav )
+				_frame.dom.navlinks = _frame.dom.nav.children('.pages')
+				_frame.dom.globaloptions = _frame.dom.nav.children('section.options')
+					//_frame.dom.btnDonates = $('<button class="donate" icon="heart4"/>')
+					//						.on('click', function(){_frame.app_main.load_page('donate')}).appendTo( _frame.dom.globaloptions )
+					_frame.dom.btnShowOnlyBg = $('<button class="show_only_bg" icon="images"/>')
+											.on('click', function(){_frame.app_main.only_bg_toggle()}).appendTo( _frame.dom.globaloptions )
+				_frame.dom.btnShowOnlyBgBack = $('<button class="show_only_bg_back" icon="arrow-set2-left"/>')
+										.on('click', function(){_frame.app_main.only_bg_off()}).appendTo( _frame.dom.nav )
 				/*
-				_frame.dom.logo = $('<button class="logo" />').on('click', function(){
-										_frame.app_main.toggle_hidecontent()
-									})
-									.html('<strong>' + node.gui.App.manifest['name'] + '</strong><b>' + node.gui.App.manifest['name'] + '</b>')
-									.on({
-										'animationend, webkitAnimationEnd': function(e){
-											$(this).addClass('ready-animated')
-										}
-									})
-									.appendTo( _frame.dom.nav )
-				*/
-				_frame.dom.navlinks = $('<div class="pages"/>').appendTo( _frame.dom.nav )
-					_frame.dom.globaloptions = $('<section class="options"/>').appendTo( _frame.dom.nav )
-						_frame.dom.btnDonates = $('<button class="donate" icon="heart4"/>')
-												.on('click', function(){_frame.app_main.load_page('donate')}).appendTo( _frame.dom.globaloptions )
-						_frame.dom.btnShowOnlyBg = $('<button class="show_only_bg" icon="images"/>')
-												.on('click', function(){_frame.app_main.only_bg_toggle()}).appendTo( _frame.dom.globaloptions )
-					_frame.dom.btnShowOnlyBgBack = $('<button class="show_only_bg_back" icon="arrow-set2-left"/>')
-											.on('click', function(){_frame.app_main.only_bg_off()}).appendTo( _frame.dom.nav )
 				_frame.dom.btnsHistory = $('<div class="history"/>').appendTo( _frame.dom.nav )
 					_frame.dom.btnHistoryBack = $('<button class="button back" icon="arrow-set2-left"/>')
 							.on({
@@ -628,7 +569,8 @@ _frame.app_main = {
 							.on('click', function(){
 								history.forward()
 							}).appendTo( _frame.dom.btnsHistory )
-			_frame.dom.main = $('<main/>').appendTo( _frame.dom.layout )
+				*/
+			_frame.dom.main = _frame.dom.layout.children('main')
 			_frame.dom.bgimg = $('<div class="bgimg" />').appendTo( _frame.dom.layout )
 
 		// 功能按钮：反馈信息
@@ -642,101 +584,31 @@ _frame.app_main = {
 				)
 		*/
 
-		// 创建主导航
-			if( _frame.app_main.nav && _frame.app_main.nav.length ){
-				_frame.dom.navs = {}
-				_frame.app_main.navtitle = {}
-				_frame.app_main.nav.forEach(function(o, i){
-					_frame.app_main.navtitle[o.page] = o.title
-					_frame.dom.navs[o.page] = (function(page){
-								return $('<button class="button" />').on('click', function(){
-										_frame.app_main.load_page(page)
-									})
-							})(o.page).html(o.title).appendTo( _frame.dom.navlinks )
-					if( o.state )
-						_frame.dom.navs[o.page].attr('mod-state', o.state)
-					//if( (i == 0 && !_g.uriHash('page') && !_g.uriSearch('page'))
-					//	|| o.page == _g.uriSearch('page')
-					//){
-					//	_frame.dom.navs[o.page].trigger('click')
-					//}
-				})
-			}
-
 		var promise_chain 	= Q.fcall(function(){})
 
 		// 开始异步函数链
 			promise_chain
 
-		// 检查 aap-db 目录，预加载全部数据库
+		// 预加载 _g.dbs 数据库
 			.then(function(){
-				var deferred = Q.defer()
-				node.fs.readdir(_g.path.db, function(err, files){
-					if( err ){
-						deferred.reject(new Error(err))
-					}else{
-						files.forEach(function(file){
-							_db[ node.path.parse(file)['name'] ]
-								= new node.nedb({
-										filename: 	node.path.join(_g.path.db, '/' + file)
-									})
-						})
-						deferred.resolve(files)
-					}
+				_g.dbs.forEach(function(dbname){
+					_db[dbname] = new nedb({
+						filename:	_g.path.db + dbname + '.json'
+					})
 				})
-				return deferred.promise
+				return _g.dbs
 			})
 
 		// 获取背景图列表，生成背景图
 			.then(function(){
-				_g.log('背景图: START')
-				var deferred = Q.defer()
-				node.fs.readdir(_g.path.bgimg_dir, function(err, files){
-					if( err ){
-						deferred.reject(new Error(err))
-					}else{
-						var bgimgs_last = _config.get('bgimgs')
-							,bgimgs_new = []
-						bgimgs_last = bgimgs_last ? bgimgs_last.split(',') : []
-						files.forEach(function(file){
-							var lstat = node.fs.lstatSync( node.path.join( _g.path.bgimg_dir , '/' + file) )
-							if( !lstat.isDirectory() ){
-								_frame.app_main.bgimgs.push( file )
-
-								// 存在bgimgs_last：直接比对
-								// 不存在bgimgs_last：比对每个文件，找出最新者
-								if( bgimgs_last.length ){
-									if( $.inArray( file, bgimgs_last ) < 0 )
-										bgimgs_new.push( file )
-								}else{
-									var ctime = parseInt(lstat.ctime.valueOf())
-									if( bgimgs_new.length ){
-										if( ctime > bgimgs_new[1] )
-											bgimgs_new = [ file, ctime ]
-									}else{
-										bgimgs_new = [ file, ctime ]
-									}
-								}
-							}
-						})
-						if( !bgimgs_last.length )
-							bgimgs_new.pop()
-						_config.set(
-							'bgimgs',
-							_frame.app_main.bgimgs
-						)
-						_frame.app_main.change_bgimg( bgimgs_new );
-						_frame.app_main.loaded('bgimgs')
-						//if( !_g.uriHash('page') )
-						//	_frame.app_main.load_page( _frame.app_main.nav[0].page )
-						//setTimeout(function(){
-						//	_frame.dom.layout.addClass('ready')
-						//}, 1000)
-						_g.log('背景图: DONE')
-						deferred.resolve()
-					}
-				})
-				return deferred.promise
+				for( let i=0; i++; i<_g.bgimg_count ){
+					_frame.app_main.bgimgs.push( i + '.jpg' )
+				}
+				
+				_frame.app_main.change_bgimg();
+				_frame.app_main.loaded('bgimgs')
+				
+				return _frame.app_main.bgimgs
 			})
 
 		// 读取db
@@ -784,7 +656,7 @@ _frame.app_main = {
 										})
 										break;
 									*/
-								case 'ships':
+								//case 'ships':
 								case 'fleets':
 									_done(db_name);
 									break;
@@ -799,6 +671,7 @@ _frame.app_main = {
 										}
 									})
 									break;
+								/*
 								case 'ship_type_order':
 									_db.ship_type_order.find({}).sort({'id': 1}).exec(function(dberr, docs){
 										if( dberr ){
@@ -882,11 +755,13 @@ _frame.app_main = {
 										}
 									})
 									break;
+								*/
 								case 'updates':
 									if( typeof _g.data[db_name] == 'undefined' )
 										_g.data[db_name] = {}
 									_done(db_name)
 									break;
+								/*
 								case 'arsenal_all':
 									_g.data['arsenal_all'] = []
 									_db.arsenal_all.find({}).sort({
@@ -910,6 +785,7 @@ _frame.app_main = {
 										_done(db_name)
 									})
 									break;
+								*/
 								default:
 									_db[db_name].find({}, function(dberr, docs){
 										if( dberr ){
@@ -919,6 +795,9 @@ _frame.app_main = {
 												_g.data[db_name] = {}
 											docs.forEach(function(doc){
 												switch( db_name ){
+													case 'ships':
+														_g.data[db_name][doc['id']] = new Ship(doc)
+														break;
 													case 'items':
 														_g.data[db_name][doc['id']] = new Equipment(doc)
 														break;
@@ -945,6 +824,7 @@ _frame.app_main = {
 			})
 
 		// 根据装备大类和类型排序整理装备ID
+		/*
 			.then(function(){
 				var deferred = Q.defer()
 				_g.data.item_id_by_type = []
@@ -990,8 +870,10 @@ _frame.app_main = {
 				}, 100)
 				return deferred.promise
 			})
+		*/
 
 		// 如果从启动器载入，检查数据是否有更新
+		/*
 			.then(function(){
 				_g.log('数据更新检查: START')
 				if( global.launcherOptions && global.launcherOptions["dataUpdated"] )
@@ -1078,6 +960,7 @@ _frame.app_main = {
 					return Q.all(the_promises);
 				}
 			})
+		*/
 
 		// 部分全局事件委托
 			.then(function(){
@@ -1093,9 +976,29 @@ _frame.app_main = {
 								el.attr('data-infos', '[[' + exp[1].toUpperCase() + '::' + exp[2] + ']]')
 								el.trigger('click')
 							}
+						},
+					link_default = function(e){
+							e.preventDefault()
+							let el = $(this)
+								,href_parts = el.attr('href').split('/').filter(function(c){return c})
+							
+							if( href_parts.length == 1 ){
+								_frame.app_main.load_page( href_parts[0] )
+							}else if( href_parts.length == 2 ){
+								let t = href_parts[0]
+								switch( t ){
+									case 'ships':		t = 'ship';			break;
+									case 'equipments':	t = 'equipment';	break;
+									case 'entities':	t = 'entity';		break;
+									case 'fleets':		t = 'fleet';		break;
+								}
+								el.attr('data-infos', '[[' + t.toUpperCase() + '::' + exp[1] + ']]')
+								el.trigger('click')
+							}
 						}
 				$body.on('click.pagechange', 'a[href^="?page="]', link_page)
 					.on('click.pagechange', 'a[href^="?infos="]', link_infos)
+					.on('click.pagechange', 'a[href^="/"]', link_default)
 				_frame.dom.bgimg.on('animationend, webkitAnimationEnd', 'div', function(){
 					_frame.app_main.change_bgimg_after()
 				})
@@ -1120,6 +1023,7 @@ _frame.app_main = {
 		// 鼠标侧键操作
 
 		// Debug Mode
+		/*
 			.then(function(){
 				if( debugmode ){
 					_frame.dom.hashbar = $('<input type="text"/>')
@@ -1188,6 +1092,7 @@ _frame.app_main = {
 				}
 				return true
 			})
+		*/
 
 		// 错误处理
 			.catch(function (err) {
@@ -1200,4 +1105,23 @@ _frame.app_main = {
 		// 标记已进行过初始化函数
 			_frame.app_main.is_init = true
 	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+_g.error = function(err){
+	if( !(err instanceof Error) )
+		err = new Error(err)
+
+	_g.log(err)
 }

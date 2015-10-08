@@ -424,8 +424,10 @@ _frame.infos.init = function(){
 					).appendTo(dom)
 
 			// 属性
-				var lvlRadio99_id = '_input_g' + parseInt(_g.inputIndex)
-					,lvlRadio150_id = '_input_g' + (parseInt(_g.inputIndex) + 1)
+				//var lvlRadio99_id = '_input_g' + parseInt(_g.inputIndex)
+				//	,lvlRadio150_id = '_input_g' + (parseInt(_g.inputIndex) + 1)
+				var lvlRadio99_id = id + '_stat_lv_99'
+					,lvlRadio150_id = id + '_stat_lv_150'
 					,curLvl = parseInt(_config.get('ship_infos_lvl') || 99)
 					,stats = $('<div class="stats"/>')
 								.html(
@@ -678,7 +680,7 @@ _frame.infos.init = function(){
 					
 					let index = 0
 					function check_append( file ){
-						file = file.replace(/\\/g, '/')
+						//file = file.replace(/\\/g, '/')
 						try{
 							let stat = node.fs.lstatSync(file)
 							if( stat && stat.isFile() ){
@@ -694,8 +696,8 @@ _frame.infos.init = function(){
 						}catch(e){}
 					}
 					illustrations.forEach(function(currentValue){
-						check_append( _g.path.pics.ships + '/' + currentValue + '/8.webp' )
-						check_append( _g.path.pics.ships + '/' + currentValue + '/9.webp' )
+						check_append( node.path.normalize(_g.path.pics.ships) + currentValue + '/8.webp' )
+						check_append( node.path.normalize(_g.path.pics.ships) + currentValue + '/9.webp' )
 					})
 					/*
 					_db.ship_series.find({'id': d['series']}, function(err,docs){

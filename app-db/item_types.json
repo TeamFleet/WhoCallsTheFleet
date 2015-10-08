@@ -22,7 +22,7 @@
 {"name":{"ja_jp":"簡易輸送部材","zh_cn":"简易运输罐"},"icon":25,"equipable_on_type":[1,2,5,12,15,19,24,28,29],"id":41,"_id":"PVgL1rXjfrATc6Ka","main_attribute":"fire"}
 {"name":{"ja_jp":"小口径高角主砲＋高射装置","zh_cn":"小口径高角主炮 + 高射装置"},"icon":16,"equipable_on_type":[1,2,3,12,15,16,17,19,21,24,28,29],"id":3,"_id":"R6WfkXVxzAtKJ34p","main_attribute":"fire"}
 {"name":{"ja_jp":"補給物資","zh_cn":"补给物资"},"equipable_on_type":[29],"id":49,"_id":"RRgrfnZxikUAvorb","icon":35}
-{"name":{"ja_jp":"追加装甲(中型)","zh_cn":"增设装甲板 (中型)"},"icon":23,"equipable_on_type":[4,5,9,12,16,17,23,24],"id":33,"_id":"U43AUs91eNKJuhCB","main_attribute":"armor"}
+{"name":{"ja_jp":"追加装甲(中型)","zh_cn":"增设装甲板 (中型)"},"icon":23,"equipable_on_type":[4,5,9,12,16,17,21,23,24],"id":33,"_id":"U43AUs91eNKJuhCB","main_attribute":"armor"}
 {"name":{"ja_jp":"大型探照灯","zh_cn":"大型探照灯"},"icon":24,"equipable_on_type":[6,7,8,20],"id":46,"_id":"UQE5VA4awY2flU2S","main_attribute":"los"}
 {"name":{"ja_jp":"特殊潜航艇","zh_cn":"微型潜艇"},"icon":5,"equipable_on_type":[3,12,13,14],"id":14,"_id":"Vd6oqdfwuueQAZhI","main_attribute":"torpedo"}
 {"name":{"ja_jp":"対地装備","zh_cn":"对地装备"},"icon":31,"equipable_on_type":[1,2,5,8,12,13,14,15,17,19,24,28],"id":44,"_id":"a1FwAWGsHxInwuCE","main_attribute":"fire"}

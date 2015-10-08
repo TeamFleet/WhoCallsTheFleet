@@ -38,9 +38,9 @@ _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar
 					+ node.path.normalize('assets/images/itemicon/' + _g.data.item_types[equipment['type']]['icon'] + '.png')
 					+ ')"></i>'
 				*/
-				+ '<small>'
+				+ '<span>'
 					+ equipment.getName(true)
-				+ '</small>'
+				+ '</span>'
 				+ ( improvementStar !== null
 					? '<em' + (improvementStar<=0 ? ' class="zero"' : '') + '>+' + improvementStar + '</em>'
 					: ''

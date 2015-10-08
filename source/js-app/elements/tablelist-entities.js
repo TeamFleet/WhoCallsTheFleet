@@ -84,6 +84,7 @@ class TablelistEntities extends Tablelist{
 			this.append_item_illustrator
 		)
 		
+		this.generated = true
 		_frame.app_main.loaded('tablelist_'+this._index, true)
 	}
 	

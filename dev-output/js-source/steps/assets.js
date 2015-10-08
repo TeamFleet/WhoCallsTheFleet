@@ -1,0 +1,212 @@
+/*
+
+Template
+dev_output_tmpl
+	let searchRes
+		,scrapePtrn = /\{\{[ ]*navContent[ ]*\}\}/gi
+	while( (searchRes = scrapePtrn.exec(dev_output_tmpl)) !== null ){
+		try{
+			dev_output_tmpl = dev_output_tmpl.replace( searchRes[0], CONTENT )
+		}catch(e){}
+	}
+
+Directory
+dev_output_dir
+
+Logging Function
+dev_output_log(msg)
+
+*/
+
+
+dev_output_steps.push(function(){
+	function copyFile(source, target, cb) {
+		Q.fcall(function(){
+			let deferred = Q.defer()
+			node.fs.readFile(source, 'utf8', function(err, data){
+				if( err ){
+					deferred.reject(new Error(err))
+				}else{
+					deferred.resolve(data)
+				}
+			})
+			return deferred.promise
+		})
+		.then(function(data){
+			let deferred = Q.defer()
+			//data = dev_output_filter(data)
+			data = dev_output_filter(data)
+			data = data.replace(/_g\.bgimg_count[\t]*=[\t]*0\;/g, '_g.bgimg_count='+ bgimg_count +';')
+			node.fs.writeFile(
+				target,
+				data,
+				function(err){
+					if( err ){
+						deferred.reject(new Error(err))
+					}else{
+						deferred.resolve()
+					}
+				}
+			)
+			return deferred.promise
+		})
+		.done(cb)
+	}
+	function copyFile2(source, target, cb) {
+		var cbCalled = false;
+		
+		var rd = node.fs.createReadStream(source);
+		rd.on("error", done);
+		
+		var wr = node.fs.createWriteStream(target);
+		wr.on("error", done);
+		wr.on("close", function(ex) {
+			done();
+		});
+		rd.pipe(wr);
+		
+		function done(err) {
+			if (!cbCalled) {
+			cb(err);
+			cbCalled = true;
+			}
+		}
+	}
+
+	let masterDeferred = Q.defer()
+		,bgimg_count = 0
+
+		Q.fcall(function(){
+			dev_output_log('开始处理: BG IMAGES')
+			
+			let deferred = Q.defer()
+
+			node.fs.readdir(node.path.join( _g.path.bgimg_dir, 'blured'), function(err, files){
+				if( err ){
+					deferred.reject(new Error(err))
+				}else{
+					bgimg_count = files.length
+					deferred.resolve(files)
+				}
+			})
+			
+			return deferred.promise
+		})
+		.then(function(files){
+			let deferred = Q.defer()
+				,result = Q(files)
+
+			files.forEach(function (file, index) {
+				console.log(file)
+				result = result.then(function(){
+					let _deferred = Q.defer()
+						,filePath1 = node.path.join( _g.path.bgimg_dir, file )
+						,filePath2 = node.path.join( _g.path.bgimg_dir, 'blured', file )
+						,outputPath1 = node.path.join( dev_output_dir, '!', 'assets', 'images', 'homebg', index + '.jpg' )
+						,outputPath2 = node.path.join( dev_output_dir, '!', 'assets', 'images', 'homebg', 'blured', index + '.jpg' )
+
+					copyFile2(
+						filePath1,
+						outputPath1,
+						function(err){
+							if( err ){
+								_deferred.reject(new Error(err))
+							}else{
+								dev_output_log('生成文件: ' + outputPath1)
+								copyFile2(
+									filePath2,
+									outputPath2,
+									function(err){
+										if( err ){
+											_deferred.reject(new Error(err))
+										}else{
+											dev_output_log('生成文件: ' + outputPath2)
+											_deferred.resolve()
+										}
+									}
+								)
+							}
+						}
+					)
+
+					return _deferred.promise
+				});
+			});
+			
+			result = result.done(function(){
+				deferred.resolve()
+			})
+			
+			return deferred.promise
+		})
+		.then(function(){
+			dev_output_log('开始处理: CSS & JS')
+			
+			let deferred = Q.defer()
+
+			node.fs.readdir(node.path.join( _g.root, 'dev-output', 'assets-output'), function(err, files){
+				if( err ){
+					deferred.reject(new Error(err))
+				}else{
+					deferred.resolve(files)
+				}
+			})
+			
+			return deferred.promise
+		})
+		.then(function(files){
+			let deferred = Q.defer()
+				,result = Q(files)
+
+			files.forEach(function (file) {
+				result = result.then(function(){
+					let _deferred = Q.defer()
+						,outputPath = node.path.join( dev_output_dir, '!', 'assets', file )
+					copyFile(
+						node.path.join( _g.root, 'dev-output', 'assets-output', file ),
+						outputPath,
+						function(err){
+							if( err ){
+								_deferred.reject(new Error(err))
+							}else{
+								dev_output_log('生成文件: ' + outputPath)
+								_deferred.resolve()
+							}
+						}
+					)
+					return _deferred.promise
+				});
+			});
+			
+			result = result.done(function(){
+				deferred.resolve()
+			})
+			
+			return deferred.promise
+		})
+		.then(function(){
+			let deferred = Q.defer()
+				,outputPath = node.path.join( dev_output_dir, '!', 'assets', 'fonts', 'icons.ttf' )
+			copyFile2(
+				node.path.join( _g.root, 'app', 'assets', 'fonts', 'icons.ttf' ),
+				outputPath,
+				function(err){
+					if( err ){
+						deferred.reject(new Error(err))
+					}else{
+						dev_output_log('生成文件: ' + outputPath)
+						deferred.resolve()
+					}
+				}
+			)
+			return deferred.promise
+		})
+		.catch(function(e){
+			console.log(e)
+			dev_output_log('发生错误')
+		}).done(function(){
+			masterDeferred.resolve()
+		})
+
+	return masterDeferred.promise
+})

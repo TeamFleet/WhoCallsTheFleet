@@ -2606,14 +2606,14 @@ _frame.app_main = {
 					_frame.dom.btnShowOnlyBgBack = $('<button class="show_only_bg_back" icon="arrow-set2-left"/>')
 											.on('click', function(){_frame.app_main.only_bg_off()}).appendTo( _frame.dom.nav )
 				_frame.dom.btnsHistory = $('<div class="history"/>').appendTo( _frame.dom.nav )
-					_frame.dom.btnHistoryBack = $('<button class="back" icon="arrow-set2-left"/>')
+					_frame.dom.btnHistoryBack = $('<button class="button back" icon="arrow-set2-left"/>')
 							.on({
 								'click': function(){
 									_frame.dom.btnHistoryForward.removeClass('disabled')
 									history.back()
 								}
 							}).appendTo( _frame.dom.btnsHistory )
-					_frame.dom.btnHistoryForward = $('<button class="forward disabled" icon="arrow-set2-right"/>')
+					_frame.dom.btnHistoryForward = $('<button class="button forward disabled" icon="arrow-set2-right"/>')
 							.on('click', function(){
 								history.forward()
 							}).appendTo( _frame.dom.btnsHistory )
@@ -2638,7 +2638,7 @@ _frame.app_main = {
 				_frame.app_main.nav.forEach(function(o, i){
 					_frame.app_main.navtitle[o.page] = o.title
 					_frame.dom.navs[o.page] = (function(page){
-								return $('<button />').on('click', function(){
+								return $('<button class="button" />').on('click', function(){
 										_frame.app_main.load_page(page)
 									})
 							})(o.page).html(o.title).appendTo( _frame.dom.navlinks )
@@ -3163,7 +3163,7 @@ _frame.app_main = {
 						}) )
 					
 					// 在标题栏添加Web输出入口
-						$.getScript('../dev-output/output.js', function(){
+						$.getScript('../dev-output/js-output/output.js', function(){
 							title_buttons.prepend( $('<button/>',{
 								'class':	'console',
 								'html':		'Output to Web'
@@ -3966,9 +3966,9 @@ _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar
 					+ node.path.normalize('assets/images/itemicon/' + _g.data.item_types[equipment['type']]['icon'] + '.png')
 					+ ')"></i>'
 				*/
-				+ '<small>'
+				+ '<span>'
 					+ equipment.getName(true)
-				+ '</small>'
+				+ '</span>'
 				+ ( improvementStar !== null
 					? '<em' + (improvementStar<=0 ? ' class="zero"' : '') + '>+' + improvementStar + '</em>'
 					: ''
@@ -4024,7 +4024,7 @@ _tmpl.link_ship = function( ship, tagName, returnHTML, mode ){
 			'<' + tagName
 				+ (tagName == 'a' ? ' href="?infos=ship&id='+shipId+'"' : '')
 				+ ' class="link_ship" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">'
-				+ '<img src="' + node.path.normalize(_g.path.pics.ships + '/' + shipId) + '/0.webp"/>'
+				+ '<img src="' + node.path.normalize(_g.path.pics.ships) + '/' + shipId + '/0.webp"/>'
 				+ '<span>'
 					+ content
 				+ '</span>'
@@ -4904,8 +4904,10 @@ _frame.infos.init = function(){
 					).appendTo(dom)
 
 			// 属性
-				var lvlRadio99_id = '_input_g' + parseInt(_g.inputIndex)
-					,lvlRadio150_id = '_input_g' + (parseInt(_g.inputIndex) + 1)
+				//var lvlRadio99_id = '_input_g' + parseInt(_g.inputIndex)
+				//	,lvlRadio150_id = '_input_g' + (parseInt(_g.inputIndex) + 1)
+				var lvlRadio99_id = id + '_stat_lv_99'
+					,lvlRadio150_id = id + '_stat_lv_150'
 					,curLvl = parseInt(_config.get('ship_infos_lvl') || 99)
 					,stats = $('<div class="stats"/>')
 								.html(
@@ -5158,7 +5160,7 @@ _frame.infos.init = function(){
 					
 					let index = 0
 					function check_append( file ){
-						file = file.replace(/\\/g, '/')
+						//file = file.replace(/\\/g, '/')
 						try{
 							let stat = node.fs.lstatSync(file)
 							if( stat && stat.isFile() ){
@@ -5174,8 +5176,8 @@ _frame.infos.init = function(){
 						}catch(e){}
 					}
 					illustrations.forEach(function(currentValue){
-						check_append( _g.path.pics.ships + '/' + currentValue + '/8.webp' )
-						check_append( _g.path.pics.ships + '/' + currentValue + '/9.webp' )
+						check_append( node.path.normalize(_g.path.pics.ships) + currentValue + '/8.webp' )
+						check_append( node.path.normalize(_g.path.pics.ships) + currentValue + '/9.webp' )
 					})
 					/*
 					_db.ship_series.find({'id': d['series']}, function(err,docs){
@@ -5506,7 +5508,7 @@ _frame.infos.__entity = function( id ){
 		// 图鉴
 			var illusts = $('<aside class="illustrations"/>').appendTo(dom)
 			try{
-				var file = _g.path.pics.items + '/' + d['id'] + '/card.webp'
+				var file = node.path.normalize(_g.path.pics.items) + d['id'] + '/card.webp'
 					,stat = node.fs.lstatSync(file)
 				if( stat && stat.isFile() ){
 					$('<img src="'+file+'" data-filename="'+d.getName()+'.webp"/>')
@@ -7595,6 +7597,7 @@ class TablelistEntities extends Tablelist{
 			this.append_item_illustrator
 		)
 		
+		this.generated = true
 		_frame.app_main.loaded('tablelist_'+this._index, true)
 	}
 	
@@ -9289,7 +9292,7 @@ class TablelistShips extends Tablelist{
 		// 右键菜单事件
 			this.dom.table.on('contextmenu.contextmenu_ship', 'tr[data-shipid]', function(e){
 				this.contextmenu_show($(e.currentTarget), null, e)
-			}.bind(this)).on('click.contextmenu_ship', 'tr[data-shipid]>th>em', function(e){
+			}.bind(this)).on('click.contextmenu_ship', 'tr[data-shipid]>th em', function(e){
 				this.contextmenu_show($(e.currentTarget).parent().parent())
 				e.stopImmediatePropagation()
 				e.stopPropagation()
