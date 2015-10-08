@@ -11,11 +11,5 @@
     "email": "diablohudream@gmail.com"
   },
   "readmeFilename": "README.md",
-  "license": "MIT",
-  "devDependencies": {
-    "babel-loader": "^5.3.2"
-  },
-  "dependencies": {
-    "normalize.css": "^3.0.3"
-  }
+  "license": "MIT"
 }
