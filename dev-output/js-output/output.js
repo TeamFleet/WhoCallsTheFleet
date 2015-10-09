@@ -97,6 +97,14 @@ function dev_output_filter(output, pagetype, name){
 		}
 
 	searchRes = null
+	scrapePtrn = /\.webp/gi
+		while( (searchRes = scrapePtrn.exec(output)) !== null ){
+			try{
+				output = output.replace( searchRes[0], '.png' )
+			}catch(e){}
+		}
+
+	searchRes = null
 	scrapePtrn = /\?infos=([a-z]+)\&amp;id=([^\&^"^']+)/gi
 		while( (searchRes = scrapePtrn.exec(output)) !== null ){
 			try{
@@ -1025,6 +1033,10 @@ dev_output_steps.push(function(){
 			
 			return deferred.promise
 		})
+		
+		
+		
+		
 		.then(function(){
 			dev_output_log('开始处理: CSS & JS')
 			
@@ -1088,6 +1100,61 @@ dev_output_steps.push(function(){
 			)
 			return deferred.promise
 		})
+		
+		
+		
+		
+		.then(function(){
+			dev_output_log('开始处理: DB JSONs')
+			
+			let deferred = Q.defer()
+
+			node.fs.readdir(node.path.normalize( _g.path.db ), function(err, files){
+				if( err ){
+					deferred.reject(new Error(err))
+				}else{
+					deferred.resolve(files)
+				}
+			})
+			
+			return deferred.promise
+		})
+		.then(function(files){
+			let deferred = Q.defer()
+				,result = Q(files)
+
+			files.forEach(function (file) {
+				result = result.then(function(){
+					let _deferred = Q.defer()
+						,outputPath = node.path.join( dev_output_dir, '!', 'db', file )
+						
+					copyFile2(
+						node.path.join( _g.path.db, file ),
+						outputPath,
+						function(err){
+							if( err ){
+								_deferred.reject(new Error(err))
+							}else{
+								dev_output_log('生成文件: ' + outputPath)
+								_deferred.resolve()
+							}
+						}
+					)
+					
+					return _deferred.promise
+				});
+			});
+			
+			result = result.done(function(){
+				deferred.resolve()
+			})
+			
+			return deferred.promise
+		})
+		
+		
+		
+		
 		.catch(function(e){
 			console.log(e)
 			dev_output_log('发生错误')

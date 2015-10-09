@@ -21,7 +21,9 @@
 		'ship_namesuffix',
 		
 		'items',
-		'item_types'
+		'item_types',
+		
+		'entities'
 	]
 
 	_g.data = {}
@@ -663,6 +665,80 @@ _frame.app_main = {
 				_g.log('BGs: ' + _frame.app_main.bgimgs.join(', '))
 				
 				return _frame.app_main.bgimgs
+			})
+
+		// 读取db
+			.then(function(){
+				_g.log('Preload All DBs (JSON ver.): START')
+				
+				let dbchain = Q()
+					,masterDeferred = Q.defer()
+
+				_g.dbs.forEach(function(db_name){
+					dbchain = dbchain.then(function(){
+						let deferred = Q.defer()
+						
+						$.ajax({
+							'url':		'/!/db/' + db_name + '.json',
+							'dataType':	'text',
+							'success': function(data){
+								let arr = data.split('\n')
+								switch(db_name){
+									case 'ship_namesuffix':
+										//_db.ship_namesuffix.find({}).sort({ 'id': 1 }).exec(function(dberr, docs){
+										//	if( dberr ){
+										//		deferred.reject(new Error(dberr))
+										//	}else{
+										//		_g.data.ship_namesuffix = [{}].concat(docs)
+										//		_frame.app_main.loaded('db_namesuffix')
+										//	}
+										//})
+										break;
+									default:
+										if( typeof _g.data[db_name] == 'undefined' )
+											_g.data[db_name] = {}
+										console.log(db_name)
+										arr.forEach(function(str){
+											let doc = JSON.parse(str)
+											//console.log(doc)
+											switch( db_name ){
+												case 'ships':
+													_g.data[db_name][doc['id']] = new Ship(doc)
+													break;
+												case 'items':
+													_g.data[db_name][doc['id']] = new Equipment(doc)
+													break;
+												case 'entities':
+													_g.data[db_name][doc['id']] = new Entity(doc)
+													break;
+												default:
+													_g.data[db_name][doc['id']] = doc
+													break;
+											}
+										})
+										break;
+								}
+							},
+							'complete': function(jqXHR, textStatus){
+								deferred.resolve()
+							}
+						})
+						
+						return deferred.promise
+					})
+				})
+				
+				dbchain = dbchain.catch(function(e){
+						console.log(e)
+					}).done(function(){
+						_g.log('Preload All DBs (JSON ver.): DONE')
+						setTimeout(function(){
+							//_frame.app_main.loaded('dbs')
+						}, 100)
+						masterDeferred.resolve()
+					})
+
+				return masterDeferred.promise
 			})
 
 		// 读取db

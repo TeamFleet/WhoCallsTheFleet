@@ -97,6 +97,14 @@ function dev_output_filter(output, pagetype, name){
 		}
 
 	searchRes = null
+	scrapePtrn = /\.webp/gi
+		while( (searchRes = scrapePtrn.exec(output)) !== null ){
+			try{
+				output = output.replace( searchRes[0], '.png' )
+			}catch(e){}
+		}
+
+	searchRes = null
 	scrapePtrn = /\?infos=([a-z]+)\&amp;id=([^\&^"^']+)/gi
 		while( (searchRes = scrapePtrn.exec(output)) !== null ){
 			try{
