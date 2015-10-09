@@ -4466,7 +4466,7 @@ _frame.app_main.page['about'].init = function( page ){
 	// 获取全部开发中的更新日志
 		.then(function(){
 			var deferred = Q.defer()
-			_db.updates.find({'date': ""}).sort({'date': -1}).exec(function(err, docs){
+			_db.updates.find({'date': ""}).sort({'date': -1, 'version': -1}).exec(function(err, docs){
 				docs.forEach(function(doc){
 					addUpdateJournal(doc)
 				})
@@ -4478,7 +4478,7 @@ _frame.app_main.page['about'].init = function( page ){
 	// 获取全部已更新的更新日志
 		.then(function(){
 			var deferred = Q.defer()
-			_db.updates.find({$not:{'date':""}}).sort({'date': -1}).exec(function(err, docs){
+			_db.updates.find({$not:{'date':""}}).sort({'date': -1, 'version': -1}).exec(function(err, docs){
 				docs.forEach(function(doc){
 					addUpdateJournal(doc)
 				})
@@ -7782,7 +7782,7 @@ class TablelistEquipments extends Tablelist{
 				this.dom.types[header_index] = tr
 			}else{
 				//let equipment_data = _g.data.items[ tr.attr('data-equipmentid') ]
-				let etype = tr.attr('data-equipmenttype')
+				let etype = parseInt(tr.attr('data-equipmenttype')) || -1
 					,eid = tr.attr('data-equipmentid')
 				tr.on('click', function(e, forceInfos){
 						if( !forceInfos && _frame.app_main.is_mode_selection() ){

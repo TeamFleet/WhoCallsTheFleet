@@ -66,7 +66,7 @@ _frame.app_main.page['about'].init = function( page ){
 	// 获取全部开发中的更新日志
 		.then(function(){
 			var deferred = Q.defer()
-			_db.updates.find({'date': ""}).sort({'date': -1}).exec(function(err, docs){
+			_db.updates.find({'date': ""}).sort({'date': -1, 'version': -1}).exec(function(err, docs){
 				docs.forEach(function(doc){
 					addUpdateJournal(doc)
 				})
@@ -78,7 +78,7 @@ _frame.app_main.page['about'].init = function( page ){
 	// 获取全部已更新的更新日志
 		.then(function(){
 			var deferred = Q.defer()
-			_db.updates.find({$not:{'date':""}}).sort({'date': -1}).exec(function(err, docs){
+			_db.updates.find({$not:{'date':""}}).sort({'date': -1, 'version': -1}).exec(function(err, docs){
 				docs.forEach(function(doc){
 					addUpdateJournal(doc)
 				})
