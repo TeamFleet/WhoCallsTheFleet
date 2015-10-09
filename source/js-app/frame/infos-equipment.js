@@ -23,6 +23,7 @@
 		}
 
 		var dom = $('<div class="infos-equipment"/>')
+					.attr('data-infos-title', d._name + ' - 装备')
 
 		// 名称 & 类型 & 开发改修
 			$('<div class="title"/>')

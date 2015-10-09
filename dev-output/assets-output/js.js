@@ -2943,7 +2943,7 @@ _menu.prototype.show = function( targetEl, mouseX, mouseY ){
 		})
 
 	// 虚化背景
-		if( this.settings.showBlured ){
+		if( this.settings.showBlured && typeof node != 'undefined' ){
 			node.win.capturePage(this.capturePage_callback.bind(this), 'jpg', 'datauri')
 		}else{
 			this.dom.menu.addClass('on')
@@ -6819,7 +6819,7 @@ _tmpl.improvement__title = function(equipment, upgrade_to, upgrade_to_star){
 			+ ' href="?infos=equipment&id='+equipment['id']+'"'
 			+ ' data-infos="[[EQUIPMENT::'+equipment['id']+']]"'
 			+ ' data-tip="[[EQUIPMENT::'+equipment['id']+']]"'
-		+ '">' + equipment.getName(true) + '</a>'
+		+ '>' + equipment.getName(true) + '</a>'
 		+ ( upgrade_to
 			? '<b></b>'
 				+ '<a style="background-image:url(../app/assets/images/itemicon/'
@@ -6828,7 +6828,7 @@ _tmpl.improvement__title = function(equipment, upgrade_to, upgrade_to_star){
 					+ ' href="?infos=equipment&id='+upgrade_to['id']+'"'
 					+ ' data-infos="[[EQUIPMENT::'+upgrade_to['id']+']]"'
 					+ ' data-tip="[[EQUIPMENT::'+upgrade_to['id']+']]"'
-				+ '">' + upgrade_to.getName(true) + '</a>'
+				+ '>' + upgrade_to.getName(true) + '</a>'
 				+ ( upgrade_to_star
 					? '<i>+'+upgrade_to_star+'</i>'
 					: ''
@@ -7328,45 +7328,25 @@ _frame.app_main.page['equipments'] = {
 _frame.app_main.page['arsenal'] = {}
 _frame.app_main.page['arsenal'].init = function( page ){
 	// tab radios
-		$('<input/>',{
-			'id':	'arsenal_headtab-1',
-			'type':	'radio',
-			'name':	'arsenal_headtab'
-		}).prop('checked', true).appendTo(page)
-		$('<input/>',{
-			'id':	'arsenal_headtab-2',
-			'type':	'radio',
-			'name':	'arsenal_headtab'
-		}).appendTo(page)
+		//page.children('#arsenal_headtab-1').prop('checked', true)
 
-	// tabs
-		var tabs = $('<div/>',{
-				'class':	'tabs',
-				'html':		'<label for="arsenal_headtab-1" class="tab">'
-								+ '每日改修'
-							+ '</label>'
-							+ '<label for="arsenal_headtab-2" class="tab">'
-								+ '明细表'
-							+ '</label>'
-			}).appendTo(page)
-		// Blinky Akashi - http://codepen.io/Diablohu/pen/RPjBgG
-			var akashi = $('<span/>',{
-								'animation':	Math.floor((Math.random() * 3) + 1)
-							})
-							.on('animationiteration webkitAnimationIteration', function(){
-								akashi.attr(
-									'animation',
-									Math.floor((Math.random() * 3) + 1)
-								)
-							})
-							.appendTo($('<div class="akashi"/>').prependTo(tabs))
+	// Blinky Akashi - http://codepen.io/Diablohu/pen/RPjBgG
+		let akashi = page.find('.akashi')
+		akashi.attr({
+				'animation':	Math.floor((Math.random() * 3) + 1)
+			})
+			.on('animationiteration webkitAnimationIteration', function(){
+				akashi.attr(
+					'animation',
+					Math.floor((Math.random() * 3) + 1)
+				)
+			})
 
 	// contents
-		this.elMain = $('<div class="main"/>')
-			.append(this.init_weekday())
-			.append(this.init_all())
-			.appendTo(page)
-			
+		this.elMain = page.children('.main')
+		this.parse_weekday( this.elMain.children('.body-weekday') )
+		this.parse_all( this.elMain.children('.body-all') )
+
 		page.find('input[type="radio"]').on('change', function(){
 				_frame.app_main.page['arsenal'].elMain.scrollTop(0)
 			})
@@ -7376,80 +7356,22 @@ _frame.app_main.page['arsenal'].init = function( page ){
 
 
 // 每日改修
-	_frame.app_main.page['arsenal'].init_weekday = function(){
-		var body = $('<div class="body body-1 body-weekday"/>')
-			,weekday = $('<div class="weekday"/>').appendTo(body)
-			,weekday_select = $('<div/>').html('<span>星期</span>').appendTo(weekday)
-			,radios = []
-
-		$('<input/>',{
-			'type':	'checkbox',
-			'id': 	'arsenal_weekday-showmeterials'
-		}).prop(
-			'checked', Lockr.get('arsenal_weekday-showmeterials', true) ? true : false
-		).on('change', function(){
-			Lockr.set(
-				'arsenal_weekday-showmeterials',
-				$(this).prop('checked') ? 1 : 0
-			)
-		}).prependTo(body)
-
-		for(var i=0; i<7; i++){
-			var text
-
-			switch(i){
-				case 0: text = '日'; break;
-				case 1: text = '一'; break;
-				case 2: text = '二'; break;
-				case 3: text = '三'; break;
-				case 4: text = '四'; break;
-				case 5: text = '五'; break;
-				case 6: text = '六'; break;
-			}
-
-			radios[i] = $('<input/>',{
-					'id':	'arsenal_weekday-' + i,
-					'type':	'radio',
-					'name':	'arsenal_weekday'
-				}).prependTo(body)
-
-			$('<label/>',{
-					'html':	text,
-					'for':	'arsenal_weekday-' + i
-				}).appendTo(weekday_select)
-
-			$('<div class="content content-'+i+'"/>')
-				.append(
-					_p.el.flexgrid.create()
-						.appendDOM(function(){
-							var o = $()
-							for(var j in _g.data.arsenal_weekday[i]){
-								var d = _g.data.arsenal_weekday[i][j]
-								o = o.add(
-									_tmpl.improvement(d[0], d[1], d[2])
-										.addClass('unit')
-								)
-							}
-							return o
-						})
+	_frame.app_main.page['arsenal'].parse_weekday = function(body){
+		let checkbox_showmeterials = body.find('#arsenal_weekday-showmeterials')
+		checkbox_showmeterials.prop(
+				'checked', Lockr.get('arsenal_weekday-showmeterials', true) ? true : false
+			).on('change', function(){
+				Lockr.set(
+					'arsenal_weekday-showmeterials',
+					checkbox_showmeterials.prop('checked') ? 1 : 0
 				)
-				.appendTo(body)
-		}
-
-		$('<span/>',{
-			'html':	'<b>*</b>日本东京时间'
-		}).appendTo(weekday)
-
-		$('<label/>',{
-			'for': 	'arsenal_weekday-showmeterials',
-			'html': '显示资源消耗'
-		}).appendTo(weekday)
+			})
 
 		// 获取当前日本东京时间，选择星期
-			var date = new Date()
+			let date = new Date()
 			date.setTime( date.getTime() + date.getTimezoneOffset()*60*1000 )
 			date.setTime( date.getTime() + 9*60*60*1000 )
-			radios[date.getDay()].prop('checked', true)
+			body.find('#arsenal_weekday-' + date.getDay()).prop('checked', true)
 
 		return body
 	}
@@ -7457,14 +7379,7 @@ _frame.app_main.page['arsenal'].init = function( page ){
 
 
 // 明细表
-	_frame.app_main.page['arsenal'].init_all = function(){
-		var body = $('<div class="body body-2 body-all"/>')
-
-		_g.data.arsenal_all.forEach(function(currentValue){
-			_tmpl.improvement_detail(currentValue).appendTo(body)
-		})
-
-		return body
+	_frame.app_main.page['arsenal'].parse_all = function(body){
 	}
 
 
@@ -7576,12 +7491,28 @@ _frame.infos = {
 	getContent: function(type, id){
 		if( !this.contentCache[type] )
 			this.contentCache[type] = {}
+		
+		let firstChildren = _frame.infos.dom.container.children('.infosbody').eq(0)
+		if( firstChildren.attr('data-infos-type') == type && firstChildren.attr('data-infos-id') == id ){
+			this.contentCache[type][id] = _p.initDOM(firstChildren)
+			return this.contentCache[type][id]
+		}
+		
+		function initcont( $el ){
+			return _p.initDOM(
+				$el.addClass('infosbody')
+					.attr({
+						'data-infos-type':	type,
+						'data-infos-id':	id
+					})
+			)
+		}
 
 		if( id == '__NEW__' )
-			return _p.initDOM( _frame.infos['__' + type]( id ).addClass('infosbody') )
+			return initcont( _frame.infos['__' + type]( id ) )
 
 		if( !this.contentCache[type][id] ){
-			this.contentCache[type][id] = _p.initDOM( _frame.infos['__' + type]( id ).addClass('infosbody') )
+			this.contentCache[type][id] = initcont( _frame.infos['__' + type]( id ) )
 		}
 
 		return this.contentCache[type][id]
@@ -7602,6 +7533,7 @@ _frame.infos = {
 			switch( infosType ){
 				case 'item':
 				case 'equip':
+				case 'equipments':
 					infosType = 'equipment'
 					break;
 			}
@@ -7624,7 +7556,11 @@ _frame.infos = {
 					'infosHistoryIndex': _frame.infos.historyCurrent
 				},
 				null,
-				'?infos=' + infosType + '&id=' + infosId
+				_g.state2URI({
+					'infos':infosType,
+					'id': 	infosId
+				})
+				//'?infos=' + infosType + '&id=' + infosId
 			)
 		}
 
@@ -7652,51 +7588,35 @@ _frame.infos = {
 		// 第一次运行，创建相关DOM和变量
 			if( !_frame.infos.dom ){
 				_frame.infos.dom = {
-					//'nav': 		$('<div class="infos"/>').appendTo( _frame.dom.nav ),
-					'main': 	$('<div class="page-container infos"/>').appendTo( _frame.dom.main )
+					'main':		_frame.dom.main.children('.page-container.infos')
 				}
-				_frame.infos.dom.container = $('<div class="wrapper"/>').appendTo( _frame.infos.dom.main )
-				/*
-				_frame.infos.dom.back = $('<button class="back" icon="arrow-set2-left"/>')
-						.on({
-							'click': function(){
-								_frame.infos.dom.forward.removeClass('disabled')
-								history.back()
-								//_frame.infos.hide()
-							},
-							'transitionend.infos_hide': function(e){
-								if( e.currentTarget == e.target
-									&& e.originalEvent.propertyName == 'opacity'
-									&& parseInt(_frame.infos.dom.back.css('opacity')) == 0
-								){
-									_frame.infos.hide_finish()
+				if( !_frame.infos.dom.main.length ){
+					_frame.infos.dom.main = $('<div class="page-container infos"/>').appendTo( _frame.dom.main )
+					_frame.infos.dom.container = $('<div class="wrapper"/>').appendTo( _frame.infos.dom.main )
+				}else{
+					_frame.infos.dom.container = _frame.infos.dom.main.children('.wrapper')
+				}
+				if( _frame.dom.btnHistoryBack )
+					_frame.dom.btnHistoryBack.on({
+								'transitionend.infos_hide': function(e){
+									if( e.currentTarget == e.target
+										&& e.originalEvent.propertyName == 'opacity'
+										&& parseFloat(_frame.dom.btnHistoryBack.css('opacity')) == 0
+									){
+										_frame.infos.hide_finish()
+									}
 								}
-							}
-						}).appendTo( _frame.infos.dom.nav )
-				_frame.infos.dom.forward = $('<button class="forward disabled" icon="arrow-set2-right"/>')
-						.on('click', function(){
-							history.forward()
-							//_frame.infos.hide()
-						}).appendTo( _frame.infos.dom.nav )
-				*/
-				_frame.dom.btnHistoryBack.on({
-							'transitionend.infos_hide': function(e){
-								if( e.currentTarget == e.target
-									&& e.originalEvent.propertyName == 'opacity'
-									&& parseFloat(_frame.dom.btnHistoryBack.css('opacity')) == 0
-								){
-									_frame.infos.hide_finish()
-								}
-							}
-						})
+							})
 			}
 
 		// 计算历史记录相关，确定 Back/Forward 按钮是否可用
-			infosHistoryIndex = typeof infosHistoryIndex != 'undefined' ? infosHistoryIndex : this.historyCurrent
-			this.historyCurrent = infosHistoryIndex
-			//_g.log( this.historyCurrent, this.historyLength )
-			if( this.historyCurrent == this.historyLength && this.historyCurrent > -1 )
-				_frame.dom.btnHistoryForward.addClass('disabled')
+			if( _frame.dom.btnHistoryForward ){
+				infosHistoryIndex = typeof infosHistoryIndex != 'undefined' ? infosHistoryIndex : this.historyCurrent
+				this.historyCurrent = infosHistoryIndex
+				//_g.log( this.historyCurrent, this.historyLength )
+				if( this.historyCurrent == this.historyLength && this.historyCurrent > -1 )
+					_frame.dom.btnHistoryForward.addClass('disabled')
+			}
 
 		// 先将内容区域设定为可见
 			_frame.dom.layout.addClass('is-infos-show')
@@ -7704,26 +7624,17 @@ _frame.infos = {
 		// 处理内容
 			switch(type){
 				case 'ship':
-					cont = this.getContent(type, id)
-					_frame.infos.dom.main.attr('data-infostype', 'ship')
-					title = '资料 - 舰娘 - ' + _g.data.ships[id]._name
-					break;
 				case 'equipment':
+				case 'entity':
 					cont = this.getContent(type, id)
-					_frame.infos.dom.main.attr('data-infostype', 'equipment')
-					title = '资料 - 装备 - ' + _g.data.items[id]._name
+					_frame.infos.dom.main.attr('data-infostype', type)
+					title = cont.attr('data-infos-title')
 					break;
 				case 'fleet':
 					cont = this.getContent(type, id)
 					_frame.infos.dom.main.attr('data-infostype', 'fleet')
-					title = '舰队 - ' + id
 					_frame.app_main.mode_selection_off()
 					TablelistEquipments.types = []
-					break;
-				case 'entity':
-					cont = this.getContent(type, id)
-					_frame.infos.dom.main.attr('data-infostype', 'entity')
-					title = '资料 - 人物团体 - ' + _g.data.entities[id]._name
 					break;
 			}
 			//var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
@@ -7747,6 +7658,17 @@ _frame.infos = {
 					_frame.infos.dom.main.empty()
 				}*/
 				//data-infos-history-skip-this
+				if( type == 'ship' ){
+					let curLvl = parseInt(_config.get('ship_infos_lvl') || 99)
+					contentDOM.find('input[type="radio"][name^="ship_infos_lvl_"]').each(function(){
+						let $el = $(this)
+							,val = $el.val()
+						$el.prop('checked', curLvl == val)
+							.on('change', function(){
+								_config.set('ship_infos_lvl', val)
+							})
+					})
+				}
 
 				contentDOM
 					.on('transitionend.hide', function(e){
@@ -7885,724 +7807,6 @@ _frame.infos.init = function(){
 	return true
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 特殊内容
-
-	// 舰娘信息
-		_frame.infos.__ship = function( id ){
-			var d = _g.data.ships[ id ]
-
-			_g.log(d)
-
-			function _val( val, show_zero ){
-				if( !show_zero && (val == 0 || val == '0') )
-					return '<small class="zero">-</small>'
-				if( val == -1 || val == '-1' )
-					return '<small class="zero">?</small>'
-				return val
-			}
-			function _add_stat( name, title, tar ){
-				let val99, val150
-
-				switch( name ){
-					case 'hp':
-						val99 = _val( d.getAttribute('hp', 99) )
-						val150 = _val( d.getAttribute('hp', 150) )
-						break;
-					case 'asw':
-						val99 = _val( d.getAttribute('asw', 99), /^(5|8|9|12|24)$/.test(d['type']) )
-						val150 = _val( d.getAttribute('asw', 150), /^(5|8|9|12|24)$/.test(d['type']) )
-						break;
-					case 'evasion':
-					case 'los':
-						val99 = _val( d.getAttribute(name, 99) )
-						val150 = _val( d.getAttribute(name, 150) )
-						break;
-					case 'speed':
-						val99 = _g.getStatSpeed( d['stat']['speed'] )
-						break;
-					case 'range':
-						val99 = _g.getStatRange( d['stat']['range'] )
-						break;
-					case 'luck':
-						val99 = d['stat']['luck'] + '<sup>' + d['stat']['luck_max'] + '</sup>'
-						val150 = (d['stat']['luck'] + 3) + '<sup>' + d['stat']['luck_max'] + '</sup>'
-						break;
-					case 'fuel':
-					case 'ammo':
-						val99 = d.getAttribute(name, 99)
-						val150 = d.getAttribute(name, 150)
-						break;
-					default:
-						val99 = _val( d.getAttribute(name, 99) )
-						break;
-				}
-
-				$('<span/>')
-					.html(
-						'<small class="stat-'+name+'">' + title + '</small>'
-						+ '<em'+( val150 ? ' class="lvl99"' : '' )+'>' + val99 + '</em>'
-						+ ( val150 ? '<em class="lvl150">' + val150 + '</em>' : '' )
-						//+ '<em class="lvl99'+( !val150 ? ' lvl150' : '' )+'">' + val99 + '</em>'
-						//+ ( val150 ? '<em class="lvl150">' + val150 + '</em>' : '' )
-					)
-					.appendTo(tar)
-			}
-
-			//_frame.modal.resetContent()
-
-			var dom = $('<div class="infos-ship"/>')
-				,ship_name = d.getName(_g.joint) || '舰娘'
-				,illustrations = []
-				,has_no = d['no'] && parseInt(d['no']) < 500 ? true : false
-
-			// 名称 & 舰种 & 舰级
-				$('<div class="title"/>')
-					.html(
-						'<h2 data-content="' + ship_name + '">' + ship_name + '</h2>'
-						+ '<small>'
-							+ '<span data-tip="' + (has_no ? '图鉴编号' : '无图鉴编号') + '">No.'
-								+ ( has_no
-									? d['no']
-									: '-'
-								)
-							+ '</span>'
-							+ ( d['class'] ? _g['data']['ship_classes'][d['class']]['name_zh'] + '级' : '' )
-							+ ( d['class_no'] ? '<em>' + d['class_no'] + '</em>号舰' : '' )
-							+ ( d['type'] ? ' / ' + _g['data']['ship_types'][d['type']]['full_zh'] : '' )
-						+ '</small>'
-					).appendTo(dom)
-
-			// 属性
-				//var lvlRadio99_id = '_input_g' + parseInt(_g.inputIndex)
-				//	,lvlRadio150_id = '_input_g' + (parseInt(_g.inputIndex) + 1)
-				var lvlRadio99_id = id + '_stat_lv_99'
-					,lvlRadio150_id = id + '_stat_lv_150'
-					,curLvl = parseInt(_config.get('ship_infos_lvl') || 99)
-					,stats = $('<div class="stats"/>')
-								.html(
-									'<div class="title">'
-										+ '<h4 data-content="基础属性">基础属性</h4>'
-										+ '<span>'
-											+ '<label for="'+lvlRadio99_id+'" class="lvl99">99</label>'
-											+ '<label for="'+lvlRadio150_id+'" class="lvl150">150</label>'
-										+ '</span>'
-									+ '</div>'
-								)
-								.prepend(
-									$('<input type="radio" name="ship_infos_lvl_'+id+'" id="'+lvlRadio99_id+'" value="99"/>')
-										.prop('checked', curLvl == 99)
-										.on('change', function(){
-											_config.set('ship_infos_lvl', $(this).val())
-										})
-								)
-								.prepend(
-									$('<input type="radio" name="ship_infos_lvl_'+id+'" id="'+lvlRadio150_id+'" value="150"/>')
-										.prop('checked', curLvl == 150)
-										.on('change', function(){
-											_config.set('ship_infos_lvl', $(this).val())
-										})
-								)
-								.appendTo(dom)
-					,stat1 = $('<div class="stat"/>').appendTo(stats)
-					,stat2 = $('<div class="stat"/>').appendTo(stats)
-					,stat3 = $('<div class="stat"/>').appendTo(stats)
-					,stat_consum = $('<div class="stat consum"/>').appendTo(stats)
-
-				_g.inputIndex+=2
-
-				_add_stat( 'hp', 		'耐久',	stat1 )
-				_add_stat( 'armor', 	'装甲',	stat1 )
-				_add_stat( 'evasion', 	'回避',	stat1 )
-				_add_stat( 'carry', 	'搭载',	stat1 )
-
-				_add_stat( 'fire', 		'火力',	stat2 )
-				_add_stat( 'torpedo', 	'雷装',	stat2 )
-				_add_stat( 'aa', 		'对空',	stat2 )
-				_add_stat( 'asw', 		'对潜',	stat2 )
-
-				_add_stat( 'speed', 	'航速',	stat3 )
-				_add_stat( 'range', 	'射程',	stat3 )
-				_add_stat( 'los', 		'索敌',	stat3 )
-				_add_stat( 'luck', 		'运',	stat3 )
-
-				_add_stat( 'fuel', 		'油耗',	stat_consum )
-				_add_stat( 'ammo', 		'弹耗',	stat_consum )
-
-			// 初始装备 & 搭载量
-				var equips = $('<div class="equipments"/>').html('<h4 data-content="初始装备 & 搭载量">初始装备 & 搭载量</h4>').appendTo(dom)
-					,i = 0
-				while( i < 4 ){
-					var equip = $('<a/>').appendTo(equips)
-						,icon = $('<i/>').appendTo( equip )
-						,name = $('<small/>').appendTo( equip )
-						,slot = $('<em/>').appendTo( equip )
-
-					if( typeof d['slot'][i] == 'undefined' ){
-						equip.addClass('no')
-					}else if( typeof d['equip'][i] == 'undefined' || !d['equip'][i] || d['equip'][i] === '' ){
-						equip.addClass('empty')
-						name.html( '--未装备--' )
-						slot.html( d['slot'][i] )
-					}else{
-						var item_data = _g.data.items[d['equip'][i]]
-							,item_icon = 'assets/images/itemicon/'
-											+ item_data.getIconId()
-											+ '.png'
-						equip.attr({
-							'data-equipmentid': 	d['equip'][i],
-							'data-tip-position': 	'left',
-							'data-infos': 			'[[EQUIPMENT::'+d['equip'][i]+']]',
-							'data-tip':				'[[EQUIPMENT::'+d['equip'][i]+']]',
-							'href':					'?infos=equipment&id=' + d['equip'][i]
-						})
-						name.html(
-							item_data.getName(true)
-						)
-						slot.html( d['slot'][i] )
-						icon.css(
-							'background-image',
-							'url(' + item_icon + ')'
-						)
-					}
-					i++
-				}
-
-			// 近代化改修（合成）
-				var modernization = $('<div class="modernization"/>').html('<h4 data-content="合成">合成</h4>').appendTo(equips)
-					,stats = $('<div class="stats"/>').appendTo(modernization)
-					,has_modernization = false
-				if( d['modernization'] )
-					d['modernization'].forEach(function(currentValue, i){
-						if( currentValue ){
-							has_modernization = true
-							var stat
-							switch(i){
-								case 0: stat = 'fire'; break;
-								case 1: stat = 'torpedo'; break;
-								case 2: stat = 'aa'; break;
-								case 3: stat = 'armor'; break;
-							}
-							$('<span class="stat-' + stat + '"/>').html('+' + currentValue).appendTo(stats)
-						}
-					})
-				// まるゆ
-					if( d['id'] == 163 )
-						$('<span class="stat-luck"/>').html('+1.2').appendTo(stats)
-					if( d['id'] == 402 )
-						$('<span class="stat-luck"/>').html('+1.6').appendTo(stats)
-				if( !has_modernization )
-					modernization.addClass('no').append($('<em/>').html('-'))
-			
-			// 可额外装备
-				if( d['additional_item_types'] && d['additional_item_types'].length ){
-					var additional_equipment_types = $('<div class="add_equip"/>').appendTo(dom)
-						,_additional_equipment_types = $('<div/>').html('<h4 data-content="特有装备类型">特有装备类型</h4>').appendTo(additional_equipment_types)
-					d['additional_item_types'].forEach(function(currentValue){
-						let _d = _g['data']['item_types'][currentValue]
-						_additional_equipment_types.append(
-							$('<span/>')
-								.html(_d['name'][_g.lang])
-								.css({
-									'background-image': 'url(assets/images/itemicon/'
-											+ _d['icon']
-											+ '.png'+')'
-								})
-						)
-					})
-				}
-
-			// 声优 & 画师 & 消耗
-				let cvId = d.getRel('cv')
-					,illustratorId = d.getRel('illustrator')
-					,cvLink = $('<a/>',{
-							'class':		'entity'
-						})
-						.html(
-							'<strong>声优</strong>'
-							+ '<span>' + ( d._cv || '?' ) + '</span>'
-						)
-						.appendTo(dom)
-					,illustratorLink = $('<a/>',{
-							'class':		'entity'
-						})
-						.html(
-							'<strong>画师</strong>'
-							+ '<span>' + ( d._illustrator || '?' ) + '</span>'
-						)
-						.appendTo(dom)
-				if( cvId )
-					cvLink.attr({
-						'href':			'?infos=entity&id=' + cvId,
-						'data-infos':	'[[ENTITY::' + cvId + ']]'
-					})
-				if( illustratorId )
-					illustratorLink.attr({
-						'href':			'?infos=entity&id=' + illustratorId,
-						'data-infos':	'[[ENTITY::' + illustratorId + ']]'
-					})
-					/*
-				var consum = $('<span class="consum"/>').html('<strong>消耗</strong>').appendTo(dom)
-				_add_stat( 'fuel', 		'', _val( d['consum']['fuel'] ),		consum )
-				_add_stat( 'ammo', 		'', _val( d['consum']['ammo'] ),		consum )
-				*/
-
-			// 图鉴
-				// illustrations
-				var illusts = $('<aside class="illustrations"/>').appendTo(dom)
-					,illusts_container = $('<div/>').appendTo(illusts)
-
-			// 改造信息
-				//var remodels = $('<div class="remodels"/>').html('<h4 data-content="改造">改造</h4>').appendTo(dom)
-				let remodels = $('<div class="remodels"/>').html('<h4 data-content="改造">改造</h4>').insertBefore(illusts)
-					,remodels_container = _p.el.flexgrid.create().appendTo( remodels )
-					,seriesData = d.getSeriesData()
-				if( seriesData ){
-					seriesData.forEach(function(currentValue, i){
-						let remodel_ship_data = _g.data.ships[currentValue['id']]
-							,remodel_ship_name = remodel_ship_data.getName(_g.joint)
-							,tip = '<h3 class="shipinfo">'
-										+ '<strong data-content="' + remodel_ship_name + '">'
-											+ remodel_ship_name
-										+ '</strong>'
-										+ (
-											remodel_ship_data['type'] ?
-												'<small>' + _g['data']['ship_types'][remodel_ship_data['type']]['full_zh'] + '</small>'
-												: ''
-										)
-									+ '</h3>'
-							,data_prev = i ? seriesData[ i - 1 ] : null
-							,remodel_lvl = data_prev ? data_prev['next_lvl'] : null
-							,remodel_blueprint = data_prev ? (data_prev['next_blueprint']) : null
-							,remodel_catapult = data_prev ? (data_prev['next_catapult']) : null
-						
-						if( remodel_blueprint || remodel_catapult ){
-							if( remodel_blueprint )
-								tip+= '<span class="requirement is-blueprint">需要：改装设计图</span>'
-							if( remodel_catapult )
-								tip+= '<span class="requirement is-catapult">需要：试制甲板弹射器</span>'
-						}
-
-						remodels_container.appendDOM(
-							$('<a/>',{
-									'class':		'unit',
-									'href':			'?infos=ship&id=' + currentValue['id'],
-									'data-shipid':	currentValue['id'],
-									'data-infos': 	'[[SHIP::'+ currentValue['id'] +']]',
-									'data-tip': 	tip,
-									'data-infos-nohistory': true
-								})
-								.addClass(currentValue['id'] == d['id'] ? 'on' : '')
-								.addClass(remodel_blueprint ? 'mod-blueprint' : '')
-								.addClass(remodel_catapult ? 'mod-catapult' : '')
-								.html(
-									'<i><img src="' + _g.path.pics.ships + '/' + currentValue['id']+'/0.webp"/></i>'
-									+ (remodel_lvl ? '<strong>' + remodel_lvl + '</strong>' : '')
-								)
-						)
-						
-						if( currentValue.next_loop )
-							remodels_container.appendDOM(
-								$('<span class="unit" icon="loop-alt3" data-tip="可在两个改造版本间切换"/>').html(' ')
-							)
-
-						// 处理图鉴信息
-							if( currentValue['id'] == d['id'] ){
-								if( currentValue.illust_delete ){
-									if( data_prev ){
-										illustrations.push( data_prev['id'] )
-										if( data_prev.illust_extra && data_prev.illust_extra.length && data_prev.illust_extra[0] ){
-											data_prev.illust_extra.forEach(function(cur){
-												illustrations.push( 'extra_' + cur )
-											})
-										}
-									}
-								}else{
-									illustrations.push( currentValue['id'] )
-									if( currentValue.illust_extra && currentValue.illust_extra.length && currentValue.illust_extra[0] ){
-										currentValue.illust_extra.forEach(function(cur){
-											illustrations.push( 'extra_' + cur )
-										})
-									}
-								}
-							}
-					})
-					
-					let index = 0
-					function check_append( file ){
-						//file = file.replace(/\\/g, '/')
-						try{
-							let stat = node.fs.lstatSync(file)
-							if( stat && stat.isFile() ){
-								index++
-								$('<input type="radio" name="ship_'+d['id']+'_illustrations" value="'+index+'"/>')
-									.prop('checked', (index == 1))
-									.insertBefore(illusts_container)
-								$('<span class="container"/>')
-									.html('<img src="'+file+'" data-filename="'+ship_name+' - '+index+'.webp"/>')
-									//.css('background-image', 'url(' + file + ')')
-									.appendTo(illusts_container)
-							}
-						}catch(e){}
-					}
-					illustrations.forEach(function(currentValue){
-						check_append( node.path.normalize(_g.path.pics.ships) + currentValue + '/8.webp' )
-						check_append( node.path.normalize(_g.path.pics.ships) + currentValue + '/9.webp' )
-					})
-					/*
-					_db.ship_series.find({'id': d['series']}, function(err,docs){
-						console.log(docs, d.getSeriesData())
-						if( !err && docs && docs.length ){
-							// 遍历 docs[0].ships
-								for(var i in docs[0].ships){
-									var _i = parseInt(i)
-										,remodel_ship_data = _g.data.ships[docs[0].ships[i]['id']]
-										,remodel_ship_name = remodel_ship_data.getName(_g.joint)
-										,tip = '<h3 class="shipinfo">'
-													+ '<strong data-content="' + remodel_ship_name + '">'
-														+ remodel_ship_name
-													+ '</strong>'
-													+ (
-														remodel_ship_data['type'] ?
-															'<small>' + _g['data']['ship_types'][remodel_ship_data['type']]['full_zh'] + '</span>'
-															: ''
-													)
-												+ '</h3>'
-										,remodel_lvl = _i ? docs[0].ships[ _i - 1 ]['next_lvl'] : null
-										,remodel_blueprint = _i ? (docs[0].ships[ _i - 1 ]['next_blueprint']) : null
-
-									remodels_container.appendDOM(
-										$('<button class="unit" data-shipid="'+ docs[0].ships[i]['id'] +'"/>')
-											.attr({
-												'data-infos': 	'[[SHIP::'+ docs[0].ships[i]['id'] +']]',
-												'data-tip': 	tip,
-												'data-infos-nohistory': true
-											})
-											.addClass(docs[0].ships[i]['id'] == d['id'] ? 'on' : '')
-											.addClass(remodel_blueprint ? 'blueprint' : '')
-											.html(
-												'<i><img src="' + _g.path.pics.ships + '/' + docs[0].ships[i]['id']+'/0.webp"/></i>'
-												+ (remodel_lvl ? '<strong>' + remodel_lvl + '</strong>' : '')
-											)
-									)
-
-									// 处理图鉴信息
-										if( docs[0].ships[i]['id'] == d['id'] ){
-											if( docs[0].ships[i].illust_delete ){
-												if( _i ){
-													illustrations.push( docs[0].ships[_i - 1]['id'] )
-													if( docs[0].ships[_i - 1].illust_extra && docs[0].ships[_i - 1].illust_extra.length && docs[0].ships[_i - 1].illust_extra[0] ){
-														//illustrations = illustrations.concat('extra_'+docs[0].ships[_i - 1].illust_extra)
-														for( var j in docs[0].ships[_i - 1].illust_extra ){
-															illustrations.push( 'extra_' + docs[0].ships[_i - 1].illust_extra[j] )
-														}
-													}
-												}
-											}else{
-												illustrations.push( docs[0].ships[i]['id'] )
-												if( docs[0].ships[i].illust_extra && docs[0].ships[i].illust_extra.length && docs[0].ships[i].illust_extra[0] ){
-													for( var j in docs[0].ships[i].illust_extra ){
-														illustrations.push( 'extra_' + docs[0].ships[i].illust_extra[j] )
-													}
-													//illustrations = illustrations.concat('extra_'+docs[0].ships[i].illust_extra)
-												}
-											}
-										}
-								}
-								var index = 0
-								function check_append( file ){
-									file = file.replace(/\\/g, '/')
-									try{
-										var stat = node.fs.lstatSync(file)
-										if( stat && stat.isFile() ){
-											index++
-											$('<input type="radio" name="ship_'+d['id']+'_illustrations" value="'+index+'"/>')
-												.prop('checked', (index == 1))
-												.insertBefore(illusts_container)
-											$('<span class="container"/>')
-												.html('<img src="'+file+'" data-filename="'+ship_name+' - '+index+'.webp"/>')
-												//.css('background-image', 'url(' + file + ')')
-												.appendTo(illusts_container)
-										}
-									}catch(e){}
-								}
-								for( var i in illustrations ){
-									//if( i )
-									//	check_append( _g.path.pics.ships + '/' + illustrations[i] + '/2.jpg' )
-									check_append( _g.path.pics.ships + '/' + illustrations[i] + '/8.webp' )
-									check_append( _g.path.pics.ships + '/' + illustrations[i] + '/9.webp' )
-								}
-						}
-					})*/
-				}
-
-			return dom
-		}
-
-
-// 实体信息
-
-_frame.infos.__entity = function( id ){
-	let d = _g.data.entities[ id ]
-		,dom = $('<div class="infos-entity"/>')
-		//,serieses = []
-		//,seriesCV = []
-		//,seriesIllustrator = []
-
-	_g.log(d)
-	
-	// 标题
-		$('<div class="title"/>')
-			.html(
-				'<h2 data-content="' + d.getName() + '">' + d.getName() + '</h2>'
-				+ '<small>' + d.getName('ja_jp') + '</small>'
-			).appendTo(dom)
-	
-	// 图片
-		if( d.picture && d.picture.avatar ){
-			dom.addClass('is-hasavatar')
-			$('<img/>',{
-				'src':			d.picture.avatar,
-				'class':		'avatar'//,
-				//'data-filename':d.getName() + '.jpg'
-			}).appendTo(dom)
-		}
-
-	/*
-	// 遍历全部舰娘，分析声优、画师数据
-	// 缓存舰娘所属系列，目前每一个系列只会有一位声优、画师
-		_g.data.ship_id_by_type.forEach(function(thisType){
-			thisType.forEach(function(thisShip){
-				thisShip = _g.data.ships[thisShip]
-				if( !thisShip.series || $.inArray( thisShip.series, serieses ) < 0 ){
-					if( thisShip.series )
-						serieses.push( thisShip.series )
-					
-					let seriesData = thisShip.getSeriesData()
-
-					if( thisShip.getRel('cv') == id )
-						seriesCV.push(seriesData)
-
-					if( thisShip.getRel('illustrator') == id )
-						seriesIllustrator.push(seriesData)
-				}
-			})
-		})
-	
-	let appendInfos = function(title, seriesArray){
-		if( !seriesArray.length )
-			return
-
-		let container = $('<div class="entity-info"/>').html('<h4 data-content="'+title+'">'+title + '<small>(' + seriesArray.length + ')</small>'+'</h4>').appendTo(dom)
-			,flexgrid = _p.el.flexgrid.create().appendTo( container ).addClass('list-ship')
-		
-		seriesArray.forEach(function(seriesData){
-			flexgrid.appendDOM(
-				_tmpl.link_ship(seriesData[seriesData.length-1].id, {
-					mode:	'names'
-				}).addClass('unit')
-			)
-		})
-	}
-	
-	appendInfos('配音', seriesCV)
-	appendInfos('绘制', seriesIllustrator)
-	*/
-	
-	let appendInfos = function(title, t){
-		if( !d.relation || !d.relation[t] || !d.relation[t].length )
-			return
-
-		let container = $('<div class="entity-info"/>')
-						.html('<h4 data-content="'+title+'">'+title + '<small>(' + d.relation[t].length + ')</small>'+'</h4>')
-						.appendTo(dom)
-			,flexgrid = _p.el.flexgrid.create().appendTo( container ).addClass('list-ship')
-		
-		d.relation[t].forEach(function(seriesShipIds){
-			flexgrid.appendDOM(
-				_tmpl.link_ship(seriesShipIds[seriesShipIds.length-1], {
-					mode:	'names'
-				}).addClass('unit')
-			)
-		})
-	}
-	
-	appendInfos('配音', 'cv')
-	appendInfos('绘制', 'illustrator')
-	
-	return dom
-}
-
-
-// 装备信息
-	_frame.infos.__equipment = function( id ){
-		var d = _g.data.items[ id ]
-
-		_g.log(d)
-
-		function _stat(stat, title){
-			if( d['stat'][stat] ){
-				var html = '<small class="stat-'+stat+'">' + title + '</small>'
-				switch(stat){
-					case 'range':
-						html+= '<em>' + _g.getStatRange( d['stat'][stat] ) + '</em>';
-						break;
-					default:
-						var val = parseInt( d['stat'][stat] )
-						html+= '<em'+ (val < 0 ? ' class="negative"' : '') +'>' + ( val > 0 ? '+' : '') + val + '</em>'
-						break;
-				}
-				$('<span/>').html(html).appendTo(stat_container)
-			}//else{
-			//	return ''
-			//}
-		}
-
-		var dom = $('<div class="infos-equipment"/>')
-
-		// 名称 & 类型 & 开发改修
-			$('<div class="title"/>')
-				.html(
-					'<h2 data-content="' + d.getName() + '">' + d.getName() + '</h2>'
-					+ '<small>'
-						+ '<span data-tip="图鉴编号">No.' + d['id'] + '</span>'
-						+ ( d['type']
-							? ( d.getType()
-								+ TablelistEquipments.gen_helper_equipable_on( d['type'] )
-							): '' )
-					+ '</small>'
-					+ '<small>'
-						+ '<small class="indicator '+(d['craftable'] ? 'true' : 'false')+'">'
-							+ ( d['craftable'] ? '可开发' : '不可开发' )
-						+ '</small>'
-						+ '<small class="indicator '+(d['improvable'] ? 'true' : 'false')+'">'
-							+ ( d['improvable'] ? '可改修' : '不可改修' )
-						+ '</small>'
-						+ '<small class="indicator '+(d['upgrade_to'] && d['upgrade_to'].push && d['upgrade_to'].length ? 'true' : 'false')+'">'
-							+ ( d['upgrade_to'] && d['upgrade_to'].push && d['upgrade_to'].length ? '可升级' : '不可升级' )
-						+ '</small>'
-					+ '</small>'
-				).appendTo(dom)
-
-		// 属性
-			var stats = $('<div class="stats"/>')
-							.html('<h4 data-content="属性">属性</h4>')
-							.appendTo(dom)
-				,stat_container = $('<div class="stat"/>').appendTo(stats)
-
-			_stat('fire', '火力')
-			_stat('torpedo', '雷装')
-			_stat('aa', '对空')
-			_stat('asw', '对潜')
-			_stat('bomb', '爆装')
-			_stat('hit', '命中')
-			_stat('armor', '装甲')
-			_stat('evasion', '回避')
-			_stat('los', '索敌')
-			_stat('range', '射程')
-
-		// 开发 & 改修
-		/*
-			var arsenal = $('<div class="stats"/>')
-							.html('<h4 data-content="开发改修">开发改修</h4>')
-							.appendTo(dom)
-				,arsenal1 = $('<div class="stat"/>').appendTo(arsenal)
-
-			$('<span/>')
-				.append(
-					$('<small class="indicator">')
-						.addClass( d['craftable'] ? 'true' : 'false' )
-						.html( d['craftable'] ? '可开发' : '不可开发' )
-				)
-				.appendTo( arsenal1 )
-			$('<span/>')
-				.append(
-					$('<small class="indicator">')
-						.addClass( d['improvable'] ? 'true' : 'false' )
-						.html( d['improvable'] ? '可改修' : '不可改修' )
-				)
-				.appendTo( arsenal1 )
-			if( d['improvable'] && !(d['upgrade_to'] && d['upgrade_to'].push && d['upgrade_to'].length) ){
-				$('<span/>').html('<small class="indicator false">不可升级</small>')
-					.appendTo( arsenal1 )
-			}
-
-			// 可升级为
-				if( d['upgrade_to'] && d['upgrade_to'].push && d['upgrade_to'].length ){
-					var arsenal_to = $('<div class="stat upgrade"/>')
-							.html('<span><small class="indicator true">可升级为</small></span>')
-							.appendTo(arsenal)
-					for( var i in d['upgrade_to'] ){
-						_tmpl.link_equipment(d['upgrade_to'][i][0], null, null, d['upgrade_to'][i][1]).appendTo( arsenal_to )
-					}
-				}
-		*/
-
-		// 改修选项
-			if( d['improvement'] && d['improvement'].push && d['improvement'].length ){
-				//var improvements = $('<div class="stats improvement-options"/>')
-				//		.html('<h4 data-content="改修选项">改修选项</h4>')
-				//		.appendTo(dom)
-				//_tmpl.improvement_inEquipmentInfos(d).appendTo(improvements)
-				_p.el.flexgrid.create()
-					.addClass('improvement-options')
-					.appendDOM(_tmpl.improvement_inEquipmentInfos(d))
-					.prepend($('<h4 data-content="改修选项">改修选项</h4>'))
-					.appendTo(dom)
-			}
-
-		// 升级来源
-			if( d['upgrade_from'] && d['upgrade_from'].push && d['upgrade_from'].length ){
-				var upgrade_from = $('<div class="upgrade-from"/>')
-								.html('<h4 data-content="可由以下装备升级获得">可由以下装备升级获得</h4>')
-								.appendTo(dom)
-					,upgrade_from1 = $('<div class="stat upgrade"/>')
-						.appendTo(upgrade_from)
-				d['upgrade_from'].forEach(function(currentValue){
-					_tmpl.link_equipment(currentValue).appendTo( upgrade_from1 )
-				})
-			}
-
-		// 初始装备于
-			var equipped = $('<div class="equipped"/>').html('<h4 data-content="初始装备于">初始装备于</h4>').appendTo(dom)
-				,equipped_container = _p.el.flexgrid.create().appendTo( equipped ).addClass('list-ship')
-			if( d.default_equipped_on && d.default_equipped_on.length ){
-				d.default_equipped_on.forEach(function(currentValue){
-					equipped_container.appendDOM(
-						_tmpl.link_ship(currentValue).addClass('unit')
-					)
-				})
-			}else{
-				equipped_container.addClass('no').html('暂无初始配置该装备的舰娘...')
-			}
-
-		// 图鉴
-			var illusts = $('<aside class="illustrations"/>').appendTo(dom)
-			try{
-				var file = node.path.normalize(_g.path.pics.items) + d['id'] + '/card.webp'
-					,stat = node.fs.lstatSync(file)
-				if( stat && stat.isFile() ){
-					$('<img src="'+file+'" data-filename="'+d.getName()+'.webp"/>')
-						.appendTo(illusts)
-				}
-			}catch(e){}
-
-		return dom
-	}
-
-
 /*
 舰队数据
 	综合选项
@@ -8628,6 +7832,7 @@ _frame.infos.__entity = function( id ){
 class InfosFleet{
 	constructor( id ){
 		this.el = $('<div class="infos-fleet loading"/>')
+					.attr('data-infos-title', '舰队 ('+id+')')
 		this.doms = {}
 
 		this.fleets = []
@@ -8672,6 +7877,7 @@ class InfosFleet{
 
 		this.el.attr({
 				'data-fleetid': d._id,
+				'data-infos-id':d._id,
 				'data-theme':	d.theme
 			})
 			//.data('fleet', d)
@@ -10251,6 +9457,7 @@ class Tablelist{
 		
 		options = options || {}
 		
+		this._index = Tablelist.index++
 		this.trIndex = 0
 		this.flexgrid_empty_count = options.flexgrid_empty_count || 8
 		this.sort_data_by_stat = options.sort_data_by_stat || {}
@@ -10611,82 +9818,9 @@ class TablelistEntities extends Tablelist{
 		
 		if( container.children('.tablelist-list').length ){
 			this.init_parse()
-		}else{
+		}else if( this.init_new ){
 			this.init_new()
 		}
-	}
-
-	append_item_cv( entity ){
-		return _tmpl.link_entity( entity, null, false, entity.relation.cv.length ).addClass('unit cv')
-	}
-
-	append_item_illustrator( entity ){
-		return $('<a/>',{
-			'class':	'unit illustrator',
-			'href':		'?infos=entity&id=' + entity.id,
-			'html':		entity._name + ' (' + entity.relation.illustrator.length + ')'
-		})
-	}
-
-	append_items( title, arr, callback_append_item ){
-		let container
-		
-		this.dom.container
-			.append(
-				$('<div/>',{
-					'class':	'typetitle',
-					'html':		title
-				})
-			)
-			.append(
-				container = _p.el.flexgrid.create().addClass('tablelist-list')
-			)
-		
-		arr.forEach(function(item){
-			container.appendDOM( callback_append_item( item ) )
-		}, this)
-	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	init_new(){
-		let listCV = [],
-			listIllustrator = []
-		
-		for( let i in _g.data.entities ){
-			let entity = _g.data.entities[i]
-			if( !entity.relation )
-				continue
-			if( entity.relation.cv && entity.relation.cv.length )
-				listCV.push(entity)
-			if( entity.relation.illustrator && entity.relation.illustrator.length )
-				listIllustrator.push(entity)
-		}
-
-		this.append_items(
-			'声优',
-			listCV.sort(function(a,b){
-				return b.relation.cv.length - a.relation.cv.length
-			}),
-			this.append_item_cv
-		)
-		this.append_items(
-			'画师',
-			listIllustrator.sort(function(a,b){
-				return b.relation.illustrator.length - a.relation.illustrator.length
-			}),
-			this.append_item_illustrator
-		)
-		
-		this.generated = true
-		_frame.app_main.loaded('tablelist_'+this._index, true)
 	}
 	
 	
@@ -10698,6 +9832,8 @@ class TablelistEntities extends Tablelist{
 	
 	
 	init_parse(){
+		this.generated = true
+		_frame.app_main.loaded('tablelist_'+this._index, true)
 	}
 }
 
@@ -10729,116 +9865,9 @@ class TablelistEquipments extends Tablelist{
 		
 		if( container.children('.fixed-table-container').length ){
 			this.init_parse()
-		}else{
+		}else if(this.init_new){
 			this.init_new()
 		}
-	}
-
-	append_item( equipment_data, collection_id ){
-		let tr = $('<tr/>',{
-						'class':			'row',
-						'data-equipmentid':	equipment_data['id'],
-						'data-equipmentcollection':	collection_id,
-						'data-infos': 		'[[EQUIPMENT::'+ equipment_data['id'] +']]',
-						'data-equipmentedit':this.dom.container.hasClass('equipmentlist-edit') ? 'true' : null,
-						'data-equipmenttype':equipment_data.type
-					})
-					.on('click', function(e, forceInfos){
-						if( !forceInfos && _frame.app_main.is_mode_selection() ){
-							e.preventDefault()
-							e.stopImmediatePropagation()
-							e.stopPropagation()
-							
-							if( $.inArray(equipment_data.type, TablelistEquipments.types) > -1 )
-								_frame.app_main.mode_selection_callback(equipment_data['id'])
-						}
-					})
-					.appendTo( this.dom.tbody )
-	
-		function _val( val, show_zero ){
-			if( !show_zero && (val == 0 || val === '0' || val === '') )
-				return '<small class="zero">-</small>'
-			//if( val > 0 )
-			//	return '+' + val
-			return val
-		}
-	
-		this.columns.forEach(function(currentValue){
-			switch( currentValue[1] ){
-				case ' ':
-					$('<th/>').html(equipment_data.getName()).appendTo(tr)
-					break;
-				case 'range':
-					$('<td data-stat="range" data-value="' + equipment_data['stat']['range'] + '"/>')
-						.html(
-							equipment_data['stat']['range']
-								? _g.getStatRange( equipment_data['stat']['range'] )
-								: '<small class="zero">-</small>'
-						)
-						.appendTo(tr)
-					break;
-				case 'improvable':
-					$('<td data-stat="range" data-value="' + (equipment_data['improvable'] ? '1' : '0') + '"/>')
-						.html(
-							equipment_data['improvable']
-								? '✓'
-								: '<small class="zero">-</small>'
-						)
-						.appendTo(tr)
-					break;
-				default:
-					$('<td data-stat="'+currentValue[1]+'" data-value="' + equipment_data['stat'][currentValue[1]] + '"/>')
-						.addClass( equipment_data['stat'][currentValue[1]] < 0 ? 'negative' : '' )
-						.html( _val( equipment_data['stat'][currentValue[1]] ) )
-						.appendTo(tr)
-					break;
-			}
-		})
-	
-		return tr
-	}
-
-	append_all_items(){
-		this.generated = false
-		this.dom.types = []
-		function _do( i, j ){
-			if( _g.data.item_id_by_type[i] ){
-				if( !j ){
-					var data_equipmenttype = _g.data.item_types[ _g.item_type_order[i] ]
-					this.dom.types.push(
-						$('<tr class="typetitle" data-equipmentcollection="'+_g.data.item_id_by_type[i]['collection']+'" data-type="'+data_equipmenttype.id+'">'
-								+ '<th colspan="' + (this.columns.length + 1) + '">'
-									+ '<span style="background-image: url(../app/assets/images/itemicon/'+data_equipmenttype['icon']+'.png)"></span>'
-									+ data_equipmenttype['name']['zh_cn']
-									+ TablelistEquipments.gen_helper_equipable_on( data_equipmenttype['id'] )
-								+ '</th></tr>'
-							).appendTo( this.dom.tbody )
-					)
-				}
-	
-				this.append_item(
-					_g.data.items[ _g.data.item_id_by_type[i]['equipments'][j] ],
-					_g.data.item_id_by_type[i]['collection']
-				)
-	
-				setTimeout(function(){
-					if( j >= _g.data.item_id_by_type[i]['equipments'].length - 1 ){
-						_do( i+1, 0 )
-					}else{
-						_do( i, j+1 )
-					}
-				}, 0)
-			}else{
-				//this.mark_high()
-				// force thead redraw
-					this.thead_redraw()
-					this.generated = true
-					this.apply_types_check()
-				_frame.app_main.loaded('tablelist_'+this._index, true)
-			}
-		}
-		_do = _do.bind(this)
-		_do( 0, 0 )
 	}
 
 	apply_types(){
@@ -10900,83 +9929,7 @@ class TablelistEquipments extends Tablelist{
 	
 	
 	
-	init_new(){
-		// 生成过滤器与选项
-			this.dom.filter_container = $('<div class="options"/>').appendTo( this.dom.container )
-			this.dom.filters = $('<div class="filters"/>').appendTo( this.dom.filter_container )
-	
-		// 装备大类切换
-			var checked = false
-			this.dom.type_radios = {}
-			for(var i in _g.data.item_type_collections){
-				//var radio_id = '_input_g' + parseInt(_g.inputIndex)
-				let radio_id = Tablelist.genId()
-				this.dom.type_radios[i] = $('<input type="radio" name="equipmentcollection" id="'+radio_id+'" value="'+i+'"/>')
-					.prop('checked', !checked )
-					.on('change', function(){
-						// force thead redraw
-						this.dom.table_container_inner.scrollTop(0)
-						this.thead_redraw()
-					}.bind(this))
-					.prependTo( this.dom.container )
-				$('<label class="tab container" for="'+radio_id+'" data-equipmentcollection="'+i+'"/>')
-					.html(
-						'<i></i>'
-						+ '<span>' + _g.data.item_type_collections[i]['name']['zh_cn'].replace(/\&/g, '<br/>') + '</span>'
-					)
-					.appendTo( this.dom.filters )
-				checked = true
-				//_g.inputIndex++
-			}
-		
-		// 装备类型过滤
-			this.dom.filter_types = $('<input name="types" type="hidden"/>').prependTo( this.dom.container )
-	
-		// 生成表格框架
-			this.dom.table_container = $('<div class="fixed-table-container"/>').appendTo( this.dom.container )
-			this.dom.table_container_inner = $('<div class="fixed-table-container-inner"/>').appendTo( this.dom.table_container )
-			this.dom.table = $('<table class="equipments hashover hashover-column"/>').appendTo( this.dom.table_container_inner )
-			function gen_thead(arr){
-				this.dom.thead = $('<thead/>')
-				var tr = $('<tr/>').appendTo(this.dom.thead)
-				arr.forEach(function(currentValue){
-					if( typeof currentValue == 'object' ){
-						$('<td data-stat="' + currentValue[1] + '"/>')
-							.html('<div class="th-inner-wrapper"><span><span>'+currentValue[0]+'</span></span></div>').appendTo(tr)
-					}else{
-						$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+currentValue[0]+'</span></span></div>').appendTo(tr)
-					}
-				})
-				return this.dom.thead
-			}
-			gen_thead = gen_thead.bind(this)
-			gen_thead( this.columns ).appendTo( this.dom.table )
-			this.dom.tbody = $('<tbody/>').appendTo( this.dom.table )
-	
-		// 生成装备数据DOM
-			this.append_all_items()
-	
-		// 生成底部内容框架
-			this.dom.msg_container = $('<div class="msgs"/>').appendTo( this.dom.container )
-			if( !_config.get( 'hide-equipmentsinfos' ) )
-				this.dom.msg_container.attr( 'data-msgs', 'equipmentsinfos' )
-	
-		// 生成部分底部内容
-			var equipmentsinfos = $('<div class="equipmentsinfos"/>').html('点击装备查询初装舰娘等信息').appendTo( this.dom.msg_container )
-				$('<button/>').html('&times;').on('click', function(){
-					this.dom.msg_container.removeAttr('data-msgs')
-					_config.set( 'hide-equipmentsinfos', true )
-				}.bind(this)).appendTo( equipmentsinfos )
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	init_parse(){
 		// 生成过滤器与选项
 			this.dom.filter_container = this.dom.container.children('.options')
@@ -11849,282 +10802,9 @@ class TablelistShips extends Tablelist{
 		
 		if( container.children('.fixed-table-container').length ){
 			this.init_parse()
-		}else{
+		}else if(this.init_new){
 			this.init_new()
 		}
-	}
-
-	append_item( ship_data, header_index ){
-			//,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" modal="true"/>')
-			//,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" data-infos="__ship__"/>')
-		let donotcompare = _g.data.ship_types[ship_data['type']]['donotcompare'] ? true : false
-			,tr = $('<tr/>',{
-						'class':		'row',
-						'data-shipid':	ship_data['id'],
-						'data-header':	header_index,
-						'data-trindex': this.trIndex,
-						'data-infos': 	'[[SHIP::'+ship_data['id']+']]',
-						'data-shipedit':this.dom.container.hasClass('shiplist-edit') ? 'true' : null,
-						'data-donotcompare': donotcompare ? true : null
-					})
-					.on('click', function(e, forceInfos){
-						if( !forceInfos && e.target.tagName.toLowerCase() != 'em' && _frame.app_main.is_mode_selection() ){
-							e.preventDefault()
-							e.stopImmediatePropagation()
-							e.stopPropagation()
-							if(!donotcompare)
-								_frame.app_main.mode_selection_callback(ship_data['id'])
-						}
-					})
-					//.appendTo( this.dom.tbody )
-					.insertAfter( this.last_item )
-			,name = ship_data['name'][_g.lang]
-					+ (ship_data['name']['suffix']
-						? '<small>' + _g.data.ship_namesuffix[ship_data['name']['suffix']][_g.lang] + '</small>'
-						: '')
-			,checkbox = $('<input type="checkbox" class="compare"/>')
-							.prop('disabled', donotcompare)
-							.on('click, change',function(e, not_trigger_check){
-								if( checkbox.prop('checked') )
-									tr.attr('compare-checked', true )
-								else
-									tr.removeAttr('compare-checked')
-								this.compare_btn_show( checkbox.prop('checked') )
-								if( !not_trigger_check )
-									this.header_checkbox[header_index].trigger('docheck')
-							}.bind(this))
-	
-		this.last_item = tr
-		this.trIndex++
-	
-		this.header_checkbox[header_index].data(
-				'ships',
-				this.header_checkbox[header_index].data('ships').add( tr )
-			)
-		tr.data('checkbox', checkbox)
-		
-		this.checkbox[ship_data['id']] = checkbox
-	
-		function _val( val, show_zero ){
-			if( !show_zero && (val == 0 || val == '0') )
-				return '<small class="zero">-</small>'
-			if( val == -1 || val == '-1' )
-				return '<small class="zero">?</small>'
-			return val
-		}
-	
-		this.columns.forEach(function(currentValue, i){
-			switch( currentValue[1] ){
-				case ' ':
-					$('<th/>')
-						.html(
-							//'<img src="../pics/ships/'+ship_data['id']+'/0.jpg"/>'
-							//'<img src="' + _g.path.pics.ships + '/' + ship_data['id']+'/0.webp" contextmenu="disabled"/>'
-							'<img src="../pics/ships/'+ship_data['id']+'/0.webp" contextmenu="disabled"/>'
-							+ '<strong>' + name + '</strong>'
-							+ '<em></em>'
-							//+ '<small>' + ship_data['pron'] + '</small>'
-						)
-						.prepend(
-							checkbox
-						)
-						.appendTo(tr)
-					break;
-				case 'nightpower':
-					// 航母没有夜战火力
-					var datavalue = /^(9|10|11)$/.test( ship_data['type'] )
-									? 0
-									: (parseInt(ship_data['stat']['fire_max'] || 0)
-										+ parseInt(ship_data['stat']['torpedo_max'] || 0)
-									)
-					$('<td data-stat="nightpower"/>')
-						.attr(
-							'data-value',
-							datavalue
-						)
-						.html( _val( datavalue ) )
-						.appendTo(tr)
-					break;
-				case 'asw':
-					$('<td data-stat="asw" />')
-						.attr(
-							'data-value',
-							ship_data['stat']['asw_max']
-						)
-						.html( _val(
-							ship_data['stat']['asw_max'],
-							/^(5|8|9|12|24)$/.test( ship_data['type'] )
-						) )
-						.appendTo(tr)
-					break;
-				case 'hp':
-					$('<td data-stat="hp" data-value="' + ship_data['stat']['hp'] + '"/>')
-						.html(_val( ship_data['stat']['hp'] ))
-						.appendTo(tr)
-					break;
-				case 'carry':
-					$('<td data-stat="carry" data-value="' + ship_data['stat']['carry'] + '"/>')
-						.html(_val( ship_data['stat']['carry'] ))
-						.appendTo(tr)
-					break;
-				case 'speed':
-					$('<td data-stat="speed" data-value="' + ship_data['stat']['speed'] + '"/>')
-						.html( _g.getStatSpeed( ship_data['stat']['speed'] ) )
-						.appendTo(tr)
-					break;
-				case 'range':
-					$('<td data-stat="range" data-value="' + ship_data['stat']['range'] + '"/>')
-						.html( _g.getStatRange( ship_data['stat']['range'] ) )
-						.appendTo(tr)
-					break;
-				case 'luck':
-					$('<td data-stat="luck" data-value="' + ship_data['stat']['luck'] + '"/>')
-						.html(ship_data['stat']['luck'] + '<sup>' + ship_data['stat']['luck_max'] + '</sup>')
-						.appendTo(tr)
-					break;
-				case 'consum_fuel':
-					$('<td data-stat="consum_fuel"/>')
-						.attr(
-							'data-value',
-							ship_data['consum']['fuel']
-						)
-						.html( _val(ship_data['consum']['fuel']) )
-						.appendTo(tr)
-					break;
-				case 'consum_ammo':
-					$('<td data-stat="consum_ammo"/>')
-						.attr(
-							'data-value',
-							ship_data['consum']['ammo']
-						)
-						.html( _val(ship_data['consum']['ammo']) )
-						.appendTo(tr)
-					break;
-				default:
-					$('<td data-stat="'+currentValue[1]+'"/>')
-						.attr(
-							'data-value',
-							ship_data['stat'][currentValue[1] + '_max']
-						)
-						.html( _val( ship_data['stat'][currentValue[1] + '_max'] ) )
-						.appendTo(tr)
-					break;
-			}
-		})
-	
-		// 检查数据是否存在 remodel.next
-		// 如果 remodel.next 与当前数据 type & name 相同，标记当前为可改造前版本
-		if( ship_data.remodel && ship_data.remodel.next
-			&& _g.data.ships[ ship_data.remodel.next ]
-			&& _g.ship_type_order_map[ship_data['type']] == _g.ship_type_order_map[_g.data.ships[ ship_data.remodel.next ]['type']]
-			&& ship_data['name']['ja_jp'] == _g.data.ships[ ship_data.remodel.next ]['name']['ja_jp']
-		){
-			tr.addClass('premodeled')
-		}
-	
-		return tr
-	}
-
-	append_all_items(){
-		function _do( i, j ){
-			if( _g.data.ship_id_by_type[i] ){
-				if( !j ){
-					let data_shiptype
-						,checkbox
-	
-					if( typeof _g.ship_type_order[i] == 'object' ){
-						data_shiptype = _g.data.ship_types[ _g.ship_type_order[i][0] ]
-					}else{
-						data_shiptype = _g.data.ship_types[ _g.ship_type_order[i] ]
-					}
-	
-					//let checkbox_id = '_input_g' + parseInt(_g.inputIndex)
-					let checkbox_id = Tablelist.genId()
-					
-					this.last_item =
-							$('<tr class="typetitle" data-trindex="'+this.trIndex+'">'
-								+ '<th colspan="' + (this.columns.length + 1) + '">'
-								+ '<label for="' + checkbox_id + '">'
-								//+ data_shiptype['full_zh']
-								//+ _g.data['ship_type_order'][i+1]['name']['zh_cn']
-								+ _g.data['ship_type_order'][i]['name']['zh_cn']
-								//+ ( _g.data['ship_type_order'][i+1]['name']['zh_cn'] == data_shiptype['full_zh']
-								+ ( _g.data['ship_type_order'][i]['name']['zh_cn'] == data_shiptype['full_zh']
-									? ('<small>[' + data_shiptype['code'] + ']</small>')
-									: ''
-								)
-								+ '</label></th></tr>')
-								.appendTo( this.dom.tbody )
-					this.trIndex++
-	
-					// 创建空DOM，欺骗flexbox layout排版
-						var k = 0
-						while(k < this.flexgrid_empty_count){
-							var _index = this.trIndex + _g.data.ship_id_by_type[i].length + k
-							$('<tr class="empty" data-trindex="'+_index+'" data-shipid/>').appendTo(this.dom.tbody)
-							k++
-						}
-	
-					checkbox = $('<input type="checkbox" id="' + checkbox_id + '"/>')
-							//.prop('disabled', _g.data['ship_type_order'][i+1]['donotcompare'] ? true : false)
-							.prop('disabled', _g.data['ship_type_order'][i]['donotcompare'] ? true : false)
-							.on({
-								'change': function(){
-									checkbox.data('ships').filter(':visible').each(function(index, element){
-										$(element).data('checkbox').prop('checked', checkbox.prop('checked')).trigger('change', [true])
-									})
-								},
-								'docheck': function(){
-									// ATTR: compare-checked
-									var trs = checkbox.data('ships').filter(':visible')
-										,checked = trs.filter('[compare-checked=true]')
-									if( !checked.length ){
-										checkbox.prop({
-											'checked': 			false,
-											'indeterminate': 	false
-										})
-									}else if( checked.length < trs.length ){
-										checkbox.prop({
-											'checked': 			false,
-											'indeterminate': 	true
-										})
-									}else{
-										checkbox.prop({
-											'checked': 			true,
-											'indeterminate': 	false
-										})
-									}
-								}
-							})
-							.data('ships', $())
-							.prependTo( this.last_item.find('th') )
-	
-					this.header_checkbox[i] = checkbox
-	
-					//_g.inputIndex++
-				}
-	
-				this.append_item( _g.data.ships[ _g.data.ship_id_by_type[i][j] ], i )
-	
-				setTimeout(function(){
-					if( j >= _g.data.ship_id_by_type[i].length - 1 ){
-						this.trIndex+= this.flexgrid_empty_count
-						_do( i+1, 0 )
-					}else{
-						_do( i, j+1 )
-					}
-				}.bind(this), 0)
-			}else{
-				this.mark_high()
-				this.thead_redraw()
-				_frame.app_main.loaded('tablelist_'+this._index, true)
-				//_g.log( this.last_item )
-				delete( this.last_item )
-				//_g.log( this.last_item )
-			}
-		}
-		_do = _do.bind(this)
-		_do( 0, 0 )
 	}
 
 	compare_btn_show( is_checked ){
@@ -12309,152 +10989,6 @@ class TablelistShips extends Tablelist{
 	
 	
 	
-	init_new(){
-		// 生成过滤器与选项
-			this.dom.filter_container = $('<div class="options"/>').appendTo( this.dom.container )
-			this.dom.filters = $('<div class="filters"/>').appendTo( this.dom.filter_container )
-			this.dom.exit_compare = $('<div class="exit_compare"/>')
-									.append(
-										$('<button icon="arrow-set2-left"/>')
-											.html('结束对比')
-											.on('click', function(){
-												this.compare_end()
-											}.bind(this))
-									)
-									.append(
-										$('<button icon="checkbox-checked"/>')
-											.html('继续选择')
-											.on('click', function(){
-												this.compare_continue()
-											}.bind(this))
-									)
-									.appendTo( this.dom.filter_container )
-			this.dom.btn_compare_sort = $('<button icon="sort-amount-desc" class="disabled"/>')
-												.html('点击表格标题可排序')
-												.on('click', function(){
-													if( !this.dom.btn_compare_sort.hasClass('disabled') )
-														this.sort_table_restore()
-												}.bind(this)).appendTo( this.dom.exit_compare )
-	
-		// 初始化设置
-			this.append_option( 'checkbox', 'hide-premodel', '仅显示同种同名舰最终版本',
-				_config.get( 'shiplist-filter-hide-premodel' ) === 'false' ? null : true, null, {
-					'onchange': function( e, input ){
-						_config.set( 'shiplist-filter-hide-premodel', input.prop('checked') )
-						this.dom.filter_container.attr('filter-hide-premodel', input.prop('checked'))
-						this.thead_redraw()
-					}.bind(this)
-				} )
-			this.append_option( 'radio', 'viewtype', null, [
-					['card', ''],
-					['list', '']
-				], null, {
-					'radio_default': _config.get( 'shiplist-viewtype' ),
-					'onchange': function( e, input ){
-						if( input.is(':checked') ){
-							_config.set( 'shiplist-viewtype', input.val() )
-							this.dom.filter_container.attr('viewtype', input.val())
-							this.thead_redraw()
-						}
-					}.bind(this)
-				} )
-			this.dom.filters.find('input').trigger('change')
-	
-		// 生成表格框架
-			this.dom.table_container = $('<div class="fixed-table-container"/>').appendTo( this.dom.container )
-			this.dom.table_container_inner = $('<div class="fixed-table-container-inner"/>').appendTo( this.dom.table_container )
-			this.dom.table = $('<table class="ships hashover hashover-column"/>').appendTo( this.dom.table_container_inner )
-			function gen_thead(arr){
-				this.dom.thead = $('<thead/>')
-				var tr = $('<tr/>').appendTo(this.dom.thead)
-				arr.forEach(function(currentValue, i){
-					if( typeof currentValue == 'object' ){
-						var td = $('<td data-stat="' + currentValue[1] + '"/>')
-									.html('<div class="th-inner-wrapper"><span><span>'+currentValue[0]+'</span></span></div>')
-									.on('click', function(){
-										this.sort_table_from_theadcell(td)
-									}.bind(this))
-									.appendTo(tr)
-					}else{
-						$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+currentValue[0]+'</span></span></div>').appendTo(tr)
-					}
-				}, this)
-				return this.dom.thead
-			}
-			gen_thead = gen_thead.bind(this)
-			gen_thead( this.columns ).appendTo( this.dom.table )
-			this.dom.tbody = $('<tbody/>').appendTo( this.dom.table )
-		
-		// 右键菜单事件
-			this.dom.table.on('contextmenu.contextmenu_ship', 'tr[data-shipid]', function(e){
-				this.contextmenu_show($(e.currentTarget), null, e)
-			}.bind(this)).on('click.contextmenu_ship', 'tr[data-shipid]>th em', function(e){
-				this.contextmenu_show($(e.currentTarget).parent().parent())
-				e.stopImmediatePropagation()
-				e.stopPropagation()
-			}.bind(this))
-	
-		// 获取所有舰娘数据，按舰种顺序 (_g.ship_type_order / _g.ship_type_order_map) 排序
-		// -> 获取舰种名称
-		// -> 生成舰娘DOM
-			if( _g.data.ship_types ){
-				this.append_all_items()
-			}else{
-				$('<p/>').html('暂无数据...').appendTo( this.dom.table_container_inner )
-			}
-			//_db.ships.find({}).sort({'type': 1, 'class': 1, 'class_no': 1, 'time_created': 1, 'name.suffix': 1}).exec(function(err, docs){
-			//	if( !err ){
-			//		for(var i in docs){
-			//			_g.data.ships[docs[i]['id']] = docs[i]
-	
-			//			if( typeof _g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] == 'undefined' )
-			//				_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ] = []
-			//			_g.data.ship_id_by_type[ _g.ship_type_order_map[docs[i]['type']] ].push( docs[i]['id'] )
-			//		}
-			//	}
-	
-				/*
-				_db.ship_types.find({}, function(err2, docs2){
-					if( !err2 ){
-						for(var i in docs2 ){
-							_g.data.ship_types[docs2[i]['id']] = docs2[i]
-						}
-	
-					}
-				})
-				*/
-			//	if( _g.data.ship_types ){
-			//		this.append_all_items()
-			//	}else{
-			//		$('<p/>').html('暂无数据...').appendTo( this.dom.table_container_inner )
-			//	}
-			//})
-	
-		// 生成底部内容框架
-			this.dom.msg_container = $('<div class="msgs"/>').appendTo( this.dom.container )
-			if( !_config.get( 'hide-compareinfos' ) )
-				this.dom.msg_container.attr( 'data-msgs', 'compareinfos' )
-	
-		// 生成部分底部内容
-			let compareinfos = $('<div class="compareinfos"/>').html('点击舰娘查询详细信息，勾选舰娘进行对比').appendTo( this.dom.msg_container )
-				$('<button/>').html('&times;').on('click', function(){
-					this.dom.msg_container.removeAttr('data-msgs')
-					_config.set( 'hide-compareinfos', true )
-				}.bind(this)).appendTo( compareinfos )
-			$('<div class="comparestart"/>').html('开始对比')
-								.on('click', function(){
-									this.compare_start()
-								}.bind(this)).appendTo( this.dom.msg_container )
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	init_parse(){
 		// 生成过滤器与选项
 			this.dom.filter_container = this.dom.container.children('.options')
@@ -12485,7 +11019,8 @@ class TablelistShips extends Tablelist{
 			// 视图切换
 				this.dom.filters.find('[name="viewtype"]').each(function(index, $el){
 					$el = $($el)
-					if( $el.val() == _config.get( 'shiplist-viewtype' ) )
+					let viewtype = _config.get( 'shiplist-viewtype' ) || 'card'
+					if( $el.val() == viewtype )
 						$el.prop('checked', true)
 					$el.on('change', function( e ){
 						if( $el.is(':checked') ){
@@ -12523,9 +11058,9 @@ class TablelistShips extends Tablelist{
 				this.dom.msg_container.attr( 'data-msgs', 'compareinfos' )
 	
 		// 处理所有舰娘数据
-			if( _g.data.ship_types ){
+			//if( _g.data.ship_types ){
 				this.parse_all_items()
-			}
+			//}
 	
 		// 生成部分底部内容
 			let compareinfos = this.dom.msg_container.children('.compareinfos')
@@ -12547,7 +11082,7 @@ class TablelistShips extends Tablelist{
 				header_index++
 				this.last_item = tr
 				let checkbox = tr.find('input[type="checkbox"]')
-						.prop('disabled', _g.data['ship_type_order'][header_index]['donotcompare'] ? true : false)
+						//.prop('disabled', _g.data['ship_type_order'][header_index]['donotcompare'] ? true : false)
 						.on({
 							'change': function(){
 								checkbox.data('ships').filter(':visible').each(function(index, element){
@@ -12580,7 +11115,8 @@ class TablelistShips extends Tablelist{
 				this.header_checkbox[header_index] = checkbox
 			}else{
 				let donotcompare = tr.attr('data-donotcompare')
-					,ship_data = _g.data.ships[ tr.attr('data-shipid') ]
+					//,ship_data = _g.data.ships[ tr.attr('data-shipid') ]
+					,ship_id = tr.attr('data-shipid')
 					,checkbox = tr.find('input[type="checkbox"]')
 					,title_index = header_index
 				
@@ -12590,7 +11126,7 @@ class TablelistShips extends Tablelist{
 							e.stopImmediatePropagation()
 							e.stopPropagation()
 							if(!donotcompare)
-								_frame.app_main.mode_selection_callback(ship_data['id'])
+								_frame.app_main.mode_selection_callback(ship_id)
 						}
 					})
 
@@ -12614,7 +11150,7 @@ class TablelistShips extends Tablelist{
 
 				tr.data('checkbox', checkbox)
 			
-				this.checkbox[ship_data['id']] = checkbox
+				this.checkbox[ship_id] = checkbox
 			}
 		}.bind(this))
 
@@ -12698,12 +11234,10 @@ _g.bgimg_count = 0;
 // @koala-prepend "../../source/js-app/page/fleets.js"
 // @koala-prepend "../../source/js-app/page/ships.js"
 // @koala-prepend "../../source/js-app/page/equipments.js"
-// @koala-prepend "../../source/js-app/page/arsenal.js"
+// @koala-prepend "../../source/js-app/page/arsenal-web.js"
 // @koala-prepend "../../source/js-app/page/about.js"
 
-// @koala-prepend "../../source/js-app/frame/infos.js"
-// @koala-prepend "../../source/js-app/frame/infos-entity.js"
-// @koala-prepend "../../source/js-app/frame/infos-equipment.js"
+// @koala-prepend "../../source/js-app/frame/infos.web.js"
 // @koala-prepend "../../source/js-app/frame/infos-fleet.js"
 // @koala-prepend "../../source/js-app/frame/mode-selection.js"
 // @koala-prepend "../../source/js-app/frame/tip-equipment.js"

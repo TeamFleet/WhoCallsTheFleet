@@ -48,6 +48,9 @@ dev_output_steps.push(function(){
 				try{
 					output = output.replace( searchRes[0],
 						dev_output_filter( mainhtml, 'page', 'arsenal' )
+							.replace('<input id="arsenal_headtab-1" type="radio" name="arsenal_headtab">',
+								'<input id="arsenal_headtab-1" type="radio" name="arsenal_headtab" checked />'
+							)
 					)
 				}catch(e){}
 			}

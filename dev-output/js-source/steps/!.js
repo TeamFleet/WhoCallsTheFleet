@@ -25,7 +25,7 @@ function dev_output_filter(output, pagetype, name){
 		output = babel.transform(output, {
 			'highlightCode':	false,
 			'comments':			false,
-			'compact':			false,
+			'compact':			true,
 			'ast':				false
 		})
 		output = output.code
@@ -45,6 +45,14 @@ function dev_output_filter(output, pagetype, name){
 		while( (searchRes = scrapePtrn.exec(output)) !== null ){
 			try{
 				output = output.replace( searchRes[0], '/!/assets/' )
+			}catch(e){}
+		}
+
+	searchRes = null
+	scrapePtrn = new RegExp('file\:///' + node.path.join(_g.root, 'app').replace(/\\/g, '/').replace(/\./g, '\\.'), 'gi')
+		while( (searchRes = scrapePtrn.exec(output)) !== null ){
+			try{
+				output = output.replace( searchRes[0], '/!' )
 			}catch(e){}
 		}
 

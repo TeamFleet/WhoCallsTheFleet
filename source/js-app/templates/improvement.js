@@ -161,7 +161,7 @@ _tmpl.improvement__title = function(equipment, upgrade_to, upgrade_to_star){
 			+ ' href="?infos=equipment&id='+equipment['id']+'"'
 			+ ' data-infos="[[EQUIPMENT::'+equipment['id']+']]"'
 			+ ' data-tip="[[EQUIPMENT::'+equipment['id']+']]"'
-		+ '">' + equipment.getName(true) + '</a>'
+		+ '>' + equipment.getName(true) + '</a>'
 		+ ( upgrade_to
 			? '<b></b>'
 				+ '<a style="background-image:url(../app/assets/images/itemicon/'
@@ -170,7 +170,7 @@ _tmpl.improvement__title = function(equipment, upgrade_to, upgrade_to_star){
 					+ ' href="?infos=equipment&id='+upgrade_to['id']+'"'
 					+ ' data-infos="[[EQUIPMENT::'+upgrade_to['id']+']]"'
 					+ ' data-tip="[[EQUIPMENT::'+upgrade_to['id']+']]"'
-				+ '">' + upgrade_to.getName(true) + '</a>'
+				+ '>' + upgrade_to.getName(true) + '</a>'
 				+ ( upgrade_to_star
 					? '<i>+'+upgrade_to_star+'</i>'
 					: ''

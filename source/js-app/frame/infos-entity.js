@@ -3,6 +3,7 @@
 _frame.infos.__entity = function( id ){
 	let d = _g.data.entities[ id ]
 		,dom = $('<div class="infos-entity"/>')
+					.attr('data-infos-title', d._name + ' - 声优&画师')
 		//,serieses = []
 		//,seriesCV = []
 		//,seriesIllustrator = []

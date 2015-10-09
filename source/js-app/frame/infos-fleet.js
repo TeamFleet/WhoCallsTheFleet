@@ -23,6 +23,7 @@
 class InfosFleet{
 	constructor( id ){
 		this.el = $('<div class="infos-fleet loading"/>')
+					.attr('data-infos-title', '舰队 ('+id+')')
 		this.doms = {}
 
 		this.fleets = []
@@ -67,6 +68,7 @@ class InfosFleet{
 
 		this.el.attr({
 				'data-fleetid': d._id,
+				'data-infos-id':d._id,
 				'data-theme':	d.theme
 			})
 			//.data('fleet', d)

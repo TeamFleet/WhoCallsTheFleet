@@ -54,18 +54,17 @@ _frame.app_main.page['arsenal'].init = function( page ){
 			,weekday = $('<div class="weekday"/>').appendTo(body)
 			,weekday_select = $('<div/>').html('<span>星期</span>').appendTo(weekday)
 			,radios = []
-
-		$('<input/>',{
-			'type':	'checkbox',
-			'id': 	'arsenal_weekday-showmeterials'
-		}).prop(
-			'checked', Lockr.get('arsenal_weekday-showmeterials', true) ? true : false
-		).on('change', function(){
-			Lockr.set(
-				'arsenal_weekday-showmeterials',
-				$(this).prop('checked') ? 1 : 0
-			)
-		}).prependTo(body)
+			,checkbox_showmeterials = $('<input/>',{
+						'type':	'checkbox',
+						'id': 	'arsenal_weekday-showmeterials'
+					}).prop(
+						'checked', Lockr.get('arsenal_weekday-showmeterials', true) ? true : false
+					).on('change', function(){
+						Lockr.set(
+							'arsenal_weekday-showmeterials',
+							checkbox_showmeterials.prop('checked') ? 1 : 0
+						)
+					}).prependTo(body)
 
 		for(var i=0; i<7; i++){
 			var text

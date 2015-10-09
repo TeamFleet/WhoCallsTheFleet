@@ -15,6 +15,12 @@ _frame.infos = {
 		if( !this.contentCache[type] )
 			this.contentCache[type] = {}
 		
+		let firstChildren = _frame.infos.dom.container.children('.infosbody').eq(0)
+		if( firstChildren.attr('data-infos-type') == type && firstChildren.attr('data-infos-id') == id ){
+			this.contentCache[type][id] = _p.initDOM(firstChildren)
+			return this.contentCache[type][id]
+		}
+		
 		function initcont( $el ){
 			return _p.initDOM(
 				$el.addClass('infosbody')
@@ -50,6 +56,7 @@ _frame.infos = {
 			switch( infosType ){
 				case 'item':
 				case 'equip':
+				case 'equipments':
 					infosType = 'equipment'
 					break;
 			}
@@ -72,7 +79,11 @@ _frame.infos = {
 					'infosHistoryIndex': _frame.infos.historyCurrent
 				},
 				null,
-				'?infos=' + infosType + '&id=' + infosId
+				_g.state2URI({
+					'infos':infosType,
+					'id': 	infosId
+				})
+				//'?infos=' + infosType + '&id=' + infosId
 			)
 		}
 
@@ -100,51 +111,35 @@ _frame.infos = {
 		// 第一次运行，创建相关DOM和变量
 			if( !_frame.infos.dom ){
 				_frame.infos.dom = {
-					//'nav': 		$('<div class="infos"/>').appendTo( _frame.dom.nav ),
-					'main': 	$('<div class="page-container infos"/>').appendTo( _frame.dom.main )
+					'main':		_frame.dom.main.children('.page-container.infos')
 				}
-				_frame.infos.dom.container = $('<div class="wrapper"/>').appendTo( _frame.infos.dom.main )
-				/*
-				_frame.infos.dom.back = $('<button class="back" icon="arrow-set2-left"/>')
-						.on({
-							'click': function(){
-								_frame.infos.dom.forward.removeClass('disabled')
-								history.back()
-								//_frame.infos.hide()
-							},
-							'transitionend.infos_hide': function(e){
-								if( e.currentTarget == e.target
-									&& e.originalEvent.propertyName == 'opacity'
-									&& parseInt(_frame.infos.dom.back.css('opacity')) == 0
-								){
-									_frame.infos.hide_finish()
+				if( !_frame.infos.dom.main.length ){
+					_frame.infos.dom.main = $('<div class="page-container infos"/>').appendTo( _frame.dom.main )
+					_frame.infos.dom.container = $('<div class="wrapper"/>').appendTo( _frame.infos.dom.main )
+				}else{
+					_frame.infos.dom.container = _frame.infos.dom.main.children('.wrapper')
+				}
+				if( _frame.dom.btnHistoryBack )
+					_frame.dom.btnHistoryBack.on({
+								'transitionend.infos_hide': function(e){
+									if( e.currentTarget == e.target
+										&& e.originalEvent.propertyName == 'opacity'
+										&& parseFloat(_frame.dom.btnHistoryBack.css('opacity')) == 0
+									){
+										_frame.infos.hide_finish()
+									}
 								}
-							}
-						}).appendTo( _frame.infos.dom.nav )
-				_frame.infos.dom.forward = $('<button class="forward disabled" icon="arrow-set2-right"/>')
-						.on('click', function(){
-							history.forward()
-							//_frame.infos.hide()
-						}).appendTo( _frame.infos.dom.nav )
-				*/
-				_frame.dom.btnHistoryBack.on({
-							'transitionend.infos_hide': function(e){
-								if( e.currentTarget == e.target
-									&& e.originalEvent.propertyName == 'opacity'
-									&& parseFloat(_frame.dom.btnHistoryBack.css('opacity')) == 0
-								){
-									_frame.infos.hide_finish()
-								}
-							}
-						})
+							})
 			}
 
 		// 计算历史记录相关，确定 Back/Forward 按钮是否可用
-			infosHistoryIndex = typeof infosHistoryIndex != 'undefined' ? infosHistoryIndex : this.historyCurrent
-			this.historyCurrent = infosHistoryIndex
-			//_g.log( this.historyCurrent, this.historyLength )
-			if( this.historyCurrent == this.historyLength && this.historyCurrent > -1 )
-				_frame.dom.btnHistoryForward.addClass('disabled')
+			if( _frame.dom.btnHistoryForward ){
+				infosHistoryIndex = typeof infosHistoryIndex != 'undefined' ? infosHistoryIndex : this.historyCurrent
+				this.historyCurrent = infosHistoryIndex
+				//_g.log( this.historyCurrent, this.historyLength )
+				if( this.historyCurrent == this.historyLength && this.historyCurrent > -1 )
+					_frame.dom.btnHistoryForward.addClass('disabled')
+			}
 
 		// 先将内容区域设定为可见
 			_frame.dom.layout.addClass('is-infos-show')
@@ -186,6 +181,17 @@ _frame.infos = {
 					_frame.infos.dom.main.empty()
 				}*/
 				//data-infos-history-skip-this
+				if( type == 'ship' ){
+					let curLvl = parseInt(_config.get('ship_infos_lvl') || 99)
+					contentDOM.find('input[type="radio"][name^="ship_infos_lvl_"]').each(function(){
+						let $el = $(this)
+							,val = $el.val()
+						$el.prop('checked', curLvl == val)
+							.on('change', function(){
+								_config.set('ship_infos_lvl', val)
+							})
+					})
+				}
 
 				contentDOM
 					.on('transitionend.hide', function(e){

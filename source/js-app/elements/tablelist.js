@@ -50,6 +50,7 @@ class Tablelist{
 		
 		options = options || {}
 		
+		this._index = Tablelist.index++
 		this.trIndex = 0
 		this.flexgrid_empty_count = options.flexgrid_empty_count || 8
 		this.sort_data_by_stat = options.sort_data_by_stat || {}
