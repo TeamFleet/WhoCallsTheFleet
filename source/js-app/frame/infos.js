@@ -187,13 +187,15 @@ _frame.infos = {
 				}*/
 				//data-infos-history-skip-this
 
-				contentDOM
-					.on('transitionend.hide', function(e){
-						if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(contentDOM.css('opacity')) == 0 ){
-							contentDOM.detach()
-						}
-					})
-					.prependTo( _frame.infos.dom.container )
+				if( !contentDOM.data('is_infosinit') ){
+					contentDOM.data('is_infosinit', true)
+						.on('transitionend.hide', function(e){
+							if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(contentDOM.css('opacity')) == 0 ){
+								contentDOM.detach()
+							}
+						})
+				}
+				contentDOM.prependTo( _frame.infos.dom.container )
 
 				//_p.initDOM( contentDOM )
 				//_frame.infos.curContent = hashcode
@@ -202,20 +204,20 @@ _frame.infos = {
 
 		// 取消主导航上的当前项目状态
 			if( _frame.app_main.cur_page ){
-				this.lastCurrentPage = _frame.app_main.cur_page
+				//this.lastCurrentPage = _frame.app_main.cur_page
 
 				// exit selection mode
 					//_frame.app_main.mode_selection_off()
 				
 				if( _frame.dom.navs[_frame.app_main.cur_page] )
 					_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
+				if( _frame.app_main.page_dom[_frame.app_main.cur_page] )
+					_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff')
 				_frame.app_main.cur_page = null
 			}
 		
 		// 确定 theme
-			_frame.infos.dom.main.attr({
-				'data-theme': 		cont.attr('data-theme')
-			})
+			_frame.dom.main.attr('data-theme', cont.attr('data-theme') || type)
 
 		setTimeout(function(){
 			// 显示内容
@@ -223,7 +225,7 @@ _frame.infos = {
 				
 			_frame.app_main.title = title
 			
-			console.log( _frame.infos.last )
+			//console.log( _frame.infos.last )
 			
 			if( _frame.infos.last != title )
 				_ga.counter(
@@ -243,11 +245,11 @@ _frame.infos = {
 			_frame.dom.btnHistoryForward.addClass('disabled')
 			this.curContent = null
 
-		if( this.lastCurrentPage ){
-			if( _frame.dom.navs[this.lastCurrentPage] )
-				_frame.dom.navs[this.lastCurrentPage].addClass('on')
-			_frame.app_main.cur_page = this.lastCurrentPage
-		}
+		//if( this.lastCurrentPage ){
+		//	if( _frame.dom.navs[this.lastCurrentPage] )
+		//		_frame.dom.navs[this.lastCurrentPage].addClass('on')
+			//_frame.app_main.cur_page = this.lastCurrentPage
+		//}
 
 		/*
 		// 为主导航最后一个元素绑定 transitionEnd 事件
@@ -292,6 +294,14 @@ _frame.infos = {
 			_frame.infos.dom.main.attr('data-infostype', 'fleet')
 		else if( _frame.infos.dom.main.children().eq(0).hasClass('entity') )
 			_frame.infos.dom.main.attr('data-infostype', 'entity')
+	},
+	
+	click: function(el){
+		_frame.infos.show(
+			el.attr('data-infos'),
+			el,
+			el.attr('data-infos-nohistory')
+		)
 	}
 }
 
@@ -308,12 +318,7 @@ _frame.infos.init = function(){
 
 	$body.on( 'click._infos', '[data-infos]', function(e){
 			if( !(e.target.tagName.toLowerCase() == 'input' && e.target.className == 'compare') ){
-				var el = $(this)
-				_frame.infos.show(
-					el.attr('data-infos'),
-					el,
-					el.attr('data-infos-nohistory')
-				)
+				_frame.infos.click($(this))
 
 				if( e.target.tagName.toLowerCase() == 'a' )
 					e.preventDefault()

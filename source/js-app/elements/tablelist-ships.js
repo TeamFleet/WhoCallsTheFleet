@@ -276,6 +276,7 @@ class TablelistShips extends Tablelist{
 		// 右键菜单事件
 			this.dom.table.on('contextmenu.contextmenu_ship', 'tr[data-shipid]', function(e){
 				this.contextmenu_show($(e.currentTarget), null, e)
+				e.preventDefault()
 			}.bind(this)).on('click.contextmenu_ship', 'tr[data-shipid]>th>em', function(e){
 				this.contextmenu_show($(e.currentTarget).parent().parent())
 				e.stopImmediatePropagation()

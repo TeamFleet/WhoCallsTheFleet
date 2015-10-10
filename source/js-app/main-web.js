@@ -21,9 +21,7 @@
 		'ship_namesuffix',
 		
 		'items',
-		'item_types',
-		
-		'entities'
+		'item_types'
 	]
 
 	_g.data = {}
@@ -220,8 +218,7 @@ _frame.app_main = {
 	// 尚未载入完毕的内容
 		loading: [
 			'dbs',
-			'bgimgs',
-			'db_namesuffix'
+			'bgimgs'
 		],
 		// is_loaded: false,
 
@@ -231,6 +228,7 @@ _frame.app_main = {
 	// 载入完毕一项内容，并检查其余内容是否载入完毕
 	// 如果全部载入完毕，#layout 添加 .ready
 		loaded: function( item, is_instant ){
+			_g.log(item + ' loaded.')
 			if( item ){
 				var index = _frame.app_main.loading.indexOf(item)
 				if( index > -1 ){
@@ -359,6 +357,68 @@ _frame.app_main = {
 		toggle_hidecontent: function(){
 			_frame.dom.layout.toggleClass('hidecontent')
 		},
+	
+	
+	
+	
+	// 载入中
+		loading_queue: [],
+		loading_state: {},
+		//loading_cur: null,
+		loading_start: function( url, callback ){
+			url = url || location.pathname
+			callback = callback || function(){}
+			this.loading_cur = url
+			
+			if( typeof this.loading_state[url] == 'undefined' ){
+				this.loading_state[url] = 'loading'
+				this.loading_queue.push(url)
+				_frame.dom.layout.addClass('is-loading')
+				$.ajax({
+					'url':		url,
+					'type':		'get',
+					'dataType':	'html',
+					
+					'success': function(data){
+						let result = /\<main\>(.+)\<\/main\>/.exec(data)
+						//console.log(result)
+						if( url == _frame.app_main.loading_cur )
+							callback( result.length > 1 ? result[1] : '' )
+						_frame.app_main.loading_state[url] = 'complete'
+					},
+					
+					'error': function(jqXHR, textStatus, errorThrown ){
+						_frame.app_main.loading_fail(url, textStatus)
+					},
+					
+					'complete': function(){
+						_frame.app_main.loading_complete( url )
+					}
+				})
+			}else if( this.loading_state[url] == 'complete' ){
+				callback()
+			}
+		},
+		
+		loading_complete: function( url ){
+			if( !url )
+				return
+			if( url == this.loading_cur )
+				this.loading_cur = null
+			let i = this.loading_queue.indexOf(url)
+			if( i >= 0 )
+				this.loading_queue.splice(i, 1)
+			if( this.loading_queue.length )
+				return
+			_frame.dom.layout.removeClass('is-loading')
+		},
+		
+		loading_fail: function( url, text ){
+			if( !url )
+				return
+			if( this.loading_state )
+				delete this.loading_state[url]
+		},
 
 
 
@@ -420,59 +480,68 @@ _frame.app_main = {
 					_frame.app_main.load_page(page, options)
 					return page
 				}
+			
+			function callback(){
+				_frame.app_main.page_dom[page].trigger('show')
+	
+				if( !options.callback_modeSelection_select ){
+					_frame.app_main.title = _frame.app_main.navtitle[page]
+					_frame.infos.last = null
+		
+					_ga.counter(
+						location.search
+					)
+				}
+	
+				if( _frame.app_main.cur_page == page )
+					return page
+	
+				_frame.app_main.page_dom[page].removeClass('off').trigger('on')
+	
+				// 关闭之前的页面
+					if( _frame.app_main.cur_page ){
+						if( _frame.dom.navs[_frame.app_main.cur_page] )
+							_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
+						if( _frame.app_main.page_dom[_frame.app_main.cur_page] )
+							setTimeout((function(p){
+								_frame.app_main.page_dom[p].addClass('off').trigger('pageoff')
+							})(_frame.app_main.cur_page), 100)
+					}
+
+				if( _frame.dom.navs[page] )
+					_frame.dom.navs[page].addClass('on')
+	
+				if( !options.callback_modeSelection_select ){
+					//if( _frame.dom.layout.hasClass('ready') )
+					//	_frame.app_main.change_bgimg()
+	
+					if( page != 'about' )
+						Lockr.set('last_page', page)
+				}
+	
+				_frame.dom.main.attr('data-theme', page)
+				_frame.app_main.cur_page = page
+	
+				_g.log( 'LOADED: ' + page )
+			}
 
 			if( !_frame.app_main.page_dom[page] ){
 				_frame.app_main.page_dom[page] = _frame.dom.main.find('.page-container[page="'+page+'"]')
 				if( _frame.app_main.page_dom[page].length ){
 					_frame.app_main.page_init(page)
+					callback()
 				}else{
-					_frame.app_main.page_dom[page] = $('<div class="page-container" page="'+page+'"/>').appendTo( _frame.dom.main )
-					this.page_html[page] = node.fs.readFileSync(_g.path.page + page + '.html', 'utf8')
-					if(this.page_html[page]){
-						_frame.app_main.page_dom[page].html( this.page_html[page] )
+					//_frame.app_main.page_dom[page] = $('<div class="page-container" page="'+page+'"/>').appendTo( _frame.dom.main )
+					this.loading_start( '/' + page + '/index.html', function( html ){
+						_frame.app_main.page_dom[page] = $(html).appendTo( _frame.dom.main )
+						//_frame.app_main.page_dom[page].html( html )
 						_frame.app_main.page_init(page)
-					}
+						callback()
+					} )
 				}
+			}else{
+				callback()
 			}
-			
-			_frame.app_main.page_dom[page].trigger('show')
-
-			if( !options.callback_modeSelection_select ){
-				_frame.app_main.title = _frame.app_main.navtitle[page]
-				_frame.infos.last = null
-	
-				_ga.counter(
-					location.search
-				)
-			}
-
-			if( _frame.app_main.cur_page == page )
-				return page
-
-			_frame.app_main.page_dom[page].removeClass('off').trigger('on')
-
-			// 关闭之前的页面
-				if( _frame.app_main.cur_page ){
-					if( _frame.dom.navs[_frame.app_main.cur_page] )
-						_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
-					if( _frame.app_main.page_dom[_frame.app_main.cur_page] )
-						_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff')
-				}
-
-			if( _frame.dom.navs[page] )
-				_frame.dom.navs[page].addClass('on')
-
-			if( !options.callback_modeSelection_select ){
-				if( _frame.dom.layout.hasClass('ready') )
-					_frame.app_main.change_bgimg()
-
-				if( page != 'about' )
-					Lockr.set('last_page', page)
-			}
-
-			_frame.app_main.cur_page = page
-
-			_g.log( 'LOADED: ' + page )
 		},
 
 
@@ -507,8 +576,8 @@ _frame.app_main = {
 
 				$('<button class="prev" icon="arrow-left"/>')
 						.on('click', function(){
-							var pathParse = node.path.parse(_frame.app_main.bgimg_path)
-								,index = $.inArray( pathParse['base'], _frame.app_main.bgimgs ) - 1
+							var pathParse = _frame.app_main.bgimg_path.split('/')
+								,index = $.inArray( pathParse[pathParse.length-1], _frame.app_main.bgimgs ) - 1
 							if( index < 0 )
 								index = _frame.app_main.bgimgs.length - 1
 							_frame.app_main.change_bgimg( [_frame.app_main.bgimgs[index]] )
@@ -525,16 +594,14 @@ _frame.app_main = {
 				$('<button class="back"/>')
 						.html('保存图片')
 						.on('click', function(){
-							var pathParse = node.path.parse(_frame.app_main.bgimg_path)
-								,index = $.inArray( pathParse['base'], _frame.app_main.bgimgs )
-							_g.file_save_as( _frame.app_main.bgimg_path, (index + 1) + pathParse['ext'] )
+							window.open(_frame.app_main.bgimg_path)
 						})
 						.appendTo(_frame.dom.bg_controls)
 
 				$('<button class="next" icon="arrow-right"/>')
 						.on('click', function(){
-							var pathParse = node.path.parse(_frame.app_main.bgimg_path)
-								,index = $.inArray( pathParse['base'], _frame.app_main.bgimgs ) + 1
+							var pathParse = _frame.app_main.bgimg_path.split('/')
+								,index = $.inArray( pathParse[pathParse.length-1], _frame.app_main.bgimgs ) + 1
 							if( index >= _frame.app_main.bgimgs.length )
 								index = 0
 							_frame.app_main.change_bgimg( [_frame.app_main.bgimgs[index]] )
@@ -644,6 +711,7 @@ _frame.app_main = {
 			})
 
 		// 预加载 _g.dbs 数据库
+		/*
 			.then(function(){
 				_g.dbs.forEach(function(dbname){
 					_db[dbname] = new Nedb({
@@ -652,6 +720,7 @@ _frame.app_main = {
 				})
 				return _g.dbs
 			})
+		*/
 
 		// 获取背景图列表，生成背景图
 			.then(function(){
@@ -682,38 +751,29 @@ _frame.app_main = {
 							'url':		'/!/db/' + db_name + '.json',
 							'dataType':	'text',
 							'success': function(data){
+								data = LZString.decompressFromBase64(data)
 								let arr = data.split('\n')
 								switch(db_name){
-									case 'ship_namesuffix':
-										//_db.ship_namesuffix.find({}).sort({ 'id': 1 }).exec(function(dberr, docs){
-										//	if( dberr ){
-										//		deferred.reject(new Error(dberr))
-										//	}else{
-										//		_g.data.ship_namesuffix = [{}].concat(docs)
-										//		_frame.app_main.loaded('db_namesuffix')
-										//	}
-										//})
-										break;
 									default:
 										if( typeof _g.data[db_name] == 'undefined' )
 											_g.data[db_name] = {}
-										console.log(db_name)
 										arr.forEach(function(str){
-											let doc = JSON.parse(str)
-											//console.log(doc)
-											switch( db_name ){
-												case 'ships':
-													_g.data[db_name][doc['id']] = new Ship(doc)
-													break;
-												case 'items':
-													_g.data[db_name][doc['id']] = new Equipment(doc)
-													break;
-												case 'entities':
-													_g.data[db_name][doc['id']] = new Entity(doc)
-													break;
-												default:
-													_g.data[db_name][doc['id']] = doc
-													break;
+											if( str ){
+												let doc = JSON.parse(str)
+												switch( db_name ){
+													case 'ships':
+														_g.data[db_name][doc['id']] = new Ship(doc)
+														break;
+													case 'items':
+														_g.data[db_name][doc['id']] = new Equipment(doc)
+														break;
+													case 'entities':
+														_g.data[db_name][doc['id']] = new Entity(doc)
+														break;
+													default:
+														_g.data[db_name][doc['id']] = doc
+														break;
+												}
 											}
 										})
 										break;
@@ -732,16 +792,14 @@ _frame.app_main = {
 						console.log(e)
 					}).done(function(){
 						_g.log('Preload All DBs (JSON ver.): DONE')
-						setTimeout(function(){
-							//_frame.app_main.loaded('dbs')
-						}, 100)
+						//setTimeout(function(){
+						//	_frame.app_main.loaded('dbs')
+						//}, 100)
 						masterDeferred.resolve()
 					})
 
 				return masterDeferred.promise
 			})
-
-		// 读取db
 			.then(function(){
 				_g.log('Preload All DBs: START')
 				var the_promises = []
@@ -769,182 +827,18 @@ _frame.app_main = {
 						if( err ){
 							deferred.reject(new Error(err))
 						}else{
-							switch( db_name ){
-								/*
-									case 'entities':
-									case 'items':
-									case 'item_types':
-									case 'ship_classes':
-									case 'ship_types':
-										_db[db_name].find({}, function(err, docs){
-											if( typeof _g.data[db_name] == 'undefined' )
-												_g.data[db_name] = {}
-											for(var i in docs ){
-												_g.data[db_name][docs[i]['id']] = docs[i]
-											}
-											_db_load_next()
-										})
-										break;
-									*/
-								//case 'ships':
-								case 'fleets':
-									_done(db_name);
-									break;
-								case 'ship_namesuffix':
-									_db.ship_namesuffix.find({}).sort({ 'id': 1 }).exec(function(dberr, docs){
-										if( dberr ){
-											deferred.reject(new Error(dberr))
-										}else{
-											_g.data.ship_namesuffix = [{}].concat(docs)
-											_frame.app_main.loaded('db_namesuffix')
-											_done(db_name)
-										}
-									})
-									break;
-								/*
-								case 'ship_type_order':
-									_db.ship_type_order.find({}).sort({'id': 1}).exec(function(dberr, docs){
-										if( dberr ){
-											deferred.reject(new Error(dberr))
-										}else{
-											docs.forEach(function(doc,i){
-												_g.ship_type_order.push(
-													doc['types'].length > 1 ? doc['types'] : doc['types'][0]
-												)
-												//_g.data['ship_type_order'][doc['id']] = doc
-												_g.data['ship_type_order'][i] = doc
-											})
-											// ship type -> ship order
-												_g.ship_type_order.forEach(function(currentValue, i){
-													if( typeof _g.ship_type_order[i] == 'object' ){
-														_g.ship_type_order[i].forEach(function(cur, j){
-															_g.ship_type_order_map[ _g.ship_type_order[i][j] ] = i
-														})
-													}else{
-														_g.ship_type_order_map[ _g.ship_type_order[i] ] = i
-													}
-												})
-											_db.ships.find({}).sort({
-												//'class': 1, 'class_no': 1, 'series': 1, 'type': 1, 'time_created': 1, 'name.suffix': 1
-												'type': 1, 'class': 1, 'class_no': 1, 'time_created': 1, 'name.suffix': 1
-											}).exec(function(dberr2, docs){
-												if( dberr2 ){
-													deferred.reject(new Error(dberr))
-												}else{
-													docs.forEach(function(doc){
-														_g.data.ships[doc['id']] = new Ship(doc)
-
-														if( typeof _g.data.ship_id_by_type[ _g.ship_type_order_map[doc['type']] ] == 'undefined' )
-															_g.data.ship_id_by_type[ _g.ship_type_order_map[doc['type']] ] = []
-														_g.data.ship_id_by_type[ _g.ship_type_order_map[doc['type']] ].push( doc['id'] )
-													})
-													function __(i){
-														let j=0
-														while(
-															_g.data.ship_id_by_type[i]
-															&& _g.data.ship_id_by_type[i][j]
-														){
-															let id = _g.data.ship_id_by_type[i][j]
-																,i_remodel
-																,next_id = _g.data.ships[id].remodel ? _g.data.ships[id].remodel.next : null
-															if( next_id
-																&& _g.data.ships[next_id]
-																&& next_id != _g.data.ship_id_by_type[i][j+1]
-																&& (i_remodel = $.inArray(next_id, _g.data.ship_id_by_type[i])) > -1
-															){
-																_g.log(
-																	id
-																	+ ', ' + next_id
-																	+ ', ' + i_remodel
-																)
-																_g.data.ship_id_by_type[i].splice(
-																	i_remodel,
-																	1
-																)
-																_g.data.ship_id_by_type[i].splice(
-																	$.inArray(id, _g.data.ship_id_by_type[i])+1,
-																	0,
-																	next_id
-																)
-																//console.log(_g.data.ship_id_by_type[i])
-																__(i)
-																break
-															}
-															if( j >= _g.data.ship_id_by_type[i].length - 2 ){
-																i++
-																j=0
-															}else{
-																j++
-															}
-														}
-													}
-													__(0)
-													_done(db_name)
-												}
-											})
-										}
-									})
-									break;
-								*/
-								case 'updates':
+							_db[db_name].find({}, function(dberr, docs){
+								if( dberr ){
+									deferred.reject(new Error(dberr))
+								}else{
 									if( typeof _g.data[db_name] == 'undefined' )
 										_g.data[db_name] = {}
+									docs.forEach(function(doc){
+										_g.data[db_name][doc['id']] = doc
+									})
 									_done(db_name)
-									break;
-								/*
-								case 'arsenal_all':
-									_g.data['arsenal_all'] = []
-									_db.arsenal_all.find({}).sort({
-										'sort': 1
-									}).exec(function(err, docs){
-										docs.forEach(function(doc){
-											_g.data['arsenal_all'].push(doc['id'])
-										})
-										_done(db_name)
-									})
-									break;
-								case 'arsenal_weekday':
-									_g.data['arsenal_weekday'] = {}
-									_db.arsenal_weekday.find({}).sort({
-										'weekday': 1
-									}).exec(function(err, docs){
-										docs.forEach(function(doc, i){
-											_g.data['arsenal_weekday'][i]
-												= doc.improvements
-										})
-										_done(db_name)
-									})
-									break;
-								*/
-								default:
-									_db[db_name].find({}, function(dberr, docs){
-										if( dberr ){
-											deferred.reject(new Error(dberr))
-										}else{
-											if( typeof _g.data[db_name] == 'undefined' )
-												_g.data[db_name] = {}
-											docs.forEach(function(doc){
-												switch( db_name ){
-													case 'ships':
-														_g.data[db_name][doc['id']] = new Ship(doc)
-														break;
-													case 'items':
-														_g.data[db_name][doc['id']] = new Equipment(doc)
-														break;
-													case 'entities':
-														_g.data[db_name][doc['id']] = new Entity(doc)
-														break;
-													default:
-														_g.data[db_name][doc['id']] = doc
-														break;
-												}
-											})
-											_done(db_name)
-										}
-									})
-									break;
-							}
-
+								}
+							})
 						}
 					})
 					the_promises.push(deferred.promise)
@@ -952,145 +846,6 @@ _frame.app_main = {
 
 				return Q.all(the_promises);
 			})
-
-		// 根据装备大类和类型排序整理装备ID
-		/*
-			.then(function(){
-				var deferred = Q.defer()
-				_g.data.item_id_by_type = []
-				_g.item_type_order = []
-				var type_by_collection = {}
-					,type_order_map = {}
-				// 遍历大类
-					for(var i in _g.data.item_type_collections){
-						for(var j in _g.data.item_type_collections[i]['types']){
-							type_by_collection[ _g.data.item_type_collections[i]['types'][j] ] = i
-							_g.item_type_order.push( _g.data.item_type_collections[i]['types'][j] )
-							type_order_map[ _g.data.item_type_collections[i]['types'][j] ] = _g.item_type_order.length - 1
-						}
-					}
-				// 遍历装备数据
-					for(var i in _g.data.items){
-						var order = type_order_map[ _g.data.items[i]['type'] ]
-						if( !_g.data.item_id_by_type[order] )
-							_g.data.item_id_by_type[order] = {
-								'collection': type_by_collection[_g.data.items[i]['type']],
-								'equipments': [],
-								'names': []
-							}
-						_g.data.item_id_by_type[order]['equipments'].push( _g.data.items[i]['id'] )
-						_g.data.item_id_by_type[order]['names'].push( _g.data.items[i].getName() )
-					}
-				// 排序
-					_g.data.item_id_by_type.forEach(function(currentValue){
-						currentValue['equipments'].sort(function(a, b){
-							let diff = _g.data.items[a].getPower() - _g.data.items[b].getPower()
-							if( diff === 0 ){
-								let diff_aa = _g.data.items[a]['stat']['aa'] - _g.data.items[b]['stat']['aa']
-								if( diff_aa === 0 ){
-									return _g.data.items[a]['stat']['hit'] - _g.data.items[b]['stat']['hit']
-								}
-								return diff_aa
-							}
-							return diff
-						})
-					})
-				setTimeout(function(){
-					deferred.resolve()
-				}, 100)
-				return deferred.promise
-			})
-		*/
-
-		// 如果从启动器载入，检查数据是否有更新
-		/*
-			.then(function(){
-				_g.log('数据更新检查: START')
-				if( global.launcherOptions && global.launcherOptions["dataUpdated"] )
-					return global.launcherOptions["dataUpdated"]
-				return {}
-			})
-			.then(function(dataUpdated){
-				var the_promises = []
-					,updated = []
-					,done_count = 0
-					,doms = $()
-
-				for(var i in dataUpdated){
-					var version = dataUpdated[i].split('.')
-						,_version = ''
-
-					for( var j = 0; j < Math.min(3, version.length); j++ )
-						_version+= '.' + version[j]
-
-					_version = _version.substr(1)
-					updated.push({
-						'type': 	i,
-						'version': 	_version
-					})
-				}
-
-				if( !updated.length ){
-					_g.log('数据更新检查: DONE，无数据更新')
-					return false
-				}else{
-					updated.forEach(function(obj){
-						var deferred = Q.defer()
-
-						function _done(item){
-							_g.log('数据更新检查: '+item+' DONE')
-							deferred.resolve()
-							done_count++
-							if( done_count >= updated.length ){
-								if( doms.length ){
-									_g.log('数据更新检查: DONE')
-									_frame.app_main.functions_on_ready.push(function(){
-										_frame.modal.show(
-											$('<div class="updates"/>')
-												.append(doms)
-												.on('click.infosHideModal', '[data-infos], a[href^="?page="]', function(){
-													_frame.modal.hide()
-												}),
-											'<span>更新日志</span>',
-											{
-												'classname': 	'update_journal'
-											}
-										)
-									})
-								}else{
-									_g.log('数据更新检查: DONE，无更新日志')
-								}
-								//setTimeout(function(){
-								//}, 100)
-							}
-						}
-
-						_db.updates.find(obj).sort({'date': -1}).exec(function(err, docs){
-							if( err ){
-								deferred.reject(new Error(err))
-							}else{
-								docs.forEach(function(doc){
-									var section = $('<section class="update_journal" data-version-'+doc['type']+'="'+doc['version']+'"/>')
-												.html(_frame.app_main.page['about'].journaltitle(doc))
-									try{
-										$(_frame.app_main.page['about'].journal_parse(doc['journal'])).appendTo( section )
-									}catch(e){
-										_g.error(e)
-										section.remove()
-									}
-									doms = doms.add(section)
-								})
-								_done(obj['type'] + ' - ' + obj['version'])
-							}
-						})
-
-						the_promises.push(deferred.promise)
-					})
-
-					return Q.all(the_promises);
-				}
-			})
-		*/
 
 		// 部分全局事件委托
 			.then(function(){
@@ -1104,7 +859,8 @@ _frame.app_main = {
 							if( !el.attr('data-infos') ){
 								let exp = /^[\?]{0,1}infos\=([^\&]+)\&id\=([^\&]+)/ig.exec(el.attr('href'))
 								el.attr('data-infos', '[[' + exp[1].toUpperCase() + '::' + exp[2] + ']]')
-								el.trigger('click')
+								//el.trigger('click')
+								_frame.infos.click(el)
 							}
 						},
 					link_default = function(e){
@@ -1116,14 +872,15 @@ _frame.app_main = {
 							if( parse.page ){
 								_frame.app_main.load_page( parse.page )
 							}else if( parse.infos ){
-								el.attr('data-infos', '[[' + parse.infos.toUpperCase() + '::' + parse.id + ']]')
-								el.trigger('click')
+								_frame.infos.click(el)
+								//el.attr('data-infos', '[[' + parse.infos.toUpperCase() + '::' + parse.id + ']]')
+								//el.off('click.global_delegate').trigger('click')
 							}
 						}
 
-				$body.on('click.pagechange', 'a[href^="?page="]', link_page)
-					.on('click.pagechange', 'a[href^="?infos="]', link_infos)
-					.on('click.pagechange', 'a[href^="/"]', link_default)
+				$body.on('click.global_delegate_page', 'a[href^="?page="]', link_page)
+					.on('click.global_delegate_infos', 'a[href^="?infos="]', link_infos)
+					.on('click.global_delegate_default', 'a[href^="/"]', link_default)
 
 				_frame.dom.bgimg.on('animationend, webkitAnimationEnd', 'div', function(){
 					_frame.app_main.change_bgimg_after()
@@ -1147,78 +904,6 @@ _frame.app_main = {
 			})
 
 		// 鼠标侧键操作
-
-		// Debug Mode
-		/*
-			.then(function(){
-				if( debugmode ){
-					_frame.dom.hashbar = $('<input type="text"/>')
-							.on({
-								'urlchanged': function(){
-									$(this).val(
-										location.href.substr( (location.origin + location.pathname).length )
-									)
-								},
-								'change': function(){
-									location.replace( location.origin + location.pathname + _frame.dom.hashbar.blur().val() )
-								}
-							})
-							.appendTo(
-								$('<div class="debug_hashbar"/>').appendTo(_frame.dom.layout)
-							)
-							.trigger( 'urlchanged' )
-					//_frame.dom.layout.addClass('debug-hashbar')
-					$window.on({
-						'hashchange.debug_mode_hashbar': function(){
-							_frame.dom.hashbar.trigger('urlchanged')
-						},
-						'popstate.debug_mode_hashbar': function(){
-							_frame.dom.hashbar.trigger('urlchanged')
-						}
-					})
-					// HACK: 在 history.pushstate() 同时，触发 window.onpopstate 事件
-					// http://felix-kling.de/blog/2011/01/06/how-to-detect-history-pushstate/
-					function hackHistory(history){
-						var pushState = history.pushState;
-						history.pushState = function(state) {
-							if (typeof history.onpushstate == "function") {
-								history.onpushstate({state: state});
-							}
-							setTimeout(function(){
-								//$window.trigger('popstate')
-								_frame.dom.hashbar.trigger('urlchanged')
-							}, 1)
-							return pushState.apply(history, arguments);
-						}
-					}
-					hackHistory(window.history);
-					
-					let title_buttons = $('#titlebar > .buttons')
-					
-					// 在标题栏添加hashbar开关
-						title_buttons.prepend( $('<button/>',{
-							'class':	'console',
-							'html':		'Toggle Hashbar'
-						}).on('click', function(){
-							_frame.dom.layout.toggleClass('debug-hashbar')
-						}) )
-					
-					// 在标题栏添加Web输出入口
-						$.getScript('../dev-output/js-output/output.js', function(){
-							title_buttons.prepend( $('<button/>',{
-								'class':	'console',
-								'html':		'Output to Web'
-							}).on('click', function(){
-								_frame.modal.show(
-									dev_output_form(),
-									'Output to Web'
-								)
-							}) )
-						})
-				}
-				return true
-			})
-		*/
 
 		// 错误处理
 			.catch(function (err) {

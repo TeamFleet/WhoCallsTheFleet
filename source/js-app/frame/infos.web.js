@@ -6,19 +6,29 @@ _frame.infos = {
 
 	// lastCurrentPage: null, 		// 进入 infos 框架之前显示的页面
 	// last: null, 					// 上一次 infos，通常进入其他页面后会被重置
+	// firstrun: false,
 	historyLength: -1,
 	historyCurrent: -1,
 
 	contentCache: {},
 
-	getContent: function(type, id){
+	getContent: function(type, id, callback){
 		if( !this.contentCache[type] )
 			this.contentCache[type] = {}
 		
-		let firstChildren = _frame.infos.dom.container.children('.infosbody').eq(0)
-		if( firstChildren.attr('data-infos-type') == type && firstChildren.attr('data-infos-id') == id ){
-			this.contentCache[type][id] = _p.initDOM(firstChildren)
-			return this.contentCache[type][id]
+		function cb($el){
+			if( callback )
+				callback($el)
+			return $el
+		}
+		
+		if( !this.firstrun ){
+			let firstChildren = _frame.infos.dom.container.children('.infosbody').eq(0)
+			this.firstrun = true
+			if( firstChildren.attr('data-infos-type') == type && firstChildren.attr('data-infos-id') == id ){
+				this.contentCache[type][id] = _p.initDOM(firstChildren)
+				return cb( this.contentCache[type][id] )
+			}
 		}
 		
 		function initcont( $el ){
@@ -32,13 +42,20 @@ _frame.infos = {
 		}
 
 		if( id == '__NEW__' )
-			return initcont( _frame.infos['__' + type]( id ) )
+			return cb( initcont( _frame.infos['__' + type]( id ) ) )
 
 		if( !this.contentCache[type][id] ){
-			this.contentCache[type][id] = initcont( _frame.infos['__' + type]( id ) )
+			_frame.app_main.loading_start( _g.state2URI({
+				'infos':	type,
+				'id':		id
+			}) + '/index.html', function( html ){
+				let result = /\<div class\=\"wrapper\"\>(.+)\<\/div\>/.exec( html )
+				_frame.infos.contentCache[type][id] = initcont( $(result.length > 1 ? result[1] : '') )
+				return cb(_frame.infos.contentCache[type][id])
+			} )
+		}else{
+			return cb(this.contentCache[type][id])
 		}
-
-		return this.contentCache[type][id]
 	},
 
 	show: function(cont, el, doNotPushHistory){
@@ -145,99 +162,83 @@ _frame.infos = {
 			_frame.dom.layout.addClass('is-infos-show')
 
 		// 处理内容
-			switch(type){
-				case 'ship':
-				case 'equipment':
-				case 'entity':
-					cont = this.getContent(type, id)
-					_frame.infos.dom.main.attr('data-infostype', type)
-					title = cont.attr('data-infos-title')
-					break;
-				case 'fleet':
-					cont = this.getContent(type, id)
-					_frame.infos.dom.main.attr('data-infostype', 'fleet')
-					_frame.app_main.mode_selection_off()
-					TablelistEquipments.types = []
-					break;
-			}
-			//var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
-			//if( _frame.infos.curContent != hashcode ){
-				var contentDOM = cont.append ? cont : $(cont)
-
-				//if( el && el.attr('data-infos-history-skip-this') )
-				//	contentDOM.attr('data-infos-history-skip-this', true)
-
-				//if( _frame.infos.dom.main.children().length )
-				//	contentDOM.addClass('fadein')
-
-				/*
-				if( history ){
-					_frame.infos.dom.main.children().filter('[data-infos-history-skip-this="true"]').remove()
-					_frame.infos.dom.main.children().slice(2).remove()
-					_frame.infos.dom.main.children().eq(0).addClass('off')
-					_frame.infos.dom.historyback.html(history).addClass('show')
-				}else{
-					_frame.infos.dom.historyback.html('').removeClass('show')
-					_frame.infos.dom.main.empty()
-				}*/
-				//data-infos-history-skip-this
-				if( type == 'ship' ){
-					let curLvl = parseInt(_config.get('ship_infos_lvl') || 99)
-					contentDOM.find('input[type="radio"][name^="ship_infos_lvl_"]').each(function(){
-						let $el = $(this)
-							,val = $el.val()
-						$el.prop('checked', curLvl == val)
-							.on('change', function(){
-								_config.set('ship_infos_lvl', val)
-							})
-					})
+			this.getContent(type, id, function(cont){
+				switch(type){
+					case 'ship':
+					case 'equipment':
+					case 'entity':
+						//cont = this.getContent(type, id)
+						_frame.infos.dom.main.attr('data-infostype', type)
+						title = cont.attr('data-infos-title')
+						break;
+					case 'fleet':
+						//cont = this.getContent(type, id)
+						_frame.infos.dom.main.attr('data-infostype', 'fleet')
+						_frame.app_main.mode_selection_off()
+						TablelistEquipments.types = []
+						break;
 				}
+				
+				if( !cont.data('is_infosinit') ){
+					if( type == 'ship' ){
+						let curLvl = parseInt(_config.get('ship_infos_lvl') || 99)
+						cont.find('input[type="radio"][name^="ship_infos_lvl_"]').each(function(){
+							let $el = $(this)
+								,val = $el.val()
+							$el.prop('checked', curLvl == val)
+								.on('change', function(){
+									_config.set('ship_infos_lvl', val)
+								})
+						})
+					}
+	
+					cont.data('is_infosinit', true)
+						.on('transitionend.hide', function(e){
+							if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(cont.css('opacity')) == 0 ){
+								cont.detach()
+							}
+						})
+				}
+				
+				cont.prependTo( _frame.infos.dom.container )
 
-				contentDOM
-					.on('transitionend.hide', function(e){
-						if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(contentDOM.css('opacity')) == 0 ){
-							contentDOM.detach()
-						}
-					})
-					.prependTo( _frame.infos.dom.container )
-
-				//_p.initDOM( contentDOM )
+				//_p.initDOM( cont )
 				//_frame.infos.curContent = hashcode
 				this.curContent = type + '::' + id
-			//}
-
-		// 取消主导航上的当前项目状态
-			if( _frame.app_main.cur_page ){
-				this.lastCurrentPage = _frame.app_main.cur_page
-
-				// exit selection mode
-					//_frame.app_main.mode_selection_off()
-				
-				if( _frame.dom.navs[_frame.app_main.cur_page] )
-					_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
-				_frame.app_main.cur_page = null
-			}
 		
-		// 确定 theme
-			_frame.infos.dom.main.attr({
-				'data-theme': 		cont.attr('data-theme')
-			})
-
-		setTimeout(function(){
-			// 显示内容
-				_frame.dom.layout.addClass('is-infos-on')
+				// 取消主导航上的当前项目状态
+					if( _frame.app_main.cur_page ){
+						//this.lastCurrentPage = _frame.app_main.cur_page
+		
+						// exit selection mode
+							//_frame.app_main.mode_selection_off()
+						
+						if( _frame.dom.navs[_frame.app_main.cur_page] )
+							_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
+						if( _frame.app_main.page_dom[_frame.app_main.cur_page] )
+							_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff')
+						_frame.app_main.cur_page = null
+					}
 				
-			_frame.app_main.title = title
-			
-			console.log( _frame.infos.last )
-			
-			if( _frame.infos.last != title )
-				_ga.counter(
-					location.search
-				)
-			
-			_frame.infos.last = title
-		}, 1)
+				// 确定 theme
+					_frame.dom.main.attr('data-theme', cont.attr('data-theme') || type)
+		
+				setTimeout(function(){
+					// 显示内容
+						_frame.dom.layout.addClass('is-infos-on')
+						
+					_frame.app_main.title = title
+					
+					//console.log( _frame.infos.last )
+					
+					if( _frame.infos.last != title )
+						_ga.counter(
+							location.search
+						)
+					
+					_frame.infos.last = title
+				}, 1)
+			}.bind(this))
 	},
 
 	hide: function(){
@@ -246,14 +247,15 @@ _frame.infos = {
 
 		// 隐藏内容
 			_frame.dom.layout.removeClass('is-infos-on')
-			_frame.dom.btnHistoryForward.addClass('disabled')
+			if( _frame.dom.btnHistoryForward )
+				_frame.dom.btnHistoryForward.addClass('disabled')
 			this.curContent = null
 
-		if( this.lastCurrentPage ){
-			if( _frame.dom.navs[this.lastCurrentPage] )
-				_frame.dom.navs[this.lastCurrentPage].addClass('on')
-			_frame.app_main.cur_page = this.lastCurrentPage
-		}
+		//if( this.lastCurrentPage ){
+		//	if( _frame.dom.navs[this.lastCurrentPage] )
+		//		_frame.dom.navs[this.lastCurrentPage].addClass('on')
+		//	_frame.app_main.cur_page = this.lastCurrentPage
+		//}
 
 		/*
 		// 为主导航最后一个元素绑定 transitionEnd 事件
@@ -298,6 +300,14 @@ _frame.infos = {
 			_frame.infos.dom.main.attr('data-infostype', 'fleet')
 		else if( _frame.infos.dom.main.children().eq(0).hasClass('entity') )
 			_frame.infos.dom.main.attr('data-infostype', 'entity')
+	},
+	
+	click: function(el){
+		_frame.infos.show(
+			el.attr('data-infos'),
+			el,
+			el.attr('data-infos-nohistory')
+		)
 	}
 }
 
@@ -314,12 +324,7 @@ _frame.infos.init = function(){
 
 	$body.on( 'click._infos', '[data-infos]', function(e){
 			if( !(e.target.tagName.toLowerCase() == 'input' && e.target.className == 'compare') ){
-				var el = $(this)
-				_frame.infos.show(
-					el.attr('data-infos'),
-					el,
-					el.attr('data-infos-nohistory')
-				)
+				_frame.infos.click($(this))
 
 				if( e.target.tagName.toLowerCase() == 'a' )
 					e.preventDefault()

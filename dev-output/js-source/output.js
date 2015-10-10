@@ -19,6 +19,9 @@ Ajax request uri
 
 // @koala-prepend "steps/!.js"
 
+// @koala-prepend "node_modules/lz-string/libs/lz-string.js"
+// @koala-prepend "node_modules/lz-string/libs/base64-string.js"
+
 // @koala-prepend "steps/ships.js"
 // @koala-prepend "steps/equipments.js"
 // @koala-prepend "steps/entities.js"

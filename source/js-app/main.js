@@ -460,6 +460,7 @@ _frame.app_main = {
 				)
 			}
 
+			console.log(_frame.app_main.cur_page)
 			if( _frame.app_main.cur_page == page )
 				return page
 
@@ -483,7 +484,8 @@ _frame.app_main = {
 				if( page != 'about' )
 					Lockr.set('last_page', page)
 			}
-
+			
+			_frame.dom.main.attr('data-theme', page)
 			_frame.app_main.cur_page = page
 
 			_g.log( 'LOADED: ' + page )
@@ -1091,7 +1093,8 @@ _frame.app_main = {
 							if( !el.attr('data-infos') ){
 								let exp = /^[\?]{0,1}infos\=([^\&]+)\&id\=([^\&]+)/ig.exec(el.attr('href'))
 								el.attr('data-infos', '[[' + exp[1].toUpperCase() + '::' + exp[2] + ']]')
-								el.trigger('click')
+								//el.trigger('click')
+								_frame.infos.click(el)
 							}
 						}
 				$body.on('click.pagechange', 'a[href^="?page="]', link_page)

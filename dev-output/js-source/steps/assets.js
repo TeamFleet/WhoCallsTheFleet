@@ -72,6 +72,35 @@ dev_output_steps.push(function(){
 			}
 		}
 	}
+	function copyFile_compress(source, target, cb, donotcompress) {
+		Q.fcall(function(){
+			let deferred = Q.defer()
+			node.fs.readFile(source, 'utf8', function(err, data){
+				if( err ){
+					deferred.reject(new Error(err))
+				}else{
+					deferred.resolve(data)
+				}
+			})
+			return deferred.promise
+		})
+		.then(function(data){
+			let deferred = Q.defer()
+			node.fs.writeFile(
+				target,
+				donotcompress ? data : LZString.compressToBase64(data),
+				function(err){
+					if( err ){
+						deferred.reject(new Error(err))
+					}else{
+						deferred.resolve()
+					}
+				}
+			)
+			return deferred.promise
+		})
+		.done(cb)
+	}
 
 	let masterDeferred = Q.defer()
 		,bgimg_count = 0
@@ -234,17 +263,18 @@ dev_output_steps.push(function(){
 					let _deferred = Q.defer()
 						,outputPath = node.path.join( dev_output_dir, '!', 'db', file )
 						
-					copyFile2(
+					copyFile_compress(
 						node.path.join( _g.path.db, file ),
 						outputPath,
 						function(err){
 							if( err ){
 								_deferred.reject(new Error(err))
 							}else{
-								dev_output_log('生成文件: ' + outputPath)
+								dev_output_log('生成文件 (已压缩): ' + outputPath)
 								_deferred.resolve()
 							}
-						}
+						},
+						file == 'entities.json' ? true : null
 					)
 					
 					return _deferred.promise

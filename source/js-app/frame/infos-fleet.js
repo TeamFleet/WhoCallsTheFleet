@@ -68,8 +68,7 @@ class InfosFleet{
 
 		this.el.attr({
 				'data-fleetid': d._id,
-				'data-infos-id':d._id,
-				'data-theme':	d.theme
+				'data-infos-id':d._id
 			})
 			//.data('fleet', d)
 			.removeClass('loading')
@@ -219,6 +218,8 @@ class InfosFleet{
 
 		// 根据数据更新DOM
 			this.update( d )
+		
+		this._theme = this._theme
 	}
 
 
@@ -290,6 +291,7 @@ class InfosFleet{
 			this.doms['theme'].val(this.data['theme']).attr('value', this.data['theme'])
 			_frame.infos.dom.main.attr('data-theme', this.data['theme'])
 			this.el.attr('data-theme', this.data['theme'])
+			_frame.dom.main.attr('data-theme', this.data['theme'])
 			this.save()
 		}
 	
