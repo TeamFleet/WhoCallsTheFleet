@@ -9484,7 +9484,7 @@ TablelistShips.prototype.init_new = function(){
 						this.thead_redraw()
 					}
 				}.bind(this)
-			} )
+			} ).attr('data-caption', '布局')
 		this.dom.filters.find('input').trigger('change')
 
 	// 生成表格框架

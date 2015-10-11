@@ -46,14 +46,17 @@
 
 .link_ship{
 	padding-right: 	40px;
+	padding-left: 	(160px - 50px - 14px);
 	img{
-		.margin-left(-50);
+		//.margin-left(-50);
 		//.mask-image(~"linear-gradient(to right, transparent 0, transparent 50px, #000 58px, #000 calc(100% - 60px), transparent calc(100% - 10px))");
 		.mask-image(~"linear-gradient(to right, #000 0, #000 calc(100% - 60px), transparent calc(100% - 10px))");
-		.margin-right(-14);
+		//.margin-right(-14);
 		pointer-events: none;
-		float:			left;
-		min-width: 		160px;
+		//float:			left;
+		//min-width: 		160px;
+		position: 	absolute;
+		left: 		-50px;
 	}
 }
 

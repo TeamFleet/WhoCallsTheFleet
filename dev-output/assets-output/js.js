@@ -5827,13 +5827,15 @@ _frame.app_main = {
 		loading_queue: [],
 		loading_state: {},
 		//loading_cur: null,
-		loading_start: function( url, callback ){
+		loading_start: function( url, callback_success, callback_error ){
 			url = url || location.pathname
-			callback = callback || function(){}
+			callback_success = callback_success || function(){}
+			callback_error = callback_error || function(){}
 			this.loading_cur = url
 			
-			if( typeof this.loading_state[url] == 'undefined' ){
-				this.loading_state[url] = 'loading'
+			if( typeof this.loading_state[url] == 'undefined' || this.loading_state[url] == 'fail' ){
+				if( this.loading_state[url] != 'fail' )
+					this.loading_state[url] = 'loading'
 				this.loading_queue.push(url)
 				_frame.dom.layout.addClass('is-loading')
 				$.ajax({
@@ -5848,21 +5850,37 @@ _frame.app_main = {
 							_frame.app_main.page_title[url] = result_title[1]
 						}
 						if( url == _frame.app_main.loading_cur ){
-							callback( result_main && result_main.length > 1 ? result_main[1] : '' )
+							callback_success( result_main && result_main.length > 1 ? result_main[1] : '' )
 						}
 						_frame.app_main.loading_state[url] = 'complete'
 					},
 					
-					'error': function(jqXHR, textStatus, errorThrown ){
-						_frame.app_main.loading_fail(url, textStatus)
+					'error': function( jqXHR, textStatus, errorThrown ){
+						errorThrown = errorThrown || ''
+						_g.log( 'Loading Fail: ' + url + ' [' + textStatus + '] (' + errorThrown + ')' )
+						
+						if( _frame.app_main.loading_state[url] == 'fail'
+							|| [
+								'Bad Request',
+								'Not Found',
+								'Forbidden'
+							].indexOf(errorThrown) > -1)
+							return _frame.app_main.loading_fail(url, textStatus, errorThrown, callback_error)
+
+						_frame.app_main.loading_state[url] = 'fail'
 					},
 					
 					'complete': function(){
 						_frame.app_main.loading_complete( url )
+						
+						if( _frame.app_main.loading_state[url] == 'fail' ){
+							console.log('retry')
+							_frame.app_main.loading_start( url, callback_success, callback_error )
+						}
 					}
 				})
 			}else if( this.loading_state[url] == 'complete' ){
-				callback()
+				callback_success()
 			}
 		},
 		
@@ -5879,11 +5897,20 @@ _frame.app_main = {
 			_frame.dom.layout.removeClass('is-loading')
 		},
 		
-		loading_fail: function( url, text ){
+		loading_fail: function( url, textStatus, errorThrown, callback_error ){
 			if( !url )
 				return
 			if( this.loading_state )
 				delete this.loading_state[url]
+
+			_frame.dom.layout.attr('data-errorbadge', url + ' 载入失败 (' + errorThrown + ')')
+			clearTimeout( this.loading_fail_timeout_errorbadge )
+			this.loading_fail_timeout_errorbadge = setTimeout(function(){
+				_frame.dom.layout.removeAttr('data-errorbadge')
+				delete _frame.app_main.loading_fail_timeout_errorbadge
+			}, 3000)
+			console.log( callback_error )
+			return callback_error( url, textStatus, errorThrown )
 		},
 
 
@@ -6008,6 +6035,9 @@ _frame.app_main = {
 						//_frame.app_main.page_dom[page].html( html )
 						_frame.app_main.page_init(page)
 						callback()
+					}, function( url, textStatus, errorThrown ){
+						delete _frame.app_main.page_dom[page]
+						history.back()
 					} )
 				}
 			}else{
@@ -7299,6 +7329,10 @@ _frame.infos = {
 				let result = /\<div class\=\"wrapper\"\>(.+)\<\/div\>/.exec( html )
 				_frame.infos.contentCache[type][id] = initcont( $(result.length > 1 ? result[1] : '') )
 				return cb(_frame.infos.contentCache[type][id])
+			}, function( url, textStatus, errorThrown ){
+				if( typeof _frame.infos.contentCache[type][id] != 'undefined' )
+					delete _frame.infos.contentCache[type][id]
+				history.back()
 			} )
 		}else{
 			return cb(this.contentCache[type][id])
