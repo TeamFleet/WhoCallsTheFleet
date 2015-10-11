@@ -116,6 +116,7 @@ main[data-theme="arsenal"]:after{
 		.loop(@n, @i: 0) when (@i =< @n) {
 			&#arsenal_weekday-@{i}:checked{
 				&~.weekday label[for="arsenal_weekday-@{i}"]{
+					cursor: 	default;
 					background-color:	hsla(100, 100%, 35%, .5);
 					color:		hsl(100, 100%, 83%);
 				}

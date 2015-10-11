@@ -89,22 +89,19 @@
 				}
 				&>input[type="radio"]{
 					display:	none;
-					&[value="99"]:checked{
-						& ~ .title label.lvl99{
-							color:		#bde8fc;
-						}
-						& ~ .stat .lvl99{
-							display:	inline;
-						}
-					}
-					&[value="150"]:checked{
-						& ~ .title label.lvl150{
-							color:		#bde8fc;
-						}
-						& ~ .stat .lvl150{
-							display:	inline;
+					.lvl(@lvl){
+						&[value="@{lvl}"]:checked{
+							& ~ .title label.lvl@{lvl}{
+								color:		#bde8fc;
+								cursor: 	default;
+							}
+							& ~ .stat .lvl@{lvl}{
+								display:	inline;
+							}
 						}
 					}
+					.lvl(99);
+					.lvl(150);
 				}
 			}
 			&.equipments{
