@@ -12,3 +12,66 @@ input[type="radio"],
 	cursor: 	default;
 	cursor: 	not-allowed;
 }
+
+
+
+
+
+
+
+
+
+@loading-bar-width: 10%;
+
+nav{
+	&:before{
+		content: 	'';
+		z-index: 	5;
+		position: 	absolute;
+		bottom: 	0;
+		left: 		0;
+		width: 		@loading-bar-width;
+		height: 	4px;
+		opacity: 	0;
+		background: rgba(255, 255, 255, .5);
+		.enable-transition();
+		.transition-property(opacity);
+	}
+	&:after{
+		.enable-transition();
+		.transition-property(height);
+	}
+}
+
+
+.is-loading nav{
+	&:before{
+		opacity: 	1;
+		.animation(global-loading-horizontal 1.5s linear infinite alternate);
+	}
+	&:after{
+		height: 	4px;
+	}
+}
+
+
+
+
+
+
+@keyframes global-loading-horizontal {
+	0% {
+		left: 	0;
+	}
+	100% {
+		left: 	(100% - @loading-bar-width);
+	}
+}
+@-webkit-keyframes global-loading-horizontal {
+	0% {
+		left: 	0;
+	}
+	100% {
+		left: 	(100% - @loading-bar-width);
+	}
+}
