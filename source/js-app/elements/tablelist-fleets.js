@@ -361,7 +361,7 @@ class TablelistFleets extends Tablelist{
 							,j = 0;
 						while( j < 6 ){
 							if( ships[j] && ships[j][0] )
-								html+='<img src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0.webp" contextmenu="disabled"/>'
+								html+='<img src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0.webp" contextmenu="disabled" width="160" height="40"/>'
 							else
 								html+='<s/>'
 							j++
