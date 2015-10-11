@@ -136,6 +136,14 @@ function dev_output_filter(output, pagetype, name){
 				output = output.replace( searchRes[0], '' )
 			}catch(e){}
 		}
+
+	searchRes = null
+	scrapePtrn = /\r?\n|\r/g
+		while( (searchRes = scrapePtrn.exec(output)) !== null ){
+			try{
+				output = output.replace( searchRes[0], '' )
+			}catch(e){}
+		}
 	
 	switch(pagetype){
 		case 'page':

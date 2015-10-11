@@ -384,7 +384,9 @@ _frame.app_main = {
 					'success': function(data){
 						let result_main = /\<main\>(.+)\<\/main\>/.exec(data)
 							,result_title = /\<title\>([^\<]+)\<\/title\>/.exec(data)
+						_g.test = data
 						//console.log(result)
+						console.log(url, _frame.app_main.loading_cur, result_main, data)
 						if( url == _frame.app_main.loading_cur ){
 							callback( result_main && result_main.length > 1 ? result_main[1] : '' )
 							if( result_title && result_title.length > 1 )
@@ -541,6 +543,7 @@ _frame.app_main = {
 					//_frame.app_main.page_dom[page] = $('<div class="page-container" page="'+page+'"/>').appendTo( _frame.dom.main )
 					this.loading_start( '/' + page + '/index.html', function( html ){
 						_frame.app_main.page_dom[page] = $(html).appendTo( _frame.dom.main )
+						console.log(html)
 						//_frame.app_main.page_dom[page].html( html )
 						_frame.app_main.page_init(page)
 						callback()

@@ -405,9 +405,10 @@ nav{
 		.transition-property(opacity);
 		.transition-duration(@transition_duration_main);
 		opacity:	1;
-		&>button{
+		&>button, &>a{
 			color:		rgba(255,255,255,.4);
 			right:		0;
+			display: 	inline-block;
 			.width(40);
 			.height(40);
 			.font-size(22);
@@ -416,6 +417,7 @@ nav{
 			//float:		right;
 			.fadein();
 			position:	relative;
+			margin-left:4px;
 			&:hover{
 				color:	#fff;
 			}
@@ -423,9 +425,6 @@ nav{
 				padding-right:	0;
 				font-size:		1em;
 				opacity:		1;
-			}
-			&+button{
-				.margin-right(4);
 			}
 		}
 		.global_options();
