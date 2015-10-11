@@ -382,10 +382,14 @@ _frame.app_main = {
 					'dataType':	'html',
 					
 					'success': function(data){
-						let result = /\<main\>(.+)\<\/main\>/.exec(data)
+						let result_main = /\<main\>(.+)\<\/main\>/.exec(data)
+							,result_title = /\<title\>([^\<]+)\<\/title\>/.exec(data)
 						//console.log(result)
-						if( url == _frame.app_main.loading_cur )
-							callback( result.length > 1 ? result[1] : '' )
+						if( url == _frame.app_main.loading_cur ){
+							callback( result_main && result_main.length > 1 ? result_main[1] : '' )
+							if( result_title && result_title.length > 1 )
+								document.title = result_title[1]
+						}
 						_frame.app_main.loading_state[url] = 'complete'
 					},
 					
