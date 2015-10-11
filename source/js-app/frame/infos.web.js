@@ -160,6 +160,8 @@ _frame.infos = {
 
 		// 先将内容区域设定为可见
 			_frame.dom.layout.addClass('is-infos-show')
+		
+		this.curContent = type + '::' + id
 
 		// 处理内容
 			this.getContent(type, id, function(cont){
@@ -200,11 +202,14 @@ _frame.infos = {
 						})
 				}
 				
+				if( this.curContent != type + '::' + id )
+					return
+				
 				cont.prependTo( _frame.infos.dom.container )
 
 				//_p.initDOM( cont )
 				//_frame.infos.curContent = hashcode
-				this.curContent = type + '::' + id
+				//this.curContent = type + '::' + id
 		
 				// 取消主导航上的当前项目状态
 					if( _frame.app_main.cur_page ){

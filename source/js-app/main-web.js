@@ -275,9 +275,11 @@ _frame.app_main = {
 	// pushState
 		pushState: function( stateObj, title, url ){
 			history.pushState( stateObj, title, url )
+			
+			console.log(stateObj)
 
-			if( !stateObj['infos'] )
-				_frame.infos.hide()
+			//if( !stateObj['infos'] )
+			//	_frame.infos.hide()
 		},
 
 
@@ -483,6 +485,7 @@ _frame.app_main = {
 			
 			function callback(){
 				_frame.app_main.page_dom[page].trigger('show')
+				_frame.infos.hide()
 	
 				if( !options.callback_modeSelection_select ){
 					_frame.app_main.title = _frame.app_main.navtitle[page]

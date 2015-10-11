@@ -5740,9 +5740,11 @@ _frame.app_main = {
 	// pushState
 		pushState: function( stateObj, title, url ){
 			history.pushState( stateObj, title, url )
+			
+			console.log(stateObj)
 
-			if( !stateObj['infos'] )
-				_frame.infos.hide()
+			//if( !stateObj['infos'] )
+			//	_frame.infos.hide()
 		},
 
 
@@ -5948,6 +5950,7 @@ _frame.app_main = {
 			
 			function callback(){
 				_frame.app_main.page_dom[page].trigger('show')
+				_frame.infos.hide()
 	
 				if( !options.callback_modeSelection_select ){
 					_frame.app_main.title = _frame.app_main.navtitle[page]
@@ -7398,6 +7401,8 @@ _frame.infos = {
 
 		// 先将内容区域设定为可见
 			_frame.dom.layout.addClass('is-infos-show')
+		
+		this.curContent = type + '::' + id
 
 		// 处理内容
 			this.getContent(type, id, function(cont){
@@ -7438,11 +7443,14 @@ _frame.infos = {
 						})
 				}
 				
+				if( this.curContent != type + '::' + id )
+					return
+				
 				cont.prependTo( _frame.infos.dom.container )
 
 				//_p.initDOM( cont )
 				//_frame.infos.curContent = hashcode
-				this.curContent = type + '::' + id
+				//this.curContent = type + '::' + id
 		
 				// 取消主导航上的当前项目状态
 					if( _frame.app_main.cur_page ){
