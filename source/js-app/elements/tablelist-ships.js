@@ -20,7 +20,8 @@ class TablelistShips extends Tablelist{
 			['索敌',	'los'],
 			['运',		'luck'],
 			['油耗',	'consum_fuel'],
-			['弹耗',	'consum_ammo']
+			['弹耗',	'consum_ammo'],
+			['多立绘',	'extra_illust']
 		]
 		this.header_checkbox = []
 		this.checkbox = []

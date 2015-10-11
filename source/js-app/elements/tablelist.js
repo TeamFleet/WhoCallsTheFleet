@@ -250,7 +250,6 @@ class Tablelist{
 						tbody = this.dom.table.find('tbody')
 		
 					let rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
-						,sort_data_by_stat = this.sort_data_by_stat
 		
 					rows.find('td[data-value]').removeClass('sort-first sort-second')
 		
@@ -260,7 +259,7 @@ class Tablelist{
 							,stat = $this.data('stat')
 		
 						// 以下属性不进行标记，但仍计算排序
-							,noMark = stat.match(/\b(speed|range)\b/ )
+							,noMark = stat.match(/\b(speed|range|extra_illust)\b/ )
 		
 						if( typeof this.sort_default_order_by_stat[stat] == 'undefined' ){
 							// 以下属性为升序
@@ -284,9 +283,9 @@ class Tablelist{
 		
 						// 将排序结果存储到表头对应的列中
 							if( cacheSortData )
-								sort_data_by_stat[stat] = sort
+								this.sort_data_by_stat[stat] = sort
 							else
-								delete( sort_data_by_stat[stat] )
+								delete( this.sort_data_by_stat[stat] )
 		
 					}.bind(this))
 		
@@ -301,6 +300,8 @@ class Tablelist{
 					
 					let stat = cell.data('stat')
 						,sortData = this.sort_data_by_stat[stat]
+					
+					console.log(stat, sortData)
 						
 					if( !stat || !sortData )
 						return false

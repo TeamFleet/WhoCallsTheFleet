@@ -220,19 +220,40 @@ dev_output_steps.push(function(){
 		})
 		.then(function(){
 			let deferred = Q.defer()
-				,outputPath = node.path.join( dev_output_dir, '!', 'assets', 'fonts', 'icons.ttf' )
-			copyFile2(
-				node.path.join( _g.root, 'app', 'assets', 'fonts', 'icons.ttf' ),
-				outputPath,
-				function(err){
-					if( err ){
-						deferred.reject(new Error(err))
-					}else{
-						dev_output_log('生成文件: ' + outputPath)
-						deferred.resolve()
-					}
-				}
-			)
+				,fontfiles = [
+					'icons.eot',
+					'icons.svg',
+					'icons.ttf',
+					'icons.woff'
+				]
+				,chain = Q()
+			
+			fontfiles.forEach(function(filename){
+				chain = chain.then(function(){
+					let outputPath = node.path.join( dev_output_dir, '!', 'assets', 'fonts', filename )
+						,_deferred = Q.defer()
+					copyFile2(
+						//node.path.join( _g.root, 'app', 'assets', 'fonts', filename ),
+						node.path.join( _g.root, '!design', 'iconfont', 'fonts', filename ),
+						outputPath,
+						function(err){
+							if( err ){
+								_deferred.reject(new Error(err))
+							}else{
+								dev_output_log('生成文件: ' + outputPath)
+								_deferred.resolve()
+							}
+						}
+					)
+				})
+			})
+			
+			chain = chain.catch(function(){
+				deferred.resolve()
+			}).done(function(){
+				deferred.resolve()
+			})
+			
 			return deferred.promise
 		})
 		

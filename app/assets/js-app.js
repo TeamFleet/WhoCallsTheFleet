@@ -6865,6 +6865,7 @@ _frame.infos.__ship = function( id ){
 					,remodel_lvl = data_prev ? data_prev['next_lvl'] : null
 					,remodel_blueprint = data_prev ? (data_prev['next_blueprint']) : null
 					,remodel_catapult = data_prev ? (data_prev['next_catapult']) : null
+					,has_extra_illust = currentValue.illust_extra && currentValue.illust_extra.length && currentValue.illust_extra[0] ? true : false
 				
 				if( remodel_blueprint || remodel_catapult ){
 					if( remodel_blueprint )
@@ -6872,23 +6873,25 @@ _frame.infos.__ship = function( id ){
 					if( remodel_catapult )
 						tip+= '<span class="requirement is-catapult">需要：试制甲板弹射器</span>'
 				}
+				
+				if( !has_extra_illust && currentValue.illust_delete && data_prev )
+					has_extra_illust = data_prev.illust_extra && data_prev.illust_extra.length && data_prev.illust_extra[0] ? true : false
 
 				remodels_container.appendDOM(
 					$('<a/>',{
-							'class':		'unit',
+							'class':		'unit'
+											+ (currentValue['id'] == d['id'] ? ' on' : '')
+											+ (remodel_blueprint ? ' mod-blueprint' : '')
+											+ (remodel_catapult ? ' mod-catapult' : ''),
 							'href':			'?infos=ship&id=' + currentValue['id'],
 							'data-shipid':	currentValue['id'],
 							'data-infos': 	'[[SHIP::'+ currentValue['id'] +']]',
 							'data-tip': 	tip,
-							'data-infos-nohistory': true
+							'data-infos-nohistory': true,
+							'html':			'<i><img src="' + _g.path.pics.ships + '/' + currentValue['id']+'/0.webp"/></i>'
+											+ (remodel_lvl ? '<strong>' + remodel_lvl + '</strong>' : '')
+											+ (has_extra_illust ? '<em icon="hanger"></em>' : '')
 						})
-						.addClass(currentValue['id'] == d['id'] ? 'on' : '')
-						.addClass(remodel_blueprint ? 'mod-blueprint' : '')
-						.addClass(remodel_catapult ? 'mod-catapult' : '')
-						.html(
-							'<i><img src="' + _g.path.pics.ships + '/' + currentValue['id']+'/0.webp"/></i>'
-							+ (remodel_lvl ? '<strong>' + remodel_lvl + '</strong>' : '')
-						)
 				)
 				
 				if( currentValue.next_loop )
@@ -7384,7 +7387,6 @@ class Tablelist{
 						tbody = this.dom.table.find('tbody')
 		
 					let rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
-						,sort_data_by_stat = this.sort_data_by_stat
 		
 					rows.find('td[data-value]').removeClass('sort-first sort-second')
 		
@@ -7394,7 +7396,7 @@ class Tablelist{
 							,stat = $this.data('stat')
 		
 						// 以下属性不进行标记，但仍计算排序
-							,noMark = stat.match(/\b(speed|range)\b/ )
+							,noMark = stat.match(/\b(speed|range|extra_illust)\b/ )
 		
 						if( typeof this.sort_default_order_by_stat[stat] == 'undefined' ){
 							// 以下属性为升序
@@ -7418,9 +7420,9 @@ class Tablelist{
 		
 						// 将排序结果存储到表头对应的列中
 							if( cacheSortData )
-								sort_data_by_stat[stat] = sort
+								this.sort_data_by_stat[stat] = sort
 							else
-								delete( sort_data_by_stat[stat] )
+								delete( this.sort_data_by_stat[stat] )
 		
 					}.bind(this))
 		
@@ -7435,6 +7437,8 @@ class Tablelist{
 					
 					let stat = cell.data('stat')
 						,sortData = this.sort_data_by_stat[stat]
+					
+					console.log(stat, sortData)
 						
 					if( !stat || !sortData )
 						return false
@@ -8778,7 +8782,8 @@ class TablelistShips extends Tablelist{
 			['索敌',	'los'],
 			['运',		'luck'],
 			['油耗',	'consum_fuel'],
-			['弹耗',	'consum_ammo']
+			['弹耗',	'consum_ammo'],
+			['多立绘',	'extra_illust']
 		]
 		this.header_checkbox = []
 		this.checkbox = []
@@ -9192,6 +9197,17 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 							if( !not_trigger_check )
 								this.header_checkbox[header_index].trigger('docheck')
 						}.bind(this))
+		,has_extra_illust = false
+		,seriesData = ship_data.getSeriesData()
+	
+	seriesData.forEach(function(data_cur, i){
+		let data_prev = i ? seriesData[ i - 1 ] : null
+		
+		has_extra_illust = data_cur.illust_extra && data_cur.illust_extra.length && data_cur.illust_extra[0] ? true : false
+		
+		if( !has_extra_illust && data_cur.illust_delete && data_prev )
+			has_extra_illust = data_prev.illust_extra && data_prev.illust_extra.length && data_prev.illust_extra[0] ? true : false
+	})
 
 	this.last_item = tr
 	this.trIndex++
@@ -9219,7 +9235,9 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 					.html(
 						//'<img src="../pics/ships/'+ship_data['id']+'/0.jpg"/>'
 						//'<img src="' + _g.path.pics.ships + '/' + ship_data['id']+'/0.webp" contextmenu="disabled"/>'
-						'<a href="?infos=ship&id='+ship_data['id']+'">'
+						'<a href="?infos=ship&id='+ship_data['id']+'"'
+							+ (has_extra_illust ? ' icon="hanger"' : '')
+						+ '>'
 						+ '<img src="../pics/ships/'+ship_data['id']+'/0.webp" contextmenu="disabled"/>'
 						+ '<strong>' + name + '</strong>'
 						+ '</a>'
@@ -9299,6 +9317,15 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 						ship_data['consum']['ammo']
 					)
 					.html( _val(ship_data['consum']['ammo']) )
+					.appendTo(tr)
+				break;
+			case 'extra_illust':
+				$('<td data-stat="'+currentValue[1]+'" data-value="' + (has_extra_illust ? '1' : '0') + '"/>')
+					.html(
+						has_extra_illust
+							? '✓'
+							: '<small class="zero">-</small>'
+					)
 					.appendTo(tr)
 				break;
 			default:

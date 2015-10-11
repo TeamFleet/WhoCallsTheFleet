@@ -109,6 +109,11 @@
 								display: 	block;
 							}
 						}
+						[icon]{
+							&:before{
+								display: 	none;
+							}
+						}
 					}
 					td{
 						position:	relative;
@@ -204,6 +209,19 @@
 					}
 					td[data-stat]{
 						display:	none;
+					}
+					[icon]{
+						&:before{
+							position: 	absolute;
+							display: 	block;
+							font-size: 	22px;
+							color: 		hsl(@hue_theme_ship, 100%, 100%);
+							transform: 	rotate(15deg);
+							top: 		0;
+							left: 		76px;
+							z-index: 	10;
+							//text-shadow:0 0 5px hsl(@hue_theme_ship, 100%, 15%);
+						}
 					}
 					&:empty{
 						margin-top:	0;

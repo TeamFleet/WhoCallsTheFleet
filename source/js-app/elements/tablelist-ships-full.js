@@ -37,6 +37,17 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 							if( !not_trigger_check )
 								this.header_checkbox[header_index].trigger('docheck')
 						}.bind(this))
+		,has_extra_illust = false
+		,seriesData = ship_data.getSeriesData()
+	
+	seriesData.forEach(function(data_cur, i){
+		let data_prev = i ? seriesData[ i - 1 ] : null
+		
+		has_extra_illust = data_cur.illust_extra && data_cur.illust_extra.length && data_cur.illust_extra[0] ? true : false
+		
+		if( !has_extra_illust && data_cur.illust_delete && data_prev )
+			has_extra_illust = data_prev.illust_extra && data_prev.illust_extra.length && data_prev.illust_extra[0] ? true : false
+	})
 
 	this.last_item = tr
 	this.trIndex++
@@ -64,7 +75,9 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 					.html(
 						//'<img src="../pics/ships/'+ship_data['id']+'/0.jpg"/>'
 						//'<img src="' + _g.path.pics.ships + '/' + ship_data['id']+'/0.webp" contextmenu="disabled"/>'
-						'<a href="?infos=ship&id='+ship_data['id']+'">'
+						'<a href="?infos=ship&id='+ship_data['id']+'"'
+							+ (has_extra_illust ? ' icon="hanger"' : '')
+						+ '>'
 						+ '<img src="../pics/ships/'+ship_data['id']+'/0.webp" contextmenu="disabled"/>'
 						+ '<strong>' + name + '</strong>'
 						+ '</a>'
@@ -144,6 +157,15 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 						ship_data['consum']['ammo']
 					)
 					.html( _val(ship_data['consum']['ammo']) )
+					.appendTo(tr)
+				break;
+			case 'extra_illust':
+				$('<td data-stat="'+currentValue[1]+'" data-value="' + (has_extra_illust ? '1' : '0') + '"/>')
+					.html(
+						has_extra_illust
+							? '✓'
+							: '<small class="zero">-</small>'
+					)
 					.appendTo(tr)
 				break;
 			default:

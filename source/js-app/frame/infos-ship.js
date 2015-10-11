@@ -287,6 +287,7 @@ _frame.infos.__ship = function( id ){
 					,remodel_lvl = data_prev ? data_prev['next_lvl'] : null
 					,remodel_blueprint = data_prev ? (data_prev['next_blueprint']) : null
 					,remodel_catapult = data_prev ? (data_prev['next_catapult']) : null
+					,has_extra_illust = currentValue.illust_extra && currentValue.illust_extra.length && currentValue.illust_extra[0] ? true : false
 				
 				if( remodel_blueprint || remodel_catapult ){
 					if( remodel_blueprint )
@@ -294,23 +295,25 @@ _frame.infos.__ship = function( id ){
 					if( remodel_catapult )
 						tip+= '<span class="requirement is-catapult">需要：试制甲板弹射器</span>'
 				}
+				
+				if( !has_extra_illust && currentValue.illust_delete && data_prev )
+					has_extra_illust = data_prev.illust_extra && data_prev.illust_extra.length && data_prev.illust_extra[0] ? true : false
 
 				remodels_container.appendDOM(
 					$('<a/>',{
-							'class':		'unit',
+							'class':		'unit'
+											+ (currentValue['id'] == d['id'] ? ' on' : '')
+											+ (remodel_blueprint ? ' mod-blueprint' : '')
+											+ (remodel_catapult ? ' mod-catapult' : ''),
 							'href':			'?infos=ship&id=' + currentValue['id'],
 							'data-shipid':	currentValue['id'],
 							'data-infos': 	'[[SHIP::'+ currentValue['id'] +']]',
 							'data-tip': 	tip,
-							'data-infos-nohistory': true
+							'data-infos-nohistory': true,
+							'html':			'<i><img src="' + _g.path.pics.ships + '/' + currentValue['id']+'/0.webp"/></i>'
+											+ (remodel_lvl ? '<strong>' + remodel_lvl + '</strong>' : '')
+											+ (has_extra_illust ? '<em icon="hanger"></em>' : '')
 						})
-						.addClass(currentValue['id'] == d['id'] ? 'on' : '')
-						.addClass(remodel_blueprint ? 'mod-blueprint' : '')
-						.addClass(remodel_catapult ? 'mod-catapult' : '')
-						.html(
-							'<i><img src="' + _g.path.pics.ships + '/' + currentValue['id']+'/0.webp"/></i>'
-							+ (remodel_lvl ? '<strong>' + remodel_lvl + '</strong>' : '')
-						)
 				)
 				
 				if( currentValue.next_loop )
