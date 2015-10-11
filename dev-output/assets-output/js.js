@@ -6335,12 +6335,11 @@ _frame.app_main = {
 							e.preventDefault()
 							let el = $(this)
 								,parse = _g.parseURI(el.attr('href'))
-								,href_parts = el.attr('href').split('/').filter(function(c){return c})
-							
+								//,href_parts = el.attr('href').split('/').filter(function(c){return c})
 							if( parse.page ){
 								_frame.app_main.load_page( parse.page )
 							}else if( parse.infos ){
-								_frame.infos.click(el)
+								_frame.infos.click(el.attr('data-infos', '[[' + parse.infos.toUpperCase() + '::' + parse.id + ']]'))
 								//el.attr('data-infos', '[[' + parse.infos.toUpperCase() + '::' + parse.id + ']]')
 								//el.off('click.global_delegate').trigger('click')
 							}
