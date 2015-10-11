@@ -105,6 +105,14 @@ function dev_output_filter(output, pagetype, name){
 		}
 
 	searchRes = null
+	scrapePtrn = /\(assets\//gi
+		while( (searchRes = scrapePtrn.exec(output)) !== null ){
+			try{
+				output = output.replace( searchRes[0], '(/!/assets/' )
+			}catch(e){}
+		}
+
+	searchRes = null
 	scrapePtrn = /\.webp/gi
 		while( (searchRes = scrapePtrn.exec(output)) !== null ){
 			try{

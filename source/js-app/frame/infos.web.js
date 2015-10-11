@@ -27,6 +27,10 @@ _frame.infos = {
 			this.firstrun = true
 			if( firstChildren.attr('data-infos-type') == type && firstChildren.attr('data-infos-id') == id ){
 				this.contentCache[type][id] = _p.initDOM(firstChildren)
+				_frame.app_main.page_title[_g.state2URI({
+						'infos':	type,
+						'id':		id
+					})] = document.title
 				return cb( this.contentCache[type][id] )
 			}
 		}
@@ -48,7 +52,7 @@ _frame.infos = {
 			_frame.app_main.loading_start( _g.state2URI({
 				'infos':	type,
 				'id':		id
-			}) + '/index.html', function( html ){
+			}), function( html ){
 				let result = /\<div class\=\"wrapper\"\>(.+)\<\/div\>/.exec( html )
 				_frame.infos.contentCache[type][id] = initcont( $(result.length > 1 ? result[1] : '') )
 				return cb(_frame.infos.contentCache[type][id])
@@ -233,6 +237,10 @@ _frame.infos = {
 						_frame.dom.layout.addClass('is-infos-on')
 						
 					_frame.app_main.title = title
+					document.title = _frame.app_main.page_title[_g.state2URI({
+							'infos':	type,
+							'id':		id
+						})]
 					
 					//console.log( _frame.infos.last )
 					

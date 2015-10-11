@@ -207,6 +207,7 @@ _frame.app_main = {
 	page: {},
 	page_dom: {},
 	page_html: {},
+	page_title: {},
 
 	// is_init: false
 	//bgimg_dir: 	'./app/assets/images/homebg',
@@ -384,13 +385,11 @@ _frame.app_main = {
 					'success': function(data){
 						let result_main = /\<main\>(.+)\<\/main\>/.exec(data)
 							,result_title = /\<title\>([^\<]+)\<\/title\>/.exec(data)
-						_g.test = data
-						//console.log(result)
-						console.log(url, _frame.app_main.loading_cur, result_main, data)
+						if( result_title && result_title.length > 1 ){
+							_frame.app_main.page_title[url] = result_title[1]
+						}
 						if( url == _frame.app_main.loading_cur ){
 							callback( result_main && result_main.length > 1 ? result_main[1] : '' )
-							if( result_title && result_title.length > 1 )
-								document.title = result_title[1]
 						}
 						_frame.app_main.loading_state[url] = 'complete'
 					},
@@ -496,7 +495,10 @@ _frame.app_main = {
 				if( !options.callback_modeSelection_select ){
 					_frame.app_main.title = _frame.app_main.navtitle[page]
 					_frame.infos.last = null
-		
+
+					console.log('/' + page + '/', _frame.app_main.page_title['/' + page + '/'])
+					document.title = _frame.app_main.page_title['/' + page + '/']
+
 					_ga.counter(
 						location.search
 					)
@@ -538,12 +540,12 @@ _frame.app_main = {
 				_frame.app_main.page_dom[page] = _frame.dom.main.find('.page-container[page="'+page+'"]')
 				if( _frame.app_main.page_dom[page].length ){
 					_frame.app_main.page_init(page)
+					_frame.app_main.page_title['/' + page + '/'] = document.title
 					callback()
 				}else{
 					//_frame.app_main.page_dom[page] = $('<div class="page-container" page="'+page+'"/>').appendTo( _frame.dom.main )
-					this.loading_start( '/' + page + '/index.html', function( html ){
+					this.loading_start( '/' + page + '/', function( html ){
 						_frame.app_main.page_dom[page] = $(html).appendTo( _frame.dom.main )
-						console.log(html)
 						//_frame.app_main.page_dom[page].html( html )
 						_frame.app_main.page_init(page)
 						callback()
