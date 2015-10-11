@@ -44,7 +44,7 @@ _tmpl.link_ship = function( ship, tagName, returnHTML, mode ){
 			'<' + tagName
 				+ (tagName == 'a' ? ' href="?infos=ship&id='+shipId+'"' : '')
 				+ ' class="link_ship" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">'
-				+ '<img src="' + node.path.normalize(_g.path.pics.ships) + '/' + shipId + '/0.webp" width="160" height="40"/>'
+				+ '<img src="' + node.path.normalize(_g.path.pics.ships) + '/' + shipId + '/0.webp"/>'
 				+ '<span>'
 					+ content
 				+ '</span>'

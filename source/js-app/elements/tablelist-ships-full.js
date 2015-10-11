@@ -65,7 +65,7 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 						//'<img src="../pics/ships/'+ship_data['id']+'/0.jpg"/>'
 						//'<img src="' + _g.path.pics.ships + '/' + ship_data['id']+'/0.webp" contextmenu="disabled"/>'
 						'<a href="?infos=ship&id='+ship_data['id']+'">'
-						+ '<img src="../pics/ships/'+ship_data['id']+'/0.webp" contextmenu="disabled" width="160" height="40"/>'
+						+ '<img src="../pics/ships/'+ship_data['id']+'/0.webp" contextmenu="disabled"/>'
 						+ '<strong>' + name + '</strong>'
 						+ '</a>'
 						+ '<em></em>'

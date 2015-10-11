@@ -308,7 +308,7 @@ _frame.infos.__ship = function( id ){
 						.addClass(remodel_blueprint ? 'mod-blueprint' : '')
 						.addClass(remodel_catapult ? 'mod-catapult' : '')
 						.html(
-							'<i><img src="' + _g.path.pics.ships + '/' + currentValue['id']+'/0.webp" width="160" height="40"/></i>'
+							'<i><img src="' + _g.path.pics.ships + '/' + currentValue['id']+'/0.webp"/></i>'
 							+ (remodel_lvl ? '<strong>' + remodel_lvl + '</strong>' : '')
 						)
 				)

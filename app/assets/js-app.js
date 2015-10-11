@@ -4032,7 +4032,7 @@ _tmpl.link_ship = function( ship, tagName, returnHTML, mode ){
 			'<' + tagName
 				+ (tagName == 'a' ? ' href="?infos=ship&id='+shipId+'"' : '')
 				+ ' class="link_ship" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">'
-				+ '<img src="' + node.path.normalize(_g.path.pics.ships) + '/' + shipId + '/0.webp" width="160" height="40"/>'
+				+ '<img src="' + node.path.normalize(_g.path.pics.ships) + '/' + shipId + '/0.webp"/>'
 				+ '<span>'
 					+ content
 				+ '</span>'
@@ -6886,7 +6886,7 @@ _frame.infos.__ship = function( id ){
 						.addClass(remodel_blueprint ? 'mod-blueprint' : '')
 						.addClass(remodel_catapult ? 'mod-catapult' : '')
 						.html(
-							'<i><img src="' + _g.path.pics.ships + '/' + currentValue['id']+'/0.webp" width="160" height="40"/></i>'
+							'<i><img src="' + _g.path.pics.ships + '/' + currentValue['id']+'/0.webp"/></i>'
 							+ (remodel_lvl ? '<strong>' + remodel_lvl + '</strong>' : '')
 						)
 				)
@@ -8384,7 +8384,7 @@ class TablelistFleets extends Tablelist{
 							,j = 0;
 						while( j < 6 ){
 							if( ships[j] && ships[j][0] )
-								html+='<img src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0.webp" contextmenu="disabled" width="160" height="40"/>'
+								html+='<img src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0.webp" contextmenu="disabled"/>'
 							else
 								html+='<s/>'
 							j++
@@ -9220,7 +9220,7 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 						//'<img src="../pics/ships/'+ship_data['id']+'/0.jpg"/>'
 						//'<img src="' + _g.path.pics.ships + '/' + ship_data['id']+'/0.webp" contextmenu="disabled"/>'
 						'<a href="?infos=ship&id='+ship_data['id']+'">'
-						+ '<img src="../pics/ships/'+ship_data['id']+'/0.webp" contextmenu="disabled" width="160" height="40"/>'
+						+ '<img src="../pics/ships/'+ship_data['id']+'/0.webp" contextmenu="disabled"/>'
 						+ '<strong>' + name + '</strong>'
 						+ '</a>'
 						+ '<em></em>'
