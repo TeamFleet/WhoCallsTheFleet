@@ -5,7 +5,7 @@
 				tr[data-shipid]{
 					th{
 						.min-width(160);
-						.padding-left(96);
+						//.padding-left(96);
 						position:	relative;
 						input[type="checkbox"].compare{
 							position:	absolute;
@@ -62,6 +62,9 @@
 							.mask-position(0 0);
 							.mask-size(100% 100%);
 							pointer-events: none;
+							&.nomask{
+								.mask-image(~"linear-gradient(to right, transparent 0, transparent 50px, #000 50px, #000)");
+							}
 						}
 						strong{
 							position:	relative;
@@ -107,6 +110,24 @@
 							}
 							@media all and (min-width: 1152px ){
 								display: 	block;
+							}
+						}
+						a{
+							position: 	absolute;
+							top: 		0;
+							left: 		-10px;
+							right: 		0;
+							//width: 		100%;
+							height: 	100%;
+							.container(strong);
+							text-align: 	left !important;
+							padding-left: 	106px;
+							overflow: 	hidden;
+							strong{
+								text-align: 	inherit !important;
+							}
+							img{
+								left: 	-35px;
 							}
 						}
 						[icon]{
@@ -205,6 +226,9 @@
 							top:	0;
 							.margin-left(-10);
 							.mask-image(~"linear-gradient(to right, transparent 0, transparent 50px, #000 58px, #000 calc(100% - 60px), transparent calc(100% - 10px))");
+							&.nomask{
+								.mask-image(~"linear-gradient(to right, transparent 0, transparent 50px, #000 58px, #000)");
+							}
 						}
 					}
 					td[data-stat]{
@@ -218,7 +242,7 @@
 							color: 		hsl(@hue_theme_ship, 100%, 100%);
 							transform: 	rotate(15deg);
 							top: 		0;
-							left: 		76px;
+							left: 		86px;
 							z-index: 	10;
 							//text-shadow:0 0 5px hsl(@hue_theme_ship, 100%, 15%);
 						}
@@ -260,10 +284,17 @@
 					&[compare-checked]{
 						display:	table-row !important;
 						th{
-							.padding-left(146);
+							//.padding-left(146);
 							img{
 								left:	0;
 								.mask-image(~"linear-gradient(to right, #000 50px, #000 calc(100% - 60px), transparent calc(100% - 10px))");
+								&.nomask{
+									.mask-image(~"linear-gradient(to right, #000 50px, #000)");
+								}
+							}
+							a{
+								left: 	0;
+								padding-left: 	146px;
 							}
 						}
 					}

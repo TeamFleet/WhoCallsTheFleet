@@ -16,6 +16,9 @@
 	//.align-items(center);
 	vertical-align: middle;
 	.mask-image(~"linear-gradient(to right, transparent 0, #000 8px, #000 100%)");
+	&.nomask{
+		.mask(none);
+	}
 	span{
 		//display:	inline-block;
 		position:	relative;
@@ -51,6 +54,9 @@
 		//.margin-left(-50);
 		//.mask-image(~"linear-gradient(to right, transparent 0, transparent 50px, #000 58px, #000 calc(100% - 60px), transparent calc(100% - 10px))");
 		.mask-image(~"linear-gradient(to right, #000 0, #000 calc(100% - 60px), transparent calc(100% - 10px))");
+		&.nomask{
+			.mask(none);
+		}
 		//.margin-right(-14);
 		pointer-events: none;
 		//float:			left;
@@ -70,5 +76,8 @@
 		background: no-repeat (100% - 61.8%) (100% - 61.8%) / cover;
 		margin: 	-15px -6px auto -10px;
 		.mask-image(~"linear-gradient(to right, #000 calc(100% - 50px), transparent 100%)");
+		&.nomask{
+			.mask(none);
+		}
 	}
 }

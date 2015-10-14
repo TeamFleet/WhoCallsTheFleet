@@ -115,6 +115,22 @@ function dev_output_filter(output, pagetype, name){
 		}
 
 	searchRes = null
+	scrapePtrn = /0\.webp\"/gi
+		while( (searchRes = scrapePtrn.exec(output)) !== null ){
+			try{
+				let mask = '-mask-1'
+					,c = ' class="nomask"'
+				if( pagetype == 'page' && name == 'ships' )
+					mask = '-mask-1'
+				else if( pagetype == 'infos' && name == 'ship' ){
+					mask = ''
+					c = ''
+				}
+				output = output.replace( searchRes[0], '0' + mask + '.png"' + c + '' )
+			}catch(e){}
+		}
+
+	searchRes = null
 	scrapePtrn = /\.webp/gi
 		while( (searchRes = scrapePtrn.exec(output)) !== null ){
 			try{

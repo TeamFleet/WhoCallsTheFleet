@@ -353,7 +353,7 @@ _frame.infos.__ship = function( id ){
 						$('<input type="radio" name="ship_'+d['id']+'_illustrations" value="'+index+'"' + (index==1 ? ' checked' : '') + '/>')
 							.prop('checked', (index == 1))
 							.insertBefore(illusts_container)
-						$('<span class="container"/>')
+						$('<span/>')
 							.html('<img src="'+file+'" data-filename="'+ship_name+' - '+index+'.webp"/>')
 							//.css('background-image', 'url(' + file + ')')
 							.appendTo(illusts_container)

@@ -479,6 +479,9 @@
 				display:	inline-block;
 				z-index:	2;
 				.checked(@n, @i: 1) when (@i =< @n) {
+					&[value="@{i}"]:checked{
+						cursor: default;
+					}
 					&[value="@{i}"]:checked~div{
 						@left:		(0 - (@i - 1) * 100%);
 						left:		@left;
@@ -525,6 +528,7 @@
 					display:	inline-block;
 					padding:	0 20px;
 					//background:	~"no-repeat 50% 50% / contain";
+					.container(img);
 					img{
 						object-fit:	scale-down;
 						max-width:	100%;
