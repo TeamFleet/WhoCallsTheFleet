@@ -508,7 +508,7 @@ _frame.app_main = {
 				_frame.dom.bg_controls = $('<div class="bg_controls"/>')
 						.on(eventName('transitionend', 'only_bg_off'), function(e){
 							if( e.currentTarget == e.target
-								&& e.originalEvent.propertyName == 'top'
+								&& e.originalEvent.propertyName == 'bottom'
 								&& _frame.dom.layout.hasClass('only_bg')
 								&& $(this).offset().top >= $body.height()
 							){

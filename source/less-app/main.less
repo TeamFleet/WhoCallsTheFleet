@@ -820,11 +820,12 @@ main{
 		.width(@width);
 		.height(@height + 4);
 		left:		~"calc( 50% - @{width_half}px )";
-		top:		~"calc( 100% + 20px )";
+		//top:		~"calc( 100% + 20px )";
+		bottom: 	-60px;
 		position:	absolute;
 		border-radius:	unit( @height, px );
 		z-index:	3;
-		.transition-property(top);
+		.transition-property(bottom);
 		.transition-duration(.5s);
 		.transition-timing-function(~"cubic-bezier(0.680, -0.550, 0.265, 1.550)");
 		overflow:	hidden;
@@ -947,7 +948,8 @@ main{
 			}
 			&.on{
 				.transition-delay(@transition_duration_main);
-				top:	~"calc(100% - 50px - @{height}px)";
+				//top:	~"calc(100% - 50px - @{height}px)";
+				bottom: 	unit( @height, px );
 			}
 		}
 	}
