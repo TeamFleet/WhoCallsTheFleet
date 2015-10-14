@@ -469,26 +469,14 @@
 			text-align:	center;
 			overflow:	hidden;
 			.mask-image( ~"linear-gradient(to left, transparent, #000 20px, #000 calc(100% - 20px), transparent)" );
-			&>input[type="radio"]{
+			&>label{
 				position:	relative;
 				margin:		0;
-				.appearance(none);
 				.width(30);
 				.height(30);
 				top:		~"calc( 100% - 60px )";
 				display:	inline-block;
 				z-index:	2;
-				.checked(@n, @i: 1) when (@i =< @n) {
-					&[value="@{i}"]:checked{
-						cursor: default;
-					}
-					&[value="@{i}"]:checked~div{
-						@left:		(0 - (@i - 1) * 100%);
-						left:		@left;
-					}
-					.checked(@n, (@i + 1))
-				}
-				.checked(10);
 				&:before{
 					@scale:	(10 / 30);
 					position:	absolute;
@@ -499,6 +487,7 @@
 					background:	#fff;
 					background:	rgba(255, 255, 255, 25%);
 					transform:	~"scale(@{scale})";
+					left: 		0;
 					.border(2, solid, transparent);
 					.enable-transition();
 					.transition-property(~"background-color, transform, border-color");
@@ -506,7 +495,21 @@
 				&:hover:before{
 					background:	rgba(255, 255, 255, 50%);
 				}
-				&:checked:before{
+			}
+			&>input[type="radio"]{
+				display: 	none;
+				.checked(@n, @i: 1) when (@i =< @n) {
+					&[value="@{i}"]:checked+label{
+						cursor: default;
+					}
+					&[value="@{i}"]:checked~div{
+						@left:		(0 - (@i - 1) * 100%);
+						left:		@left;
+					}
+					.checked(@n, (@i + 1))
+				}
+				.checked(10);
+				&:checked+label:before{
 					@scale:	(16 / 30);
 					background-color:	fade(#3fc0ff, 25%);
 					border-color:	fade(#3fc0ff, 75%);
@@ -536,39 +539,17 @@
 					}
 				}
 			}
-			.radio_number( @number ){
-				width:	percentage(@number);
-				&>span{
-					width:	percentage(1 / @number);
+			
+			.loop(@n, @i: 2) when (@i =< @n) {
+				&>input[type="radio"][value="@{i}"]~div{
+					width:	percentage(@i);
+					&>span{
+						width:	percentage(1 / @i);
+					}
 				}
+				.loop(@n, (@i + 1))
 			}
-			&>input[type="radio"]+input[type="radio"]~div{
-				.radio_number(2)
-			}
-			&>input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
-				.radio_number(3)
-			}
-			&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
-				.radio_number(4)
-			}
-			&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
-				.radio_number(5)
-			}
-			&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
-				.radio_number(6)
-			}
-			&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
-				.radio_number(7)
-			}
-			&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
-				.radio_number(8)
-			}
-			&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
-				.radio_number(9)
-			}
-			&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
-				.radio_number(10)
-			}
+			.loop(10);
 		}
 
 		@media all and (max-width: 1152px ){
@@ -641,7 +622,7 @@
 				left:		0;
 				display:	block !important;
 				.margin-bottom(-20);
-				&>input[type="radio"]{
+				&>label{
 					top:		~"calc(100% - 30px)" !important;
 					&~div{
 						.padding(10, 0, 30, 0) !important;
@@ -671,44 +652,21 @@
 		@media all and (min-height: 801px) and (max-aspect-ratio: 5 / 4), (min-width: 1601px) and (min-aspect-ratio: 3 / 2){
 			&>aside{
 				&>input[type="radio"]{
-					&:nth-child(even){
+					&:nth-child(4n+3)+label{
 						display:	none;
 					}
-					.checked(@n, @i: 1) when (@i =< @n) {
+			
+					.loop2(@n, @i: 1) when (@i =< @n) {
 						&[value="@{i}"]:checked~div{
 							@left:		(0 - floor( (@i - 1) / 2) * 100%);
 							left:		@left;
 						}
-						.checked(@n, (@i + 1))
+						&[value="@{i}"]~div{
+							width:	(50% * @i);
+						}
+						.loop2(@n, (@i + 1))
 					}
-					.checked(10);
-				}
-				&>input[type="radio"]+input[type="radio"]~div{
-					width:	(50% * 2);
-				}
-				&>input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
-					width:	(50% * 3);
-				}
-				&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
-					width:	(50% * 4);
-				}
-				&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
-					width:	(50% * 5);
-				}
-				&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
-					width:	(50% * 6);
-				}
-				&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
-					width:	(50% * 7);
-				}
-				&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
-					width:	(50% * 8);
-				}
-				&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
-					width:	(50% * 9);
-				}
-				&>input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]+input[type="radio"]~div{
-					width:	(50% * 10);
+					.loop2(10);
 				}
 			}
 		}
@@ -823,7 +781,8 @@
 				}
 			}
 			&>aside{
-				&>input[type="radio"]{
+				//&>input[type="radio"]{
+				&>label{
 					top:	~"calc( 100% - 30px )"
 				}
 				&>div{

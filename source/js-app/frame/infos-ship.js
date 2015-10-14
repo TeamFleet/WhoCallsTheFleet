@@ -350,9 +350,11 @@ _frame.infos.__ship = function( id ){
 					let stat = node.fs.lstatSync(file)
 					if( stat && stat.isFile() ){
 						index++
-						$('<input type="radio" name="ship_'+d['id']+'_illustrations" value="'+index+'"' + (index==1 ? ' checked' : '') + '/>')
+						let radioid = 'ship_' + d['id'] +'_illustrations_' + index
+						$('<input type="radio" name="ship_'+d['id']+'_illustrations" id="'+radioid+'" value="'+index+'"' + (index==1 ? ' checked' : '') + '/>')
 							.prop('checked', (index == 1))
 							.insertBefore(illusts_container)
+						$('<label for="'+radioid+'"/>').insertBefore(illusts_container)
 						$('<span/>')
 							.html('<img src="'+file+'" data-filename="'+ship_name+' - '+index+'.webp"/>')
 							//.css('background-image', 'url(' + file + ')')
