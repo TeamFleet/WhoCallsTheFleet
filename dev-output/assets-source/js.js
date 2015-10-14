@@ -5,9 +5,6 @@
 // @koala-prepend "../../source/nw.js-base-framework/source/js-base/_g.js"
 // @koala-prepend "../../source/nw.js-base-framework/source/js-base/_p.js"
 
-_g.bgimg_count = 0;
-
-
 // @koala-prepend "../../source/nw.js-base-framework/source/js-base/prototype/Array.js"
 // @koala-prepend "../../source/nw.js-base-framework/source/js-base/prototype/date.js"
 // @koala-prepend "../../source/nw.js-base-framework/source/js-base/prototype/object.js"

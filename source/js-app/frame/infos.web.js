@@ -145,16 +145,14 @@ _frame.infos = {
 					_frame.infos.dom.container = _frame.infos.dom.main.children('.wrapper')
 				}
 				if( _frame.dom.btnHistoryBack )
-					_frame.dom.btnHistoryBack.on({
-								'transitionend.infos_hide': function(e){
+					_frame.dom.btnHistoryBack.on(eventName('transitionend', 'infos_hide'), function(e){
 									if( e.currentTarget == e.target
 										&& e.originalEvent.propertyName == 'opacity'
 										&& parseFloat(_frame.dom.btnHistoryBack.css('opacity')) == 0
 									){
 										_frame.infos.hide_finish()
 									}
-								}
-							})
+								})
 			}
 
 		// 计算历史记录相关，确定 Back/Forward 按钮是否可用
@@ -203,7 +201,7 @@ _frame.infos = {
 					}
 	
 					cont.data('is_infosinit', true)
-						.on('transitionend.hide', function(e){
+						.on(eventName('transitionend', 'hide'), function(e){
 							if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(cont.css('opacity')) == 0 ){
 								cont.detach()
 							}

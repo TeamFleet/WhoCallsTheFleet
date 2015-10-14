@@ -1,10 +1,13 @@
 
-// Global Variables
-	_g.animate_duration_delay = 320;
-	_g.inputIndex = 0
-	_g.lang = 'zh_cn'
-	_g.joint = '・'
+_g.bgimg_count = 0;
 
+// Global Variables
+	_g.event = {
+		'animationend':			'animationend webkitAnimationEnd',
+		'animationiteration':	'animationiteration webkitAnimationIteration',
+		'transitionend':		'transitionend webkitTransitionEnd mozTransitionEnd'
+	};
+	
 	_g.path = {
 		'db': 		'/!/db/',
 		'bgimg_dir':'/!/assets/images/homebg/',
@@ -600,7 +603,7 @@ _frame.app_main = {
 
 			if( !_frame.dom.bg_controls ){
 				_frame.dom.bg_controls = $('<div class="bg_controls"/>')
-						.on('transitionend.only_bg_off', function(e){
+						.on(eventName('transitionend', 'only_bg_off'), function(e){
 							if( e.currentTarget == e.target
 								&& e.originalEvent.propertyName == 'top'
 								&& _frame.dom.layout.hasClass('only_bg')
@@ -685,11 +688,15 @@ _frame.app_main = {
 		// 创建基础框架
 			_frame.dom.nav = _frame.dom.layout.children('nav')
 				_frame.dom.logo = $('<button class="logo"/>')
+									.on(_g.event.animationend, function(e){
+										_frame.dom.logo.addClass('ready-animated')
+									})
+									/*
 									.on({
 										'animationend, webkitAnimationEnd': function(e){
 											_frame.dom.logo.addClass('ready-animated')
 										}
-									})
+									})*/
 									.appendTo( _frame.dom.nav )
 				_frame.dom.navlinks = _frame.dom.nav.children('.pages')
 				_frame.dom.globaloptions = _frame.dom.nav.children('section.options')
@@ -923,7 +930,7 @@ _frame.app_main = {
 					.on('click.global_delegate_infos', 'a[href^="?infos="]', link_infos)
 					.on('click.global_delegate_default', 'a[href^="/"]', link_default)
 
-				_frame.dom.bgimg.on('animationend, webkitAnimationEnd', 'div', function(){
+				_frame.dom.bgimg.on(_g.event.animationend, 'div', function(){
 					_frame.app_main.change_bgimg_after()
 				})
 				/*

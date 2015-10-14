@@ -8,7 +8,7 @@ _frame.app_main.page['arsenal'].init = function( page ){
 		akashi.attr({
 				'animation':	Math.floor((Math.random() * 3) + 1)
 			})
-			.on('animationiteration webkitAnimationIteration', function(){
+			.on(_g.event.animationiteration, function(){
 				akashi.attr(
 					'animation',
 					Math.floor((Math.random() * 3) + 1)

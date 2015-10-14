@@ -1,7 +1,3 @@
-/*
- my base framework for nw.js project: https://github.com/Diablohu/nw.js-base-framework
- */
-
 // @koala-prepend "nw.js-base-framework/source/js-base/!.js"
 
 // @koala-prepend "nw.js-base-framework/source/js-base/libs/jquery-2.1.3.min.js"

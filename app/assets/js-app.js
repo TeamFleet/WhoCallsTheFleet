@@ -1,5 +1,20 @@
 "use strict";
 
+// Global Variables
+	_g.animate_duration_delay = 320;
+	_g.inputIndex = 0
+	_g.lang = 'zh_cn'
+	_g.joint = '・'
+	
+	function eventName(event, name){
+		name = name ? ('.' + name) : ''
+		if( _g.event[event] )
+			return _g.event[event].split(' ').map(function(value){
+				return value + name
+			}).join(' ')
+		return event + name
+	}
+
 (function(root, factory) {
 
   if (typeof exports !== 'undefined') {
@@ -163,7 +178,6 @@
   return Lockr;
 
 }));
-
 
 //
 // SmoothScroll for websites v1.3.8 (Balazs Galambosi)
@@ -846,7 +860,6 @@ if (wheelEvent) {
 }
  
 })();
-
 var _ga = {
 	/*
 	defaults: {
@@ -938,7 +951,6 @@ var _ga = {
 	}
 }
 
-
 // put this file before all js files when compile with a builder
 
 "use strict";
@@ -947,7 +959,6 @@ if( typeof _g == 'undefined' )
 	var _g = {}
 
 _g.lang = _g.lang || 'zh_cn' 
-
 // 公式来源: http://bbs.ngacn.cc/read.php?tid=8329592
 
 let Formula = {
@@ -1379,7 +1390,6 @@ Formula.addEvasion = function(ship, equipments_by_slot, star_by_slot, rank_by_sl
 	return this.calculate( 'addEvasion', ship, equipments_by_slot, star_by_slot, rank_by_slot )
 };
 
-
 class ItemBase {
 	constructor() {
 	}
@@ -1395,7 +1405,6 @@ class ItemBase {
 		return this.getName()
 	}
 }
-
 // Class for Entity (Person/Group, such as CVs, illustrators)
 
 class Entity extends ItemBase{
@@ -1404,7 +1413,6 @@ class Entity extends ItemBase{
 		$.extend(true, this, data)
 	}
 }
-
 class Equipment extends ItemBase{
 	constructor(data) {
 		super()
@@ -1462,7 +1470,6 @@ class Equipment extends ItemBase{
 		*/
 	}
 }
-
 /* Class: Ship / 舰娘
 
  *******************************************************************
@@ -1770,7 +1777,6 @@ class Ship extends ItemBase{
 		return this.getIllustrator()
 	}
 }
-
 /* Perser for kancolle-calc.net
 
  *******************************************************************
@@ -1988,7 +1994,6 @@ _g.kancolle_calc = {
 		return result
 	}
 }
-
 // node.js modules
 	node.require('fs')
 	node.require('nedb')
@@ -2006,11 +2011,12 @@ _g.kancolle_calc = {
 
 
 // Global Variables
-	_g.animate_duration_delay = 320;
-	_g.inputIndex = 0
-	_g.lang = 'zh_cn'
-	_g.joint = '・'
-
+	_g.event = {
+		'animationend':			'webkitAnimationEnd',
+		'animationiteration':	'webkitAnimationIteration',
+		'transitionend':		'transitionend'
+	};
+	
 	_g.path = {
 		'db': 		node.path.join(_g.root, '/app-db/'),
 		'page': 	node.path.join(_g.root, '/app/page/'),
@@ -2496,7 +2502,7 @@ _frame.app_main = {
 
 			if( !_frame.dom.bg_controls ){
 				_frame.dom.bg_controls = $('<div class="bg_controls"/>')
-						.on('transitionend.only_bg_off', function(e){
+						.on(eventName('transitionend', 'only_bg_off'), function(e){
 							if( e.currentTarget == e.target
 								&& e.originalEvent.propertyName == 'top'
 								&& _frame.dom.layout.hasClass('only_bg')
@@ -2583,11 +2589,15 @@ _frame.app_main = {
 		// 创建基础框架
 			_frame.dom.nav = $('<nav/>').appendTo( _frame.dom.layout )
 				_frame.dom.logo = $('<button class="logo" />')
+									.on(_g.event.animationend, function(e){
+										_frame.dom.logo.addClass('ready-animated')
+									})
+									/*
 									.on({
 										'animationend, webkitAnimationEnd': function(e){
 											$(this).addClass('ready-animated')
 										}
-									})
+									})*/
 									.appendTo( _frame.dom.nav )
 				/*
 				_frame.dom.logo = $('<button class="logo" />').on('click', function(){
@@ -3090,7 +3100,7 @@ _frame.app_main = {
 						}
 				$body.on('click.pagechange', 'a[href^="?page="]', link_page)
 					.on('click.pagechange', 'a[href^="?infos="]', link_infos)
-				_frame.dom.bgimg.on('animationend, webkitAnimationEnd', 'div', function(){
+				_frame.dom.bgimg.on(_g.event.animationend, 'div', function(){
 					_frame.app_main.change_bgimg_after()
 				})
 				/*
@@ -3195,7 +3205,6 @@ _frame.app_main = {
 			_frame.app_main.is_init = true
 	}
 }
-
 //
 _g.error = function( err ){
 	if( !(err instanceof Error) )
@@ -3217,7 +3226,6 @@ _g.error = function( err ){
 
 	//throw err
 }
-
 
 /*
 
@@ -3589,7 +3597,6 @@ var _updater = {
 
 // 将更新流程加入页面序列
 	_frame.app_main.functions_on_ready.push( _updater.update )
-
 _tmpl.improvement = function( equipment, improvement_index, requirement_index, returnHTML ){
 	if( typeof equipment == 'undefined' )
 		return false
@@ -3888,7 +3895,6 @@ _tmpl.improvement__reqdetails = function(reqdata){
 	return requirements
 }
 
-
 _tmpl.link_entity = function( entity, tagName, returnHTML, count ){
 	if( !entity )
 		return false
@@ -3931,7 +3937,6 @@ _tmpl.link_entity = function( entity, tagName, returnHTML, count ){
 			returnHTML
 		)
 }
-
 
 _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar ){
 	if( !equipment )
@@ -3984,7 +3989,6 @@ _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar
 			returnHTML
 		)
 }
-
 
 _tmpl.link_ship = function( ship, tagName, returnHTML, mode ){
 	if( !ship )
@@ -4046,7 +4050,6 @@ _tmpl.link_ship = function( ship, tagName, returnHTML, mode ){
 		)
 }
 
-
 _tmpl.textlink_entity = function( entity, tagName, returnHTML ){
 	if( !entity )
 		return false
@@ -4077,7 +4080,6 @@ _tmpl.textlink_entity = function( entity, tagName, returnHTML ){
 			returnHTML
 		)
 }
-
 
 _tmpl.textlink_ship = function( ship, tagName, returnHTML ){
 	if( !ship )
@@ -4113,7 +4115,6 @@ _tmpl.textlink_ship = function( ship, tagName, returnHTML ){
 		)
 }
 
-
 class PAGE {
 	constructor( $page ) {
 	}
@@ -4143,7 +4144,6 @@ class PAGE {
 	}
 }
 
-
 //class PageFleets extends PAGE
 
 _frame.app_main.page['fleets'] = {
@@ -4165,7 +4165,6 @@ _frame.app_main.page['fleets'] = {
 		}( $page )
 	}
 }
-
 
 //class PageShips extends PAGE
 
@@ -4215,7 +4214,6 @@ _frame.app_main.page['ships'] = {
 	}
 }
 
-
 //class PageEquipments extends PAGE
 
 _frame.app_main.page['equipments'] = {
@@ -4258,7 +4256,6 @@ _frame.app_main.page['equipments'] = {
 	}
 }
 
-
 _frame.app_main.page['arsenal'] = {}
 _frame.app_main.page['arsenal'].init = function( page ){
 	// tab radios
@@ -4287,7 +4284,7 @@ _frame.app_main.page['arsenal'].init = function( page ){
 			var akashi = $('<span/>',{
 								'animation':	Math.floor((Math.random() * 3) + 1)
 							})
-							.on('animationiteration webkitAnimationIteration', function(){
+							.on(_g.event.animationiteration, function(){
 								akashi.attr(
 									'animation',
 									Math.floor((Math.random() * 3) + 1)
@@ -4400,7 +4397,6 @@ _frame.app_main.page['arsenal'].init = function( page ){
 		return body
 	}
 
-
 _frame.app_main.page['about'] = {}
 
 _frame.app_main.page['about'].journal_parse = function( raw ){
@@ -4491,7 +4487,6 @@ _frame.app_main.page['about'].init = function( page ){
 		})
 
 }
-
 
 /* 
  */
@@ -4622,16 +4617,14 @@ _frame.infos = {
 							//_frame.infos.hide()
 						}).appendTo( _frame.infos.dom.nav )
 				*/
-				_frame.dom.btnHistoryBack.on({
-							'transitionend.infos_hide': function(e){
+				_frame.dom.btnHistoryBack.on(eventName('transitionend', 'infos_hide'), function(e){
 								if( e.currentTarget == e.target
 									&& e.originalEvent.propertyName == 'opacity'
 									&& parseFloat(_frame.dom.btnHistoryBack.css('opacity')) == 0
 								){
 									_frame.infos.hide_finish()
 								}
-							}
-						})
+							})
 			}
 
 		// 计算历史记录相关，确定 Back/Forward 按钮是否可用
@@ -4684,7 +4677,7 @@ _frame.infos = {
 
 				if( !contentDOM.data('is_infosinit') ){
 					contentDOM.data('is_infosinit', true)
-						.on('transitionend.hide', function(e){
+						.on(eventName('transitionend','hide'), function(e){
 							if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(contentDOM.css('opacity')) == 0 ){
 								contentDOM.detach()
 							}
@@ -4824,7 +4817,6 @@ _frame.infos.init = function(){
 	return true
 }
 
-
 // 实体信息
 
 _frame.infos.__entity = function( id ){
@@ -4918,7 +4910,6 @@ _frame.infos.__entity = function( id ){
 	
 	return dom
 }
-
 
 // 装备信息
 	_frame.infos.__equipment = function( id ){
@@ -5076,7 +5067,6 @@ _frame.infos.__entity = function( id ){
 
 		return dom
 	}
-
 
 /*
 舰队数据
@@ -6575,7 +6565,6 @@ class InfosFleetShipEquipment{
 		}
 }
 
-
 // 舰娘信息
 
 _frame.infos.__ship = function( id ){
@@ -7032,7 +7021,6 @@ _frame.infos.__ship = function( id ){
 	return dom
 }
 
-
 _frame.app_main.is_mode_selection = function(){
 	return $html.hasClass('mode-selection') || _frame.dom.layout.hasClass('mode-selection')
 }
@@ -7053,7 +7041,6 @@ _frame.app_main.mode_selection_off = function(){
 		_frame.app_main.page_dom[_frame.app_main.cur_page].trigger('modeSelectionExit')
 	_frame.dom.layout.removeClass('mode-selection')
 }
-
 
 if( typeof _p.tip != 'undefined' ){
 
@@ -7107,7 +7094,6 @@ _p.tip.content_equipment = function( d ){
 
 }}
 
-
 if( typeof _p.tip != 'undefined' ){
 
 _p.tip.filters.push( function(cont){
@@ -7133,7 +7119,6 @@ _p.tip.content_ship = function( d ){
 	return html
 
 }}
-
 
 /*
  */
@@ -7536,7 +7521,6 @@ Tablelist.genId = function(text){
 	return 'tablelist'+hash;
 }
 
-
 // Entities
 
 class TablelistEntities extends Tablelist{
@@ -7567,7 +7551,6 @@ class TablelistEntities extends Tablelist{
 		_frame.app_main.loaded('tablelist_'+this._index, true)
 	}
 }
-
 
 // Entities
 
@@ -7643,7 +7626,6 @@ TablelistEntities.prototype.init_new = function(){
 	this.generated = true
 	_frame.app_main.loaded('tablelist_'+this._index, true)
 }
-
 
 // Equipments
 
@@ -7837,7 +7819,6 @@ TablelistEquipments.types = []
 TablelistEquipments.shipId = null
 TablelistEquipments.shipIdLast = null
 
-
 // Equipments (Other Class Functions)
 
 TablelistEquipments.prototype.append_item = function( equipment_data, collection_id ){
@@ -8023,7 +8004,6 @@ TablelistEquipments.prototype.init_new = function(){
 				_config.set( 'hide-equipmentsinfos', true )
 			}.bind(this)).appendTo( equipmentsinfos )
 }
-
 
 /* TODO
 	新建
@@ -8761,7 +8741,6 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 
 
 
-
 class TablelistShips extends Tablelist{
 	constructor( container, options ){
 		super( container, options )
@@ -9156,7 +9135,6 @@ class TablelistShips extends Tablelist{
 		delete( this.last_item )
 	}
 }
-
 
 TablelistShips.prototype.append_item = function( ship_data, header_index ){
 		//,tr = $('<tr class="row" data-shipid="'+ ship_data['id'] +'" data-header="'+ header_index +'" modal="true"/>')
@@ -9600,55 +9578,3 @@ TablelistShips.prototype.init_new = function(){
 								this.compare_start()
 							}.bind(this)).appendTo( this.dom.msg_container )
 }
-
-
-// @koala-prepend "js-app/!.js"
-
-// @koala-prepend "js-app/lib/lockr.js"
-// @koala-prepend "js-app/lib/SmoothScroll.js"
-
-// @koala-prepend "js-app/google_analytics.js"
-
-// @koala-prepend "KanColle-JS-Kit/js/!.js"
-// @koala-prepend "KanColle-JS-Kit/js/formula.js"
-// @koala-prepend "KanColle-JS-Kit/js/class-item/!.js"
-// @koala-prepend "KanColle-JS-Kit/js/class-item/entity.js"
-// @koala-prepend "KanColle-JS-Kit/js/class-item/equipment.js"
-// @koala-prepend "KanColle-JS-Kit/js/class-item/ship.js"
-// @koala-prepend "KanColle-JS-Kit/js/parser/kancolle-calc.js"
-
-// @koala-prepend "js-app/main.js"
-// @koala-prepend "js-app/errorlog.js"
-// @koala-prepend "js-app/updater.js"
-
-// @koala-prepend "js-app/templates/improvement.js"
-// @koala-prepend "js-app/templates/link_entity.js"
-// @koala-prepend "js-app/templates/link_equipment.js"
-// @koala-prepend "js-app/templates/link_ship.js"
-// @koala-prepend "js-app/templates/textlink_entity.js"
-// @koala-prepend "js-app/templates/textlink_ship.js"
-
-// @koala-prepend "js-app/page/!.js"
-// @koala-prepend "js-app/page/fleets.js"
-// @koala-prepend "js-app/page/ships.js"
-// @koala-prepend "js-app/page/equipments.js"
-// @koala-prepend "js-app/page/arsenal.js"
-// @koala-prepend "js-app/page/about.js"
-
-// @koala-prepend "js-app/frame/infos.js"
-// @koala-prepend "js-app/frame/infos-entity.js"
-// @koala-prepend "js-app/frame/infos-equipment.js"
-// @koala-prepend "js-app/frame/infos-fleet.js"
-// @koala-prepend "js-app/frame/infos-ship.js"
-// @koala-prepend "js-app/frame/mode-selection.js"
-// @koala-prepend "js-app/frame/tip-equipment.js"
-// @koala-prepend "js-app/frame/tip-ship.js"
-
-// @koala-prepend "js-app/elements/tablelist.js"
-// @koala-prepend "js-app/elements/tablelist-entities.js"
-// @koala-prepend "js-app/elements/tablelist-entities-full.js"
-// @koala-prepend "js-app/elements/tablelist-equipments.js"
-// @koala-prepend "js-app/elements/tablelist-equipments-full.js"
-// @koala-prepend "js-app/elements/tablelist-fleets.js"
-// @koala-prepend "js-app/elements/tablelist-ships.js"
-// @koala-prepend "js-app/elements/tablelist-ships-full.js"

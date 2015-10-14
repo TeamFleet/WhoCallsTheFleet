@@ -1,5 +1,4 @@
 "use strict";
-
 /* Global Variables
  *******************************************************************
 
@@ -567,7 +566,6 @@ if(bGecko){
 if( bTouch ){
 	$html.addClass('touch')
 }
-
 
 
 
@@ -1722,7 +1720,6 @@ $.fn.serializeObject = function(){
 	return o;
 };
 
-
 /* page elements/components
 */
 
@@ -1897,7 +1894,6 @@ _p.removeEmptyTextNode = function( el ){
 		}).remove()
 }
 
-
 /* Extra properties & methods for Array
  *******************************************************************
 
@@ -1931,7 +1927,6 @@ Object.defineProperty(Array.prototype, 'mergeFrom', {
 		return this
 	}
 })
-
 /*******************************************************************
  Function shortcut for DATE
 
@@ -2072,7 +2067,6 @@ _g.formatTime = function( time, pattern, set ){
 				.replace(/\%l/g, _g.formatTime_weekdaymappding[time.getDay()]._(_g.formatTime_string) )
 			)
 };
-
 /*******************************************************************
  Function shortcut for OBJECT
 
@@ -2108,7 +2102,6 @@ Object.defineProperty(Object.prototype, '_size', {
 		return size
 	}
 })
-
 /*******************************************************************
  Function shortcut for STRING
 
@@ -2258,7 +2251,6 @@ String.prototype.filter = function(){
 String.prototype.escape = function() {
     return $('<div />').text(this).html();
 };
-
 /*************************************************
 * Library for HTML Templates
 **************************************************
@@ -2291,7 +2283,6 @@ var _tmpl = {
 			return $(value)
 	}
 }
-
 /*************************************************
 * Library for Hotkey bindings
 **************************************************
@@ -2434,7 +2425,6 @@ _hotkey.init = function(){
 
 	_hotkey.is_init = true
 }
-
 
 /*************************************************
 * Library for form sections creation
@@ -2693,7 +2683,6 @@ _form.element = function(type, name, id, value, options){
 
 	return element
 }
-
 /* 
  */
 
@@ -2817,7 +2806,6 @@ _frame.global.init = function(){
 
 
 
-
 var _menu = function( settings ){
 	if( !this.settings ){
 		this.settings = $.extend(
@@ -2861,7 +2849,8 @@ _menu.prototype.init = function(){
 	
 	// 绑定transitionend事件，自动触发隐藏函数
 		this.dom.menu.on({
-			'transitionend.menu_hide': function(e){
+			//'transitionend.menu_hide': function(e){
+			'transitionend.menu_hide webkitTransitionEnd.menu_hide mozTransitionEnd.menu_hide': function(e){
 				if( e.currentTarget == e.target
 					&& e.originalEvent.propertyName == 'opacity'
 					&& parseFloat(self.dom.menu.css('opacity')) === 0
@@ -3036,7 +3025,6 @@ _frame.menu = {
 		this.is_init = true
 	}
 }
-
 /* 
  */
 
@@ -3163,8 +3151,9 @@ _frame.modal.init = function(){
 	if( _frame.modal.is_init )
 		return true
 
-	_frame.modal.dom.container = $('<div class="container modal" />').on({
-										'transitionend.modal_hide': function(e){
+	_frame.modal.dom.container = $('<div class="modal" />').on({
+										//'transitionend.modal_hide': function(e){
+										'transitionend.modal_hide webkitTransitionEnd.modal_hide mozTransitionEnd.modal_hide': function(e){
 											if( _frame.modal.showing
 												&& e.currentTarget == e.target
 												&& e.originalEvent.propertyName == 'opacity'
@@ -3196,7 +3185,6 @@ _frame.modal.init = function(){
 	_frame.modal.is_init = true
 	return true
 }
-
 /* Tooltip ----------------------------------------------------------------------------------------------------
 Tooltip
 	_p.tip.show(HTMLcontent, this[, options])
@@ -3227,7 +3215,8 @@ _p.tip = {
 			return false
 
 		_p.tip.dom = $('<div id="tip"/>')
-						.on('transitionend', function(e){
+						//.on('transitionend', function(e){
+						.on('transitionend webkitTransitionEnd mozTransitionEnd', function(e){
 							if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseFloat(_p.tip.dom.css('opacity')) == 0 ){
 								_p.tip.dom
 									.removeClass('show')
@@ -3548,7 +3537,6 @@ _p.el.tip = {
 }
 
 
-
 // 初始化所有 A 标签，使用delegate方式绑定事件
 
 
@@ -3602,7 +3590,6 @@ _p.el.links = {
 	}
 }
 
-
 /*
  */
 
@@ -3647,7 +3634,6 @@ _p.el.form = {
 		})
 	}
 };
-
 
 
 
@@ -3707,7 +3693,6 @@ jQuery.fn.extend({
 		return this
 	}
 })
-
 
 /* Element: Input
 */
@@ -4091,7 +4076,6 @@ _p.el.input = {
 	}
 }
 */
-
 /*
  */
 
@@ -4204,7 +4188,6 @@ _p.el.table = {
 		})
 	}
 };
-
 /*
  */
 
@@ -4284,7 +4267,6 @@ _p.el.tabview = {
 		})
 	}
 };
-
 $document.ready(function(){
 
 	var timeStart = _g.timeNow()
@@ -4335,8 +4317,22 @@ $document.ready(function(){
 		$html.addClass('no-transition')
 	}
 });
-
 "use strict";
+
+// Global Variables
+	_g.animate_duration_delay = 320;
+	_g.inputIndex = 0
+	_g.lang = 'zh_cn'
+	_g.joint = '・'
+	
+	function eventName(event, name){
+		name = name ? ('.' + name) : ''
+		if( _g.event[event] )
+			return _g.event[event].split(' ').map(function(value){
+				return value + name
+			}).join(' ')
+		return event + name
+	}
 
 var _ga = {
 	//init_count:	false,
@@ -4357,7 +4353,6 @@ var _ga = {
 			});
 	}
 }
-
 
 var _config = {
 	getFullKeyname: function( key ){
@@ -4406,7 +4401,6 @@ _frame.app_config = {
 		_frame.app_config.is_init = true
 	}
 }
-
 // put this file before all js files when compile with a builder
 
 "use strict";
@@ -4415,7 +4409,6 @@ if( typeof _g == 'undefined' )
 	var _g = {}
 
 _g.lang = _g.lang || 'zh_cn' 
-
 // 公式来源: http://bbs.ngacn.cc/read.php?tid=8329592
 
 let Formula = {
@@ -4847,7 +4840,6 @@ Formula.addEvasion = function(ship, equipments_by_slot, star_by_slot, rank_by_sl
 	return this.calculate( 'addEvasion', ship, equipments_by_slot, star_by_slot, rank_by_slot )
 };
 
-
 class ItemBase {
 	constructor() {
 	}
@@ -4863,7 +4855,6 @@ class ItemBase {
 		return this.getName()
 	}
 }
-
 // Class for Entity (Person/Group, such as CVs, illustrators)
 
 class Entity extends ItemBase{
@@ -4872,7 +4863,6 @@ class Entity extends ItemBase{
 		$.extend(true, this, data)
 	}
 }
-
 class Equipment extends ItemBase{
 	constructor(data) {
 		super()
@@ -4930,7 +4920,6 @@ class Equipment extends ItemBase{
 		*/
 	}
 }
-
 /* Class: Ship / 舰娘
 
  *******************************************************************
@@ -5238,7 +5227,6 @@ class Ship extends ItemBase{
 		return this.getIllustrator()
 	}
 }
-
 /* Perser for kancolle-calc.net
 
  *******************************************************************
@@ -5457,13 +5445,15 @@ _g.kancolle_calc = {
 	}
 }
 
+_g.bgimg_count = 0;
 
 // Global Variables
-	_g.animate_duration_delay = 320;
-	_g.inputIndex = 0
-	_g.lang = 'zh_cn'
-	_g.joint = '・'
-
+	_g.event = {
+		'animationend':			'animationend webkitAnimationEnd',
+		'animationiteration':	'animationiteration webkitAnimationIteration',
+		'transitionend':		'transitionend webkitTransitionEnd mozTransitionEnd'
+	};
+	
 	_g.path = {
 		'db': 		'/!/db/',
 		'bgimg_dir':'/!/assets/images/homebg/',
@@ -6059,7 +6049,7 @@ _frame.app_main = {
 
 			if( !_frame.dom.bg_controls ){
 				_frame.dom.bg_controls = $('<div class="bg_controls"/>')
-						.on('transitionend.only_bg_off', function(e){
+						.on(eventName('transitionend', 'only_bg_off'), function(e){
 							if( e.currentTarget == e.target
 								&& e.originalEvent.propertyName == 'top'
 								&& _frame.dom.layout.hasClass('only_bg')
@@ -6144,11 +6134,15 @@ _frame.app_main = {
 		// 创建基础框架
 			_frame.dom.nav = _frame.dom.layout.children('nav')
 				_frame.dom.logo = $('<button class="logo"/>')
+									.on(_g.event.animationend, function(e){
+										_frame.dom.logo.addClass('ready-animated')
+									})
+									/*
 									.on({
 										'animationend, webkitAnimationEnd': function(e){
 											_frame.dom.logo.addClass('ready-animated')
 										}
-									})
+									})*/
 									.appendTo( _frame.dom.nav )
 				_frame.dom.navlinks = _frame.dom.nav.children('.pages')
 				_frame.dom.globaloptions = _frame.dom.nav.children('section.options')
@@ -6382,7 +6376,7 @@ _frame.app_main = {
 					.on('click.global_delegate_infos', 'a[href^="?infos="]', link_infos)
 					.on('click.global_delegate_default', 'a[href^="/"]', link_default)
 
-				_frame.dom.bgimg.on('animationend, webkitAnimationEnd', 'div', function(){
+				_frame.dom.bgimg.on(_g.event.animationend, 'div', function(){
 					_frame.app_main.change_bgimg_after()
 				})
 				/*
@@ -6443,14 +6437,12 @@ _g.error = function(err){
 
 var debugmode = false
 
-
 _frame.app_main.page_init = function(page, $page){
 	$page = $page || _frame.app_main.page_dom[page]
 	if( _frame.app_main.page[page] && _frame.app_main.page[page].init )
 		_frame.app_main.page[page].init($page)
 	_p.initDOM($page)
 }
-
 
 _tmpl.improvement = function( equipment, improvement_index, requirement_index, returnHTML ){
 	if( typeof equipment == 'undefined' )
@@ -6750,7 +6742,6 @@ _tmpl.improvement__reqdetails = function(reqdata){
 	return requirements
 }
 
-
 _tmpl.link_entity = function( entity, tagName, returnHTML, count ){
 	if( !entity )
 		return false
@@ -6793,7 +6784,6 @@ _tmpl.link_entity = function( entity, tagName, returnHTML, count ){
 			returnHTML
 		)
 }
-
 
 _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar ){
 	if( !equipment )
@@ -6846,7 +6836,6 @@ _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar
 			returnHTML
 		)
 }
-
 
 _tmpl.link_ship = function( ship, tagName, returnHTML, mode ){
 	if( !ship )
@@ -6908,7 +6897,6 @@ _tmpl.link_ship = function( ship, tagName, returnHTML, mode ){
 		)
 }
 
-
 _tmpl.textlink_entity = function( entity, tagName, returnHTML ){
 	if( !entity )
 		return false
@@ -6939,7 +6927,6 @@ _tmpl.textlink_entity = function( entity, tagName, returnHTML ){
 			returnHTML
 		)
 }
-
 
 _tmpl.textlink_ship = function( ship, tagName, returnHTML ){
 	if( !ship )
@@ -6975,7 +6962,6 @@ _tmpl.textlink_ship = function( ship, tagName, returnHTML ){
 		)
 }
 
-
 class PAGE {
 	constructor( $page ) {
 	}
@@ -7005,7 +6991,6 @@ class PAGE {
 	}
 }
 
-
 //class PageFleets extends PAGE
 
 _frame.app_main.page['fleets'] = {
@@ -7027,7 +7012,6 @@ _frame.app_main.page['fleets'] = {
 		}( $page )
 	}
 }
-
 
 //class PageShips extends PAGE
 
@@ -7077,7 +7061,6 @@ _frame.app_main.page['ships'] = {
 	}
 }
 
-
 //class PageEquipments extends PAGE
 
 _frame.app_main.page['equipments'] = {
@@ -7120,7 +7103,6 @@ _frame.app_main.page['equipments'] = {
 	}
 }
 
-
 _frame.app_main.page['arsenal'] = {}
 _frame.app_main.page['arsenal'].init = function( page ){
 	// tab radios
@@ -7131,7 +7113,7 @@ _frame.app_main.page['arsenal'].init = function( page ){
 		akashi.attr({
 				'animation':	Math.floor((Math.random() * 3) + 1)
 			})
-			.on('animationiteration webkitAnimationIteration', function(){
+			.on(_g.event.animationiteration, function(){
 				akashi.attr(
 					'animation',
 					Math.floor((Math.random() * 3) + 1)
@@ -7177,7 +7159,6 @@ _frame.app_main.page['arsenal'].init = function( page ){
 // 明细表
 	_frame.app_main.page['arsenal'].parse_all = function(body){
 	}
-
 
 _frame.app_main.page['about'] = {}
 
@@ -7269,7 +7250,6 @@ _frame.app_main.page['about'].init = function( page ){
 		})
 
 }
-
 
 /* 
  */
@@ -7418,16 +7398,14 @@ _frame.infos = {
 					_frame.infos.dom.container = _frame.infos.dom.main.children('.wrapper')
 				}
 				if( _frame.dom.btnHistoryBack )
-					_frame.dom.btnHistoryBack.on({
-								'transitionend.infos_hide': function(e){
+					_frame.dom.btnHistoryBack.on(eventName('transitionend', 'infos_hide'), function(e){
 									if( e.currentTarget == e.target
 										&& e.originalEvent.propertyName == 'opacity'
 										&& parseFloat(_frame.dom.btnHistoryBack.css('opacity')) == 0
 									){
 										_frame.infos.hide_finish()
 									}
-								}
-							})
+								})
 			}
 
 		// 计算历史记录相关，确定 Back/Forward 按钮是否可用
@@ -7476,7 +7454,7 @@ _frame.infos = {
 					}
 	
 					cont.data('is_infosinit', true)
-						.on('transitionend.hide', function(e){
+						.on(eventName('transitionend', 'hide'), function(e){
 							if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(cont.css('opacity')) == 0 ){
 								cont.detach()
 							}
@@ -7624,7 +7602,6 @@ _frame.infos.init = function(){
 	_frame.infos.is_init = true
 	return true
 }
-
 /*
 舰队数据
 	综合选项
@@ -9122,7 +9099,6 @@ class InfosFleetShipEquipment{
 		}
 }
 
-
 _frame.app_main.is_mode_selection = function(){
 	return $html.hasClass('mode-selection') || _frame.dom.layout.hasClass('mode-selection')
 }
@@ -9143,7 +9119,6 @@ _frame.app_main.mode_selection_off = function(){
 		_frame.app_main.page_dom[_frame.app_main.cur_page].trigger('modeSelectionExit')
 	_frame.dom.layout.removeClass('mode-selection')
 }
-
 
 if( typeof _p.tip != 'undefined' ){
 
@@ -9197,7 +9172,6 @@ _p.tip.content_equipment = function( d ){
 
 }}
 
-
 if( typeof _p.tip != 'undefined' ){
 
 _p.tip.filters.push( function(cont){
@@ -9223,7 +9197,6 @@ _p.tip.content_ship = function( d ){
 	return html
 
 }}
-
 
 /*
  */
@@ -9626,7 +9599,6 @@ Tablelist.genId = function(text){
 	return 'tablelist'+hash;
 }
 
-
 // Entities
 
 class TablelistEntities extends Tablelist{
@@ -9657,7 +9629,6 @@ class TablelistEntities extends Tablelist{
 		_frame.app_main.loaded('tablelist_'+this._index, true)
 	}
 }
-
 
 // Equipments
 
@@ -9850,7 +9821,6 @@ TablelistEquipments.gen_helper_equipable_on = function( type_id ){
 TablelistEquipments.types = []
 TablelistEquipments.shipId = null
 TablelistEquipments.shipIdLast = null
-
 
 /* TODO
 	新建
@@ -10588,7 +10558,6 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 
 
 
-
 class TablelistShips extends Tablelist{
 	constructor( container, options ){
 		super( container, options )
@@ -10983,91 +10952,3 @@ class TablelistShips extends Tablelist{
 		delete( this.last_item )
 	}
 }
-
-
-
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/!.js"
-
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/_g-variables.js"
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/_g.js"
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/_p.js"
-
-_g.bgimg_count = 0;
-
-
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/prototype/Array.js"
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/prototype/date.js"
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/prototype/object.js"
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/prototype/string.js"
-
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/templates/_.js"
-
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/hotkey/_.js"
-
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/form/_.js"
-
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/frame/_global.js"
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/frame/menu.js"
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/frame/modal.js"
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/frame/tip.js"
-
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/elements/_a.js"
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/elements/form.js"
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/elements/flexgrid.js"
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/elements/input.js"
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/elements/table.js"
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/elements/tabview.js"
-
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/!last.js"
-
-
-
-
-
-
-
-
-
-
-// @koala-prepend "../../source/js-app/!.js"
-
-// @koala-prepend "../../source/js-app/google_analytics-web.js"
-
-// @koala-prepend "../../source/nw.js-base-framework/source/js-base/node-webkit/configuration.js"
-
-// @koala-prepend "../../source/KanColle-JS-Kit/js/!.js"
-// @koala-prepend "../../source/KanColle-JS-Kit/js/formula.js"
-// @koala-prepend "../../source/KanColle-JS-Kit/js/class-item/!.js"
-// @koala-prepend "../../source/KanColle-JS-Kit/js/class-item/entity.js"
-// @koala-prepend "../../source/KanColle-JS-Kit/js/class-item/equipment.js"
-// @koala-prepend "../../source/KanColle-JS-Kit/js/class-item/ship.js"
-// @koala-prepend "../../source/KanColle-JS-Kit/js/parser/kancolle-calc.js"
-
-// @koala-prepend "../../source/js-app/main-web.js"
-// @koala-prepend "../../source/js-app/main-web-page.js"
-
-// @koala-prepend "../../source/js-app/templates/improvement.js"
-// @koala-prepend "../../source/js-app/templates/link_entity.js"
-// @koala-prepend "../../source/js-app/templates/link_equipment.js"
-// @koala-prepend "../../source/js-app/templates/link_ship.js"
-// @koala-prepend "../../source/js-app/templates/textlink_entity.js"
-// @koala-prepend "../../source/js-app/templates/textlink_ship.js"
-
-// @koala-prepend "../../source/js-app/page/!.js"
-// @koala-prepend "../../source/js-app/page/fleets.js"
-// @koala-prepend "../../source/js-app/page/ships.js"
-// @koala-prepend "../../source/js-app/page/equipments.js"
-// @koala-prepend "../../source/js-app/page/arsenal-web.js"
-// @koala-prepend "../../source/js-app/page/about.js"
-
-// @koala-prepend "../../source/js-app/frame/infos.web.js"
-// @koala-prepend "../../source/js-app/frame/infos-fleet.js"
-// @koala-prepend "../../source/js-app/frame/mode-selection.js"
-// @koala-prepend "../../source/js-app/frame/tip-equipment.js"
-// @koala-prepend "../../source/js-app/frame/tip-ship.js"
-
-// @koala-prepend "../../source/js-app/elements/tablelist.js"
-// @koala-prepend "../../source/js-app/elements/tablelist-entities.js"
-// @koala-prepend "../../source/js-app/elements/tablelist-equipments.js"
-// @koala-prepend "../../source/js-app/elements/tablelist-fleets.js"
-// @koala-prepend "../../source/js-app/elements/tablelist-ships.js"

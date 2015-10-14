@@ -1,5 +1,7 @@
 "use strict";
 
+
+
 var babel = require("../dev-output/js-source/node_modules/babel-core")
 
 let dev_output_steps = []
@@ -314,7 +316,6 @@ function dev_output_form(){
 	
 	return el.container
 }
-
 // Copyright (c) 2013 Pieroxy <pieroxy@pieroxy.net>
 // This work is free. You can redistribute it and/or modify it
 // under the terms of the WTFPL, Version 2
@@ -817,7 +818,6 @@ if (typeof define === 'function' && define.amd) {
   module.exports = LZString
 }
 
-
 // Copyright (c) 2013 Pieroxy <pieroxy@pieroxy.net>
 // This work is free. You can redistribute it and/or modify it
 // under the terms of the WTFPL, Version 2
@@ -1104,7 +1104,6 @@ var Base64String = {
   }
 }
 
-
 /*
 
 Template
@@ -1243,7 +1242,6 @@ dev_output_steps.push(function(){
 
 	return masterDeferred.promise
 })
-
 /*
 
 Template
@@ -1381,7 +1379,6 @@ dev_output_steps.push(function(){
 
 	return masterDeferred.promise
 })
-
 /*
 
 Template
@@ -1535,7 +1532,6 @@ dev_output_steps.push(function(){
 
 	return masterDeferred.promise
 })
-
 /*
 
 Template
@@ -1626,7 +1622,6 @@ dev_output_steps.push(function(){
 
 	return masterDeferred.promise
 })
-
 /*
 
 Template
@@ -1705,7 +1700,6 @@ dev_output_steps.push(function(){
 
 	return masterDeferred.promise
 })
-
 /*
 
 Template
@@ -2029,35 +2023,3 @@ dev_output_steps.push(function(){
 
 	return masterDeferred.promise
 })
-
-/*
-
-URI pattern
-	/					/index.html
-	/ships				/ships/index.html
-	/ships/1			/ships/1/index.html
-	/equipments			/equipments/index.html
-	/equipments/1		/equipments/1/index.html
-
-Ajax request uri
-	/					/_/index.html
-	/ships				/_/ships/index.html
-	/ships/1			/_/ships/1/index.html
-	/equipments			/_/equipments/index.html
-	/equipments/1		/_/equipments/1/index.html
-
- */
-
-
-// @koala-prepend "steps/!.js"
-
-// @koala-prepend "node_modules/lz-string/libs/lz-string.js"
-// @koala-prepend "node_modules/lz-string/libs/base64-string.js"
-
-// @koala-prepend "steps/ships.js"
-// @koala-prepend "steps/equipments.js"
-// @koala-prepend "steps/entities.js"
-// @koala-prepend "steps/arsenal.js"
-// @koala-prepend "steps/donate.js"
-
-// @koala-prepend "steps/assets.js"

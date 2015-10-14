@@ -354,6 +354,7 @@
 				@media all and (max-width: 800px ){
 					.padding(0, 4);
 				}
+				.container2(i, span);
 				&>i{
 					.width(24);
 					.height(24);
@@ -640,11 +641,12 @@
 		}
 		.loop(@n, @i: 1) when (@i =< @n) {
 			//&:nth-child(@{n}):checked~.tabview-content:nth-child(@{n}){
-			&>input[type="radio"][value="@{i}"]:checked{
+			//&>input[type="radio"][value="@{i}"]:checked{
+			&>[value="@{i}"]:checked{
 				&~.options>.filters>label[data-equipmentcollection="@{i}"]{
 					.tab-on();
 				}
-				&~.fixed-table-container>.fixed-table-container-inner>table tbody tr[data-equipmentcollection="@{i}"]{
+				&~.fixed-table-container tr[data-equipmentcollection="@{i}"]{
 					display:	table-row;
 				}
 			}
@@ -652,7 +654,8 @@
 		}
 		.loop(10);
 		
-		&>input[type="hidden"][name="types"][class]{
+		//&>input[type="hidden"][name="types"][class]{
+		&>input[name="types"][class]{
 			& ~ .fixed-table-container{
 				tr.typetitle{
 					opacity: 	.35;
@@ -673,10 +676,12 @@
 						//}
 					}
 					.loop2(@n2, @j: 1) when (@j =< @n2) {
-						&~input[type="radio"][value="@{j}"]:checked{
-							&~.fixed-table-container>.fixed-table-container-inner>table tbody tr[data-equipmentcollection="@{j}"][data-equipmenttype="@{i}"]{
+						//&~input[type="radio"][value="@{j}"]:checked~.fixed-table-container tr[data-equipmentcollection="@{j}"][data-equipmenttype="@{i}"]{
+						&~[value="@{j}"]:checked~.fixed-table-container tr[data-equipmentcollection="@{j}"][data-equipmenttype="@{i}"]{
+							//&~.fixed-table-container>.fixed-table-container-inner>table tbody tr[data-equipmentcollection="@{j}"][data-equipmenttype="@{i}"]{
+							//&~.fixed-table-container tr[data-equipmentcollection="@{j}"][data-equipmenttype="@{i}"]{
 								display:	table-row !important;
-							}
+							//}
 						}
 						.loop2(@n2, (@j + 1))
 					}
@@ -685,6 +690,18 @@
 				.loop(@n, (@i + 1))
 			}
 			.loop(50);
+			/*
+			.loop(@n, @i: 1) when (@i =< @n) {
+				&.type@{i}{
+					& ~ .fixed-table-container{
+						tr.typetitle:not([data-type="@{i}"]){
+							opacity: 	.35;
+						}
+					}
+				}
+			}
+			.loop(50);
+			*/
 		}
 	}
 }
