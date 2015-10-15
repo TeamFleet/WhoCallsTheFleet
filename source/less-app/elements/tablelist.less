@@ -17,6 +17,7 @@
 	&>input[type="radio"]{
 		display:	none;
 	}
+
 	&>.fixed-table-container{
 		height:		auto;
 		.flex(0 1 100%);
@@ -52,161 +53,164 @@
 			.window-noframe({
 				.padding-right(@nav_height - @scrollbar_width + 2);
 			});
-			table{
-				thead{
-					tr{
-						border:	0;
-					}
-				}
-				tbody{
-					td, th{
-						.height(50);
-					}
-					th{
-						a{
-							display: 	block;
-						}
-					}
-					tr.typetitle{
-						th{
-							.padding-top(18);
-							input[type="checkbox"]{
-								opacity:	.175;
-								.margin(4, 8, 0, -20);
-								.enable-transition();
-								.transition-property(opacity);
-								&:hover{
-									opacity:	.75;
-								}
-								&:indeterminate{
-									opacity:	.45;
-									&:hover{
-										opacity:	.75;
-									}
-								}
-								&:checked{
-									opacity:	1 !important;
-								}
-								&[disabled]{
-									opacity:	0 !important;
-									z-index:	-100;
-								}
-							}
-							span{
-								display:	inline-block;
-								.width(42);
-								.height(30);
-								background:	no-repeat 50% 50%;
-								float:		left;
-								.margin-top(-4)
-							}
-						}
-					}
-					tr{
-						td{
-							&.negative{
-								color:		hsl(0, 90%, 70%);
-							}
-							small.zero{
-								.font-size(11);
-								opacity:	.35;
-							}
-						}
-					}
-					//tr.row{
-					//	.fadein()
-					//}
-					tr.empty, tr:empty{
-						pointer-events: none;
-					}
-					tr[data-equipmentid]{
-						td, th{
-							.height(25);
-							.line-height(18)
-						}
-						th{
-							font-weight:	lighter;
-							.padding-left(42);
-						}
-						td{
-							.font-size(12)
-						}
-					} // tr[data-equipmentid]
-				}
-
-				&.hashover{
-					//tbody tr[data-shipid]:hover,
-					//tbody tr[data-equipmentid]:hover
-					tbody tr.row:hover{
-						//background-color:	rgba(0, 0, 0, .5);
-						background-color:	rgba(0,0,0,.2);
-					}
-				}
-				&.hashover-column{
-					td.state-hover-column{
-						&[data-stat="fire"]{
-							background-color:	hsla(6, 85%, 40%, .25);
-						}
-						&[data-stat="torpedo"]{
-							background-color:	hsla(207, 85%, 40%, .25);
-						}
-						&[data-stat="nightpower"]{
-							background-color:	fade(mix(hsl(6, 85%, 40%), hsl(207, 85%, 40%)), 50%);
-						}
-						&[data-stat="aa"]{
-							background-color:	hsla(26, 85%, 40%, .25);
-						}
-						&[data-stat="armor"]{
-							background-color:	hsla(39, 85%, 40%, .25);
-						}
-					}
-				}
-				.tablelist-ships-table-viewtype-list();
-				.tablelist-fleets-table-viewtype-list();
-			} // table
-			&>.nocontent{
-				position:	absolute;
-				top:		0;
-				right:		0;
-				.bottom(20);
-				left:		0;
-				color:		rgba(255,255,255,.2);
-				.fadein();
-				display:	none;
-				&>div{
-					&>span{
-						.font-size(60);
-						.line-height(70);
-						letter-spacing:	.15em;
-						display:	block;
-						font-weight:lighter;
-					}
-					&>button{
-						.height(40);
-						.font-size(16);
-						color:		rgba(255,255,255, .5);
-						letter-spacing:	.1em;
-						padding:	0 5em;
-						background:	rgba(0,0,0, .25);
-						border-radius:	5px;
-						.border(1, solid, rgba(255,255,255, .2));
-						.transition-property(~"background-color, border-color, color");
-						&:hover{
-							background:	rgba(0,0,0, .6);
-							color:		rgba(255,255,255, .85);
-						}
-						&:active{
-							background:	rgba(0,0,0, .325);
-							color:		rgba(255,255,255, .75);
-						}
-					}
-					&>span + button{
-						.margin-top(14);
-					}
-				}
-			} // &>.nocontent
 		}
 	}
+
+
+
+	table{
+		thead{
+			tr{
+				border:	0;
+			}
+		}
+		tbody{
+			td, th{
+				.height(50);
+			}
+			th{
+				a{
+					display: 	block;
+				}
+			}
+			tr.typetitle{
+				th{
+					.padding-top(18);
+					input[type="checkbox"]{
+						opacity:	.175;
+						.margin(4, 8, 0, -20);
+						.enable-transition();
+						.transition-property(opacity);
+						&:hover{
+							opacity:	.75;
+						}
+						&:indeterminate{
+							opacity:	.45;
+							&:hover{
+								opacity:	.75;
+							}
+						}
+						&:checked{
+							opacity:	1 !important;
+						}
+						&[disabled]{
+							opacity:	0 !important;
+							z-index:	-100;
+						}
+					}
+					span{
+						display:	inline-block;
+						.width(42);
+						.height(30);
+						background:	no-repeat 50% 50%;
+						float:		left;
+						.margin-top(-4)
+					}
+				}
+			}
+			tr{
+				td{
+					&.negative{
+						color:		hsl(0, 90%, 70%);
+					}
+					small.zero{
+						.font-size(11);
+						opacity:	.35;
+					}
+				}
+			}
+			//tr.row{
+			//	.fadein()
+			//}
+			tr.empty, tr:empty{
+				pointer-events: none;
+			}
+			tr[data-equipmentid]{
+				td, th{
+					.height(25);
+					.line-height(18)
+				}
+				th{
+					font-weight:	lighter;
+					.padding-left(42);
+				}
+				td{
+					.font-size(12)
+				}
+			} // tr[data-equipmentid]
+		}
+
+		&.hashover{
+			//tbody tr[data-shipid]:hover,
+			//tbody tr[data-equipmentid]:hover
+			tbody tr.row:hover{
+				//background-color:	rgba(0, 0, 0, .5);
+				background-color:	rgba(0,0,0,.2);
+			}
+		}
+		&.hashover-column{
+			td.state-hover-column{
+				&[data-stat="fire"]{
+					background-color:	hsla(6, 85%, 40%, .25);
+				}
+				&[data-stat="torpedo"]{
+					background-color:	hsla(207, 85%, 40%, .25);
+				}
+				&[data-stat="nightpower"]{
+					background-color:	fade(mix(hsl(6, 85%, 40%), hsl(207, 85%, 40%)), 50%);
+				}
+				&[data-stat="aa"]{
+					background-color:	hsla(26, 85%, 40%, .25);
+				}
+				&[data-stat="armor"]{
+					background-color:	hsla(39, 85%, 40%, .25);
+				}
+			}
+		}
+		.tablelist-ships-table-viewtype-list();
+		.tablelist-fleets-table-viewtype-list();
+	} // table
+	&>.nocontent{
+		position:	absolute;
+		top:		0;
+		right:		0;
+		.bottom(20);
+		left:		0;
+		color:		rgba(255,255,255,.2);
+		.fadein();
+		display:	none;
+		&>div{
+			&>span{
+				.font-size(60);
+				.line-height(70);
+				letter-spacing:	.15em;
+				display:	block;
+				font-weight:lighter;
+			}
+			&>button{
+				.height(40);
+				.font-size(16);
+				color:		rgba(255,255,255, .5);
+				letter-spacing:	.1em;
+				padding:	0 5em;
+				background:	rgba(0,0,0, .25);
+				border-radius:	5px;
+				.border(1, solid, rgba(255,255,255, .2));
+				.transition-property(~"background-color, border-color, color");
+				&:hover{
+					background:	rgba(0,0,0, .6);
+					color:		rgba(255,255,255, .85);
+				}
+				&:active{
+					background:	rgba(0,0,0, .325);
+					color:		rgba(255,255,255, .75);
+				}
+			}
+			&>span + button{
+				.margin-top(14);
+			}
+		}
+	} // &>.nocontent
 
 
 
@@ -447,56 +451,51 @@
 			&~.fixed-table-container{
 				.padding-top(10);
 				background-size:	100% 9px;
-				&>.fixed-table-container-inner{
-					//.padding-left(@nav_height);
-					table{
-						display:	block;
-						thead{
-							display:	none !important;
-						}
-						tbody{
-							.flexbox();
-							.flex-flow(row wrap);
-							tr{
-								//overflow:	hidden;
-								.flex(1 0 170px);
-								display:	inline-block;
-								position:	relative;
-								&:empty{
-									height:		0 !important;
-									//.margin-left(20);
-								}
-							}
-							tr.typetitle{
-								display:	block;
-								.flex(none) !important;
-								width:		100%;
-								.height(50);
-								input[type="checkbox"]{
-									//.margin(4, 6, 0, 5);
-									.margin-left(5)
-								}
+				table{
+					display:	block;
+					thead{
+						display:	none !important;
+					}
+					tbody{
+						.flexbox();
+						.flex-flow(row wrap);
+						tr{
+							//overflow:	hidden;
+							.flex(1 0 170px);
+							display:	inline-block;
+							position:	relative;
+							&:empty{
+								height:		0 !important;
+								//.margin-left(20);
 							}
 						}
-						.tablelist-ships-table-viewtype-card();
-						.tablelist-fleets-table-viewtype-card();
-					} // table
-				} // &>.fixed-table-container-inner
+						tr.typetitle{
+							display:	block;
+							.flex(none) !important;
+							width:		100%;
+							.height(50);
+							input[type="checkbox"]{
+								//.margin(4, 6, 0, 5);
+								.margin-left(5)
+							}
+						}
+					}
+					.tablelist-ships-table-viewtype-card();
+					.tablelist-fleets-table-viewtype-card();
+				} // table
 			}
 		} // &[viewtype="card"]
 
 		&[viewtype="compare"]{
 			&~.fixed-table-container{
-				&>.fixed-table-container-inner{
-					table{
-						tbody{
-							tr.typetitle{
-								display:	none;
-							}
+				table{
+					tbody{
+						tr.typetitle{
+							display:	none;
 						}
-						.tablelist-ships-table-viewtype-compare();
-					} // table
-				} // &>.fixed-table-container-inner
+					}
+					.tablelist-ships-table-viewtype-compare();
+				} // table
 			}
 			&>div.filters{
 				.transition-delay(0);
@@ -636,7 +635,7 @@
 				}
 			}
 		}
-		&>.fixed-table-container>.fixed-table-container-inner>table tbody tr{
+		table tbody tr{
 			display:	none;
 		}
 		.loop(@n, @i: 1) when (@i =< @n) {

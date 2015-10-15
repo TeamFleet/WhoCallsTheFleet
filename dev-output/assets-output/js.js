@@ -4324,6 +4324,7 @@ $document.ready(function(){
 	_g.inputIndex = 0
 	_g.lang = 'zh_cn'
 	_g.joint = '・'
+	_g.isClient = typeof node == 'undefined' && typeof nw == 'undefined' ? false : true
 	
 	function eventName(event, name){
 		name = name ? ('.' + name) : ''
