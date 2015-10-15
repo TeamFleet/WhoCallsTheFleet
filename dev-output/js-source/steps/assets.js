@@ -36,7 +36,7 @@ dev_output_steps.push(function(){
 			let deferred = Q.defer()
 			//data = dev_output_filter(data)
 			data = dev_output_filter(data, t)
-			data = data.replace(/_g\.bgimg_count[\t ]*=[\t ]*0\;/g, '_g.bgimg_count='+ bgimg_count +';')
+			data = data.replace(/_g\.bgimg_count[\t ]*=[\t ]*0/g, '_g.bgimg_count='+ bgimg_count)
 			node.fs.writeFile(
 				target,
 				data,
@@ -206,7 +206,7 @@ dev_output_steps.push(function(){
 								_deferred.resolve()
 							}
 						},
-						/\.js$/g.test(file) && !/^libs/g.test(file) ? 'javascript' : ''
+						node.path.extname(file)
 					)
 					return _deferred.promise
 				});

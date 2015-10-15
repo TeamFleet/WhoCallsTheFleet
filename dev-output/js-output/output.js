@@ -23,6 +23,8 @@ function dev_output_gen_title(){
 }
 
 function dev_output_filter(output, pagetype, name){
+	pagetype = pagetype || ''
+	/*
 	if( pagetype == 'javascript' ){
 		output = babel.transform(output, {
 			'highlightCode':	false,
@@ -32,6 +34,7 @@ function dev_output_filter(output, pagetype, name){
 		})
 		output = output.code
 	}
+	*/
 
 	let searchRes
 		,scrapePtrn = /\.\.\/\.\.\/app\//gi
@@ -107,6 +110,14 @@ function dev_output_filter(output, pagetype, name){
 		}
 
 	searchRes = null
+	scrapePtrn = /\"assets\//gi
+		while( (searchRes = scrapePtrn.exec(output)) !== null ){
+			try{
+				output = output.replace( searchRes[0], '"/!/assets/' )
+			}catch(e){}
+		}
+
+	searchRes = null
 	scrapePtrn = /\(assets\//gi
 		while( (searchRes = scrapePtrn.exec(output)) !== null ){
 			try{
@@ -157,21 +168,24 @@ function dev_output_filter(output, pagetype, name){
 			}catch(e){}
 		}
 
-	searchRes = null
-	scrapePtrn = /^\s*[\r\n]/gm
-		while( (searchRes = scrapePtrn.exec(output)) !== null ){
-			try{
-				output = output.replace( searchRes[0], '' )
-			}catch(e){}
-		}
-
-	searchRes = null
-	scrapePtrn = /\r?\n|\r/g
-		while( (searchRes = scrapePtrn.exec(output)) !== null ){
-			try{
-				output = output.replace( searchRes[0], '' )
-			}catch(e){}
-		}
+	//if( ['.js', '.css', '.jpg'].indexOf(pagetype) < 0 ){
+	if( pagetype.substr(0,1) !== '.' ){
+		searchRes = null
+		scrapePtrn = /^\s*[\r\n]/gm
+			while( (searchRes = scrapePtrn.exec(output)) !== null ){
+				try{
+					output = output.replace( searchRes[0], '' )
+				}catch(e){}
+			}
+	
+		searchRes = null
+		scrapePtrn = /\r?\n|\r/g
+			while( (searchRes = scrapePtrn.exec(output)) !== null ){
+				try{
+					output = output.replace( searchRes[0], '' )
+				}catch(e){}
+			}
+	}
 	
 	switch(pagetype){
 		case 'page':
@@ -1756,7 +1770,7 @@ dev_output_steps.push(function(){
 			let deferred = Q.defer()
 			//data = dev_output_filter(data)
 			data = dev_output_filter(data, t)
-			data = data.replace(/_g\.bgimg_count[\t ]*=[\t ]*0\;/g, '_g.bgimg_count='+ bgimg_count +';')
+			data = data.replace(/_g\.bgimg_count[\t ]*=[\t ]*0/g, '_g.bgimg_count='+ bgimg_count)
 			node.fs.writeFile(
 				target,
 				data,
@@ -1926,7 +1940,7 @@ dev_output_steps.push(function(){
 								_deferred.resolve()
 							}
 						},
-						/\.js$/g.test(file) && !/^libs/g.test(file) ? 'javascript' : ''
+						node.path.extname(file)
 					)
 					return _deferred.promise
 				});

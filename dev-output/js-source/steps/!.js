@@ -23,6 +23,8 @@ function dev_output_gen_title(){
 }
 
 function dev_output_filter(output, pagetype, name){
+	pagetype = pagetype || ''
+	/*
 	if( pagetype == 'javascript' ){
 		output = babel.transform(output, {
 			'highlightCode':	false,
@@ -32,6 +34,7 @@ function dev_output_filter(output, pagetype, name){
 		})
 		output = output.code
 	}
+	*/
 
 	let searchRes
 		,scrapePtrn = /\.\.\/\.\.\/app\//gi
@@ -107,6 +110,14 @@ function dev_output_filter(output, pagetype, name){
 		}
 
 	searchRes = null
+	scrapePtrn = /\"assets\//gi
+		while( (searchRes = scrapePtrn.exec(output)) !== null ){
+			try{
+				output = output.replace( searchRes[0], '"/!/assets/' )
+			}catch(e){}
+		}
+
+	searchRes = null
 	scrapePtrn = /\(assets\//gi
 		while( (searchRes = scrapePtrn.exec(output)) !== null ){
 			try{
@@ -157,21 +168,24 @@ function dev_output_filter(output, pagetype, name){
 			}catch(e){}
 		}
 
-	searchRes = null
-	scrapePtrn = /^\s*[\r\n]/gm
-		while( (searchRes = scrapePtrn.exec(output)) !== null ){
-			try{
-				output = output.replace( searchRes[0], '' )
-			}catch(e){}
-		}
-
-	searchRes = null
-	scrapePtrn = /\r?\n|\r/g
-		while( (searchRes = scrapePtrn.exec(output)) !== null ){
-			try{
-				output = output.replace( searchRes[0], '' )
-			}catch(e){}
-		}
+	//if( ['.js', '.css', '.jpg'].indexOf(pagetype) < 0 ){
+	if( pagetype.substr(0,1) !== '.' ){
+		searchRes = null
+		scrapePtrn = /^\s*[\r\n]/gm
+			while( (searchRes = scrapePtrn.exec(output)) !== null ){
+				try{
+					output = output.replace( searchRes[0], '' )
+				}catch(e){}
+			}
+	
+		searchRes = null
+		scrapePtrn = /\r?\n|\r/g
+			while( (searchRes = scrapePtrn.exec(output)) !== null ){
+				try{
+					output = output.replace( searchRes[0], '' )
+				}catch(e){}
+			}
+	}
 	
 	switch(pagetype){
 		case 'page':
