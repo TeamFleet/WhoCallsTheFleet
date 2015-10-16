@@ -11,16 +11,15 @@ section.update_journal{
 			margin-top:	2em;
 		}
 	}
-	a:not([href^="?infos=equipment"]){
+	a{
 		display:	inline-block;
 		color:		#e0e0e0;
 		margin:		0.4px .15em;
-		padding:	0 .35em;
 		background:	rgba(0, 0, 0, .25);
 		text-decoration:	none;
 		border-radius:	3px;
 		cursor:		default;
-		.transition-property(~"color, background");
+		transition-property: color, background;
 		border-top:		1px solid rgba(0,0,0,.45);
 		border-bottom:	1px solid rgba(255,255,255,.25);
 		&:hover{
@@ -30,6 +29,13 @@ section.update_journal{
 		&:active{
 			color:		#fff;
 			background:	rgba(0, 0, 0, .35);
+		}
+		&:not(.link_ship):not(.link_equipment):not(.link_entity){
+			padding:	0 .35em;
+		}
+		&.link_ship{
+			padding-right: 	1em;
+			min-width: 	200px;
 		}
 	}
 }

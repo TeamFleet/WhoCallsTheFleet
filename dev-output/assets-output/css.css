@@ -7064,11 +7064,10 @@ section.update_journal + section.update_journal > h5,
 section.update_journal + section.update_journal > h6 {
   margin-top: 2em;
 }
-section.update_journal a:not([href^="?infos=equipment"]) {
+section.update_journal a {
   display: inline-block;
   color: #e0e0e0;
   margin: 0.4px .15em;
-  padding: 0 .35em;
   background: rgba(0, 0, 0, 0.25);
   text-decoration: none;
   border-radius: 3px;
@@ -7078,13 +7077,20 @@ section.update_journal a:not([href^="?infos=equipment"]) {
   border-top: 1px solid rgba(0, 0, 0, 0.45);
   border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 }
-section.update_journal a:not([href^="?infos=equipment"]):hover {
+section.update_journal a:hover {
   color: #fff;
   background: rgba(0, 0, 0, 0.75);
 }
-section.update_journal a:not([href^="?infos=equipment"]):active {
+section.update_journal a:active {
   color: #fff;
   background: rgba(0, 0, 0, 0.35);
+}
+section.update_journal a:not(.link_ship):not(.link_equipment):not(.link_entity) {
+  padding: 0 .35em;
+}
+section.update_journal a.link_ship {
+  padding-right: 1em;
+  min-width: 200px;
 }
 h2 + section.update_journal,
 h3 + section.update_journal,
