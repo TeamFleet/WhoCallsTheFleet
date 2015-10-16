@@ -1,3 +1,7 @@
+
+@max_equipment_collection: 8;
+@max_equipment_type: 49;
+
 .tablelist{
 	.flexbox();
 	.flex-flow(column nowrap);
@@ -53,6 +57,48 @@
 			.window-noframe({
 				.padding-right(@nav_height - @scrollbar_width + 2);
 			});
+			&>.nocontent{
+				position:	absolute;
+				top:		0;
+				right:		0;
+				.bottom(20);
+				left:		0;
+				color:		rgba(255,255,255,.2);
+				.fadein();
+				.container(div);
+				display:	none;
+				&>div{
+					&>span{
+						.font-size(60);
+						.line-height(70);
+						letter-spacing:	.15em;
+						display:	block;
+						font-weight:lighter;
+					}
+					&>button{
+						.height(40);
+						.font-size(16);
+						color:		rgba(255,255,255, .5);
+						letter-spacing:	.1em;
+						padding:	0 5em;
+						background:	rgba(0,0,0, .25);
+						border-radius:	5px;
+						.border(1, solid, rgba(255,255,255, .2));
+						.transition-property(~"background-color, border-color, color");
+						&:hover{
+							background:	rgba(0,0,0, .6);
+							color:		rgba(255,255,255, .85);
+						}
+						&:active{
+							background:	rgba(0,0,0, .325);
+							color:		rgba(255,255,255, .75);
+						}
+					}
+					&>span + button{
+						.margin-top(14);
+					}
+				}
+			} // &>.nocontent
 		}
 	}
 
@@ -170,47 +216,7 @@
 		.tablelist-ships-table-viewtype-list();
 		.tablelist-fleets-table-viewtype-list();
 	} // table
-	&>.nocontent{
-		position:	absolute;
-		top:		0;
-		right:		0;
-		.bottom(20);
-		left:		0;
-		color:		rgba(255,255,255,.2);
-		.fadein();
-		display:	none;
-		&>div{
-			&>span{
-				.font-size(60);
-				.line-height(70);
-				letter-spacing:	.15em;
-				display:	block;
-				font-weight:lighter;
-			}
-			&>button{
-				.height(40);
-				.font-size(16);
-				color:		rgba(255,255,255, .5);
-				letter-spacing:	.1em;
-				padding:	0 5em;
-				background:	rgba(0,0,0, .25);
-				border-radius:	5px;
-				.border(1, solid, rgba(255,255,255, .2));
-				.transition-property(~"background-color, border-color, color");
-				&:hover{
-					background:	rgba(0,0,0, .6);
-					color:		rgba(255,255,255, .85);
-				}
-				&:active{
-					background:	rgba(0,0,0, .325);
-					color:		rgba(255,255,255, .75);
-				}
-			}
-			&>span + button{
-				.margin-top(14);
-			}
-		}
-	} // &>.nocontent
+
 
 
 
@@ -384,7 +390,7 @@
 					}
 					.loop(@n, (@i + 1))
 				}
-				.loop(10);
+				.loop(@max_equipment_collection);
 			}
 		}
 
@@ -620,89 +626,6 @@
 			}
 		}*/
 	}
-
-	&.equipments{
-		&>.msgs{
-			background:	fade(#16402a, 65%);
-			color:		#a3d9bd;
-			&>div{
-				&.equipmentsinfos{
-					&>button{
-						&:hover{
-							color:		hsl(149, 27%, 75%);
-						}
-					}
-				}
-			}
-		}
-		table tbody tr{
-			display:	none;
-		}
-		.loop(@n, @i: 1) when (@i =< @n) {
-			//&:nth-child(@{n}):checked~.tabview-content:nth-child(@{n}){
-			//&>input[type="radio"][value="@{i}"]:checked{
-			&>[value="@{i}"]:checked{
-				&~.options>.filters>label[data-equipmentcollection="@{i}"]{
-					.tab-on();
-				}
-				&~.fixed-table-container tr[data-equipmentcollection="@{i}"]{
-					display:	table-row;
-				}
-			}
-			.loop(@n, (@i + 1))
-		}
-		.loop(10);
-		
-		//&>input[type="hidden"][name="types"][class]{
-		&>input[name="types"][class]{
-			& ~ .fixed-table-container{
-				tr.typetitle{
-					opacity: 	.35;
-				}
-				tr.row[data-equipmentid]{
-					//opacity: 	.35;
-					display: 	none !important;
-				}
-			}
-			.loop(@n, @i: 1) when (@i =< @n) {
-				&.type@{i}{
-					& ~ .fixed-table-container{
-						tr.typetitle[data-type="@{i}"]{
-							opacity: 	1;
-						}
-						//tr.row[data-equipmenttype="@{i}"]{
-							//opacity: 	1;
-						//}
-					}
-					.loop2(@n2, @j: 1) when (@j =< @n2) {
-						//&~input[type="radio"][value="@{j}"]:checked~.fixed-table-container tr[data-equipmentcollection="@{j}"][data-equipmenttype="@{i}"]{
-						&~[value="@{j}"]:checked~.fixed-table-container tr[data-equipmentcollection="@{j}"][data-equipmenttype="@{i}"]{
-							//&~.fixed-table-container>.fixed-table-container-inner>table tbody tr[data-equipmentcollection="@{j}"][data-equipmenttype="@{i}"]{
-							//&~.fixed-table-container tr[data-equipmentcollection="@{j}"][data-equipmenttype="@{i}"]{
-								display:	table-row !important;
-							//}
-						}
-						.loop2(@n2, (@j + 1))
-					}
-					.loop2(10);
-				}
-				.loop(@n, (@i + 1))
-			}
-			.loop(50);
-			/*
-			.loop(@n, @i: 1) when (@i =< @n) {
-				&.type@{i}{
-					& ~ .fixed-table-container{
-						tr.typetitle:not([data-type="@{i}"]){
-							opacity: 	.35;
-						}
-					}
-				}
-			}
-			.loop(50);
-			*/
-		}
-	}
 }
 
 
@@ -729,3 +652,78 @@
 	}
 }
 */
+
+
+.tablelist-equipments{
+	&>.msgs{
+		background:	fade(#16402a, 65%);
+		color:		#a3d9bd;
+		&>div{
+			&.equipmentsinfos{
+				&>button{
+					&:hover{
+						color:		hsl(149, 27%, 75%);
+					}
+				}
+			}
+		}
+	}
+	table tbody tr{
+		display:	none;
+	}
+	.loop(@n, @i: 1) when (@i =< @n) {
+		//&:nth-child(@{n}):checked~.tabview-content:nth-child(@{n}){
+		//&>input[type="radio"][value="@{i}"]:checked{
+		&>[value="@{i}"]:checked{
+			&~.options>.filters>label[data-equipmentcollection="@{i}"]{
+				.tab-on();
+			}
+			&~.fixed-table-container tr[data-equipmentcollection="@{i}"]{
+				display:	table-row;
+			}
+		}
+		.loop(@n, (@i + 1))
+	}
+	.loop(@max_equipment_collection);
+	
+	//&>input[type="hidden"][name="types"][class]{
+	&>input[name="types"][class]{
+		& ~ .fixed-table-container{
+			tr.typetitle{
+				opacity: 	.35;
+			}
+			tr[data-equipmentid]{
+				//opacity: 	.35;
+				display: 	none !important;
+			}
+		}
+	}
+	//&>input[name="types"]{
+	&>input{
+		.loop(@n, @i: 1) when (@i =< @n) {
+			&.type@{i}{
+				& ~ .fixed-table-container{
+					tr.typetitle[data-type="@{i}"]{
+						opacity: 	1;
+					}
+					//tr.row[data-equipmenttype="@{i}"]{
+						//opacity: 	1;
+					//}
+				}
+				.loop_inner(@n2, @j: 1) when (@j =< @n2) {
+					//&~input[type="radio"][value="@{j}"]:checked~.fixed-table-container tr[data-equipmentcollection="@{j}"][data-equipmenttype="@{i}"]{
+					&~[value="@{j}"]:checked~.fixed-table-container tr[data-equipmentcollection="@{j}"][data-equipmenttype="@{i}"]{
+						//&~.fixed-table-container>.fixed-table-container-inner>table tbody tr[data-equipmentcollection="@{j}"][data-equipmenttype="@{i}"]{
+						//&~.fixed-table-container tr[data-equipmentcollection="@{j}"][data-equipmenttype="@{i}"]{
+							display:	table-row !important;
+						//}
+					}
+					.loop_inner(@n2, (@j + 1))
+				}
+				.loop_inner(@max_equipment_collection);
+			}
+			.loop(@n, (@i + 1))
+		}
+		.loop(@max_equipment_type);
+	}
+}

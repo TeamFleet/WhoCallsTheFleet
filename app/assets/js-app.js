@@ -3726,7 +3726,7 @@ _tmpl.improvement_inEquipmentInfos = function( equipment, returnHTML ){
 									+ ' href="?infos=equipment&id='+upgrade_to['id']+'"'
 									+ ' data-infos="[[EQUIPMENT::'+upgrade_to['id']+']]"'
 									+ ' data-tip="[[EQUIPMENT::'+upgrade_to['id']+']]"'
-								+ '">' + upgrade_to.getName(true) + '</a>'
+								+ '>' + upgrade_to.getName(true) + '</a>'
 								+ ( improvement['upgrade'][1]
 									? '<i>+'+improvement['upgrade'][1]+'</i>'
 									: ''
@@ -7134,7 +7134,7 @@ _p.el.tablelist = {
 			el.data({
 				'tablelist': new TablelistShips( el )
 			})
-		else if( el.hasClass('equipments') )
+		else if( el.hasClass('tablelist-equipments') )
 			el.data({
 				'tablelist': new TablelistEquipments( el )
 			})

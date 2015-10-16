@@ -9,7 +9,7 @@ _p.el.tablelist = {
 			el.data({
 				'tablelist': new TablelistShips( el )
 			})
-		else if( el.hasClass('equipments') )
+		else if( el.hasClass('tablelist-equipments') )
 			el.data({
 				'tablelist': new TablelistEquipments( el )
 			})

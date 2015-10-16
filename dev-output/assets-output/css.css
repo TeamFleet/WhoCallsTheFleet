@@ -4250,6 +4250,66 @@ body.mod-capture #tip {
   padding-right: 3.5rem;
   padding-bottom: 1rem;
 }
+.tablelist > .fixed-table-container > .fixed-table-container-inner > .nocontent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 1rem;
+  left: 0;
+  color: rgba(255, 255, 255, 0.2);
+  animation: fadein 0.3s ease-out;
+  -webkit-animation: fadein 0.3s ease-out;
+  display: inline-block;
+  text-align: center !important;
+  vertical-align: middle !important;
+  display: none;
+}
+.tablelist > .fixed-table-container > .fixed-table-container-inner > .nocontent > div {
+  display: inline-block !important;
+  max-width: 98% !important;
+  max-width: calc(100% - 0.2rem) !important;
+  max-height: 100% !important;
+  vertical-align: middle !important;
+  margin: 0 auto !important;
+}
+.tablelist > .fixed-table-container > .fixed-table-container-inner > .nocontent:after {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+  height: 100%;
+  overflow: hidden;
+}
+.tablelist > .fixed-table-container > .fixed-table-container-inner > .nocontent > div > span {
+  font-size: 3rem;
+  line-height: 3.5rem;
+  letter-spacing: .15em;
+  display: block;
+  font-weight: lighter;
+}
+.tablelist > .fixed-table-container > .fixed-table-container-inner > .nocontent > div > button {
+  height: 2rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: .1em;
+  padding: 0 5em;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  border: 0.05rem solid rgba(255, 255, 255, 0.2);
+  -webkit-transition-property: background-color, border-color, color;
+          transition-property: background-color, border-color, color;
+}
+.tablelist > .fixed-table-container > .fixed-table-container-inner > .nocontent > div > button:hover {
+  background: rgba(0, 0, 0, 0.6);
+  color: rgba(255, 255, 255, 0.85);
+}
+.tablelist > .fixed-table-container > .fixed-table-container-inner > .nocontent > div > button:active {
+  background: rgba(0, 0, 0, 0.325);
+  color: rgba(255, 255, 255, 0.75);
+}
+.tablelist > .fixed-table-container > .fixed-table-container-inner > .nocontent > div > span + button {
+  margin-top: 0.7000000000000001rem;
+}
 .tablelist table thead tr {
   border: 0;
 }
@@ -4532,47 +4592,6 @@ body.mod-capture #tip {
 .tablelist table.ships tbody tr[data-shipid][data-donotcompare="true"] > th em {
   display: none !important;
 }
-.tablelist > .nocontent {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 1rem;
-  left: 0;
-  color: rgba(255, 255, 255, 0.2);
-  animation: fadein 0.3s ease-out;
-  -webkit-animation: fadein 0.3s ease-out;
-  display: none;
-}
-.tablelist > .nocontent > div > span {
-  font-size: 3rem;
-  line-height: 3.5rem;
-  letter-spacing: .15em;
-  display: block;
-  font-weight: lighter;
-}
-.tablelist > .nocontent > div > button {
-  height: 2rem;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.5);
-  letter-spacing: .1em;
-  padding: 0 5em;
-  background: rgba(0, 0, 0, 0.25);
-  border-radius: 5px;
-  border: 0.05rem solid rgba(255, 255, 255, 0.2);
-  -webkit-transition-property: background-color, border-color, color;
-          transition-property: background-color, border-color, color;
-}
-.tablelist > .nocontent > div > button:hover {
-  background: rgba(0, 0, 0, 0.6);
-  color: rgba(255, 255, 255, 0.85);
-}
-.tablelist > .nocontent > div > button:active {
-  background: rgba(0, 0, 0, 0.325);
-  color: rgba(255, 255, 255, 0.75);
-}
-.tablelist > .nocontent > div > span + button {
-  margin-top: 0.7000000000000001rem;
-}
 .tablelist > .options {
   height: 2.5rem;
   max-height: calc(100% - 280px);
@@ -4810,12 +4829,6 @@ body.mod-capture #tip {
 }
 .tablelist > .options > div.filters > .tab:nth-of-type(8) > i {
   background-position: 0 -168px;
-}
-.tablelist > .options > div.filters > .tab:nth-of-type(9) > i {
-  background-position: 0 -192px;
-}
-.tablelist > .options > div.filters > .tab:nth-of-type(10) > i {
-  background-position: 0 -216px;
 }
 .tablelist > .options > div.exit_compare {
   line-height: 1rem;
@@ -5513,1796 +5526,6 @@ body.mod-capture #tip {
     display: none;
   }
 }
-.tablelist.equipments > .msgs {
-  background: rgba(22, 64, 42, 0.65);
-  color: #a3d9bd;
-}
-.tablelist.equipments > .msgs > div.equipmentsinfos > button:hover {
-  color: #aed0bf;
-}
-.tablelist.equipments table tbody tr {
-  display: none;
-}
-.tablelist.equipments > [value="1"]:checked ~ .options > .filters > label[data-equipmentcollection="1"] {
-  opacity: 1;
-  background-position: 0 0;
-  cursor: default;
-}
-.tablelist.equipments > [value="1"]:checked ~ .options > .filters > label[data-equipmentcollection="1"]:before {
-  background-position: 0 0;
-}
-.tablelist.equipments > [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"] {
-  display: table-row;
-}
-.tablelist.equipments > [value="2"]:checked ~ .options > .filters > label[data-equipmentcollection="2"] {
-  opacity: 1;
-  background-position: 0 0;
-  cursor: default;
-}
-.tablelist.equipments > [value="2"]:checked ~ .options > .filters > label[data-equipmentcollection="2"]:before {
-  background-position: 0 0;
-}
-.tablelist.equipments > [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"] {
-  display: table-row;
-}
-.tablelist.equipments > [value="3"]:checked ~ .options > .filters > label[data-equipmentcollection="3"] {
-  opacity: 1;
-  background-position: 0 0;
-  cursor: default;
-}
-.tablelist.equipments > [value="3"]:checked ~ .options > .filters > label[data-equipmentcollection="3"]:before {
-  background-position: 0 0;
-}
-.tablelist.equipments > [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"] {
-  display: table-row;
-}
-.tablelist.equipments > [value="4"]:checked ~ .options > .filters > label[data-equipmentcollection="4"] {
-  opacity: 1;
-  background-position: 0 0;
-  cursor: default;
-}
-.tablelist.equipments > [value="4"]:checked ~ .options > .filters > label[data-equipmentcollection="4"]:before {
-  background-position: 0 0;
-}
-.tablelist.equipments > [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"] {
-  display: table-row;
-}
-.tablelist.equipments > [value="5"]:checked ~ .options > .filters > label[data-equipmentcollection="5"] {
-  opacity: 1;
-  background-position: 0 0;
-  cursor: default;
-}
-.tablelist.equipments > [value="5"]:checked ~ .options > .filters > label[data-equipmentcollection="5"]:before {
-  background-position: 0 0;
-}
-.tablelist.equipments > [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"] {
-  display: table-row;
-}
-.tablelist.equipments > [value="6"]:checked ~ .options > .filters > label[data-equipmentcollection="6"] {
-  opacity: 1;
-  background-position: 0 0;
-  cursor: default;
-}
-.tablelist.equipments > [value="6"]:checked ~ .options > .filters > label[data-equipmentcollection="6"]:before {
-  background-position: 0 0;
-}
-.tablelist.equipments > [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"] {
-  display: table-row;
-}
-.tablelist.equipments > [value="7"]:checked ~ .options > .filters > label[data-equipmentcollection="7"] {
-  opacity: 1;
-  background-position: 0 0;
-  cursor: default;
-}
-.tablelist.equipments > [value="7"]:checked ~ .options > .filters > label[data-equipmentcollection="7"]:before {
-  background-position: 0 0;
-}
-.tablelist.equipments > [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"] {
-  display: table-row;
-}
-.tablelist.equipments > [value="8"]:checked ~ .options > .filters > label[data-equipmentcollection="8"] {
-  opacity: 1;
-  background-position: 0 0;
-  cursor: default;
-}
-.tablelist.equipments > [value="8"]:checked ~ .options > .filters > label[data-equipmentcollection="8"]:before {
-  background-position: 0 0;
-}
-.tablelist.equipments > [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"] {
-  display: table-row;
-}
-.tablelist.equipments > [value="9"]:checked ~ .options > .filters > label[data-equipmentcollection="9"] {
-  opacity: 1;
-  background-position: 0 0;
-  cursor: default;
-}
-.tablelist.equipments > [value="9"]:checked ~ .options > .filters > label[data-equipmentcollection="9"]:before {
-  background-position: 0 0;
-}
-.tablelist.equipments > [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"] {
-  display: table-row;
-}
-.tablelist.equipments > [value="10"]:checked ~ .options > .filters > label[data-equipmentcollection="10"] {
-  opacity: 1;
-  background-position: 0 0;
-  cursor: default;
-}
-.tablelist.equipments > [value="10"]:checked ~ .options > .filters > label[data-equipmentcollection="10"]:before {
-  background-position: 0 0;
-}
-.tablelist.equipments > [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"] {
-  display: table-row;
-}
-.tablelist.equipments > input[name="types"][class] {
-  /*
-			.loop(@n, @i: 1) when (@i =< @n) {
-				&.type@{i}{
-					& ~ .fixed-table-container{
-						tr.typetitle:not([data-type="@{i}"]){
-							opacity: 	.35;
-						}
-					}
-				}
-			}
-			.loop(50);
-			*/
-}
-.tablelist.equipments > input[name="types"][class] ~ .fixed-table-container tr.typetitle {
-  opacity: .35;
-}
-.tablelist.equipments > input[name="types"][class] ~ .fixed-table-container tr.row[data-equipmentid] {
-  display: none !important;
-}
-.tablelist.equipments > input[name="types"][class].type1 ~ .fixed-table-container tr.typetitle[data-type="1"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type1 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="1"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type1 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="1"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type1 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="1"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type1 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="1"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type1 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="1"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type1 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="1"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type1 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="1"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type1 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="1"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type1 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="1"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type1 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="1"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type2 ~ .fixed-table-container tr.typetitle[data-type="2"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type2 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="2"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type2 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="2"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type2 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="2"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type2 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="2"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type2 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="2"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type2 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="2"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type2 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="2"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type2 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="2"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type2 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="2"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type2 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="2"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type3 ~ .fixed-table-container tr.typetitle[data-type="3"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type3 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="3"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type3 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="3"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type3 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="3"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type3 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="3"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type3 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="3"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type3 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="3"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type3 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="3"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type3 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="3"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type3 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="3"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type3 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="3"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type4 ~ .fixed-table-container tr.typetitle[data-type="4"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type4 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="4"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type4 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="4"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type4 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="4"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type4 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="4"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type4 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="4"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type4 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="4"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type4 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="4"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type4 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="4"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type4 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="4"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type4 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="4"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type5 ~ .fixed-table-container tr.typetitle[data-type="5"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type5 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="5"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type5 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="5"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type5 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="5"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type5 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="5"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type5 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="5"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type5 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="5"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type5 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="5"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type5 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="5"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type5 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="5"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type5 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="5"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type6 ~ .fixed-table-container tr.typetitle[data-type="6"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type6 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="6"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type6 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="6"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type6 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="6"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type6 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="6"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type6 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="6"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type6 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="6"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type6 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="6"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type6 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="6"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type6 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="6"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type6 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="6"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type7 ~ .fixed-table-container tr.typetitle[data-type="7"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type7 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="7"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type7 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="7"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type7 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="7"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type7 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="7"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type7 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="7"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type7 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="7"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type7 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="7"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type7 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="7"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type7 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="7"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type7 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="7"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type8 ~ .fixed-table-container tr.typetitle[data-type="8"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type8 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="8"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type8 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="8"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type8 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="8"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type8 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="8"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type8 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="8"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type8 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="8"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type8 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="8"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type8 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="8"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type8 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="8"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type8 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="8"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type9 ~ .fixed-table-container tr.typetitle[data-type="9"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type9 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="9"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type9 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="9"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type9 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="9"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type9 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="9"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type9 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="9"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type9 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="9"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type9 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="9"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type9 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="9"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type9 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="9"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type9 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="9"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type10 ~ .fixed-table-container tr.typetitle[data-type="10"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type10 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="10"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type10 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="10"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type10 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="10"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type10 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="10"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type10 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="10"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type10 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="10"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type10 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="10"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type10 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="10"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type10 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="10"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type10 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="10"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type11 ~ .fixed-table-container tr.typetitle[data-type="11"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type11 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="11"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type11 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="11"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type11 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="11"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type11 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="11"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type11 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="11"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type11 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="11"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type11 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="11"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type11 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="11"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type11 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="11"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type11 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="11"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type12 ~ .fixed-table-container tr.typetitle[data-type="12"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type12 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="12"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type12 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="12"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type12 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="12"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type12 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="12"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type12 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="12"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type12 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="12"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type12 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="12"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type12 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="12"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type12 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="12"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type12 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="12"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type13 ~ .fixed-table-container tr.typetitle[data-type="13"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type13 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="13"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type13 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="13"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type13 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="13"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type13 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="13"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type13 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="13"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type13 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="13"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type13 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="13"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type13 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="13"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type13 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="13"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type13 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="13"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type14 ~ .fixed-table-container tr.typetitle[data-type="14"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type14 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="14"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type14 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="14"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type14 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="14"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type14 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="14"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type14 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="14"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type14 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="14"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type14 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="14"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type14 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="14"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type14 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="14"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type14 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="14"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type15 ~ .fixed-table-container tr.typetitle[data-type="15"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type15 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="15"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type15 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="15"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type15 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="15"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type15 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="15"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type15 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="15"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type15 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="15"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type15 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="15"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type15 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="15"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type15 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="15"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type15 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="15"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type16 ~ .fixed-table-container tr.typetitle[data-type="16"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type16 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="16"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type16 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="16"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type16 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="16"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type16 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="16"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type16 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="16"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type16 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="16"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type16 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="16"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type16 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="16"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type16 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="16"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type16 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="16"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type17 ~ .fixed-table-container tr.typetitle[data-type="17"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type17 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="17"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type17 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="17"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type17 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="17"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type17 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="17"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type17 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="17"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type17 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="17"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type17 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="17"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type17 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="17"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type17 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="17"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type17 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="17"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type18 ~ .fixed-table-container tr.typetitle[data-type="18"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type18 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="18"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type18 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="18"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type18 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="18"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type18 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="18"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type18 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="18"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type18 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="18"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type18 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="18"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type18 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="18"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type18 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="18"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type18 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="18"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type19 ~ .fixed-table-container tr.typetitle[data-type="19"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type19 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="19"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type19 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="19"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type19 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="19"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type19 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="19"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type19 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="19"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type19 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="19"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type19 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="19"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type19 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="19"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type19 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="19"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type19 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="19"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type20 ~ .fixed-table-container tr.typetitle[data-type="20"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type20 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="20"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type20 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="20"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type20 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="20"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type20 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="20"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type20 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="20"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type20 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="20"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type20 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="20"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type20 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="20"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type20 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="20"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type20 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="20"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type21 ~ .fixed-table-container tr.typetitle[data-type="21"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type21 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="21"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type21 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="21"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type21 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="21"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type21 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="21"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type21 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="21"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type21 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="21"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type21 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="21"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type21 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="21"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type21 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="21"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type21 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="21"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type22 ~ .fixed-table-container tr.typetitle[data-type="22"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type22 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="22"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type22 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="22"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type22 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="22"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type22 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="22"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type22 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="22"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type22 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="22"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type22 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="22"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type22 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="22"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type22 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="22"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type22 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="22"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type23 ~ .fixed-table-container tr.typetitle[data-type="23"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type23 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="23"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type23 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="23"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type23 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="23"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type23 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="23"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type23 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="23"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type23 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="23"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type23 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="23"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type23 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="23"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type23 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="23"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type23 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="23"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type24 ~ .fixed-table-container tr.typetitle[data-type="24"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type24 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="24"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type24 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="24"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type24 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="24"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type24 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="24"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type24 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="24"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type24 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="24"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type24 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="24"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type24 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="24"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type24 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="24"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type24 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="24"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type25 ~ .fixed-table-container tr.typetitle[data-type="25"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type25 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="25"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type25 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="25"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type25 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="25"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type25 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="25"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type25 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="25"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type25 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="25"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type25 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="25"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type25 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="25"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type25 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="25"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type25 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="25"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type26 ~ .fixed-table-container tr.typetitle[data-type="26"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type26 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="26"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type26 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="26"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type26 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="26"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type26 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="26"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type26 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="26"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type26 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="26"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type26 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="26"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type26 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="26"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type26 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="26"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type26 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="26"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type27 ~ .fixed-table-container tr.typetitle[data-type="27"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type27 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="27"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type27 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="27"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type27 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="27"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type27 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="27"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type27 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="27"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type27 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="27"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type27 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="27"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type27 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="27"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type27 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="27"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type27 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="27"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type28 ~ .fixed-table-container tr.typetitle[data-type="28"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type28 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="28"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type28 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="28"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type28 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="28"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type28 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="28"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type28 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="28"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type28 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="28"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type28 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="28"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type28 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="28"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type28 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="28"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type28 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="28"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type29 ~ .fixed-table-container tr.typetitle[data-type="29"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type29 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="29"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type29 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="29"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type29 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="29"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type29 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="29"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type29 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="29"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type29 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="29"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type29 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="29"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type29 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="29"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type29 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="29"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type29 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="29"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type30 ~ .fixed-table-container tr.typetitle[data-type="30"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type30 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="30"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type30 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="30"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type30 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="30"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type30 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="30"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type30 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="30"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type30 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="30"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type30 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="30"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type30 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="30"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type30 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="30"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type30 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="30"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type31 ~ .fixed-table-container tr.typetitle[data-type="31"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type31 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="31"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type31 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="31"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type31 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="31"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type31 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="31"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type31 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="31"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type31 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="31"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type31 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="31"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type31 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="31"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type31 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="31"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type31 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="31"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type32 ~ .fixed-table-container tr.typetitle[data-type="32"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type32 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="32"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type32 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="32"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type32 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="32"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type32 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="32"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type32 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="32"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type32 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="32"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type32 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="32"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type32 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="32"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type32 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="32"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type32 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="32"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type33 ~ .fixed-table-container tr.typetitle[data-type="33"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type33 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="33"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type33 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="33"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type33 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="33"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type33 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="33"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type33 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="33"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type33 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="33"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type33 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="33"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type33 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="33"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type33 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="33"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type33 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="33"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type34 ~ .fixed-table-container tr.typetitle[data-type="34"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type34 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="34"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type34 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="34"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type34 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="34"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type34 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="34"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type34 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="34"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type34 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="34"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type34 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="34"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type34 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="34"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type34 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="34"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type34 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="34"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type35 ~ .fixed-table-container tr.typetitle[data-type="35"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type35 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="35"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type35 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="35"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type35 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="35"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type35 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="35"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type35 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="35"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type35 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="35"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type35 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="35"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type35 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="35"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type35 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="35"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type35 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="35"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type36 ~ .fixed-table-container tr.typetitle[data-type="36"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type36 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="36"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type36 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="36"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type36 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="36"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type36 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="36"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type36 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="36"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type36 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="36"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type36 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="36"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type36 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="36"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type36 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="36"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type36 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="36"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type37 ~ .fixed-table-container tr.typetitle[data-type="37"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type37 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="37"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type37 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="37"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type37 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="37"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type37 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="37"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type37 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="37"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type37 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="37"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type37 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="37"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type37 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="37"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type37 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="37"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type37 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="37"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type38 ~ .fixed-table-container tr.typetitle[data-type="38"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type38 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="38"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type38 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="38"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type38 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="38"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type38 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="38"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type38 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="38"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type38 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="38"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type38 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="38"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type38 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="38"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type38 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="38"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type38 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="38"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type39 ~ .fixed-table-container tr.typetitle[data-type="39"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type39 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="39"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type39 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="39"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type39 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="39"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type39 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="39"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type39 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="39"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type39 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="39"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type39 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="39"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type39 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="39"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type39 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="39"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type39 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="39"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type40 ~ .fixed-table-container tr.typetitle[data-type="40"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type40 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="40"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type40 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="40"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type40 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="40"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type40 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="40"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type40 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="40"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type40 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="40"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type40 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="40"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type40 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="40"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type40 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="40"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type40 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="40"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type41 ~ .fixed-table-container tr.typetitle[data-type="41"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type41 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="41"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type41 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="41"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type41 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="41"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type41 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="41"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type41 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="41"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type41 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="41"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type41 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="41"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type41 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="41"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type41 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="41"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type41 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="41"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type42 ~ .fixed-table-container tr.typetitle[data-type="42"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type42 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="42"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type42 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="42"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type42 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="42"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type42 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="42"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type42 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="42"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type42 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="42"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type42 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="42"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type42 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="42"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type42 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="42"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type42 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="42"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type43 ~ .fixed-table-container tr.typetitle[data-type="43"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type43 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="43"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type43 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="43"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type43 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="43"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type43 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="43"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type43 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="43"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type43 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="43"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type43 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="43"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type43 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="43"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type43 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="43"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type43 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="43"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type44 ~ .fixed-table-container tr.typetitle[data-type="44"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type44 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="44"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type44 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="44"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type44 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="44"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type44 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="44"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type44 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="44"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type44 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="44"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type44 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="44"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type44 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="44"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type44 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="44"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type44 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="44"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type45 ~ .fixed-table-container tr.typetitle[data-type="45"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type45 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="45"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type45 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="45"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type45 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="45"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type45 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="45"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type45 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="45"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type45 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="45"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type45 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="45"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type45 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="45"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type45 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="45"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type45 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="45"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type46 ~ .fixed-table-container tr.typetitle[data-type="46"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type46 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="46"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type46 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="46"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type46 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="46"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type46 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="46"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type46 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="46"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type46 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="46"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type46 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="46"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type46 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="46"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type46 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="46"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type46 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="46"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type47 ~ .fixed-table-container tr.typetitle[data-type="47"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type47 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="47"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type47 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="47"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type47 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="47"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type47 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="47"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type47 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="47"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type47 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="47"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type47 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="47"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type47 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="47"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type47 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="47"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type47 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="47"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type48 ~ .fixed-table-container tr.typetitle[data-type="48"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type48 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="48"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type48 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="48"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type48 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="48"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type48 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="48"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type48 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="48"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type48 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="48"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type48 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="48"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type48 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="48"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type48 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="48"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type48 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="48"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type49 ~ .fixed-table-container tr.typetitle[data-type="49"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type49 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="49"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type49 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="49"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type49 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="49"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type49 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="49"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type49 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="49"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type49 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="49"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type49 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="49"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type49 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="49"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type49 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="49"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type49 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="49"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type50 ~ .fixed-table-container tr.typetitle[data-type="50"] {
-  opacity: 1;
-}
-.tablelist.equipments > input[name="types"][class].type50 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="50"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type50 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="50"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type50 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="50"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type50 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="50"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type50 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="50"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type50 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="50"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type50 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="50"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type50 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="50"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type50 ~ [value="9"]:checked ~ .fixed-table-container tr[data-equipmentcollection="9"][data-equipmenttype="50"] {
-  display: table-row !important;
-}
-.tablelist.equipments > input[name="types"][class].type50 ~ [value="10"]:checked ~ .fixed-table-container tr[data-equipmentcollection="10"][data-equipmenttype="50"] {
-  display: table-row !important;
-}
 .nocontent .nocontent {
   display: block !important;
 }
@@ -7320,6 +5543,1433 @@ body.mod-capture #tip {
 	}
 }
 */
+.tablelist-equipments > .msgs {
+  background: rgba(22, 64, 42, 0.65);
+  color: #a3d9bd;
+}
+.tablelist-equipments > .msgs > div.equipmentsinfos > button:hover {
+  color: #aed0bf;
+}
+.tablelist-equipments table tbody tr {
+  display: none;
+}
+.tablelist-equipments > [value="1"]:checked ~ .options > .filters > label[data-equipmentcollection="1"] {
+  opacity: 1;
+  background-position: 0 0;
+  cursor: default;
+}
+.tablelist-equipments > [value="1"]:checked ~ .options > .filters > label[data-equipmentcollection="1"]:before {
+  background-position: 0 0;
+}
+.tablelist-equipments > [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"] {
+  display: table-row;
+}
+.tablelist-equipments > [value="2"]:checked ~ .options > .filters > label[data-equipmentcollection="2"] {
+  opacity: 1;
+  background-position: 0 0;
+  cursor: default;
+}
+.tablelist-equipments > [value="2"]:checked ~ .options > .filters > label[data-equipmentcollection="2"]:before {
+  background-position: 0 0;
+}
+.tablelist-equipments > [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"] {
+  display: table-row;
+}
+.tablelist-equipments > [value="3"]:checked ~ .options > .filters > label[data-equipmentcollection="3"] {
+  opacity: 1;
+  background-position: 0 0;
+  cursor: default;
+}
+.tablelist-equipments > [value="3"]:checked ~ .options > .filters > label[data-equipmentcollection="3"]:before {
+  background-position: 0 0;
+}
+.tablelist-equipments > [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"] {
+  display: table-row;
+}
+.tablelist-equipments > [value="4"]:checked ~ .options > .filters > label[data-equipmentcollection="4"] {
+  opacity: 1;
+  background-position: 0 0;
+  cursor: default;
+}
+.tablelist-equipments > [value="4"]:checked ~ .options > .filters > label[data-equipmentcollection="4"]:before {
+  background-position: 0 0;
+}
+.tablelist-equipments > [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"] {
+  display: table-row;
+}
+.tablelist-equipments > [value="5"]:checked ~ .options > .filters > label[data-equipmentcollection="5"] {
+  opacity: 1;
+  background-position: 0 0;
+  cursor: default;
+}
+.tablelist-equipments > [value="5"]:checked ~ .options > .filters > label[data-equipmentcollection="5"]:before {
+  background-position: 0 0;
+}
+.tablelist-equipments > [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"] {
+  display: table-row;
+}
+.tablelist-equipments > [value="6"]:checked ~ .options > .filters > label[data-equipmentcollection="6"] {
+  opacity: 1;
+  background-position: 0 0;
+  cursor: default;
+}
+.tablelist-equipments > [value="6"]:checked ~ .options > .filters > label[data-equipmentcollection="6"]:before {
+  background-position: 0 0;
+}
+.tablelist-equipments > [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"] {
+  display: table-row;
+}
+.tablelist-equipments > [value="7"]:checked ~ .options > .filters > label[data-equipmentcollection="7"] {
+  opacity: 1;
+  background-position: 0 0;
+  cursor: default;
+}
+.tablelist-equipments > [value="7"]:checked ~ .options > .filters > label[data-equipmentcollection="7"]:before {
+  background-position: 0 0;
+}
+.tablelist-equipments > [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"] {
+  display: table-row;
+}
+.tablelist-equipments > [value="8"]:checked ~ .options > .filters > label[data-equipmentcollection="8"] {
+  opacity: 1;
+  background-position: 0 0;
+  cursor: default;
+}
+.tablelist-equipments > [value="8"]:checked ~ .options > .filters > label[data-equipmentcollection="8"]:before {
+  background-position: 0 0;
+}
+.tablelist-equipments > [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"] {
+  display: table-row;
+}
+.tablelist-equipments > input[name="types"][class] ~ .fixed-table-container tr.typetitle {
+  opacity: .35;
+}
+.tablelist-equipments > input[name="types"][class] ~ .fixed-table-container tr[data-equipmentid] {
+  display: none !important;
+}
+.tablelist-equipments > input.type1 ~ .fixed-table-container tr.typetitle[data-type="1"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type1 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="1"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type1 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="1"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type1 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="1"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type1 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="1"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type1 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="1"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type1 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="1"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type1 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="1"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type1 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="1"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type2 ~ .fixed-table-container tr.typetitle[data-type="2"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type2 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="2"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type2 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="2"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type2 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="2"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type2 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="2"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type2 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="2"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type2 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="2"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type2 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="2"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type2 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="2"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type3 ~ .fixed-table-container tr.typetitle[data-type="3"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type3 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="3"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type3 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="3"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type3 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="3"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type3 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="3"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type3 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="3"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type3 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="3"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type3 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="3"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type3 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="3"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type4 ~ .fixed-table-container tr.typetitle[data-type="4"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type4 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="4"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type4 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="4"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type4 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="4"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type4 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="4"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type4 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="4"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type4 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="4"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type4 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="4"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type4 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="4"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type5 ~ .fixed-table-container tr.typetitle[data-type="5"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type5 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="5"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type5 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="5"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type5 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="5"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type5 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="5"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type5 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="5"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type5 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="5"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type5 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="5"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type5 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="5"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type6 ~ .fixed-table-container tr.typetitle[data-type="6"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type6 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="6"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type6 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="6"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type6 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="6"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type6 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="6"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type6 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="6"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type6 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="6"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type6 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="6"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type6 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="6"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type7 ~ .fixed-table-container tr.typetitle[data-type="7"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type7 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="7"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type7 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="7"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type7 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="7"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type7 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="7"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type7 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="7"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type7 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="7"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type7 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="7"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type7 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="7"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type8 ~ .fixed-table-container tr.typetitle[data-type="8"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type8 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="8"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type8 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="8"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type8 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="8"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type8 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="8"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type8 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="8"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type8 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="8"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type8 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="8"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type8 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="8"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type9 ~ .fixed-table-container tr.typetitle[data-type="9"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type9 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="9"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type9 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="9"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type9 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="9"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type9 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="9"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type9 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="9"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type9 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="9"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type9 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="9"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type9 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="9"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type10 ~ .fixed-table-container tr.typetitle[data-type="10"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type10 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="10"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type10 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="10"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type10 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="10"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type10 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="10"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type10 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="10"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type10 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="10"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type10 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="10"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type10 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="10"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type11 ~ .fixed-table-container tr.typetitle[data-type="11"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type11 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="11"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type11 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="11"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type11 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="11"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type11 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="11"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type11 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="11"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type11 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="11"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type11 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="11"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type11 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="11"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type12 ~ .fixed-table-container tr.typetitle[data-type="12"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type12 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="12"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type12 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="12"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type12 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="12"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type12 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="12"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type12 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="12"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type12 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="12"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type12 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="12"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type12 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="12"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type13 ~ .fixed-table-container tr.typetitle[data-type="13"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type13 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="13"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type13 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="13"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type13 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="13"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type13 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="13"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type13 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="13"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type13 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="13"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type13 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="13"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type13 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="13"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type14 ~ .fixed-table-container tr.typetitle[data-type="14"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type14 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="14"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type14 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="14"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type14 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="14"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type14 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="14"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type14 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="14"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type14 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="14"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type14 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="14"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type14 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="14"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type15 ~ .fixed-table-container tr.typetitle[data-type="15"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type15 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="15"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type15 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="15"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type15 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="15"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type15 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="15"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type15 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="15"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type15 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="15"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type15 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="15"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type15 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="15"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type16 ~ .fixed-table-container tr.typetitle[data-type="16"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type16 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="16"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type16 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="16"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type16 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="16"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type16 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="16"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type16 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="16"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type16 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="16"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type16 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="16"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type16 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="16"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type17 ~ .fixed-table-container tr.typetitle[data-type="17"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type17 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="17"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type17 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="17"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type17 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="17"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type17 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="17"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type17 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="17"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type17 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="17"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type17 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="17"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type17 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="17"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type18 ~ .fixed-table-container tr.typetitle[data-type="18"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type18 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="18"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type18 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="18"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type18 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="18"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type18 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="18"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type18 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="18"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type18 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="18"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type18 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="18"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type18 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="18"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type19 ~ .fixed-table-container tr.typetitle[data-type="19"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type19 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="19"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type19 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="19"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type19 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="19"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type19 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="19"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type19 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="19"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type19 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="19"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type19 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="19"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type19 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="19"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type20 ~ .fixed-table-container tr.typetitle[data-type="20"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type20 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="20"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type20 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="20"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type20 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="20"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type20 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="20"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type20 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="20"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type20 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="20"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type20 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="20"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type20 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="20"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type21 ~ .fixed-table-container tr.typetitle[data-type="21"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type21 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="21"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type21 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="21"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type21 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="21"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type21 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="21"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type21 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="21"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type21 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="21"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type21 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="21"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type21 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="21"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type22 ~ .fixed-table-container tr.typetitle[data-type="22"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type22 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="22"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type22 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="22"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type22 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="22"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type22 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="22"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type22 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="22"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type22 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="22"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type22 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="22"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type22 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="22"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type23 ~ .fixed-table-container tr.typetitle[data-type="23"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type23 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="23"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type23 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="23"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type23 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="23"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type23 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="23"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type23 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="23"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type23 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="23"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type23 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="23"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type23 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="23"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type24 ~ .fixed-table-container tr.typetitle[data-type="24"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type24 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="24"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type24 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="24"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type24 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="24"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type24 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="24"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type24 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="24"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type24 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="24"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type24 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="24"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type24 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="24"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type25 ~ .fixed-table-container tr.typetitle[data-type="25"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type25 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="25"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type25 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="25"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type25 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="25"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type25 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="25"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type25 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="25"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type25 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="25"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type25 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="25"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type25 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="25"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type26 ~ .fixed-table-container tr.typetitle[data-type="26"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type26 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="26"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type26 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="26"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type26 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="26"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type26 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="26"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type26 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="26"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type26 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="26"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type26 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="26"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type26 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="26"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type27 ~ .fixed-table-container tr.typetitle[data-type="27"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type27 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="27"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type27 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="27"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type27 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="27"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type27 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="27"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type27 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="27"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type27 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="27"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type27 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="27"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type27 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="27"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type28 ~ .fixed-table-container tr.typetitle[data-type="28"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type28 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="28"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type28 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="28"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type28 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="28"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type28 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="28"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type28 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="28"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type28 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="28"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type28 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="28"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type28 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="28"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type29 ~ .fixed-table-container tr.typetitle[data-type="29"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type29 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="29"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type29 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="29"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type29 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="29"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type29 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="29"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type29 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="29"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type29 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="29"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type29 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="29"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type29 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="29"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type30 ~ .fixed-table-container tr.typetitle[data-type="30"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type30 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="30"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type30 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="30"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type30 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="30"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type30 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="30"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type30 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="30"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type30 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="30"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type30 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="30"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type30 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="30"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type31 ~ .fixed-table-container tr.typetitle[data-type="31"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type31 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="31"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type31 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="31"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type31 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="31"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type31 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="31"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type31 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="31"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type31 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="31"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type31 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="31"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type31 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="31"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type32 ~ .fixed-table-container tr.typetitle[data-type="32"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type32 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="32"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type32 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="32"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type32 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="32"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type32 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="32"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type32 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="32"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type32 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="32"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type32 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="32"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type32 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="32"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type33 ~ .fixed-table-container tr.typetitle[data-type="33"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type33 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="33"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type33 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="33"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type33 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="33"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type33 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="33"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type33 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="33"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type33 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="33"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type33 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="33"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type33 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="33"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type34 ~ .fixed-table-container tr.typetitle[data-type="34"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type34 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="34"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type34 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="34"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type34 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="34"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type34 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="34"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type34 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="34"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type34 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="34"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type34 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="34"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type34 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="34"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type35 ~ .fixed-table-container tr.typetitle[data-type="35"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type35 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="35"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type35 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="35"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type35 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="35"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type35 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="35"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type35 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="35"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type35 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="35"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type35 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="35"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type35 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="35"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type36 ~ .fixed-table-container tr.typetitle[data-type="36"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type36 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="36"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type36 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="36"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type36 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="36"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type36 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="36"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type36 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="36"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type36 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="36"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type36 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="36"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type36 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="36"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type37 ~ .fixed-table-container tr.typetitle[data-type="37"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type37 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="37"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type37 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="37"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type37 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="37"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type37 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="37"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type37 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="37"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type37 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="37"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type37 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="37"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type37 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="37"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type38 ~ .fixed-table-container tr.typetitle[data-type="38"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type38 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="38"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type38 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="38"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type38 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="38"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type38 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="38"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type38 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="38"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type38 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="38"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type38 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="38"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type38 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="38"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type39 ~ .fixed-table-container tr.typetitle[data-type="39"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type39 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="39"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type39 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="39"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type39 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="39"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type39 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="39"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type39 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="39"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type39 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="39"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type39 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="39"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type39 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="39"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type40 ~ .fixed-table-container tr.typetitle[data-type="40"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type40 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="40"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type40 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="40"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type40 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="40"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type40 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="40"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type40 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="40"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type40 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="40"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type40 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="40"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type40 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="40"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type41 ~ .fixed-table-container tr.typetitle[data-type="41"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type41 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="41"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type41 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="41"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type41 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="41"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type41 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="41"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type41 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="41"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type41 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="41"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type41 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="41"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type41 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="41"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type42 ~ .fixed-table-container tr.typetitle[data-type="42"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type42 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="42"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type42 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="42"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type42 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="42"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type42 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="42"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type42 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="42"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type42 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="42"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type42 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="42"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type42 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="42"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type43 ~ .fixed-table-container tr.typetitle[data-type="43"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type43 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="43"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type43 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="43"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type43 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="43"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type43 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="43"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type43 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="43"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type43 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="43"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type43 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="43"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type43 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="43"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type44 ~ .fixed-table-container tr.typetitle[data-type="44"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type44 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="44"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type44 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="44"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type44 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="44"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type44 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="44"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type44 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="44"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type44 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="44"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type44 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="44"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type44 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="44"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type45 ~ .fixed-table-container tr.typetitle[data-type="45"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type45 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="45"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type45 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="45"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type45 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="45"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type45 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="45"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type45 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="45"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type45 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="45"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type45 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="45"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type45 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="45"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type46 ~ .fixed-table-container tr.typetitle[data-type="46"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type46 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="46"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type46 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="46"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type46 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="46"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type46 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="46"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type46 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="46"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type46 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="46"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type46 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="46"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type46 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="46"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type47 ~ .fixed-table-container tr.typetitle[data-type="47"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type47 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="47"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type47 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="47"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type47 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="47"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type47 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="47"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type47 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="47"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type47 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="47"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type47 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="47"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type47 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="47"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type48 ~ .fixed-table-container tr.typetitle[data-type="48"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type48 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="48"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type48 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="48"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type48 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="48"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type48 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="48"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type48 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="48"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type48 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="48"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type48 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="48"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type48 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="48"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type49 ~ .fixed-table-container tr.typetitle[data-type="49"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type49 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="49"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type49 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="49"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type49 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="49"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type49 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="49"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type49 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="49"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type49 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="49"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type49 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="49"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type49 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="49"] {
+  display: table-row !important;
+}
 .tablelist.entities {
   padding-left: 4rem;
   padding-right: 4rem;

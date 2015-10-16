@@ -4061,7 +4061,7 @@ _tmpl.improvement_inEquipmentInfos = function (equipment, returnHTML) {
 		var upgrade_to = improvement['upgrade'] ? _g.data.items[improvement['upgrade'][0]] : false,
 		    requirements = this.improvement__reqdetails(improvement.req);
 
-		html += '<span class="unit improvement improvement-details">' + '<b>' + (upgrade_to ? '<span class="indicator true">可升级为</span>' + '<a style="background-image:url(../app/assets/images/itemicon/' + upgrade_to.getIconId() + '.png)"' + ' href="?infos=equipment&id=' + upgrade_to['id'] + '"' + ' data-infos="[[EQUIPMENT::' + upgrade_to['id'] + ']]"' + ' data-tip="[[EQUIPMENT::' + upgrade_to['id'] + ']]"' + '">' + upgrade_to.getName(true) + '</a>' + (improvement['upgrade'][1] ? '<i>+' + improvement['upgrade'][1] + '</i>' : '') : '<span class="indicator false">不可升级</span>') + '</b>' + requirements + _tmpl.improvement__resource(improvement, upgrade_to ? true : false) + '</span>';
+		html += '<span class="unit improvement improvement-details">' + '<b>' + (upgrade_to ? '<span class="indicator true">可升级为</span>' + '<a style="background-image:url(../app/assets/images/itemicon/' + upgrade_to.getIconId() + '.png)"' + ' href="?infos=equipment&id=' + upgrade_to['id'] + '"' + ' data-infos="[[EQUIPMENT::' + upgrade_to['id'] + ']]"' + ' data-tip="[[EQUIPMENT::' + upgrade_to['id'] + ']]"' + '>' + upgrade_to.getName(true) + '</a>' + (improvement['upgrade'][1] ? '<i>+' + improvement['upgrade'][1] + '</i>' : '') : '<span class="indicator false">不可升级</span>') + '</b>' + requirements + _tmpl.improvement__resource(improvement, upgrade_to ? true : false) + '</span>';
 	}, this);
 
 	return _tmpl['export'](html, returnHTML);
@@ -5807,7 +5807,7 @@ _p.el.tablelist = {
 
 		if (el.hasClass('ships')) el.data({
 			'tablelist': new TablelistShips(el)
-		});else if (el.hasClass('equipments')) el.data({
+		});else if (el.hasClass('tablelist-equipments')) el.data({
 			'tablelist': new TablelistEquipments(el)
 		});else if (el.hasClass('fleets')) el.data({
 			'tablelist': new TablelistFleets(el)

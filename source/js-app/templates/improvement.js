@@ -126,7 +126,7 @@ _tmpl.improvement_inEquipmentInfos = function( equipment, returnHTML ){
 									+ ' href="?infos=equipment&id='+upgrade_to['id']+'"'
 									+ ' data-infos="[[EQUIPMENT::'+upgrade_to['id']+']]"'
 									+ ' data-tip="[[EQUIPMENT::'+upgrade_to['id']+']]"'
-								+ '">' + upgrade_to.getName(true) + '</a>'
+								+ '>' + upgrade_to.getName(true) + '</a>'
 								+ ( improvement['upgrade'][1]
 									? '<i>+'+improvement['upgrade'][1]+'</i>'
 									: ''
