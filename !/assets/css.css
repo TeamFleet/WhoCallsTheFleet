@@ -3113,6 +3113,8 @@ main:after {
   -webkit-animation: layout-ready-logo 1s ease-in-out;
   animation-iteration-count: 1;
   -webkit-animation-iteration-count: 1;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
 }
 #layout.ready > nav > .logo.ready-animated {
   display: none;
