@@ -6972,6 +6972,33 @@ body.mod-capture #tip {
 .tablelist-equipments > input.type49 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="49"] {
   display: table-row !important;
 }
+.tablelist-equipments > input.type50 ~ .fixed-table-container tr.typetitle[data-type="50"] {
+  opacity: 1;
+}
+.tablelist-equipments > input.type50 ~ [value="1"]:checked ~ .fixed-table-container tr[data-equipmentcollection="1"][data-equipmenttype="50"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type50 ~ [value="2"]:checked ~ .fixed-table-container tr[data-equipmentcollection="2"][data-equipmenttype="50"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type50 ~ [value="3"]:checked ~ .fixed-table-container tr[data-equipmentcollection="3"][data-equipmenttype="50"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type50 ~ [value="4"]:checked ~ .fixed-table-container tr[data-equipmentcollection="4"][data-equipmenttype="50"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type50 ~ [value="5"]:checked ~ .fixed-table-container tr[data-equipmentcollection="5"][data-equipmenttype="50"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type50 ~ [value="6"]:checked ~ .fixed-table-container tr[data-equipmentcollection="6"][data-equipmenttype="50"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type50 ~ [value="7"]:checked ~ .fixed-table-container tr[data-equipmentcollection="7"][data-equipmenttype="50"] {
+  display: table-row !important;
+}
+.tablelist-equipments > input.type50 ~ [value="8"]:checked ~ .fixed-table-container tr[data-equipmentcollection="8"][data-equipmenttype="50"] {
+  display: table-row !important;
+}
 .tablelist.entities {
   padding-left: 4rem;
   padding-right: 4rem;
