@@ -1,3 +1,8 @@
+# SO LONG AND THANKS FOR ALL THE BITS
+**defs is done. I recommend migrating to the TypeScript `tsc` compiler because
+it does what defs does as good or better, and it does much more.**
+
+
 # defs.js
 Static scope analysis and transpilation of ES6 block scoped `const` and `let`
 variables, to ES3.

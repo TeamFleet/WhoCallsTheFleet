@@ -1,3 +1,6 @@
+## v1.1.1 2015-10-09
+ * defs is done
+
 ## v1.1.0 2014-11-28
  * Use esprima-fb instead of upstream Esprima harmony branch
 

@@ -15,7 +15,8 @@ with the help of [many contributors](https://github.com/ariya/esprima/contributo
 - Sensible [syntax tree format](https://github.com/facebook/jsx/blob/master/AST.md) compatible with Mozilla
 [Parser AST](https://developer.mozilla.org/en/SpiderMonkey/Parser_API)
 - Optional tracking of syntax node location (index-based and line-column)
-- [Heavily tested](https://travis-ci.org/facebook/esprima) (> 600 unit tests with solid statement and branch coverage)
+- Heavily tested (> 650 [unit tests](http://esprima.org/test/) with [full code coverage](http://esprima.org/test/coverage.html))
+- Ongoing support for ES6/Harmony (module, class, destructuring, ...)
 
 ### Versioning rules
 
