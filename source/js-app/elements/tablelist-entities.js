@@ -11,7 +11,7 @@ class TablelistEntities extends Tablelist{
 		if( container.children('.tablelist-list').length ){
 			this.init_parse()
 		}else if( this.init_new ){
-			this.init_new()
+			this.init_new( options )
 		}
 	}
 	

@@ -40,7 +40,9 @@ TablelistEntities.prototype.append_items = function( title, arr, callback_append
 	
 	
 	
-TablelistEntities.prototype.init_new = function(){
+TablelistEntities.prototype.init_new = function(options){
+	options = options || {}
+	
 	let listCV = [],
 		listIllustrator = []
 	
