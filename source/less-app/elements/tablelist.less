@@ -224,14 +224,18 @@
 		@options_height:	50;
 
 		.height(@options_height);
+		line-height: 	unit(@options_height, px);
 		max-height:	~"calc(100% - 280px)";
 		.flex(1 0 auto);
 		.transition-property(height);
 		position:	relative;
 		color:		#f2f2f2;
+		
+		label, button{
+			color:		rgba(255,255,255, .65);
+		}
 
 		button{
-			color:		rgba(255,255,255, .65);
 			.transition-property(color);
 			&[icon]:before{
 				opacity:1;
@@ -261,19 +265,19 @@
 		}
 
 		&>div.filters{
-			.line-height(20);
+			//.line-height(20);
 			.transition-delay(.5s);
 			z-index:	3;
-			&>.hide-premodel,
-			&>.viewtype{
-				.padding-top(15);
-			}
+			//&>.hide-premodel,
+			//&>.viewtype{
+			//	.padding-top(15);
+			//}
 			button{
 				display:	inline-block;
 				font-weight:lighter;
 				.font-size(14);
-				.line-height(35);
-				.margin-top( (@options_height - 35) / 2 );
+				//.line-height(35);
+				//.margin-top( (@options_height - 35) / 2 );
 				&[icon]:before{
 					.font-size(16);
 					.padding-right(8);
@@ -290,8 +294,14 @@
 			}
 			&>.hide-premodel{
 				float:		left;
+				padding-left:25px;
+				position: 	relative;
 				input{
-					margin: 	2px 8px 0 0;
+					//margin: 	2px 8px 0 0;
+					position: 	absolute;
+					top: 		50%;
+					left: 		0;
+					line-height:0;
 					&, & ~ label{
 						color:	rgba(255,255,255,0.75);
 						.transition-property(color);
@@ -324,6 +334,7 @@
 					.margin-left(4);
 					color:		rgba(255, 255, 255, .35);
 					.transition-property(color);
+					vertical-align: top;
 					&:before{
 						content:	"\e600";
 						.font-size(16);
@@ -356,6 +367,9 @@
 			}
 			&>.buttons_right{
 				float:		right;
+				button, .setting{
+					margin-left: 10px;
+				}
 			}
 			&>.tab{
 				.font-size(12);
@@ -365,6 +379,7 @@
 					.padding(0, 4);
 				}
 				.container2(i, span);
+				vertical-align: top !important;
 				&>i{
 					.width(24);
 					.height(24);

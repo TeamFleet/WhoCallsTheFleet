@@ -6914,6 +6914,13 @@ var TablelistFleets = (function (_Tablelist3) {
 		}).appendTo(_this10.dom.filters);
 
 		_this10.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(_this10.dom.filters);
+		_this10.dom.setting_hqlv = $('<label/>', {
+			'class': 'setting setting-hqlv',
+			'html': '默认司令部等级'
+		}).append(_this10.dom.setting_hqlv_input = $('<input type="number"/>').val(Lockr.get('hqLvDefault', 90)).on('input', function () {
+			var val = this.dom.setting_hqlv_input.val();
+			if (val > 0) Lockr.set('hqLvDefault', val);
+		})).appendTo(_this10.dom.buttons_right);
 		_this10.dom.btn_settings = $('<button icon="cog"/>').on('click', (function () {
 			this.btn_settings();
 		}).bind(_this10)).appendTo(_this10.dom.buttons_right);

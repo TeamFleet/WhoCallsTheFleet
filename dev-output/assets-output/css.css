@@ -4597,6 +4597,7 @@ body.mod-capture #tip {
 }
 .tablelist > .options {
   height: 2.5rem;
+  line-height: 50px;
   max-height: calc(100% - 280px);
   -webkit-box-flex: 1;
   -webkit-flex: 1 0 auto;
@@ -4607,8 +4608,11 @@ body.mod-capture #tip {
   position: relative;
   color: #f2f2f2;
 }
+.tablelist > .options label,
 .tablelist > .options button {
   color: rgba(255, 255, 255, 0.65);
+}
+.tablelist > .options button {
   -webkit-transition-property: color;
           transition-property: color;
 }
@@ -4658,21 +4662,14 @@ body.mod-capture #tip {
   }
 }
 .tablelist > .options > div.filters {
-  line-height: 1rem;
   -webkit-transition-delay: 0.5s;
           transition-delay: 0.5s;
   z-index: 3;
-}
-.tablelist > .options > div.filters > .hide-premodel,
-.tablelist > .options > div.filters > .viewtype {
-  padding-top: 0.75rem;
 }
 .tablelist > .options > div.filters button {
   display: inline-block;
   font-weight: lighter;
   font-size: 0.7000000000000001rem;
-  line-height: 1.75rem;
-  margin-top: 0.375rem;
 }
 .tablelist > .options > div.filters button[icon]:before {
   font-size: 0.8rem;
@@ -4689,9 +4686,14 @@ body.mod-capture #tip {
 }
 .tablelist > .options > div.filters > .hide-premodel {
   float: left;
+  padding-left: 25px;
+  position: relative;
 }
 .tablelist > .options > div.filters > .hide-premodel input {
-  margin: 2px 8px 0 0;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  line-height: 0;
 }
 .tablelist > .options > div.filters > .hide-premodel input,
 .tablelist > .options > div.filters > .hide-premodel input ~ label {
@@ -4725,6 +4727,7 @@ body.mod-capture #tip {
   color: rgba(255, 255, 255, 0.35);
   -webkit-transition-property: color;
           transition-property: color;
+  vertical-align: top;
 }
 .tablelist > .options > div.filters > .viewtype label:before {
   content: "\e600";
@@ -4757,6 +4760,10 @@ body.mod-capture #tip {
 .tablelist > .options > div.filters > .buttons_right {
   float: right;
 }
+.tablelist > .options > div.filters > .buttons_right button,
+.tablelist > .options > div.filters > .buttons_right .setting {
+  margin-left: 10px;
+}
 .tablelist > .options > div.filters > .tab {
   font-size: 0.6000000000000001rem;
   line-height: 0.7000000000000001rem;
@@ -4764,6 +4771,7 @@ body.mod-capture #tip {
   display: inline-block;
   text-align: center !important;
   vertical-align: middle !important;
+  vertical-align: top !important;
 }
 @media all and (max-width: 800px) {
   .tablelist > .options > div.filters > .tab {

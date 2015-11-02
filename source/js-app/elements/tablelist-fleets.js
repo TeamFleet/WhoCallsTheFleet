@@ -55,6 +55,20 @@ class TablelistFleets extends Tablelist{
 									.appendTo(this.dom.filters)
 			// 右 - 选项组
 				this.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(this.dom.filters)
+				this.dom.setting_hqlv = $('<label/>',{
+										'class':	'setting setting-hqlv',
+										'html':		'默认司令部等级'
+									})
+									.append(
+										this.dom.setting_hqlv_input = $('<input type="number"/>')
+											.val(Lockr.get('hqLvDefault', 90))
+											.on('input', function(){
+												let val = this.dom.setting_hqlv_input.val()
+												if( val > 0 )
+													Lockr.set('hqLvDefault', val)
+											})
+									)
+									.appendTo(this.dom.buttons_right)
 				this.dom.btn_settings = $('<button icon="cog"/>')
 									.on('click',function(){
 										this.btn_settings()
