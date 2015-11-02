@@ -1285,7 +1285,8 @@ body > .menus > .menu.mod-checkbox > .body menuitem {
 }
 body > .menus > .menu.mod-checkbox > .body menuitem input[type=checkbox] {
   position: absolute;
-  top: 0.5rem;
+  top: 50%;
+  line-height: 0;
   left: 0.5rem;
 }
 body > .menus > .menu.mod-checkbox > .body menuitem label {
