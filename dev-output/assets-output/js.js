@@ -1,12 +1,16 @@
 "use strict";
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _instanceof(left, right) { if (right != null && right[Symbol.hasInstance]) { return right[Symbol.hasInstance](left); } else { return left instanceof right; } }
+
+function _typeof(obj) { return obj && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
 var $window = $(window),
     $document = $(document),
@@ -431,7 +435,7 @@ _g.uriHash = function (name, val, value) {
 		_g.uriHashInited = true;
 	}
 
-	if (typeof name == 'object') {
+	if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) == 'object') {
 		for (var k in name) {
 			curH = _g.uriHash(k, name[k], curH);
 		}
@@ -796,7 +800,7 @@ _support._css3imageset = function () {
 _support._pluginflash = function () {
 	var _ = false;
 	try {
-		_ = typeof navigator.plugins != "undefined" && typeof navigator.plugins["Shockwave Flash"] == "object" || window.ActiveXObject && new ActiveXObject("ShockwaveFlash.ShockwaveFlash") != false;
+		_ = typeof navigator.plugins != "undefined" && _typeof(navigator.plugins["Shockwave Flash"]) == "object" || window.ActiveXObject && new ActiveXObject("ShockwaveFlash.ShockwaveFlash") != false;
 	} catch (e) {}
 	return _;
 };
@@ -1106,7 +1110,7 @@ $.fn.serializeObject = function () {
 };
 
 _p.initDOM = function (tar) {
-	tar = tar || (_frame.dom.layout || (_frame.dom.layout || $body));
+	tar = tar || _frame.dom.layout || _frame.dom.layout || $body;
 
 	return tar.initAll();
 };
@@ -1135,7 +1139,7 @@ _p.getSummary = function () {
 	}
 	return summary;
 }, _p.get_tar = function (tar, className, is_startwith) {
-	tar = tar || (_frame.dom.layout || ($('#layout') || $body));
+	tar = tar || _frame.dom.layout || $('#layout') || $body;
 
 	if (className.substr(0, 1) == '.') className = className.substr(1);
 	if (tar.hasClass(className)) return tar;
@@ -1215,7 +1219,7 @@ Object.defineProperty(Array.prototype, 'mergeFrom', {
 	enumerable: false,
 
 	value: function value(arr2) {
-		Array.prototype.push.apply(this, arr2 instanceof Array ? arr2 : [arr2]);
+		Array.prototype.push.apply(this, _instanceof(arr2, Array) ? arr2 : [arr2]);
 		return this;
 	}
 });
@@ -1294,7 +1298,7 @@ _g.getText = function (text, table, locale, isString) {
 	if (!text || !table) return text;
 
 	function _r(t) {
-		if (typeof t == 'object' && t.length) return t[0];
+		if ((typeof t === 'undefined' ? 'undefined' : _typeof(t)) == 'object' && t.length) return t[0];
 		return t;
 	}
 
@@ -1358,7 +1362,7 @@ String.prototype.escape = function () {
 };
 
 var _tmpl = {
-	'export': function _export(value, returnHTML) {
+	export: function _export(value, returnHTML) {
 		if (value.attr && returnHTML) return value.prop('outerHTML');
 		if (value.attr && !returnHTML) return value;
 		if (!value.attr && returnHTML) return value;
@@ -1464,15 +1468,15 @@ var _form = {};
 _form.section = function (type, name, label, value, suffix, options) {
 	if (!type) return false;
 
-	if (typeof type == 'object') return _form.section(type['type'], type['name'] || null, type['label'] || null, type['value'] || null, type['suffix'] || null, type);
+	if ((typeof type === 'undefined' ? 'undefined' : _typeof(type)) == 'object') return _form.section(type['type'], type['name'] || null, type['label'] || null, type['value'] || null, type['suffix'] || null, type);
 
-	if (typeof name == 'object') return _form.section(type, name, name['label'] || null, name['value'] || null, name['suffix'] || null, name);
+	if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) == 'object') return _form.section(type, name, name['label'] || null, name['value'] || null, name['suffix'] || null, name);
 
-	if (typeof label == 'object') return _form.section(type, name, label['label'] || null, label['value'] || null, label['suffix'] || null, label);
+	if ((typeof label === 'undefined' ? 'undefined' : _typeof(label)) == 'object') return _form.section(type, name, label['label'] || null, label['value'] || null, label['suffix'] || null, label);
 
-	if (typeof value == 'object') return _form.section(type, name, id, value['value'] || null, value['suffix'] || null, value);
+	if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) == 'object') return _form.section(type, name, id, value['value'] || null, value['suffix'] || null, value);
 
-	if (typeof suffix == 'object') return _form.section(type, name, id, value || null, suffix['suffix'] || null, suffix);
+	if ((typeof suffix === 'undefined' ? 'undefined' : _typeof(suffix)) == 'object') return _form.section(type, name, id, value || null, suffix['suffix'] || null, suffix);
 
 	options = options || {};
 
@@ -1508,13 +1512,13 @@ _form.line = _form.section;
 _form.element = function (type, name, id, value, options) {
 	if (!type) return false;
 
-	if (typeof type == 'object') return _form.element(type['type'], type['name'] || null, type['id'] || null, type['value'] || null, type);
+	if ((typeof type === 'undefined' ? 'undefined' : _typeof(type)) == 'object') return _form.element(type['type'], type['name'] || null, type['id'] || null, type['value'] || null, type);
 
-	if (typeof name == 'object') return _form.element(type, name, name['id'] || null, name['value'] || null, name);
+	if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) == 'object') return _form.element(type, name, name['id'] || null, name['value'] || null, name);
 
-	if (typeof id == 'object') return _form.element(type, name, id['id'] || null, id['value'] || null, id);
+	if ((typeof id === 'undefined' ? 'undefined' : _typeof(id)) == 'object') return _form.element(type, name, id['id'] || null, id['value'] || null, id);
 
-	if (typeof value == 'object') return _form.element(type, name, id, value['value'] || null, value);
+	if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) == 'object') return _form.element(type, name, id, value['value'] || null, value);
 
 	options = options || {};
 	id = id || null;
@@ -1542,7 +1546,7 @@ _form.element = function (type, name, id, value, options) {
 			}).val(value);
 			var optionEmpty = $('<option value=""/>').appendTo(element);
 			for (var i in value) {
-				if (typeof value[i] == 'object') {
+				if (_typeof(value[i]) == 'object') {
 					var v = value[i]['value'] || value[i].val,
 					    o_el = $('<option value="' + v + '"/>').html(value[i]['title'] || value[i]['name']).appendTo(element);
 				} else {
@@ -1581,7 +1585,7 @@ _form.element = function (type, name, id, value, options) {
 				var group = $('<optgroup label="' + value[i][0] + '"/>').appendTo(element);
 				for (var j in value[i][1]) {
 					var _v = value[i][1][j];
-					if (typeof _v == 'object') {
+					if ((typeof _v === 'undefined' ? 'undefined' : _typeof(_v)) == 'object') {
 						var o_el = $('<option value="' + (typeof _v.val == 'undefined' ? _v['value'] : _v.val) + '"/>').html(_v['title'] || _v['name']).appendTo(group);
 					} else {
 						var o_el = $('<option value="' + _v + '"/>').html(_v).appendTo(group);
@@ -1624,7 +1628,7 @@ _form.element = function (type, name, id, value, options) {
 		case 'checkboxes':
 			for (var i in value) {
 				var v = value[i];
-				if (typeof v != 'object') v = [v, false];
+				if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) != 'object') v = [v, false];
 
 				if (parseInt(i)) {
 					_g.inputIndex++;
@@ -1816,7 +1820,7 @@ _menu.prototype.show = function (targetEl, mouseX, mouseY) {
 
 	this.dom.body.children().trigger('show');
 
-	if (targetEl && targetEl instanceof jQuery) {
+	if (targetEl && _instanceof(targetEl, jQuery)) {
 		var offset = targetEl.offset();
 		top = offset.top + targetEl.height() - $body.scrollTop();
 		left = offset.left - $body.scrollLeft();
@@ -1856,7 +1860,7 @@ _menu.prototype.hideTrue = function () {
 		'left': ''
 	});
 
-	if (this.dom.blured instanceof jQuery) {
+	if (_instanceof(this.dom.blured, jQuery)) {
 		this.dom.blured.remove();
 		delete this.dom.blured;
 	}
@@ -1866,7 +1870,7 @@ _menu.prototype.hideTrue = function () {
 };
 
 _menu.prototype.appendItem = function (item) {
-	if (item instanceof jQuery) return item.appendTo(this.dom.body);
+	if (_instanceof(item, jQuery)) return item.appendTo(this.dom.body);
 };
 
 _menu.prototype.capturePage_callback = function (datauri) {
@@ -2368,36 +2372,18 @@ _p.el.table = {
 	dom: {},
 
 	hover_column_getTable: function hover_column_getTable(path) {
-		function _check(_x4) {
-			var _again2 = true;
+		function _check(index) {
+			if (path[index].tagName.toLowerCase() == 'table') return $(path[index]);
 
-			_function2: while (_again2) {
-				var index = _x4;
-				_again2 = false;
-
-				if (path[index].tagName.toLowerCase() == 'table') return $(path[index]);
-
-				_x4 = index + 1;
-				_again2 = true;
-				continue _function2;
-			}
+			return _check(index + 1);
 		}
 		return _check(0);
 	},
 	hover_column_getTr: function hover_column_getTr(path) {
-		function _check(_x5) {
-			var _again3 = true;
+		function _check(index) {
+			if (path[index].tagName.toLowerCase() == 'tr') return $(path[index]);
 
-			_function3: while (_again3) {
-				var index = _x5;
-				_again3 = false;
-
-				if (path[index].tagName.toLowerCase() == 'tr') return $(path[index]);
-
-				_x5 = index + 1;
-				_again3 = true;
-				continue _function3;
-			}
+			return _check(index + 1);
 		}
 		return _check(0);
 	},
@@ -2647,7 +2633,7 @@ var Formula = {
 	calculate: function calculate(type, ship, equipments_by_slot, star_by_slot, rank_by_slot, options) {
 		if (!type || !ship) return 0;
 
-		if (!(ship instanceof Ship)) ship = _g.data.ships[ship];
+		if (!_instanceof(ship, Ship)) ship = _g.data.ships[ship];
 
 		var result = 0,
 		    count = {
@@ -2744,7 +2730,7 @@ var Formula = {
 
 		equipments_by_slot = equipments_by_slot.map(function (equipment) {
 			if (!equipment) return null;
-			if (equipment instanceof Equipment) return equipment;
+			if (_instanceof(equipment, Equipment)) return equipment;
 			return _g.data.items[equipment];
 		}) || [];
 		star_by_slot = star_by_slot || [];
@@ -2929,8 +2915,10 @@ var Entity = (function (_ItemBase) {
 	function Entity(data) {
 		_classCallCheck(this, Entity);
 
-		_get(Object.getPrototypeOf(Entity.prototype), 'constructor', this).call(this);
-		$.extend(true, this, data);
+		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Entity).call(this));
+
+		$.extend(true, _this, data);
+		return _this;
 	}
 
 	return Entity;
@@ -2942,8 +2930,10 @@ var Equipment = (function (_ItemBase2) {
 	function Equipment(data) {
 		_classCallCheck(this, Equipment);
 
-		_get(Object.getPrototypeOf(Equipment.prototype), 'constructor', this).call(this);
-		$.extend(true, this, data);
+		var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Equipment).call(this));
+
+		$.extend(true, _this2, data);
+		return _this2;
 	}
 
 	_createClass(Equipment, [{
@@ -2994,8 +2984,10 @@ var Ship = (function (_ItemBase3) {
 	function Ship(data) {
 		_classCallCheck(this, Ship);
 
-		_get(Object.getPrototypeOf(Ship.prototype), 'constructor', this).call(this);
-		$.extend(true, this, data);
+		var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(Ship).call(this));
+
+		$.extend(true, _this3, data);
+		return _this3;
 	}
 
 	_createClass(Ship, [{
@@ -3206,7 +3198,7 @@ _g.kancolle_calc = {
 	decode: function decode(data, version) {
 		if (!data) return;
 		if (typeof data == 'string') data = JSON.parse(data);
-		if (typeof data != 'object') return;
+		if ((typeof data === 'undefined' ? 'undefined' : _typeof(data)) != 'object') return;
 		version = parseInt(data.version) || this.version;
 
 		var result = undefined,
@@ -3889,7 +3881,7 @@ _frame.app_main = {
 				});
 			});
 
-			dbchain = dbchain['catch'](function (e) {
+			dbchain = dbchain.catch(function (e) {
 				console.log(e);
 			}).done(function () {
 				_g.log('Preload All DBs (JSON ver.): DONE');
@@ -3976,7 +3968,7 @@ _frame.app_main = {
 			});
 
 			return true;
-		})['catch'](function (err) {
+		}).catch(function (err) {
 			_g.error(err);
 		}).done(function () {
 			_g.log('Global initialization DONE');
@@ -3987,7 +3979,7 @@ _frame.app_main = {
 };
 
 _g.error = function (err) {
-	if (!(err instanceof Error)) err = new Error(err);
+	if (!_instanceof(err, Error)) err = new Error(err);
 
 	_g.log(err);
 };
@@ -4003,7 +3995,7 @@ _frame.app_main.page_init = function (page, $page) {
 _tmpl.improvement = function (equipment, improvement_index, requirement_index, returnHTML) {
 	if (typeof equipment == 'undefined') return false;
 
-	if (typeof equipment != 'object') if (!(equipment = _g.data.items[equipment])) return false;
+	if ((typeof equipment === 'undefined' ? 'undefined' : _typeof(equipment)) != 'object') if (!(equipment = _g.data.items[equipment])) return false;
 
 	improvement_index = improvement_index || 0;
 	requirement_index = requirement_index || [0];
@@ -4028,13 +4020,13 @@ _tmpl.improvement = function (equipment, improvement_index, requirement_index, r
 		requirement = '<font class="no">无秘书舰要求</font>';
 	}
 
-	return _tmpl['export']('<span class="improvement">' + _tmpl.improvement__title(equipment, upgrade_to, improvement['upgrade'][1]) + requirement + _tmpl.improvement__resource(improvement, upgrade_to ? true : false) + '</span>', returnHTML);
+	return _tmpl.export('<span class="improvement">' + _tmpl.improvement__title(equipment, upgrade_to, improvement['upgrade'][1]) + requirement + _tmpl.improvement__resource(improvement, upgrade_to ? true : false) + '</span>', returnHTML);
 };
 
 _tmpl.improvement_detail = function (equipment, returnHTML) {
 	if (typeof equipment == 'undefined') return false;
 
-	if (typeof equipment != 'object') if (!(equipment = _g.data.items[equipment])) return false;
+	if ((typeof equipment === 'undefined' ? 'undefined' : _typeof(equipment)) != 'object') if (!(equipment = _g.data.items[equipment])) return false;
 
 	var html = '',
 	    data = equipment['improvement'] || [];
@@ -4046,13 +4038,13 @@ _tmpl.improvement_detail = function (equipment, returnHTML) {
 		html += '<span class="improvement improvement-details">' + _tmpl.improvement__title(equipment, upgrade_to, improvement['upgrade'][1]) + requirements + _tmpl.improvement__resource(improvement, upgrade_to ? true : false) + '</span>';
 	}, this);
 
-	return _tmpl['export'](html, returnHTML);
+	return _tmpl.export(html, returnHTML);
 };
 
 _tmpl.improvement_inEquipmentInfos = function (equipment, returnHTML) {
 	if (typeof equipment == 'undefined') return false;
 
-	if (typeof equipment != 'object') if (!(equipment = _g.data.items[equipment])) return false;
+	if ((typeof equipment === 'undefined' ? 'undefined' : _typeof(equipment)) != 'object') if (!(equipment = _g.data.items[equipment])) return false;
 
 	var html = '',
 	    data = equipment['improvement'] || [];
@@ -4064,7 +4056,7 @@ _tmpl.improvement_inEquipmentInfos = function (equipment, returnHTML) {
 		html += '<span class="unit improvement improvement-details">' + '<b>' + (upgrade_to ? '<span class="indicator true">可升级为</span>' + '<a style="background-image:url(../app/assets/images/itemicon/' + upgrade_to.getIconId() + '.png)"' + ' href="?infos=equipment&id=' + upgrade_to['id'] + '"' + ' data-infos="[[EQUIPMENT::' + upgrade_to['id'] + ']]"' + ' data-tip="[[EQUIPMENT::' + upgrade_to['id'] + ']]"' + '>' + upgrade_to.getName(true) + '</a>' + (improvement['upgrade'][1] ? '<i>+' + improvement['upgrade'][1] + '</i>' : '') : '<span class="indicator false">不可升级</span>') + '</b>' + requirements + _tmpl.improvement__resource(improvement, upgrade_to ? true : false) + '</span>';
 	}, this);
 
-	return _tmpl['export'](html, returnHTML);
+	return _tmpl.export(html, returnHTML);
 };
 
 _tmpl.improvement__title = function (equipment, upgrade_to, upgrade_to_star) {
@@ -4147,51 +4139,51 @@ _tmpl.improvement__reqdetails = function (reqdata) {
 _tmpl.link_entity = function (entity, tagName, returnHTML, count) {
 	if (!entity) return false;
 
-	if (tagName && typeof tagName == 'object') return _tmpl.link_entity(entity, tagName['tagName'] || null, tagName['returnHTML'] || null, tagName['count'] || null);
+	if (tagName && (typeof tagName === 'undefined' ? 'undefined' : _typeof(tagName)) == 'object') return _tmpl.link_entity(entity, tagName['tagName'] || null, tagName['returnHTML'] || null, tagName['count'] || null);
 
 	tagName = tagName || 'a';
 	returnHTML = returnHTML || false;
 	count = typeof count == 'undefined' ? false : count;
 
-	if (typeof entity != 'object') {
+	if ((typeof entity === 'undefined' ? 'undefined' : _typeof(entity)) != 'object') {
 		var entityId = parseInt(entity);
 		entity = _g.data.entities[entityId];
 	} else {
 		var entityId = entity['id'];
 	}
 
-	return _tmpl['export']('<' + tagName + (tagName == 'a' ? ' href="?infos=entity&id=' + entityId + '"' : '') + ' class="link_entity" data-entityid="' + entityId + '" data-infos="[[ENTITY::' + entityId + ']]">' + (entity.picture && entity.picture.avatar ? '<i style="background-image:url(' + entity.picture.avatar + ')"></i>' : '<i></i>') + '<span>' + entity._name + (typeof count == 'undefined' ? '' : ' <small>(' + count + ')</small>') + '</span>' + '</' + tagName + '>', returnHTML);
+	return _tmpl.export('<' + tagName + (tagName == 'a' ? ' href="?infos=entity&id=' + entityId + '"' : '') + ' class="link_entity" data-entityid="' + entityId + '" data-infos="[[ENTITY::' + entityId + ']]">' + (entity.picture && entity.picture.avatar ? '<i style="background-image:url(' + entity.picture.avatar + ')"></i>' : '<i></i>') + '<span>' + entity._name + (typeof count == 'undefined' ? '' : ' <small>(' + count + ')</small>') + '</span>' + '</' + tagName + '>', returnHTML);
 };
 
 _tmpl.link_equipment = function (equipment, tagName, returnHTML, improvementStar) {
 	if (!equipment) return false;
 
-	if (tagName && typeof tagName == 'object') return _tmpl.link_equipment(equipment, tagName['tagName'] || null, tagName['returnHTML'] || null, typeof tagName['improvementStar'] == 'undefined' ? null : tagName['improvementStar']);
+	if (tagName && (typeof tagName === 'undefined' ? 'undefined' : _typeof(tagName)) == 'object') return _tmpl.link_equipment(equipment, tagName['tagName'] || null, tagName['returnHTML'] || null, typeof tagName['improvementStar'] == 'undefined' ? null : tagName['improvementStar']);
 
 	tagName = tagName || 'a';
 	returnHTML = returnHTML || false;
 	improvementStar = typeof improvementStar == 'undefined' ? null : improvementStar;
 
-	if (typeof equipment != 'object') {
+	if ((typeof equipment === 'undefined' ? 'undefined' : _typeof(equipment)) != 'object') {
 		var equipmentId = parseInt(equipment);
 		equipment = _g.data.items[equipmentId];
 	} else {
 		var equipmentId = equipment['id'];
 	}
 
-	return _tmpl['export']('<' + tagName + (tagName == 'a' ? ' href="?infos=equipment&id=' + equipmentId + '"' : '') + ' class="link_equipment"' + ' data-equipmentid="' + equipmentId + '"' + ' data-tip-position="right"' + ' data-infos="[[EQUIPMENT::' + equipmentId + ']]"' + ' data-tip="[[EQUIPMENT::' + equipmentId + ']]"' + '>' + '<i style="background-image:url(assets/images/itemicon/' + equipment.getIconId() + '.png)"></i>' + '<span>' + equipment.getName(true) + '</span>' + (improvementStar !== null ? '<em' + (improvementStar <= 0 ? ' class="zero"' : '') + '>+' + improvementStar + '</em>' : '') + '</' + tagName + '>', returnHTML);
+	return _tmpl.export('<' + tagName + (tagName == 'a' ? ' href="?infos=equipment&id=' + equipmentId + '"' : '') + ' class="link_equipment"' + ' data-equipmentid="' + equipmentId + '"' + ' data-tip-position="right"' + ' data-infos="[[EQUIPMENT::' + equipmentId + ']]"' + ' data-tip="[[EQUIPMENT::' + equipmentId + ']]"' + '>' + '<i style="background-image:url(assets/images/itemicon/' + equipment.getIconId() + '.png)"></i>' + '<span>' + equipment.getName(true) + '</span>' + (improvementStar !== null ? '<em' + (improvementStar <= 0 ? ' class="zero"' : '') + '>+' + improvementStar + '</em>' : '') + '</' + tagName + '>', returnHTML);
 };
 
 _tmpl.link_ship = function (ship, tagName, returnHTML, mode) {
 	if (!ship) return false;
 
-	if (tagName && typeof tagName == 'object') return _tmpl.link_ship(ship, tagName['tagName'] || null, tagName['returnHTML'] || null, tagName['mode'] || null);
+	if (tagName && (typeof tagName === 'undefined' ? 'undefined' : _typeof(tagName)) == 'object') return _tmpl.link_ship(ship, tagName['tagName'] || null, tagName['returnHTML'] || null, tagName['mode'] || null);
 
 	tagName = tagName || 'a';
 	returnHTML = returnHTML || false;
 	mode = mode || 'default';
 
-	if (typeof ship != 'object') {
+	if ((typeof ship === 'undefined' ? 'undefined' : _typeof(ship)) != 'object') {
 		var shipId = parseInt(ship);
 		ship = _g.data.ships[shipId];
 	} else {
@@ -4215,36 +4207,36 @@ _tmpl.link_ship = function (ship, tagName, returnHTML, mode) {
 			break;
 	}
 
-	return _tmpl['export']('<' + tagName + (tagName == 'a' ? ' href="?infos=ship&id=' + shipId + '"' : '') + ' class="link_ship" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">' + '<img src="' + node.path.normalize(_g.path.pics.ships) + '/' + shipId + '/0.webp"/>' + '<span>' + content + '</span>' + '</' + tagName + '>', returnHTML);
+	return _tmpl.export('<' + tagName + (tagName == 'a' ? ' href="?infos=ship&id=' + shipId + '"' : '') + ' class="link_ship" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">' + '<img src="' + node.path.normalize(_g.path.pics.ships) + '/' + shipId + '/0.webp"/>' + '<span>' + content + '</span>' + '</' + tagName + '>', returnHTML);
 };
 
 _tmpl.textlink_entity = function (entity, tagName, returnHTML) {
 	if (!entity) return false;
 
-	if (tagName && typeof tagName == 'object') return _tmpl.textlink_entity(entity, tagName['tagName'] || null, tagName['returnHTML'] || null);
+	if (tagName && (typeof tagName === 'undefined' ? 'undefined' : _typeof(tagName)) == 'object') return _tmpl.textlink_entity(entity, tagName['tagName'] || null, tagName['returnHTML'] || null);
 
 	tagName = tagName || 'a';
 	returnHTML = returnHTML || false;
 
-	if (typeof entity != 'object') {
+	if ((typeof entity === 'undefined' ? 'undefined' : _typeof(entity)) != 'object') {
 		var entityId = parseInt(entity);
 		entity = _g.data.entities[entityId];
 	} else {
 		var entityId = entity['id'];
 	}
 
-	return _tmpl['export']('<' + tagName + (tagName == 'a' ? ' href="?infos=entity&id=' + entityId + '"' : '') + ' data-entityid="' + entityId + '" data-infos="[[ENTITY::' + entityId + ']]">' + entity._name + '</' + tagName + '>', returnHTML);
+	return _tmpl.export('<' + tagName + (tagName == 'a' ? ' href="?infos=entity&id=' + entityId + '"' : '') + ' data-entityid="' + entityId + '" data-infos="[[ENTITY::' + entityId + ']]">' + entity._name + '</' + tagName + '>', returnHTML);
 };
 
 _tmpl.textlink_ship = function (ship, tagName, returnHTML) {
 	if (!ship) return false;
 
-	if (tagName && typeof tagName == 'object') return _tmpl.textlink_ship(ship, tagName['tagName'] || null, tagName['returnHTML'] || null);
+	if (tagName && (typeof tagName === 'undefined' ? 'undefined' : _typeof(tagName)) == 'object') return _tmpl.textlink_ship(ship, tagName['tagName'] || null, tagName['returnHTML'] || null);
 
 	tagName = tagName || 'a';
 	returnHTML = returnHTML || false;
 
-	if (typeof ship != 'object') {
+	if ((typeof ship === 'undefined' ? 'undefined' : _typeof(ship)) != 'object') {
 		var shipId = parseInt(ship);
 		ship = _g.data.ships[shipId];
 	} else {
@@ -4253,7 +4245,7 @@ _tmpl.textlink_ship = function (ship, tagName, returnHTML) {
 
 	var shipType = ship.getType();
 
-	return _tmpl['export']('<' + tagName + (tagName == 'a' ? ' href="?infos=ship&id=' + shipId + '"' : '') + ' data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">' + (shipType ? '[' + shipType + '] ' : '') + ship.getName(_g.joint) + '</' + tagName + '>', returnHTML);
+	return _tmpl.export('<' + tagName + (tagName == 'a' ? ' href="?infos=ship&id=' + shipId + '"' : '') + ' data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">' + (shipType ? '[' + shipType + '] ' : '') + ship.getName(_g.joint) + '</' + tagName + '>', returnHTML);
 };
 
 var PAGE = (function () {
@@ -4298,7 +4290,7 @@ _frame.app_main.page['fleets'] = {
 			function _class($page) {
 				_classCallCheck(this, _class);
 
-				_get(Object.getPrototypeOf(_class.prototype), 'constructor', this).call(this, $page);
+				var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this, $page));
 
 				$page.on({
 					'show': function show() {
@@ -4309,6 +4301,7 @@ _frame.app_main.page['fleets'] = {
 						this.inited = true;
 					}
 				});
+				return _this4;
 			}
 
 			return _class;
@@ -4325,21 +4318,22 @@ _frame.app_main.page['ships'] = {
 			function _class2($page) {
 				_classCallCheck(this, _class2);
 
-				_get(Object.getPrototypeOf(_class2.prototype), 'constructor', this).call(this, $page);
+				var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(_class2).call(this, $page));
 
-				this.tablelist = $page.find('.tablelist');
-				this.tablelistObj = this.tablelist.data('tablelist');
+				_this5.tablelist = $page.find('.tablelist');
+				_this5.tablelistObj = _this5.tablelist.data('tablelist');
 
 				$page.on({
 					'on': (function () {
 						if (!this.tablelistObj) this.tablelistObj = this.tablelist.data('tablelist');
 
 						if (this.tablelistObj) this.tablelistObj.thead_redraw();
-					}).bind(this),
+					}).bind(_this5),
 					'modeSelectionEnter': (function (e, callback_select) {
 						this.modeSelectionEnter(callback_select);
-					}).bind(this)
+					}).bind(_this5)
 				});
+				return _this5;
 			}
 
 			return _class2;
@@ -4355,10 +4349,10 @@ _frame.app_main.page['equipments'] = {
 			function _class3($page) {
 				_classCallCheck(this, _class3);
 
-				_get(Object.getPrototypeOf(_class3.prototype), 'constructor', this).call(this, $page);
+				var _this6 = _possibleConstructorReturn(this, Object.getPrototypeOf(_class3).call(this, $page));
 
-				this.tablelist = $page.find('.tablelist');
-				this.tablelistObj = this.tablelist.data('tablelist');
+				_this6.tablelist = $page.find('.tablelist');
+				_this6.tablelistObj = _this6.tablelist.data('tablelist');
 
 				$page.on({
 					'on': (function () {
@@ -4368,17 +4362,18 @@ _frame.app_main.page['equipments'] = {
 							this.tablelistObj.thead_redraw();
 							this.tablelistObj.apply_types();
 						}
-					}).bind(this),
+					}).bind(_this6),
 					'modeSelectionEnter': (function (e, callback_select, callback_enter) {
 						this.modeSelectionEnter(callback_select, callback_enter);
-					}).bind(this),
+					}).bind(_this6),
 					'show': (function () {
 						if (this.tablelistObj) {
 							this.tablelistObj.thead_redraw();
 							this.tablelistObj.apply_types();
 						}
-					}).bind(this)
+					}).bind(_this6)
 				});
+				return _this6;
 			}
 
 			return _class3;
@@ -4818,16 +4813,16 @@ var InfosFleet = (function () {
 				}
 				return els;
 			})).append(this.doms['themeOption'] = $('<button class="option option-theme"/>').html('主题').on('click', (function () {
-				var _this = this;
+				var _this7 = this;
 
 				if (!InfosFleet.menuTheme) {
 					InfosFleet.menuThemeItems = $('<div/>');
 
-					var _loop = function (_i6) {
+					var _loop = function _loop(_i6) {
 						$('<button class="theme-' + _i6 + '"/>').html(_i6).on('click', (function () {
 							InfosFleet.menuThemeCur._theme = _i6;
 							this.el.attr('data-theme', this._theme);
-						}).bind(_this)).appendTo(InfosFleet.menuThemeItems);
+						}).bind(_this7)).appendTo(InfosFleet.menuThemeItems);
 					};
 
 					for (var _i6 = 1; _i6 < 11; _i6++) {
@@ -5547,7 +5542,7 @@ var InfosFleetShipEquipment = (function () {
 			if (!InfosFleet.menuRankSelect) {
 				InfosFleet.menuRankSelectItems = $('<div/>');
 
-				var _loop2 = function (_i10) {
+				var _loop2 = function _loop2(_i10) {
 					$('<button class="rank-' + _i10 + '"/>').html(!_i10 ? '无' : '').on('click', function () {
 						InfosFleet.menuRankSelectCur.rank = _i10;
 					}).appendTo(InfosFleet.menuRankSelectItems);
@@ -5863,7 +5858,7 @@ var Tablelist = (function () {
 						input = $('<select name="' + name + '" id="' + id + '" />');
 						option_empty = $('<option value=""/>').html('').appendTo(input);
 						value.forEach(function (currentValue, i) {
-							if (typeof currentValue == 'object') {
+							if ((typeof currentValue === 'undefined' ? 'undefined' : _typeof(currentValue)) == 'object') {
 								o_el = $('<option value="' + (typeof currentValue.val == 'undefined' ? currentValue['value'] : currentValue.val) + '"/>').html(currentValue['title'] || currentValue['name']).appendTo(input);
 							} else {
 								o_el = $('<option value="' + currentValue + '"/>').html(currentValue).appendTo(input);
@@ -6133,16 +6128,17 @@ var TablelistEntities = (function (_Tablelist) {
 	function TablelistEntities(container, options) {
 		_classCallCheck(this, TablelistEntities);
 
-		_get(Object.getPrototypeOf(TablelistEntities.prototype), 'constructor', this).call(this, container, options);
+		var _this8 = _possibleConstructorReturn(this, Object.getPrototypeOf(TablelistEntities).call(this, container, options));
 
-		_frame.app_main.loading.push('tablelist_' + this._index);
+		_frame.app_main.loading.push('tablelist_' + _this8._index);
 		_frame.app_main.is_loaded = false;
 
 		if (container.children('.tablelist-list').length) {
-			this.init_parse();
-		} else if (this.init_new) {
-			this.init_new();
+			_this8.init_parse();
+		} else if (_this8.init_new) {
+			_this8.init_new(options);
 		}
+		return _this8;
 	}
 
 	_createClass(TablelistEntities, [{
@@ -6162,18 +6158,19 @@ var TablelistEquipments = (function (_Tablelist2) {
 	function TablelistEquipments(container, options) {
 		_classCallCheck(this, TablelistEquipments);
 
-		_get(Object.getPrototypeOf(TablelistEquipments.prototype), 'constructor', this).call(this, container, options);
+		var _this9 = _possibleConstructorReturn(this, Object.getPrototypeOf(TablelistEquipments).call(this, container, options));
 
-		this.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['对空', 'aa'], ['对潜', 'asw'], ['爆装', 'bomb'], ['命中', 'hit'], ['装甲', 'armor'], ['回避', 'evasion'], ['索敌', 'los'], ['射程', 'range'], ['可改修', 'improvable']];
+		_this9.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['对空', 'aa'], ['对潜', 'asw'], ['爆装', 'bomb'], ['命中', 'hit'], ['装甲', 'armor'], ['回避', 'evasion'], ['索敌', 'los'], ['射程', 'range'], ['可改修', 'improvable']];
 
-		_frame.app_main.loading.push('tablelist_' + this._index);
+		_frame.app_main.loading.push('tablelist_' + _this9._index);
 		_frame.app_main.is_loaded = false;
 
 		if (container.children('.fixed-table-container').length) {
-			this.init_parse();
-		} else if (this.init_new) {
-			this.init_new();
+			_this9.init_parse();
+		} else if (_this9.init_new) {
+			_this9.init_new();
 		}
+		return _this9;
 	}
 
 	_createClass(TablelistEquipments, [{
@@ -6317,44 +6314,44 @@ var TablelistFleets = (function (_Tablelist3) {
 	function TablelistFleets(container, options) {
 		_classCallCheck(this, TablelistFleets);
 
-		_get(Object.getPrototypeOf(TablelistFleets.prototype), 'constructor', this).call(this, container, options);
+		var _this10 = _possibleConstructorReturn(this, Object.getPrototypeOf(TablelistFleets).call(this, container, options));
 
-		this.columns = ['  ', ['创建者', 'user'], ['修改时间', 'time_modify'], ['评价', 'rating'], ['', 'options']];
+		_this10.columns = ['  ', ['创建者', 'user'], ['修改时间', 'time_modify'], ['评价', 'rating'], ['', 'options']];
 
-		this.kancolle_calc = {
+		_this10.kancolle_calc = {
 			'_ApplicationId': 'l1aps8iaIfcq2ZzhOHJWNUU2XrNySIzRahodijXW',
 			'_ClientVersion': 'js1.2.19',
 			'_InstallationId': '62522018-ec82-b434-f5a5-08c3ab61d932',
 			'_JavaScriptKey': 'xOrFpWEQZFxUDK2fN1DwbKoj3zTKAEkgJHzwTuZ4'
 		};
 
-		_frame.app_main.loading.push('tablelist_' + this._index);
+		_frame.app_main.loading.push('tablelist_' + _this10._index);
 		_frame.app_main.is_loaded = false;
 
-		this.dom.filter_container = $('<div class="options" viewtype="card"/>').appendTo(this.dom.container);
-		this.dom.filters = $('<div class="filters"/>').appendTo(this.dom.filter_container);
+		_this10.dom.filter_container = $('<div class="options" viewtype="card"/>').appendTo(_this10.dom.container);
+		_this10.dom.filters = $('<div class="filters"/>').appendTo(_this10.dom.filter_container);
 
-		this.dom.btn_new = $('<button class="new" icon="import"/>').html('新建/导入').on('click', (function () {
+		_this10.dom.btn_new = $('<button class="new" icon="import"/>').html('新建/导入').on('click', (function () {
 			this.btn_new();
-		}).bind(this)).appendTo(this.dom.filters);
-		this.dom.btn_exportFile = $('<button class="export" icon="floppy-disk"/>').html('导出配置文件').on('click', function () {
+		}).bind(_this10)).appendTo(_this10.dom.filters);
+		_this10.dom.btn_exportFile = $('<button class="export" icon="floppy-disk"/>').html('导出配置文件').on('click', function () {
 			_db.fleets.persistence.compactDatafile();
 			_g.file_save_as(_db.fleets.filename, 'fleets.json');
-		}).appendTo(this.dom.filters);
+		}).appendTo(_this10.dom.filters);
 
-		this.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(this.dom.filters);
-		this.dom.btn_settings = $('<button icon="cog"/>').on('click', (function () {
+		_this10.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(_this10.dom.filters);
+		_this10.dom.btn_settings = $('<button icon="cog"/>').on('click', (function () {
 			this.btn_settings();
-		}).bind(this)).appendTo(this.dom.buttons_right);
+		}).bind(_this10)).appendTo(_this10.dom.buttons_right);
 
-		this.dom.table_container = $('<div class="fixed-table-container"/>').appendTo(this.dom.container);
-		this.dom.table_container_inner = $('<div class="fixed-table-container-inner"/>').appendTo(this.dom.table_container);
-		this.dom.table = $('<table class="fleets hashover hashover-column"/>').appendTo(this.dom.table_container_inner);
+		_this10.dom.table_container = $('<div class="fixed-table-container"/>').appendTo(_this10.dom.container);
+		_this10.dom.table_container_inner = $('<div class="fixed-table-container-inner"/>').appendTo(_this10.dom.table_container);
+		_this10.dom.table = $('<table class="fleets hashover hashover-column"/>').appendTo(_this10.dom.table_container_inner);
 		function gen_thead(arr) {
 			this.dom.thead = $('<thead/>');
 			var tr = $('<tr/>').appendTo(this.dom.thead);
 			arr.forEach(function (column) {
-				if (typeof column == 'object') {
+				if ((typeof column === 'undefined' ? 'undefined' : _typeof(column)) == 'object') {
 					$('<td data-stat="' + column[1] + '"/>').html('<div class="th-inner-wrapper"><span><span>' + column[0] + '</span></span></div>').appendTo(tr);
 				} else {
 					$('<th/>').html('<div class="th-inner-wrapper"><span><span>' + column[0] + '</span></span></div>').appendTo(tr);
@@ -6362,23 +6359,24 @@ var TablelistFleets = (function (_Tablelist3) {
 			});
 			return this.dom.thead;
 		}
-		gen_thead = gen_thead.bind(this);
-		gen_thead(this.columns).appendTo(this.dom.table);
-		this.dom.tbody = $('<tbody/>').appendTo(this.dom.table);
+		gen_thead = gen_thead.bind(_this10);
+		gen_thead(_this10.columns).appendTo(_this10.dom.table);
+		_this10.dom.tbody = $('<tbody/>').appendTo(_this10.dom.table);
 
 		$('<div class="nocontent container"/>').append($($('<div/>').append($('<span>').html('暂无舰队配置')).append($('<button>').html('新建/导入').on('click', (function () {
 			this.dom.btn_new.click();
-		}).bind(this))))).appendTo(this.dom.table_container_inner);
+		}).bind(_this10))))).appendTo(_this10.dom.table_container_inner);
 
-		this.dom.table.on('contextmenu.contextmenu_fleet', 'tr[data-fleetid]', (function (e) {
+		_this10.dom.table.on('contextmenu.contextmenu_fleet', 'tr[data-fleetid]', (function (e) {
 			this.contextmenu_show($(e.currentTarget), null, e);
-		}).bind(this)).on('click.contextmenu_fleet', 'tr[data-fleetid]>th>em', (function (e) {
+		}).bind(_this10)).on('click.contextmenu_fleet', 'tr[data-fleetid]>th>em', (function (e) {
 			this.contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget));
 			e.stopImmediatePropagation();
 			e.stopPropagation();
-		}).bind(this));
+		}).bind(_this10));
 
-		this.genlist();
+		_this10.genlist();
+		return _this10;
 	}
 
 	_createClass(TablelistFleets, [{
@@ -6446,8 +6444,8 @@ var TablelistFleets = (function (_Tablelist3) {
 							_iteratorError2 = err;
 						} finally {
 							try {
-								if (!_iteratorNormalCompletion2 && _iterator2['return']) {
-									_iterator2['return']();
+								if (!_iteratorNormalCompletion2 && _iterator2.return) {
+									_iterator2.return();
 								}
 							} finally {
 								if (_didIteratorError2) {
@@ -6461,8 +6459,8 @@ var TablelistFleets = (function (_Tablelist3) {
 					_iteratorError = err;
 				} finally {
 					try {
-						if (!_iteratorNormalCompletion && _iterator['return']) {
-							_iterator['return']();
+						if (!_iteratorNormalCompletion && _iterator.return) {
+							_iterator.return();
 						}
 					} finally {
 						if (_didIteratorError) {
@@ -6507,7 +6505,7 @@ var TablelistFleets = (function (_Tablelist3) {
 	}, {
 		key: 'append_all_items',
 		value: function append_all_items(arr) {
-			var _this2 = this;
+			var _this11 = this;
 
 			arr = arr || [];
 			arr.sort(function (a, b) {
@@ -6537,8 +6535,8 @@ var TablelistFleets = (function (_Tablelist3) {
 					for (var _i11 in sorted) {
 						k = 0;
 
-						while (k < _this2.flexgrid_empty_count) {
-							if (!k) _this2.flexgrid_ph = $('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(_this2.dom.tbody);else $('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(_this2.dom.tbody);
+						while (k < _this11.flexgrid_empty_count) {
+							if (!k) _this11.flexgrid_ph = $('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(_this11.dom.tbody);else $('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(_this11.dom.tbody);
 							k++;
 						}
 
@@ -6548,10 +6546,10 @@ var TablelistFleets = (function (_Tablelist3) {
 								count++;
 								if (count >= arr.length - 1) deferred.resolve();
 							}).bind(this)(index), 0);
-						}).bind(_this2));
+						}).bind(_this11));
 
-						$('<tr class="typetitle" data-trindex="' + ++_this2.trIndex + '">' + '<th colspan="' + (_this2.columns.length + 1) + '">' + '</th></tr>').appendTo(_this2.dom.tbody);
-						_this2.trIndex++;
+						$('<tr class="typetitle" data-trindex="' + ++_this11.trIndex + '">' + '<th colspan="' + (_this11.columns.length + 1) + '">' + '</th></tr>').appendTo(_this11.dom.tbody);
+						_this11.trIndex++;
 					}
 				})();
 			} else {
@@ -6703,7 +6701,7 @@ var TablelistFleets = (function (_Tablelist3) {
 						});
 
 						return Q.all(the_promises);
-					})['catch'](function (msg, err) {
+					}).catch(function (msg, err) {
 						_g.log(msg);
 						_g.error(err);
 					}).done((function () {
@@ -6795,7 +6793,7 @@ var TablelistFleets = (function (_Tablelist3) {
 				setTimeout((function () {
 					_frame.app_main.loaded('tablelist_' + this._index, true);
 				}).bind(this), 100);
-			}).bind(this))['catch'](function (err) {
+			}).bind(this)).catch(function (err) {
 				_g.log(err);
 			}).done(function () {
 				_g.log('Fleets list DONE');
@@ -6850,21 +6848,22 @@ var TablelistShips = (function (_Tablelist4) {
 	function TablelistShips(container, options) {
 		_classCallCheck(this, TablelistShips);
 
-		_get(Object.getPrototypeOf(TablelistShips.prototype), 'constructor', this).call(this, container, options);
+		var _this12 = _possibleConstructorReturn(this, Object.getPrototypeOf(TablelistShips).call(this, container, options));
 
-		this.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['夜战', 'nightpower'], ['对空', 'aa'], ['对潜', 'asw'], ['耐久', 'hp'], ['装甲', 'armor'], ['回避', 'evasion'], ['搭载', 'carry'], ['航速', 'speed'], ['射程', 'range'], ['索敌', 'los'], ['运', 'luck'], ['油耗', 'consum_fuel'], ['弹耗', 'consum_ammo'], ['多立绘', 'extra_illust']];
-		this.header_checkbox = [];
-		this.checkbox = [];
-		this.last_item = null;
+		_this12.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['夜战', 'nightpower'], ['对空', 'aa'], ['对潜', 'asw'], ['耐久', 'hp'], ['装甲', 'armor'], ['回避', 'evasion'], ['搭载', 'carry'], ['航速', 'speed'], ['射程', 'range'], ['索敌', 'los'], ['运', 'luck'], ['油耗', 'consum_fuel'], ['弹耗', 'consum_ammo'], ['多立绘', 'extra_illust']];
+		_this12.header_checkbox = [];
+		_this12.checkbox = [];
+		_this12.last_item = null;
 
-		_frame.app_main.loading.push('tablelist_' + this._index);
+		_frame.app_main.loading.push('tablelist_' + _this12._index);
 		_frame.app_main.is_loaded = false;
 
 		if (container.children('.fixed-table-container').length) {
-			this.init_parse();
-		} else if (this.init_new) {
-			this.init_new();
+			_this12.init_parse();
+		} else if (_this12.init_new) {
+			_this12.init_new();
 		}
+		return _this12;
 	}
 
 	_createClass(TablelistShips, [{
@@ -7061,13 +7060,13 @@ var TablelistShips = (function (_Tablelist4) {
 			var header_index = -1;
 
 			this.dom.tbody.children('tr.typetitle,tr.row').each((function (index, tr) {
-				var _this3 = this;
+				var _this13 = this;
 
 				tr = $(tr);
 				if (tr.hasClass('typetitle')) {
 					(function () {
 						header_index++;
-						_this3.last_item = tr;
+						_this13.last_item = tr;
 						var checkbox = tr.find('input[type="checkbox"]').on({
 							'change': function change() {
 								checkbox.data('ships').filter(':visible').each(function (index, element) {
@@ -7095,7 +7094,7 @@ var TablelistShips = (function (_Tablelist4) {
 								}
 							}
 						}).data('ships', $());
-						_this3.header_checkbox[header_index] = checkbox;
+						_this13.header_checkbox[header_index] = checkbox;
 					})();
 				} else {
 					(function () {
@@ -7119,13 +7118,13 @@ var TablelistShips = (function (_Tablelist4) {
 							if (checkbox.prop('checked')) tr.attr('compare-checked', true);else tr.removeAttr('compare-checked');
 							this.compare_btn_show(checkbox.prop('checked'));
 							if (!not_trigger_check) this.header_checkbox[title_index].trigger('docheck');
-						}).bind(_this3));
+						}).bind(_this13));
 
-						_this3.header_checkbox[title_index].data('ships', _this3.header_checkbox[title_index].data('ships').add(tr));
+						_this13.header_checkbox[title_index].data('ships', _this13.header_checkbox[title_index].data('ships').add(tr));
 
 						tr.data('checkbox', checkbox);
 
-						_this3.checkbox[ship_id] = checkbox;
+						_this13.checkbox[ship_id] = checkbox;
 					})();
 				}
 			}).bind(this));
