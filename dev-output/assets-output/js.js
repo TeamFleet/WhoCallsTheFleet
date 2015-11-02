@@ -2776,6 +2776,10 @@ var Formula = {
 
 				break;
 
+			case 'fighterPower_v2':
+				return Formula.calcBySlot.fighterPower_v2(ship, equipments_by_slot, star_by_slot, rank_by_slot);
+				break;
+
 			case 'shelling':
 			case 'shellingDamage':
 				if ($.inArray(ship.type, Formula.shipType.Submarines) > -1) {
@@ -2798,7 +2802,6 @@ var Formula = {
 				if ($.inArray(ship.type, Formula.shipType.Carriers) > -1) {
 					return '-';
 				} else {
-					console.log(count);
 					result = powerFire() + powerTorpedo();
 					if (count.torpedo >= 2) {
 						return '雷击CI ' + Math.floor(result * 1.5) + ' x 2';
@@ -2839,7 +2842,9 @@ var Formula = {
 		}
 
 		return '-';
-	}
+	},
+
+	calcBySlot: {}
 };
 
 Formula.equipmentType.MainGuns = [Formula.equipmentType.SmallCaliber, Formula.equipmentType.SmallCaliberHigh, Formula.equipmentType.SmallCaliberAA, Formula.equipmentType.MediumCaliber, Formula.equipmentType.LargeCaliber, Formula.equipmentType.SuperCaliber];
@@ -2852,7 +2857,7 @@ Formula.equipmentType.Torpedos = [Formula.equipmentType.Torpedo, Formula.equipme
 
 Formula.equipmentType.Seaplanes = [Formula.equipmentType.ReconSeaplane, Formula.equipmentType.ReconSeaplaneNight, Formula.equipmentType.SeaplaneBomber];
 
-Formula.equipmentType.Fighters = [Formula.equipmentType.SeaplaneBomber, Formula.equipmentType.CarrierFighter, Formula.equipmentType.TorpedoBomber, Formula.equipmentType.DiveBomber, Formula.equipmentType.CarrierRecon];
+Formula.equipmentType.Fighters = [Formula.equipmentType.SeaplaneBomber, Formula.equipmentType.CarrierFighter, Formula.equipmentType.TorpedoBomber, Formula.equipmentType.DiveBomber];
 
 Formula.equipmentType.Recons = [Formula.equipmentType.ReconSeaplane, Formula.equipmentType.ReconSeaplaneNight, Formula.equipmentType.CarrierRecon];
 
@@ -2875,6 +2880,9 @@ Formula.torpedoDamage = function (ship, equipments_by_slot, star_by_slot, rank_b
 Formula.fighterPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
 	return this.calculate('fighterPower', ship, equipments_by_slot, star_by_slot, rank_by_slot);
 };
+Formula.fighterPower_v2 = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+	return this.calculate('fighterPower_v2', ship, equipments_by_slot, star_by_slot, rank_by_slot);
+};
 Formula.nightBattle = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
 	return this.calculate('nightBattle', ship, equipments_by_slot, star_by_slot, rank_by_slot);
 };
@@ -2886,6 +2894,37 @@ Formula.addArmor = function (ship, equipments_by_slot, star_by_slot, rank_by_slo
 };
 Formula.addEvasion = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
 	return this.calculate('addEvasion', ship, equipments_by_slot, star_by_slot, rank_by_slot);
+};
+
+Formula.calcBySlot.fighterPower_v2 = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+	var rankInternal = [],
+	    typeValue = {},
+	    results = [0, 0];
+
+	rankInternal[0] = [0, 9];
+	rankInternal[1] = [10, 24];
+	rankInternal[2] = [25, 39];
+	rankInternal[3] = [40, 54];
+	rankInternal[4] = [55, 69];
+	rankInternal[5] = [70, 84];
+	rankInternal[6] = [85, 99];
+	rankInternal[7] = [100, 120];
+
+	typeValue.CarrierFighter = [0, 0, 2, 5, 9, 14, 14, 22];
+
+	typeValue.others = [0, 0, 1, 1, 1, 3, 3, 6];
+
+	ship.slot.map(function (carry, index) {
+		if (equipments_by_slot[index] && $.inArray(equipments_by_slot[index].type, Formula.equipmentType.Fighters) > -1 && carry) {
+			var base = Math.sqrt(carry) * (equipments_by_slot[index].stat.aa || 0),
+			    _rank = rank_by_slot[index] || 0,
+			    _rankInternal = rankInternal[_rank],
+			    _typeValue = equipments_by_slot[index].type == Formula.equipmentType.CarrierFighter ? typeValue.CarrierFighter[_rank] : typeValue.others[_rank];
+			results[0] += Math.floor(base + Math.sqrt(_rankInternal[0] / 10) + _typeValue);
+			results[1] += Math.floor(base + Math.sqrt(_rankInternal[1] / 10) + _typeValue);
+		}
+	});
+	return results;
 };
 
 var ItemBase = (function () {
@@ -5045,7 +5084,6 @@ InfosFleet.modalExportText_show = function (data) {
 	text += data.name || '';
 
 	fleets.forEach(function (fleet, i) {
-		console.log(fleet);
 		text += (text ? '\n' : '') + (fleets.length > 1 ? '\n第 ' + (i + 1) + ' 舰队' : '');
 		fleet.filter(function (value) {
 			return value.length > 0 && value[0];
@@ -5114,7 +5152,7 @@ var InfosFleetSubFleet = (function () {
 			if (this.summaryCalculating) return false;
 
 			this.summaryCalculating = setTimeout((function () {
-				var fighterPower = 0,
+				var fighterPower = [0, 0],
 				    fleetSpeet = 'fast',
 				    consumFuel = 0,
 				    consumAmmo = 0;
@@ -5125,7 +5163,9 @@ var InfosFleetSubFleet = (function () {
 
 						if (ship.stat.speed < 10) fleetSpeet = 'slow';
 
-						fighterPower += shipdata.calculate('fighterPower');
+						shipdata.calculate('fighterPower_v2').forEach(function (val, i) {
+							fighterPower[i] += val > 0 ? val : 0;
+						});
 
 						consumFuel += ship.getAttribute('fuel', shipdata.shipLv) || 0;
 						consumAmmo += ship.getAttribute('ammo', shipdata.shipLv) || 0;
@@ -5134,8 +5174,15 @@ var InfosFleetSubFleet = (function () {
 
 				this.elSummarySpeed.html(fleetSpeet == 'fast' ? '高速' : '低速');
 
-				this.elSummaryFighterPower.html(fighterPower > 0 ? Math.floor(fighterPower) : '-');
-				if (fighterPower > 0) this.elSummaryFighterPower.removeClass('empty');else this.elSummaryFighterPower.addClass('empty');
+				if (Math.max(fighterPower[0], fighterPower[1]) > 0) {
+					var val1 = Math.floor(fighterPower[0]),
+					    val2 = Math.floor(fighterPower[1]);
+					this.elSummaryFighterPower.html(val1 == val2 ? val1 : val1 + '~' + val2);
+					this.elSummaryFighterPower.removeClass('empty');
+				} else {
+					this.elSummaryFighterPower.html('-');
+					this.elSummaryFighterPower.addClass('empty');
+				}
 
 				this.elSummaryConsummation.html(consumFuel || consumAmmo ? '<span class="fuel">' + consumFuel + '</span><span class="ammo">' + consumAmmo + '</span>' : '-');
 
@@ -5258,12 +5305,17 @@ var InfosFleetShip = (function () {
 		value: function updateAttrs() {
 			this.elAttrShelling.html(this.calculate('shellingDamage'));
 			this.elAttrTorpedo.html(this.calculate('torpedoDamage'));
+
 			var hitSum = this.calculate('addHit');
 			if (hitSum >= 0) this.elAttrHitSum.removeClass('negative');else this.elAttrHitSum.addClass('negative');
 			this.elAttrHitSum.html(hitSum);
+
 			this.elAttrHp.html(this.calculate('attribute', 'hp'));
 			this.elAttrArmor.html(this.calculate('attribute', 'armor') + this.calculate('addArmor'));
-			this.elAttrEvasion.html(this.shipLv ? this.calculate('attribute', 'evasion') + this.calculate('addEvasion') : '-');
+
+			var attrEvasion = this.shipLv ? this.calculate('attribute', 'evasion') : -1;
+			this.elAttrEvasion.html(attrEvasion >= 0 ? attrEvasion + this.calculate('addEvasion') : '-');
+
 			this.elAttrNightBattle.html(this.calculate('nightBattle'));
 		}
 	}, {

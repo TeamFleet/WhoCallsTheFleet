@@ -458,7 +458,7 @@ InfosFleet.modalExportText_show = function(data){
 	text+= data.name || ''
 	
 	fleets.forEach(function(fleet, i){
-		console.log(fleet)
+		//console.log(fleet)
 		text+= (text ? '\n' : '')
 			+ ( fleets.length > 1 ? '\n第 ' + (i+1) + ' 舰队' : '')
 		fleet.filter(function(value){
@@ -581,7 +581,8 @@ class InfosFleetSubFleet{
 				return false
 			
 			this.summaryCalculating = setTimeout(function(){
-				let fighterPower = 0
+				let fighterPower = [0, 0]
+					//,fighterPower = 0
 					,fleetSpeet = 'fast'
 					,consumFuel = 0
 					,consumAmmo = 0
@@ -595,7 +596,10 @@ class InfosFleetSubFleet{
 								fleetSpeet = 'slow'
 						
 						// 制空战力
-							fighterPower+= shipdata.calculate('fighterPower')
+							//fighterPower+= shipdata.calculate('fighterPower')
+							shipdata.calculate('fighterPower_v2').forEach(function(val, i){
+								fighterPower[i]+= val > 0 ? val : 0
+							})
 						
 						// 总消耗
 							consumFuel+= ship.getAttribute('fuel', shipdata.shipLv) || 0
@@ -605,11 +609,24 @@ class InfosFleetSubFleet{
 				
 				this.elSummarySpeed.html( fleetSpeet == 'fast' ? '高速' : '低速' )
 				
-				this.elSummaryFighterPower.html( fighterPower > 0 ? Math.floor(fighterPower) : '-' )
-				if( fighterPower > 0 )
+				//this.elSummaryFighterPower.html( fighterPower > 0 ? Math.floor(fighterPower) : '-' )
+				//if( fighterPower > 0 )
+				//	this.elSummaryFighterPower.removeClass('empty')
+				//else
+				//	this.elSummaryFighterPower.addClass('empty')
+				if( Math.max( fighterPower[0], fighterPower[1] ) > 0 ){
+					let val1 = Math.floor(fighterPower[0])
+						,val2 = Math.floor(fighterPower[1])
+					this.elSummaryFighterPower.html(
+						val1 == val2
+							? val1
+							: val1 + '~' + val2
+					)
 					this.elSummaryFighterPower.removeClass('empty')
-				else
+				}else{
+					this.elSummaryFighterPower.html( '-' )
 					this.elSummaryFighterPower.addClass('empty')
+				}
 				
 				this.elSummaryConsummation.html(
 					(consumFuel || consumAmmo)
@@ -870,18 +887,22 @@ class InfosFleetShip{
 		updateAttrs(){
 			this.elAttrShelling.html( this.calculate('shellingDamage') )
 			this.elAttrTorpedo.html( this.calculate('torpedoDamage') )
+			
 			let hitSum = this.calculate('addHit')
 				if( hitSum >= 0 )
 					this.elAttrHitSum.removeClass('negative')
 				else
 					this.elAttrHitSum.addClass('negative')
 				this.elAttrHitSum.html( hitSum )
+
 			this.elAttrHp.html( this.calculate('attribute', 'hp') )
 			this.elAttrArmor.html( this.calculate('attribute', 'armor') + this.calculate('addArmor') )
-			this.elAttrEvasion.html( this.shipLv
-										? this.calculate('attribute', 'evasion') + this.calculate('addEvasion')
-										: '-'
-									)
+			
+			let attrEvasion = this.shipLv ? this.calculate('attribute', 'evasion') : -1
+				this.elAttrEvasion.html( attrEvasion >= 0
+											? attrEvasion + this.calculate('addEvasion')
+											: '-' )
+
 			this.elAttrNightBattle.html( this.calculate('nightBattle') )
 		}
 	

@@ -1,8 +1,8 @@
 // @koala-prepend "js-app/!.js"
 
 // @koala-prepend "js-app/lib/lockr.js"
-// @koala-prepend "js-app/lib/lz-string.js"
 // @koala-prepend "js-app/lib/SmoothScroll.js"
+// @koala-prepend "libs/node_modules/lz-string/libs/lz-string.js"
 
 // @koala-prepend "js-app/google_analytics.js"
 
