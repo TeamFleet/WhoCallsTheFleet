@@ -193,12 +193,9 @@
 			.line-height(@tab_height);
 			color:		rgba(255, 255, 255, .5);
 			font-size: 	percentage(13 / @base_font_size);
-			.mod-capture({
-				display: 	none;
-			});
 			&>.option{
 				display:	inline-block;
-				margin-right:	1.25em;
+				margin-left:1.25em;
 				position: 	relative;
 				.line-height(@tab_height);
 				&:last-child{
@@ -227,9 +224,15 @@
 				position: 	relative;
 				text-align: center;
 				vertical-align: top;
+				margin-left:1.25em;
 				&[icon]:before{
 					font-size: 	16px;
 				}
+			}
+			&>.option, &>.icon{
+				.mod-capture({
+					display: 	none;
+				});
 			}
 			&>span.option{
 				color:		rgba(255, 255, 255, 0.2625);
@@ -289,6 +292,18 @@
 				&[value="10"]+.option-theme:before{
 					background: hsla(331,100%,50%, .35);
 				}
+			}
+			&>.option-hqlv{
+				input[type="number"]{
+					width: 		2.5em;
+					line-height:normal;
+					//vertical-align: middle;
+					height: 	24px;
+					margin-left:4px;
+				}
+				.mod-capture({
+					display: 	inline-block;
+				});
 			}
 		}
 	} // &>.fleets

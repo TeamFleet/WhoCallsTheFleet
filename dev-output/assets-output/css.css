@@ -7796,12 +7796,9 @@ body.mod-capture .infos-fleet > header:after {
   color: rgba(255, 255, 255, 0.5);
   font-size: 108.33333333%;
 }
-body.mod-capture .infos-fleet > .fleets .options {
-  display: none;
-}
 .infos-fleet > .fleets .options > .option {
   display: inline-block;
-  margin-right: 1.25em;
+  margin-left: 1.25em;
   position: relative;
   line-height: 1.5rem;
 }
@@ -7830,9 +7827,14 @@ body.mod-capture .infos-fleet > .fleets .options {
   position: relative;
   text-align: center;
   vertical-align: top;
+  margin-left: 1.25em;
 }
 .infos-fleet > .fleets .options > .icon[icon]:before {
   font-size: 16px;
+}
+body.mod-capture .infos-fleet > .fleets .options > .option,
+body.mod-capture .infos-fleet > .fleets .options > .icon {
+  display: none;
 }
 .infos-fleet > .fleets .options > span.option {
   color: rgba(255, 255, 255, 0.2625);
@@ -7892,6 +7894,15 @@ body.mod-capture .infos-fleet > .fleets .options {
 }
 .infos-fleet > .fleets .options > .option-theme-value[value="10"] + .option-theme:before {
   background: rgba(255, 0, 123, 0.35);
+}
+.infos-fleet > .fleets .options > .option-hqlv input[type="number"] {
+  width: 2.5em;
+  line-height: normal;
+  height: 24px;
+  margin-left: 4px;
+}
+body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
+  display: inline-block;
 }
 .infos-fleet > .ships {
   background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.35) 1px, rgba(230, 230, 230, 0.25) 1px, rgba(230, 230, 230, 0.25) calc(100% - 1px), rgba(255, 255, 255, 0.35) calc(100% - 1px)) no-repeat 0 0;

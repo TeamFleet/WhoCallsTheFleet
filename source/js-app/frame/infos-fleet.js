@@ -48,11 +48,16 @@ class InfosFleet{
 		this.el.on('show', function(e, is_firstShow){
 			if( !is_firstShow ){
 				// 再次显示时，重新计算分舰队的索敌能力
-				let i = 0;
+				let i = 0
+					,l = Lockr.get('hqLvDefault', _g.defaultHqLv)
 				while(i < 4){
 					this.fleets[i].summaryCalc(true)
 					i++
 				}
+				if( !this._hqlv )
+					this.doms['hqlvOption'].val(l)
+				this.doms['hqlvOptionLabel'].attr('data-tip', '输入 0 表示采用默认等级 (Lv.' + l + ')')
+				this.doms['hqlvOption'].attr('placeholder', l)
 			}
 		}.bind(this))
 	}
@@ -69,6 +74,7 @@ class InfosFleet{
 		//_g.log(this.data)
 
 		let i = 0
+			,defaultHqLv = Lockr.get('hqLvDefault', _g.defaultHqLv)
 
 		this.el.attr({
 				'data-fleetid': d._id,
@@ -124,6 +130,37 @@ class InfosFleet{
 				)
 				.append(
 					this.doms['options'] = $('<div class="options"/>')
+						.append(
+							this.doms['hqlvOptionLabel'] = $('<label/>',{
+								'class':	'option option-hqlv',
+								'html':		'司令部等级',
+								'data-tip':	'输入 0 表示采用默认等级 (Lv.' + defaultHqLv + ')'
+							})
+							.append(
+								this.doms['hqlvOption'] = $('<input/>',{
+										'type':		'number',
+										'min':		0,
+										'max':		150,
+										'placeholder': defaultHqLv
+									})
+									.val(this._hqlv || defaultHqLv)
+									.on({
+										'input': function(){
+											this._hqlv = this.doms['hqlvOption'].val()
+										}.bind(this),
+										'focus': function(){
+											this.doms['hqlvOption'].trigger('tipshow')
+										}.bind(this),
+										'blur': function(){
+											this.doms['hqlvOption'].trigger('tiphide')
+										}.bind(this),
+										'click': function(e){
+											e.stopImmediatePropagation()
+											e.stopPropagation()
+										}
+									})
+							)
+						)
 						.append(
 							this.doms['theme'] = $('<select class="option option-theme-value"/>')
 								.on('change', function(){
@@ -254,6 +291,16 @@ class InfosFleet{
 			this.update( d )
 		
 		this._theme = this._theme
+		
+		// 事件: 默认司令部等级更新
+			$body.on('update_defaultHqLv.fleet'+this.data._id, function(e, val){
+				if( this.el.data('is_show') ){
+					if( !this._hqlv )
+						this.doms['hqlvOption'].val(val)
+					this.doms['hqlvOptionLabel'].attr('data-tip', '输入 0 表示采用默认等级 (Lv.' + val + ')')
+					this.doms['hqlvOption'].attr('placeholder', val)
+				}
+			}.bind(this))
 	}
 
 
@@ -327,6 +374,33 @@ class InfosFleet{
 			this.el.attr('data-theme', this.data['theme'])
 			_frame.dom.main.attr('data-theme', this.data['theme'])
 			this.save()
+		}
+	
+	// 司令部等级
+		get _hqlv(){
+			if( this.data['hq_lv'] > 0 )
+				return this.data['hq_lv']
+			return 0
+		}
+		set _hqlv( value ){
+			value = parseInt(value)
+			let last = this._hqlv
+			if( value && value > 0 ){
+				this.data['hq_lv'] = value
+				this.doms['hqlvOption'].val(value)
+			}else{
+				value = -1
+				this.data['hq_lv'] = -1
+				this.doms['hqlvOption'].val(Lockr.get('hqLvDefault', _g.defaultHqLv))
+			}
+			if( last != value ){
+				let i = 0;
+				while(i < 4){
+					this.fleets[i].summaryCalc(true)
+					i++
+				}
+				this.save()
+			}
 		}
 	
 	// 保存
