@@ -6130,13 +6130,13 @@ class InfosFleet{
 								})
 						)
 						.append(
-							this.doms['themeOption'] = $('<button class="option option-theme"/>').html('主题').on('click', function(){
+							this.doms['themeOption'] = $('<button class="option option-theme mod-dropdown"/>').html('主题').on('click', function(){
 								if( !InfosFleet.menuTheme ){
 									InfosFleet.menuThemeItems = $('<div/>')
 									for(let i=1; i<11; i++){
 										$('<button class="theme-' + i + '"/>').html(i)
 											.on('click', function(){
-												InfosFleet.menuThemeCur._theme = i
+												InfosFleet.menuCur._theme = i
 												this.el.attr('data-theme', this._theme)
 											}.bind(this))
 											.appendTo(InfosFleet.menuThemeItems)
@@ -6146,10 +6146,39 @@ class InfosFleet{
 										'items': [InfosFleet.menuThemeItems]
 									})
 								}
-								InfosFleet.menuThemeCur = this
+								InfosFleet.menuCur = this
 								InfosFleet.menuTheme.show(this.doms['themeOption'])
 							}.bind(this))
 						)
+						.append(
+							this.doms['exportOption'] = $('<button class="option mod-dropdown"/>').html('导出').on('click', function(){
+								if( !InfosFleet.menuExport ){
+									InfosFleet.menuExport = new _menu({
+										'className': 'contextmenu-infos_fleet_themes',
+										'items': [
+											$('<menuitem/>',{
+													'html':		'导出代码'
+												}).on('click', function(){
+													InfosFleet.menuCur.modalExport_show()
+												}),
+											$('<menuitem/>',{
+													'html':		'导出文本'
+												}).on('click', function(){
+													InfosFleet.menuCur.modalExportText_show()
+												}),
+											$('<menuitem/>',{
+													'html':		'导出图片'
+												}).on('click', function(){
+													InfosFleet.menuCur.exportPic()
+												})
+										]
+									})
+								}
+								InfosFleet.menuCur = this
+								InfosFleet.menuExport.show(this.doms['exportOption'])
+							}.bind(this))
+						)
+						/*
 						.append(
 							$('<button class="option"/>').html('导出代码').on('click', function(){
 								this.modalExport_show()
@@ -6165,6 +6194,7 @@ class InfosFleet{
 								this.exportPic()
 							}.bind(this))
 						)
+						*/
 						.append(
 							this.doms['optionOptions'] = $('<button class="icon" icon="cog"/>').on('click', function(){
 								TablelistFleets.menuOptions_show(this.doms['optionOptions'])
@@ -6370,6 +6400,7 @@ class InfosFleet{
 										'windowWidth':	null,
 										'windowHeight': null
 									})
+								_menu.hideAll()
 							}
 						}
 					})
@@ -9347,9 +9378,21 @@ class TablelistFleets extends Tablelist{
 												'max':		150
 											})
 											.val(Lockr.get('hqLvDefault', _g.defaultHqLv))
-											.on('input', function(){
-												_g.updateDefaultHqLv(this.dom.setting_hqlv_input.val())
-											}.bind(this))
+											.on({
+												'input': function(){
+													_g.updateDefaultHqLv(this.dom.setting_hqlv_input.val())
+												}.bind(this),
+												'focus': function(){
+													this.dom.setting_hqlv_input.trigger('tipshow')
+												}.bind(this),
+												'blur': function(){
+													this.dom.setting_hqlv_input.trigger('tiphide')
+												}.bind(this),
+												'click': function(e){
+													e.stopImmediatePropagation()
+													e.stopPropagation()
+												}
+											})
 									)
 									.appendTo(this.dom.buttons_right)
 					$body.on('update_defaultHqLv.update_fleets_hqlv_input', function(e, val){

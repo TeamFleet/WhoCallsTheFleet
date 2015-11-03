@@ -5565,10 +5565,8 @@ body.mod-capture #tip {
   right: 0;
   height: 22px;
   margin-top: -11px;
-  width: 0;
-  border: 0;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  width: 1px;
+  background: rgba(255, 255, 255, 0.15);
 }
 .nocontent .nocontent {
   display: block !important;
@@ -7810,11 +7808,28 @@ body.mod-capture .infos-fleet > .fleets .options {
 .infos-fleet > .fleets .options > .option:last-child {
   margin-right: 0;
 }
+.infos-fleet > .fleets .options > .option.mod-dropdown {
+  padding-right: 16px;
+}
+.infos-fleet > .fleets .options > .option.mod-dropdown:after {
+  content: '';
+  display: block;
+  top: 50%;
+  position: absolute;
+  line-height: 0;
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  border-top-color: inherit;
+  right: 0;
+  margin-top: -2.5px;
+}
 .infos-fleet > .fleets .options > .icon {
   line-height: inherit;
   width: 30px;
   position: relative;
   text-align: center;
+  vertical-align: top;
 }
 .infos-fleet > .fleets .options > .icon[icon]:before {
   font-size: 16px;
@@ -7834,35 +7849,19 @@ body.mod-capture .infos-fleet > .fleets .options {
 }
 .infos-fleet > .fleets .options > .option-theme {
   padding-left: 20px;
-  padding-right: 16px;
 }
-.infos-fleet > .fleets .options > .option-theme:before,
-.infos-fleet > .fleets .options > .option-theme:after {
+.infos-fleet > .fleets .options > .option-theme:before {
   content: '';
   display: block;
   top: 50%;
   position: absolute;
   line-height: 0;
-}
-.infos-fleet > .fleets .options > .option-theme:before {
   width: 16px;
   height: 16px;
   border: 1px solid rgba(255, 255, 255, 0.35);
   background: rgba(0, 0, 0, 0.25);
   left: 0;
-  -webkit-transform: translateY(-8px);
-      -ms-transform: translateY(-8px);
-          transform: translateY(-8px);
-}
-.infos-fleet > .fleets .options > .option-theme:after {
-  width: 0;
-  height: 0;
-  border: 5px solid transparent;
-  border-top-color: inherit;
-  right: 0;
-  -webkit-transform: translateY(-2.5px);
-      -ms-transform: translateY(-2.5px);
-          transform: translateY(-2.5px);
+  margin-top: -8px;
 }
 .infos-fleet > .fleets .options > .option-theme-value {
   display: none;

@@ -1851,6 +1851,8 @@ _menu.prototype.show = function (targetEl, mouseX, mouseY) {
 _menu.prototype.hide = function () {
 	if (!this.showing) return false;
 
+	if (!this.dom.menu.hasClass('on')) this.hideTrue();
+
 	this.dom.menu.removeClass('on');
 };
 
@@ -1880,6 +1882,15 @@ _menu.prototype.capturePage_callback = function (datauri) {
 	}
 };
 
+_menu.hideAll = function (ms) {
+	_frame.menu.timeout_hideall = setTimeout(function () {
+		for (var i in _frame.menu.menus) {
+			if (_frame.menu.menus[i].hide) _frame.menu.menus[i].hide();
+		}
+		_frame.menu.timeout_hideall = null;
+	}, ms || 1);
+};
+
 _frame.menu = {
 	dom: {},
 	menus: [],
@@ -1888,12 +1899,7 @@ _frame.menu = {
 
 		this.dom.container = $('<div class="menus"/>').on({
 			'click': function click(e, ms) {
-				_frame.menu.timeout_hideall = setTimeout(function () {
-					for (var i in _frame.menu.menus) {
-						if (_frame.menu.menus[i].hide) _frame.menu.menus[i].hide();
-					}
-					_frame.menu.timeout_hideall = null;
-				}, ms || 1);
+				_menu.hideAll(ms);
 			},
 			'contextmenu': function contextmenu() {
 				_frame.menu.dom.container.trigger('click');
@@ -2223,6 +2229,22 @@ _p.tip = {
 			'data-tip-indicator-offset-y': y - ny + 'px'
 		});
 		return pos;
+	},
+
+	trigger_by_el: function trigger_by_el(el) {
+		var cont = el.data('tip');
+
+		if (!el.data('tip-filtered')) {
+			_p.tip.filters.forEach(function (filter) {
+				cont = filter(cont) || cont;
+			});
+			el.data({
+				'tip': cont,
+				'tip-filtered': true
+			});
+		}
+
+		_p.tip.show(cont, el, el.data('tip-position'));
 	}
 };
 
@@ -2232,26 +2254,15 @@ _p.el.tip = {
 		if (_p.el.tip.isInit) return false;
 
 		$body.on('mouseenter._tip', '[data-tip]', function () {
-			if ($body_preventMouseover) return false;
-
-			var el = $(this),
-			    cont = el.data('tip');
-
-			if (!el.data('tip-filtered')) {
-				_p.tip.filters.forEach(function (filter) {
-					cont = filter(cont) || cont;
-				});
-				el.data({
-					'tip': cont,
-					'tip-filtered': true
-				});
-			}
-
-			_p.tip.show(cont, el, el.data('tip-position'));
+			if (!$body_preventMouseover) _p.tip.trigger_by_el($(this));
 		}).on('mouseleave._tip', '[data-tip]', function () {
 			_p.tip.hide();
 		}).on('click._tip', '[data-tip]', function () {
 			_p.tip.hide(true);
+		}).on('tipshow._tip', '[data-tip]', function () {
+			_p.tip.trigger_by_el($(this));
+		}).on('tiphide._tip', '[data-tip]', function () {
+			_p.tip.hide();
 		});
 
 		_p.el.tip.isInit = true;
@@ -5078,7 +5089,6 @@ var InfosFleet = (function () {
 			if (!is_firstShow) {
 				var _i7 = 0;
 				while (_i7 < 4) {
-					console.log(this.fleets[_i7]);
 					this.fleets[_i7].summaryCalc(true);
 					_i7++;
 				}
@@ -5140,7 +5150,7 @@ var InfosFleet = (function () {
 					}));
 				}
 				return els;
-			})).append(this.doms['themeOption'] = $('<button class="option option-theme"/>').html('主题').on('click', (function () {
+			})).append(this.doms['themeOption'] = $('<button class="option option-theme mod-dropdown"/>').html('主题').on('click', (function () {
 				var _this7 = this;
 
 				if (!InfosFleet.menuTheme) {
@@ -5148,7 +5158,7 @@ var InfosFleet = (function () {
 
 					var _loop = function _loop(_i8) {
 						$('<button class="theme-' + _i8 + '"/>').html(_i8).on('click', (function () {
-							InfosFleet.menuThemeCur._theme = _i8;
+							InfosFleet.menuCur._theme = _i8;
 							this.el.attr('data-theme', this._theme);
 						}).bind(_this7)).appendTo(InfosFleet.menuThemeItems);
 					};
@@ -5161,14 +5171,29 @@ var InfosFleet = (function () {
 						'items': [InfosFleet.menuThemeItems]
 					});
 				}
-				InfosFleet.menuThemeCur = this;
+				InfosFleet.menuCur = this;
 				InfosFleet.menuTheme.show(this.doms['themeOption']);
-			}).bind(this))).append($('<button class="option"/>').html('导出代码').on('click', (function () {
-				this.modalExport_show();
-			}).bind(this))).append($('<button class="option"/>').html('导出文本').on('click', (function () {
-				this.modalExportText_show();
-			}).bind(this))).append($('<button class="option"/>').html('导出图片').on('click', (function () {
-				this.exportPic();
+			}).bind(this))).append(this.doms['exportOption'] = $('<button class="option mod-dropdown"/>').html('导出').on('click', (function () {
+				if (!InfosFleet.menuExport) {
+					InfosFleet.menuExport = new _menu({
+						'className': 'contextmenu-infos_fleet_themes',
+						'items': [$('<menuitem/>', {
+							'html': '导出代码'
+						}).on('click', function () {
+							InfosFleet.menuCur.modalExport_show();
+						}), $('<menuitem/>', {
+							'html': '导出文本'
+						}).on('click', function () {
+							InfosFleet.menuCur.modalExportText_show();
+						}), $('<menuitem/>', {
+							'html': '导出图片'
+						}).on('click', function () {
+							InfosFleet.menuCur.exportPic();
+						})]
+					});
+				}
+				InfosFleet.menuCur = this;
+				InfosFleet.menuExport.show(this.doms['exportOption']);
 			}).bind(this))).append(this.doms['optionOptions'] = $('<button class="icon" icon="cog"/>').on('click', (function () {
 				TablelistFleets.menuOptions_show(this.doms['optionOptions']);
 			}).bind(this)))).appendTo(this.el);
@@ -5287,6 +5312,7 @@ var InfosFleet = (function () {
 								'windowWidth': null,
 								'windowHeight': null
 							});
+							_menu.hideAll();
 						}
 					}
 				}).appendTo(_frame.dom.hidden);
@@ -6964,9 +6990,21 @@ var TablelistFleets = (function (_Tablelist3) {
 			'type': 'number',
 			'min': 0,
 			'max': 150
-		}).val(Lockr.get('hqLvDefault', _g.defaultHqLv)).on('input', (function () {
-			_g.updateDefaultHqLv(this.dom.setting_hqlv_input.val());
-		}).bind(_this11))).appendTo(_this11.dom.buttons_right);
+		}).val(Lockr.get('hqLvDefault', _g.defaultHqLv)).on({
+			'input': (function () {
+				_g.updateDefaultHqLv(this.dom.setting_hqlv_input.val());
+			}).bind(_this11),
+			'focus': (function () {
+				this.dom.setting_hqlv_input.trigger('tipshow');
+			}).bind(_this11),
+			'blur': (function () {
+				this.dom.setting_hqlv_input.trigger('tiphide');
+			}).bind(_this11),
+			'click': function click(e) {
+				e.stopImmediatePropagation();
+				e.stopPropagation();
+			}
+		})).appendTo(_this11.dom.buttons_right);
 		$body.on('update_defaultHqLv.update_fleets_hqlv_input', (function (e, val) {
 			this.dom.setting_hqlv_input.val(val);
 		}).bind(_this11));

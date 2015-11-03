@@ -67,9 +67,21 @@ class TablelistFleets extends Tablelist{
 												'max':		150
 											})
 											.val(Lockr.get('hqLvDefault', _g.defaultHqLv))
-											.on('input', function(){
-												_g.updateDefaultHqLv(this.dom.setting_hqlv_input.val())
-											}.bind(this))
+											.on({
+												'input': function(){
+													_g.updateDefaultHqLv(this.dom.setting_hqlv_input.val())
+												}.bind(this),
+												'focus': function(){
+													this.dom.setting_hqlv_input.trigger('tipshow')
+												}.bind(this),
+												'blur': function(){
+													this.dom.setting_hqlv_input.trigger('tiphide')
+												}.bind(this),
+												'click': function(e){
+													e.stopImmediatePropagation()
+													e.stopPropagation()
+												}
+											})
 									)
 									.appendTo(this.dom.buttons_right)
 					$body.on('update_defaultHqLv.update_fleets_hqlv_input', function(e, val){
