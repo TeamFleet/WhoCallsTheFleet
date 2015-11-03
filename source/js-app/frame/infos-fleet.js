@@ -1,6 +1,8 @@
 // 舰队配置
 	_frame.infos.__fleet = function( id ){
-		return (new InfosFleet(id)).el
+		let data = new InfosFleet(id)
+			,el = data.el
+		return el
 	}
 
 
@@ -42,6 +44,17 @@ class InfosFleet{
 				}
 			}.bind(this))
 		}
+
+		this.el.on('show', function(e, is_firstShow){
+			if( !is_firstShow ){
+				// 再次显示时，重新计算分舰队的索敌能力
+				let i = 0;
+				while(i < 4){
+					this.fleets[i].summaryCalc(true)
+					i++
+				}
+			}
+		}.bind(this))
 	}
 
 
@@ -557,7 +570,8 @@ class InfosFleetSubFleet{
 		
 		// 事件: 默认司令部等级更新
 			$body.on('update_defaultHqLv.fleet'+infosFleet.data._id+'-'+(index+1), function(){
-				this.summaryCalc(true)
+				if( this.infosFleet.el.data('is_show') )
+					this.summaryCalc(true)
 			}.bind(this))
 	}
 

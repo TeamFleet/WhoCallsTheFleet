@@ -187,6 +187,8 @@ _frame.infos = {
 						break;
 				}
 				
+				let is_firstShow = !contentDOM.data('is_infosinit')
+				
 				if( !cont.data('is_infosinit') ){
 					if( type == 'ship' ){
 						let curLvl = parseInt(_config.get('ship_infos_lvl') || 99)
@@ -204,6 +206,7 @@ _frame.infos = {
 						.on(eventName('transitionend', 'hide'), function(e){
 							if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(cont.css('opacity')) == 0 ){
 								cont.detach()
+									.data('is_show', false)
 							}
 						})
 				}
@@ -212,6 +215,8 @@ _frame.infos = {
 					return
 				
 				cont.prependTo( _frame.infos.dom.container )
+					.trigger('show', [is_firstShow])
+					.data('is_show', true)
 
 				//_p.initDOM( cont )
 				//_frame.infos.curContent = hashcode

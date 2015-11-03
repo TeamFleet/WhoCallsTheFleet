@@ -166,6 +166,7 @@ _frame.infos = {
 			//var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
 			//if( _frame.infos.curContent != hashcode ){
 				var contentDOM = cont.append ? cont : $(cont)
+					,is_firstShow = !contentDOM.data('is_infosinit')
 
 				//if( el && el.attr('data-infos-history-skip-this') )
 				//	contentDOM.attr('data-infos-history-skip-this', true)
@@ -190,10 +191,13 @@ _frame.infos = {
 						.on(eventName('transitionend','hide'), function(e){
 							if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(contentDOM.css('opacity')) == 0 ){
 								contentDOM.detach()
+									.data('is_show', false)
 							}
 						})
 				}
 				contentDOM.prependTo( _frame.infos.dom.container )
+					.trigger('show', [is_firstShow])
+					.data('is_show', true)
 
 				//_p.initDOM( contentDOM )
 				//_frame.infos.curContent = hashcode

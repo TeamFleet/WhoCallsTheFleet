@@ -4938,6 +4938,8 @@ _frame.infos = {
 					break;
 			}
 
+			var is_firstShow = !contentDOM.data('is_infosinit');
+
 			if (!cont.data('is_infosinit')) {
 				if (type == 'ship') {
 					(function () {
@@ -4954,14 +4956,14 @@ _frame.infos = {
 
 				cont.data('is_infosinit', true).on(eventName('transitionend', 'hide'), function (e) {
 					if (e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(cont.css('opacity')) == 0) {
-						cont.detach();
+						cont.detach().data('is_show', false);
 					}
 				});
 			}
 
 			if (this.curContent != type + '::' + id) return;
 
-			cont.prependTo(_frame.infos.dom.container);
+			cont.prependTo(_frame.infos.dom.container).trigger('show', [is_firstShow]).data('is_show', true);
 
 			if (_frame.app_main.cur_page) {
 
@@ -5038,7 +5040,9 @@ _frame.infos.init = function () {
 };
 
 _frame.infos.__fleet = function (id) {
-	return new InfosFleet(id).el;
+	var data = new InfosFleet(id),
+	    el = data.el;
+	return el;
 };
 
 var InfosFleet = (function () {
@@ -5069,6 +5073,17 @@ var InfosFleet = (function () {
 				}
 			}).bind(this));
 		}
+
+		this.el.on('show', (function (e, is_firstShow) {
+			if (!is_firstShow) {
+				var _i7 = 0;
+				while (_i7 < 4) {
+					console.log(this.fleets[_i7]);
+					this.fleets[_i7].summaryCalc(true);
+					_i7++;
+				}
+			}
+		}).bind(this));
 	}
 
 	_createClass(InfosFleet, [{
@@ -5131,15 +5146,15 @@ var InfosFleet = (function () {
 				if (!InfosFleet.menuTheme) {
 					InfosFleet.menuThemeItems = $('<div/>');
 
-					var _loop = function _loop(_i7) {
-						$('<button class="theme-' + _i7 + '"/>').html(_i7).on('click', (function () {
-							InfosFleet.menuThemeCur._theme = _i7;
+					var _loop = function _loop(_i8) {
+						$('<button class="theme-' + _i8 + '"/>').html(_i8).on('click', (function () {
+							InfosFleet.menuThemeCur._theme = _i8;
 							this.el.attr('data-theme', this._theme);
 						}).bind(_this7)).appendTo(InfosFleet.menuThemeItems);
 					};
 
-					for (var _i7 = 1; _i7 < 11; _i7++) {
-						_loop(_i7);
+					for (var _i8 = 1; _i8 < 11; _i8++) {
+						_loop(_i8);
 					}
 					InfosFleet.menuTheme = new _menu({
 						'className': 'contextmenu-infos_fleet_themes',
@@ -5407,7 +5422,7 @@ var InfosFleetSubFleet = (function () {
 		this.updateEl();
 
 		$body.on('update_defaultHqLv.fleet' + infosFleet.data._id + '-' + (index + 1), (function () {
-			this.summaryCalc(true);
+			if (this.infosFleet.el.data('is_show')) this.summaryCalc(true);
 		}).bind(this));
 	}
 
@@ -5713,8 +5728,8 @@ var InfosFleetSubFleet = (function () {
 					}) || [];
 					equipments_by_slot.forEach(function (equipment) {
 						if (equipment) {
-							for (var _i8 in x) {
-								if (Formula.equipmentType[_i8] && Formula.equipmentType[_i8].push && Formula.equipmentType[_i8].indexOf(equipment.type) > -1) x[_i8] += equipment.stat.los;
+							for (var _i9 in x) {
+								if (Formula.equipmentType[_i9] && Formula.equipmentType[_i9].push && Formula.equipmentType[_i9].indexOf(equipment.type) > -1) x[_i9] += equipment.stat.los;
 							}
 						}
 					});
@@ -5790,9 +5805,9 @@ var InfosFleetShip = (function () {
 			}).bind(this)
 		}))).append(this.elInfosInfo = $('<span/>'))))).append($('<div class="equipments"/>').append((function () {
 			var els = $();
-			for (var _i9 = 0; _i9 < 4; _i9++) {
-				this.equipments[_i9] = new InfosFleetShipEquipment(this, _i9);
-				els = els.add(this.equipments[_i9].el);
+			for (var _i10 = 0; _i10 < 4; _i10++) {
+				this.equipments[_i10] = new InfosFleetShipEquipment(this, _i10);
+				els = els.add(this.equipments[_i10].el);
 			}
 
 			return els;
@@ -5891,10 +5906,10 @@ var InfosFleetShip = (function () {
 
 			if (this.data[1][0]) this.shipLv = this.data[1][0];
 
-			for (var _i10 = 0; _i10 < 4; _i10++) {
-				this.equipments[_i10].id = this.data[2][_i10];
-				this.equipments[_i10].star = this.data[3][_i10];
-				this.equipments[_i10].rank = this.data[4][_i10];
+			for (var _i11 = 0; _i11 < 4; _i11++) {
+				this.equipments[_i11].id = this.data[2][_i11];
+				this.equipments[_i11].star = this.data[3][_i11];
+				this.equipments[_i11].rank = this.data[4][_i11];
 			}
 
 			this.updateAttrs();
@@ -6046,12 +6061,12 @@ var InfosFleetShip = (function () {
 				this.elInfosTitle.html('<h4 data-content="' + ship['name'][_g.lang] + '">' + ship['name'][_g.lang] + '</h4>' + (suffix ? '<h5 data-content="' + suffix + '">' + suffix + '</h5>' : ''));
 				this.elInfosInfo.html(speed + ' ' + stype);
 
-				for (var _i11 = 0; _i11 < 4; _i11++) {
-					this.equipments[_i11].carry = ship.slot[_i11];
+				for (var _i12 = 0; _i12 < 4; _i12++) {
+					this.equipments[_i12].carry = ship.slot[_i12];
 					if (!this._updating) {
-						this.equipments[_i11].id = null;
-						this.equipments[_i11].star = null;
-						this.equipments[_i11].rank = null;
+						this.equipments[_i12].id = null;
+						this.equipments[_i12].star = null;
+						this.equipments[_i12].rank = null;
 					}
 				}
 			} else {
@@ -6143,14 +6158,14 @@ var InfosFleetShipEquipment = (function () {
 			if (!InfosFleet.menuRankSelect) {
 				InfosFleet.menuRankSelectItems = $('<div/>');
 
-				var _loop2 = function _loop2(_i12) {
-					$('<button class="rank-' + _i12 + '"/>').html(!_i12 ? '无' : '').on('click', function () {
-						InfosFleet.menuRankSelectCur.rank = _i12;
+				var _loop2 = function _loop2(_i13) {
+					$('<button class="rank-' + _i13 + '"/>').html(!_i13 ? '无' : '').on('click', function () {
+						InfosFleet.menuRankSelectCur.rank = _i13;
 					}).appendTo(InfosFleet.menuRankSelectItems);
 				};
 
-				for (var _i12 = 0; _i12 < 8; _i12++) {
-					_loop2(_i12);
+				for (var _i13 = 0; _i13 < 8; _i13++) {
+					_loop2(_i13);
 				}
 				InfosFleet.menuRankSelect = new _menu({
 					'className': 'contextmenu-infos_fleet_rank_select',
@@ -7147,7 +7162,7 @@ var TablelistFleets = (function (_Tablelist3) {
 					});
 					console.log(sorted);
 
-					for (var _i13 in sorted) {
+					for (var _i14 in sorted) {
 						k = 0;
 
 						while (k < _this12.flexgrid_empty_count) {
@@ -7155,7 +7170,7 @@ var TablelistFleets = (function (_Tablelist3) {
 							k++;
 						}
 
-						sorted[_i13].forEach((function (index) {
+						sorted[_i14].forEach((function (index) {
 							setTimeout((function (i) {
 								this.append_item(arr[i]);
 								count++;

@@ -5569,6 +5569,7 @@ _frame.infos = {
 			//var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
 			//if( _frame.infos.curContent != hashcode ){
 				var contentDOM = cont.append ? cont : $(cont)
+					,is_firstShow = !contentDOM.data('is_infosinit')
 
 				//if( el && el.attr('data-infos-history-skip-this') )
 				//	contentDOM.attr('data-infos-history-skip-this', true)
@@ -5593,10 +5594,13 @@ _frame.infos = {
 						.on(eventName('transitionend','hide'), function(e){
 							if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(contentDOM.css('opacity')) == 0 ){
 								contentDOM.detach()
+									.data('is_show', false)
 							}
 						})
 				}
 				contentDOM.prependTo( _frame.infos.dom.container )
+					.trigger('show', [is_firstShow])
+					.data('is_show', true)
 
 				//_p.initDOM( contentDOM )
 				//_frame.infos.curContent = hashcode
@@ -5983,7 +5987,9 @@ _frame.infos.__entity = function( id ){
 
 // 舰队配置
 	_frame.infos.__fleet = function( id ){
-		return (new InfosFleet(id)).el
+		let data = new InfosFleet(id)
+			,el = data.el
+		return el
 	}
 
 
@@ -6025,6 +6031,17 @@ class InfosFleet{
 				}
 			}.bind(this))
 		}
+
+		this.el.on('show', function(e, is_firstShow){
+			if( !is_firstShow ){
+				// 再次显示时，重新计算分舰队的索敌能力
+				let i = 0;
+				while(i < 4){
+					this.fleets[i].summaryCalc(true)
+					i++
+				}
+			}
+		}.bind(this))
 	}
 
 
@@ -6540,7 +6557,8 @@ class InfosFleetSubFleet{
 		
 		// 事件: 默认司令部等级更新
 			$body.on('update_defaultHqLv.fleet'+infosFleet.data._id+'-'+(index+1), function(){
-				this.summaryCalc(true)
+				if( this.infosFleet.el.data('is_show') )
+					this.summaryCalc(true)
 			}.bind(this))
 	}
 
