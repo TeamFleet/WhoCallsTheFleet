@@ -5,6 +5,7 @@
 // @koala-prepend "../../node_modules/q/q.js"
 // @koala-prepend "../../node_modules/markdown/lib/markdown.js"
 // @koala-prepend "../../node_modules/nedb/browser-version/out/nedb.min.js"
-// @koala-prepend "../../dev-output/js-source/node_modules/lz-string/libs/lz-string.js"
 
 // @koala-prepend "../../source/js-app/lib/lockr.js"
+// @koala-prepend "../../source/libs/node_modules/lz-string/libs/lz-string.js"
+// @koala-prepend "../../source/libs/node_modules/sprintf-js/src/sprintf.js"

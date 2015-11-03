@@ -21,6 +21,8 @@ class InfosFleet{
 
 		this.fleets = []
 		//this._updating = false
+		
+		this.tip_hqlv_input = '输入 0 表示采用默认等级 (Lv.%1$d)'
 	
 		if( id == '__NEW__' ){
 			_db.fleets.insert( _tablelist.prototype._fleets_new_data(), function(err, newDoc){
@@ -56,7 +58,7 @@ class InfosFleet{
 				}
 				if( !this._hqlv )
 					this.doms['hqlvOption'].val(l)
-				this.doms['hqlvOptionLabel'].data('tip', '输入 0 表示采用默认等级 (Lv.' + l + ')')
+				this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(l) )
 				this.doms['hqlvOption'].attr('placeholder', l)
 			}
 		}.bind(this))
@@ -134,7 +136,7 @@ class InfosFleet{
 							this.doms['hqlvOptionLabel'] = $('<label/>',{
 								'class':	'option option-hqlv',
 								'html':		'司令部等级',
-								'data-tip':	'输入 0 表示采用默认等级 (Lv.' + defaultHqLv + ')'
+								'data-tip':	this.tip_hqlv_input.printf(defaultHqLv)
 							})
 							.append(
 								this.doms['hqlvOption'] = $('<input/>',{
@@ -297,7 +299,7 @@ class InfosFleet{
 				if( this.el.data('is_show') ){
 					if( !this._hqlv )
 						this.doms['hqlvOption'].val(val)
-					this.doms['hqlvOptionLabel'].data('tip', '输入 0 表示采用默认等级 (Lv.' + val + ')')
+					this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(val) )
 					this.doms['hqlvOption'].attr('placeholder', val)
 				}
 			}.bind(this))

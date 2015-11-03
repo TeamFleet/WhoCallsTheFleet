@@ -58,7 +58,7 @@ class TablelistFleets extends Tablelist{
 				this.dom.setting_hqlv = $('<label/>',{
 										'class':	'setting setting-hqlv',
 										'html':		'默认司令部等级',
-										'data-tip':	'如果舰队配置没有设置司令部等级，<br/>则会使用该默认数值'
+										'data-tip':	'如果舰队配置没有设置司令部等级，<br/>则会使用该默认数值<br/>司令部等级会影响索敌能力的计算'
 									})
 									.append(
 										this.dom.setting_hqlv_input = $('<input/>',{

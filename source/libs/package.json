@@ -9,6 +9,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "lz-string": "^1.4.4"
+    "lz-string": "^1.4.4",
+    "sprintf-js": "^1.0.3"
   }
 }

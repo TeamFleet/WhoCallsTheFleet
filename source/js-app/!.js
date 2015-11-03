@@ -31,3 +31,17 @@
 			}.bind(this), 200)
 		}
 	};
+
+
+
+// locale object
+	let _l = {};
+
+
+
+// String
+	String.prototype.printf = function() {
+		if( typeof vsprintf != 'undefined' )
+			return vsprintf(this, Array.prototype.slice.call(arguments));
+		return this;
+	};

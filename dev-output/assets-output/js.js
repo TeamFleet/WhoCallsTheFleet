@@ -2552,6 +2552,13 @@ _g.updateDefaultHqLv = function (val) {
 	}
 };
 
+var _l = {};
+
+String.prototype.printf = function () {
+	if (typeof vsprintf != 'undefined') return vsprintf(this, Array.prototype.slice.call(arguments));
+	return this;
+};
+
 var _ga = {
 	counter: function counter(path, title, screenName) {
 
@@ -5065,6 +5072,8 @@ var InfosFleet = (function () {
 
 		this.fleets = [];
 
+		this.tip_hqlv_input = '输入 0 表示采用默认等级 (Lv.%1$d)';
+
 		if (id == '__NEW__') {
 			_db.fleets.insert(_tablelist.prototype._fleets_new_data(), (function (err, newDoc) {
 				if (err) {
@@ -5094,7 +5103,7 @@ var InfosFleet = (function () {
 					_i7++;
 				}
 				if (!this._hqlv) this.doms['hqlvOption'].val(_l2);
-				this.doms['hqlvOptionLabel'].data('tip', '输入 0 表示采用默认等级 (Lv.' + _l2 + ')');
+				this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(_l2));
 				this.doms['hqlvOption'].attr('placeholder', _l2);
 			}
 		}).bind(this));
@@ -5147,7 +5156,7 @@ var InfosFleet = (function () {
 			$('<div class="fleets"/>').append(this.doms['tabs'] = $('<div class="tabs"/>')).append(this.doms['options'] = $('<div class="options"/>').append(this.doms['hqlvOptionLabel'] = $('<label/>', {
 				'class': 'option option-hqlv',
 				'html': '司令部等级',
-				'data-tip': '输入 0 表示采用默认等级 (Lv.' + defaultHqLv + ')'
+				'data-tip': this.tip_hqlv_input.printf(defaultHqLv)
 			}).append(this.doms['hqlvOption'] = $('<input/>', {
 				'type': 'number',
 				'min': 0,
@@ -5256,7 +5265,7 @@ var InfosFleet = (function () {
 			$body.on('update_defaultHqLv.fleet' + this.data._id, (function (e, val) {
 				if (this.el.data('is_show')) {
 					if (!this._hqlv) this.doms['hqlvOption'].val(val);
-					this.doms['hqlvOptionLabel'].data('tip', '输入 0 表示采用默认等级 (Lv.' + val + ')');
+					this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(val));
 					this.doms['hqlvOption'].attr('placeholder', val);
 				}
 			}).bind(this));
@@ -7047,7 +7056,7 @@ var TablelistFleets = (function (_Tablelist3) {
 		_this11.dom.setting_hqlv = $('<label/>', {
 			'class': 'setting setting-hqlv',
 			'html': '默认司令部等级',
-			'data-tip': '如果舰队配置没有设置司令部等级，<br/>则会使用该默认数值'
+			'data-tip': '如果舰队配置没有设置司令部等级，<br/>则会使用该默认数值<br/>司令部等级会影响索敌能力的计算'
 		}).append(_this11.dom.setting_hqlv_input = $('<input/>', {
 			'type': 'number',
 			'min': 0,
