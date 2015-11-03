@@ -2918,6 +2918,7 @@ Formula.losPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slo
 };
 
 Formula.calcBySlot.fighterPower_v2 = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+
 	var rankInternal = [],
 	    typeValue = {},
 	    results = [0, 0];
@@ -2933,14 +2934,16 @@ Formula.calcBySlot.fighterPower_v2 = function (ship, equipments_by_slot, star_by
 
 	typeValue.CarrierFighter = [0, 0, 2, 5, 9, 14, 14, 22];
 
-	typeValue.others = [0, 0, 1, 1, 1, 3, 3, 6];
+	typeValue.SeaplaneBomber = [0, 0, 1, 1, 1, 3, 3, 6];
 
 	ship.slot.map(function (carry, index) {
 		if (equipments_by_slot[index] && $.inArray(equipments_by_slot[index].type, Formula.equipmentType.Fighters) > -1 && carry) {
 			var base = Math.sqrt(carry) * (equipments_by_slot[index].stat.aa || 0),
 			    _rank = rank_by_slot[index] || 0,
 			    _rankInternal = rankInternal[_rank],
-			    _typeValue = equipments_by_slot[index].type == Formula.equipmentType.CarrierFighter ? typeValue.CarrierFighter[_rank] : typeValue.others[_rank];
+			    _typeValue = 0;
+			if (equipments_by_slot[index].type == Formula.equipmentType.CarrierFighter) _typeValue = typeValue.CarrierFighter[_rank];
+			if (equipments_by_slot[index].type == Formula.equipmentType.SeaplaneBomber) _typeValue = typeValue.SeaplaneBomber[_rank];
 			results[0] += Math.floor(base + Math.sqrt(_rankInternal[0] / 10) + _typeValue);
 			results[1] += Math.floor(base + Math.sqrt(_rankInternal[1] / 10) + _typeValue);
 		}

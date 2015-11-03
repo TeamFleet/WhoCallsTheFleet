@@ -1973,6 +1973,9 @@ Formula.losPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot
 
 
 Formula.calcBySlot.fighterPower_v2 = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
+	// http://bbs.ngacn.cc/read.php?tid=8680767
+	// http://ja.kancolle.wikia.com/wiki/%E8%89%A6%E8%BC%89%E6%A9%9F%E7%86%9F%E7%B7%B4%E5%BA%A6
+
 	let rankInternal = []
 		,typeValue = {}
 		,results = [0, 0]
@@ -1997,7 +2000,7 @@ Formula.calcBySlot.fighterPower_v2 = function(ship, equipments_by_slot, star_by_
 		22
 	]
 	
-	typeValue.others = [
+	typeValue.SeaplaneBomber = [
 		0,
 		0,
 		1,
@@ -2017,9 +2020,11 @@ Formula.calcBySlot.fighterPower_v2 = function(ship, equipments_by_slot, star_by_
 			let base = Math.sqrt(carry) * (equipments_by_slot[index].stat.aa || 0)
 				,_rank = rank_by_slot[index] || 0
 				,_rankInternal = rankInternal[_rank]
-				,_typeValue = equipments_by_slot[index].type == Formula.equipmentType.CarrierFighter
-								? typeValue.CarrierFighter[_rank]
-								: typeValue.others[_rank]
+				,_typeValue = 0
+			if( equipments_by_slot[index].type == Formula.equipmentType.CarrierFighter )
+				_typeValue = typeValue.CarrierFighter[_rank]
+			if( equipments_by_slot[index].type == Formula.equipmentType.SeaplaneBomber )
+				_typeValue = typeValue.SeaplaneBomber[_rank]
 			results[0]+= Math.floor(base + Math.sqrt( _rankInternal[0] / 10 ) + _typeValue)
 			results[1]+= Math.floor(base + Math.sqrt( _rankInternal[1] / 10 ) + _typeValue)
 		}
