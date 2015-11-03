@@ -66,14 +66,15 @@ class TablelistFleets extends Tablelist{
 												'min':		0,
 												'max':		150
 											})
-											.val(Lockr.get('hqLvDefault', 90))
+											.val(Lockr.get('hqLvDefault', _g.defaultHqLv))
 											.on('input', function(){
-												let val = parseInt(this.dom.setting_hqlv_input.val())
-												if( val && val > 0 )
-													Lockr.set('hqLvDefault', val)
+												_g.updateDefaultHqLv(this.dom.setting_hqlv_input.val())
 											}.bind(this))
 									)
 									.appendTo(this.dom.buttons_right)
+					$body.on('update_defaultHqLv.update_fleets_hqlv_input', function(e, val){
+						this.dom.setting_hqlv_input.val(val)
+					}.bind(this))
 				this.dom.btn_settings = $('<button icon="cog"/>')
 									.on('click',function(){
 										this.btn_settings()

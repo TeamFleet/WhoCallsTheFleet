@@ -2,10 +2,11 @@
 
 // Global Variables
 	_g.animate_duration_delay = 320;
-	_g.inputIndex = 0
-	_g.lang = 'zh_cn'
-	_g.joint = '・'
-	_g.isClient = typeof node == 'undefined' && typeof nw == 'undefined' ? false : true
+	_g.inputIndex = 0;
+	_g.lang = 'zh_cn';
+	_g.joint = '・';
+	_g.isClient = typeof node == 'undefined' && typeof nw == 'undefined' ? false : true;
+	_g.defaultHqLv = 90;
 	
 	function eventName(event, name){
 		name = name ? ('.' + name) : ''
@@ -15,6 +16,21 @@
 			}).join(' ')
 		return event + name
 	}
+
+	_g.updateDefaultHqLv = function(val){
+		val = parseInt(val) || _g.defaultHqLv
+		if( val <= 0 )
+			val = _g.defaultHqLv
+		if( val != Lockr.get('hqLvDefault', _g.defaultHqLv) ){
+			Lockr.set('hqLvDefault', val)
+			clearTimeout(this.delay_updateDefaultHqLv)
+			this.delay_updateDefaultHqLv = setTimeout(function(){
+				$body.trigger('update_defaultHqLv', [val])
+				clearTimeout(this.delay_updateDefaultHqLv)
+				this.delay_updateDefaultHqLv = null
+			}.bind(this), 200)
+		}
+	};
 
 (function(root, factory) {
 
@@ -6152,7 +6168,7 @@ class InfosFleet{
 	
 			// 4个分舰队
 				while(i < 4){
-					this.fleets[i] = new InfosFleetSubFleet(this, [])
+					this.fleets[i] = new InfosFleetSubFleet(this, [], i)
 
 					$('<input/>',{
 							'type': 	'radio',
@@ -6460,7 +6476,7 @@ InfosFleet.modalExportText_show = function(data){
 
 // 类：子舰队
 class InfosFleetSubFleet{
-	constructor(infosFleet, d){
+	constructor(infosFleet, d, index){
 		d = d || []
 		this.data = d
 
@@ -6521,6 +6537,11 @@ class InfosFleetSubFleet{
 		this.infosFleet = infosFleet
 
 		this.updateEl()
+		
+		// 事件: 默认司令部等级更新
+			$body.on('update_defaultHqLv.fleet'+infosFleet.data._id+'-'+(index+1), function(){
+				this.summaryCalc(true)
+			}.bind(this))
 	}
 
 
@@ -6541,77 +6562,85 @@ class InfosFleetSubFleet{
 		}
 	
 	// 遍历该子舰队下全部装备，计算相关舰队数据
-		summaryCalc(){
+		summaryCalc( is_onlyHqLvChange ){
 			if( this.summaryCalculating )
 				return false
 			
 			this.summaryCalculating = setTimeout(function(){
-				let fighterPower = [0, 0]
-					//,fighterPower = 0
-					//,los = {}
-					,los = this.summaryCalcLos()
-					,fleetSpeet = 'fast'
-					,consumFuel = 0
-					,consumAmmo = 0
-				
-				this.ships.forEach(function(shipdata){
-					if( shipdata.data[0] ){
-						let ship = _g.data.ships[shipdata.data[0]]
-						
-						// 航速
-							if( ship.stat.speed < 10 )
-								fleetSpeet = 'slow'
-						
-						// 制空战力
-							//fighterPower+= shipdata.calculate('fighterPower')
-							shipdata.calculate('fighterPower_v2').forEach(function(val, i){
-								fighterPower[i]+= val > 0 ? val : 0
-							})
-						
-						// 索敌能力
-						/*
-							let losData = shipdata.calculate('losPower')
-							for(let i in losData){
-								if( typeof losData[i] == 'object' ){
-									los[i] = los[i] || {}
-									for(let j in losData[i]){
-										los[i][j] = los[i][j] || 0
-										los[i][j]+= losData[i][j]
+				if( !is_onlyHqLvChange ){
+					let fighterPower = [0, 0]
+						//,fighterPower = 0
+						//,los = {}
+						,fleetSpeet = 'fast'
+						,consumFuel = 0
+						,consumAmmo = 0
+					
+					this.ships.forEach(function(shipdata){
+						if( shipdata.data[0] ){
+							let ship = _g.data.ships[shipdata.data[0]]
+							
+							// 航速
+								if( ship.stat.speed < 10 )
+									fleetSpeet = 'slow'
+							
+							// 制空战力
+								//fighterPower+= shipdata.calculate('fighterPower')
+								shipdata.calculate('fighterPower_v2').forEach(function(val, i){
+									fighterPower[i]+= val > 0 ? val : 0
+								})
+							
+							// 索敌能力
+							/*
+								let losData = shipdata.calculate('losPower')
+								for(let i in losData){
+									if( typeof losData[i] == 'object' ){
+										los[i] = los[i] || {}
+										for(let j in losData[i]){
+											los[i][j] = los[i][j] || 0
+											los[i][j]+= losData[i][j]
+										}
+									}else{
+										los[i] = los[i] || 0
+										los[i]+= losData[i]
 									}
-								}else{
-									los[i] = los[i] || 0
-									los[i]+= losData[i]
 								}
-							}
-							*/
-						
-						// 总消耗
-							consumFuel+= ship.getAttribute('fuel', shipdata.shipLv) || 0
-							consumAmmo+= ship.getAttribute('ammo', shipdata.shipLv) || 0
+								*/
+							
+							// 总消耗
+								consumFuel+= ship.getAttribute('fuel', shipdata.shipLv) || 0
+								consumAmmo+= ship.getAttribute('ammo', shipdata.shipLv) || 0
+						}
+					})
+					
+					this.elSummarySpeed.html( fleetSpeet == 'fast' ? '高速' : '低速' )
+					
+					//this.elSummaryFighterPower.html( fighterPower > 0 ? Math.floor(fighterPower) : '-' )
+					//if( fighterPower > 0 )
+					//	this.elSummaryFighterPower.removeClass('empty')
+					//else
+					//	this.elSummaryFighterPower.addClass('empty')
+					if( Math.max( fighterPower[0], fighterPower[1] ) > 0 ){
+						let val1 = Math.floor(fighterPower[0])
+							,val2 = Math.floor(fighterPower[1])
+						this.elSummaryFighterPower.html(
+							val1 == val2
+								? val1
+								: val1 + '~' + val2
+						)
+						this.elSummaryFighterPower.removeClass('empty')
+					}else{
+						this.elSummaryFighterPower.html( '-' )
+						this.elSummaryFighterPower.addClass('empty')
 					}
-				})
-				
-				this.elSummarySpeed.html( fleetSpeet == 'fast' ? '高速' : '低速' )
-				
-				//this.elSummaryFighterPower.html( fighterPower > 0 ? Math.floor(fighterPower) : '-' )
-				//if( fighterPower > 0 )
-				//	this.elSummaryFighterPower.removeClass('empty')
-				//else
-				//	this.elSummaryFighterPower.addClass('empty')
-				if( Math.max( fighterPower[0], fighterPower[1] ) > 0 ){
-					let val1 = Math.floor(fighterPower[0])
-						,val2 = Math.floor(fighterPower[1])
-					this.elSummaryFighterPower.html(
-						val1 == val2
-							? val1
-							: val1 + '~' + val2
+					
+					this.elSummaryConsummation.html(
+						(consumFuel || consumAmmo)
+							? '<span class="fuel">' + consumFuel + '</span><span class="ammo">' + consumAmmo + '</span>'
+							: '-'
 					)
-					this.elSummaryFighterPower.removeClass('empty')
-				}else{
-					this.elSummaryFighterPower.html( '-' )
-					this.elSummaryFighterPower.addClass('empty')
 				}
-				
+
+				let los = this.summaryCalcLos()
 				if( los.y_estimate && los.y_std_error ){
 					//_g.log(los)
 					let losMin = (los.y_estimate - los.y_std_error).toFixed(1)
@@ -6622,12 +6651,6 @@ class InfosFleetSubFleet{
 						losMax = 0
 					this.elSummaryLos.html( losMin == losMax ? losMin : losMin + '~' + losMax )
 				}
-				
-				this.elSummaryConsummation.html(
-					(consumFuel || consumAmmo)
-						? '<span class="fuel">' + consumFuel + '</span><span class="ammo">' + consumAmmo + '</span>'
-						: '-'
-				)
 
 				this.summaryCalculating = null
 			}.bind(this), 10)
@@ -6852,9 +6875,9 @@ class InfosFleetSubFleet{
 				}
 			};
 			
-			let hq_lv = this.infosFleet.data.hq_lv || 90
+			let hq_lv = this.infosFleet.data.hq_lv || Lockr.get('hqLvDefault', _g.defaultHqLv)
 			if( hq_lv < 0 )
-				hq_lv = 90
+				hq_lv = Lockr.get('hqLvDefault', _g.defaultHqLv)
 			
 			var x = {
 				'DiveBombers': 		0,
@@ -9305,14 +9328,15 @@ class TablelistFleets extends Tablelist{
 												'min':		0,
 												'max':		150
 											})
-											.val(Lockr.get('hqLvDefault', 90))
+											.val(Lockr.get('hqLvDefault', _g.defaultHqLv))
 											.on('input', function(){
-												let val = parseInt(this.dom.setting_hqlv_input.val())
-												if( val && val > 0 )
-													Lockr.set('hqLvDefault', val)
+												_g.updateDefaultHqLv(this.dom.setting_hqlv_input.val())
 											}.bind(this))
 									)
 									.appendTo(this.dom.buttons_right)
+					$body.on('update_defaultHqLv.update_fleets_hqlv_input', function(e, val){
+						this.dom.setting_hqlv_input.val(val)
+					}.bind(this))
 				this.dom.btn_settings = $('<button icon="cog"/>')
 									.on('click',function(){
 										this.btn_settings()
