@@ -1718,7 +1718,7 @@ let Formula = {
 			// 同时返回制空战力的上下限
 			// 返回值为Array
 			case 'fighterPower_v2':
-				return Formula.calcBySlot.fighterPower_v2(ship, equipments_by_slot, star_by_slot, rank_by_slot)
+				return Formula.calcByShip.fighterPower_v2(ship, equipments_by_slot, star_by_slot, rank_by_slot)
 				break;
 			
 			// 炮击威力，除潜艇外
@@ -1800,14 +1800,14 @@ let Formula = {
 
 			// 索敌能力
 			case 'losPower':
-				return Formula.calcBySlot.losPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, options)
+				return Formula.calcByShip.losPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, options)
 				break;
 		}
 		
 		return '-'
 	},
 	
-	calcBySlot: {}
+	calcByShip: {}
 };
 
 Formula.equipmentType.MainGuns = [
@@ -1972,7 +1972,7 @@ Formula.losPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot
 
 
 
-Formula.calcBySlot.fighterPower_v2 = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
+Formula.calcByShip.fighterPower_v2 = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
 	// http://bbs.ngacn.cc/read.php?tid=8680767
 	// http://ja.kancolle.wikia.com/wiki/%E8%89%A6%E8%BC%89%E6%A9%9F%E7%86%9F%E7%B7%B4%E5%BA%A6
 
@@ -2032,7 +2032,7 @@ Formula.calcBySlot.fighterPower_v2 = function(ship, equipments_by_slot, star_by_
 	return results
 }
 
-Formula.calcBySlot.losPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot, options){
+Formula.calcByShip.losPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot, options){
 	// http://biikame.hatenablog.com/entry/2014/11/14/224925
 	
 	options = options || {}
@@ -5965,15 +5965,6 @@ _frame.infos.__entity = function( id ){
 		return dom
 	}
 
-/*
-舰队数据
-	综合选项
-		更改舰队模式：单舰队阵型，联合舰队阵型，影响属性计算
-
-图片输出
-	允许编辑文字
-*/
-
 // 舰队配置
 	_frame.infos.__fleet = function( id ){
 		return (new InfosFleet(id)).el
@@ -6891,7 +6882,7 @@ class InfosFleetSubFleet{
 						}) || []
 					equipments_by_slot.forEach(function(equipment){
 						if( equipment ){
-							console.log(equipment)
+							//console.log(equipment)
 							for(let i in x){
 								if( Formula.equipmentType[i]
 									&& Formula.equipmentType[i].push
@@ -9305,16 +9296,21 @@ class TablelistFleets extends Tablelist{
 				this.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(this.dom.filters)
 				this.dom.setting_hqlv = $('<label/>',{
 										'class':	'setting setting-hqlv',
-										'html':		'默认司令部等级'
+										'html':		'默认司令部等级',
+										'data-tip':	'如果舰队配置没有设置司令部等级，<br/>则会使用该默认数值'
 									})
 									.append(
-										this.dom.setting_hqlv_input = $('<input type="number"/>')
+										this.dom.setting_hqlv_input = $('<input/>',{
+												'type':		'number',
+												'min':		0,
+												'max':		150
+											})
 											.val(Lockr.get('hqLvDefault', 90))
 											.on('input', function(){
-												let val = this.dom.setting_hqlv_input.val()
-												if( val > 0 )
+												let val = parseInt(this.dom.setting_hqlv_input.val())
+												if( val && val > 0 )
 													Lockr.set('hqLvDefault', val)
-											})
+											}.bind(this))
 									)
 									.appendTo(this.dom.buttons_right)
 				this.dom.btn_settings = $('<button icon="cog"/>')

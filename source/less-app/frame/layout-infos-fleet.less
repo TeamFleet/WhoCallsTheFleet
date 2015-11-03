@@ -1,7 +1,7 @@
 .layout-infos-fleet(){
-	.fleet{
+	//.fleet{
 
-	}
+	//}
 }
 
 
@@ -65,7 +65,11 @@
 		min-width: 	0;
 		font-size: 	inherit;
 		&::-webkit-inner-spin-button{
-			display: 	none;
+			position: 	absolute;
+			//top: 		-1000%;
+			//left: 		-1000%;
+			z-index: 	-100;
+			visibility: hidden;
 		}
 	}
 	button{

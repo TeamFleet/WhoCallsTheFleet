@@ -194,6 +194,47 @@
 	}
 
 
+// .options
+	.tablelist-fleets-options(){
+		.setting-hqlv{
+			display: 	inline-block;
+			position: 	relative;
+			padding: 	0 15px 0 0;
+			line-height:30px;
+			input[type="number"]{
+				padding: 	0;
+				text-align: center;
+				min-width: 	0;
+				width: 		2.5em;
+				line-height:normal;
+				vertical-align: middle;
+				height: 	24px;
+				margin-left:4px;
+				//font-size: 	inherit;
+				&::-webkit-inner-spin-button{
+					position: 	absolute;
+					z-index: 	-100;
+					visibility: hidden;
+				}
+			}
+			&:after{
+				@height: 	22px;
+				position: 	absolute;
+				content: 	'';
+				top: 		50%;
+				right: 		0;
+				height: 	@height;
+				margin-top: (0 - @height / 2);
+				width: 		0;
+				//background: rgba(255, 255, 255, .15);
+				border: 	0;
+				border-left:1px solid rgba(0, 0, 0, .1);
+				border-right:1px solid rgba(255, 255, 255, .15);
+			}
+		}
+	}
+
+
 
 
 

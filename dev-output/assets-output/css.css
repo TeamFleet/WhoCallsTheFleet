@@ -4762,7 +4762,7 @@ body.mod-capture #tip {
 }
 .tablelist > .options > div.filters > .buttons_right button,
 .tablelist > .options > div.filters > .buttons_right .setting {
-  margin-left: 10px;
+  margin-left: 15px;
 }
 .tablelist > .options > div.filters > .tab {
   font-size: 0.6000000000000001rem;
@@ -5536,6 +5536,39 @@ body.mod-capture #tip {
   .tablelist.ships td[data-stat="los"] {
     display: none;
   }
+}
+.tablelist.fleets > .options .setting-hqlv {
+  display: inline-block;
+  position: relative;
+  padding: 0 15px 0 0;
+  line-height: 30px;
+}
+.tablelist.fleets > .options .setting-hqlv input[type="number"] {
+  padding: 0;
+  text-align: center;
+  min-width: 0;
+  width: 2.5em;
+  line-height: normal;
+  vertical-align: middle;
+  height: 24px;
+  margin-left: 4px;
+}
+.tablelist.fleets > .options .setting-hqlv input[type="number"]::-webkit-inner-spin-button {
+  position: absolute;
+  z-index: -100;
+  visibility: hidden;
+}
+.tablelist.fleets > .options .setting-hqlv:after {
+  position: absolute;
+  content: '';
+  top: 50%;
+  right: 0;
+  height: 22px;
+  margin-top: -11px;
+  width: 0;
+  border: 0;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
 }
 .nocontent .nocontent {
   display: block !important;
@@ -7630,7 +7663,9 @@ h6 + section.update_journal {
   font-size: inherit;
 }
 .infos-fleet input[type="number"]::-webkit-inner-spin-button {
-  display: none;
+  position: absolute;
+  z-index: -100;
+  visibility: hidden;
 }
 .infos-fleet button {
   font-size: inherit;

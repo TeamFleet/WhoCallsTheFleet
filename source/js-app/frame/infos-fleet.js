@@ -1,12 +1,3 @@
-/*
-舰队数据
-	综合选项
-		更改舰队模式：单舰队阵型，联合舰队阵型，影响属性计算
-
-图片输出
-	允许编辑文字
-*/
-
 // 舰队配置
 	_frame.infos.__fleet = function( id ){
 		return (new InfosFleet(id)).el
@@ -924,7 +915,7 @@ class InfosFleetSubFleet{
 						}) || []
 					equipments_by_slot.forEach(function(equipment){
 						if( equipment ){
-							console.log(equipment)
+							//console.log(equipment)
 							for(let i in x){
 								if( Formula.equipmentType[i]
 									&& Formula.equipmentType[i].push

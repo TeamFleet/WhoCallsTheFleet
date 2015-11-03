@@ -2779,7 +2779,7 @@ var Formula = {
 				break;
 
 			case 'fighterPower_v2':
-				return Formula.calcBySlot.fighterPower_v2(ship, equipments_by_slot, star_by_slot, rank_by_slot);
+				return Formula.calcByShip.fighterPower_v2(ship, equipments_by_slot, star_by_slot, rank_by_slot);
 				break;
 
 			case 'shelling':
@@ -2843,14 +2843,14 @@ var Formula = {
 				break;
 
 			case 'losPower':
-				return Formula.calcBySlot.losPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, options);
+				return Formula.calcByShip.losPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, options);
 				break;
 		}
 
 		return '-';
 	},
 
-	calcBySlot: {}
+	calcByShip: {}
 };
 
 Formula.equipmentType.MainGuns = [Formula.equipmentType.SmallCaliber, Formula.equipmentType.SmallCaliberHigh, Formula.equipmentType.SmallCaliberAA, Formula.equipmentType.MediumCaliber, Formula.equipmentType.LargeCaliber, Formula.equipmentType.SuperCaliber];
@@ -2917,7 +2917,7 @@ Formula.losPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slo
 	return this.calculate('losPower', ship, equipments_by_slot, star_by_slot, rank_by_slot, options);
 };
 
-Formula.calcBySlot.fighterPower_v2 = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+Formula.calcByShip.fighterPower_v2 = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
 
 	var rankInternal = [],
 	    typeValue = {},
@@ -2951,7 +2951,7 @@ Formula.calcBySlot.fighterPower_v2 = function (ship, equipments_by_slot, star_by
 	return results;
 };
 
-Formula.calcBySlot.losPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, options) {
+Formula.calcByShip.losPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, options) {
 
 	options = options || {};
 	options.shipLv = options.shipLv || 1;
@@ -5688,7 +5688,6 @@ var InfosFleetSubFleet = (function () {
 					}) || [];
 					equipments_by_slot.forEach(function (equipment) {
 						if (equipment) {
-							console.log(equipment);
 							for (var _i8 in x) {
 								if (Formula.equipmentType[_i8] && Formula.equipmentType[_i8].push && Formula.equipmentType[_i8].indexOf(equipment.type) > -1) x[_i8] += equipment.stat.los;
 							}
@@ -6919,11 +6918,16 @@ var TablelistFleets = (function (_Tablelist3) {
 		_this10.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(_this10.dom.filters);
 		_this10.dom.setting_hqlv = $('<label/>', {
 			'class': 'setting setting-hqlv',
-			'html': '默认司令部等级'
-		}).append(_this10.dom.setting_hqlv_input = $('<input type="number"/>').val(Lockr.get('hqLvDefault', 90)).on('input', function () {
-			var val = this.dom.setting_hqlv_input.val();
-			if (val > 0) Lockr.set('hqLvDefault', val);
-		})).appendTo(_this10.dom.buttons_right);
+			'html': '默认司令部等级',
+			'data-tip': '如果舰队配置没有设置司令部等级，<br/>则会使用该默认数值'
+		}).append(_this10.dom.setting_hqlv_input = $('<input/>', {
+			'type': 'number',
+			'min': 0,
+			'max': 150
+		}).val(Lockr.get('hqLvDefault', 90)).on('input', (function () {
+			var val = parseInt(this.dom.setting_hqlv_input.val());
+			if (val && val > 0) Lockr.set('hqLvDefault', val);
+		}).bind(_this10))).appendTo(_this10.dom.buttons_right);
 		_this10.dom.btn_settings = $('<button icon="cog"/>').on('click', (function () {
 			this.btn_settings();
 		}).bind(_this10)).appendTo(_this10.dom.buttons_right);
