@@ -2232,16 +2232,19 @@ _p.tip = {
 	},
 
 	trigger_by_el: function trigger_by_el(el) {
-		var cont = el.attr('data-tip');
+		var cont = el.data('tip');
 
 		if (!el.data('tip-filtered')) {
 			_p.tip.filters.forEach(function (filter) {
 				cont = filter(cont) || cont;
 			});
-			el.data('tip-filtered', true);
+			el.data({
+				'tip': cont,
+				'tip-filtered': true
+			});
 		}
 
-		_p.tip.show(cont, el, el.attr('data-tip-position'));
+		_p.tip.show(cont, el, el.data('tip-position'));
 	}
 };
 
@@ -5091,7 +5094,7 @@ var InfosFleet = (function () {
 					_i7++;
 				}
 				if (!this._hqlv) this.doms['hqlvOption'].val(_l2);
-				this.doms['hqlvOptionLabel'].attr('data-tip', '输入 0 表示采用默认等级 (Lv.' + _l2 + ')');
+				this.doms['hqlvOptionLabel'].data('tip', '输入 0 表示采用默认等级 (Lv.' + _l2 + ')');
 				this.doms['hqlvOption'].attr('placeholder', _l2);
 			}
 		}).bind(this));
@@ -5253,7 +5256,7 @@ var InfosFleet = (function () {
 			$body.on('update_defaultHqLv.fleet' + this.data._id, (function (e, val) {
 				if (this.el.data('is_show')) {
 					if (!this._hqlv) this.doms['hqlvOption'].val(val);
-					this.doms['hqlvOptionLabel'].attr('data-tip', '输入 0 表示采用默认等级 (Lv.' + val + ')');
+					this.doms['hqlvOptionLabel'].data('tip', '输入 0 表示采用默认等级 (Lv.' + val + ')');
 					this.doms['hqlvOption'].attr('placeholder', val);
 				}
 			}).bind(this));

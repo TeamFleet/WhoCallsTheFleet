@@ -6043,7 +6043,7 @@ class InfosFleet{
 				}
 				if( !this._hqlv )
 					this.doms['hqlvOption'].val(l)
-				this.doms['hqlvOptionLabel'].attr('data-tip', '输入 0 表示采用默认等级 (Lv.' + l + ')')
+				this.doms['hqlvOptionLabel'].data('tip', '输入 0 表示采用默认等级 (Lv.' + l + ')')
 				this.doms['hqlvOption'].attr('placeholder', l)
 			}
 		}.bind(this))
@@ -6284,7 +6284,7 @@ class InfosFleet{
 				if( this.el.data('is_show') ){
 					if( !this._hqlv )
 						this.doms['hqlvOption'].val(val)
-					this.doms['hqlvOptionLabel'].attr('data-tip', '输入 0 表示采用默认等级 (Lv.' + val + ')')
+					this.doms['hqlvOptionLabel'].data('tip', '输入 0 表示采用默认等级 (Lv.' + val + ')')
 					this.doms['hqlvOption'].attr('placeholder', val)
 				}
 			}.bind(this))
