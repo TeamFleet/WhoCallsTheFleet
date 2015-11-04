@@ -187,7 +187,7 @@ _frame.infos = {
 						break;
 				}
 				
-				let is_firstShow = !contentDOM.data('is_infosinit')
+				let is_firstShow = !cont.data('is_infosinit')
 				
 				if( !cont.data('is_infosinit') ){
 					if( type == 'ship' ){

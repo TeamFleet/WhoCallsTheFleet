@@ -9201,6 +9201,9 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > div {
   line-height: 36px;
   margin: 0 1em 0 0;
 }
+.infos-ship > div.remodels {
+  overflow: hidden;
+}
 .infos-ship > div.remodels .flexgrid {
   -webkit-flex-flow: row nowrap;
       -ms-flex-flow: row nowrap;
@@ -9215,7 +9218,6 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > div {
           align-items: flex-start;
   margin-top: -1.5rem;
   margin-right: -0.1rem;
-  overflow: hidden;
 }
 .infos-ship > div.remodels .flexgrid > .unit {
   -webkit-box-flex: 0;

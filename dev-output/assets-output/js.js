@@ -4973,7 +4973,7 @@ _frame.infos = {
 					break;
 			}
 
-			var is_firstShow = !contentDOM.data('is_infosinit');
+			var is_firstShow = !cont.data('is_infosinit');
 
 			if (!cont.data('is_infosinit')) {
 				if (type == 'ship') {
