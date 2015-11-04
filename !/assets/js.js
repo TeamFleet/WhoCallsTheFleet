@@ -2500,8 +2500,6 @@ _p.el.tabview = {
 };
 $document.ready(function () {
 
-	var timeStart = _g.timeNow();
-
 	$body = $('body');
 
 	for (var i in _g.func_first) {
@@ -2512,13 +2510,6 @@ $document.ready(function () {
 
 	for (var i in _g.func_last) {
 		_g.func_last[i]();
-	}
-
-	var timeEnd = _g.timeNow(),
-	    t = timeEnd - timeStart;
-
-	if (t > 5000 || bMobile) {
-		$html.addClass('no-transition');
 	}
 });
 "use strict";
