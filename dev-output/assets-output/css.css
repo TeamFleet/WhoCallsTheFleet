@@ -2152,7 +2152,7 @@ nav:before {
   z-index: 5;
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: -10%;
   width: 10%;
   height: 4px;
   opacity: 0;
@@ -2170,8 +2170,8 @@ nav:after {
 }
 .is-loading nav:before {
   opacity: 1;
-  animation: global-loading-horizontal 1.5s linear infinite alternate;
   -webkit-animation: global-loading-horizontal 1.5s linear infinite alternate;
+          animation: global-loading-horizontal 1.5s linear infinite alternate;
 }
 .is-loading nav:after {
   height: 4px;
