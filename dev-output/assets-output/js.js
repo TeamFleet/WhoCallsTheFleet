@@ -3538,31 +3538,48 @@ _g.kancolle_calc = {
 		    k = 0,
 		    data_fleet = undefined,
 		    data_ship = undefined,
-		    data_item = undefined;
+		    data_item = undefined,
+		    max_fleets = 4,
+		    max_ships_per_fleet = 6,
+		    max_equipments_per_ship = 5;
 
 		switch (version) {
 			case 3:
 				result = [];
 				i = 0;
-				while (data_fleet = data['f' + (i + 1)]) {
+
+				while (i < max_fleets) {
+					data_fleet = data['f' + (i + 1)];
 					result[i] = [];
-					j = 0;
-					while (data_ship = data_fleet['s' + (j + 1)]) {
-						if (data_ship.id) {
-							result[i][j] = [data_ship.id, [data_ship.lv || null, data_ship.luck || -1], [], [], []];
-						}
-						if (data_ship.items) {
-							k = 0;
-							while (data_item = data_ship.items['i' + (k + 1)]) {
-								if (data_item.id) {
-									result[i][j][2][k] = data_item.id;
-									result[i][j][3][k] = data_item.rf || null;
-									result[i][j][4][k] = data_item.rp || null;
+					if (data_fleet) {
+						j = 0;
+
+						while (j < max_ships_per_fleet) {
+							data_ship = data_fleet['s' + (j + 1)];
+							if (data_ship && data_ship.id) {
+								result[i][j] = [data_ship.id, [data_ship.lv || null, data_ship.luck || -1], [], [], []];
+								if (data_ship.items) {
+									k = 0;
+
+									while (k < max_equipments_per_ship) {
+										data_item = data_ship.items['i' + (k + 1)];
+										if (data_item && data_item.id) {
+											result[i][j][2][k] = data_item.id;
+											result[i][j][3][k] = data_item.rf || null;
+											result[i][j][4][k] = data_item.rp || null;
+										} else {
+											result[i][j][2][k] = null;
+											result[i][j][3][k] = null;
+											result[i][j][4][k] = null;
+										}
+										k++;
+									}
 								}
-								k++;
+							} else {
+								result[i][j] = null;
 							}
+							j++;
 						}
-						j++;
 					}
 					i++;
 				}
@@ -5276,6 +5293,12 @@ var InfosFleet = (function () {
 			this._updating = true;
 			d = d || {};
 
+			if (d['data'] && !d['data'].push) {
+				try {
+					d['data'] = JSON.parse(LZString.decompressFromEncodedURIComponent(d['data']));
+				} catch (e) {}
+			}
+
 			if (typeof d['theme'] != 'undefined') {
 				_frame.infos.dom.main.attr('data-theme', d['theme']);
 				this.doms['theme'].val(d['theme']).attr('value', d['theme']);
@@ -5309,7 +5332,9 @@ var InfosFleet = (function () {
 
 				this.data.time_modify = _g.timeNow();
 
-				console.log(this.data);
+				try {
+					this.data.data = LZString.compressToEncodedURIComponent(JSON.stringify(this.data.data));
+				} catch (e) {}
 
 				if (!not_save_to_file) {
 					clearTimeout(this.delay_updateDb);
@@ -7323,6 +7348,12 @@ var TablelistFleets = (function (_Tablelist3) {
 			if (typeof index == 'undefined') {
 				index = this.trIndex;
 				this.trIndex++;
+			}
+
+			if (data['data'] && !data['data'].push) {
+				try {
+					data['data'] = JSON.parse(LZString.decompressFromEncodedURIComponent(data['data']));
+				} catch (e) {}
 			}
 
 			var tr = $('<tr class="row"/>').attr({

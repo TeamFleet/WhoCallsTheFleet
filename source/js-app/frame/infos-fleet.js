@@ -312,6 +312,14 @@ class InfosFleet{
 	update( d ){
 		this._updating = true
 		d = d || {}
+				
+		// check d.data if is JSON
+		// if not, decompress and JSON.parse
+			if( d['data'] && !d['data'].push ){
+				try{
+					d['data'] = JSON.parse( LZString.decompressFromEncodedURIComponent(d['data']) )
+				}catch(e){}
+			}
 
 		// 主题颜色
 			if( typeof d['theme'] != 'undefined' ){
@@ -439,7 +447,11 @@ class InfosFleet{
 				_g.log(JSON.stringify(this.data.data))
 				*/
 				
-				console.log(this.data)
+				// JSON.stringify and compress this.data.data
+				try{
+					this.data.data = LZString.compressToEncodedURIComponent( JSON.stringify( this.data.data ) )
+				}catch(e){}
+				//console.log(this.data)
 				
 				if( !not_save_to_file ){
 					clearTimeout( this.delay_updateDb )

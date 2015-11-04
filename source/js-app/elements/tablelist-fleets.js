@@ -372,6 +372,11 @@ class TablelistFleets extends Tablelist{
 			}
 			
 			//_g.log(data)
+			if( data['data'] && !data['data'].push ){
+				try{
+					data['data'] = JSON.parse( LZString.decompressFromEncodedURIComponent(data['data']) )
+				}catch(e){}
+			}
 			
 			let tr = $('<tr class="row"/>')
 						.attr({
