@@ -2,7 +2,8 @@
 
 
 
-var babel = require("../dev-output/js-source/node_modules/babel-core")
+var babel = require("../dev-output/js-source/node_modules/babel-core");
+var minify = require("../dev-output/js-source/node_modules/html-minifier").minify;
 
 let dev_output_steps = []
 	,dev_output_tmpl
@@ -170,6 +171,7 @@ function dev_output_filter(output, pagetype, name){
 
 	//if( ['.js', '.css', '.jpg'].indexOf(pagetype) < 0 ){
 	if( pagetype.substr(0,1) !== '.' ){
+		/*
 		searchRes = null
 		scrapePtrn = /^\s*[\r\n]/gm
 			while( (searchRes = scrapePtrn.exec(output)) !== null ){
@@ -185,6 +187,11 @@ function dev_output_filter(output, pagetype, name){
 					output = output.replace( searchRes[0], '' )
 				}catch(e){}
 			}
+		*/
+		output = minify(output, {
+			removeComments:		true,
+			collapseWhitespace:	true
+		})
 	}
 	
 	switch(pagetype){
@@ -266,6 +273,11 @@ function dev_output_form(){
 								dev_output_tmpl = dev_output_tmpl.replace( searchRes[0], elNav.html() )
 							}catch(e){}
 						}
+
+						//dev_output_tmpl = minify(dev_output_tmpl, {
+						//	removeComments:		true,
+						//	collapseWhitespace:	true
+						//})
 					
 					console.log(dev_output_tmpl)
 
