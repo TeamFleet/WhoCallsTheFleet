@@ -284,7 +284,7 @@ class TablelistFleets extends Tablelist{
 				if (a['name'] > b['name']) return 1;
 				return 0;
 			})
-			_g.log(arr)
+			//_g.log(arr)
 			
 			this.trIndex = 0
 			
@@ -304,7 +304,7 @@ class TablelistFleets extends Tablelist{
 						sorted[cur.theme] = []
 					sorted[cur.theme].push(i)
 				})
-				console.log(sorted)
+				//console.log(sorted)
 				
 				// 根据主题颜色遍历
 					for( let i in sorted ){

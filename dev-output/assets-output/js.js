@@ -5302,15 +5302,28 @@ var InfosFleet = (function () {
 		value: function save(not_save_to_file) {
 			if (this._updating) return this;
 
-			this.fleets.forEach(function (currentValue, i) {
-				this.data.data[i] = currentValue.data;
-			}, this);
+			if (this.is_init) {
+				this.fleets.forEach(function (currentValue, i) {
+					this.data.data[i] = currentValue.data;
+				}, this);
 
-			this.data.time_modify = _g.timeNow();
+				this.data.time_modify = _g.timeNow();
 
-			if (!not_save_to_file) _db.fleets.updateById(this.data._id, this.data, function () {
-				_g.log('saved');
-			});
+				console.log(this.data);
+
+				if (!not_save_to_file) {
+					clearTimeout(this.delay_updateDb);
+					this.delay_updateDb = setTimeout((function () {
+						_db.fleets.updateById(this.data._id, this.data, function () {
+							_g.log('saved');
+						});
+						clearTimeout(this.delay_updateDb);
+						this.delay_updateDb = null;
+					}).bind(this), 1000);
+				}
+			}
+
+			this.is_init = true;
 			return this;
 		}
 	}, {
@@ -6120,17 +6133,12 @@ var InfosFleetShip = (function () {
 			if (!this._updateTimeout) {
 				this._updateTimeout = setTimeout((function () {
 					this.updateAttrs();
-					this.infosFleetSubFleet.summaryCalc();
+					if (this.infosFleetSubFleet) {
+						this.infosFleetSubFleet.summaryCalc();
+						this.infosFleetSubFleet.save();
+					}
 					this._updateTimeout = null;
-				}).bind(this), 10);
-			}
-
-			if (!this._saveTimeout) {
-				this._saveTimeout = setTimeout((function () {
-					if (this.infosFleetSubFleet) this.infosFleetSubFleet.save();
-
-					this._saveTimeout = null;
-				}).bind(this), 1000);
+				}).bind(this), 50);
 			}
 		}
 	}, {
@@ -7252,7 +7260,6 @@ var TablelistFleets = (function (_Tablelist3) {
 				if (a['name'] > b['name']) return 1;
 				return 0;
 			});
-			_g.log(arr);
 
 			this.trIndex = 0;
 
@@ -7269,7 +7276,6 @@ var TablelistFleets = (function (_Tablelist3) {
 						if (!sorted[cur.theme]) sorted[cur.theme] = [];
 						sorted[cur.theme].push(i);
 					});
-					console.log(sorted);
 
 					for (var _i15 in sorted) {
 						k = 0;

@@ -6231,6 +6231,7 @@ class InfosFleet{
 
 		this.fleets = []
 		//this._updating = false
+		//this.is_init = false
 		
 		this.tip_hqlv_input = '输入 0 表示采用默认等级 (Lv.%1$d)'
 	
@@ -6620,37 +6621,49 @@ class InfosFleet{
 			if( this._updating )
 				return this
 			
-			this.fleets.forEach(function(currentValue, i){
-				this.data.data[i] = currentValue.data
-			}, this)
-			
-			// 更新时间
-			this.data.time_modify = _g.timeNow()
-			
-			// 清理Array中的null值
-			/*
-			let deleteNull = function(arr){
-				if( arr && arr.length && arr.push ){
-					arr.forEach(function(value, i){
-						if( value === null ){
-							delete arr[i]
-							console.log(arr)
-						}
-						if( value && value.length && value.push )
-							deleteNull(value)
-					})
+			if( this.is_init ){
+				this.fleets.forEach(function(currentValue, i){
+					this.data.data[i] = currentValue.data
+				}, this)
+				
+				// 更新时间
+				this.data.time_modify = _g.timeNow()
+				
+				// 清理Array中的null值
+				/*
+				let deleteNull = function(arr){
+					if( arr && arr.length && arr.push ){
+						arr.forEach(function(value, i){
+							if( value === null ){
+								delete arr[i]
+								console.log(arr)
+							}
+							if( value && value.length && value.push )
+								deleteNull(value)
+						})
+					}
+				}
+				deleteNull(this.data.data)
+				
+				//_g.log(this)
+				_g.log(JSON.stringify(this.data.data))
+				*/
+				
+				console.log(this.data)
+				
+				if( !not_save_to_file ){
+					clearTimeout( this.delay_updateDb )
+					this.delay_updateDb = setTimeout(function(){
+						_db.fleets.updateById(this.data._id, this.data, function(){
+							_g.log('saved')
+						})
+						clearTimeout( this.delay_updateDb )
+						this.delay_updateDb = null
+					}.bind(this), 1000)
 				}
 			}
-			deleteNull(this.data.data)
 			
-			//_g.log(this)
-			_g.log(JSON.stringify(this.data.data))
-			*/
-			
-			if( !not_save_to_file )
-				_db.fleets.updateById(this.data._id, this.data, function(){
-					_g.log('saved')
-				})
+			this.is_init = true			
 			return this
 		}
 	
@@ -7807,6 +7820,7 @@ class InfosFleetShip{
 			if( this._updating )
 				return false
 
+			/*
 			// 计算属性
 				if( !this._updateTimeout ){
 					this._updateTimeout = setTimeout(function(){
@@ -7823,6 +7837,17 @@ class InfosFleetShip{
 					
 					this._saveTimeout = null
 				}.bind(this), 1000)
+			}
+			*/
+			if( !this._updateTimeout ){
+				this._updateTimeout = setTimeout(function(){
+					this.updateAttrs()
+					if( this.infosFleetSubFleet ){
+						this.infosFleetSubFleet.summaryCalc()
+						this.infosFleetSubFleet.save()
+					}
+					this._updateTimeout = null
+				}.bind(this), 50)
 			}
 		}
 }
@@ -9894,7 +9919,7 @@ class TablelistFleets extends Tablelist{
 				if (a['name'] > b['name']) return 1;
 				return 0;
 			})
-			_g.log(arr)
+			//_g.log(arr)
 			
 			this.trIndex = 0
 			
@@ -9914,7 +9939,7 @@ class TablelistFleets extends Tablelist{
 						sorted[cur.theme] = []
 					sorted[cur.theme].push(i)
 				})
-				console.log(sorted)
+				//console.log(sorted)
 				
 				// 根据主题颜色遍历
 					for( let i in sorted ){
