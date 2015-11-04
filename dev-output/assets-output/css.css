@@ -4378,6 +4378,22 @@ body.mod-capture #tip {
 .tablelist table tbody tr[data-equipmentid] th {
   font-weight: lighter;
   padding-left: 2.1rem;
+  /*
+					a{
+						position: 	relative;
+						&:before{
+							position: 	absolute;
+							content: 	@iconcode-checkbox-uncheck;
+							left: 		-28px;
+							top: 		50%;
+							height: 	0;
+							font-size: 	16px;
+							line-height:0;
+							font-family:icons;
+							color: 		rgba(255, 255, 255, .1);
+						}
+					}
+					*/
 }
 .tablelist table tbody tr[data-equipmentid] td {
   font-size: 0.6000000000000001rem;
