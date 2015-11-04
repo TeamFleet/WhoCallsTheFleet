@@ -2807,6 +2807,7 @@ main:after {
   overflow-x: hidden;
   animation: none;
   -webkit-animation: none;
+  -webkit-overflow-scrolling: touch;
 }
 .page-container.infos > .wrapper {
   position: relative;
@@ -7046,6 +7047,7 @@ body.mod-capture #tip {
   -webkit-flex-flow: none;
       -ms-flex-flow: none;
           flex-flow: none;
+  -webkit-overflow-scrolling: touch;
 }
 @media all and (max-width: 1152px) {
   .tablelist.entities {
@@ -10194,6 +10196,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > div {
           align-items: flex-start;
   margin-top: -1.5rem;
   margin-right: -0.1rem;
+  overflow: hidden;
 }
 .infos-ship > div.remodels .flexgrid > .unit {
   -webkit-box-flex: 0;
@@ -10703,7 +10706,10 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > div {
     margin-bottom: -1rem;
   }
   .infos-ship > aside > label {
-    top: calc(100% - 30px) !important;
+    top: 100% !important;
+    -webkit-transform: translateY(-150%);
+        -ms-transform: translateY(-150%);
+            transform: translateY(-150%);
   }
   .infos-ship > aside > label ~ div {
     padding: 0.5rem 0rem 1.5rem 0rem !important;
@@ -10798,7 +10804,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > div {
     height: calc(45% + 30px - 70px);
   }
 }
-@media all and (max-width: 800px) and (max-height: 600px), (min-width: 801px) and (max-width: 960px) and (max-height: 690px), (min-width: 961px) and (max-height: 600px) {
+@media all and (max-width: 800px) and (max-height: 600px), (min-width: 801px) and (max-width: 960px) and (max-height: 690px) {
   .infos-ship {
     -webkit-flex-flow: column nowrap;
         -ms-flex-flow: column nowrap;
@@ -10930,7 +10936,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > div {
     display: none;
   }
 }
-@media all and (max-width: 800px) and (max-height: 600px) and all and (max-width: 800px), (min-width: 801px) and (max-width: 960px) and (max-height: 690px) and all and (max-width: 800px), (min-width: 961px) and (max-height: 600px) and all and (max-width: 800px) {
+@media all and (max-width: 800px) and (max-height: 600px) and all and (max-width: 800px), (min-width: 801px) and (max-width: 960px) and (max-height: 690px) and all and (max-width: 800px) {
   .infos-ship > div.add_equip > div {
     -webkit-transform: translateY(165%);
         -ms-transform: translateY(165%);

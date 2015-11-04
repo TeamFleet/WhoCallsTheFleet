@@ -244,6 +244,7 @@
 					.align-items(flex-start);
 					.margin-top(-30);
 					.margin-right(-2);
+					overflow: 	hidden;
 					&>.unit{
 						flex: 		0 1 auto;
 						position:	relative;
@@ -623,7 +624,9 @@
 				display:	block !important;
 				.margin-bottom(-20);
 				&>label{
-					top:		~"calc(100% - 30px)" !important;
+					//top:		~"calc(100% - 30px)" !important;
+					top: 	100% !important;
+					transform: translateY(-150%);
 					&~div{
 						.padding(10, 0, 30, 0) !important;
 					}
@@ -681,7 +684,9 @@
 			}
 		}
 		//@media all and (max-width: 960px) and (max-height: 600px), (min-width: 961px) and (max-height: 560px){
-		@media all and (max-width: 800px) and (max-height: 600px), (min-width: 801px) and (max-width: 960px) and (max-height: 690px), (min-width: 961px) and (max-height: 600px){
+		@media all and (max-width: 800px) and (max-height: 600px),
+		(min-width: 801px) and (max-width: 960px) and (max-height: 690px){
+		//(min-width: 961px) and (max-height: 600px){
 			.flex-flow(column nowrap);
 			.justify-content(flex-start);
 			.align-items(flex-start);
