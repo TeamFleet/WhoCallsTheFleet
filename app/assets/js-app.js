@@ -6542,11 +6542,7 @@ class InfosFleet{
 				
 		// check d.data if is JSON
 		// if not, decompress and JSON.parse
-			if( d['data'] && !d['data'].push ){
-				try{
-					d['data'] = JSON.parse( LZString.decompressFromEncodedURIComponent(d['data']) )
-				}catch(e){}
-			}
+			d['data'] = InfosFleet.decompress(d['data'])
 
 		// 主题颜色
 			if( typeof d['theme'] != 'undefined' ){
@@ -6647,6 +6643,7 @@ class InfosFleet{
 				return this
 			
 			if( this.is_init ){
+				this.data.data = []
 				this.fleets.forEach(function(currentValue, i){
 					this.data.data[i] = currentValue.data
 				}, this)
@@ -6675,20 +6672,19 @@ class InfosFleet{
 				*/
 				
 				// JSON.stringify and compress this.data.data
-				try{
-					this.data.data = LZString.compressToEncodedURIComponent( JSON.stringify( this.data.data ) )
-				}catch(e){}
 				//console.log(this.data)
+				//this.data.data = InfosFleet.compress(this.data.data)
 				
 				if( !not_save_to_file ){
 					clearTimeout( this.delay_updateDb )
 					this.delay_updateDb = setTimeout(function(){
-						_db.fleets.updateById(this.data._id, this.data, function(){
+						_db.fleets.updateById(this.data._id, InfosFleet.compressMetaData(this.data), function(){
 							_g.log('saved')
-						})
+							InfosFleet.decompressMetaData(this.data)
+						}.bind(this))
 						clearTimeout( this.delay_updateDb )
 						this.delay_updateDb = null
-					}.bind(this), 1000)
+					}.bind(this), 200)
 				}
 			}
 			
@@ -6789,7 +6785,7 @@ InfosFleet.modalExport = function(curval){
 	return InfosFleet.elModalExport
 }
 InfosFleet.modalExport_show = function(data){
-	data = data.data || []
+	data = InfosFleet.decompress(data.data || [])
 
 	/*
 	data = JSON.stringify(data)
@@ -6814,7 +6810,7 @@ InfosFleet.modalExportText_show = function(data){
 		return false
 	
 	let text = ''
-		,fleets = data.data.filter(function(value){
+		,fleets = InfosFleet.decompress(data.data).filter(function(value){
 						return value.length
 					}) || []
 	
@@ -6855,6 +6851,46 @@ InfosFleet.modalExportText_show = function(data){
 			'classname': 	'infos_fleet infos_fleet_export mod-text'
 		}
 	)
+}
+InfosFleet.decompress = function(code){
+	if( code && !code.push ){
+		try{
+			code = JSON.parse( LZString.decompressFromEncodedURIComponent(code) )
+		}catch(e){
+			_g.error(e)
+		}
+	}
+	return code
+}
+InfosFleet.compress = function(code){
+	if( code && code.push ){
+		try{
+			code = LZString.compressToEncodedURIComponent( JSON.stringify( code ) )
+		}catch(e){
+			_g.error(e)
+		}
+	}
+	return code
+}
+InfosFleet.compressMetaData = function(code){
+	if( code && code.data && code.data.push ){
+		try{
+			code.data = InfosFleet.compress( code.data )
+		}catch(e){
+			_g.error(e)
+		}
+	}
+	return code
+}
+InfosFleet.decompressMetaData = function(code){
+	if( code && code.data && !code.data.push ){
+		try{
+			code.data = InfosFleet.decompress( code.data )
+		}catch(e){
+			_g.error(e)
+		}
+	}
+	return code
 }
 
 
@@ -9827,6 +9863,10 @@ class TablelistFleets extends Tablelist{
 				if( err ){
 					deferred.resolve( [] )
 				}else{
+					docs.forEach(function(doc){
+						doc.data =  InfosFleet.decompress(doc['data'])
+					})
+					console.log(docs)
 					deferred.resolve( docs )
 				}
 			})
@@ -9897,15 +9937,16 @@ class TablelistFleets extends Tablelist{
 					}
 					if( !fleetdata.data || !fleetdata.data.length || !fleetdata.data.push )
 						return false
+					let is_valid = false
 					for( let fleet of fleetdata.data ){
-						if( !fleet || !fleet.length || !fleet.push )
-							return false
-						for( let shipdata of fleet ){
-							if( typeof shipdata != 'undefined' && typeof shipdata[0] != 'undefined' && shipdata[0] )
-								return true
+						if( fleet && fleet.length && fleet.push ){
+							for( let shipdata of fleet ){
+								if( typeof shipdata != 'undefined' && shipdata && shipdata.push && typeof shipdata[0] != 'undefined' && shipdata[0] )
+									is_valid = true
+							}
 						}
 					}
-					return false
+					return is_valid
 				}
 				
 			while( i < arr.length ){
@@ -10036,11 +10077,6 @@ class TablelistFleets extends Tablelist{
 			}
 			
 			//_g.log(data)
-			if( data['data'] && !data['data'].push ){
-				try{
-					data['data'] = JSON.parse( LZString.decompressFromEncodedURIComponent(data['data']) )
-				}catch(e){}
-			}
 			
 			let tr = $('<tr class="row"/>')
 						.attr({

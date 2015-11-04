@@ -163,6 +163,10 @@ class TablelistFleets extends Tablelist{
 				if( err ){
 					deferred.resolve( [] )
 				}else{
+					docs.forEach(function(doc){
+						doc.data =  InfosFleet.decompress(doc['data'])
+					})
+					console.log(docs)
 					deferred.resolve( docs )
 				}
 			})
@@ -233,15 +237,16 @@ class TablelistFleets extends Tablelist{
 					}
 					if( !fleetdata.data || !fleetdata.data.length || !fleetdata.data.push )
 						return false
+					let is_valid = false
 					for( let fleet of fleetdata.data ){
-						if( !fleet || !fleet.length || !fleet.push )
-							return false
-						for( let shipdata of fleet ){
-							if( typeof shipdata != 'undefined' && typeof shipdata[0] != 'undefined' && shipdata[0] )
-								return true
+						if( fleet && fleet.length && fleet.push ){
+							for( let shipdata of fleet ){
+								if( typeof shipdata != 'undefined' && shipdata && shipdata.push && typeof shipdata[0] != 'undefined' && shipdata[0] )
+									is_valid = true
+							}
 						}
 					}
-					return false
+					return is_valid
 				}
 				
 			while( i < arr.length ){
@@ -372,11 +377,6 @@ class TablelistFleets extends Tablelist{
 			}
 			
 			//_g.log(data)
-			if( data['data'] && !data['data'].push ){
-				try{
-					data['data'] = JSON.parse( LZString.decompressFromEncodedURIComponent(data['data']) )
-				}catch(e){}
-			}
 			
 			let tr = $('<tr class="row"/>')
 						.attr({

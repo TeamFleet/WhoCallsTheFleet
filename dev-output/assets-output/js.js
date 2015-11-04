@@ -5293,11 +5293,7 @@ var InfosFleet = (function () {
 			this._updating = true;
 			d = d || {};
 
-			if (d['data'] && !d['data'].push) {
-				try {
-					d['data'] = JSON.parse(LZString.decompressFromEncodedURIComponent(d['data']));
-				} catch (e) {}
-			}
+			d['data'] = InfosFleet.decompress(d['data']);
 
 			if (typeof d['theme'] != 'undefined') {
 				_frame.infos.dom.main.attr('data-theme', d['theme']);
@@ -5326,25 +5322,23 @@ var InfosFleet = (function () {
 			if (this._updating) return this;
 
 			if (this.is_init) {
+				this.data.data = [];
 				this.fleets.forEach(function (currentValue, i) {
 					this.data.data[i] = currentValue.data;
 				}, this);
 
 				this.data.time_modify = _g.timeNow();
 
-				try {
-					this.data.data = LZString.compressToEncodedURIComponent(JSON.stringify(this.data.data));
-				} catch (e) {}
-
 				if (!not_save_to_file) {
 					clearTimeout(this.delay_updateDb);
 					this.delay_updateDb = setTimeout((function () {
-						_db.fleets.updateById(this.data._id, this.data, function () {
+						_db.fleets.updateById(this.data._id, InfosFleet.compressMetaData(this.data), (function () {
 							_g.log('saved');
-						});
+							InfosFleet.decompressMetaData(this.data);
+						}).bind(this));
 						clearTimeout(this.delay_updateDb);
 						this.delay_updateDb = null;
-					}).bind(this), 1000);
+					}).bind(this), 200);
 				}
 			}
 
@@ -5489,7 +5483,7 @@ InfosFleet.modalExport = function (curval) {
 	return InfosFleet.elModalExport;
 };
 InfosFleet.modalExport_show = function (data) {
-	data = data.data || [];
+	data = InfosFleet.decompress(data.data || []);
 
 	data = JSON.stringify(_g.kancolle_calc.encode(data));
 
@@ -5501,7 +5495,7 @@ InfosFleet.modalExportText_show = function (data) {
 	if (!data) return false;
 
 	var text = '',
-	    fleets = data.data.filter(function (value) {
+	    fleets = InfosFleet.decompress(data.data).filter(function (value) {
 		return value.length;
 	}) || [];
 
@@ -5529,6 +5523,46 @@ InfosFleet.modalExportText_show = function (data) {
 	_frame.modal.show(InfosFleet.modalExport(text), '导出配置文本', {
 		'classname': 'infos_fleet infos_fleet_export mod-text'
 	});
+};
+InfosFleet.decompress = function (code) {
+	if (code && !code.push) {
+		try {
+			code = JSON.parse(LZString.decompressFromEncodedURIComponent(code));
+		} catch (e) {
+			_g.error(e);
+		}
+	}
+	return code;
+};
+InfosFleet.compress = function (code) {
+	if (code && code.push) {
+		try {
+			code = LZString.compressToEncodedURIComponent(JSON.stringify(code));
+		} catch (e) {
+			_g.error(e);
+		}
+	}
+	return code;
+};
+InfosFleet.compressMetaData = function (code) {
+	if (code && code.data && code.data.push) {
+		try {
+			code.data = InfosFleet.compress(code.data);
+		} catch (e) {
+			_g.error(e);
+		}
+	}
+	return code;
+};
+InfosFleet.decompressMetaData = function (code) {
+	if (code && code.data && !code.data.push) {
+		try {
+			code.data = InfosFleet.decompress(code.data);
+		} catch (e) {
+			_g.error(e);
+		}
+	}
+	return code;
 };
 
 var InfosFleetSubFleet = (function () {
@@ -7175,6 +7209,10 @@ var TablelistFleets = (function (_Tablelist3) {
 				if (err) {
 					deferred.resolve([]);
 				} else {
+					docs.forEach(function (doc) {
+						doc.data = InfosFleet.decompress(doc['data']);
+					});
+					console.log(docs);
 					deferred.resolve(docs);
 				}
 			});
@@ -7192,6 +7230,7 @@ var TablelistFleets = (function (_Tablelist3) {
 					return true;
 				}
 				if (!fleetdata.data || !fleetdata.data.length || !fleetdata.data.push) return false;
+				var is_valid = false;
 				var _iteratorNormalCompletion = true;
 				var _didIteratorError = false;
 				var _iteratorError = undefined;
@@ -7200,28 +7239,29 @@ var TablelistFleets = (function (_Tablelist3) {
 					for (var _iterator = fleetdata.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 						var fleet = _step.value;
 
-						if (!fleet || !fleet.length || !fleet.push) return false;
-						var _iteratorNormalCompletion2 = true;
-						var _didIteratorError2 = false;
-						var _iteratorError2 = undefined;
+						if (fleet && fleet.length && fleet.push) {
+							var _iteratorNormalCompletion2 = true;
+							var _didIteratorError2 = false;
+							var _iteratorError2 = undefined;
 
-						try {
-							for (var _iterator2 = fleet[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-								var shipdata = _step2.value;
-
-								if (typeof shipdata != 'undefined' && typeof shipdata[0] != 'undefined' && shipdata[0]) return true;
-							}
-						} catch (err) {
-							_didIteratorError2 = true;
-							_iteratorError2 = err;
-						} finally {
 							try {
-								if (!_iteratorNormalCompletion2 && _iterator2.return) {
-									_iterator2.return();
+								for (var _iterator2 = fleet[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+									var shipdata = _step2.value;
+
+									if (typeof shipdata != 'undefined' && shipdata && shipdata.push && typeof shipdata[0] != 'undefined' && shipdata[0]) is_valid = true;
 								}
+							} catch (err) {
+								_didIteratorError2 = true;
+								_iteratorError2 = err;
 							} finally {
-								if (_didIteratorError2) {
-									throw _iteratorError2;
+								try {
+									if (!_iteratorNormalCompletion2 && _iterator2.return) {
+										_iterator2.return();
+									}
+								} finally {
+									if (_didIteratorError2) {
+										throw _iteratorError2;
+									}
 								}
 							}
 						}
@@ -7241,7 +7281,7 @@ var TablelistFleets = (function (_Tablelist3) {
 					}
 				}
 
-				return false;
+				return is_valid;
 			};
 
 			while (i < arr.length) {
@@ -7348,12 +7388,6 @@ var TablelistFleets = (function (_Tablelist3) {
 			if (typeof index == 'undefined') {
 				index = this.trIndex;
 				this.trIndex++;
-			}
-
-			if (data['data'] && !data['data'].push) {
-				try {
-					data['data'] = JSON.parse(LZString.decompressFromEncodedURIComponent(data['data']));
-				} catch (e) {}
 			}
 
 			var tr = $('<tr class="row"/>').attr({
