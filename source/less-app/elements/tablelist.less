@@ -703,6 +703,8 @@
 			}
 		}
 	}
+	
+	/*
 	table tbody tr{
 		display:	none;
 	}
@@ -761,4 +763,36 @@
 		}
 		.loop(@max_equipment_type);
 	}
+	*/
+	
+	// new implememt since 2015/11/05
+	// inspired by http://nexts.github.io/Jets.js/
+		.loop_equipmentcollection(@n, @i: 1) when (@i =< @n) {
+			&>[value="@{i}"]:checked{
+				&~.options>.filters>label[data-equipmentcollection="@{i}"]{
+					.tab-on();
+				}
+				&~.fixed-table-container tbody tr:not([data-equipmentcollection="@{i}"]){
+					display:	none !important;
+				}
+			}
+			.loop_equipmentcollection(@n, (@i + 1))
+		}
+		.loop_equipmentcollection(@max_equipment_collection);
+		
+		.loop_equipmenttypes(@n, @i: 1) when (@i =< @n) {
+			//&>.type@{i} ~ .fixed-table-container tr[data-equipmenttype="@{i}"]{
+			//	display:	table-row;
+			//}
+			&>[name="types"][class]:not(.type@{i}) ~ .fixed-table-container{
+				tr[data-equipmenttype="@{i}"]{
+					display:	none;
+				}
+				tr.typetitle[data-type="@{i}"]{
+					opacity: 	.35;
+				}
+			}
+			.loop_equipmenttypes(@n, (@i + 1))
+		}
+		.loop_equipmenttypes(@max_equipment_type);
 }
