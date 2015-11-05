@@ -1,23 +1,23 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.8.2.0",
-			"path":		"data/2015-10-30/app.nwjs-data",
-			"bytes":	16051599
+			"version":	"0.8.3.0",
+			"path":		"data/2015-11-06/app.nwjs-data",
+			"bytes":	16068589
 		},
 		"app-db": {
-			"version":	"1.8.2.0",
-			"path":		"data/2015-10-30/app-db.nwjs-data",
-			"bytes":	816731
+			"version":	"1.8.3.0",
+			"path":		"data/2015-11-06/app-db.nwjs-data",
+			"bytes":	817801
 		},
 		"pics": {
-			"version":	"1.8.2.0",
-			"path":		"data/2015-10-30/pics.nwjs-data",
-			"bytes":	44834507
+			"version":	"1.8.3.0",
+			"path":		"data/2015-11-06/pics.nwjs-data",
+			"bytes":	44837365
 		}
 	},
 	"packages-beta": {},
-	"core":  null,
+	"core": null,
 	"homepage": "http://fleet.diablohu.com/",
 	"release-notes": "https://github.com/Diablohu/WhoCallsTheFleet/releases",
 	"forum": "http://bbs.ngacn.cc/read.php?tid=7959995"
