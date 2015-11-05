@@ -1115,9 +1115,12 @@ class InfosFleetSubFleet{
 						}
 					})
 					let shipLv = shipdata.shipLv || 1
+						,shipLos = _g.data.ships[shipdata.shipId].getAttribute('los', shipLv) || 1
 					if( shipLv < 0 )
 						shipLv = 1
-					x.statLos+= Math.sqrt(_g.data.ships[shipdata.shipId].getAttribute('los', shipLv))
+					if( shipLos < 0 )
+						shipLos = 1
+					x.statLos+= Math.sqrt(shipLos)
 				}
 			})
 			
@@ -1861,6 +1864,7 @@ class InfosFleetShipEquipment{
 					this.star = 0
 					this.rank = (Lockr.get( 'fleetlist-option-aircraftdefaultmax' )
 									&& id
+									&& _g.data.items[id].rankupgradable
 									&& $.inArray(_g.data.items[id].type, _g.data.item_type_collections[3].types) > -1
 								) ? 7 : 0
 					TablelistEquipments.types = []
@@ -1906,17 +1910,21 @@ class InfosFleetShipEquipment{
 						.css('background-image', 'url('+_g.data.items[value]._icon+')')
 				this.elName.html(_g.data.items[value]._name)
 				// 如果装备为飞行器，标记样式
-					if( $.inArray(_g.data.items[value].type, _g.data.item_type_collections[3].types) > -1 )
+					if( $.inArray(_g.data.items[value].type, _g.data.item_type_collections[3].types) > -1 ){
 						this.el.addClass('is-aircraft')
-					else
+						if( _g.data.items[value].rankupgradable )
+							this.el.addClass('is-rankupgradable')
+					}else
 						this.el.removeClass('is-aircraft')
 			}else{
 				this.infosFleetShip.data[2][this.index] = null
 				this.improvable = false
 				this.el.removeAttr('data-equipmentId')
 						.removeAttr('data-tip')
+						.removeAttr('data-star')
+						.removeAttr('data-rank')
 						.css('background-image', '')
-						.removeClass('is-aircraft')
+						.removeClass('is-aircraft is-rankupgradable')
 				this.elName.html('')
 			}
 			

@@ -2826,6 +2826,8 @@ class Ship extends ItemBase{
 			max = parseFloat(max) || base
 			if( base < 0 || max < 0 )
 				return -1
+			if( base == max )
+				return max
 			return Math.floor( base + (max - base) * lvl / 99 )
 		}
 		
@@ -6110,12 +6112,17 @@ _frame.infos.__entity = function( id ){
 						+ '<small class="indicator '+(d['craftable'] ? 'true' : 'false')+'">'
 							+ ( d['craftable'] ? '可开发' : '不可开发' )
 						+ '</small>'
-						+ '<small class="indicator '+(d['improvable'] ? 'true' : 'false')+'">'
-							+ ( d['improvable'] ? '可改修' : '不可改修' )
-						+ '</small>'
-						+ '<small class="indicator '+(d['upgrade_to'] && d['upgrade_to'].push && d['upgrade_to'].length ? 'true' : 'false')+'">'
-							+ ( d['upgrade_to'] && d['upgrade_to'].push && d['upgrade_to'].length ? '可升级' : '不可升级' )
-						+ '</small>'
+						+ ($.inArray(_g.data.items[id].type, _g.data.item_type_collections[3].types) > -1
+							? '<small class="indicator '+(d['rankupgradable'] ? 'true' : 'false')+'">'
+									+ ( d['rankupgradable'] ? '可提升熟练度' : '无熟练度' )
+								+ '</small>'
+							: '<small class="indicator '+(d['improvable'] ? 'true' : 'false')+'">'
+									+ ( d['improvable'] ? '可改修' : '不可改修' )
+								+ '</small>'
+								+ '<small class="indicator '+(d['upgrade_to'] && d['upgrade_to'].push && d['upgrade_to'].length ? 'true' : 'false')+'">'
+									+ ( d['upgrade_to'] && d['upgrade_to'].push && d['upgrade_to'].length ? '可升级' : '不可升级' )
+								+ '</small>'
+						)
 					+ '</small>'
 				).appendTo(dom)
 
@@ -7342,9 +7349,12 @@ class InfosFleetSubFleet{
 						}
 					})
 					let shipLv = shipdata.shipLv || 1
+						,shipLos = _g.data.ships[shipdata.shipId].getAttribute('los', shipLv) || 1
 					if( shipLv < 0 )
 						shipLv = 1
-					x.statLos+= Math.sqrt(_g.data.ships[shipdata.shipId].getAttribute('los', shipLv))
+					if( shipLos < 0 )
+						shipLos = 1
+					x.statLos+= Math.sqrt(shipLos)
 				}
 			})
 			
@@ -8088,6 +8098,7 @@ class InfosFleetShipEquipment{
 					this.star = 0
 					this.rank = (Lockr.get( 'fleetlist-option-aircraftdefaultmax' )
 									&& id
+									&& _g.data.items[id].rankupgradable
 									&& $.inArray(_g.data.items[id].type, _g.data.item_type_collections[3].types) > -1
 								) ? 7 : 0
 					TablelistEquipments.types = []
@@ -8133,17 +8144,21 @@ class InfosFleetShipEquipment{
 						.css('background-image', 'url('+_g.data.items[value]._icon+')')
 				this.elName.html(_g.data.items[value]._name)
 				// 如果装备为飞行器，标记样式
-					if( $.inArray(_g.data.items[value].type, _g.data.item_type_collections[3].types) > -1 )
+					if( $.inArray(_g.data.items[value].type, _g.data.item_type_collections[3].types) > -1 ){
 						this.el.addClass('is-aircraft')
-					else
+						if( _g.data.items[value].rankupgradable )
+							this.el.addClass('is-rankupgradable')
+					}else
 						this.el.removeClass('is-aircraft')
 			}else{
 				this.infosFleetShip.data[2][this.index] = null
 				this.improvable = false
 				this.el.removeAttr('data-equipmentId')
 						.removeAttr('data-tip')
+						.removeAttr('data-star')
+						.removeAttr('data-rank')
 						.css('background-image', '')
-						.removeClass('is-aircraft')
+						.removeClass('is-aircraft is-rankupgradable')
 				this.elName.html('')
 			}
 			

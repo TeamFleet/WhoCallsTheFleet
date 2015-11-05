@@ -40,12 +40,17 @@
 						+ '<small class="indicator '+(d['craftable'] ? 'true' : 'false')+'">'
 							+ ( d['craftable'] ? '可开发' : '不可开发' )
 						+ '</small>'
-						+ '<small class="indicator '+(d['improvable'] ? 'true' : 'false')+'">'
-							+ ( d['improvable'] ? '可改修' : '不可改修' )
-						+ '</small>'
-						+ '<small class="indicator '+(d['upgrade_to'] && d['upgrade_to'].push && d['upgrade_to'].length ? 'true' : 'false')+'">'
-							+ ( d['upgrade_to'] && d['upgrade_to'].push && d['upgrade_to'].length ? '可升级' : '不可升级' )
-						+ '</small>'
+						+ ($.inArray(_g.data.items[id].type, _g.data.item_type_collections[3].types) > -1
+							? '<small class="indicator '+(d['rankupgradable'] ? 'true' : 'false')+'">'
+									+ ( d['rankupgradable'] ? '可提升熟练度' : '无熟练度' )
+								+ '</small>'
+							: '<small class="indicator '+(d['improvable'] ? 'true' : 'false')+'">'
+									+ ( d['improvable'] ? '可改修' : '不可改修' )
+								+ '</small>'
+								+ '<small class="indicator '+(d['upgrade_to'] && d['upgrade_to'].push && d['upgrade_to'].length ? 'true' : 'false')+'">'
+									+ ( d['upgrade_to'] && d['upgrade_to'].push && d['upgrade_to'].length ? '可升级' : '不可升级' )
+								+ '</small>'
+						)
 					+ '</small>'
 				).appendTo(dom)
 

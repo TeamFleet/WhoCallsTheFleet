@@ -757,6 +757,8 @@
 											color: 	inherit;
 										}
 									}
+								}
+								&.is-rankupgradable{
 									&>.equipment-infos{
 										&>.equipment-star{
 											display: 	none;
@@ -777,7 +779,6 @@
 											}
 										}
 									}
-									
 									.loop(@n, @i: 1) when (@i =< @n) {
 										&[data-rank="@{i}"]{
 											&>.equipment-infos>.equipment-rank{
