@@ -737,13 +737,14 @@ _frame.app_main = {
 
 		var promise_chain 	= Q.fcall(function(){})
 
+		this.nav = []
+		this.navtitle = {}
+
 		// 开始异步函数链
 			promise_chain
 		
 		// 处理导航项信息
 			.then(function(){
-				_frame.app_main.nav = []
-				_frame.app_main.navtitle = {}
 				_frame.dom.navs = {}
 				_frame.dom.navlinks.children('a').each(function(index, $el){
 					$el = $($el)

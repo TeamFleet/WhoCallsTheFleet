@@ -4143,9 +4143,10 @@ _frame.app_main = {
 
 		var promise_chain = Q.fcall(function () {});
 
+		this.nav = [];
+		this.navtitle = {};
+
 		promise_chain.then(function () {
-			_frame.app_main.nav = [];
-			_frame.app_main.navtitle = {};
 			_frame.dom.navs = {};
 			_frame.dom.navlinks.children('a').each(function (index, $el) {
 				$el = $($el);
@@ -4917,10 +4918,9 @@ _frame.infos = {
 		if (this.curContent == type + '::' + id) return _frame.infos.dom.container.children('div:first-child');
 
 		type = type.toLowerCase();
-		if (isNaN(id)) id = id;else id = parseInt(id);
+		if (!isNaN(id)) id = parseInt(id);
 
-		var cont = '',
-		    title = null;
+		var title = null;
 
 		if (!_frame.infos.dom) {
 			_frame.infos.dom = {

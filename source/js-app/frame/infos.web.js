@@ -125,13 +125,12 @@ _frame.infos = {
 				return _frame.infos.dom.container.children('div:first-child')
 
 		type = type.toLowerCase()
-		if( isNaN(id) )
-			id = id
-		else
+		if( !isNaN(id) )
 			id = parseInt(id)
 
-		var cont = ''
-			,title = null
+		var title = null
+		
+		//console.log('init infos: ' + type + ' - ' + id)
 
 		// 第一次运行，创建相关DOM和变量
 			if( !_frame.infos.dom ){
