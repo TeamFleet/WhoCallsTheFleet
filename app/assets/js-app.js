@@ -2046,7 +2046,8 @@ let Formula = {
 		return '-'
 	},
 	
-	calcByShip: {}
+	calcByShip: {},
+	calc: {}
 };
 
 Formula.equipmentType.MainGuns = [
@@ -2100,6 +2101,10 @@ Formula.equipmentType.SeaplaneRecons = [
 		Formula.equipmentType.ReconSeaplane,
 		Formula.equipmentType.ReconSeaplaneNight,
 		Formula.equipmentType.LargeFlyingBoat
+	];
+
+Formula.equipmentType.SeaplaneBombers = [
+		Formula.equipmentType.SeaplaneBomber
 	];
 
 Formula.equipmentType.CarrierRecons = [
@@ -2193,339 +2198,354 @@ Formula.losPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot
 
 
 
+// Formulas
+	Formula.calc.losPower = function(data){
+		// http://biikame.hatenablog.com/entry/2014/11/14/224925
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Formula.calcByShip.fighterPower_v2 = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
-	// http://bbs.ngacn.cc/read.php?tid=8680767
-	// http://ja.kancolle.wikia.com/wiki/%E8%89%A6%E8%BC%89%E6%A9%9F%E7%86%9F%E7%B7%B4%E5%BA%A6
-
-	let rankInternal = []
-		,typeValue = {}
-		,results = [0, 0]
-
-	rankInternal[0] = [0, 9]
-	rankInternal[1] = [10, 24]
-	rankInternal[2] = [25, 39]
-	rankInternal[3] = [40, 54]
-	rankInternal[4] = [55, 69]
-	rankInternal[5] = [70, 84]
-	rankInternal[6] = [85, 99]
-	rankInternal[7] = [100, 120]
-	
-	typeValue.CarrierFighter = [
-		0,
-		0,
-		2,
-		5,
-		9,
-		14,
-		14,
-		22
-	]
-	
-	typeValue.SeaplaneBomber = [
-		0,
-		0,
-		1,
-		1,
-		1,
-		3,
-		3,
-		6
-	]
-
-	ship.slot.map(function(carry, index){
-		if( equipments_by_slot[index]
-			&& $.inArray( equipments_by_slot[index].type, Formula.equipmentType.Fighters ) > -1
-			&& carry
-		){
-			// Math.floor(Math.sqrt(carry) * (equipments_by_slot[index].stat.aa || 0) + Math.sqrt( rankInternal / 10 ) + typeValue)
-			let base = Math.sqrt(carry) * (equipments_by_slot[index].stat.aa || 0)
-				,_rank = rank_by_slot[index] || 0
-				,_rankInternal = rankInternal[_rank]
-				,_typeValue = 0
-			if( equipments_by_slot[index].type == Formula.equipmentType.CarrierFighter )
-				_typeValue = typeValue.CarrierFighter[_rank]
-			if( equipments_by_slot[index].type == Formula.equipmentType.SeaplaneBomber )
-				_typeValue = typeValue.SeaplaneBomber[_rank]
-			results[0]+= Math.floor(base + Math.sqrt( _rankInternal[0] / 10 ) + _typeValue)
-			results[1]+= Math.floor(base + Math.sqrt( _rankInternal[1] / 10 ) + _typeValue)
-		}
-	})
-	return results
-}
-
-Formula.calcByShip.losPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot, options){
-	// http://biikame.hatenablog.com/entry/2014/11/14/224925
-	
-	options = options || {}
-	options.shipLv = options.shipLv || 1
-	options.hqLv = options.hqLv || 1
-	
-	if( options.shipLv < 0 )
-		options.shipLv = 1
-	if( options.hqLv < 0 )
-		options.hqLv = 1
-
-    var calc = function (x) {
-        x = $.extend({'(Intercept)': 1}, x);
-        x['hqLv'] = (Math.ceil(x['hqLv'] / 5) * 5);
-        var x_estimate = {};
-        var y_estimate = 0;
-        $.each(keys, function () {
-            var estimate = x[this] * estimate_coefficients[this];
-            x_estimate[this] = estimate;
-            y_estimate += estimate;
-        });
-        var x_std_error = {};
-        $.each(keys, function () {
-            x_std_error[this] = x[this] * std_error_coefficients[this];
-        });
-        var y_std_error = 0;
-        $.each(keys, function () {
-            var key1 = this;
-            $.each(keys, function () {
-                var key2 = this;
-                y_std_error += x_std_error[key1] * x_std_error[key2] * correlation[key1][key2];
-            });
-        });
-        return {
-            x_estimate: x_estimate
-            , y_estimate: y_estimate
-            , x_std_error: x_std_error
-            , y_std_error: y_std_error
-        };
-    };
-    var keys = [
-        '(Intercept)'
-        , 'DiveBombers'
-        , 'TorpedoBombers'
-        , 'CarrierRecons'
-        , 'SeaplaneRecons'
-        , 'SeaplaneBomber'
-        , 'SmallRadars'
-        , 'LargeRadars'
-        , 'Searchlights'
-        , 'statLos'
-        , 'hqLv'
-    ];
-    var estimate_coefficients = {
-        '(Intercept)': 0
-        , 'DiveBombers': 1.03745043134563
-        , 'TorpedoBombers': 1.3679056374142
-        , 'CarrierRecons': 1.65940512636315
-        , 'SeaplaneRecons': 2
-        , 'SeaplaneBomber': 1.77886368594467
-        , 'SmallRadars': 1.0045778494921
-        , 'LargeRadars': 0.990738063979571
-        , 'Searchlights': 0.906965144360512
-        , 'statLos': 1.6841895400986
-        , 'hqLv': -0.614246711531445
-    };
-    var std_error_coefficients = {
-        '(Intercept)': 4.66445565766347
-        , 'DiveBombers': 0.0965028505325845
-        , 'TorpedoBombers': 0.108636184978525
-        , 'CarrierRecons': 0.0976055279516298
-        , 'SeaplaneRecons': 0.0866229392463539
-        , 'SeaplaneBomber': 0.0917722496848294
-        , 'SmallRadars': 0.0492773648320346
-        , 'LargeRadars': 0.0491221486053861
-        , 'Searchlights': 0.0658283797225724
-        , 'statLos': 0.0781594211213618
-        , 'hqLv': 0.0369222352426548
-    };
-    var correlation = {
-        '(Intercept)': {
-            '(Intercept)': 1
-            , 'DiveBombers': -0.147020064768061
-            , 'TorpedoBombers': -0.379236131621529
-            , 'CarrierRecons': -0.572858669501918
-            , 'SeaplaneRecons': -0.733913857017495
-            , 'SeaplaneBomber': -0.642621825152428
-            , 'SmallRadars': -0.674829588068364
-            , 'LargeRadars': -0.707418111752863
-            , 'Searchlights': -0.502304601556193
-            , 'statLos': -0.737374218573832
-            , 'hqLv': -0.05071933950163
-        }
-        , 'DiveBombers': {
-            '(Intercept)': -0.147020064768061
-            , 'DiveBombers': 1
-            , 'TorpedoBombers': 0.288506347076736
-            , 'CarrierRecons': 0.365820372770994
-            , 'SeaplaneRecons': 0.425744409856409
-            , 'SeaplaneBomber': 0.417783698791503
-            , 'SmallRadars': 0.409046013184429
-            , 'LargeRadars': 0.413855653833994
-            , 'Searchlights': 0.308730607324667
-            , 'statLos': 0.317984916914851
-            , 'hqLv': -0.386740224500626
-        }
-        , 'TorpedoBombers': {
-            '(Intercept)': -0.379236131621529
-            , 'DiveBombers': 0.288506347076736
-            , 'TorpedoBombers': 1
-            , 'CarrierRecons': 0.482215071254241
-            , 'SeaplaneRecons': 0.584455876852325
-            , 'SeaplaneBomber': 0.558515133495825
-            , 'SmallRadars': 0.547260012897553
-            , 'LargeRadars': 0.560437619378443
-            , 'Searchlights': 0.437934879351188
-            , 'statLos': 0.533934507932748
-            , 'hqLv': -0.405349979885748
-        }
-        , 'CarrierRecons': {
-            '(Intercept)': -0.572858669501918
-            , 'DiveBombers': 0.365820372770994
-            , 'TorpedoBombers': 0.482215071254241
-            , 'CarrierRecons': 1
-            , 'SeaplaneRecons': 0.804494553748065
-            , 'SeaplaneBomber': 0.75671307047535
-            , 'SmallRadars': 0.748420581669228
-            , 'LargeRadars': 0.767980338133817
-            , 'Searchlights': 0.589651513349878
-            , 'statLos': 0.743851348255527
-            , 'hqLv': -0.503544281376776
-        }
-        , 'SeaplaneRecons': {
-            '(Intercept)': -0.733913857017495
-            , 'DiveBombers': 0.425744409856409
-            , 'TorpedoBombers': 0.584455876852325
-            , 'CarrierRecons': 0.804494553748065
-            , 'SeaplaneRecons': 1
-            , 'SeaplaneBomber': 0.932444440578382
-            , 'SmallRadars': 0.923988080549326
-            , 'LargeRadars': 0.94904944359066
-            , 'Searchlights': 0.727912987329348
-            , 'statLos': 0.944434077970518
-            , 'hqLv': -0.614921413821462
-        }
-        , 'SeaplaneBomber': {
-            '(Intercept)': -0.642621825152428
-            , 'DiveBombers': 0.417783698791503
-            , 'TorpedoBombers': 0.558515133495825
-            , 'CarrierRecons': 0.75671307047535
-            , 'SeaplaneRecons': 0.932444440578382
-            , 'SeaplaneBomber': 1
-            , 'SmallRadars': 0.864289865445084
-            , 'LargeRadars': 0.886872388674911
-            , 'Searchlights': 0.68310647756898
-            , 'statLos': 0.88122333327317
-            , 'hqLv': -0.624797255805045
-        }
-        , 'SmallRadars': {
-            '(Intercept)': -0.674829588068364
-            , 'DiveBombers': 0.409046013184429
-            , 'TorpedoBombers': 0.547260012897553
-            , 'CarrierRecons': 0.748420581669228
-            , 'SeaplaneRecons': 0.923988080549326
-            , 'SeaplaneBomber': 0.864289865445084
-            , 'SmallRadars': 1
-            , 'LargeRadars': 0.872011318623459
-            , 'Searchlights': 0.671926570242336
-            , 'statLos': 0.857213501657084
-            , 'hqLv': -0.560018086758868
-        }
-        , 'LargeRadars': {
-            '(Intercept)': -0.707418111752863
-            , 'DiveBombers': 0.413855653833994
-            , 'TorpedoBombers': 0.560437619378443
-            , 'CarrierRecons': 0.767980338133817
-            , 'SeaplaneRecons': 0.94904944359066
-            , 'SeaplaneBomber': 0.886872388674911
-            , 'SmallRadars': 0.872011318623459
-            , 'LargeRadars': 1
-            , 'Searchlights': 0.690102027588321
-            , 'statLos': 0.883771367337743
-            , 'hqLv': -0.561336967269448
-        }
-        , 'Searchlights': {
-            '(Intercept)': -0.502304601556193
-            , 'DiveBombers': 0.308730607324667
-            , 'TorpedoBombers': 0.437934879351188
-            , 'CarrierRecons': 0.589651513349878
-            , 'SeaplaneRecons': 0.727912987329348
-            , 'SeaplaneBomber': 0.68310647756898
-            , 'SmallRadars': 0.671926570242336
-            , 'LargeRadars': 0.690102027588321
-            , 'Searchlights': 1
-            , 'statLos': 0.723228553177704
-            , 'hqLv': -0.518427865593732
-        }
-        , 'statLos': {
-            '(Intercept)': -0.737374218573832
-            , 'DiveBombers': 0.317984916914851
-            , 'TorpedoBombers': 0.533934507932748
-            , 'CarrierRecons': 0.743851348255527
-            , 'SeaplaneRecons': 0.944434077970518
-            , 'SeaplaneBomber': 0.88122333327317
-            , 'SmallRadars': 0.857213501657084
-            , 'LargeRadars': 0.883771367337743
-            , 'Searchlights': 0.723228553177704
-            , 'statLos': 1
-            , 'hqLv': -0.620804120587684
-        }
-        , 'hqLv': {
-            '(Intercept)': -0.05071933950163
-            , 'DiveBombers': -0.386740224500626
-            , 'TorpedoBombers': -0.405349979885748
-            , 'CarrierRecons': -0.503544281376776
-            , 'SeaplaneRecons': -0.614921413821462
-            , 'SeaplaneBomber': -0.624797255805045
-            , 'SmallRadars': -0.560018086758868
-            , 'LargeRadars': -0.561336967269448
-            , 'Searchlights': -0.518427865593732
-            , 'statLos': -0.620804120587684
-            , 'hqLv': 1
-        }
-    };
-
-	var x = {
-		'DiveBombers': 		0,
-		'TorpedoBombers': 	0,
-		'CarrierRecons':	0,
-		'SeaplaneRecons':	0,
-		'SeaplaneBomber':	0,
-		'SmallRadars':		0,
-		'LargeRadars':		0,
-		'Searchlights':		0,
-		'statLos':			Math.sqrt(ship.getAttribute('los', options.shipLv)),
-		'hqLv':				options.hqLv,
-	};
-	
-	equipments_by_slot.forEach(function(equipment){
-		if( equipment ){
-			for(let i in x){
-				if( Formula.equipmentType[i]
-					&& Formula.equipmentType[i].push
-					&& Formula.equipmentType[i].indexOf(equipment.type) > -1
-				)
-					x[i]+= equipment.stat.los
+		var calc = function (x) {
+			x = $.extend({'(Intercept)': 1}, x);
+			x['hqLv'] = (Math.ceil(x['hqLv'] / 5) * 5);
+			var x_estimate = {};
+			var y_estimate = 0;
+			$.each(keys, function () {
+				var estimate = x[this] * estimate_coefficients[this];
+				x_estimate[this] = estimate;
+				y_estimate += estimate;
+			});
+			var x_std_error = {};
+			$.each(keys, function () {
+				x_std_error[this] = x[this] * std_error_coefficients[this];
+			});
+			var y_std_error = 0;
+			$.each(keys, function () {
+				var key1 = this;
+				$.each(keys, function () {
+					var key2 = this;
+					y_std_error += x_std_error[key1] * x_std_error[key2] * correlation[key1][key2];
+				});
+			});
+			return {
+				x_estimate: x_estimate
+				, y_estimate: y_estimate
+				, x_std_error: x_std_error
+				, y_std_error: y_std_error
+			};
+		};
+		var keys = [
+			'(Intercept)'
+			, 'DiveBombers'
+			, 'TorpedoBombers'
+			, 'CarrierRecons'
+			, 'SeaplaneRecons'
+			, 'SeaplaneBombers'
+			, 'SmallRadars'
+			, 'LargeRadars'
+			, 'Searchlights'
+			, 'statLos'
+			, 'hqLv'
+		];
+		var estimate_coefficients = {
+			'(Intercept)': 0
+			, 'DiveBombers': 1.03745043134563
+			, 'TorpedoBombers': 1.3679056374142
+			, 'CarrierRecons': 1.65940512636315
+			, 'SeaplaneRecons': 2
+			, 'SeaplaneBombers': 1.77886368594467
+			, 'SmallRadars': 1.0045778494921
+			, 'LargeRadars': 0.990738063979571
+			, 'Searchlights': 0.906965144360512
+			, 'statLos': 1.6841895400986
+			, 'hqLv': -0.614246711531445
+		};
+		var std_error_coefficients = {
+			'(Intercept)': 4.66445565766347
+			, 'DiveBombers': 0.0965028505325845
+			, 'TorpedoBombers': 0.108636184978525
+			, 'CarrierRecons': 0.0976055279516298
+			, 'SeaplaneRecons': 0.0866229392463539
+			, 'SeaplaneBombers': 0.0917722496848294
+			, 'SmallRadars': 0.0492773648320346
+			, 'LargeRadars': 0.0491221486053861
+			, 'Searchlights': 0.0658283797225724
+			, 'statLos': 0.0781594211213618
+			, 'hqLv': 0.0369222352426548
+		};
+		var correlation = {
+			'(Intercept)': {
+				'(Intercept)': 1
+				, 'DiveBombers': -0.147020064768061
+				, 'TorpedoBombers': -0.379236131621529
+				, 'CarrierRecons': -0.572858669501918
+				, 'SeaplaneRecons': -0.733913857017495
+				, 'SeaplaneBombers': -0.642621825152428
+				, 'SmallRadars': -0.674829588068364
+				, 'LargeRadars': -0.707418111752863
+				, 'Searchlights': -0.502304601556193
+				, 'statLos': -0.737374218573832
+				, 'hqLv': -0.05071933950163
 			}
+			, 'DiveBombers': {
+				'(Intercept)': -0.147020064768061
+				, 'DiveBombers': 1
+				, 'TorpedoBombers': 0.288506347076736
+				, 'CarrierRecons': 0.365820372770994
+				, 'SeaplaneRecons': 0.425744409856409
+				, 'SeaplaneBombers': 0.417783698791503
+				, 'SmallRadars': 0.409046013184429
+				, 'LargeRadars': 0.413855653833994
+				, 'Searchlights': 0.308730607324667
+				, 'statLos': 0.317984916914851
+				, 'hqLv': -0.386740224500626
+			}
+			, 'TorpedoBombers': {
+				'(Intercept)': -0.379236131621529
+				, 'DiveBombers': 0.288506347076736
+				, 'TorpedoBombers': 1
+				, 'CarrierRecons': 0.482215071254241
+				, 'SeaplaneRecons': 0.584455876852325
+				, 'SeaplaneBombers': 0.558515133495825
+				, 'SmallRadars': 0.547260012897553
+				, 'LargeRadars': 0.560437619378443
+				, 'Searchlights': 0.437934879351188
+				, 'statLos': 0.533934507932748
+				, 'hqLv': -0.405349979885748
+			}
+			, 'CarrierRecons': {
+				'(Intercept)': -0.572858669501918
+				, 'DiveBombers': 0.365820372770994
+				, 'TorpedoBombers': 0.482215071254241
+				, 'CarrierRecons': 1
+				, 'SeaplaneRecons': 0.804494553748065
+				, 'SeaplaneBombers': 0.75671307047535
+				, 'SmallRadars': 0.748420581669228
+				, 'LargeRadars': 0.767980338133817
+				, 'Searchlights': 0.589651513349878
+				, 'statLos': 0.743851348255527
+				, 'hqLv': -0.503544281376776
+			}
+			, 'SeaplaneRecons': {
+				'(Intercept)': -0.733913857017495
+				, 'DiveBombers': 0.425744409856409
+				, 'TorpedoBombers': 0.584455876852325
+				, 'CarrierRecons': 0.804494553748065
+				, 'SeaplaneRecons': 1
+				, 'SeaplaneBombers': 0.932444440578382
+				, 'SmallRadars': 0.923988080549326
+				, 'LargeRadars': 0.94904944359066
+				, 'Searchlights': 0.727912987329348
+				, 'statLos': 0.944434077970518
+				, 'hqLv': -0.614921413821462
+			}
+			, 'SeaplaneBombers': {
+				'(Intercept)': -0.642621825152428
+				, 'DiveBombers': 0.417783698791503
+				, 'TorpedoBombers': 0.558515133495825
+				, 'CarrierRecons': 0.75671307047535
+				, 'SeaplaneRecons': 0.932444440578382
+				, 'SeaplaneBombers': 1
+				, 'SmallRadars': 0.864289865445084
+				, 'LargeRadars': 0.886872388674911
+				, 'Searchlights': 0.68310647756898
+				, 'statLos': 0.88122333327317
+				, 'hqLv': -0.624797255805045
+			}
+			, 'SmallRadars': {
+				'(Intercept)': -0.674829588068364
+				, 'DiveBombers': 0.409046013184429
+				, 'TorpedoBombers': 0.547260012897553
+				, 'CarrierRecons': 0.748420581669228
+				, 'SeaplaneRecons': 0.923988080549326
+				, 'SeaplaneBombers': 0.864289865445084
+				, 'SmallRadars': 1
+				, 'LargeRadars': 0.872011318623459
+				, 'Searchlights': 0.671926570242336
+				, 'statLos': 0.857213501657084
+				, 'hqLv': -0.560018086758868
+			}
+			, 'LargeRadars': {
+				'(Intercept)': -0.707418111752863
+				, 'DiveBombers': 0.413855653833994
+				, 'TorpedoBombers': 0.560437619378443
+				, 'CarrierRecons': 0.767980338133817
+				, 'SeaplaneRecons': 0.94904944359066
+				, 'SeaplaneBombers': 0.886872388674911
+				, 'SmallRadars': 0.872011318623459
+				, 'LargeRadars': 1
+				, 'Searchlights': 0.690102027588321
+				, 'statLos': 0.883771367337743
+				, 'hqLv': -0.561336967269448
+			}
+			, 'Searchlights': {
+				'(Intercept)': -0.502304601556193
+				, 'DiveBombers': 0.308730607324667
+				, 'TorpedoBombers': 0.437934879351188
+				, 'CarrierRecons': 0.589651513349878
+				, 'SeaplaneRecons': 0.727912987329348
+				, 'SeaplaneBombers': 0.68310647756898
+				, 'SmallRadars': 0.671926570242336
+				, 'LargeRadars': 0.690102027588321
+				, 'Searchlights': 1
+				, 'statLos': 0.723228553177704
+				, 'hqLv': -0.518427865593732
+			}
+			, 'statLos': {
+				'(Intercept)': -0.737374218573832
+				, 'DiveBombers': 0.317984916914851
+				, 'TorpedoBombers': 0.533934507932748
+				, 'CarrierRecons': 0.743851348255527
+				, 'SeaplaneRecons': 0.944434077970518
+				, 'SeaplaneBombers': 0.88122333327317
+				, 'SmallRadars': 0.857213501657084
+				, 'LargeRadars': 0.883771367337743
+				, 'Searchlights': 0.723228553177704
+				, 'statLos': 1
+				, 'hqLv': -0.620804120587684
+			}
+			, 'hqLv': {
+				'(Intercept)': -0.05071933950163
+				, 'DiveBombers': -0.386740224500626
+				, 'TorpedoBombers': -0.405349979885748
+				, 'CarrierRecons': -0.503544281376776
+				, 'SeaplaneRecons': -0.614921413821462
+				, 'SeaplaneBombers': -0.624797255805045
+				, 'SmallRadars': -0.560018086758868
+				, 'LargeRadars': -0.561336967269448
+				, 'Searchlights': -0.518427865593732
+				, 'statLos': -0.620804120587684
+				, 'hqLv': 1
+			}
+		};
+
+		var x = {
+			'DiveBombers': 		0,
+			'TorpedoBombers': 	0,
+			'CarrierRecons':	0,
+			'SeaplaneRecons':	0,
+			'SeaplaneBombers':	0,
+			'SmallRadars':		0,
+			'LargeRadars':		0,
+			'Searchlights':		0,
+			'statLos':			1,
+			'hqLv':				1,
+		};
+		
+		for( var i in data ){
+			x[i] = data[i]
 		}
-	})
+		
+		return calc(x);
+		//var result = calc(x);
+		//var score = result.y_estimate.toFixed(1) + ' ± ' + result.y_std_error.toFixed(1);
+	}
+
+
+
+
+
+
+
+
+
+// Calculate by Ship
+	Formula.calcByShip.fighterPower_v2 = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
+		// http://bbs.ngacn.cc/read.php?tid=8680767
+		// http://ja.kancolle.wikia.com/wiki/%E8%89%A6%E8%BC%89%E6%A9%9F%E7%86%9F%E7%B7%B4%E5%BA%A6
 	
-	return calc(x);
-	//var result = calc(x);
-	//var score = result.y_estimate.toFixed(1) + ' ± ' + result.y_std_error.toFixed(1);
-}
+		let rankInternal = []
+			,typeValue = {}
+			,results = [0, 0]
+	
+		rankInternal[0] = [0, 9]
+		rankInternal[1] = [10, 24]
+		rankInternal[2] = [25, 39]
+		rankInternal[3] = [40, 54]
+		rankInternal[4] = [55, 69]
+		rankInternal[5] = [70, 84]
+		rankInternal[6] = [85, 99]
+		rankInternal[7] = [100, 120]
+		
+		typeValue.CarrierFighter = [
+			0,
+			0,
+			2,
+			5,
+			9,
+			14,
+			14,
+			22
+		]
+		
+		typeValue.SeaplaneBomber = [
+			0,
+			0,
+			1,
+			1,
+			1,
+			3,
+			3,
+			6
+		]
+	
+		ship.slot.map(function(carry, index){
+			if( equipments_by_slot[index]
+				&& $.inArray( equipments_by_slot[index].type, Formula.equipmentType.Fighters ) > -1
+				&& carry
+			){
+				// Math.floor(Math.sqrt(carry) * (equipments_by_slot[index].stat.aa || 0) + Math.sqrt( rankInternal / 10 ) + typeValue)
+				let base = Math.sqrt(carry) * (equipments_by_slot[index].stat.aa || 0)
+					,_rank = rank_by_slot[index] || 0
+					,_rankInternal = rankInternal[_rank]
+					,_typeValue = 0
+				if( equipments_by_slot[index].type == Formula.equipmentType.CarrierFighter )
+					_typeValue = typeValue.CarrierFighter[_rank]
+				if( equipments_by_slot[index].type == Formula.equipmentType.SeaplaneBomber )
+					_typeValue = typeValue.SeaplaneBomber[_rank]
+				results[0]+= Math.floor(base + Math.sqrt( _rankInternal[0] / 10 ) + _typeValue)
+				results[1]+= Math.floor(base + Math.sqrt( _rankInternal[1] / 10 ) + _typeValue)
+			}
+		})
+		return results
+	}
+	
+	Formula.calcByShip.losPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot, options){
+		// http://biikame.hatenablog.com/entry/2014/11/14/224925
+		
+		options = options || {}
+		options.shipLv = options.shipLv || 1
+		options.hqLv = options.hqLv || 1
+		
+		if( options.shipLv < 0 )
+			options.shipLv = 1
+		if( options.hqLv < 0 )
+			options.hqLv = 1
+	
+		var x = {
+			'DiveBombers': 		0,
+			'TorpedoBombers': 	0,
+			'CarrierRecons':	0,
+			'SeaplaneRecons':	0,
+			'SeaplaneBombers':	0,
+			'SmallRadars':		0,
+			'LargeRadars':		0,
+			'Searchlights':		0,
+			'statLos':			Math.sqrt(ship.getAttribute('los', options.shipLv)),
+			'hqLv':				options.hqLv,
+		};
+		
+		equipments_by_slot.forEach(function(equipment){
+			if( equipment ){
+				for(let i in x){
+					if( Formula.equipmentType[i]
+						&& Formula.equipmentType[i].push
+						&& Formula.equipmentType[i].indexOf(equipment.type) > -1
+					)
+						x[i]+= equipment.stat.los
+				}
+			}
+		})
+		
+		return Formula.calc.losPower(x);
+	}
 class ItemBase {
 	constructor() {
 	}
@@ -7090,224 +7110,7 @@ class InfosFleetSubFleet{
 		}
 	
 	// 计算: 索敌能力
-		summaryCalcLos(){
-			//Formula.calcBySlot.losPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot, options){
-			// http://biikame.hatenablog.com/entry/2014/11/14/224925
-			
-			var calc = function (x) {
-				x = $.extend({'(Intercept)': 1}, x);
-				x['hqLv'] = (Math.ceil(x['hqLv'] / 5) * 5);
-				var x_estimate = {};
-				var y_estimate = 0;
-				$.each(keys, function () {
-					var estimate = x[this] * estimate_coefficients[this];
-					x_estimate[this] = estimate;
-					y_estimate += estimate;
-				});
-				var x_std_error = {};
-				$.each(keys, function () {
-					x_std_error[this] = x[this] * std_error_coefficients[this];
-				});
-				var y_std_error = 0;
-				$.each(keys, function () {
-					var key1 = this;
-					$.each(keys, function () {
-						var key2 = this;
-						y_std_error += x_std_error[key1] * x_std_error[key2] * correlation[key1][key2];
-					});
-				});
-				return {
-					x_estimate: x_estimate
-					, y_estimate: y_estimate
-					, x_std_error: x_std_error
-					, y_std_error: y_std_error
-				};
-			};
-			var keys = [
-				'(Intercept)'
-				, 'DiveBombers'
-				, 'TorpedoBombers'
-				, 'CarrierRecons'
-				, 'SeaplaneRecons'
-				, 'SeaplaneBomber'
-				, 'SmallRadars'
-				, 'LargeRadars'
-				, 'Searchlights'
-				, 'statLos'
-				, 'hqLv'
-			];
-			var estimate_coefficients = {
-				'(Intercept)': 0
-				, 'DiveBombers': 1.03745043134563
-				, 'TorpedoBombers': 1.3679056374142
-				, 'CarrierRecons': 1.65940512636315
-				, 'SeaplaneRecons': 2
-				, 'SeaplaneBomber': 1.77886368594467
-				, 'SmallRadars': 1.0045778494921
-				, 'LargeRadars': 0.990738063979571
-				, 'Searchlights': 0.906965144360512
-				, 'statLos': 1.6841895400986
-				, 'hqLv': -0.614246711531445
-			};
-			var std_error_coefficients = {
-				'(Intercept)': 4.66445565766347
-				, 'DiveBombers': 0.0965028505325845
-				, 'TorpedoBombers': 0.108636184978525
-				, 'CarrierRecons': 0.0976055279516298
-				, 'SeaplaneRecons': 0.0866229392463539
-				, 'SeaplaneBomber': 0.0917722496848294
-				, 'SmallRadars': 0.0492773648320346
-				, 'LargeRadars': 0.0491221486053861
-				, 'Searchlights': 0.0658283797225724
-				, 'statLos': 0.0781594211213618
-				, 'hqLv': 0.0369222352426548
-			};
-			var correlation = {
-				'(Intercept)': {
-					'(Intercept)': 1
-					, 'DiveBombers': -0.147020064768061
-					, 'TorpedoBombers': -0.379236131621529
-					, 'CarrierRecons': -0.572858669501918
-					, 'SeaplaneRecons': -0.733913857017495
-					, 'SeaplaneBomber': -0.642621825152428
-					, 'SmallRadars': -0.674829588068364
-					, 'LargeRadars': -0.707418111752863
-					, 'Searchlights': -0.502304601556193
-					, 'statLos': -0.737374218573832
-					, 'hqLv': -0.05071933950163
-				}
-				, 'DiveBombers': {
-					'(Intercept)': -0.147020064768061
-					, 'DiveBombers': 1
-					, 'TorpedoBombers': 0.288506347076736
-					, 'CarrierRecons': 0.365820372770994
-					, 'SeaplaneRecons': 0.425744409856409
-					, 'SeaplaneBomber': 0.417783698791503
-					, 'SmallRadars': 0.409046013184429
-					, 'LargeRadars': 0.413855653833994
-					, 'Searchlights': 0.308730607324667
-					, 'statLos': 0.317984916914851
-					, 'hqLv': -0.386740224500626
-				}
-				, 'TorpedoBombers': {
-					'(Intercept)': -0.379236131621529
-					, 'DiveBombers': 0.288506347076736
-					, 'TorpedoBombers': 1
-					, 'CarrierRecons': 0.482215071254241
-					, 'SeaplaneRecons': 0.584455876852325
-					, 'SeaplaneBomber': 0.558515133495825
-					, 'SmallRadars': 0.547260012897553
-					, 'LargeRadars': 0.560437619378443
-					, 'Searchlights': 0.437934879351188
-					, 'statLos': 0.533934507932748
-					, 'hqLv': -0.405349979885748
-				}
-				, 'CarrierRecons': {
-					'(Intercept)': -0.572858669501918
-					, 'DiveBombers': 0.365820372770994
-					, 'TorpedoBombers': 0.482215071254241
-					, 'CarrierRecons': 1
-					, 'SeaplaneRecons': 0.804494553748065
-					, 'SeaplaneBomber': 0.75671307047535
-					, 'SmallRadars': 0.748420581669228
-					, 'LargeRadars': 0.767980338133817
-					, 'Searchlights': 0.589651513349878
-					, 'statLos': 0.743851348255527
-					, 'hqLv': -0.503544281376776
-				}
-				, 'SeaplaneRecons': {
-					'(Intercept)': -0.733913857017495
-					, 'DiveBombers': 0.425744409856409
-					, 'TorpedoBombers': 0.584455876852325
-					, 'CarrierRecons': 0.804494553748065
-					, 'SeaplaneRecons': 1
-					, 'SeaplaneBomber': 0.932444440578382
-					, 'SmallRadars': 0.923988080549326
-					, 'LargeRadars': 0.94904944359066
-					, 'Searchlights': 0.727912987329348
-					, 'statLos': 0.944434077970518
-					, 'hqLv': -0.614921413821462
-				}
-				, 'SeaplaneBomber': {
-					'(Intercept)': -0.642621825152428
-					, 'DiveBombers': 0.417783698791503
-					, 'TorpedoBombers': 0.558515133495825
-					, 'CarrierRecons': 0.75671307047535
-					, 'SeaplaneRecons': 0.932444440578382
-					, 'SeaplaneBomber': 1
-					, 'SmallRadars': 0.864289865445084
-					, 'LargeRadars': 0.886872388674911
-					, 'Searchlights': 0.68310647756898
-					, 'statLos': 0.88122333327317
-					, 'hqLv': -0.624797255805045
-				}
-				, 'SmallRadars': {
-					'(Intercept)': -0.674829588068364
-					, 'DiveBombers': 0.409046013184429
-					, 'TorpedoBombers': 0.547260012897553
-					, 'CarrierRecons': 0.748420581669228
-					, 'SeaplaneRecons': 0.923988080549326
-					, 'SeaplaneBomber': 0.864289865445084
-					, 'SmallRadars': 1
-					, 'LargeRadars': 0.872011318623459
-					, 'Searchlights': 0.671926570242336
-					, 'statLos': 0.857213501657084
-					, 'hqLv': -0.560018086758868
-				}
-				, 'LargeRadars': {
-					'(Intercept)': -0.707418111752863
-					, 'DiveBombers': 0.413855653833994
-					, 'TorpedoBombers': 0.560437619378443
-					, 'CarrierRecons': 0.767980338133817
-					, 'SeaplaneRecons': 0.94904944359066
-					, 'SeaplaneBomber': 0.886872388674911
-					, 'SmallRadars': 0.872011318623459
-					, 'LargeRadars': 1
-					, 'Searchlights': 0.690102027588321
-					, 'statLos': 0.883771367337743
-					, 'hqLv': -0.561336967269448
-				}
-				, 'Searchlights': {
-					'(Intercept)': -0.502304601556193
-					, 'DiveBombers': 0.308730607324667
-					, 'TorpedoBombers': 0.437934879351188
-					, 'CarrierRecons': 0.589651513349878
-					, 'SeaplaneRecons': 0.727912987329348
-					, 'SeaplaneBomber': 0.68310647756898
-					, 'SmallRadars': 0.671926570242336
-					, 'LargeRadars': 0.690102027588321
-					, 'Searchlights': 1
-					, 'statLos': 0.723228553177704
-					, 'hqLv': -0.518427865593732
-				}
-				, 'statLos': {
-					'(Intercept)': -0.737374218573832
-					, 'DiveBombers': 0.317984916914851
-					, 'TorpedoBombers': 0.533934507932748
-					, 'CarrierRecons': 0.743851348255527
-					, 'SeaplaneRecons': 0.944434077970518
-					, 'SeaplaneBomber': 0.88122333327317
-					, 'SmallRadars': 0.857213501657084
-					, 'LargeRadars': 0.883771367337743
-					, 'Searchlights': 0.723228553177704
-					, 'statLos': 1
-					, 'hqLv': -0.620804120587684
-				}
-				, 'hqLv': {
-					'(Intercept)': -0.05071933950163
-					, 'DiveBombers': -0.386740224500626
-					, 'TorpedoBombers': -0.405349979885748
-					, 'CarrierRecons': -0.503544281376776
-					, 'SeaplaneRecons': -0.614921413821462
-					, 'SeaplaneBomber': -0.624797255805045
-					, 'SmallRadars': -0.560018086758868
-					, 'LargeRadars': -0.561336967269448
-					, 'Searchlights': -0.518427865593732
-					, 'statLos': -0.620804120587684
-					, 'hqLv': 1
-				}
-			};
-			
+		summaryCalcLos(){			
 			let hq_lv = this.infosFleet.data.hq_lv || Lockr.get('hqLvDefault', _g.defaultHqLv)
 			if( hq_lv < 0 )
 				hq_lv = Lockr.get('hqLvDefault', _g.defaultHqLv)
@@ -7317,7 +7120,7 @@ class InfosFleetSubFleet{
 				'TorpedoBombers': 	0,
 				'CarrierRecons':	0,
 				'SeaplaneRecons':	0,
-				'SeaplaneBomber':	0,
+				'SeaplaneBombers':	0,
 				'SmallRadars':		0,
 				'LargeRadars':		0,
 				'Searchlights':		0,
@@ -7358,9 +7161,7 @@ class InfosFleetSubFleet{
 				}
 			})
 			
-			return calc(x);
-			//var result = calc(x);
-			//var score = result.y_estimate.toFixed(1) + ' ± ' + result.y_std_error.toFixed(1);
+			return Formula.calc.losPower(x);
 		}
 
 
