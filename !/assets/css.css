@@ -1736,159 +1736,248 @@ ul{
 }
 .tabview > input.tabview-switch[type="radio"] {
   display: none;
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
+  /*
+			&[value="@{i}"]:checked ~ section:nth-of-type(@{i}){
+				display:	block;
+			}
+			*/
 }
-.tabview > input.tabview-switch[type="radio"][value="1"]:checked ~ section:nth-of-type(1) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="1"]:checked ~ section:not(:nth-of-type(1)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="2"]:checked ~ section:nth-of-type(2) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="2"]:checked ~ section:not(:nth-of-type(2)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="3"]:checked ~ section:nth-of-type(3) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="3"]:checked ~ section:not(:nth-of-type(3)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="4"]:checked ~ section:nth-of-type(4) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="4"]:checked ~ section:not(:nth-of-type(4)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="5"]:checked ~ section:nth-of-type(5) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="5"]:checked ~ section:not(:nth-of-type(5)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="6"]:checked ~ section:nth-of-type(6) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="6"]:checked ~ section:not(:nth-of-type(6)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="7"]:checked ~ section:nth-of-type(7) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="7"]:checked ~ section:not(:nth-of-type(7)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="8"]:checked ~ section:nth-of-type(8) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="8"]:checked ~ section:not(:nth-of-type(8)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="9"]:checked ~ section:nth-of-type(9) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="9"]:checked ~ section:not(:nth-of-type(9)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="10"]:checked ~ section:nth-of-type(10) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="10"]:checked ~ section:not(:nth-of-type(10)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="11"]:checked ~ section:nth-of-type(11) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="11"]:checked ~ section:not(:nth-of-type(11)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="12"]:checked ~ section:nth-of-type(12) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="12"]:checked ~ section:not(:nth-of-type(12)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="13"]:checked ~ section:nth-of-type(13) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="13"]:checked ~ section:not(:nth-of-type(13)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="14"]:checked ~ section:nth-of-type(14) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="14"]:checked ~ section:not(:nth-of-type(14)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="15"]:checked ~ section:nth-of-type(15) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="15"]:checked ~ section:not(:nth-of-type(15)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="16"]:checked ~ section:nth-of-type(16) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="16"]:checked ~ section:not(:nth-of-type(16)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="17"]:checked ~ section:nth-of-type(17) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="17"]:checked ~ section:not(:nth-of-type(17)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="18"]:checked ~ section:nth-of-type(18) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="18"]:checked ~ section:not(:nth-of-type(18)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="19"]:checked ~ section:nth-of-type(19) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="19"]:checked ~ section:not(:nth-of-type(19)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="20"]:checked ~ section:nth-of-type(20) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="20"]:checked ~ section:not(:nth-of-type(20)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="21"]:checked ~ section:nth-of-type(21) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="21"]:checked ~ section:not(:nth-of-type(21)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="22"]:checked ~ section:nth-of-type(22) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="22"]:checked ~ section:not(:nth-of-type(22)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="23"]:checked ~ section:nth-of-type(23) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="23"]:checked ~ section:not(:nth-of-type(23)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="24"]:checked ~ section:nth-of-type(24) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="24"]:checked ~ section:not(:nth-of-type(24)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="25"]:checked ~ section:nth-of-type(25) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="25"]:checked ~ section:not(:nth-of-type(25)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="26"]:checked ~ section:nth-of-type(26) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="26"]:checked ~ section:not(:nth-of-type(26)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="27"]:checked ~ section:nth-of-type(27) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="27"]:checked ~ section:not(:nth-of-type(27)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="28"]:checked ~ section:nth-of-type(28) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="28"]:checked ~ section:not(:nth-of-type(28)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="29"]:checked ~ section:nth-of-type(29) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="29"]:checked ~ section:not(:nth-of-type(29)) {
+  display: none !important;
 }
-.tabview > input.tabview-switch[type="radio"][value="30"]:checked ~ section:nth-of-type(30) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="31"]:checked ~ section:nth-of-type(31) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="32"]:checked ~ section:nth-of-type(32) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="33"]:checked ~ section:nth-of-type(33) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="34"]:checked ~ section:nth-of-type(34) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="35"]:checked ~ section:nth-of-type(35) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="36"]:checked ~ section:nth-of-type(36) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="37"]:checked ~ section:nth-of-type(37) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="38"]:checked ~ section:nth-of-type(38) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="39"]:checked ~ section:nth-of-type(39) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="40"]:checked ~ section:nth-of-type(40) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="41"]:checked ~ section:nth-of-type(41) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="42"]:checked ~ section:nth-of-type(42) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="43"]:checked ~ section:nth-of-type(43) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="44"]:checked ~ section:nth-of-type(44) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="45"]:checked ~ section:nth-of-type(45) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="46"]:checked ~ section:nth-of-type(46) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="47"]:checked ~ section:nth-of-type(47) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="48"]:checked ~ section:nth-of-type(48) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="49"]:checked ~ section:nth-of-type(49) {
-  display: block;
-}
-.tabview > input.tabview-switch[type="radio"][value="50"]:checked ~ section:nth-of-type(50) {
-  display: block;
+.tabview > input.tabview-switch[type="radio"][value="30"]:checked ~ section:not(:nth-of-type(30)) {
+  display: none !important;
 }
 .tabview > section {
-  display: none;
   animation: fadein 0.3s ease-out;
   -webkit-animation: fadein 0.3s ease-out;
 }
@@ -7446,131 +7535,131 @@ body.mod-capture .infos-fleet > .ships > dl dd > .equipments {
 .infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-carry="0"] .equipment-carry {
   color: inherit;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft > .equipment-infos > .equipment-star {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable > .equipment-infos > .equipment-star {
   display: none;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft > .equipment-infos > .equipment-rank {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable > .equipment-infos > .equipment-rank {
   display: block;
   background: url(/!/assets/images/Aircraft_Proficiency.png) no-repeat 50% 224px / cover;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft > .equipment-options .equipment-starinput {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable > .equipment-options .equipment-starinput {
   display: none;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft > .equipment-options .equipment-rankselect {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable > .equipment-options .equipment-rankselect {
   display: block;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft > .equipment-options .equipment-rankselect span {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable > .equipment-options .equipment-rankselect span {
   background: url(/!/assets/images/Aircraft_Proficiency.png) no-repeat 50% 224px / cover;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="1"] > .equipment-infos > .equipment-rank {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="1"] > .equipment-infos > .equipment-rank {
   background-position-y: 0px;
   opacity: 1;
   -webkit-transform: translateY(calc(-50% - 8px));
       -ms-transform: translateY(calc(-50% - 8px));
           transform: translateY(calc(-50% - 8px));
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="1"] > .equipment-infos > .equipment-rank:before {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="1"] > .equipment-infos > .equipment-rank:before {
   display: none;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="1"] > .equipment-options .equipment-rankselect span {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="1"] > .equipment-options .equipment-rankselect span {
   color: transparent;
   background-position-y: 0px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="2"] > .equipment-infos > .equipment-rank {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="2"] > .equipment-infos > .equipment-rank {
   background-position-y: -16px;
   opacity: 1;
   -webkit-transform: translateY(calc(-50% - 8px));
       -ms-transform: translateY(calc(-50% - 8px));
           transform: translateY(calc(-50% - 8px));
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="2"] > .equipment-infos > .equipment-rank:before {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="2"] > .equipment-infos > .equipment-rank:before {
   display: none;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="2"] > .equipment-options .equipment-rankselect span {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="2"] > .equipment-options .equipment-rankselect span {
   color: transparent;
   background-position-y: -32px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="3"] > .equipment-infos > .equipment-rank {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="3"] > .equipment-infos > .equipment-rank {
   background-position-y: -32px;
   opacity: 1;
   -webkit-transform: translateY(calc(-50% - 8px));
       -ms-transform: translateY(calc(-50% - 8px));
           transform: translateY(calc(-50% - 8px));
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="3"] > .equipment-infos > .equipment-rank:before {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="3"] > .equipment-infos > .equipment-rank:before {
   display: none;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="3"] > .equipment-options .equipment-rankselect span {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="3"] > .equipment-options .equipment-rankselect span {
   color: transparent;
   background-position-y: -64px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="4"] > .equipment-infos > .equipment-rank {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="4"] > .equipment-infos > .equipment-rank {
   background-position-y: -48px;
   opacity: 1;
   -webkit-transform: translateY(calc(-50% - 8px));
       -ms-transform: translateY(calc(-50% - 8px));
           transform: translateY(calc(-50% - 8px));
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="4"] > .equipment-infos > .equipment-rank:before {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="4"] > .equipment-infos > .equipment-rank:before {
   display: none;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="4"] > .equipment-options .equipment-rankselect span {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="4"] > .equipment-options .equipment-rankselect span {
   color: transparent;
   background-position-y: -96px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="5"] > .equipment-infos > .equipment-rank {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="5"] > .equipment-infos > .equipment-rank {
   background-position-y: -64px;
   opacity: 1;
   -webkit-transform: translateY(calc(-50% - 8px));
       -ms-transform: translateY(calc(-50% - 8px));
           transform: translateY(calc(-50% - 8px));
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="5"] > .equipment-infos > .equipment-rank:before {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="5"] > .equipment-infos > .equipment-rank:before {
   display: none;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="5"] > .equipment-options .equipment-rankselect span {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="5"] > .equipment-options .equipment-rankselect span {
   color: transparent;
   background-position-y: -128px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="6"] > .equipment-infos > .equipment-rank {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="6"] > .equipment-infos > .equipment-rank {
   background-position-y: -80px;
   opacity: 1;
   -webkit-transform: translateY(calc(-50% - 8px));
       -ms-transform: translateY(calc(-50% - 8px));
           transform: translateY(calc(-50% - 8px));
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="6"] > .equipment-infos > .equipment-rank:before {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="6"] > .equipment-infos > .equipment-rank:before {
   display: none;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="6"] > .equipment-options .equipment-rankselect span {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="6"] > .equipment-options .equipment-rankselect span {
   color: transparent;
   background-position-y: -160px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="7"] > .equipment-infos > .equipment-rank {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="7"] > .equipment-infos > .equipment-rank {
   background-position-y: -96px;
   opacity: 1;
   -webkit-transform: translateY(calc(-50% - 8px));
       -ms-transform: translateY(calc(-50% - 8px));
           transform: translateY(calc(-50% - 8px));
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="7"] > .equipment-infos > .equipment-rank:before {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="7"] > .equipment-infos > .equipment-rank:before {
   display: none;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="7"] > .equipment-options .equipment-rankselect span {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="7"] > .equipment-options .equipment-rankselect span {
   color: transparent;
   background-position-y: -192px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="8"] > .equipment-infos > .equipment-rank {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="8"] > .equipment-infos > .equipment-rank {
   background-position-y: -112px;
   opacity: 1;
   -webkit-transform: translateY(calc(-50% - 8px));
       -ms-transform: translateY(calc(-50% - 8px));
           transform: translateY(calc(-50% - 8px));
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="8"] > .equipment-infos > .equipment-rank:before {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="8"] > .equipment-infos > .equipment-rank:before {
   display: none;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-rank="8"] > .equipment-options .equipment-rankselect span {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="8"] > .equipment-options .equipment-rankselect span {
   color: transparent;
   background-position-y: -224px;
 }
