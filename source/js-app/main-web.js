@@ -162,7 +162,10 @@ _g.bgimg_count = 0;
 				case 'ships':		t = 'ship';			break;
 				case 'equipments':	t = 'equipment';	break;
 				case 'entities':	t = 'entity';		break;
-				case 'fleets':		t = 'fleet';		break;
+				case 'fleets':
+					t = 'fleet';
+					parts[1] = _g.uriSearch('i') || '__NEW__'
+					break;
 			}
 			return {
 				'infos':	t,
@@ -180,13 +183,18 @@ _g.bgimg_count = 0;
 			
 		if( state.infos ){
 			var t = state.infos
+				,extra = ''
 			switch(t){
 				case 'ship':		t = 'ships';		break;
 				case 'equipment':	t = 'equipments';	break;
 				case 'entity':		t = 'entities';		break;
-				case 'fleet':		t = 'fleets';		break;
+				case 'fleet':
+					t = 'fleets';
+					extra = '?i='+state.id;
+					state.id = 'build';
+					break;
 			}
-			return '/' + t + '/' + state.id + '/'
+			return '/' + t + '/' + state.id + '/' + extra
 		}
 	}
 
@@ -482,6 +490,7 @@ _frame.app_main = {
 			this.load_page_func( page, options )
 
 			if( options.callback_modeSelection_select ){
+				console.log('trigger: modeSelectionEnter')
 				_frame.app_main.page_dom[page].trigger('modeSelectionEnter', [
 					options.callback_modeSelection_select || function(){},
 					options.callback_modeSelection_enter || function(){}

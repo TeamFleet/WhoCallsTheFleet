@@ -3376,6 +3376,12 @@ var Ship = (function (_ItemBase3) {
 			var series = this.getSeriesData();
 			picId = parseInt(picId || 0);
 
+			var getURI = function getURI(i, p) {
+				if (typeof node != 'undefined' && node && node.path && _g.path.pics.ships) return node.path.join(_g.path.pics.ships, i + '/' + p + '.webp');
+				if (_g.path.pics.ships) return _g.path.pics.ships + i + '/' + p + '.png';
+				return '/' + i + '/' + p + '.png';
+			};
+
 			for (var _i2 = 0; _i2 < series.length; _i2++) {
 				if (series[_i2].id == this.id) {
 					switch (picId) {
@@ -3386,13 +3392,13 @@ var Ship = (function (_ItemBase3) {
 						case 12:
 						case 13:
 						case 14:
-							return node.path.join(_g.path.pics.ships, this.id + '/' + picId + '.webp');
+							return getURI(this.id, picId);
 							break;
 						default:
 							if (series[_i2].illust_delete) {
-								return node.path.join(_g.path.pics.ships, series[_i2 - 1].id + '/' + picId + '.webp');
+								return getURI(series[_i2 - 1].id, picId);
 							} else {
-								return node.path.join(_g.path.pics.ships, this.id + '/' + picId + '.webp');
+								return getURI(this.id, picId);
 							}
 							break;
 					}
@@ -3777,7 +3783,9 @@ _g.parseURI = function (uri) {
 			case 'entities':
 				t = 'entity';break;
 			case 'fleets':
-				t = 'fleet';break;
+				t = 'fleet';
+				parts[1] = _g.uriSearch('i') || '__NEW__';
+				break;
 		}
 		return {
 			'infos': t,
@@ -3792,7 +3800,8 @@ _g.state2URI = function (state) {
 	if (state.page) return '/' + state.page + '/';
 
 	if (state.infos) {
-		var t = state.infos;
+		var t = state.infos,
+		    extra = '';
 		switch (t) {
 			case 'ship':
 				t = 'ships';break;
@@ -3801,9 +3810,12 @@ _g.state2URI = function (state) {
 			case 'entity':
 				t = 'entities';break;
 			case 'fleet':
-				t = 'fleets';break;
+				t = 'fleets';
+				extra = '?i=' + state.id;
+				state.id = 'build';
+				break;
 		}
-		return '/' + t + '/' + state.id + '/';
+		return '/' + t + '/' + state.id + '/' + extra;
 	}
 };
 
@@ -4004,6 +4016,7 @@ _frame.app_main = {
 		this.load_page_func(page, options);
 
 		if (options.callback_modeSelection_select) {
+			console.log('trigger: modeSelectionEnter');
 			_frame.app_main.page_dom[page].trigger('modeSelectionEnter', [options.callback_modeSelection_select || function () {}, options.callback_modeSelection_enter || function () {}]);
 		} else {
 			_frame.app_main.mode_selection_off();
@@ -4875,6 +4888,8 @@ _frame.infos = {
 		}
 
 		function initcont($el) {
+			if (type == 'fleet') $el = _frame.infos['__' + type](id, $el);
+
 			return _p.initDOM($el.addClass('infosbody').attr({
 				'data-infos-type': type,
 				'data-infos-id': id
@@ -5091,19 +5106,18 @@ _frame.infos.init = function () {
 	return true;
 };
 
-_frame.infos.__fleet = function (id) {
-	var data = new InfosFleet(id),
-	    el = data.el;
-	return el;
+_frame.infos.__fleet = function (id, el) {
+	return new InfosFleet(id, el).el;
 };
 
 var InfosFleet = (function () {
-	function InfosFleet(id) {
+	function InfosFleet(id, el) {
 		_classCallCheck(this, InfosFleet);
 
-		this.el = $('<div class="infos-fleet loading"/>').attr('data-infos-title', '舰队 (' + id + ')');
-		this.doms = {};
+		this.el = el || $('<div/>');
+		this.el.addClass('infos-fleet loading').attr('data-infos-title', '舰队 (' + id + ')');
 
+		this.doms = {};
 		this.fleets = [];
 
 		this.tip_hqlv_input = '输入 0 表示采用默认等级 (Lv.%1$d)';
@@ -5157,6 +5171,8 @@ var InfosFleet = (function () {
 				'data-fleetid': d._id,
 				'data-infos-id': d._id
 			}).removeClass('loading');
+
+			this.el.find('.loading-msg').remove();
 
 			$('<header/>').append(this.doms['name'] = $('<h3 contenteditable/>').html('点击编辑标题').on({
 				'input': (function () {
@@ -6931,8 +6947,8 @@ var TablelistFleets = (function (_Tablelist3) {
 		_this11.dom.filter_container = $('<div class="options" viewtype="card"/>').appendTo(_this11.dom.container);
 		_this11.dom.filters = $('<div class="filters"/>').appendTo(_this11.dom.filter_container);
 
-		_this11.dom.btn_new = $('<button class="new" icon="import"/>').html('新建/导入').on('click', (function () {
-			this.btn_new();
+		_this11.dom.btn_new = $('<button class="new" icon="import"/>').html('新建/导入').on('click', (function (e, target) {
+			this.btn_new(target);
 		}).bind(_this11)).appendTo(_this11.dom.filters);
 		_this11.dom.btn_exportFile = $('<button class="export" icon="floppy-disk"/>').html('导出配置文件').on('click', function () {
 			_db.fleets.persistence.compactDatafile();
@@ -6989,8 +7005,8 @@ var TablelistFleets = (function (_Tablelist3) {
 		gen_thead(_this11.columns).appendTo(_this11.dom.table);
 		_this11.dom.tbody = $('<tbody/>').appendTo(_this11.dom.table);
 
-		$('<div class="nocontent container"/>').append($($('<div/>').append($('<span>').html('暂无舰队配置')).append($('<button>').html('新建/导入').on('click', (function () {
-			this.dom.btn_new.click();
+		$('<div class="nocontent container"/>').append($($('<div/>').append($('<span>').html('暂无舰队配置')).append($('<button>').html('新建/导入').on('click', (function (e) {
+			this.dom.btn_new.trigger('click', [$(e.currentTarget)]);
 		}).bind(_this11))))).appendTo(_this11.dom.table_container_inner);
 
 		_this11.dom.table.on('contextmenu.contextmenu_fleet', 'tr[data-fleetid]', (function (e) {
@@ -7246,7 +7262,7 @@ var TablelistFleets = (function (_Tablelist3) {
 		}
 	}, {
 		key: 'btn_new',
-		value: function btn_new() {
+		value: function btn_new(target) {
 			if (!this.menu_new) {
 				this.menu_new = new _menu({
 					'target': this.dom.btn_new,
@@ -7341,7 +7357,7 @@ var TablelistFleets = (function (_Tablelist3) {
 				}).bind(this)).appendTo(this.dom.filters);
 			}
 
-			this.menu_new.show();
+			this.menu_new.show(target);
 		}
 	}, {
 		key: 'btn_settings',
@@ -7396,6 +7412,9 @@ var TablelistFleets = (function (_Tablelist3) {
 							_id: id
 						}, { multi: true }, function (err, numRemoved) {
 							_g.log('Fleet ' + id + ' removed.');
+							_db.fleets.count({}, (function (err, count) {
+								if (!count) this.dom.container.addClass('nocontent');
+							}).bind(this));
 						});
 						TablelistFleets.contextmenu.curel.remove();
 					}

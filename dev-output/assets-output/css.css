@@ -8238,6 +8238,31 @@ body.mod-capture .infos-fleet > .ships > dl dd > .options {
   display: flex;
   z-index: 2;
 }
+.infos-fleet.loading {
+  display: inline-block;
+  text-align: center !important;
+  vertical-align: middle !important;
+  font-size: 3em;
+  letter-spacing: .25em;
+  position: absolute;
+  color: rgba(255, 255, 255, 0.2);
+}
+.infos-fleet.loading > .loading-msg {
+  display: inline-block !important;
+  max-width: 98% !important;
+  max-width: calc(100% - 0.2rem) !important;
+  max-height: 100% !important;
+  vertical-align: middle !important;
+  margin: 0 auto !important;
+}
+.infos-fleet.loading:after {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+  height: 100%;
+  overflow: hidden;
+}
 main[data-theme="1"] {
   background-color: rgba(26, 26, 26, 0.8);
 }

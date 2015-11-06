@@ -27,6 +27,9 @@ _frame.infos = {
 
 		if( id == '__NEW__' )
 			return initcont( _frame.infos['__' + type]( id ) )
+		
+		if( id == '__OUTPUT__' )
+			this.contentCache[type][id] = initcont( _frame.infos['__' + type + '__OUTPUT']( id ) ).removeAttr('data-infos-id')
 
 		if( !this.contentCache[type][id] ){
 			this.contentCache[type][id] = initcont( _frame.infos['__' + type]( id ) )

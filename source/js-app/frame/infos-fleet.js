@@ -1,8 +1,6 @@
 // 舰队配置
-	_frame.infos.__fleet = function( id ){
-		let data = new InfosFleet(id)
-			,el = data.el
-		return el
+	_frame.infos.__fleet = function( id, el ){
+		return (new InfosFleet(id, el)).el
 	}
 
 
@@ -14,15 +12,14 @@
 
 
 class InfosFleet{
-	constructor( id ){
-		this.el = $('<div class="infos-fleet loading"/>')
-					.attr('data-infos-title', '舰队 ('+id+')')
+	constructor( id, el ){
+		this.el = el || $('<div/>')
+		this.el.addClass('infos-fleet loading').attr('data-infos-title','舰队 ('+id+')')
+		
 		this.doms = {}
-
 		this.fleets = []
 		//this._updating = false
 		//this.is_init = false
-		
 		this.tip_hqlv_input = '输入 0 表示采用默认等级 (Lv.%1$d)'
 	
 		if( id == '__NEW__' ){
@@ -85,6 +82,8 @@ class InfosFleet{
 			})
 			//.data('fleet', d)
 			.removeClass('loading')
+		
+		this.el.find('.loading-msg').remove()
 		
 		// 创建DOM
 			$('<header/>')

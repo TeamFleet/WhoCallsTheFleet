@@ -43,8 +43,8 @@ class TablelistFleets extends Tablelist{
 			this.dom.filters = $('<div class="filters"/>').appendTo( this.dom.filter_container )
 			// 左
 				this.dom.btn_new = $('<button class="new" icon="import"/>').html('新建/导入')
-									.on('click',function(){
-										this.btn_new()
+									.on('click',function(e, target){
+										this.btn_new(target)
 									}.bind(this))
 									.appendTo(this.dom.filters)
 				this.dom.btn_exportFile = $('<button class="export" icon="floppy-disk"/>').html('导出配置文件')
@@ -120,8 +120,8 @@ class TablelistFleets extends Tablelist{
 					$($('<div/>')
 						.append($('<span>').html('暂无舰队配置'))
 						.append($('<button>').html('新建/导入')
-									.on('click',function(){
-										this.dom.btn_new.click()
+									.on('click',function(e){
+										this.dom.btn_new.trigger('click', [$(e.currentTarget)])
 									}.bind(this))
 								)
 					)
@@ -438,7 +438,7 @@ class TablelistFleets extends Tablelist{
 		}
 
 	// [按钮操作] 新建/导入配置
-		btn_new(){
+		btn_new(target){
 			if( !this.menu_new ){
 				this.menu_new = new _menu({
 					'target': 	this.dom.btn_new,
@@ -585,8 +585,8 @@ class TablelistFleets extends Tablelist{
 					}.bind(this))
 					.appendTo(this.dom.filters)
 			}
-	
-			this.menu_new.show()
+			
+			this.menu_new.show(target)
 		}
 
 	// [按钮操作] 选项设置
@@ -658,6 +658,10 @@ class TablelistFleets extends Tablelist{
 										_id: id
 									}, { multi: true }, function (err, numRemoved) {
 										_g.log('Fleet ' + id + ' removed.')
+										_db.fleets.count({}, function(err, count){
+											if( !count )
+												this.dom.container.addClass('nocontent')
+										}.bind(this))
 									});
 									TablelistFleets.contextmenu.curel.remove()
 								}

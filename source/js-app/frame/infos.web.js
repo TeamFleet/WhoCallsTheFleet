@@ -36,6 +36,9 @@ _frame.infos = {
 		}
 		
 		function initcont( $el ){
+			if( type == 'fleet' )
+				$el = _frame.infos['__' + type]( id, $el )
+			
 			return _p.initDOM(
 				$el.addClass('infosbody')
 					.attr({
