@@ -488,16 +488,6 @@ _frame.app_main = {
 			)
 			
 			this.load_page_func( page, options )
-
-			if( options.callback_modeSelection_select ){
-				console.log('trigger: modeSelectionEnter')
-				_frame.app_main.page_dom[page].trigger('modeSelectionEnter', [
-					options.callback_modeSelection_select || function(){},
-					options.callback_modeSelection_enter || function(){}
-				])
-			}else{
-				_frame.app_main.mode_selection_off()
-			}
 			//_g.uriHash('page', page)
 		},
 		load_page_func: function( page, options ){
@@ -573,6 +563,15 @@ _frame.app_main = {
 				_frame.app_main.cur_page = page
 	
 				_g.log( 'LOADED: ' + page )
+
+				if( options.callback_modeSelection_select ){
+					_frame.app_main.page_dom[page].trigger('modeSelectionEnter', [
+						options.callback_modeSelection_select || function(){},
+						options.callback_modeSelection_enter || function(){}
+					])
+				}else{
+					_frame.app_main.mode_selection_off()
+				}
 			}
 
 			if( !_frame.app_main.page_dom[page] ){

@@ -1645,7 +1645,7 @@ class InfosFleetShipEquipment{
 					this.rank = (Lockr.get( 'fleetlist-option-aircraftdefaultmax' )
 									&& id
 									&& _g.data.items[id].rankupgradable
-									&& $.inArray(_g.data.items[id].type, _g.data.item_type_collections[3].types) > -1
+									&& $.inArray(_g.data.items[id].type, Formula.equipmentType.Aircrafts) > -1
 								) ? 7 : 0
 					TablelistEquipments.types = []
 					TablelistEquipments.shipId = null
@@ -1690,7 +1690,7 @@ class InfosFleetShipEquipment{
 						.css('background-image', 'url('+_g.data.items[value]._icon+')')
 				this.elName.html(_g.data.items[value]._name)
 				// 如果装备为飞行器，标记样式
-					if( $.inArray(_g.data.items[value].type, _g.data.item_type_collections[3].types) > -1 ){
+					if( $.inArray(_g.data.items[value].type, Formula.equipmentType.Aircrafts) > -1 ){
 						this.el.addClass('is-aircraft')
 						if( _g.data.items[value].rankupgradable )
 							this.el.addClass('is-rankupgradable')
@@ -1751,7 +1751,7 @@ class InfosFleetShipEquipment{
 			return this.infosFleetShip.data[4][this.index]
 		}
 		set rank( value ){
-			if( this.id && $.inArray(_g.data.items[this.id].type, _g.data.item_type_collections[3].types) > -1 ){
+			if( this.id && $.inArray(_g.data.items[this.id].type, Formula.equipmentType.Aircrafts) > -1 ){
 				value = parseInt(value) || null
 				
 				if( value > 7 )

@@ -9,8 +9,11 @@ _frame.app_main.page['fleets'] = {
 				$page.on({
 					'show': function(){
 						if( this.inited ){
+							/*
 							$page.html( _frame.app_main.page_html['fleets'] )
 							_p.initDOM($page)
+							*/
+							$page.children('.tablelist').data('tablelist').refresh()
 						}
 						this.inited = true
 					}

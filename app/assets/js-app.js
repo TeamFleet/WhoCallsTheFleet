@@ -1726,6 +1726,8 @@ let Formula = {
 			TorpedoBomber:		19,		// 舰攻 / 舰载鱼雷轰炸机
 			DiveBomber:			20,		// 舰爆 / 舰载俯冲轰炸机
 			CarrierRecon:		21,		// 舰侦 / 舰载侦察机
+			Autogyro:			22,		// 旋翼机
+			AntiSubPatrol:		23,		// 对潜哨戒机
 			SmallRadar:			24,		// 小型雷达
 			LargeRadar:			25,		// 大型雷达
 			DepthCharge:		26,		// 爆雷
@@ -1787,7 +1789,7 @@ let Formula = {
 							isCV = true
 						}else{
 							equipments_by_slot.forEach(function(equipment){
-								if( equipment && !isCV && $.inArray(equipment.type, Formula.equipmentType.AircraftBased) > -1 )
+								if( equipment && !isCV && $.inArray(equipment.type, Formula.equipmentType.CarrierBased) > -1 )
 									isCV = true
 							})
 						}
@@ -2112,7 +2114,7 @@ Formula.equipmentType.CarrierRecons = [
 		Formula.equipmentType.CarrierRecon2
 	];
 
-Formula.equipmentType.AircraftBased = [
+Formula.equipmentType.CarrierBased = [
 		Formula.equipmentType.CarrierFighter,
 		Formula.equipmentType.TorpedoBomber,
 		Formula.equipmentType.DiveBomber,
@@ -2127,6 +2129,25 @@ Formula.equipmentType.TorpedoBombers = [
 Formula.equipmentType.DiveBombers = [
 		Formula.equipmentType.DiveBomber
 	];
+
+Formula.equipmentType.Autogyros = [
+		Formula.equipmentType.Autogyro
+	];
+
+Formula.equipmentType.AntiSubPatrols = [
+		Formula.equipmentType.AntiSubPatrol
+	];
+
+Formula.equipmentType.Aircrafts = [];
+	[].concat(Formula.equipmentType.Seaplanes)
+		.concat(Formula.equipmentType.Recons)
+		.concat(Formula.equipmentType.CarrierBased)
+		.concat(Formula.equipmentType.Autogyros)
+		.concat(Formula.equipmentType.AntiSubPatrols)
+		.forEach(function(v){
+			if( Formula.equipmentType.Aircrafts.indexOf(v) < 0 )
+				Formula.equipmentType.Aircrafts.push(v)
+		})
 
 Formula.equipmentType.Radars = [
 		Formula.equipmentType.SmallRadar,
@@ -5338,8 +5359,11 @@ _frame.app_main.page['fleets'] = {
 				$page.on({
 					'show': function(){
 						if( this.inited ){
+							/*
 							$page.html( _frame.app_main.page_html['fleets'] )
 							_p.initDOM($page)
+							*/
+							$page.children('.tablelist').data('tablelist').refresh()
 						}
 						this.inited = true
 					}
@@ -7910,7 +7934,7 @@ class InfosFleetShipEquipment{
 					this.rank = (Lockr.get( 'fleetlist-option-aircraftdefaultmax' )
 									&& id
 									&& _g.data.items[id].rankupgradable
-									&& $.inArray(_g.data.items[id].type, _g.data.item_type_collections[3].types) > -1
+									&& $.inArray(_g.data.items[id].type, Formula.equipmentType.Aircrafts) > -1
 								) ? 7 : 0
 					TablelistEquipments.types = []
 					TablelistEquipments.shipId = null
@@ -7955,7 +7979,7 @@ class InfosFleetShipEquipment{
 						.css('background-image', 'url('+_g.data.items[value]._icon+')')
 				this.elName.html(_g.data.items[value]._name)
 				// 如果装备为飞行器，标记样式
-					if( $.inArray(_g.data.items[value].type, _g.data.item_type_collections[3].types) > -1 ){
+					if( $.inArray(_g.data.items[value].type, Formula.equipmentType.Aircrafts) > -1 ){
 						this.el.addClass('is-aircraft')
 						if( _g.data.items[value].rankupgradable )
 							this.el.addClass('is-rankupgradable')
@@ -8016,7 +8040,7 @@ class InfosFleetShipEquipment{
 			return this.infosFleetShip.data[4][this.index]
 		}
 		set rank( value ){
-			if( this.id && $.inArray(_g.data.items[this.id].type, _g.data.item_type_collections[3].types) > -1 ){
+			if( this.id && $.inArray(_g.data.items[this.id].type, Formula.equipmentType.Aircrafts) > -1 ){
 				value = parseInt(value) || null
 				
 				if( value > 7 )
@@ -9668,6 +9692,7 @@ class TablelistFleets extends Tablelist{
 		// 右键菜单事件
 			this.dom.table.on('contextmenu.contextmenu_fleet', 'tr[data-fleetid]', function(e){
 				this.contextmenu_show($(e.currentTarget), null , e)
+				e.preventDefault()
 			}.bind(this)).on('click.contextmenu_fleet', 'tr[data-fleetid]>th>em', function(e){
 				this.contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget))
 				e.stopImmediatePropagation()
@@ -9814,6 +9839,8 @@ class TablelistFleets extends Tablelist{
 	
 			if( !arr.length )
 				this.dom.container.addClass('nocontent')
+			else
+				this.dom.container.removeClass('nocontent')
 	
 			return arr
 		}
@@ -10197,8 +10224,8 @@ class TablelistFleets extends Tablelist{
 										_g.log('Fleet ' + id + ' removed.')
 										_db.fleets.count({}, function(err, count){
 											if( !count )
-												this.dom.container.addClass('nocontent')
-										}.bind(this))
+												TablelistFleets.contextmenu.curobject.dom.container.addClass('nocontent')
+										})
 									});
 									TablelistFleets.contextmenu.curel.remove()
 								}
@@ -10206,6 +10233,7 @@ class TablelistFleets extends Tablelist{
 					]
 				})
 
+			TablelistFleets.contextmenu.curobject = this
 			TablelistFleets.contextmenu.curel = $tr
 
 			if( is_rightclick )
@@ -10219,7 +10247,7 @@ class TablelistFleets extends Tablelist{
 		genlist(){
 			let promise_chain 	= Q.fcall(function(){})
 	
-				promise_chain
+				//promise_chain
 	
 			// 读取已保存数据
 				.then(function(){
@@ -10260,6 +10288,7 @@ class TablelistFleets extends Tablelist{
 	
 	// 重新生成列表
 		refresh(){
+			console.log('refresh')
 			this.dom.tbody.empty()
 			this.genlist()
 		}

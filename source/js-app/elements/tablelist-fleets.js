@@ -131,6 +131,7 @@ class TablelistFleets extends Tablelist{
 		// 右键菜单事件
 			this.dom.table.on('contextmenu.contextmenu_fleet', 'tr[data-fleetid]', function(e){
 				this.contextmenu_show($(e.currentTarget), null , e)
+				e.preventDefault()
 			}.bind(this)).on('click.contextmenu_fleet', 'tr[data-fleetid]>th>em', function(e){
 				this.contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget))
 				e.stopImmediatePropagation()
@@ -277,6 +278,8 @@ class TablelistFleets extends Tablelist{
 	
 			if( !arr.length )
 				this.dom.container.addClass('nocontent')
+			else
+				this.dom.container.removeClass('nocontent')
 	
 			return arr
 		}
@@ -660,8 +663,8 @@ class TablelistFleets extends Tablelist{
 										_g.log('Fleet ' + id + ' removed.')
 										_db.fleets.count({}, function(err, count){
 											if( !count )
-												this.dom.container.addClass('nocontent')
-										}.bind(this))
+												TablelistFleets.contextmenu.curobject.dom.container.addClass('nocontent')
+										})
 									});
 									TablelistFleets.contextmenu.curel.remove()
 								}
@@ -669,6 +672,7 @@ class TablelistFleets extends Tablelist{
 					]
 				})
 
+			TablelistFleets.contextmenu.curobject = this
 			TablelistFleets.contextmenu.curel = $tr
 
 			if( is_rightclick )
@@ -682,7 +686,7 @@ class TablelistFleets extends Tablelist{
 		genlist(){
 			let promise_chain 	= Q.fcall(function(){})
 	
-				promise_chain
+				//promise_chain
 	
 			// 读取已保存数据
 				.then(function(){
@@ -723,6 +727,7 @@ class TablelistFleets extends Tablelist{
 	
 	// 重新生成列表
 		refresh(){
+			console.log('refresh')
 			this.dom.tbody.empty()
 			this.genlist()
 		}

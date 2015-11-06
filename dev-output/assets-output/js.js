@@ -2635,6 +2635,8 @@ var Formula = {
 		TorpedoBomber: 19,
 		DiveBomber: 20,
 		CarrierRecon: 21,
+		Autogyro: 22,
+		AntiSubPatrol: 23,
 		SmallRadar: 24,
 		LargeRadar: 25,
 		DepthCharge: 26,
@@ -2678,7 +2680,7 @@ var Formula = {
 				isCV = true;
 			} else {
 				equipments_by_slot.forEach(function (equipment) {
-					if (equipment && !isCV && $.inArray(equipment.type, Formula.equipmentType.AircraftBased) > -1) isCV = true;
+					if (equipment && !isCV && $.inArray(equipment.type, Formula.equipmentType.CarrierBased) > -1) isCV = true;
 				});
 			}
 
@@ -2898,11 +2900,20 @@ Formula.equipmentType.SeaplaneBombers = [Formula.equipmentType.SeaplaneBomber];
 
 Formula.equipmentType.CarrierRecons = [Formula.equipmentType.CarrierRecon, Formula.equipmentType.CarrierRecon2];
 
-Formula.equipmentType.AircraftBased = [Formula.equipmentType.CarrierFighter, Formula.equipmentType.TorpedoBomber, Formula.equipmentType.DiveBomber, Formula.equipmentType.CarrierRecon, Formula.equipmentType.CarrierRecon2];
+Formula.equipmentType.CarrierBased = [Formula.equipmentType.CarrierFighter, Formula.equipmentType.TorpedoBomber, Formula.equipmentType.DiveBomber, Formula.equipmentType.CarrierRecon, Formula.equipmentType.CarrierRecon2];
 
 Formula.equipmentType.TorpedoBombers = [Formula.equipmentType.TorpedoBomber];
 
 Formula.equipmentType.DiveBombers = [Formula.equipmentType.DiveBomber];
+
+Formula.equipmentType.Autogyros = [Formula.equipmentType.Autogyro];
+
+Formula.equipmentType.AntiSubPatrols = [Formula.equipmentType.AntiSubPatrol];
+
+Formula.equipmentType.Aircrafts = [];
+[].concat(Formula.equipmentType.Seaplanes).concat(Formula.equipmentType.Recons).concat(Formula.equipmentType.CarrierBased).concat(Formula.equipmentType.Autogyros).concat(Formula.equipmentType.AntiSubPatrols).forEach(function (v) {
+	if (Formula.equipmentType.Aircrafts.indexOf(v) < 0) Formula.equipmentType.Aircrafts.push(v);
+});
 
 Formula.equipmentType.Radars = [Formula.equipmentType.SmallRadar, Formula.equipmentType.LargeRadar, Formula.equipmentType.SuparRadar];
 
@@ -4014,13 +4025,6 @@ _frame.app_main = {
 		}));
 
 		this.load_page_func(page, options);
-
-		if (options.callback_modeSelection_select) {
-			console.log('trigger: modeSelectionEnter');
-			_frame.app_main.page_dom[page].trigger('modeSelectionEnter', [options.callback_modeSelection_select || function () {}, options.callback_modeSelection_enter || function () {}]);
-		} else {
-			_frame.app_main.mode_selection_off();
-		}
 	},
 	load_page_func: function load_page_func(page, options) {
 		_g.log('PREPARE LOADING: ' + page);
@@ -4082,6 +4086,12 @@ _frame.app_main = {
 			_frame.app_main.cur_page = page;
 
 			_g.log('LOADED: ' + page);
+
+			if (options.callback_modeSelection_select) {
+				_frame.app_main.page_dom[page].trigger('modeSelectionEnter', [options.callback_modeSelection_select || function () {}, options.callback_modeSelection_enter || function () {}]);
+			} else {
+				_frame.app_main.mode_selection_off();
+			}
 		}
 
 		if (!_frame.app_main.page_dom[page]) {
@@ -4674,8 +4684,7 @@ _frame.app_main.page['fleets'] = {
 				$page.on({
 					'show': function show() {
 						if (this.inited) {
-							$page.html(_frame.app_main.page_html['fleets']);
-							_p.initDOM($page);
+							$page.children('.tablelist').data('tablelist').refresh();
 						}
 						this.inited = true;
 					}
@@ -6194,7 +6203,7 @@ var InfosFleetShipEquipment = (function () {
 					history.back();
 					this.id = id;
 					this.star = 0;
-					this.rank = Lockr.get('fleetlist-option-aircraftdefaultmax') && id && _g.data.items[id].rankupgradable && $.inArray(_g.data.items[id].type, _g.data.item_type_collections[3].types) > -1 ? 7 : 0;
+					this.rank = Lockr.get('fleetlist-option-aircraftdefaultmax') && id && _g.data.items[id].rankupgradable && $.inArray(_g.data.items[id].type, Formula.equipmentType.Aircrafts) > -1 ? 7 : 0;
 					TablelistEquipments.types = [];
 					TablelistEquipments.shipId = null;
 					if (this.infosFleetShip.infosFleet) _frame.infos.dom.main.attr('data-theme', this.infosFleetShip.infosFleet.data['theme']);
@@ -6241,7 +6250,7 @@ var InfosFleetShipEquipment = (function () {
 				}).css('background-image', 'url(' + _g.data.items[value]._icon + ')');
 				this.elName.html(_g.data.items[value]._name);
 
-				if ($.inArray(_g.data.items[value].type, _g.data.item_type_collections[3].types) > -1) {
+				if ($.inArray(_g.data.items[value].type, Formula.equipmentType.Aircrafts) > -1) {
 					this.el.addClass('is-aircraft');
 					if (_g.data.items[value].rankupgradable) this.el.addClass('is-rankupgradable');
 				} else this.el.removeClass('is-aircraft');
@@ -6292,7 +6301,7 @@ var InfosFleetShipEquipment = (function () {
 			return this.infosFleetShip.data[4][this.index];
 		},
 		set: function set(value) {
-			if (this.id && $.inArray(_g.data.items[this.id].type, _g.data.item_type_collections[3].types) > -1) {
+			if (this.id && $.inArray(_g.data.items[this.id].type, Formula.equipmentType.Aircrafts) > -1) {
 				value = parseInt(value) || null;
 
 				if (value > 7) value = 7;
@@ -7011,6 +7020,7 @@ var TablelistFleets = (function (_Tablelist3) {
 
 		_this11.dom.table.on('contextmenu.contextmenu_fleet', 'tr[data-fleetid]', (function (e) {
 			this.contextmenu_show($(e.currentTarget), null, e);
+			e.preventDefault();
 		}).bind(_this11)).on('click.contextmenu_fleet', 'tr[data-fleetid]>th>em', (function (e) {
 			this.contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget));
 			e.stopImmediatePropagation();
@@ -7146,7 +7156,7 @@ var TablelistFleets = (function (_Tablelist3) {
 		value: function datacheck(arr) {
 			arr = arr || [];
 
-			if (!arr.length) this.dom.container.addClass('nocontent');
+			if (!arr.length) this.dom.container.addClass('nocontent');else this.dom.container.removeClass('nocontent');
 
 			return arr;
 		}
@@ -7412,15 +7422,16 @@ var TablelistFleets = (function (_Tablelist3) {
 							_id: id
 						}, { multi: true }, function (err, numRemoved) {
 							_g.log('Fleet ' + id + ' removed.');
-							_db.fleets.count({}, (function (err, count) {
-								if (!count) this.dom.container.addClass('nocontent');
-							}).bind(this));
+							_db.fleets.count({}, function (err, count) {
+								if (!count) TablelistFleets.contextmenu.curobject.dom.container.addClass('nocontent');
+							});
 						});
 						TablelistFleets.contextmenu.curel.remove();
 					}
 				})]
 			});
 
+			TablelistFleets.contextmenu.curobject = this;
 			TablelistFleets.contextmenu.curel = $tr;
 
 			if (is_rightclick) TablelistFleets.contextmenu.show(is_rightclick.clientX, is_rightclick.clientY);else TablelistFleets.contextmenu.show($em || $tr);
@@ -7428,9 +7439,7 @@ var TablelistFleets = (function (_Tablelist3) {
 	}, {
 		key: 'genlist',
 		value: function genlist() {
-			var promise_chain = Q.fcall(function () {});
-
-			promise_chain.then((function () {
+			var promise_chain = Q.fcall(function () {}).then((function () {
 				return this.loaddata();
 			}).bind(this)).then((function (arr) {
 				return this.validdata(arr);
@@ -7451,6 +7460,7 @@ var TablelistFleets = (function (_Tablelist3) {
 	}, {
 		key: 'refresh',
 		value: function refresh() {
+			console.log('refresh');
 			this.dom.tbody.empty();
 			this.genlist();
 		}
