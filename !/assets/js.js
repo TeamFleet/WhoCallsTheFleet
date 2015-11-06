@@ -1949,7 +1949,7 @@ _frame.modal = {
 		});
 
 		if (settings.showBlured) {
-			if (!_frame.modal.dom.blured) node.win.capturePage(function (datauri) {
+			if (!_frame.modal.dom.blured && typeof node != 'undefined') node.win.capturePage(function (datauri) {
 				_frame.modal.dom.blured = $('<img/>').attr('src', datauri).appendTo(_frame.modal.dom.bg);
 			}, 'jpg', 'datauri');
 			_frame.modal.dom.container.addClass('bluredbg');
@@ -2534,13 +2534,39 @@ _g.updateDefaultHqLv = function (val) {
 	if (val <= 0) val = _g.defaultHqLv;
 	if (val != Lockr.get('hqLvDefault', _g.defaultHqLv)) {
 		Lockr.set('hqLvDefault', val);
-		clearTimeout(this.delay_updateDefaultHqLv);
-		this.delay_updateDefaultHqLv = setTimeout((function () {
+		clearTimeout(_g.delay_updateDefaultHqLv);
+		_g.delay_updateDefaultHqLv = setTimeout(function () {
 			$body.trigger('update_defaultHqLv', [val]);
-			clearTimeout(this.delay_updateDefaultHqLv);
-			this.delay_updateDefaultHqLv = null;
-		}).bind(this), 200);
+			clearTimeout(_g.delay_updateDefaultHqLv);
+			_g.delay_updateDefaultHqLv = null;
+		}, 200);
 	}
+};
+
+_g.statSpeed = {
+	5: '低速',
+	10: '高速'
+};
+_g.statRange = {
+	1: '短',
+	2: '中',
+	3: '长',
+	4: '超长'
+};
+_g.textRank = {
+	1: '|',
+	2: '||',
+	3: '|||',
+	4: '\\',
+	5: '\\\\',
+	6: '\\\\\\',
+	7: '》'
+};
+_g.getStatSpeed = function (speed) {
+	return _g.statSpeed[parseInt(speed)];
+};
+_g.getStatRange = function (range) {
+	return _g.statRange[parseInt(range)];
 };
 
 var _l = {};
@@ -2635,6 +2661,8 @@ var Formula = {
 		TorpedoBomber: 19,
 		DiveBomber: 20,
 		CarrierRecon: 21,
+		Autogyro: 22,
+		AntiSubPatrol: 23,
 		SmallRadar: 24,
 		LargeRadar: 25,
 		DepthCharge: 26,
@@ -2678,7 +2706,7 @@ var Formula = {
 				isCV = true;
 			} else {
 				equipments_by_slot.forEach(function (equipment) {
-					if (equipment && !isCV && $.inArray(equipment.type, Formula.equipmentType.AircraftBased) > -1) isCV = true;
+					if (equipment && !isCV && $.inArray(equipment.type, Formula.equipmentType.CarrierBased) > -1) isCV = true;
 				});
 			}
 
@@ -2898,11 +2926,20 @@ Formula.equipmentType.SeaplaneBombers = [Formula.equipmentType.SeaplaneBomber];
 
 Formula.equipmentType.CarrierRecons = [Formula.equipmentType.CarrierRecon, Formula.equipmentType.CarrierRecon2];
 
-Formula.equipmentType.AircraftBased = [Formula.equipmentType.CarrierFighter, Formula.equipmentType.TorpedoBomber, Formula.equipmentType.DiveBomber, Formula.equipmentType.CarrierRecon, Formula.equipmentType.CarrierRecon2];
+Formula.equipmentType.CarrierBased = [Formula.equipmentType.CarrierFighter, Formula.equipmentType.TorpedoBomber, Formula.equipmentType.DiveBomber, Formula.equipmentType.CarrierRecon, Formula.equipmentType.CarrierRecon2];
 
 Formula.equipmentType.TorpedoBombers = [Formula.equipmentType.TorpedoBomber];
 
 Formula.equipmentType.DiveBombers = [Formula.equipmentType.DiveBomber];
+
+Formula.equipmentType.Autogyros = [Formula.equipmentType.Autogyro];
+
+Formula.equipmentType.AntiSubPatrols = [Formula.equipmentType.AntiSubPatrol];
+
+Formula.equipmentType.Aircrafts = [];
+[].concat(Formula.equipmentType.Seaplanes).concat(Formula.equipmentType.Recons).concat(Formula.equipmentType.CarrierBased).concat(Formula.equipmentType.Autogyros).concat(Formula.equipmentType.AntiSubPatrols).forEach(function (v) {
+	if (Formula.equipmentType.Aircrafts.indexOf(v) < 0) Formula.equipmentType.Aircrafts.push(v);
+});
 
 Formula.equipmentType.Radars = [Formula.equipmentType.SmallRadar, Formula.equipmentType.LargeRadar, Formula.equipmentType.SuparRadar];
 
@@ -3376,6 +3413,12 @@ var Ship = (function (_ItemBase3) {
 			var series = this.getSeriesData();
 			picId = parseInt(picId || 0);
 
+			var getURI = function getURI(i, p) {
+				if (typeof node != 'undefined' && node && node.path && _g.path.pics.ships) return node.path.join(_g.path.pics.ships, i + '/' + p + '.png');
+				if (_g.path.pics.ships) return _g.path.pics.ships + i + '/' + p + '.png';
+				return '/' + i + '/' + p + '.png';
+			};
+
 			for (var _i2 = 0; _i2 < series.length; _i2++) {
 				if (series[_i2].id == this.id) {
 					switch (picId) {
@@ -3386,13 +3429,13 @@ var Ship = (function (_ItemBase3) {
 						case 12:
 						case 13:
 						case 14:
-							return node.path.join(_g.path.pics.ships, this.id + '/' + picId + '.png');
+							return getURI(this.id, picId);
 							break;
 						default:
 							if (series[_i2].illust_delete) {
-								return node.path.join(_g.path.pics.ships, series[_i2 - 1].id + '/' + picId + '.png');
+								return getURI(series[_i2 - 1].id, picId);
 							} else {
-								return node.path.join(_g.path.pics.ships, this.id + '/' + picId + '.png');
+								return getURI(this.id, picId);
 							}
 							break;
 					}
@@ -3726,33 +3769,6 @@ Nedb.prototype._updateById = function () {
 	}).bind(this));
 };
 
-_g.statSpeed = {
-	5: '低速',
-	10: '高速'
-};
-_g.statRange = {
-	1: '短',
-	2: '中',
-	3: '长',
-	4: '超长'
-};
-_g.textRank = {
-	1: '|',
-	2: '||',
-	3: '|||',
-	4: '\\',
-	5: '\\\\',
-	6: '\\\\\\',
-	7: '》'
-};
-_g.getStatSpeed = function (speed) {
-	speed = parseInt(speed);
-	return _g.statSpeed[speed];
-};
-_g.getStatRange = function (range) {
-	range = parseInt(range);
-	return _g.statRange[range];
-};
 _g.log = function () {
 	console.log.apply(console, arguments);
 };
@@ -3777,7 +3793,9 @@ _g.parseURI = function (uri) {
 			case 'entities':
 				t = 'entity';break;
 			case 'fleets':
-				t = 'fleet';break;
+				t = 'fleet';
+				parts[1] = _g.uriSearch('i') || '__NEW__';
+				break;
 		}
 		return {
 			'infos': t,
@@ -3792,7 +3810,8 @@ _g.state2URI = function (state) {
 	if (state.page) return '/' + state.page + '/';
 
 	if (state.infos) {
-		var t = state.infos;
+		var t = state.infos,
+		    extra = '';
 		switch (t) {
 			case 'ship':
 				t = 'ships';break;
@@ -3801,9 +3820,12 @@ _g.state2URI = function (state) {
 			case 'entity':
 				t = 'entities';break;
 			case 'fleet':
-				t = 'fleets';break;
+				t = 'fleets';
+				extra = '?i=' + state.id;
+				state.id = 'build';
+				break;
 		}
-		return '/' + t + '/' + state.id + '/';
+		return '/' + t + '/' + state.id + '/' + extra;
 	}
 };
 
@@ -3822,13 +3844,12 @@ _frame.app_main = {
 	loaded: function loaded(item, is_instant) {
 		_g.log(item + ' loaded.');
 		if (item) {
-			var index = _frame.app_main.loading.indexOf(item);
-			if (index > -1) {
-				_frame.app_main.loading.splice(_frame.app_main.loading.indexOf(item), 1);
-				_frame.app_main.is_loaded = false;
+			if (this.loading.indexOf(item) > -1) {
+				this.loading.splice(this.loading.indexOf(item), 1);
+				this.is_loaded = false;
 			}
 		}
-		if (!_frame.app_main.loading.length && !_frame.app_main.is_loaded) {
+		if (!this.loading.length && !this.is_loaded) {
 			setTimeout(function () {
 				if (_frame.app_main.is_loaded && !_frame.app_main.loading.length && !$html.hasClass('app-ready')) {
 					_frame.dom.layout.addClass('ready');
@@ -3852,7 +3873,7 @@ _frame.app_main = {
 				this.window_event_bound = true;
 			}
 
-			_frame.app_main.is_loaded = true;
+			this.is_loaded = true;
 		}
 	},
 
@@ -3874,11 +3895,11 @@ _frame.app_main = {
 	},
 
 	change_bgimg: function change_bgimg(bgimgs_new) {
-		if (!_frame.app_main.bgimgs.length) return false;
+		if (!this.bgimgs.length) return false;
 
-		var bgimgs = bgimgs_new && bgimgs_new.length ? bgimgs_new : _frame.app_main.bgimgs,
+		var bgimgs = bgimgs_new && bgimgs_new.length ? bgimgs_new : this.bgimgs,
 		    img_new = bgimgs[_g.randInt(bgimgs.length)],
-		    img_old = _frame.app_main.cur_bgimg_el ? _frame.app_main.cur_bgimg_el.css('background-image') : null;
+		    img_old = this.cur_bgimg_el ? this.cur_bgimg_el.css('background-image') : null;
 
 		img_old = img_old ? img_old.split('/') : null;
 		img_old = img_old ? img_old[img_old.length - 1].split(')') : null;
@@ -3893,14 +3914,14 @@ _frame.app_main = {
 		img_new = this.bgimg_path;
 
 		if (img_old) {
-			this.change_bgimg_oldEl = _frame.app_main.cur_bgimg_el;
+			this.change_bgimg_oldEl = this.cur_bgimg_el;
 		}
 
-		_frame.app_main.cur_bgimg_el = $('<div/>').css('background-image', 'url(' + img_new + ')').appendTo(_frame.dom.bgimg).add($('<s' + (_frame.app_main.change_bgimg_fadein ? ' class="fadein"' : '') + '/>').css('background-image', 'url(' + img_new_blured + ')').appendTo(_frame.dom.nav)).add($('<s' + (_frame.app_main.change_bgimg_fadein ? ' class="fadein"' : '') + '/>').css('background-image', 'url(' + img_new_blured + ')').appendTo(_frame.dom.main));
+		this.cur_bgimg_el = $('<div/>').css('background-image', 'url(' + img_new + ')').appendTo(_frame.dom.bgimg).add($('<s' + (this.change_bgimg_fadein ? ' class="fadein"' : '') + '/>').css('background-image', 'url(' + img_new_blured + ')').appendTo(_frame.dom.nav)).add($('<s' + (this.change_bgimg_fadein ? ' class="fadein"' : '') + '/>').css('background-image', 'url(' + img_new_blured + ')').appendTo(_frame.dom.main));
 
-		if (_frame.dom.bg_controls) _frame.app_main.cur_bgimg_el = _frame.app_main.cur_bgimg_el.add($('<s' + (_frame.app_main.change_bgimg_fadein ? ' class="fadein"' : '') + '/>').css('background-image', 'url(' + img_new_blured + ')').appendTo(_frame.dom.bg_controls));
+		if (_frame.dom.bg_controls) this.cur_bgimg_el = this.cur_bgimg_el.add($('<s' + (this.change_bgimg_fadein ? ' class="fadein"' : '') + '/>').css('background-image', 'url(' + img_new_blured + ')').appendTo(_frame.dom.bg_controls));
 
-		_frame.app_main.change_bgimg_fadein = true;
+		this.change_bgimg_fadein = true;
 	},
 	change_bgimg_after: function change_bgimg_after(oldEl) {
 		oldEl = oldEl || this.change_bgimg_oldEl;
@@ -3991,7 +4012,7 @@ _frame.app_main = {
 	},
 
 	load_page: function load_page(page, options) {
-		if (_frame.app_main.cur_page == page || !page) return page;
+		if (this.cur_page == page || !page) return page;
 
 		options = options || {};
 
@@ -4002,12 +4023,6 @@ _frame.app_main = {
 		}));
 
 		this.load_page_func(page, options);
-
-		if (options.callback_modeSelection_select) {
-			_frame.app_main.page_dom[page].trigger('modeSelectionEnter', [options.callback_modeSelection_select || function () {}, options.callback_modeSelection_enter || function () {}]);
-		} else {
-			_frame.app_main.mode_selection_off();
-		}
 	},
 	load_page_func: function load_page_func(page, options) {
 		_g.log('PREPARE LOADING: ' + page);
@@ -4019,8 +4034,8 @@ _frame.app_main = {
 
 		if (page == 'donate') {
 			checked = true;
-		}if (!_frame.app_main.cur_page) {
-			_frame.app_main.nav.forEach(function (currentValue) {
+		}if (!this.cur_page) {
+			this.nav.forEach(function (currentValue) {
 				if (page == currentValue.page) checked = true;
 			});
 		} else {
@@ -4028,8 +4043,8 @@ _frame.app_main = {
 		}
 
 		if (!checked) {
-			page = _frame.app_main.nav[0].page;
-			_frame.app_main.load_page(page, options);
+			page = this.nav[0].page;
+			this.load_page(page, options);
 			return page;
 		}
 
@@ -4069,13 +4084,19 @@ _frame.app_main = {
 			_frame.app_main.cur_page = page;
 
 			_g.log('LOADED: ' + page);
+
+			if (options.callback_modeSelection_select) {
+				_frame.app_main.page_dom[page].trigger('modeSelectionEnter', [options.callback_modeSelection_select || function () {}, options.callback_modeSelection_enter || function () {}]);
+			} else {
+				_frame.app_main.mode_selection_off();
+			}
 		}
 
-		if (!_frame.app_main.page_dom[page]) {
-			_frame.app_main.page_dom[page] = _frame.dom.main.find('.page-container[page="' + page + '"]');
-			if (_frame.app_main.page_dom[page].length) {
-				_frame.app_main.page_init(page);
-				_frame.app_main.page_title['/' + page + '/'] = document.title;
+		if (!this.page_dom[page]) {
+			this.page_dom[page] = _frame.dom.main.find('.page-container[page="' + page + '"]');
+			if (this.page_dom[page].length) {
+				this.page_init(page);
+				this.page_title['/' + page + '/'] = document.title;
 				callback();
 			} else {
 				this.loading_start('/' + page + '/', function (html) {
@@ -4105,7 +4126,7 @@ _frame.app_main = {
 				}
 			}).appendTo(_frame.dom.layout);
 
-			_frame.app_main.cur_bgimg_el = _frame.app_main.cur_bgimg_el.add(_frame.app_main.cur_bgimg_el.eq(0).clone().appendTo(_frame.dom.bg_controls));
+			this.cur_bgimg_el = this.cur_bgimg_el.add(this.cur_bgimg_el.eq(0).clone().appendTo(_frame.dom.bg_controls));
 
 			$('<button class="prev" icon="arrow-left"/>').on('click', function () {
 				var pathParse = _frame.app_main.bgimg_path.split('/'),
@@ -4147,7 +4168,7 @@ _frame.app_main = {
 	},
 
 	init: function init() {
-		if (_frame.app_main.is_init) return true;
+		if (this.is_init) return true;
 
 		_frame.dom.nav = _frame.dom.layout.children('nav');
 		_frame.dom.logo = $('<button class="logo"/>').on(_g.event.animationend, function (e) {
@@ -4340,7 +4361,7 @@ _frame.app_main = {
 			_g.log('Global initialization DONE');
 		});
 
-		_frame.app_main.is_init = true;
+		this.is_init = true;
 	}
 };
 
@@ -4353,8 +4374,8 @@ _g.error = function (err) {
 var debugmode = false;
 
 _frame.app_main.page_init = function (page, $page) {
-	$page = $page || _frame.app_main.page_dom[page];
-	if (_frame.app_main.page[page] && _frame.app_main.page[page].init) _frame.app_main.page[page].init($page);
+	$page = $page || this.page_dom[page];
+	if (this.page[page] && this.page[page].init) this.page[page].init($page);
 	_p.initDOM($page);
 };
 
@@ -4661,8 +4682,7 @@ _frame.app_main.page['fleets'] = {
 				$page.on({
 					'show': function show() {
 						if (this.inited) {
-							$page.html(_frame.app_main.page_html['fleets']);
-							_p.initDOM($page);
+							$page.children('.tablelist').data('tablelist').refresh();
 						}
 						this.inited = true;
 					}
@@ -4862,7 +4882,7 @@ _frame.infos = {
 		}
 
 		if (!this.firstrun) {
-			var firstChildren = _frame.infos.dom.container.children('.infosbody').eq(0);
+			var firstChildren = this.dom.container.children('.infosbody').eq(0);
 			this.firstrun = true;
 			if (firstChildren.attr('data-infos-type') == type && firstChildren.attr('data-infos-id') == id) {
 				this.contentCache[type][id] = _p.initDOM(firstChildren);
@@ -4875,13 +4895,15 @@ _frame.infos = {
 		}
 
 		function initcont($el) {
+			if (type == 'fleet') $el = _frame.infos['__' + type](id, $el);
+
 			return _p.initDOM($el.addClass('infosbody').attr({
 				'data-infos-type': type,
 				'data-infos-id': id
 			}));
 		}
 
-		if (id == '__NEW__') return cb(initcont(_frame.infos['__' + type](id)));
+		if (id == '__NEW__') return cb(initcont(this['__' + type](id)));
 
 		if (!this.contentCache[type][id]) {
 			_frame.app_main.loading_start(_g.state2URI({
@@ -4919,7 +4941,7 @@ _frame.infos = {
 			return false;
 		}
 
-		if (this.curContent == infosType + '::' + infosId) return _frame.infos.dom.container.children('div:first-child');
+		if (this.curContent == infosType + '::' + infosId) return this.dom.container.children('div:first-child');
 
 		if (!doNotPushHistory) {
 			this.historyCurrent++;
@@ -4927,7 +4949,7 @@ _frame.infos = {
 			_frame.app_main.pushState({
 				'infos': infosType,
 				'id': infosId,
-				'infosHistoryIndex': _frame.infos.historyCurrent
+				'infosHistoryIndex': this.historyCurrent
 			}, null, _g.state2URI({
 				'infos': infosType,
 				'id': infosId
@@ -4940,35 +4962,23 @@ _frame.infos = {
 	show_func: function show_func(type, id, doNotPushHistory, infosHistoryIndex) {
 		if (!type || !id) return false;
 
-		if (this.curContent == type + '::' + id) return _frame.infos.dom.container.children('div:first-child');
+		if (this.curContent == type + '::' + id) return this.dom.container.children('div:first-child');
 
 		type = type.toLowerCase();
 		if (!isNaN(id)) id = parseInt(id);
 
 		var title = null;
 
-		if (!_frame.infos.dom) {
-			_frame.infos.dom = {
+		if (!this.dom) {
+			this.dom = {
 				'main': _frame.dom.main.children('.page-container.infos')
 			};
-			if (!_frame.infos.dom.main.length) {
-				_frame.infos.dom.main = $('<div class="page-container infos"/>').appendTo(_frame.dom.main);
-				_frame.infos.dom.container = $('<div class="wrapper"/>').appendTo(_frame.infos.dom.main);
+			if (!this.dom.main.length) {
+				this.dom.main = $('<div class="page-container infos"/>').appendTo(_frame.dom.main);
+				this.dom.container = $('<div class="wrapper"/>').appendTo(this.dom.main);
 			} else {
-				_frame.infos.dom.container = _frame.infos.dom.main.children('.wrapper');
+				this.dom.container = this.dom.main.children('.wrapper');
 			}
-			if (_frame.dom.btnHistoryBack) _frame.dom.btnHistoryBack.on(eventName('transitionend', 'infos_hide'), function (e) {
-				if (e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseFloat(_frame.dom.btnHistoryBack.css('opacity')) == 0) {
-					_frame.infos.hide_finish();
-				}
-			});
-		}
-
-		if (_frame.dom.btnHistoryForward) {
-			infosHistoryIndex = typeof infosHistoryIndex != 'undefined' ? infosHistoryIndex : this.historyCurrent;
-			this.historyCurrent = infosHistoryIndex;
-
-			if (this.historyCurrent == this.historyLength && this.historyCurrent > -1) _frame.dom.btnHistoryForward.addClass('disabled');
 		}
 
 		_frame.dom.layout.addClass('is-infos-show');
@@ -4980,11 +4990,11 @@ _frame.infos = {
 				case 'ship':
 				case 'equipment':
 				case 'entity':
-					_frame.infos.dom.main.attr('data-infostype', type);
+					this.dom.main.attr('data-infostype', type);
 					title = cont.attr('data-infos-title');
 					break;
 				case 'fleet':
-					_frame.infos.dom.main.attr('data-infostype', 'fleet');
+					this.dom.main.attr('data-infostype', 'fleet');
 					_frame.app_main.mode_selection_off();
 					TablelistEquipments.types = [];
 					break;
@@ -5015,7 +5025,7 @@ _frame.infos = {
 
 			if (this.curContent != type + '::' + id) return;
 
-			cont.prependTo(_frame.infos.dom.container).trigger('show', [is_firstShow]).data('is_show', true);
+			cont.prependTo(this.dom.container).trigger('show', [is_firstShow]).data('is_show', true);
 
 			if (_frame.app_main.cur_page) {
 
@@ -5043,18 +5053,18 @@ _frame.infos = {
 	},
 
 	hide: function hide() {
-		if (!_frame.infos.dom || !this.curContent) return false;
+		if (!this.dom || !this.curContent) return false;
 
 		_frame.dom.layout.removeClass('is-infos-on');
-		if (_frame.dom.btnHistoryForward) _frame.dom.btnHistoryForward.addClass('disabled');
+
 		this.curContent = null;
 	},
 
 	hide_finish: function hide_finish() {
-		if (_frame.infos.curContent) return false;
+		if (this.curContent) return false;
 
 		_frame.dom.layout.removeClass('is-infos-show');
-		_frame.infos.dom.main.attr({
+		this.dom.main.attr({
 			'data-infostype': '',
 			'data-theme': ''
 		});
@@ -5063,47 +5073,38 @@ _frame.infos = {
 		this.historyCurrent = -1;
 	},
 
-	historyback: function historyback() {
-		_frame.infos.dom.main.children().slice(1).remove();
-		_frame.infos.dom.main.children().eq(0).removeClass('off').addClass('fadein');
-		_frame.infos.dom.historyback.empty().removeClass('show');
-
-		if (_frame.infos.dom.main.children().eq(0).hasClass('ship')) _frame.infos.dom.main.attr('data-infostype', 'ship');else if (_frame.infos.dom.main.children().eq(0).hasClass('equipment')) _frame.infos.dom.main.attr('data-infostype', 'equipment');else if (_frame.infos.dom.main.children().eq(0).hasClass('fleet')) _frame.infos.dom.main.attr('data-infostype', 'fleet');else if (_frame.infos.dom.main.children().eq(0).hasClass('entity')) _frame.infos.dom.main.attr('data-infostype', 'entity');
+	click: function click(el) {
+		this.show(el.attr('data-infos'), el, el.attr('data-infos-nohistory'));
 	},
 
-	click: function click(el) {
-		_frame.infos.show(el.attr('data-infos'), el, el.attr('data-infos-nohistory'));
+	init: function init() {
+		if (this.is_init) return true;
+
+		$body.on('click._infos', '[data-infos]', function (e) {
+			if (!(e.target.tagName.toLowerCase() == 'input' && e.target.className == 'compare')) {
+				_frame.infos.click($(this));
+
+				if (e.target.tagName.toLowerCase() == 'a') e.preventDefault();
+			}
+		});
+
+		this.is_init = true;
+		return true;
 	}
 };
 
-_frame.infos.init = function () {
-	if (_frame.infos.is_init) return true;
-
-	$body.on('click._infos', '[data-infos]', function (e) {
-		if (!(e.target.tagName.toLowerCase() == 'input' && e.target.className == 'compare')) {
-			_frame.infos.click($(this));
-
-			if (e.target.tagName.toLowerCase() == 'a') e.preventDefault();
-		}
-	});
-
-	_frame.infos.is_init = true;
-	return true;
-};
-
-_frame.infos.__fleet = function (id) {
-	var data = new InfosFleet(id),
-	    el = data.el;
-	return el;
+_frame.infos.__fleet = function (id, el) {
+	return new InfosFleet(id, el).el;
 };
 
 var InfosFleet = (function () {
-	function InfosFleet(id) {
+	function InfosFleet(id, el) {
 		_classCallCheck(this, InfosFleet);
 
-		this.el = $('<div class="infos-fleet loading"/>').attr('data-infos-title', '舰队 (' + id + ')');
-		this.doms = {};
+		this.el = el || $('<div/>');
+		this.el.addClass('infos-fleet loading').attr('data-infos-title', '舰队 (' + id + ')');
 
+		this.doms = {};
 		this.fleets = [];
 
 		this.tip_hqlv_input = '输入 0 表示采用默认等级 (Lv.%1$d)';
@@ -5141,6 +5142,11 @@ var InfosFleet = (function () {
 				this.doms['hqlvOption'].attr('placeholder', _l2);
 			}
 		}).bind(this));
+
+		if (!_g.isClient) this.doms.warning = $('<div/>', {
+			'class': 'warning',
+			'html': '功能移植/测试中，请勿日常使用'
+		}).appendTo(this.el);
 	}
 
 	_createClass(InfosFleet, [{
@@ -5157,6 +5163,8 @@ var InfosFleet = (function () {
 				'data-fleetid': d._id,
 				'data-infos-id': d._id
 			}).removeClass('loading');
+
+			this.el.find('.loading-msg').remove();
 
 			$('<header/>').append(this.doms['name'] = $('<h3 contenteditable/>').html('点击编辑标题').on({
 				'input': (function () {
@@ -6178,7 +6186,7 @@ var InfosFleetShipEquipment = (function () {
 					history.back();
 					this.id = id;
 					this.star = 0;
-					this.rank = Lockr.get('fleetlist-option-aircraftdefaultmax') && id && _g.data.items[id].rankupgradable && $.inArray(_g.data.items[id].type, _g.data.item_type_collections[3].types) > -1 ? 7 : 0;
+					this.rank = Lockr.get('fleetlist-option-aircraftdefaultmax') && id && _g.data.items[id].rankupgradable && $.inArray(_g.data.items[id].type, Formula.equipmentType.Aircrafts) > -1 ? 7 : 0;
 					TablelistEquipments.types = [];
 					TablelistEquipments.shipId = null;
 					if (this.infosFleetShip.infosFleet) _frame.infos.dom.main.attr('data-theme', this.infosFleetShip.infosFleet.data['theme']);
@@ -6225,7 +6233,7 @@ var InfosFleetShipEquipment = (function () {
 				}).css('background-image', 'url(' + _g.data.items[value]._icon + ')');
 				this.elName.html(_g.data.items[value]._name);
 
-				if ($.inArray(_g.data.items[value].type, _g.data.item_type_collections[3].types) > -1) {
+				if ($.inArray(_g.data.items[value].type, Formula.equipmentType.Aircrafts) > -1) {
 					this.el.addClass('is-aircraft');
 					if (_g.data.items[value].rankupgradable) this.el.addClass('is-rankupgradable');
 				} else this.el.removeClass('is-aircraft');
@@ -6276,7 +6284,7 @@ var InfosFleetShipEquipment = (function () {
 			return this.infosFleetShip.data[4][this.index];
 		},
 		set: function set(value) {
-			if (this.id && $.inArray(_g.data.items[this.id].type, _g.data.item_type_collections[3].types) > -1) {
+			if (this.id && $.inArray(_g.data.items[this.id].type, Formula.equipmentType.Aircrafts) > -1) {
 				value = parseInt(value) || null;
 
 				if (value > 7) value = 7;
@@ -6343,7 +6351,7 @@ _frame.app_main.mode_selection_on = function (callback) {
 };
 
 _frame.app_main.mode_selection_off = function () {
-	if (_frame.app_main.cur_page) _frame.app_main.page_dom[_frame.app_main.cur_page].trigger('modeSelectionExit');
+	if (this.cur_page) this.page_dom[this.cur_page].trigger('modeSelectionExit');
 	_frame.dom.layout.removeClass('mode-selection');
 };
 
@@ -6549,7 +6557,8 @@ var Tablelist = (function () {
 			if (!rows) {
 				var tbody = this.dom.tbody;
 				if (!tbody || !tbody.length) tbody = this.dom.table.find('tbody');
-				rows = tbody.find('tr.row:visible').not('[data-donotcompare]');
+
+				rows = tbody.find('tr.row:visible:not([data-donotcompare])');
 			}
 			nth = nth || 1;
 
@@ -6558,7 +6567,7 @@ var Tablelist = (function () {
 
 			rows.find('td:nth-of-type(' + nth + ')').each((function (index, element) {
 				var cell = $(element),
-				    val = cell.data('value');
+				    val = cell.attr('data-value');
 
 				val = parseFloat(val);
 
@@ -6590,7 +6599,7 @@ var Tablelist = (function () {
 
 			if (!tbody || !tbody.length) tbody = this.dom.table.find('tbody');
 
-			var rows = tbody.find('tr.row:visible').not('[data-donotcompare]');
+			var rows = tbody.find('tr.row:visible:not([data-donotcompare])');
 
 			rows.find('td[data-value]').removeClass('sort-first sort-second');
 
@@ -6930,8 +6939,8 @@ var TablelistFleets = (function (_Tablelist3) {
 		_this11.dom.filter_container = $('<div class="options" viewtype="card"/>').appendTo(_this11.dom.container);
 		_this11.dom.filters = $('<div class="filters"/>').appendTo(_this11.dom.filter_container);
 
-		_this11.dom.btn_new = $('<button class="new" icon="import"/>').html('新建/导入').on('click', (function () {
-			this.btn_new();
+		_this11.dom.btn_new = $('<button class="new" icon="import"/>').html('新建/导入').on('click', (function (e, target) {
+			this.btn_new(target);
 		}).bind(_this11)).appendTo(_this11.dom.filters);
 		_this11.dom.btn_exportFile = $('<button class="export" icon="floppy-disk"/>').html('导出配置文件').on('click', function () {
 			_db.fleets.persistence.compactDatafile();
@@ -6968,6 +6977,10 @@ var TablelistFleets = (function (_Tablelist3) {
 		_this11.dom.btn_settings = $('<button icon="cog"/>').on('click', (function () {
 			this.btn_settings();
 		}).bind(_this11)).appendTo(_this11.dom.buttons_right);
+		if (!_g.isClient) _this11.dom.warning = $('<div/>', {
+			'class': 'warning',
+			'html': '功能移植/测试中，请勿日常使用'
+		}).appendTo(_this11.dom.filter_container);
 
 		_this11.dom.table_container = $('<div class="fixed-table-container"/>').appendTo(_this11.dom.container);
 		_this11.dom.table_container_inner = $('<div class="fixed-table-container-inner"/>').appendTo(_this11.dom.table_container);
@@ -6988,12 +7001,13 @@ var TablelistFleets = (function (_Tablelist3) {
 		gen_thead(_this11.columns).appendTo(_this11.dom.table);
 		_this11.dom.tbody = $('<tbody/>').appendTo(_this11.dom.table);
 
-		$('<div class="nocontent container"/>').append($($('<div/>').append($('<span>').html('暂无舰队配置')).append($('<button>').html('新建/导入').on('click', (function () {
-			this.dom.btn_new.click();
+		$('<div class="nocontent container"/>').append($($('<div/>').append($('<span>').html('暂无舰队配置')).append($('<button>').html('新建/导入').on('click', (function (e) {
+			this.dom.btn_new.trigger('click', [e]);
 		}).bind(_this11))))).appendTo(_this11.dom.table_container_inner);
 
 		_this11.dom.table.on('contextmenu.contextmenu_fleet', 'tr[data-fleetid]', (function (e) {
 			this.contextmenu_show($(e.currentTarget), null, e);
+			e.preventDefault();
 		}).bind(_this11)).on('click.contextmenu_fleet', 'tr[data-fleetid]>th>em', (function (e) {
 			this.contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget));
 			e.stopImmediatePropagation();
@@ -7129,7 +7143,7 @@ var TablelistFleets = (function (_Tablelist3) {
 		value: function datacheck(arr) {
 			arr = arr || [];
 
-			if (!arr.length) this.dom.container.addClass('nocontent');
+			if (!arr.length) this.dom.container.addClass('nocontent');else this.dom.container.removeClass('nocontent');
 
 			return arr;
 		}
@@ -7245,7 +7259,7 @@ var TablelistFleets = (function (_Tablelist3) {
 		}
 	}, {
 		key: 'btn_new',
-		value: function btn_new() {
+		value: function btn_new(target) {
 			if (!this.menu_new) {
 				this.menu_new = new _menu({
 					'target': this.dom.btn_new,
@@ -7340,7 +7354,8 @@ var TablelistFleets = (function (_Tablelist3) {
 				}).bind(this)).appendTo(this.dom.filters);
 			}
 
-			this.menu_new.show();
+			if (target && target.clientX) return this.menu_new.show(target.clientX, target.clientY);
+			return this.menu_new.show(target);
 		}
 	}, {
 		key: 'btn_settings',
@@ -7395,12 +7410,16 @@ var TablelistFleets = (function (_Tablelist3) {
 							_id: id
 						}, { multi: true }, function (err, numRemoved) {
 							_g.log('Fleet ' + id + ' removed.');
+							_db.fleets.count({}, function (err, count) {
+								if (!count) TablelistFleets.contextmenu.curobject.dom.container.addClass('nocontent');
+							});
 						});
 						TablelistFleets.contextmenu.curel.remove();
 					}
 				})]
 			});
 
+			TablelistFleets.contextmenu.curobject = this;
 			TablelistFleets.contextmenu.curel = $tr;
 
 			if (is_rightclick) TablelistFleets.contextmenu.show(is_rightclick.clientX, is_rightclick.clientY);else TablelistFleets.contextmenu.show($em || $tr);
@@ -7408,9 +7427,7 @@ var TablelistFleets = (function (_Tablelist3) {
 	}, {
 		key: 'genlist',
 		value: function genlist() {
-			var promise_chain = Q.fcall(function () {});
-
-			promise_chain.then((function () {
+			var promise_chain = Q.fcall(function () {}).then((function () {
 				return this.loaddata();
 			}).bind(this)).then((function (arr) {
 				return this.validdata(arr);
@@ -7431,6 +7448,7 @@ var TablelistFleets = (function (_Tablelist3) {
 	}, {
 		key: 'refresh',
 		value: function refresh() {
+			console.log('refresh');
 			this.dom.tbody.empty();
 			this.genlist();
 		}

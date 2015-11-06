@@ -1287,7 +1287,7 @@ body > .menus > .menu.mod-checkbox > .body menuitem input[type=checkbox] {
   position: absolute;
   top: 50%;
   line-height: 0;
-  left: 0.5rem;
+  left: 0.6000000000000001rem;
 }
 body > .menus > .menu.mod-checkbox > .body menuitem label {
   display: block;
@@ -3086,6 +3086,22 @@ main:after {
   padding-left: .25em;
   top: .5em;
 }
+.infosbody > div.warning {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
+  background: rgba(255, 64, 64, 0.5);
+  font-size: 16px;
+  padding: 0 1em;
+  text-align: center;
+  width: auto;
+  height: 50px;
+  line-height: 50px;
+}
 .infosbody .flexgrid.list-ship {
   -webkit-flex-flow: row wrap;
       -ms-flex-flow: row wrap;
@@ -3891,6 +3907,16 @@ body.mod-capture #tip {
     opacity: 0;
   }
 }
+/*
+@media all and (max-width: 1152px ) {
+	html{
+		body{
+			#layout{
+			} // #layout
+		}
+	}
+}
+*/
 .improvement {
   display: inline-block;
   position: relative;
@@ -4451,7 +4477,8 @@ body.mod-capture #tip {
 .tablelist table tbody tr td.negative {
   color: #f76e6e;
 }
-.tablelist table tbody tr td small.zero {
+.tablelist table tbody tr td[data-value="0"],
+.tablelist table tbody tr td[data-value="-1"] {
   font-size: 0.55rem;
   opacity: .35;
 }
@@ -4997,6 +5024,18 @@ body.mod-capture #tip {
 .tablelist > .options > div.exit_compare button.disabled {
   background: rgba(0, 0, 0, 0.35) !important;
   color: rgba(255, 255, 255, 0.35) !important;
+}
+.tablelist > .options > div.warning {
+  z-index: 5;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
+  background: rgba(255, 64, 64, 0.5);
+  font-size: 16px;
+  padding: 0 1em;
+  text-align: center;
+  width: auto;
 }
 .tablelist > .options[filter-hide-premodel="true"] ~ .fixed-table-container .premodeled {
   display: none !important;
@@ -5850,300 +5889,350 @@ body.mod-capture #tip {
 }
 .tablelist-equipments > [name="types"][class]:not(.type1) ~ .fixed-table-container tr[data-equipmenttype="1"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type1) ~ .fixed-table-container tr.typetitle[data-type="1"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type2) ~ .fixed-table-container tr[data-equipmenttype="2"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type2) ~ .fixed-table-container tr.typetitle[data-type="2"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type3) ~ .fixed-table-container tr[data-equipmenttype="3"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type3) ~ .fixed-table-container tr.typetitle[data-type="3"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type4) ~ .fixed-table-container tr[data-equipmenttype="4"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type4) ~ .fixed-table-container tr.typetitle[data-type="4"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type5) ~ .fixed-table-container tr[data-equipmenttype="5"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type5) ~ .fixed-table-container tr.typetitle[data-type="5"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type6) ~ .fixed-table-container tr[data-equipmenttype="6"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type6) ~ .fixed-table-container tr.typetitle[data-type="6"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type7) ~ .fixed-table-container tr[data-equipmenttype="7"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type7) ~ .fixed-table-container tr.typetitle[data-type="7"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type8) ~ .fixed-table-container tr[data-equipmenttype="8"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type8) ~ .fixed-table-container tr.typetitle[data-type="8"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type9) ~ .fixed-table-container tr[data-equipmenttype="9"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type9) ~ .fixed-table-container tr.typetitle[data-type="9"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type10) ~ .fixed-table-container tr[data-equipmenttype="10"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type10) ~ .fixed-table-container tr.typetitle[data-type="10"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type11) ~ .fixed-table-container tr[data-equipmenttype="11"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type11) ~ .fixed-table-container tr.typetitle[data-type="11"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type12) ~ .fixed-table-container tr[data-equipmenttype="12"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type12) ~ .fixed-table-container tr.typetitle[data-type="12"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type13) ~ .fixed-table-container tr[data-equipmenttype="13"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type13) ~ .fixed-table-container tr.typetitle[data-type="13"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type14) ~ .fixed-table-container tr[data-equipmenttype="14"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type14) ~ .fixed-table-container tr.typetitle[data-type="14"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type15) ~ .fixed-table-container tr[data-equipmenttype="15"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type15) ~ .fixed-table-container tr.typetitle[data-type="15"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type16) ~ .fixed-table-container tr[data-equipmenttype="16"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type16) ~ .fixed-table-container tr.typetitle[data-type="16"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type17) ~ .fixed-table-container tr[data-equipmenttype="17"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type17) ~ .fixed-table-container tr.typetitle[data-type="17"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type18) ~ .fixed-table-container tr[data-equipmenttype="18"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type18) ~ .fixed-table-container tr.typetitle[data-type="18"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type19) ~ .fixed-table-container tr[data-equipmenttype="19"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type19) ~ .fixed-table-container tr.typetitle[data-type="19"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type20) ~ .fixed-table-container tr[data-equipmenttype="20"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type20) ~ .fixed-table-container tr.typetitle[data-type="20"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type21) ~ .fixed-table-container tr[data-equipmenttype="21"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type21) ~ .fixed-table-container tr.typetitle[data-type="21"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type22) ~ .fixed-table-container tr[data-equipmenttype="22"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type22) ~ .fixed-table-container tr.typetitle[data-type="22"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type23) ~ .fixed-table-container tr[data-equipmenttype="23"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type23) ~ .fixed-table-container tr.typetitle[data-type="23"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type24) ~ .fixed-table-container tr[data-equipmenttype="24"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type24) ~ .fixed-table-container tr.typetitle[data-type="24"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type25) ~ .fixed-table-container tr[data-equipmenttype="25"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type25) ~ .fixed-table-container tr.typetitle[data-type="25"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type26) ~ .fixed-table-container tr[data-equipmenttype="26"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type26) ~ .fixed-table-container tr.typetitle[data-type="26"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type27) ~ .fixed-table-container tr[data-equipmenttype="27"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type27) ~ .fixed-table-container tr.typetitle[data-type="27"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type28) ~ .fixed-table-container tr[data-equipmenttype="28"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type28) ~ .fixed-table-container tr.typetitle[data-type="28"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type29) ~ .fixed-table-container tr[data-equipmenttype="29"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type29) ~ .fixed-table-container tr.typetitle[data-type="29"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type30) ~ .fixed-table-container tr[data-equipmenttype="30"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type30) ~ .fixed-table-container tr.typetitle[data-type="30"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type31) ~ .fixed-table-container tr[data-equipmenttype="31"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type31) ~ .fixed-table-container tr.typetitle[data-type="31"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type32) ~ .fixed-table-container tr[data-equipmenttype="32"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type32) ~ .fixed-table-container tr.typetitle[data-type="32"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type33) ~ .fixed-table-container tr[data-equipmenttype="33"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type33) ~ .fixed-table-container tr.typetitle[data-type="33"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type34) ~ .fixed-table-container tr[data-equipmenttype="34"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type34) ~ .fixed-table-container tr.typetitle[data-type="34"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type35) ~ .fixed-table-container tr[data-equipmenttype="35"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type35) ~ .fixed-table-container tr.typetitle[data-type="35"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type36) ~ .fixed-table-container tr[data-equipmenttype="36"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type36) ~ .fixed-table-container tr.typetitle[data-type="36"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type37) ~ .fixed-table-container tr[data-equipmenttype="37"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type37) ~ .fixed-table-container tr.typetitle[data-type="37"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type38) ~ .fixed-table-container tr[data-equipmenttype="38"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type38) ~ .fixed-table-container tr.typetitle[data-type="38"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type39) ~ .fixed-table-container tr[data-equipmenttype="39"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type39) ~ .fixed-table-container tr.typetitle[data-type="39"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type40) ~ .fixed-table-container tr[data-equipmenttype="40"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type40) ~ .fixed-table-container tr.typetitle[data-type="40"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type41) ~ .fixed-table-container tr[data-equipmenttype="41"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type41) ~ .fixed-table-container tr.typetitle[data-type="41"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type42) ~ .fixed-table-container tr[data-equipmenttype="42"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type42) ~ .fixed-table-container tr.typetitle[data-type="42"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type43) ~ .fixed-table-container tr[data-equipmenttype="43"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type43) ~ .fixed-table-container tr.typetitle[data-type="43"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type44) ~ .fixed-table-container tr[data-equipmenttype="44"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type44) ~ .fixed-table-container tr.typetitle[data-type="44"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type45) ~ .fixed-table-container tr[data-equipmenttype="45"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type45) ~ .fixed-table-container tr.typetitle[data-type="45"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type46) ~ .fixed-table-container tr[data-equipmenttype="46"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type46) ~ .fixed-table-container tr.typetitle[data-type="46"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type47) ~ .fixed-table-container tr[data-equipmenttype="47"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type47) ~ .fixed-table-container tr.typetitle[data-type="47"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type48) ~ .fixed-table-container tr[data-equipmenttype="48"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type48) ~ .fixed-table-container tr.typetitle[data-type="48"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type49) ~ .fixed-table-container tr[data-equipmenttype="49"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type49) ~ .fixed-table-container tr.typetitle[data-type="49"] {
   opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type50) ~ .fixed-table-container tr[data-equipmenttype="50"] {
   display: none;
+  opacity: .35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type50) ~ .fixed-table-container tr.typetitle[data-type="50"] {
   opacity: .35;
@@ -8186,6 +8275,31 @@ body.mod-capture .infos-fleet > .ships > dl dd > .options {
   display: -ms-flexbox;
   display: flex;
   z-index: 2;
+}
+.infos-fleet.loading {
+  display: inline-block;
+  text-align: center !important;
+  vertical-align: middle !important;
+  font-size: 3em;
+  letter-spacing: .25em;
+  position: absolute;
+  color: rgba(255, 255, 255, 0.2);
+}
+.infos-fleet.loading > .loading-msg {
+  display: inline-block !important;
+  max-width: 98% !important;
+  max-width: calc(100% - 0.2rem) !important;
+  max-height: 100% !important;
+  vertical-align: middle !important;
+  margin: 0 auto !important;
+}
+.infos-fleet.loading:after {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+  height: 100%;
+  overflow: hidden;
 }
 main[data-theme="1"] {
   background-color: rgba(26, 26, 26, 0.8);
