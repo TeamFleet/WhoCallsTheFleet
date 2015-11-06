@@ -8826,7 +8826,8 @@ class Tablelist{
 						let tbody = this.dom.tbody
 						if( !tbody || !tbody.length )
 							tbody = this.dom.table.find('tbody')
-						rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
+						//rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
+						rows = tbody.find('tr.row:visible:not([data-donotcompare])')
 					}
 					nth = nth || 1
 		
@@ -8837,7 +8838,8 @@ class Tablelist{
 					// 遍历，将值全部导出到 _tmp_values，_tmp_value_map_cell 中记录 值 -> jQuery DOM
 						rows.find('td:nth-of-type(' + nth + ')').each(function(index, element){
 							let cell = $(element)
-								,val = cell.data('value')
+								//,val = cell.data('value')
+								,val = cell.attr('data-value')
 		
 							val = parseFloat(val)
 		
@@ -8878,7 +8880,8 @@ class Tablelist{
 					if( !tbody || !tbody.length )
 						tbody = this.dom.table.find('tbody')
 		
-					let rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
+					//let rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
+					let rows = tbody.find('tr.row:visible:not([data-donotcompare])')
 		
 					rows.find('td[data-value]').removeClass('sort-first sort-second')
 		
@@ -9353,7 +9356,8 @@ TablelistEquipments.prototype.append_item = function( equipment_data, collection
 
 	function _val( val, show_zero ){
 		if( !show_zero && (val == 0 || val === '0' || val === '') )
-			return '<small class="zero">-</small>'
+			//return '<small class="zero">-</small>'
+			return '-'
 		//if( val > 0 )
 		//	return '+' + val
 		return val
@@ -9383,7 +9387,7 @@ TablelistEquipments.prototype.append_item = function( equipment_data, collection
 					.appendTo(tr)
 				break;
 			default:
-				$('<td data-stat="'+currentValue[1]+'" data-value="' + equipment_data['stat'][currentValue[1]] + '"/>')
+				$('<td data-stat="'+currentValue[1]+'" data-value="' + (equipment_data['stat'][currentValue[1]] || 0) + '"/>')
 					.addClass( equipment_data['stat'][currentValue[1]] < 0 ? 'negative' : '' )
 					.html( _val( equipment_data['stat'][currentValue[1]] ) )
 					.appendTo(tr)
@@ -10721,6 +10725,7 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 							if( !not_trigger_check )
 								this.header_checkbox[header_index].trigger('docheck')
 						}.bind(this))
+		,label = $('<label/>').append(checkbox)
 		,has_extra_illust = false
 		,seriesData = ship_data.getSeriesData()
 	
@@ -10746,9 +10751,11 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 
 	function _val( val, show_zero ){
 		if( !show_zero && (val == 0 || val == '0') )
-			return '<small class="zero">-</small>'
+			//return '<small class="zero">-</small>'
+			return '-'
 		if( val == -1 || val == '-1' )
-			return '<small class="zero">?</small>'
+			//return '<small class="zero">?</small>'
+			return '?'
 		return val
 	}
 
@@ -10769,7 +10776,7 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 						//+ '<small>' + ship_data['pron'] + '</small>'
 					)
 					.prepend(
-						checkbox
+						label
 					)
 					.appendTo(tr)
 				break;
@@ -10792,7 +10799,7 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 				$('<td data-stat="asw" />')
 					.attr(
 						'data-value',
-						ship_data['stat']['asw_max']
+						ship_data['stat']['asw_max'] || 0
 					)
 					.html( _val(
 						ship_data['stat']['asw_max'],
@@ -10801,27 +10808,27 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 					.appendTo(tr)
 				break;
 			case 'hp':
-				$('<td data-stat="hp" data-value="' + ship_data['stat']['hp'] + '"/>')
+				$('<td data-stat="hp" data-value="' + (ship_data['stat']['hp'] || 0) + '"/>')
 					.html(_val( ship_data['stat']['hp'] ))
 					.appendTo(tr)
 				break;
 			case 'carry':
-				$('<td data-stat="carry" data-value="' + ship_data['stat']['carry'] + '"/>')
+				$('<td data-stat="carry" data-value="' + (ship_data['stat']['carry'] || 0) + '"/>')
 					.html(_val( ship_data['stat']['carry'] ))
 					.appendTo(tr)
 				break;
 			case 'speed':
-				$('<td data-stat="speed" data-value="' + ship_data['stat']['speed'] + '"/>')
+				$('<td data-stat="speed" data-value="' + (ship_data['stat']['speed'] || 0) + '"/>')
 					.html( _g.getStatSpeed( ship_data['stat']['speed'] ) )
 					.appendTo(tr)
 				break;
 			case 'range':
-				$('<td data-stat="range" data-value="' + ship_data['stat']['range'] + '"/>')
+				$('<td data-stat="range" data-value="' + (ship_data['stat']['range'] || 0) + '"/>')
 					.html( _g.getStatRange( ship_data['stat']['range'] ) )
 					.appendTo(tr)
 				break;
 			case 'luck':
-				$('<td data-stat="luck" data-value="' + ship_data['stat']['luck'] + '"/>')
+				$('<td data-stat="luck" data-value="' + (ship_data['stat']['luck'] || 0) + '"/>')
 					.html(ship_data['stat']['luck'] + '<sup>' + ship_data['stat']['luck_max'] + '</sup>')
 					.appendTo(tr)
 				break;
@@ -10829,7 +10836,7 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 				$('<td data-stat="consum_fuel"/>')
 					.attr(
 						'data-value',
-						ship_data['consum']['fuel']
+						ship_data['consum']['fuel'] || 0
 					)
 					.html( _val(ship_data['consum']['fuel']) )
 					.appendTo(tr)
@@ -10838,7 +10845,7 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 				$('<td data-stat="consum_ammo"/>')
 					.attr(
 						'data-value',
-						ship_data['consum']['ammo']
+						ship_data['consum']['ammo'] || 0
 					)
 					.html( _val(ship_data['consum']['ammo']) )
 					.appendTo(tr)
@@ -10856,7 +10863,7 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 				$('<td data-stat="'+currentValue[1]+'"/>')
 					.attr(
 						'data-value',
-						ship_data['stat'][currentValue[1] + '_max']
+						ship_data['stat'][currentValue[1] + '_max'] || 0
 					)
 					.html( _val( ship_data['stat'][currentValue[1] + '_max'] ) )
 					.appendTo(tr)

@@ -159,7 +159,9 @@
 					&.negative{
 						color:		hsl(0, 90%, 70%);
 					}
-					small.zero{
+					&[data-value="0"],
+					&[data-value="-1"]{
+					//small.zero{
 						.font-size(11);
 						opacity:	.35;
 					}
@@ -787,6 +789,7 @@
 			&>[name="types"][class]:not(.type@{i}) ~ .fixed-table-container{
 				tr[data-equipmenttype="@{i}"]{
 					display:	none;
+					opacity: 	.35;
 				}
 				tr.typetitle[data-type="@{i}"]{
 					opacity: 	.35;

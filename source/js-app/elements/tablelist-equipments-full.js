@@ -23,7 +23,8 @@ TablelistEquipments.prototype.append_item = function( equipment_data, collection
 
 	function _val( val, show_zero ){
 		if( !show_zero && (val == 0 || val === '0' || val === '') )
-			return '<small class="zero">-</small>'
+			//return '<small class="zero">-</small>'
+			return '-'
 		//if( val > 0 )
 		//	return '+' + val
 		return val
@@ -53,7 +54,7 @@ TablelistEquipments.prototype.append_item = function( equipment_data, collection
 					.appendTo(tr)
 				break;
 			default:
-				$('<td data-stat="'+currentValue[1]+'" data-value="' + equipment_data['stat'][currentValue[1]] + '"/>')
+				$('<td data-stat="'+currentValue[1]+'" data-value="' + (equipment_data['stat'][currentValue[1]] || 0) + '"/>')
 					.addClass( equipment_data['stat'][currentValue[1]] < 0 ? 'negative' : '' )
 					.html( _val( equipment_data['stat'][currentValue[1]] ) )
 					.appendTo(tr)

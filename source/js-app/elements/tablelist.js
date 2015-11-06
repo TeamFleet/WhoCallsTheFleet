@@ -197,7 +197,8 @@ class Tablelist{
 						let tbody = this.dom.tbody
 						if( !tbody || !tbody.length )
 							tbody = this.dom.table.find('tbody')
-						rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
+						//rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
+						rows = tbody.find('tr.row:visible:not([data-donotcompare])')
 					}
 					nth = nth || 1
 		
@@ -208,7 +209,8 @@ class Tablelist{
 					// 遍历，将值全部导出到 _tmp_values，_tmp_value_map_cell 中记录 值 -> jQuery DOM
 						rows.find('td:nth-of-type(' + nth + ')').each(function(index, element){
 							let cell = $(element)
-								,val = cell.data('value')
+								//,val = cell.data('value')
+								,val = cell.attr('data-value')
 		
 							val = parseFloat(val)
 		
@@ -249,7 +251,8 @@ class Tablelist{
 					if( !tbody || !tbody.length )
 						tbody = this.dom.table.find('tbody')
 		
-					let rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
+					//let rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
+					let rows = tbody.find('tr.row:visible:not([data-donotcompare])')
 		
 					rows.find('td[data-value]').removeClass('sort-first sort-second')
 		

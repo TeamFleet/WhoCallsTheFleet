@@ -6549,7 +6549,8 @@ var Tablelist = (function () {
 			if (!rows) {
 				var tbody = this.dom.tbody;
 				if (!tbody || !tbody.length) tbody = this.dom.table.find('tbody');
-				rows = tbody.find('tr.row:visible').not('[data-donotcompare]');
+
+				rows = tbody.find('tr.row:visible:not([data-donotcompare])');
 			}
 			nth = nth || 1;
 
@@ -6558,7 +6559,7 @@ var Tablelist = (function () {
 
 			rows.find('td:nth-of-type(' + nth + ')').each((function (index, element) {
 				var cell = $(element),
-				    val = cell.data('value');
+				    val = cell.attr('data-value');
 
 				val = parseFloat(val);
 
@@ -6590,7 +6591,7 @@ var Tablelist = (function () {
 
 			if (!tbody || !tbody.length) tbody = this.dom.table.find('tbody');
 
-			var rows = tbody.find('tr.row:visible').not('[data-donotcompare]');
+			var rows = tbody.find('tr.row:visible:not([data-donotcompare])');
 
 			rows.find('td[data-value]').removeClass('sort-first sort-second');
 
