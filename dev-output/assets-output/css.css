@@ -3907,6 +3907,16 @@ body.mod-capture #tip {
     opacity: 0;
   }
 }
+/*
+@media all and (max-width: 1152px ) {
+	html{
+		body{
+			#layout{
+			} // #layout
+		}
+	}
+}
+*/
 .improvement {
   display: inline-block;
   position: relative;
