@@ -2534,13 +2534,39 @@ _g.updateDefaultHqLv = function (val) {
 	if (val <= 0) val = _g.defaultHqLv;
 	if (val != Lockr.get('hqLvDefault', _g.defaultHqLv)) {
 		Lockr.set('hqLvDefault', val);
-		clearTimeout(this.delay_updateDefaultHqLv);
-		this.delay_updateDefaultHqLv = setTimeout((function () {
+		clearTimeout(_g.delay_updateDefaultHqLv);
+		_g.delay_updateDefaultHqLv = setTimeout(function () {
 			$body.trigger('update_defaultHqLv', [val]);
-			clearTimeout(this.delay_updateDefaultHqLv);
-			this.delay_updateDefaultHqLv = null;
-		}).bind(this), 200);
+			clearTimeout(_g.delay_updateDefaultHqLv);
+			_g.delay_updateDefaultHqLv = null;
+		}, 200);
 	}
+};
+
+_g.statSpeed = {
+	5: '低速',
+	10: '高速'
+};
+_g.statRange = {
+	1: '短',
+	2: '中',
+	3: '长',
+	4: '超长'
+};
+_g.textRank = {
+	1: '|',
+	2: '||',
+	3: '|||',
+	4: '\\',
+	5: '\\\\',
+	6: '\\\\\\',
+	7: '》'
+};
+_g.getStatSpeed = function (speed) {
+	return _g.statSpeed[parseInt(speed)];
+};
+_g.getStatRange = function (range) {
+	return _g.statRange[parseInt(range)];
 };
 
 var _l = {};
@@ -3743,33 +3769,6 @@ Nedb.prototype._updateById = function () {
 	}).bind(this));
 };
 
-_g.statSpeed = {
-	5: '低速',
-	10: '高速'
-};
-_g.statRange = {
-	1: '短',
-	2: '中',
-	3: '长',
-	4: '超长'
-};
-_g.textRank = {
-	1: '|',
-	2: '||',
-	3: '|||',
-	4: '\\',
-	5: '\\\\',
-	6: '\\\\\\',
-	7: '》'
-};
-_g.getStatSpeed = function (speed) {
-	speed = parseInt(speed);
-	return _g.statSpeed[speed];
-};
-_g.getStatRange = function (range) {
-	range = parseInt(range);
-	return _g.statRange[range];
-};
 _g.log = function () {
 	console.log.apply(console, arguments);
 };
@@ -3845,13 +3844,12 @@ _frame.app_main = {
 	loaded: function loaded(item, is_instant) {
 		_g.log(item + ' loaded.');
 		if (item) {
-			var index = _frame.app_main.loading.indexOf(item);
-			if (index > -1) {
-				_frame.app_main.loading.splice(_frame.app_main.loading.indexOf(item), 1);
-				_frame.app_main.is_loaded = false;
+			if (this.loading.indexOf(item) > -1) {
+				this.loading.splice(this.loading.indexOf(item), 1);
+				this.is_loaded = false;
 			}
 		}
-		if (!_frame.app_main.loading.length && !_frame.app_main.is_loaded) {
+		if (!this.loading.length && !this.is_loaded) {
 			setTimeout(function () {
 				if (_frame.app_main.is_loaded && !_frame.app_main.loading.length && !$html.hasClass('app-ready')) {
 					_frame.dom.layout.addClass('ready');
@@ -3875,7 +3873,7 @@ _frame.app_main = {
 				this.window_event_bound = true;
 			}
 
-			_frame.app_main.is_loaded = true;
+			this.is_loaded = true;
 		}
 	},
 
@@ -3897,11 +3895,11 @@ _frame.app_main = {
 	},
 
 	change_bgimg: function change_bgimg(bgimgs_new) {
-		if (!_frame.app_main.bgimgs.length) return false;
+		if (!this.bgimgs.length) return false;
 
-		var bgimgs = bgimgs_new && bgimgs_new.length ? bgimgs_new : _frame.app_main.bgimgs,
+		var bgimgs = bgimgs_new && bgimgs_new.length ? bgimgs_new : this.bgimgs,
 		    img_new = bgimgs[_g.randInt(bgimgs.length)],
-		    img_old = _frame.app_main.cur_bgimg_el ? _frame.app_main.cur_bgimg_el.css('background-image') : null;
+		    img_old = this.cur_bgimg_el ? this.cur_bgimg_el.css('background-image') : null;
 
 		img_old = img_old ? img_old.split('/') : null;
 		img_old = img_old ? img_old[img_old.length - 1].split(')') : null;
@@ -3916,14 +3914,14 @@ _frame.app_main = {
 		img_new = this.bgimg_path;
 
 		if (img_old) {
-			this.change_bgimg_oldEl = _frame.app_main.cur_bgimg_el;
+			this.change_bgimg_oldEl = this.cur_bgimg_el;
 		}
 
-		_frame.app_main.cur_bgimg_el = $('<div/>').css('background-image', 'url(' + img_new + ')').appendTo(_frame.dom.bgimg).add($('<s' + (_frame.app_main.change_bgimg_fadein ? ' class="fadein"' : '') + '/>').css('background-image', 'url(' + img_new_blured + ')').appendTo(_frame.dom.nav)).add($('<s' + (_frame.app_main.change_bgimg_fadein ? ' class="fadein"' : '') + '/>').css('background-image', 'url(' + img_new_blured + ')').appendTo(_frame.dom.main));
+		this.cur_bgimg_el = $('<div/>').css('background-image', 'url(' + img_new + ')').appendTo(_frame.dom.bgimg).add($('<s' + (this.change_bgimg_fadein ? ' class="fadein"' : '') + '/>').css('background-image', 'url(' + img_new_blured + ')').appendTo(_frame.dom.nav)).add($('<s' + (this.change_bgimg_fadein ? ' class="fadein"' : '') + '/>').css('background-image', 'url(' + img_new_blured + ')').appendTo(_frame.dom.main));
 
-		if (_frame.dom.bg_controls) _frame.app_main.cur_bgimg_el = _frame.app_main.cur_bgimg_el.add($('<s' + (_frame.app_main.change_bgimg_fadein ? ' class="fadein"' : '') + '/>').css('background-image', 'url(' + img_new_blured + ')').appendTo(_frame.dom.bg_controls));
+		if (_frame.dom.bg_controls) this.cur_bgimg_el = this.cur_bgimg_el.add($('<s' + (this.change_bgimg_fadein ? ' class="fadein"' : '') + '/>').css('background-image', 'url(' + img_new_blured + ')').appendTo(_frame.dom.bg_controls));
 
-		_frame.app_main.change_bgimg_fadein = true;
+		this.change_bgimg_fadein = true;
 	},
 	change_bgimg_after: function change_bgimg_after(oldEl) {
 		oldEl = oldEl || this.change_bgimg_oldEl;
@@ -4014,7 +4012,7 @@ _frame.app_main = {
 	},
 
 	load_page: function load_page(page, options) {
-		if (_frame.app_main.cur_page == page || !page) return page;
+		if (this.cur_page == page || !page) return page;
 
 		options = options || {};
 
@@ -4036,8 +4034,8 @@ _frame.app_main = {
 
 		if (page == 'donate') {
 			checked = true;
-		}if (!_frame.app_main.cur_page) {
-			_frame.app_main.nav.forEach(function (currentValue) {
+		}if (!this.cur_page) {
+			this.nav.forEach(function (currentValue) {
 				if (page == currentValue.page) checked = true;
 			});
 		} else {
@@ -4045,8 +4043,8 @@ _frame.app_main = {
 		}
 
 		if (!checked) {
-			page = _frame.app_main.nav[0].page;
-			_frame.app_main.load_page(page, options);
+			page = this.nav[0].page;
+			this.load_page(page, options);
 			return page;
 		}
 
@@ -4094,11 +4092,11 @@ _frame.app_main = {
 			}
 		}
 
-		if (!_frame.app_main.page_dom[page]) {
-			_frame.app_main.page_dom[page] = _frame.dom.main.find('.page-container[page="' + page + '"]');
-			if (_frame.app_main.page_dom[page].length) {
-				_frame.app_main.page_init(page);
-				_frame.app_main.page_title['/' + page + '/'] = document.title;
+		if (!this.page_dom[page]) {
+			this.page_dom[page] = _frame.dom.main.find('.page-container[page="' + page + '"]');
+			if (this.page_dom[page].length) {
+				this.page_init(page);
+				this.page_title['/' + page + '/'] = document.title;
 				callback();
 			} else {
 				this.loading_start('/' + page + '/', function (html) {
@@ -4128,7 +4126,7 @@ _frame.app_main = {
 				}
 			}).appendTo(_frame.dom.layout);
 
-			_frame.app_main.cur_bgimg_el = _frame.app_main.cur_bgimg_el.add(_frame.app_main.cur_bgimg_el.eq(0).clone().appendTo(_frame.dom.bg_controls));
+			this.cur_bgimg_el = this.cur_bgimg_el.add(this.cur_bgimg_el.eq(0).clone().appendTo(_frame.dom.bg_controls));
 
 			$('<button class="prev" icon="arrow-left"/>').on('click', function () {
 				var pathParse = _frame.app_main.bgimg_path.split('/'),
@@ -4170,7 +4168,7 @@ _frame.app_main = {
 	},
 
 	init: function init() {
-		if (_frame.app_main.is_init) return true;
+		if (this.is_init) return true;
 
 		_frame.dom.nav = _frame.dom.layout.children('nav');
 		_frame.dom.logo = $('<button class="logo"/>').on(_g.event.animationend, function (e) {
@@ -4363,7 +4361,7 @@ _frame.app_main = {
 			_g.log('Global initialization DONE');
 		});
 
-		_frame.app_main.is_init = true;
+		this.is_init = true;
 	}
 };
 
@@ -4376,8 +4374,8 @@ _g.error = function (err) {
 var debugmode = false;
 
 _frame.app_main.page_init = function (page, $page) {
-	$page = $page || _frame.app_main.page_dom[page];
-	if (_frame.app_main.page[page] && _frame.app_main.page[page].init) _frame.app_main.page[page].init($page);
+	$page = $page || this.page_dom[page];
+	if (this.page[page] && this.page[page].init) this.page[page].init($page);
 	_p.initDOM($page);
 };
 
@@ -4884,7 +4882,7 @@ _frame.infos = {
 		}
 
 		if (!this.firstrun) {
-			var firstChildren = _frame.infos.dom.container.children('.infosbody').eq(0);
+			var firstChildren = this.dom.container.children('.infosbody').eq(0);
 			this.firstrun = true;
 			if (firstChildren.attr('data-infos-type') == type && firstChildren.attr('data-infos-id') == id) {
 				this.contentCache[type][id] = _p.initDOM(firstChildren);
@@ -4905,7 +4903,7 @@ _frame.infos = {
 			}));
 		}
 
-		if (id == '__NEW__') return cb(initcont(_frame.infos['__' + type](id)));
+		if (id == '__NEW__') return cb(initcont(this['__' + type](id)));
 
 		if (!this.contentCache[type][id]) {
 			_frame.app_main.loading_start(_g.state2URI({
@@ -4943,7 +4941,7 @@ _frame.infos = {
 			return false;
 		}
 
-		if (this.curContent == infosType + '::' + infosId) return _frame.infos.dom.container.children('div:first-child');
+		if (this.curContent == infosType + '::' + infosId) return this.dom.container.children('div:first-child');
 
 		if (!doNotPushHistory) {
 			this.historyCurrent++;
@@ -4951,7 +4949,7 @@ _frame.infos = {
 			_frame.app_main.pushState({
 				'infos': infosType,
 				'id': infosId,
-				'infosHistoryIndex': _frame.infos.historyCurrent
+				'infosHistoryIndex': this.historyCurrent
 			}, null, _g.state2URI({
 				'infos': infosType,
 				'id': infosId
@@ -4964,35 +4962,23 @@ _frame.infos = {
 	show_func: function show_func(type, id, doNotPushHistory, infosHistoryIndex) {
 		if (!type || !id) return false;
 
-		if (this.curContent == type + '::' + id) return _frame.infos.dom.container.children('div:first-child');
+		if (this.curContent == type + '::' + id) return this.dom.container.children('div:first-child');
 
 		type = type.toLowerCase();
 		if (!isNaN(id)) id = parseInt(id);
 
 		var title = null;
 
-		if (!_frame.infos.dom) {
-			_frame.infos.dom = {
+		if (!this.dom) {
+			this.dom = {
 				'main': _frame.dom.main.children('.page-container.infos')
 			};
-			if (!_frame.infos.dom.main.length) {
-				_frame.infos.dom.main = $('<div class="page-container infos"/>').appendTo(_frame.dom.main);
-				_frame.infos.dom.container = $('<div class="wrapper"/>').appendTo(_frame.infos.dom.main);
+			if (!this.dom.main.length) {
+				this.dom.main = $('<div class="page-container infos"/>').appendTo(_frame.dom.main);
+				this.dom.container = $('<div class="wrapper"/>').appendTo(this.dom.main);
 			} else {
-				_frame.infos.dom.container = _frame.infos.dom.main.children('.wrapper');
+				this.dom.container = this.dom.main.children('.wrapper');
 			}
-			if (_frame.dom.btnHistoryBack) _frame.dom.btnHistoryBack.on(eventName('transitionend', 'infos_hide'), function (e) {
-				if (e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseFloat(_frame.dom.btnHistoryBack.css('opacity')) == 0) {
-					_frame.infos.hide_finish();
-				}
-			});
-		}
-
-		if (_frame.dom.btnHistoryForward) {
-			infosHistoryIndex = typeof infosHistoryIndex != 'undefined' ? infosHistoryIndex : this.historyCurrent;
-			this.historyCurrent = infosHistoryIndex;
-
-			if (this.historyCurrent == this.historyLength && this.historyCurrent > -1) _frame.dom.btnHistoryForward.addClass('disabled');
 		}
 
 		_frame.dom.layout.addClass('is-infos-show');
@@ -5004,11 +4990,11 @@ _frame.infos = {
 				case 'ship':
 				case 'equipment':
 				case 'entity':
-					_frame.infos.dom.main.attr('data-infostype', type);
+					this.dom.main.attr('data-infostype', type);
 					title = cont.attr('data-infos-title');
 					break;
 				case 'fleet':
-					_frame.infos.dom.main.attr('data-infostype', 'fleet');
+					this.dom.main.attr('data-infostype', 'fleet');
 					_frame.app_main.mode_selection_off();
 					TablelistEquipments.types = [];
 					break;
@@ -5039,7 +5025,7 @@ _frame.infos = {
 
 			if (this.curContent != type + '::' + id) return;
 
-			cont.prependTo(_frame.infos.dom.container).trigger('show', [is_firstShow]).data('is_show', true);
+			cont.prependTo(this.dom.container).trigger('show', [is_firstShow]).data('is_show', true);
 
 			if (_frame.app_main.cur_page) {
 
@@ -5067,18 +5053,18 @@ _frame.infos = {
 	},
 
 	hide: function hide() {
-		if (!_frame.infos.dom || !this.curContent) return false;
+		if (!this.dom || !this.curContent) return false;
 
 		_frame.dom.layout.removeClass('is-infos-on');
-		if (_frame.dom.btnHistoryForward) _frame.dom.btnHistoryForward.addClass('disabled');
+
 		this.curContent = null;
 	},
 
 	hide_finish: function hide_finish() {
-		if (_frame.infos.curContent) return false;
+		if (this.curContent) return false;
 
 		_frame.dom.layout.removeClass('is-infos-show');
-		_frame.infos.dom.main.attr({
+		this.dom.main.attr({
 			'data-infostype': '',
 			'data-theme': ''
 		});
@@ -5087,32 +5073,24 @@ _frame.infos = {
 		this.historyCurrent = -1;
 	},
 
-	historyback: function historyback() {
-		_frame.infos.dom.main.children().slice(1).remove();
-		_frame.infos.dom.main.children().eq(0).removeClass('off').addClass('fadein');
-		_frame.infos.dom.historyback.empty().removeClass('show');
-
-		if (_frame.infos.dom.main.children().eq(0).hasClass('ship')) _frame.infos.dom.main.attr('data-infostype', 'ship');else if (_frame.infos.dom.main.children().eq(0).hasClass('equipment')) _frame.infos.dom.main.attr('data-infostype', 'equipment');else if (_frame.infos.dom.main.children().eq(0).hasClass('fleet')) _frame.infos.dom.main.attr('data-infostype', 'fleet');else if (_frame.infos.dom.main.children().eq(0).hasClass('entity')) _frame.infos.dom.main.attr('data-infostype', 'entity');
+	click: function click(el) {
+		this.show(el.attr('data-infos'), el, el.attr('data-infos-nohistory'));
 	},
 
-	click: function click(el) {
-		_frame.infos.show(el.attr('data-infos'), el, el.attr('data-infos-nohistory'));
+	init: function init() {
+		if (this.is_init) return true;
+
+		$body.on('click._infos', '[data-infos]', function (e) {
+			if (!(e.target.tagName.toLowerCase() == 'input' && e.target.className == 'compare')) {
+				_frame.infos.click($(this));
+
+				if (e.target.tagName.toLowerCase() == 'a') e.preventDefault();
+			}
+		});
+
+		this.is_init = true;
+		return true;
 	}
-};
-
-_frame.infos.init = function () {
-	if (_frame.infos.is_init) return true;
-
-	$body.on('click._infos', '[data-infos]', function (e) {
-		if (!(e.target.tagName.toLowerCase() == 'input' && e.target.className == 'compare')) {
-			_frame.infos.click($(this));
-
-			if (e.target.tagName.toLowerCase() == 'a') e.preventDefault();
-		}
-	});
-
-	_frame.infos.is_init = true;
-	return true;
 };
 
 _frame.infos.__fleet = function (id, el) {
@@ -6373,7 +6351,7 @@ _frame.app_main.mode_selection_on = function (callback) {
 };
 
 _frame.app_main.mode_selection_off = function () {
-	if (_frame.app_main.cur_page) _frame.app_main.page_dom[_frame.app_main.cur_page].trigger('modeSelectionExit');
+	if (this.cur_page) this.page_dom[this.cur_page].trigger('modeSelectionExit');
 	_frame.dom.layout.removeClass('mode-selection');
 };
 

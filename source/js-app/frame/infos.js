@@ -26,13 +26,13 @@ _frame.infos = {
 		}
 
 		if( id == '__NEW__' )
-			return initcont( _frame.infos['__' + type]( id ) )
+			return initcont( this['__' + type]( id ) )
 		
 		if( id == '__OUTPUT__' )
-			this.contentCache[type][id] = initcont( _frame.infos['__' + type + '__OUTPUT']( id ) ).removeAttr('data-infos-id')
+			this.contentCache[type][id] = initcont( this['__' + type + '__OUTPUT']( id ) ).removeAttr('data-infos-id')
 
 		if( !this.contentCache[type][id] ){
-			this.contentCache[type][id] = initcont( _frame.infos['__' + type]( id ) )
+			this.contentCache[type][id] = initcont( this['__' + type]( id ) )
 		}
 
 		return this.contentCache[type][id]
@@ -62,7 +62,7 @@ _frame.infos = {
 
 		// 如果为相同内容，不运行
 			if( this.curContent == infosType + '::' + infosId )
-				return _frame.infos.dom.container.children('div:first-child')
+				return this.dom.container.children('div:first-child')
 
 		if( !doNotPushHistory ){
 		//}else{
@@ -72,7 +72,7 @@ _frame.infos = {
 				{
 					'infos':infosType,
 					'id': 	infosId,
-					'infosHistoryIndex': _frame.infos.historyCurrent
+					'infosHistoryIndex': this.historyCurrent
 				},
 				null,
 				'?infos=' + infosType + '&id=' + infosId
@@ -89,7 +89,7 @@ _frame.infos = {
 
 		// 如果为相同内容，不运行
 			if( this.curContent == type + '::' + id )
-				return _frame.infos.dom.container.children('div:first-child')
+				return this.dom.container.children('div:first-child')
 
 		type = type.toLowerCase()
 		if( isNaN(id) )
@@ -101,14 +101,14 @@ _frame.infos = {
 			,title = null
 
 		// 第一次运行，创建相关DOM和变量
-			if( !_frame.infos.dom ){
-				_frame.infos.dom = {
+			if( !this.dom ){
+				this.dom = {
 					//'nav': 		$('<div class="infos"/>').appendTo( _frame.dom.nav ),
 					'main': 	$('<div class="page-container infos"/>').appendTo( _frame.dom.main )
 				}
-				_frame.infos.dom.container = $('<div class="wrapper"/>').appendTo( _frame.infos.dom.main )
+				this.dom.container = $('<div class="wrapper"/>').appendTo( this.dom.main )
 				/*
-				_frame.infos.dom.back = $('<button class="back" icon="arrow-set2-left"/>')
+				this.dom.back = $('<button class="back" icon="arrow-set2-left"/>')
 						.on({
 							'click': function(){
 								_frame.infos.dom.forward.removeClass('disabled')
@@ -123,19 +123,19 @@ _frame.infos = {
 									_frame.infos.hide_finish()
 								}
 							}
-						}).appendTo( _frame.infos.dom.nav )
-				_frame.infos.dom.forward = $('<button class="forward disabled" icon="arrow-set2-right"/>')
+						}).appendTo( this.dom.nav )
+				this.dom.forward = $('<button class="forward disabled" icon="arrow-set2-right"/>')
 						.on('click', function(){
 							history.forward()
 							//_frame.infos.hide()
-						}).appendTo( _frame.infos.dom.nav )
+						}).appendTo( this.dom.nav )
 				*/
 				_frame.dom.btnHistoryBack.on(eventName('transitionend', 'infos_hide'), function(e){
 								if( e.currentTarget == e.target
 									&& e.originalEvent.propertyName == 'opacity'
 									&& parseFloat(_frame.dom.btnHistoryBack.css('opacity')) == 0
 								){
-									_frame.infos.hide_finish()
+									this.hide_finish()
 								}
 							})
 			}
@@ -156,36 +156,36 @@ _frame.infos = {
 				case 'equipment':
 				case 'entity':
 					cont = this.getContent(type, id)
-					_frame.infos.dom.main.attr('data-infostype', type)
+					this.dom.main.attr('data-infostype', type)
 					title = cont.attr('data-infos-title')
 					break;
 				case 'fleet':
 					cont = this.getContent(type, id)
-					_frame.infos.dom.main.attr('data-infostype', 'fleet')
+					this.dom.main.attr('data-infostype', 'fleet')
 					_frame.app_main.mode_selection_off()
 					TablelistEquipments.types = []
 					break;
 			}
 			//var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
-			//if( _frame.infos.curContent != hashcode ){
+			//if( this.curContent != hashcode ){
 				var contentDOM = cont.append ? cont : $(cont)
 					,is_firstShow = !contentDOM.data('is_infosinit')
 
 				//if( el && el.attr('data-infos-history-skip-this') )
 				//	contentDOM.attr('data-infos-history-skip-this', true)
 
-				//if( _frame.infos.dom.main.children().length )
+				//if( this.dom.main.children().length )
 				//	contentDOM.addClass('fadein')
 
 				/*
 				if( history ){
-					_frame.infos.dom.main.children().filter('[data-infos-history-skip-this="true"]').remove()
-					_frame.infos.dom.main.children().slice(2).remove()
-					_frame.infos.dom.main.children().eq(0).addClass('off')
-					_frame.infos.dom.historyback.html(history).addClass('show')
+					this.dom.main.children().filter('[data-infos-history-skip-this="true"]').remove()
+					this.dom.main.children().slice(2).remove()
+					this.dom.main.children().eq(0).addClass('off')
+					this.dom.historyback.html(history).addClass('show')
 				}else{
-					_frame.infos.dom.historyback.html('').removeClass('show')
-					_frame.infos.dom.main.empty()
+					this.dom.historyback.html('').removeClass('show')
+					this.dom.main.empty()
 				}*/
 				//data-infos-history-skip-this
 
@@ -198,12 +198,12 @@ _frame.infos = {
 							}
 						})
 				}
-				contentDOM.prependTo( _frame.infos.dom.container )
+				contentDOM.prependTo( this.dom.container )
 					.trigger('show', [is_firstShow])
 					.data('is_show', true)
 
 				//_p.initDOM( contentDOM )
-				//_frame.infos.curContent = hashcode
+				//this.curContent = hashcode
 				this.curContent = type + '::' + id
 			//}
 
@@ -242,7 +242,7 @@ _frame.infos = {
 	},
 
 	hide: function(){
-		if( !_frame.infos.dom || !this.curContent )
+		if( !this.dom || !this.curContent )
 			return false
 
 		// 隐藏内容
@@ -273,11 +273,11 @@ _frame.infos = {
 
 	hide_finish: function(){
 		// 仍在显示，不予执行
-			if( _frame.infos.curContent )
+			if( this.curContent )
 				return false
 
 		_frame.dom.layout.removeClass('is-infos-show')
-		_frame.infos.dom.main.attr({
+		this.dom.main.attr({
 			'data-infostype': 	'',
 			'data-theme': 		''
 		})
@@ -287,49 +287,43 @@ _frame.infos = {
 	},
 
 	historyback: function(){
-		_frame.infos.dom.main.children().slice(1).remove()
-		_frame.infos.dom.main.children().eq(0).removeClass('off').addClass('fadein')
-		_frame.infos.dom.historyback.empty().removeClass('show')
+		this.dom.main.children().slice(1).remove()
+		this.dom.main.children().eq(0).removeClass('off').addClass('fadein')
+		this.dom.historyback.empty().removeClass('show')
 
-		if( _frame.infos.dom.main.children().eq(0).hasClass('ship') )
-			_frame.infos.dom.main.attr('data-infostype', 'ship')
-		else if( _frame.infos.dom.main.children().eq(0).hasClass('equipment') )
-			_frame.infos.dom.main.attr('data-infostype', 'equipment')
-		else if( _frame.infos.dom.main.children().eq(0).hasClass('fleet') )
-			_frame.infos.dom.main.attr('data-infostype', 'fleet')
-		else if( _frame.infos.dom.main.children().eq(0).hasClass('entity') )
-			_frame.infos.dom.main.attr('data-infostype', 'entity')
+		if( this.dom.main.children().eq(0).hasClass('ship') )
+			this.dom.main.attr('data-infostype', 'ship')
+		else if( this.dom.main.children().eq(0).hasClass('equipment') )
+			this.dom.main.attr('data-infostype', 'equipment')
+		else if( this.dom.main.children().eq(0).hasClass('fleet') )
+			this.dom.main.attr('data-infostype', 'fleet')
+		else if( this.dom.main.children().eq(0).hasClass('entity') )
+			this.dom.main.attr('data-infostype', 'entity')
 	},
 	
 	click: function(el){
-		_frame.infos.show(
+		this.show(
 			el.attr('data-infos'),
 			el,
 			el.attr('data-infos-nohistory')
 		)
-	}
-}
+	},
 
-
-
-
-
-
-
-// 初始化
-_frame.infos.init = function(){
-	if( _frame.infos.is_init )
+	// 初始化
+	init: function(){
+		if( this.is_init )
+			return true
+	
+		$body.on( 'click._infos', '[data-infos]', function(e){
+				if( !(e.target.tagName.toLowerCase() == 'input' && e.target.className == 'compare') ){
+					_frame.infos.click($(this))
+	
+					if( e.target.tagName.toLowerCase() == 'a' )
+						e.preventDefault()
+				}
+			})
+	
+		this.is_init = true
 		return true
-
-	$body.on( 'click._infos', '[data-infos]', function(e){
-			if( !(e.target.tagName.toLowerCase() == 'input' && e.target.className == 'compare') ){
-				_frame.infos.click($(this))
-
-				if( e.target.tagName.toLowerCase() == 'a' )
-					e.preventDefault()
-			}
-		})
-
-	_frame.infos.is_init = true
-	return true
+	}
 }

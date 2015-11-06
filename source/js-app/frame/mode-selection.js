@@ -14,7 +14,7 @@ _frame.app_main.mode_selection_on = function( callback ){
 }
 
 _frame.app_main.mode_selection_off = function(){
-	if( _frame.app_main.cur_page )
-		_frame.app_main.page_dom[_frame.app_main.cur_page].trigger('modeSelectionExit')
+	if( this.cur_page )
+		this.page_dom[this.cur_page].trigger('modeSelectionExit')
 	_frame.dom.layout.removeClass('mode-selection')
 }

@@ -23,7 +23,7 @@ _frame.infos = {
 		}
 		
 		if( !this.firstrun ){
-			let firstChildren = _frame.infos.dom.container.children('.infosbody').eq(0)
+			let firstChildren = this.dom.container.children('.infosbody').eq(0)
 			this.firstrun = true
 			if( firstChildren.attr('data-infos-type') == type && firstChildren.attr('data-infos-id') == id ){
 				this.contentCache[type][id] = _p.initDOM(firstChildren)
@@ -49,7 +49,7 @@ _frame.infos = {
 		}
 
 		if( id == '__NEW__' )
-			return cb( initcont( _frame.infos['__' + type]( id ) ) )
+			return cb( initcont( this['__' + type]( id ) ) )
 
 		if( !this.contentCache[type][id] ){
 			_frame.app_main.loading_start( _g.state2URI({
@@ -94,7 +94,7 @@ _frame.infos = {
 
 		// 如果为相同内容，不运行
 			if( this.curContent == infosType + '::' + infosId )
-				return _frame.infos.dom.container.children('div:first-child')
+				return this.dom.container.children('div:first-child')
 
 		if( !doNotPushHistory ){
 		//}else{
@@ -104,7 +104,7 @@ _frame.infos = {
 				{
 					'infos':infosType,
 					'id': 	infosId,
-					'infosHistoryIndex': _frame.infos.historyCurrent
+					'infosHistoryIndex': this.historyCurrent
 				},
 				null,
 				_g.state2URI({
@@ -125,7 +125,7 @@ _frame.infos = {
 
 		// 如果为相同内容，不运行
 			if( this.curContent == type + '::' + id )
-				return _frame.infos.dom.container.children('div:first-child')
+				return this.dom.container.children('div:first-child')
 
 		type = type.toLowerCase()
 		if( !isNaN(id) )
@@ -136,16 +136,17 @@ _frame.infos = {
 		//console.log('init infos: ' + type + ' - ' + id)
 
 		// 第一次运行，创建相关DOM和变量
-			if( !_frame.infos.dom ){
-				_frame.infos.dom = {
+			if( !this.dom ){
+				this.dom = {
 					'main':		_frame.dom.main.children('.page-container.infos')
 				}
-				if( !_frame.infos.dom.main.length ){
-					_frame.infos.dom.main = $('<div class="page-container infos"/>').appendTo( _frame.dom.main )
-					_frame.infos.dom.container = $('<div class="wrapper"/>').appendTo( _frame.infos.dom.main )
+				if( !this.dom.main.length ){
+					this.dom.main = $('<div class="page-container infos"/>').appendTo( _frame.dom.main )
+					this.dom.container = $('<div class="wrapper"/>').appendTo( this.dom.main )
 				}else{
-					_frame.infos.dom.container = _frame.infos.dom.main.children('.wrapper')
+					this.dom.container = this.dom.main.children('.wrapper')
 				}
+				/*
 				if( _frame.dom.btnHistoryBack )
 					_frame.dom.btnHistoryBack.on(eventName('transitionend', 'infos_hide'), function(e){
 									if( e.currentTarget == e.target
@@ -155,9 +156,11 @@ _frame.infos = {
 										_frame.infos.hide_finish()
 									}
 								})
+				*/
 			}
 
 		// 计算历史记录相关，确定 Back/Forward 按钮是否可用
+		/*
 			if( _frame.dom.btnHistoryForward ){
 				infosHistoryIndex = typeof infosHistoryIndex != 'undefined' ? infosHistoryIndex : this.historyCurrent
 				this.historyCurrent = infosHistoryIndex
@@ -165,6 +168,7 @@ _frame.infos = {
 				if( this.historyCurrent == this.historyLength && this.historyCurrent > -1 )
 					_frame.dom.btnHistoryForward.addClass('disabled')
 			}
+		*/
 
 		// 先将内容区域设定为可见
 			_frame.dom.layout.addClass('is-infos-show')
@@ -178,12 +182,12 @@ _frame.infos = {
 					case 'equipment':
 					case 'entity':
 						//cont = this.getContent(type, id)
-						_frame.infos.dom.main.attr('data-infostype', type)
+						this.dom.main.attr('data-infostype', type)
 						title = cont.attr('data-infos-title')
 						break;
 					case 'fleet':
 						//cont = this.getContent(type, id)
-						_frame.infos.dom.main.attr('data-infostype', 'fleet')
+						this.dom.main.attr('data-infostype', 'fleet')
 						_frame.app_main.mode_selection_off()
 						TablelistEquipments.types = []
 						break;
@@ -216,12 +220,12 @@ _frame.infos = {
 				if( this.curContent != type + '::' + id )
 					return
 				
-				cont.prependTo( _frame.infos.dom.container )
+				cont.prependTo( this.dom.container )
 					.trigger('show', [is_firstShow])
 					.data('is_show', true)
 
 				//_p.initDOM( cont )
-				//_frame.infos.curContent = hashcode
+				//this.curContent = hashcode
 				//this.curContent = type + '::' + id
 		
 				// 取消主导航上的当前项目状态
@@ -264,13 +268,15 @@ _frame.infos = {
 	},
 
 	hide: function(){
-		if( !_frame.infos.dom || !this.curContent )
+		if( !this.dom || !this.curContent )
 			return false
 
 		// 隐藏内容
 			_frame.dom.layout.removeClass('is-infos-on')
+			/*
 			if( _frame.dom.btnHistoryForward )
 				_frame.dom.btnHistoryForward.addClass('disabled')
+			*/
 			this.curContent = null
 
 		//if( this.lastCurrentPage ){
@@ -296,11 +302,11 @@ _frame.infos = {
 
 	hide_finish: function(){
 		// 仍在显示，不予执行
-			if( _frame.infos.curContent )
+			if( this.curContent )
 				return false
 
 		_frame.dom.layout.removeClass('is-infos-show')
-		_frame.infos.dom.main.attr({
+		this.dom.main.attr({
 			'data-infostype': 	'',
 			'data-theme': 		''
 		})
@@ -309,50 +315,46 @@ _frame.infos = {
 		this.historyCurrent = -1
 	},
 
+/*
 	historyback: function(){
-		_frame.infos.dom.main.children().slice(1).remove()
-		_frame.infos.dom.main.children().eq(0).removeClass('off').addClass('fadein')
-		_frame.infos.dom.historyback.empty().removeClass('show')
+		this.dom.main.children().slice(1).remove()
+		this.dom.main.children().eq(0).removeClass('off').addClass('fadein')
+		this.dom.historyback.empty().removeClass('show')
 
-		if( _frame.infos.dom.main.children().eq(0).hasClass('ship') )
-			_frame.infos.dom.main.attr('data-infostype', 'ship')
-		else if( _frame.infos.dom.main.children().eq(0).hasClass('equipment') )
-			_frame.infos.dom.main.attr('data-infostype', 'equipment')
-		else if( _frame.infos.dom.main.children().eq(0).hasClass('fleet') )
-			_frame.infos.dom.main.attr('data-infostype', 'fleet')
-		else if( _frame.infos.dom.main.children().eq(0).hasClass('entity') )
-			_frame.infos.dom.main.attr('data-infostype', 'entity')
+		if( this.dom.main.children().eq(0).hasClass('ship') )
+			this.dom.main.attr('data-infostype', 'ship')
+		else if( this.dom.main.children().eq(0).hasClass('equipment') )
+			this.dom.main.attr('data-infostype', 'equipment')
+		else if( this.dom.main.children().eq(0).hasClass('fleet') )
+			this.dom.main.attr('data-infostype', 'fleet')
+		else if( this.dom.main.children().eq(0).hasClass('entity') )
+			this.dom.main.attr('data-infostype', 'entity')
 	},
+*/
 	
 	click: function(el){
-		_frame.infos.show(
+		this.show(
 			el.attr('data-infos'),
 			el,
 			el.attr('data-infos-nohistory')
 		)
-	}
-}
+	},
 
-
-
-
-
-
-
-// 初始化
-_frame.infos.init = function(){
-	if( _frame.infos.is_init )
+	// 初始化
+	init: function(){
+		if( this.is_init )
+			return true
+	
+		$body.on( 'click._infos', '[data-infos]', function(e){
+				if( !(e.target.tagName.toLowerCase() == 'input' && e.target.className == 'compare') ){
+					_frame.infos.click($(this))
+	
+					if( e.target.tagName.toLowerCase() == 'a' )
+						e.preventDefault()
+				}
+			})
+	
+		this.is_init = true
 		return true
-
-	$body.on( 'click._infos', '[data-infos]', function(e){
-			if( !(e.target.tagName.toLowerCase() == 'input' && e.target.className == 'compare') ){
-				_frame.infos.click($(this))
-
-				if( e.target.tagName.toLowerCase() == 'a' )
-					e.preventDefault()
-			}
-		})
-
-	_frame.infos.is_init = true
-	return true
+	}
 }

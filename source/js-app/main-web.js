@@ -117,33 +117,6 @@ _g.bgimg_count = 0;
 
 
 // Global Functions
-	_g.statSpeed = {
-		5: 	'低速',
-		10: '高速'
-	}
-	_g.statRange = {
-		1: 	'短',
-		2: 	'中',
-		3: 	'长',
-		4: 	'超长'
-	}
-	_g.textRank = {
-		1:	'|',
-		2:	'||',
-		3:	'|||',
-		4:	'\\',
-		5:	'\\\\',
-		6:	'\\\\\\',
-		7:	'》'
-	}
-	_g.getStatSpeed = function( speed ){
-		speed = parseInt(speed)
-		return _g.statSpeed[speed]
-	}
-	_g.getStatRange = function( range ){
-		range = parseInt(range)
-		return _g.statRange[range]
-	}
 	_g.log = function(){
 		console.log.apply(console, arguments)
 	}
@@ -242,13 +215,12 @@ _frame.app_main = {
 		loaded: function( item, is_instant ){
 			_g.log(item + ' loaded.')
 			if( item ){
-				var index = _frame.app_main.loading.indexOf(item)
-				if( index > -1 ){
-					_frame.app_main.loading.splice(_frame.app_main.loading.indexOf(item), 1)
-					_frame.app_main.is_loaded = false
+				if( this.loading.indexOf(item) > -1 ){
+					this.loading.splice(this.loading.indexOf(item), 1)
+					this.is_loaded = false
 				}
 			}
-			if( !_frame.app_main.loading.length && !_frame.app_main.is_loaded ){
+			if( !this.loading.length && !this.is_loaded ){
 				setTimeout(function(){
 					if( _frame.app_main.is_loaded && !_frame.app_main.loading.length && !$html.hasClass('app-ready') ){
 						_frame.dom.layout.addClass('ready')
@@ -278,8 +250,8 @@ _frame.app_main = {
 						this.window_event_bound = true
 					}
 
-				//_frame.app_main.load_page_func(_g.uriHash('page'))
-				_frame.app_main.is_loaded = true
+				//this.load_page_func(_g.uriHash('page'))
+				this.is_loaded = true
 			}
 		},
 
@@ -313,13 +285,13 @@ _frame.app_main = {
 		//change_bgimg_fadein: false,
 		//change_bgimg_oldEl: null,
 		change_bgimg: function( bgimgs_new ){
-			// _frame.app_main.bgimgs 未生成，函数不予执行
-			if( !_frame.app_main.bgimgs.length )
+			// this.bgimgs 未生成，函数不予执行
+			if( !this.bgimgs.length )
 				return false
 
-			var bgimgs = bgimgs_new && bgimgs_new.length ? bgimgs_new : _frame.app_main.bgimgs
+			var bgimgs = bgimgs_new && bgimgs_new.length ? bgimgs_new : this.bgimgs
 				,img_new = bgimgs[_g.randInt(bgimgs.length)]
-				,img_old = _frame.app_main.cur_bgimg_el ? _frame.app_main.cur_bgimg_el.css('background-image') : null
+				,img_old = this.cur_bgimg_el ? this.cur_bgimg_el.css('background-image') : null
 
 			img_old = img_old ? img_old.split('/') : null
 			img_old = img_old ? img_old[img_old.length - 1].split(')') : null
@@ -340,20 +312,20 @@ _frame.app_main = {
 			//}
 
 			if( img_old ){
-				this.change_bgimg_oldEl = _frame.app_main.cur_bgimg_el
-				//delete_old_dom( _frame.app_main.cur_bgimg_el )
+				this.change_bgimg_oldEl = this.cur_bgimg_el
+				//delete_old_dom( this.cur_bgimg_el )
 			}
 
-			//_frame.app_main.cur_bgimg_el = $('<img src="' + img_new + '" />').appendTo( _frame.dom.bgimg )
-			_frame.app_main.cur_bgimg_el = $('<div/>').css('background-image','url('+img_new+')').appendTo( _frame.dom.bgimg )
-											.add( $('<s'+( _frame.app_main.change_bgimg_fadein ? ' class="fadein"' : '' )+'/>').css('background-image','url('+img_new_blured+')').appendTo( _frame.dom.nav ) )
-											.add( $('<s'+( _frame.app_main.change_bgimg_fadein ? ' class="fadein"' : '' )+'/>').css('background-image','url('+img_new_blured+')').appendTo( _frame.dom.main ) )
+			//this.cur_bgimg_el = $('<img src="' + img_new + '" />').appendTo( _frame.dom.bgimg )
+			this.cur_bgimg_el = $('<div/>').css('background-image','url('+img_new+')').appendTo( _frame.dom.bgimg )
+									.add( $('<s'+( this.change_bgimg_fadein ? ' class="fadein"' : '' )+'/>').css('background-image','url('+img_new_blured+')').appendTo( _frame.dom.nav ) )
+									.add( $('<s'+( this.change_bgimg_fadein ? ' class="fadein"' : '' )+'/>').css('background-image','url('+img_new_blured+')').appendTo( _frame.dom.main ) )
 
 			if( _frame.dom.bg_controls )
-				_frame.app_main.cur_bgimg_el = _frame.app_main.cur_bgimg_el
-											.add( $('<s'+( _frame.app_main.change_bgimg_fadein ? ' class="fadein"' : '' )+'/>').css('background-image','url('+img_new_blured+')').appendTo( _frame.dom.bg_controls) )
+				this.cur_bgimg_el = this.cur_bgimg_el
+									.add( $('<s'+( this.change_bgimg_fadein ? ' class="fadein"' : '' )+'/>').css('background-image','url('+img_new_blured+')').appendTo( _frame.dom.bg_controls) )
 
-			_frame.app_main.change_bgimg_fadein = true
+			this.change_bgimg_fadein = true
 		},
 		change_bgimg_after: function(oldEl){
 			oldEl = oldEl || this.change_bgimg_oldEl
@@ -471,7 +443,7 @@ _frame.app_main = {
 
 	// 更换页面
 		load_page: function( page, options ){
-			if( _frame.app_main.cur_page == page || !page )
+			if( this.cur_page == page || !page )
 				return page
 
 			options = options || {}
@@ -502,8 +474,8 @@ _frame.app_main = {
 					
 				if( page == 'donate' ){
 					checked = true
-				}if( !_frame.app_main.cur_page ){
-					_frame.app_main.nav.forEach(function(currentValue){
+				}if( !this.cur_page ){
+					this.nav.forEach(function(currentValue){
 						if( page == currentValue.page )
 							checked = true
 					})
@@ -512,8 +484,8 @@ _frame.app_main = {
 				}
 				
 				if( !checked ){
-					page = _frame.app_main.nav[0].page
-					_frame.app_main.load_page(page, options)
+					page = this.nav[0].page
+					this.load_page(page, options)
 					return page
 				}
 			
@@ -574,14 +546,14 @@ _frame.app_main = {
 				}
 			}
 
-			if( !_frame.app_main.page_dom[page] ){
-				_frame.app_main.page_dom[page] = _frame.dom.main.find('.page-container[page="'+page+'"]')
-				if( _frame.app_main.page_dom[page].length ){
-					_frame.app_main.page_init(page)
-					_frame.app_main.page_title['/' + page + '/'] = document.title
+			if( !this.page_dom[page] ){
+				this.page_dom[page] = _frame.dom.main.find('.page-container[page="'+page+'"]')
+				if( this.page_dom[page].length ){
+					this.page_init(page)
+					this.page_title['/' + page + '/'] = document.title
 					callback()
 				}else{
-					//_frame.app_main.page_dom[page] = $('<div class="page-container" page="'+page+'"/>').appendTo( _frame.dom.main )
+					//this.page_dom[page] = $('<div class="page-container" page="'+page+'"/>').appendTo( _frame.dom.main )
 					this.loading_start( '/' + page + '/', function( html ){
 						_frame.app_main.page_dom[page] = $(html).appendTo( _frame.dom.main )
 						//_frame.app_main.page_dom[page].html( html )
@@ -624,8 +596,8 @@ _frame.app_main = {
 						})
 						.appendTo(_frame.dom.layout)
 
-				_frame.app_main.cur_bgimg_el = _frame.app_main.cur_bgimg_el.add(
-						_frame.app_main.cur_bgimg_el.eq(0).clone().appendTo( _frame.dom.bg_controls)
+				this.cur_bgimg_el = this.cur_bgimg_el.add(
+						this.cur_bgimg_el.eq(0).clone().appendTo( _frame.dom.bg_controls)
 					)
 
 				$('<button class="prev" icon="arrow-left"/>')
@@ -691,7 +663,7 @@ _frame.app_main = {
 
 
 	init: function(){
-		if( _frame.app_main.is_init )
+		if( this.is_init )
 			return true
 
 		// 创建基础框架
@@ -972,7 +944,7 @@ _frame.app_main = {
 			})
 
 		// 标记已进行过初始化函数
-			_frame.app_main.is_init = true
+			this.is_init = true
 	}
 };
 

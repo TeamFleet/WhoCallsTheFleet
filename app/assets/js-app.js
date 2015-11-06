@@ -23,13 +23,39 @@
 			val = _g.defaultHqLv
 		if( val != Lockr.get('hqLvDefault', _g.defaultHqLv) ){
 			Lockr.set('hqLvDefault', val)
-			clearTimeout(this.delay_updateDefaultHqLv)
-			this.delay_updateDefaultHqLv = setTimeout(function(){
+			clearTimeout(_g.delay_updateDefaultHqLv)
+			_g.delay_updateDefaultHqLv = setTimeout(function(){
 				$body.trigger('update_defaultHqLv', [val])
-				clearTimeout(this.delay_updateDefaultHqLv)
-				this.delay_updateDefaultHqLv = null
-			}.bind(this), 200)
+				clearTimeout(_g.delay_updateDefaultHqLv)
+				_g.delay_updateDefaultHqLv = null
+			}, 200)
 		}
+	};
+
+	_g.statSpeed = {
+		5: 	'低速',
+		10: '高速'
+	};
+	_g.statRange = {
+		1: 	'短',
+		2: 	'中',
+		3: 	'长',
+		4: 	'超长'
+	};
+	_g.textRank = {
+		1:	'|',
+		2:	'||',
+		3:	'|||',
+		4:	'\\',
+		5:	'\\\\',
+		6:	'\\\\\\',
+		7:	'》'
+	};
+	_g.getStatSpeed = function( speed ){
+		return _g.statSpeed[parseInt(speed)]
+	};
+	_g.getStatRange = function( range ){
+		return _g.statRange[parseInt(range)]
 	};
 
 
@@ -3345,33 +3371,6 @@ _g.kancolle_calc = {
 
 
 // Global Functions
-	_g.statSpeed = {
-		5: 	'低速',
-		10: '高速'
-	}
-	_g.statRange = {
-		1: 	'短',
-		2: 	'中',
-		3: 	'长',
-		4: 	'超长'
-	}
-	_g.textRank = {
-		1:	'|',
-		2:	'||',
-		3:	'|||',
-		4:	'\\',
-		5:	'\\\\',
-		6:	'\\\\\\',
-		7:	'》'
-	}
-	_g.getStatSpeed = function( speed ){
-		speed = parseInt(speed)
-		return _g.statSpeed[speed]
-	}
-	_g.getStatRange = function( range ){
-		range = parseInt(range)
-		return _g.statRange[range]
-	}
 	/*
 		moved to Ship.getName()
 	_g.getName = function( nameObj, joint, lang ){
@@ -3437,13 +3436,12 @@ _frame.app_main = {
 	// 如果全部载入完毕，#layout 添加 .ready
 		loaded: function( item, is_instant ){
 			if( item ){
-				var index = _frame.app_main.loading.indexOf(item)
-				if( index > -1 ){
-					_frame.app_main.loading.splice(_frame.app_main.loading.indexOf(item), 1)
-					_frame.app_main.is_loaded = false
+				if( this.loading.indexOf(item) > -1 ){
+					this.loading.splice(this.loading.indexOf(item), 1)
+					this.is_loaded = false
 				}
 			}
-			if( !_frame.app_main.loading.length && !_frame.app_main.is_loaded ){
+			if( !this.loading.length && !this.is_loaded ){
 				setTimeout(function(){
 					if( _frame.app_main.is_loaded && !_frame.app_main.loading.length && !$html.hasClass('app-ready') ){
 						_frame.dom.layout.addClass('ready')
@@ -3489,8 +3487,8 @@ _frame.app_main = {
 						this.window_event_bound = true
 					}
 
-				//_frame.app_main.load_page_func(_g.uriHash('page'))
-				_frame.app_main.is_loaded = true
+				//this.load_page_func(_g.uriHash('page'))
+				this.is_loaded = true
 			}
 		},
 
@@ -3523,12 +3521,12 @@ _frame.app_main = {
 		//change_bgimg_oldEl: null,
 		change_bgimg: function( bgimgs_new ){
 			// _frame.app_main.bgimgs 未生成，函数不予执行
-			if( !_frame.app_main.bgimgs.length )
+			if( !this.bgimgs.length )
 				return false
 
-			var bgimgs = bgimgs_new && bgimgs_new.length ? bgimgs_new : _frame.app_main.bgimgs
+			var bgimgs = bgimgs_new && bgimgs_new.length ? bgimgs_new : this.bgimgs
 				,img_new = bgimgs[_g.randInt(bgimgs.length)]
-				,img_old = _frame.app_main.cur_bgimg_el ? _frame.app_main.cur_bgimg_el.css('background-image') : null
+				,img_old = this.cur_bgimg_el ? this.cur_bgimg_el.css('background-image') : null
 
 			img_old = img_old ? img_old.split('/') : null
 			img_old = img_old ? img_old[img_old.length - 1].split(')') : null
@@ -3549,20 +3547,20 @@ _frame.app_main = {
 			//}
 
 			if( img_old ){
-				this.change_bgimg_oldEl = _frame.app_main.cur_bgimg_el
-				//delete_old_dom( _frame.app_main.cur_bgimg_el )
+				this.change_bgimg_oldEl = this.cur_bgimg_el
+				//delete_old_dom( this.cur_bgimg_el )
 			}
 
-			//_frame.app_main.cur_bgimg_el = $('<img src="' + img_new + '" />').appendTo( _frame.dom.bgimg )
-			_frame.app_main.cur_bgimg_el = $('<div/>').css('background-image','url('+img_new+')').appendTo( _frame.dom.bgimg )
-											.add( $('<s'+( _frame.app_main.change_bgimg_fadein ? ' class="fadein"' : '' )+'/>').css('background-image','url('+img_new_blured+')').appendTo( _frame.dom.nav ) )
-											.add( $('<s'+( _frame.app_main.change_bgimg_fadein ? ' class="fadein"' : '' )+'/>').css('background-image','url('+img_new_blured+')').appendTo( _frame.dom.main ) )
+			//this.cur_bgimg_el = $('<img src="' + img_new + '" />').appendTo( _frame.dom.bgimg )
+			this.cur_bgimg_el = $('<div/>').css('background-image','url('+img_new+')').appendTo( _frame.dom.bgimg )
+									.add( $('<s'+( this.change_bgimg_fadein ? ' class="fadein"' : '' )+'/>').css('background-image','url('+img_new_blured+')').appendTo( _frame.dom.nav ) )
+									.add( $('<s'+( this.change_bgimg_fadein ? ' class="fadein"' : '' )+'/>').css('background-image','url('+img_new_blured+')').appendTo( _frame.dom.main ) )
 
 			if( _frame.dom.bg_controls )
-				_frame.app_main.cur_bgimg_el = _frame.app_main.cur_bgimg_el
-											.add( $('<s'+( _frame.app_main.change_bgimg_fadein ? ' class="fadein"' : '' )+'/>').css('background-image','url('+img_new_blured+')').appendTo( _frame.dom.bg_controls) )
+				this.cur_bgimg_el = this.cur_bgimg_el
+									.add( $('<s'+( this.change_bgimg_fadein ? ' class="fadein"' : '' )+'/>').css('background-image','url('+img_new_blured+')').appendTo( _frame.dom.bg_controls) )
 
-			_frame.app_main.change_bgimg_fadein = true
+			this.change_bgimg_fadein = true
 		},
 		change_bgimg_after: function(oldEl){
 			oldEl = oldEl || this.change_bgimg_oldEl
@@ -3587,7 +3585,7 @@ _frame.app_main = {
 
 	// 更换页面
 		load_page: function( page, options ){
-			if( _frame.app_main.cur_page == page || !page )
+			if( this.cur_page == page || !page )
 				return page
 
 			options = options || {}
@@ -3603,12 +3601,12 @@ _frame.app_main = {
 			this.load_page_func( page, options )
 
 			if( options.callback_modeSelection_select ){
-				_frame.app_main.page_dom[page].trigger('modeSelectionEnter', [
+				this.page_dom[page].trigger('modeSelectionEnter', [
 					options.callback_modeSelection_select || function(){},
 					options.callback_modeSelection_enter || function(){}
 				])
 			}else{
-				_frame.app_main.mode_selection_off()
+				this.mode_selection_off()
 			}
 			//_g.uriHash('page', page)
 		},
@@ -3624,8 +3622,8 @@ _frame.app_main = {
 					
 				if( page == 'donate' ){
 					checked = true
-				}if( !_frame.app_main.cur_page ){
-					_frame.app_main.nav.forEach(function(currentValue){
+				}if( !this.cur_page ){
+					this.nav.forEach(function(currentValue){
 						if( page == currentValue.page )
 							checked = true
 					})
@@ -3634,26 +3632,26 @@ _frame.app_main = {
 				}
 				
 				if( !checked ){
-					page = _frame.app_main.nav[0].page
-					_frame.app_main.load_page(page, options)
+					page = this.nav[0].page
+					this.load_page(page, options)
 					return page
 				}
 
-			if( !_frame.app_main.page_dom[page] ){
-				_frame.app_main.page_dom[page] = $('<div class="page-container" page="'+page+'"/>').appendTo( _frame.dom.main )
+			if( !this.page_dom[page] ){
+				this.page_dom[page] = $('<div class="page-container" page="'+page+'"/>').appendTo( _frame.dom.main )
 				this.page_html[page] = node.fs.readFileSync(_g.path.page + page + '.html', 'utf8')
 				if(this.page_html[page]){
-					_frame.app_main.page_dom[page].html( this.page_html[page] )
-					if( _frame.app_main.page[page] && _frame.app_main.page[page].init )
-						_frame.app_main.page[page].init(_frame.app_main.page_dom[page])
-					_p.initDOM(_frame.app_main.page_dom[page])
+					this.page_dom[page].html( this.page_html[page] )
+					if( this.page[page] && this.page[page].init )
+						this.page[page].init(this.page_dom[page])
+					_p.initDOM(this.page_dom[page])
 				}
 			}
 			
-			_frame.app_main.page_dom[page].trigger('show')
+			this.page_dom[page].trigger('show')
 
 			if( !options.callback_modeSelection_select ){
-				_frame.app_main.title = _frame.app_main.navtitle[page]
+				this.title = this.navtitle[page]
 				_frame.infos.last = null
 	
 				_ga.counter(
@@ -3661,18 +3659,18 @@ _frame.app_main = {
 				)
 			}
 
-			console.log(_frame.app_main.cur_page)
-			if( _frame.app_main.cur_page == page )
+			//_g.log(this.cur_page)
+			if( this.cur_page == page )
 				return page
 
-			_frame.app_main.page_dom[page].removeClass('off').trigger('on')
+			this.page_dom[page].removeClass('off').trigger('on')
 
 			// 关闭之前的页面
-				if( _frame.app_main.cur_page ){
-					if( _frame.dom.navs[_frame.app_main.cur_page] )
-						_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
-					if( _frame.app_main.page_dom[_frame.app_main.cur_page] )
-						_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff')
+				if( this.cur_page ){
+					if( _frame.dom.navs[this.cur_page] )
+						_frame.dom.navs[this.cur_page].removeClass('on')
+					if( this.page_dom[this.cur_page] )
+						this.page_dom[this.cur_page].addClass('off').trigger('pageoff')
 				}
 
 			if( _frame.dom.navs[page] )
@@ -3680,14 +3678,14 @@ _frame.app_main = {
 
 			if( !options.callback_modeSelection_select ){
 				if( _frame.dom.layout.hasClass('ready') )
-					_frame.app_main.change_bgimg()
+					this.change_bgimg()
 
 				if( page != 'about' )
 					Lockr.set('last_page', page)
 			}
 			
 			_frame.dom.main.attr('data-theme', page)
-			_frame.app_main.cur_page = page
+			this.cur_page = page
 
 			_g.log( 'LOADED: ' + page )
 		},
@@ -3718,8 +3716,8 @@ _frame.app_main = {
 						})
 						.appendTo(_frame.dom.layout)
 
-				_frame.app_main.cur_bgimg_el = _frame.app_main.cur_bgimg_el.add(
-						_frame.app_main.cur_bgimg_el.eq(0).clone().appendTo( _frame.dom.bg_controls)
+				this.cur_bgimg_el = this.cur_bgimg_el.add(
+						this.cur_bgimg_el.eq(0).clone().appendTo( _frame.dom.bg_controls)
 					)
 
 				$('<button class="prev" icon="arrow-left"/>')
@@ -3787,7 +3785,7 @@ _frame.app_main = {
 
 
 	init: function(){
-		if( _frame.app_main.is_init )
+		if( this.is_init )
 			return true
 
 		// 创建基础框架
@@ -3850,10 +3848,10 @@ _frame.app_main = {
 		*/
 
 		// 创建主导航
-			if( _frame.app_main.nav && _frame.app_main.nav.length ){
+			if( this.nav && this.nav.length ){
 				_frame.dom.navs = {}
-				_frame.app_main.navtitle = {}
-				_frame.app_main.nav.forEach(function(o, i){
+				this.navtitle = {}
+				this.nav.forEach(function(o, i){
 					_frame.app_main.navtitle[o.page] = o.title
 					_frame.dom.navs[o.page] = (function(page){
 								return $('<button class="button" />').on('click', function(){
@@ -4406,7 +4404,7 @@ _frame.app_main = {
 			})
 
 		// 标记已进行过初始化函数
-			_frame.app_main.is_init = true
+			this.is_init = true
 	}
 }
 //
@@ -5723,13 +5721,13 @@ _frame.infos = {
 		}
 
 		if( id == '__NEW__' )
-			return initcont( _frame.infos['__' + type]( id ) )
+			return initcont( this['__' + type]( id ) )
 		
 		if( id == '__OUTPUT__' )
-			this.contentCache[type][id] = initcont( _frame.infos['__' + type + '__OUTPUT']( id ) ).removeAttr('data-infos-id')
+			this.contentCache[type][id] = initcont( this['__' + type + '__OUTPUT']( id ) ).removeAttr('data-infos-id')
 
 		if( !this.contentCache[type][id] ){
-			this.contentCache[type][id] = initcont( _frame.infos['__' + type]( id ) )
+			this.contentCache[type][id] = initcont( this['__' + type]( id ) )
 		}
 
 		return this.contentCache[type][id]
@@ -5759,7 +5757,7 @@ _frame.infos = {
 
 		// 如果为相同内容，不运行
 			if( this.curContent == infosType + '::' + infosId )
-				return _frame.infos.dom.container.children('div:first-child')
+				return this.dom.container.children('div:first-child')
 
 		if( !doNotPushHistory ){
 		//}else{
@@ -5769,7 +5767,7 @@ _frame.infos = {
 				{
 					'infos':infosType,
 					'id': 	infosId,
-					'infosHistoryIndex': _frame.infos.historyCurrent
+					'infosHistoryIndex': this.historyCurrent
 				},
 				null,
 				'?infos=' + infosType + '&id=' + infosId
@@ -5786,7 +5784,7 @@ _frame.infos = {
 
 		// 如果为相同内容，不运行
 			if( this.curContent == type + '::' + id )
-				return _frame.infos.dom.container.children('div:first-child')
+				return this.dom.container.children('div:first-child')
 
 		type = type.toLowerCase()
 		if( isNaN(id) )
@@ -5798,14 +5796,14 @@ _frame.infos = {
 			,title = null
 
 		// 第一次运行，创建相关DOM和变量
-			if( !_frame.infos.dom ){
-				_frame.infos.dom = {
+			if( !this.dom ){
+				this.dom = {
 					//'nav': 		$('<div class="infos"/>').appendTo( _frame.dom.nav ),
 					'main': 	$('<div class="page-container infos"/>').appendTo( _frame.dom.main )
 				}
-				_frame.infos.dom.container = $('<div class="wrapper"/>').appendTo( _frame.infos.dom.main )
+				this.dom.container = $('<div class="wrapper"/>').appendTo( this.dom.main )
 				/*
-				_frame.infos.dom.back = $('<button class="back" icon="arrow-set2-left"/>')
+				this.dom.back = $('<button class="back" icon="arrow-set2-left"/>')
 						.on({
 							'click': function(){
 								_frame.infos.dom.forward.removeClass('disabled')
@@ -5820,19 +5818,19 @@ _frame.infos = {
 									_frame.infos.hide_finish()
 								}
 							}
-						}).appendTo( _frame.infos.dom.nav )
-				_frame.infos.dom.forward = $('<button class="forward disabled" icon="arrow-set2-right"/>')
+						}).appendTo( this.dom.nav )
+				this.dom.forward = $('<button class="forward disabled" icon="arrow-set2-right"/>')
 						.on('click', function(){
 							history.forward()
 							//_frame.infos.hide()
-						}).appendTo( _frame.infos.dom.nav )
+						}).appendTo( this.dom.nav )
 				*/
 				_frame.dom.btnHistoryBack.on(eventName('transitionend', 'infos_hide'), function(e){
 								if( e.currentTarget == e.target
 									&& e.originalEvent.propertyName == 'opacity'
 									&& parseFloat(_frame.dom.btnHistoryBack.css('opacity')) == 0
 								){
-									_frame.infos.hide_finish()
+									this.hide_finish()
 								}
 							})
 			}
@@ -5853,36 +5851,36 @@ _frame.infos = {
 				case 'equipment':
 				case 'entity':
 					cont = this.getContent(type, id)
-					_frame.infos.dom.main.attr('data-infostype', type)
+					this.dom.main.attr('data-infostype', type)
 					title = cont.attr('data-infos-title')
 					break;
 				case 'fleet':
 					cont = this.getContent(type, id)
-					_frame.infos.dom.main.attr('data-infostype', 'fleet')
+					this.dom.main.attr('data-infostype', 'fleet')
 					_frame.app_main.mode_selection_off()
 					TablelistEquipments.types = []
 					break;
 			}
 			//var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
-			//if( _frame.infos.curContent != hashcode ){
+			//if( this.curContent != hashcode ){
 				var contentDOM = cont.append ? cont : $(cont)
 					,is_firstShow = !contentDOM.data('is_infosinit')
 
 				//if( el && el.attr('data-infos-history-skip-this') )
 				//	contentDOM.attr('data-infos-history-skip-this', true)
 
-				//if( _frame.infos.dom.main.children().length )
+				//if( this.dom.main.children().length )
 				//	contentDOM.addClass('fadein')
 
 				/*
 				if( history ){
-					_frame.infos.dom.main.children().filter('[data-infos-history-skip-this="true"]').remove()
-					_frame.infos.dom.main.children().slice(2).remove()
-					_frame.infos.dom.main.children().eq(0).addClass('off')
-					_frame.infos.dom.historyback.html(history).addClass('show')
+					this.dom.main.children().filter('[data-infos-history-skip-this="true"]').remove()
+					this.dom.main.children().slice(2).remove()
+					this.dom.main.children().eq(0).addClass('off')
+					this.dom.historyback.html(history).addClass('show')
 				}else{
-					_frame.infos.dom.historyback.html('').removeClass('show')
-					_frame.infos.dom.main.empty()
+					this.dom.historyback.html('').removeClass('show')
+					this.dom.main.empty()
 				}*/
 				//data-infos-history-skip-this
 
@@ -5895,12 +5893,12 @@ _frame.infos = {
 							}
 						})
 				}
-				contentDOM.prependTo( _frame.infos.dom.container )
+				contentDOM.prependTo( this.dom.container )
 					.trigger('show', [is_firstShow])
 					.data('is_show', true)
 
 				//_p.initDOM( contentDOM )
-				//_frame.infos.curContent = hashcode
+				//this.curContent = hashcode
 				this.curContent = type + '::' + id
 			//}
 
@@ -5939,7 +5937,7 @@ _frame.infos = {
 	},
 
 	hide: function(){
-		if( !_frame.infos.dom || !this.curContent )
+		if( !this.dom || !this.curContent )
 			return false
 
 		// 隐藏内容
@@ -5970,11 +5968,11 @@ _frame.infos = {
 
 	hide_finish: function(){
 		// 仍在显示，不予执行
-			if( _frame.infos.curContent )
+			if( this.curContent )
 				return false
 
 		_frame.dom.layout.removeClass('is-infos-show')
-		_frame.infos.dom.main.attr({
+		this.dom.main.attr({
 			'data-infostype': 	'',
 			'data-theme': 		''
 		})
@@ -5984,51 +5982,45 @@ _frame.infos = {
 	},
 
 	historyback: function(){
-		_frame.infos.dom.main.children().slice(1).remove()
-		_frame.infos.dom.main.children().eq(0).removeClass('off').addClass('fadein')
-		_frame.infos.dom.historyback.empty().removeClass('show')
+		this.dom.main.children().slice(1).remove()
+		this.dom.main.children().eq(0).removeClass('off').addClass('fadein')
+		this.dom.historyback.empty().removeClass('show')
 
-		if( _frame.infos.dom.main.children().eq(0).hasClass('ship') )
-			_frame.infos.dom.main.attr('data-infostype', 'ship')
-		else if( _frame.infos.dom.main.children().eq(0).hasClass('equipment') )
-			_frame.infos.dom.main.attr('data-infostype', 'equipment')
-		else if( _frame.infos.dom.main.children().eq(0).hasClass('fleet') )
-			_frame.infos.dom.main.attr('data-infostype', 'fleet')
-		else if( _frame.infos.dom.main.children().eq(0).hasClass('entity') )
-			_frame.infos.dom.main.attr('data-infostype', 'entity')
+		if( this.dom.main.children().eq(0).hasClass('ship') )
+			this.dom.main.attr('data-infostype', 'ship')
+		else if( this.dom.main.children().eq(0).hasClass('equipment') )
+			this.dom.main.attr('data-infostype', 'equipment')
+		else if( this.dom.main.children().eq(0).hasClass('fleet') )
+			this.dom.main.attr('data-infostype', 'fleet')
+		else if( this.dom.main.children().eq(0).hasClass('entity') )
+			this.dom.main.attr('data-infostype', 'entity')
 	},
 	
 	click: function(el){
-		_frame.infos.show(
+		this.show(
 			el.attr('data-infos'),
 			el,
 			el.attr('data-infos-nohistory')
 		)
-	}
-}
+	},
 
-
-
-
-
-
-
-// 初始化
-_frame.infos.init = function(){
-	if( _frame.infos.is_init )
+	// 初始化
+	init: function(){
+		if( this.is_init )
+			return true
+	
+		$body.on( 'click._infos', '[data-infos]', function(e){
+				if( !(e.target.tagName.toLowerCase() == 'input' && e.target.className == 'compare') ){
+					_frame.infos.click($(this))
+	
+					if( e.target.tagName.toLowerCase() == 'a' )
+						e.preventDefault()
+				}
+			})
+	
+		this.is_init = true
 		return true
-
-	$body.on( 'click._infos', '[data-infos]', function(e){
-			if( !(e.target.tagName.toLowerCase() == 'input' && e.target.className == 'compare') ){
-				_frame.infos.click($(this))
-
-				if( e.target.tagName.toLowerCase() == 'a' )
-					e.preventDefault()
-			}
-		})
-
-	_frame.infos.is_init = true
-	return true
+	}
 }
 
 // 实体信息
@@ -8591,8 +8583,8 @@ _frame.app_main.mode_selection_on = function( callback ){
 }
 
 _frame.app_main.mode_selection_off = function(){
-	if( _frame.app_main.cur_page )
-		_frame.app_main.page_dom[_frame.app_main.cur_page].trigger('modeSelectionExit')
+	if( this.cur_page )
+		this.page_dom[this.cur_page].trigger('modeSelectionExit')
 	_frame.dom.layout.removeClass('mode-selection')
 }
 

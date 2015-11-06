@@ -23,13 +23,39 @@
 			val = _g.defaultHqLv
 		if( val != Lockr.get('hqLvDefault', _g.defaultHqLv) ){
 			Lockr.set('hqLvDefault', val)
-			clearTimeout(this.delay_updateDefaultHqLv)
-			this.delay_updateDefaultHqLv = setTimeout(function(){
+			clearTimeout(_g.delay_updateDefaultHqLv)
+			_g.delay_updateDefaultHqLv = setTimeout(function(){
 				$body.trigger('update_defaultHqLv', [val])
-				clearTimeout(this.delay_updateDefaultHqLv)
-				this.delay_updateDefaultHqLv = null
-			}.bind(this), 200)
+				clearTimeout(_g.delay_updateDefaultHqLv)
+				_g.delay_updateDefaultHqLv = null
+			}, 200)
 		}
+	};
+
+	_g.statSpeed = {
+		5: 	'低速',
+		10: '高速'
+	};
+	_g.statRange = {
+		1: 	'短',
+		2: 	'中',
+		3: 	'长',
+		4: 	'超长'
+	};
+	_g.textRank = {
+		1:	'|',
+		2:	'||',
+		3:	'|||',
+		4:	'\\',
+		5:	'\\\\',
+		6:	'\\\\\\',
+		7:	'》'
+	};
+	_g.getStatSpeed = function( speed ){
+		return _g.statSpeed[parseInt(speed)]
+	};
+	_g.getStatRange = function( range ){
+		return _g.statRange[parseInt(range)]
 	};
 
 
