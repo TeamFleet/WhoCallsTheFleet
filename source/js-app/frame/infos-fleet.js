@@ -60,6 +60,12 @@ class InfosFleet{
 				this.doms['hqlvOption'].attr('placeholder', l)
 			}
 		}.bind(this))
+
+		if( !_g.isClient )
+			this.doms.warning = $('<div/>',{
+					'class':	'warning',
+					'html':		'功能移植/测试中，请勿日常使用'
+				}).appendTo( this.el )
 	}
 
 

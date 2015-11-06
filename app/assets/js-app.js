@@ -6349,6 +6349,12 @@ class InfosFleet{
 				this.doms['hqlvOption'].attr('placeholder', l)
 			}
 		}.bind(this))
+
+		if( !_g.isClient )
+			this.doms.warning = $('<div/>',{
+					'class':	'warning',
+					'html':		'功能移植/测试中，请勿日常使用'
+				}).appendTo( this.el )
 	}
 
 
@@ -9653,6 +9659,11 @@ class TablelistFleets extends Tablelist{
 										this.btn_settings()
 									}.bind(this))
 									.appendTo(this.dom.buttons_right)
+			if( !_g.isClient )
+				this.dom.warning = $('<div/>',{
+						'class':	'warning',
+						'html':		'功能移植/测试中，请勿日常使用'
+					}).appendTo( this.dom.filter_container )
 
 		// [创建] 表格框架
 			this.dom.table_container = $('<div class="fixed-table-container"/>').appendTo( this.dom.container )
@@ -9682,7 +9693,7 @@ class TablelistFleets extends Tablelist{
 						.append($('<span>').html('暂无舰队配置'))
 						.append($('<button>').html('新建/导入')
 									.on('click',function(e){
-										this.dom.btn_new.trigger('click', [$(e.currentTarget)])
+										this.dom.btn_new.trigger('click', [e])
 									}.bind(this))
 								)
 					)
@@ -10150,7 +10161,9 @@ class TablelistFleets extends Tablelist{
 					.appendTo(this.dom.filters)
 			}
 			
-			this.menu_new.show(target)
+			if( target && target.clientX )
+				return this.menu_new.show(target.clientX, target.clientY)
+			return this.menu_new.show(target)
 		}
 
 	// [按钮操作] 选项设置

@@ -1949,7 +1949,7 @@ _frame.modal = {
 		});
 
 		if (settings.showBlured) {
-			if (!_frame.modal.dom.blured) node.win.capturePage(function (datauri) {
+			if (!_frame.modal.dom.blured && typeof node != 'undefined') node.win.capturePage(function (datauri) {
 				_frame.modal.dom.blured = $('<img/>').attr('src', datauri).appendTo(_frame.modal.dom.bg);
 			}, 'jpg', 'datauri');
 			_frame.modal.dom.container.addClass('bluredbg');
@@ -5164,6 +5164,11 @@ var InfosFleet = (function () {
 				this.doms['hqlvOption'].attr('placeholder', _l2);
 			}
 		}).bind(this));
+
+		if (!_g.isClient) this.doms.warning = $('<div/>', {
+			'class': 'warning',
+			'html': '功能移植/测试中，请勿日常使用'
+		}).appendTo(this.el);
 	}
 
 	_createClass(InfosFleet, [{
@@ -6994,6 +6999,10 @@ var TablelistFleets = (function (_Tablelist3) {
 		_this11.dom.btn_settings = $('<button icon="cog"/>').on('click', (function () {
 			this.btn_settings();
 		}).bind(_this11)).appendTo(_this11.dom.buttons_right);
+		if (!_g.isClient) _this11.dom.warning = $('<div/>', {
+			'class': 'warning',
+			'html': '功能移植/测试中，请勿日常使用'
+		}).appendTo(_this11.dom.filter_container);
 
 		_this11.dom.table_container = $('<div class="fixed-table-container"/>').appendTo(_this11.dom.container);
 		_this11.dom.table_container_inner = $('<div class="fixed-table-container-inner"/>').appendTo(_this11.dom.table_container);
@@ -7015,7 +7024,7 @@ var TablelistFleets = (function (_Tablelist3) {
 		_this11.dom.tbody = $('<tbody/>').appendTo(_this11.dom.table);
 
 		$('<div class="nocontent container"/>').append($($('<div/>').append($('<span>').html('暂无舰队配置')).append($('<button>').html('新建/导入').on('click', (function (e) {
-			this.dom.btn_new.trigger('click', [$(e.currentTarget)]);
+			this.dom.btn_new.trigger('click', [e]);
 		}).bind(_this11))))).appendTo(_this11.dom.table_container_inner);
 
 		_this11.dom.table.on('contextmenu.contextmenu_fleet', 'tr[data-fleetid]', (function (e) {
@@ -7367,7 +7376,8 @@ var TablelistFleets = (function (_Tablelist3) {
 				}).bind(this)).appendTo(this.dom.filters);
 			}
 
-			this.menu_new.show(target);
+			if (target && target.clientX) return this.menu_new.show(target.clientX, target.clientY);
+			return this.menu_new.show(target);
 		}
 	}, {
 		key: 'btn_settings',

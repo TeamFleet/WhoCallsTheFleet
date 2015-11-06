@@ -3086,6 +3086,22 @@ main:after {
   padding-left: .25em;
   top: .5em;
 }
+.infosbody > div.warning {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
+  background: rgba(255, 64, 64, 0.5);
+  font-size: 16px;
+  padding: 0 1em;
+  text-align: center;
+  width: auto;
+  height: 50px;
+  line-height: 50px;
+}
 .infosbody .flexgrid.list-ship {
   -webkit-flex-flow: row wrap;
       -ms-flex-flow: row wrap;
@@ -4998,6 +5014,18 @@ body.mod-capture #tip {
 .tablelist > .options > div.exit_compare button.disabled {
   background: rgba(0, 0, 0, 0.35) !important;
   color: rgba(255, 255, 255, 0.35) !important;
+}
+.tablelist > .options > div.warning {
+  z-index: 5;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
+  background: rgba(255, 64, 64, 0.5);
+  font-size: 16px;
+  padding: 0 1em;
+  text-align: center;
+  width: auto;
 }
 .tablelist > .options[filter-hide-premodel="true"] ~ .fixed-table-container .premodeled {
   display: none !important;
