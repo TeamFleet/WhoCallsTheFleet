@@ -1806,80 +1806,6 @@ let Formula = {
 					'apshell': 0,
 					'radar': 0
 				}
-			,powerFire = function(){
-					let result = 0
-						,isCV = false
-					
-					// 检查是否为航母攻击模式
-						if( $.inArray(ship.type, Formula.shipType.Carriers) > -1 ){
-							isCV = true
-						}else{
-							equipments_by_slot.forEach(function(equipment){
-								if( equipment && !isCV && $.inArray(equipment.type, Formula.equipmentType.CarrierBased) > -1 )
-									isCV = true
-							})
-						}
-					
-					if( isCV ){
-						// 航母攻击模式
-						let torpedoDamage = 0
-							,bombDamage = 0
-						ship.slot.map(function(carry, index){
-							if( equipments_by_slot[index] ){
-								result+= (equipments_by_slot[index].stat.fire * 1.5) || 0
-								
-								if( equipments_by_slot[index].type == Formula.equipmentType.TorpedoBomber )
-									torpedoDamage+= equipments_by_slot[index].stat.torpedo || 0
-									
-								if( equipments_by_slot[index].type == Formula.equipmentType.DiveBomber )
-									bombDamage+= equipments_by_slot[index].stat.bomb || 0
-								
-								if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.SecondaryGuns ) > -1 )
-									result+= Math.sqrt((star_by_slot[index] || 0) * 1.5)
-							}
-						})
-						if( !torpedoDamage && !bombDamage )
-							return -1
-						else
-							result+= ( bombDamage * 1.3 + torpedoDamage + ship.stat.fire_max ) * 1.5 + 50
-						return result
-					}else{
-						result = ship.stat.fire_max || 0
-						// 其他舰种
-						let CLGunNavalNumber = 0
-							,CLGunTwinNumber = 0
-						ship.slot.map(function(carry, index){
-							if( equipments_by_slot[index] ){
-								result+= equipments_by_slot[index].stat.fire || 0
-								
-								// 轻巡系主炮加成
-									if( $.inArray(ship.type, Formula.shipType.LightCruisers) > -1 ){
-										if( equipments_by_slot[index].id == 4 || equipments_by_slot[index].id == 65 )
-											CLGunNavalNumber+= 1
-										if( equipments_by_slot[index].id == 119 || equipments_by_slot[index].id == 139 )
-											CLGunTwinNumber+= 1
-									}
-								
-								// 改修加成
-									if( star_by_slot[index] ){
-										// 忽略装备类型: 鱼雷、雷达
-										if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.Torpedos.concat(Formula.equipmentType.Radars) ) < 0 ){
-											let multipler = 1
-											// 对潜装备
-												if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.AntiSubmarines ) > -1 )
-													multipler = 0.75
-											// 大口径主炮
-												if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.LargeCalibers ) > -1 )
-													multipler = 1.5
-											result+= Math.sqrt(star_by_slot[index]) * multipler
-										}
-									}
-							}
-						})
-						return result + 2 * Math.sqrt(CLGunTwinNumber) + Math.sqrt(CLGunNavalNumber)
-					}
-					return (ship.stat.fire_max || 0)
-				}
 			,powerTorpedo = function(){
 					let result = 0
 					if( $.inArray(ship.type, Formula.shipType.Carriers) > -1 ){
@@ -1994,7 +1920,7 @@ let Formula = {
 				if( $.inArray(ship.type, Formula.shipType.Submarines) > -1 ){
 					return '-'
 				}else{
-					result = powerFire()
+					result = Formula.calcByShip.shellingPower(ship, equipments_by_slot, star_by_slot, rank_by_slot)
 					if( result && result > -1 )
 						return Math.floor(result) + 5
 					return '-'
@@ -2017,7 +1943,10 @@ let Formula = {
 					return '-'
 				}else{
 					//console.log(count)
-					result = powerFire() + powerTorpedo()
+					result = Formula.calcByShip.shellingPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, {
+									isNight: true
+								})
+							+ powerTorpedo()
 					if( count.torpedo >= 2 ){
 						return '雷击CI ' + Math.floor( result * 1.5 ) + ' x 2'
 					}else if( count.main >= 3 ){
@@ -2494,6 +2423,87 @@ Formula.losPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot
 
 
 // Calculate by Ship
+	Formula.calcByShip.shellingPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot, options){
+		options = options || {}
+
+		let result = 0
+			,isCV = false
+		
+		// 检查是否为航母攻击模式
+			if( $.inArray(ship.type, Formula.shipType.Carriers) > -1 ){
+				isCV = true
+			}else{
+				equipments_by_slot.forEach(function(equipment){
+					if( equipment && !isCV && $.inArray(equipment.type, Formula.equipmentType.CarrierBased) > -1 )
+						isCV = true
+				})
+			}
+		
+		if( isCV && !options.isNight ){
+			// 航母攻击模式
+			let torpedoDamage = 0
+				,bombDamage = 0
+			ship.slot.map(function(carry, index){
+				if( equipments_by_slot[index] ){
+					result+= (equipments_by_slot[index].stat.fire * 1.5) || 0
+					
+					if( equipments_by_slot[index].type == Formula.equipmentType.TorpedoBomber )
+						torpedoDamage+= equipments_by_slot[index].stat.torpedo || 0
+						
+					//if( equipments_by_slot[index].type == Formula.equipmentType.DiveBomber )
+						bombDamage+= equipments_by_slot[index].stat.bomb || 0
+					
+					if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.SecondaryGuns ) > -1 )
+						result+= Math.sqrt((star_by_slot[index] || 0) * 1.5)
+				}
+			})
+			if( !torpedoDamage && !bombDamage )
+				return -1
+			else
+				result+= ( bombDamage * 1.3 + torpedoDamage + ship.stat.fire_max ) * 1.5 + 50
+			return result
+		}else{
+			result = ship.stat.fire_max || 0
+			// 其他舰种
+			let CLGunNavalNumber = 0
+				,CLGunTwinNumber = 0
+			ship.slot.map(function(carry, index){
+				if( equipments_by_slot[index] ){
+					result+= equipments_by_slot[index].stat.fire || 0
+					
+					// 轻巡系主炮加成
+						if( $.inArray(ship.type, Formula.shipType.LightCruisers) > -1 ){
+							if( equipments_by_slot[index].id == 4 || equipments_by_slot[index].id == 65 )
+								CLGunNavalNumber+= 1
+							if( equipments_by_slot[index].id == 119 || equipments_by_slot[index].id == 139 )
+								CLGunTwinNumber+= 1
+						}
+					
+					// 改修加成
+						if( star_by_slot[index] ){
+							// 忽略装备类型: 鱼雷、雷达
+							if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.Torpedos.concat(Formula.equipmentType.Radars) ) < 0 ){
+								let multipler = 1
+								// 对潜装备
+									if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.AntiSubmarines ) > -1 )
+										multipler = 0.75
+								// 大口径主炮
+									if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.LargeCalibers ) > -1 ){
+										if( options.isNight )
+											multipler = 1
+										else
+											multipler = 1.5
+									}
+								result+= Math.sqrt(star_by_slot[index]) * multipler
+							}
+						}
+				}
+			})
+			return result + 2 * Math.sqrt(CLGunTwinNumber) + Math.sqrt(CLGunNavalNumber)
+		}
+		return (ship.stat.fire_max || 0)
+	};
+
 	Formula.calcByShip.fighterPower_v2 = function(ship, equipments_by_slot, star_by_slot, rank_by_slot){
 		// http://bbs.ngacn.cc/read.php?tid=8680767
 		// http://ja.kancolle.wikia.com/wiki/%E8%89%A6%E8%BC%89%E6%A9%9F%E7%86%9F%E7%B7%B4%E5%BA%A6

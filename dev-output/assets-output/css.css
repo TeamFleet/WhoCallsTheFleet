@@ -440,9 +440,9 @@ sup{
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-transition: none 0 ease-out;
-          transition: none 0 ease-out;
+  transition: none 0 ease-out;
   -webkit-transition-property: none;
-          transition-property: none;
+  transition-property: none;
 }
 html {
   height: 100%;
@@ -458,7 +458,7 @@ html.no-transition *,
 html.no-transition *:before,
 html.no-transition *:after {
   -webkit-transition: none !important;
-          transition: none !important;
+  transition: none !important;
   -webkit-animation: none !important;
           animation: none !important;
 }
@@ -1147,8 +1147,7 @@ html body #layout {
   position: relative;
   width: 100%;
   min-height: 100%;
-  -webkit-transition-property: -webkit-filter;
-          transition-property: -webkit-filter;
+  transition-property: -webkit-filter;
 }
 body > .menus {
   position: fixed;
@@ -1174,7 +1173,9 @@ body > .menus > .menu {
   opacity: 0;
   cursor: default;
   -webkit-transition-property: opacity, -webkit-transform;
-          transition-property: opacity, transform;
+  transition-property: opacity, -webkit-transform;
+  transition-property: opacity, transform;
+  transition-property: opacity, transform, -webkit-transform;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -1240,7 +1241,7 @@ body > .menus > .menu > .body .item {
   color: #f2f2f2;
   font-weight: lighter;
   -webkit-transition-property: color, background-color;
-          transition-property: color, background-color;
+  transition-property: color, background-color;
 }
 body > .menus > .menu > .body menuitem:hover,
 body > .menus > .menu > .body .menuitem:hover {
@@ -1274,7 +1275,9 @@ body > .menus > .menu > .blured {
   background: no-repeat 50% 50% / cover;
   background-attachment: fixed;
   -webkit-transition-property: -webkit-transform;
-          transition-property: transform;
+  transition-property: -webkit-transform;
+  transition-property: transform;
+  transition-property: transform, -webkit-transform;
   -webkit-transform: translateY(10px);
       -ms-transform: translateY(10px);
           transform: translateY(10px);
@@ -1300,7 +1303,7 @@ body > .menus > .menu.mod-checkbox > .body menuitem label {
   width: 100%;
   height: 100%;
   -webkit-transition-property: opacity, top, left, z-index, display;
-          transition-property: opacity, top, left, z-index, display;
+  transition-property: opacity, top, left, z-index, display;
   -webkit-transition-delay: 0, 0.2s, 0.2s, 0.2s, 0.2s;
           transition-delay: 0, 0.2s, 0.2s, 0.2s, 0.2s;
   -webkit-transition-duration: 0.2s, 0, 0, 0, 0;
@@ -1329,7 +1332,7 @@ body > .menus > .menu.mod-checkbox > .body menuitem label {
   top: 0;
   left: 0;
   -webkit-transition-property: opacity;
-          transition-property: opacity;
+  transition-property: opacity;
   -webkit-transition-delay: 0;
           transition-delay: 0;
   -webkit-transition-duration: 0.2s;
@@ -1477,7 +1480,7 @@ body > .menus > .menu.mod-checkbox > .body menuitem label {
   opacity: 0;
   cursor: default !important;
   -webkit-transition-property: opacity;
-          transition-property: opacity;
+  transition-property: opacity;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -1678,7 +1681,7 @@ ul{
   background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.25) 100%);
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.25) 100%);
   -webkit-transition-property: background;
-          transition-property: background;
+  transition-property: background;
 }
 .debugbtns button:hover {
   background-color: rgba(0, 0, 0, 0.75);
@@ -2247,15 +2250,15 @@ nav:before {
   opacity: 0;
   background: rgba(255, 255, 255, 0.5);
   -webkit-transition: none 0.2s ease-out;
-          transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
   -webkit-transition-property: opacity;
-          transition-property: opacity;
+  transition-property: opacity;
 }
 nav:after {
   -webkit-transition: none 0.2s ease-out;
-          transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
   -webkit-transition-property: height;
-          transition-property: height;
+  transition-property: height;
 }
 .is-loading nav:before {
   opacity: 1;
@@ -2431,7 +2434,7 @@ nav {
   width: 100%;
   z-index: 4;
   -webkit-transition-property: top;
-          transition-property: top;
+  transition-property: top;
   background: rgba(0, 0, 0, 0.5);
   user-select: none;
   -webkit-user-select: none;
@@ -2480,8 +2483,10 @@ nav > div {
   top: 0;
   left: 0;
   max-width: calc(100% - 80px - 10px);
-  -webkit-transition-property: -webkit-transform, top, opacity;
-          transition-property: transform, top, opacity;
+  -webkit-transition-property: top, opacity, -webkit-transform;
+  transition-property: top, opacity, -webkit-transform;
+  transition-property: transform, top, opacity;
+  transition-property: transform, top, opacity, -webkit-transform;
   -webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
           transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
   -webkit-transition-duration: 0.3s !important;
@@ -2516,7 +2521,7 @@ nav > div .button {
   top: 0;
   position: relative;
   -webkit-transition-property: text-shadow, color, opacity, margin, font-size;
-          transition-property: text-shadow, color, opacity, margin, font-size;
+  transition-property: text-shadow, color, opacity, margin, font-size;
   -webkit-transition-duration: 0.3s;
           transition-duration: 0.3s;
   /*
@@ -2627,9 +2632,9 @@ nav > s:after {
   z-index: 1;
   background: rgba(0, 0, 0, 0.5);
   -webkit-transition: none 0.2s ease-out;
-          transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
   -webkit-transition-property: background-color;
-          transition-property: background-color;
+  transition-property: background-color;
 }
 nav > section.options {
   position: absolute;
@@ -2641,7 +2646,7 @@ nav > section.options {
   -webkit-app-region: no-drag;
   padding: 0.25rem;
   -webkit-transition-property: opacity;
-          transition-property: opacity;
+  transition-property: opacity;
   -webkit-transition-duration: 0.75s;
           transition-duration: 0.75s;
   opacity: 1;
@@ -2655,7 +2660,7 @@ nav > section.options > a {
   height: 2rem;
   font-size: 1.1rem;
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
   -webkit-transition-duration: 0.75s;
           transition-duration: 0.75s;
   animation: fadein 0.3s ease-out;
@@ -2699,16 +2704,16 @@ nav > section.options > button.update_progress > s:before {
   content: "✓";
   color: transparent;
   -webkit-transition: none 0.2s ease-out;
-          transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
   font-size: 12px;
   line-height: 16px;
   vertical-align: top;
 }
 nav > section.options > button.update_progress.done > s {
   -webkit-transition-property: width, top, right, bottom, border-radius, background;
-          transition-property: width, top, right, bottom, border-radius, background;
+  transition-property: width, top, right, bottom, border-radius, background;
   -webkit-transition-timing-function: ease-out;
           transition-timing-function: ease-out;
   -webkit-transition-duration: 0.2s;
@@ -2736,7 +2741,7 @@ main {
   color: #f2f2f2;
   top: 100%;
   -webkit-transition-property: top;
-          transition-property: top;
+  transition-property: top;
 }
 main h1,
 main h2,
@@ -2783,9 +2788,9 @@ main:after {
   bottom: 0;
   left: 0;
   -webkit-transition: none 0.2s ease-out;
-          transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
   -webkit-transition-property: background-color;
-          transition-property: background-color;
+  transition-property: background-color;
   -webkit-transition-duration: 0.5s;
           transition-duration: 0.5s;
   background: rgba(0, 0, 0, 0.65);
@@ -2802,7 +2807,7 @@ main:after {
   animation: fadein 0.3s ease-out;
   -webkit-animation: fadein 0.3s ease-out;
   -webkit-transition-property: opacity, background-color;
-          transition-property: opacity, background-color;
+  transition-property: opacity, background-color;
   -webkit-transition-duration: 0.4s;
           transition-duration: 0.4s;
   padding-top: 1rem;
@@ -2916,7 +2921,9 @@ main:after {
   opacity: 0;
   top: 0;
   -webkit-transition-property: opacity, -webkit-transform;
-          transition-property: opacity, transform;
+  transition-property: opacity, -webkit-transform;
+  transition-property: opacity, transform;
+  transition-property: opacity, transform, -webkit-transform;
   -webkit-transition-duration: 0.2s;
           transition-duration: 0.2s;
   -webkit-transition-timing-function: ease-in;
@@ -3238,7 +3245,7 @@ main:after {
   border-radius: 44px;
   z-index: 3;
   -webkit-transition-property: bottom;
-          transition-property: bottom;
+  transition-property: bottom;
   -webkit-transition-duration: 0.5s;
           transition-duration: 0.5s;
   -webkit-transition-timing-function: cubic-bezier(0.680, -0.550, 0.265, 1.550);
@@ -3293,7 +3300,7 @@ main:after {
   border-left: 0.05rem solid rgba(255, 255, 255, 0.25);
   border-right: 0.05rem solid rgba(255, 255, 255, 0.25);
   -webkit-transition-property: color, background-color, padding;
-          transition-property: color, background-color, padding;
+  transition-property: color, background-color, padding;
 }
 #layout.ready > .bg_controls > button.prev,
 #layout.ready > .bg_controls > button.next {
@@ -3329,7 +3336,7 @@ main:after {
   height: 1.5rem;
   font-size: 1rem;
   -webkit-transition-property: color, left;
-          transition-property: color, left;
+  transition-property: color, left;
   -webkit-transition-duration: 0.75s;
           transition-duration: 0.75s;
   height: 1.6rem;
@@ -3390,7 +3397,7 @@ main:after {
   border-radius: 44px;
   z-index: 3;
   -webkit-transition-property: bottom;
-          transition-property: bottom;
+  transition-property: bottom;
   -webkit-transition-duration: 0.5s;
           transition-duration: 0.5s;
   -webkit-transition-timing-function: cubic-bezier(0.680, -0.550, 0.265, 1.550);
@@ -3445,7 +3452,7 @@ main:after {
   border-left: 0.05rem solid rgba(255, 255, 255, 0.25);
   border-right: 0.05rem solid rgba(255, 255, 255, 0.25);
   -webkit-transition-property: color, background-color, padding;
-          transition-property: color, background-color, padding;
+  transition-property: color, background-color, padding;
 }
 .layout-only_bg #layout.ready > .bg_controls > button.prev,
 .layout-only_bg #layout.ready > .bg_controls > button.next {
@@ -3481,7 +3488,7 @@ main:after {
   height: 1.5rem;
   font-size: 1rem;
   -webkit-transition-property: color, left;
-          transition-property: color, left;
+  transition-property: color, left;
   -webkit-transition-duration: 0.75s;
           transition-duration: 0.75s;
   height: 1.6rem;
@@ -3666,12 +3673,12 @@ table thead td {
 }
 table tbody tr {
   -webkit-transition-property: background, color;
-          transition-property: background, color;
+  transition-property: background, color;
 }
 table tbody td,
 table tbody th {
   -webkit-transition-property: background;
-          transition-property: background;
+  transition-property: background;
   min-width: 2.5em;
   vertical-align: middle;
 }
@@ -3698,7 +3705,7 @@ table.sortable thead {
 }
 table.sortable thead td {
   -webkit-transition-property: color, text-shadow;
-          transition-property: color, text-shadow;
+  transition-property: color, text-shadow;
 }
 input[type="text"],
 input[type="number"],
@@ -3710,7 +3717,7 @@ select {
   width: auto;
   color: inherit;
   -webkit-transition-property: border,background,color;
-          transition-property: border,background,color;
+  transition-property: border,background,color;
   height: 1rem;
   line-height: 1rem;
   min-width: 6rem;
@@ -3780,7 +3787,7 @@ input[type="submit"] {
   padding: 0 .5em;
   text-align: center;
   -webkit-transition-property: background;
-          transition-property: background;
+  transition-property: background;
 }
 button[type="button"].delete,
 button[type="submit"].delete,
@@ -3819,7 +3826,7 @@ form p.actions input[type="submit"]:hover {
 html #titlebar {
   background: rgba(0, 0, 0, 0.35);
   -webkit-transition-property: background-color, height;
-          transition-property: background-color, height;
+  transition-property: background-color, height;
   height: 1.7000000000000002rem;
 }
 html.app-ready #titlebar {
@@ -3858,7 +3865,7 @@ body.mod-capture #tip {
   padding-right: 10rem;
   background: rgba(0, 0, 0, 0.85);
   -webkit-transition-property: top;
-          transition-property: top;
+  transition-property: top;
   -webkit-transition-duration: 0.75s;
           transition-duration: 0.75s;
 }
@@ -3947,7 +3954,7 @@ body.mod-capture #tip {
   font-style: normal;
   text-shadow: 0 1px 0 #000;
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
   letter-spacing: -0.05em;
 }
 .improvement > strong > a small {
@@ -4001,7 +4008,7 @@ body.mod-capture #tip {
 .improvement > font > a {
   display: inline-block;
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
 }
 .improvement > font > a:hover {
   color: #aaff80;
@@ -4072,7 +4079,7 @@ body.mod-capture #tip {
   background-size: 22px 22px;
   width: auto;
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
   /*
 					position:	relative;
 					&:before{
@@ -4145,7 +4152,7 @@ body.mod-capture #tip {
 .improvement.improvement-details > font > b > a {
   display: inline-block;
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
 }
 .improvement.improvement-details > font > b > a:hover {
   color: #aaff80;
@@ -4172,7 +4179,7 @@ body.mod-capture #tip {
   height: 40px;
   min-width: 150px;
   -webkit-transition-property: background-color, opacity;
-          transition-property: background-color, opacity;
+  transition-property: background-color, opacity;
   vertical-align: middle;
   mask-image: linear-gradient(to right, transparent 0, #000 8px, #000 100%);
   -webkit-mask-image: -webkit-linear-gradient(left, transparent 0, #000 8px, #000 100%);
@@ -4251,7 +4258,7 @@ body.mod-capture #tip {
   position: relative;
   vertical-align: middle;
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
 }
 .link_equipment > i {
   width: 36px;
@@ -4283,7 +4290,7 @@ body.mod-capture #tip {
   height: 100%;
   position: relative;
   -webkit-transition-property: opacity, background-position;
-          transition-property: opacity, background-position;
+  transition-property: opacity, background-position;
   background: -webkit-linear-gradient(top, transparent, rgba(255, 255, 255, 0.35)) repeat-x 0 50px;
   background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.35)) repeat-x 0 50px;
 }
@@ -4295,9 +4302,9 @@ body.mod-capture #tip {
   width: 100%;
   height: 0.30000000000000004rem;
   -webkit-transition: none 0.2s ease-out;
-          transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
   -webkit-transition-property: background-position;
-          transition-property: background-position;
+  transition-property: background-position;
   background: -webkit-linear-gradient(bottom, transparent, rgba(255, 255, 255, 0.175)) repeat-x 0 -6px;
   background: linear-gradient(to top, transparent, rgba(255, 255, 255, 0.175)) repeat-x 0 -6px;
 }
@@ -4354,7 +4361,7 @@ body.mod-capture #tip {
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35) 1px, rgba(230, 230, 230, 0.25) 1px, rgba(230, 230, 230, 0.25) calc(100% - 1px), rgba(255, 255, 255, 0.35) calc(100% - 1px)) no-repeat 0 0;
   background-size: 100% 31px;
   -webkit-transition-property: background-size, padding-top;
-          transition-property: background-size, padding-top;
+  transition-property: background-size, padding-top;
   -webkit-transition-duration: 0.5s;
           transition-duration: 0.5s;
 }
@@ -4416,7 +4423,7 @@ body.mod-capture #tip {
   border-radius: 5px;
   border: 0.05rem solid rgba(255, 255, 255, 0.2);
   -webkit-transition-property: background-color, border-color, color;
-          transition-property: background-color, border-color, color;
+  transition-property: background-color, border-color, color;
 }
 .tablelist > .fixed-table-container > .fixed-table-container-inner > .nocontent > div > button:hover {
   background: rgba(0, 0, 0, 0.6);
@@ -4446,9 +4453,9 @@ body.mod-capture #tip {
   opacity: .175;
   margin: 0.2rem 0.4rem 0rem -1rem;
   -webkit-transition: none 0.2s ease-out;
-          transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
   -webkit-transition-property: opacity;
-          transition-property: opacity;
+  transition-property: opacity;
 }
 .tablelist table tbody tr.typetitle th input[type="checkbox"]:hover {
   opacity: .75;
@@ -4480,7 +4487,7 @@ body.mod-capture #tip {
 .tablelist table tbody tr td[data-value="0"],
 .tablelist table tbody tr td[data-value="-1"] {
   font-size: 0.55rem;
-  opacity: .35;
+  color: rgba(242, 242, 242, 0.35);
 }
 .tablelist table tbody tr.empty,
 .tablelist table tbody tr:empty {
@@ -4547,7 +4554,7 @@ body.mod-capture #tip {
   margin: 0;
   opacity: .175;
   -webkit-transition-property: opacity;
-          transition-property: opacity;
+  transition-property: opacity;
 }
 .tablelist table.ships tbody tr[data-shipid] th input[type="checkbox"].compare:hover,
 .tablelist table.ships tbody tr[data-shipid] th input[type="checkbox"].compare:checked {
@@ -4555,15 +4562,15 @@ body.mod-capture #tip {
 }
 .tablelist table.ships tbody tr[data-shipid] th input[type="checkbox"].compare:before {
   -webkit-transition: none 0.2s ease-out;
-          transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
   -webkit-transition-property: left;
-          transition-property: left;
+  transition-property: left;
 }
 .tablelist table.ships tbody tr[data-shipid] th input[type="checkbox"].compare:after {
   -webkit-transition: none 0.2s ease-out;
-          transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
   -webkit-transition-property: background;
-          transition-property: background;
+  transition-property: background;
   content: '';
   position: absolute;
   z-index: -1;
@@ -4628,7 +4635,7 @@ body.mod-capture #tip {
   font-style: normal;
   font-weight: lighter;
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
   z-index: 3;
 }
 .tablelist table.ships tbody tr[data-shipid] th > em:before {
@@ -4737,7 +4744,7 @@ body.mod-capture #tip {
       -ms-flex: 1 0 auto;
           flex: 1 0 auto;
   -webkit-transition-property: height;
-          transition-property: height;
+  transition-property: height;
   position: relative;
   color: #f2f2f2;
 }
@@ -4747,7 +4754,7 @@ body.mod-capture #tip {
 }
 .tablelist > .options button {
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
 }
 .tablelist > .options button[icon]:before {
   opacity: 1;
@@ -4769,7 +4776,7 @@ body.mod-capture #tip {
   padding-left: 4rem;
   padding-right: 4rem;
   -webkit-transition-property: opacity;
-          transition-property: opacity;
+  transition-property: opacity;
   -webkit-transition-duration: 0.35s;
           transition-duration: 0.35s;
   z-index: 1;
@@ -4832,7 +4839,7 @@ body.mod-capture #tip {
 .tablelist > .options > div.filters > .hide-premodel input ~ label {
   color: rgba(255, 255, 255, 0.75);
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
 }
 .tablelist > .options > div.filters > .hide-premodel input:hover,
 .tablelist > .options > div.filters > .hide-premodel input:hover ~ label {
@@ -4859,7 +4866,7 @@ body.mod-capture #tip {
   margin-left: 0.2rem;
   color: rgba(255, 255, 255, 0.35);
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
   vertical-align: top;
 }
 .tablelist > .options > div.filters > .viewtype label:before {
@@ -4987,7 +4994,7 @@ body.mod-capture #tip {
   background: rgba(0, 0, 0, 0.25);
   border: 0.05rem solid rgba(255, 255, 255, 0.25);
   -webkit-transition-property: background, color;
-          transition-property: background, color;
+  transition-property: background, color;
   border-radius: 5px 0 0 5px;
   overflow: hidden;
   border-right-color: transparent;
@@ -5098,7 +5105,7 @@ body.mod-capture #tip {
       -ms-flex-preferred-size: 7.75rem;
           flex-basis: 7.75rem;
   -webkit-transition-property: background, color, opacity;
-          transition-property: background, color, opacity;
+  transition-property: background, color, opacity;
 }
 .tablelist > .options[viewtype="card"] ~ .fixed-table-container table.ships tbody tr[data-shipid] input[type="checkbox"].compare {
   position: absolute;
@@ -5209,9 +5216,9 @@ body.mod-capture #tip {
   -ms-filter: drop-shadow(0 0 10px #e6e6e6);
   z-index: 7;
   -webkit-transition: none 0.2s ease-out;
-          transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
   -webkit-transition-property: top, height, border;
-          transition-property: top, height, border;
+  transition-property: top, height, border;
 }
 .tablelist > .options[viewtype="card"] ~ .fixed-table-container table.fleets tbody tr[data-fleetid] th {
   display: block;
@@ -5404,7 +5411,7 @@ body.mod-capture #tip {
   font-style: normal;
   font-weight: lighter;
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
 }
 .tablelist > .options[viewtype="card"] ~ .fixed-table-container table.fleets tbody tr[data-fleetid] th > em:before {
   content: "\ec59";
@@ -5582,7 +5589,7 @@ body.mod-capture #tip {
       -ms-flex: 1 0 auto;
           flex: 1 0 auto;
   -webkit-transition-property: height, border-top-width;
-          transition-property: height, border-top-width;
+  transition-property: height, border-top-width;
   position: relative;
   overflow: hidden;
   border-top: 0rem solid rgba(255, 255, 255, 0.15);
@@ -5592,7 +5599,7 @@ body.mod-capture #tip {
 }
 .tablelist > .msgs > div {
   -webkit-transition-property: opacity;
-          transition-property: opacity;
+  transition-property: opacity;
   opacity: 0;
   width: 100%;
   height: 100%;
@@ -5611,7 +5618,7 @@ body.mod-capture #tip {
   text-align: center;
   color: #63899c;
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
   font-size: 2rem;
   font-family: Gothic;
   font-weight: lighter;
@@ -5622,7 +5629,7 @@ body.mod-capture #tip {
 }
 .tablelist > .msgs > div.comparestart {
   -webkit-transition-property: background;
-          transition-property: background;
+  transition-property: background;
 }
 .tablelist > .msgs > div.comparestart:hover {
   background: rgba(108, 134, 147, 0.35);
@@ -6284,7 +6291,7 @@ body.mod-capture #tip {
   line-height: 25px;
   padding: 0 0 0 6px;
   -webkit-transition-property: background-color, opacity;
-          transition-property: background-color, opacity;
+  transition-property: background-color, opacity;
 }
 .tablelist.entities .tablelist-list > .unit.illustrator:hover {
   background-color: rgba(0, 0, 0, 0.2);
@@ -6341,7 +6348,7 @@ section.update_journal a {
   border-radius: 3px;
   cursor: default;
   -webkit-transition-property: color, background;
-          transition-property: color, background;
+  transition-property: color, background;
   border-top: 1px solid rgba(0, 0, 0, 0.45);
   border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 }
@@ -6628,7 +6635,7 @@ h6 + section.update_journal {
   background: no-repeat 0 50%;
   vertical-align: top;
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
   font-style: normal;
   margin-left: .5em;
 }
@@ -6885,7 +6892,7 @@ h6 + section.update_journal {
   min-width: 10rem;
   max-width: calc(100% - 120px);
   -webkit-transition-property: padding, background-color, border-color;
-          transition-property: padding, background-color, border-color;
+  transition-property: padding, background-color, border-color;
   margin: 0;
 }
 .infos-fleet > header h3:not([data-content]) {
@@ -6901,9 +6908,9 @@ h6 + section.update_journal {
   margin-top: 0.25rem;
   padding-right: 0.5rem;
   -webkit-transition: none 0.2s ease-out;
-          transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
   -webkit-transition-property: padding;
-          transition-property: padding;
+  transition-property: padding;
 }
 .infos-fleet > header h3:focus,
 .infos-fleet > header h3:not([data-content]),
@@ -6965,7 +6972,7 @@ body.mod-capture .infos-fleet > header:after {
   border: 0.05rem solid transparent;
   border-bottom-width: 0;
   -webkit-transition-property: color, background-position, border-color;
-          transition-property: color, background-position, border-color;
+  transition-property: color, background-position, border-color;
   background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.0875), rgba(255, 255, 255, 0.35)) repeat-x 0 30px;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.0875), rgba(255, 255, 255, 0.35)) repeat-x 0 30px;
 }
@@ -6981,9 +6988,9 @@ body.mod-capture .infos-fleet > header:after {
   right: -0.05rem;
   height: 0.30000000000000004rem;
   -webkit-transition: none 0.2s ease-out;
-          transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
   -webkit-transition-property: background-position;
-          transition-property: background-position;
+  transition-property: background-position;
   background: -webkit-linear-gradient(bottom, transparent, rgba(255, 255, 255, 0.175)) repeat-x 0 -6px;
   background: linear-gradient(to top, transparent, rgba(255, 255, 255, 0.175)) repeat-x 0 -6px;
 }
@@ -7040,7 +7047,7 @@ body.mod-capture .infos-fleet > .fleets .options > .icon {
 }
 .infos-fleet > .fleets .options > button {
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
 }
 .infos-fleet > .fleets .options > button:hover {
   color: rgba(255, 255, 255, 0.95);
@@ -7215,9 +7222,9 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   -ms-filter: drop-shadow(0 0 10px rgba(255,255,255,1));
   z-index: -1;
   -webkit-transition: none 0.2s ease-out;
-          transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
   -webkit-transition-property: border-color;
-          transition-property: border-color;
+  transition-property: border-color;
 }
 .infos-fleet > .ships > dl dd:after {
   content: '';
@@ -7379,7 +7386,7 @@ body.mod-capture .infos-fleet > .ships > dl dd > .equipments {
   background: rgba(0, 0, 0, 0.125) no-repeat 2px 50%;
   margin: 0 2px 0 0;
   -webkit-transition-property: background-color;
-          transition-property: background-color;
+  transition-property: background-color;
   position: relative;
 }
 .infos-fleet > .ships > dl dd > .equipments > .equipment:first-child {
@@ -7527,7 +7534,7 @@ body.mod-capture .infos-fleet > .ships > dl dd > .equipments {
   width: auto;
   color: inherit;
   -webkit-transition-property: border,background,color;
-          transition-property: border,background,color;
+  transition-property: border,background,color;
   display: none;
   position: relative;
   text-align: center;
@@ -7919,7 +7926,7 @@ body.mod-capture .infos-fleet > .ships > dl dd > .options {
 .infos-fleet > .ships > dl dd > .options button {
   color: rgba(255, 255, 255, 0.2);
   -webkit-transition-property: color, background-color;
-          transition-property: color, background-color;
+  transition-property: color, background-color;
   font-size: 166.66666667%;
   width: 1.5em;
   line-height: 1.5em;
@@ -8078,9 +8085,9 @@ body.mod-capture .infos-fleet > .ships > dl dd > .options {
   font-size: 333.33333333%;
   z-index: 2;
   -webkit-transition: none 0.2s ease-out;
-          transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
   -webkit-transition-property: left;
-          transition-property: left;
+  transition-property: left;
 }
 .infos-fleet > .ships > dl dd[data-shipid] > dt:after {
   right: 0;
@@ -9220,7 +9227,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > div {
 }
 .infos-ship > div.stats > .title > span label {
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
 }
 .infos-ship > div.stats > .title > span label + label {
   padding-left: .25em;
@@ -9296,7 +9303,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > div {
   background: #182d31 no-repeat 50% 50%;
   border: 0.05rem solid #0874a6;
   -webkit-transition-property: background-color, border-color;
-          transition-property: background-color, border-color;
+  transition-property: background-color, border-color;
   z-index: 3;
 }
 .infos-ship > div.equipments > a small {
@@ -9317,7 +9324,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > div {
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-transition-property: background-color, color;
-          transition-property: background-color, color;
+  transition-property: background-color, color;
 }
 .infos-ship > div.equipments > a > small sup {
   line-height: 0.7000000000000001rem;
@@ -9469,7 +9476,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > div {
   overflow: hidden;
   opacity: 0.5;
   -webkit-transition-property: opacity;
-          transition-property: opacity;
+  transition-property: opacity;
   mask-repeat: no-repeat;
   -webkit-mask-repeat: no-repeat;
   mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 35px), transparent 100%);
@@ -9505,19 +9512,19 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > div {
   bottom: 0;
   left: 0;
   -webkit-transition: none 0.2s ease-out;
-          transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
 }
 .infos-ship > div.remodels .flexgrid > a.unit:before {
   z-index: 3;
   border: 0.1rem solid transparent;
   -webkit-transition-property: border-color, box-shadow;
-          transition-property: border-color, box-shadow;
+  transition-property: border-color, box-shadow;
 }
 .infos-ship > div.remodels .flexgrid > a.unit:after {
   z-index: 1;
   backgrond: transparent;
   -webkit-transition-property: background-color;
-          transition-property: background-color;
+  transition-property: background-color;
 }
 .infos-ship > div.remodels .flexgrid > a.unit.mod-blueprint strong:after,
 .infos-ship > div.remodels .flexgrid > a.unit .mod-catapult strong:after {
@@ -9623,7 +9630,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > div {
   background: rgba(19, 108, 108, 0.325);
   border-radius: 0 5px 5px 0;
   -webkit-transition-property: background-color;
-          transition-property: background-color;
+  transition-property: background-color;
   height: 2.7rem;
 }
 .infos-ship > .entity > strong {
@@ -9685,9 +9692,11 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > div {
   left: 0;
   border: 0.1rem solid transparent;
   -webkit-transition: none 0.2s ease-out;
-          transition: none 0.2s ease-out;
-  -webkit-transition-property: background-color, -webkit-transform, border-color;
-          transition-property: background-color, transform, border-color;
+  transition: none 0.2s ease-out;
+  -webkit-transition-property: background-color, border-color, -webkit-transform;
+  transition-property: background-color, border-color, -webkit-transform;
+  transition-property: background-color, transform, border-color;
+  transition-property: background-color, transform, border-color, -webkit-transform;
 }
 .infos-ship > aside > label:hover:before {
   background: rgba(255, 255, 255, 0.5);
@@ -9769,7 +9778,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > div {
   top: 0;
   left: 0;
   -webkit-transition-property: left;
-          transition-property: left;
+  transition-property: left;
   padding: 0.5rem 0rem 3.5rem 0rem;
 }
 .infos-ship > aside > div > span {
@@ -10872,7 +10881,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > div {
   border-radius: 3px;
   cursor: default;
   -webkit-transition-property: color, background;
-          transition-property: color, background;
+  transition-property: color, background;
   border-top: 1px solid rgba(0, 0, 0, 0.45);
   border-bottom: 1px solid rgba(255, 255, 255, 0.35);
 }
@@ -10892,7 +10901,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > div {
   font-size: 16px;
   background: rgba(255, 255, 255, 0.15);
   -webkit-transition-property: background, color;
-          transition-property: background, color;
+  transition-property: background, color;
 }
 .modal.infos_fleet > div > section button.button:hover {
   background: rgba(255, 255, 255, 0.25);
@@ -10999,7 +11008,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > div {
   font-size: 2.4000000000000004rem;
   width: auto;
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
   -webkit-transition-duration: 0.3s;
           transition-duration: 0.3s;
   left: 4rem;
@@ -12024,7 +12033,7 @@ main[data-theme="arsenal"]:after {
 .page-container[page="arsenal"] > .main > .body-weekday > .weekday > div > label {
   color: rgba(255, 255, 255, 0.65);
   -webkit-transition-property: color, background-color;
-          transition-property: color, background-color;
+  transition-property: color, background-color;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > .weekday > div > label:hover {
   background-color: rgba(59, 179, 0, 0.25);
@@ -12039,7 +12048,7 @@ main[data-theme="arsenal"]:after {
   text-align: center;
   color: rgba(255, 255, 255, 0.45);
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > .weekday > label:before,
 .page-container[page="arsenal"] > .main > .body-weekday > .weekday > span > b {
@@ -12079,12 +12088,12 @@ main[data-theme="arsenal"]:after {
   padding-top: 10px;
   overflow: hidden;
   -webkit-transition-property: height;
-          transition-property: height;
+  transition-property: height;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > .content > .flexgrid > .unit.improvement > span {
   opacity: 0;
   -webkit-transition-property: opacity;
-          transition-property: opacity;
+  transition-property: opacity;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > #arsenal_weekday-showmeterials:checked ~ .weekday > label[for="arsenal_weekday-showmeterials"]:before {
   content: "\e601";
@@ -12101,14 +12110,14 @@ main[data-theme="arsenal"]:after {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 6px;
   -webkit-transition-property: background, padding;
-          transition-property: background, padding;
+  transition-property: background, padding;
 }
 .page-container[page="arsenal"] > .main > .body-all > .improvement > font {
   margin-top: 0;
 }
 .page-container[page="arsenal"] > .main > .body-all > .improvement > span {
   -webkit-transition-property: bottom;
-          transition-property: bottom;
+  transition-property: bottom;
 }
 .page-container[page="arsenal"] > .main > .body-all > .improvement > span > span {
   padding-top: 1px;
@@ -12373,7 +12382,7 @@ main[data-theme="about"]:after {
   text-decoration: none;
   color: #ff4d4d;
   -webkit-transition-property: color;
-          transition-property: color;
+  transition-property: color;
 }
 .page-container[page="about"] .infos section a:hover {
   color: #fff2f2;
