@@ -351,10 +351,23 @@ _frame.app_main = {
 		loading_queue: [],
 		loading_state: {},
 		//loading_cur: null,
-		loading_start: function( url, callback_success, callback_error ){
+		loading_start: function( url, callback_success, callback_error, callback_successAfter, callback_beforeSend, callback_complete ){
 			url = url || location.pathname
+			
+			if( typeof callback_success == 'object' ){
+				callback_error = callback_success.error
+				callback_successAfter = callback_success.successAfter
+				callback_beforeSend = callback_success.beforeSend
+				callback_complete = callback_success.complete
+				callback_success = callback_success.success
+			}
+
+			callback_beforeSend = callback_beforeSend || function(){}
 			callback_success = callback_success || function(){}
+			callback_successAfter = callback_successAfter || function(){}
 			callback_error = callback_error || function(){}
+			callback_complete = callback_complete || function(){}
+
 			this.loading_cur = url
 			
 			if( typeof this.loading_state[url] == 'undefined' || this.loading_state[url] == 'fail' ){
@@ -367,14 +380,20 @@ _frame.app_main = {
 					'type':		'get',
 					'dataType':	'html',
 					
+					'beforeSend': function( jqXHR, settings ){
+						callback_beforeSend( url, jqXHR, settings )
+					},
+					
 					'success': function(data){
 						let result_main = /\<main\>(.+)\<\/main\>/.exec(data)
 							,result_title = /\<title\>([^\<]+)\<\/title\>/.exec(data)
 						if( result_title && result_title.length > 1 ){
 							_frame.app_main.page_title[url] = result_title[1]
 						}
-						if( url == _frame.app_main.loading_cur ){
-							callback_success( result_main && result_main.length > 1 ? result_main[1] : '' )
+						callback_success( result_main && result_main.length > 1 ? result_main[1] : '' )
+						//if( url == _frame.app_main.loading_cur ){
+						if( url == location.pathname ){
+							callback_successAfter( result_main && result_main.length > 1 ? result_main[1] : '' )
 						}
 						_frame.app_main.loading_state[url] = 'complete'
 					},
@@ -394,17 +413,19 @@ _frame.app_main = {
 						_frame.app_main.loading_state[url] = 'fail'
 					},
 					
-					'complete': function(){
+					'complete': function( jqXHR, textStatus ){
 						_frame.app_main.loading_complete( url )
+						callback_complete( url, jqXHR, textStatus )
 						
 						if( _frame.app_main.loading_state[url] == 'fail' ){
 							console.log('retry')
-							_frame.app_main.loading_start( url, callback_success, callback_error )
+							_frame.app_main.loading_start( url, callback_success, callback_error, callback_successAfter, callback_beforeSend, callback_complete )
 						}
 					}
 				})
 			}else if( this.loading_state[url] == 'complete' ){
 				callback_success()
+				callback_successAfter()
 			}
 		},
 		
@@ -554,14 +575,22 @@ _frame.app_main = {
 					callback()
 				}else{
 					//this.page_dom[page] = $('<div class="page-container" page="'+page+'"/>').appendTo( _frame.dom.main )
-					this.loading_start( '/' + page + '/', function( html ){
-						_frame.app_main.page_dom[page] = $(html).appendTo( _frame.dom.main )
-						//_frame.app_main.page_dom[page].html( html )
-						_frame.app_main.page_init(page)
-						callback()
-					}, function( url, textStatus, errorThrown ){
-						delete _frame.app_main.page_dom[page]
-						history.back()
+					let u = '/' + page + '/'
+					this.loading_start( u, {
+						success: function(html){
+							if( html ){
+								_frame.app_main.page_dom[page] = $(html).appendTo( _frame.dom.main )
+								if( u != location.pathname )
+									_frame.app_main.page_dom[page].addClass('off')
+								//_frame.app_main.page_dom[page].html( html )
+								_frame.app_main.page_init(page)
+							}
+						},
+						successAfter: callback,
+						error: function(){
+							delete _frame.app_main.page_dom[page]
+							history.back()
+						}
 					} )
 				}
 			}else{

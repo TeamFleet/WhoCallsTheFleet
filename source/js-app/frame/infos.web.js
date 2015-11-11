@@ -55,14 +55,21 @@ _frame.infos = {
 			_frame.app_main.loading_start( _g.state2URI({
 				'infos':	type,
 				'id':		id
-			}), function( html ){
-				let result = /\<div class\=\"wrapper\"\>(.+)\<\/div\>/.exec( html )
-				_frame.infos.contentCache[type][id] = initcont( $(result.length > 1 ? result[1] : '') )
-				return cb(_frame.infos.contentCache[type][id])
-			}, function( url, textStatus, errorThrown ){
-				if( typeof _frame.infos.contentCache[type][id] != 'undefined' )
-					delete _frame.infos.contentCache[type][id]
-				history.back()
+			}), {
+				success: function(html){
+					if( html ){
+						let result = /\<div class\=\"wrapper\"\>(.+)\<\/div\>/.exec( html )
+						_frame.infos.contentCache[type][id] = initcont( $(result.length > 1 ? result[1] : '') )
+					}
+				},
+				successAfter: function(){
+					return cb(_frame.infos.contentCache[type][id])
+				},
+				error: function(){
+					if( typeof _frame.infos.contentCache[type][id] != 'undefined' )
+						delete _frame.infos.contentCache[type][id]
+					history.back()
+				}
 			} )
 		}else{
 			return cb(this.contentCache[type][id])
