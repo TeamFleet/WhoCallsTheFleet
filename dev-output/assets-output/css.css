@@ -7594,13 +7594,10 @@ body.mod-capture .infos-fleet > .ships > dl dd > .equipments {
   width: 24px;
   text-align: center;
   display: inline-block;
-  line-height: 34px;
+  line-height: 0;
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-          transform: translateY(-50%);
 }
 .infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-options button {
   opacity: .45;
@@ -7611,6 +7608,7 @@ body.mod-capture .infos-fleet > .ships > dl dd > .equipments {
   height: 100%;
   text-align: center;
   vertical-align: bottom;
+  line-height: 0;
 }
 .infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-options button:hover {
   opacity: 1;
@@ -7692,17 +7690,20 @@ body.mod-capture .infos-fleet > .ships > dl dd > .equipments {
 .infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable > .equipment-options .equipment-rankselect span {
   background: url(/!/assets/images/Aircraft_Proficiency.png) no-repeat 50% 224px / cover;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank] > .equipment-infos > .equipment-rank {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank]:not([data-rank=""]) > .equipment-infos > .equipment-rank {
   opacity: 1;
   -webkit-transform: translateY(calc(-50% - 8px));
       -ms-transform: translateY(calc(-50% - 8px));
           transform: translateY(calc(-50% - 8px));
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank] > .equipment-infos > .equipment-rank:before {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank]:not([data-rank=""]) > .equipment-infos > .equipment-rank:before {
   display: none;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank] > .equipment-options .equipment-rankselect span {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank]:not([data-rank=""]) > .equipment-options .equipment-rankselect span {
   color: transparent;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
 }
 .infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank="1"] > .equipment-infos > .equipment-rank {
   background-position: 50% 0px;
