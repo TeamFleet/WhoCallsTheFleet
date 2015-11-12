@@ -6350,6 +6350,9 @@ class InfosFleet{
 				this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(l) )
 				this.doms['hqlvOption'].attr('placeholder', l)
 			}
+			if( this.is_init ){
+				this.updateURI()
+			}
 		}.bind(this))
 
 		if( !_g.isClient )
@@ -6706,6 +6709,23 @@ class InfosFleet{
 			}
 		}
 	
+	// Web Version - 更新URI Search
+		updateURI(){
+			if( !_g.isClient && _g.uriSearch() ){
+				let d = $.extend(true, {}, this.data)
+				delete d._id
+				delete d.time_create
+				delete d.time_modify
+				delete d.rating
+				delete d.user
+				history.replaceState(
+					history.state,
+					document.title,
+					location.pathname + location.search + '&d=' + LZString.compressToEncodedURIComponent( JSON.stringify( d ) )
+				);
+			}
+		}
+	
 	// 保存
 		save( not_save_to_file ){
 			if( this._updating )
@@ -6719,6 +6739,9 @@ class InfosFleet{
 				
 				// 更新时间
 				this.data.time_modify = _g.timeNow()
+				
+				// Web Version - 更新URI Search
+				this.updateURI()
 				
 				// 清理Array中的null值
 				/*
@@ -6755,6 +6778,9 @@ class InfosFleet{
 						this.delay_updateDb = null
 					}.bind(this), 200)
 				}
+			}else{
+				// Web Version - 更新URI Search
+				this.updateURI()
 			}
 			
 			this.is_init = true			
