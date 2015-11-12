@@ -5186,6 +5186,9 @@ var InfosFleet = (function () {
 				this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(_l2));
 				this.doms['hqlvOption'].attr('placeholder', _l2);
 			}
+			if (this.is_init) {
+				this.updateURI();
+			}
 		}).bind(this));
 
 		if (!_g.isClient) this.doms.warning = $('<div/>', {
@@ -5387,6 +5390,18 @@ var InfosFleet = (function () {
 			this.update(d);
 		}
 	}, {
+		key: 'updateURI',
+		value: function updateURI() {
+			if (!_g.isClient && _g.uriSearch()) {
+				var d = $.extend(true, {}, this.data);
+				delete d._id;
+				delete d.time_create;
+				delete d.time_modify;
+				delete d.user;
+				history.replaceState(history.state, document.title, location.pathname + location.search + '&d=' + LZString.compressToEncodedURIComponent(JSON.stringify(d)));
+			}
+		}
+	}, {
 		key: 'save',
 		value: function save(not_save_to_file) {
 			if (this._updating) return this;
@@ -5399,6 +5414,8 @@ var InfosFleet = (function () {
 
 				this.data.time_modify = _g.timeNow();
 
+				this.updateURI();
+
 				if (!not_save_to_file) {
 					clearTimeout(this.delay_updateDb);
 					this.delay_updateDb = setTimeout((function () {
@@ -5410,6 +5427,8 @@ var InfosFleet = (function () {
 						this.delay_updateDb = null;
 					}).bind(this), 200);
 				}
+			} else {
+				this.updateURI();
 			}
 
 			this.is_init = true;
