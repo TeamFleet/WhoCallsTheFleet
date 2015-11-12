@@ -3727,6 +3727,12 @@ select {
 input[type="text"]:not([disabled]):hover,
 input[type="number"]:not([disabled]):hover,
 select:not([disabled]):hover,
+input[type="text"]:not([readonly]):hover,
+input[type="number"]:not([readonly]):hover,
+select:not([readonly]):hover {
+  background: rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.3);
+}
 input[type="text"]:not([disabled]):focus,
 input[type="number"]:not([disabled]):focus,
 select:not([disabled]):focus {
@@ -6876,7 +6882,7 @@ h6 + section.update_journal {
   font-size: inherit;
 }
 .infos-fleet > header {
-  padding-top: 0.5rem;
+  border-top: 10px solid transparent;
   padding-bottom: 0.30000000000000004rem;
   -webkit-box-flex: 0.5;
   -webkit-flex: 0.5 0 auto;
@@ -6922,10 +6928,31 @@ h6 + section.update_journal {
   background: rgba(0, 0, 0, 0.175);
   border-color: rgba(255, 255, 255, 0.225);
 }
-.infos-fleet > header > button {
+.infos-fleet > header .preview {
   position: absolute;
   right: 0;
   top: 0;
+  font-size: 116.66666667%;
+  line-height: 169.23076923%;
+  padding: 6px 0;
+}
+.infos-fleet > header .preview button {
+  line-height: inherit;
+  padding: 2px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: inherit;
+  background: rgba(255, 255, 255, 0.15);
+  -webkit-transition-property: background, color;
+  transition-property: background, color;
+  margin-left: 6px;
+}
+.infos-fleet > header .preview button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+.infos-fleet > header .preview button:active {
+  background: rgba(255, 255, 255, 0.05);
 }
 body.mod-capture .infos-fleet > header:before,
 body.mod-capture .infos-fleet > header:after {
@@ -7541,6 +7568,10 @@ body.mod-capture .infos-fleet > .ships > dl dd > .equipments {
   text-align: center;
 }
 .infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-options .equipment-rankselect:not([disabled]):hover,
+.infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-options .equipment-rankselect:not([readonly]):hover {
+  background: rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.3);
+}
 .infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-options .equipment-rankselect:not([disabled]):focus {
   background: rgba(0, 0, 0, 0.25);
   border-color: rgba(255, 255, 255, 0.3);
@@ -8288,10 +8319,7 @@ body.mod-capture .infos-fleet > .ships > dl dd > .options {
   display: inline-block;
   text-align: center !important;
   vertical-align: middle !important;
-  font-size: 3em;
-  letter-spacing: .25em;
   position: absolute;
-  color: rgba(255, 255, 255, 0.2);
 }
 .infos-fleet.loading > .loading-msg {
   display: inline-block !important;
@@ -8308,6 +8336,39 @@ body.mod-capture .infos-fleet > .ships > dl dd > .options {
   width: 0;
   height: 100%;
   overflow: hidden;
+}
+.infos-fleet.loading .loading-msg {
+  font-size: 3em;
+  letter-spacing: .25em;
+  color: rgba(255, 255, 255, 0.2);
+}
+.infos-fleet.mod-preview > .fleets .options > .option-theme {
+  display: none;
+}
+.infos-fleet.mod-preview > .ships > dl dd[data-shipid] > dt > s {
+  cursor: default;
+}
+.infos-fleet.mod-preview > .ships > dl dd[data-shipid] > dt > s:before {
+  display: none;
+}
+.infos-fleet.mod-preview > .ships > dl dd[data-shipid] > .equipments {
+  padding-right: 4px;
+}
+.infos-fleet.mod-preview > .ships > dl dd[data-shipid] > .equipments > .equipment[data-carry][data-equipmentid]:hover > .equipment-options {
+  display: none;
+}
+.infos-fleet.mod-preview > .ships > dl dd[data-shipid] > .equipments > .equipment[data-carry][data-equipmentid]:hover > .equipment-infos {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  z-index: 10;
+}
+.infos-fleet.mod-preview > .ships > dl dd[data-shipid] > .equipments > .equipment[data-carry]:not([data-equipmentid]):hover {
+  background-color: rgba(0, 0, 0, 0.125);
+}
+.infos-fleet.mod-preview > .ships > dl dd[data-shipid] > .options {
+  display: none;
 }
 main[data-theme="1"] {
   background-color: rgba(26, 26, 26, 0.8);
