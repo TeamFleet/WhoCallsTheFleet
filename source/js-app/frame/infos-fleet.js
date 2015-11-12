@@ -14,7 +14,11 @@
 class InfosFleet{
 	constructor( id, el, d ){
 		this.el = el || $('<div/>')
-		this.el.addClass('infos-fleet infosbody loading').attr('data-infos-title','舰队 ('+id+')')
+		this.el.addClass('infos-fleet infosbody loading')
+				.attr({
+					'data-infos-type':	'fleet',
+					'data-infos-title':	'舰队 ('+id+')'
+				})
 		
 		this.doms = {}
 		this.fleets = []
@@ -413,7 +417,7 @@ class InfosFleet{
 					})
 					_frame.infos.curContent = 'fleet::' + newDoc._id
 					let newEl = _frame.infos.__fleet( newDoc._id, null, newDoc )
-					_frame.infos.contentCache.fleet._id = newEl
+					_frame.infos.contentCache.fleet[newDoc._id] = newEl
 					_frame.infos.contentCache.fleet[this._infos_state_id] = newEl
 					newEl.insertBefore(this.el)
 					this.el.remove()

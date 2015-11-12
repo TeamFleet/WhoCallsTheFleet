@@ -32,6 +32,8 @@ _frame.infos = {
 						'id':		id
 					})] = document.title
 				return cb( this.contentCache[type][id] )
+			}else if( firstChildren.attr('data-infos-type') == type ){
+				firstChildren.remove()
 			}
 		}
 		
