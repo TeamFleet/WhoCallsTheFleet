@@ -7300,6 +7300,7 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   width: calc(30% - 15px);
   top: 0;
   left: 0;
+  overflow: hidden;
 }
 .infos-fleet > .ships > dl dd > dt > s {
   display: block;
@@ -8167,6 +8168,48 @@ body.mod-capture .infos-fleet > .ships > dl dd > .options {
 .infos-fleet > .ships > dl dd[data-shipid].moving > dt > s:before {
   display: none;
 }
+.infos-fleet > .ships > dl dd.mod-nomask.noship > dt {
+  overflow: visible;
+}
+.infos-fleet > .ships > dl dd.mod-nomask > .attributes > .bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: -15px;
+  z-index: -1;
+  overflow: hidden;
+}
+.infos-fleet > .ships > dl dd.mod-nomask > .attributes > .bg:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -15px;
+  bottom: 0;
+  left: 15px;
+  -webkit-transform: skew(-30deg);
+      -ms-transform: skew(-30deg);
+          transform: skew(-30deg);
+  -webkit-transform-origin: 0 0;
+      -ms-transform-origin: 0 0;
+          transform-origin: 0 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+.infos-fleet > .ships > dl dd.mod-nomask > .attributes:after {
+  display: none;
+}
+.infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt > div:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 5px;
+  right: 0;
+  bottom: 5px;
+  left: -10px;
+  background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.35) 20%, transparent);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.35) 20%, transparent);
+  border-radius: 5px;
+}
 .infos-fleet > .ships > dl > s {
   display: block;
   -webkit-box-flex: 0.25;
@@ -8467,6 +8510,9 @@ main[data-theme="2"] .infos-fleet > .ships > dl dd.noship > dt > s:before {
 main[data-theme="2"] .infos-fleet > .ships > dl dd.noship > dt > div {
   color: #fee2dc;
 }
+main[data-theme="2"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt > div > .info {
+  color: #feebe6;
+}
 main[data-theme="3"]:after {
   background-color: rgba(63, 61, 52, 0.75);
   background-image: -webkit-linear-gradient(top, #fff099 4px, rgba(255, 236, 128, 0.2) 4px, transparent 25%);
@@ -8548,6 +8594,9 @@ main[data-theme="3"] .infos-fleet > .ships > dl dd.noship > dt > s:before {
 }
 main[data-theme="3"] .infos-fleet > .ships > dl dd.noship > dt > div {
   color: #fffadb;
+}
+main[data-theme="3"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt > div > .info {
+  color: #fffbe5;
 }
 main[data-theme="4"]:after {
   background-color: rgba(57, 57, 57, 0.75);
@@ -8631,6 +8680,9 @@ main[data-theme="4"] .infos-fleet > .ships > dl dd.noship > dt > s:before {
 main[data-theme="4"] .infos-fleet > .ships > dl dd.noship > dt > div {
   color: #edfddd;
 }
+main[data-theme="4"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt > div > .info {
+  color: #f2fee7;
+}
 main[data-theme="5"]:after {
   background-color: rgba(52, 63, 54, 0.75);
   background-image: -webkit-linear-gradient(top, #99ffac 4px, rgba(128, 255, 151, 0.2) 4px, transparent 25%);
@@ -8712,6 +8764,9 @@ main[data-theme="5"] .infos-fleet > .ships > dl dd.noship > dt > s:before {
 }
 main[data-theme="5"] .infos-fleet > .ships > dl dd.noship > dt > div {
   color: #dbffe2;
+}
+main[data-theme="5"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt > div > .info {
+  color: #e5ffea;
 }
 main[data-theme="6"]:after {
   background-color: rgba(52, 63, 61, 0.75);
@@ -8795,6 +8850,9 @@ main[data-theme="6"] .infos-fleet > .ships > dl dd.noship > dt > s:before {
 main[data-theme="6"] .infos-fleet > .ships > dl dd.noship > dt > div {
   color: #dbfffa;
 }
+main[data-theme="6"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt > div > .info {
+  color: #e5fffb;
+}
 main[data-theme="7"]:after {
   background-color: rgba(49, 57, 66, 0.75);
   background-image: -webkit-linear-gradient(top, #99caff 4px, rgba(128, 189, 255, 0.2) 4px, transparent 25%);
@@ -8876,6 +8934,9 @@ main[data-theme="7"] .infos-fleet > .ships > dl dd.noship > dt > s:before {
 }
 main[data-theme="7"] .infos-fleet > .ships > dl dd.noship > dt > div {
   color: #dbedff;
+}
+main[data-theme="7"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt > div > .info {
+  color: #e5f2ff;
 }
 main[data-theme="8"]:after {
   background-color: rgba(66, 63, 77, 0.75);
@@ -8959,6 +9020,9 @@ main[data-theme="8"] .infos-fleet > .ships > dl dd.noship > dt > s:before {
 main[data-theme="8"] .infos-fleet > .ships > dl dd.noship > dt > div {
   color: #f7f5ff;
 }
+main[data-theme="8"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt > div > .info {
+  color: #ffffff;
+}
 main[data-theme="9"]:after {
   background-color: rgba(61, 52, 63, 0.75);
   background-image: -webkit-linear-gradient(top, #f099ff 4px, rgba(236, 128, 255, 0.2) 4px, transparent 25%);
@@ -9041,6 +9105,9 @@ main[data-theme="9"] .infos-fleet > .ships > dl dd.noship > dt > s:before {
 main[data-theme="9"] .infos-fleet > .ships > dl dd.noship > dt > div {
   color: #fadbff;
 }
+main[data-theme="9"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt > div > .info {
+  color: #fbe5ff;
+}
 main[data-theme="10"]:after {
   background-color: rgba(77, 63, 70, 0.75);
   background-image: -webkit-linear-gradient(top, #ffb3d7 4px, rgba(255, 153, 202, 0.2) 4px, transparent 25%);
@@ -9122,6 +9189,9 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > s:before {
 }
 main[data-theme="10"] .infos-fleet > .ships > dl dd.noship > dt > div {
   color: #fff5fa;
+}
+main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt > div > .info {
+  color: #ffffff;
 }
 .menu.contextmenu-infos_fleet_themes > .body > div {
   padding: 5px;

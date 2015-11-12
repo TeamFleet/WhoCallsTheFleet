@@ -1177,6 +1177,11 @@ class InfosFleetShip{
 					.append(
 						this.elAttrNightBattle = $('<span class="nightbattle" data-text="夜战"/>')
 					)
+					.append(
+						_huCss.csscheck_full('mask-image')
+							? null
+							: $('<div class="bg"/>')
+					)
 				/*
 					.append($('<span class="shelling"/>').html('炮击力').append(
 						this.elAttrShelling = $('<strong/>').html('-')
@@ -1237,6 +1242,10 @@ class InfosFleetShip{
 				})
 		}else{
 			this.elInputLevel.prop('readonly', true)
+		}
+		
+		if( !_huCss.csscheck_full('mask-image') ){
+			this.el.addClass('mod-nomask')
 		}
 
 		//this.updateEl()
