@@ -163,22 +163,34 @@ a{
 	.padding-top(@nav_height);
 	height:		100%;
 
-	&[data-errorbadge]{
+	&[data-errorbadge],
+	&[data-msgbadge]{
 		&:after{
-			content:	attr(data-errorbadge);
 			position:	absolute;
 			z-index:	10;
 			top:		0;
 			left:		50%;
 			padding:	.65em 1em;
-			background:	hsla(0, 100%, 50%, .575);
-			//color:		rgba(255, 255, 255, .75);
 			color:		#fff;
 			font-size: 	14px;
 			.user-select(none);
 			pointer-events:	none;
 			transform: 	translateX(-50%);
 			.fadein();
+		}
+	}
+
+	&[data-errorbadge]{
+		&:after{
+			content:	attr(data-errorbadge);
+			background:	hsla(0, 100%, 50%, .575);
+		}
+	}
+
+	&[data-msgbadge]{
+		&:after{
+			content:	attr(data-msgbadge);
+			background:	hsla(200, 100%, 50%, .575);
 		}
 	}
 }

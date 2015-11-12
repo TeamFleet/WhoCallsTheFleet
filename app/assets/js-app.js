@@ -72,6 +72,20 @@
 		return this;
 	};
 
+
+
+// main badge
+	_g.badgeMsg = function( cont ){
+		_frame.dom.layout.attr('data-msgbadge', cont)
+		clearTimeout( this.timeout_badgeMsg_hiding )
+		this.timeout_badgeMsg_hiding = setTimeout(function(){
+			_frame.dom.layout.removeAttr('data-msgbadge')
+			delete _g.timeout_badgeMsg_hiding
+		}, 3000)
+	};
+
+
+
 (function(root, factory) {
 
   if (typeof exports !== 'undefined') {
@@ -6713,6 +6727,8 @@ class InfosFleet{
 					newEl.insertBefore(this.el)
 					this.el.remove()
 					delete this
+					
+					_g.badgeMsg('舰队配置已保存')
 					//this._infos_state_id = id'fleet::' + id
 				}
 			}.bind(this)
@@ -10082,7 +10098,11 @@ class TablelistFleets extends Tablelist{
 							,j = 0;
 						while( j < 6 ){
 							if( ships[j] && ships[j][0] )
-								html+='<img src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0.webp" contextmenu="disabled"/>'
+								html+='<img src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0'
+										+ (_huCss.csscheck_full('mask-image') ? '.webp' : '-mask-2.png')
+										+ '" contextmenu="disabled"'
+										+ (_huCss.csscheck_full('mask-image') ? '' : ' class="nomask"')
+										+ '/>'
 							else
 								html+='<s/>'
 							j++

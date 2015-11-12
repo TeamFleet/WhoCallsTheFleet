@@ -66,6 +66,9 @@
 								.mask-image(~"linear-gradient(to right, transparent 0, transparent 36px, #000 40px, #000 calc(100% - 30px), transparent calc(100% - 10px))");
 								.mask-position(0 0);
 								.mask-size(100% 100%);
+								&.nomask{
+									mask-image: 	none;
+								}
 								&+img, &+s{
 									z-index:	5;
 									.left(5 + 55 * 1 + @left_offset);

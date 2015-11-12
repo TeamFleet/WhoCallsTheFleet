@@ -2400,14 +2400,13 @@ a {
   padding-top: 4rem;
   height: 100%;
 }
-#layout[data-errorbadge]:after {
-  content: attr(data-errorbadge);
+#layout[data-errorbadge]:after,
+#layout[data-msgbadge]:after {
   position: absolute;
   z-index: 10;
   top: 0;
   left: 50%;
   padding: .65em 1em;
-  background: rgba(255, 0, 0, 0.575);
   color: #fff;
   font-size: 14px;
   user-select: none;
@@ -2420,6 +2419,14 @@ a {
           transform: translateX(-50%);
   animation: fadein 0.3s ease-out;
   -webkit-animation: fadein 0.3s ease-out;
+}
+#layout[data-errorbadge]:after {
+  content: attr(data-errorbadge);
+  background: rgba(255, 0, 0, 0.575);
+}
+#layout[data-msgbadge]:after {
+  content: attr(data-msgbadge);
+  background: rgba(0, 170, 255, 0.575);
 }
 html.ready nav,
 html.ready main {
@@ -5260,6 +5267,11 @@ body.mod-capture #tip {
   -webkit-mask-position: 0 0;
   mask-size: 100% 100%;
   -webkit-mask-size: 100% 100%;
+}
+.tablelist > .options[viewtype="card"] ~ .fixed-table-container table.fleets tbody tr[data-fleetid] th > i > img.nomask,
+.tablelist > .options[viewtype="card"] ~ .fixed-table-container table.fleets tbody tr[data-fleetid] th > i > s.nomask {
+  -webkit-mask-image: none;
+          mask-image: none;
 }
 .tablelist > .options[viewtype="card"] ~ .fixed-table-container table.fleets tbody tr[data-fleetid] th > i > img + img,
 .tablelist > .options[viewtype="card"] ~ .fixed-table-container table.fleets tbody tr[data-fleetid] th > i > s + img,

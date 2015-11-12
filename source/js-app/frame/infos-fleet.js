@@ -422,6 +422,8 @@ class InfosFleet{
 					newEl.insertBefore(this.el)
 					this.el.remove()
 					delete this
+					
+					_g.badgeMsg('舰队配置已保存')
 					//this._infos_state_id = id'fleet::' + id
 				}
 			}.bind(this)

@@ -2576,6 +2576,15 @@ String.prototype.printf = function () {
 	return this;
 };
 
+_g.badgeMsg = function (cont) {
+	_frame.dom.layout.attr('data-msgbadge', cont);
+	clearTimeout(this.timeout_badgeMsg_hiding);
+	this.timeout_badgeMsg_hiding = setTimeout(function () {
+		_frame.dom.layout.removeAttr('data-msgbadge');
+		delete _g.timeout_badgeMsg_hiding;
+	}, 3000);
+};
+
 var _ga = {
 	counter: function counter(path, title, screenName) {
 
@@ -5442,6 +5451,8 @@ var InfosFleet = (function () {
 					newEl.insertBefore(this.el);
 					this.el.remove();
 					delete this;
+
+					_g.badgeMsg('舰队配置已保存');
 				}
 			}).bind(this));
 		}
@@ -7369,7 +7380,7 @@ var TablelistFleets = (function (_Tablelist3) {
 						    ships = data['data'][0] || [],
 						    j = 0;
 						while (j < 6) {
-							if (ships[j] && ships[j][0]) html += '<img src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0.webp" contextmenu="disabled"/>';else html += '<s/>';
+							if (ships[j] && ships[j][0]) html += '<img src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0' + (_huCss.csscheck_full('mask-image') ? '.webp' : '-mask-2.png') + '" contextmenu="disabled"' + (_huCss.csscheck_full('mask-image') ? '' : ' class="nomask"') + '/>';else html += '<s/>';
 							j++;
 						}
 						html += '</i>';

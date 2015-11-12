@@ -71,3 +71,17 @@
 			return vsprintf(this, Array.prototype.slice.call(arguments));
 		return this;
 	};
+
+
+
+// main badge
+	_g.badgeMsg = function( cont ){
+		_frame.dom.layout.attr('data-msgbadge', cont)
+		clearTimeout( this.timeout_badgeMsg_hiding )
+		this.timeout_badgeMsg_hiding = setTimeout(function(){
+			_frame.dom.layout.removeAttr('data-msgbadge')
+			delete _g.timeout_badgeMsg_hiding
+		}, 3000)
+	};
+
+
