@@ -5723,6 +5723,7 @@ body.mod-capture #tip {
   vertical-align: middle;
   height: 24px;
   margin-left: 4px;
+  -moz-appearance: textfield;
 }
 .tablelist.fleets > .options .setting-hqlv input[type="number"]::-webkit-inner-spin-button {
   position: absolute;
@@ -6782,9 +6783,7 @@ h6 + section.update_journal {
   margin-left: -80px;
   margin-right: -80px;
   width: calc(100% + 160px);
-  -webkit-transform: translateY(-20px);
-      -ms-transform: translateY(-20px);
-          transform: translateY(-20px);
+  margin-top: -20px;
   height: calc(100% + 40px);
   font-size: 12px;
   user-select: none;
@@ -6884,6 +6883,7 @@ h6 + section.update_journal {
   text-align: center;
   min-width: 0;
   font-size: inherit;
+  -moz-appearance: textfield;
 }
 .infos-fleet input[type="number"]::-webkit-inner-spin-button {
   position: absolute;
@@ -7642,167 +7642,115 @@ body.mod-capture .infos-fleet > .ships > dl dd > .equipments {
   display: flex;
   z-index: 10;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid] > .equipment-add {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid] > .equipment-add {
   display: none;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid] > .equipment-infos {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid] > .equipment-infos {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   z-index: 10;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid]:hover > .equipment-infos {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid]:hover > .equipment-infos {
   display: none;
   z-index: 1;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid]:hover > .equipment-options {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid]:hover > .equipment-options {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   z-index: 10;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft .equipment-carry {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-aircraft .equipment-carry {
   opacity: 1;
   color: rgba(46, 255, 147, 0.65);
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-carry="0"] {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-aircraft[data-carry="0"] {
   color: #ff8a80 !important;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-carry="0"] > .equipment-infos > .equipment-name {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-aircraft[data-carry="0"] > .equipment-infos > .equipment-name {
   color: inherit !important;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-aircraft[data-carry="0"] .equipment-carry {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-aircraft[data-carry="0"] .equipment-carry {
   color: inherit;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable > .equipment-infos > .equipment-star {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable > .equipment-infos > .equipment-star {
   display: none;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable > .equipment-infos > .equipment-rank {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable > .equipment-infos > .equipment-rank {
   display: block;
   background: url(/!/assets/images/Aircraft_Proficiency.png) no-repeat 50% 224px / cover;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable > .equipment-options .equipment-starinput {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable > .equipment-options .equipment-starinput {
   display: none;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable > .equipment-options .equipment-rankselect {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable > .equipment-options .equipment-rankselect {
   display: block;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable > .equipment-options .equipment-rankselect span {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable > .equipment-options .equipment-rankselect span {
   background: url(/!/assets/images/Aircraft_Proficiency.png) no-repeat 50% 224px / cover;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="1"] > .equipment-infos > .equipment-rank {
-  background-position-y: 0px;
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank] > .equipment-infos > .equipment-rank {
   opacity: 1;
   -webkit-transform: translateY(calc(-50% - 8px));
       -ms-transform: translateY(calc(-50% - 8px));
           transform: translateY(calc(-50% - 8px));
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="1"] > .equipment-infos > .equipment-rank:before {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank] > .equipment-infos > .equipment-rank:before {
   display: none;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="1"] > .equipment-options .equipment-rankselect span {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank] > .equipment-options .equipment-rankselect span {
   color: transparent;
-  background-position-y: 0px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="2"] > .equipment-infos > .equipment-rank {
-  background-position-y: -16px;
-  opacity: 1;
-  -webkit-transform: translateY(calc(-50% - 8px));
-      -ms-transform: translateY(calc(-50% - 8px));
-          transform: translateY(calc(-50% - 8px));
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank="1"] > .equipment-infos > .equipment-rank {
+  background-position: 50% 0px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="2"] > .equipment-infos > .equipment-rank:before {
-  display: none;
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank="1"] > .equipment-options .equipment-rankselect span {
+  background-position: 50% 0px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="2"] > .equipment-options .equipment-rankselect span {
-  color: transparent;
-  background-position-y: -32px;
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank="2"] > .equipment-infos > .equipment-rank {
+  background-position: 50% -16px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="3"] > .equipment-infos > .equipment-rank {
-  background-position-y: -32px;
-  opacity: 1;
-  -webkit-transform: translateY(calc(-50% - 8px));
-      -ms-transform: translateY(calc(-50% - 8px));
-          transform: translateY(calc(-50% - 8px));
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank="2"] > .equipment-options .equipment-rankselect span {
+  background-position: 50% -32px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="3"] > .equipment-infos > .equipment-rank:before {
-  display: none;
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank="3"] > .equipment-infos > .equipment-rank {
+  background-position: 50% -32px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="3"] > .equipment-options .equipment-rankselect span {
-  color: transparent;
-  background-position-y: -64px;
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank="3"] > .equipment-options .equipment-rankselect span {
+  background-position: 50% -64px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="4"] > .equipment-infos > .equipment-rank {
-  background-position-y: -48px;
-  opacity: 1;
-  -webkit-transform: translateY(calc(-50% - 8px));
-      -ms-transform: translateY(calc(-50% - 8px));
-          transform: translateY(calc(-50% - 8px));
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank="4"] > .equipment-infos > .equipment-rank {
+  background-position: 50% -48px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="4"] > .equipment-infos > .equipment-rank:before {
-  display: none;
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank="4"] > .equipment-options .equipment-rankselect span {
+  background-position: 50% -96px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="4"] > .equipment-options .equipment-rankselect span {
-  color: transparent;
-  background-position-y: -96px;
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank="5"] > .equipment-infos > .equipment-rank {
+  background-position: 50% -64px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="5"] > .equipment-infos > .equipment-rank {
-  background-position-y: -64px;
-  opacity: 1;
-  -webkit-transform: translateY(calc(-50% - 8px));
-      -ms-transform: translateY(calc(-50% - 8px));
-          transform: translateY(calc(-50% - 8px));
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank="5"] > .equipment-options .equipment-rankselect span {
+  background-position: 50% -128px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="5"] > .equipment-infos > .equipment-rank:before {
-  display: none;
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank="6"] > .equipment-infos > .equipment-rank {
+  background-position: 50% -80px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="5"] > .equipment-options .equipment-rankselect span {
-  color: transparent;
-  background-position-y: -128px;
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank="6"] > .equipment-options .equipment-rankselect span {
+  background-position: 50% -160px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="6"] > .equipment-infos > .equipment-rank {
-  background-position-y: -80px;
-  opacity: 1;
-  -webkit-transform: translateY(calc(-50% - 8px));
-      -ms-transform: translateY(calc(-50% - 8px));
-          transform: translateY(calc(-50% - 8px));
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank="7"] > .equipment-infos > .equipment-rank {
+  background-position: 50% -96px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="6"] > .equipment-infos > .equipment-rank:before {
-  display: none;
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank="7"] > .equipment-options .equipment-rankselect span {
+  background-position: 50% -192px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="6"] > .equipment-options .equipment-rankselect span {
-  color: transparent;
-  background-position-y: -160px;
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank="8"] > .equipment-infos > .equipment-rank {
+  background-position: 50% -112px;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="7"] > .equipment-infos > .equipment-rank {
-  background-position-y: -96px;
-  opacity: 1;
-  -webkit-transform: translateY(calc(-50% - 8px));
-      -ms-transform: translateY(calc(-50% - 8px));
-          transform: translateY(calc(-50% - 8px));
-}
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="7"] > .equipment-infos > .equipment-rank:before {
-  display: none;
-}
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="7"] > .equipment-options .equipment-rankselect span {
-  color: transparent;
-  background-position-y: -192px;
-}
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="8"] > .equipment-infos > .equipment-rank {
-  background-position-y: -112px;
-  opacity: 1;
-  -webkit-transform: translateY(calc(-50% - 8px));
-      -ms-transform: translateY(calc(-50% - 8px));
-          transform: translateY(calc(-50% - 8px));
-}
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="8"] > .equipment-infos > .equipment-rank:before {
-  display: none;
-}
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry][data-equipmentid].is-rankupgradable[data-rank="8"] > .equipment-options .equipment-rankselect span {
-  color: transparent;
-  background-position-y: -224px;
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-rankupgradable[data-rank="8"] > .equipment-options .equipment-rankselect span {
+  background-position: 50% -224px;
 }
 .infos-fleet > .ships > dl dd > .equipments > .equipment[data-star] > .equipment-options:before,
 .infos-fleet > .ships > dl dd > .equipments > .equipment[data-star] > .equipment-options .equipment-starinput {
@@ -9268,28 +9216,28 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
   background-image: none;
 }
 .menu.contextmenu-infos_fleet_rank_select > .body > div button.rank-1 {
-  background-position-y: 0px;
+  background-position: 50% 0px;
 }
 .menu.contextmenu-infos_fleet_rank_select > .body > div button.rank-2 {
-  background-position-y: -32px;
+  background-position: 50% -32px;
 }
 .menu.contextmenu-infos_fleet_rank_select > .body > div button.rank-3 {
-  background-position-y: -64px;
+  background-position: 50% -64px;
 }
 .menu.contextmenu-infos_fleet_rank_select > .body > div button.rank-4 {
-  background-position-y: -96px;
+  background-position: 50% -96px;
 }
 .menu.contextmenu-infos_fleet_rank_select > .body > div button.rank-5 {
-  background-position-y: -128px;
+  background-position: 50% -128px;
 }
 .menu.contextmenu-infos_fleet_rank_select > .body > div button.rank-6 {
-  background-position-y: -160px;
+  background-position: 50% -160px;
 }
 .menu.contextmenu-infos_fleet_rank_select > .body > div button.rank-7 {
-  background-position-y: -192px;
+  background-position: 50% -192px;
 }
 .menu.contextmenu-infos_fleet_rank_select > .body > div button.rank-8 {
-  background-position-y: -224px;
+  background-position: 50% -224px;
 }
 .infos-ship {
   display: -webkit-box;

@@ -16,7 +16,8 @@
 	.main-sizing-anti-padding();
 	@base_font_size: 12;
 	//top: 		-20px;
-	transform: 	translateY(-20px);
+	//transform: 	translateY(-20px);
+	margin-top: -20px;
 	height: 	~"calc(100% + 40px)";
 	font-size: 	unit( @base_font_size, px );
 	.user-select(none);
@@ -64,6 +65,7 @@
 		text-align: center;
 		min-width: 	0;
 		font-size: 	inherit;
+		-moz-appearance:textfield;
 		&::-webkit-inner-spin-button{
 			position: 	absolute;
 			//top: 		-1000%;
@@ -734,93 +736,101 @@
 								display: 	flex;
 								z-index: 	10;
 							}
+						}
 							
-							&[data-equipmentid]{
-								&>.equipment-add{
-									display: 	none;
-								}
-								//&>.equipment-infos, &>.equipment-options{
-									//display: 	flex;
-									//will-change:opacity;
-								//}
+						&[data-equipmentid]{
+							&>.equipment-add{
+								display: 	none;
+							}
+							//&>.equipment-infos, &>.equipment-options{
+								//display: 	flex;
+								//will-change:opacity;
+							//}
+							&>.equipment-infos{
+								//opacity: 	1;
+								display: 	flex;
+								z-index: 	10;
+							}
+							&:hover{
 								&>.equipment-infos{
-									//opacity: 	1;
+									display: 	none;
+									//opacity: 	0;
+									z-index: 	1;
+								}
+								&>.equipment-options{
 									display: 	flex;
+									//opacity: 	1;
 									z-index: 	10;
+									//button{
+									//	will-change:opacity;
+									//}
 								}
-								&:hover{
+							}
+							
+							&.is-aircraft{
+								.equipment-carry{
+									opacity: 1;
+									color: 	hsla(149, 100%, 59%, .65);
+								}
+								&[data-carry="0"]{
+									color: 	hsl(5, 100%, 75%) !important;
 									&>.equipment-infos{
-										display: 	none;
-										//opacity: 	0;
-										z-index: 	1;
+										&>.equipment-name{
+											color:	inherit !important;
+										}
 									}
-									&>.equipment-options{
-										display: 	flex;
-										//opacity: 	1;
-										z-index: 	10;
-										//button{
-										//	will-change:opacity;
-										//}
-									}
-								}
-								
-								&.is-aircraft{
 									.equipment-carry{
-										opacity: 1;
-										color: 	hsla(149, 100%, 59%, .65);
-									}
-									&[data-carry="0"]{
-										color: 	hsl(5, 100%, 75%) !important;
-										&>.equipment-infos{
-											&>.equipment-name{
-												color:	inherit !important;
-											}
-										}
-										.equipment-carry{
-											color: 	inherit;
-										}
+										color: 	inherit;
 									}
 								}
-								&.is-rankupgradable{
-									&>.equipment-infos{
-										&>.equipment-star{
-											display: 	none;
-										}
-										&>.equipment-rank{
-											display: 	block;
+							}
+							&.is-rankupgradable{
+								&>.equipment-infos{
+									&>.equipment-star{
+										display: 	none;
+									}
+									&>.equipment-rank{
+										display: 	block;
+										background: ~"url(@{folder_images}/Aircraft_Proficiency.png) no-repeat 50% 224px / cover";
+									}
+								}
+								&>.equipment-options{
+									.equipment-starinput{
+										display: 	none;
+									}
+									.equipment-rankselect{
+										display: 	block;
+										span{
 											background: ~"url(@{folder_images}/Aircraft_Proficiency.png) no-repeat 50% 224px / cover";
 										}
 									}
-									&>.equipment-options{
-										.equipment-starinput{
+								}
+								&[data-rank]{
+									&>.equipment-infos>.equipment-rank{
+										opacity: 	1;
+										transform: 	translateY( ~"calc(-50% - 8px)");
+										&:before{
 											display: 	none;
 										}
-										.equipment-rankselect{
-											display: 	block;
-											span{
-												background: ~"url(@{folder_images}/Aircraft_Proficiency.png) no-repeat 50% 224px / cover";
-											}
-										}
 									}
-									.loop(@n, @i: 1) when (@i =< @n) {
-										&[data-rank="@{i}"]{
-											&>.equipment-infos>.equipment-rank{
-												background-position-y: unit( ((@i - 1) * -16px ), px );
-												opacity: 	1;
-												transform: 	translateY( ~"calc(-50% - 8px)");
-												&:before{
-													display: 	none;
-												}
-											}
-											&>.equipment-options .equipment-rankselect span{
-												color: transparent;
-												background-position-y: unit( ((@i - 1) * -32px ), px );
-											}
-										}
-										.loop(@n, (@i + 1))
+									&>.equipment-options .equipment-rankselect span{
+										color: transparent;
 									}
-									.loop(8);
 								}
+								.loop(@n, @i: 1) when (@i =< @n) {
+									&[data-rank="@{i}"]{
+										&>.equipment-infos>.equipment-rank{
+											//background-position-y: unit( ((@i - 1) * -16px ), px );
+											background-position: 50% unit( ((@i - 1) * -16px ), px );
+										}
+										&>.equipment-options .equipment-rankselect span{
+											//background-position-y: unit( ((@i - 1) * -32px ), px );
+											background-position: 50% unit( ((@i - 1) * -32px ), px );
+										}
+									}
+									.loop(@n, (@i + 1))
+								}
+								.loop(8);
 							}
 						}
 						
@@ -1719,7 +1729,7 @@ main{
 		}
 		.loop(@n, @i: 1) when (@i =< @n) {
 			&.rank-@{i}{
-				background-position-y: unit( ((@i - 1) * -32 ), px );
+				background-position: 50% unit( ((@i - 1) * -32 ), px );
 			}
 			.loop(@n, (@i + 1))
 		}
