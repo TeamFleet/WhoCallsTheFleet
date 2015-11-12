@@ -7961,6 +7961,9 @@ body.mod-capture .infos-fleet > .ships > dl dd > .options {
 .infos-fleet > .ships > dl dd:hover > .attributes {
   opacity: 1;
 }
+.infos-fleet > .ships > dl dd.noship > dt {
+  overflow: visible;
+}
 .infos-fleet > .ships > dl dd.noship > dt > s:before {
   content: '+';
   font-size: 533.33333333%;
@@ -8115,9 +8118,6 @@ body.mod-capture .infos-fleet > .ships > dl dd > .options {
 }
 .infos-fleet > .ships > dl dd[data-shipid].moving > dt > s:before {
   display: none;
-}
-.infos-fleet > .ships > dl dd.mod-nomask.noship > dt {
-  overflow: visible;
 }
 .infos-fleet > .ships > dl dd.mod-nomask > .attributes > .bg {
   position: absolute;

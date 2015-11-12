@@ -5035,6 +5035,11 @@ _frame.infos = {
 			} else {
 				this.dom.container = this.dom.main.children('.wrapper');
 			}
+			this.dom.main.on(eventName('transitionend', 'infos_hide'), function (e) {
+				if (e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && _frame.infos.dom.main.css('opacity') == 0) {
+					_frame.infos.hide_finish();
+				}
+			});
 		}
 
 		_frame.dom.layout.addClass('is-infos-show');
@@ -5042,6 +5047,11 @@ _frame.infos = {
 		this.curContent = type + '::' + id;
 
 		this.getContent(type, id, (function (cont) {
+			this.dom.container.children().not(cont).each(function (i, el) {
+				var $el = $(el);
+				if ($el.css('opacity') == 0) $el.trigger('hidden');
+			});
+
 			switch (type) {
 				case 'ship':
 				case 'equipment':
@@ -5072,9 +5082,11 @@ _frame.infos = {
 					})();
 				}
 
-				cont.data('is_infosinit', true).on(eventName('transitionend', 'hide'), function (e) {
-					if (e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(cont.css('opacity')) == 0) {
-						cont.detach().data('is_show', false);
+				cont.data('is_infosinit', true).on('hidden', function () {
+					cont.detach().data('is_show', false);
+				}).on(eventName('transitionend', 'hide'), function (e) {
+					if (e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && cont.css('opacity') == 0 && cont.data('is_show')) {
+						cont.trigger('hidden');
 					}
 				});
 			}
@@ -5118,6 +5130,8 @@ _frame.infos = {
 
 	hide_finish: function hide_finish() {
 		if (this.curContent) return false;
+
+		this.dom.container.children().trigger('hidden');
 
 		_frame.dom.layout.removeClass('is-infos-show');
 		this.dom.main.attr({
