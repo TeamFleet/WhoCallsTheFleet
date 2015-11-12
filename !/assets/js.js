@@ -3984,8 +3984,7 @@ _frame.app_main = {
 						_frame.app_main.page_title[url] = result_title[1];
 					}
 					callback_success(result_main && result_main.length > 1 ? result_main[1] : '');
-
-					if (url == location.pathname) {
+					if (url == _frame.app_main.loading_cur) {
 						callback_successAfter(result_main && result_main.length > 1 ? result_main[1] : '');
 					}
 					_frame.app_main.loading_state[url] = 'complete';
