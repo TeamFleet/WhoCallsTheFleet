@@ -5138,69 +5138,87 @@ _frame.infos = {
 	}
 };
 
-_frame.infos.__fleet = function (id, el) {
-	return new InfosFleet(id, el).el;
+_frame.infos.__fleet = function (id, el, d) {
+	return new InfosFleet(id, el, d).el;
 };
 
 var InfosFleet = (function () {
-	function InfosFleet(id, el) {
+	function InfosFleet(id, el, d) {
 		_classCallCheck(this, InfosFleet);
 
 		this.el = el || $('<div/>');
-		this.el.addClass('infos-fleet loading').attr('data-infos-title', '舰队 (' + id + ')');
+		this.el.addClass('infos-fleet infosbody loading').attr('data-infos-title', '舰队 (' + id + ')');
 
 		this.doms = {};
 		this.fleets = [];
 
 		this.tip_hqlv_input = '输入 0 表示采用默认等级 (Lv.%1$d)';
 
-		if (id == '__NEW__') {
-			_db.fleets.insert(_tablelist.prototype._fleets_new_data(), (function (err, newDoc) {
-				if (err) {
-					_g.error(err);
-				} else {
-					if (_frame.infos.curContent == 'fleet::__NEW__') _frame.infos.show('[[FLEET::' + newDoc['_id'] + ']]');
-				}
-			}).bind(this));
+		if (d) {
+			this.init(d);
 		} else {
-			_db.fleets.find({
-				'_id': id
-			}, (function (err, docs) {
-				if (err || !docs) {
-					_g.error(err);
-				} else {
-					if (_frame.infos.curContent == 'fleet::' + id) this.init(docs[0]);
-				}
-			}).bind(this));
+			if (id == '__NEW__') {
+				_db.fleets.insert(_tablelist.prototype._fleets_new_data(), (function (err, newDoc) {
+					if (err) {
+						_g.error(err);
+					} else {
+						if (_frame.infos.curContent == 'fleet::__NEW__') _frame.infos.show('[[FLEET::' + newDoc['_id'] + ']]');
+					}
+				}).bind(this));
+			} else {
+				_db.fleets.find({
+					'_id': id
+				}, (function (err, docs) {
+					if (err || !docs) {
+						_g.error(err);
+					} else {
+						if (_frame.infos.curContent == 'fleet::' + id) {
+							if (docs.length) {
+								this.init(docs[0]);
+							} else {
+								try {
+									this._infos_state_id = id;
+									this.init(TablelistFleets.prototype.new_data(JSON.parse(LZString.decompressFromEncodedURIComponent(_g.uriSearch('d')))));
+								} catch (e) {
+									_g.error(e);
+								}
+							}
+						} else {
+								el.remove();
+								delete _frame.infos.contentCache.fleet[id];
+							}
+					}
+				}).bind(this));
+			}
 		}
-
-		this.el.on('show', (function (e, is_firstShow) {
-			if (!is_firstShow) {
-				var _i7 = 0,
-				    _l2 = Lockr.get('hqLvDefault', _g.defaultHqLv);
-				while (_i7 < 4) {
-					this.fleets[_i7].summaryCalc(true);
-					_i7++;
-				}
-				if (!this._hqlv) this.doms['hqlvOption'].val(_l2);
-				this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(_l2));
-				this.doms['hqlvOption'].attr('placeholder', _l2);
-			}
-			if (this.is_init) {
-				this.updateURI();
-			}
-		}).bind(this));
-
-		if (!_g.isClient) this.doms.warning = $('<div/>', {
-			'class': 'warning',
-			'html': '功能移植/测试中，请勿日常使用'
-		}).appendTo(this.el);
 	}
 
 	_createClass(InfosFleet, [{
 		key: 'init',
 		value: function init(d) {
 			if (!d) return false;
+
+			this.el.on('show', (function (e, is_firstShow) {
+				if (!is_firstShow) {
+					var _i7 = 0,
+					    _l2 = Lockr.get('hqLvDefault', _g.defaultHqLv);
+					while (_i7 < 4) {
+						this.fleets[_i7].summaryCalc(true);
+						_i7++;
+					}
+					if (!this._hqlv) this.doms['hqlvOption'].val(_l2);
+					this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(_l2));
+					this.doms['hqlvOption'].attr('placeholder', _l2);
+				}
+				if (this.is_init) {
+					this.updateURI();
+				}
+			}).bind(this));
+
+			if (!_g.isClient) this.doms.warning = $('<div/>', {
+				'class': 'warning',
+				'html': '功能移植/测试中，请勿日常使用'
+			}).appendTo(this.el);
 
 			this.data = d;
 
@@ -5241,7 +5259,7 @@ var InfosFleet = (function () {
 						}).bind(this), 1);
 					}
 				}).bind(this)
-			})).append(this.doms['user'] = $('<button/>')).appendTo(this.el);
+			})).append(this.doms['preview'] = $('<div class="preview"/>')).appendTo(this.el);
 
 			$('<div class="fleets"/>').append(this.doms['tabs'] = $('<div class="tabs"/>')).append(this.doms['options'] = $('<div class="options"/>').append(this.doms['hqlvOptionLabel'] = $('<label/>', {
 				'class': 'option option-hqlv',
@@ -5348,6 +5366,19 @@ var InfosFleet = (function () {
 				i++;
 			}
 
+			if (!this.data._id) {
+				this.el.addClass('mod-preview');
+				this.doms['preview'].html('若要编辑配置或保存以备日后查看，请').append($('<button/>', {
+					'html': '保存配置'
+				}).on('click', (function () {
+					this.previewSave();
+				}).bind(this)));
+
+				this.doms['name'].removeAttr('contenteditable');
+				this.doms['hqlvOptionLabel'].data('tip', '若要编辑配置或保存以备日后查看，<br/>请点击上方的“保存配置”按钮');
+				this.doms['hqlvOption'].prop('readonly', true);
+			}
+
 			this.update(d);
 
 			this._theme = this._theme;
@@ -5390,16 +5421,37 @@ var InfosFleet = (function () {
 			this.update(d);
 		}
 	}, {
+		key: 'previewSave',
+		value: function previewSave() {
+			_db.fleets.insert(TablelistFleets.prototype.new_data(this.data), (function (err, newDoc) {
+				if (err) {
+					_g.error(err);
+				} else {
+					this.el.attr({
+						'data-infos-id': newDoc._id
+					});
+					_frame.infos.curContent = 'fleet::' + newDoc._id;
+					var newEl = _frame.infos.__fleet(newDoc._id, null, newDoc);
+					_frame.infos.contentCache.fleet._id = newEl;
+					_frame.infos.contentCache.fleet[this._infos_state_id] = newEl;
+					newEl.insertBefore(this.el);
+					this.el.remove();
+					delete this;
+				}
+			}).bind(this));
+		}
+	}, {
 		key: 'updateURI',
 		value: function updateURI() {
-			if (!_g.isClient && _g.uriSearch()) {
-				var d = $.extend(true, {}, this.data);
+			if (!_g.isClient && this.data._id && _g.uriSearch()) {
+				var d = $.extend(true, {}, this.data),
+				    _id = d._id;
 				delete d._id;
 				delete d.time_create;
 				delete d.time_modify;
 				delete d.rating;
 				delete d.user;
-				history.replaceState(history.state, document.title, location.pathname + location.search + '&d=' + LZString.compressToEncodedURIComponent(JSON.stringify(d)));
+				history.replaceState(history.state, document.title, location.pathname + '?i=' + _id + '&d=' + LZString.compressToEncodedURIComponent(JSON.stringify(d)));
 			}
 		}
 	}, {
@@ -5833,12 +5885,7 @@ var InfosFleetShip = (function () {
 		this.equipments = [];
 		this.index = index;
 
-		this.el = $('<dd class="noship"/>').append($('<dt/>').append(this.elAvatar = $('<s/>').on({
-			'mousedown': (function (e) {
-				e.preventDefault();
-				if (this.data[0]) InfosFleetShip.dragStart(this);
-			}).bind(this)
-		})).append(this.elInfos = $('<div/>').html('<span>选择舰娘...</span>').append(this.elInfosTitle = $('<div class="title"/>')).append($('<div class="info"/>').append($('<label/>').html('Lv.').append(this.elInputLevel = $('<input/>', {
+		this.el = $('<dd class="noship"/>').append($('<dt/>').append(this.elAvatar = $('<s/>')).append(this.elInfos = $('<div/>').html('<span>' + (this.infosFleet.data._id ? '选择舰娘' : '无舰娘') + '...</span>').append(this.elInfosTitle = $('<div class="title"/>')).append($('<div class="info"/>').append($('<label/>').html('Lv.').append(this.elInputLevel = $('<input/>', {
 			'type': 'number',
 			'min': 0,
 			'max': 150
@@ -5871,19 +5918,31 @@ var InfosFleetShip = (function () {
 			return els;
 		}).bind(this))).append($('<div class="attributes"/>').append(this.elAttrShelling = $('<span class="shelling"/>')).append(this.elAttrTorpedo = $('<span class="torpedo"/>')).append(this.elAttrHitSum = $('<span class="hitsum"/>')).append(this.elAttrHp = $('<span class="hp"/>')).append(this.elAttrArmor = $('<span class="armor"/>')).append(this.elAttrEvasion = $('<span class="evasion"/>')).append(this.elAttrNightBattle = $('<span class="nightbattle" data-text="夜战"/>'))).append($('<div class="options"/>').append(this.elBtnOptions = $('<button class="options"/>').on('click', (function (e) {
 			this.showMenu();
-		}).bind(this)))).on({
-			'click': (function () {
-				if (!this.data[0]) this.selectShipStart();
-			}).bind(this),
-
-			'mouseenter': (function (e) {
-				InfosFleetShip.dragEnter(this);
-			}).bind(this)
-		});
+		}).bind(this))));
 
 		this.after = $('<s/>');
 
 		this.els = this.el.add(this.after);
+
+		if (this.infosFleet.data._id) {
+			this.el.on({
+				'click': (function () {
+					if (!this.data[0]) this.selectShipStart();
+				}).bind(this),
+
+				'mouseenter': (function (e) {
+					InfosFleetShip.dragEnter(this);
+				}).bind(this)
+			});
+			this.elAvatar.on({
+				'mousedown': (function (e) {
+					e.preventDefault();
+					if (this.data[0]) InfosFleetShip.dragStart(this);
+				}).bind(this)
+			});
+		} else {
+			this.elInputLevel.prop('readonly', true);
+		}
 	}
 
 	_createClass(InfosFleetShip, [{

@@ -77,13 +77,15 @@
 	}
 
 	&>header{
-		.padding-top(10);
+		//.padding-top(10);
+		border-top: 10px solid transparent;
 		.padding-bottom(6);
 		flex:		0.5 0 auto;
+		@height: 	22;
 		h3{
 			//.font-size(20);
 			font-size: 	percentage(20 / @base_font_size);
-			line-height:percentage(22 / 20);
+			line-height:percentage(@height / 20);
 			.padding(5, 10, 5, 0);
 			display:	inline-block;
 			border-radius:3px;
@@ -116,10 +118,30 @@
 				border-color:	rgba(255, 255, 255, .225);
 			}
 		}
-		&>button{
+		.preview{
 			position:	absolute;
 			right:		0;
 			top:		0;
+			font-size: 	percentage(14 / @base_font_size);
+			line-height:percentage(@height / 13);
+			padding: 	6px 0;
+			button{
+				line-height: 	inherit;
+				padding: 		2px 6px;
+				border: 		1px solid rgba(255, 255, 255, .25);
+				color: 			rgba(255, 255, 255, .75);
+				font-size: 		inherit;
+				background: 	rgba(255, 255, 255, .15);
+				transition-property: background, color;
+				margin-left: 	6px;
+				&:hover{
+					background: 	rgba(255, 255, 255, .25);
+					color: 			rgb(255, 255, 255);
+				}
+				&:active{
+					background: 	rgba(255, 255, 255, .05);
+				}
+			}
 		}
 		.mod-capture({
 			@size: 48px;
@@ -1292,10 +1314,58 @@
 	
 	&.loading{
 		.container(~".loading-msg");
-		font-size: 	3em;
-		letter-spacing: .25em;
 		position: 	absolute;
-		color: 		rgba(255,255,255,.2);
+		.loading-msg{
+			font-size: 	3em;
+			letter-spacing: .25em;
+			color: 		rgba(255,255,255,.2);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	&.mod-preview{
+		&>.fleets{
+			.options{
+				&>.option-theme{
+					display: 	none;
+				}
+			}
+		}
+		&>.ships>dl{
+			dd[data-shipid]{
+				&>dt{
+					&>s{
+						cursor: 	default;
+					}
+					&>s:before{
+						display: 	none;
+					}
+				}
+				&>.equipments{
+					padding-right: 	4px;
+					&>.equipment[data-carry][data-equipmentid]:hover{
+						&>.equipment-options{
+							display: 	none;
+						}
+						&>.equipment-infos{
+							display: 	flex;
+							z-index: 	10;
+						}
+					}
+					&>.equipment[data-carry]:not([data-equipmentid]):hover{
+						background-color: 	rgba(0,0,0,.125);
+					}
+				}
+				&>.options{
+					display: 	none;
+				}
+			}
+		}
 	}
 }
 

@@ -6290,8 +6290,8 @@ _frame.infos.__entity = function( id ){
 	}
 
 // 舰队配置
-	_frame.infos.__fleet = function( id, el ){
-		return (new InfosFleet(id, el)).el
+	_frame.infos.__fleet = function( id, el, d ){
+		return (new InfosFleet(id, el, d)).el
 	}
 
 
@@ -6303,38 +6303,75 @@ _frame.infos.__entity = function( id ){
 
 
 class InfosFleet{
-	constructor( id, el ){
+	constructor( id, el, d ){
 		this.el = el || $('<div/>')
-		this.el.addClass('infos-fleet loading').attr('data-infos-title','舰队 ('+id+')')
+		this.el.addClass('infos-fleet infosbody loading').attr('data-infos-title','舰队 ('+id+')')
 		
 		this.doms = {}
 		this.fleets = []
 		//this._updating = false
 		//this.is_init = false
 		this.tip_hqlv_input = '输入 0 表示采用默认等级 (Lv.%1$d)'
-	
-		if( id == '__NEW__' ){
-			_db.fleets.insert( _tablelist.prototype._fleets_new_data(), function(err, newDoc){
-				if(err){
-					_g.error(err)
-				}else{
-					if( _frame.infos.curContent == 'fleet::__NEW__' )
-						_frame.infos.show('[[FLEET::' + newDoc['_id'] + ']]')
-						//this.init(newDoc)
-				}
-			}.bind(this))
+		
+		if( d ){
+			this.init(d)
 		}else{
-			_db.fleets.find({
-				'_id': 		id
-			}, function(err, docs){
-				if(err || !docs){
-					_g.error(err)
-				}else{
-					if( _frame.infos.curContent == 'fleet::' + id )
-						this.init(docs[0])
-				}
-			}.bind(this))
+			if( id == '__NEW__' ){
+				_db.fleets.insert( _tablelist.prototype._fleets_new_data(), function(err, newDoc){
+					if(err){
+						_g.error(err)
+					}else{
+						if( _frame.infos.curContent == 'fleet::__NEW__' )
+							_frame.infos.show('[[FLEET::' + newDoc['_id'] + ']]')
+							//this.init(newDoc)
+					}
+				}.bind(this))
+			}else{
+				_db.fleets.find({
+					'_id': 		id
+				}, function(err, docs){
+					if(err || !docs){
+						_g.error(err)
+					}else{
+						if( _frame.infos.curContent == 'fleet::' + id ){
+							if( docs.length ){
+								this.init(docs[0])
+							}else{
+								try{
+									this._infos_state_id = id
+									this.init(TablelistFleets.prototype.new_data(JSON.parse(LZString.decompressFromEncodedURIComponent(_g.uriSearch('d')))))
+								}catch(e){
+									_g.error(e)
+								}
+								/*
+								_db.fleets.insert(
+									TablelistFleets.prototype.new_data(JSON.parse(LZString.decompressFromEncodedURIComponent(_g.uriSearch('d')))),
+									function(err, newDoc){
+										if(err){
+											_g.error(err)
+										}else{
+											if( _frame.infos.curContent == 'fleet::' + id )
+												this.init(newDoc)
+										}
+									}.bind(this)
+								)*/
+							}
+						}else{
+							el.remove()
+							delete _frame.infos.contentCache.fleet[id]
+						}
+					}
+				}.bind(this))
+			}
 		}
+	}
+
+
+
+	// 初始化内容
+	init( d ){
+		if( !d )
+			return false
 
 		this.el.on('show', function(e, is_firstShow){
 			if( !is_firstShow ){
@@ -6360,14 +6397,6 @@ class InfosFleet{
 					'class':	'warning',
 					'html':		'功能移植/测试中，请勿日常使用'
 				}).appendTo( this.el )
-	}
-
-
-
-	// 初始化内容
-	init( d ){
-		if( !d )
-			return false
 
 		//$.extend(true, this, d)
 		this.data = d
@@ -6422,7 +6451,7 @@ class InfosFleet{
 						})
 				)
 				.append(
-					this.doms['user'] = $('<button/>')
+					this.doms['preview'] = $('<div class="preview"/>')
 				)
 				.appendTo(this.el)
 	
@@ -6588,6 +6617,22 @@ class InfosFleet{
 
 					i++
 				}
+			
+			// 预览模式
+				if( !this.data._id ){
+					this.el.addClass('mod-preview')
+					this.doms['preview']
+						.html('若要编辑配置或保存以备日后查看，请')
+						.append( $('<button/>',{
+								'html':		'保存配置'
+							}).on('click', function(){
+								this.previewSave()
+							}.bind(this)) )
+					
+					this.doms['name'].removeAttr('contenteditable')
+					this.doms['hqlvOptionLabel'].data('tip', '若要编辑配置或保存以备日后查看，<br/>请点击上方的“保存配置”按钮' )
+					this.doms['hqlvOption'].prop('readonly', true)
+				}
 
 		// 根据数据更新DOM
 			this.update( d )
@@ -6643,6 +6688,31 @@ class InfosFleet{
 	update_data( d ){
 		d = d || {}
 		this.update(d)
+	}
+	
+	
+	// 保存预览配置到本地
+	previewSave(){
+		_db.fleets.insert(
+			TablelistFleets.prototype.new_data( this.data ),
+			function(err, newDoc){
+				if(err){
+					_g.error(err)
+				}else{
+					this.el.attr({
+						'data-infos-id':	newDoc._id
+					})
+					_frame.infos.curContent = 'fleet::' + newDoc._id
+					let newEl = _frame.infos.__fleet( newDoc._id, null, newDoc )
+					_frame.infos.contentCache.fleet._id = newEl
+					_frame.infos.contentCache.fleet[this._infos_state_id] = newEl
+					newEl.insertBefore(this.el)
+					this.el.remove()
+					delete this
+					//this._infos_state_id = id'fleet::' + id
+				}
+			}.bind(this)
+		)
 	}
 
 
@@ -6711,8 +6781,9 @@ class InfosFleet{
 	
 	// Web Version - 更新URI Search
 		updateURI(){
-			if( !_g.isClient && _g.uriSearch() ){
+			if( !_g.isClient && this.data._id && _g.uriSearch() ){
 				let d = $.extend(true, {}, this.data)
+					,_id = d._id
 				delete d._id
 				delete d.time_create
 				delete d.time_modify
@@ -6721,7 +6792,7 @@ class InfosFleet{
 				history.replaceState(
 					history.state,
 					document.title,
-					location.pathname + location.search + '&d=' + LZString.compressToEncodedURIComponent( JSON.stringify( d ) )
+					location.pathname + '?i=' + _id + '&d=' + LZString.compressToEncodedURIComponent( JSON.stringify( d ) )
 				);
 			}
 		}
@@ -7308,16 +7379,10 @@ class InfosFleetShip{
 			.append(
 				$('<dt/>')
 					.append(
-						this.elAvatar = $('<s/>').on({
-							'mousedown': function(e){
-								e.preventDefault()
-								if( this.data[0] )
-									InfosFleetShip.dragStart( this )
-							}.bind(this)
-						})
+						this.elAvatar = $('<s/>')
 					)
 					.append(
-						this.elInfos = $('<div/>').html('<span>选择舰娘...</span>')
+						this.elInfos = $('<div/>').html('<span>' + (this.infosFleet.data._id ? '选择舰娘' : '无舰娘' ) + '...</span>')
 							.append(
 								this.elInfosTitle = $('<div class="title"/>')
 							)
@@ -7430,22 +7495,34 @@ class InfosFleetShip{
 							}.bind(this))
 					)*/
 			)
-			// 事件
-			.on({
-				// [点击] 无舰娘时，选择舰娘
-					'click': function(){
-						if( !this.data[0] )
-							this.selectShipStart()
-					}.bind(this),
-					
-					'mouseenter': function(e){
-						InfosFleetShip.dragEnter(this)
-					}.bind(this)
-			})
 		
 		this.after = $('<s/>')
 		
 		this.els = this.el.add(this.after)
+		
+		if( this.infosFleet.data._id ){
+			// 事件
+			this.el.on({
+					// [点击] 无舰娘时，选择舰娘
+						'click': function(){
+							if( !this.data[0] )
+								this.selectShipStart()
+						}.bind(this),
+						
+						'mouseenter': function(e){
+							InfosFleetShip.dragEnter(this)
+						}.bind(this)
+				})
+			this.elAvatar.on({
+					'mousedown': function(e){
+						e.preventDefault()
+						if( this.data[0] )
+							InfosFleetShip.dragStart( this )
+					}.bind(this)
+				})
+		}else{
+			this.elInputLevel.prop('readonly', true)
+		}
 
 		//this.updateEl()
 	}
