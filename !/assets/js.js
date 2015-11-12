@@ -2576,6 +2576,15 @@ String.prototype.printf = function () {
 	return this;
 };
 
+_g.badgeMsg = function (cont) {
+	_frame.dom.layout.attr('data-msgbadge', cont);
+	clearTimeout(this.timeout_badgeMsg_hiding);
+	this.timeout_badgeMsg_hiding = setTimeout(function () {
+		_frame.dom.layout.removeAttr('data-msgbadge');
+		delete _g.timeout_badgeMsg_hiding;
+	}, 3000);
+};
+
 var _ga = {
 	counter: function counter(path, title, screenName) {
 
@@ -5026,6 +5035,11 @@ _frame.infos = {
 			} else {
 				this.dom.container = this.dom.main.children('.wrapper');
 			}
+			this.dom.main.on(eventName('transitionend', 'infos_hide'), function (e) {
+				if (e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && _frame.infos.dom.main.css('opacity') == 0) {
+					_frame.infos.hide_finish();
+				}
+			});
 		}
 
 		_frame.dom.layout.addClass('is-infos-show');
@@ -5033,6 +5047,11 @@ _frame.infos = {
 		this.curContent = type + '::' + id;
 
 		this.getContent(type, id, (function (cont) {
+			this.dom.container.children().not(cont).each(function (i, el) {
+				var $el = $(el);
+				if ($el.css('opacity') == 0) $el.trigger('hidden');
+			});
+
 			switch (type) {
 				case 'ship':
 				case 'equipment':
@@ -5063,9 +5082,11 @@ _frame.infos = {
 					})();
 				}
 
-				cont.data('is_infosinit', true).on(eventName('transitionend', 'hide'), function (e) {
-					if (e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(cont.css('opacity')) == 0) {
-						cont.detach().data('is_show', false);
+				cont.data('is_infosinit', true).on('hidden', function () {
+					cont.detach().data('is_show', false);
+				}).on(eventName('transitionend', 'hide'), function (e) {
+					if (e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && cont.css('opacity') == 0 && cont.data('is_show')) {
+						cont.trigger('hidden');
 					}
 				});
 			}
@@ -5109,6 +5130,8 @@ _frame.infos = {
 
 	hide_finish: function hide_finish() {
 		if (this.curContent) return false;
+
+		this.dom.container.children().trigger('hidden');
 
 		_frame.dom.layout.removeClass('is-infos-show');
 		this.dom.main.attr({
@@ -5442,6 +5465,8 @@ var InfosFleet = (function () {
 					newEl.insertBefore(this.el);
 					this.el.remove();
 					delete this;
+
+					_g.badgeMsg('舰队配置已保存');
 				}
 			}).bind(this));
 		}
@@ -5921,7 +5946,7 @@ var InfosFleetShip = (function () {
 			}
 
 			return els;
-		}).bind(this))).append($('<div class="attributes"/>').append(this.elAttrShelling = $('<span class="shelling"/>')).append(this.elAttrTorpedo = $('<span class="torpedo"/>')).append(this.elAttrHitSum = $('<span class="hitsum"/>')).append(this.elAttrHp = $('<span class="hp"/>')).append(this.elAttrArmor = $('<span class="armor"/>')).append(this.elAttrEvasion = $('<span class="evasion"/>')).append(this.elAttrNightBattle = $('<span class="nightbattle" data-text="夜战"/>'))).append($('<div class="options"/>').append(this.elBtnOptions = $('<button class="options"/>').on('click', (function (e) {
+		}).bind(this))).append($('<div class="attributes"/>').append(this.elAttrShelling = $('<span class="shelling"/>')).append(this.elAttrTorpedo = $('<span class="torpedo"/>')).append(this.elAttrHitSum = $('<span class="hitsum"/>')).append(this.elAttrHp = $('<span class="hp"/>')).append(this.elAttrArmor = $('<span class="armor"/>')).append(this.elAttrEvasion = $('<span class="evasion"/>')).append(this.elAttrNightBattle = $('<span class="nightbattle" data-text="夜战"/>')).append(_huCss.csscheck_full('mask-image') ? null : $('<div class="bg"/>'))).append($('<div class="options"/>').append(this.elBtnOptions = $('<button class="options"/>').on('click', (function (e) {
 			this.showMenu();
 		}).bind(this))));
 
@@ -5947,6 +5972,10 @@ var InfosFleetShip = (function () {
 			});
 		} else {
 			this.elInputLevel.prop('readonly', true);
+		}
+
+		if (!_huCss.csscheck_full('mask-image')) {
+			this.el.addClass('mod-nomask');
 		}
 	}
 
@@ -7369,7 +7398,7 @@ var TablelistFleets = (function (_Tablelist3) {
 						    ships = data['data'][0] || [],
 						    j = 0;
 						while (j < 6) {
-							if (ships[j] && ships[j][0]) html += '<img src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0.png" contextmenu="disabled"/>';else html += '<s/>';
+							if (ships[j] && ships[j][0]) html += '<img src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0' + (_huCss.csscheck_full('mask-image') ? '.png' : '-mask-2.png') + '" contextmenu="disabled"' + (_huCss.csscheck_full('mask-image') ? '' : ' class="nomask"') + '/>';else html += '<s/>';
 							j++;
 						}
 						html += '</i>';
