@@ -318,7 +318,7 @@ _frame.infos.__ship = function( id ){
 				
 				if( currentValue.next_loop )
 					remodels_container.appendDOM(
-						$('<span class="unit" icon="loop-alt3" data-tip="可在两个改造版本间切换"/>').html(' ')
+						$('<span class="unit" icon="loop-alt3" data-tip="可在两个改造版本间切换"/>').html('&nbsp;')
 					)
 
 				// 处理图鉴信息
