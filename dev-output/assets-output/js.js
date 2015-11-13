@@ -1781,22 +1781,29 @@ _menu.prototype.init = function () {
 		}
 	});
 
-	for (var i in this.settings.items) {
-		var menuitem = self.settings.items[i];
-		switch (menuitem) {
-			case 'separator':
-				menuitem = $('<hr/>');
-				break;
+	for (var i = 0, menuitem; menuitem = this.settings.items[i]; i++) {
+		if (menuitem) {
+			switch (menuitem) {
+				case 'separator':
+					menuitem = $('<hr/>');
+					break;
+			}
+			if (menuitem.hasClass('donot_hide')) {
+				menuitem.on('click', function () {
+					setTimeout(function () {
+						clearTimeout(self.timeout_hideself);
+						self.timeout_hideself = null;
+					}, 1);
+				});
+			}
+			self.appendItem(menuitem);
 		}
-		if (menuitem.hasClass('donot_hide')) {
-			menuitem.on('click', function () {
-				setTimeout(function () {
-					clearTimeout(self.timeout_hideself);
-					self.timeout_hideself = null;
-				}, 1);
-			});
-		}
-		self.appendItem(menuitem);
+	}
+
+	if (this.settings.showBlured && _huCss.csscheck_full('backdrop-filter')) {
+		this.dom.menu.addClass('mod-blur-backdrop');
+	} else if (this.settings.showBlured && typeof node != 'undefined') {
+		this.dom.menu.addClass('mod-blur-shot');
 	}
 
 	_frame.menu.menus.push(this);
@@ -1876,7 +1883,6 @@ _menu.prototype.appendItem = function (item) {
 };
 
 _menu.prototype.capturePage_callback = function (datauri) {
-	console.log(this);
 	if (this.showing) {
 		this.dom.blured = $('<s class="blured"/>').css('background-image', 'url(' + datauri + ')').appendTo(this.dom.menu.addClass('on'));
 	}
@@ -5265,11 +5271,6 @@ var InfosFleet = (function () {
 				}
 			}).bind(this));
 
-			if (!_g.isClient) this.doms.warning = $('<div/>', {
-				'class': 'warning',
-				'html': '功能移植/测试中，请勿日常使用'
-			}).appendTo(this.el);
-
 			this.data = d;
 
 			var i = 0,
@@ -5380,11 +5381,11 @@ var InfosFleet = (function () {
 							'html': '导出文本'
 						}).on('click', function () {
 							InfosFleet.menuCur.modalExportText_show();
-						}), $('<menuitem/>', {
+						}), _g.isNWjs ? $('<menuitem/>', {
 							'html': '导出图片'
 						}).on('click', function () {
 							InfosFleet.menuCur.exportPic();
-						})]
+						}) : null]
 					});
 				}
 				InfosFleet.menuCur = this;
@@ -7183,10 +7184,6 @@ var TablelistFleets = (function (_Tablelist3) {
 		_this12.dom.btn_settings = $('<button icon="cog"/>').on('click', (function () {
 			this.btn_settings();
 		}).bind(_this12)).appendTo(_this12.dom.buttons_right);
-		if (!_g.isClient) _this12.dom.warning = $('<div/>', {
-			'class': 'warning',
-			'html': '功能移植/测试中，请勿日常使用'
-		}).appendTo(_this12.dom.filter_container);
 
 		_this12.dom.table_container = $('<div class="fixed-table-container"/>').appendTo(_this12.dom.container);
 		_this12.dom.table_container_inner = $('<div class="fixed-table-container-inner"/>').appendTo(_this12.dom.table_container);

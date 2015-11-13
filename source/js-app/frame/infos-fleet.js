@@ -105,11 +105,13 @@ class InfosFleet{
 			}
 		}.bind(this))
 
+		/*
 		if( !_g.isClient )
 			this.doms.warning = $('<div/>',{
 					'class':	'warning',
 					'html':		'功能移植/测试中，请勿日常使用'
-				}).appendTo( this.el )
+				}).appendTo( this.el
+		*/
 
 		//$.extend(true, this, d)
 		this.data = d
@@ -260,11 +262,13 @@ class InfosFleet{
 												}).on('click', function(){
 													InfosFleet.menuCur.modalExportText_show()
 												}),
-											$('<menuitem/>',{
-													'html':		'导出图片'
-												}).on('click', function(){
-													InfosFleet.menuCur.exportPic()
-												})
+											_g.isNWjs
+												? $('<menuitem/>',{
+														'html':		'导出图片'
+													}).on('click', function(){
+														InfosFleet.menuCur.exportPic()
+													})
+												: null
 										]
 									})
 								}

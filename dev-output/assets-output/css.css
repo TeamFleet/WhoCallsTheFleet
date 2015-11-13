@@ -1166,8 +1166,8 @@ body > .menus > .menu {
   display: none;
   top: -1000px;
   left: -1000px;
-  background: #888;
-  background: rgba(0, 0, 0, 0.5);
+  background: #222;
+  background: rgba(32, 32, 32, 0.8);
   line-height: 150%;
   font-size: 0.7000000000000001rem;
   opacity: 0;
@@ -1188,25 +1188,6 @@ body > .menus > .menu {
           transform: translateY(-10px);
   border: 0.05rem solid rgba(255, 255, 255, 0.3);
 }
-body > .menus > .menu.on {
-  opacity: 1;
-  -webkit-transform: translateY(0);
-      -ms-transform: translateY(0);
-          transform: translateY(0);
-}
-body > .menus > .menu.on > .blured {
-  -webkit-transform: translateY(0);
-      -ms-transform: translateY(0);
-          transform: translateY(0);
-}
-body > .menus > .menu.show {
-  display: block;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
-  will-change: opacity;
-}
-body > .menus > .menu.show > .blured {
-  -webkit-filter: blur(7.5px);
-}
 body > .menus > .menu > .body {
   position: relative;
   z-index: 2;
@@ -1214,7 +1195,6 @@ body > .menus > .menu > .body {
   max-height: 100%;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  background: rgba(0, 0, 0, 0.4);
   /*
 			&:before{
 				z-index:	100;
@@ -1263,6 +1243,37 @@ body > .menus > .menu > .body hr {
   border: 0 solid transparent;
   border-top: 0.05rem solid rgba(255, 255, 255, 0.2);
   margin: 8px 0;
+}
+body > .menus > .menu.mod-blur-backdrop,
+body > .menus > .menu.mod-blur-shot {
+  background: rgba(0, 0, 0, 0.5);
+}
+body > .menus > .menu.mod-blur-backdrop > .body,
+body > .menus > .menu.mod-blur-shot > .body {
+  background: rgba(0, 0, 0, 0.4);
+}
+body > .menus > .menu.on {
+  opacity: 1;
+  -webkit-transform: translateY(0);
+      -ms-transform: translateY(0);
+          transform: translateY(0);
+}
+body > .menus > .menu.on > .blured {
+  -webkit-transform: translateY(0);
+      -ms-transform: translateY(0);
+          transform: translateY(0);
+}
+body > .menus > .menu.on.mod-blur-backdrop {
+  -webkit-backdrop-filter: blur(7.5px);
+          backdrop-filter: blur(7.5px);
+}
+body > .menus > .menu.show {
+  display: block;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
+  will-change: opacity;
+}
+body > .menus > .menu.show > .blured {
+  -webkit-filter: blur(7.5px);
 }
 body > .menus > .menu > .blured {
   position: absolute;
@@ -2232,7 +2243,7 @@ label[for],
 table.sortable thead,
 input[type="checkbox"],
 input[type="radio"],
-.menus .menu menuitem {
+menuitem {
   cursor: pointer;
 }
 .disabled,
@@ -2500,8 +2511,9 @@ nav > div .button {
   font-weight: lighter;
   color: rgba(255, 255, 255, 0.5);
   padding: 0rem 0.5rem;
-  top: 0;
   position: relative;
+  top: 0;
+  display: inline-block;
   -webkit-transition-property: text-shadow, color, opacity, margin, font-size;
   transition-property: text-shadow, color, opacity, margin, font-size;
   -webkit-transition-duration: 0.3s;

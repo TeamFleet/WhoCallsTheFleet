@@ -6431,11 +6431,13 @@ class InfosFleet{
 			}
 		}.bind(this))
 
+		/*
 		if( !_g.isClient )
 			this.doms.warning = $('<div/>',{
 					'class':	'warning',
 					'html':		'功能移植/测试中，请勿日常使用'
-				}).appendTo( this.el )
+				}).appendTo( this.el
+		*/
 
 		//$.extend(true, this, d)
 		this.data = d
@@ -6586,11 +6588,13 @@ class InfosFleet{
 												}).on('click', function(){
 													InfosFleet.menuCur.modalExportText_show()
 												}),
-											$('<menuitem/>',{
-													'html':		'导出图片'
-												}).on('click', function(){
-													InfosFleet.menuCur.exportPic()
-												})
+											_g.isNWjs
+												? $('<menuitem/>',{
+														'html':		'导出图片'
+													}).on('click', function(){
+														InfosFleet.menuCur.exportPic()
+													})
+												: null
 										]
 									})
 								}
@@ -9838,11 +9842,13 @@ class TablelistFleets extends Tablelist{
 										this.btn_settings()
 									}.bind(this))
 									.appendTo(this.dom.buttons_right)
+			/*
 			if( !_g.isClient )
 				this.dom.warning = $('<div/>',{
 						'class':	'warning',
 						'html':		'功能移植/测试中，请勿日常使用'
 					}).appendTo( this.dom.filter_container )
+			*/
 
 		// [创建] 表格框架
 			this.dom.table_container = $('<div class="fixed-table-container"/>').appendTo( this.dom.container )
