@@ -65,7 +65,7 @@ class TablelistFleets extends Tablelist{
 													_g.error(err)
 												}else{
 													docs.forEach(function(doc){
-														data+= JSON.stringify(doc) + '\r\n'
+														data+= JSON.stringify(doc) + '\n'
 													})
 													let blob = new Blob([data], {type: "application/json"})
 													TablelistFleets.btn_exportFile_link.href = URL.createObjectURL(blob)
@@ -538,28 +538,46 @@ class TablelistFleets extends Tablelist{
 					]
 				})
 				this.dbfile_selector = $('<input type="file" class="none"/>')
-					.on('change', function(){
+					.on('change', function(e){
+						_frame.dom.layout.addClass('is-loading')
+						this.dbfile_selector.prop('disabled', true)
+						
 						let file = this.dbfile_selector.val()
 							,promise_chain 	= Q.fcall(function(){})
-
-						this.dbfile_selector.val('')
 						
 						promise_chain
 						
 						// 载入文件
 							.then(function(){
 								let deferred = Q.defer()
-								node.fs.readFile(file, 'utf8', function(err, data){
-									if( err )
-										deferred.reject('文件载入失败', new Error(err))
-									else
-										deferred.resolve(data)
-								})
+								if( _g.isNWjs ){
+									// NW.js - 使用node.js方式读取文件内容
+									node.fs.readFile(file, 'utf8', function(err, data){
+										if( err )
+											deferred.reject('文件载入失败', new Error(err))
+										else
+											deferred.resolve(data)
+									})
+								}else{
+									// HTML5方式
+									// http://www.html5rocks.com/en/tutorials/file/dndfiles/
+									for(let i = 0, f; f = e.target.files[i]; i++){
+										let reader = new FileReader();
+										reader.onload = (function(theFile) {
+											return function(r) {
+												return deferred.resolve(r.target.result)
+											};
+										})(f);
+										reader.readAsText(f);
+									}
+								}
 								return deferred.promise
 							})
-						
+
 						// 处理文件内容，以换行符为准创建Array
 							.then(function(data){
+								this.dbfile_selector.val('')
+
 								let array = []
 									,deferred = Q.defer()
 								data.split('\n').forEach(function(line){
@@ -575,7 +593,7 @@ class TablelistFleets extends Tablelist{
 									}
 								})
 								return deferred.promise
-							})
+							}.bind(this))
 						
 						// 已处理JSON，导入
 							.then(function(array){
@@ -618,6 +636,8 @@ class TablelistFleets extends Tablelist{
 							})
 							.done(function(){
 								_g.log('import complete')
+								_frame.dom.layout.removeClass('is-loading')
+								this.dbfile_selector.prop('disabled', false)
 								this.refresh()
 							}.bind(this))
 					}.bind(this))

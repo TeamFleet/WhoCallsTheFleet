@@ -7121,7 +7121,7 @@ var TablelistFleets = (function (_Tablelist3) {
 								_g.error(err);
 							} else {
 								docs.forEach(function (doc) {
-									data += JSON.stringify(doc) + '\r\n';
+									data += JSON.stringify(doc) + '\n';
 								});
 								var blob = new Blob([data], { type: "application/json" });
 								TablelistFleets.btn_exportFile_link.href = URL.createObjectURL(blob);
@@ -7479,19 +7479,34 @@ var TablelistFleets = (function (_Tablelist3) {
 						this.dbfile_selector.trigger('click');
 					}).bind(this)) : null)]
 				});
-				this.dbfile_selector = $('<input type="file" class="none"/>').on('change', (function () {
+				this.dbfile_selector = $('<input type="file" class="none"/>').on('change', (function (e) {
+					_frame.dom.layout.addClass('is-loading');
+					this.dbfile_selector.prop('disabled', true);
+
 					var file = this.dbfile_selector.val(),
 					    promise_chain = Q.fcall(function () {});
 
-					this.dbfile_selector.val('');
-
 					promise_chain.then(function () {
 						var deferred = Q.defer();
-						node.fs.readFile(file, 'utf8', function (err, data) {
-							if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
-						});
+						if (_g.isNWjs) {
+							node.fs.readFile(file, 'utf8', function (err, data) {
+								if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
+							});
+						} else {
+							for (var _i16 = 0, f = undefined; f = e.target.files[_i16]; _i16++) {
+								var reader = new FileReader();
+								reader.onload = (function (theFile) {
+									return function (r) {
+										return deferred.resolve(r.target.result);
+									};
+								})(f);
+								reader.readAsText(f);
+							}
+						}
 						return deferred.promise;
-					}).then(function (data) {
+					}).then((function (data) {
+						this.dbfile_selector.val('');
+
 						var array = [],
 						    deferred = Q.defer();
 						data.split('\n').forEach(function (line) {
@@ -7507,7 +7522,7 @@ var TablelistFleets = (function (_Tablelist3) {
 							}
 						});
 						return deferred.promise;
-					}).then(function (array) {
+					}).bind(this)).then(function (array) {
 						var the_promises = [],
 						    complete = 0;
 
@@ -7536,6 +7551,8 @@ var TablelistFleets = (function (_Tablelist3) {
 						_g.error(err);
 					}).done((function () {
 						_g.log('import complete');
+						_frame.dom.layout.removeClass('is-loading');
+						this.dbfile_selector.prop('disabled', false);
 						this.refresh();
 					}).bind(this));
 				}).bind(this)).appendTo(this.dom.filters);
