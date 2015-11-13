@@ -2013,7 +2013,7 @@ _frame.modal.init = function () {
 
 	this.dom.container = $('<div class="modal" />').on({
 		'transitionend.modal_hide webkitTransitionEnd.modal_hide mozTransitionEnd.modal_hide': function transitionendModal_hideWebkitTransitionEndModal_hideMozTransitionEndModal_hide(e) {
-			if (_frame.modal.showing && e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseFloat($(this).css('opacity')) <= 0) {
+			if (_frame.modal.showing && e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && _frame.modal.dom.container.css('opacity') == 0) {
 				_frame.modal.hide_timeout = setTimeout(function () {
 					_frame.modal.reset();
 					_frame.modal.dom.container.removeClass('show');
@@ -5145,15 +5145,15 @@ _frame.infos = {
 			setTimeout(function () {
 				_frame.dom.layout.addClass('is-infos-on');
 
-				_frame.app_main.title = title;
-				document.title = _frame.app_main.page_title[_g.state2URI({
-					'infos': type,
-					'id': id
-				})];
+				if (title) {
+					_frame.app_main.title = title;
+					document.title = _frame.app_main.page_title[_g.state2URI({
+						'infos': type,
+						'id': id
+					})];
+				}
 
-				if (_frame.infos.last != title) _ga.counter(location.search);
-
-				_frame.infos.last = title;
+				_ga.counter(location.search);
 			}, 1);
 		}).bind(this));
 	},

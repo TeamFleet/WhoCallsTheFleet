@@ -278,21 +278,23 @@ _frame.infos = {
 				setTimeout(function(){
 					// 显示内容
 						_frame.dom.layout.addClass('is-infos-on')
-						
-					_frame.app_main.title = title
-					document.title = _frame.app_main.page_title[_g.state2URI({
-							'infos':	type,
-							'id':		id
-						})]
+					
+					if( title ){
+						_frame.app_main.title = title
+						document.title = _frame.app_main.page_title[_g.state2URI({
+								'infos':	type,
+								'id':		id
+							})]
+					}
 					
 					//console.log( _frame.infos.last )
 					
-					if( _frame.infos.last != title )
+					//if( _frame.infos.last != type + '::' + id )
 						_ga.counter(
 							location.search
 						)
 					
-					_frame.infos.last = title
+					//_frame.infos.last = type + '::' + id
 				}, 1)
 			}.bind(this))
 	},

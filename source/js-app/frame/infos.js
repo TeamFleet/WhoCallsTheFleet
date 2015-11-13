@@ -135,7 +135,7 @@ _frame.infos = {
 									&& e.originalEvent.propertyName == 'opacity'
 									&& parseFloat(_frame.dom.btnHistoryBack.css('opacity')) == 0
 								){
-									this.hide_finish()
+									_frame.infos.hide_finish()
 								}
 							})
 			}

@@ -5875,7 +5875,7 @@ _frame.infos = {
 									&& e.originalEvent.propertyName == 'opacity'
 									&& parseFloat(_frame.dom.btnHistoryBack.css('opacity')) == 0
 								){
-									this.hide_finish()
+									_frame.infos.hide_finish()
 								}
 							})
 			}
@@ -6735,30 +6735,30 @@ class InfosFleet{
 	
 	
 	// 保存预览配置到本地
-	previewSave(){
-		_db.fleets.insert(
-			TablelistFleets.prototype.new_data( this.data ),
-			function(err, newDoc){
-				if(err){
-					_g.error(err)
-				}else{
-					this.el.attr({
-						'data-infos-id':	newDoc._id
-					})
-					_frame.infos.curContent = 'fleet::' + newDoc._id
-					let newEl = _frame.infos.__fleet( newDoc._id, null, newDoc )
-					_frame.infos.contentCache.fleet[newDoc._id] = newEl
-					_frame.infos.contentCache.fleet[this._infos_state_id] = newEl
-					newEl.insertBefore(this.el)
-					this.el.remove()
-					delete this
-					
-					_g.badgeMsg('舰队配置已保存')
-					//this._infos_state_id = id'fleet::' + id
-				}
-			}.bind(this)
-		)
-	}
+		previewSave(){
+			_db.fleets.insert(
+				TablelistFleets.prototype.new_data( this.data ),
+				function(err, newDoc){
+					if(err){
+						_g.error(err)
+					}else{
+						this.el.attr({
+							'data-infos-id':	newDoc._id
+						})
+						_frame.infos.curContent = 'fleet::' + newDoc._id
+						let newEl = _frame.infos.__fleet( newDoc._id, null, newDoc )
+						_frame.infos.contentCache.fleet[newDoc._id] = newEl
+						_frame.infos.contentCache.fleet[this._infos_state_id] = newEl
+						newEl.insertBefore(this.el)
+						this.el.remove()
+						delete this
+						
+						_g.badgeMsg('舰队配置已保存')
+						//this._infos_state_id = id'fleet::' + id
+					}
+				}.bind(this)
+			)
+		}
 
 
 
