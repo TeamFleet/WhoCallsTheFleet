@@ -628,17 +628,21 @@ class TablelistFleets extends Tablelist{
 								
 								return Q.all(the_promises);
 							})
+							.then(function(){
+								this.refresh()
+								_g.badgeMsg('成功导入配置')
+							}.bind(this))
 						
 						// 错误处理
 							.catch(function(msg, err) {
 								_g.log(msg)
 								_g.error(err)
+								_g.badgeError(msg)
 							})
 							.done(function(){
 								_g.log('import complete')
 								_frame.dom.layout.removeClass('is-loading')
 								this.dbfile_selector.prop('disabled', false)
-								this.refresh()
 							}.bind(this))
 					}.bind(this))
 					.appendTo(this.dom.filters)

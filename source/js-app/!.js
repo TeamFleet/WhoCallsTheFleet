@@ -76,12 +76,32 @@
 
 
 // main badge
+	_g.badge = function( cont, t ){
+		if( typeof t == 'string' )
+			t = t.toLowerCase()
+		switch(t){
+			case 'error':
+				return _g.badgeError(cont)
+				break;
+			default:
+				return _g.badgeMsg(cont)
+				break;
+		}
+	};
 	_g.badgeMsg = function( cont ){
 		_frame.dom.layout.attr('data-msgbadge', cont)
 		clearTimeout( this.timeout_badgeMsg_hiding )
 		this.timeout_badgeMsg_hiding = setTimeout(function(){
 			_frame.dom.layout.removeAttr('data-msgbadge')
 			delete _g.timeout_badgeMsg_hiding
+		}, 3000)
+	};
+	_g.badgeError = function( cont ){
+		_frame.dom.layout.attr('data-errorbadge', cont)
+		clearTimeout( this.timeout_badgeError_hiding )
+		this.timeout_badgeError_hiding = setTimeout(function(){
+			_frame.dom.layout.removeAttr('data-errorbadge')
+			delete _g.timeout_badgeError_hiding
 		}, 3000)
 	};
 
