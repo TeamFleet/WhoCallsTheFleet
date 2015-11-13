@@ -5,7 +5,8 @@
 	_g.inputIndex = 0;
 	_g.lang = 'zh_cn';
 	_g.joint = '・';
-	_g.isClient = typeof node == 'undefined' && typeof nw == 'undefined' ? false : true;
+	_g.isNWjs = (typeof node != 'undefined' || typeof nw != 'undefined')
+	_g.isClient = _g.isNWjs ? true : false;
 	_g.defaultHqLv = 90;
 	
 	function eventName(event, name){
@@ -9748,12 +9749,36 @@ class TablelistFleets extends Tablelist{
 										this.btn_new(target)
 									}.bind(this))
 									.appendTo(this.dom.filters)
-				this.dom.btn_exportFile = $('<button class="export" icon="floppy-disk"/>').html('导出配置文件')
+				if( TablelistFleets.support.buildfile ){
+					this.dom.btn_exportFile = $('<button class="export" icon="floppy-disk"/>').html('导出配置文件')
 									.on('click',function(){
 										_db.fleets.persistence.compactDatafile()
-										_g.file_save_as(_db.fleets.filename, 'fleets.json')
+										if( _g.isClient ){
+											_g.file_save_as(_db.fleets.filename, 'fleets.json')
+										}else{
+											if( !TablelistFleets.btn_exportFile_link ){
+												TablelistFleets.btn_exportFile_link = document.createElement('a')
+												TablelistFleets.btn_exportFile_link.download = 'fleets.json'
+											}
+											_frame.dom.layout.addClass('is-loading')
+											let data = ''
+											_db.fleets.find({}, function(err, docs){
+												if( err ){
+													_g.error(err)
+												}else{
+													docs.forEach(function(doc){
+														data+= JSON.stringify(doc) + '\r\n'
+													})
+													let blob = new Blob([data], {type: "application/json"})
+													TablelistFleets.btn_exportFile_link.href = URL.createObjectURL(blob)
+													TablelistFleets.btn_exportFile_link.click()
+													_frame.dom.layout.removeClass('is-loading')
+												}
+											})
+										}
 									})
 									.appendTo(this.dom.filters)
+				}
 			// 右 - 选项组
 				this.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(this.dom.filters)
 				this.dom.setting_hqlv = $('<label/>',{
@@ -10206,9 +10231,11 @@ class TablelistFleets extends Tablelist{
 									}.bind(this))
 							)
 							.append(
-								$('<menuitem/>').html('导入配置文件').on('click', function(){
-									this.dbfile_selector.trigger('click')
-								}.bind(this))
+								TablelistFleets.support.buildfile
+									? $('<menuitem/>').html('导入配置文件').on('click', function(){
+											this.dbfile_selector.trigger('click')
+										}.bind(this))
+									: null
 							)
 					]
 				})
@@ -10489,6 +10516,9 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 		TablelistFleets.menuOptions.dom.menu.removeClass('is-tablelist')
 	TablelistFleets.menuOptions.show($el)
 }
+
+TablelistFleets.support = {};
+TablelistFleets.support.buildfile = (_g.isNWjs || (window.File && window.FileReader && window.FileList && window.Blob && window.URL)) ? true : false;
 
 
 

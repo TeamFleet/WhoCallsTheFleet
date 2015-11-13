@@ -5,7 +5,8 @@
 	_g.inputIndex = 0;
 	_g.lang = 'zh_cn';
 	_g.joint = '・';
-	_g.isClient = typeof node == 'undefined' && typeof nw == 'undefined' ? false : true;
+	_g.isNWjs = (typeof node != 'undefined' || typeof nw != 'undefined')
+	_g.isClient = _g.isNWjs ? true : false;
 	_g.defaultHqLv = 90;
 	
 	function eventName(event, name){
