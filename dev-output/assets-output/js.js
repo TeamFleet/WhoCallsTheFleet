@@ -2047,7 +2047,7 @@ _p.tip = {
 		if (_p.tip.is_init) return false;
 
 		_p.tip.dom = $('<div id="tip"/>').on('transitionend webkitTransitionEnd mozTransitionEnd', function (e) {
-			if (e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseFloat(_p.tip.dom.css('opacity')) == 0) {
+			if (e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && _p.tip.dom.css('opacity') == 0) {
 				_p.tip.dom.removeClass('show').css({
 					'top': '',
 					'left': ''
@@ -2056,12 +2056,18 @@ _p.tip = {
 					'data-tip-indicator-offset-x': '',
 					'data-tip-indicator-offset-y': ''
 				});
-				_p.tip.dom_bluredbg.css('background-image', '');
+				if (_p.tip.dom_bluredbg) _p.tip.dom_bluredbg.css('background-image', '');
 			}
 		}).appendTo($body);
 
 		_p.tip.dom_body = $('<div class="body"/>').appendTo(_p.tip.dom);
-		_p.tip.dom_bluredbg = $('<div/>').appendTo($('<div class="bluredbg"/>').appendTo(_p.tip.dom));
+
+		if (_huCss.csscheck_full('backdrop-filter')) {
+			_p.tip.dom.addClass('mod-blur-backdrop');
+		} else if (typeof node != 'undefined') {
+			_p.tip.dom.addClass('mod-blur-shot');
+			_p.tip.dom_bluredbg = $('<div/>').appendTo($('<div class="bluredbg"/>').appendTo(_p.tip.dom));
+		}
 
 		_p.tip.is_init = true;
 	},
@@ -2082,7 +2088,7 @@ _p.tip = {
 		_p.tip.init_global();
 
 		if (!_p.tip.dom.hasClass('show')) {
-			if (typeof node != 'undefined') {
+			if (_p.tip.dom_bluredbg && typeof node != 'undefined') {
 				node.win.capturePage(function (datauri) {
 					_p.tip.dom_bluredbg.css('background-image', 'url(' + datauri + ')');
 				}, 'jpg', 'datauri');

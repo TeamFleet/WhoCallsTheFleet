@@ -1166,8 +1166,8 @@ body > .menus > .menu {
   display: none;
   top: -1000px;
   left: -1000px;
-  background: #222;
-  background: rgba(32, 32, 32, 0.8);
+  background: #333;
+  background: rgba(32, 32, 32, 0.9);
   line-height: 150%;
   font-size: 0.7000000000000001rem;
   opacity: 0;
@@ -1485,7 +1485,7 @@ body > .menus > .menu.mod-checkbox > .body menuitem label {
   left: -1000px;
   color: #f2f2f2;
   background: #333;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(32, 32, 32, 0.9);
   line-height: 150%;
   font-size: 0.7000000000000001rem;
   opacity: 0;
@@ -1517,7 +1517,6 @@ body > .menus > .menu.mod-checkbox > .body menuitem label {
   display: block;
   position: relative;
   z-index: 1;
-  background: rgba(0, 0, 0, 0.4);
   border: 0.05rem solid #808080;
   padding: 0.2rem 0.30000000000000004rem;
 }
@@ -1541,8 +1540,20 @@ body > .menus > .menu.mod-checkbox > .body menuitem label {
   background: no-repeat 50% 50% / cover;
   background-attachment: fixed;
 }
+#tip.mod-blur-backdrop,
+#tip.mod-blur-shot {
+  background: rgba(0, 0, 0, 0.5);
+}
+#tip.mod-blur-backdrop > .body,
+#tip.mod-blur-shot > .body {
+  background: rgba(0, 0, 0, 0.4);
+}
 #tip.on {
   opacity: 1;
+}
+#tip.on.mod-blur-backdrop {
+  -webkit-backdrop-filter: blur(7.5px);
+          backdrop-filter: blur(7.5px);
 }
 #tip.show {
   display: block;
