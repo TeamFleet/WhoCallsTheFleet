@@ -2291,15 +2291,17 @@ _p.el.links = {
 				var el = $(this),
 				    target = el.attr('target');
 
-				if (this.hostname != window.location.hostname) target = '_external';
+				if (typeof node != 'undefined') {
+					if (this.hostname != window.location.hostname) target = '_external';
 
-				if (target == '_external' || target == '_blank') {
-					node.gui.Shell.openExternal($(this).attr('href'));
-					e.preventDefault();
-					return true;
+					if (target == '_external' || target == '_blank') {
+						node.gui.Shell.openExternal(el.attr('href'));
+						e.preventDefault();
+						return true;
+					}
 				}
 
-				_p.el.links.click($(this), e);
+				_p.el.links.click(el, e);
 			});
 
 			_p.el.links.is_init = true;
@@ -2518,7 +2520,8 @@ _g.animate_duration_delay = 320;
 _g.inputIndex = 0;
 _g.lang = 'zh_cn';
 _g.joint = '・';
-_g.isClient = typeof node == 'undefined' && typeof nw == 'undefined' ? false : true;
+_g.isNWjs = typeof node != 'undefined' || typeof nw != 'undefined';
+_g.isClient = _g.isNWjs ? true : false;
 _g.defaultHqLv = 90;
 
 function eventName(event, name) {
@@ -2576,12 +2579,31 @@ String.prototype.printf = function () {
 	return this;
 };
 
+_g.badge = function (cont, t) {
+	if (typeof t == 'string') t = t.toLowerCase();
+	switch (t) {
+		case 'error':
+			return _g.badgeError(cont);
+			break;
+		default:
+			return _g.badgeMsg(cont);
+			break;
+	}
+};
 _g.badgeMsg = function (cont) {
 	_frame.dom.layout.attr('data-msgbadge', cont);
 	clearTimeout(this.timeout_badgeMsg_hiding);
 	this.timeout_badgeMsg_hiding = setTimeout(function () {
 		_frame.dom.layout.removeAttr('data-msgbadge');
 		delete _g.timeout_badgeMsg_hiding;
+	}, 3000);
+};
+_g.badgeError = function (cont) {
+	_frame.dom.layout.attr('data-errorbadge', cont);
+	clearTimeout(this.timeout_badgeError_hiding);
+	this.timeout_badgeError_hiding = setTimeout(function () {
+		_frame.dom.layout.removeAttr('data-errorbadge');
+		delete _g.timeout_badgeError_hiding;
 	}, 3000);
 };
 
@@ -7100,10 +7122,36 @@ var TablelistFleets = (function (_Tablelist3) {
 		_this12.dom.btn_new = $('<button class="new" icon="import"/>').html('新建/导入').on('click', (function (e, target) {
 			this.btn_new(target);
 		}).bind(_this12)).appendTo(_this12.dom.filters);
-		_this12.dom.btn_exportFile = $('<button class="export" icon="floppy-disk"/>').html('导出配置文件').on('click', function () {
-			_db.fleets.persistence.compactDatafile();
-			_g.file_save_as(_db.fleets.filename, 'fleets.json');
-		}).appendTo(_this12.dom.filters);
+		if (TablelistFleets.support.buildfile) {
+			_this12.dom.btn_exportFile = $('<button class="export" icon="floppy-disk"/>').html('导出配置文件').on('click', function () {
+				_db.fleets.persistence.compactDatafile();
+				if (_g.isClient) {
+					_g.file_save_as(_db.fleets.filename, 'fleets.json');
+				} else {
+					(function () {
+						if (!TablelistFleets.btn_exportFile_link) {
+							TablelistFleets.btn_exportFile_link = document.createElement('a');
+							TablelistFleets.btn_exportFile_link.download = 'fleets.json';
+						}
+						_frame.dom.layout.addClass('is-loading');
+						var data = '';
+						_db.fleets.find({}, function (err, docs) {
+							if (err) {
+								_g.error(err);
+							} else {
+								docs.forEach(function (doc) {
+									data += JSON.stringify(doc) + '\n';
+								});
+								var blob = new Blob([data], { type: "application/json" });
+								TablelistFleets.btn_exportFile_link.href = URL.createObjectURL(blob);
+								TablelistFleets.btn_exportFile_link.click();
+								_frame.dom.layout.removeClass('is-loading');
+							}
+						});
+					})();
+				}
+			}).appendTo(_this12.dom.filters);
+		}
 
 		_this12.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(_this12.dom.filters);
 		_this12.dom.setting_hqlv = $('<label/>', {
@@ -7446,23 +7494,38 @@ var TablelistFleets = (function (_Tablelist3) {
 						_frame.modal.show(TablelistFleets.modalImport, '导入配置代码', {
 							'classname': 'infos_fleet infos_fleet_import'
 						});
-					}).bind(this))).append($('<menuitem/>').html('导入配置文件').on('click', (function () {
+					}).bind(this))).append(TablelistFleets.support.buildfile ? $('<menuitem/>').html('导入配置文件').on('click', (function () {
 						this.dbfile_selector.trigger('click');
-					}).bind(this)))]
+					}).bind(this)) : null)]
 				});
-				this.dbfile_selector = $('<input type="file" class="none"/>').on('change', (function () {
+				this.dbfile_selector = $('<input type="file" class="none"/>').on('change', (function (e) {
+					_frame.dom.layout.addClass('is-loading');
+					this.dbfile_selector.prop('disabled', true);
+
 					var file = this.dbfile_selector.val(),
 					    promise_chain = Q.fcall(function () {});
 
-					this.dbfile_selector.val('');
-
 					promise_chain.then(function () {
 						var deferred = Q.defer();
-						node.fs.readFile(file, 'utf8', function (err, data) {
-							if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
-						});
+						if (_g.isNWjs) {
+							node.fs.readFile(file, 'utf8', function (err, data) {
+								if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
+							});
+						} else {
+							for (var _i16 = 0, f = undefined; f = e.target.files[_i16]; _i16++) {
+								var reader = new FileReader();
+								reader.onload = (function (theFile) {
+									return function (r) {
+										return deferred.resolve(r.target.result);
+									};
+								})(f);
+								reader.readAsText(f);
+							}
+						}
 						return deferred.promise;
-					}).then(function (data) {
+					}).then((function (data) {
+						this.dbfile_selector.val('');
+
 						var array = [],
 						    deferred = Q.defer();
 						data.split('\n').forEach(function (line) {
@@ -7478,7 +7541,7 @@ var TablelistFleets = (function (_Tablelist3) {
 							}
 						});
 						return deferred.promise;
-					}).then(function (array) {
+					}).bind(this)).then(function (array) {
 						var the_promises = [],
 						    complete = 0;
 
@@ -7502,12 +7565,17 @@ var TablelistFleets = (function (_Tablelist3) {
 						});
 
 						return Q.all(the_promises);
-					}).catch(function (msg, err) {
+					}).then((function () {
+						this.refresh();
+						_g.badgeMsg('成功导入配置');
+					}).bind(this)).catch(function (msg, err) {
 						_g.log(msg);
 						_g.error(err);
+						_g.badgeError(msg);
 					}).done((function () {
 						_g.log('import complete');
-						this.refresh();
+						_frame.dom.layout.removeClass('is-loading');
+						this.dbfile_selector.prop('disabled', false);
 					}).bind(this));
 				}).bind(this)).appendTo(this.dom.filters);
 			}
@@ -7646,6 +7714,9 @@ TablelistFleets.menuOptions_show = function ($el, $el_tablelist) {
 	if ($el_tablelist) TablelistFleets.menuOptions.dom.menu.addClass('is-tablelist');else TablelistFleets.menuOptions.dom.menu.removeClass('is-tablelist');
 	TablelistFleets.menuOptions.show($el);
 };
+
+TablelistFleets.support = {};
+TablelistFleets.support.buildfile = _g.isNWjs || window.File && window.FileReader && window.FileList && window.Blob && window.URL ? true : false;
 
 var TablelistShips = (function (_Tablelist4) {
 	_inherits(TablelistShips, _Tablelist4);
