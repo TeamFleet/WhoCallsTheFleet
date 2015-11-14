@@ -2237,6 +2237,9 @@ html.ie6 * {
 [icon="plus"]:before {
   content: "\ed5a" !important;
 }
+[icon="qq"]:before {
+  content: "\e902" !important;
+}
 [icon="redo"]:before {
   content: "\e610" !important;
 }
@@ -2255,8 +2258,14 @@ html.ie6 * {
 [icon="table"]:before {
   content: "\e602" !important;
 }
+[icon="tencent-weibo"]:before {
+  content: "\e900" !important;
+}
 [icon="twitter"]:before {
   content: "\e609" !important;
+}
+[icon="wechat"]:before {
+  content: "\e901" !important;
 }
 [icon="weibo"]:before {
   content: "\e608" !important;
