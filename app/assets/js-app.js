@@ -4844,6 +4844,95 @@ var _updater = {
 
 // 将更新流程加入页面序列
 	_frame.app_main.functions_on_ready.push( _updater.update )
+class ShareBar{
+	constructor(options){
+		options = options || {}
+		this.settings = $.extend(true, {}, ShareBar.defaults, options)
+		
+		this.el = this.create();
+		
+		return this
+	}
+	
+	create(){
+		this.el = $('<div class="sharebar"/>')
+		
+		this.settings.sites.forEach(function(site){
+			let link = $('<a/>',{
+					'class':			'sharebar-share sharebar-site-'+site,
+					'data-share-site':	site,
+					'href':				'javascript:;',
+					'target':			'_self',
+					'icon':				ShareBar.iconmap[site] || site
+				}).appendTo(this.el)
+		
+			if( this.settings.modifyItem )
+				this.settings.modifyItem(link)
+		}.bind(this))
+		
+		this.el.on('click.sharebar-share', 'a[data-share-site]', function(e, is_to_launch){
+			//if( !is_to_launch ){
+			//	e.preventDefault()
+				let $el = $(e.target)
+					,site = $el.attr('data-share-site')
+				$el.attr({
+					'href': 	'http://www.jiathis.com/send/?webid='
+								+ site
+								+ '&url='
+								+ encodeURIComponent(this.getContent( 'url', location.href ))
+								+ '&title='
+								+ encodeURIComponent(this.getContent( 'title', document.title ))
+								+ '&summary='
+								+ encodeURIComponent(this.getContent( 'summary', $('meta[name="description"]').attr('content') ))
+								
+								+ (this.settings.uid ? ('&uid=' + this.settings.uid) : '')
+								+ (this.settings.appkey[site] ? ('&appkey=' + this.settings.appkey[site]) : ''),
+					'target': 	'_blank'
+				})//.trigger('click', [true])
+			//}
+		}.bind(this))
+		
+		return this.el
+	}
+	
+	getContent(t, fallback){
+		if( typeof this.settings[t] == 'function' )
+			return this.settings[t](this)
+		if( this.settings[t] )
+			return this.settings[t]
+		return fallback
+	}
+}
+
+ShareBar.defaults = {
+	// url: null,
+	// title: null,
+	// summary: null,
+	
+	// 修改创建的链接
+	// modifyItem: function(el){},
+	
+	// JiaThis的用户ID
+	// uid: null
+	
+	// 支持的网站 http://www.jiathis.com/help/html/support-media-website
+	sites: [
+		'tsina',		// 微博
+		'tqq',			// 腾讯微博
+		'cqq',			// QQ好友
+		'twitter',
+		'tieba'			// 百度贴吧
+	],
+
+	appkey: {}
+};
+
+ShareBar.iconmap = {
+	'tsina':	'weibo',
+	'tqq':		'tencent-weibo',
+	'cqq':		'qq'
+}
+
 _tmpl.improvement = function( equipment, improvement_index, requirement_index, returnHTML ){
 	if( typeof equipment == 'undefined' )
 		return false
@@ -6573,29 +6662,56 @@ class InfosFleet{
 							}.bind(this))
 						)
 						.append(
-							this.doms['exportOption'] = $('<button class="option mod-dropdown"/>').html('导出').on('click', function(){
+							this.doms['exportOption'] = $('<button class="option mod-dropdown"/>').html('分享').on('click', function(){
 								if( !InfosFleet.menuExport ){
+									let menuitems = []
+									if( !_g.isClient ){
+										menuitems.push($('<div class="item"/>')
+											.append('分享当前配置<small>可直接分享网址</small>')
+											.add(
+												(new ShareBar({
+													title: function(){
+														return InfosFleet.menuCur.data.name
+													},
+													summary: '分享自 是谁呼叫舰队 (http://fleet.diablohu.com)',
+													sites: [
+														'tsina',		// 微博
+														'tqq',			// 腾讯微博
+														'cqq',			// QQ好友
+														'twitter',
+														'tieba'			// 百度贴吧
+													],
+													uid:	1552359,
+													modifyItem: function(el){
+														el.addClass('menuitem')
+													}
+												})).el.addClass('item')
+											)
+											.add($('<hr/>'))
+										)
+									}
+									menuitems = menuitems.concat([
+										$('<menuitem/>',{
+												'html':		'导出配置代码'
+											}).on('click', function(){
+												InfosFleet.menuCur.modalExport_show()
+											}),
+										$('<menuitem/>',{
+												'html':		'导出配置文本'
+											}).on('click', function(){
+												InfosFleet.menuCur.modalExportText_show()
+											})
+									])
+									if( _g.isClient ){
+										menuitems.push($('<menuitem/>',{
+													'html':		'生成图片'
+												}).on('click', function(){
+													InfosFleet.menuCur.exportPic()
+												}))
+									}
 									InfosFleet.menuExport = new _menu({
 										'className': 'contextmenu-infos_fleet_themes',
-										'items': [
-											$('<menuitem/>',{
-													'html':		'导出代码'
-												}).on('click', function(){
-													InfosFleet.menuCur.modalExport_show()
-												}),
-											$('<menuitem/>',{
-													'html':		'导出文本'
-												}).on('click', function(){
-													InfosFleet.menuCur.modalExportText_show()
-												}),
-											_g.isNWjs
-												? $('<menuitem/>',{
-														'html':		'导出图片'
-													}).on('click', function(){
-														InfosFleet.menuCur.exportPic()
-													})
-												: null
-										]
+										'items': menuitems
 									})
 								}
 								InfosFleet.menuCur = this

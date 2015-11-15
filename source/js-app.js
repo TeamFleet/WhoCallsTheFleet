@@ -18,6 +18,7 @@
 // @koala-prepend "js-app/main.js"
 // @koala-prepend "js-app/errorlog.js"
 // @koala-prepend "js-app/updater.js"
+// @koala-prepend "js-app/sharebar.js"
 
 // @koala-prepend "js-app/templates/improvement.js"
 // @koala-prepend "js-app/templates/link_entity.js"

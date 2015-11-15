@@ -247,29 +247,56 @@ class InfosFleet{
 							}.bind(this))
 						)
 						.append(
-							this.doms['exportOption'] = $('<button class="option mod-dropdown"/>').html('导出').on('click', function(){
+							this.doms['exportOption'] = $('<button class="option mod-dropdown"/>').html('分享').on('click', function(){
 								if( !InfosFleet.menuExport ){
+									let menuitems = []
+									if( !_g.isClient ){
+										menuitems.push($('<div class="item"/>')
+											.append('分享当前配置<small>可直接分享网址</small>')
+											.add(
+												(new ShareBar({
+													title: function(){
+														return InfosFleet.menuCur.data.name
+													},
+													summary: '分享自 是谁呼叫舰队 (http://fleet.diablohu.com)',
+													sites: [
+														'tsina',		// 微博
+														'tqq',			// 腾讯微博
+														'cqq',			// QQ好友
+														'twitter',
+														'tieba'			// 百度贴吧
+													],
+													uid:	1552359,
+													modifyItem: function(el){
+														el.addClass('menuitem')
+													}
+												})).el.addClass('item')
+											)
+											.add($('<hr/>'))
+										)
+									}
+									menuitems = menuitems.concat([
+										$('<menuitem/>',{
+												'html':		'导出配置代码'
+											}).on('click', function(){
+												InfosFleet.menuCur.modalExport_show()
+											}),
+										$('<menuitem/>',{
+												'html':		'导出配置文本'
+											}).on('click', function(){
+												InfosFleet.menuCur.modalExportText_show()
+											})
+									])
+									if( _g.isClient ){
+										menuitems.push($('<menuitem/>',{
+													'html':		'生成图片'
+												}).on('click', function(){
+													InfosFleet.menuCur.exportPic()
+												}))
+									}
 									InfosFleet.menuExport = new _menu({
 										'className': 'contextmenu-infos_fleet_themes',
-										'items': [
-											$('<menuitem/>',{
-													'html':		'导出代码'
-												}).on('click', function(){
-													InfosFleet.menuCur.modalExport_show()
-												}),
-											$('<menuitem/>',{
-													'html':		'导出文本'
-												}).on('click', function(){
-													InfosFleet.menuCur.modalExportText_show()
-												}),
-											_g.isNWjs
-												? $('<menuitem/>',{
-														'html':		'导出图片'
-													}).on('click', function(){
-														InfosFleet.menuCur.exportPic()
-													})
-												: null
-										]
+										'items': menuitems
 									})
 								}
 								InfosFleet.menuCur = this
