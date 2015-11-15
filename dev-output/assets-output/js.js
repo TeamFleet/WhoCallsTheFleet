@@ -2417,6 +2417,7 @@ _p.el.table = {
 		}
 		return _check(0);
 	},
+
 	hover_column_mouseenter: function hover_column_mouseenter(table, td_index) {
 		table.find('tbody tr td:nth-of-type(' + (parseInt(td_index) + 1) + ')').addClass('state-hover-column');
 	},
@@ -2436,15 +2437,17 @@ _p.el.table = {
 
 		if (!_p.el.table.is_init) {
 			$html.on('mouseenter.tablehover-column', 'body.hover table.hashover-column tbody td', function (e) {
-				var path = e.originalEvent.path,
-				    td = $(this).on('mouseleave.tablehover-column', function () {
-					_p.el.table.hover_column_mouseleave(table, index);
-					td.off('mouseleave.tablehover-column');
-				}),
-				    table = _p.el.table.hover_column_getTable(path),
-				    tr = _p.el.table.hover_column_getTr(path),
-				    index = $.inArray(td[0], tr.find('td'));
-				_p.el.table.hover_column_mouseenter(table, index);
+				if (e && e.originalEvent.path) {
+					var path = e.originalEvent.path,
+					    td = $(this).on('mouseleave.tablehover-column', function () {
+						_p.el.table.hover_column_mouseleave(table, index);
+						td.off('mouseleave.tablehover-column');
+					}),
+					    table = _p.el.table.hover_column_getTable(path),
+					    tr = _p.el.table.hover_column_getTr(path),
+					    index = $.inArray(td[0], tr.find('td'));
+					_p.el.table.hover_column_mouseenter(table, index);
+				}
 			});
 			_p.el.table.is_init = true;
 		}

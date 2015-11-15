@@ -4664,8 +4664,8 @@ body.mod-capture #tip {
   color: #f76e6e;
 }
 .tablelist table tbody tr td[data-value="0"],
-.tablelist table tbody tr td[data-value="-1"] {
-  font-size: 0.55rem;
+.tablelist table tbody tr td[data-value="-1"]:not(.negative) {
+  font-size: 11px;
   color: rgba(242, 242, 242, 0.35);
 }
 .tablelist table tbody tr.empty,
