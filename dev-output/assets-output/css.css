@@ -4034,13 +4034,39 @@ body.mod-capture #tip {
   height: 12px;
   width: 20px;
   margin: 0 .2em 0 .35em;
+  vertical-align: baseline;
+  position: relative;
+  /*
+				// clip-path method
+				transform:	translateY(10px);
+				background:	@color;
+				.clip-path(~"polygon(0% 35%, 60% 35%, 60% 0%, 100% 50%, 60% 100%, 60% 65%, 0% 65%)");
+			*/
+  -webkit-transform: scaleY(0.85);
+      -ms-transform: scaleY(0.85);
+          transform: scaleY(0.85);
+}
+.improvement > strong > b:before,
+.improvement > strong > b:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+}
+.improvement > strong > b:before {
+  margin-top: -2px;
+  height: 4px;
+  width: 14px;
   background: #88ff4d;
-  vertical-align: top;
-  -webkit-transform: translateY(10px);
-      -ms-transform: translateY(10px);
-          transform: translateY(10px);
-  clip-path: polygon(0% 35%, 60% 35%, 60% 0%, 100% 50%, 60% 100%, 60% 65%, 0% 65%);
-  -webkit-clip-path: polygon(0% 35%, 60% 35%, 60% 0%, 100% 50%, 60% 100%, 60% 65%, 0% 65%);
+  left: 0;
+}
+.improvement > strong > b:after {
+  right: 0;
+  width: 0;
+  height: 0;
+  border: 7px solid transparent;
+  border-right: 0;
+  border-left-color: #88ff4d;
+  margin-top: -7px;
 }
 .improvement > strong > i {
   font-size: 14px;
