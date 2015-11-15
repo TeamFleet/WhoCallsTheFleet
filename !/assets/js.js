@@ -1799,6 +1799,7 @@ _menu.prototype.init = function () {
 			self.appendItem(menuitem);
 		}
 	}
+	this.dom.body.find('input[type="checkbox"]+label').addClass('checkbox');
 
 	if (this.settings.showBlured && _huCss.csscheck_full('backdrop-filter')) {
 		this.dom.menu.addClass('mod-blur-backdrop');
@@ -2416,6 +2417,7 @@ _p.el.table = {
 		}
 		return _check(0);
 	},
+
 	hover_column_mouseenter: function hover_column_mouseenter(table, td_index) {
 		table.find('tbody tr td:nth-of-type(' + (parseInt(td_index) + 1) + ')').addClass('state-hover-column');
 	},
@@ -2435,15 +2437,17 @@ _p.el.table = {
 
 		if (!_p.el.table.is_init) {
 			$html.on('mouseenter.tablehover-column', 'body.hover table.hashover-column tbody td', function (e) {
-				var path = e.originalEvent.path,
-				    td = $(this).on('mouseleave.tablehover-column', function () {
-					_p.el.table.hover_column_mouseleave(table, index);
-					td.off('mouseleave.tablehover-column');
-				}),
-				    table = _p.el.table.hover_column_getTable(path),
-				    tr = _p.el.table.hover_column_getTr(path),
-				    index = $.inArray(td[0], tr.find('td'));
-				_p.el.table.hover_column_mouseenter(table, index);
+				if (e && e.originalEvent.path) {
+					var path = e.originalEvent.path,
+					    td = $(this).on('mouseleave.tablehover-column', function () {
+						_p.el.table.hover_column_mouseleave(table, index);
+						td.off('mouseleave.tablehover-column');
+					}),
+					    table = _p.el.table.hover_column_getTable(path),
+					    tr = _p.el.table.hover_column_getTr(path),
+					    index = $.inArray(td[0], tr.find('td'));
+					_p.el.table.hover_column_mouseenter(table, index);
+				}
 			});
 			_p.el.table.is_init = true;
 		}
@@ -4140,12 +4144,12 @@ _frame.app_main = {
 
 			if (_frame.app_main.cur_page == page) return page;
 
-			_frame.app_main.page_dom[page].removeClass('off').trigger('on');
+			_frame.app_main.page_dom[page].appendTo(_frame.dom.main).removeClass('off').trigger('on');
 
 			if (_frame.app_main.cur_page) {
 				if (_frame.dom.navs[_frame.app_main.cur_page]) _frame.dom.navs[_frame.app_main.cur_page].removeClass('on');
 				if (_frame.app_main.page_dom[_frame.app_main.cur_page]) setTimeout((function (p) {
-					_frame.app_main.page_dom[p].addClass('off').trigger('pageoff');
+					_frame.app_main.page_dom[p].addClass('off').trigger('pageoff').detach();
 				})(_frame.app_main.cur_page), 100);
 			}
 
@@ -5200,7 +5204,7 @@ _frame.infos = {
 			if (_frame.app_main.cur_page) {
 
 				if (_frame.dom.navs[_frame.app_main.cur_page]) _frame.dom.navs[_frame.app_main.cur_page].removeClass('on');
-				if (_frame.app_main.page_dom[_frame.app_main.cur_page]) _frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff');
+				if (_frame.app_main.page_dom[_frame.app_main.cur_page]) _frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff').detach();
 				_frame.app_main.cur_page = null;
 			}
 
@@ -6806,8 +6810,7 @@ var Tablelist = (function () {
 			    input = gen_input().appendTo(line),
 			    id = input.attr('id') || Tablelist.genId();
 
-			label = label ? $('<label for="' + id + '"/>').html(label).appendTo(line) : null;
-
+			label = label ? $('<label' + (type == 'checkbox' ? ' class="checkbox"' : '') + ' for="' + id + '"/>').html(label).appendTo(line) : null;
 			if (type == 'checkbox' && label) label.insertAfter(input);
 
 			if (suffix) $('<label for="' + id + '"/>').html(suffix).appendTo(line);
@@ -8018,6 +8021,18 @@ var TablelistShips = (function (_Tablelist4) {
 			this.dom.msg_container.children('.comparestart').on('click', (function () {
 				this.compare_start();
 			}).bind(this));
+
+			this.dom.tbody.on('click', 'tr.row[data-shipid]', (function (e, forceInfos) {
+				if (e.target.tagName.toLowerCase() == 'label') {
+					this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked', !this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked')).trigger('change');
+					e.stopPropagation();
+				} else if (!forceInfos && _frame.app_main.is_mode_selection()) {
+						e.preventDefault();
+						e.stopImmediatePropagation();
+						e.stopPropagation();
+						if (!e.currentTarget.getAttribute('data-donotcompare')) _frame.app_main.mode_selection_callback(e.currentTarget.getAttribute('data-shipid'));
+					}
+			}).bind(this));
 		}
 	}, {
 		key: 'parse_all_items',
@@ -8068,18 +8083,7 @@ var TablelistShips = (function (_Tablelist4) {
 						    checkbox = tr.find('input[type="checkbox"]'),
 						    title_index = header_index;
 
-						tr.on('click', function (e, forceInfos) {
-							if (!forceInfos && e.target.tagName.toLowerCase() != 'em' && _frame.app_main.is_mode_selection()) {
-								e.preventDefault();
-								e.stopImmediatePropagation();
-								e.stopPropagation();
-								if (!donotcompare) _frame.app_main.mode_selection_callback(ship_id);
-							}
-						});
-
-						checkbox.prop('disabled', donotcompare).on('click change', (function (e, not_trigger_check) {
-							e.stopImmediatePropagation();
-							e.stopPropagation();
+						checkbox.prop('disabled', donotcompare).on('change', (function (e, not_trigger_check) {
 							if (checkbox.prop('checked')) tr.attr('compare-checked', true);else tr.removeAttr('compare-checked');
 							this.compare_btn_show(checkbox.prop('checked'));
 							if (!not_trigger_check) this.header_checkbox[title_index].trigger('docheck');
