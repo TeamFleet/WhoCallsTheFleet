@@ -7535,7 +7535,7 @@ var TablelistFleets = (function (_Tablelist3) {
 						    ships = data['data'][0] || [],
 						    j = 0;
 						while (j < 6) {
-							if (ships[j] && ships[j][0]) html += '<img src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0' + (_huCss.csscheck_full('mask-image') ? '.webp' : '-mask-2.png') + '" contextmenu="disabled"' + (_huCss.csscheck_full('mask-image') ? '' : ' class="nomask"') + '/>';else html += '<s/>';
+							if (ships[j] && ships[j][0]) html += '<img src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0' + (_huCss.csscheck_full('mask-image') ? '.webp' : '-mask-2.png') + '" contextmenu="disabled"' + (_huCss.csscheck_full('mask-image') ? '' : ' class="nomask"') + '/>';else html += '<s' + (_huCss.csscheck_full('mask-image') ? '' : ' class="nomask"') + '/>';
 							j++;
 						}
 						html += '</i>';

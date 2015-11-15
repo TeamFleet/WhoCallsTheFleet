@@ -38,6 +38,18 @@ dev_output_steps.push(function(){
 				if( data.generated ){
 					clearInterval(interval)
 					interval = null
+					
+					// 将base64编码的图片地址转为URL
+						container.find('a[data-entityid]').each(function(i, el){
+							el = $(el)
+							let id = el.attr('data-entityid')
+							if( id )
+								el.find('i')
+									.removeAttr('style')
+									.attr('search-entitymaskpic-id', id)
+									.addClass('nomask')
+						})
+					
 					deferred.resolve( maincontainer.html() )
 				}
 			},10)
@@ -45,7 +57,18 @@ dev_output_steps.push(function(){
 			return deferred.promise
 		})
 		.then(function( mainhtml ){
+			let searchRes
+				,scrapePtrn = /search-entitymaskpic-id\=\"([^\"]+)\"/gi
 
+			while( (searchRes = scrapePtrn.exec(mainhtml)) !== null ){
+				try{
+					mainhtml = mainhtml.replace( searchRes[0], 'style="background-image:url(/!/pics/entities/'+searchRes[1]+'/0-mask-1.png)"')
+				}catch(e){}
+			}
+			
+			return mainhtml
+		})
+		.then(function( mainhtml ){
 			let deferred = Q.defer()
 				,searchRes
 				,scrapePtrn = /\{\{[ ]*mainContent[ ]*\}\}/gi
@@ -120,9 +143,17 @@ dev_output_steps.push(function(){
 				}catch(e){}
 			}
 			
+			searchRes = null
+			scrapePtrn = /src="data\:image[^\"]+"/gi
+			while( (searchRes = scrapePtrn.exec(output)) !== null ){
+				try{
+					output = output.replace( searchRes[0], 'src="/!/pics/entities/'+i+'/2.jpg"' )
+				}catch(e){}
+			}
+			
 			output = dev_output_filter(output)
 		
-			console.log( outputPath )
+			//console.log( outputPath )
 			
 			node.fs.writeFile(
 				outputPath,

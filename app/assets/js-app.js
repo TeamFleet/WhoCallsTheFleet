@@ -10280,7 +10280,7 @@ class TablelistFleets extends Tablelist{
 										+ (_huCss.csscheck_full('mask-image') ? '' : ' class="nomask"')
 										+ '/>'
 							else
-								html+='<s/>'
+								html+='<s' + (_huCss.csscheck_full('mask-image') ? '' : ' class="nomask"') + '/>'
 							j++
 						}
 						html+='</i>'
