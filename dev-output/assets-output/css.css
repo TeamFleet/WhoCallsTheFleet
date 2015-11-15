@@ -1296,17 +1296,22 @@ body > .menus > .menu > .blured {
 body > .menus > .menu.mod-checkbox > .body menuitem {
   position: relative;
   padding: 0;
-}
-body > .menus > .menu.mod-checkbox > .body menuitem input[type=checkbox] {
-  position: absolute;
-  top: 50%;
-  line-height: 0;
-  left: 0.6000000000000001rem;
+  /*
+					input[type=checkbox]{
+						position: 	absolute;
+						top: 		50%;
+						line-height:0;
+						.left(12);
+					}
+					*/
 }
 body > .menus > .menu.mod-checkbox > .body menuitem label {
   display: block;
-  padding-left: 2rem;
+  padding-left: 40px;
   padding-right: 1.5em;
+}
+body > .menus > .menu.mod-checkbox > .body menuitem label.checkbox:before {
+  margin-left: 12px;
 }
 body > .modal {
   z-index: 200;

@@ -1799,6 +1799,7 @@ _menu.prototype.init = function () {
 			self.appendItem(menuitem);
 		}
 	}
+	this.dom.body.find('input[type="checkbox"]+label').addClass('checkbox');
 
 	if (this.settings.showBlured && _huCss.csscheck_full('backdrop-filter')) {
 		this.dom.menu.addClass('mod-blur-backdrop');
