@@ -256,11 +256,17 @@ function dev_output_form(){
 						let searchRes
 							,scrapePtrn = /\{\{[ ]*navContent[ ]*\}\}/gi
 							,elNav = $('<div/>')
+							,navobj = [].concat(_frame.app_main.nav)
 							,navlinks = $('<div class="pages"/>').appendTo( elNav )
 							,globaloptions = $('<section class="options"/>').appendTo( elNav )
 							,btnDonates = $('<a class="donate" icon="heart4" href="/donate/"/>').appendTo( globaloptions )
-						_frame.app_main.nav.forEach(function(o, i){
-							(function(page){
+
+						// 首页
+							//$('<h1 class="button home"/>').html('<a href="/">是谁呼叫舰队</a>').appendTo( navlinks )
+
+						navobj.forEach(function(o, i){
+							if( o.title != '关于' )
+								(function(page){
 										let $el = $('<a class="button" href="/'+page+'/"/>')
 										if( o.state )
 											$el.attr('mod-state', o.state)

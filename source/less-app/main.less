@@ -403,13 +403,15 @@ nav{
 		&.selection-info{
 			opacity: 	0;
 			z-index: 	3;
-			transform: 	translateX(@left-nav-pages-history-on);
 			.line-height(@nav_height);
 			.font-size(24);
 			font-weight:lighter;
 			color:		rgba(255,255,255,.5);
 			display: 	block !important;
 			.transition-timing-function(ease-out);
+		}
+		&.history ~ .selection-info{
+			transform: 	translateX(@left-nav-pages-history-on);
 		}
 	} // &>div
 	&>s{

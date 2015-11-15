@@ -2633,9 +2633,6 @@ nav > div .button[mod-state]:after {
 nav > div.selection-info {
   opacity: 0;
   z-index: 3;
-  -webkit-transform: translateX(120px);
-      -ms-transform: translateX(120px);
-          transform: translateX(120px);
   line-height: 4rem;
   font-size: 1.2000000000000002rem;
   font-weight: lighter;
@@ -2643,6 +2640,11 @@ nav > div.selection-info {
   display: block !important;
   -webkit-transition-timing-function: ease-out;
           transition-timing-function: ease-out;
+}
+nav > div.history ~ .selection-info {
+  -webkit-transform: translateX(120px);
+      -ms-transform: translateX(120px);
+          transform: translateX(120px);
 }
 nav > s {
   display: block;
@@ -7571,6 +7573,7 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
       -ms-flex: 1 1 150px;
           flex: 1 1 150px;
   z-index: 1;
+  text-decoration: none;
 }
 .infos-fleet > .ships > dl dd > dt > s:after {
   content: '';
@@ -8416,8 +8419,8 @@ body.mod-capture .infos-fleet > .ships > dl dd > .options {
   right: 0;
   bottom: 5px;
   left: -10px;
-  background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.35) 20%, transparent);
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.35) 20%, transparent);
+  background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.35) 50%, transparent);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.35) 50%, transparent);
   border-radius: 5px;
 }
 .infos-fleet > .ships > dl > s {
