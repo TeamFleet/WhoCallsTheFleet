@@ -4464,6 +4464,70 @@ _frame.app_main.page_init = function (page, $page) {
 	_p.initDOM($page);
 };
 
+var ShareBar = (function () {
+	function ShareBar(options) {
+		_classCallCheck(this, ShareBar);
+
+		options = options || {};
+		this.settings = $.extend(true, {}, ShareBar.defaults, options);
+
+		this.el = this.create();
+
+		return this;
+	}
+
+	_createClass(ShareBar, [{
+		key: 'create',
+		value: function create() {
+			this.el = $('<div class="sharebar"/>');
+
+			this.settings.sites.forEach((function (site) {
+				var link = $('<a/>', {
+					'class': 'sharebar-share sharebar-site-' + site,
+					'data-share-site': site,
+					'href': 'javascript:;',
+					'target': '_self',
+					'icon': ShareBar.iconmap[site] || site
+				}).appendTo(this.el);
+
+				if (this.settings.modifyItem) this.settings.modifyItem(link);
+			}).bind(this));
+
+			this.el.on('click.sharebar-share', 'a[data-share-site]', (function (e, is_to_launch) {
+				var $el = $(e.target),
+				    site = $el.attr('data-share-site');
+				$el.attr({
+					'href': 'http://www.jiathis.com/send/?webid=' + site + '&url=' + encodeURIComponent(this.getContent('url', location.href)) + '&title=' + encodeURIComponent(this.getContent('title', document.title)) + '&summary=' + encodeURIComponent(this.getContent('summary', $('meta[name="description"]').attr('content'))) + (this.settings.uid ? '&uid=' + this.settings.uid : '') + (this.settings.appkey[site] ? '&appkey=' + this.settings.appkey[site] : ''),
+					'target': '_blank'
+				});
+			}).bind(this));
+
+			return this.el;
+		}
+	}, {
+		key: 'getContent',
+		value: function getContent(t, fallback) {
+			if (typeof this.settings[t] == 'function') return this.settings[t](this);
+			if (this.settings[t]) return this.settings[t];
+			return fallback;
+		}
+	}]);
+
+	return ShareBar;
+})();
+
+ShareBar.defaults = {
+	sites: ['tsina', 'tqq', 'cqq', 'twitter', 'tieba'],
+
+	appkey: {}
+};
+
+ShareBar.iconmap = {
+	'tsina': 'weibo',
+	'tqq': 'tencent-weibo',
+	'cqq': 'qq'
+};
+
 _tmpl.improvement = function (equipment, improvement_index, requirement_index, returnHTML) {
 	if (typeof equipment == 'undefined') return false;
 
@@ -5379,23 +5443,41 @@ var InfosFleet = (function () {
 				}
 				InfosFleet.menuCur = this;
 				InfosFleet.menuTheme.show(this.doms['themeOption']);
-			}).bind(this))).append(this.doms['exportOption'] = $('<button class="option mod-dropdown"/>').html('导出').on('click', (function () {
+			}).bind(this))).append(this.doms['exportOption'] = $('<button class="option mod-dropdown"/>').html('分享').on('click', (function () {
 				if (!InfosFleet.menuExport) {
-					InfosFleet.menuExport = new _menu({
-						'className': 'contextmenu-infos_fleet_themes',
-						'items': [$('<menuitem/>', {
-							'html': '导出代码'
-						}).on('click', function () {
-							InfosFleet.menuCur.modalExport_show();
-						}), $('<menuitem/>', {
-							'html': '导出文本'
-						}).on('click', function () {
-							InfosFleet.menuCur.modalExportText_show();
-						}), _g.isNWjs ? $('<menuitem/>', {
-							'html': '导出图片'
+					var menuitems = [];
+					if (!_g.isClient) {
+						menuitems.push($('<div class="item"/>').append('分享当前配置<small>可直接分享网址</small>').add(new ShareBar({
+							title: function title() {
+								return InfosFleet.menuCur.data.name;
+							},
+							summary: '分享自 是谁呼叫舰队 (http://fleet.diablohu.com)',
+							sites: ['tsina', 'tqq', 'cqq', 'twitter', 'tieba'],
+							uid: 1552359,
+							modifyItem: function modifyItem(el) {
+								el.addClass('menuitem');
+							}
+						}).el.addClass('item')).add($('<hr/>')));
+					}
+					menuitems = menuitems.concat([$('<menuitem/>', {
+						'html': '导出配置代码'
+					}).on('click', function () {
+						InfosFleet.menuCur.modalExport_show();
+					}), $('<menuitem/>', {
+						'html': '导出配置文本'
+					}).on('click', function () {
+						InfosFleet.menuCur.modalExportText_show();
+					})]);
+					if (_g.isClient) {
+						menuitems.push($('<menuitem/>', {
+							'html': '生成图片'
 						}).on('click', function () {
 							InfosFleet.menuCur.exportPic();
-						}) : null]
+						}));
+					}
+					InfosFleet.menuExport = new _menu({
+						'className': 'contextmenu-infos_fleet_themes',
+						'items': menuitems
 					});
 				}
 				InfosFleet.menuCur = this;
@@ -7453,7 +7535,7 @@ var TablelistFleets = (function (_Tablelist3) {
 						    ships = data['data'][0] || [],
 						    j = 0;
 						while (j < 6) {
-							if (ships[j] && ships[j][0]) html += '<img src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0' + (_huCss.csscheck_full('mask-image') ? '.png' : '-mask-2.png') + '" contextmenu="disabled"' + (_huCss.csscheck_full('mask-image') ? '' : ' class="nomask"') + '/>';else html += '<s/>';
+							if (ships[j] && ships[j][0]) html += '<img src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0' + (_huCss.csscheck_full('mask-image') ? '.png' : '-mask-2.png') + '" contextmenu="disabled"' + (_huCss.csscheck_full('mask-image') ? '' : ' class="nomask"') + '/>';else html += '<s' + (_huCss.csscheck_full('mask-image') ? '' : ' class="nomask"') + '/>';
 							j++;
 						}
 						html += '</i>';
