@@ -3708,14 +3708,14 @@ _frame.app_main = {
 			if( this.cur_page == page )
 				return page
 
-			this.page_dom[page].removeClass('off').trigger('on')
+			this.page_dom[page].appendTo(_frame.dom.main).removeClass('off').trigger('on')
 
 			// 关闭之前的页面
 				if( this.cur_page ){
 					if( _frame.dom.navs[this.cur_page] )
 						_frame.dom.navs[this.cur_page].removeClass('on')
 					if( this.page_dom[this.cur_page] )
-						this.page_dom[this.cur_page].addClass('off').trigger('pageoff')
+						this.page_dom[this.cur_page].addClass('off').trigger('pageoff').detach()
 				}
 
 			if( _frame.dom.navs[page] )
@@ -6046,7 +6046,7 @@ _frame.infos = {
 				if( _frame.dom.navs[_frame.app_main.cur_page] )
 					_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
 				if( _frame.app_main.page_dom[_frame.app_main.cur_page] )
-					_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff')
+					_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff').detach()
 				_frame.app_main.cur_page = null
 			}
 		
@@ -6115,6 +6115,7 @@ _frame.infos = {
 		this.historyCurrent = -1
 	},
 
+	/*
 	historyback: function(){
 		this.dom.main.children().slice(1).remove()
 		this.dom.main.children().eq(0).removeClass('off').addClass('fadein')
@@ -6129,6 +6130,7 @@ _frame.infos = {
 		else if( this.dom.main.children().eq(0).hasClass('entity') )
 			this.dom.main.attr('data-infostype', 'entity')
 	},
+	*/
 	
 	click: function(el){
 		this.show(
@@ -9116,8 +9118,10 @@ class Tablelist{
 				//,id = '_input_g' + parseInt(_g.inputIndex)
 				,id = input.attr('id') || Tablelist.genId()
 		
-			label = label ? $('<label for="'+id+'"/>').html( label ).appendTo(line) : null
-		
+			label = label ? $('<label'+(type == 'checkbox'? ' class="checkbox"' : '')+' for="'+id+'"/>')
+								.html( label )
+								.appendTo(line)
+						: null		
 			if( type == 'checkbox' && label )
 				label.insertAfter(input)
 		
@@ -10994,6 +10998,25 @@ class TablelistShips extends Tablelist{
 					.on('click', function(){
 						this.compare_start()
 					}.bind(this))
+		
+		this.dom.tbody.on('click', 'tr.row[data-shipid]', function(e, forceInfos){
+				if( e.target.tagName.toLowerCase() == 'label' ){
+					this.checkbox[e.currentTarget.getAttribute('data-shipid')]
+						.prop('checked', !this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked'))
+						.trigger('change')
+					e.stopPropagation()
+				}/*else if( e.target.tagName.toLowerCase() == 'em' ){
+					e.preventDefault()
+					e.stopImmediatePropagation()
+					e.stopPropagation()
+				}*/else if( !forceInfos && _frame.app_main.is_mode_selection() ){
+					e.preventDefault()
+					e.stopImmediatePropagation()
+					e.stopPropagation()
+					if( !e.currentTarget.getAttribute('data-donotcompare') )
+						_frame.app_main.mode_selection_callback(e.currentTarget.getAttribute('data-shipid'))
+				}
+			}.bind(this))
 	}
 	parse_all_items(){
 		let header_index = -1
@@ -11042,8 +11065,13 @@ class TablelistShips extends Tablelist{
 					,checkbox = tr.find('input[type="checkbox"]')
 					,title_index = header_index
 				
+				/*
 				tr.on('click', function(e, forceInfos){
-						if( !forceInfos && e.target.tagName.toLowerCase() != 'em' && _frame.app_main.is_mode_selection() ){
+						if( !forceInfos
+							&& e.target.tagName.toLowerCase() != 'em'
+							&& e.target.tagName.toLowerCase() != 'label'
+							&& _frame.app_main.is_mode_selection()
+						){
 							e.preventDefault()
 							e.stopImmediatePropagation()
 							e.stopPropagation()
@@ -11051,11 +11079,13 @@ class TablelistShips extends Tablelist{
 								_frame.app_main.mode_selection_callback(ship_id)
 						}
 					})
+				*/
 
 				checkbox.prop('disabled', donotcompare)
-					.on('click change',function(e, not_trigger_check){
-						e.stopImmediatePropagation()
-						e.stopPropagation()
+					//.on('click change',function(e, not_trigger_check){
+					.on('change',function(e, not_trigger_check){
+						//e.stopImmediatePropagation()
+						//e.stopPropagation()
 						if( checkbox.prop('checked') )
 							tr.attr('compare-checked', true )
 						else
@@ -11122,7 +11152,7 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 							if( !not_trigger_check )
 								this.header_checkbox[header_index].trigger('docheck')
 						}.bind(this))
-		,label = $('<label/>').append(checkbox)
+		,label = checkbox.add( $('<label class="checkbox"/>') )
 		,has_extra_illust = false
 		,seriesData = ship_data.getSeriesData()
 	
@@ -11300,7 +11330,7 @@ TablelistShips.prototype.append_all_items = function(){
 				this.last_item =
 						$('<tr class="typetitle" data-trindex="'+this.trIndex+'">'
 							+ '<th colspan="' + (this.columns.length + 1) + '">'
-							+ '<label for="' + checkbox_id + '">'
+							+ '<label class="checkbox" for="' + checkbox_id + '">'
 							//+ data_shiptype['full_zh']
 							//+ _g.data['ship_type_order'][i+1]['name']['zh_cn']
 							+ _g.data['ship_type_order'][i]['name']['zh_cn']

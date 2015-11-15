@@ -268,7 +268,7 @@ _frame.infos = {
 						if( _frame.dom.navs[_frame.app_main.cur_page] )
 							_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
 						if( _frame.app_main.page_dom[_frame.app_main.cur_page] )
-							_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff')
+							_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff').detach()
 						_frame.app_main.cur_page = null
 					}
 				

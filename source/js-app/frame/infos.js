@@ -217,7 +217,7 @@ _frame.infos = {
 				if( _frame.dom.navs[_frame.app_main.cur_page] )
 					_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
 				if( _frame.app_main.page_dom[_frame.app_main.cur_page] )
-					_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff')
+					_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff').detach()
 				_frame.app_main.cur_page = null
 			}
 		
@@ -286,6 +286,7 @@ _frame.infos = {
 		this.historyCurrent = -1
 	},
 
+	/*
 	historyback: function(){
 		this.dom.main.children().slice(1).remove()
 		this.dom.main.children().eq(0).removeClass('off').addClass('fadein')
@@ -300,6 +301,7 @@ _frame.infos = {
 		else if( this.dom.main.children().eq(0).hasClass('entity') )
 			this.dom.main.attr('data-infostype', 'entity')
 	},
+	*/
 	
 	click: function(el){
 		this.show(

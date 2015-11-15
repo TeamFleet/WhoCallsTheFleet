@@ -7,6 +7,7 @@
 						.min-width(160);
 						//.padding-left(96);
 						position:	relative;
+						/*
 						input[type="checkbox"].compare{
 							position:	absolute;
 							z-index:	2;
@@ -49,13 +50,55 @@
 								z-index:	-100;
 							}
 						}
+						*/
+						label.checkbox{
+							position:	absolute;
+							z-index:	2;
+							left: 		-20px;
+							top:		0;
+							width:		0;
+							height:		100%;
+							line-height:49px;
+							margin:		0;
+							opacity:	.175;
+							transition-property: opacity;
+							cursor: 	pointer;
+							&:before{
+								.enable-transition();
+								transition-property: left;
+							}
+							&:after{
+								.enable-transition();
+								transition-property: background;
+								content:	'';
+								position:	absolute;
+								z-index:	-1;
+								width: 		26px;
+								height:		~"calc(100% - 10px)";
+								left:		0;
+								top: 		5px;
+							}
+						}
+						label.checkbox:hover, input[type="checkbox"]:checked + label.checkbox{
+							opacity:	.9 !important;
+						}
+						input[type="checkbox"]:checked + label.checkbox:before{
+							left: 		5px;
+						}
+						input[type="checkbox"]:checked + label.checkbox:after{
+							background:	hsla(199, 65%, 35%, .85);
+						}
+						input[type="checkbox"][disabled] + label.checkbox{
+							display: 	none;
+						}
+						
 						img{
 							position:	absolute;
-							.top(5);
+							top: 		5px;
 							//.left(5);
-							.left(-45);
-							.width(160);
-							.height(40);
+							left: 		-45px;
+							width: 		160px;
+							height: 	40px;
 							z-index:	1;
 							.mask-repeat(no-repeat);
 							.mask-image(~"linear-gradient(to right, transparent 0, transparent 50px, #000 50px, #000 calc(100% - 60px), transparent calc(100% - 10px))");
@@ -164,7 +207,12 @@
 						}
 					}
 					&:hover{
+						/*
 						input[type="checkbox"].compare{
+							opacity:	.9;
+						}
+						*/
+						label.checkbox{
 							opacity:	.9;
 						}
 						th em{
@@ -204,6 +252,7 @@
 					//background-repeat:	no-repeat;
 					//background-image:	linear-gradient(to right, transparent 10px, rgba(0, 0, 0, .35) ~"calc(100% - 30px)", transparent);
 					.transition-property(~"background, color, opacity");
+					/*
 					input[type="checkbox"].compare{
 						position:	absolute;
 						.left(-25);
@@ -213,6 +262,17 @@
 							height:	100%;
 						}
 					}
+					*/
+					label.checkbox{
+						position:	absolute;
+						left: 		-25px;
+						line-height:40px;
+						&:after{
+							height:		100%;
+							top: 		0;
+						}
+					}
+						
 					th, td{
 						display:	block;
 					}
@@ -277,12 +337,17 @@
 		&.ships{
 			tbody{
 				tr[data-shipid]{
-					display:	none;
+					//display:	none;
+					/*
 					input[type="checkbox"].compare{
 						display:	none;
 					}
+					*/
+					label.checkbox{
+						display: 	none;
+					}
 					&[compare-checked]{
-						display:	table-row !important;
+						//display:	table-row !important;
 						th{
 							//.padding-left(146);
 							img{
@@ -300,6 +365,9 @@
 					}
 					th em{
 						display: 	none !important;
+					}
+					&:not([compare-checked]){
+						display: 	none;
 					}
 				}
 			}

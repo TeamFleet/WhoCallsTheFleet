@@ -437,14 +437,14 @@ _frame.app_main = {
 			if( this.cur_page == page )
 				return page
 
-			this.page_dom[page].removeClass('off').trigger('on')
+			this.page_dom[page].appendTo(_frame.dom.main).removeClass('off').trigger('on')
 
 			// 关闭之前的页面
 				if( this.cur_page ){
 					if( _frame.dom.navs[this.cur_page] )
 						_frame.dom.navs[this.cur_page].removeClass('on')
 					if( this.page_dom[this.cur_page] )
-						this.page_dom[this.cur_page].addClass('off').trigger('pageoff')
+						this.page_dom[this.cur_page].addClass('off').trigger('pageoff').detach()
 				}
 
 			if( _frame.dom.navs[page] )

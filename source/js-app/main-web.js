@@ -529,7 +529,7 @@ _frame.app_main = {
 				if( _frame.app_main.cur_page == page )
 					return page
 	
-				_frame.app_main.page_dom[page].removeClass('off').trigger('on')
+				_frame.app_main.page_dom[page].appendTo(_frame.dom.main).removeClass('off').trigger('on')
 	
 				// 关闭之前的页面
 					if( _frame.app_main.cur_page ){
@@ -537,7 +537,7 @@ _frame.app_main = {
 							_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
 						if( _frame.app_main.page_dom[_frame.app_main.cur_page] )
 							setTimeout((function(p){
-								_frame.app_main.page_dom[p].addClass('off').trigger('pageoff')
+								_frame.app_main.page_dom[p].addClass('off').trigger('pageoff').detach()
 							})(_frame.app_main.cur_page), 100)
 					}
 

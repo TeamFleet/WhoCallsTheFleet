@@ -37,7 +37,7 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 							if( !not_trigger_check )
 								this.header_checkbox[header_index].trigger('docheck')
 						}.bind(this))
-		,label = $('<label/>').append(checkbox)
+		,label = checkbox.add( $('<label class="checkbox"/>') )
 		,has_extra_illust = false
 		,seriesData = ship_data.getSeriesData()
 	
@@ -215,7 +215,7 @@ TablelistShips.prototype.append_all_items = function(){
 				this.last_item =
 						$('<tr class="typetitle" data-trindex="'+this.trIndex+'">'
 							+ '<th colspan="' + (this.columns.length + 1) + '">'
-							+ '<label for="' + checkbox_id + '">'
+							+ '<label class="checkbox" for="' + checkbox_id + '">'
 							//+ data_shiptype['full_zh']
 							//+ _g.data['ship_type_order'][i+1]['name']['zh_cn']
 							+ _g.data['ship_type_order'][i]['name']['zh_cn']

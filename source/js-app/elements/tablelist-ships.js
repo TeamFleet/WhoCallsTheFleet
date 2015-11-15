@@ -306,6 +306,25 @@ class TablelistShips extends Tablelist{
 					.on('click', function(){
 						this.compare_start()
 					}.bind(this))
+		
+		this.dom.tbody.on('click', 'tr.row[data-shipid]', function(e, forceInfos){
+				if( e.target.tagName.toLowerCase() == 'label' ){
+					this.checkbox[e.currentTarget.getAttribute('data-shipid')]
+						.prop('checked', !this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked'))
+						.trigger('change')
+					e.stopPropagation()
+				}/*else if( e.target.tagName.toLowerCase() == 'em' ){
+					e.preventDefault()
+					e.stopImmediatePropagation()
+					e.stopPropagation()
+				}*/else if( !forceInfos && _frame.app_main.is_mode_selection() ){
+					e.preventDefault()
+					e.stopImmediatePropagation()
+					e.stopPropagation()
+					if( !e.currentTarget.getAttribute('data-donotcompare') )
+						_frame.app_main.mode_selection_callback(e.currentTarget.getAttribute('data-shipid'))
+				}
+			}.bind(this))
 	}
 	parse_all_items(){
 		let header_index = -1
@@ -354,8 +373,13 @@ class TablelistShips extends Tablelist{
 					,checkbox = tr.find('input[type="checkbox"]')
 					,title_index = header_index
 				
+				/*
 				tr.on('click', function(e, forceInfos){
-						if( !forceInfos && e.target.tagName.toLowerCase() != 'em' && _frame.app_main.is_mode_selection() ){
+						if( !forceInfos
+							&& e.target.tagName.toLowerCase() != 'em'
+							&& e.target.tagName.toLowerCase() != 'label'
+							&& _frame.app_main.is_mode_selection()
+						){
 							e.preventDefault()
 							e.stopImmediatePropagation()
 							e.stopPropagation()
@@ -363,11 +387,13 @@ class TablelistShips extends Tablelist{
 								_frame.app_main.mode_selection_callback(ship_id)
 						}
 					})
+				*/
 
 				checkbox.prop('disabled', donotcompare)
-					.on('click change',function(e, not_trigger_check){
-						e.stopImmediatePropagation()
-						e.stopPropagation()
+					//.on('click change',function(e, not_trigger_check){
+					.on('change',function(e, not_trigger_check){
+						//e.stopImmediatePropagation()
+						//e.stopPropagation()
 						if( checkbox.prop('checked') )
 							tr.attr('compare-checked', true )
 						else
