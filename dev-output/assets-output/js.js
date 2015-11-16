@@ -1810,10 +1810,10 @@ _menu.prototype.init = function () {
 	_frame.menu.menus.push(this);
 };
 
-_menu.prototype.show = function (targetEl, mouseX, mouseY) {
+_menu.prototype.show = function (targetEl, x, y) {
 	if (this.showing) return this;
 
-	if (typeof targetEl == 'number') return this.show('mouse', targetEl, mouseX);
+	if (typeof targetEl == 'number') return this.show('mouse', targetEl, x);
 
 	var top, left, viewport_height, viewport_width, menu_height, menu_width;
 	targetEl = targetEl || this.settings.target;
@@ -1830,11 +1830,11 @@ _menu.prototype.show = function (targetEl, mouseX, mouseY) {
 
 	if (targetEl && _instanceof(targetEl, jQuery)) {
 		var offset = targetEl.offset();
-		top = offset.top + targetEl.height() - $body.scrollTop();
-		left = offset.left - $body.scrollLeft();
-	} else if (targetEl == 'mouse' || !targetEl && typeof mouseX == 'number') {
-		left = mouseX || 0;
-		top = mouseY + 5 || 0;
+		top = offset.top + targetEl.height() - $body.scrollTop() + (y || 0);
+		left = offset.left - $body.scrollLeft() + (x || 0);
+	} else if (targetEl == 'mouse' || !targetEl && typeof x == 'number') {
+		left = x || 0;
+		top = y + 5 || 0;
 	}
 
 	viewport_height = $window.height() - 10;
@@ -5347,6 +5347,15 @@ var InfosFleet = (function () {
 				if (this.is_init) {
 					this.updateURI();
 				}
+				if (InfosFleetShipEquipment.curHoverEquipment) {
+					InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide');
+					InfosFleetShipEquipment.curHoverEquipment = null;
+				}
+			}).bind(this)).on('click', (function () {
+				if (InfosFleetShipEquipment.curHoverEquipment) {
+					InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide');
+					InfosFleetShipEquipment.curHoverEquipment = null;
+				}
 			}).bind(this));
 
 			this.data = d;
@@ -6368,6 +6377,11 @@ var InfosFleetShip = (function () {
 InfosFleetShip.dragStart = function (infosFleetShip) {
 	if (InfosFleetShip.dragging || !infosFleetShip) return false;
 
+	if (InfosFleetShipEquipment.curHoverEquipment) {
+		InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide');
+		InfosFleetShipEquipment.curHoverEquipment = null;
+	}
+
 	InfosFleetShip.dragging = infosFleetShip;
 	infosFleetShip.el.addClass('moving');
 
@@ -6387,6 +6401,11 @@ InfosFleetShip.dragStart = function (infosFleetShip) {
 InfosFleetShip.dragEnter = function (infosFleetShip_enter) {
 	if (!InfosFleetShip.dragging || !infosFleetShip_enter || InfosFleetShip.dragging == infosFleetShip_enter) return false;
 
+	if (InfosFleetShipEquipment.curHoverEquipment) {
+		InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide');
+		InfosFleetShipEquipment.curHoverEquipment = null;
+	}
+
 	InfosFleetShip.dragging.swap(infosFleetShip_enter);
 };
 
@@ -6399,7 +6418,27 @@ var InfosFleetShipEquipment = (function () {
 
 		if (this.el) return this.el;
 
-		this.el = $('<div class="equipment"/>').append(this.elCarry = $('<div class="equipment-layer equipment-add"/>').on('click', (function () {
+		this.el = $('<div class="equipment" touch-action="none"/>').on({
+			'pointerenter': (function (e) {
+				if (e.originalEvent.pointerType != 'touch') {
+					if (InfosFleetShipEquipment.curHoverEquipment) InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover');
+					InfosFleetShipEquipment.curHoverEquipment = this.el.addClass('is-hover');
+				}
+			}).bind(this),
+			'pointerup pointercancel': (function (e) {
+				if (e.originalEvent.pointerType == 'touch') {
+					setTimeout((function () {
+						if (InfosFleetShipEquipment.curHoverEquipment) InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide');
+						InfosFleetShipEquipment.curHoverEquipment = this.el.addClass('is-hover').trigger('tipshow');
+					}).bind(this), 100);
+				}
+			}).bind(this),
+			'pointerleave': (function (e) {
+				if (e.originalEvent.pointerType != 'touch') {
+					this.el.removeClass('is-hover');
+				}
+			}).bind(this)
+		}).append(this.elCarry = $('<div class="equipment-layer equipment-add"/>').on('click', (function () {
 			this.selectEquipmentStart();
 		}).bind(this))).append($('<div class="equipment-layer equipment-infos"/>').append(this.elName = $('<span class="equipment-name"/>')).append(this.elStar = $('<span class="equipment-star"/>').html(0)).append(this.elRank = $('<span class="equipment-rank"/>')).append((function () {
 			var el = $('<span class="equipment-carry"/>').html(0);
@@ -6438,7 +6477,7 @@ var InfosFleetShipEquipment = (function () {
 				});
 			}
 			InfosFleet.menuRankSelectCur = this;
-			InfosFleet.menuRankSelect.show(this.elSelectRank);
+			InfosFleet.menuRankSelect.show(this.elSelectRank, 0 - this.elSelectRank.width(), 0 - this.elSelectRank.height() - 5);
 		}).bind(this))).append(this.elButtonInspect = $('<button class="inspect" icon="search"/>').on('click', (function () {
 			if (this.id) _frame.infos.show('[[EQUIPMENT::' + this.id + ']]');
 		}).bind(this))).append($('<button class="change" icon="loop"/>').on('click', (function () {

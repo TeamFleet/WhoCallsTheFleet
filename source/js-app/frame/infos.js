@@ -195,6 +195,7 @@ _frame.infos = {
 							if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(contentDOM.css('opacity')) == 0 ){
 								contentDOM.detach()
 									.data('is_show', false)
+									.trigger('hidden')
 							}
 						})
 				}

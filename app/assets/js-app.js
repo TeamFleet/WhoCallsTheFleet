@@ -6029,6 +6029,7 @@ _frame.infos = {
 							if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(contentDOM.css('opacity')) == 0 ){
 								contentDOM.detach()
 									.data('is_show', false)
+									.trigger('hidden')
 							}
 						})
 				}
@@ -6524,6 +6525,16 @@ class InfosFleet{
 			}
 			if( this.is_init ){
 				this.updateURI()
+			}
+			if( InfosFleetShipEquipment.curHoverEquipment ){
+				InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide')
+				InfosFleetShipEquipment.curHoverEquipment = null
+			}
+		}.bind(this))
+		.on('click', function(){
+			if( InfosFleetShipEquipment.curHoverEquipment ){
+				InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide')
+				InfosFleetShipEquipment.curHoverEquipment = null
 			}
 		}.bind(this))
 
@@ -8055,6 +8066,11 @@ InfosFleetShip.dragStart = function(infosFleetShip){
 	if( InfosFleetShip.dragging || !infosFleetShip )
 		return false
 
+	if( InfosFleetShipEquipment.curHoverEquipment ){
+		InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide')
+		InfosFleetShipEquipment.curHoverEquipment = null
+	}
+
 	InfosFleetShip.dragging = infosFleetShip
 	infosFleetShip.el.addClass('moving')
 	
@@ -8075,6 +8091,11 @@ InfosFleetShip.dragStart = function(infosFleetShip){
 InfosFleetShip.dragEnter = function(infosFleetShip_enter){
 	if( !InfosFleetShip.dragging || !infosFleetShip_enter || InfosFleetShip.dragging == infosFleetShip_enter )
 		return false
+
+	if( InfosFleetShipEquipment.curHoverEquipment ){
+		InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide')
+		InfosFleetShipEquipment.curHoverEquipment = null
+	}
 	
 	InfosFleetShip.dragging.swap(infosFleetShip_enter)
 }
@@ -8121,7 +8142,35 @@ class InfosFleetShipEquipment{
 		if( this.el )
 			return this.el
 		
-		this.el = $('<div class="equipment"/>')
+		this.el = $('<div class="equipment" touch-action="none"/>')
+					.on({
+						'pointerenter': function(e){
+							if( e.originalEvent.pointerType != 'touch' ){
+								if( InfosFleetShipEquipment.curHoverEquipment )
+									InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')
+								InfosFleetShipEquipment.curHoverEquipment = this.el.addClass('is-hover')
+							}
+						}.bind(this),
+						'pointerup pointercancel': function(e){
+							if( e.originalEvent.pointerType == 'touch' ){
+								setTimeout(function(){
+									if( InfosFleetShipEquipment.curHoverEquipment )
+										InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide')
+									InfosFleetShipEquipment.curHoverEquipment
+										= this.el.addClass('is-hover')
+												.trigger('tipshow')
+								}.bind(this), 100)
+							}
+						}.bind(this),
+						'pointerleave': function(e){
+							if( e.originalEvent.pointerType != 'touch' ){
+								this.el.removeClass('is-hover')
+								//if( InfosFleetShipEquipment.curHoverEquipment )
+								//	InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')
+								//InfosFleetShipEquipment.curHoverEquipment = null
+							}
+						}.bind(this)
+					})
 					.append(
 						this.elCarry = $('<div class="equipment-layer equipment-add"/>')
 										.on('click', function(){
@@ -8184,7 +8233,7 @@ class InfosFleetShipEquipment{
 										})
 									}
 									InfosFleet.menuRankSelectCur = this
-									InfosFleet.menuRankSelect.show(this.elSelectRank)
+									InfosFleet.menuRankSelect.show(this.elSelectRank, 0 - this.elSelectRank.width(), 0 - this.elSelectRank.height() - 5)
 								}.bind(this))				
 							)
 							.append(

@@ -7891,7 +7891,7 @@ body.mod-capture .infos-fleet > .ships > dl dd > .equipments {
 .infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry] {
   will-change: background-color;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry]:hover {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry].is-hover {
   background-color: rgba(0, 0, 0, 0.35);
 }
 .infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry]:before {
@@ -7914,11 +7914,11 @@ body.mod-capture .infos-fleet > .ships > dl dd > .equipments {
   display: flex;
   z-index: 10;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid]:hover > .equipment-infos {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-hover > .equipment-infos {
   display: none;
   z-index: 1;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid]:hover > .equipment-options {
+.infos-fleet > .ships > dl dd > .equipments > .equipment[data-equipmentid].is-hover > .equipment-options {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
