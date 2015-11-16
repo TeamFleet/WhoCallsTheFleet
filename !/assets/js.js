@@ -17,6 +17,7 @@ var $window = $(window),
     $html = $('html'),
     $body = $('body'),
     $body_preventMouseover = false,
+    $body_isTouch = false,
     _g = {
 	isinit: false,
 
@@ -940,28 +941,28 @@ _g.init = function () {
 		}
 	});
 
-	$body.data('preventMouseover', false).on({
+	$body.on({
 		'touchstart.preventMouseover': function touchstartPreventMouseover() {
 			$body.removeClass('hover');
 			$body_preventMouseover = true;
+			$body_isTouch = true;
 		},
-		'touchend.preventMouseover': function touchendPreventMouseover() {
-			setTimeout(function () {
+
+		'pointerenter': function pointerenter(e) {
+			if (e.originalEvent.pointerType == 'touch') $body.trigger('touchstart.preventMouseover');else {
 				$body_preventMouseover = false;
-			}, 1);
+				$body_isTouch = false;
+			}
 		},
-		'pointerover': function pointerover(e) {
-			if (e.originalEvent.pointerType == 'touch') $body.trigger('touchstart.preventMouseover');
-		},
-		'pointerleave': function pointerleave(e) {
-			if (e.originalEvent.pointerType == 'touch') $body.trigger('touchend.preventMouseover');
-		},
+
 		'mouseenter': function mouseenter() {
-			if (!$body_preventMouseover) {
-				$body.addClass('hover');
+			if ($body_isTouch) {
+				$body_isTouch = false;
+				$body_preventMouseover = true;
 			} else {
-					$body_preventMouseover = false;
-				}
+				$body.addClass('hover');
+				$body_preventMouseover = false;
+			}
 		},
 		'mouseleave': function mouseleave() {
 			$body.removeClass('hover');
