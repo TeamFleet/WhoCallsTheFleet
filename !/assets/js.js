@@ -5352,14 +5352,17 @@ var InfosFleet = (function () {
 						InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover');
 						InfosFleetShipEquipment.curHoverEquipment = null;
 					}
-				}).bind(this),
-				'click': function click() {
-					if (InfosFleetShipEquipment.curHoverEquipment) {
-						InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover');
-						InfosFleetShipEquipment.curHoverEquipment = null;
-					}
+				}).bind(this) }).on('click', '.equipment', (function (e) {
+				if (InfosFleetShipEquipment.curHoverEquipment && InfosFleetShipEquipment.curHoverEquipment[0] != e.currentTarget) {
+					InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide');
+					InfosFleetShipEquipment.curHoverEquipment = null;
 				}
-			});
+			}).bind(this)).on('click', ':not(.equipment)', (function () {
+				if (InfosFleetShipEquipment.curHoverEquipment) {
+					InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide');
+					InfosFleetShipEquipment.curHoverEquipment = null;
+				}
+			}).bind(this));
 
 			this.data = d;
 
