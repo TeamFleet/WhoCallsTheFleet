@@ -5192,7 +5192,11 @@ _frame.infos = {
 					cont.detach().data('is_show', false);
 				}).on(eventName('transitionend', 'hide'), function (e) {
 					if (e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && cont.css('opacity') == 0 && cont.data('is_show')) {
-						cont.trigger('hidden');
+						if (_frame.infos.curContent == type + '::' + id) {
+							cont.prependTo(_frame.infos.dom.container);
+						} else {
+							cont.trigger('hidden');
+						}
 					}
 				});
 			}
@@ -5352,12 +5356,7 @@ var InfosFleet = (function () {
 						InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover');
 						InfosFleetShipEquipment.curHoverEquipment = null;
 					}
-				}).bind(this) }).on('click', '.equipment', (function (e) {
-				if (InfosFleetShipEquipment.curHoverEquipment && InfosFleetShipEquipment.curHoverEquipment[0] != e.currentTarget) {
-					InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide');
-					InfosFleetShipEquipment.curHoverEquipment = null;
-				}
-			}).bind(this)).on('click', ':not(.equipment)', (function () {
+				}).bind(this) }).on('click', ':not(.equipment)', (function () {
 				if (InfosFleetShipEquipment.curHoverEquipment) {
 					InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide');
 					InfosFleetShipEquipment.curHoverEquipment = null;
@@ -6406,11 +6405,6 @@ InfosFleetShip.dragStart = function (infosFleetShip) {
 };
 InfosFleetShip.dragEnter = function (infosFleetShip_enter) {
 	if (!InfosFleetShip.dragging || !infosFleetShip_enter || InfosFleetShip.dragging == infosFleetShip_enter) return false;
-
-	if (InfosFleetShipEquipment.curHoverEquipment && InfosFleetShipEquipment.curHoverEquipment != infosFleetShip_enter) {
-		InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover');
-		InfosFleetShipEquipment.curHoverEquipment = null;
-	}
 
 	InfosFleetShip.dragging.swap(infosFleetShip_enter);
 };
