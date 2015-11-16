@@ -955,7 +955,7 @@ _g.init = function () {
 			}
 		},
 
-		'mouseenter': function mouseenter() {
+		'mouseover': function mouseover() {
 			if ($body_isTouch) {
 				$body_isTouch = false;
 				$body_preventMouseover = true;
