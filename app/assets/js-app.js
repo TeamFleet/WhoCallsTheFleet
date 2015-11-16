@@ -6531,23 +6531,28 @@ class InfosFleet{
 						InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')//.trigger('tiphide')
 						InfosFleetShipEquipment.curHoverEquipment = null
 					}
-				}.bind(this),
+				}.bind(this)/*,
 			'click': function(){
 					if( InfosFleetShipEquipment.curHoverEquipment ){
 						InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')//.trigger('tiphide')
 						InfosFleetShipEquipment.curHoverEquipment = null
 					}
-			}
+			}*/
 		})
 		/*
 		.on('click', '.equipment', function(e){
-			console.log(e)
 			if( InfosFleetShipEquipment.curHoverEquipment && InfosFleetShipEquipment.curHoverEquipment[0] != e.currentTarget ){
 				InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide')
 				InfosFleetShipEquipment.curHoverEquipment = null
 			}
 		}.bind(this))
 		*/
+		.on('click', ':not(.equipment)', function(){
+			if( InfosFleetShipEquipment.curHoverEquipment ){
+				InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide')
+				InfosFleetShipEquipment.curHoverEquipment = null
+			}
+		}.bind(this))
 
 		/*
 		if( !_g.isClient )
@@ -8103,10 +8108,12 @@ InfosFleetShip.dragEnter = function(infosFleetShip_enter){
 	if( !InfosFleetShip.dragging || !infosFleetShip_enter || InfosFleetShip.dragging == infosFleetShip_enter )
 		return false
 
-	if( InfosFleetShipEquipment.curHoverEquipment && InfosFleetShipEquipment.curHoverEquipment != infosFleetShip_enter ){
+	/*
+	if( InfosFleetShipEquipment.curHoverEquipment ){
 		InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')//.trigger('tiphide')
 		InfosFleetShipEquipment.curHoverEquipment = null
 	}
+	*/
 	
 	InfosFleetShip.dragging.swap(infosFleetShip_enter)
 }
@@ -8170,7 +8177,7 @@ class InfosFleetShipEquipment{
 									InfosFleetShipEquipment.curHoverEquipment
 										= this.el.addClass('is-hover')
 												//.trigger('tipshow')
-								}.bind(this), 10)
+								}.bind(this), bIOS ? 400 : 10)
 							}
 						}.bind(this),
 						'pointerleave': function(e){

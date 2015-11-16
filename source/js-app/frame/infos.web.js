@@ -242,7 +242,11 @@ _frame.infos = {
 								&& cont.css('opacity') == 0
 								&& cont.data('is_show')
 							){
-								cont.trigger('hidden')
+								if( _frame.infos.curContent == type + '::' + id ){
+									cont.prependTo( _frame.infos.dom.container )
+								}else{
+									cont.trigger('hidden')
+								}
 							}
 						})
 				}
