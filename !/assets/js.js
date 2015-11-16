@@ -6430,7 +6430,7 @@ var InfosFleetShipEquipment = (function () {
 					setTimeout((function () {
 						if (InfosFleetShipEquipment.curHoverEquipment) InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover');
 						InfosFleetShipEquipment.curHoverEquipment = this.el.addClass('is-hover');
-					}).bind(this), 10);
+					}).bind(this), bIOS ? 310 : 10);
 				}
 			}).bind(this),
 			'pointerleave': (function (e) {
