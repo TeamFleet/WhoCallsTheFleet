@@ -8229,6 +8229,9 @@ body.mod-capture .infos-fleet > .ships > dl dd > .options {
 .infos-fleet > .ships > dl dd.noship > dt {
   overflow: visible;
 }
+.infos-fleet > .ships > dl dd.noship > dt > s {
+  pointer-events: none;
+}
 .infos-fleet > .ships > dl dd.noship > dt > s:before {
   content: '+';
   font-size: 533.33333333%;

@@ -6509,34 +6509,45 @@ class InfosFleet{
 		if( !d )
 			return false
 
-		this.el.on('show', function(e, is_firstShow){
-			if( !is_firstShow ){
-				// 再次显示时，重新计算分舰队的索敌能力
-				let i = 0
-					,l = Lockr.get('hqLvDefault', _g.defaultHqLv)
-				while(i < 4){
-					this.fleets[i].summaryCalc(true)
-					i++
-				}
-				if( !this._hqlv )
-					this.doms['hqlvOption'].val(l)
-				this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(l) )
-				this.doms['hqlvOption'].attr('placeholder', l)
+		this.el.on({
+			'show': function(e, is_firstShow){
+					if( !is_firstShow ){
+						// 再次显示时，重新计算分舰队的索敌能力
+						let i = 0
+							,l = Lockr.get('hqLvDefault', _g.defaultHqLv)
+						while(i < 4){
+							this.fleets[i].summaryCalc(true)
+							i++
+						}
+						if( !this._hqlv )
+							this.doms['hqlvOption'].val(l)
+						this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(l) )
+						this.doms['hqlvOption'].attr('placeholder', l)
+					}
+					if( this.is_init ){
+						this.updateURI()
+					}
+					if( InfosFleetShipEquipment.curHoverEquipment ){
+						InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')//.trigger('tiphide')
+						InfosFleetShipEquipment.curHoverEquipment = null
+					}
+				}.bind(this),
+			'click': function(){
+					if( InfosFleetShipEquipment.curHoverEquipment ){
+						InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')//.trigger('tiphide')
+						InfosFleetShipEquipment.curHoverEquipment = null
+					}
 			}
-			if( this.is_init ){
-				this.updateURI()
-			}
-			if( InfosFleetShipEquipment.curHoverEquipment ){
+		})
+		/*
+		.on('click', '.equipment', function(e){
+			console.log(e)
+			if( InfosFleetShipEquipment.curHoverEquipment && InfosFleetShipEquipment.curHoverEquipment[0] != e.currentTarget ){
 				InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide')
 				InfosFleetShipEquipment.curHoverEquipment = null
 			}
 		}.bind(this))
-		.on('click', function(){
-			if( InfosFleetShipEquipment.curHoverEquipment ){
-				InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide')
-				InfosFleetShipEquipment.curHoverEquipment = null
-			}
-		}.bind(this))
+		*/
 
 		/*
 		if( !_g.isClient )
@@ -8067,7 +8078,7 @@ InfosFleetShip.dragStart = function(infosFleetShip){
 		return false
 
 	if( InfosFleetShipEquipment.curHoverEquipment ){
-		InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide')
+		InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')//.trigger('tiphide')
 		InfosFleetShipEquipment.curHoverEquipment = null
 	}
 
@@ -8092,8 +8103,8 @@ InfosFleetShip.dragEnter = function(infosFleetShip_enter){
 	if( !InfosFleetShip.dragging || !infosFleetShip_enter || InfosFleetShip.dragging == infosFleetShip_enter )
 		return false
 
-	if( InfosFleetShipEquipment.curHoverEquipment ){
-		InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide')
+	if( InfosFleetShipEquipment.curHoverEquipment && InfosFleetShipEquipment.curHoverEquipment != infosFleetShip_enter ){
+		InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')//.trigger('tiphide')
 		InfosFleetShipEquipment.curHoverEquipment = null
 	}
 	
@@ -8155,11 +8166,11 @@ class InfosFleetShipEquipment{
 							if( e.originalEvent.pointerType == 'touch' ){
 								setTimeout(function(){
 									if( InfosFleetShipEquipment.curHoverEquipment )
-										InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide')
+										InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')//.trigger('tiphide')
 									InfosFleetShipEquipment.curHoverEquipment
 										= this.el.addClass('is-hover')
-												.trigger('tipshow')
-								}.bind(this), 100)
+												//.trigger('tipshow')
+								}.bind(this), 10)
 							}
 						}.bind(this),
 						'pointerleave': function(e){
@@ -8233,7 +8244,7 @@ class InfosFleetShipEquipment{
 										})
 									}
 									InfosFleet.menuRankSelectCur = this
-									InfosFleet.menuRankSelect.show(this.elSelectRank, 0 - this.elSelectRank.width(), 0 - this.elSelectRank.height() - 5)
+									InfosFleet.menuRankSelect.show(this.elSelectRank/*, 0 - this.elSelectRank.width(), 0 - this.elSelectRank.height() - 5*/)
 								}.bind(this))				
 							)
 							.append(
