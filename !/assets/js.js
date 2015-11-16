@@ -1810,10 +1810,10 @@ _menu.prototype.init = function () {
 	_frame.menu.menus.push(this);
 };
 
-_menu.prototype.show = function (targetEl, mouseX, mouseY) {
+_menu.prototype.show = function (targetEl, x, y) {
 	if (this.showing) return this;
 
-	if (typeof targetEl == 'number') return this.show('mouse', targetEl, mouseX);
+	if (typeof targetEl == 'number') return this.show('mouse', targetEl, x);
 
 	var top, left, viewport_height, viewport_width, menu_height, menu_width;
 	targetEl = targetEl || this.settings.target;
@@ -1830,11 +1830,11 @@ _menu.prototype.show = function (targetEl, mouseX, mouseY) {
 
 	if (targetEl && _instanceof(targetEl, jQuery)) {
 		var offset = targetEl.offset();
-		top = offset.top + targetEl.height() - $body.scrollTop();
-		left = offset.left - $body.scrollLeft();
-	} else if (targetEl == 'mouse' || !targetEl && typeof mouseX == 'number') {
-		left = mouseX || 0;
-		top = mouseY + 5 || 0;
+		top = offset.top + targetEl.height() - $body.scrollTop() + (y || 0);
+		left = offset.left - $body.scrollLeft() + (x || 0);
+	} else if (targetEl == 'mouse' || !targetEl && typeof x == 'number') {
+		left = x || 0;
+		top = y + 5 || 0;
 	}
 
 	viewport_height = $window.height() - 10;
@@ -2049,9 +2049,9 @@ _p.tip = {
 	countdown_fade: 250,
 
 	init_global: function init_global() {
-		if (_p.tip.is_init) return false;
+		if (this.is_init) return false;
 
-		_p.tip.dom = $('<div id="tip"/>').on('transitionend webkitTransitionEnd mozTransitionEnd', function (e) {
+		this.dom = $('<div id="tip"/>').on('transitionend webkitTransitionEnd mozTransitionEnd', function (e) {
 			if (e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && _p.tip.dom.css('opacity') == 0) {
 				_p.tip.dom.removeClass('show').css({
 					'top': '',
@@ -2065,99 +2065,98 @@ _p.tip = {
 			}
 		}).appendTo($body);
 
-		_p.tip.dom_body = $('<div class="body"/>').appendTo(_p.tip.dom);
+		this.dom_body = $('<div class="body"/>').appendTo(this.dom);
 
 		if (_huCss.csscheck_full('backdrop-filter')) {
-			_p.tip.dom.addClass('mod-blur-backdrop');
+			this.dom.addClass('mod-blur-backdrop');
 		} else if (typeof node != 'undefined') {
-			_p.tip.dom.addClass('mod-blur-shot');
-			_p.tip.dom_bluredbg = $('<div/>').appendTo($('<div class="bluredbg"/>').appendTo(_p.tip.dom));
+			this.dom.addClass('mod-blur-shot');
+			this.dom_bluredbg = $('<div/>').appendTo($('<div class="bluredbg"/>').appendTo(this.dom));
 		}
 
-		_p.tip.is_init = true;
+		this.is_init = true;
 	},
 
 	show: function show(cont, el, pos) {
 		if ($('body').data('preventMouseover') || !cont) return false;
 
-		clearTimeout(_p.tip.timeout_fade);
-		_p.tip.timeout_fade = null;
+		clearTimeout(this.timeout_fade);
 
 		el = el || 'body';
-		_p.tip.el = $(el);
+		this.el = $(el);
 
-		pos = pos || _p.tip.pos;
+		pos = pos || this.pos;
 
-		cont = _p.tip.content(cont);
+		cont = this.content(cont);
 
-		_p.tip.init_global();
+		this.init_global();
 
-		if (!_p.tip.dom.hasClass('show')) {
-			if (_p.tip.dom_bluredbg && typeof node != 'undefined') {
+		if (!this.dom.hasClass('show')) {
+			if (this.dom_bluredbg && typeof node != 'undefined') {
 				node.win.capturePage(function (datauri) {
 					_p.tip.dom_bluredbg.css('background-image', 'url(' + datauri + ')');
 				}, 'jpg', 'datauri');
 			}
-			_p.tip.dom.addClass('show');
+			this.dom.addClass('show');
 		}
 
-		_p.tip.position(cont, pos);
+		this.position(cont, pos);
 
-		_p.tip.is_showing = true;
+		this.is_showing = true;
 	},
 
 	position: function position(cont, pos) {
 		var hashcode = cont.hashCode();
 
-		if (_p.tip.curContent != hashcode) {
-			_p.tip.dom.css({
+		if (this.curContent != hashcode) {
+			this.dom.css({
 				top: '-1000px',
 				left: '-1000px'
 			});
-			_p.tip.dom_body.html(cont);
-			_p.initDOM(_p.tip.dom_body);
+			this.dom_body.html(cont);
+			_p.initDOM(this.dom_body);
 
-			_p.tip.curContent = hashcode;
+			this.curContent = hashcode;
 		}
 
-		var coords = _p.tip['pos_' + pos](_p.tip.dom.outerWidth(), _p.tip.dom.outerHeight());
+		var coords = this['pos_' + pos](this.dom.outerWidth(), this.dom.outerHeight());
 		if (coords) {
-			_p.tip.move(coords.x, coords.y);
+			this.move(coords.x, coords.y);
 		}
 	},
 
 	hide: function hide(is_instant) {
-		if (!_p.tip.is_init || !_p.tip.is_showing) return false;
+		if (!this.is_init || !this.is_showing) return false;
 
-		_p.tip.timeout_fade = setTimeout(function () {
+		this.timeout_fade = setTimeout(function () {
 			_p.tip.el = null;
 
 			_p.tip.dom.removeClass('on');
 
 			_p.tip.is_showing = false;
 			_p.tip.curContent = null;
-		}, is_instant ? 0 : _p.tip.countdown_fade);
+		}, is_instant ? 0 : this.countdown_fade);
 	},
 
 	content: function content(cont, el) {
-		el = el || _p.tip.el;
+		el = el || this.el;
 
 		return cont;
 	},
 
 	move: function move(x, y) {
-		_p.tip.dom.css({
+		this.dom.css({
 			top: y,
 			left: x
 		}).addClass('on');
 	},
 
 	get_indicator_size: function get_indicator_size() {
-		return _p.tip.size_indicator * _g.baseMultiper;
+		return this.size_indicator * _g.baseMultiper;
 	},
 
 	pos_mouse: function pos_mouse(w, h) {
-		_p.tip.el.unbind('mousemove.tooltip').bind('mousemove.tooltip', function (e) {
+		this.el.unbind('mousemove.tooltip').bind('mousemove.tooltip', function (e) {
 			var xOff = 25,
 			    yOff = 30,
 			    x = e.pageX + xOff,
@@ -2176,52 +2175,52 @@ _p.tip = {
 		});
 	},
 	pos_bottom: function pos_bottom(w, h) {
-		var el = _p.tip.el,
-		    dom = _p.tip.dom,
+		var el = this.el,
+		    dom = this.dom,
 		    offset = el.offset(),
 		    x = offset.left + (el.outerWidth() - dom.outerWidth()) / 2,
-		    y = offset.top + el.outerHeight() + _p.tip.get_indicator_size();
+		    y = offset.top + el.outerHeight() + this.get_indicator_size();
 
-		_p.tip.dom.attr('data-tip-indicator-pos', 'top');
+		this.dom.attr('data-tip-indicator-pos', 'top');
 
-		return _p.tip.checkpos(x, y, w, h);
+		return this.checkpos(x, y, w, h);
 	},
 	pos_top: function pos_top(w, h) {
-		var el = _p.tip.el,
-		    dom = _p.tip.dom,
+		var el = this.el,
+		    dom = this.dom,
 		    offset = el.offset(),
 		    x = offset.left + (el.outerWidth() - dom.outerWidth()) / 2,
-		    y = offset.top - h - _p.tip.get_indicator_size();
+		    y = offset.top - h - this.get_indicator_size();
 
-		_p.tip.dom.attr('data-tip-indicator-pos', 'bottom');
+		this.dom.attr('data-tip-indicator-pos', 'bottom');
 
-		return _p.tip.checkpos(x, y, w, h);
+		return this.checkpos(x, y, w, h);
 	},
 	pos_left: function pos_left(w, h) {
-		var el = _p.tip.el,
-		    dom = _p.tip.dom,
+		var el = this.el,
+		    dom = this.dom,
 		    offset = el.offset(),
-		    x = offset.left - w - _p.tip.get_indicator_size(),
+		    x = offset.left - w - this.get_indicator_size(),
 		    y = offset.top + (el.outerHeight() - dom.outerHeight()) / 2;
 
-		_p.tip.dom.attr('data-tip-indicator-pos', 'right');
+		this.dom.attr('data-tip-indicator-pos', 'right');
 
-		return _p.tip.checkpos(x, y, w, h);
+		return this.checkpos(x, y, w, h);
 	},
 	pos_right: function pos_right(w, h) {
-		var el = _p.tip.el,
-		    dom = _p.tip.dom,
+		var el = this.el,
+		    dom = this.dom,
 		    offset = el.offset(),
-		    x = offset.left + el.outerWidth() + _p.tip.get_indicator_size(),
+		    x = offset.left + el.outerWidth() + this.get_indicator_size(),
 		    y = offset.top + (el.outerHeight() - dom.outerHeight()) / 2;
 
-		_p.tip.dom.attr('data-tip-indicator-pos', 'left');
+		this.dom.attr('data-tip-indicator-pos', 'left');
 
-		return _p.tip.checkpos(x, y, w, h);
+		return this.checkpos(x, y, w, h);
 	},
 	checkpos: function checkpos(x, y, w, h) {
-		var el = _p.tip.el,
-		    dom = _p.tip.dom,
+		var el = this.el,
+		    dom = this.dom,
 		    offset = el.offset(),
 		    nx = x,
 		    ny = y,
@@ -2235,11 +2234,11 @@ _p.tip = {
 					'y': y
 				};
 			} else {
-				pos = _p.tip['pos_left'](w, h);
+				pos = this['pos_left'](w, h);
 			}
-		} else if (x < 0) pos = _p.tip['pos_right'](w, h);
+		} else if (x < 0) pos = this['pos_right'](w, h);
 
-		if (y + h > $(window).scrollTop() + $(window).height()) pos = _p.tip['pos_top'](w, h);else if (y < $(window).scrollTop()) pos = _p.tip['pos_bottom'](w, h);
+		if (y + h > $(window).scrollTop() + $(window).height()) pos = this['pos_top'](w, h);else if (y < $(window).scrollTop()) pos = this['pos_bottom'](w, h);
 
 		dom.attr({
 			'data-tip-indicator-offset-x': x - nx + 'px',
@@ -2252,7 +2251,7 @@ _p.tip = {
 		var cont = el.data('tip');
 
 		if (!el.data('tip-filtered')) {
-			_p.tip.filters.forEach(function (filter) {
+			this.filters.forEach(function (filter) {
 				cont = filter(cont) || cont;
 			});
 			el.data({
@@ -2261,7 +2260,7 @@ _p.tip = {
 			});
 		}
 
-		_p.tip.show(cont, el, el.data('tip-position'));
+		this.show(cont, el, el.data('tip-position'));
 	}
 };
 
@@ -5332,22 +5331,34 @@ var InfosFleet = (function () {
 		value: function init(d) {
 			if (!d) return false;
 
-			this.el.on('show', (function (e, is_firstShow) {
-				if (!is_firstShow) {
-					var _i7 = 0,
-					    _l2 = Lockr.get('hqLvDefault', _g.defaultHqLv);
-					while (_i7 < 4) {
-						this.fleets[_i7].summaryCalc(true);
-						_i7++;
+			this.el.on({
+				'show': (function (e, is_firstShow) {
+					if (!is_firstShow) {
+						var _i7 = 0,
+						    _l2 = Lockr.get('hqLvDefault', _g.defaultHqLv);
+						while (_i7 < 4) {
+							this.fleets[_i7].summaryCalc(true);
+							_i7++;
+						}
+						if (!this._hqlv) this.doms['hqlvOption'].val(_l2);
+						this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(_l2));
+						this.doms['hqlvOption'].attr('placeholder', _l2);
 					}
-					if (!this._hqlv) this.doms['hqlvOption'].val(_l2);
-					this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(_l2));
-					this.doms['hqlvOption'].attr('placeholder', _l2);
+					if (this.is_init) {
+						this.updateURI();
+					}
+					if (InfosFleetShipEquipment.curHoverEquipment) {
+						InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover');
+						InfosFleetShipEquipment.curHoverEquipment = null;
+					}
+				}).bind(this),
+				'click': function click() {
+					if (InfosFleetShipEquipment.curHoverEquipment) {
+						InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover');
+						InfosFleetShipEquipment.curHoverEquipment = null;
+					}
 				}
-				if (this.is_init) {
-					this.updateURI();
-				}
-			}).bind(this));
+			});
 
 			this.data = d;
 
@@ -6034,7 +6045,7 @@ var InfosFleetShip = (function () {
 		this.equipments = [];
 		this.index = index;
 
-		this.el = $('<dd class="noship"/>').append($('<dt/>').append(this.elAvatar = $('<s/>')).append(this.elInfos = $('<div/>').html('<span>' + (this.infosFleet.data._id ? '选择舰娘' : '无舰娘') + '...</span>').append(this.elInfosTitle = $('<div class="title"/>')).append($('<div class="info"/>').append($('<label/>').html('Lv.').append(this.elInputLevel = $('<input/>', {
+		this.el = $('<dd class="noship"/>').append($('<dt/>').append(this.elAvatar = $('<s touch-action="none"/>')).append(this.elInfos = $('<div/>').html('<span>' + (this.infosFleet.data._id ? '选择舰娘' : '无舰娘') + '...</span>').append(this.elInfosTitle = $('<div class="title"/>')).append($('<div class="info"/>').append($('<label/>').html('Lv.').append(this.elInputLevel = $('<input/>', {
 			'type': 'number',
 			'min': 0,
 			'max': 150
@@ -6079,12 +6090,12 @@ var InfosFleetShip = (function () {
 					if (!this.data[0]) this.selectShipStart();
 				}).bind(this),
 
-				'mouseenter': (function (e) {
+				'pointerenter': (function () {
 					InfosFleetShip.dragEnter(this);
 				}).bind(this)
 			});
 			this.elAvatar.on({
-				'mousedown': (function (e) {
+				'pointerdown': (function (e) {
 					e.preventDefault();
 					if (this.data[0]) InfosFleetShip.dragStart(this);
 				}).bind(this)
@@ -6368,12 +6379,17 @@ var InfosFleetShip = (function () {
 InfosFleetShip.dragStart = function (infosFleetShip) {
 	if (InfosFleetShip.dragging || !infosFleetShip) return false;
 
+	if (InfosFleetShipEquipment.curHoverEquipment) {
+		InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover');
+		InfosFleetShipEquipment.curHoverEquipment = null;
+	}
+
 	InfosFleetShip.dragging = infosFleetShip;
 	infosFleetShip.el.addClass('moving');
 
 	if (!InfosFleetShip.isInit) {
 		$body.on({
-			'mouseup.InfosFleetShip_dragend': function mouseupInfosFleetShip_dragend() {
+			'pointerup.InfosFleetShip_dragend pointercancel.InfosFleetShip_dragend': function pointerupInfosFleetShip_dragendPointercancelInfosFleetShip_dragend() {
 				if (InfosFleetShip.dragging) {
 					InfosFleetShip.dragging.el.removeClass('moving');
 					InfosFleetShip.dragging.save();
@@ -6387,6 +6403,11 @@ InfosFleetShip.dragStart = function (infosFleetShip) {
 InfosFleetShip.dragEnter = function (infosFleetShip_enter) {
 	if (!InfosFleetShip.dragging || !infosFleetShip_enter || InfosFleetShip.dragging == infosFleetShip_enter) return false;
 
+	if (InfosFleetShipEquipment.curHoverEquipment && InfosFleetShipEquipment.curHoverEquipment != infosFleetShip_enter) {
+		InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover');
+		InfosFleetShipEquipment.curHoverEquipment = null;
+	}
+
 	InfosFleetShip.dragging.swap(infosFleetShip_enter);
 };
 
@@ -6399,7 +6420,27 @@ var InfosFleetShipEquipment = (function () {
 
 		if (this.el) return this.el;
 
-		this.el = $('<div class="equipment"/>').append(this.elCarry = $('<div class="equipment-layer equipment-add"/>').on('click', (function () {
+		this.el = $('<div class="equipment" touch-action="none"/>').on({
+			'pointerenter': (function (e) {
+				if (e.originalEvent.pointerType != 'touch') {
+					if (InfosFleetShipEquipment.curHoverEquipment) InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover');
+					InfosFleetShipEquipment.curHoverEquipment = this.el.addClass('is-hover');
+				}
+			}).bind(this),
+			'pointerup pointercancel': (function (e) {
+				if (e.originalEvent.pointerType == 'touch') {
+					setTimeout((function () {
+						if (InfosFleetShipEquipment.curHoverEquipment) InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover');
+						InfosFleetShipEquipment.curHoverEquipment = this.el.addClass('is-hover');
+					}).bind(this), 10);
+				}
+			}).bind(this),
+			'pointerleave': (function (e) {
+				if (e.originalEvent.pointerType != 'touch') {
+					this.el.removeClass('is-hover');
+				}
+			}).bind(this)
+		}).append(this.elCarry = $('<div class="equipment-layer equipment-add"/>').on('click', (function () {
 			this.selectEquipmentStart();
 		}).bind(this))).append($('<div class="equipment-layer equipment-infos"/>').append(this.elName = $('<span class="equipment-name"/>')).append(this.elStar = $('<span class="equipment-star"/>').html(0)).append(this.elRank = $('<span class="equipment-rank"/>')).append((function () {
 			var el = $('<span class="equipment-carry"/>').html(0);
