@@ -6034,7 +6034,7 @@ var InfosFleetShip = (function () {
 		this.equipments = [];
 		this.index = index;
 
-		this.el = $('<dd class="noship"/>').append($('<dt/>').append(this.elAvatar = $('<s/>')).append(this.elInfos = $('<div/>').html('<span>' + (this.infosFleet.data._id ? '选择舰娘' : '无舰娘') + '...</span>').append(this.elInfosTitle = $('<div class="title"/>')).append($('<div class="info"/>').append($('<label/>').html('Lv.').append(this.elInputLevel = $('<input/>', {
+		this.el = $('<dd class="noship"/>').append($('<dt/>').append(this.elAvatar = $('<s touch-action="none"/>')).append(this.elInfos = $('<div/>').html('<span>' + (this.infosFleet.data._id ? '选择舰娘' : '无舰娘') + '...</span>').append(this.elInfosTitle = $('<div class="title"/>')).append($('<div class="info"/>').append($('<label/>').html('Lv.').append(this.elInputLevel = $('<input/>', {
 			'type': 'number',
 			'min': 0,
 			'max': 150
@@ -6079,12 +6079,12 @@ var InfosFleetShip = (function () {
 					if (!this.data[0]) this.selectShipStart();
 				}).bind(this),
 
-				'mouseenter': (function (e) {
+				'pointerenter': (function () {
 					InfosFleetShip.dragEnter(this);
 				}).bind(this)
 			});
 			this.elAvatar.on({
-				'mousedown': (function (e) {
+				'pointerdown': (function (e) {
 					e.preventDefault();
 					if (this.data[0]) InfosFleetShip.dragStart(this);
 				}).bind(this)
@@ -6373,7 +6373,7 @@ InfosFleetShip.dragStart = function (infosFleetShip) {
 
 	if (!InfosFleetShip.isInit) {
 		$body.on({
-			'mouseup.InfosFleetShip_dragend': function mouseupInfosFleetShip_dragend() {
+			'pointerup.InfosFleetShip_dragend pointercancel.InfosFleetShip_dragend': function pointerupInfosFleetShip_dragendPointercancelInfosFleetShip_dragend() {
 				if (InfosFleetShip.dragging) {
 					InfosFleetShip.dragging.el.removeClass('moving');
 					InfosFleetShip.dragging.save();

@@ -1125,7 +1125,7 @@ class InfosFleetShip{
 			.append(
 				$('<dt/>')
 					.append(
-						this.elAvatar = $('<s/>')
+						this.elAvatar = $('<s touch-action="none"/>')
 					)
 					.append(
 						this.elInfos = $('<div/>').html('<span>' + (this.infosFleet.data._id ? '选择舰娘' : '无舰娘' ) + '...</span>')
@@ -1260,12 +1260,14 @@ class InfosFleetShip{
 								this.selectShipStart()
 						}.bind(this),
 						
-						'mouseenter': function(e){
+						//'mouseenter': function(e){
+						'pointerenter': function(){
 							InfosFleetShip.dragEnter(this)
 						}.bind(this)
 				})
 			this.elAvatar.on({
-					'mousedown': function(e){
+					//'mousedown': function(e){
+					'pointerdown': function(e){
 						e.preventDefault()
 						if( this.data[0] )
 							InfosFleetShip.dragStart( this )
@@ -1636,7 +1638,8 @@ InfosFleetShip.dragStart = function(infosFleetShip){
 	
 	if( !InfosFleetShip.isInit ){
 		$body.on({
-			'mouseup.InfosFleetShip_dragend': function(){
+			//'mouseup.InfosFleetShip_dragend': function(){
+			'pointerup.InfosFleetShip_dragend pointercancel.InfosFleetShip_dragend': function(){
 				if( InfosFleetShip.dragging ){
 					InfosFleetShip.dragging.el.removeClass('moving')
 					InfosFleetShip.dragging.save()
