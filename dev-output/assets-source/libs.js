@@ -8,3 +8,4 @@
 // @koala-prepend "../../source/js-app/lib/lockr.js"
 // @koala-prepend "../../source/libs/node_modules/lz-string/libs/lz-string.js"
 // @koala-prepend "../../source/libs/node_modules/sprintf-js/src/sprintf.js"
+// @koala-prepend "../../source/libs/node_modules/pepjs/dist/pep.min.js"
