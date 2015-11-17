@@ -58,7 +58,7 @@ class TablelistFleets extends Tablelist{
 												TablelistFleets.btn_exportFile_link = document.createElement('a')
 												TablelistFleets.btn_exportFile_link.download = 'fleets.json'
 											}
-											_frame.dom.layout.addClass('is-loading')
+											_frame.app_main.loading_start('tablelist_fleets_export', false)
 											let data = ''
 											_db.fleets.find({}, function(err, docs){
 												if( err ){
@@ -70,7 +70,7 @@ class TablelistFleets extends Tablelist{
 													let blob = new Blob([data], {type: "application/json"})
 													TablelistFleets.btn_exportFile_link.href = URL.createObjectURL(blob)
 													TablelistFleets.btn_exportFile_link.click()
-													_frame.dom.layout.removeClass('is-loading')
+													_frame.app_main.loading_complete('tablelist_fleets_export')
 												}
 											})
 										}
@@ -538,7 +538,8 @@ class TablelistFleets extends Tablelist{
 											TablelistFleets.modalImport,
 											'导入配置代码',
 											{
-												'classname': 	'infos_fleet infos_fleet_import'
+												'classname': 	'infos_fleet infos_fleet_import',
+												'detach':		true
 											}
 										)
 									}.bind(this))
@@ -554,7 +555,7 @@ class TablelistFleets extends Tablelist{
 				})
 				this.dbfile_selector = $('<input type="file" class="none"/>')
 					.on('change', function(e){
-						_frame.dom.layout.addClass('is-loading')
+						_frame.app_main.loading_start('tablelist_fleets_import', false)
 						this.dbfile_selector.prop('disabled', true)
 						
 						let file = this.dbfile_selector.val()
@@ -656,7 +657,7 @@ class TablelistFleets extends Tablelist{
 							})
 							.done(function(){
 								_g.log('import complete')
-								_frame.dom.layout.removeClass('is-loading')
+								_frame.app_main.loading_complete('tablelist_fleets_import')
 								this.dbfile_selector.prop('disabled', false)
 							}.bind(this))
 					}.bind(this))
@@ -733,6 +734,10 @@ class TablelistFleets extends Tablelist{
 							.on({
 								'click': function(e){
 									let id = TablelistFleets.contextmenu.curel.attr('data-fleetid')
+									if( id ){
+										InfosFleet.modalRemove_show(id, TablelistFleets.contextmenu.curobject)
+									}
+									/*
 									_db.fleets.remove({
 										_id: id
 									}, { multi: true }, function (err, numRemoved) {
@@ -743,6 +748,7 @@ class TablelistFleets extends Tablelist{
 										})
 									});
 									TablelistFleets.contextmenu.curel.remove()
+									*/
 								}
 							})
 					]
@@ -811,9 +817,9 @@ class TablelistFleets extends Tablelist{
 TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 	if( !TablelistFleets.menuOptions )
 		TablelistFleets.menuOptions = new _menu({
-			'className':	'mod-checkbox menu-tablelistfleets-options',
+			'className':	'menu-tablelistfleets-options',
 			'items': [
-				$('<menuitem class="donot_hide option-groupbytheme"/>')
+				$('<menuitem class="mod-checkbox donot_hide option-in-tablelist option-groupbytheme"/>')
 					.append($('<input/>',{
 							'type':	'checkbox',
 							'id':	'_input_g' + _g.inputIndex
@@ -830,7 +836,7 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 							'html':	'按主题颜色进行分组'
 						})),
 
-				$('<menuitem class="donot_hide option-aircraftdefaultmax"/>')
+				$('<menuitem class="mod-checkbox donot_hide option-aircraftdefaultmax"/>')
 					.append($('<input/>',{
 							'type':	'checkbox',
 							'id':	'_input_g' + _g.inputIndex
@@ -841,7 +847,17 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 					.append($('<label/>',{
 							'for':	'_input_g' + (_g.inputIndex++),
 							'html':	'新增飞行器熟练度默认为'
-						}))
+						})),
+
+				$('<hr class="option-in-infos"/>'),
+
+				$('<menuitem/>',{
+						'class':	'option-in-infos',
+						'html':		'移除配置'
+					}).on('click', function(){
+						if( InfosFleet.cur )
+							InfosFleet.cur.remove()
+					})
 			]
 		})
 

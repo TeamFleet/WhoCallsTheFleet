@@ -353,13 +353,17 @@ _frame.app_main = {
 		//loading_cur: null,
 		loading_start: function( url, callback_success, callback_error, callback_successAfter, callback_beforeSend, callback_complete ){
 			url = url || location.pathname
+			let isUrl = true
 			
 			if( typeof callback_success == 'object' ){
+				isUrl = typeof callback_success.isUrl != 'undefined' ? callback_success.isUrl : true
 				callback_error = callback_success.error
 				callback_successAfter = callback_success.successAfter
 				callback_beforeSend = callback_success.beforeSend
 				callback_complete = callback_success.complete
 				callback_success = callback_success.success
+			}else if( callback_success === false ){
+				isUrl = false
 			}
 
 			callback_beforeSend = callback_beforeSend || function(){}
@@ -375,54 +379,59 @@ _frame.app_main = {
 					this.loading_state[url] = 'loading'
 				this.loading_queue.push(url)
 				_frame.dom.layout.addClass('is-loading')
-				$.ajax({
-					'url':		url,
-					'type':		'get',
-					'dataType':	'html',
-					
-					'beforeSend': function( jqXHR, settings ){
-						callback_beforeSend( url, jqXHR, settings )
-					},
-					
-					'success': function(data){
-						let result_main = /\<main\>(.+)\<\/main\>/.exec(data)
-							,result_title = /\<title\>([^\<]+)\<\/title\>/.exec(data)
-						if( result_title && result_title.length > 1 ){
-							_frame.app_main.page_title[url] = result_title[1]
-						}
-						callback_success( result_main && result_main.length > 1 ? result_main[1] : '' )
-						if( url == _frame.app_main.loading_cur ){
-						//if( url == location.pathname ){
-							callback_successAfter( result_main && result_main.length > 1 ? result_main[1] : '' )
-						}
-						_frame.app_main.loading_state[url] = 'complete'
-					},
-					
-					'error': function( jqXHR, textStatus, errorThrown ){
-						errorThrown = errorThrown || ''
-						_g.log( 'Loading Fail: ' + url + ' [' + textStatus + '] (' + errorThrown + ')' )
-						
-						if( _frame.app_main.loading_state[url] == 'fail'
-							|| [
-								'Bad Request',
-								'Not Found',
-								'Forbidden'
-							].indexOf(errorThrown) > -1)
-							return _frame.app_main.loading_fail(url, textStatus, errorThrown, callback_error)
 
-						_frame.app_main.loading_state[url] = 'fail'
-					},
-					
-					'complete': function( jqXHR, textStatus ){
-						_frame.app_main.loading_complete( url )
-						callback_complete( url, jqXHR, textStatus )
+				if( isUrl ){
+					$.ajax({
+						'url':		url,
+						'type':		'get',
+						'dataType':	'html',
 						
-						if( _frame.app_main.loading_state[url] == 'fail' ){
-							console.log('retry')
-							_frame.app_main.loading_start( url, callback_success, callback_error, callback_successAfter, callback_beforeSend, callback_complete )
+						'beforeSend': function( jqXHR, settings ){
+							callback_beforeSend( url, jqXHR, settings )
+						},
+						
+						'success': function(data){
+							let result_main = /\<main\>(.+)\<\/main\>/.exec(data)
+								,result_title = /\<title\>([^\<]+)\<\/title\>/.exec(data)
+							if( result_title && result_title.length > 1 ){
+								_frame.app_main.page_title[url] = result_title[1]
+							}
+							callback_success( result_main && result_main.length > 1 ? result_main[1] : '' )
+							if( url == _frame.app_main.loading_cur ){
+							//if( url == location.pathname ){
+								callback_successAfter( result_main && result_main.length > 1 ? result_main[1] : '' )
+							}
+							_frame.app_main.loading_state[url] = 'complete'
+						},
+						
+						'error': function( jqXHR, textStatus, errorThrown ){
+							errorThrown = errorThrown || ''
+							_g.log( 'Loading Fail: ' + url + ' [' + textStatus + '] (' + errorThrown + ')' )
+							
+							if( _frame.app_main.loading_state[url] == 'fail'
+								|| [
+									'Bad Request',
+									'Not Found',
+									'Forbidden'
+								].indexOf(errorThrown) > -1)
+								return _frame.app_main.loading_fail(url, textStatus, errorThrown, callback_error)
+	
+							_frame.app_main.loading_state[url] = 'fail'
+						},
+						
+						'complete': function( jqXHR, textStatus ){
+							_frame.app_main.loading_complete( url )
+							callback_complete( url, jqXHR, textStatus )
+							
+							if( _frame.app_main.loading_state[url] == 'fail' ){
+								console.log('retry')
+								_frame.app_main.loading_start( url, callback_success, callback_error, callback_successAfter, callback_beforeSend, callback_complete )
+							}
 						}
-					}
-				})
+					})
+				}else{
+					
+				}
 			}else if( this.loading_state[url] == 'complete' ){
 				callback_success()
 				callback_successAfter()

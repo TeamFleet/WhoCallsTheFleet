@@ -3628,6 +3628,129 @@ _frame.app_main = {
 		toggle_hidecontent: function(){
 			_frame.dom.layout.toggleClass('hidecontent')
 		},
+	
+	
+	
+	
+	// 载入中
+		loading_queue: [],
+		loading_state: {},
+		//loading_cur: null,
+		loading_start: function( url, callback_success, callback_error, callback_successAfter, callback_beforeSend, callback_complete ){
+			url = url || location.pathname
+			let isUrl = true
+			
+			if( typeof callback_success == 'object' ){
+				isUrl = typeof callback_success.isUrl != 'undefined' ? callback_success.isUrl : true
+				callback_error = callback_success.error
+				callback_successAfter = callback_success.successAfter
+				callback_beforeSend = callback_success.beforeSend
+				callback_complete = callback_success.complete
+				callback_success = callback_success.success
+			}else if( callback_success === false ){
+				isUrl = false
+			}
+
+			callback_beforeSend = callback_beforeSend || function(){}
+			callback_success = callback_success || function(){}
+			callback_successAfter = callback_successAfter || function(){}
+			callback_error = callback_error || function(){}
+			callback_complete = callback_complete || function(){}
+
+			this.loading_cur = url
+			
+			if( typeof this.loading_state[url] == 'undefined' || this.loading_state[url] == 'fail' ){
+				if( this.loading_state[url] != 'fail' )
+					this.loading_state[url] = 'loading'
+				this.loading_queue.push(url)
+				_frame.dom.layout.addClass('is-loading')
+
+				if( isUrl ){
+					$.ajax({
+						'url':		url,
+						'type':		'get',
+						'dataType':	'html',
+						
+						'beforeSend': function( jqXHR, settings ){
+							callback_beforeSend( url, jqXHR, settings )
+						},
+						
+						'success': function(data){
+							let result_main = /\<main\>(.+)\<\/main\>/.exec(data)
+								,result_title = /\<title\>([^\<]+)\<\/title\>/.exec(data)
+							if( result_title && result_title.length > 1 ){
+								_frame.app_main.page_title[url] = result_title[1]
+							}
+							callback_success( result_main && result_main.length > 1 ? result_main[1] : '' )
+							if( url == _frame.app_main.loading_cur ){
+							//if( url == location.pathname ){
+								callback_successAfter( result_main && result_main.length > 1 ? result_main[1] : '' )
+							}
+							_frame.app_main.loading_state[url] = 'complete'
+						},
+						
+						'error': function( jqXHR, textStatus, errorThrown ){
+							errorThrown = errorThrown || ''
+							_g.log( 'Loading Fail: ' + url + ' [' + textStatus + '] (' + errorThrown + ')' )
+							
+							if( _frame.app_main.loading_state[url] == 'fail'
+								|| [
+									'Bad Request',
+									'Not Found',
+									'Forbidden'
+								].indexOf(errorThrown) > -1)
+								return _frame.app_main.loading_fail(url, textStatus, errorThrown, callback_error)
+	
+							_frame.app_main.loading_state[url] = 'fail'
+						},
+						
+						'complete': function( jqXHR, textStatus ){
+							_frame.app_main.loading_complete( url )
+							callback_complete( url, jqXHR, textStatus )
+							
+							if( _frame.app_main.loading_state[url] == 'fail' ){
+								console.log('retry')
+								_frame.app_main.loading_start( url, callback_success, callback_error, callback_successAfter, callback_beforeSend, callback_complete )
+							}
+						}
+					})
+				}else{
+					
+				}
+			}else if( this.loading_state[url] == 'complete' ){
+				callback_success()
+				callback_successAfter()
+			}
+		},
+		
+		loading_complete: function( url ){
+			if( !url )
+				return
+			if( url == this.loading_cur )
+				this.loading_cur = null
+			let i = this.loading_queue.indexOf(url)
+			if( i >= 0 )
+				this.loading_queue.splice(i, 1)
+			if( this.loading_queue.length )
+				return
+			_frame.dom.layout.removeClass('is-loading')
+		},
+		
+		loading_fail: function( url, textStatus, errorThrown, callback_error ){
+			if( !url )
+				return
+			if( this.loading_state )
+				delete this.loading_state[url]
+
+			_frame.dom.layout.attr('data-errorbadge', url + ' 载入失败 (' + errorThrown + ')')
+			clearTimeout( this.loading_fail_timeout_errorbadge )
+			this.loading_fail_timeout_errorbadge = setTimeout(function(){
+				_frame.dom.layout.removeAttr('data-errorbadge')
+				delete _frame.app_main.loading_fail_timeout_errorbadge
+			}, 3000)
+			console.log( callback_error )
+			return callback_error( url, textStatus, errorThrown )
+		},
 
 
 
@@ -4437,7 +4560,10 @@ _frame.app_main = {
 							}).on('click', function(){
 								_frame.modal.show(
 									dev_output_form(),
-									'Output to Web'
+									'Output to Web',
+									{
+										'detach':	true
+									}
 								)
 							}) )
 						})
@@ -6500,6 +6626,8 @@ class InfosFleet{
 				}.bind(this))
 			}
 		}
+
+		InfosFleet.cur = this
 	}
 
 
@@ -7135,6 +7263,11 @@ class InfosFleet{
 			// 选择文件
 				InfosFleet.fileDialog_export.trigger('click', [windowWidth, windowHeight])
 		}
+	
+	// 删除配置
+		remove(){
+			InfosFleet.modalRemove_show(this)
+		}
 }
 InfosFleet.modalExport = function(curval){
 	if( !InfosFleet.elModalExport ){
@@ -7175,7 +7308,8 @@ InfosFleet.modalExport_show = function(data){
 		InfosFleet.modalExport(data),
 		'导出配置代码',
 		{
-			'classname': 	'infos_fleet infos_fleet_export'
+			'classname': 	'infos_fleet infos_fleet_export',
+			'detach':		true
 		}
 	)
 }
@@ -7222,7 +7356,78 @@ InfosFleet.modalExportText_show = function(data){
 		InfosFleet.modalExport(text),
 		'导出配置文本',
 		{
-			'classname': 	'infos_fleet infos_fleet_export mod-text'
+			'classname': 	'infos_fleet infos_fleet_export mod-text',
+			'detach':		true
+		}
+	)
+}
+InfosFleet.modalRemove_show = function(id, is_list){
+	if( typeof id == 'undefined' )
+		return 
+	
+	let infosFleet
+	if( id instanceof InfosFleet ){
+		infosFleet = id
+		id = infosFleet.data._id
+	}
+
+	if( !InfosFleet.elModalRemove ){
+		InfosFleet.elModalRemove = $('<form/>')
+			.append(
+				InfosFleet.elModalRemoveId = $('<input name="id" type="hidden"/>')
+			)
+			.append(
+				$('<p/>').html('是否删除该舰队配置？')
+			)
+			.append(
+				$('<p class="actions"/>')
+					.append(
+						$('<button/>',{
+							'type':		'submit',
+							'class':	'button',
+							'html':		'是'
+						})
+					)
+					.append(
+						$('<button/>',{
+							'type':		'button',
+							'class':	'button',
+							'html': 	'否'
+						}).on('click', function(){
+							_frame.modal.hide()
+						})
+					)
+			).on('submit', function(e){
+				e.preventDefault()
+				let _id = InfosFleet.elModalRemoveId.val()
+				if( _id ){
+					_frame.app_main.loading_start('remove_fleet_'+_id, false)
+					_db.fleets.remove({
+						_id: _id
+					}, { multi: true }, function (err, numRemoved) {
+						_g.log('Fleet ' + _id + ' removed.')
+						_frame.app_main.loading_complete('remove_fleet_'+_id)
+						_frame.modal.hide()
+						_g.badgeMsg('已删除配置')
+						if( is_list && is_list instanceof TablelistFleets ){
+							is_list.refresh()
+						}else{
+							_frame.dom.navs.fleets.click()
+						}
+					});
+				}
+				return false
+			})
+	}
+	
+	InfosFleet.elModalRemoveId.val(id)
+
+	_frame.modal.show(
+		InfosFleet.elModalRemove,
+		'删除配置',
+		{
+			'classname': 	'infos_fleet infos_fleet_remove',
+			'detach':		true
 		}
 	)
 }
@@ -10025,7 +10230,7 @@ class TablelistFleets extends Tablelist{
 												TablelistFleets.btn_exportFile_link = document.createElement('a')
 												TablelistFleets.btn_exportFile_link.download = 'fleets.json'
 											}
-											_frame.dom.layout.addClass('is-loading')
+											_frame.app_main.loading_start('tablelist_fleets_export', false)
 											let data = ''
 											_db.fleets.find({}, function(err, docs){
 												if( err ){
@@ -10037,7 +10242,7 @@ class TablelistFleets extends Tablelist{
 													let blob = new Blob([data], {type: "application/json"})
 													TablelistFleets.btn_exportFile_link.href = URL.createObjectURL(blob)
 													TablelistFleets.btn_exportFile_link.click()
-													_frame.dom.layout.removeClass('is-loading')
+													_frame.app_main.loading_complete('tablelist_fleets_export')
 												}
 											})
 										}
@@ -10505,7 +10710,8 @@ class TablelistFleets extends Tablelist{
 											TablelistFleets.modalImport,
 											'导入配置代码',
 											{
-												'classname': 	'infos_fleet infos_fleet_import'
+												'classname': 	'infos_fleet infos_fleet_import',
+												'detach':		true
 											}
 										)
 									}.bind(this))
@@ -10521,7 +10727,7 @@ class TablelistFleets extends Tablelist{
 				})
 				this.dbfile_selector = $('<input type="file" class="none"/>')
 					.on('change', function(e){
-						_frame.dom.layout.addClass('is-loading')
+						_frame.app_main.loading_start('tablelist_fleets_import', false)
 						this.dbfile_selector.prop('disabled', true)
 						
 						let file = this.dbfile_selector.val()
@@ -10623,7 +10829,7 @@ class TablelistFleets extends Tablelist{
 							})
 							.done(function(){
 								_g.log('import complete')
-								_frame.dom.layout.removeClass('is-loading')
+								_frame.app_main.loading_complete('tablelist_fleets_import')
 								this.dbfile_selector.prop('disabled', false)
 							}.bind(this))
 					}.bind(this))
@@ -10700,6 +10906,10 @@ class TablelistFleets extends Tablelist{
 							.on({
 								'click': function(e){
 									let id = TablelistFleets.contextmenu.curel.attr('data-fleetid')
+									if( id ){
+										InfosFleet.modalRemove_show(id, TablelistFleets.contextmenu.curobject)
+									}
+									/*
 									_db.fleets.remove({
 										_id: id
 									}, { multi: true }, function (err, numRemoved) {
@@ -10710,6 +10920,7 @@ class TablelistFleets extends Tablelist{
 										})
 									});
 									TablelistFleets.contextmenu.curel.remove()
+									*/
 								}
 							})
 					]
@@ -10778,9 +10989,9 @@ class TablelistFleets extends Tablelist{
 TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 	if( !TablelistFleets.menuOptions )
 		TablelistFleets.menuOptions = new _menu({
-			'className':	'mod-checkbox menu-tablelistfleets-options',
+			'className':	'menu-tablelistfleets-options',
 			'items': [
-				$('<menuitem class="donot_hide option-groupbytheme"/>')
+				$('<menuitem class="mod-checkbox donot_hide option-in-tablelist option-groupbytheme"/>')
 					.append($('<input/>',{
 							'type':	'checkbox',
 							'id':	'_input_g' + _g.inputIndex
@@ -10797,7 +11008,7 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 							'html':	'按主题颜色进行分组'
 						})),
 
-				$('<menuitem class="donot_hide option-aircraftdefaultmax"/>')
+				$('<menuitem class="mod-checkbox donot_hide option-aircraftdefaultmax"/>')
 					.append($('<input/>',{
 							'type':	'checkbox',
 							'id':	'_input_g' + _g.inputIndex
@@ -10808,7 +11019,17 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 					.append($('<label/>',{
 							'for':	'_input_g' + (_g.inputIndex++),
 							'html':	'新增飞行器熟练度默认为'
-						}))
+						})),
+
+				$('<hr class="option-in-infos"/>'),
+
+				$('<menuitem/>',{
+						'class':	'option-in-infos',
+						'html':		'移除配置'
+					}).on('click', function(){
+						if( InfosFleet.cur )
+							InfosFleet.cur.remove()
+					})
 			]
 		})
 

@@ -53,6 +53,8 @@ body > .modal.infos_fleet{
 			font-size: 		16px;
 			background: 	rgba(255, 255, 255, .15);
 			transition-property: background, color;
+			min-width: 		40px;
+			text-align: 	center;
 			&:hover{
 				background: 	rgba(255, 255, 255, .25);
 				color: 			rgb(255, 255, 255);
@@ -60,11 +62,15 @@ body > .modal.infos_fleet{
 			&:active{
 				background: 	rgba(255, 255, 255, .05);
 			}
+			&+button.button{
+				margin-left: 	10px;
+			}
 		}
 	}
 	
 	&.infos_fleet_import,
-	&.infos_fleet_export{
+	&.infos_fleet_export,
+	&.infos_fleet_remove{
 		&>div{
 			height: 	auto;
 			width: 		520px;

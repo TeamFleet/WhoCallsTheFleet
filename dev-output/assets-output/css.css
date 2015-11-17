@@ -1219,9 +1219,35 @@ body > .menus > .menu > .body .item {
   height: 2rem;
   padding: 0 1.5em 0 1.25em;
   color: #f2f2f2;
+  position: relative;
   font-weight: lighter;
   -webkit-transition-property: color, background-color;
   transition-property: color, background-color;
+}
+body > .menus > .menu > .body menuitem.mod-checkbox,
+body > .menus > .menu > .body .menuitem.mod-checkbox,
+body > .menus > .menu > .body .item.mod-checkbox {
+  padding: 0;
+  /*
+					input[type=checkbox]{
+						position: 	absolute;
+						top: 		50%;
+						line-height:0;
+						.left(12);
+					}
+					*/
+}
+body > .menus > .menu > .body menuitem.mod-checkbox label,
+body > .menus > .menu > .body .menuitem.mod-checkbox label,
+body > .menus > .menu > .body .item.mod-checkbox label {
+  display: block;
+  padding-left: 40px;
+  padding-right: 1.5em;
+}
+body > .menus > .menu > .body menuitem.mod-checkbox label.checkbox:before,
+body > .menus > .menu > .body .menuitem.mod-checkbox label.checkbox:before,
+body > .menus > .menu > .body .item.mod-checkbox label.checkbox:before {
+  margin-left: 12px;
 }
 body > .menus > .menu > .body menuitem:hover,
 body > .menus > .menu > .body .menuitem:hover {
@@ -1292,26 +1318,6 @@ body > .menus > .menu > .blured {
   -webkit-transform: translateY(10px);
       -ms-transform: translateY(10px);
           transform: translateY(10px);
-}
-body > .menus > .menu.mod-checkbox > .body menuitem {
-  position: relative;
-  padding: 0;
-  /*
-					input[type=checkbox]{
-						position: 	absolute;
-						top: 		50%;
-						line-height:0;
-						.left(12);
-					}
-					*/
-}
-body > .menus > .menu.mod-checkbox > .body menuitem label {
-  display: block;
-  padding-left: 40px;
-  padding-right: 1.5em;
-}
-body > .menus > .menu.mod-checkbox > .body menuitem label.checkbox:before {
-  margin-left: 12px;
 }
 body > .modal {
   z-index: 200;
@@ -3866,53 +3872,48 @@ input[type="checkbox"]:indeterminate + label.checkbox:after {
   margin: -4px auto auto -4px;
   background: rgba(255, 255, 255, 0.5);
 }
-button[type="button"],
-button[type="submit"],
-input[type="submit"] {
-  background: #239e9f;
-  color: #fff;
-  box-shadow: inset 0 0 3px #fff;
-  border-radius: 5px;
-  line-height: 1rem;
-  padding: 0 .5em;
-  text-align: center;
-  -webkit-transition-property: background;
-  transition-property: background;
-}
-button[type="button"].delete,
-button[type="submit"].delete,
-input[type="submit"].delete {
-  width: 20px;
-  height: 20px;
-  margin-left: 4px;
-  padding: 0;
-}
-button[type="button"]:hover,
-button[type="submit"]:hover,
-input[type="submit"]:hover {
-  background-color: #28b3b4;
-}
-button[type="button"].large,
-form p.actions button[type="submit"],
-form p.actions button[type="button"],
-form p.actions input[type="submit"] {
-  background: transparent -webkit-linear-gradient(top, #1fa7b8 50%, #267d86 100%) 0 -100%;
-  background: transparent linear-gradient(to bottom, #1fa7b8 50%, #267d86 100%) 0 -100%;
-  background-size: 100% 200%;
-  text-shadow: -0.1rem -0.1rem 0.025rem #14707d, -0.1rem 0rem 0.05rem #14707d, -0.1rem 0.1rem 0.025rem #14707d, 0rem -0.1rem 0.05rem #14707d, 0rem 0rem 0.075rem #14707d, 0rem 0.1rem 0.05rem #14707d, 0.1rem -0.1rem 0.025rem #14707d, 0.1rem 0rem 0.05rem #14707d, 0.1rem 0.1rem 0.025rem #14707d;
-  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
-  font-size: 0.9rem;
-  line-height: 1.5rem;
-  padding: 0 1em;
-  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
-}
-button[type="button"].large:hover,
-form p.actions button[type="submit"]:hover,
-form p.actions button[type="button"]:hover,
-form p.actions input[type="submit"]:hover {
-  background-color: transparent;
-  background-position: 0 -200%;
-}
+/*
+	button[type="button"],
+	button[type="submit"],
+	input[type="submit"]{
+		background:	#239e9f;
+		color:		#fff;
+		box-shadow:	inset 0 0 3px #fff;
+		border-radius:	5px;
+		.line-height(20);
+		padding:	0 .5em;
+		text-align:	center;
+		.transition-property(background);
+		&.add{
+		}
+		&.delete{
+			width:	20px;
+			height:	20px;
+			margin-left:	4px;
+			padding:	0;
+		}
+		&:hover{
+			background-color:	lighten(#239e9f, 5%)
+		}
+	}
+	button[type="button"].large,
+	form p.actions button[type="submit"],
+	form p.actions button[type="button"],
+	form p.actions input[type="submit"]{
+		background:	transparent ~"linear-gradient(to bottom, #1fa7b8 50%, #267d86 100%)" 0 -100%;
+		background-size:	100% 200%;
+		.text-stroke-shadow( #14707d );
+		box-shadow:	inset 0 0 10px rgba(255,255,255,.5);
+		.font-size(18);
+		.line-height(30);
+		padding:	0 1em;
+		font-family:@font_famliy_Song;
+		&:hover{
+			background-color:	transparent;
+			background-position: 0 -200%;
+		}
+	}
+	*/
 html #titlebar {
   background: rgba(0, 0, 0, 0.35);
   -webkit-transition-property: background-color, height;
@@ -6582,7 +6583,7 @@ body.mod-capture #tip {
 .tablelist.entities .tablelist-list > .unit.illustrator:active {
   opacity: .5;
 }
-body > .menus > .menu.menu-tablelistfleets-options > .body menuitem.option-groupbytheme {
+body > .menus > .menu.menu-tablelistfleets-options > .body .option-in-tablelist {
   display: none;
 }
 body > .menus > .menu.menu-tablelistfleets-options > .body menuitem.option-aircraftdefaultmax label {
@@ -6600,8 +6601,11 @@ body > .menus > .menu.menu-tablelistfleets-options > .body menuitem.option-aircr
   top: 50%;
   margin-top: -9.4px;
 }
-body > .menus > .menu.menu-tablelistfleets-options.is-tablelist > .body menuitem.option-groupbytheme {
+body > .menus > .menu.menu-tablelistfleets-options.is-tablelist > .body .option-in-tablelist {
   display: block;
+}
+body > .menus > .menu.menu-tablelistfleets-options.is-tablelist > .body .option-in-infos {
+  display: none;
 }
 section.update_journal ul > strong,
 section.update_journal p > strong {
@@ -7705,6 +7709,9 @@ body.mod-capture .infos-fleet > .ships > dl dd > .equipments {
   position: absolute;
   right: 0;
   left: 0;
+}
+.infos-fleet > .ships > dl dd > .equipments > .equipment:focus {
+  outline: 0;
 }
 .infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-layer {
   z-index: 1;
@@ -11302,6 +11309,8 @@ body > .modal.infos_fleet > div > section button.button {
   background: rgba(255, 255, 255, 0.15);
   -webkit-transition-property: background, color;
   transition-property: background, color;
+  min-width: 40px;
+  text-align: center;
 }
 body > .modal.infos_fleet > div > section button.button:hover {
   background: rgba(255, 255, 255, 0.25);
@@ -11310,8 +11319,12 @@ body > .modal.infos_fleet > div > section button.button:hover {
 body > .modal.infos_fleet > div > section button.button:active {
   background: rgba(255, 255, 255, 0.05);
 }
+body > .modal.infos_fleet > div > section button.button + button.button {
+  margin-left: 10px;
+}
 body > .modal.infos_fleet.infos_fleet_import > div,
-body > .modal.infos_fleet.infos_fleet_export > div {
+body > .modal.infos_fleet.infos_fleet_export > div,
+body > .modal.infos_fleet.infos_fleet_remove > div {
   height: auto;
   width: 520px;
 }

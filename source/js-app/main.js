@@ -352,6 +352,129 @@ _frame.app_main = {
 		toggle_hidecontent: function(){
 			_frame.dom.layout.toggleClass('hidecontent')
 		},
+	
+	
+	
+	
+	// 载入中
+		loading_queue: [],
+		loading_state: {},
+		//loading_cur: null,
+		loading_start: function( url, callback_success, callback_error, callback_successAfter, callback_beforeSend, callback_complete ){
+			url = url || location.pathname
+			let isUrl = true
+			
+			if( typeof callback_success == 'object' ){
+				isUrl = typeof callback_success.isUrl != 'undefined' ? callback_success.isUrl : true
+				callback_error = callback_success.error
+				callback_successAfter = callback_success.successAfter
+				callback_beforeSend = callback_success.beforeSend
+				callback_complete = callback_success.complete
+				callback_success = callback_success.success
+			}else if( callback_success === false ){
+				isUrl = false
+			}
+
+			callback_beforeSend = callback_beforeSend || function(){}
+			callback_success = callback_success || function(){}
+			callback_successAfter = callback_successAfter || function(){}
+			callback_error = callback_error || function(){}
+			callback_complete = callback_complete || function(){}
+
+			this.loading_cur = url
+			
+			if( typeof this.loading_state[url] == 'undefined' || this.loading_state[url] == 'fail' ){
+				if( this.loading_state[url] != 'fail' )
+					this.loading_state[url] = 'loading'
+				this.loading_queue.push(url)
+				_frame.dom.layout.addClass('is-loading')
+
+				if( isUrl ){
+					$.ajax({
+						'url':		url,
+						'type':		'get',
+						'dataType':	'html',
+						
+						'beforeSend': function( jqXHR, settings ){
+							callback_beforeSend( url, jqXHR, settings )
+						},
+						
+						'success': function(data){
+							let result_main = /\<main\>(.+)\<\/main\>/.exec(data)
+								,result_title = /\<title\>([^\<]+)\<\/title\>/.exec(data)
+							if( result_title && result_title.length > 1 ){
+								_frame.app_main.page_title[url] = result_title[1]
+							}
+							callback_success( result_main && result_main.length > 1 ? result_main[1] : '' )
+							if( url == _frame.app_main.loading_cur ){
+							//if( url == location.pathname ){
+								callback_successAfter( result_main && result_main.length > 1 ? result_main[1] : '' )
+							}
+							_frame.app_main.loading_state[url] = 'complete'
+						},
+						
+						'error': function( jqXHR, textStatus, errorThrown ){
+							errorThrown = errorThrown || ''
+							_g.log( 'Loading Fail: ' + url + ' [' + textStatus + '] (' + errorThrown + ')' )
+							
+							if( _frame.app_main.loading_state[url] == 'fail'
+								|| [
+									'Bad Request',
+									'Not Found',
+									'Forbidden'
+								].indexOf(errorThrown) > -1)
+								return _frame.app_main.loading_fail(url, textStatus, errorThrown, callback_error)
+	
+							_frame.app_main.loading_state[url] = 'fail'
+						},
+						
+						'complete': function( jqXHR, textStatus ){
+							_frame.app_main.loading_complete( url )
+							callback_complete( url, jqXHR, textStatus )
+							
+							if( _frame.app_main.loading_state[url] == 'fail' ){
+								console.log('retry')
+								_frame.app_main.loading_start( url, callback_success, callback_error, callback_successAfter, callback_beforeSend, callback_complete )
+							}
+						}
+					})
+				}else{
+					
+				}
+			}else if( this.loading_state[url] == 'complete' ){
+				callback_success()
+				callback_successAfter()
+			}
+		},
+		
+		loading_complete: function( url ){
+			if( !url )
+				return
+			if( url == this.loading_cur )
+				this.loading_cur = null
+			let i = this.loading_queue.indexOf(url)
+			if( i >= 0 )
+				this.loading_queue.splice(i, 1)
+			if( this.loading_queue.length )
+				return
+			_frame.dom.layout.removeClass('is-loading')
+		},
+		
+		loading_fail: function( url, textStatus, errorThrown, callback_error ){
+			if( !url )
+				return
+			if( this.loading_state )
+				delete this.loading_state[url]
+
+			_frame.dom.layout.attr('data-errorbadge', url + ' 载入失败 (' + errorThrown + ')')
+			clearTimeout( this.loading_fail_timeout_errorbadge )
+			this.loading_fail_timeout_errorbadge = setTimeout(function(){
+				_frame.dom.layout.removeAttr('data-errorbadge')
+				delete _frame.app_main.loading_fail_timeout_errorbadge
+			}, 3000)
+			console.log( callback_error )
+			return callback_error( url, textStatus, errorThrown )
+		},
 
 
 
@@ -1161,7 +1284,10 @@ _frame.app_main = {
 							}).on('click', function(){
 								_frame.modal.show(
 									dev_output_form(),
-									'Output to Web'
+									'Output to Web',
+									{
+										'detach':	true
+									}
 								)
 							}) )
 						})

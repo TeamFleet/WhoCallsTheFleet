@@ -77,6 +77,8 @@ class InfosFleet{
 				}.bind(this))
 			}
 		}
+
+		InfosFleet.cur = this
 	}
 
 
@@ -712,6 +714,11 @@ class InfosFleet{
 			// 选择文件
 				InfosFleet.fileDialog_export.trigger('click', [windowWidth, windowHeight])
 		}
+	
+	// 删除配置
+		remove(){
+			InfosFleet.modalRemove_show(this)
+		}
 }
 InfosFleet.modalExport = function(curval){
 	if( !InfosFleet.elModalExport ){
@@ -752,7 +759,8 @@ InfosFleet.modalExport_show = function(data){
 		InfosFleet.modalExport(data),
 		'导出配置代码',
 		{
-			'classname': 	'infos_fleet infos_fleet_export'
+			'classname': 	'infos_fleet infos_fleet_export',
+			'detach':		true
 		}
 	)
 }
@@ -799,7 +807,78 @@ InfosFleet.modalExportText_show = function(data){
 		InfosFleet.modalExport(text),
 		'导出配置文本',
 		{
-			'classname': 	'infos_fleet infos_fleet_export mod-text'
+			'classname': 	'infos_fleet infos_fleet_export mod-text',
+			'detach':		true
+		}
+	)
+}
+InfosFleet.modalRemove_show = function(id, is_list){
+	if( typeof id == 'undefined' )
+		return 
+	
+	let infosFleet
+	if( id instanceof InfosFleet ){
+		infosFleet = id
+		id = infosFleet.data._id
+	}
+
+	if( !InfosFleet.elModalRemove ){
+		InfosFleet.elModalRemove = $('<form/>')
+			.append(
+				InfosFleet.elModalRemoveId = $('<input name="id" type="hidden"/>')
+			)
+			.append(
+				$('<p/>').html('是否删除该舰队配置？')
+			)
+			.append(
+				$('<p class="actions"/>')
+					.append(
+						$('<button/>',{
+							'type':		'submit',
+							'class':	'button',
+							'html':		'是'
+						})
+					)
+					.append(
+						$('<button/>',{
+							'type':		'button',
+							'class':	'button',
+							'html': 	'否'
+						}).on('click', function(){
+							_frame.modal.hide()
+						})
+					)
+			).on('submit', function(e){
+				e.preventDefault()
+				let _id = InfosFleet.elModalRemoveId.val()
+				if( _id ){
+					_frame.app_main.loading_start('remove_fleet_'+_id, false)
+					_db.fleets.remove({
+						_id: _id
+					}, { multi: true }, function (err, numRemoved) {
+						_g.log('Fleet ' + _id + ' removed.')
+						_frame.app_main.loading_complete('remove_fleet_'+_id)
+						_frame.modal.hide()
+						_g.badgeMsg('已删除配置')
+						if( is_list && is_list instanceof TablelistFleets ){
+							is_list.refresh()
+						}else{
+							_frame.dom.navs.fleets.click()
+						}
+					});
+				}
+				return false
+			})
+	}
+	
+	InfosFleet.elModalRemoveId.val(id)
+
+	_frame.modal.show(
+		InfosFleet.elModalRemove,
+		'删除配置',
+		{
+			'classname': 	'infos_fleet infos_fleet_remove',
+			'detach':		true
 		}
 	)
 }
