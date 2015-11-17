@@ -2082,6 +2082,7 @@ _p.tip = {
 		if ($('body').data('preventMouseover') || !cont) return false;
 
 		clearTimeout(this.timeout_fade);
+		this.timeout_fade = null;
 
 		el = el || 'body';
 		this.el = $(el);
@@ -2136,6 +2137,8 @@ _p.tip = {
 
 			_p.tip.is_showing = false;
 			_p.tip.curContent = null;
+
+			_p.tip.timeout_fade = null;
 		}, is_instant ? 0 : this.countdown_fade);
 	},
 
@@ -5352,16 +5355,9 @@ var InfosFleet = (function () {
 					if (this.is_init) {
 						this.updateURI();
 					}
-					if (InfosFleetShipEquipment.curHoverEquipment) {
-						InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover');
-						InfosFleetShipEquipment.curHoverEquipment = null;
-					}
-				}).bind(this) }).on('click', ':not(.equipment)', (function () {
-				if (InfosFleetShipEquipment.curHoverEquipment) {
-					InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide');
-					InfosFleetShipEquipment.curHoverEquipment = null;
-				}
-			}).bind(this));
+				}).bind(this) }).on('focus.number_input_select', 'input[type="number"]:not([readonly])', function (e) {
+				e.currentTarget.select();
+			});
 
 			this.data = d;
 
@@ -5408,6 +5404,13 @@ var InfosFleet = (function () {
 				'class': 'option option-hqlv',
 				'html': '司令部等级',
 				'data-tip': this.tip_hqlv_input.printf(defaultHqLv)
+			}).on({
+				'mouseenter mouseleave': (function (e) {
+					if (_p.tip.is_showing && !_p.tip.timeout_fade && this.doms['hqlvOption'].is(':focus')) {
+						e.stopImmediatePropagation();
+						e.stopPropagation();
+					}
+				}).bind(this)
 			}).append(this.doms['hqlvOption'] = $('<input/>', {
 				'type': 'number',
 				'min': 0,
@@ -5417,10 +5420,10 @@ var InfosFleet = (function () {
 				'input': (function () {
 					this._hqlv = this.doms['hqlvOption'].val();
 				}).bind(this),
-				'focus': (function () {
+				'focus.tipshow': (function () {
 					this.doms['hqlvOption'].trigger('tipshow');
 				}).bind(this),
-				'blur': (function () {
+				'blur.tiphide': (function () {
 					this.doms['hqlvOption'].trigger('tiphide');
 				}).bind(this),
 				'click': function click(e) {
@@ -6100,7 +6103,10 @@ var InfosFleetShip = (function () {
 			this.elAvatar.on({
 				'pointerdown': (function (e) {
 					e.preventDefault();
-					if (this.data[0]) InfosFleetShip.dragStart(this);
+					if (this.data[0]) {
+						document.activeElement.blur();
+						InfosFleetShip.dragStart(this);
+					}
 				}).bind(this)
 			});
 		} else {
@@ -6382,11 +6388,6 @@ var InfosFleetShip = (function () {
 InfosFleetShip.dragStart = function (infosFleetShip) {
 	if (InfosFleetShip.dragging || !infosFleetShip) return false;
 
-	if (InfosFleetShipEquipment.curHoverEquipment) {
-		InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover');
-		InfosFleetShipEquipment.curHoverEquipment = null;
-	}
-
 	InfosFleetShip.dragging = infosFleetShip;
 	infosFleetShip.el.addClass('moving');
 
@@ -6418,24 +6419,21 @@ var InfosFleetShipEquipment = (function () {
 
 		if (this.el) return this.el;
 
-		this.el = $('<div class="equipment" touch-action="none"/>').on({
+		this.el = $('<div class="equipment" touch-action="none" tabindex="0"/>').on({
+			'focus': (function () {
+				this.el.addClass('is-hover');
+			}).bind(this),
+			'blur': (function () {
+				this.el.removeClass('is-hover');
+			}).bind(this),
 			'pointerenter': (function (e) {
 				if (e.originalEvent.pointerType != 'touch') {
-					if (InfosFleetShipEquipment.curHoverEquipment) InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover');
-					InfosFleetShipEquipment.curHoverEquipment = this.el.addClass('is-hover');
-				}
-			}).bind(this),
-			'pointerup pointercancel': (function (e) {
-				if (e.originalEvent.pointerType == 'touch') {
-					setTimeout((function () {
-						if (InfosFleetShipEquipment.curHoverEquipment) InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover');
-						InfosFleetShipEquipment.curHoverEquipment = this.el.addClass('is-hover');
-					}).bind(this), bIOS ? 400 : 10);
+					this.el.focus();
 				}
 			}).bind(this),
 			'pointerleave': (function (e) {
 				if (e.originalEvent.pointerType != 'touch') {
-					this.el.removeClass('is-hover');
+					this.el.blur();
 				}
 			}).bind(this)
 		}).append(this.elCarry = $('<div class="equipment-layer equipment-add"/>').on('click', (function () {
@@ -6448,14 +6446,24 @@ var InfosFleetShipEquipment = (function () {
 			'class': 'equipment-starinput',
 			'type': 'number',
 			'placeholder': 0
-		}).on('input', (function () {
-			var value = this.elInputStar.val();
+		}).on({
+			'input': (function () {
+				var value = this.elInputStar.val();
 
-			if ((typeof value == 'undefined' || value === '') && this.star) this.star = null;
+				if ((typeof value == 'undefined' || value === '') && this.star) this.star = null;
 
-			value = parseInt(value);
-			if (!isNaN(value) && this.star != value) this.star = value;
-		}).bind(this))).append(this.elSelectRank = $('<div/>', {
+				value = parseInt(value);
+				if (!isNaN(value) && this.star != value) this.star = value;
+			}).bind(this),
+			'focus': (function () {
+				this.el.addClass('is-hover');
+			}).bind(this),
+			'blur': (function () {
+				setTimeout((function () {
+					if (!this.el.is(':focus')) this.el.removeClass('is-hover');
+				}).bind(this), 10);
+			}).bind(this)
+		})).append(this.elSelectRank = $('<div/>', {
 			'class': 'equipment-rankselect',
 			'html': '<span>无</span>'
 		}).on('click', (function () {
@@ -7293,6 +7301,13 @@ var TablelistFleets = (function (_Tablelist3) {
 			'class': 'setting setting-hqlv',
 			'html': '默认司令部等级',
 			'data-tip': '如果舰队配置没有设置司令部等级，<br/>则会使用该默认数值<br/>司令部等级会影响索敌能力的计算'
+		}).on({
+			'mouseenter mouseleave': (function (e) {
+				if (_p.tip.is_showing && !_p.tip.timeout_fade && this.dom.setting_hqlv_input.is(':focus')) {
+					e.stopImmediatePropagation();
+					e.stopPropagation();
+				}
+			}).bind(_this12)
 		}).append(_this12.dom.setting_hqlv_input = $('<input/>', {
 			'type': 'number',
 			'min': 0,
@@ -7301,10 +7316,10 @@ var TablelistFleets = (function (_Tablelist3) {
 			'input': (function () {
 				_g.updateDefaultHqLv(this.dom.setting_hqlv_input.val());
 			}).bind(_this12),
-			'focus': (function () {
+			'focus.tipshow': (function () {
 				this.dom.setting_hqlv_input.trigger('tipshow');
 			}).bind(_this12),
-			'blur': (function () {
+			'blur.tiphide': (function () {
 				this.dom.setting_hqlv_input.trigger('tiphide');
 			}).bind(_this12),
 			'click': function click(e) {
@@ -7350,6 +7365,10 @@ var TablelistFleets = (function (_Tablelist3) {
 			e.stopImmediatePropagation();
 			e.stopPropagation();
 		}).bind(_this12));
+
+		_this12.dom.container.on('focus.number_input_select', 'input[type="number"]', function (e) {
+			e.currentTarget.select();
+		});
 
 		_this12.genlist();
 		return _this12;

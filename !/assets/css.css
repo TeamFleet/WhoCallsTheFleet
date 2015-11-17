@@ -7706,6 +7706,9 @@ body.mod-capture .infos-fleet > .ships > dl dd > .equipments {
   right: 0;
   left: 0;
 }
+.infos-fleet > .ships > dl dd > .equipments > .equipment:focus {
+  outline: 0;
+}
 .infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-layer {
   z-index: 1;
   display: none;
