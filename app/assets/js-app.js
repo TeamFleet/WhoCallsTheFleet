@@ -6527,10 +6527,12 @@ class InfosFleet{
 					if( this.is_init ){
 						this.updateURI()
 					}
+					/*
 					if( InfosFleetShipEquipment.curHoverEquipment ){
 						InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')//.trigger('tiphide')
 						InfosFleetShipEquipment.curHoverEquipment = null
 					}
+					*/
 				}.bind(this)/*,
 			'click': function(){
 					if( InfosFleetShipEquipment.curHoverEquipment ){
@@ -6549,13 +6551,13 @@ class InfosFleet{
 				InfosFleetShipEquipment.curHoverEquipment = null
 			}
 		}.bind(this))
-		*/
 		.on('click', ':not(.equipment)', function(){
 			if( InfosFleetShipEquipment.curHoverEquipment ){
 				InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide')
 				InfosFleetShipEquipment.curHoverEquipment = null
 			}
 		}.bind(this))
+		*/
 
 		/*
 		if( !_g.isClient )
@@ -7729,8 +7731,10 @@ class InfosFleetShip{
 					//'mousedown': function(e){
 					'pointerdown': function(e){
 						e.preventDefault()
-						if( this.data[0] )
+						if( this.data[0] ){
+							document.activeElement.blur()
 							InfosFleetShip.dragStart( this )
+						}
 					}.bind(this)
 				})
 		}else{
@@ -8093,10 +8097,12 @@ InfosFleetShip.dragStart = function(infosFleetShip){
 	if( InfosFleetShip.dragging || !infosFleetShip )
 		return false
 
+	/*
 	if( InfosFleetShipEquipment.curHoverEquipment ){
 		InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')//.trigger('tiphide')
 		InfosFleetShipEquipment.curHoverEquipment = null
 	}
+	*/
 
 	InfosFleetShip.dragging = infosFleetShip
 	infosFleetShip.el.addClass('moving')
@@ -8171,8 +8177,9 @@ class InfosFleetShipEquipment{
 		if( this.el )
 			return this.el
 		
-		this.el = $('<div class="equipment" touch-action="none"/>')
+		this.el = $('<div class="equipment" touch-action="none" tabindex="0"/>')
 					.on({
+						/*
 						'pointerenter': function(e){
 							if( e.originalEvent.pointerType != 'touch' ){
 								if( InfosFleetShipEquipment.curHoverEquipment )
@@ -8199,6 +8206,23 @@ class InfosFleetShipEquipment{
 								//InfosFleetShipEquipment.curHoverEquipment = null
 							}
 						}.bind(this)
+						*/
+						'focus': function(){
+								this.el.addClass('is-hover')
+							}.bind(this),
+						'blur': function(){
+								this.el.removeClass('is-hover')
+							}.bind(this),
+						'pointerenter': function(e){
+								if( e.originalEvent.pointerType != 'touch' ){
+									this.el.focus()
+								}
+							}.bind(this),
+						'pointerleave': function(e){
+								if( e.originalEvent.pointerType != 'touch' ){
+									this.el.blur()
+								}
+							}.bind(this)
 					})
 					.append(
 						this.elCarry = $('<div class="equipment-layer equipment-add"/>')
@@ -8230,16 +8254,27 @@ class InfosFleetShipEquipment{
 									'class':		'equipment-starinput',
 									'type':			'number',
 									'placeholder':	0
-								}).on('input', function(){
-									let value = this.elInputStar.val()
-									
-									if( (typeof value == 'undefined' || value === '') && this.star )
-										this.star = null
-									
-									value = parseInt(value)
-									if( !isNaN(value) && this.star != value )
-										this.star = value
-								}.bind(this))				
+								}).on({
+									'input': function(){
+											let value = this.elInputStar.val()
+											
+											if( (typeof value == 'undefined' || value === '') && this.star )
+												this.star = null
+											
+											value = parseInt(value)
+											if( !isNaN(value) && this.star != value )
+												this.star = value
+										}.bind(this),
+									'focus': function(){
+											this.el.addClass('is-hover')
+										}.bind(this),
+									'blur': function(){
+											setTimeout(function(){
+												if( !this.el.is(':focus') )
+													this.el.removeClass('is-hover')
+											}.bind(this), 10)
+										}.bind(this)
+								})			
 							)
 							.append(
 								this.elSelectRank = $('<div/>',{
