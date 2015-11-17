@@ -1941,6 +1941,8 @@ _frame.modal = {
 
 		var settings = $.extend({}, this.defaults, options);
 
+		if (settings.detach) this.content = content;
+
 		content.appendTo(this.dom.content);
 
 		if (title) {
@@ -2000,6 +2002,11 @@ _frame.modal = {
 	},
 
 	resetContent: function resetContent() {
+		if (this.content) {
+			this.content.detach();
+			this.content = null;
+		}
+
 		this.dom.content.empty();
 
 		this.dom.container.removeClass(this.dom.container.data('customclass'));
@@ -4001,13 +4008,17 @@ _frame.app_main = {
 
 	loading_start: function loading_start(url, callback_success, callback_error, callback_successAfter, callback_beforeSend, callback_complete) {
 		url = url || location.pathname;
+		var isUrl = true;
 
 		if ((typeof callback_success === 'undefined' ? 'undefined' : _typeof(callback_success)) == 'object') {
+			isUrl = typeof callback_success.isUrl != 'undefined' ? callback_success.isUrl : true;
 			callback_error = callback_success.error;
 			callback_successAfter = callback_success.successAfter;
 			callback_beforeSend = callback_success.beforeSend;
 			callback_complete = callback_success.complete;
 			callback_success = callback_success.success;
+		} else if (callback_success === false) {
+			isUrl = false;
 		}
 
 		callback_beforeSend = callback_beforeSend || function () {};
@@ -4022,47 +4033,50 @@ _frame.app_main = {
 			if (this.loading_state[url] != 'fail') this.loading_state[url] = 'loading';
 			this.loading_queue.push(url);
 			_frame.dom.layout.addClass('is-loading');
-			$.ajax({
-				'url': url,
-				'type': 'get',
-				'dataType': 'html',
 
-				'beforeSend': function beforeSend(jqXHR, settings) {
-					callback_beforeSend(url, jqXHR, settings);
-				},
+			if (isUrl) {
+				$.ajax({
+					'url': url,
+					'type': 'get',
+					'dataType': 'html',
 
-				'success': function success(data) {
-					var result_main = /\<main\>(.+)\<\/main\>/.exec(data),
-					    result_title = /\<title\>([^\<]+)\<\/title\>/.exec(data);
-					if (result_title && result_title.length > 1) {
-						_frame.app_main.page_title[url] = result_title[1];
+					'beforeSend': function beforeSend(jqXHR, settings) {
+						callback_beforeSend(url, jqXHR, settings);
+					},
+
+					'success': function success(data) {
+						var result_main = /\<main\>(.+)\<\/main\>/.exec(data),
+						    result_title = /\<title\>([^\<]+)\<\/title\>/.exec(data);
+						if (result_title && result_title.length > 1) {
+							_frame.app_main.page_title[url] = result_title[1];
+						}
+						callback_success(result_main && result_main.length > 1 ? result_main[1] : '');
+						if (url == _frame.app_main.loading_cur) {
+							callback_successAfter(result_main && result_main.length > 1 ? result_main[1] : '');
+						}
+						_frame.app_main.loading_state[url] = 'complete';
+					},
+
+					'error': function error(jqXHR, textStatus, errorThrown) {
+						errorThrown = errorThrown || '';
+						_g.log('Loading Fail: ' + url + ' [' + textStatus + '] (' + errorThrown + ')');
+
+						if (_frame.app_main.loading_state[url] == 'fail' || ['Bad Request', 'Not Found', 'Forbidden'].indexOf(errorThrown) > -1) return _frame.app_main.loading_fail(url, textStatus, errorThrown, callback_error);
+
+						_frame.app_main.loading_state[url] = 'fail';
+					},
+
+					'complete': function complete(jqXHR, textStatus) {
+						_frame.app_main.loading_complete(url);
+						callback_complete(url, jqXHR, textStatus);
+
+						if (_frame.app_main.loading_state[url] == 'fail') {
+							console.log('retry');
+							_frame.app_main.loading_start(url, callback_success, callback_error, callback_successAfter, callback_beforeSend, callback_complete);
+						}
 					}
-					callback_success(result_main && result_main.length > 1 ? result_main[1] : '');
-					if (url == _frame.app_main.loading_cur) {
-						callback_successAfter(result_main && result_main.length > 1 ? result_main[1] : '');
-					}
-					_frame.app_main.loading_state[url] = 'complete';
-				},
-
-				'error': function error(jqXHR, textStatus, errorThrown) {
-					errorThrown = errorThrown || '';
-					_g.log('Loading Fail: ' + url + ' [' + textStatus + '] (' + errorThrown + ')');
-
-					if (_frame.app_main.loading_state[url] == 'fail' || ['Bad Request', 'Not Found', 'Forbidden'].indexOf(errorThrown) > -1) return _frame.app_main.loading_fail(url, textStatus, errorThrown, callback_error);
-
-					_frame.app_main.loading_state[url] = 'fail';
-				},
-
-				'complete': function complete(jqXHR, textStatus) {
-					_frame.app_main.loading_complete(url);
-					callback_complete(url, jqXHR, textStatus);
-
-					if (_frame.app_main.loading_state[url] == 'fail') {
-						console.log('retry');
-						_frame.app_main.loading_start(url, callback_success, callback_error, callback_successAfter, callback_beforeSend, callback_complete);
-					}
-				}
-			});
+				});
+			} else {}
 		} else if (this.loading_state[url] == 'complete') {
 			callback_success();
 			callback_successAfter();
@@ -5332,6 +5346,8 @@ var InfosFleet = (function () {
 				}).bind(this));
 			}
 		}
+
+		InfosFleet.cur = this;
 	}
 
 	_createClass(InfosFleet, [{
@@ -5718,6 +5734,11 @@ var InfosFleet = (function () {
 			InfosFleet.fileDialog_export.trigger('click', [windowWidth, windowHeight]);
 		}
 	}, {
+		key: 'remove',
+		value: function remove() {
+			InfosFleet.modalRemove_show(this);
+		}
+	}, {
 		key: '_name',
 		get: function get() {
 			return this.data['name'];
@@ -5796,7 +5817,8 @@ InfosFleet.modalExport_show = function (data) {
 	data = JSON.stringify(_g.kancolle_calc.encode(data));
 
 	_frame.modal.show(InfosFleet.modalExport(data), '导出配置代码', {
-		'classname': 'infos_fleet infos_fleet_export'
+		'classname': 'infos_fleet infos_fleet_export',
+		'detach': true
 	});
 };
 InfosFleet.modalExportText_show = function (data) {
@@ -5829,7 +5851,58 @@ InfosFleet.modalExportText_show = function (data) {
 	text += (text ? '\n\n' : '') + '* 创建自 是谁呼叫舰队 (fleet.diablohu.com)';
 
 	_frame.modal.show(InfosFleet.modalExport(text), '导出配置文本', {
-		'classname': 'infos_fleet infos_fleet_export mod-text'
+		'classname': 'infos_fleet infos_fleet_export mod-text',
+		'detach': true
+	});
+};
+InfosFleet.modalRemove_show = function (id, is_list) {
+	if (typeof id == 'undefined') return;
+
+	var infosFleet = undefined;
+	if (_instanceof(id, InfosFleet)) {
+		infosFleet = id;
+		id = infosFleet.data._id;
+	}
+
+	if (!InfosFleet.elModalRemove) {
+		InfosFleet.elModalRemove = $('<form/>').append(InfosFleet.elModalRemoveId = $('<input name="id" type="hidden"/>')).append($('<p/>').html('是否删除该舰队配置？')).append($('<p class="actions"/>').append($('<button/>', {
+			'type': 'submit',
+			'class': 'button',
+			'html': '是'
+		})).append($('<button/>', {
+			'type': 'button',
+			'class': 'button',
+			'html': '否'
+		}).on('click', function () {
+			_frame.modal.hide();
+		}))).on('submit', function (e) {
+			e.preventDefault();
+			var _id = InfosFleet.elModalRemoveId.val();
+			if (_id) {
+				_frame.app_main.loading_start('remove_fleet_' + _id, false);
+				_db.fleets.remove({
+					_id: _id
+				}, { multi: true }, function (err, numRemoved) {
+					_g.log('Fleet ' + _id + ' removed.');
+					_frame.app_main.loading_complete('remove_fleet_' + _id);
+					_frame.modal.hide();
+					_g.badgeMsg('已删除配置');
+					if (is_list && _instanceof(is_list, TablelistFleets)) {
+						is_list.refresh();
+					} else {
+						_frame.dom.navs.fleets.click();
+					}
+				});
+			}
+			return false;
+		});
+	}
+
+	InfosFleet.elModalRemoveId.val(id);
+
+	_frame.modal.show(InfosFleet.elModalRemove, '删除配置', {
+		'classname': 'infos_fleet infos_fleet_remove',
+		'detach': true
 	});
 };
 InfosFleet.decompress = function (code) {
@@ -7276,7 +7349,7 @@ var TablelistFleets = (function (_Tablelist3) {
 							TablelistFleets.btn_exportFile_link = document.createElement('a');
 							TablelistFleets.btn_exportFile_link.download = 'fleets.json';
 						}
-						_frame.dom.layout.addClass('is-loading');
+						_frame.app_main.loading_start('tablelist_fleets_export', false);
 						var data = '';
 						_db.fleets.find({}, function (err, docs) {
 							if (err) {
@@ -7288,7 +7361,7 @@ var TablelistFleets = (function (_Tablelist3) {
 								var blob = new Blob([data], { type: "application/json" });
 								TablelistFleets.btn_exportFile_link.href = URL.createObjectURL(blob);
 								TablelistFleets.btn_exportFile_link.click();
-								_frame.dom.layout.removeClass('is-loading');
+								_frame.app_main.loading_complete('tablelist_fleets_export');
 							}
 						});
 					})();
@@ -7642,14 +7715,15 @@ var TablelistFleets = (function (_Tablelist3) {
 							}
 						}).bind(this));
 						_frame.modal.show(TablelistFleets.modalImport, '导入配置代码', {
-							'classname': 'infos_fleet infos_fleet_import'
+							'classname': 'infos_fleet infos_fleet_import',
+							'detach': true
 						});
 					}).bind(this))).append(TablelistFleets.support.buildfile ? $('<menuitem/>').html('导入配置文件').on('click', (function () {
 						this.dbfile_selector.trigger('click');
 					}).bind(this)) : null)]
 				});
 				this.dbfile_selector = $('<input type="file" class="none"/>').on('change', (function (e) {
-					_frame.dom.layout.addClass('is-loading');
+					_frame.app_main.loading_start('tablelist_fleets_import', false);
 					this.dbfile_selector.prop('disabled', true);
 
 					var file = this.dbfile_selector.val(),
@@ -7724,7 +7798,7 @@ var TablelistFleets = (function (_Tablelist3) {
 						_g.badgeError(msg);
 					}).done((function () {
 						_g.log('import complete');
-						_frame.dom.layout.removeClass('is-loading');
+						_frame.app_main.loading_complete('tablelist_fleets_import');
 						this.dbfile_selector.prop('disabled', false);
 					}).bind(this));
 				}).bind(this)).appendTo(this.dom.filters);
@@ -7782,15 +7856,9 @@ var TablelistFleets = (function (_Tablelist3) {
 				}), $('<menuitem/>').html('移除').on({
 					'click': function click(e) {
 						var id = TablelistFleets.contextmenu.curel.attr('data-fleetid');
-						_db.fleets.remove({
-							_id: id
-						}, { multi: true }, function (err, numRemoved) {
-							_g.log('Fleet ' + id + ' removed.');
-							_db.fleets.count({}, function (err, count) {
-								if (!count) TablelistFleets.contextmenu.curobject.dom.container.addClass('nocontent');
-							});
-						});
-						TablelistFleets.contextmenu.curel.remove();
+						if (id) {
+							InfosFleet.modalRemove_show(id, TablelistFleets.contextmenu.curobject);
+						}
 					}
 				})]
 			});
@@ -7835,8 +7903,8 @@ var TablelistFleets = (function (_Tablelist3) {
 
 TablelistFleets.menuOptions_show = function ($el, $el_tablelist) {
 	if (!TablelistFleets.menuOptions) TablelistFleets.menuOptions = new _menu({
-		'className': 'mod-checkbox menu-tablelistfleets-options',
-		'items': [$('<menuitem class="donot_hide option-groupbytheme"/>').append($('<input/>', {
+		'className': 'menu-tablelistfleets-options',
+		'items': [$('<menuitem class="mod-checkbox donot_hide option-in-tablelist option-groupbytheme"/>').append($('<input/>', {
 			'type': 'checkbox',
 			'id': '_input_g' + _g.inputIndex
 		}).prop('checked', Lockr.get('fleetlist-option-groupbytheme')).on('change', function (e) {
@@ -7848,7 +7916,7 @@ TablelistFleets.menuOptions_show = function ($el, $el_tablelist) {
 		})).append($('<label/>', {
 			'for': '_input_g' + _g.inputIndex++,
 			'html': '按主题颜色进行分组'
-		})), $('<menuitem class="donot_hide option-aircraftdefaultmax"/>').append($('<input/>', {
+		})), $('<menuitem class="mod-checkbox donot_hide option-aircraftdefaultmax"/>').append($('<input/>', {
 			'type': 'checkbox',
 			'id': '_input_g' + _g.inputIndex
 		}).prop('checked', Lockr.get('fleetlist-option-aircraftdefaultmax')).on('change', function (e) {
@@ -7856,7 +7924,12 @@ TablelistFleets.menuOptions_show = function ($el, $el_tablelist) {
 		})).append($('<label/>', {
 			'for': '_input_g' + _g.inputIndex++,
 			'html': '新增飞行器熟练度默认为'
-		}))]
+		})), $('<hr class="option-in-infos"/>'), $('<menuitem/>', {
+			'class': 'option-in-infos',
+			'html': '移除配置'
+		}).on('click', function () {
+			if (InfosFleet.cur) InfosFleet.cur.remove();
+		})]
 	});
 
 	TablelistFleets.menuOptions.curTablelist = $el_tablelist || null;
