@@ -84,6 +84,14 @@ class TablelistFleets extends Tablelist{
 										'html':		'默认司令部等级',
 										'data-tip':	'如果舰队配置没有设置司令部等级，<br/>则会使用该默认数值<br/>司令部等级会影响索敌能力的计算'
 									})
+									.on({
+										'mouseenter mouseleave': function(e){
+											if( _p.tip.is_showing && !_p.tip.timeout_fade && this.dom.setting_hqlv_input.is(':focus') ){
+												e.stopImmediatePropagation()
+												e.stopPropagation()
+											}
+										}.bind(this)
+									})
 									.append(
 										this.dom.setting_hqlv_input = $('<input/>',{
 												'type':		'number',
@@ -95,10 +103,10 @@ class TablelistFleets extends Tablelist{
 												'input': function(){
 													_g.updateDefaultHqLv(this.dom.setting_hqlv_input.val())
 												}.bind(this),
-												'focus': function(){
+												'focus.tipshow': function(){
 													this.dom.setting_hqlv_input.trigger('tipshow')
 												}.bind(this),
-												'blur': function(){
+												'blur.tiphide': function(){
 													this.dom.setting_hqlv_input.trigger('tiphide')
 												}.bind(this),
 												'click': function(e){
@@ -168,6 +176,11 @@ class TablelistFleets extends Tablelist{
 				e.stopImmediatePropagation()
 				e.stopPropagation()
 			}.bind(this))
+		
+		// Auto select for number input
+			this.dom.container.on('focus.number_input_select', 'input[type="number"]', function(e){
+				e.currentTarget.select()
+			})
 
 		this.genlist()
 	}

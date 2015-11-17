@@ -116,6 +116,9 @@ class InfosFleet{
 					}
 			}*/
 		})
+		.on('focus.number_input_select', 'input[type="number"]:not([readonly])', function(e){
+			e.currentTarget.select()
+		})
 		/*
 		.on('click', '.equipment', function(e){
 			if( InfosFleetShipEquipment.curHoverEquipment && InfosFleetShipEquipment.curHoverEquipment[0] != e.currentTarget ){
@@ -208,6 +211,14 @@ class InfosFleet{
 								'html':		'司令部等级',
 								'data-tip':	this.tip_hqlv_input.printf(defaultHqLv)
 							})
+							.on({
+								'mouseenter mouseleave': function(e){
+									if( _p.tip.is_showing && !_p.tip.timeout_fade && this.doms['hqlvOption'].is(':focus') ){
+										e.stopImmediatePropagation()
+										e.stopPropagation()
+									}
+								}.bind(this)
+							})
 							.append(
 								this.doms['hqlvOption'] = $('<input/>',{
 										'type':		'number',
@@ -220,10 +231,10 @@ class InfosFleet{
 										'input': function(){
 											this._hqlv = this.doms['hqlvOption'].val()
 										}.bind(this),
-										'focus': function(){
+										'focus.tipshow': function(){
 											this.doms['hqlvOption'].trigger('tipshow')
 										}.bind(this),
-										'blur': function(){
+										'blur.tiphide': function(){
 											this.doms['hqlvOption'].trigger('tiphide')
 										}.bind(this),
 										'click': function(e){
