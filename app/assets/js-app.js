@@ -8507,19 +8507,19 @@ class InfosFleetShipEquipment{
 							)
 							.append(
 								//this.elButtonInspect = $('<button class="inspect"/>').html('资料').on('click', function(){
-								this.elButtonInspect = $('<button class="inspect" icon="search"/>').on('click', function(){
+								this.elButtonInspect = $('<span class="button inspect" icon="search"/>').on('click', function(){
 									if( this.id )
 										_frame.infos.show('[[EQUIPMENT::' + this.id + ']]')
 								}.bind(this))
 							)
 							.append(
 								//$('<button class="change"/>').html('更变').on('click',function(){
-								$('<button class="change" icon="loop"/>').on('click',function(){
+								$('<span class="button change" icon="loop"/>').on('click',function(){
 									this.selectEquipmentStart()
 								}.bind(this))
 							)
 							.append(
-								$('<button class="remove"/>').html('×').on('click',function(){
+								$('<span class="button remove"/>').html('×').on('click',function(){
 									this.id = null
 								}.bind(this))
 							)
