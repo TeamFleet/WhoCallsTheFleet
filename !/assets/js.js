@@ -6560,11 +6560,11 @@ var InfosFleetShipEquipment = (function () {
 			}
 			InfosFleet.menuRankSelectCur = this;
 			InfosFleet.menuRankSelect.show(this.elSelectRank);
-		}).bind(this))).append(this.elButtonInspect = $('<button class="inspect" icon="search"/>').on('click', (function () {
+		}).bind(this))).append(this.elButtonInspect = $('<span class="button inspect" icon="search"/>').on('click', (function () {
 			if (this.id) _frame.infos.show('[[EQUIPMENT::' + this.id + ']]');
-		}).bind(this))).append($('<button class="change" icon="loop"/>').on('click', (function () {
+		}).bind(this))).append($('<span class="button change" icon="loop"/>').on('click', (function () {
 			this.selectEquipmentStart();
-		}).bind(this))).append($('<button class="remove"/>').html('×').on('click', (function () {
+		}).bind(this))).append($('<span class="button remove"/>').html('×').on('click', (function () {
 			this.id = null;
 		}).bind(this))));
 	}

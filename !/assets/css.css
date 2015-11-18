@@ -7884,7 +7884,7 @@ body.mod-capture .infos-fleet > .ships > dl dd > .equipments {
   top: 50%;
   left: 50%;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-options button {
+.infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-options .button {
   opacity: .45;
   -webkit-box-flex: 1;
   -webkit-flex: 1 0 20px;
@@ -7893,21 +7893,32 @@ body.mod-capture .infos-fleet > .ships > dl dd > .equipments {
   height: 100%;
   text-align: center;
   vertical-align: bottom;
-  line-height: 0;
+  display: inline-block;
+  position: relative;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-options button:hover {
+.infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-options .button:hover {
   opacity: 1;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-options button:active {
+.infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-options .button:active {
   opacity: .3;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-options button.remove {
+.infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-options .button.remove {
   font-family: Gothic;
   font-size: 200%;
   font-weight: bold;
 }
-.infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-options button[icon] {
+.infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-options .button[icon] {
   font-size: 133.33333333%;
+}
+.infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-options .button[icon]:before {
+  position: absolute;
+  top: 50%;
+  line-height: 0;
+  height: 0;
+  width: 100%;
+  text-align: center;
+  padding: 0;
+  left: 0;
 }
 .infos-fleet > .ships > dl dd > .equipments > .equipment[data-carry] {
   will-change: background-color;
