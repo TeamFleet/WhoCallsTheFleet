@@ -522,6 +522,8 @@ _frame.app_main = {
 					this.load_page(page, options)
 					return page
 				}
+				
+			let u = _g.state2URI({page: page})
 			
 			function callback(){
 				_frame.app_main.page_dom[page].trigger('show')
@@ -531,8 +533,8 @@ _frame.app_main = {
 					_frame.app_main.title = _frame.app_main.navtitle[page]
 					_frame.infos.last = null
 
-					console.log('/' + page + '/', _frame.app_main.page_title['/' + page + '/'])
-					document.title = _frame.app_main.page_title['/' + page + '/']
+					//console.log(u, _frame.app_main.page_title[u])
+					document.title = _frame.app_main.page_title[u]
 
 					_ga.counter(
 						location.search
@@ -584,12 +586,12 @@ _frame.app_main = {
 				this.page_dom[page] = _frame.dom.main.find('.page-container[page="'+page+'"]')
 				if( this.page_dom[page].length ){
 					this.page_init(page)
-					this.page_title['/' + page + '/'] = document.title
+					this.page_title[u] = document.title
 					callback()
 				}else{
 					//this.page_dom[page] = $('<div class="page-container" page="'+page+'"/>').appendTo( _frame.dom.main )
 					//let u = '/' + page + '/'
-					let u = _g.state2URI({page: page})
+					//let u = _g.state2URI({page: page})
 					this.loading_start( u, {
 						success: function(html){
 							if( html ){

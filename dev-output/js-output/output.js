@@ -19,7 +19,7 @@ let dev_output_steps = []
 	,dev_output_filters = {}
 
 function dev_output_gen_title(){
-	if( arguments && arguments.length )
+	if( arguments && arguments.length && arguments[0] )
 		return Array.prototype.join.call(arguments, ' - ') + ' - 是谁呼叫舰队'
 	return '是谁呼叫舰队'
 }
