@@ -52,10 +52,13 @@
 	
 	h3, h4, h5{
 		&[data-content]{
-			color:		hsl(50, 100%, 100%);
+			//color:		hsl(50, 100%, 100%);
+			color: 		hsl(50, 10%, 70%);
 			text-shadow:0 0 unit(5 / 30, em) rgba(255, 255, 255, .5);
 			&:before{
-				color: 		hsl(50, 10%, 70%);
+				//color: 		hsl(50, 10%, 70%);
+				color:		hsl(50, 100%, 100%);
+				.mask-image( ~"linear-gradient(to top, transparent, #000)" );
 			}
 		}
 	}
@@ -102,10 +105,12 @@
 				border-color:	rgba(255, 255, 255, .15);
 			}
 			&[data-content]{
-				color:		hsl(50, 100%, 100%);
+				//color:		hsl(50, 100%, 100%);
+				color: 		hsl(50, 20%, 70%);
 				//text-shadow:0 0 unit(5 / 30, em) hsla(50, 20%, 57%, .5);
 				&:before{
-					color: 		hsl(50, 20%, 70%);
+					//color: 		hsl(50, 20%, 70%);
+					color:		hsl(50, 100%, 100%);
 					.margin-top(5);
 					.padding-right(10);
 					.enable-transition();
@@ -1283,6 +1288,11 @@
 							background: linear-gradient(to right, rgba(0,0,0,.35) 50%, transparent);
 							border-radius: 5px;
 						}
+						.info{
+							//text-shadow:0 1px 1px #000;
+							color: 		darken(rgb(255,255,255), 5%);
+							.text-stroke-shadow();
+						}
 					}
 				}
 			} // dd
@@ -1478,14 +1488,18 @@ main{
 			.infos-fleet{
 				h3, h4, h5{
 					&[data-content]{
-						.convertColor(hsl(@hue, 24%, 97%));
-						color:		@color;
+						//.convertColor(hsl(@hue, 24%, 97%));
+						//color:		@color;
+						.convertColor(hsl(@hue, 90%, 75%));
+						color: 		@color;
 						//.convertColor(hsla(@hue, 100%, 57%, .5));
 						//text-shadow:0 0 unit(5 / 30, em) rgba(255, 255, 255, .25);
 						&:before{
 							//.convertColor(hsl(@hue, 87%, 80%));
-							.convertColor(hsl(@hue, 90%, 75%));
-							color: 		@color;
+							//.convertColor(hsl(@hue, 90%, 75%));
+							//color: 		@color;
+							.convertColor(hsl(@hue, 24%, 97%));
+							color:		@color;
 						}
 					}
 				}
@@ -1496,13 +1510,17 @@ main{
 							color:		@color;
 						}
 						&[data-content]{
-							.convertColor(hsl(@hue, 100%, 97%));
-							color:		@color;
+							//.convertColor(hsl(@hue, 100%, 97%));
+							//color:		@color;
+							.convertColor(hsl(@hue, 100%, 70%));
+							color: 		@color;
 							//.convertColor(hsla(@hue, 100%, 57%, .5));
 							//text-shadow:0 0 unit(5 / 30, em) @color;
 							&:before{
-								.convertColor(hsl(@hue, 100%, 70%));
-								color: 		@color;
+								//.convertColor(hsl(@hue, 100%, 70%));
+								//color: 		@color;
+								.convertColor(hsl(@hue, 100%, 97%));
+								color:		@color;
 							}
 						}
 					}
@@ -1586,11 +1604,21 @@ main{
 							}
 							&.mod-nomask{
 								&[data-shipid]>dt>div{
+									&:after{
+										.convertColor(hsla(@hue, 50%, 5%, 0.4));
+										background: linear-gradient(to right, @color 50%, transparent);
+									}
+									.info{
+										.convertColor(hsl(@hue, 100%, 95%));
+										color: 		@color;
+									}
+									/*
 									&>.info{
 										//.convertColor(hsla(@hue, 100%, 95%, .95));
 										.convertColor(hsl(@hue, 100%, 95%));
 										color: 	@color;
 									}
+									*/
 								}
 							}
 						} // dd
