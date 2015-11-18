@@ -99,7 +99,11 @@ dev_output_filters.page_home = function(html, updates){
 		,scrapePtrn = /\{\{[ ]*content::WhatsNew[ ]*\}\}/gi
 		
 		,section = $('<section class="update_journal" data-version-'+updates[0]['type']+'="'+updates[0]['version']+'"/>')
-						.html(_frame.app_main.page['about'].journaltitle(updates[0]))
+						.html('<h3>'
+								+ '新内容'
+								+ '<small>'+(updates[0]['date'] ? updates[0]['date'] : 'WIP')+'</small>'
+								+ '</h3>'
+							)
 		try{
 			$(_frame.app_main.page['about'].journal_parse(updates[0]['journal'])).appendTo( section )
 		}catch(e){}
