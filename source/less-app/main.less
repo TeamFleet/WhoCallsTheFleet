@@ -333,7 +333,9 @@ nav{
 			.font-size(24);
 			font-weight:lighter;
 			color:		rgba(255,255,255,.5);
-			.padding(0, 10);
+			//.padding(0, 10);
+			border-left:10px solid transparent;
+			border-right:10px solid transparent;
 			position:	relative;
 			top:		0;
 			display: 	inline-block;
@@ -344,7 +346,9 @@ nav{
 				color:		#fff;
 				text-shadow:0 0 10px #fff
 							,0 0 10px rgba(255,255,255,.25);
-				cursor: 	default;
+				&, a{
+					cursor: 	default;
+				}
 			}
 			&:hover{
 				color:		#fff;
@@ -407,6 +411,14 @@ nav{
 					border-radius:2px;
 					background: rgba(255, 255, 255, .45);
 					color: 		#000;
+				}
+			}
+			&.home{
+				a{
+					display: 	block;
+					text-indent:-9999px;
+					width: 		40px;
+					background: ~"url(@{folder_images}/appicon.png) no-repeat 50% 45% / contain";
 				}
 			}
 		}

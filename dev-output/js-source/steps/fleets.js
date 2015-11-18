@@ -48,7 +48,7 @@ dev_output_steps.push(function(){
 				}catch(e){}
 			}
 			
-			output = dev_output_filter(output)
+			//output = dev_output_filter(output)
 		
 			console.log( outputPath )
 			
@@ -101,7 +101,7 @@ dev_output_steps.push(function(){
 				}catch(e){}
 			}
 			
-			output = dev_output_filter(output)
+			//output = dev_output_filter(output)
 		
 			console.log( outputPath )
 			

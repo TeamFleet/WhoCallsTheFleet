@@ -125,7 +125,11 @@ _g.bgimg_count = 0;
 		uri = uri || location.pathname
 		let parts = uri.split('/').filter(function(c){return c})
 		
-		if( parts.length == 1 ){
+		if( !parts.length ){
+			return {
+				'page':		'home'
+			}
+		}else if( parts.length == 1 ){
 			return {
 				'page':		parts[0]
 			}
@@ -148,7 +152,7 @@ _g.bgimg_count = 0;
 	}
 	
 	_g.state2URI = function(state){
-		if( !state )
+		if( !state || state.page == 'home' )
 			return '/'
 			
 		if( state.page )
@@ -584,7 +588,8 @@ _frame.app_main = {
 					callback()
 				}else{
 					//this.page_dom[page] = $('<div class="page-container" page="'+page+'"/>').appendTo( _frame.dom.main )
-					let u = '/' + page + '/'
+					//let u = '/' + page + '/'
+					let u = _g.state2URI({page: page})
 					this.loading_start( u, {
 						success: function(html){
 							if( html ){
@@ -764,7 +769,8 @@ _frame.app_main = {
 		// 处理导航项信息
 			.then(function(){
 				_frame.dom.navs = {}
-				_frame.dom.navlinks.children('a').each(function(index, $el){
+				//_frame.dom.navlinks.children('a').each(function(index, $el){
+				_frame.dom.navlinks.find('a').each(function(index, $el){
 					$el = $($el)
 					let p = _g.parseURI($el.attr('href')).page
 						,t = $el.text()

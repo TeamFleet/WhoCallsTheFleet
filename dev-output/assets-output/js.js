@@ -3847,7 +3847,11 @@ _g.parseURI = function (uri) {
 		return c;
 	});
 
-	if (parts.length == 1) {
+	if (!parts.length) {
+		return {
+			'page': 'home'
+		};
+	} else if (parts.length == 1) {
 		return {
 			'page': parts[0]
 		};
@@ -3873,7 +3877,7 @@ _g.parseURI = function (uri) {
 };
 
 _g.state2URI = function (state) {
-	if (!state) return '/';
+	if (!state || state.page == 'home') return '/';
 
 	if (state.page) return '/' + state.page + '/';
 
@@ -4197,7 +4201,7 @@ _frame.app_main = {
 				callback();
 			} else {
 				(function () {
-					var u = '/' + page + '/';
+					var u = _g.state2URI({ page: page });
 					_this4.loading_start(u, {
 						success: function success(html) {
 							if (html) {
@@ -4300,7 +4304,8 @@ _frame.app_main = {
 
 		promise_chain.then(function () {
 			_frame.dom.navs = {};
-			_frame.dom.navlinks.children('a').each(function (index, $el) {
+
+			_frame.dom.navlinks.find('a').each(function (index, $el) {
 				$el = $($el);
 				var p = _g.parseURI($el.attr('href')).page,
 				    t = $el.text();

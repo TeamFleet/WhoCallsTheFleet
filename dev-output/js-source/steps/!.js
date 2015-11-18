@@ -16,6 +16,7 @@ let dev_output_steps = []
 		}))
 		_g.log(msg)
 	}
+	,dev_output_filters = {}
 
 function dev_output_gen_title(){
 	if( arguments && arguments.length )
@@ -262,7 +263,7 @@ function dev_output_form(){
 							,btnDonates = $('<a class="donate" icon="heart4" href="/donate/"/>').appendTo( globaloptions )
 
 						// 首页
-							//$('<h1 class="button home"/>').html('<a href="/">是谁呼叫舰队</a>').appendTo( navlinks )
+							$('<h1 class="button home"/>').html('<a href="/">是谁呼叫舰队</a>').appendTo( navlinks )
 
 						navobj.forEach(function(o, i){
 							if( o.title != '关于' )
@@ -280,10 +281,10 @@ function dev_output_form(){
 							}catch(e){}
 						}
 
-						//dev_output_tmpl = minify(dev_output_tmpl, {
-						//	removeComments:		true,
-						//	collapseWhitespace:	true
-						//})
+						dev_output_tmpl = minify(dev_output_tmpl, {
+							removeComments:		true,
+							collapseWhitespace:	true
+						})
 					
 					console.log(dev_output_tmpl)
 
