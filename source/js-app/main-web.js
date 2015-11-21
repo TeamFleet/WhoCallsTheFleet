@@ -25,7 +25,9 @@ _g.bgimg_count = 0;
 		
 		'items',
 		'item_types'
-	]
+	];
+	
+	_g.db_version = '1.8.6.0';
 
 	_g.data = {}
 
@@ -819,13 +821,18 @@ _frame.app_main = {
 				
 				let dbchain = Q()
 					,masterDeferred = Q.defer()
+				/*
+					,lastVersion = Lockr.get('db_version')
+					
+				Lockr.set('db_version', _g.db_version)
+				*/
 
 				_g.dbs.forEach(function(db_name){
 					dbchain = dbchain.then(function(){
 						let deferred = Q.defer()
 						
 						$.ajax({
-							'url':		'/!/db/' + db_name + '.json',
+							'url':		'/!/db/' + db_name + '.json?v=' + _g.db_version,
 							'dataType':	'text',
 							'success': function(data){
 								data = LZString.decompressFromBase64(data)

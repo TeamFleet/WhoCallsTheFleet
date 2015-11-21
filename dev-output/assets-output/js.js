@@ -3780,6 +3780,8 @@ _g.path = {
 
 _g.dbs = ['ships', 'ship_types', 'ship_series', 'ship_namesuffix', 'items', 'item_types'];
 
+_g.db_version = '1.8.6.0';
+
 _g.data = {};
 
 var _db = {
@@ -4336,7 +4338,7 @@ _frame.app_main = {
 					var deferred = Q.defer();
 
 					$.ajax({
-						'url': '/!/db/' + db_name + '.json',
+						'url': '/!/db/' + db_name + '.json?v=' + _g.db_version,
 						'dataType': 'text',
 						'success': function success(data) {
 							data = LZString.decompressFromBase64(data);
