@@ -3780,6 +3780,8 @@ _g.path = {
 
 _g.dbs = ['ships', 'ship_types', 'ship_series', 'ship_namesuffix', 'items', 'item_types'];
 
+_g.db_version = '1.8.6.0';
+
 _g.data = {};
 
 var _db = {
@@ -4336,7 +4338,7 @@ _frame.app_main = {
 					var deferred = Q.defer();
 
 					$.ajax({
-						'url': '/!/db/' + db_name + '.json',
+						'url': '/!/db/' + db_name + '.json?v=' + _g.db_version,
 						'dataType': 'text',
 						'success': function success(data) {
 							data = LZString.decompressFromBase64(data);
@@ -4462,6 +4464,8 @@ _frame.app_main = {
 			});
 
 			return true;
+		}).then(function () {
+			_frame.ad(_frame.dom.layout);
 		}).catch(function (err) {
 			_g.error(err);
 		}).done(function () {
@@ -5035,6 +5039,22 @@ _frame.app_main.page['about'].init = function (page) {
 			deferred.resolve(err);
 		});
 		return deferred.promise;
+	});
+};
+
+_frame.ad = function () {
+	$.ajax({
+		'url': 'http://fleet.diablohu.com/!/ad/',
+		'method': 'get',
+		'dataType': 'html',
+		'success': function success(data) {
+			if (data) {
+				var ad = $('<div class="ad"/>').html(data).append($('<button type="button" class="close"/>').on('click', function () {
+					_frame.dom.layout.css('padding-bottom', '').removeClass('mod-ad');
+				}));
+				_frame.dom.layout.append(ad).addClass('mod-ad').css('padding-bottom', ad.height() + 1);
+			}
+		}
 	});
 };
 
