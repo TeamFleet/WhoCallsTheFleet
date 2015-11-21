@@ -1294,6 +1294,11 @@ _frame.app_main = {
 				}
 				return true
 			})
+		
+		// 广告
+			.then(function(){
+				_frame.ad(_frame.dom.layout)
+			})
 
 		// 错误处理
 			.catch(function (err) {

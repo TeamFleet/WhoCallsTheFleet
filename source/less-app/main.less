@@ -177,6 +177,8 @@ a{
 #layout{
 	.padding-top(@nav_height);
 	height:		100%;
+	transition-property: padding !important;
+	transition-duration: .75s;
 
 	&[data-errorbadge],
 	&[data-msgbadge]{
@@ -206,6 +208,46 @@ a{
 		&:after{
 			content:	attr(data-msgbadge);
 			background:	hsla(200, 100%, 50%, .575);
+		}
+	}
+	&>.ad{
+		position: 	absolute;
+		z-index: 	10;
+		width: 		100%;
+		height: 	51px;
+		border-top: 1px solid rgba(229,229,229,.25);
+		background: rgba(0,0,0,.85);
+		bottom: 	0;
+		left: 		0;
+		.fadein();
+		transition-property: transform;
+		transition-duration: .75s;
+		transform: 	translateY(100%);
+		&>.close{
+			position: 	absolute;
+			top: 		0;
+			right: 		0;
+			height: 	100%;
+			width: 		50px;
+			z-index: 	50;
+			color: 		#bbb;
+			font-size: 	30px;
+			transition-property: color;
+			&:before{
+				content: @iconcode-close;
+				font-family: 'Gothic';
+				font-weight: lighter;
+				display: 	block;
+				position: 	absolute;
+				top: 		50%;
+				left: 		0;
+				line-height:0;
+				width: 		100%;
+				text-align: center;
+			}
+			&:hover{
+				color: 	#fff;
+			}
 		}
 	}
 }
@@ -1009,7 +1051,7 @@ main{
 			&.on{
 				.transition-delay(@transition_duration_main);
 				//top:	~"calc(100% - 50px - @{height}px)";
-				bottom: 	unit( @height, px );
+				bottom: 	unit( @height + 20, px );
 			}
 		}
 	}
@@ -1031,6 +1073,24 @@ main{
 	}
 	&:after{
 		height: 	4px;
+	}
+}
+
+
+
+
+
+
+
+
+
+#layout.mod-ad{
+	padding-bottom: 	51px;
+	&>.ad{
+		transform: 	translateY(0);
+	}
+	&.ready.only_bg>main{
+		top: 	~"calc(100% + 51px)";
 	}
 }
 

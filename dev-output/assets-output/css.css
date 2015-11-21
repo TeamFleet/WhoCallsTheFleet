@@ -2414,6 +2414,10 @@ a {
 #layout {
   padding-top: 4rem;
   height: 100%;
+  -webkit-transition-property: padding !important;
+  transition-property: padding !important;
+  -webkit-transition-duration: .75s;
+          transition-duration: .75s;
 }
 #layout[data-errorbadge]:after,
 #layout[data-msgbadge]:after {
@@ -2442,6 +2446,54 @@ a {
 #layout[data-msgbadge]:after {
   content: attr(data-msgbadge);
   background: rgba(0, 170, 255, 0.575);
+}
+#layout > .ad {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  height: 51px;
+  border-top: 1px solid rgba(229, 229, 229, 0.25);
+  background: rgba(0, 0, 0, 0.85);
+  bottom: 0;
+  left: 0;
+  animation: fadein 0.3s ease-out;
+  -webkit-animation: fadein 0.3s ease-out;
+  -webkit-transition-property: -webkit-transform;
+  transition-property: -webkit-transform;
+  transition-property: transform;
+  transition-property: transform, -webkit-transform;
+  -webkit-transition-duration: .75s;
+          transition-duration: .75s;
+  -webkit-transform: translateY(100%);
+      -ms-transform: translateY(100%);
+          transform: translateY(100%);
+}
+#layout > .ad > .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 50px;
+  z-index: 50;
+  color: #bbb;
+  font-size: 30px;
+  -webkit-transition-property: color;
+  transition-property: color;
+}
+#layout > .ad > .close:before {
+  content: "×";
+  font-family: 'Gothic';
+  font-weight: lighter;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  line-height: 0;
+  width: 100%;
+  text-align: center;
+}
+#layout > .ad > .close:hover {
+  color: #fff;
 }
 html.ready nav,
 html.ready main {
@@ -3432,7 +3484,7 @@ main:after {
 #layout.ready.only_bg > .bg_controls.on {
   -webkit-transition-delay: 0.75s;
           transition-delay: 0.75s;
-  bottom: 44px;
+  bottom: 64px;
 }
 .mode-selection > nav > div.pages {
   -webkit-transform: translateX(120px) translateY(-100%);
@@ -3584,7 +3636,7 @@ main:after {
 .layout-only_bg #layout.ready.only_bg > .bg_controls.on {
   -webkit-transition-delay: 0.75s;
           transition-delay: 0.75s;
-  bottom: 44px;
+  bottom: 64px;
 }
 #layout.is-loading nav:before {
   opacity: 1;
@@ -3593,6 +3645,17 @@ main:after {
 }
 #layout.is-loading nav:after {
   height: 4px;
+}
+#layout.mod-ad {
+  padding-bottom: 51px;
+}
+#layout.mod-ad > .ad {
+  -webkit-transform: translateY(0);
+      -ms-transform: translateY(0);
+          transform: translateY(0);
+}
+#layout.mod-ad.ready.only_bg > main {
+  top: calc(100% + 51px);
 }
 /*
 .tabview{

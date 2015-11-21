@@ -72,6 +72,7 @@
 // @koala-prepend "../../source/js-app/page/arsenal-web.js"
 // @koala-prepend "../../source/js-app/page/about.js"
 
+// @koala-prepend "../../source/js-app/frame/ad.js"
 // @koala-prepend "../../source/js-app/frame/infos.web.js"
 // @koala-prepend "../../source/js-app/frame/infos-fleet.js"
 // @koala-prepend "../../source/js-app/frame/mode-selection.js"

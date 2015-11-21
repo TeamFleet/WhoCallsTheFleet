@@ -987,6 +987,11 @@ _frame.app_main = {
 			})
 
 		// 鼠标侧键操作
+		
+		// 广告
+			.then(function(){
+				_frame.ad(_frame.dom.layout)
+			})
 
 		// 错误处理
 			.catch(function (err) {
