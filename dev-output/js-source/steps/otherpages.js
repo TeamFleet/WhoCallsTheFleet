@@ -12,6 +12,12 @@ dev_output_steps.push(function(){
 				source:	node.path.join( dir_templates, 'page', 'index.html' ),
 				target:	node.path.join( dev_output_dir, 'index.html' ),
 				filter:	dev_output_filters.page_home
+			},
+			{
+				page:	'calctp',
+				title:	'TP计算器',
+				source:	node.path.join( _g.path.page, 'calctp.html' ),
+				target:	node.path.join( dev_output_dir, 'calctp', 'index.html' )
 			}
 		]
 		,updates = []
