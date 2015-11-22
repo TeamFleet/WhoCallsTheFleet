@@ -13052,6 +13052,36 @@ main[data-theme="about"]:after {
 .page-container[page="about"] .infos ~ section.update_journal:first-of-type {
   padding-right: 7.5rem;
 }
+.page-container[page="about"] section.update_journal {
+  height: 44px;
+  overflow: hidden;
+  position: relative;
+  padding-left: 20px;
+}
+.page-container[page="about"] section.update_journal:before {
+  content: '\25BA';
+  position: absolute;
+  top: 4px;
+  left: 0;
+  font-size: 14px;
+  font-family: Arial;
+  color: #bea7a7;
+  -webkit-transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
+  -webkit-transition-property: -webkit-transform;
+  transition-property: -webkit-transform;
+  transition-property: transform;
+  transition-property: transform, -webkit-transform;
+}
+.page-container[page="about"] input[type="checkbox"]:checked + section.update_journal {
+  height: auto;
+  overflow: visible;
+}
+.page-container[page="about"] input[type="checkbox"]:checked + section.update_journal:before {
+  -webkit-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
 .page-container[page="fleets"] {
   border-width: 0 !important;
   padding: 0 !important;

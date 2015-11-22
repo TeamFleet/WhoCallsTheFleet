@@ -92,4 +92,30 @@ main[data-theme="about"]:after{
 	.infos ~ section.update_journal:first-of-type{
 		.padding-right(150);
 	}
+	
+	section.update_journal{
+		height: 	44px;
+		overflow: 	hidden;
+		position: 	relative;
+		padding-left: 20px;
+		&:before{
+			content: 	'\25BA';
+			position: 	absolute;
+			top: 		4px;
+			left: 		0;
+			font-size: 	14px;
+			font-family:Arial;
+			color: 		hsl(0, 15%, 70%);
+			.enable-transition();
+			transition-property: transform;
+		}
+	}
+	
+	input[type="checkbox"]:checked + section.update_journal{
+		height: 	auto;
+		overflow: 	visible;
+		&:before{
+			transform: 	rotate(90deg);
+		}
+	}
 }

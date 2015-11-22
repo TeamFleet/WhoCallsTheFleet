@@ -45,10 +45,20 @@ _frame.app_main.page['about'].init = function( page ){
 		,latestVersionSub = latestVersion[0] + '.' + latestVersion[1]
 	*/
 	//$('[data-version-app^="'+latestVersionSub+'"]')
+	
+	let i = 0;
 
 	function addUpdateJournal( updateData ){
-		var section = $('<section class="update_journal" data-version-'+updateData['type']+'="'+updateData['version']+'"/>')
-						.html(_frame.app_main.page['about'].journaltitle(updateData))
+		let id = 'update_journal_'+(i++)
+			,section = $('<input type="checkbox" id="'+(id)+'"/>')
+						.prop('checked', (i<3 ? true : false))
+						.add(
+							$('<section class="update_journal" data-version-'+updateData['type']+'="'+updateData['version']+'"/>')
+								.append(
+									$('<label for="'+id+'"/>')
+										.html(_frame.app_main.page['about'].journaltitle(updateData))
+								)
+						)
 						.appendTo(page)
 		try{
 			$(_frame.app_main.page['about'].journal_parse(updateData['journal'])).appendTo( section )
