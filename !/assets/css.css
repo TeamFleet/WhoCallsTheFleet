@@ -2436,10 +2436,12 @@ section.update_journal a:active,
   color: #fff;
   background: rgba(0, 0, 0, 0.35);
 }
-a.link:not(.link_ship):not(.link_equipment):not(.link_entity) {
+a.link:not(.link_ship):not(.link_equipment):not(.link_entity),
+section.update_journal a:not(.link_ship):not(.link_equipment):not(.link_entity) {
   padding: 0 .35em;
 }
-a.link.link_ship {
+a.link.link_ship,
+section.update_journal a.link_ship {
   padding-right: 1em;
   min-width: 200px;
 }
@@ -2449,8 +2451,10 @@ fieldset {
 #layout {
   padding-top: 4rem;
   height: 100%;
-  -webkit-transition-property: padding !important;
-  transition-property: padding !important;
+  -webkit-transition-property: padding, -webkit-filter !important;
+  transition-property: padding, -webkit-filter !important;
+  transition-property: filter, padding !important;
+  transition-property: filter, padding, -webkit-filter !important;
   -webkit-transition-duration: .75s;
           transition-duration: .75s;
 }
@@ -2643,11 +2647,11 @@ nav > div {
 }
 nav > div .button {
   line-height: 4rem;
-  font-size: 1.2000000000000002rem;
+  font-size: 24px;
   font-weight: lighter;
   color: rgba(255, 255, 255, 0.5);
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
+  border-left: 0.41666667em solid transparent;
+  border-right: 0.41666667em solid transparent;
   position: relative;
   top: 0;
   display: inline-block;
@@ -2685,15 +2689,29 @@ nav > div .button:active {
 }
 nav > div .button + .button {
   margin-left: 1.25em;
+  /*
+				@media all and (max-width: 800px ){
+					margin-left:	unit( 16 / 24, em );
+				}
+				@media all and (max-width: 700px ){
+					margin-left:	unit( 4 / 24, em );
+				}
+				*/
 }
-@media all and (max-width: 800px) {
+@media all and (max-width: 960px) {
+  nav > div .button {
+    font-size: 22px;
+  }
   nav > div .button + .button {
-    margin-left: 0.66666667em;
+    margin-left: 0.72727273em;
   }
 }
-@media all and (max-width: 700px) {
+@media all and (max-width: 800px) {
+  nav > div .button {
+    font-size: 18px;
+  }
   nav > div .button + .button {
-    margin-left: 0.16666667em;
+    margin-left: 0.55555556em;
   }
 }
 nav > div .button[icon] {
@@ -13033,6 +13051,36 @@ main[data-theme="about"]:after {
 }
 .page-container[page="about"] .infos ~ section.update_journal:first-of-type {
   padding-right: 7.5rem;
+}
+.page-container[page="about"] section.update_journal {
+  height: 44px;
+  overflow: hidden;
+  position: relative;
+  padding-left: 20px;
+}
+.page-container[page="about"] section.update_journal:before {
+  content: '\25BA';
+  position: absolute;
+  top: 4px;
+  left: 0;
+  font-size: 14px;
+  font-family: Arial;
+  color: #bea7a7;
+  -webkit-transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
+  -webkit-transition-property: -webkit-transform;
+  transition-property: -webkit-transform;
+  transition-property: transform;
+  transition-property: transform, -webkit-transform;
+}
+.page-container[page="about"] input[type="checkbox"]:checked + section.update_journal {
+  height: auto;
+  overflow: visible;
+}
+.page-container[page="about"] input[type="checkbox"]:checked + section.update_journal:before {
+  -webkit-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+          transform: rotate(90deg);
 }
 .page-container[page="fleets"] {
   border-width: 0 !important;
