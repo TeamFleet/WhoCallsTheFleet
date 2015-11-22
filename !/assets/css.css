@@ -2444,7 +2444,7 @@ a.link.link_ship {
   min-width: 200px;
 }
 fieldset {
-  margin: 1.5em auto;
+  margin: 1.5em 0;
 }
 #layout {
   padding-top: 4rem;
@@ -13131,4 +13131,80 @@ main[data-theme="about"]:after {
 }
 .page-container[page="home"] p {
   margin-top: 1em;
+}
+main[data-theme="calctp"]:after {
+  background: rgba(55, 52, 37, 0.7);
+}
+.page-container[page="calctp"] {
+  font-size: 14px;
+}
+.page-container[page="calctp"] h1,
+.page-container[page="calctp"] h2,
+.page-container[page="calctp"] h3,
+.page-container[page="calctp"] h4,
+.page-container[page="calctp"] h5,
+.page-container[page="calctp"] h6 {
+  color: #fff1b3;
+  text-shadow: 0 0 0.16666667em #ffde4d;
+}
+.page-container[page="calctp"] h1[data-content],
+.page-container[page="calctp"] h2[data-content],
+.page-container[page="calctp"] h3[data-content],
+.page-container[page="calctp"] h4[data-content],
+.page-container[page="calctp"] h5[data-content],
+.page-container[page="calctp"] h6[data-content] {
+  color: #fff8d9;
+  text-shadow: 0 0 0.16666667em #ffe880;
+}
+.page-container[page="calctp"] h1[data-content]:before,
+.page-container[page="calctp"] h2[data-content]:before,
+.page-container[page="calctp"] h3[data-content]:before,
+.page-container[page="calctp"] h4[data-content]:before,
+.page-container[page="calctp"] h5[data-content]:before,
+.page-container[page="calctp"] h6[data-content]:before {
+  color: #ffe880;
+}
+.page-container[page="calctp"] form.tpcalculator {
+  margin-top: 1.5em;
+  overflow: hidden;
+}
+.page-container[page="calctp"] form.tpcalculator fieldset {
+  display: block;
+  vertical-align: top;
+  margin-top: 0;
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.2);
+}
+.page-container[page="calctp"] form.tpcalculator fieldset legend {
+  color: #fff1b3;
+}
+.page-container[page="calctp"] form.tpcalculator fieldset p {
+  display: inline-block;
+  width: 50%;
+  min-width: 200px;
+  float: left;
+}
+.page-container[page="calctp"] form.tpcalculator fieldset p span {
+  display: inline-block;
+  width: 130px;
+  padding: 0 10px 0 0;
+  text-align: right;
+}
+.page-container[page="calctp"] form.tpcalculator fieldset p input {
+  width: 60px;
+  min-width: 0;
+}
+@media all and (min-width: 641px) {
+  .page-container[page="calctp"] form.tpcalculator fieldset {
+    width: calc(50% - 10px);
+  }
+  .page-container[page="calctp"] form.tpcalculator fieldset.count_ships {
+    float: left;
+    margin-right: 20px;
+  }
+  .page-container[page="calctp"] form.tpcalculator fieldset.result {
+    clear: both;
+    width: 100%;
+    padding-left: 1em;
+  }
 }
