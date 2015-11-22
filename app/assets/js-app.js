@@ -5981,7 +5981,7 @@ _frame.app_main.page['calctp'] = {
 					switch(i){
 						case 'dd':
 						case 'cl':
-						case 'dav':
+						case 'cav':
 							r+= 3 * count;
 							break;
 						case 'av':

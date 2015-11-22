@@ -5060,7 +5060,7 @@ _frame.app_main.page['calctp'] = {
 					switch (_i7) {
 						case 'dd':
 						case 'cl':
-						case 'dav':
+						case 'cav':
 							r += 3 * count;
 							break;
 						case 'av':
