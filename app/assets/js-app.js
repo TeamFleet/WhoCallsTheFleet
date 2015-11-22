@@ -5963,7 +5963,7 @@ _frame.app_main.page['about'].init = function( page ){
 
 }
 
-_frame.app_main.page['tpcalc'] = {
+_frame.app_main.page['calctp'] = {
 	init: function(page){
 		page.find('form.tpcalculator').each(function(i, form){
 			form = $(form)
