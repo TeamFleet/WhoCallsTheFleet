@@ -209,7 +209,7 @@ fieldset{
 #layout{
 	.padding-top(@nav_height);
 	height:		100%;
-	transition-property: padding !important;
+	transition-property: filter, padding !important;
 	transition-duration: .75s;
 
 	&[data-errorbadge],
@@ -404,12 +404,12 @@ nav{
 		}
 		.button{
 			.line-height(@nav_height);
-			.font-size(24);
+			font-size: 	24px;
 			font-weight:lighter;
 			color:		rgba(255,255,255,.5);
 			//.padding(0, 10);
-			border-left:10px solid transparent;
-			border-right:10px solid transparent;
+			border-left:unit( 10 / 24, em ) solid transparent;
+			border-right:unit( 10 / 24, em ) solid transparent;
 			position:	relative;
 			top:		0;
 			display: 	inline-block;
@@ -439,11 +439,25 @@ nav{
 			//}
 			&+.button{
 				margin-left:	unit( 30 / 24, em );
+				/*
 				@media all and (max-width: 800px ){
 					margin-left:	unit( 16 / 24, em );
 				}
 				@media all and (max-width: 700px ){
 					margin-left:	unit( 4 / 24, em );
+				}
+				*/
+			}
+			@media all and (max-width: 960px ){
+				font-size: 	22px;
+				&+.button{
+					margin-left:	unit( 16 / 22, em );
+				}
+			}
+			@media all and (max-width: 800px ){
+				font-size: 	18px;
+				&+.button{
+					margin-left:	unit( 10 / 18, em );
 				}
 			}
 			/*
