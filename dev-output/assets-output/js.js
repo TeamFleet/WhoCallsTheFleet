@@ -5042,6 +5042,49 @@ _frame.app_main.page['about'].init = function (page) {
 	});
 };
 
+_frame.app_main.page['calctp'] = {
+	'init': function init(page) {
+		page.find('form.tpcalculator').each(function (i, form) {
+			form = $(form);
+			var resultA = form.find('.result_a'),
+			    resultS = form.find('.result_s');
+
+			form.on('input', 'input', function () {
+				form.trigger('submit');
+			}).on('submit', function (e) {
+				var d = form.serializeObject(),
+				    r = 0;
+
+				for (var _i7 in d) {
+					var count = parseInt(d[_i7]) || 0;
+					switch (_i7) {
+						case 'dd':
+						case 'cl':
+						case 'dav':
+							r += 3 * count;
+							break;
+						case 'av':
+							r += 8 * count;
+							break;
+						case 'lha':
+						case 'ao':
+							r += 10 * count;
+							break;
+						case 'e75':
+							r += 3.5 * count;
+							break;
+						case 'e68':
+							r += 5.5 * count;
+							break;
+					}
+				}
+				e.preventDefault();
+				resultA.html(Math.floor(r));
+				resultS.html(Math.floor(r * 1.45));
+			});
+		});
+	}
+};
 _frame.ad = function () {
 	$.ajax({
 		'url': 'http://fleet.diablohu.com/!/ad/',
@@ -5379,11 +5422,11 @@ var InfosFleet = (function () {
 			this.el.on({
 				'show': (function (e, is_firstShow) {
 					if (!is_firstShow) {
-						var _i7 = 0,
+						var _i8 = 0,
 						    _l2 = Lockr.get('hqLvDefault', _g.defaultHqLv);
-						while (_i7 < 4) {
-							this.fleets[_i7].summaryCalc(true);
-							_i7++;
+						while (_i8 < 4) {
+							this.fleets[_i8].summaryCalc(true);
+							_i8++;
 						}
 						if (!this._hqlv) this.doms['hqlvOption'].val(_l2);
 						this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(_l2));
@@ -5484,15 +5527,15 @@ var InfosFleet = (function () {
 				if (!InfosFleet.menuTheme) {
 					InfosFleet.menuThemeItems = $('<div/>');
 
-					var _loop = function _loop(_i8) {
-						$('<button class="theme-' + _i8 + '"/>').html(_i8).on('click', (function () {
-							InfosFleet.menuCur._theme = _i8;
+					var _loop = function _loop(_i9) {
+						$('<button class="theme-' + _i9 + '"/>').html(_i9).on('click', (function () {
+							InfosFleet.menuCur._theme = _i9;
 							this.el.attr('data-theme', this._theme);
 						}).bind(_this7)).appendTo(InfosFleet.menuThemeItems);
 					};
 
-					for (var _i8 = 1; _i8 < 11; _i8++) {
-						_loop(_i8);
+					for (var _i9 = 1; _i9 < 11; _i9++) {
+						_loop(_i9);
 					}
 					InfosFleet.menuTheme = new _menu({
 						'className': 'contextmenu-infos_fleet_themes',
@@ -5807,10 +5850,10 @@ var InfosFleet = (function () {
 				this.doms['hqlvOption'].val(Lockr.get('hqLvDefault', _g.defaultHqLv));
 			}
 			if (last != value) {
-				var _i9 = 0;
-				while (_i9 < 4) {
-					this.fleets[_i9].summaryCalc(true);
-					_i9++;
+				var _i10 = 0;
+				while (_i10 < 4) {
+					this.fleets[_i10].summaryCalc(true);
+					_i10++;
 				}
 				this.save();
 			}
@@ -6096,8 +6139,8 @@ var InfosFleetSubFleet = (function () {
 					}) || [];
 					equipments_by_slot.forEach(function (equipment) {
 						if (equipment) {
-							for (var _i10 in x) {
-								if (Formula.equipmentType[_i10] && Formula.equipmentType[_i10].push && Formula.equipmentType[_i10].indexOf(equipment.type) > -1) x[_i10] += equipment.stat.los;
+							for (var _i11 in x) {
+								if (Formula.equipmentType[_i11] && Formula.equipmentType[_i11].push && Formula.equipmentType[_i11].indexOf(equipment.type) > -1) x[_i11] += equipment.stat.los;
 							}
 						}
 					});
@@ -6170,9 +6213,9 @@ var InfosFleetShip = (function () {
 			}).bind(this)
 		}))).append(this.elInfosInfo = $('<span/>'))))).append($('<div class="equipments"/>').append((function () {
 			var els = $();
-			for (var _i11 = 0; _i11 < 4; _i11++) {
-				this.equipments[_i11] = new InfosFleetShipEquipment(this, _i11);
-				els = els.add(this.equipments[_i11].el);
+			for (var _i12 = 0; _i12 < 4; _i12++) {
+				this.equipments[_i12] = new InfosFleetShipEquipment(this, _i12);
+				els = els.add(this.equipments[_i12].el);
 			}
 
 			return els;
@@ -6290,10 +6333,10 @@ var InfosFleetShip = (function () {
 
 			if (this.data[1][0]) this.shipLv = this.data[1][0];
 
-			for (var _i12 = 0; _i12 < 4; _i12++) {
-				this.equipments[_i12].id = this.data[2][_i12];
-				this.equipments[_i12].star = this.data[3][_i12];
-				this.equipments[_i12].rank = this.data[4][_i12];
+			for (var _i13 = 0; _i13 < 4; _i13++) {
+				this.equipments[_i13].id = this.data[2][_i13];
+				this.equipments[_i13].star = this.data[3][_i13];
+				this.equipments[_i13].rank = this.data[4][_i13];
 			}
 
 			this.updateAttrs();
@@ -6440,12 +6483,12 @@ var InfosFleetShip = (function () {
 				this.elInfosTitle.html('<h4 data-content="' + ship['name'][_g.lang] + '">' + ship['name'][_g.lang] + '</h4>' + (suffix ? '<h5 data-content="' + suffix + '">' + suffix + '</h5>' : ''));
 				this.elInfosInfo.html(speed + ' ' + stype);
 
-				for (var _i13 = 0; _i13 < 4; _i13++) {
-					this.equipments[_i13].carry = ship.slot[_i13];
+				for (var _i14 = 0; _i14 < 4; _i14++) {
+					this.equipments[_i14].carry = ship.slot[_i14];
 					if (!this._updating) {
-						this.equipments[_i13].id = null;
-						this.equipments[_i13].star = null;
-						this.equipments[_i13].rank = null;
+						this.equipments[_i14].id = null;
+						this.equipments[_i14].star = null;
+						this.equipments[_i14].rank = null;
 					}
 				}
 			} else {
@@ -6564,14 +6607,14 @@ var InfosFleetShipEquipment = (function () {
 			if (!InfosFleet.menuRankSelect) {
 				InfosFleet.menuRankSelectItems = $('<div/>');
 
-				var _loop2 = function _loop2(_i14) {
-					$('<button class="rank-' + _i14 + '"/>').html(!_i14 ? '无' : '').on('click', function () {
-						InfosFleet.menuRankSelectCur.rank = _i14;
+				var _loop2 = function _loop2(_i15) {
+					$('<button class="rank-' + _i15 + '"/>').html(!_i15 ? '无' : '').on('click', function () {
+						InfosFleet.menuRankSelectCur.rank = _i15;
 					}).appendTo(InfosFleet.menuRankSelectItems);
 				};
 
-				for (var _i14 = 0; _i14 < 8; _i14++) {
-					_loop2(_i14);
+				for (var _i15 = 0; _i15 < 8; _i15++) {
+					_loop2(_i15);
 				}
 				InfosFleet.menuRankSelect = new _menu({
 					'className': 'contextmenu-infos_fleet_rank_select',
@@ -7625,7 +7668,7 @@ var TablelistFleets = (function (_Tablelist3) {
 						sorted[cur.theme].push(i);
 					});
 
-					for (var _i15 in sorted) {
+					for (var _i16 in sorted) {
 						k = 0;
 
 						while (k < _this12.flexgrid_empty_count) {
@@ -7633,7 +7676,7 @@ var TablelistFleets = (function (_Tablelist3) {
 							k++;
 						}
 
-						sorted[_i15].forEach((function (index) {
+						sorted[_i16].forEach((function (index) {
 							setTimeout((function (i) {
 								this.append_item(arr[i]);
 								count++;
@@ -7757,7 +7800,7 @@ var TablelistFleets = (function (_Tablelist3) {
 								if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
 							});
 						} else {
-							for (var _i16 = 0, f = undefined; f = e.target.files[_i16]; _i16++) {
+							for (var _i17 = 0, f = undefined; f = e.target.files[_i17]; _i17++) {
 								var reader = new FileReader();
 								reader.onload = (function (theFile) {
 									return function (r) {

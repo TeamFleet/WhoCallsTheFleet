@@ -1,5 +1,5 @@
 _frame.app_main.page['calctp'] = {
-	init: function(page){
+	'init': function(page){
 		page.find('form.tpcalculator').each(function(i, form){
 			form = $(form)
 			let resultA = form.find('.result_a')
@@ -34,7 +34,6 @@ _frame.app_main.page['calctp'] = {
 							break;
 					}
 				}
-				console.log(d)
 				e.preventDefault()
 				resultA.html(Math.floor(r))
 				resultS.html(Math.floor(r * 1.45))
