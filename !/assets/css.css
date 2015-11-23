@@ -2486,7 +2486,7 @@ fieldset {
   content: attr(data-msgbadge);
   background: rgba(0, 170, 255, 0.575);
 }
-#layout > .ad {
+#layout > .gg {
   position: absolute;
   z-index: 10;
   width: 100%;
@@ -2507,7 +2507,7 @@ fieldset {
       -ms-transform: translateY(100%);
           transform: translateY(100%);
 }
-#layout > .ad > .close {
+#layout > .gg > .close {
   position: absolute;
   top: 0;
   right: 0;
@@ -2519,7 +2519,7 @@ fieldset {
   -webkit-transition-property: color;
   transition-property: color;
 }
-#layout > .ad > .close:before {
+#layout > .gg > .close:before {
   content: "×";
   font-family: 'Gothic';
   font-weight: lighter;
@@ -2531,7 +2531,7 @@ fieldset {
   width: 100%;
   text-align: center;
 }
-#layout > .ad > .close:hover {
+#layout > .gg > .close:hover {
   color: #fff;
 }
 html.ready nav,
@@ -3699,15 +3699,15 @@ main:after {
 #layout.is-loading nav:after {
   height: 4px;
 }
-#layout.mod-ad {
+#layout.mod-gg {
   padding-bottom: 51px;
 }
-#layout.mod-ad > .ad {
+#layout.mod-gg > .gg {
   -webkit-transform: translateY(0);
       -ms-transform: translateY(0);
           transform: translateY(0);
 }
-#layout.mod-ad.ready.only_bg > main {
+#layout.mod-gg.ready.only_bg > main {
   top: calc(100% + 51px);
 }
 /*
