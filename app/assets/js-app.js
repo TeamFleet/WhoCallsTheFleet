@@ -5984,34 +5984,44 @@ _frame.app_main.page['calctp'] = {
 				form.trigger('submit')
 			}).on('submit', function(e){
 				let d = form.serializeObject()
-					,r = 0
+					,rA = 0
+					,rS = 0
 				
 				for(let i in d){
 					let count = parseInt(d[i]) || 0;
 					switch(i){
 						case 'dd':
 						case 'cl':
+							rA+= 3 * count;
+							rS+= 4.5 * count;
+							break;
 						case 'cav':
-							r+= 3 * count;
+							rA+= 3 * count;
+							rS+= 4 * count;
 							break;
 						case 'av':
-							r+= 8 * count;
+							rA+= 8 * count;
+							rS+= 10.5 * count;
 							break;
 						case 'lha':
 						case 'ao':
-							r+= 10 * count;
+							rA+= 10 * count;
+							rS+= 13.5 * count;
 							break;
+						// canister
 						case 'e75':
-							r+= 3.5 * count;
+							rA+= 3.5 * count;
+							rS+= 5 * count;
 							break;
 						case 'e68':
-							r+= 5.5 * count;
+							rA+= 5.5 * count;
+							rS+= 8.3333 * count;
 							break;
 					}
 				}
 				e.preventDefault()
-				resultA.html(Math.floor(r))
-				resultS.html(Math.floor(r * 1.45))
+				resultA.html(Math.floor(rA))
+				resultS.html(Math.floor(rS))
 			})
 		})
 	}
