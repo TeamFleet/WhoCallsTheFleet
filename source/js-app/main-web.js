@@ -27,7 +27,7 @@ _g.bgimg_count = 0;
 		'item_types'
 	];
 	
-	_g.db_version = '1.8.6.0';
+	_g.db_version = '1.8.6.1';
 
 	_g.data = {}
 
@@ -990,7 +990,7 @@ _frame.app_main = {
 		
 		// 广告
 			.then(function(){
-				_frame.ad(_frame.dom.layout)
+				_frame.gg(_frame.dom.layout)
 			})
 
 		// 错误处理

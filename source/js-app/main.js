@@ -1297,7 +1297,7 @@ _frame.app_main = {
 		
 		// 广告
 			.then(function(){
-				_frame.ad(_frame.dom.layout)
+				_frame.gg(_frame.dom.layout)
 			})
 
 		// 错误处理
