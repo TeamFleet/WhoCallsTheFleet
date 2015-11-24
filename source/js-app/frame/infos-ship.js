@@ -209,7 +209,7 @@ _frame.infos.__ship = function( id ){
 	// 可额外装备
 		if( d['additional_item_types'] && d['additional_item_types'].length ){
 			var additional_equipment_types = $('<div class="add_equip"/>').appendTo(dom)
-				,_additional_equipment_types = $('<div/>').html('<h4 data-content="特有装备类型">特有装备类型</h4>').appendTo(additional_equipment_types)
+				,_additional_equipment_types = $('<div/>').html('<h4 data-content="额外装备类型">额外装备类型</h4>').appendTo(additional_equipment_types)
 			d['additional_item_types'].forEach(function(currentValue){
 				let _d = _g['data']['item_types'][currentValue]
 				_additional_equipment_types.append(
@@ -222,6 +222,15 @@ _frame.infos.__ship = function( id ){
 						})
 				)
 			})
+		}
+	
+	// 其他额外信息
+		if( d['additional_night_shelling'] ){
+			$('<div class="add_equip"/>')
+				.html(`<div>
+					<h4 data-content="额外能力">额外能力</h4>
+					<span>夜战炮击</span>
+				</div>`).appendTo(dom)
 		}
 
 	// 声优 & 画师 & 消耗

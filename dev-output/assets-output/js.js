@@ -2856,7 +2856,7 @@ var Formula = {
 				break;
 
 			case 'nightBattle':
-				if ($.inArray(ship.type, Formula.shipType.Carriers) > -1) {
+				if (!ship.additional_night_shelling && $.inArray(ship.type, Formula.shipType.Carriers) > -1) {
 					return '-';
 				} else {
 					result = Formula.calcByShip.shellingPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, {

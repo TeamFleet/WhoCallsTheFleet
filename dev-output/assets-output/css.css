@@ -2611,8 +2611,8 @@ nav > div {
   height: 100%;
   -webkit-app-region: no-drag;
   display: block;
-  margin-left: 3.5rem;
-  padding: 0rem 0.5rem;
+  margin-left: 60px;
+  padding: 0 10px;
   top: 0;
   left: 0;
   max-width: calc(100% - 80px - 10px);
@@ -2632,17 +2632,17 @@ nav > div {
 }
 @media all and (max-width: 1152px) {
   nav > div {
-    margin-left: 2.5rem;
+    margin-left: 40px;
   }
 }
 @media all and (max-width: 960px) {
   nav > div {
-    margin-left: 1.5rem;
+    margin-left: 20px;
   }
 }
 @media all and (max-width: 800px) {
   nav > div {
-    margin-left: 0.75rem;
+    margin-left: 5px;
   }
 }
 nav > div .button {
@@ -2763,9 +2763,9 @@ nav > div.selection-info {
           transition-timing-function: ease-out;
 }
 nav > div.history ~ .selection-info {
-  -webkit-transform: translateX(120px);
-      -ms-transform: translateX(120px);
-          transform: translateX(120px);
+  -webkit-transform: translateX(140px);
+      -ms-transform: translateX(140px);
+          transform: translateX(140px);
 }
 nav > s {
   display: block;
@@ -3540,9 +3540,9 @@ main:after {
   bottom: 64px;
 }
 .mode-selection > nav > div.pages {
-  -webkit-transform: translateX(120px) translateY(-100%);
-      -ms-transform: translateX(120px) translateY(-100%);
-          transform: translateX(120px) translateY(-100%);
+  -webkit-transform: translateX(140px) translateY(-100%);
+      -ms-transform: translateX(140px) translateY(-100%);
+          transform: translateX(140px) translateY(-100%);
   opacity: 0;
 }
 .mode-selection > nav > div.selection-info {

@@ -380,8 +380,8 @@ nav{
 		//.padding(0, (@nav_height - 10));
 		-webkit-app-region:	no-drag;
 		display:	block;
-		.margin-left(@nav_height - 10);
-		.padding(0, 10);
+		margin-left:unit(@nav_height - 20, px);
+		padding: 	0 10px;
 		top:		0;
 		left:		0;
 		max-width:	~"calc(100% - @{nav_height}px - 10px)";
@@ -394,13 +394,13 @@ nav{
 		}
 			*/
 		@media all and (max-width: 1152px ){
-			.margin-left(@nav_height - 10 - 20);
+			margin-left:unit(@nav_height - 20 - 20, px);
 		}
 		@media all and (max-width: 960px ){
-			.margin-left(@nav_height - 10 - 40);
+			margin-left:unit(@nav_height - 20 - 40, px);
 		}
 		@media all and (max-width: 800px ){
-			.margin-left(@nav_height - 10 - 55);
+			margin-left:unit(@nav_height - 20 - 55, px);
 		}
 		.button{
 			.line-height(@nav_height);
