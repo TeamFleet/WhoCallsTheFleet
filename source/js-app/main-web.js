@@ -1,7 +1,8 @@
-
-_g.bgimg_count = 0;
-
 // Global Variables
+	_g.db_version = '1.8.6.1';
+
+	_g.bgimg_count = 0;
+
 	_g.event = {
 		'animationend':			'animationend webkitAnimationEnd',
 		'animationiteration':	'animationiteration webkitAnimationIteration',
@@ -26,8 +27,6 @@ _g.bgimg_count = 0;
 		'items',
 		'item_types'
 	];
-	
-	_g.db_version = '1.8.6.1';
 
 	_g.data = {}
 

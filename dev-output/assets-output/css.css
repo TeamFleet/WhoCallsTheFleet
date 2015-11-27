@@ -2542,18 +2542,19 @@ html.ready main {
 nav {
   display: block;
   position: absolute;
-  top: -4rem;
+  top: -80px;
   left: 0;
-  height: 4rem;
+  height: 80px;
+  line-height: 80px;
   width: 100%;
   z-index: 4;
   -webkit-transition-property: top;
   transition-property: top;
   background: rgba(0, 0, 0, 0.5);
-  user-select: none;
   -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 nav:before,
 nav:after {
@@ -2577,7 +2578,7 @@ nav:after {
   z-index: 4;
   left: 0;
   width: 100%;
-  height: 0.05rem;
+  height: 1px;
   background: rgba(229, 229, 229, 0.25);
   -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
@@ -2597,8 +2598,8 @@ nav > .logo {
 nav > .logo:before {
   content: "";
   position: absolute;
-  animation: layout-loading-logo 1.2s ease-out infinite alternate;
   -webkit-animation: layout-loading-logo 1.2s ease-out infinite alternate;
+          animation: layout-loading-logo 1.2s ease-out infinite alternate;
   top: 0;
   left: 0;
   width: 100%;
@@ -2622,8 +2623,8 @@ nav > div {
   transition-property: transform, top, opacity, -webkit-transform;
   -webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
           transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
-  -webkit-transition-duration: 0.3s !important;
-          transition-duration: 0.3s !important;
+  -webkit-transition-duration: .3s !important;
+          transition-duration: .3s !important;
   /*
 		@media all and (min-width: 1920px ){
 			margin-left:	~"calc((100% - 1920px) / 2 + @{nav_height}px - 10px)";
@@ -2646,7 +2647,6 @@ nav > div {
   }
 }
 nav > div .button {
-  line-height: 4rem;
   font-size: 24px;
   font-weight: lighter;
   color: rgba(255, 255, 255, 0.5);
@@ -2715,17 +2715,17 @@ nav > div .button + .button {
   }
 }
 nav > div .button[icon] {
-  padding-left: 2.3000000000000003rem;
+  padding-left: 46px;
 }
 nav > div .button[icon]:before {
   position: absolute;
-  width: 1.6rem;
+  width: 32px;
   text-align: center;
-  left: 0.5rem;
-  font-size: 1.6rem;
+  left: 10px;
+  font-size: 32px;
 }
 nav > div .button[icon]:first-child {
-  padding-left: 1.8rem;
+  padding-left: 36px;
 }
 nav > div .button[icon]:first-child:before {
   left: 0;
@@ -2754,18 +2754,16 @@ nav > div .button.home a {
 nav > div.selection-info {
   opacity: 0;
   z-index: 3;
-  line-height: 4rem;
-  font-size: 1.2000000000000002rem;
+  font-size: 24px;
   font-weight: lighter;
   color: rgba(255, 255, 255, 0.5);
   display: block !important;
+  padding-left: 20px;
   -webkit-transition-timing-function: ease-out;
           transition-timing-function: ease-out;
 }
 nav > div.history ~ .selection-info {
-  -webkit-transform: translateX(140px);
-      -ms-transform: translateX(140px);
-          transform: translateX(140px);
+  padding-left: 0;
 }
 nav > s {
   display: block;
@@ -2801,10 +2799,11 @@ nav > section.options {
   bottom: 0;
   right: 0;
   z-index: 5;
+  height: 100%;
   text-align: center;
   display: block;
   -webkit-app-region: no-drag;
-  padding: 0.25rem;
+  padding: 0 5px;
   -webkit-transition-property: opacity;
   transition-property: opacity;
   -webkit-transition-duration: 0.75s;
@@ -2813,12 +2812,12 @@ nav > section.options {
 }
 nav > section.options > button,
 nav > section.options > a {
+  height: 100%;
   color: rgba(255, 255, 255, 0.4);
   right: 0;
   display: inline-block;
-  width: 2rem;
-  height: 2rem;
-  font-size: 1.1rem;
+  width: 40px;
+  font-size: 22px;
   -webkit-transition-property: color;
   transition-property: color;
   -webkit-transition-duration: 0.75s;
@@ -3540,9 +3539,9 @@ main:after {
   bottom: 64px;
 }
 .mode-selection > nav > div.pages {
-  -webkit-transform: translateX(140px) translateY(-100%);
-      -ms-transform: translateX(140px) translateY(-100%);
-          transform: translateX(140px) translateY(-100%);
+  -webkit-transform: translateY(-100%);
+      -ms-transform: translateY(-100%);
+          transform: translateY(-100%);
   opacity: 0;
 }
 .mode-selection > nav > div.selection-info {
