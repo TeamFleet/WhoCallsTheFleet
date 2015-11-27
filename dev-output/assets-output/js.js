@@ -1771,7 +1771,8 @@ _menu.prototype.init = function () {
 			self.timeout_hideself = null;
 			self.hide();
 		}, 10);
-	}).appendTo(_frame.menu.dom.container);
+	});
+
 	this.dom.body = $('<div class="body"/>').appendTo(this.dom.menu);
 
 	this.dom.menu.on({
@@ -1822,7 +1823,7 @@ _menu.prototype.show = function (targetEl, x, y) {
 	clearTimeout(_frame.menu.timeout_hideall);
 	_frame.menu.timeout_hideall = null;
 
-	this.dom.menu.addClass('show');
+	this.dom.menu.appendTo(_frame.menu.dom.container).addClass('show');
 	_frame.menu.dom.container.addClass('on');
 
 	this.showing = true;
@@ -1869,7 +1870,7 @@ _menu.prototype.hideTrue = function () {
 	this.dom.menu.removeClass('show').css({
 		'top': '',
 		'left': ''
-	});
+	}).detach();
 
 	if (_instanceof(this.dom.blured, jQuery)) {
 		this.dom.blured.remove();
