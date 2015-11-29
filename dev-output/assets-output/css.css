@@ -7027,6 +7027,18 @@ h6 + section.update_journal {
   min-width: 200px;
   max-width: 200px;
 }
+@media all and (max-width: 720px) {
+  .infos-entity.is-hasavatar {
+    padding-right: 0;
+  }
+  .infos-entity.is-hasavatar > .title {
+    padding-right: 140px;
+  }
+  .infos-entity.is-hasavatar img.avatar {
+    min-width: 120px;
+    max-width: 120px;
+  }
+}
 .infos-equipment {
   display: -webkit-box;
   display: -webkit-flex;
@@ -10004,6 +10016,348 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
       -ms-flex-flow: row wrap;
           flex-flow: row wrap;
   padding-right: calc( 30% + 80px );
+  min-height: 460px;
+  /*
+		@media all and (max-width: 720px){
+			padding-right: 	35%;
+			&>aside{
+				width: 	35%;
+			}
+		}
+		*/
+  /*
+		@media all and (min-height: 801px) and (max-aspect-ratio: @aspect_ratio){
+			padding:	0 !important;
+			&>div{
+				h3, h4, h5, h6{
+					.margin-top(26) !important;
+				}
+			}
+			&>div.equipments{
+				//h4{
+				//	.margin-bottom(4);
+				//}
+				&>button~button{
+					.margin-top(4);
+				}
+			}
+			&>div.equipments>.modernization{
+				.margin-top(12);
+				h4{
+					margin-top:	0 !important;
+				}
+			}
+			&>div.remodels{
+				height:		auto;
+			}
+			&>div.add_equip{
+				&>div{
+					overflow: 	hidden;
+					&>h4, &>span{
+						vertical-align: bottom;
+						display: 		inline-block;
+					}
+					&>span{
+						line-height: 	25px;
+						margin-left: 	1em;
+						margin-right: 	0;
+					}
+				}
+			}
+			&>.entity{
+				right:	0 !important;
+				border-radius:	0 5px 5px 0 !important;
+				&+.entity{
+					top:	0 !important;
+					.right(142) !important;
+					border-radius:	5px 0 0 5px !important;
+				}
+			}
+			&>aside{
+				width:		100% !important;
+				position:	relative;
+				top:		auto;
+				flex:		1 0 100%;
+				height:		~"calc(40% + 20px)";
+				left:		0;
+				display:	block !important;
+				.margin-bottom(-20);
+				&>label{
+					//top:		~"calc(100% - 30px)" !important;
+					top: 	100% !important;
+					transform: translateY(-150%);
+					&~div{
+						.padding(10, 0, 30, 0) !important;
+					}
+				}
+			}
+			&>div.add_equip ~ aside{
+				height:		~"calc(40% + 20px - 70px)";
+			}
+			&:after{
+				display: 	none;
+			}
+		}
+		@media all and (min-height: 801px) and (max-height: 1024px) and (max-aspect-ratio: 5 / 4){
+			&>div.stats{
+				&>.stat{
+					span{
+						.line-height(20);
+					}
+					& ~ .stat{
+						.padding-top(4);
+						.margin-top(4);
+					}
+				}
+			}
+		}
+		@media all and (min-height: 801px) and (max-aspect-ratio: 5 / 4), (min-width: 1601px) and (min-aspect-ratio: 3 / 2){
+			&>aside{
+				&>input[type="radio"]{
+					&:nth-child(4n+3)+label{
+						display:	none;
+					}
+			
+					.loop2(@n, @i: 1) when (@i =< @n) {
+						&[value="@{i}"]:checked~div{
+							@left:		(0 - floor( (@i - 1) / 2) * 100%);
+							left:		@left;
+						}
+						&[value="@{i}"]~div{
+							width:	(50% * @i);
+						}
+						.loop2(@n, (@i + 1))
+					}
+					.loop2(10);
+				}
+			}
+		}
+		@media all and (min-height: 901px) and (max-aspect-ratio: 5 / 4){
+			&>aside{
+				height:		~"calc(45% + 30px)";
+				//.margin-bottom(-30);
+				margin-bottom:	0;
+			}
+			&>div.add_equip ~ aside{
+				height:		~"calc(45% + 30px - 70px)";
+			}
+		}
+		//@media all and (max-width: 960px) and (max-height: 600px), (min-width: 961px) and (max-height: 560px){
+		@media all and (max-width: 800px) and (max-height: 600px),
+		(min-width: 801px) and (max-width: 960px) and (max-height: 690px){
+		//(min-width: 961px) and (max-height: 600px){
+			.flex-flow(column nowrap);
+			.justify-content(flex-start);
+			.align-items(flex-start);
+			&>div{
+				.flex(1 0 auto);
+				h4{
+					.font-size(20) !important;
+				}
+				&.stats{
+					flex-basis:	auto;
+					padding-right:	0 !important;
+					&>.stat{
+						display:	inline-block;
+						width:		30%;
+						span{
+							width:	50%;
+							&:nth-child(odd){
+								width:	50%;
+							}
+							&:nth-child(even){
+								width:	50%;
+							}
+							&>small{
+								.font-size(12);
+							}
+							&>em{
+								.padding-left(2);
+							}
+						}
+						&~.stat{
+							border-top:		0;
+							.border-left(2);
+							padding-top:	0;
+							margin-top:		0;
+							&.consum{
+								width:	10%;
+								span{
+									width:	100%;
+									&:nth-child(odd){
+										width:	100%;
+									}
+									&:nth-child(even){
+										width:	100%;
+									}
+									&>small{
+										width: 		0;
+										overflow: 	hidden;
+										display: 	inline-block;
+										.height(18);
+									}
+									&>em{
+										padding: 	0;
+									}
+								}
+							}
+						}
+					}
+				}
+				&.equipments{
+					flex-basis:	auto;
+					&>button{
+						display:	inline-block;
+						width:		~"calc(25% - 9px)";
+						.margin-right(12);
+						&:last-of-type{
+							margin-right:	0;
+						}
+						&~button{
+							margin-top:		0;
+						}
+					}
+				}
+				&.equipments>.modernization{
+					position:	absolute;
+					top:		0;
+					right:		0;
+					margin-top:	0;
+					h4{
+						margin-right:	.35em;
+					}
+				}
+				&.add_equip{
+					top: 		-66%;
+					flex: 		none;
+					&>div{
+						position: 	absolute;
+						right: 		0;
+						transform: 	translateY(190%);
+						@media all and (max-width: 800px ){
+							transform: 	translateY(165%);
+						}
+					}
+				}
+				&.remodels{
+					flex:	0 0 76px;
+					.margin-bottom(-6);
+				}
+			}
+			&>aside{
+				//&>input[type="radio"]{
+				&>label{
+					top:	~"calc( 100% - 30px )"
+				}
+				&>div{
+					padding-top:	0;
+					.padding-bottom(30);
+				}
+			}
+			&:after{
+				display: none;
+			}
+		}
+		@media all and (max-width: 960px ){
+			@size:	unit( @nav_height - 40, px );
+			padding-right:	~"calc( 20% + @{size} )";
+			&>div h4{
+				.font-size(22);
+			}
+			&>div.stats{
+				padding-right:	@size;
+			}
+			&>.entity{
+				right:	~"calc( 20% + @{size} )";
+				border-radius:	5px 5px 0 0;
+				height: 45px;
+				&+.entity{
+					right:	~"calc( 20% + @{size} )";
+					.top(46);
+					border-radius:	0 0 5px 5px;
+				}
+				&>strong, &>span{
+					line-height: 16px;
+				}
+				&>span{
+					padding-top: 0;
+				}
+			}
+			&>aside{
+				width:		~"calc(20% + 80px)";
+				.right(-40);
+			}
+		}
+		@media all and (max-width: 800px ){
+			@size:	unit( @nav_height - 55, px );
+			//padding-right:	~"calc( 15% + @{size} )";
+			//&>.entity{
+			//	right:	~"calc( 15% + @{size} )";
+			//	&+.entity{
+			//		right:	~"calc( 15% + @{size} + 140px + 10px )";
+			//	}
+			//}
+			padding-right:	0;
+			&>div.stats{
+				padding-right:	@size;
+			}
+			&>div.remodels{
+				height:		auto;
+			}
+			&>.entity{
+				right:	0;
+				border-radius:	0 5px 5px 0;
+				&+.entity{
+					top:	0;
+					.right(142);
+					border-radius:	5px 0 0 5px;
+				}
+			}
+			&>aside{
+				display:	none;
+			}
+		}
+		@media all and (min-width: 1601px) and (max-width: 1900px) and (min-aspect-ratio: 3 / 2){
+			padding-right:	~"calc( 45% + 80px )";
+			&>.entity{
+				right:		~"calc( 45% + 80px )";
+				&+.entity{
+					right:	~"calc( 45% + 80px + 140px + 2px )";
+				}
+			}
+			&>aside{
+				width:		~"calc( 45% + 40px )"
+			}
+		}
+		@media all and (min-width: 1901px) and (min-aspect-ratio: 3 / 2){
+			padding-right:	~"calc( 50% + 80px )";
+			&>.entity{
+				right:		~"calc( 50% + 80px )";
+				&+.entity{
+					right:	~"calc( 50% + 80px + 140px + 2px )";
+				}
+			}
+			&>aside{
+				width:		~"calc( 50% + 40px )"
+			}
+		}
+		@media all and (max-height: 720px ){
+			&>div{
+				&.add_equip>div{
+					overflow: 	hidden;
+					&>h4, &>span{
+						vertical-align: top;
+						display: 		inline-block;
+					}
+					&>span{
+						line-height: 	25px;
+						margin-left: 	1em;
+						margin-right: 	0;
+					}
+				}
+			}
+		}
+	*/
 }
 .infos-ship h1,
 .infos-ship h2,
@@ -10080,6 +10434,9 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
 .infos-ship > div.stats > .title > span label + label {
   padding-left: .25em;
 }
+.infos-ship > div.stats > .stat {
+  border: 0 solid rgba(44, 172, 232, 0.25);
+}
 .infos-ship > div.stats > .stat span {
   width: 50%;
 }
@@ -10093,8 +10450,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
   display: none;
 }
 .infos-ship > div.stats > .stat ~ .stat {
-  border-top: 0.1rem solid;
-  border-color: rgba(44, 172, 232, 0.25);
+  border-top-width: 2px;
   padding-top: 0.25rem;
   margin-top: 0.25rem;
 }
@@ -10239,6 +10595,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
   margin-left: .35em;
   color: #2cace8;
   padding-left: 1rem;
+  vertical-align: bottom;
 }
 .infos-ship > div.equipments > .modernization > .stats > span:before {
   top: 0;
@@ -10320,7 +10677,6 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
 .infos-ship > div.remodels .flexgrid > a.unit i {
   z-index: 2;
   width: 100%;
-  height: 100%;
   overflow: hidden;
   opacity: 0.5;
   -webkit-transition-property: opacity;
@@ -10516,15 +10872,30 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
   overflow: hidden;
   mask-image: linear-gradient(to left, transparent, #000 20px, #000 calc(100% - 20px), transparent);
   -webkit-mask-image: -webkit-linear-gradient(right, transparent, #000 20px, #000 calc(100% - 20px), transparent);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row nowrap;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: end;
+  -webkit-align-items: flex-end;
+      -ms-flex-align: end;
+          align-items: flex-end;
 }
 .infos-ship > aside > label {
   position: relative;
   margin: 0;
   width: 1.5rem;
   height: 1.5rem;
-  top: calc( 100% - 60px );
   display: inline-block;
   z-index: 2;
+  margin-bottom: 30px;
 }
 .infos-ship > aside > label:before {
   position: absolute;
@@ -10625,6 +10996,10 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
   height: 100%;
   top: 0;
   left: 0;
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+      -ms-flex: none;
+          flex: none;
   -webkit-transition-property: left;
   transition-property: left;
   padding: 0.5rem 0rem 3.5rem 0rem;
@@ -10714,421 +11089,193 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
 .infos-ship > aside > input[type="radio"][value="10"] ~ div > span {
   width: 10%;
 }
-@media all and (max-width: 1152px) {
+@media all and (min-width: 721px) and (max-width: 1152px) and (min-aspect-ratio: 5/4), (min-width: 721px) and (max-width: 1152px) and (max-height: 800px) {
   .infos-ship {
     padding-right: calc( 20% + 60px );
   }
+  .infos-ship > div.stats {
+    -webkit-flex-basis: 55%;
+        -ms-flex-preferred-size: 55%;
+            flex-basis: 55%;
+    padding-right: 20px;
+  }
+  .infos-ship > div.equipments {
+    -webkit-flex-basis: 45%;
+        -ms-flex-preferred-size: 45%;
+            flex-basis: 45%;
+  }
   .infos-ship > .entity {
-    right: calc( 20% + 60px );
+    right: 0;
   }
   .infos-ship > .entity + .entity {
-    right: calc( 20% + 60px + 140px + 2px );
+    right: 142px;
   }
   .infos-ship > aside {
-    width: calc(20% + 60px);
-    right: -1.5rem;
+    width: calc(20% + 80px);
+    right: -30px;
+    border-top: 60px solid transparent;
   }
 }
-@media all and (min-height: 801px) and (max-aspect-ratio: 5 / 4) {
-  .infos-ship {
-    padding: 0 !important;
-  }
-  .infos-ship > div h3,
-  .infos-ship > div h4,
-  .infos-ship > div h5,
-  .infos-ship > div h6 {
-    margin-top: 1.3rem !important;
-  }
-  .infos-ship > div.equipments > button ~ button {
-    margin-top: 0.2rem;
-  }
-  .infos-ship > div.equipments > .modernization {
-    margin-top: 0.6000000000000001rem;
-  }
-  .infos-ship > div.equipments > .modernization h4 {
-    margin-top: 0 !important;
-  }
-  .infos-ship > div.remodels {
-    height: auto;
-  }
-  .infos-ship > div.add_equip > div {
-    overflow: hidden;
-  }
-  .infos-ship > div.add_equip > div > h4,
-  .infos-ship > div.add_equip > div > span {
-    vertical-align: bottom;
-    display: inline-block;
-  }
-  .infos-ship > div.add_equip > div > span {
-    line-height: 25px;
-    margin-left: 1em;
-    margin-right: 0;
-  }
-  .infos-ship > .entity {
-    right: 0 !important;
-    border-radius: 0 5px 5px 0 !important;
-  }
-  .infos-ship > .entity + .entity {
-    top: 0 !important;
-    right: 7.1000000000000005rem !important;
-    border-radius: 5px 0 0 5px !important;
-  }
-  .infos-ship > aside {
-    width: 100% !important;
-    position: relative;
-    top: auto;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1 0 100%;
-        -ms-flex: 1 0 100%;
-            flex: 1 0 100%;
-    height: calc(40% + 20px);
-    left: 0;
-    display: block !important;
-    margin-bottom: -1rem;
-  }
-  .infos-ship > aside > label {
-    top: 100% !important;
-    -webkit-transform: translateY(-150%);
-        -ms-transform: translateY(-150%);
-            transform: translateY(-150%);
-  }
-  .infos-ship > aside > label ~ div {
-    padding: 0.5rem 0rem 1.5rem 0rem !important;
-  }
-  .infos-ship > div.add_equip ~ aside {
-    height: calc(40% + 20px - 70px);
-  }
+@media all and (min-width: 721px) and (max-width: 1152px) and (max-height: 700px) and (min-aspect-ratio: 5/4) {
   .infos-ship:after {
     display: none;
   }
 }
-@media all and (min-height: 801px) and (max-height: 1024px) and (max-aspect-ratio: 5 / 4) {
-  .infos-ship > div.stats > .stat span {
-    line-height: 1rem;
-  }
-  .infos-ship > div.stats > .stat ~ .stat {
-    padding-top: 0.2rem;
-    margin-top: 0.2rem;
-  }
-}
-@media all and (min-height: 801px) and (max-aspect-ratio: 5 / 4), (min-width: 1601px) and (min-aspect-ratio: 3 / 2) {
-  .infos-ship > aside > input[type="radio"]:nth-child(4n+3) + label {
+@media all and (max-width: 720px), (min-width: 721px) and (min-height: 801px) and (max-aspect-ratio: 5/4) {
+  .infos-ship:after {
     display: none;
   }
-  .infos-ship > aside > input[type="radio"][value="1"]:checked ~ div {
-    left: 0%;
+  .infos-ship > div.title ~ div {
+    padding-top: 25px;
   }
-  .infos-ship > aside > input[type="radio"][value="1"] ~ div {
-    width: 50%;
-  }
-  .infos-ship > aside > input[type="radio"][value="2"]:checked ~ div {
-    left: 0%;
-  }
-  .infos-ship > aside > input[type="radio"][value="2"] ~ div {
-    width: 100%;
-  }
-  .infos-ship > aside > input[type="radio"][value="3"]:checked ~ div {
-    left: -100%;
-  }
-  .infos-ship > aside > input[type="radio"][value="3"] ~ div {
-    width: 150%;
-  }
-  .infos-ship > aside > input[type="radio"][value="4"]:checked ~ div {
-    left: -100%;
-  }
-  .infos-ship > aside > input[type="radio"][value="4"] ~ div {
-    width: 200%;
-  }
-  .infos-ship > aside > input[type="radio"][value="5"]:checked ~ div {
-    left: -200%;
-  }
-  .infos-ship > aside > input[type="radio"][value="5"] ~ div {
-    width: 250%;
-  }
-  .infos-ship > aside > input[type="radio"][value="6"]:checked ~ div {
-    left: -200%;
-  }
-  .infos-ship > aside > input[type="radio"][value="6"] ~ div {
-    width: 300%;
-  }
-  .infos-ship > aside > input[type="radio"][value="7"]:checked ~ div {
-    left: -300%;
-  }
-  .infos-ship > aside > input[type="radio"][value="7"] ~ div {
-    width: 350%;
-  }
-  .infos-ship > aside > input[type="radio"][value="8"]:checked ~ div {
-    left: -300%;
-  }
-  .infos-ship > aside > input[type="radio"][value="8"] ~ div {
-    width: 400%;
-  }
-  .infos-ship > aside > input[type="radio"][value="9"]:checked ~ div {
-    left: -400%;
-  }
-  .infos-ship > aside > input[type="radio"][value="9"] ~ div {
-    width: 450%;
-  }
-  .infos-ship > aside > input[type="radio"][value="10"]:checked ~ div {
-    left: -400%;
-  }
-  .infos-ship > aside > input[type="radio"][value="10"] ~ div {
-    width: 500%;
-  }
-}
-@media all and (min-height: 901px) and (max-aspect-ratio: 5 / 4) {
-  .infos-ship > aside {
-    height: calc(45% + 30px);
-    margin-bottom: 0;
-  }
-  .infos-ship > div.add_equip ~ aside {
-    height: calc(45% + 30px - 70px);
-  }
-}
-@media all and (max-width: 800px) and (max-height: 600px), (min-width: 801px) and (max-width: 960px) and (max-height: 690px) {
-  .infos-ship {
-    -webkit-flex-flow: column nowrap;
-        -ms-flex-flow: column nowrap;
-            flex-flow: column nowrap;
-    -webkit-box-pack: start;
-    -webkit-justify-content: flex-start;
-        -ms-flex-pack: start;
-            justify-content: flex-start;
-    -webkit-box-align: start;
-    -webkit-align-items: flex-start;
-        -ms-flex-align: start;
-            align-items: flex-start;
-  }
-  .infos-ship > div {
-    -webkit-box-flex: 1;
-    -webkit-flex: 1 0 auto;
-        -ms-flex: 1 0 auto;
-            flex: 1 0 auto;
-  }
-  .infos-ship > div h4 {
-    font-size: 1rem !important;
-  }
-  .infos-ship > div.stats {
-    -webkit-flex-basis: auto;
-        -ms-flex-preferred-size: auto;
-            flex-basis: auto;
-    padding-right: 0 !important;
-  }
-  .infos-ship > div.stats > .stat {
+  .infos-ship > div.add_equip > div > h4 {
     display: inline-block;
-    width: 30%;
+    margin-right: -20px;
   }
-  .infos-ship > div.stats > .stat span {
-    width: 50%;
-  }
-  .infos-ship > div.stats > .stat span:nth-child(odd) {
-    width: 50%;
-  }
-  .infos-ship > div.stats > .stat span:nth-child(even) {
-    width: 50%;
-  }
-  .infos-ship > div.stats > .stat span > small {
-    font-size: 0.6000000000000001rem;
-  }
-  .infos-ship > div.stats > .stat span > em {
-    padding-left: 0.1rem;
-  }
-  .infos-ship > div.stats > .stat ~ .stat {
-    border-top: 0;
-    border-left: 0.1rem ;
-    padding-top: 0;
-    margin-top: 0;
-  }
-  .infos-ship > div.stats > .stat ~ .stat.consum {
-    width: 10%;
-  }
-  .infos-ship > div.stats > .stat ~ .stat.consum span {
-    width: 100%;
-  }
-  .infos-ship > div.stats > .stat ~ .stat.consum span:nth-child(odd) {
-    width: 100%;
-  }
-  .infos-ship > div.stats > .stat ~ .stat.consum span:nth-child(even) {
-    width: 100%;
-  }
-  .infos-ship > div.stats > .stat ~ .stat.consum span > small {
-    width: 0;
-    overflow: hidden;
-    display: inline-block;
-    height: 0.9rem;
-  }
-  .infos-ship > div.stats > .stat ~ .stat.consum span > em {
-    padding: 0;
-  }
-  .infos-ship > div.equipments {
-    -webkit-flex-basis: auto;
-        -ms-flex-preferred-size: auto;
-            flex-basis: auto;
-  }
-  .infos-ship > div.equipments > button {
-    display: inline-block;
-    width: calc(25% - 9px);
-    margin-right: 0.6000000000000001rem;
-  }
-  .infos-ship > div.equipments > button:last-of-type {
-    margin-right: 0;
-  }
-  .infos-ship > div.equipments > button ~ button {
-    margin-top: 0;
-  }
-  .infos-ship > div.equipments > .modernization {
-    position: absolute;
-    top: 0;
+  .infos-ship > .entity {
     right: 0;
-    margin-top: 0;
   }
-  .infos-ship > div.equipments > .modernization h4 {
-    margin-right: .35em;
+  .infos-ship > .entity + .entity {
+    right: 142px;
   }
-  .infos-ship > div.add_equip {
-    top: -66%;
+  .infos-ship > aside {
+    width: 40%;
+    border-top: 60px solid transparent;
+  }
+}
+@media all and (min-width: 721px) and (min-height: 801px) and (max-aspect-ratio: 5/4) {
+  .infos-ship {
+    padding-right: 45%;
+  }
+  .infos-ship > aside {
+    width: 45%;
+  }
+}
+@media all and (min-width: 721px) and (min-height: 801px) and (max-aspect-ratio: 5/4), (max-width: 540px) {
+  .infos-ship > div.stats,
+  .infos-ship > div.equipments {
     -webkit-box-flex: 0;
     -webkit-flex: none;
         -ms-flex: none;
             flex: none;
   }
-  .infos-ship > div.add_equip > div {
-    position: absolute;
-    right: 0;
-    -webkit-transform: translateY(190%);
-        -ms-transform: translateY(190%);
-            transform: translateY(190%);
-  }
-  .infos-ship > div.remodels {
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 76px;
-        -ms-flex: 0 0 76px;
-            flex: 0 0 76px;
-    margin-bottom: -0.30000000000000004rem;
-  }
-  .infos-ship > aside > label {
-    top: calc( 100% - 30px );
-  }
-  .infos-ship > aside > div {
-    padding-top: 0;
-    padding-bottom: 1.5rem;
-  }
-  .infos-ship:after {
-    display: none;
-  }
-}
-@media all and (max-width: 800px) and (max-height: 600px) and all and (max-width: 800px), (min-width: 801px) and (max-width: 960px) and (max-height: 690px) and all and (max-width: 800px) {
-  .infos-ship > div.add_equip > div {
-    -webkit-transform: translateY(165%);
-        -ms-transform: translateY(165%);
-            transform: translateY(165%);
-  }
-}
-@media all and (max-width: 960px) {
-  .infos-ship {
-    padding-right: calc( 20% + 40px );
-  }
-  .infos-ship > div h4 {
-    font-size: 1.1rem;
-  }
   .infos-ship > div.stats {
-    padding-right: 40px;
-  }
-  .infos-ship > .entity {
-    right: calc( 20% + 40px );
-    border-radius: 5px 5px 0 0;
-    height: 45px;
-  }
-  .infos-ship > .entity + .entity {
-    right: calc( 20% + 40px );
-    top: 2.3000000000000003rem;
-    border-radius: 0 0 5px 5px;
-  }
-  .infos-ship > .entity > strong,
-  .infos-ship > .entity > span {
-    line-height: 16px;
-  }
-  .infos-ship > .entity > span {
-    padding-top: 0;
-  }
-  .infos-ship > aside {
-    width: calc(20% + 80px);
-    right: -2rem;
-  }
-}
-@media all and (max-width: 800px) {
-  .infos-ship {
-    /*
-			padding-right:	~"calc( 15% + @{size} )";
-			&>.entity{
-				right:	~"calc( 15% + @{size} )";
-				&+.entity{
-					right:	~"calc( 15% + @{size} + 140px + 10px )";
-				}
-			}
-			*/
     padding-right: 0;
   }
-  .infos-ship > div.stats {
-    padding-right: 25px;
+  .infos-ship > div.equipments > .modernization {
+    text-align: left;
   }
-  .infos-ship > div.remodels {
-    height: auto;
-  }
-  .infos-ship > .entity {
-    right: 0;
-    border-radius: 0 5px 5px 0;
-  }
-  .infos-ship > .entity + .entity {
-    top: 0;
-    right: 7.1000000000000005rem;
-    border-radius: 5px 0 0 5px;
-  }
-  .infos-ship > aside {
-    display: none;
+  .infos-ship > div.equipments > .modernization > .stats {
+    padding-left: 60px;
+    text-align: left;
   }
 }
-@media all and (min-width: 1601px) and (max-width: 1900px) and (min-aspect-ratio: 3 / 2) {
-  .infos-ship {
-    padding-right: calc( 45% + 80px );
-  }
-  .infos-ship > .entity {
-    right: calc( 45% + 80px );
-  }
-  .infos-ship > .entity + .entity {
-    right: calc( 45% + 80px + 140px + 2px );
-  }
-  .infos-ship > aside {
-    width: calc( 45% + 40px );
-  }
-}
-@media all and (min-width: 1901px) and (min-aspect-ratio: 3 / 2) {
-  .infos-ship {
-    padding-right: calc( 50% + 80px );
-  }
-  .infos-ship > .entity {
-    right: calc( 50% + 80px );
-  }
-  .infos-ship > .entity + .entity {
-    right: calc( 50% + 80px + 140px + 2px );
-  }
-  .infos-ship > aside {
-    width: calc( 50% + 40px );
-  }
-}
-@media all and (max-height: 720px) {
-  .infos-ship > div.add_equip > div {
-    overflow: hidden;
-  }
-  .infos-ship > div.add_equip > div > h4,
-  .infos-ship > div.add_equip > div > span {
-    vertical-align: top;
+@media all and (min-width: 721px) and (min-height: 801px) and (max-aspect-ratio: 5/4), (min-width: 461px) and (max-width: 540px) {
+  .infos-ship > div.stats > .stat {
+    width: 50%;
     display: inline-block;
   }
-  .infos-ship > div.add_equip > div > span {
-    line-height: 25px;
-    margin-left: 1em;
-    margin-right: 0;
+  .infos-ship > div.stats > .title + .stat ~ .stat {
+    border-top: 0;
+    padding-top: 0;
+    margin-top: 0;
+  }
+  .infos-ship > div.stats > .title + .stat,
+  .infos-ship > div.stats > .title + .stat + .stat {
+    border-bottom-width: 2px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+  }
+}
+@media all and (min-width: 541px) and (max-width: 720px) {
+  .infos-ship > div.stats {
+    -webkit-flex-basis: 55%;
+        -ms-flex-preferred-size: 55%;
+            flex-basis: 55%;
+    padding-right: 20px;
+  }
+  .infos-ship > div.equipments {
+    -webkit-flex-basis: 45%;
+        -ms-flex-preferred-size: 45%;
+            flex-basis: 45%;
+  }
+}
+@media all and (max-width: 720px) {
+  .infos-ship {
+    padding-right: 0;
+    min-height: 100%;
+  }
+  .infos-ship > div.title {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
+    -webkit-box-ordinal-group: 2;
+    -webkit-order: 1;
+        -ms-flex-order: 1;
+            order: 1;
+    margin-bottom: 25px;
+  }
+  .infos-ship > .entity {
+    -webkit-box-ordinal-group: 4;
+    -webkit-order: 3;
+        -ms-flex-order: 3;
+            order: 3;
+    position: relative;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 calc(50% - 1px);
+        -ms-flex: 1 0 calc(50% - 1px);
+            flex: 1 0 calc(50% - 1px);
+  }
+  .infos-ship > .entity + .entity {
+    -webkit-box-ordinal-group: 3;
+    -webkit-order: 2;
+        -ms-flex-order: 2;
+            order: 2;
+    right: 0;
+    margin-right: 1px;
+  }
+  .infos-ship > div.stats {
+    -webkit-box-ordinal-group: 11;
+    -webkit-order: 10;
+        -ms-flex-order: 10;
+            order: 10;
+  }
+  .infos-ship > div.equipments {
+    -webkit-box-ordinal-group: 12;
+    -webkit-order: 11;
+        -ms-flex-order: 11;
+            order: 11;
+  }
+  .infos-ship > div.add_equip {
+    -webkit-box-ordinal-group: 13;
+    -webkit-order: 12;
+        -ms-flex-order: 12;
+            order: 12;
+  }
+  .infos-ship > div.remodels {
+    -webkit-box-ordinal-group: 21;
+    -webkit-order: 20;
+        -ms-flex-order: 20;
+            order: 20;
+  }
+  .infos-ship > aside {
+    width: 100%;
+    position: relative;
+    top: auto;
+    right: auto;
+    border-top-width: 0;
+    margin-top: 35px;
+    min-height: 400px;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 75%;
+        -ms-flex: 1 0 75%;
+            flex: 1 0 75%;
+    height: 75%;
+    -webkit-box-ordinal-group: 31;
+    -webkit-order: 30;
+        -ms-flex-order: 30;
+            order: 30;
   }
 }
 body > .modal > div {

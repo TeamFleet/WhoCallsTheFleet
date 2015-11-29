@@ -1,51 +1,62 @@
 @size_avatar: 	200px;
 
-.layout-infos-entity(){
-	//&>.entity{
-	.infos-entity{
-		@color_accent:		hsl(180, 100%, 78%);
-		@color_accent2:		hsl(180, 54%, 56%);
-		@color_disabled:	rgba(255, 255, 255, .35);
+.layout-infos-entity(){.infos-entity{
+	@color_accent:		hsl(180, 100%, 78%);
+	@color_accent2:		hsl(180, 54%, 56%);
+	@color_disabled:	rgba(255, 255, 255, .35);
 
-		h1, h2, h3, h4, h5, h6{
-			color:		hsl(180, 100%, 90%);
-			text-shadow:0 0 unit(5 / 30, em) hsl(180, 100%, 65%);
-			&:before{
-				color: 		hsl(180, 100%, 65%);
-				//.mask-image( ~"linear-gradient(to bottom, transparent, #000)" );
-			}
-			small{
-				font-size: 	smaller;
-				text-shadow:none;
-				opacity: 	.75;
-				padding-left:.5em;
-			}
+	h1, h2, h3, h4, h5, h6{
+		color:		hsl(180, 100%, 90%);
+		text-shadow:0 0 unit(5 / 30, em) hsl(180, 100%, 65%);
+		&:before{
+			color: 		hsl(180, 100%, 65%);
+			//.mask-image( ~"linear-gradient(to bottom, transparent, #000)" );
 		}
-		
-		&>.title{
-			small{
-				color: 	@color_accent2;
-			}
+		small{
+			font-size: 	smaller;
+			text-shadow:none;
+			opacity: 	.75;
+			padding-left:.5em;
 		}
+	}
+	
+	&>.title{
+		small{
+			color: 	@color_accent2;
+		}
+	}
 
-		.entity-info{
-			padding-top: 	3em;
+	.entity-info{
+		padding-top: 	3em;
+	}
+	
+	&.is-hasavatar{
+		padding-right: 	(@size_avatar + 20);
+		img.avatar{
+			display: 	block;
+			position: 	absolute;
+			top: 		0;
+			right: 		0;
+			width: 		auto;
+			height: 	auto;
+			min-width: 	@size_avatar;
+			max-width: 	@size_avatar;
 		}
-		
+	}
+
+	@media all and ( max-width: 720px ){	
+		@size_avatar: 	120px;
 		&.is-hasavatar{
-			padding-right: 	(@size_avatar + 20);
+			padding-right: 	0;
+			&>.title{
+				padding-right: 	(@size_avatar + 20);
+			}
 			img.avatar{
-				display: 	block;
-				position: 	absolute;
-				top: 		0;
-				right: 		0;
-				width: 		auto;
-				height: 	auto;
 				min-width: 	@size_avatar;
 				max-width: 	@size_avatar;
 			}
 		}
 	}
-}
+}}
 
 .layout-infos-entity();

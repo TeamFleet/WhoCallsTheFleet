@@ -1,9 +1,13 @@
 .layout-infos-ship(){
 	.infos-ship{
 		@size:	unit( @nav_height, px );
+		
 		.flexbox();
 		.flex-flow(row wrap);
 		padding-right:	~"calc( 30% + @{size} )";
+		min-height: 	460px;
+		
+		@color_stats_border: fade(#2cace8, 25%);
 
 		h1, h2, h3, h4, h5, h6{
 			color:		#f2fbff;
@@ -63,6 +67,7 @@
 					}
 				}
 				&>.stat{
+					border:	0 solid @color_stats_border;
 					span{
 						width:		50%;
 						&>em{
@@ -74,8 +79,7 @@
 						}
 					}
 					& ~ .stat{
-						.border-top(2, solid);
-						border-color:	fade(#2cace8, 25%);
+						border-top-width: 2px;
 						.padding-top(5);
 						.margin-top(5);
 						&.consum{
@@ -214,6 +218,7 @@
 						margin-left:.35em;
 						color:		#2cace8;
 						.padding-left(20);
+						vertical-align: bottom;
 						&:before{
 							top:		0;
 						}
@@ -280,7 +285,7 @@
 						i{
 							z-index:	2;
 							width:		100%;
-							height:		100%;
+							//height:		100%;
 							overflow:	hidden;
 							opacity:	0.5;
 							.transition-property(opacity);
@@ -470,14 +475,19 @@
 			text-align:	center;
 			overflow:	hidden;
 			.mask-image( ~"linear-gradient(to left, transparent, #000 20px, #000 calc(100% - 20px), transparent)" );
+			display: 	flex;
+			flex-flow: 	row nowrap;
+			justify-content:center;
+			align-items: 	flex-end;
 			&>label{
 				position:	relative;
 				margin:		0;
 				.width(30);
 				.height(30);
-				top:		~"calc( 100% - 60px )";
+				//top:		~"calc( 100% - 60px )";
 				display:	inline-block;
 				z-index:	2;
+				margin-bottom: 	30px;
 				&:before{
 					@scale:	(10 / 30);
 					position:	absolute;
@@ -523,6 +533,7 @@
 				height:		100%;
 				top:		0;
 				left:		0;
+				flex: 		none;
 				.transition-property(left);
 				.padding(10, 0, 70, 0);
 				&>span{
@@ -553,21 +564,190 @@
 			.loop(10);
 		}
 
-		@media all and (max-width: 1152px ){
+
+
+
+
+
+
+
+
+
+		@aspect_ratio: 	5/4;
+		@media all and ( min-width: 721px ) and ( max-width: 1152px ) and (min-aspect-ratio: @aspect_ratio)
+		,( min-width: 721px ) and ( max-width: 1152px ) and (max-height: 800px){
 			@size:	unit( @nav_height - 20, px );
 			padding-right:	~"calc( 20% + @{size} )";
+			&>div.stats{
+				flex-basis: 	55%;
+				padding-right: 	20px;
+			}
+			&>div.equipments{
+				flex-basis: 	45%;
+			}
 			&>.entity{
-				right:	~"calc( 20% + @{size} )";
+				//right:	~"calc( 20% + @{size} )";
+				right: 	0;
 				&+.entity{
-					right:	~"calc( 20% + @{size} + 140px + 2px )";
+					//right:	~"calc( 20% + @{size} + 140px + 2px )";
+					right: 	(140px + 2);
 				}
 			}
 			&>aside{
-				width:	~"calc(20% + 60px)";
-				.right(-30);
+				width:	~"calc(20% + 80px)";
+				right: 	-30px;
+				border-top: 60px solid transparent;
 			}
 		}
-		@media all and (min-height: 801px) and (max-aspect-ratio: 5 / 4){
+		@media all and ( min-width: 721px ) and ( max-width: 1152px ) and ( max-height: 700px ) and (min-aspect-ratio: @aspect_ratio){
+			&:after{
+				display: 	none;
+			}
+			//&>aside{
+			//	&>label{
+			//		top: 	~"calc(100% - 50px)";
+			//	}
+			//}
+		}
+		@media all and (max-width: 720px)
+		,( min-width: 721px ) and (min-height: 801px) and (max-aspect-ratio: @aspect_ratio){
+			&:after{
+				display: 	none;
+			}
+			&>div.title ~ div{
+				padding-top: 25px;
+			}
+			&>div.add_equip{
+				&>div>h4{
+					display: 	inline-block;
+					margin-right:-20px;
+				}
+			}
+			&>.entity{
+				//right:	~"calc( 20% + @{size} )";
+				right: 	0;
+				&+.entity{
+					//right:	~"calc( 20% + @{size} + 140px + 2px )";
+					right: 	(140px + 2);
+				}
+			}
+			&>aside{
+				width: 	40%;
+				border-top: 60px solid transparent;
+			}
+		}
+		@media all and ( min-width: 721px ) and (min-height: 801px) and (max-aspect-ratio: @aspect_ratio){
+			padding-right: 	45%;
+			&>aside{
+				width: 	45%;
+			}
+		}
+		@media all and ( min-width: 721px ) and (min-height: 801px) and (max-aspect-ratio: @aspect_ratio)
+		,(max-width: 540px){
+			&>div.stats,
+			&>div.equipments{
+				flex: 	none;
+			}
+			&>div.stats{
+				padding-right: 0;
+			}
+			&>div.equipments{
+				&>.modernization{
+					text-align: left;
+					&>.stats{
+						padding-left: 	60px;
+						text-align: 	left;
+					}
+				}
+			}
+		}
+		@media all and ( min-width: 721px ) and (min-height: 801px) and (max-aspect-ratio: @aspect_ratio)
+		,(min-width: 461px) and (max-width: 540px){
+			&>div.stats{
+				&>.stat{
+					width: 	50%;
+					display:inline-block;
+				}
+				&>.title+.stat{
+					&~.stat{
+						border-top: 	0;
+						padding-top: 	0;
+						margin-top: 	0;
+					}
+					&, &+.stat{
+						border-bottom-width: 	2px;
+						margin-bottom: 	5px;
+						padding-bottom: 5px;
+					}
+				}
+			}
+		}
+		/*
+		@media all and (max-width: 720px){
+			padding-right: 	35%;
+			&>aside{
+				width: 	35%;
+			}
+		}
+		*/
+		@media all and (min-width: 541px) and (max-width: 720px){
+			&>div.stats{
+				flex-basis: 55%;
+				padding-right: 20px;
+			}
+			&>div.equipments{
+				flex-basis: 45%;
+			}
+		}
+		@media all and (max-width: 720px){
+			padding-right: 	0;
+			//flex-flow: 		column nowrap;
+			min-height: 	100%;
+			&>div.title{
+				flex: 	0 0 auto;
+				order: 	1;
+				margin-bottom: 25px;
+				//&~div{
+				//	flex: 	1 0 auto;
+				//}
+			}
+			&>.entity{
+				order: 	3;
+				position: 	relative;
+				flex: 		1 0 ~"calc(50% - 1px)";
+				&+.entity{
+					order: 	2;
+					right: 	0;
+					margin-right: 1px;
+				}
+			}
+			&>div.stats{
+				order: 	10;
+			}
+			&>div.equipments{
+				order: 	11;
+			}
+			&>div.add_equip{
+				order: 	12;
+			}
+			&>div.remodels{
+				order: 	20;
+			}
+			&>aside{
+				width: 		100%;
+				position: 	relative;
+				top: 		auto;
+				right: 		auto;
+				border-top-width: 0;
+				margin-top: 35px;
+				min-height: 400px;
+				flex: 		1 0 75%;
+				height: 	75%;
+				order: 		30;
+			}
+		}
+	/*
+		@media all and (min-height: 801px) and (max-aspect-ratio: @aspect_ratio){
 			padding:	0 !important;
 			&>div{
 				h3, h4, h5, h6{
@@ -831,15 +1011,13 @@
 		}
 		@media all and (max-width: 800px ){
 			@size:	unit( @nav_height - 55, px );
-			/*
-			padding-right:	~"calc( 15% + @{size} )";
-			&>.entity{
-				right:	~"calc( 15% + @{size} )";
-				&+.entity{
-					right:	~"calc( 15% + @{size} + 140px + 10px )";
-				}
-			}
-			*/
+			//padding-right:	~"calc( 15% + @{size} )";
+			//&>.entity{
+			//	right:	~"calc( 15% + @{size} )";
+			//	&+.entity{
+			//		right:	~"calc( 15% + @{size} + 140px + 10px )";
+			//	}
+			//}
 			padding-right:	0;
 			&>div.stats{
 				padding-right:	@size;
@@ -900,6 +1078,7 @@
 				}
 			}
 		}
+	*/
 	}
 }
 
