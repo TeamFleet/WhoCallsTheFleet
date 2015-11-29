@@ -1,5 +1,5 @@
 // Global Variables
-	_g.db_version = '1.8.6.1';
+	_g.db_version = '1.9.0.0';
 
 	_g.bgimg_count = 0;
 
