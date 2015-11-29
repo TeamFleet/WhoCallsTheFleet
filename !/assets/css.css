@@ -10862,8 +10862,8 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
   right: -20px;
   text-align: center;
   overflow: hidden;
-  mask-image: linear-gradient(to left, transparent, #000 20px, #000 calc(100% - 20px), transparent);
   -webkit-mask-image: -webkit-linear-gradient(right, transparent, #000 20px, #000 calc(100% - 20px), transparent);
+          mask-image: linear-gradient(to left, transparent, #000 20px, #000 calc(100% - 20px), transparent);
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -10879,6 +10879,17 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
   -webkit-align-items: flex-end;
       -ms-flex-align: end;
           align-items: flex-end;
+  /*.loop(@n, @i: 2) when (@i =< @n) {
+				&>input[type="radio"][value="@{i}"]~div{
+					width:	percentage(@i);
+					&>span{
+						width:	percentage(1 / @i);
+					}
+				}
+				.loop(@n, (@i + 1))
+			}
+			.loop(10);
+			*/
 }
 .infos-ship > aside > label {
   position: relative;
@@ -10912,95 +10923,49 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
 .infos-ship > aside > label:hover:before {
   background: rgba(255, 255, 255, 0.5);
 }
-.infos-ship > aside > input[type="radio"] {
-  display: none;
-}
-.infos-ship > aside > input[type="radio"][value="1"]:checked + label {
-  cursor: default;
-}
-.infos-ship > aside > input[type="radio"][value="1"]:checked ~ div {
-  left: 0%;
-}
-.infos-ship > aside > input[type="radio"][value="2"]:checked + label {
-  cursor: default;
-}
-.infos-ship > aside > input[type="radio"][value="2"]:checked ~ div {
-  left: -100%;
-}
-.infos-ship > aside > input[type="radio"][value="3"]:checked + label {
-  cursor: default;
-}
-.infos-ship > aside > input[type="radio"][value="3"]:checked ~ div {
-  left: -200%;
-}
-.infos-ship > aside > input[type="radio"][value="4"]:checked + label {
-  cursor: default;
-}
-.infos-ship > aside > input[type="radio"][value="4"]:checked ~ div {
-  left: -300%;
-}
-.infos-ship > aside > input[type="radio"][value="5"]:checked + label {
-  cursor: default;
-}
-.infos-ship > aside > input[type="radio"][value="5"]:checked ~ div {
-  left: -400%;
-}
-.infos-ship > aside > input[type="radio"][value="6"]:checked + label {
-  cursor: default;
-}
-.infos-ship > aside > input[type="radio"][value="6"]:checked ~ div {
-  left: -500%;
-}
-.infos-ship > aside > input[type="radio"][value="7"]:checked + label {
-  cursor: default;
-}
-.infos-ship > aside > input[type="radio"][value="7"]:checked ~ div {
-  left: -600%;
-}
-.infos-ship > aside > input[type="radio"][value="8"]:checked + label {
-  cursor: default;
-}
-.infos-ship > aside > input[type="radio"][value="8"]:checked ~ div {
-  left: -700%;
-}
-.infos-ship > aside > input[type="radio"][value="9"]:checked + label {
-  cursor: default;
-}
-.infos-ship > aside > input[type="radio"][value="9"]:checked ~ div {
-  left: -800%;
-}
-.infos-ship > aside > input[type="radio"][value="10"]:checked + label {
-  cursor: default;
-}
-.infos-ship > aside > input[type="radio"][value="10"]:checked ~ div {
-  left: -900%;
-}
-.infos-ship > aside > input[type="radio"]:checked + label:before {
-  background-color: rgba(63, 192, 255, 0.25);
-  border-color: rgba(63, 192, 255, 0.75);
-  -webkit-transform: scale(0.5333333333333333);
-      -ms-transform: scale(0.5333333333333333);
-          transform: scale(0.5333333333333333);
-}
 .infos-ship > aside > div {
   position: absolute;
   width: 100%;
-  height: 100%;
   top: 0;
+  bottom: 0;
   left: 0;
   -webkit-box-flex: 0;
   -webkit-flex: none;
       -ms-flex: none;
           flex: none;
-  -webkit-transition-property: left;
-  transition-property: left;
-  padding: 0.5rem 0rem 3.5rem 0rem;
+  -webkit-transition-property: -webkit-transform;
+  transition-property: -webkit-transform;
+  transition-property: transform;
+  transition-property: transform, -webkit-transform;
+  padding: 10px 0 70px 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row nowrap;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-scroll-snap-type: mandatory;
+      -ms-scroll-snap-type: mandatory;
+          scroll-snap-type: mandatory;
+  -webkit-scroll-snap-points-x: repeat(100%);
+      -ms-scroll-snap-points-x: repeat(100%);
+          scroll-snap-points-x: repeat(100%);
+}
+.infos-ship > aside > div.is-panning {
+  -webkit-transition: none;
+  transition: none;
 }
 .infos-ship > aside > div > span {
   position: relative;
   width: 100%;
   height: 100%;
   padding: 0 20px;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 100%;
+      -ms-flex: 0 0 100%;
+          flex: 0 0 100%;
+  min-width: 0;
   display: inline-block;
   text-align: center !important;
   vertical-align: middle !important;
@@ -11027,59 +10992,73 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
   max-width: 100%;
   max-height: 100%;
 }
-.infos-ship > aside > input[type="radio"][value="2"] ~ div {
-  width: 200%;
+.infos-ship > aside > input[type="radio"] {
+  display: none;
 }
-.infos-ship > aside > input[type="radio"][value="2"] ~ div > span {
-  width: 50%;
+.infos-ship > aside > input[type="radio"]:checked + label {
+  cursor: default;
 }
-.infos-ship > aside > input[type="radio"][value="3"] ~ div {
-  width: 300%;
+.infos-ship > aside > input[type="radio"]:checked + label:before {
+  background-color: rgba(63, 192, 255, 0.25);
+  border-color: rgba(63, 192, 255, 0.75);
+  -webkit-transform: scale(0.5333333333333333);
+      -ms-transform: scale(0.5333333333333333);
+          transform: scale(0.5333333333333333);
 }
-.infos-ship > aside > input[type="radio"][value="3"] ~ div > span {
-  width: 33.33333333%;
+.infos-ship > aside.mod-scroll-snap > div {
+  overflow: auto;
+  overflow-style: none;
+  -ms-overflow-style: none;
 }
-.infos-ship > aside > input[type="radio"][value="4"] ~ div {
-  width: 400%;
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="1"]:checked ~ div {
+  -webkit-transform: translateX(0%);
+      -ms-transform: translateX(0%);
+          transform: translateX(0%);
 }
-.infos-ship > aside > input[type="radio"][value="4"] ~ div > span {
-  width: 25%;
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="2"]:checked ~ div {
+  -webkit-transform: translateX(-100%);
+      -ms-transform: translateX(-100%);
+          transform: translateX(-100%);
 }
-.infos-ship > aside > input[type="radio"][value="5"] ~ div {
-  width: 500%;
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="3"]:checked ~ div {
+  -webkit-transform: translateX(-200%);
+      -ms-transform: translateX(-200%);
+          transform: translateX(-200%);
 }
-.infos-ship > aside > input[type="radio"][value="5"] ~ div > span {
-  width: 20%;
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="4"]:checked ~ div {
+  -webkit-transform: translateX(-300%);
+      -ms-transform: translateX(-300%);
+          transform: translateX(-300%);
 }
-.infos-ship > aside > input[type="radio"][value="6"] ~ div {
-  width: 600%;
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="5"]:checked ~ div {
+  -webkit-transform: translateX(-400%);
+      -ms-transform: translateX(-400%);
+          transform: translateX(-400%);
 }
-.infos-ship > aside > input[type="radio"][value="6"] ~ div > span {
-  width: 16.66666667%;
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="6"]:checked ~ div {
+  -webkit-transform: translateX(-500%);
+      -ms-transform: translateX(-500%);
+          transform: translateX(-500%);
 }
-.infos-ship > aside > input[type="radio"][value="7"] ~ div {
-  width: 700%;
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="7"]:checked ~ div {
+  -webkit-transform: translateX(-600%);
+      -ms-transform: translateX(-600%);
+          transform: translateX(-600%);
 }
-.infos-ship > aside > input[type="radio"][value="7"] ~ div > span {
-  width: 14.28571429%;
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="8"]:checked ~ div {
+  -webkit-transform: translateX(-700%);
+      -ms-transform: translateX(-700%);
+          transform: translateX(-700%);
 }
-.infos-ship > aside > input[type="radio"][value="8"] ~ div {
-  width: 800%;
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="9"]:checked ~ div {
+  -webkit-transform: translateX(-800%);
+      -ms-transform: translateX(-800%);
+          transform: translateX(-800%);
 }
-.infos-ship > aside > input[type="radio"][value="8"] ~ div > span {
-  width: 12.5%;
-}
-.infos-ship > aside > input[type="radio"][value="9"] ~ div {
-  width: 900%;
-}
-.infos-ship > aside > input[type="radio"][value="9"] ~ div > span {
-  width: 11.11111111%;
-}
-.infos-ship > aside > input[type="radio"][value="10"] ~ div {
-  width: 1000%;
-}
-.infos-ship > aside > input[type="radio"][value="10"] ~ div > span {
-  width: 10%;
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="10"]:checked ~ div {
+  -webkit-transform: translateX(-900%);
+      -ms-transform: translateX(-900%);
+          transform: translateX(-900%);
 }
 @media all and (min-width: 1601px) and (min-aspect-ratio: 5/4) {
   .infos-ship {
@@ -11097,65 +11076,61 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
   .infos-ship > aside > input[type="radio"]:nth-child(4n+3) + label {
     display: none;
   }
-  .infos-ship > aside > input[type="radio"][value="1"]:checked ~ div {
-    left: 0%;
-  }
-  .infos-ship > aside > input[type="radio"][value="1"] ~ div {
+  .infos-ship > aside > div > span {
     width: 50%;
+    -webkit-flex-basis: 50%;
+        -ms-flex-preferred-size: 50%;
+            flex-basis: 50%;
   }
-  .infos-ship > aside > input[type="radio"][value="2"]:checked ~ div {
-    left: 0%;
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="1"]:checked ~ div {
+    -webkit-transform: translateX(0%);
+        -ms-transform: translateX(0%);
+            transform: translateX(0%);
   }
-  .infos-ship > aside > input[type="radio"][value="2"] ~ div {
-    width: 100%;
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="2"]:checked ~ div {
+    -webkit-transform: translateX(0%);
+        -ms-transform: translateX(0%);
+            transform: translateX(0%);
   }
-  .infos-ship > aside > input[type="radio"][value="3"]:checked ~ div {
-    left: -100%;
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="3"]:checked ~ div {
+    -webkit-transform: translateX(-100%);
+        -ms-transform: translateX(-100%);
+            transform: translateX(-100%);
   }
-  .infos-ship > aside > input[type="radio"][value="3"] ~ div {
-    width: 150%;
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="4"]:checked ~ div {
+    -webkit-transform: translateX(-100%);
+        -ms-transform: translateX(-100%);
+            transform: translateX(-100%);
   }
-  .infos-ship > aside > input[type="radio"][value="4"]:checked ~ div {
-    left: -100%;
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="5"]:checked ~ div {
+    -webkit-transform: translateX(-200%);
+        -ms-transform: translateX(-200%);
+            transform: translateX(-200%);
   }
-  .infos-ship > aside > input[type="radio"][value="4"] ~ div {
-    width: 200%;
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="6"]:checked ~ div {
+    -webkit-transform: translateX(-200%);
+        -ms-transform: translateX(-200%);
+            transform: translateX(-200%);
   }
-  .infos-ship > aside > input[type="radio"][value="5"]:checked ~ div {
-    left: -200%;
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="7"]:checked ~ div {
+    -webkit-transform: translateX(-300%);
+        -ms-transform: translateX(-300%);
+            transform: translateX(-300%);
   }
-  .infos-ship > aside > input[type="radio"][value="5"] ~ div {
-    width: 250%;
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="8"]:checked ~ div {
+    -webkit-transform: translateX(-300%);
+        -ms-transform: translateX(-300%);
+            transform: translateX(-300%);
   }
-  .infos-ship > aside > input[type="radio"][value="6"]:checked ~ div {
-    left: -200%;
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="9"]:checked ~ div {
+    -webkit-transform: translateX(-400%);
+        -ms-transform: translateX(-400%);
+            transform: translateX(-400%);
   }
-  .infos-ship > aside > input[type="radio"][value="6"] ~ div {
-    width: 300%;
-  }
-  .infos-ship > aside > input[type="radio"][value="7"]:checked ~ div {
-    left: -300%;
-  }
-  .infos-ship > aside > input[type="radio"][value="7"] ~ div {
-    width: 350%;
-  }
-  .infos-ship > aside > input[type="radio"][value="8"]:checked ~ div {
-    left: -300%;
-  }
-  .infos-ship > aside > input[type="radio"][value="8"] ~ div {
-    width: 400%;
-  }
-  .infos-ship > aside > input[type="radio"][value="9"]:checked ~ div {
-    left: -400%;
-  }
-  .infos-ship > aside > input[type="radio"][value="9"] ~ div {
-    width: 450%;
-  }
-  .infos-ship > aside > input[type="radio"][value="10"]:checked ~ div {
-    left: -400%;
-  }
-  .infos-ship > aside > input[type="radio"][value="10"] ~ div {
-    width: 500%;
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="10"]:checked ~ div {
+    -webkit-transform: translateX(-400%);
+        -ms-transform: translateX(-400%);
+            transform: translateX(-400%);
   }
 }
 @media all and (min-width: 721px) and (max-width: 1152px) and (min-aspect-ratio: 5/4), (min-width: 721px) and (max-width: 1152px) and (max-height: 800px) {
@@ -11254,6 +11229,11 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
     border-bottom-width: 2px;
     margin-bottom: 5px;
     padding-bottom: 5px;
+  }
+}
+@media all and (max-width: 800px) {
+  .infos-ship > div.equipments > .modernization > .stats > span {
+    vertical-align: top;
   }
 }
 @media all and (min-width: 541px) and (max-width: 720px) {
