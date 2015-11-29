@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",71,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/16.png)\"></s><strong>10cm连装高角炮<small>(炮架)</small></strong><small>高角副炮</small></h3><span>+1 火力</span><span>+7 对空</span><span>+1 命中</span><span>射程: 短</span>")

@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",51,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/15.png)\"></s><strong>12cm30连装喷进炮</strong><small>对空机枪</small></h3><span>+8 对空</span>")

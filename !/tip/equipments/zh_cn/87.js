@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",87,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/19.png)\"></s><strong>新型高温高压锅炉</strong><small>引擎强化</small></h3><span>+13 回避</span>")

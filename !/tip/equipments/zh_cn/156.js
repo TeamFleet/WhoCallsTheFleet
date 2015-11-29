@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",156,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/6.png)\"></s><strong>零式舰战52型甲<small>(附岩本小队)</small></strong><small>舰载战斗机</small></h3><span>+11 对空</span><span>+1 命中</span><span>+3 回避</span><span>+1 索敌</span>")

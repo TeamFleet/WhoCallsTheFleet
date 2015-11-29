@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",95,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/5.png)\"></s><strong>潜艇53cm舰首鱼雷<small>(8门)</small></strong><small>潜艇专用鱼雷</small></h3><span>+16 雷装</span><span>+3 命中</span><span>射程: 短</span>")

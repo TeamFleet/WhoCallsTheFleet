@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",102,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/10.png)\"></s><strong>九八式水上侦察机<small>(夜侦)</small></strong><small>水上侦察机 (夜间)</small></h3><span>+1 对潜</span><span>+1 命中</span><span>+3 索敌</span>")

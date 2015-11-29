@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",77,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/4.png)\"></s><strong>15cm连装副炮</strong><small>副炮</small></h3><span>+4 火力</span><span>+2 对空</span><span>+2 命中</span><span>射程: 中</span>")

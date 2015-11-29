@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",110,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/6.png)\"></s><strong>烈风<small>(六〇一空)</small></strong><small>舰载战斗机</small></h3><span>+11 对空</span><span>+1 命中</span><span>+2 回避</span>")

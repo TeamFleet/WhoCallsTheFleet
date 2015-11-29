@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",146,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/35.png)\"></s><strong>洋上补给</strong><small>补给物资</small></h3><span>-2 装甲</span>")

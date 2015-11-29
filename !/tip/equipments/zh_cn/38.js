@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",38,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/15.png)\"></s><strong>12.7mm单装机枪</strong><small>对空机枪</small></h3><span>+3 对空</span><span>+1 回避</span>")

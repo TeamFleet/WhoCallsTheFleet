@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",15,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/5.png)\"></s><strong>61cm四连装<small>(酸素)</small>鱼雷</strong><small>鱼雷</small></h3><span>+10 雷装</span><span>射程: 短</span>")

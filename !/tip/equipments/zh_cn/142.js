@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",142,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/11.png)\"></s><strong>15m二重测距仪+21号电探改二</strong><small>超大型电探/雷达</small></h3><span>+1 火力</span><span>+8 对空</span><span>+9 命中</span><span>+1 装甲</span><span>+1 回避</span><span>+7 索敌</span>")

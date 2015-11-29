@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",108,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/29.png)\"></s><strong>熟练舰载机整备员</strong><small>航空要员</small></h3><span>+10 火力</span><span>+1 对空</span><span>+1 命中</span><span>+1 索敌</span><span>射程: 长</span>")

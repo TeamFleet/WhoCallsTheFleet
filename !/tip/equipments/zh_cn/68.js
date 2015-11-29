@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",68,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/20.png)\"></s><strong>大发登陆艇</strong><small>登陆艇</small></h3>")

@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",36,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/13.png)\"></s><strong>九一式穿甲弹</strong><small>对舰强化弹</small></h3><span>+8 火力</span><span>+1 命中</span>")

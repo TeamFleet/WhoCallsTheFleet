@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",121,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/30.png)\"></s><strong>94式高射装置</strong><small>高射装置</small></h3><span>+3 对空</span><span>+1 回避</span>")

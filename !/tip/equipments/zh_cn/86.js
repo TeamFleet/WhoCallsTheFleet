@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",86,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/26.png)\"></s><strong>舰艇修理设施</strong><small>舰艇修理设施</small></h3>")

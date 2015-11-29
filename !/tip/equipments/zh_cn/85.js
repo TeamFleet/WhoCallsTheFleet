@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",85,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/15.png)\"></s><strong>3.7cm FlaK M42</strong><small>对空机枪</small></h3><span>+1 火力</span><span>+8 对空</span><span>+1 命中</span>")

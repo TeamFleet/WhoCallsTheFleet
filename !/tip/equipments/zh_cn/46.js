@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",46,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/18.png)\"></s><strong>九三式水中听音机</strong><small>声纳</small></h3><span>+6 对潜</span><span>+1 命中</span>")

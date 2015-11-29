@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",47,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/18.png)\"></s><strong>三式水中探信仪</strong><small>声纳</small></h3><span>+10 对潜</span><span>+2 命中</span>")

@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",33,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/19.png)\"></s><strong>改良型舰船涡轮机</strong><small>引擎强化</small></h3><span>+6 回避</span>")

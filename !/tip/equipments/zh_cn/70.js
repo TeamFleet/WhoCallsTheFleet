@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",70,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/22.png)\"></s><strong>三式指挥联络机<small>(对潜)</small></strong><small>对潜哨戒机</small></h3><span>+7 对潜</span><span>+2 命中</span><span>+1 索敌</span>")

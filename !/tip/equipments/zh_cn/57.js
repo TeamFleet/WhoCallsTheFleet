@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",57,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/7.png)\"></s><strong>彗星一二型甲</strong><small>舰载轰炸机</small></h3><span>+3 对潜</span><span>+10 爆装</span><span>+1 索敌</span>")

@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",67,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/5.png)\"></s><strong>53cm舰首<small>(酸素)</small>鱼雷</strong><small>鱼雷</small></h3><span>+15 雷装</span><span>+2 命中</span><span>射程: 短</span>")

@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",41,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/5.png)\"></s><strong>甲标的 甲</strong><small>微型潜艇</small></h3><span>+12 雷装</span>")

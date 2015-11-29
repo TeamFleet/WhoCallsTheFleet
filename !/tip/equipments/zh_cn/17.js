@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",17,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/8.png)\"></s><strong>天山</strong><small>舰载鱼雷机</small></h3><span>+7 雷装</span><span>+3 对潜</span><span>+1 索敌</span>")

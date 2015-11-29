@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",98,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/8.png)\"></s><strong>九七式舰攻<small>(熟练)</small></strong><small>舰载鱼雷机</small></h3><span>+8 雷装</span><span>+5 对潜</span><span>+2 命中</span><span>+2 索敌</span>")

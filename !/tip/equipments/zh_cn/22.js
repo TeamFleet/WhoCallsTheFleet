@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",22,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/6.png)\"></s><strong>烈风</strong><small>舰载战斗机</small></h3><span>+10 对空</span>")

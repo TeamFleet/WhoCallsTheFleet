@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",73,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/23.png)\"></s><strong>增设装甲板<small>(大型舰)</small></strong><small>增设装甲板 (大型)</small></h3><span>+9 装甲</span><span>-3 回避</span>")

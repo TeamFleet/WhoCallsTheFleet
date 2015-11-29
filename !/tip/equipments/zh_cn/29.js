@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",29,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/11.png)\"></s><strong>33号对水上电探</strong><small>小型电探/雷达</small></h3><span>+5 命中</span><span>+7 索敌</span>")

@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",84,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/15.png)\"></s><strong>2cm四连装FlaK 38</strong><small>对空机枪</small></h3><span>+7 对空</span><span>+1 命中</span>")

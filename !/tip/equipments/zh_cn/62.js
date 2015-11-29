@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",62,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/10.png)\"></s><strong>试制晴岚</strong><small>水上轰炸机</small></h3><span>+6 对潜</span><span>+11 爆装</span><span>+1 命中</span><span>+6 索敌</span>")

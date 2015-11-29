@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",35,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/12.png)\"></s><strong>三式弹</strong><small>对空强化弹</small></h3><span>+5 对空</span>")

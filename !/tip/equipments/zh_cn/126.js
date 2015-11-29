@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",126,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/31.png)\"></s><strong>WG42<small>(Wurfgerät 42)</small></strong><small>对地装备</small></h3><span>+1 火力</span><span>-1 装甲</span><span>射程: 短</span>")

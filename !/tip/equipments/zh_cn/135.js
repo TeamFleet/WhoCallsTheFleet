@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",135,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/16.png)\"></s><strong>90mm单装高角炮</strong><small>高角副炮 + 高射装置</small></h3><span>+1 火力</span><span>+8 对空</span><span>+1 命中</span><span>射程: 短</span>")

@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",115,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/10.png)\"></s><strong>Ar196改</strong><small>水上侦察机</small></h3><span>+1 对空</span><span>+5 对潜</span><span>+1 爆装</span><span>+2 命中</span><span>+5 索敌</span>")

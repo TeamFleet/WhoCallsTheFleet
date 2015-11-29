@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",69,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/21.png)\"></s><strong>KA号观测机</strong><small>旋翼机</small></h3><span>+9 对潜</span><span>+1 命中</span>")

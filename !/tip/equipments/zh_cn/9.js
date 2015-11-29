@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",9,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/3.png)\"></s><strong>46cm三连装炮</strong><small>大口径主炮</small></h3><span>+26 火力</span><span>+5 对空</span><span>射程: 超长</span>")

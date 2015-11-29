@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",97,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/7.png)\"></s><strong>九九式舰爆<small>(熟练)</small></strong><small>舰载轰炸机</small></h3><span>+1 对空</span><span>+4 对潜</span><span>+7 爆装</span><span>+2 命中</span><span>+2 索敌</span>")

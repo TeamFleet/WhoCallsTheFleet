@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",159,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/6.png)\"></s><strong>Fw190T改</strong><small>舰载战斗机</small></h3><span>+2 火力</span><span>+10 对空</span><span>+2 回避</span>")

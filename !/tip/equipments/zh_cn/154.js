@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",154,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/7.png)\"></s><strong>零式舰战62型<small>(爆战/岩井队)</small></strong><small>舰载轰炸机</small></h3><span>+7 对空</span><span>+3 对潜</span><span>+4 爆装</span><span>+1 命中</span><span>+2 回避</span><span>+1 索敌</span>")

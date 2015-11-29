@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",75,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/25.png)\"></s><strong>鼓筒<small>(运输用)</small></strong><small>简易运输罐</small></h3>")

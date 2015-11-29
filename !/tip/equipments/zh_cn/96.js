@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",96,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/6.png)\"></s><strong>零式舰战21型<small>(熟练)</small></strong><small>舰载战斗机</small></h3><span>+8 对空</span><span>+2 命中</span><span>+2 回避</span><span>+1 索敌</span>")
