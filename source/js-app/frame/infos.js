@@ -86,6 +86,8 @@ _frame.infos = {
 	show_func: function(type, id, doNotPushHistory, infosHistoryIndex){
 		if( !type || !id )
 			return false
+		
+		_g.pageChangeBefore()
 
 		// 如果为相同内容，不运行
 			if( this.curContent == type + '::' + id )

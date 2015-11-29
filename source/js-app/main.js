@@ -508,6 +508,8 @@ _frame.app_main = {
 			//_g.uriHash('page', page)
 		},
 		load_page_func: function( page, options ){
+			_g.pageChangeBefore()
+			
 			_g.log( 'PREPARE LOADING: ' + page )
 			options = options || {}
 			
@@ -686,9 +688,10 @@ _frame.app_main = {
 			return true
 
 		// 创建基础框架
+			_frame.dom.mobilemenu = $('<input type="checkbox" id="view-mobile-menu"/>').prependTo( _frame.dom.layout )
 			_frame.dom.nav = $('<nav/>').appendTo( _frame.dom.layout )
 				_frame.dom.logo = $('<button class="logo" />')
-									.on(_g.event.animationend, function(e){
+									.on(_g.event.animationend, function(){
 										_frame.dom.logo.addClass('ready-animated')
 									})
 									/*
@@ -730,8 +733,17 @@ _frame.app_main = {
 							.on('click', function(){
 								history.forward()
 							}).appendTo( _frame.dom.btnsHistory )
+				_frame.dom.navtitle = $('<span class="title"/>')
+							.append(
+								$('<label for="view-mobile-menu"/>').html('<i></i>')
+							)
+							.appendTo( _frame.dom.nav )
 			_frame.dom.main = $('<main/>').appendTo( _frame.dom.layout )
 			_frame.dom.bgimg = $('<div class="bgimg" />').appendTo( _frame.dom.layout )
+			$('<div class="nav-mask"/>').appendTo( _frame.dom.layout )
+				.on('click', function(){
+					_frame.dom.mobilemenu.prop('checked', false)
+				})
 
 		// 功能按钮：反馈信息
 		/*
@@ -770,7 +782,7 @@ _frame.app_main = {
 		// 开始异步函数链
 			promise_chain
 
-		// 检查 aap-db 目录，预加载全部数据库
+		// 检查 app-db 目录，预加载全部数据库
 			.then(function(){
 				var deferred = Q.defer()
 				node.fs.readdir(_g.path.db, function(err, files){

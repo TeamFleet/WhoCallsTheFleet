@@ -274,6 +274,12 @@ function dev_output_form(){
 										return $el
 									})(o.page).html(o.title).appendTo( navlinks )
 						})
+						
+						$('<span class="title"/>')
+							.append(
+								$('<label for="view-mobile-menu"/>').html('<i></i>')
+							)
+							.appendTo( elNav )
 					
 						while( (searchRes = scrapePtrn.exec(dev_output_tmpl)) !== null ){
 							try{

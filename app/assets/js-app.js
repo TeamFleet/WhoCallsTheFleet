@@ -1,3 +1,11 @@
+/* global global */
+/* global nw */
+/* global vsprintf */
+/* global dev_output_form */
+/* global Lockr */
+/* global LZString */
+/* global Nedb */
+
 "use strict";
 
 // Global Variables
@@ -62,7 +70,7 @@
 
 
 // locale object
-	let _l = {};
+	var _l = {};
 
 
 
@@ -105,6 +113,12 @@
 		}, 3000)
 	};
 
+
+
+// main
+	_g.pageChangeBefore = function(){
+		_frame.dom.mobilemenu.prop('checked', false)
+	}
 
 
 !function(root,factory){"undefined"!=typeof exports?"undefined"!=typeof module&&module.exports&&(exports=module.exports=factory(root,exports)):"function"==typeof define&&define.amd?define(["exports"],function(exports){root.Lockr=factory(root,exports)}):root.Lockr=factory(root,{})}(this,function(root,Lockr){"use strict";return Array.prototype.indexOf||(Array.prototype.indexOf=function(elt){var len=this.length>>>0,from=Number(arguments[1])||0;for(from=0>from?Math.ceil(from):Math.floor(from),0>from&&(from+=len);len>from;from++)if(from in this&&this[from]===elt)return from;return-1}),Lockr.prefix="",Lockr._getPrefixedKey=function(key,options){return options=options||{},options.noPrefix?key:this.prefix+key},Lockr.set=function(key,value,options){var query_key=this._getPrefixedKey(key,options);try{localStorage.setItem(query_key,JSON.stringify({data:value}))}catch(e){console&&console.warn("Lockr didn't successfully save the '{"+key+": "+value+"}' pair, because the localStorage is full.")}},Lockr.get=function(key,missing,options){var value,query_key=this._getPrefixedKey(key,options);try{value=JSON.parse(localStorage.getItem(query_key))}catch(e){value=localStorage[query_key]?JSON.parse('{"data":"'+localStorage.getItem(query_key)+'"}'):null}return null===value?missing:"undefined"!=typeof value.data?value.data:missing},Lockr.sadd=function(key,value,options){var json,query_key=this._getPrefixedKey(key,options),values=Lockr.smembers(key);if(values.indexOf(value)>-1)return null;try{values.push(value),json=JSON.stringify({data:values}),localStorage.setItem(query_key,json)}catch(e){console.log(e),console&&console.warn("Lockr didn't successfully add the "+value+" to "+key+" set, because the localStorage is full.")}},Lockr.smembers=function(key,options){var value,query_key=this._getPrefixedKey(key,options);try{value=JSON.parse(localStorage.getItem(query_key))}catch(e){value=null}return null===value?[]:value.data||[]},Lockr.sismember=function(key,value,options){this._getPrefixedKey(key,options);return Lockr.smembers(key).indexOf(value)>-1},Lockr.getAll=function(){var keys=Object.keys(localStorage);return keys.map(function(key){return Lockr.get(key)})},Lockr.srem=function(key,value,options){var json,index,query_key=this._getPrefixedKey(key,options),values=Lockr.smembers(key,value);index=values.indexOf(value),index>-1&&values.splice(index,1),json=JSON.stringify({data:values});try{localStorage.setItem(query_key,json)}catch(e){console&&console.warn("Lockr couldn't remove the "+value+" from the set "+key)}},Lockr.rm=function(key){localStorage.removeItem(key)},Lockr.flush=function(){localStorage.clear()},Lockr});
@@ -3621,6 +3635,8 @@ _frame.app_main = {
 			//_g.uriHash('page', page)
 		},
 		load_page_func: function( page, options ){
+			_g.pageChangeBefore()
+			
 			_g.log( 'PREPARE LOADING: ' + page )
 			options = options || {}
 			
@@ -3799,9 +3815,10 @@ _frame.app_main = {
 			return true
 
 		// 创建基础框架
+			_frame.dom.mobilemenu = $('<input type="checkbox" id="view-mobile-menu"/>').prependTo( _frame.dom.layout )
 			_frame.dom.nav = $('<nav/>').appendTo( _frame.dom.layout )
 				_frame.dom.logo = $('<button class="logo" />')
-									.on(_g.event.animationend, function(e){
+									.on(_g.event.animationend, function(){
 										_frame.dom.logo.addClass('ready-animated')
 									})
 									/*
@@ -3843,8 +3860,17 @@ _frame.app_main = {
 							.on('click', function(){
 								history.forward()
 							}).appendTo( _frame.dom.btnsHistory )
+				_frame.dom.navtitle = $('<span class="title"/>')
+							.append(
+								$('<label for="view-mobile-menu"/>').html('<i></i>')
+							)
+							.appendTo( _frame.dom.nav )
 			_frame.dom.main = $('<main/>').appendTo( _frame.dom.layout )
 			_frame.dom.bgimg = $('<div class="bgimg" />').appendTo( _frame.dom.layout )
+			$('<div class="nav-mask"/>').appendTo( _frame.dom.layout )
+				.on('click', function(){
+					_frame.dom.mobilemenu.prop('checked', false)
+				})
 
 		// 功能按钮：反馈信息
 		/*
@@ -3883,7 +3909,7 @@ _frame.app_main = {
 		// 开始异步函数链
 			promise_chain
 
-		// 检查 aap-db 目录，预加载全部数据库
+		// 检查 app-db 目录，预加载全部数据库
 			.then(function(){
 				var deferred = Q.defer()
 				node.fs.readdir(_g.path.db, function(err, files){
@@ -5976,6 +6002,8 @@ _frame.infos = {
 	show_func: function(type, id, doNotPushHistory, infosHistoryIndex){
 		if( !type || !id )
 			return false
+		
+		_g.pageChangeBefore()
 
 		// 如果为相同内容，不运行
 			if( this.curContent == type + '::' + id )

@@ -498,6 +498,8 @@ _frame.app_main = {
 			//_g.uriHash('page', page)
 		},
 		load_page_func: function( page, options ){
+			_g.pageChangeBefore()
+			
 			_g.log( 'PREPARE LOADING: ' + page )
 			options = options || {}
 			
@@ -713,6 +715,7 @@ _frame.app_main = {
 			return true
 
 		// 创建基础框架
+			_frame.dom.mobilemenu = _frame.dom.layout.children('#view-mobile-menu')
 			_frame.dom.nav = _frame.dom.layout.children('nav')
 				_frame.dom.logo = $('<button class="logo"/>')
 									.on(_g.event.animationend, function(e){
@@ -749,6 +752,10 @@ _frame.app_main = {
 				*/
 			_frame.dom.main = _frame.dom.layout.children('main')
 			_frame.dom.bgimg = $('<div class="bgimg" />').appendTo( _frame.dom.layout )
+			$('<div class="nav-mask"/>').appendTo( _frame.dom.layout )
+				.on('click', function(){
+					_frame.dom.mobilemenu.prop('checked', false)
+				})
 
 		// 功能按钮：反馈信息
 		/*
@@ -783,6 +790,8 @@ _frame.app_main = {
 						'page':		p
 					})
 					_frame.app_main.navtitle[p] = t
+					if( !$el.hasClass('button') )
+						$el = $el.parent()
 					_frame.dom.navs[p] = $el
 				})
 				return _frame.app_main.nav

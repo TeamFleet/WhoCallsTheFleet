@@ -1,3 +1,11 @@
+/* global global */
+/* global nw */
+/* global vsprintf */
+/* global dev_output_form */
+/* global Lockr */
+/* global LZString */
+/* global Nedb */
+
 "use strict";
 
 // Global Variables
@@ -62,7 +70,7 @@
 
 
 // locale object
-	let _l = {};
+	var _l = {};
 
 
 
@@ -105,4 +113,10 @@
 		}, 3000)
 	};
 
+
+
+// main
+	_g.pageChangeBefore = function(){
+		_frame.dom.mobilemenu.prop('checked', false)
+	}
 
