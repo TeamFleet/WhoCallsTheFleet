@@ -10,5 +10,6 @@
 // @koala-prepend "steps/donate.js"
 // @koala-prepend "steps/fleets.js"
 // @koala-prepend "steps/otherpages.js"
+// @koala-prepend "steps/tips.js"
 
 // @koala-prepend "steps/assets.js"

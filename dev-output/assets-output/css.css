@@ -10820,14 +10820,15 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
   right: calc( 30% + 80px );
 }
 .infos-ship > .entity {
-  padding: 0.30000000000000004rem 0rem 0.30000000000000004rem 0.6000000000000001rem;
-  width: 7rem;
+  padding: 6px 0 6px 12px;
+  width: 140px;
+  height: 54px;
   vertical-align: top;
   background: rgba(19, 108, 108, 0.325);
   border-radius: 0 5px 5px 0;
   -webkit-transition-property: background-color;
   transition-property: background-color;
-  height: 2.7rem;
+  z-index: 2;
 }
 .infos-ship > .entity > strong {
   font-size: 0.65rem;
