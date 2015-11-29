@@ -3206,6 +3206,7 @@ main:after {
 }
 .infosbody > div {
   width: 100%;
+  position: relaitve;
 }
 .infosbody > div.title > small {
   display: block;
@@ -3231,12 +3232,11 @@ main:after {
 }
 .infosbody > div.title > small small {
   font-size: inherit;
-}
-.infosbody > div.title > small small + small {
-  margin-left: 1.5em;
+  display: inline-block;
+  margin: .25em 1.5em .25em 0;
 }
 .infosbody > div.title > small ~ small {
-  margin-top: 0.5rem;
+  margin-top: 5px;
 }
 .infosbody > div.stats > .stat {
   display: block;
@@ -3877,7 +3877,7 @@ table tbody th {
 table tbody td {
   border-left: 1px solid transparent;
   text-align: center;
-  padding: .25em;
+  padding: 0 .25em;
 }
 table.hashover-column td.state-hover-column {
   background-color: rgba(0, 0, 0, 0.2);
@@ -4474,6 +4474,11 @@ body.mod-capture #tip {
   color: rgba(255, 255, 255, 0.35);
   width: 80px;
 }
+@media all and (max-width: 600px) {
+  .improvement > span > span > em {
+    display: block;
+  }
+}
 .improvement > span > span > i,
 .improvement > span > span > a {
   background: url(/!/assets/images/stats.png) no-repeat 0 0;
@@ -4819,7 +4824,6 @@ body.mod-capture #tip {
           flex: 1 0 100%;
   padding-left: 4rem;
   padding-right: 3.5rem;
-  padding-bottom: 1rem;
 }
 .tablelist > .fixed-table-container > .fixed-table-container-inner > .nocontent {
   position: absolute;
@@ -4880,6 +4884,9 @@ body.mod-capture #tip {
 }
 .tablelist > .fixed-table-container > .fixed-table-container-inner > .nocontent > div > span + button {
   margin-top: 0.7000000000000001rem;
+}
+.tablelist > .fixed-table-container > .fixed-table-container-inner table {
+  margin-bottom: 30px;
 }
 .tablelist table thead tr {
   border: 0;
@@ -4985,7 +4992,7 @@ body.mod-capture #tip {
 }
 .tablelist table tbody tr[data-equipmentid] td,
 .tablelist table tbody tr[data-equipmentid] th {
-  height: 1.25rem;
+  height: 25px;
   line-height: 0.9rem;
 }
 .tablelist table tbody tr[data-equipmentid] th {
@@ -6873,10 +6880,13 @@ body.mod-capture #tip {
 }
 .tablelist.entities .tablelist-list {
   margin-right: -10px;
+  padding-bottom: 30px;
 }
 .tablelist.entities .tablelist-list > .unit {
-  margin-top: 10px;
   margin-right: 10px;
+}
+.tablelist.entities .tablelist-list > .unit:not(:empty) {
+  margin-top: 10px;
 }
 .tablelist.entities .tablelist-list > .unit.illustrator {
   height: 25px;
@@ -7137,29 +7147,29 @@ h6 + section.update_journal {
           flex-flow: row wrap;
   margin-right: -1rem;
   /*
-				&>.unit{
-					.flex-basis(840);
-					.margin-right(20);
-				}
-				.improvement-details{
-					vertical-align: top;
-					.margin-top(15);
-					.height(96);
-					&>font{
-						.margin-top(2);
-						.width(420);
-						&>b{
-							.padding-left(150);
-							&>i:first-child{
-								.margin-left(-150);
-							}
+			&>.unit{
+				.flex-basis(840);
+				.margin-right(20);
+			}
+			.improvement-details{
+				vertical-align: top;
+				.margin-top(15);
+				.height(96);
+				&>font{
+					.margin-top(2);
+					.width(420);
+					&>b{
+						.padding-left(150);
+						&>i:first-child{
+							.margin-left(-150);
 						}
 					}
-					&>span{
-						.left(420);
-					}
 				}
-				*/
+				&>span{
+					.left(420);
+				}
+			}
+			*/
 }
 .infos-equipment > div.improvement-options h4 {
   -webkit-box-flex: 0;
@@ -7249,38 +7259,38 @@ h6 + section.update_journal {
 }
 .infos-equipment > div.upgrade-from {
   /*
-				display: block;
-				flex: none;
-				position: absolute;
-				width: 260px;
-				right: 0;
-				top: 260px;
-				*/
+			display: block;
+			flex: none;
+			position: absolute;
+			width: 260px;
+			right: 0;
+			top: 260px;
+			*/
 }
 .infos-equipment > div.upgrade-from h4 {
   margin-bottom: 0.2rem;
 }
 .infos-equipment > div.equipped {
   /*
-					.flex-flow(row wrap);
-					.justify-content(flex-start);
-					.align-items(flex-start);
-					.margin-top(-10);
-					.padding-bottom(20);
-					&>.unit{
-						flex: 	1 0 195px;
-						position:	relative;
-					}
-					&>a{
-						.margin-top(10);
-						padding-right:	0;
-					}
-					&.no{
-						margin-top:	0;
-						.font-size(16);
-						color:		fade(#aaa, 65%);
-					}
-					*/
+				.flex-flow(row wrap);
+				.justify-content(flex-start);
+				.align-items(flex-start);
+				.margin-top(-10);
+				.padding-bottom(20);
+				&>.unit{
+					flex: 	1 0 195px;
+					position:	relative;
+				}
+				&>a{
+					.margin-top(10);
+					padding-right:	0;
+				}
+				&.no{
+					margin-top:	0;
+					.font-size(16);
+					color:		fade(#aaa, 65%);
+				}
+				*/
 }
 .infos-equipment > aside {
   -webkit-box-flex: 0;
@@ -7317,6 +7327,18 @@ h6 + section.update_journal {
   .infos-equipment > aside {
     width: 200px;
     height: 200px;
+  }
+}
+@media all and (max-width: 720px) {
+  .infos-equipment > div.title {
+    padding-right: 180px;
+  }
+  .infos-equipment > div.title + .stats {
+    padding-right: 0;
+  }
+  .infos-equipment > aside {
+    width: 150px;
+    height: 150px;
   }
 }
 .infos-fleet {
@@ -12938,6 +12960,12 @@ main[data-theme="arsenal"]:after {
 .page-container[page="arsenal"] > .main > .body-weekday > #arsenal_weekday-showmeterials:checked ~ .content > .flexgrid > .improvement.unit {
   height: 175px;
   overflow: visible;
+}
+@media all and (max-width: 600px) {
+  .page-container[page="arsenal"] > .main > .body-weekday > #arsenal_weekday-showmeterials:checked ~ .content > .flexgrid > .improvement.unit {
+    height: auto;
+    margin-bottom: 20px;
+  }
 }
 .page-container[page="arsenal"] > .main > .body-weekday > #arsenal_weekday-showmeterials:checked ~ .content > .flexgrid > .improvement.unit > span {
   opacity: 1;

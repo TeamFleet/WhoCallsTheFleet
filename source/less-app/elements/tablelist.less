@@ -53,7 +53,7 @@
 			.flex(1 0 100%);
 			.padding-left(@nav_height);
 			.padding-right(@nav_height - @scrollbar_width);
-			.padding-bottom(20);
+			//.padding-bottom(20);
 			.window-noframe({
 				.padding-right(@nav_height - @scrollbar_width + 2);
 			});
@@ -99,6 +99,9 @@
 					}
 				}
 			} // &>.nocontent
+			table{
+				margin-bottom: 30px;
+			}
 		}
 	}
 
@@ -226,7 +229,8 @@
 			}
 			tr[data-equipmentid]{
 				td, th{
-					.height(25);
+					//.height(25);
+					height: 	25px;
 					.line-height(18)
 				}
 				th{

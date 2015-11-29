@@ -127,6 +127,7 @@
 
 	&>div{
 		width:		100%;
+		position: 	relaitve;
 		&.title{
 			&>small{
 				display:	block;
@@ -152,12 +153,11 @@
 				}
 				small{
 					font-size: 	inherit;
-					&+small{
-						margin-left:	1.5em;
-					}
+					display: 	inline-block;
+					margin:		.25em 1.5em .25em 0;
 				}
 				&~small{
-					.margin-top(10);
+					margin-top: 5px;
 				}
 			}
 		}
