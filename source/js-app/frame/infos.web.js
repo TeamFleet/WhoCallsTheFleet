@@ -259,6 +259,8 @@ _frame.infos = {
 				cont.prependTo( this.dom.container )
 					.trigger('show', [is_firstShow])
 					.data('is_show', true)
+				
+				this.dom.main.scrollTop(0)
 
 				//_p.initDOM( cont )
 				//this.curContent = hashcode

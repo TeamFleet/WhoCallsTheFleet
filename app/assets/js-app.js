@@ -6121,6 +6121,8 @@ _frame.infos = {
 					.trigger('show', [is_firstShow])
 					.data('is_show', true)
 
+				this.dom.main.scrollTop(0)
+
 				//_p.initDOM( contentDOM )
 				//this.curContent = hashcode
 				this.curContent = type + '::' + id

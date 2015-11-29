@@ -5315,6 +5315,8 @@ _frame.infos = {
 
 			cont.prependTo(this.dom.container).trigger('show', [is_firstShow]).data('is_show', !0);
 
+			this.dom.main.scrollTop(0);
+
 			if (_frame.app_main.cur_page) {
 
 				if (_frame.dom.navs[_frame.app_main.cur_page]) _frame.dom.navs[_frame.app_main.cur_page].removeClass('on');
