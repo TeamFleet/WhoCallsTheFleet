@@ -2372,7 +2372,7 @@ h3[data-content]:before,
 h4[data-content]:before,
 h5[data-content]:before,
 h6[data-content]:before {
-  color: #6d6037;
+  color: #b39b4d;
   content: attr(data-content);
   display: block;
   font: inherit;
@@ -2488,7 +2488,7 @@ fieldset {
 }
 #layout > .gg {
   position: absolute;
-  z-index: 10;
+  z-index: 3;
   width: 100%;
   height: 51px;
   border-top: 1px solid rgba(229, 229, 229, 0.25);
@@ -2542,18 +2542,19 @@ html.ready main {
 nav {
   display: block;
   position: absolute;
-  top: -4rem;
+  top: -80px;
   left: 0;
-  height: 4rem;
+  height: 80px;
+  line-height: 80px;
   width: 100%;
-  z-index: 4;
+  z-index: 5;
   -webkit-transition-property: top;
   transition-property: top;
   background: rgba(0, 0, 0, 0.5);
-  user-select: none;
   -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 nav:before,
 nav:after {
@@ -2577,7 +2578,7 @@ nav:after {
   z-index: 4;
   left: 0;
   width: 100%;
-  height: 0.05rem;
+  height: 1px;
   background: rgba(229, 229, 229, 0.25);
   -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
@@ -2597,8 +2598,8 @@ nav > .logo {
 nav > .logo:before {
   content: "";
   position: absolute;
-  animation: layout-loading-logo 1.2s ease-out infinite alternate;
   -webkit-animation: layout-loading-logo 1.2s ease-out infinite alternate;
+          animation: layout-loading-logo 1.2s ease-out infinite alternate;
   top: 0;
   left: 0;
   width: 100%;
@@ -2611,8 +2612,8 @@ nav > div {
   height: 100%;
   -webkit-app-region: no-drag;
   display: block;
-  margin-left: 3.5rem;
-  padding: 0rem 0.5rem;
+  margin-left: 60px;
+  padding: 0 10px;
   top: 0;
   left: 0;
   max-width: calc(100% - 80px - 10px);
@@ -2622,8 +2623,8 @@ nav > div {
   transition-property: transform, top, opacity, -webkit-transform;
   -webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
           transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
-  -webkit-transition-duration: 0.3s !important;
-          transition-duration: 0.3s !important;
+  -webkit-transition-duration: .3s !important;
+          transition-duration: .3s !important;
   /*
 		@media all and (min-width: 1920px ){
 			margin-left:	~"calc((100% - 1920px) / 2 + @{nav_height}px - 10px)";
@@ -2632,21 +2633,20 @@ nav > div {
 }
 @media all and (max-width: 1152px) {
   nav > div {
-    margin-left: 2.5rem;
+    margin-left: 40px;
   }
 }
 @media all and (max-width: 960px) {
   nav > div {
-    margin-left: 1.5rem;
+    margin-left: 20px;
   }
 }
 @media all and (max-width: 800px) {
   nav > div {
-    margin-left: 0.75rem;
+    margin-left: 5px;
   }
 }
 nav > div .button {
-  line-height: 4rem;
   font-size: 24px;
   font-weight: lighter;
   color: rgba(255, 255, 255, 0.5);
@@ -2655,8 +2655,8 @@ nav > div .button {
   position: relative;
   top: 0;
   display: inline-block;
-  -webkit-transition-property: text-shadow, color, opacity, margin, font-size;
-  transition-property: text-shadow, color, opacity, margin, font-size;
+  -webkit-transition-property: text-shadow, color, opacity, margin, font-size, background-color;
+  transition-property: text-shadow, color, opacity, margin, font-size, background-color;
   -webkit-transition-duration: 0.3s;
           transition-duration: 0.3s;
   /*
@@ -2715,17 +2715,17 @@ nav > div .button + .button {
   }
 }
 nav > div .button[icon] {
-  padding-left: 2.3000000000000003rem;
+  padding-left: 46px;
 }
 nav > div .button[icon]:before {
   position: absolute;
-  width: 1.6rem;
+  width: 32px;
   text-align: center;
-  left: 0.5rem;
-  font-size: 1.6rem;
+  left: 10px;
+  font-size: 32px;
 }
 nav > div .button[icon]:first-child {
-  padding-left: 1.8rem;
+  padding-left: 36px;
 }
 nav > div .button[icon]:first-child:before {
   left: 0;
@@ -2754,18 +2754,26 @@ nav > div .button.home a {
 nav > div.selection-info {
   opacity: 0;
   z-index: 3;
-  line-height: 4rem;
-  font-size: 1.2000000000000002rem;
+  font-size: 24px;
   font-weight: lighter;
   color: rgba(255, 255, 255, 0.5);
   display: block !important;
+  padding-left: 20px;
   -webkit-transition-timing-function: ease-out;
           transition-timing-function: ease-out;
 }
+@media all and (max-width: 720px) {
+  nav > div.selection-info {
+    left: 50px;
+  }
+}
+@media all and (max-width: 720px) {
+  nav > div.selection-info {
+    font-size: 18px;
+  }
+}
 nav > div.history ~ .selection-info {
-  -webkit-transform: translateX(120px);
-      -ms-transform: translateX(120px);
-          transform: translateX(120px);
+  padding-left: 0;
 }
 nav > s {
   display: block;
@@ -2801,10 +2809,11 @@ nav > section.options {
   bottom: 0;
   right: 0;
   z-index: 5;
+  height: 100%;
   text-align: center;
   display: block;
   -webkit-app-region: no-drag;
-  padding: 0.25rem;
+  padding: 0 5px;
   -webkit-transition-property: opacity;
   transition-property: opacity;
   -webkit-transition-duration: 0.75s;
@@ -2813,12 +2822,12 @@ nav > section.options {
 }
 nav > section.options > button,
 nav > section.options > a {
+  height: 100%;
   color: rgba(255, 255, 255, 0.4);
   right: 0;
   display: inline-block;
-  width: 2rem;
-  height: 2rem;
-  font-size: 1.1rem;
+  width: 40px;
+  font-size: 22px;
   -webkit-transition-property: color;
   transition-property: color;
   -webkit-transition-duration: 0.75s;
@@ -3540,9 +3549,9 @@ main:after {
   bottom: 64px;
 }
 .mode-selection > nav > div.pages {
-  -webkit-transform: translateX(120px) translateY(-100%);
-      -ms-transform: translateX(120px) translateY(-100%);
-          transform: translateX(120px) translateY(-100%);
+  -webkit-transform: translateY(-100%);
+      -ms-transform: translateY(-100%);
+          transform: translateY(-100%);
   opacity: 0;
 }
 .mode-selection > nav > div.selection-info {
@@ -4100,6 +4109,179 @@ body.mod-capture #tip {
 }
 #layout.debug-hashbar.ready > .debug_hashbar {
   top: 0;
+}
+@media all and (max-width: 720px) {
+  #layout {
+    padding-top: 50px;
+  }
+  nav {
+    height: 50px;
+    line-height: 50px;
+  }
+  nav > div.pages {
+    margin-left: 0 !important;
+    max-width: none;
+    width: 321px;
+    height: calc(100% - 50px);
+    position: fixed;
+    top: 50px;
+    left: -321px;
+    z-index: 10;
+    padding: 0;
+    overflow: auto;
+    background: rgba(0, 0, 0, 0.9);
+    -webkit-backdrop-filter: blur(7.5px);
+            backdrop-filter: blur(7.5px);
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    -webkit-transform: translateX(0) !important;
+        -ms-transform: translateX(0) !important;
+            transform: translateX(0) !important;
+    -webkit-transition-timing-function: ease-out;
+            transition-timing-function: ease-out;
+    -webkit-overflow-scrolling: touch;
+  }
+  nav > div.pages .button {
+    display: block;
+    line-height: 20px;
+    margin: 0 !important;
+    padding: 15px 25px !important;
+    width: 320px;
+    text-align: left;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  nav > div.pages .button[mod-state]:after {
+    position: relative;
+    top: -0.5em;
+    left: .5em;
+    -webkit-transform: none;
+        -ms-transform: none;
+            transform: none;
+    vertical-align: super;
+  }
+  nav > div.pages .button:hover,
+  nav > div.pages .button.on {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+  nav > div.pages .button.home {
+    padding: 0 !important;
+  }
+  nav > div.pages .button.home a {
+    background-size: 20px 20px;
+    background-position: 25px 50%;
+    width: auto;
+    text-indent: 0;
+    padding: 15px 25px 15px 55px;
+  }
+  nav > .title {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: block;
+    z-index: 4;
+    padding: 0 10px 0 90px;
+    -webkit-app-region: no-drag;
+    -webkit-transition-property: -webkit-transform;
+    transition-property: -webkit-transform;
+    transition-property: transform;
+    transition-property: transform, -webkit-transform;
+  }
+  nav > .title label {
+    position: absolute;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    height: 100%;
+    width: 54px;
+    left: 10px;
+    -webkit-transition-property: -webkit-transform;
+    transition-property: -webkit-transform;
+    transition-property: transform;
+    transition-property: transform, -webkit-transform;
+  }
+  nav > .title label i {
+    -webkit-transform: translateY(-1px);
+        -ms-transform: translateY(-1px);
+            transform: translateY(-1px);
+  }
+  nav > .title label i:before,
+  nav > .title label i:after {
+    content: "";
+    -webkit-transform-origin: 100% 50%;
+        -ms-transform-origin: 100% 50%;
+            transform-origin: 100% 50%;
+    -webkit-transition: none 0.2s ease-out;
+    transition: none 0.2s ease-out;
+  }
+  nav > .title label i,
+  nav > .title label i:before,
+  nav > .title label i:after {
+    width: 100%;
+    height: 2px;
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 1px;
+    -webkit-transition-property: background, width, -webkit-transform;
+    transition-property: background, width, -webkit-transform;
+    transition-property: transform, background, width;
+    transition-property: transform, background, width, -webkit-transform;
+  }
+  nav > .title label i:before {
+    -webkit-transform: translateY(-7px);
+        -ms-transform: translateY(-7px);
+            transform: translateY(-7px);
+  }
+  nav > .title label i:after {
+    -webkit-transform: translateY(5px);
+        -ms-transform: translateY(5px);
+            transform: translateY(5px);
+  }
+  nav > .title label:hover i,
+  nav > .title label:hover i:before,
+  nav > .title label:hover i:after {
+    background: rgba(255, 255, 255, 0.85);
+  }
+  #view-mobile-menu:checked ~ nav > div.pages {
+    -webkit-transform: translateX(321px) !important;
+        -ms-transform: translateX(321px) !important;
+            transform: translateX(321px) !important;
+    opacity: 1 !important;
+  }
+  #view-mobile-menu:checked ~ nav > .title label {
+    -webkit-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+            transform: rotate(180deg);
+  }
+  #view-mobile-menu:checked ~ nav > .title label i:before,
+  #view-mobile-menu:checked ~ nav > .title label i:after {
+    width: 60%;
+  }
+  #view-mobile-menu:checked ~ nav > .title label i:before {
+    -webkit-transform: translateY(-1px) rotate(45deg);
+        -ms-transform: translateY(-1px) rotate(45deg);
+            transform: translateY(-1px) rotate(45deg);
+  }
+  #view-mobile-menu:checked ~ nav > .title label i:after {
+    -webkit-transform: translateY(-1px) rotate(-45deg);
+        -ms-transform: translateY(-1px) rotate(-45deg);
+            transform: translateY(-1px) rotate(-45deg);
+  }
+  #view-mobile-menu:checked ~ nav > .history,
+  #view-mobile-menu:checked ~ nav > .selection-info {
+    opacity: 0;
+  }
+  #view-mobile-menu:checked ~ .nav-mask {
+    z-index: 4;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
 }
 @-webkit-keyframes layout-loading-logo {
   0% {
