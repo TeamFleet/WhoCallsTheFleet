@@ -191,7 +191,10 @@ _frame.infos = {
 				}*/
 				//data-infos-history-skip-this
 
-				if( !contentDOM.data('is_infosinit') ){
+				if( !contentDOM.data('is_infosinit') ){					
+					if( _frame.infos['__' + type + '_init'] )
+						_frame.infos['__' + type + '_init']( contentDOM )
+						
 					contentDOM.data('is_infosinit', true)
 						.on(eventName('transitionend','hide'), function(e){
 							if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && parseInt(contentDOM.css('opacity')) == 0 ){

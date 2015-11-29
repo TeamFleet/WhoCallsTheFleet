@@ -186,7 +186,7 @@ if (!_huCss.ver || _huCss.ver < 1.2) {
 
 	_huCss.csscheck = function (prop) {
 		if (!_huCss.csscheck_div) {
-			_huCss.csscheck_div = document.createElement("div");
+			_huCss.csscheck_div = document.documentElement;
 		}
 		if (prop in _huCss.csscheck_div.style) {
 			return !0;
@@ -5298,6 +5298,8 @@ _frame.infos = {
 					})();
 				}
 
+				if (_frame.infos['__' + type + '_init']) _frame.infos['__' + type + '_init'](cont);
+
 				cont.data('is_infosinit', !0).on('hidden', function () {
 					cont.detach().data('is_show', !1);
 				}).on(eventName('transitionend', 'hide'), function (e) {
@@ -5382,6 +5384,96 @@ _frame.infos = {
 
 		this.is_init = !0;
 		return !0;
+	}
+};
+
+_frame.infos.__ship_init = function ($el) {
+	var x = undefined,
+	    originalX = undefined,
+	    deltaX = undefined,
+	    isPanning = !1,
+	    isScrollSnap = _huCss.csscheck_full('scroll-snap-type') && !bFirefox,
+	    isMoving = 0,
+	    illustMain = $el.find('.illustrations'),
+	    illust = illustMain.children('div'),
+	    imgs = illust.children('span'),
+	    s = imgs.eq(0),
+	    labels = illustMain.children('label'),
+	    inputs = illustMain.children('input[type="radio"]').on('change', function (e) {
+		var i = parseInt(e.target.getAttribute('value')) - 1;
+		if (!labels.eq(i).is(':visible')) {
+			i--;
+			inputs.eq(i).prop('checked', !0);
+		}
+		if (isScrollSnap) {
+			illust.off('scroll').animate({
+				scrollLeft: imgs.eq(i)[0].offsetLeft
+			}, 200, function () {
+				illust.on('scroll', scrollHandler);
+			});
+		} else {}
+	});
+
+	function scrollHandler() {
+		x = illust.scrollLeft();
+		if (!isPanning) {
+			requestAnimationFrame(scrollX);
+		}
+		isPanning = !0;
+	}
+	function scrollX() {
+		isPanning = !1;
+		inputs.eq(Math.floor(x / (s.outerWidth() * 0.95))).prop('checked', !0);
+	}
+
+	function panX() {
+		isPanning = !1;
+		illust.addClass('is-panning').css('transform', 'translateX(' + (deltaX + originalX) + 'px)');
+	}
+	function calcScrollbar() {}
+
+	if (isScrollSnap) {
+		illustMain.addClass('mod-scroll-snap');
+		$window.on('resized', function () {
+			if ($el.data('is_show')) inputs.filter(':checked').trigger('change');
+		});
+		illust.on({
+			'scroll': scrollHandler });
+		calcScrollbar();
+	} else {
+		illustMain.attr('touch-action', 'none').on({
+			'pointerdown': function pointerdown(e) {
+				if (e.originalEvent.pointerType == 'touch') {
+					isMoving = e.clientX;
+					var matrix = illust.css('transform').replace(/[^0-9\-.,]/g, '').split(',');
+					originalX = parseInt(matrix[12] || matrix[4] || 0);
+				}
+			},
+			'pointermove': function pointermove(e) {
+				if (isMoving) {
+					deltaX = e.clientX - isMoving;
+					if (!isPanning) {
+						requestAnimationFrame(panX);
+					}
+					isPanning = !0;
+				}
+			},
+			'pointerleave pointerup pointercancel': function pointerleavePointerupPointercancel() {
+				requestAnimationFrame(function () {
+					if (deltaX && Math.abs(deltaX) >= 30) {
+						illust.css('transform', '').removeClass('is-panning');
+						var cur = parseInt(inputs.filter(':checked').val()) - 1;
+						if (deltaX < 0 && cur < inputs.length - 1) {
+							inputs.eq(cur + Math.floor(illust.width() / (s.outerWidth() * 0.95))).prop('checked', !0).trigger('change');
+						} else if (deltaX > 0 && cur > 0) {
+							inputs.eq(cur - 1).prop('checked', !0).trigger('change');
+						}
+					}
+					isMoving = 0;
+					deltaX = 0;
+				});
+			}
+		});
 	}
 };
 

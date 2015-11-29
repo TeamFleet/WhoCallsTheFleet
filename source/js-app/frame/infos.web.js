@@ -233,6 +233,9 @@ _frame.infos = {
 								})
 						})
 					}
+					
+					if( _frame.infos['__' + type + '_init'] )
+						_frame.infos['__' + type + '_init']( cont )
 	
 					cont.data('is_infosinit', true)
 						.on('hidden', function(){
