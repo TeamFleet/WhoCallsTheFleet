@@ -91,7 +91,8 @@
 			//.font-size(20);
 			font-size: 	percentage(20 / @base_font_size);
 			line-height:percentage(@height / 20);
-			.padding(5, 10, 5, 0);
+			min-height: ~"calc(1.1em + 10px)";
+			padding: 	5px 10px 5px 0;
 			display:	inline-block;
 			border-radius:3px;
 			.border(1, solid, transparent);
@@ -99,6 +100,7 @@
 			max-width:	~"calc(100% - 120px)";
 			.transition-property(~"padding, background-color, border-color");
 			margin:		0;
+			user-select:text;
 			&:not([data-content]){
 				color:			hsl(50, 0%, 60%);
 				background:		rgba(0, 0, 0, .1);
@@ -114,7 +116,10 @@
 					.margin-top(5);
 					.padding-right(10);
 					.enable-transition();
-					.transition-property(padding)
+					.transition-property(padding);
+					.is-gecko({
+						z-index: 	-1;
+					});
 				}
 			}
 			&:focus, &:not([data-content]), &[data-content]:focus:before{

@@ -369,7 +369,7 @@ if (bIOSver && bIOSver < 6) {
 }
 
 if (bGecko) {
-	$html.addClass('gecko');
+	$html.addClass('is-gecko');
 } else if (bIE11 && !bIE10) {
 	$html.removeClass('ie9').addClass('ie11' + (bTouch ? ' ie-touch' : ''));
 } else if (bIE10 && !bIE9) {
@@ -5576,7 +5576,6 @@ var InfosFleet = (function () {
 
 			$('<header/>').append(this.doms['name'] = $('<h3 contenteditable/>').html('点击编辑标题').on({
 				'input': (function () {
-					this.update_data({});
 					this.doms['name'].trigger('namechange');
 				}).bind(this),
 				'focus': (function () {
@@ -5932,7 +5931,8 @@ var InfosFleet = (function () {
 		},
 		set: function set(value) {
 			this.data['name'] = value;
-			this.doms['name'].html(value);
+
+			if (value != this.doms['name'].html()) this.doms['name'].html(value);
 
 			if (value) {
 				this.doms['name'].attr('data-content', value);

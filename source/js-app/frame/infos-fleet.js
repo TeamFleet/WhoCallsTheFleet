@@ -169,14 +169,17 @@ class InfosFleet{
 						.html('点击编辑标题')
 						.on({
 							'input': function(){
-								this.update_data({})
+								//this.update_data({})
+								//console.log('input')
 								this.doms['name'].trigger('namechange')
 							}.bind(this),
 							'focus': function(){
+								//console.log('focus')
 								if( this.doms['name'].text() == '点击编辑标题' )
 									this.doms['name'].html('')
 							}.bind(this),
 							'blur': function(){
+								//console.log(document.activeElement == this.doms['name'][0], 'blur')
 								if( !this.doms['name'].text() )
 									this.doms['name'].html('点击编辑标题')
 							}.bind(this),
@@ -515,7 +518,9 @@ class InfosFleet{
 		}
 		set _name( value ){
 			this.data['name'] = value
-			this.doms['name'].html(value)
+			
+			if( value != this.doms['name'].html() )
+				this.doms['name'].html(value)
 
 			if( value ){
 				this.doms['name'].attr('data-content', value)
