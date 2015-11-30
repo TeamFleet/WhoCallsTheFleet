@@ -6682,7 +6682,6 @@ class InfosFleet{
 						.on({
 							'input': function(){
 								//this.update_data({})
-								//console.log('input')
 								this.doms['name'].trigger('namechange')
 							}.bind(this),
 							'focus': function(){
@@ -6710,6 +6709,10 @@ class InfosFleet{
 										this.doms['name'].blur()
 									}.bind(this), 1)
 								}
+								setTimeout(function(){
+									if( !this.doms['name'].text() )
+										this._name = ''
+								}.bind(this), 100)
 							}.bind(this)
 						})
 				)
@@ -7031,8 +7034,9 @@ class InfosFleet{
 		set _name( value ){
 			this.data['name'] = value
 			
-			if( value != this.doms['name'].html() )
-				this.doms['name'].html(value)
+			//console.log( value, this.doms['name'].html() )
+			//if( value != this.doms['name'].html() )
+			//	this.doms['name'].html(value)
 
 			if( value ){
 				this.doms['name'].attr('data-content', value)
@@ -8388,12 +8392,14 @@ class InfosFleetShipEquipment{
 							}.bind(this),
 						'pointerenter': function(e){
 								if( e.originalEvent.pointerType != 'touch' ){
-									this.el.focus()
+									this.el.addClass('is-hover')
+											//.focus()
 								}
 							}.bind(this),
 						'pointerleave': function(e){
 								if( e.originalEvent.pointerType != 'touch' ){
-									this.el.blur()
+									this.el.removeClass('is-hover')
+											.blur()
 								}
 							}.bind(this)
 					})
@@ -8440,6 +8446,7 @@ class InfosFleetShipEquipment{
 										}.bind(this),
 									'focus': function(){
 											this.el.addClass('is-hover')
+											console.log('focus')
 										}.bind(this),
 									'blur': function(){
 											setTimeout(function(){

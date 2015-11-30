@@ -2383,6 +2383,7 @@ h6[data-content]:before {
   text-shadow: 0 0 1px #000;
   mask-image: linear-gradient(to bottom, transparent, #000);
   -webkit-mask-image: -webkit-linear-gradient(top, transparent, #000);
+  pointer-events: none;
 }
 h2 {
   font-size: 1.8rem;
