@@ -5412,8 +5412,17 @@ _frame.infos.__ship_init = function ($el) {
 				illust.on('scroll', scrollHandler);
 			});
 		} else {}
-	});
+	}),
+	    illustWidth = 0,
+	    inputCur = 0,
+	    sCount = 1;
 
+	function scrollStart() {
+		originalX = illust.scrollLeft();
+		illustWidth = illust.width();
+		inputCur = parseInt(inputs.filter(':checked').val()) - 1;
+		sCount = Math.floor(illustWidth / (s.outerWidth() * 0.95));
+	}
 	function scrollHandler() {
 		x = illust.scrollLeft();
 		if (!isPanning) {
@@ -5422,8 +5431,11 @@ _frame.infos.__ship_init = function ($el) {
 		isPanning = !0;
 	}
 	function scrollX() {
+		var delta = x - originalX,
+		    pDelta = (Math.floor(Math.abs(delta) / illustWidth) + (Math.abs(delta % illustWidth) > illustWidth / 2 ? 1 : 0)) * (x < originalX ? -1 : 1);
+
 		isPanning = !1;
-		inputs.eq(Math.floor(x / (s.outerWidth() * 0.95))).prop('checked', !0);
+		if (delta !== 0) inputs.eq(inputCur + pDelta * sCount).prop('checked', !0);
 	}
 
 	function panX() {
@@ -5435,10 +5447,16 @@ _frame.infos.__ship_init = function ($el) {
 	if (isScrollSnap) {
 		illustMain.addClass('mod-scroll-snap');
 		$window.on('resized', function () {
+			scrollStart();
 			if ($el.data('is_show')) inputs.filter(':checked').trigger('change');
 		});
 		illust.on({
-			'scroll': scrollHandler });
+			'scroll': scrollHandler,
+			'pointerdown': function pointerdown(e) {
+				if (e.originalEvent.pointerType == 'touch') {
+					scrollStart();
+				}
+			} });
 		calcScrollbar();
 	} else {
 		illustMain.attr('touch-action', 'none').on({
@@ -5773,7 +5791,7 @@ var InfosFleet = (function () {
 				this.doms['theme'].val(d['theme']).attr('value', d['theme']);
 			}
 
-			if (typeof d['name'] != 'undefined') this.doms['name'].trigger('namechange', [d['name']]).trigger('blur');
+			if (typeof d['name'] != 'undefined') this.doms['name'].html(d['name']).trigger('namechange', [d['name']]).trigger('blur');
 
 			if (d['data'] && d['data'].push) {
 				d['data'].forEach(function (currentValue, i) {

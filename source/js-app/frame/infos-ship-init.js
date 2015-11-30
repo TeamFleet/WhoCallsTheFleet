@@ -30,7 +30,16 @@ _frame.infos.__ship_init = function( $el ){
 							
 						}
 					})
+		,illustWidth = 0
+		,inputCur = 0
+		,sCount = 1
 	
+	function scrollStart(){
+		originalX = illust.scrollLeft()
+		illustWidth = illust.width()
+		inputCur = parseInt(inputs.filter(':checked').val()) - 1
+		sCount = Math.floor(illustWidth / (s.outerWidth() * 0.95))
+	}
 	function scrollHandler(){
 		x = illust.scrollLeft()
 		if( !isPanning ){
@@ -39,8 +48,15 @@ _frame.infos.__ship_init = function( $el ){
 		isPanning = true
 	}
 	function scrollX(){
+		let delta = x - originalX
+			,pDelta = (Math.floor(Math.abs(delta) / illustWidth) + (Math.abs(delta % illustWidth) > (illustWidth / 2) ? 1 : 0) )
+						* (x < originalX ? -1 : 1)
+			//,pDelta = Math.abs(delta % illustWidth) > (illustWidth / 3) ? Math.ceil(delta / illustWidth) : Math.floor(delta / illustWidth)
+		//console.log(delta, pDelta)
 		isPanning = false
-		inputs.eq( Math.floor(x / (s.outerWidth() * 0.95)) ).prop('checked', true)
+		if( delta !== 0 )
+			inputs.eq(inputCur + pDelta * sCount).prop('checked', true)
+		//inputs.eq( Math.floor(x / (s.outerWidth() * 0.95)) ).prop('checked', true)
 	}
 	//function scrollToX(){
 	//	isPanning = false
@@ -60,18 +76,19 @@ _frame.infos.__ship_init = function( $el ){
 		if( isScrollSnap ){
 			illustMain.addClass('mod-scroll-snap')
 			$window.on('resized', function(){
+				scrollStart();
 				if( $el.data('is_show') )
 					inputs.filter(':checked').trigger('change')
 			})
 			illust.on({
-				'scroll': scrollHandler/*,
+				'scroll': scrollHandler,
 				'pointerdown': function(e){
-					if( e.originalEvent.pointerType == 'pen' ){
-						originalX = illust.scrollLeft()
-						isMoving = e.clientX
-						illust.off('scroll')
+					if( e.originalEvent.pointerType == 'touch' ){
+						scrollStart()
+						//isMoving = e.clientX
+						//illust.off('scroll')
 					}
-				},
+				}/*,
 				'pointermove': function(e){
 					if( isMoving ){
 						deltaX = isMoving - e.clientX

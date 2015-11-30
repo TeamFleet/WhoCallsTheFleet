@@ -226,7 +226,7 @@ _frame.infos.__ship = function( id ){
 	
 	// 其他额外信息
 		if( d['additional_night_shelling'] ){
-			$('<div class="add_equip"/>')
+			$('<div class="add_equip add_other"/>')
 				.html(`<div>
 					<h4 data-content="额外能力">额外能力</h4>
 					<span>夜战炮击</span>

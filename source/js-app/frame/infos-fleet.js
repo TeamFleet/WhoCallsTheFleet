@@ -460,7 +460,7 @@ class InfosFleet{
 
 		// 标题
 			if( typeof d['name'] != 'undefined' )
-				this.doms['name'].trigger('namechange',[d['name']]).trigger('blur')
+				this.doms['name'].html(d['name']).trigger('namechange',[d['name']]).trigger('blur')
 
 		// 分舰队
 			if( d['data'] && d['data'].push ){
