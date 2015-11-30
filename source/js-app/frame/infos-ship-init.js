@@ -2,10 +2,13 @@
 _frame.infos.__ship_init = function( $el ){
 	let x
 		,originalX
+		,startX
+		,startY
 		,deltaX
+		,deltaY
 		,isPanning = false
 		,isScrollSnap = ( _huCss.csscheck_full('scroll-snap-type') && !bFirefox )
-		,isMoving = 0
+		//,isMoving = 0
 		,illustMain = $el.find('.illustrations')
 		,illust = illustMain.children('div')
 		,imgs = illust.children('span')
@@ -64,7 +67,8 @@ _frame.infos.__ship_init = function( $el ){
 	//}
 	function panX(){
 		isPanning = false
-		illust.addClass('is-panning').css('transform', 'translateX('+(deltaX + originalX)+'px)')
+		let half = ((inputCur <= 0 && deltaX > 0) || (inputCur >= inputs.length - sCount && deltaX < 0))
+		illust.addClass('is-panning').css('transform', 'translateX('+(deltaX * (half ? 0.3333 : 1) + originalX)+'px)')
 	}
 	function calcScrollbar(){
 		//illust.css('bottom',
@@ -107,6 +111,85 @@ _frame.infos.__ship_init = function( $el ){
 			})
 			calcScrollbar()
 		}else{
+			let isActualPanning = false
+			function panEnd(){
+				illust.css('transform', '').removeClass('is-panning')
+				originalX = 0
+				startX = 0
+				startY = 0
+				deltaX = 0
+				deltaY = 0
+				sCount = 0
+				isActualPanning = false
+				$(document).off('touchmove.infosShipIllust touchend.infosShipIllust touchcancel.infosShipIllust')
+			}
+			function panHandler(){
+				if( !isPanning ){
+					requestAnimationFrame(panX);
+				}
+				isPanning = true
+			}
+			function bodyTouchMove(e){
+				if( (startX || startY) && e.originalEvent.targetTouches.length == 1 ){
+					deltaX = e.originalEvent.targetTouches[0].clientX - startX
+					if( isActualPanning ){
+						panHandler()
+					}else{
+						deltaY = e.originalEvent.targetTouches[0].clientY - startY
+						let absX = Math.abs(deltaX)
+							,absY = Math.abs(deltaY)
+						if( (absX < 20 && absY < 20) || absX > absY ){
+							//console.log('pan pending')
+							e.preventDefault()
+							if( absX > absY ){
+								//console.log('pan X')
+								isActualPanning = true
+								panHandler()
+							}
+						}else{
+							//console.log('pan Y')
+							panEnd()
+						}
+					}
+				}
+			}
+			function bodyTouchEnd(e){
+				requestAnimationFrame(function(){
+					if( deltaX && Math.abs(deltaX) >= 30 ){
+						if( deltaX < 0 && inputCur < inputs.length - 1 ){
+							inputs.eq(inputCur+ sCount ).prop('checked', true).trigger('change')
+						}else if( deltaX > 0 && inputCur > 0 ){
+							inputs.eq(inputCur-1).prop('checked', true).trigger('change')
+						}
+					}
+					panEnd()
+				})
+				//inputs.filter(':checked').trigger('change')
+			}
+			illustMain
+				.on({
+					'touchstart': function(e){
+						if( e.originalEvent.targetTouches && e.originalEvent.targetTouches.length == 1 ){
+							let matrix = illust.css('transform').replace(/[^0-9\-.,]/g, '').split(',')
+							originalX = parseInt( matrix[12] || matrix[4] || 0 )
+							startX = e.originalEvent.targetTouches[0].clientX
+							startY = e.originalEvent.targetTouches[0].clientY
+							inputCur = parseInt(inputs.filter(':checked').val()) - 1
+							sCount = Math.floor(illust.width() / (s.outerWidth() * 0.95))
+							
+							$(document).on({
+								'touchmove.infosShipIllust': bodyTouchMove,
+								'touchend.infosShipIllust': bodyTouchEnd,
+								'touchcancel.infosShipIllust': bodyTouchEnd
+							})
+						}
+					},
+					'touchmove': function(e){
+						if( isActualPanning )
+							e.preventDefault()
+					}
+				})
+			/* PEPjs
 			illustMain.attr('touch-action', 'none')
 				.on({
 					'pointerdown': function(e){
@@ -142,5 +225,6 @@ _frame.infos.__ship_init = function( $el ){
 						//inputs.filter(':checked').trigger('change')
 					}
 				})
+			*/
 		}
 };
