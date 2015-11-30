@@ -369,7 +369,7 @@ if (bIOSver && bIOSver < 6) {
 }
 
 if (bGecko) {
-	$html.addClass('gecko');
+	$html.addClass('is-gecko');
 } else if (bIE11 && !bIE10) {
 	$html.removeClass('ie9').addClass('ie11' + (bTouch ? ' ie-touch' : ''));
 } else if (bIE10 && !bIE9) {
@@ -5576,7 +5576,6 @@ var InfosFleet = (function () {
 
 			$('<header/>').append(this.doms['name'] = $('<h3 contenteditable/>').html('点击编辑标题').on({
 				'input': (function () {
-					this.update_data({});
 					this.doms['name'].trigger('namechange');
 				}).bind(this),
 				'focus': (function () {
@@ -5600,6 +5599,9 @@ var InfosFleet = (function () {
 							this.doms['name'].blur();
 						}).bind(this), 1);
 					}
+					setTimeout((function () {
+						if (!this.doms['name'].text()) this._name = '';
+					}).bind(this), 100);
 				}).bind(this)
 			})).append(this.doms['preview'] = $('<div class="preview"/>')).appendTo(this.el);
 
@@ -5932,7 +5934,6 @@ var InfosFleet = (function () {
 		},
 		set: function set(value) {
 			this.data['name'] = value;
-			this.doms['name'].html(value);
 
 			if (value) {
 				this.doms['name'].attr('data-content', value);
@@ -6688,12 +6689,12 @@ var InfosFleetShipEquipment = (function () {
 			}).bind(this),
 			'pointerenter': (function (e) {
 				if (e.originalEvent.pointerType != 'touch') {
-					this.el.focus();
+					this.el.addClass('is-hover');
 				}
 			}).bind(this),
 			'pointerleave': (function (e) {
 				if (e.originalEvent.pointerType != 'touch') {
-					this.el.blur();
+					this.el.removeClass('is-hover').blur();
 				}
 			}).bind(this)
 		}).append(this.elCarry = $('<div class="equipment-layer equipment-add"/>').on('click', (function () {
@@ -6717,6 +6718,7 @@ var InfosFleetShipEquipment = (function () {
 			}).bind(this),
 			'focus': (function () {
 				this.el.addClass('is-hover');
+				console.log('focus');
 			}).bind(this),
 			'blur': (function () {
 				setTimeout((function () {

@@ -2383,6 +2383,7 @@ h6[data-content]:before {
   text-shadow: 0 0 1px #000;
   mask-image: linear-gradient(to bottom, transparent, #000);
   -webkit-mask-image: -webkit-linear-gradient(top, transparent, #000);
+  pointer-events: none;
 }
 h2 {
   font-size: 1.8rem;
@@ -7487,7 +7488,8 @@ h6 + section.update_journal {
 .infos-fleet > header h3 {
   font-size: 166.66666667%;
   line-height: 110%;
-  padding: 0.25rem 0.5rem 0.25rem 0rem;
+  min-height: calc(1.1em + 10px);
+  padding: 5px 10px 5px 0;
   display: inline-block;
   border-radius: 3px;
   border: 0.05rem solid transparent;
@@ -7496,6 +7498,10 @@ h6 + section.update_journal {
   -webkit-transition-property: padding, background-color, border-color;
   transition-property: padding, background-color, border-color;
   margin: 0;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+      -ms-user-select: text;
+          user-select: text;
 }
 .infos-fleet > header h3:not([data-content]) {
   color: #999999;
@@ -7513,6 +7519,9 @@ h6 + section.update_journal {
   transition: none 0.2s ease-out;
   -webkit-transition-property: padding;
   transition-property: padding;
+}
+html.is-gecko .infos-fleet > header h3[data-content]:before {
+  z-index: -1;
 }
 .infos-fleet > header h3:focus,
 .infos-fleet > header h3:not([data-content]),
