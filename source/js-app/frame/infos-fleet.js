@@ -522,7 +522,6 @@ class InfosFleet{
 		set _name( value ){
 			this.data['name'] = value
 			
-			//console.log( value, this.doms['name'].html() )
 			//if( value != this.doms['name'].html() )
 			//	this.doms['name'].html(value)
 
