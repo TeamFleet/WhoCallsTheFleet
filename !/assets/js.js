@@ -5773,7 +5773,7 @@ var InfosFleet = (function () {
 				this.doms['theme'].val(d['theme']).attr('value', d['theme']);
 			}
 
-			if (typeof d['name'] != 'undefined') this.doms['name'].trigger('namechange', [d['name']]).trigger('blur');
+			if (typeof d['name'] != 'undefined') this.doms['name'].html(d['name']).trigger('namechange', [d['name']]).trigger('blur');
 
 			if (d['data'] && d['data'].push) {
 				d['data'].forEach(function (currentValue, i) {
