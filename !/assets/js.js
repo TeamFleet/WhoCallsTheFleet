@@ -5390,10 +5390,12 @@ _frame.infos = {
 _frame.infos.__ship_init = function ($el) {
 	var x = undefined,
 	    originalX = undefined,
+	    startX = undefined,
+	    startY = undefined,
 	    deltaX = undefined,
+	    deltaY = undefined,
 	    isPanning = !1,
 	    isScrollSnap = _huCss.csscheck_full('scroll-snap-type') && !bFirefox,
-	    isMoving = 0,
 	    illustMain = $el.find('.illustrations'),
 	    illust = illustMain.children('div'),
 	    imgs = illust.children('span'),
@@ -5412,8 +5414,17 @@ _frame.infos.__ship_init = function ($el) {
 				illust.on('scroll', scrollHandler);
 			});
 		} else {}
-	});
+	}),
+	    illustWidth = 0,
+	    inputCur = 0,
+	    sCount = 1;
 
+	function scrollStart() {
+		originalX = illust.scrollLeft();
+		illustWidth = illust.width();
+		inputCur = parseInt(inputs.filter(':checked').val()) - 1;
+		sCount = Math.floor(illustWidth / (s.outerWidth() * 0.95));
+	}
 	function scrollHandler() {
 		x = illust.scrollLeft();
 		if (!isPanning) {
@@ -5422,58 +5433,114 @@ _frame.infos.__ship_init = function ($el) {
 		isPanning = !0;
 	}
 	function scrollX() {
+		var delta = x - originalX,
+		    pDelta = (Math.floor(Math.abs(delta) / illustWidth) + (Math.abs(delta % illustWidth) > illustWidth / 2 ? 1 : 0)) * (x < originalX ? -1 : 1);
+
 		isPanning = !1;
-		inputs.eq(Math.floor(x / (s.outerWidth() * 0.95))).prop('checked', !0);
+		if (delta !== 0) inputs.eq(inputCur + pDelta * sCount).prop('checked', !0);
 	}
 
 	function panX() {
 		isPanning = !1;
-		illust.addClass('is-panning').css('transform', 'translateX(' + (deltaX + originalX) + 'px)');
+		var half = inputCur <= 0 && deltaX > 0 || inputCur >= inputs.length - sCount && deltaX < 0;
+		illust.addClass('is-panning').css('transform', 'translateX(' + (deltaX * (half ? 0.3333 : 1) + originalX) + 'px)');
 	}
 	function calcScrollbar() {}
 
 	if (isScrollSnap) {
 		illustMain.addClass('mod-scroll-snap');
 		$window.on('resized', function () {
+			scrollStart();
 			if ($el.data('is_show')) inputs.filter(':checked').trigger('change');
 		});
 		illust.on({
-			'scroll': scrollHandler });
-		calcScrollbar();
-	} else {
-		illustMain.attr('touch-action', 'none').on({
+			'scroll': scrollHandler,
 			'pointerdown': function pointerdown(e) {
 				if (e.originalEvent.pointerType == 'touch') {
-					isMoving = e.clientX;
-					var matrix = illust.css('transform').replace(/[^0-9\-.,]/g, '').split(',');
-					originalX = parseInt(matrix[12] || matrix[4] || 0);
+					scrollStart();
 				}
-			},
-			'pointermove': function pointermove(e) {
-				if (isMoving) {
-					deltaX = e.clientX - isMoving;
-					if (!isPanning) {
-						requestAnimationFrame(panX);
-					}
-					isPanning = !0;
+			} });
+		calcScrollbar();
+	} else {
+		(function () {
+			var panEnd = function panEnd() {
+				illust.css('transform', '').removeClass('is-panning');
+				originalX = 0;
+				startX = 0;
+				startY = 0;
+				deltaX = 0;
+				deltaY = 0;
+				sCount = 0;
+				isActualPanning = !1;
+				$(document).off('touchmove.infosShipIllust touchend.infosShipIllust touchcancel.infosShipIllust');
+			};
+
+			var panHandler = function panHandler() {
+				if (!isPanning) {
+					requestAnimationFrame(panX);
 				}
-			},
-			'pointerleave pointerup pointercancel': function pointerleavePointerupPointercancel() {
-				requestAnimationFrame(function () {
-					if (deltaX && Math.abs(deltaX) >= 30) {
-						illust.css('transform', '').removeClass('is-panning');
-						var cur = parseInt(inputs.filter(':checked').val()) - 1;
-						if (deltaX < 0 && cur < inputs.length - 1) {
-							inputs.eq(cur + Math.floor(illust.width() / (s.outerWidth() * 0.95))).prop('checked', !0).trigger('change');
-						} else if (deltaX > 0 && cur > 0) {
-							inputs.eq(cur - 1).prop('checked', !0).trigger('change');
+				isPanning = !0;
+			};
+
+			var bodyTouchMove = function bodyTouchMove(e) {
+				if ((startX || startY) && e.originalEvent.targetTouches.length == 1) {
+					deltaX = e.originalEvent.targetTouches[0].clientX - startX;
+					if (isActualPanning) {
+						panHandler();
+					} else {
+						deltaY = e.originalEvent.targetTouches[0].clientY - startY;
+						var absX = Math.abs(deltaX),
+						    absY = Math.abs(deltaY);
+						if (absX < 20 && absY < 20 || absX > absY) {
+							e.preventDefault();
+							if (absX > absY) {
+								isActualPanning = !0;
+								panHandler();
+							}
+						} else {
+							panEnd();
 						}
 					}
-					isMoving = 0;
-					deltaX = 0;
+				}
+			};
+
+			var bodyTouchEnd = function bodyTouchEnd(e) {
+				requestAnimationFrame(function () {
+					if (deltaX && Math.abs(deltaX) >= 30) {
+						if (deltaX < 0 && inputCur < inputs.length - 1) {
+							inputs.eq(inputCur + sCount).prop('checked', !0).trigger('change');
+						} else if (deltaX > 0 && inputCur > 0) {
+							inputs.eq(inputCur - 1).prop('checked', !0).trigger('change');
+						}
+					}
+					panEnd();
 				});
-			}
-		});
+			};
+
+			var isActualPanning = !1;
+
+			illustMain.on({
+				'touchstart': function touchstart(e) {
+					if (e.originalEvent.targetTouches && e.originalEvent.targetTouches.length == 1) {
+						var matrix = illust.css('transform').replace(/[^0-9\-.,]/g, '').split(',');
+						originalX = parseInt(matrix[12] || matrix[4] || 0);
+						startX = e.originalEvent.targetTouches[0].clientX;
+						startY = e.originalEvent.targetTouches[0].clientY;
+						inputCur = parseInt(inputs.filter(':checked').val()) - 1;
+						sCount = Math.floor(illust.width() / (s.outerWidth() * 0.95));
+
+						$(document).on({
+							'touchmove.infosShipIllust': bodyTouchMove,
+							'touchend.infosShipIllust': bodyTouchEnd,
+							'touchcancel.infosShipIllust': bodyTouchEnd
+						});
+					}
+				},
+				'touchmove': function touchmove(e) {
+					if (isActualPanning) e.preventDefault();
+				}
+			});
+		})();
 	}
 };
 
