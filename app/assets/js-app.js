@@ -9228,11 +9228,6 @@ _frame.infos.__ship_init = function( $el ){
 	//	isPanning = false
 	//	illust.scrollLeft( originalX + deltaX )
 	//}
-	function panX(){
-		isPanning = false
-		let half = ((inputCur <= 0 && deltaX > 0) || (inputCur >= inputs.length - sCount && deltaX < 0))
-		illust.addClass('is-panning').css('transform', 'translateX('+(deltaX * (half ? 0.3333 : 1) + originalX)+'px)')
-	}
 	function calcScrollbar(){
 		//illust.css('bottom',
 		//	0 - illust.outerHeight() + (s.height() + parseInt(illust.css('padding-top')) + parseInt(illust.css('padding-bottom')))
@@ -9286,6 +9281,11 @@ _frame.infos.__ship_init = function( $el ){
 				isActualPanning = false
 				$(document).off('touchmove.infosShipIllust touchend.infosShipIllust touchcancel.infosShipIllust')
 			}
+			function panX(){
+				isPanning = false
+				let half = ((inputCur <= 0 && deltaX > 0) || (inputCur >= inputs.length - sCount && deltaX < 0))
+				illust/*.addClass('is-panning')*/.css('transform', 'translateX('+(deltaX * (half ? 0.3333 : 1) + originalX)+'px)')
+			}
 			function panHandler(){
 				if( !isPanning ){
 					requestAnimationFrame(panX);
@@ -9294,10 +9294,10 @@ _frame.infos.__ship_init = function( $el ){
 			}
 			function bodyTouchMove(e){
 				if( (startX || startY) && e.originalEvent.targetTouches.length == 1 ){
-					deltaX = e.originalEvent.targetTouches[0].clientX - startX
 					if( isActualPanning ){
 						panHandler()
 					}else{
+						deltaX = e.originalEvent.targetTouches[0].clientX - startX
 						deltaY = e.originalEvent.targetTouches[0].clientY - startY
 						let absX = Math.abs(deltaX)
 							,absY = Math.abs(deltaY)
@@ -9307,6 +9307,7 @@ _frame.infos.__ship_init = function( $el ){
 							if( absX > absY ){
 								//console.log('pan X')
 								isActualPanning = true
+								illust.addClass('is-panning')
 								panHandler()
 							}
 						}else{
@@ -9690,6 +9691,200 @@ class Tablelist{
 					if( !rows ){
 						let tbody = this.dom.tbody
 						if( !tbody || !tbody.length )
+							tbody = this.dom.table.children('.tablelist-body')
+						//rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
+						rows = tbody.children('p.row:visible:not([data-donotcompare])')
+					}
+					nth = nth || 1
+		
+					// 建立临时用对象，在函数结束时delete
+						this._tmp_values = []
+						this._tmp_value_map_cell = {}
+		
+					// 遍历，将值全部导出到 _tmp_values，_tmp_value_map_cell 中记录 值 -> jQuery DOM
+						rows.children('span:nth-of-type(' + nth + ')').each(function(index, element){
+							let cell = $(element)
+								//,val = cell.data('value')
+								,val = cell.attr('data-value')
+		
+							val = parseFloat(val)
+		
+							if( $.inArray( val, this._tmp_values ) < 0 )
+								this._tmp_values.push( val )
+		
+							if( !this._tmp_value_map_cell[val] )
+								this._tmp_value_map_cell[val] = $()
+		
+							this._tmp_value_map_cell[val] = this._tmp_value_map_cell[val].add( cell )
+						}.bind(this))
+		
+					// 排序
+						this._tmp_values.sort(function(a, b){
+							if( is_ascending )
+								return a-b
+							else
+								return b-a
+						})
+		
+					// 根据排序结果，整理返回结果
+						let return_array = []
+						this._tmp_values.forEach(function(currentValue){
+							return_array.push( this._tmp_value_map_cell[currentValue] )
+						}, this)
+		
+					// delete 临时对象
+						delete this._tmp_values
+						delete this._tmp_value_map_cell
+		
+					return return_array
+				}
+
+			// 标记表格全部数据列中第一和第二高值的单元格
+				mark_high( cacheSortData ){
+					let tbody = this.dom.tbody
+		
+					if( !tbody || !tbody.length )
+						tbody = this.dom.table.children('.tablelist-body')
+		
+					//let rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
+					let rows = tbody.children('p.row:visible:not([data-donotcompare])')
+		
+					rows.children('span[data-value]').removeClass('sort-first sort-second')
+		
+					rows.eq(0).children('span[data-value]').each(function(index, element){
+						let is_ascending = false
+							,$this = $(element)
+							,stat = $this.data('stat')
+		
+						// 以下属性不进行标记，但仍计算排序
+							,noMark = stat.match(/\b(speed|range|extra_illust)\b/ )
+		
+						if( typeof this.sort_default_order_by_stat[stat] == 'undefined' ){
+							// 以下属性为升序
+								if( stat.match(/\b(consum_fuel|consum_ammo)\b/ ) )
+									is_ascending = true
+							this.sort_default_order_by_stat[stat] = is_ascending ? 'asc' : 'desc'
+						}else{
+							is_ascending = this.sort_default_order_by_stat[stat] == 'asc' ? true : false
+						}
+		
+						let sort = this.sort_column( index+1, is_ascending, rows )
+							,max = Math.min( 6, Math.ceil(rows.length / 2) + 1 )
+		
+						if( !noMark && sort.length > 1 && sort[0].length < max ){
+							sort[0].addClass('sort-first')
+							if( sort.length > 2 && sort[1].length < max )
+								sort[1].addClass('sort-second')
+						}
+						
+						//console.log(is_ascending, sort)
+		
+						// 将排序结果存储到表头对应的列中
+							if( cacheSortData )
+								this.sort_data_by_stat[stat] = sort
+							else
+								delete( this.sort_data_by_stat[stat] )
+		
+					}.bind(this))
+		
+					return rows
+				}
+
+			// thead td, thead th
+			// 点击表头单元格，表格排序
+				sort_table_from_theadcell( cell ){
+					if( !cell )
+						return
+					
+					let stat = cell.data('stat')
+						,sortData = this.sort_data_by_stat[stat]
+					
+					console.log(stat, sortData)
+						
+					if( !stat || !sortData )
+						return false
+		
+					if( stat != this.lastSortedStat ){
+						if( this.lastSortedHeader )
+							this.lastSortedHeader.removeClass('sorting desc asc')
+						cell.addClass('sorting')
+					}
+		
+					let order = (stat == this.lastSortedStat && this.lastSortedOrder == 'obverse')
+									? 'reverse'
+									: 'obverse'
+						,i = order == 'reverse' ? sortData.length - 1 : 0
+		
+					if( this.sort_default_order_by_stat[stat] ){
+						let reverse = this.sort_default_order_by_stat[stat] == 'asc' ? 'desc' : 'asc'
+						if( order == 'obverse' ){
+							cell.removeClass(reverse).addClass(this.sort_default_order_by_stat[stat])
+						}else{
+							cell.removeClass(this.sort_default_order_by_stat[stat]).addClass(reverse)
+						}
+					}
+		
+					this.sortedRow = $()
+		
+					while( sortData[i] ){
+						this._tmpDOM = sortData[i].parent()
+						this.sortedRow = this.sortedRow.add( this._tmpDOM )
+						this._tmpDOM.appendTo( this.dom.tbody )
+						i = order == 'reverse' ? i - 1 : i + 1
+					}
+		
+					// 修改排序提示按钮
+						this.dom.btn_compare_sort.removeClass('disabled').html('取消排序')
+		
+					this.lastSortedStat = stat
+					this.lastSortedOrder = order
+					this.lastSortedHeader = cell
+					delete this._tmpDOM
+				}
+
+			// 重置表格排序
+				sort_table_restore(){
+					if( !this.sortedRow )
+						return true
+		
+					// 还原所有DOM位置
+						let parent, arr = []
+						this.sortedRow.each(function(index, element){
+							var $this = $(element)
+								,trIndex = parseInt( $this.data('trindex') )
+							parent = parent || $this.parent()
+							arr.push({
+								'index': 	trIndex,
+								'el': 		$this,
+								'prev': 	parent.children('[data-trindex="' + (trIndex - 1) + '"]')
+							})
+						})
+						// 如果在上一步直接将DOM移动到上一个index行的后方，可能会因为目标DOM也为排序目标同时在当前DOM顺序后，造成结果不正常
+						// 故需要两步操作
+						arr.sort(function(a, b){
+							return a['index']-b['index']
+						})
+						arr.forEach(function(currentValue){
+							currentValue.el.insertAfter( currentValue.prev )
+						})
+		
+					// 修改排序提示按钮
+						this.dom.btn_compare_sort.addClass('disabled').html('点击表格标题可排序')
+		
+					// 重置其他样式
+						this.lastSortedHeader.removeClass('sorting desc asc')
+		
+					delete this.sortedRow
+					delete this.lastSortedStat
+					delete this.lastSortedOrder
+					delete this.lastSortedHeader
+					return true
+				}
+			/* v1
+				sort_column( nth, is_ascending, rows ){
+					if( !rows ){
+						let tbody = this.dom.tbody
+						if( !tbody || !tbody.length )
 							tbody = this.dom.table.find('tbody')
 						//rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
 						rows = tbody.find('tr.row:visible:not([data-donotcompare])')
@@ -9879,6 +10074,7 @@ class Tablelist{
 					delete this.lastSortedHeader
 					return true
 				}
+			*/
 }
 Tablelist.index = 0
 Tablelist.genId = function(text){
@@ -11285,7 +11481,8 @@ class TablelistShips extends Tablelist{
 		]
 		this.header_checkbox = []
 		this.checkbox = []
-		this.last_item = null
+		//this.last_item = null
+		//this.compare_checkbox
 
 		// 标记全局载入状态
 			_frame.app_main.loading.push('tablelist_'+this._index)
@@ -11293,7 +11490,7 @@ class TablelistShips extends Tablelist{
 	
 			//_g.log( 'shiplist init', _frame.app_main.loading )
 		
-		if( container.children('.fixed-table-container').length ){
+		if( container.children('.tablelist-container').length ){
 			this.init_parse()
 		}else if(this.init_new){
 			this.init_new()
@@ -11301,7 +11498,7 @@ class TablelistShips extends Tablelist{
 	}
 
 	compare_btn_show( is_checked ){
-		if( (!is_checked && this.dom.tbody.find('input[type="checkbox"].compare:checked').length)
+		if( (!is_checked && this.compare_checkbox.filter(':checked').length)
 			|| is_checked
 		){
 			this.dom.msg_container.attr('data-msgs', 'comparestart')
@@ -11317,11 +11514,11 @@ class TablelistShips extends Tablelist{
 		// 存储当前状态
 			this.last_viewtype = this.dom.filter_container.attr('viewtype')
 			_config.set( 'shiplist-viewtype', this.last_viewtype )
-			this.last_scrollTop = this.dom.table_container_inner.scrollTop()
+			this.last_scrollTop = this.dom.tbody.scrollTop()
 	
 		// 更改视图
 			this.dom.filter_container.attr('viewtype', 'compare')
-			this.dom.table_container_inner.scrollTop( 0 )
+			this.dom.tbody.scrollTop( 0 )
 			this.dom.table.addClass('sortable')
 	
 		// 计算数据排序排序
@@ -11334,14 +11531,14 @@ class TablelistShips extends Tablelist{
 		this.sort_table_restore()
 		this.mark_high()
 		this.thead_redraw( 500 )
-		this.dom.table_container_inner.scrollTop( this.last_scrollTop )
+		this.dom.tbody.scrollTop( this.last_scrollTop )
 		this.dom.table.removeClass('sortable')
 		delete this.last_viewtype
 		delete this.last_scrollTop
 	}
 
 	compare_end(){
-		this.dom.tbody.find('input[type="checkbox"].compare:checked').prop('checked', false).trigger('change')
+		this.compare_checkbox.filter(':checked').prop('checked', false).trigger('change')
 		this.dom.msg_container.removeAttr('data-msgs')
 		this.compare_off()
 	}
@@ -11526,23 +11723,39 @@ class TablelistShips extends Tablelist{
 			this.dom.filters.find('input').trigger('change')
 	
 		// 生成表格框架
-			this.dom.table_container = this.dom.container.children('.fixed-table-container')
-			this.dom.table_container_inner = this.dom.table_container.children('.fixed-table-container-inner')
-			this.dom.table = this.dom.table_container_inner.children('table.ships')
-				this.dom.table.find('thead td').on('click', function(e){
-										this.sort_table_from_theadcell($(e.currentTarget))
-									}.bind(this))
-			this.dom.tbody = this.dom.table.children('tbody')
-		
-		// 右键菜单事件
-			this.dom.table.on('contextmenu.contextmenu_ship', 'tr[data-shipid]', function(e){
-				this.contextmenu_show($(e.currentTarget), null, e)
-				e.preventDefault()
-			}.bind(this)).on('click.contextmenu_ship', 'tr[data-shipid]>th>em', function(e){
-				this.contextmenu_show($(e.currentTarget).parent().parent())
-				e.stopImmediatePropagation()
-				e.stopPropagation()
-			}.bind(this))
+			this.dom.table = this.dom.container.children('.tablelist-container')
+			this.dom.table_header = this.dom.table.children('.tablelist-header')
+				this.dom.table_header.children('span').on('click', function(e){
+						this.sort_table_from_theadcell($(e.currentTarget))
+					}.bind(this))
+			this.dom.tbody = this.dom.table.children('.tablelist-body')
+				.on('contextmenu.contextmenu_ship', '.row[data-shipid]', function(e){
+						this.contextmenu_show($(e.currentTarget), null, e)
+						e.preventDefault()
+					}.bind(this))
+				.on('click.contextmenu_ship', '.row[data-shipid]>strong>em', function(e){
+						this.contextmenu_show($(e.currentTarget).parent().parent())
+						e.stopImmediatePropagation()
+						e.stopPropagation()
+					}.bind(this))
+				.on('click', '.row[data-shipid]', function(e, forceInfos){
+						if( e.target.tagName.toLowerCase() == 'label' ){
+							this.checkbox[e.currentTarget.getAttribute('data-shipid')]
+								.prop('checked', !this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked'))
+								.trigger('change')
+							e.stopPropagation()
+						}/*else if( e.target.tagName.toLowerCase() == 'em' ){
+							e.preventDefault()
+							e.stopImmediatePropagation()
+							e.stopPropagation()
+						}*/else if( !forceInfos && _frame.app_main.is_mode_selection() ){
+							e.preventDefault()
+							e.stopImmediatePropagation()
+							e.stopPropagation()
+							if( !e.currentTarget.getAttribute('data-donotcompare') )
+								_frame.app_main.mode_selection_callback(e.currentTarget.getAttribute('data-shipid'))
+						}
+					}.bind(this))
 	
 		// 生成底部内容框架
 			this.dom.msg_container = this.dom.container.children('.msgs')
@@ -11566,32 +11779,14 @@ class TablelistShips extends Tablelist{
 					.on('click', function(){
 						this.compare_start()
 					}.bind(this))
-		
-		this.dom.tbody.on('click', 'tr.row[data-shipid]', function(e, forceInfos){
-				if( e.target.tagName.toLowerCase() == 'label' ){
-					this.checkbox[e.currentTarget.getAttribute('data-shipid')]
-						.prop('checked', !this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked'))
-						.trigger('change')
-					e.stopPropagation()
-				}/*else if( e.target.tagName.toLowerCase() == 'em' ){
-					e.preventDefault()
-					e.stopImmediatePropagation()
-					e.stopPropagation()
-				}*/else if( !forceInfos && _frame.app_main.is_mode_selection() ){
-					e.preventDefault()
-					e.stopImmediatePropagation()
-					e.stopPropagation()
-					if( !e.currentTarget.getAttribute('data-donotcompare') )
-						_frame.app_main.mode_selection_callback(e.currentTarget.getAttribute('data-shipid'))
-				}
-			}.bind(this))
 	}
+	
 	parse_all_items(){
 		let header_index = -1
 
-		this.dom.tbody.children('tr.typetitle,tr.row').each(function(index, tr){
+		this.dom.tbody.children('p.title,p.row').each(function(index, tr){
 			tr = $(tr)
-			if( tr.hasClass('typetitle') ){
+			if( tr.hasClass('title') ){
 				header_index++
 				this.last_item = tr
 				let checkbox = tr.find('input[type="checkbox"]')
@@ -11673,7 +11868,8 @@ class TablelistShips extends Tablelist{
 				this.checkbox[ship_id] = checkbox
 			}
 		}.bind(this))
-
+		
+		this.compare_checkbox = this.dom.tbody.find('input[type="checkbox"].compare')
 		this.mark_high()
 		this.thead_redraw()
 		_frame.app_main.loaded('tablelist_'+this._index, true)

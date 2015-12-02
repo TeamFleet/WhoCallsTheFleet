@@ -11,9 +11,10 @@ var _ga = {
 			return
 		}
 
-		ga('send', 'pageview', {
-				'location':	location.href,
-				'page': 	location.pathname
-			});
+		if( typeof ga != 'undefined' )
+			ga('send', 'pageview', {
+					'location':	location.href,
+					'page': 	location.pathname
+				});
 	}
 }

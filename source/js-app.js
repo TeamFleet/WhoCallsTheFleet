@@ -54,5 +54,5 @@
 // @koala-prepend "js-app/elements/tablelist-equipments.js"
 // @koala-prepend "js-app/elements/tablelist-equipments-full.js"
 // @koala-prepend "js-app/elements/tablelist-fleets.js"
-// @koala-prepend "js-app/elements/tablelist-ships.js"
+// @koala-prepend "js-app/elements/tablelist-ships-v2.js"
 // @koala-prepend "js-app/elements/tablelist-ships-full.js"

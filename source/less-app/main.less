@@ -718,6 +718,7 @@ main{
 		padding:	0 !important;
 	}
 
+	/*
 	&>.tablelist{
 		&>.fixed-table-container{
 			&>.fixed-table-container-inner{
@@ -745,7 +746,7 @@ main{
 					}
 				});
 			}
-		}
+		}*/
 		/*
 		&>.options{
 			&[viewtype="card"]{
@@ -767,7 +768,7 @@ main{
 				}
 			} // &[viewtype="card"]
 		}*/
-	}
+	//}
 	
 	/*
 	&>.container{
@@ -1347,6 +1348,7 @@ main{
 
 
 
+/*
 table{
 	width:		100%;
 	tr{
@@ -1362,26 +1364,25 @@ table{
 		td{
 			text-align:		center;
 		}
-		/*
-		.th-inner{
-			//line-height:	@thead_height;
-			width:			100%;
-			//@calc_number:	unit( ( @nav_height + @scrollbar_width ) / 2, px );
-			@calc_number:	unit( @nav_height / 2, px );
-			margin-left:	~"calc(-50% + @{calc_number})";
-			@media all and (max-width: 1152px ){
-				@calc_number:	unit( (@nav_height - 20) / 2, px );
-				margin-left:	~"calc(-50% + @{calc_number})";
-			}
-			@media all and (max-width: 960px ){
-				@calc_number:	unit( (@nav_height - 40) / 2, px );
-				margin-left:	~"calc(-50% + @{calc_number})";
-			}
-			@media all and (max-width: 800px ){
-				@calc_number:	unit( (@nav_height - 55) / 2, px );
-				margin-left:	~"calc(-50% + @{calc_number})";
-			}
-		}*/
+	//	.th-inner{
+	//		//line-height:	@thead_height;
+	//		width:			100%;
+	//		//@calc_number:	unit( ( @nav_height + @scrollbar_width ) / 2, px );
+	//		@calc_number:	unit( @nav_height / 2, px );
+	//		margin-left:	~"calc(-50% + @{calc_number})";
+	//		@media all and (max-width: 1152px ){
+	//			@calc_number:	unit( (@nav_height - 20) / 2, px );
+	//			margin-left:	~"calc(-50% + @{calc_number})";
+	//		}
+	//		@media all and (max-width: 960px ){
+	//			@calc_number:	unit( (@nav_height - 40) / 2, px );
+	//			margin-left:	~"calc(-50% + @{calc_number})";
+	//		}
+	//		@media all and (max-width: 800px ){
+	//			@calc_number:	unit( (@nav_height - 55) / 2, px );
+	//			margin-left:	~"calc(-50% + @{calc_number})";
+	//		}
+	//	}
 	}
 	tbody{
 		tr{
@@ -1407,14 +1408,13 @@ table{
 	}
 
 	@color_table_hover: 	fade(saturate( #67afa5, 5%), 85% );
-	/*
-	&.hashover{
-		tbody tr[data-shipid]:hover{
-			//background:	fade(saturate( #67afa5, 5%), 35% );
-			background:	rgba(0, 0, 0, .5);
-			//color:		#fff;
-		}
-	}*/
+	//&.hashover{
+	//	tbody tr[data-shipid]:hover{
+	//		//background:	fade(saturate( #67afa5, 5%), 35% );
+	//		background:	rgba(0, 0, 0, .5);
+	//		//color:		#fff;
+	//	}
+	//}
 
 	.loop(@n, @i: 1) when (@i =< @n) {
 		&.hashover-column[td-nth-hovered="@{i}"] tbody tr td:nth-of-type( @{i} ){
@@ -1444,6 +1444,7 @@ table{
 		}
 	}
 }
+*/
 
 
 

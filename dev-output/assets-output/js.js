@@ -2653,7 +2653,7 @@ var _ga = {
 			return;
 		}
 
-		ga('send', 'pageview', {
+		if (typeof ga != 'undefined') ga('send', 'pageview', {
 			'location': location.href,
 			'page': location.pathname
 		});
@@ -5440,11 +5440,6 @@ _frame.infos.__ship_init = function ($el) {
 		if (delta !== 0) inputs.eq(inputCur + pDelta * sCount).prop('checked', !0);
 	}
 
-	function panX() {
-		isPanning = !1;
-		var half = inputCur <= 0 && deltaX > 0 || inputCur >= inputs.length - sCount && deltaX < 0;
-		illust.addClass('is-panning').css('transform', 'translateX(' + (deltaX * (half ? 0.3333 : 1) + originalX) + 'px)');
-	}
 	function calcScrollbar() {}
 
 	if (isScrollSnap) {
@@ -5475,6 +5470,12 @@ _frame.infos.__ship_init = function ($el) {
 				$(document).off('touchmove.infosShipIllust touchend.infosShipIllust touchcancel.infosShipIllust');
 			};
 
+			var panX = function panX() {
+				isPanning = !1;
+				var half = inputCur <= 0 && deltaX > 0 || inputCur >= inputs.length - sCount && deltaX < 0;
+				illust.css('transform', 'translateX(' + (deltaX * (half ? 0.3333 : 1) + originalX) + 'px)');
+			};
+
 			var panHandler = function panHandler() {
 				if (!isPanning) {
 					requestAnimationFrame(panX);
@@ -5484,10 +5485,10 @@ _frame.infos.__ship_init = function ($el) {
 
 			var bodyTouchMove = function bodyTouchMove(e) {
 				if ((startX || startY) && e.originalEvent.targetTouches.length == 1) {
-					deltaX = e.originalEvent.targetTouches[0].clientX - startX;
 					if (isActualPanning) {
 						panHandler();
 					} else {
+						deltaX = e.originalEvent.targetTouches[0].clientX - startX;
 						deltaY = e.originalEvent.targetTouches[0].clientY - startY;
 						var absX = Math.abs(deltaX),
 						    absY = Math.abs(deltaY);
@@ -5495,6 +5496,7 @@ _frame.infos.__ship_init = function ($el) {
 							e.preventDefault();
 							if (absX > absY) {
 								isActualPanning = !0;
+								illust.addClass('is-panning');
 								panHandler();
 							}
 						} else {
@@ -7208,16 +7210,16 @@ var Tablelist = (function () {
 		value: function sort_column(nth, is_ascending, rows) {
 			if (!rows) {
 				var tbody = this.dom.tbody;
-				if (!tbody || !tbody.length) tbody = this.dom.table.find('tbody');
+				if (!tbody || !tbody.length) tbody = this.dom.table.children('.tablelist-body');
 
-				rows = tbody.find('tr.row:visible:not([data-donotcompare])');
+				rows = tbody.children('p.row:visible:not([data-donotcompare])');
 			}
 			nth = nth || 1;
 
 			this._tmp_values = [];
 			this._tmp_value_map_cell = {};
 
-			rows.find('td:nth-of-type(' + nth + ')').each((function (index, element) {
+			rows.children('span:nth-of-type(' + nth + ')').each((function (index, element) {
 				var cell = $(element),
 				    val = cell.attr('data-value');
 
@@ -7249,13 +7251,13 @@ var Tablelist = (function () {
 		value: function mark_high(cacheSortData) {
 			var tbody = this.dom.tbody;
 
-			if (!tbody || !tbody.length) tbody = this.dom.table.find('tbody');
+			if (!tbody || !tbody.length) tbody = this.dom.table.children('.tablelist-body');
 
-			var rows = tbody.find('tr.row:visible:not([data-donotcompare])');
+			var rows = tbody.children('p.row:visible:not([data-donotcompare])');
 
-			rows.find('td[data-value]').removeClass('sort-first sort-second');
+			rows.children('span[data-value]').removeClass('sort-first sort-second');
 
-			rows.eq(0).find('td[data-value]').each((function (index, element) {
+			rows.eq(0).children('span[data-value]').each((function (index, element) {
 				var is_ascending = !1,
 				    $this = $(element),
 				    stat = $this.data('stat'),
@@ -7340,7 +7342,7 @@ var Tablelist = (function () {
 				arr.push({
 					'index': trIndex,
 					'el': $this,
-					'prev': parent.children('tr[data-trindex="' + (trIndex - 1) + '"]')
+					'prev': parent.children('[data-trindex="' + (trIndex - 1) + '"]')
 				});
 			});
 
@@ -8213,12 +8215,11 @@ var TablelistShips = (function (_Tablelist4) {
 		_this13.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['夜战', 'nightpower'], ['对空', 'aa'], ['对潜', 'asw'], ['耐久', 'hp'], ['装甲', 'armor'], ['回避', 'evasion'], ['搭载', 'carry'], ['航速', 'speed'], ['射程', 'range'], ['索敌', 'los'], ['运', 'luck'], ['油耗', 'consum_fuel'], ['弹耗', 'consum_ammo'], ['多立绘', 'extra_illust']];
 		_this13.header_checkbox = [];
 		_this13.checkbox = [];
-		_this13.last_item = null;
 
 		_frame.app_main.loading.push('tablelist_' + _this13._index);
 		_frame.app_main.is_loaded = !1;
 
-		if (container.children('.fixed-table-container').length) {
+		if (container.children('.tablelist-container').length) {
 			_this13.init_parse();
 		} else if (_this13.init_new) {
 			_this13.init_new();
@@ -8229,7 +8230,7 @@ var TablelistShips = (function (_Tablelist4) {
 	_createClass(TablelistShips, [{
 		key: 'compare_btn_show',
 		value: function compare_btn_show(is_checked) {
-			if (!is_checked && this.dom.tbody.find('input[type="checkbox"].compare:checked').length || is_checked) {
+			if (!is_checked && this.compare_checkbox.filter(':checked').length || is_checked) {
 				this.dom.msg_container.attr('data-msgs', 'comparestart');
 			} else {
 				this.dom.msg_container.removeAttr('data-msgs');
@@ -8242,10 +8243,10 @@ var TablelistShips = (function (_Tablelist4) {
 
 			this.last_viewtype = this.dom.filter_container.attr('viewtype');
 			_config.set('shiplist-viewtype', this.last_viewtype);
-			this.last_scrollTop = this.dom.table_container_inner.scrollTop();
+			this.last_scrollTop = this.dom.tbody.scrollTop();
 
 			this.dom.filter_container.attr('viewtype', 'compare');
-			this.dom.table_container_inner.scrollTop(0);
+			this.dom.tbody.scrollTop(0);
 			this.dom.table.addClass('sortable');
 
 			this.mark_high(!0);
@@ -8258,7 +8259,7 @@ var TablelistShips = (function (_Tablelist4) {
 			this.sort_table_restore();
 			this.mark_high();
 			this.thead_redraw(500);
-			this.dom.table_container_inner.scrollTop(this.last_scrollTop);
+			this.dom.tbody.scrollTop(this.last_scrollTop);
 			this.dom.table.removeClass('sortable');
 			delete this.last_viewtype;
 			delete this.last_scrollTop;
@@ -8266,7 +8267,7 @@ var TablelistShips = (function (_Tablelist4) {
 	}, {
 		key: 'compare_end',
 		value: function compare_end() {
-			this.dom.tbody.find('input[type="checkbox"].compare:checked').prop('checked', !1).trigger('change');
+			this.compare_checkbox.filter(':checked').prop('checked', !1).trigger('change');
 			this.dom.msg_container.removeAttr('data-msgs');
 			this.compare_off();
 		}
@@ -8383,21 +8384,28 @@ var TablelistShips = (function (_Tablelist4) {
 			}).bind(this));
 			this.dom.filters.find('input').trigger('change');
 
-			this.dom.table_container = this.dom.container.children('.fixed-table-container');
-			this.dom.table_container_inner = this.dom.table_container.children('.fixed-table-container-inner');
-			this.dom.table = this.dom.table_container_inner.children('table.ships');
-			this.dom.table.find('thead td').on('click', (function (e) {
+			this.dom.table = this.dom.container.children('.tablelist-container');
+			this.dom.table_header = this.dom.table.children('.tablelist-header');
+			this.dom.table_header.children('span').on('click', (function (e) {
 				this.sort_table_from_theadcell($(e.currentTarget));
 			}).bind(this));
-			this.dom.tbody = this.dom.table.children('tbody');
-
-			this.dom.table.on('contextmenu.contextmenu_ship', 'tr[data-shipid]', (function (e) {
+			this.dom.tbody = this.dom.table.children('.tablelist-body').on('contextmenu.contextmenu_ship', '.row[data-shipid]', (function (e) {
 				this.contextmenu_show($(e.currentTarget), null, e);
 				e.preventDefault();
-			}).bind(this)).on('click.contextmenu_ship', 'tr[data-shipid]>th>em', (function (e) {
+			}).bind(this)).on('click.contextmenu_ship', '.row[data-shipid]>strong>em', (function (e) {
 				this.contextmenu_show($(e.currentTarget).parent().parent());
 				e.stopImmediatePropagation();
 				e.stopPropagation();
+			}).bind(this)).on('click', '.row[data-shipid]', (function (e, forceInfos) {
+				if (e.target.tagName.toLowerCase() == 'label') {
+					this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked', !this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked')).trigger('change');
+					e.stopPropagation();
+				} else if (!forceInfos && _frame.app_main.is_mode_selection()) {
+						e.preventDefault();
+						e.stopImmediatePropagation();
+						e.stopPropagation();
+						if (!e.currentTarget.getAttribute('data-donotcompare')) _frame.app_main.mode_selection_callback(e.currentTarget.getAttribute('data-shipid'));
+					}
 			}).bind(this));
 
 			this.dom.msg_container = this.dom.container.children('.msgs');
@@ -8413,29 +8421,17 @@ var TablelistShips = (function (_Tablelist4) {
 			this.dom.msg_container.children('.comparestart').on('click', (function () {
 				this.compare_start();
 			}).bind(this));
-
-			this.dom.tbody.on('click', 'tr.row[data-shipid]', (function (e, forceInfos) {
-				if (e.target.tagName.toLowerCase() == 'label') {
-					this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked', !this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked')).trigger('change');
-					e.stopPropagation();
-				} else if (!forceInfos && _frame.app_main.is_mode_selection()) {
-						e.preventDefault();
-						e.stopImmediatePropagation();
-						e.stopPropagation();
-						if (!e.currentTarget.getAttribute('data-donotcompare')) _frame.app_main.mode_selection_callback(e.currentTarget.getAttribute('data-shipid'));
-					}
-			}).bind(this));
 		}
 	}, {
 		key: 'parse_all_items',
 		value: function parse_all_items() {
 			var header_index = -1;
 
-			this.dom.tbody.children('tr.typetitle,tr.row').each((function (index, tr) {
+			this.dom.tbody.children('p.title,p.row').each((function (index, tr) {
 				var _this14 = this;
 
 				tr = $(tr);
-				if (tr.hasClass('typetitle')) {
+				if (tr.hasClass('title')) {
 					(function () {
 						header_index++;
 						_this14.last_item = tr;
@@ -8490,6 +8486,7 @@ var TablelistShips = (function (_Tablelist4) {
 				}
 			}).bind(this));
 
+			this.compare_checkbox = this.dom.tbody.find('input[type="checkbox"].compare');
 			this.mark_high();
 			this.thead_redraw();
 			_frame.app_main.loaded('tablelist_' + this._index, !0);

@@ -65,11 +65,6 @@ _frame.infos.__ship_init = function( $el ){
 	//	isPanning = false
 	//	illust.scrollLeft( originalX + deltaX )
 	//}
-	function panX(){
-		isPanning = false
-		let half = ((inputCur <= 0 && deltaX > 0) || (inputCur >= inputs.length - sCount && deltaX < 0))
-		illust.addClass('is-panning').css('transform', 'translateX('+(deltaX * (half ? 0.3333 : 1) + originalX)+'px)')
-	}
 	function calcScrollbar(){
 		//illust.css('bottom',
 		//	0 - illust.outerHeight() + (s.height() + parseInt(illust.css('padding-top')) + parseInt(illust.css('padding-bottom')))
@@ -123,6 +118,11 @@ _frame.infos.__ship_init = function( $el ){
 				isActualPanning = false
 				$(document).off('touchmove.infosShipIllust touchend.infosShipIllust touchcancel.infosShipIllust')
 			}
+			function panX(){
+				isPanning = false
+				let half = ((inputCur <= 0 && deltaX > 0) || (inputCur >= inputs.length - sCount && deltaX < 0))
+				illust/*.addClass('is-panning')*/.css('transform', 'translateX('+(deltaX * (half ? 0.3333 : 1) + originalX)+'px)')
+			}
 			function panHandler(){
 				if( !isPanning ){
 					requestAnimationFrame(panX);
@@ -131,10 +131,10 @@ _frame.infos.__ship_init = function( $el ){
 			}
 			function bodyTouchMove(e){
 				if( (startX || startY) && e.originalEvent.targetTouches.length == 1 ){
-					deltaX = e.originalEvent.targetTouches[0].clientX - startX
 					if( isActualPanning ){
 						panHandler()
 					}else{
+						deltaX = e.originalEvent.targetTouches[0].clientX - startX
 						deltaY = e.originalEvent.targetTouches[0].clientY - startY
 						let absX = Math.abs(deltaX)
 							,absY = Math.abs(deltaY)
@@ -144,6 +144,7 @@ _frame.infos.__ship_init = function( $el ){
 							if( absX > absY ){
 								//console.log('pan X')
 								isActualPanning = true
+								illust.addClass('is-panning')
 								panHandler()
 							}
 						}else{
