@@ -6993,7 +6993,7 @@ var Tablelist = (function () {
 		this.sort_data_by_stat = options.sort_data_by_stat || {};
 		this.sort_default_order_by_stat = options.sort_default_order_by_stat || {};
 
-		container.attr('data-index', this._index).on('mouseenter.hovercolumn', '.tablelist-body>p.row>span', this.hovercolumn_delegate.bind(this)).on('mouseleave.hovercolumn', '.tablelist-body>p.row>span', this.hovercolumn_delegate_leave.bind(this));
+		container.on('mouseenter.hovercolumn', '.tablelist-body>p.row>span', this.hovercolumn_delegate.bind(this)).on('mouseleave.hovercolumn', '.tablelist-body>p.row>span', this.hovercolumn_delegate_leave.bind(this));
 	}
 
 	_createClass(Tablelist, [{

@@ -2202,7 +2202,7 @@ html.ie6 * {
   content: "\e603" !important;
 }
 [icon="close"]:before {
-  content: "×" !important;
+  content: "\00d7" !important;
   font-family: 'Gothic' !important;
   font-weight: lighter !important;
 }
@@ -2521,7 +2521,7 @@ fieldset {
   transition-property: color;
 }
 #layout > .gg > .close:before {
-  content: "×";
+  content: "\00d7";
   font-family: 'Gothic';
   font-weight: lighter;
   display: block;
@@ -4910,7 +4910,7 @@ body.mod-capture #tip {
 }
 .tablelist > .options > div.filters > .viewtype label {
   width: 20px;
-  height: 20px;
+  height: 50px;
   position: relative;
   margin-left: 4px;
   color: rgba(255, 255, 255, 0.35);
@@ -5001,6 +5001,11 @@ body.mod-capture #tip {
   margin-left: 10px;
 }
 @media all and (max-width: 800px) {
+  .tablelist > .options > div.filters > .tab + .tab {
+    margin-left: 3px;
+  }
+}
+@media all and (max-width: 640px) {
   .tablelist > .options > div.filters > .tab + .tab {
     margin-left: 0;
   }
@@ -5405,7 +5410,7 @@ body.mod-capture #tip {
   -webkit-transition-property: color, text-shadow;
   transition-property: color, text-shadow;
 }
-.tablelist > .options[filter-hide-premodel="true"] ~ .tablelist-container .premodeled {
+.tablelist > .options[filter-hide-premodel="true"] ~ .tablelist-container .premodeled:not([compare-checked]) {
   display: none !important;
 }
 .tablelist > .options[viewtype="card"] ~ .tablelist-container {
@@ -5731,6 +5736,9 @@ body.mod-capture #tip {
 .tablelist.ships > .options[viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] label.checkbox {
   display: none;
 }
+.tablelist.ships > .options[viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] > strong em {
+  display: none !important;
+}
 .tablelist.ships > .options[viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid][compare-checked] > strong img {
   left: 0;
   -webkit-mask-image: -webkit-linear-gradient(left, #000 50px, #000 calc(100% - 60px), transparent calc(100% - 10px));
@@ -5743,9 +5751,6 @@ body.mod-capture #tip {
 .tablelist.ships > .options[viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid][compare-checked] > strong a {
   left: 0;
   padding-left: 146px;
-}
-.tablelist.ships > .options[viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] > strong em {
-  display: none !important;
 }
 .tablelist.ships > .options[viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid]:not([compare-checked]) {
   display: none;
@@ -5775,8 +5780,21 @@ body.mod-capture #tip {
   margin-top: -4px;
 }
 .tablelist-equipments .tablelist-body > p.row[data-equipmentid] {
-  height: 25px;
-  line-height: 25px;
+  height: auto;
+}
+.tablelist-equipments .tablelist-body > p.row[data-equipmentid] > strong,
+.tablelist-equipments .tablelist-body > p.row[data-equipmentid] > span {
+  line-height: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .tablelist-equipments .tablelist-body > p.row[data-equipmentid] > strong {
   font-weight: lighter;
@@ -5784,6 +5802,10 @@ body.mod-capture #tip {
 }
 .tablelist-equipments .tablelist-body > p.row[data-equipmentid] > span {
   font-size: 12px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 .tablelist-equipments > .msgs {
   background: rgba(22, 64, 42, 0.65);
@@ -7850,7 +7872,7 @@ body.mod-capture .infos-fleet > .ships > dl dd > .equipments {
           transform: translateY(50%);
 }
 .infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-infos > .equipment-carry:before {
-  content: '×';
+  content: "\00d7";
   font-size: 150%;
 }
 .infos-fleet > .ships > dl dd > .equipments > .equipment > .equipment-options {
