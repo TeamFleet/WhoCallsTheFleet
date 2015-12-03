@@ -137,7 +137,7 @@ class TablelistFleets extends Tablelist{
 				.on('focus.number_input_select', 'input[type="number"]', function(e){
 						e.currentTarget.select()
 					})
-			this.dom.thead = $('<div class="tablelist-header"/>').appendTo( this.dom.table )
+			this.dom.thead = $('<div class="wrapper"/>').appendTo($('<div class="tablelist-header"/>').appendTo( this.dom.table ))
 			this.dom.tbody = $('<div class="tablelist-body"/>').appendTo( this.dom.table )
 				.on('contextmenu.contextmenu_fleet', '.row[data-fleetid]', function(e){
 						this.contextmenu_show($(e.currentTarget), null , e)

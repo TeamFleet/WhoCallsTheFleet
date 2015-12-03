@@ -269,7 +269,7 @@ class TablelistShips extends Tablelist{
 		// 生成表格框架
 			this.dom.table = this.dom.container.children('.tablelist-container')
 			this.dom.thead = this.dom.table.children('.tablelist-header')
-				this.dom.thead.children('span').on('click', function(e){
+				.on('click', 'span[data-stat]', function(e){
 						this.sort_table_from_theadcell($(e.currentTarget))
 					}.bind(this))
 			this.dom.tbody = this.dom.table.children('.tablelist-body')

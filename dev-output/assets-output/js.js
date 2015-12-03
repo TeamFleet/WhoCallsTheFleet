@@ -6993,7 +6993,7 @@ var Tablelist = (function () {
 		this.sort_data_by_stat = options.sort_data_by_stat || {};
 		this.sort_default_order_by_stat = options.sort_default_order_by_stat || {};
 
-		container.attr('data-index', this._index).on('mouseenter.hovercolumn', '.tablelist-body>p.row>span', this.hovercolumn_delegate.bind(this)).on('mouseleave.hovercolumn', '.tablelist-body>p.row>span', this.hovercolumn_delegate_leave.bind(this));
+		container.on('mouseenter.hovercolumn', '.tablelist-body>p.row>span', this.hovercolumn_delegate.bind(this)).on('mouseleave.hovercolumn', '.tablelist-body>p.row>span', this.hovercolumn_delegate_leave.bind(this));
 	}
 
 	_createClass(Tablelist, [{
@@ -7505,8 +7505,7 @@ var TablelistShips = (function (_Tablelist2) {
 			this.dom.filters.find('input').trigger('change');
 
 			this.dom.table = this.dom.container.children('.tablelist-container');
-			this.dom.thead = this.dom.table.children('.tablelist-header');
-			this.dom.thead.children('span').on('click', (function (e) {
+			this.dom.thead = this.dom.table.children('.tablelist-header').on('click', 'span[data-stat]', (function (e) {
 				this.sort_table_from_theadcell($(e.currentTarget));
 			}).bind(this));
 			this.dom.tbody = this.dom.table.children('.tablelist-body').on('contextmenu.contextmenu_ship', '.row[data-shipid]', (function (e) {
@@ -7867,7 +7866,7 @@ var TablelistFleets = (function (_Tablelist4) {
 		_this13.dom.table = $('<div class="tablelist-container" scrollbody/>').appendTo(_this13.dom.container).on('focus.number_input_select', 'input[type="number"]', function (e) {
 			e.currentTarget.select();
 		});
-		_this13.dom.thead = $('<div class="tablelist-header"/>').appendTo(_this13.dom.table);
+		_this13.dom.thead = $('<div class="wrapper"/>').appendTo($('<div class="tablelist-header"/>').appendTo(_this13.dom.table));
 		_this13.dom.tbody = $('<div class="tablelist-body"/>').appendTo(_this13.dom.table).on('contextmenu.contextmenu_fleet', '.row[data-fleetid]', (function (e) {
 			this.contextmenu_show($(e.currentTarget), null, e);
 			e.preventDefault();

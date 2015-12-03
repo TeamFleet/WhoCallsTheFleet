@@ -3217,6 +3217,7 @@ main:after {
 .infosbody > div {
   width: 100%;
   position: relaitve;
+  overflow: hidden;
 }
 .infosbody > div.title > small {
   display: block;
@@ -5163,7 +5164,7 @@ body.mod-capture #tip {
   -webkit-flex: 0 1 100%;
       -ms-flex: 0 1 100%;
           flex: 0 1 100%;
-  padding-top: 33px;
+  padding-top: 32px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -5182,34 +5183,33 @@ body.mod-capture #tip {
   -webkit-transition-duration: .5s;
           transition-duration: .5s;
 }
-.tablelist-header,
+.tablelist-header > .wrapper,
 .tablelist-body {
   padding-left: 80px;
   padding-right: 80px;
-  width: 100%;
 }
 @media all and (max-width: 1152px) {
-  .tablelist-header,
+  .tablelist-header > .wrapper,
   .tablelist-body {
     padding-left: 60px;
     padding-right: 60px;
   }
 }
 @media all and (max-width: 960px) {
-  .tablelist-header,
+  .tablelist-header > .wrapper,
   .tablelist-body {
     padding-left: 40px;
     padding-right: 40px;
   }
 }
 @media all and (max-width: 800px) {
-  .tablelist-header,
+  .tablelist-header > .wrapper,
   .tablelist-body {
     padding-left: 25px;
     padding-right: 25px;
   }
 }
-.tablelist-header,
+.tablelist-header > .wrapper,
 .tablelist-body > p.row {
   display: -webkit-box;
   display: -webkit-flex;
@@ -5219,21 +5219,21 @@ body.mod-capture #tip {
       -ms-flex-flow: row nowrap;
           flex-flow: row nowrap;
 }
-.tablelist-header > strong,
+.tablelist-header > .wrapper > strong,
 .tablelist-body > p.row > strong,
-.tablelist-header > span,
+.tablelist-header > .wrapper > span,
 .tablelist-body > p.row > span {
   display: inline-block;
   position: relative;
 }
-.tablelist-header > strong,
+.tablelist-header > .wrapper > strong,
 .tablelist-body > p.row > strong {
   -webkit-box-flex: 7.5;
   -webkit-flex: 7.5 0 155px;
       -ms-flex: 7.5 0 155px;
           flex: 7.5 0 155px;
 }
-.tablelist-header > span,
+.tablelist-header > .wrapper > span,
 .tablelist-body > p.row > span {
   -webkit-box-flex: 1;
   -webkit-flex: 1 0 36px;
@@ -5250,10 +5250,13 @@ body.mod-capture #tip {
           flex: none;
   line-height: 32px;
   font-size: 12px;
-  overflow-y: scroll;
+  border-right: 20px solid transparent;
+  overflow: hidden;
+  width: 100%;
 }
-.tablelist-header::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0);
+.tablelist-header > .wrapper {
+  margin-right: -20px;
+  overflow-y: scroll;
 }
 .tablelist-body {
   overflow-y: scroll;
@@ -5398,7 +5401,7 @@ body.mod-capture #tip {
       -ms-user-select: none;
           user-select: none;
 }
-.tablelist-container.sortable .tablelist-header > span {
+.tablelist-container.sortable .tablelist-header span[data-stat] {
   -webkit-transition-property: color, text-shadow;
   transition-property: color, text-shadow;
 }
@@ -10615,11 +10618,11 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
 .infos-ship > aside > label {
   position: relative;
   margin: 0;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 30px;
+  height: 30px;
   display: inline-block;
   z-index: 2;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
 }
 .infos-ship > aside > label:before {
   position: absolute;
@@ -10658,7 +10661,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
   transition-property: -webkit-transform;
   transition-property: transform;
   transition-property: transform, -webkit-transform;
-  padding: 10px 0 70px 0;
+  padding: 10px 0 55px 0;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -12548,12 +12551,12 @@ main[data-theme="ship"]:after {
 	}
 	*/
 }
-.page-container[page="ships"] .tablelist-container.sortable .tablelist-header > span:hover,
-.page-container[page="ships"] .tablelist-container.sortable .tablelist-header > span.sorting {
+.page-container[page="ships"] .tablelist-container.sortable .tablelist-header span[data-stat]:hover,
+.page-container[page="ships"] .tablelist-container.sortable .tablelist-header span[data-stat].sorting {
   color: #b3e5ff;
   text-shadow: 0 0 2px #00aaff, 0 0 1px #00334d;
 }
-.page-container[page="ships"] .tablelist-container.sortable .tablelist-header > span.sorting:before {
+.page-container[page="ships"] .tablelist-container.sortable .tablelist-header span[data-stat].sorting:before {
   position: absolute;
   z-index: -1;
   top: 0;
@@ -12564,10 +12567,10 @@ main[data-theme="ship"]:after {
   margin-left: -6px;
   border: 6px solid transparent;
 }
-.page-container[page="ships"] .tablelist-container.sortable .tablelist-header > span.sorting.desc:before {
+.page-container[page="ships"] .tablelist-container.sortable .tablelist-header span[data-stat].sorting.desc:before {
   border-top-color: #4dc3ff;
 }
-.page-container[page="ships"] .tablelist-container.sortable .tablelist-header > span.sorting.asc:before {
+.page-container[page="ships"] .tablelist-container.sortable .tablelist-header span[data-stat].sorting.asc:before {
   border-bottom-color: #4dc3ff;
   border-top-width: 0;
 }
