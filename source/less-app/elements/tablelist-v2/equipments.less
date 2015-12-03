@@ -1,33 +1,68 @@
-.tablelist-equipments(){
+.tablelist-equipments(){.tablelist-equipments{
 	
-}
-			tr[data-equipmentid]{
-				td, th{
-					//.height(25);
-					height: 	25px;
-					.line-height(18)
-				}
-				th{
-					font-weight:	lighter;
-					.padding-left(42);
-					/*
-					a{
-						position: 	relative;
-						&:before{
-							position: 	absolute;
-							content: 	@iconcode-checkbox-uncheck;
-							left: 		-28px;
-							top: 		50%;
-							height: 	0;
-							font-size: 	16px;
-							line-height:0;
-							font-family:icons;
-							color: 		rgba(255, 255, 255, .1);
-						}
+	.tablelist-body{
+		&>p.title{
+			span{
+				display:	block;
+				width: 		42px;
+				height: 	30px;
+				background:	no-repeat 50% 50%;
+				float:		left;
+				margin-top: -4px;
+			}
+		}
+		&>p.row[data-equipmentid]{
+			height: 	25px;
+			line-height:25px;
+			&>strong{
+				font-weight:	lighter;
+				padding-left: 	42px;
+			}
+			&>span{
+				font-size: 		12px;
+			}
+		}
+	}
+	
+	&>.msgs{
+		background:	fade(#16402a, 65%);
+		color:		#a3d9bd;
+		&>div{
+			&.equipmentsinfos{
+				&>button{
+					&:hover{
+						color:		hsl(149, 27%, 75%);
 					}
-					*/
 				}
-				td{
-					.font-size(12)
-				}
-			} // tr[data-equipmentid]
+			}
+		}
+	}
+	
+	.loop_equipmentcollection(@n, @i: 1) when (@i =< @n) {
+		&>[value="@{i}"]:checked{
+			&~.options>.filters>label[data-equipmentcollection="@{i}"]{
+				.tab-on();
+				color: 	#fff;
+			}
+			&~.tablelist-container .tablelist-body p:not([data-equipmentcollection="@{i}"]){
+				display:	none !important;
+			}
+		}
+		.loop_equipmentcollection(@n, (@i + 1))
+	}
+	.loop_equipmentcollection(@max_equipment_collection);
+	
+	.loop_equipmenttypes(@n, @i: 1) when (@i =< @n) {
+		&>[name="types"][class]:not(.type@{i}) ~ .tablelist-container .tablelist-body{
+			p[data-equipmenttype="@{i}"]{
+				display:	none;
+				opacity: 	.35;
+			}
+			p.title[data-type="@{i}"]{
+				opacity: 	.35;
+			}
+		}
+		.loop_equipmenttypes(@n, (@i + 1))
+	}
+	.loop_equipmenttypes(@max_equipment_type);
+}}

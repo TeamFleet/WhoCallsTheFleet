@@ -2983,8 +2983,8 @@ main:after {
   padding-top: 1rem;
   padding-bottom: 1rem;
   border-top: 0.05rem solid transparent;
-  padding-left: 4rem;
-  padding-right: 4rem;
+  padding-left: 80px;
+  padding-right: 80px;
   /*
 	&>.tablelist{
 		&>.fixed-table-container{
@@ -3051,20 +3051,20 @@ main:after {
 }
 @media all and (max-width: 1152px) {
   .page-container {
-    padding-left: 3rem;
-    padding-right: 3rem;
+    padding-left: 60px;
+    padding-right: 60px;
   }
 }
 @media all and (max-width: 960px) {
   .page-container {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 40px;
+    padding-right: 40px;
   }
 }
 @media all and (max-width: 800px) {
   .page-container {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+    padding-left: 25px;
+    padding-right: 25px;
   }
 }
 .page-container[page="ships"],
@@ -4824,8 +4824,8 @@ body.mod-capture #tip {
 .tablelist > .options label,
 .tablelist > .options button {
   color: rgba(255, 255, 255, 0.75);
-  -webkit-transition-property: color;
-  transition-property: color;
+  -webkit-transition-property: color, opacity, background-position;
+  transition-property: color, opacity, background-position;
 }
 .tablelist > .options label:hover,
 .tablelist > .options button:hover {
@@ -4847,8 +4847,8 @@ body.mod-capture #tip {
   left: 0;
   width: 100%;
   height: 100%;
-  padding-left: 4rem;
-  padding-right: 4rem;
+  padding-left: 80px;
+  padding-right: 80px;
   -webkit-transition-property: opacity;
   transition-property: opacity;
   -webkit-transition-duration: .35s;
@@ -4859,20 +4859,20 @@ body.mod-capture #tip {
 }
 @media all and (max-width: 1152px) {
   .tablelist > .options > div {
-    padding-left: 3rem;
-    padding-right: 3rem;
+    padding-left: 60px;
+    padding-right: 60px;
   }
 }
 @media all and (max-width: 960px) {
   .tablelist > .options > div {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 40px;
+    padding-right: 40px;
   }
 }
 @media all and (max-width: 800px) {
   .tablelist > .options > div {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+    padding-left: 25px;
+    padding-right: 25px;
   }
 }
 .tablelist > .options > div.filters {
@@ -5144,9 +5144,6 @@ body.mod-capture #tip {
 }
 .tablelist > .msgs[data-msgs] {
   height: 40px;
-  -webkit-flex-basis: 40px;
-      -ms-flex-preferred-size: 40px;
-          flex-basis: 40px;
   border-top-width: 1px;
 }
 .tablelist > .msgs[data-msgs="compareinfos"] > .compareinfos {
@@ -5160,6 +5157,9 @@ body.mod-capture #tip {
 .tablelist > .msgs[data-msgs="equipmentsinfos"] > .equipmentsinfos {
   opacity: 1;
   z-index: 2;
+}
+.tablelist.nocontent .nocontent {
+  display: block !important;
 }
 .tablelist-container {
   -webkit-box-flex: 0;
@@ -5186,29 +5186,29 @@ body.mod-capture #tip {
 }
 .tablelist-header,
 .tablelist-body {
-  padding-left: 4rem;
-  padding-right: 4rem;
+  padding-left: 80px;
+  padding-right: 80px;
   width: 100%;
 }
 @media all and (max-width: 1152px) {
   .tablelist-header,
   .tablelist-body {
-    padding-left: 3rem;
-    padding-right: 3rem;
+    padding-left: 60px;
+    padding-right: 60px;
   }
 }
 @media all and (max-width: 960px) {
   .tablelist-header,
   .tablelist-body {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 40px;
+    padding-right: 40px;
   }
 }
 @media all and (max-width: 800px) {
   .tablelist-header,
   .tablelist-body {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+    padding-left: 25px;
+    padding-right: 25px;
   }
 }
 .tablelist-header,
@@ -5230,10 +5230,10 @@ body.mod-capture #tip {
 }
 .tablelist-header > strong,
 .tablelist-body > p.row > strong {
-  -webkit-box-flex: 5;
-  -webkit-flex: 5 0 155px;
-      -ms-flex: 5 0 155px;
-          flex: 5 0 155px;
+  -webkit-box-flex: 7.5;
+  -webkit-flex: 7.5 0 155px;
+      -ms-flex: 7.5 0 155px;
+          flex: 7.5 0 155px;
 }
 .tablelist-header > span,
 .tablelist-body > p.row > span {
@@ -5392,6 +5392,7 @@ body.mod-capture #tip {
   display: none;
 }
 .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body {
+  padding-right: 70px;
   background-size: 100% 9px;
   display: -webkit-box;
   display: -webkit-flex;
@@ -5400,6 +5401,21 @@ body.mod-capture #tip {
   -webkit-flex-flow: row wrap;
       -ms-flex-flow: row wrap;
           flex-flow: row wrap;
+}
+@media all and (max-width: 1152px) {
+  .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body {
+    padding-right: 50px;
+  }
+}
+@media all and (max-width: 960px) {
+  .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body {
+    padding-right: 30px;
+  }
+}
+@media all and (max-width: 800px) {
+  .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body {
+    padding-right: 15px;
+  }
 }
 .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p {
   -webkit-box-flex: 1;
@@ -5413,8 +5429,8 @@ body.mod-capture #tip {
   -webkit-flex: none !important;
       -ms-flex: none !important;
           flex: none !important;
-  width: 100%;
-  margin: 0 !important;
+  width: calc(100% - 10px);
+  margin: 0 10px 0 0 !important;
 }
 .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.title label.checkbox:before {
   margin-left: 5px;
@@ -5624,7 +5640,7 @@ body.mod-capture #tip {
   display: none !important;
 }
 .tablelist.ships > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p {
-  margin: 0 5px 0 30px;
+  margin-left: 30px;
 }
 @media all and (min-width: 1152px) {
   .tablelist.ships > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p {
@@ -5658,6 +5674,9 @@ body.mod-capture #tip {
   padding-top: 0;
   padding-bottom: 0;
 }
+.tablelist.ships > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] > strong a {
+  padding-left: 100px;
+}
 .tablelist.ships > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] > strong img {
   top: 0;
   margin-left: -10px;
@@ -5680,7 +5699,7 @@ body.mod-capture #tip {
       -ms-transform: rotate(15deg);
           transform: rotate(15deg);
   top: 0;
-  left: 86px;
+  left: 80px;
   z-index: 10;
 }
 .tablelist.ships > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid]:active {
@@ -5708,33 +5727,501 @@ body.mod-capture #tip {
 .tablelist.ships > .options[viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid]:not([compare-checked]) {
   display: none;
 }
-tr[data-equipmentid] td,
-tr[data-equipmentid] th {
+.tablelist-equipments .tablelist-body > p.title span {
+  display: block;
+  width: 42px;
+  height: 30px;
+  background: no-repeat 50% 50%;
+  float: left;
+  margin-top: -4px;
+}
+.tablelist-equipments .tablelist-body > p.row[data-equipmentid] {
   height: 25px;
-  line-height: 0.9rem;
+  line-height: 25px;
 }
-tr[data-equipmentid] th {
+.tablelist-equipments .tablelist-body > p.row[data-equipmentid] > strong {
   font-weight: lighter;
-  padding-left: 2.1rem;
-  /*
-					a{
-						position: 	relative;
-						&:before{
-							position: 	absolute;
-							content: 	@iconcode-checkbox-uncheck;
-							left: 		-28px;
-							top: 		50%;
-							height: 	0;
-							font-size: 	16px;
-							line-height:0;
-							font-family:icons;
-							color: 		rgba(255, 255, 255, .1);
-						}
-					}
-					*/
+  padding-left: 42px;
 }
-tr[data-equipmentid] td {
-  font-size: 0.6000000000000001rem;
+.tablelist-equipments .tablelist-body > p.row[data-equipmentid] > span {
+  font-size: 12px;
+}
+.tablelist-equipments > .msgs {
+  background: rgba(22, 64, 42, 0.65);
+  color: #a3d9bd;
+}
+.tablelist-equipments > .msgs > div.equipmentsinfos > button:hover {
+  color: #aed0bf;
+}
+.tablelist-equipments > [value="1"]:checked ~ .options > .filters > label[data-equipmentcollection="1"] {
+  opacity: 1;
+  background-position: 0 0;
+  cursor: default;
+  color: #fff;
+}
+.tablelist-equipments > [value="1"]:checked ~ .options > .filters > label[data-equipmentcollection="1"]:before {
+  background-position: 0 0;
+}
+.tablelist-equipments > [value="1"]:checked ~ .tablelist-container .tablelist-body p:not([data-equipmentcollection="1"]) {
+  display: none !important;
+}
+.tablelist-equipments > [value="2"]:checked ~ .options > .filters > label[data-equipmentcollection="2"] {
+  opacity: 1;
+  background-position: 0 0;
+  cursor: default;
+  color: #fff;
+}
+.tablelist-equipments > [value="2"]:checked ~ .options > .filters > label[data-equipmentcollection="2"]:before {
+  background-position: 0 0;
+}
+.tablelist-equipments > [value="2"]:checked ~ .tablelist-container .tablelist-body p:not([data-equipmentcollection="2"]) {
+  display: none !important;
+}
+.tablelist-equipments > [value="3"]:checked ~ .options > .filters > label[data-equipmentcollection="3"] {
+  opacity: 1;
+  background-position: 0 0;
+  cursor: default;
+  color: #fff;
+}
+.tablelist-equipments > [value="3"]:checked ~ .options > .filters > label[data-equipmentcollection="3"]:before {
+  background-position: 0 0;
+}
+.tablelist-equipments > [value="3"]:checked ~ .tablelist-container .tablelist-body p:not([data-equipmentcollection="3"]) {
+  display: none !important;
+}
+.tablelist-equipments > [value="4"]:checked ~ .options > .filters > label[data-equipmentcollection="4"] {
+  opacity: 1;
+  background-position: 0 0;
+  cursor: default;
+  color: #fff;
+}
+.tablelist-equipments > [value="4"]:checked ~ .options > .filters > label[data-equipmentcollection="4"]:before {
+  background-position: 0 0;
+}
+.tablelist-equipments > [value="4"]:checked ~ .tablelist-container .tablelist-body p:not([data-equipmentcollection="4"]) {
+  display: none !important;
+}
+.tablelist-equipments > [value="5"]:checked ~ .options > .filters > label[data-equipmentcollection="5"] {
+  opacity: 1;
+  background-position: 0 0;
+  cursor: default;
+  color: #fff;
+}
+.tablelist-equipments > [value="5"]:checked ~ .options > .filters > label[data-equipmentcollection="5"]:before {
+  background-position: 0 0;
+}
+.tablelist-equipments > [value="5"]:checked ~ .tablelist-container .tablelist-body p:not([data-equipmentcollection="5"]) {
+  display: none !important;
+}
+.tablelist-equipments > [value="6"]:checked ~ .options > .filters > label[data-equipmentcollection="6"] {
+  opacity: 1;
+  background-position: 0 0;
+  cursor: default;
+  color: #fff;
+}
+.tablelist-equipments > [value="6"]:checked ~ .options > .filters > label[data-equipmentcollection="6"]:before {
+  background-position: 0 0;
+}
+.tablelist-equipments > [value="6"]:checked ~ .tablelist-container .tablelist-body p:not([data-equipmentcollection="6"]) {
+  display: none !important;
+}
+.tablelist-equipments > [value="7"]:checked ~ .options > .filters > label[data-equipmentcollection="7"] {
+  opacity: 1;
+  background-position: 0 0;
+  cursor: default;
+  color: #fff;
+}
+.tablelist-equipments > [value="7"]:checked ~ .options > .filters > label[data-equipmentcollection="7"]:before {
+  background-position: 0 0;
+}
+.tablelist-equipments > [value="7"]:checked ~ .tablelist-container .tablelist-body p:not([data-equipmentcollection="7"]) {
+  display: none !important;
+}
+.tablelist-equipments > [value="8"]:checked ~ .options > .filters > label[data-equipmentcollection="8"] {
+  opacity: 1;
+  background-position: 0 0;
+  cursor: default;
+  color: #fff;
+}
+.tablelist-equipments > [value="8"]:checked ~ .options > .filters > label[data-equipmentcollection="8"]:before {
+  background-position: 0 0;
+}
+.tablelist-equipments > [value="8"]:checked ~ .tablelist-container .tablelist-body p:not([data-equipmentcollection="8"]) {
+  display: none !important;
+}
+.tablelist-equipments > [name="types"][class]:not(.type1) ~ .tablelist-container .tablelist-body p[data-equipmenttype="1"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type1) ~ .tablelist-container .tablelist-body p.title[data-type="1"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type2) ~ .tablelist-container .tablelist-body p[data-equipmenttype="2"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type2) ~ .tablelist-container .tablelist-body p.title[data-type="2"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type3) ~ .tablelist-container .tablelist-body p[data-equipmenttype="3"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type3) ~ .tablelist-container .tablelist-body p.title[data-type="3"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type4) ~ .tablelist-container .tablelist-body p[data-equipmenttype="4"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type4) ~ .tablelist-container .tablelist-body p.title[data-type="4"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type5) ~ .tablelist-container .tablelist-body p[data-equipmenttype="5"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type5) ~ .tablelist-container .tablelist-body p.title[data-type="5"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type6) ~ .tablelist-container .tablelist-body p[data-equipmenttype="6"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type6) ~ .tablelist-container .tablelist-body p.title[data-type="6"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type7) ~ .tablelist-container .tablelist-body p[data-equipmenttype="7"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type7) ~ .tablelist-container .tablelist-body p.title[data-type="7"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type8) ~ .tablelist-container .tablelist-body p[data-equipmenttype="8"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type8) ~ .tablelist-container .tablelist-body p.title[data-type="8"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type9) ~ .tablelist-container .tablelist-body p[data-equipmenttype="9"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type9) ~ .tablelist-container .tablelist-body p.title[data-type="9"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type10) ~ .tablelist-container .tablelist-body p[data-equipmenttype="10"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type10) ~ .tablelist-container .tablelist-body p.title[data-type="10"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type11) ~ .tablelist-container .tablelist-body p[data-equipmenttype="11"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type11) ~ .tablelist-container .tablelist-body p.title[data-type="11"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type12) ~ .tablelist-container .tablelist-body p[data-equipmenttype="12"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type12) ~ .tablelist-container .tablelist-body p.title[data-type="12"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type13) ~ .tablelist-container .tablelist-body p[data-equipmenttype="13"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type13) ~ .tablelist-container .tablelist-body p.title[data-type="13"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type14) ~ .tablelist-container .tablelist-body p[data-equipmenttype="14"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type14) ~ .tablelist-container .tablelist-body p.title[data-type="14"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type15) ~ .tablelist-container .tablelist-body p[data-equipmenttype="15"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type15) ~ .tablelist-container .tablelist-body p.title[data-type="15"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type16) ~ .tablelist-container .tablelist-body p[data-equipmenttype="16"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type16) ~ .tablelist-container .tablelist-body p.title[data-type="16"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type17) ~ .tablelist-container .tablelist-body p[data-equipmenttype="17"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type17) ~ .tablelist-container .tablelist-body p.title[data-type="17"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type18) ~ .tablelist-container .tablelist-body p[data-equipmenttype="18"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type18) ~ .tablelist-container .tablelist-body p.title[data-type="18"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type19) ~ .tablelist-container .tablelist-body p[data-equipmenttype="19"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type19) ~ .tablelist-container .tablelist-body p.title[data-type="19"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type20) ~ .tablelist-container .tablelist-body p[data-equipmenttype="20"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type20) ~ .tablelist-container .tablelist-body p.title[data-type="20"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type21) ~ .tablelist-container .tablelist-body p[data-equipmenttype="21"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type21) ~ .tablelist-container .tablelist-body p.title[data-type="21"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type22) ~ .tablelist-container .tablelist-body p[data-equipmenttype="22"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type22) ~ .tablelist-container .tablelist-body p.title[data-type="22"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type23) ~ .tablelist-container .tablelist-body p[data-equipmenttype="23"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type23) ~ .tablelist-container .tablelist-body p.title[data-type="23"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type24) ~ .tablelist-container .tablelist-body p[data-equipmenttype="24"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type24) ~ .tablelist-container .tablelist-body p.title[data-type="24"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type25) ~ .tablelist-container .tablelist-body p[data-equipmenttype="25"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type25) ~ .tablelist-container .tablelist-body p.title[data-type="25"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type26) ~ .tablelist-container .tablelist-body p[data-equipmenttype="26"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type26) ~ .tablelist-container .tablelist-body p.title[data-type="26"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type27) ~ .tablelist-container .tablelist-body p[data-equipmenttype="27"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type27) ~ .tablelist-container .tablelist-body p.title[data-type="27"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type28) ~ .tablelist-container .tablelist-body p[data-equipmenttype="28"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type28) ~ .tablelist-container .tablelist-body p.title[data-type="28"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type29) ~ .tablelist-container .tablelist-body p[data-equipmenttype="29"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type29) ~ .tablelist-container .tablelist-body p.title[data-type="29"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type30) ~ .tablelist-container .tablelist-body p[data-equipmenttype="30"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type30) ~ .tablelist-container .tablelist-body p.title[data-type="30"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type31) ~ .tablelist-container .tablelist-body p[data-equipmenttype="31"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type31) ~ .tablelist-container .tablelist-body p.title[data-type="31"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type32) ~ .tablelist-container .tablelist-body p[data-equipmenttype="32"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type32) ~ .tablelist-container .tablelist-body p.title[data-type="32"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type33) ~ .tablelist-container .tablelist-body p[data-equipmenttype="33"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type33) ~ .tablelist-container .tablelist-body p.title[data-type="33"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type34) ~ .tablelist-container .tablelist-body p[data-equipmenttype="34"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type34) ~ .tablelist-container .tablelist-body p.title[data-type="34"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type35) ~ .tablelist-container .tablelist-body p[data-equipmenttype="35"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type35) ~ .tablelist-container .tablelist-body p.title[data-type="35"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type36) ~ .tablelist-container .tablelist-body p[data-equipmenttype="36"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type36) ~ .tablelist-container .tablelist-body p.title[data-type="36"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type37) ~ .tablelist-container .tablelist-body p[data-equipmenttype="37"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type37) ~ .tablelist-container .tablelist-body p.title[data-type="37"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type38) ~ .tablelist-container .tablelist-body p[data-equipmenttype="38"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type38) ~ .tablelist-container .tablelist-body p.title[data-type="38"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type39) ~ .tablelist-container .tablelist-body p[data-equipmenttype="39"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type39) ~ .tablelist-container .tablelist-body p.title[data-type="39"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type40) ~ .tablelist-container .tablelist-body p[data-equipmenttype="40"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type40) ~ .tablelist-container .tablelist-body p.title[data-type="40"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type41) ~ .tablelist-container .tablelist-body p[data-equipmenttype="41"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type41) ~ .tablelist-container .tablelist-body p.title[data-type="41"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type42) ~ .tablelist-container .tablelist-body p[data-equipmenttype="42"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type42) ~ .tablelist-container .tablelist-body p.title[data-type="42"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type43) ~ .tablelist-container .tablelist-body p[data-equipmenttype="43"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type43) ~ .tablelist-container .tablelist-body p.title[data-type="43"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type44) ~ .tablelist-container .tablelist-body p[data-equipmenttype="44"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type44) ~ .tablelist-container .tablelist-body p.title[data-type="44"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type45) ~ .tablelist-container .tablelist-body p[data-equipmenttype="45"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type45) ~ .tablelist-container .tablelist-body p.title[data-type="45"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type46) ~ .tablelist-container .tablelist-body p[data-equipmenttype="46"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type46) ~ .tablelist-container .tablelist-body p.title[data-type="46"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type47) ~ .tablelist-container .tablelist-body p[data-equipmenttype="47"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type47) ~ .tablelist-container .tablelist-body p.title[data-type="47"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type48) ~ .tablelist-container .tablelist-body p[data-equipmenttype="48"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type48) ~ .tablelist-container .tablelist-body p.title[data-type="48"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type49) ~ .tablelist-container .tablelist-body p[data-equipmenttype="49"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type49) ~ .tablelist-container .tablelist-body p.title[data-type="49"] {
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type50) ~ .tablelist-container .tablelist-body p[data-equipmenttype="50"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type50) ~ .tablelist-container .tablelist-body p.title[data-type="50"] {
+  opacity: .35;
+}
+body > .menus > .menu.menu-tablelistfleets-options > .body .option-in-tablelist {
+  display: none;
+}
+body > .menus > .menu.menu-tablelistfleets-options > .body menuitem.option-aircraftdefaultmax label {
+  position: relative;
+  padding-right: 40.6px;
+}
+body > .menus > .menu.menu-tablelistfleets-options > .body menuitem.option-aircraftdefaultmax label:after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 15.6px;
+  height: 20.8px;
+  background: url(/!/assets/images/Aircraft_Proficiency.png) no-repeat 50% 100% / cover;
+  right: 21px;
+  top: 50%;
+  margin-top: -9.4px;
+}
+body > .menus > .menu.menu-tablelistfleets-options.is-tablelist > .body .option-in-tablelist {
+  display: block;
+}
+body > .menus > .menu.menu-tablelistfleets-options.is-tablelist > .body .option-in-infos {
+  display: none;
 }
 section.update_journal ul > strong,
 section.update_journal p > strong {
@@ -6595,28 +7082,28 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   display: none;
   animation: fadein 0.3s ease-out;
   -webkit-animation: fadein 0.3s ease-out;
-  padding-left: 4rem;
-  padding-right: 4rem;
+  padding-left: 80px;
+  padding-right: 80px;
   -webkit-flex-flow: column nowrap;
       -ms-flex-flow: column nowrap;
           flex-flow: column nowrap;
 }
 @media all and (max-width: 1152px) {
   .infos-fleet > .ships > dl {
-    padding-left: 3rem;
-    padding-right: 3rem;
+    padding-left: 60px;
+    padding-right: 60px;
   }
 }
 @media all and (max-width: 960px) {
   .infos-fleet > .ships > dl {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 40px;
+    padding-right: 40px;
   }
 }
 @media all and (max-width: 800px) {
   .infos-fleet > .ships > dl {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+    padding-left: 25px;
+    padding-right: 25px;
   }
 }
 .infos-fleet > .ships > dl:before {
@@ -10837,28 +11324,28 @@ body > .modal.update_journal > div {
 }
 body > .modal.update_journal > div > header,
 body > .modal.update_journal > div > section {
-  padding-left: 4rem;
-  padding-right: 4rem;
+  padding-left: 80px;
+  padding-right: 80px;
 }
 @media all and (max-width: 1152px) {
   body > .modal.update_journal > div > header,
   body > .modal.update_journal > div > section {
-    padding-left: 3rem;
-    padding-right: 3rem;
+    padding-left: 60px;
+    padding-right: 60px;
   }
 }
 @media all and (max-width: 960px) {
   body > .modal.update_journal > div > header,
   body > .modal.update_journal > div > section {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 40px;
+    padding-right: 40px;
   }
 }
 @media all and (max-width: 800px) {
   body > .modal.update_journal > div > header,
   body > .modal.update_journal > div > section {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+    padding-left: 25px;
+    padding-right: 25px;
   }
 }
 body > .modal.update_journal > div > header {
@@ -11743,28 +12230,28 @@ main[data-theme="arsenal"]:after {
 }
 .page-container[page="arsenal"] > .tabs,
 .page-container[page="arsenal"] > .main {
-  padding-left: 4rem;
-  padding-right: 4rem;
+  padding-left: 80px;
+  padding-right: 80px;
 }
 @media all and (max-width: 1152px) {
   .page-container[page="arsenal"] > .tabs,
   .page-container[page="arsenal"] > .main {
-    padding-left: 3rem;
-    padding-right: 3rem;
+    padding-left: 60px;
+    padding-right: 60px;
   }
 }
 @media all and (max-width: 960px) {
   .page-container[page="arsenal"] > .tabs,
   .page-container[page="arsenal"] > .main {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 40px;
+    padding-right: 40px;
   }
 }
 @media all and (max-width: 800px) {
   .page-container[page="arsenal"] > .tabs,
   .page-container[page="arsenal"] > .main {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+    padding-left: 25px;
+    padding-right: 25px;
   }
 }
 .page-container[page="arsenal"] > .tabs {

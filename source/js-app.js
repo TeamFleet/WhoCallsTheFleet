@@ -49,10 +49,10 @@
 // @koala-prepend "js-app/frame/tip-ship.js"
 
 // @koala-prepend "js-app/elements/tablelist.js"
+// @koala-prepend "js-app/elements/tablelist-v2/ships.js"
+// @koala-prepend "js-app/elements/tablelist-v2/equipments.js"
+// @koala-prepend "js-app/elements/tablelist-v2/fleets.js"
 // @koala-prepend "js-app/elements/tablelist-entities.js"
 // @koala-prepend "js-app/elements/tablelist-entities-full.js"
-// @koala-prepend "js-app/elements/tablelist-equipments.js"
 // @koala-prepend "js-app/elements/tablelist-equipments-full.js"
-// @koala-prepend "js-app/elements/tablelist-fleets.js"
-// @koala-prepend "js-app/elements/tablelist-ships-v2.js"
 // @koala-prepend "js-app/elements/tablelist-ships-full.js"

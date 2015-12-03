@@ -158,7 +158,8 @@
 	&  > .options[viewtype="card"] ~ .tablelist-container{
 		.tablelist-body{
 			&>p{
-				margin: 	0 5px 0 30px;
+				//margin: 	0 10px 0 30px;
+				margin-left: 	30px;
 				@media all and (min-width: 1152px ){
 					flex-basis: 175px;
 				}
@@ -183,6 +184,9 @@
 					line-height:	40px;
 					padding-top:	0;
 					padding-bottom:	0;
+					a{
+						padding-left: 100px;
+					}
 					img{
 						top:	0;
 						margin-left: -10px;
@@ -203,7 +207,7 @@
 						color: 		hsl(@hue_theme_ship, 100%, 100%);
 						transform: 	rotate(15deg);
 						top: 		0;
-						left: 		86px;
+						left: 		80px;
 						z-index: 	10;
 						//text-shadow:0 0 5px hsl(@hue_theme_ship, 100%, 15%);
 					}

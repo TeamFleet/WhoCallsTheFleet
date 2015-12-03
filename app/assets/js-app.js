@@ -9674,12 +9674,12 @@ class Tablelist{
 
 		// 强制 thead 重绘，以解决某些CSS计算延迟问题
 			thead_redraw( timeout_duration ){
-				if( this.dom.thead && this.dom.thead.length ){
-					var thead = this.dom.thead
-					setTimeout(function(){
-						thead.hide().show(0)
-					}, timeout_duration || 10)
-				}
+				//if( this.dom.thead && this.dom.thead.length ){
+				//	var thead = this.dom.thead
+				//	setTimeout(function(){
+				//		thead.hide().show(0)
+				//	}, timeout_duration || 10)
+				//}
 			}
 
 		// 表格排序相关
@@ -10092,21 +10092,221 @@ Tablelist.genId = function(text){
 	return 'tablelist'+hash;
 }
 
-// Entities
 
-class TablelistEntities extends Tablelist{
+
+class TablelistShips extends Tablelist{
 	constructor( container, options ){
 		super( container, options )
+
+		this.columns = [
+			'  ',
+			['火力',	'fire'],
+			['雷装',	'torpedo'],
+			['夜战',	'nightpower'],
+			['对空',	'aa'],
+			['对潜',	'asw'],
+			['耐久',	'hp'],
+			['装甲',	'armor'],
+			['回避',	'evasion'],
+			['搭载',	'carry'],
+			['航速',	'speed'],
+			['射程',	'range'],
+			['索敌',	'los'],
+			['运',		'luck'],
+			['油耗',	'consum_fuel'],
+			['弹耗',	'consum_ammo'],
+			['多立绘',	'extra_illust']
+		]
+		this.header_checkbox = []
+		this.checkbox = []
+		//this.last_item = null
+		//this.compare_checkbox
 
 		// 标记全局载入状态
 			_frame.app_main.loading.push('tablelist_'+this._index)
 			_frame.app_main.is_loaded = false
+	
+			//_g.log( 'shiplist init', _frame.app_main.loading )
 		
-		if( container.children('.tablelist-list').length ){
+		if( container.children('.tablelist-container').length ){
 			this.init_parse()
-		}else if( this.init_new ){
-			this.init_new( options )
+		}//else if(this.init_new){
+		//	this.init_new()
+		//}
+	}
+
+	compare_btn_show( is_checked ){
+		if( (!is_checked && this.compare_checkbox.filter(':checked').length)
+			|| is_checked
+		){
+			this.dom.msg_container.attr('data-msgs', 'comparestart')
+		}else{
+			this.dom.msg_container.removeAttr('data-msgs')
 		}
+	}
+
+	compare_start(){
+		// 隐藏底部提示信息
+			this.dom.msg_container.removeAttr('data-msgs')
+	
+		// 存储当前状态
+			this.last_viewtype = this.dom.filter_container.attr('viewtype')
+			_config.set( 'shiplist-viewtype', this.last_viewtype )
+			this.last_scrollTop = this.dom.tbody.scrollTop()
+	
+		// 更改视图
+			this.dom.filter_container.attr('viewtype', 'compare')
+			this.dom.tbody.scrollTop( 0 )
+			this.dom.table.addClass('sortable')
+	
+		// 计算数据排序排序
+			this.mark_high( true )
+			this.thead_redraw( 500 )
+	}
+
+	compare_off(){
+		this.dom.filter_container.attr('viewtype', this.last_viewtype)
+		this.sort_table_restore()
+		this.mark_high()
+		this.thead_redraw( 500 )
+		this.dom.tbody.scrollTop( this.last_scrollTop )
+		this.dom.table.removeClass('sortable')
+		delete this.last_viewtype
+		delete this.last_scrollTop
+	}
+
+	compare_end(){
+		this.compare_checkbox.filter(':checked').prop('checked', false).trigger('change')
+		this.dom.msg_container.removeAttr('data-msgs')
+		this.compare_off()
+	}
+
+	compare_continue(){
+		this.dom.msg_container.attr('data-msgs', 'comparestart')
+		this.compare_off()
+	}
+	
+	contextmenu_show($el, shipId, is_rightclick){
+		if( this.dom.filter_container.attr('viewtype') == 'compare' || $el.attr('data-donotcompare') == 'true' )
+			return false
+	
+		if( !TablelistShips.contextmenu )
+			TablelistShips.contextmenu = new _menu({
+				'className': 'contextmenu-ship',
+				'items': [
+					$('<menuitem/>').html('选择')
+						.on({
+							'click': function(e){
+								if( _frame.app_main.is_mode_selection() )
+									_frame.app_main.mode_selection_callback(TablelistShips.contextmenu._curid)
+							},
+							'show': function(){
+								if( _frame.app_main.is_mode_selection() )
+									$(this).show()
+								else
+									$(this).hide()
+							}
+						}),
+					$('<menuitem/>').html('查看资料')
+						.on({
+							'click': function(e){
+								TablelistShips.contextmenu._curel.trigger('click', [true])
+							}
+						}),
+	
+					$('<menuitem/>').html('将该舰娘加入对比')
+						.on({
+							'click': function(e){
+								this.checkbox[TablelistShips.contextmenu._curid]
+									.prop('checked', !this.checkbox[TablelistShips.contextmenu._curid].prop('checked'))
+									.trigger('change')
+							}.bind(this),
+							'show': function(e){
+								if( !TablelistShips.contextmenu._curid )
+									return false
+								
+								if( _g.data.ship_types[_g['data']['ships'][TablelistShips.contextmenu._curid]['type']]['donotcompare'] )
+									$(e.target).hide()
+								else
+									$(e.target).show()
+									
+								if( this.checkbox[TablelistShips.contextmenu._curid].prop('checked') )
+									$(e.target).html('取消对比')
+								else
+									$(e.target).html('将该舰娘加入对比')
+							}.bind(this)
+						}),
+					
+					$('<div/>').on('show', function(e){
+						var $div = $(e.target).empty()
+						if( TablelistShips.contextmenu._curid ){
+							var series = _g['data']['ships'][TablelistShips.contextmenu._curid].getSeriesData() || []
+							series.forEach(function(currentValue, i){
+								if( !i )
+									$div.append($('<hr/>'))
+								let checkbox = null
+								try{
+									checkbox = this.checkbox[currentValue['id']]
+								}catch(e){}
+								$div.append(
+									$('<div class="item"/>')
+										.html('<span>' + _g['data']['ships'][currentValue['id']].getName(true) + '</span>')
+										.append(
+											$('<div class="group"/>')
+												.append(function(){
+													var els = $()
+													
+													if( _frame.app_main.is_mode_selection() ){
+														els = els.add(
+															$('<menuitem/>')
+																.html('选择')
+																.on({
+																	'click': function(){
+																		if( _frame.app_main.is_mode_selection() )
+																			_frame.app_main.mode_selection_callback(currentValue['id'])
+																	}
+																})
+														)
+													}
+													
+													return els
+												})
+												.append(
+													$('<menuitem data-infos="[[SHIP::'+currentValue['id']+']]"/>')
+														.html('查看资料')
+												)
+												.append(
+													$('<menuitem/>')
+														.html(
+															checkbox && checkbox.prop('checked')
+																? '取消对比'
+																: '加入对比'
+														)
+														.on({
+															'click': function(e){
+																if( checkbox ){
+																	this.checkbox[currentValue['id']]
+																		.prop('checked', !checkbox.prop('checked'))
+																		.trigger('change')
+																}
+															}.bind(this)
+														})
+												)
+										)
+								)
+							}, this)
+						}
+					}.bind(this))
+				]
+			})
+	
+		TablelistShips.contextmenu._curid = shipId || $el.data('shipid')
+		TablelistShips.contextmenu._curel = $el
+
+		if( is_rightclick )
+			TablelistShips.contextmenu.show(is_rightclick.clientX, is_rightclick.clientY)
+		else
+			TablelistShips.contextmenu.show($el)
 	}
 	
 	
@@ -10118,86 +10318,201 @@ class TablelistEntities extends Tablelist{
 	
 	
 	init_parse(){
-		this.generated = true
+		// 生成过滤器与选项
+			this.dom.filter_container = this.dom.container.children('.options')
+			this.dom.filters = this.dom.filter_container.children('.filters')
+			this.dom.exit_compare = this.dom.filter_container.children('.exit_compare')
+			// 结束对比
+				this.dom.exit_compare.children('button[icon="arrow-set2-left"]').on('click', function(){
+						this.compare_end()
+					}.bind(this))
+			// 继续选择
+				this.dom.exit_compare.children('button[icon="checkbox-checked"]').on('click', function(){
+						this.compare_continue()
+					}.bind(this))
+			// 点击表格标题可排序
+				this.dom.btn_compare_sort = this.dom.exit_compare.children('button[icon="sort-amount-desc"]')
+					.on('click', function(){
+						if( !this.dom.btn_compare_sort.hasClass('disabled') )
+							this.sort_table_restore()
+					}.bind(this))
+			// 仅显示同种同名舰最终版本
+				this.dom.btn_hide_premodel = this.dom.filters.find('[name="hide-premodel"]')
+					.prop('checked', _config.get( 'shiplist-filter-hide-premodel' ) === 'false' ? null : true)
+					.on('change', function( e ){
+						_config.set( 'shiplist-filter-hide-premodel', this.dom.btn_hide_premodel.prop('checked') )
+						this.dom.filter_container.attr('filter-hide-premodel', this.dom.btn_hide_premodel.prop('checked'))
+						this.thead_redraw()
+					}.bind(this))
+			// 视图切换
+				this.dom.filters.find('[name="viewtype"]').each(function(index, $el){
+					$el = $($el)
+					let viewtype = _config.get( 'shiplist-viewtype' ) || 'card'
+					if( $el.val() == viewtype )
+						$el.prop('checked', true)
+					$el.on('change', function( e ){
+						if( $el.is(':checked') ){
+							_config.set( 'shiplist-viewtype', $el.val() )
+							this.dom.filter_container.attr('viewtype', $el.val())
+							this.thead_redraw()
+						}
+					}.bind(this))
+				}.bind(this))
+			this.dom.filters.find('input').trigger('change')
+	
+		// 生成表格框架
+			this.dom.table = this.dom.container.children('.tablelist-container')
+			this.dom.thead = this.dom.table.children('.tablelist-header')
+				this.dom.thead.children('span').on('click', function(e){
+						this.sort_table_from_theadcell($(e.currentTarget))
+					}.bind(this))
+			this.dom.tbody = this.dom.table.children('.tablelist-body')
+				.on('contextmenu.contextmenu_ship', '.row[data-shipid]', function(e){
+						this.contextmenu_show($(e.currentTarget), null, e)
+						e.preventDefault()
+					}.bind(this))
+				.on('click.contextmenu_ship', '.row[data-shipid]>strong>em', function(e){
+						this.contextmenu_show($(e.currentTarget).parent().parent())
+						e.stopImmediatePropagation()
+						e.stopPropagation()
+					}.bind(this))
+				.on('click', '.row[data-shipid]', function(e, forceInfos){
+						if( e.target.tagName.toLowerCase() == 'label' ){
+							this.checkbox[e.currentTarget.getAttribute('data-shipid')]
+								.prop('checked', !this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked'))
+								.trigger('change')
+							e.stopPropagation()
+						}/*else if( e.target.tagName.toLowerCase() == 'em' ){
+							e.preventDefault()
+							e.stopImmediatePropagation()
+							e.stopPropagation()
+						}*/else if( !forceInfos && _frame.app_main.is_mode_selection() ){
+							e.preventDefault()
+							e.stopImmediatePropagation()
+							e.stopPropagation()
+							if( !e.currentTarget.getAttribute('data-donotcompare') )
+								_frame.app_main.mode_selection_callback(e.currentTarget.getAttribute('data-shipid'))
+						}
+					}.bind(this))
+	
+		// 生成底部内容框架
+			this.dom.msg_container = this.dom.container.children('.msgs')
+			if( _config.get( 'hide-compareinfos' ) )
+				this.dom.msg_container.removeAttr('data-msgs')
+			else
+				this.dom.msg_container.attr( 'data-msgs', 'compareinfos' )
+	
+		// 处理所有舰娘数据
+			//if( _g.data.ship_types ){
+				this.parse_all_items()
+			//}
+	
+		// 生成部分底部内容
+			let compareinfos = this.dom.msg_container.children('.compareinfos')
+				compareinfos.children('button').on('click', function(){
+						this.dom.msg_container.removeAttr('data-msgs')
+						_config.set( 'hide-compareinfos', true )
+					}.bind(this))
+			this.dom.msg_container.children('.comparestart')
+					.on('click', function(){
+						this.compare_start()
+					}.bind(this))
+	}
+	
+	parse_all_items(){
+		let header_index = -1
+
+		this.dom.tbody.children('p.title,p.row').each(function(index, tr){
+			tr = $(tr)
+			if( tr.hasClass('title') ){
+				header_index++
+				this.last_item = tr
+				let checkbox = tr.find('input[type="checkbox"]')
+						//.prop('disabled', _g.data['ship_type_order'][header_index]['donotcompare'] ? true : false)
+						.on({
+							'change': function(){
+								checkbox.data('ships').filter(':visible').each(function(index, element){
+									$(element).data('checkbox').prop('checked', checkbox.prop('checked')).trigger('change', [true])
+								})
+							},
+							'docheck': function(){
+								// ATTR: compare-checked
+								var trs = checkbox.data('ships').filter(':visible')
+									,checked = trs.filter('[compare-checked=true]')
+								if( !checked.length ){
+									checkbox.prop({
+										'checked': 			false,
+										'indeterminate': 	false
+									})
+								}else if( checked.length < trs.length ){
+									checkbox.prop({
+										'checked': 			false,
+										'indeterminate': 	true
+									})
+								}else{
+									checkbox.prop({
+										'checked': 			true,
+										'indeterminate': 	false
+									})
+								}
+							}
+						})
+						.data('ships', $())
+				this.header_checkbox[header_index] = checkbox
+			}else{
+				let donotcompare = tr.attr('data-donotcompare')
+					//,ship_data = _g.data.ships[ tr.attr('data-shipid') ]
+					,ship_id = tr.attr('data-shipid')
+					,checkbox = tr.find('input[type="checkbox"]')
+					,title_index = header_index
+				
+				/*
+				tr.on('click', function(e, forceInfos){
+						if( !forceInfos
+							&& e.target.tagName.toLowerCase() != 'em'
+							&& e.target.tagName.toLowerCase() != 'label'
+							&& _frame.app_main.is_mode_selection()
+						){
+							e.preventDefault()
+							e.stopImmediatePropagation()
+							e.stopPropagation()
+							if(!donotcompare)
+								_frame.app_main.mode_selection_callback(ship_id)
+						}
+					})
+				*/
+
+				checkbox.prop('disabled', donotcompare)
+					//.on('click change',function(e, not_trigger_check){
+					.on('change',function(e, not_trigger_check){
+						//e.stopImmediatePropagation()
+						//e.stopPropagation()
+						if( checkbox.prop('checked') )
+							tr.attr('compare-checked', true )
+						else
+							tr.removeAttr('compare-checked')
+						this.compare_btn_show( checkbox.prop('checked') )
+						if( !not_trigger_check )
+							this.header_checkbox[title_index].trigger('docheck')
+					}.bind(this))
+	
+				this.header_checkbox[title_index].data(
+						'ships',
+						this.header_checkbox[title_index].data('ships').add( tr )
+					)
+
+				tr.data('checkbox', checkbox)
+			
+				this.checkbox[ship_id] = checkbox
+			}
+		}.bind(this))
+		
+		this.compare_checkbox = this.dom.tbody.find('input[type="checkbox"].compare')
+		this.mark_high()
+		this.thead_redraw()
 		_frame.app_main.loaded('tablelist_'+this._index, true)
+		delete( this.last_item )
 	}
-}
-
-// Entities
-
-TablelistEntities.prototype.append_item_cv = function( entity ){
-	return _tmpl.link_entity( entity, null, false, entity.relation.cv.length ).addClass('unit cv')
-}
-
-TablelistEntities.prototype.append_item_illustrator = function( entity ){
-	return $('<a/>',{
-		'class':	'unit illustrator',
-		'href':		'?infos=entity&id=' + entity.id,
-		'html':		entity._name + ' (' + entity.relation.illustrator.length + ')'
-	})
-}
-
-TablelistEntities.prototype.append_items = function( title, arr, callback_append_item ){
-	let container
-	
-	this.dom.container
-		.append(
-			$('<div/>',{
-				'class':	'typetitle',
-				'html':		title
-			})
-		)
-		.append(
-			container = _p.el.flexgrid.create().addClass('tablelist-list')
-		)
-	
-	arr.forEach(function(item){
-		container.appendDOM( callback_append_item( item ) )
-	}, this)
-}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-TablelistEntities.prototype.init_new = function(options){
-	options = options || {}
-	
-	let listCV = [],
-		listIllustrator = []
-	
-	for( let i in _g.data.entities ){
-		let entity = _g.data.entities[i]
-		if( !entity.relation )
-			continue
-		if( entity.relation.cv && entity.relation.cv.length )
-			listCV.push(entity)
-		if( entity.relation.illustrator && entity.relation.illustrator.length )
-			listIllustrator.push(entity)
-	}
-
-	this.append_items(
-		'声优',
-		listCV.sort(function(a,b){
-			return b.relation.cv.length - a.relation.cv.length
-		}),
-		this.append_item_cv
-	)
-	this.append_items(
-		'画师',
-		listIllustrator.sort(function(a,b){
-			return b.relation.illustrator.length - a.relation.illustrator.length
-		}),
-		this.append_item_illustrator
-	)
-	
-	this.generated = true
-	_frame.app_main.loaded('tablelist_'+this._index, true)
 }
 
 // Equipments
@@ -10225,11 +10540,11 @@ class TablelistEquipments extends Tablelist{
 			_frame.app_main.loading.push('tablelist_'+this._index)
 			_frame.app_main.is_loaded = false
 		
-		if( container.children('.fixed-table-container').length ){
+		if( container.children('.tablelist-container').length ){
 			this.init_parse()
-		}else if(this.init_new){
-			this.init_new()
-		}
+		}//else if(this.init_new){
+		//	this.init_new()
+		//}
 	}
 
 	apply_types(){
@@ -10264,7 +10579,7 @@ class TablelistEquipments extends Tablelist{
 			el = el || this.dom.types[0]
 			
 			this.dom.type_radios[3].prop('checked', true).trigger('change')
-			this.dom.table_container_inner.scrollTop(el[0].offsetTop || 0)
+			this.dom.tbody.scrollTop(el[0].offsetTop || 0)
 			return
 		}
 		
@@ -10279,7 +10594,7 @@ class TablelistEquipments extends Tablelist{
 			el = el || this.dom.types[0]
 			
 			this.dom.type_radios[parseInt(el.attr('data-equipmentcollection')) || 1].prop('checked', true).trigger('change')
-			this.dom.table_container_inner.scrollTop(el[0].offsetTop || 0)
+			this.dom.tbody.scrollTop(el[0].offsetTop || 0)
 		}
 	}
 	
@@ -10306,7 +10621,7 @@ class TablelistEquipments extends Tablelist{
 					.prop('checked', val == 1 )
 					.on('change', function(){
 						// force thead redraw
-						this.dom.table_container_inner.scrollTop(0)
+						this.dom.tbody.scrollTop(0)
 						this.thead_redraw()
 					}.bind(this))
 			}.bind(this))
@@ -10315,11 +10630,12 @@ class TablelistEquipments extends Tablelist{
 			this.dom.filter_types = this.dom.container.children('input[name="types"][type="hidden"]')
 	
 		// 生成表格框架
-			this.dom.table_container = this.dom.container.children('.fixed-table-container')
-			this.dom.table_container_inner = this.dom.table_container.children('.fixed-table-container-inner')
-			this.dom.table = this.dom.table_container_inner.children('.equipments.hashover.hashover-column')
-			this.dom.thead = this.dom.table.children('thead')
-			this.dom.tbody = this.dom.table.children('tbody')
+			this.dom.table = this.dom.container.children('.tablelist-container')
+			this.dom.thead = this.dom.table.children('.tablelist-header')
+				//this.dom.thead.children('span').on('click', function(e){
+				//		this.sort_table_from_theadcell($(e.currentTarget))
+				//	}.bind(this))
+			this.dom.tbody = this.dom.table.children('.tablelist-body')
 	
 		// 生成装备数据DOM
 			this.parse_all_items()
@@ -10344,9 +10660,9 @@ class TablelistEquipments extends Tablelist{
 		
 		let header_index = -1
 
-		this.dom.tbody.children('tr.typetitle,tr.row').each(function(index, tr){
+		this.dom.tbody.children('p.title,p.row').each(function(index, tr){
 			tr = $(tr)
-			if( tr.hasClass('typetitle') ){
+			if( tr.hasClass('title') ){
 				header_index++
 				this.dom.types[header_index] = tr
 			}else{
@@ -10391,193 +10707,6 @@ TablelistEquipments.gen_helper_equipable_on = function( type_id ){
 TablelistEquipments.types = []
 TablelistEquipments.shipId = null
 TablelistEquipments.shipIdLast = null
-
-// Equipments (Other Class Functions)
-
-TablelistEquipments.prototype.append_item = function( equipment_data, collection_id ){
-	let tr = $('<tr/>',{
-					'class':			'row',
-					'data-equipmentid':	equipment_data['id'],
-					'data-equipmentcollection':	collection_id,
-					'data-infos': 		'[[EQUIPMENT::'+ equipment_data['id'] +']]',
-					'data-equipmentedit':this.dom.container.hasClass('equipmentlist-edit') ? 'true' : null,
-					'data-equipmenttype':equipment_data.type
-				})
-				.on('click', function(e, forceInfos){
-					if( !forceInfos && _frame.app_main.is_mode_selection() ){
-						e.preventDefault()
-						e.stopImmediatePropagation()
-						e.stopPropagation()
-						
-						if( $.inArray(equipment_data.type, TablelistEquipments.types) > -1 )
-							_frame.app_main.mode_selection_callback(equipment_data['id'])
-					}
-				})
-				.appendTo( this.dom.tbody )
-
-	function _val( val, show_zero ){
-		if( !show_zero && (val == 0 || val === '0' || val === '') )
-			//return '<small class="zero">-</small>'
-			return '-'
-		//if( val > 0 )
-		//	return '+' + val
-		return val
-	}
-
-	this.columns.forEach(function(currentValue){
-		switch( currentValue[1] ){
-			case ' ':
-				$('<th/>').html(equipment_data.getName()).appendTo(tr)
-				break;
-			case 'range':
-				$('<td data-stat="range" data-value="' + equipment_data['stat']['range'] + '"/>')
-					.html(
-						equipment_data['stat']['range']
-							? _g.getStatRange( equipment_data['stat']['range'] )
-							: '<small class="zero">-</small>'
-					)
-					.appendTo(tr)
-				break;
-			case 'improvable':
-				$('<td data-stat="range" data-value="' + (equipment_data['improvable'] ? '1' : '0') + '"/>')
-					.html(
-						equipment_data['improvable']
-							? '✓'
-							: '<small class="zero">-</small>'
-					)
-					.appendTo(tr)
-				break;
-			default:
-				$('<td data-stat="'+currentValue[1]+'" data-value="' + (equipment_data['stat'][currentValue[1]] || 0) + '"/>')
-					.addClass( equipment_data['stat'][currentValue[1]] < 0 ? 'negative' : '' )
-					.html( _val( equipment_data['stat'][currentValue[1]] ) )
-					.appendTo(tr)
-				break;
-		}
-	})
-
-	return tr
-}
-
-TablelistEquipments.prototype.append_all_items = function(){
-	this.generated = false
-	this.dom.types = []
-	function _do( i, j ){
-		if( _g.data.item_id_by_type[i] ){
-			if( !j ){
-				var data_equipmenttype = _g.data.item_types[ _g.item_type_order[i] ]
-				this.dom.types.push(
-					$('<tr class="typetitle" data-equipmentcollection="'+_g.data.item_id_by_type[i]['collection']+'" data-type="'+data_equipmenttype.id+'">'
-							+ '<th colspan="' + (this.columns.length + 1) + '">'
-								+ '<span style="background-image: url(../app/assets/images/itemicon/'+data_equipmenttype['icon']+'.png)"></span>'
-								+ data_equipmenttype['name']['zh_cn']
-								+ TablelistEquipments.gen_helper_equipable_on( data_equipmenttype['id'] )
-							+ '</th></tr>'
-						).appendTo( this.dom.tbody )
-				)
-			}
-
-			this.append_item(
-				_g.data.items[ _g.data.item_id_by_type[i]['equipments'][j] ],
-				_g.data.item_id_by_type[i]['collection']
-			)
-
-			setTimeout(function(){
-				if( j >= _g.data.item_id_by_type[i]['equipments'].length - 1 ){
-					_do( i+1, 0 )
-				}else{
-					_do( i, j+1 )
-				}
-			}, 0)
-		}else{
-			//this.mark_high()
-			// force thead redraw
-				this.thead_redraw()
-				this.generated = true
-				this.apply_types_check()
-			_frame.app_main.loaded('tablelist_'+this._index, true)
-		}
-	}
-	_do = _do.bind(this)
-	_do( 0, 0 )
-}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-TablelistEquipments.prototype.init_new = function(){
-	// 生成过滤器与选项
-		this.dom.filter_container = $('<div class="options"/>').appendTo( this.dom.container )
-		this.dom.filters = $('<div class="filters"/>').appendTo( this.dom.filter_container )
-
-	// 装备大类切换
-		var checked = false
-		this.dom.type_radios = {}
-		for(var i in _g.data.item_type_collections){
-			//var radio_id = '_input_g' + parseInt(_g.inputIndex)
-			let radio_id = Tablelist.genId()
-			this.dom.type_radios[i] = $('<input type="radio" name="equipmentcollection" id="'+radio_id+'" value="'+i+'"/>')
-				.prop('checked', !checked )
-				.on('change', function(){
-					// force thead redraw
-					this.dom.table_container_inner.scrollTop(0)
-					this.thead_redraw()
-				}.bind(this))
-				.prependTo( this.dom.container )
-			$('<label class="tab container" for="'+radio_id+'" data-equipmentcollection="'+i+'"/>')
-				.html(
-					'<i></i>'
-					+ '<span>' + _g.data.item_type_collections[i]['name']['zh_cn'].replace(/\&/g, '<br/>') + '</span>'
-				)
-				.appendTo( this.dom.filters )
-			checked = true
-			//_g.inputIndex++
-		}
-	
-	// 装备类型过滤
-		this.dom.filter_types = $('<input name="types" type="hidden"/>').prependTo( this.dom.container )
-
-	// 生成表格框架
-		this.dom.table_container = $('<div class="fixed-table-container"/>').appendTo( this.dom.container )
-		this.dom.table_container_inner = $('<div class="fixed-table-container-inner"/>').appendTo( this.dom.table_container )
-		this.dom.table = $('<table class="equipments hashover hashover-column"/>').appendTo( this.dom.table_container_inner )
-		function gen_thead(arr){
-			this.dom.thead = $('<thead/>')
-			var tr = $('<tr/>').appendTo(this.dom.thead)
-			arr.forEach(function(currentValue){
-				if( typeof currentValue == 'object' ){
-					$('<td data-stat="' + currentValue[1] + '"/>')
-						.html('<div class="th-inner-wrapper"><span><span>'+currentValue[0]+'</span></span></div>').appendTo(tr)
-				}else{
-					$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+currentValue[0]+'</span></span></div>').appendTo(tr)
-				}
-			})
-			return this.dom.thead
-		}
-		gen_thead = gen_thead.bind(this)
-		gen_thead( this.columns ).appendTo( this.dom.table )
-		this.dom.tbody = $('<tbody/>').appendTo( this.dom.table )
-
-	// 生成装备数据DOM
-		this.append_all_items()
-
-	// 生成底部内容框架
-		this.dom.msg_container = $('<div class="msgs"/>').appendTo( this.dom.container )
-		if( !_config.get( 'hide-equipmentsinfos' ) )
-			this.dom.msg_container.attr( 'data-msgs', 'equipmentsinfos' )
-
-	// 生成部分底部内容
-		var equipmentsinfos = $('<div class="equipmentsinfos"/>').html('点击装备查询初装舰娘等信息').appendTo( this.dom.msg_container )
-			$('<button/>').html('&times;').on('click', function(){
-				this.dom.msg_container.removeAttr('data-msgs')
-				_config.set( 'hide-equipmentsinfos', true )
-			}.bind(this)).appendTo( equipmentsinfos )
-}
 
 /* TODO
 	新建
@@ -10714,25 +10843,32 @@ class TablelistFleets extends Tablelist{
 			*/
 
 		// [创建] 表格框架
-			this.dom.table_container = $('<div class="fixed-table-container"/>').appendTo( this.dom.container )
-			this.dom.table_container_inner = $('<div class="fixed-table-container-inner"/>').appendTo( this.dom.table_container )
-			this.dom.table = $('<table class="fleets hashover hashover-column"/>').appendTo( this.dom.table_container_inner )
-			function gen_thead(arr){
-				this.dom.thead = $('<thead/>')
-				var tr = $('<tr/>').appendTo(this.dom.thead)
-				arr.forEach(function(column){
-					if( typeof column == 'object' ){
-						$('<td data-stat="' + column[1] + '"/>')
-							.html('<div class="th-inner-wrapper"><span><span>'+column[0]+'</span></span></div>').appendTo(tr)
-					}else{
-						$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+column[0]+'</span></span></div>').appendTo(tr)
-					}
-				})
-				return this.dom.thead
-			}
-			gen_thead = gen_thead.bind(this)
-			gen_thead( this.columns ).appendTo( this.dom.table )
-			this.dom.tbody = $('<tbody/>').appendTo( this.dom.table )
+			this.dom.table = this.dom.container.children('.tablelist-container')
+				.on('focus.number_input_select', 'input[type="number"]', function(e){
+						e.currentTarget.select()
+					})
+			this.dom.thead = this.dom.table.children('.tablelist-header')
+			this.dom.tbody = this.dom.table.children('.tablelist-body')
+				.on('contextmenu.contextmenu_fleet', '.row[data-fleetid]', function(e){
+						this.contextmenu_show($(e.currentTarget), null , e)
+						e.preventDefault()
+					}.bind(this))
+				.on('click.contextmenu_fleet', '.row[data-fleetid]>th>em', function(e){
+						this.contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget))
+						e.stopImmediatePropagation()
+						e.stopPropagation()
+					}.bind(this))
+			
+			this.columns.forEach(function(v, i){
+				if( typeof v == 'object' ){
+					$('<span data-stat="' + v[1] + '"/>',{
+						'data-stat':v[1],
+						'html':		v[0]
+					}).appendTo(this.dom.thead)
+				}else{
+					$('<strong/>').html(v[0]).appendTo(this.dom.thead)
+				}
+			}.bind(this))
 
 		// [创建] 无内容时的新建提示框架
 			$('<div class="nocontent container"/>')
@@ -10746,22 +10882,7 @@ class TablelistFleets extends Tablelist{
 								)
 					)
 				)
-				.appendTo( this.dom.table_container_inner )
-	
-		// 右键菜单事件
-			this.dom.table.on('contextmenu.contextmenu_fleet', 'tr[data-fleetid]', function(e){
-				this.contextmenu_show($(e.currentTarget), null , e)
-				e.preventDefault()
-			}.bind(this)).on('click.contextmenu_fleet', 'tr[data-fleetid]>th>em', function(e){
-				this.contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget))
-				e.stopImmediatePropagation()
-				e.stopPropagation()
-			}.bind(this))
-		
-		// Auto select for number input
-			this.dom.container.on('focus.number_input_select', 'input[type="number"]', function(e){
-				e.currentTarget.select()
-			})
+				.appendTo( this.dom.table )
 
 		this.genlist()
 	}
@@ -10945,9 +11066,9 @@ class TablelistFleets extends Tablelist{
 						// 创建flexgrid placeholder
 							while(k < this.flexgrid_empty_count){
 								if( !k )
-									this.flexgrid_ph = $('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
+									this.flexgrid_ph = $('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
 								else
-									$('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
+									$('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
 								k++
 							}
 
@@ -10962,9 +11083,9 @@ class TablelistFleets extends Tablelist{
 							}.bind(this))
 
 						// 创建强制换行
-							$('<tr class="typetitle" data-trindex="'+(++this.trIndex)+'">'
+							$('<p class="title" data-trindex="'+(++this.trIndex)+'">'
 								+ '<th colspan="' + (this.columns.length + 1) + '">'
-								+ '</th></tr>')
+								+ '</th></p>')
 								.appendTo( this.dom.tbody )
 							this.trIndex++
 					}
@@ -10972,9 +11093,9 @@ class TablelistFleets extends Tablelist{
 				// 创建flexgrid placeholder
 					while(k < this.flexgrid_empty_count){
 						if( !k )
-							this.flexgrid_ph = $('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
+							this.flexgrid_ph = $('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
 						else
-							$('<tr class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
+							$('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
 						k++
 					}
 		
@@ -11006,7 +11127,7 @@ class TablelistFleets extends Tablelist{
 			
 			//_g.log(data)
 			
-			let tr = $('<tr class="row"/>')
+			let tr = $('<p class="row"/>')
 						.attr({
 							'data-trindex': index,
 							'data-fleetid': data._id || 'PLACEHOLDER',
@@ -11347,7 +11468,7 @@ class TablelistFleets extends Tablelist{
 	
 	// 生成列表
 		genlist(){
-			let promise_chain 	= Q.fcall(function(){})
+			Q.fcall(function(){})
 	
 				//promise_chain
 	
@@ -11454,221 +11575,21 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 TablelistFleets.support = {};
 TablelistFleets.support.buildfile = (_g.isNWjs || (window.File && window.FileReader && window.FileList && window.Blob && window.URL)) ? true : false;
 
+// Entities
 
-
-class TablelistShips extends Tablelist{
+class TablelistEntities extends Tablelist{
 	constructor( container, options ){
 		super( container, options )
-
-		this.columns = [
-			'  ',
-			['火力',	'fire'],
-			['雷装',	'torpedo'],
-			['夜战',	'nightpower'],
-			['对空',	'aa'],
-			['对潜',	'asw'],
-			['耐久',	'hp'],
-			['装甲',	'armor'],
-			['回避',	'evasion'],
-			['搭载',	'carry'],
-			['航速',	'speed'],
-			['射程',	'range'],
-			['索敌',	'los'],
-			['运',		'luck'],
-			['油耗',	'consum_fuel'],
-			['弹耗',	'consum_ammo'],
-			['多立绘',	'extra_illust']
-		]
-		this.header_checkbox = []
-		this.checkbox = []
-		//this.last_item = null
-		//this.compare_checkbox
 
 		// 标记全局载入状态
 			_frame.app_main.loading.push('tablelist_'+this._index)
 			_frame.app_main.is_loaded = false
-	
-			//_g.log( 'shiplist init', _frame.app_main.loading )
 		
-		if( container.children('.tablelist-container').length ){
+		if( container.children('.tablelist-list').length ){
 			this.init_parse()
-		}else if(this.init_new){
-			this.init_new()
+		}else if( this.init_new ){
+			this.init_new( options )
 		}
-	}
-
-	compare_btn_show( is_checked ){
-		if( (!is_checked && this.compare_checkbox.filter(':checked').length)
-			|| is_checked
-		){
-			this.dom.msg_container.attr('data-msgs', 'comparestart')
-		}else{
-			this.dom.msg_container.removeAttr('data-msgs')
-		}
-	}
-
-	compare_start(){
-		// 隐藏底部提示信息
-			this.dom.msg_container.removeAttr('data-msgs')
-	
-		// 存储当前状态
-			this.last_viewtype = this.dom.filter_container.attr('viewtype')
-			_config.set( 'shiplist-viewtype', this.last_viewtype )
-			this.last_scrollTop = this.dom.tbody.scrollTop()
-	
-		// 更改视图
-			this.dom.filter_container.attr('viewtype', 'compare')
-			this.dom.tbody.scrollTop( 0 )
-			this.dom.table.addClass('sortable')
-	
-		// 计算数据排序排序
-			this.mark_high( true )
-			this.thead_redraw( 500 )
-	}
-
-	compare_off(){
-		this.dom.filter_container.attr('viewtype', this.last_viewtype)
-		this.sort_table_restore()
-		this.mark_high()
-		this.thead_redraw( 500 )
-		this.dom.tbody.scrollTop( this.last_scrollTop )
-		this.dom.table.removeClass('sortable')
-		delete this.last_viewtype
-		delete this.last_scrollTop
-	}
-
-	compare_end(){
-		this.compare_checkbox.filter(':checked').prop('checked', false).trigger('change')
-		this.dom.msg_container.removeAttr('data-msgs')
-		this.compare_off()
-	}
-
-	compare_continue(){
-		this.dom.msg_container.attr('data-msgs', 'comparestart')
-		this.compare_off()
-	}
-	
-	contextmenu_show($el, shipId, is_rightclick){
-		if( this.dom.filter_container.attr('viewtype') == 'compare' || $el.attr('data-donotcompare') == 'true' )
-			return false
-	
-		if( !TablelistShips.contextmenu )
-			TablelistShips.contextmenu = new _menu({
-				'className': 'contextmenu-ship',
-				'items': [
-					$('<menuitem/>').html('选择')
-						.on({
-							'click': function(e){
-								if( _frame.app_main.is_mode_selection() )
-									_frame.app_main.mode_selection_callback(TablelistShips.contextmenu._curid)
-							},
-							'show': function(){
-								if( _frame.app_main.is_mode_selection() )
-									$(this).show()
-								else
-									$(this).hide()
-							}
-						}),
-					$('<menuitem/>').html('查看资料')
-						.on({
-							'click': function(e){
-								TablelistShips.contextmenu._curel.trigger('click', [true])
-							}
-						}),
-	
-					$('<menuitem/>').html('将该舰娘加入对比')
-						.on({
-							'click': function(e){
-								this.checkbox[TablelistShips.contextmenu._curid]
-									.prop('checked', !this.checkbox[TablelistShips.contextmenu._curid].prop('checked'))
-									.trigger('change')
-							}.bind(this),
-							'show': function(e){
-								if( !TablelistShips.contextmenu._curid )
-									return false
-								
-								if( _g.data.ship_types[_g['data']['ships'][TablelistShips.contextmenu._curid]['type']]['donotcompare'] )
-									$(e.target).hide()
-								else
-									$(e.target).show()
-									
-								if( this.checkbox[TablelistShips.contextmenu._curid].prop('checked') )
-									$(e.target).html('取消对比')
-								else
-									$(e.target).html('将该舰娘加入对比')
-							}.bind(this)
-						}),
-					
-					$('<div/>').on('show', function(e){
-						var $div = $(e.target).empty()
-						if( TablelistShips.contextmenu._curid ){
-							var series = _g['data']['ships'][TablelistShips.contextmenu._curid].getSeriesData() || []
-							series.forEach(function(currentValue, i){
-								if( !i )
-									$div.append($('<hr/>'))
-								let checkbox = null
-								try{
-									checkbox = this.checkbox[currentValue['id']]
-								}catch(e){}
-								$div.append(
-									$('<div class="item"/>')
-										.html('<span>' + _g['data']['ships'][currentValue['id']].getName(true) + '</span>')
-										.append(
-											$('<div class="group"/>')
-												.append(function(){
-													var els = $()
-													
-													if( _frame.app_main.is_mode_selection() ){
-														els = els.add(
-															$('<menuitem/>')
-																.html('选择')
-																.on({
-																	'click': function(){
-																		if( _frame.app_main.is_mode_selection() )
-																			_frame.app_main.mode_selection_callback(currentValue['id'])
-																	}
-																})
-														)
-													}
-													
-													return els
-												})
-												.append(
-													$('<menuitem data-infos="[[SHIP::'+currentValue['id']+']]"/>')
-														.html('查看资料')
-												)
-												.append(
-													$('<menuitem/>')
-														.html(
-															checkbox && checkbox.prop('checked')
-																? '取消对比'
-																: '加入对比'
-														)
-														.on({
-															'click': function(e){
-																if( checkbox ){
-																	this.checkbox[currentValue['id']]
-																		.prop('checked', !checkbox.prop('checked'))
-																		.trigger('change')
-																}
-															}.bind(this)
-														})
-												)
-										)
-								)
-							}, this)
-						}
-					}.bind(this))
-				]
-			})
-	
-		TablelistShips.contextmenu._curid = shipId || $el.data('shipid')
-		TablelistShips.contextmenu._curel = $el
-
-		if( is_rightclick )
-			TablelistShips.contextmenu.show(is_rightclick.clientX, is_rightclick.clientY)
-		else
-			TablelistShips.contextmenu.show($el)
 	}
 	
 	
@@ -11680,201 +11601,273 @@ class TablelistShips extends Tablelist{
 	
 	
 	init_parse(){
-		// 生成过滤器与选项
-			this.dom.filter_container = this.dom.container.children('.options')
-			this.dom.filters = this.dom.filter_container.children('.filters')
-			this.dom.exit_compare = this.dom.filter_container.children('.exit_compare')
-			// 结束对比
-				this.dom.exit_compare.children('button[icon="arrow-set2-left"]').on('click', function(){
-						this.compare_end()
-					}.bind(this))
-			// 继续选择
-				this.dom.exit_compare.children('button[icon="checkbox-checked"]').on('click', function(){
-						this.compare_continue()
-					}.bind(this))
-			// 点击表格标题可排序
-				this.dom.btn_compare_sort = this.dom.exit_compare.children('button[icon="sort-amount-desc"]')
-					.on('click', function(){
-						if( !this.dom.btn_compare_sort.hasClass('disabled') )
-							this.sort_table_restore()
-					}.bind(this))
-			// 仅显示同种同名舰最终版本
-				this.dom.btn_hide_premodel = this.dom.filters.find('[name="hide-premodel"]')
-					.prop('checked', _config.get( 'shiplist-filter-hide-premodel' ) === 'false' ? null : true)
-					.on('change', function( e ){
-						_config.set( 'shiplist-filter-hide-premodel', this.dom.btn_hide_premodel.prop('checked') )
-						this.dom.filter_container.attr('filter-hide-premodel', this.dom.btn_hide_premodel.prop('checked'))
-						this.thead_redraw()
-					}.bind(this))
-			// 视图切换
-				this.dom.filters.find('[name="viewtype"]').each(function(index, $el){
-					$el = $($el)
-					let viewtype = _config.get( 'shiplist-viewtype' ) || 'card'
-					if( $el.val() == viewtype )
-						$el.prop('checked', true)
-					$el.on('change', function( e ){
-						if( $el.is(':checked') ){
-							_config.set( 'shiplist-viewtype', $el.val() )
-							this.dom.filter_container.attr('viewtype', $el.val())
-							this.thead_redraw()
-						}
-					}.bind(this))
-				}.bind(this))
-			this.dom.filters.find('input').trigger('change')
+		this.generated = true
+		_frame.app_main.loaded('tablelist_'+this._index, true)
+	}
+}
+
+// Entities
+
+TablelistEntities.prototype.append_item_cv = function( entity ){
+	return _tmpl.link_entity( entity, null, false, entity.relation.cv.length ).addClass('unit cv')
+}
+
+TablelistEntities.prototype.append_item_illustrator = function( entity ){
+	return $('<a/>',{
+		'class':	'unit illustrator',
+		'href':		'?infos=entity&id=' + entity.id,
+		'html':		entity._name + ' (' + entity.relation.illustrator.length + ')'
+	})
+}
+
+TablelistEntities.prototype.append_items = function( title, arr, callback_append_item ){
+	let container
 	
-		// 生成表格框架
-			this.dom.table = this.dom.container.children('.tablelist-container')
-			this.dom.table_header = this.dom.table.children('.tablelist-header')
-				this.dom.table_header.children('span').on('click', function(e){
-						this.sort_table_from_theadcell($(e.currentTarget))
-					}.bind(this))
-			this.dom.tbody = this.dom.table.children('.tablelist-body')
-				.on('contextmenu.contextmenu_ship', '.row[data-shipid]', function(e){
-						this.contextmenu_show($(e.currentTarget), null, e)
+	this.dom.container
+		.append(
+			$('<div/>',{
+				'class':	'typetitle',
+				'html':		title
+			})
+		)
+		.append(
+			container = _p.el.flexgrid.create().addClass('tablelist-list')
+		)
+	
+	arr.forEach(function(item){
+		container.appendDOM( callback_append_item( item ) )
+	}, this)
+}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+TablelistEntities.prototype.init_new = function(options){
+	options = options || {}
+	
+	let listCV = [],
+		listIllustrator = []
+	
+	for( let i in _g.data.entities ){
+		let entity = _g.data.entities[i]
+		if( !entity.relation )
+			continue
+		if( entity.relation.cv && entity.relation.cv.length )
+			listCV.push(entity)
+		if( entity.relation.illustrator && entity.relation.illustrator.length )
+			listIllustrator.push(entity)
+	}
+
+	this.append_items(
+		'声优',
+		listCV.sort(function(a,b){
+			return b.relation.cv.length - a.relation.cv.length
+		}),
+		this.append_item_cv
+	)
+	this.append_items(
+		'画师',
+		listIllustrator.sort(function(a,b){
+			return b.relation.illustrator.length - a.relation.illustrator.length
+		}),
+		this.append_item_illustrator
+	)
+	
+	this.generated = true
+	_frame.app_main.loaded('tablelist_'+this._index, true)
+}
+
+// Equipments (Other Class Functions)
+
+TablelistEquipments.prototype.append_item = function( equipment_data, collection_id ){
+	let tr = $('<tr/>',{
+					'class':			'row',
+					'data-equipmentid':	equipment_data['id'],
+					'data-equipmentcollection':	collection_id,
+					'data-infos': 		'[[EQUIPMENT::'+ equipment_data['id'] +']]',
+					'data-equipmentedit':this.dom.container.hasClass('equipmentlist-edit') ? 'true' : null,
+					'data-equipmenttype':equipment_data.type
+				})
+				.on('click', function(e, forceInfos){
+					if( !forceInfos && _frame.app_main.is_mode_selection() ){
 						e.preventDefault()
-					}.bind(this))
-				.on('click.contextmenu_ship', '.row[data-shipid]>strong>em', function(e){
-						this.contextmenu_show($(e.currentTarget).parent().parent())
 						e.stopImmediatePropagation()
 						e.stopPropagation()
-					}.bind(this))
-				.on('click', '.row[data-shipid]', function(e, forceInfos){
-						if( e.target.tagName.toLowerCase() == 'label' ){
-							this.checkbox[e.currentTarget.getAttribute('data-shipid')]
-								.prop('checked', !this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked'))
-								.trigger('change')
-							e.stopPropagation()
-						}/*else if( e.target.tagName.toLowerCase() == 'em' ){
-							e.preventDefault()
-							e.stopImmediatePropagation()
-							e.stopPropagation()
-						}*/else if( !forceInfos && _frame.app_main.is_mode_selection() ){
-							e.preventDefault()
-							e.stopImmediatePropagation()
-							e.stopPropagation()
-							if( !e.currentTarget.getAttribute('data-donotcompare') )
-								_frame.app_main.mode_selection_callback(e.currentTarget.getAttribute('data-shipid'))
-						}
-					}.bind(this))
-	
-		// 生成底部内容框架
-			this.dom.msg_container = this.dom.container.children('.msgs')
-			if( _config.get( 'hide-compareinfos' ) )
-				this.dom.msg_container.removeAttr('data-msgs')
-			else
-				this.dom.msg_container.attr( 'data-msgs', 'compareinfos' )
-	
-		// 处理所有舰娘数据
-			//if( _g.data.ship_types ){
-				this.parse_all_items()
-			//}
-	
-		// 生成部分底部内容
-			let compareinfos = this.dom.msg_container.children('.compareinfos')
-				compareinfos.children('button').on('click', function(){
-						this.dom.msg_container.removeAttr('data-msgs')
-						_config.set( 'hide-compareinfos', true )
-					}.bind(this))
-			this.dom.msg_container.children('.comparestart')
-					.on('click', function(){
-						this.compare_start()
-					}.bind(this))
+						
+						if( $.inArray(equipment_data.type, TablelistEquipments.types) > -1 )
+							_frame.app_main.mode_selection_callback(equipment_data['id'])
+					}
+				})
+				.appendTo( this.dom.tbody )
+
+	function _val( val, show_zero ){
+		if( !show_zero && (val == 0 || val === '0' || val === '') )
+			//return '<small class="zero">-</small>'
+			return '-'
+		//if( val > 0 )
+		//	return '+' + val
+		return val
 	}
-	
-	parse_all_items(){
-		let header_index = -1
 
-		this.dom.tbody.children('p.title,p.row').each(function(index, tr){
-			tr = $(tr)
-			if( tr.hasClass('title') ){
-				header_index++
-				this.last_item = tr
-				let checkbox = tr.find('input[type="checkbox"]')
-						//.prop('disabled', _g.data['ship_type_order'][header_index]['donotcompare'] ? true : false)
-						.on({
-							'change': function(){
-								checkbox.data('ships').filter(':visible').each(function(index, element){
-									$(element).data('checkbox').prop('checked', checkbox.prop('checked')).trigger('change', [true])
-								})
-							},
-							'docheck': function(){
-								// ATTR: compare-checked
-								var trs = checkbox.data('ships').filter(':visible')
-									,checked = trs.filter('[compare-checked=true]')
-								if( !checked.length ){
-									checkbox.prop({
-										'checked': 			false,
-										'indeterminate': 	false
-									})
-								}else if( checked.length < trs.length ){
-									checkbox.prop({
-										'checked': 			false,
-										'indeterminate': 	true
-									})
-								}else{
-									checkbox.prop({
-										'checked': 			true,
-										'indeterminate': 	false
-									})
-								}
-							}
-						})
-						.data('ships', $())
-				this.header_checkbox[header_index] = checkbox
-			}else{
-				let donotcompare = tr.attr('data-donotcompare')
-					//,ship_data = _g.data.ships[ tr.attr('data-shipid') ]
-					,ship_id = tr.attr('data-shipid')
-					,checkbox = tr.find('input[type="checkbox"]')
-					,title_index = header_index
-				
-				/*
-				tr.on('click', function(e, forceInfos){
-						if( !forceInfos
-							&& e.target.tagName.toLowerCase() != 'em'
-							&& e.target.tagName.toLowerCase() != 'label'
-							&& _frame.app_main.is_mode_selection()
-						){
-							e.preventDefault()
-							e.stopImmediatePropagation()
-							e.stopPropagation()
-							if(!donotcompare)
-								_frame.app_main.mode_selection_callback(ship_id)
-						}
-					})
-				*/
-
-				checkbox.prop('disabled', donotcompare)
-					//.on('click change',function(e, not_trigger_check){
-					.on('change',function(e, not_trigger_check){
-						//e.stopImmediatePropagation()
-						//e.stopPropagation()
-						if( checkbox.prop('checked') )
-							tr.attr('compare-checked', true )
-						else
-							tr.removeAttr('compare-checked')
-						this.compare_btn_show( checkbox.prop('checked') )
-						if( !not_trigger_check )
-							this.header_checkbox[title_index].trigger('docheck')
-					}.bind(this))
-	
-				this.header_checkbox[title_index].data(
-						'ships',
-						this.header_checkbox[title_index].data('ships').add( tr )
+	this.columns.forEach(function(currentValue){
+		switch( currentValue[1] ){
+			case ' ':
+				$('<th/>').html(equipment_data.getName()).appendTo(tr)
+				break;
+			case 'range':
+				$('<td data-stat="range" data-value="' + equipment_data['stat']['range'] + '"/>')
+					.html(
+						equipment_data['stat']['range']
+							? _g.getStatRange( equipment_data['stat']['range'] )
+							: '<small class="zero">-</small>'
 					)
+					.appendTo(tr)
+				break;
+			case 'improvable':
+				$('<td data-stat="range" data-value="' + (equipment_data['improvable'] ? '1' : '0') + '"/>')
+					.html(
+						equipment_data['improvable']
+							? '✓'
+							: '<small class="zero">-</small>'
+					)
+					.appendTo(tr)
+				break;
+			default:
+				$('<td data-stat="'+currentValue[1]+'" data-value="' + (equipment_data['stat'][currentValue[1]] || 0) + '"/>')
+					.addClass( equipment_data['stat'][currentValue[1]] < 0 ? 'negative' : '' )
+					.html( _val( equipment_data['stat'][currentValue[1]] ) )
+					.appendTo(tr)
+				break;
+		}
+	})
 
-				tr.data('checkbox', checkbox)
-			
-				this.checkbox[ship_id] = checkbox
+	return tr
+}
+
+TablelistEquipments.prototype.append_all_items = function(){
+	this.generated = false
+	this.dom.types = []
+	function _do( i, j ){
+		if( _g.data.item_id_by_type[i] ){
+			if( !j ){
+				var data_equipmenttype = _g.data.item_types[ _g.item_type_order[i] ]
+				this.dom.types.push(
+					$('<tr class="typetitle" data-equipmentcollection="'+_g.data.item_id_by_type[i]['collection']+'" data-type="'+data_equipmenttype.id+'">'
+							+ '<th colspan="' + (this.columns.length + 1) + '">'
+								+ '<span style="background-image: url(../app/assets/images/itemicon/'+data_equipmenttype['icon']+'.png)"></span>'
+								+ data_equipmenttype['name']['zh_cn']
+								+ TablelistEquipments.gen_helper_equipable_on( data_equipmenttype['id'] )
+							+ '</th></tr>'
+						).appendTo( this.dom.tbody )
+				)
 			}
-		}.bind(this))
-		
-		this.compare_checkbox = this.dom.tbody.find('input[type="checkbox"].compare')
-		this.mark_high()
-		this.thead_redraw()
-		_frame.app_main.loaded('tablelist_'+this._index, true)
-		delete( this.last_item )
+
+			this.append_item(
+				_g.data.items[ _g.data.item_id_by_type[i]['equipments'][j] ],
+				_g.data.item_id_by_type[i]['collection']
+			)
+
+			setTimeout(function(){
+				if( j >= _g.data.item_id_by_type[i]['equipments'].length - 1 ){
+					_do( i+1, 0 )
+				}else{
+					_do( i, j+1 )
+				}
+			}, 0)
+		}else{
+			//this.mark_high()
+			// force thead redraw
+				this.thead_redraw()
+				this.generated = true
+				this.apply_types_check()
+			_frame.app_main.loaded('tablelist_'+this._index, true)
+		}
 	}
+	_do = _do.bind(this)
+	_do( 0, 0 )
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+TablelistEquipments.prototype.init_new = function(){
+	// 生成过滤器与选项
+		this.dom.filter_container = $('<div class="options"/>').appendTo( this.dom.container )
+		this.dom.filters = $('<div class="filters"/>').appendTo( this.dom.filter_container )
+
+	// 装备大类切换
+		var checked = false
+		this.dom.type_radios = {}
+		for(var i in _g.data.item_type_collections){
+			//var radio_id = '_input_g' + parseInt(_g.inputIndex)
+			let radio_id = Tablelist.genId()
+			this.dom.type_radios[i] = $('<input type="radio" name="equipmentcollection" id="'+radio_id+'" value="'+i+'"/>')
+				.prop('checked', !checked )
+				.on('change', function(){
+					// force thead redraw
+					this.dom.table_container_inner.scrollTop(0)
+					this.thead_redraw()
+				}.bind(this))
+				.prependTo( this.dom.container )
+			$('<label class="tab container" for="'+radio_id+'" data-equipmentcollection="'+i+'"/>')
+				.html(
+					'<i></i>'
+					+ '<span>' + _g.data.item_type_collections[i]['name']['zh_cn'].replace(/\&/g, '<br/>') + '</span>'
+				)
+				.appendTo( this.dom.filters )
+			checked = true
+			//_g.inputIndex++
+		}
+	
+	// 装备类型过滤
+		this.dom.filter_types = $('<input name="types" type="hidden"/>').prependTo( this.dom.container )
+
+	// 生成表格框架
+		this.dom.table_container = $('<div class="fixed-table-container"/>').appendTo( this.dom.container )
+		this.dom.table_container_inner = $('<div class="fixed-table-container-inner"/>').appendTo( this.dom.table_container )
+		this.dom.table = $('<table class="equipments hashover hashover-column"/>').appendTo( this.dom.table_container_inner )
+		function gen_thead(arr){
+			this.dom.thead = $('<thead/>')
+			var tr = $('<tr/>').appendTo(this.dom.thead)
+			arr.forEach(function(currentValue){
+				if( typeof currentValue == 'object' ){
+					$('<td data-stat="' + currentValue[1] + '"/>')
+						.html('<div class="th-inner-wrapper"><span><span>'+currentValue[0]+'</span></span></div>').appendTo(tr)
+				}else{
+					$('<th/>').html('<div class="th-inner-wrapper"><span><span>'+currentValue[0]+'</span></span></div>').appendTo(tr)
+				}
+			})
+			return this.dom.thead
+		}
+		gen_thead = gen_thead.bind(this)
+		gen_thead( this.columns ).appendTo( this.dom.table )
+		this.dom.tbody = $('<tbody/>').appendTo( this.dom.table )
+
+	// 生成装备数据DOM
+		this.append_all_items()
+
+	// 生成底部内容框架
+		this.dom.msg_container = $('<div class="msgs"/>').appendTo( this.dom.container )
+		if( !_config.get( 'hide-equipmentsinfos' ) )
+			this.dom.msg_container.attr( 'data-msgs', 'equipmentsinfos' )
+
+	// 生成部分底部内容
+		var equipmentsinfos = $('<div class="equipmentsinfos"/>').html('点击装备查询初装舰娘等信息').appendTo( this.dom.msg_container )
+			$('<button/>').html('&times;').on('click', function(){
+				this.dom.msg_container.removeAttr('data-msgs')
+				_config.set( 'hide-equipmentsinfos', true )
+			}.bind(this)).appendTo( equipmentsinfos )
 }
 
 TablelistShips.prototype.append_item = function( ship_data, header_index ){

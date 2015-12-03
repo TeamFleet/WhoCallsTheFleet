@@ -83,6 +83,6 @@
 
 // @koala-prepend "../../source/js-app/elements/tablelist.js"
 // @koala-prepend "../../source/js-app/elements/tablelist-entities.js"
-// @koala-prepend "../../source/js-app/elements/tablelist-equipments.js"
-// @koala-prepend "../../source/js-app/elements/tablelist-fleets.js"
-// @koala-prepend "../../source/js-app/elements/tablelist-ships-v2.js"
+// @koala-prepend "../../source/js-app/elements/tablelist-v2/ships.js"
+// @koala-prepend "../../source/js-app/elements/tablelist-v2/equipments.js"
+// @koala-prepend "../../source/js-app/elements/tablelist-v2/fleets.js"

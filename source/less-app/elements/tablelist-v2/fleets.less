@@ -1,3 +1,296 @@
 .tablelist-fleets(){
 	
 }
+
+
+// DEFAULT viewtype: list
+	.tablelist-fleets-table-viewtype-list(){
+		&.fleets{
+		}
+	}
+
+// viewtype: card
+	.tablelist-fleets-table-viewtype-card(){
+		&.fleets{
+			tbody{
+				.margin-right(-5);
+				tr.typetitle{
+					height: 	17.5px;
+					margin: 	0 auto 7.5px -20px;
+					width: 		~"calc(100% + 30px)";
+					&:last-child{
+						margin-bottom: 	0;
+						border: 		0;
+					}
+				}
+				tr[data-fleetid]{
+					@color:		hsl(50, 0%, 90%);
+					@color2:	fade(@color, 80%);
+					@color3:	fade(@color, 15%);
+					.flex-basis(500) !important;
+					.margin-right(5);
+					.height(40);
+					.margin-top(10);
+					.padding-right(20);
+					border-bottom:	0;
+					&:before{
+						content:	"";
+						position:	absolute;
+						.top(5);
+						left:		0;
+						.height(30);
+						width:		0;
+						.border(3, solid, transparent);
+						.border-right(4, solid, @color2);
+						border-left:0;
+						.filter( ~"drop-shadow(0 0 10px @{color})" );
+						z-index:	7;
+						.enable-transition();
+						.transition-property(~"top, height, border");
+					}
+					th{
+						display:	block;
+						.flexbox();
+						.align-items(center);
+						.padding-left(350);
+						height:		100%;
+						&>i{
+							//.transition-property(opacity);
+							//opacity:	.75;
+							&>img, &>s{
+								@left_offset:	-38;
+								flex:		none;
+								display:	block;
+								position:	absolute;
+								z-index:	6;
+								.top(5);
+								.left(5 + @left_offset);
+								.width(120);
+								.height(30);
+								pointer-events: none;
+								.mask-image(~"linear-gradient(to right, transparent 0, transparent 36px, #000 40px, #000 calc(100% - 30px), transparent calc(100% - 10px))");
+								.mask-position(0 0);
+								.mask-size(100% 100%);
+								&.nomask{
+									mask-image: 	none;
+								}
+								&+img, &+s{
+									z-index:	5;
+									.left(5 + 55 * 1 + @left_offset);
+									&+img, &+s{
+										z-index:	4;
+										.left(5 + 55 * 2 + @left_offset);
+										&+img, &+s{
+											z-index:	3;
+											.left(5 + 55 * 3 + @left_offset);
+											&+img, &+s{
+												z-index:	2;
+												.left(5 + 55 * 4 + @left_offset);
+												&+img, &+s{
+													z-index:	1;
+													.left(5 + 55 * 5 + @left_offset);
+												}
+											}
+										}
+									}
+								}
+							}
+							&>s{
+								//background:	rgba(0,0,0, .35);
+								background:	rgba(255,255,255, .15);
+								&.nomask{
+									background: ~"linear-gradient(to right, transparent 0, transparent 36px, rgba(255,255,255, .15) 40px, rgba(255,255,255, .15) calc(100% - 30px), transparent calc(100% - 10px))";
+								}
+							}
+						}
+						&>strong{
+							font-weight:lighter;
+							.line-height(16);
+						}
+						&>em{
+							display: 	none;
+							position: 	absolute;
+							right: 		0;
+							top: 		0;
+							width: 		30px;
+							height: 	100%;
+							color: 		rgba(255, 255, 255, .075);
+							font-style: normal;
+							font-weight:lighter;
+							.transition-property(color);
+							&:before{
+								content: 	@iconcode-more;
+								font-family:icons;
+								position: 	absolute;
+								display: 	block;
+								width: 		100%;
+								height: 	0;
+								top: 		50%;
+								left: 		0;
+								text-align: center;
+								line-height:0;
+								font-size: 	24px;
+							}
+							&:hover{
+								color: 		rgba(255, 255, 255, .8) !important;
+							}
+							@media all and (min-width: 1152px ){
+								display: 	block;
+							}
+						}
+					}
+					td{
+						display:	none;
+					}
+					&:hover{
+						background:	@color3 !important;
+						&:before{
+							top:	0;
+							.height(40);
+							border-top-width:	0;
+							border-bottom-width:0;
+						}
+						//&>th>i{
+						//	opacity:	1;
+						//}
+					}
+					&:empty{
+						&:before{
+							display:	none;
+						}
+						margin-top:	0;
+					}
+					
+					.theme(@color){
+						@color2:	fade(@color, 80%);
+						@color3:	fade(@color, 15%);
+						&:before{
+							border-right-color: 	@color2;
+							.filter( ~"drop-shadow(0 0 10px @{color})" );
+						}
+						&:hover{
+							background:	@color3 !important;
+						}
+					}
+					&[data-theme="2"]{
+						.theme( hsl(11, 100%, 83%) );
+					}
+					&[data-theme="3"]{
+						.theme( hsl(51, 100%, 83%) );
+					}
+					&[data-theme="4"]{
+						.theme( hsl(91, 100%, 83%) );
+					}
+					&[data-theme="5"]{
+						.theme( hsl(131, 100%, 83%) );
+					}
+					&[data-theme="6"]{
+						.theme( hsl(171, 100%, 83%) );
+					}
+					&[data-theme="7"]{
+						.theme( hsl(211, 100%, 83%) );
+					}
+					&[data-theme="8"]{
+						.theme( hsl(251, 100%, 83%) );
+					}
+					&[data-theme="9"]{
+						.theme( hsl(291, 100%, 83%) );
+					}
+					&[data-theme="10"]{
+						.theme( hsl(331, 100%, 83%) );
+					}
+				}
+			}
+		}
+	}
+
+
+// .options
+	.tablelist-fleets-options(){
+		.setting-hqlv{
+			display: 	inline-block;
+			position: 	relative;
+			padding: 	0 15px 0 0;
+			line-height:30px;
+			input[type="number"]{
+				padding: 	0;
+				text-align: center;
+				min-width: 	0;
+				width: 		2.5em;
+				line-height:normal;
+				vertical-align: middle;
+				height: 	24px;
+				margin-left:4px;
+				//font-size: 	inherit;
+				-moz-appearance:textfield;
+				&::-webkit-inner-spin-button{
+					position: 	absolute;
+					z-index: 	-100;
+					visibility: hidden;
+				}
+			}
+			&:after{
+				@height: 	22px;
+				position: 	absolute;
+				content: 	'';
+				top: 		50%;
+				right: 		0;
+				height: 	@height;
+				margin-top: (0 - @height / 2);
+				width: 		1px;
+				background: rgba(255, 255, 255, .15);
+				//border: 	0;
+				//border-left:1px solid rgba(0, 0, 0, .1);
+				//border-right:1px solid rgba(255, 255, 255, .15);
+			}
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body > .menus > .menu.menu-tablelistfleets-options{
+	&>.body{
+		.option-in-tablelist{
+			display: 	none;
+		}
+		menuitem.option-aircraftdefaultmax{
+			label{
+				position: 		relative;
+				padding-right: 	(21 + 24px * 0.65 + 4);
+				&:after{
+					content: 	'';
+					position: 	absolute;
+					display: 	block;
+					width: 		(24px * 0.65);
+					height: 	(32px * 0.65);
+					background: ~"url(@{folder_images}/Aircraft_Proficiency.png) no-repeat 50% 100% / cover";
+					right: 		21px;
+					top: 		50%;
+					margin-top: (-16px * 0.65 + 1);
+				}
+			}
+		}
+	}
+	&.is-tablelist>.body{
+		.option-in-tablelist{
+			display: 	block;
+		}
+		.option-in-infos{
+			display: 	none;
+		}
+	}
+}

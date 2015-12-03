@@ -24,13 +24,14 @@
 		//color:		#f2f2f2;
 		max-height: auto;
 		flex: 		0 0 @tablelist-options-height;
+		//border-right:0 solid transparent;
 		//max-height:	~"calc(100% - 280px)";
 		//flex: 	1 0 auto;
 		//transition-property: height;
 		
 		label, button{
 			color:		rgba(255,255,255, .75);
-			transition-property: color;
+			transition-property: color, opacity, background-position;
 			&:hover{
 				color:	#fff;
 			}
@@ -280,7 +281,7 @@
 		}
 		&[data-msgs]{
 			height: 	@tablelist-msgs-height;
-			flex-basis: @tablelist-msgs-height;
+			//flex-basis: @tablelist-msgs-height;
 			border-top-width: 1px;
 		}
 		&[data-msgs="compareinfos"] > .compareinfos{
@@ -296,6 +297,10 @@
 			z-index:	2;
 		}
 	} // &>.msgs
+
+	&.nocontent .nocontent{
+		display:	block !important;
+	}
 }
 
 
@@ -349,7 +354,7 @@
 			position: 	relative;
 		}
 		& > strong{
-			flex: 		5 0 155px;
+			flex: 		7.5 0 155px;
 		}
 		& > span{
 			flex: 		1 0 @tablelist-cell-basis;
@@ -362,6 +367,7 @@
 		flex: 		none;
 		line-height:@tablelist-thead-height;
 		font-size: 	12px;
+		//border-right:0 solid transparent;
 		overflow-y: scroll;
 		&::-webkit-scrollbar-track{
 			background: 	rgba(255,255,255,0);
@@ -517,6 +523,7 @@
 		display: 	none;
 	}
 	.tablelist-body{
+		.main-sizing-padding-right( -10px );
 		background-size:100% 9px;
 		display: 		flex;
 		flex-flow: 		row wrap;
@@ -525,8 +532,8 @@
 			margin-right:10px;
 			&.title{
 				flex: 	none !important;
-				width: 	100%;
-				margin: 0 !important;
+				width: 	~"calc(100% - 10px)";
+				margin: 0 10px 0 0 !important;
 				label.checkbox{
 					&:before{
 						margin-left:5px;

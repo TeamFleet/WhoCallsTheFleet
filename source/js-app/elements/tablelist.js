@@ -181,12 +181,12 @@ class Tablelist{
 
 		// 强制 thead 重绘，以解决某些CSS计算延迟问题
 			thead_redraw( timeout_duration ){
-				if( this.dom.thead && this.dom.thead.length ){
-					var thead = this.dom.thead
-					setTimeout(function(){
-						thead.hide().show(0)
-					}, timeout_duration || 10)
-				}
+				//if( this.dom.thead && this.dom.thead.length ){
+				//	var thead = this.dom.thead
+				//	setTimeout(function(){
+				//		thead.hide().show(0)
+				//	}, timeout_duration || 10)
+				//}
 			}
 
 		// 表格排序相关

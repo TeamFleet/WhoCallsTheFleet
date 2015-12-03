@@ -36,9 +36,9 @@ class TablelistShips extends Tablelist{
 		
 		if( container.children('.tablelist-container').length ){
 			this.init_parse()
-		}else if(this.init_new){
-			this.init_new()
-		}
+		}//else if(this.init_new){
+		//	this.init_new()
+		//}
 	}
 
 	compare_btn_show( is_checked ){
@@ -268,8 +268,8 @@ class TablelistShips extends Tablelist{
 	
 		// 生成表格框架
 			this.dom.table = this.dom.container.children('.tablelist-container')
-			this.dom.table_header = this.dom.table.children('.tablelist-header')
-				this.dom.table_header.children('span').on('click', function(e){
+			this.dom.thead = this.dom.table.children('.tablelist-header')
+				this.dom.thead.children('span').on('click', function(e){
 						this.sort_table_from_theadcell($(e.currentTarget))
 					}.bind(this))
 			this.dom.tbody = this.dom.table.children('.tablelist-body')
