@@ -5433,6 +5433,9 @@ body.mod-capture #tip {
   -webkit-flex-flow: row wrap;
       -ms-flex-flow: row wrap;
           flex-flow: row wrap;
+  -webkit-align-content: flex-start;
+      -ms-flex-line-pack: start;
+          align-content: flex-start;
 }
 @media all and (max-width: 1152px) {
   .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body {
