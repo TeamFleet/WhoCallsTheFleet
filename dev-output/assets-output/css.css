@@ -5723,6 +5723,22 @@ body.mod-capture #tip {
 .tablelist.ships > .options[viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid]:not([compare-checked]) {
   display: none;
 }
+@media all and (max-width: 900px) {
+  .tablelist.ships span[data-stat="consum_fuel"],
+  .tablelist.ships span[data-stat="consum_ammo"] {
+    display: none !important;
+  }
+}
+@media all and (max-width: 800px) {
+  .tablelist.ships span[data-stat="range"] {
+    display: none !important;
+  }
+}
+@media all and (max-width: 720px) {
+  .tablelist.ships span[data-stat="los"] {
+    display: none !important;
+  }
+}
 .tablelist-equipments .tablelist-body > p.title span {
   display: block;
   width: 42px;

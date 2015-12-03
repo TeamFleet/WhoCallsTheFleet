@@ -57,6 +57,7 @@
 // @koala-prepend "../../source/js-app/main-web-page.js"
 
 // @koala-prepend "../../source/js-app/sharebar.js"
+// @koala-prepend "../../source/js-app/duoshuo.js"
 
 // @koala-prepend "../../source/js-app/templates/improvement.js"
 // @koala-prepend "../../source/js-app/templates/link_entity.js"
