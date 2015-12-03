@@ -6507,6 +6507,72 @@ body.mod-capture #tip {
 .tablelist.fleets.nocontent .tablelist-container > .nocontent {
   display: block !important;
 }
+.tablelist.entities {
+  padding-left: 80px;
+  padding-right: 80px;
+  display: block;
+  -webkit-flex-flow: none;
+      -ms-flex-flow: none;
+          flex-flow: none;
+  height: auto;
+}
+@media all and (max-width: 1152px) {
+  .tablelist.entities {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+}
+@media all and (max-width: 960px) {
+  .tablelist.entities {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+@media all and (max-width: 800px) {
+  .tablelist.entities {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+}
+.tablelist.entities .typetitle {
+  height: 50px;
+  font-weight: bold;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 0 auto 0 -20px;
+  width: calc(100% + 40px);
+  padding: 18px 0 0 20px;
+  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
+  text-shadow: 0 1px 0 #000;
+  font-size: 18px;
+}
+.tablelist.entities .typetitle small {
+  padding-left: .5em;
+  font-size: 75%;
+  opacity: .75;
+}
+.tablelist.entities .tablelist-list {
+  margin-right: -10px;
+  padding-bottom: 30px;
+}
+.tablelist.entities .tablelist-list > .unit {
+  margin-right: 10px;
+}
+.tablelist.entities .tablelist-list > .unit:not(:empty) {
+  margin-top: 10px;
+}
+.tablelist.entities .tablelist-list > .unit.illustrator {
+  height: 25px;
+  line-height: 25px;
+  padding: 0 0 0 6px;
+  -webkit-transition-property: background-color, opacity;
+  transition-property: background-color, opacity;
+}
+.tablelist.entities .tablelist-list > .unit.illustrator:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.tablelist.entities .tablelist-list > .unit.illustrator:active {
+  opacity: .5;
+}
 body > .menus > .menu.menu-tablelistfleets-options > .body .option-in-tablelist {
   display: none;
 }
