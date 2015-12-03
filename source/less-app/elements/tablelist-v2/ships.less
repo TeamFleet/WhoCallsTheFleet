@@ -157,9 +157,11 @@
 	// viewtype: card
 	&  > .options[viewtype="card"] ~ .tablelist-container{
 		.tablelist-body{
-			&>p{
+			//&>p{
 				//margin: 	0 10px 0 30px;
-				margin-left: 	30px;
+			//}
+			&>p[data-shipid]{
+				margin-left:30px;
 				@media all and (min-width: 1152px ){
 					flex-basis: 175px;
 				}
@@ -168,8 +170,8 @@
 				}
 			}
 			&>p.row[data-shipid]{
-				margin-top: 10px;
 				height: 	40px;
+				margin-top: 10px;
 				//transition-property: background, color, opacity;
 				label.checkbox{
 					position:	absolute;
@@ -196,9 +198,9 @@
 						}
 					}
 				}
-				&>span{
-					display: 	none;
-				}
+				//&>span{
+				//	display: 	none;
+				//}
 				[icon]{
 					&:before{
 						position: 	absolute;

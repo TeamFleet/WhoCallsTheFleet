@@ -297,10 +297,6 @@
 			z-index:	2;
 		}
 	} // &>.msgs
-
-	&.nocontent .nocontent{
-		display:	block !important;
-	}
 }
 
 
@@ -533,7 +529,7 @@
 			&.title{
 				flex: 	none !important;
 				width: 	~"calc(100% - 10px)";
-				margin: 0 10px 0 0 !important;
+				//margin: 0 10px 0 0;
 				label.checkbox{
 					&:before{
 						margin-left:5px;
@@ -547,6 +543,9 @@
 			}
 			&.row{
 				border-bottom:0;
+				&>span{
+					display: 	none;
+				}
 			}
 		}
 	}

@@ -10843,17 +10843,17 @@ class TablelistFleets extends Tablelist{
 			*/
 
 		// [创建] 表格框架
-			this.dom.table = this.dom.container.children('.tablelist-container')
+			this.dom.table = $('<div class="tablelist-container" scrollbody/>').appendTo( this.dom.container )
 				.on('focus.number_input_select', 'input[type="number"]', function(e){
 						e.currentTarget.select()
 					})
-			this.dom.thead = this.dom.table.children('.tablelist-header')
-			this.dom.tbody = this.dom.table.children('.tablelist-body')
+			this.dom.thead = $('<div class="tablelist-header"/>').appendTo( this.dom.table )
+			this.dom.tbody = $('<div class="tablelist-body"/>').appendTo( this.dom.table )
 				.on('contextmenu.contextmenu_fleet', '.row[data-fleetid]', function(e){
 						this.contextmenu_show($(e.currentTarget), null , e)
 						e.preventDefault()
 					}.bind(this))
-				.on('click.contextmenu_fleet', '.row[data-fleetid]>th>em', function(e){
+				.on('click.contextmenu_fleet', '.row[data-fleetid]>strong>em', function(e){
 						this.contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget))
 						e.stopImmediatePropagation()
 						e.stopPropagation()
@@ -11083,9 +11083,11 @@ class TablelistFleets extends Tablelist{
 							}.bind(this))
 
 						// 创建强制换行
-							$('<p class="title" data-trindex="'+(++this.trIndex)+'">'
-								+ '<th colspan="' + (this.columns.length + 1) + '">'
-								+ '</th></p>')
+							$('<p/>',{
+									'class':	'title',
+									'data-trindex': ++this.trIndex,
+									'html': 	'&nbsp;'
+								})
 								.appendTo( this.dom.tbody )
 							this.trIndex++
 					}
@@ -11147,17 +11149,17 @@ class TablelistFleets extends Tablelist{
 							,j = 0;
 						while( j < 6 ){
 							if( ships[j] && ships[j][0] )
-								html+='<img src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0'
+								html+='<img class="img'+(_huCss.csscheck_full('mask-image') ? '' : ' nomask')
+										+'" src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0'
 										+ (_huCss.csscheck_full('mask-image') ? '.webp' : '-mask-2.png')
 										+ '" contextmenu="disabled"'
-										+ (_huCss.csscheck_full('mask-image') ? '' : ' class="nomask"')
 										+ '/>'
 							else
-								html+='<s' + (_huCss.csscheck_full('mask-image') ? '' : ' class="nomask"') + '/>'
+								html+='<s class="img'+(_huCss.csscheck_full('mask-image') ? '' : ' nomask')+'"/>'
 							j++
 						}
 						html+='</i>'
-						$('<th/>')
+						$('<strong/>')
 							.attr(
 								'data-value',
 								data['name']
@@ -11171,7 +11173,7 @@ class TablelistFleets extends Tablelist{
 						break;
 					default:
 						var datavalue = data[column[1]]
-						$('<td/>')
+						$('<span/>')
 							.attr(
 								'data-value',
 								datavalue

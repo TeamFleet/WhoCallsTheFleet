@@ -7944,14 +7944,14 @@ var TablelistFleets = (function (_Tablelist4) {
 			this.btn_settings();
 		}).bind(_this13)).appendTo(_this13.dom.buttons_right);
 
-		_this13.dom.table = _this13.dom.container.children('.tablelist-container').on('focus.number_input_select', 'input[type="number"]', function (e) {
+		_this13.dom.table = $('<div class="tablelist-container" scrollbody/>').appendTo(_this13.dom.container).on('focus.number_input_select', 'input[type="number"]', function (e) {
 			e.currentTarget.select();
 		});
-		_this13.dom.thead = _this13.dom.table.children('.tablelist-header');
-		_this13.dom.tbody = _this13.dom.table.children('.tablelist-body').on('contextmenu.contextmenu_fleet', '.row[data-fleetid]', (function (e) {
+		_this13.dom.thead = $('<div class="tablelist-header"/>').appendTo(_this13.dom.table);
+		_this13.dom.tbody = $('<div class="tablelist-body"/>').appendTo(_this13.dom.table).on('contextmenu.contextmenu_fleet', '.row[data-fleetid]', (function (e) {
 			this.contextmenu_show($(e.currentTarget), null, e);
 			e.preventDefault();
-		}).bind(_this13)).on('click.contextmenu_fleet', '.row[data-fleetid]>th>em', (function (e) {
+		}).bind(_this13)).on('click.contextmenu_fleet', '.row[data-fleetid]>strong>em', (function (e) {
 			this.contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget));
 			e.stopImmediatePropagation();
 			e.stopPropagation();
@@ -8154,7 +8154,11 @@ var TablelistFleets = (function (_Tablelist4) {
 							}).bind(this)(index), 0);
 						}).bind(_this14));
 
-						$('<p class="title" data-trindex="' + ++_this14.trIndex + '">' + '<th colspan="' + (_this14.columns.length + 1) + '">' + '</th></p>').appendTo(_this14.dom.tbody);
+						$('<p/>', {
+							'class': 'title',
+							'data-trindex': ++_this14.trIndex,
+							'html': '&nbsp;'
+						}).appendTo(_this14.dom.tbody);
 						_this14.trIndex++;
 					}
 				})();
@@ -8203,15 +8207,15 @@ var TablelistFleets = (function (_Tablelist4) {
 						    ships = data['data'][0] || [],
 						    j = 0;
 						while (j < 6) {
-							if (ships[j] && ships[j][0]) html += '<img src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0' + (_huCss.csscheck_full('mask-image') ? '.webp' : '-mask-2.png') + '" contextmenu="disabled"' + (_huCss.csscheck_full('mask-image') ? '' : ' class="nomask"') + '/>';else html += '<s' + (_huCss.csscheck_full('mask-image') ? '' : ' class="nomask"') + '/>';
+							if (ships[j] && ships[j][0]) html += '<img class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '" src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0' + (_huCss.csscheck_full('mask-image') ? '.webp' : '-mask-2.png') + '" contextmenu="disabled"' + '/>';else html += '<s class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '"/>';
 							j++;
 						}
 						html += '</i>';
-						$('<th/>').attr('data-value', data['name']).html(html + '<strong>' + data['name'] + '</strong>' + '<em></em>').appendTo(tr);
+						$('<strong/>').attr('data-value', data['name']).html(html + '<strong>' + data['name'] + '</strong>' + '<em></em>').appendTo(tr);
 						break;
 					default:
 						var datavalue = data[column[1]];
-						$('<td/>').attr('data-value', datavalue).html(datavalue).appendTo(tr);
+						$('<span/>').attr('data-value', datavalue).html(datavalue).appendTo(tr);
 						break;
 				}
 			});
