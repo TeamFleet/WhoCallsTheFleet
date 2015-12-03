@@ -95,7 +95,7 @@
 					}
 					label{
 						width: 		20px;
-						height: 	20px;
+						height: 	@tablelist-options-height;
 						position:	relative;
 						margin-left:4px;
 						color:		rgba(255, 255, 255, .35);
@@ -160,6 +160,9 @@
 					&+.tab{
 						margin-left: 	10px;
 						@media all and (max-width: 800px ){
+							margin-left:	3px;
+						}
+						@media all and (max-width: 640px ){
 							margin-left:	0;
 						}
 					}
@@ -531,7 +534,7 @@
 
 
 .tablelist > .options[filter-hide-premodel="true"]{
-	&~.tablelist-container .premodeled{
+	&~.tablelist-container .premodeled:not([compare-checked]){
 		display:	none !important;
 	}
 }

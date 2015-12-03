@@ -2024,6 +2024,13 @@ dev_output_steps.push(function(){
 
 
 dev_output_filters.page_home = function(html, updates){
+	// if update date not reached, filtered out
+	updates = updates.filter(function(update){
+		let target = parseInt(update.date.split('-').join(''))
+			,now = parseInt((new Date()).format('%Y%m%d'))		
+		return (now >= target)
+	})
+
 	let searchRes
 		,scrapePtrn = /\{\{[ ]*content::WhatsNew[ ]*\}\}/gi
 		
