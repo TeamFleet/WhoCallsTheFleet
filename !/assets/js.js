@@ -7654,7 +7654,8 @@ var TablelistEquipments = (function (_Tablelist3) {
 
 			if (TablelistEquipments.shipId && $.inArray(_g.data.ships[TablelistEquipments.shipId].type, [9, 10, 11]) > -1) {
 				var k = 0,
-				    _el2 = undefined;
+				    _el2 = undefined,
+				    t = undefined;
 
 				while (this.dom.types[k++].attr('data-equipmentcollection') != 3 || $.inArray(parseInt(this.dom.types[k].attr('data-type')) || null, TablelistEquipments.types) <= -1) {
 					_el2 = this.dom.types[k + 1];
@@ -7662,14 +7663,18 @@ var TablelistEquipments = (function (_Tablelist3) {
 
 				_el2 = _el2 || this.dom.types[0];
 
+				t = _el2[0].offsetTop;
+				if (t) t -= 32;
+
 				this.dom.type_radios[3].prop('checked', !0).trigger('change');
-				this.dom.tbody.scrollTop(_el2[0].offsetTop || 0);
+				this.dom.tbody.scrollTop(t || 0);
 				return;
 			}
 
 			if (TablelistEquipments.types.length) {
 				var k = 0,
-				    _el3 = undefined;
+				    _el3 = undefined,
+				    t = undefined;
 
 				while ($.inArray(parseInt(this.dom.types[k++].attr('data-type')) || null, TablelistEquipments.types) <= -1) {
 					_el3 = this.dom.types[k];
@@ -7677,8 +7682,11 @@ var TablelistEquipments = (function (_Tablelist3) {
 
 				_el3 = _el3 || this.dom.types[0];
 
+				t = _el3[0].offsetTop;
+				if (t) t -= 32;
+
 				this.dom.type_radios[parseInt(_el3.attr('data-equipmentcollection')) || 1].prop('checked', !0).trigger('change');
-				this.dom.tbody.scrollTop(_el3[0].offsetTop || 0);
+				this.dom.tbody.scrollTop(t || 0);
 			}
 		}
 	}, {
