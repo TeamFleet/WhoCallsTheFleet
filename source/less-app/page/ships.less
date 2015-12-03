@@ -29,24 +29,21 @@ main[data-theme="ship"]:after{
 				&.sorting{
 					@indicator_size:	6px;
 					@indicator_color:	hsl(200, 100%, 65%);
-					&>.th-inner-wrapper>span>span{
-						position:	relative;
-						&:before{
-							position:	absolute;
-							z-index:	-1;
-							top:		0;
-							left:		50%;
-							width:		0;
-							height:		0;
-							content:	'';
-							margin-left:(0 - @indicator_size);
-							border:		@indicator_size solid transparent;
-						}
+					&:before{
+						position:	absolute;
+						z-index:	-1;
+						top:		0;
+						left:		50%;
+						width:		0;
+						height:		0;
+						content:	'';
+						margin-left:(0 - @indicator_size);
+						border:		@indicator_size solid transparent;
 					}
-					&.desc>.th-inner-wrapper>span>span:before{
+					&.desc:before{
 						border-top-color:@indicator_color
 					}
-					&.asc>.th-inner-wrapper>span>span:before{
+					&.asc:before{
 						border-bottom-color:@indicator_color;
 						border-top-width:	0;
 					}

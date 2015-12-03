@@ -55,6 +55,10 @@ class Tablelist{
 		this.flexgrid_empty_count = options.flexgrid_empty_count || 8
 		this.sort_data_by_stat = options.sort_data_by_stat || {}
 		this.sort_default_order_by_stat = options.sort_default_order_by_stat || {}
+		
+		container.attr('data-index', this._index)
+			.on('mouseenter.hovercolumn', '.tablelist-body>p.row>span', this.hovercolumn_delegate.bind(this))
+			.on('mouseleave.hovercolumn', '.tablelist-body>p.row>span', this.hovercolumn_delegate_leave.bind(this))
 		/*
 		if( this.is_init )
 			return true
@@ -179,409 +183,447 @@ class Tablelist{
 			return line
 		}
 
-		// 强制 thead 重绘，以解决某些CSS计算延迟问题
-			thead_redraw( timeout_duration ){
-				//if( this.dom.thead && this.dom.thead.length ){
-				//	var thead = this.dom.thead
-				//	setTimeout(function(){
-				//		thead.hide().show(0)
-				//	}, timeout_duration || 10)
-				//}
-			}
+	// 强制 thead 重绘，以解决某些CSS计算延迟问题
+		thead_redraw( timeout_duration ){
+			//if( this.dom.thead && this.dom.thead.length ){
+			//	var thead = this.dom.thead
+			//	setTimeout(function(){
+			//		thead.hide().show(0)
+			//	}, timeout_duration || 10)
+			//}
+		}
 
-		// 表格排序相关
-			// 排序表格中正在显示行中某一列(td:nth-of-type)
-			// 返回一个Array，每一个元素为jQuery DOM Object
-			// is_ascending 	是否为升序，默认降序
-			// rows				目标行，默认为全部可见行
-				sort_column( nth, is_ascending, rows ){
-					if( !rows ){
-						let tbody = this.dom.tbody
-						if( !tbody || !tbody.length )
-							tbody = this.dom.table.children('.tablelist-body')
-						//rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
-						rows = tbody.children('p.row:visible:not([data-donotcompare])')
-					}
-					nth = nth || 1
-		
-					// 建立临时用对象，在函数结束时delete
-						this._tmp_values = []
-						this._tmp_value_map_cell = {}
-		
-					// 遍历，将值全部导出到 _tmp_values，_tmp_value_map_cell 中记录 值 -> jQuery DOM
-						rows.children('span:nth-of-type(' + nth + ')').each(function(index, element){
-							let cell = $(element)
-								//,val = cell.data('value')
-								,val = cell.attr('data-value')
-		
-							val = parseFloat(val)
-		
-							if( $.inArray( val, this._tmp_values ) < 0 )
-								this._tmp_values.push( val )
-		
-							if( !this._tmp_value_map_cell[val] )
-								this._tmp_value_map_cell[val] = $()
-		
-							this._tmp_value_map_cell[val] = this._tmp_value_map_cell[val].add( cell )
-						}.bind(this))
-		
-					// 排序
-						this._tmp_values.sort(function(a, b){
-							if( is_ascending )
-								return a-b
-							else
-								return b-a
-						})
-		
-					// 根据排序结果，整理返回结果
-						let return_array = []
-						this._tmp_values.forEach(function(currentValue){
-							return_array.push( this._tmp_value_map_cell[currentValue] )
-						}, this)
-		
-					// delete 临时对象
-						delete this._tmp_values
-						delete this._tmp_value_map_cell
-		
-					return return_array
-				}
-
-			// 标记表格全部数据列中第一和第二高值的单元格
-				mark_high( cacheSortData ){
+	// 表格排序相关
+		// 排序表格中正在显示行中某一列(td:nth-of-type)
+		// 返回一个Array，每一个元素为jQuery DOM Object
+		// is_ascending 	是否为升序，默认降序
+		// rows				目标行，默认为全部可见行
+			sort_column( nth, is_ascending, rows ){
+				if( !rows ){
 					let tbody = this.dom.tbody
-		
 					if( !tbody || !tbody.length )
 						tbody = this.dom.table.children('.tablelist-body')
-		
-					//let rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
-					let rows = tbody.children('p.row:visible:not([data-donotcompare])')
-		
-					rows.children('span[data-value]').removeClass('sort-first sort-second')
-		
-					rows.eq(0).children('span[data-value]').each(function(index, element){
-						let is_ascending = false
-							,$this = $(element)
-							,stat = $this.data('stat')
-		
-						// 以下属性不进行标记，但仍计算排序
-							,noMark = stat.match(/\b(speed|range|extra_illust)\b/ )
-		
-						if( typeof this.sort_default_order_by_stat[stat] == 'undefined' ){
-							// 以下属性为升序
-								if( stat.match(/\b(consum_fuel|consum_ammo)\b/ ) )
-									is_ascending = true
-							this.sort_default_order_by_stat[stat] = is_ascending ? 'asc' : 'desc'
-						}else{
-							is_ascending = this.sort_default_order_by_stat[stat] == 'asc' ? true : false
-						}
-		
-						let sort = this.sort_column( index+1, is_ascending, rows )
-							,max = Math.min( 6, Math.ceil(rows.length / 2) + 1 )
-		
-						if( !noMark && sort.length > 1 && sort[0].length < max ){
-							sort[0].addClass('sort-first')
-							if( sort.length > 2 && sort[1].length < max )
-								sort[1].addClass('sort-second')
-						}
-						
-						//console.log(is_ascending, sort)
-		
-						// 将排序结果存储到表头对应的列中
-							if( cacheSortData )
-								this.sort_data_by_stat[stat] = sort
-							else
-								delete( this.sort_data_by_stat[stat] )
-		
+					//rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
+					rows = tbody.children('p.row:visible:not([data-donotcompare])')
+				}
+				nth = nth || 1
+	
+				// 建立临时用对象，在函数结束时delete
+					this._tmp_values = []
+					this._tmp_value_map_cell = {}
+	
+				// 遍历，将值全部导出到 _tmp_values，_tmp_value_map_cell 中记录 值 -> jQuery DOM
+					rows.children('span:nth-of-type(' + nth + ')').each(function(index, element){
+						let cell = $(element)
+							//,val = cell.data('value')
+							,val = cell.attr('data-value')
+	
+						val = parseFloat(val)
+	
+						if( $.inArray( val, this._tmp_values ) < 0 )
+							this._tmp_values.push( val )
+	
+						if( !this._tmp_value_map_cell[val] )
+							this._tmp_value_map_cell[val] = $()
+	
+						this._tmp_value_map_cell[val] = this._tmp_value_map_cell[val].add( cell )
 					}.bind(this))
-		
-					return rows
-				}
+	
+				// 排序
+					this._tmp_values.sort(function(a, b){
+						if( is_ascending )
+							return a-b
+						else
+							return b-a
+					})
+	
+				// 根据排序结果，整理返回结果
+					let return_array = []
+					this._tmp_values.forEach(function(currentValue){
+						return_array.push( this._tmp_value_map_cell[currentValue] )
+					}, this)
+	
+				// delete 临时对象
+					delete this._tmp_values
+					delete this._tmp_value_map_cell
+	
+				return return_array
+			}
 
-			// thead td, thead th
-			// 点击表头单元格，表格排序
-				sort_table_from_theadcell( cell ){
-					if( !cell )
-						return
+		// 标记表格全部数据列中第一和第二高值的单元格
+			mark_high( cacheSortData ){
+				let tbody = this.dom.tbody
+	
+				if( !tbody || !tbody.length )
+					tbody = this.dom.table.children('.tablelist-body')
+	
+				//let rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
+				let rows = tbody.children('p.row:visible:not([data-donotcompare])')
+	
+				rows.children('span[data-value]').removeClass('sort-first sort-second')
+	
+				rows.eq(0).children('span[data-value]').each(function(index, element){
+					let is_ascending = false
+						,$this = $(element)
+						,stat = $this.data('stat')
+	
+					// 以下属性不进行标记，但仍计算排序
+						,noMark = stat.match(/\b(speed|range|extra_illust)\b/ )
+	
+					if( typeof this.sort_default_order_by_stat[stat] == 'undefined' ){
+						// 以下属性为升序
+							if( stat.match(/\b(consum_fuel|consum_ammo)\b/ ) )
+								is_ascending = true
+						this.sort_default_order_by_stat[stat] = is_ascending ? 'asc' : 'desc'
+					}else{
+						is_ascending = this.sort_default_order_by_stat[stat] == 'asc' ? true : false
+					}
+	
+					let sort = this.sort_column( index+1, is_ascending, rows )
+						,max = Math.min( 6, Math.ceil(rows.length / 2) + 1 )
+	
+					if( !noMark && sort.length > 1 && sort[0].length < max ){
+						sort[0].addClass('sort-first')
+						if( sort.length > 2 && sort[1].length < max )
+							sort[1].addClass('sort-second')
+					}
 					
-					let stat = cell.data('stat')
-						,sortData = this.sort_data_by_stat[stat]
-					
-					console.log(stat, sortData)
-						
-					if( !stat || !sortData )
-						return false
-		
-					if( stat != this.lastSortedStat ){
-						if( this.lastSortedHeader )
-							this.lastSortedHeader.removeClass('sorting desc asc')
-						cell.addClass('sorting')
-					}
-		
-					let order = (stat == this.lastSortedStat && this.lastSortedOrder == 'obverse')
-									? 'reverse'
-									: 'obverse'
-						,i = order == 'reverse' ? sortData.length - 1 : 0
-		
-					if( this.sort_default_order_by_stat[stat] ){
-						let reverse = this.sort_default_order_by_stat[stat] == 'asc' ? 'desc' : 'asc'
-						if( order == 'obverse' ){
-							cell.removeClass(reverse).addClass(this.sort_default_order_by_stat[stat])
-						}else{
-							cell.removeClass(this.sort_default_order_by_stat[stat]).addClass(reverse)
-						}
-					}
-		
-					this.sortedRow = $()
-		
-					while( sortData[i] ){
-						this._tmpDOM = sortData[i].parent()
-						this.sortedRow = this.sortedRow.add( this._tmpDOM )
-						this._tmpDOM.appendTo( this.dom.tbody )
-						i = order == 'reverse' ? i - 1 : i + 1
-					}
-		
-					// 修改排序提示按钮
-						this.dom.btn_compare_sort.removeClass('disabled').html('取消排序')
-		
-					this.lastSortedStat = stat
-					this.lastSortedOrder = order
-					this.lastSortedHeader = cell
-					delete this._tmpDOM
-				}
+					//console.log(is_ascending, sort)
+	
+					// 将排序结果存储到表头对应的列中
+						if( cacheSortData )
+							this.sort_data_by_stat[stat] = sort
+						else
+							delete( this.sort_data_by_stat[stat] )
+	
+				}.bind(this))
+	
+				return rows
+			}
 
-			// 重置表格排序
-				sort_table_restore(){
-					if( !this.sortedRow )
-						return true
-		
-					// 还原所有DOM位置
-						let parent, arr = []
-						this.sortedRow.each(function(index, element){
-							var $this = $(element)
-								,trIndex = parseInt( $this.data('trindex') )
-							parent = parent || $this.parent()
-							arr.push({
-								'index': 	trIndex,
-								'el': 		$this,
-								'prev': 	parent.children('[data-trindex="' + (trIndex - 1) + '"]')
-							})
-						})
-						// 如果在上一步直接将DOM移动到上一个index行的后方，可能会因为目标DOM也为排序目标同时在当前DOM顺序后，造成结果不正常
-						// 故需要两步操作
-						arr.sort(function(a, b){
-							return a['index']-b['index']
-						})
-						arr.forEach(function(currentValue){
-							currentValue.el.insertAfter( currentValue.prev )
-						})
-		
-					// 修改排序提示按钮
-						this.dom.btn_compare_sort.addClass('disabled').html('点击表格标题可排序')
-		
-					// 重置其他样式
+		// thead td, thead th
+		// 点击表头单元格，表格排序
+			sort_table_from_theadcell( cell ){
+				if( !cell )
+					return
+				
+				let stat = cell.data('stat')
+					,sortData = this.sort_data_by_stat[stat]
+				
+				console.log(stat, sortData)
+					
+				if( !stat || !sortData )
+					return false
+	
+				if( stat != this.lastSortedStat ){
+					if( this.lastSortedHeader )
 						this.lastSortedHeader.removeClass('sorting desc asc')
-		
-					delete this.sortedRow
-					delete this.lastSortedStat
-					delete this.lastSortedOrder
-					delete this.lastSortedHeader
-					return true
+					cell.addClass('sorting')
 				}
-			/* v1
-				sort_column( nth, is_ascending, rows ){
-					if( !rows ){
-						let tbody = this.dom.tbody
-						if( !tbody || !tbody.length )
-							tbody = this.dom.table.find('tbody')
-						//rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
-						rows = tbody.find('tr.row:visible:not([data-donotcompare])')
+	
+				let order = (stat == this.lastSortedStat && this.lastSortedOrder == 'obverse')
+								? 'reverse'
+								: 'obverse'
+					,i = order == 'reverse' ? sortData.length - 1 : 0
+	
+				if( this.sort_default_order_by_stat[stat] ){
+					let reverse = this.sort_default_order_by_stat[stat] == 'asc' ? 'desc' : 'asc'
+					if( order == 'obverse' ){
+						cell.removeClass(reverse).addClass(this.sort_default_order_by_stat[stat])
+					}else{
+						cell.removeClass(this.sort_default_order_by_stat[stat]).addClass(reverse)
 					}
-					nth = nth || 1
-		
-					// 建立临时用对象，在函数结束时delete
-						this._tmp_values = []
-						this._tmp_value_map_cell = {}
-		
-					// 遍历，将值全部导出到 _tmp_values，_tmp_value_map_cell 中记录 值 -> jQuery DOM
-						rows.find('td:nth-of-type(' + nth + ')').each(function(index, element){
-							let cell = $(element)
-								//,val = cell.data('value')
-								,val = cell.attr('data-value')
-		
-							val = parseFloat(val)
-		
-							if( $.inArray( val, this._tmp_values ) < 0 )
-								this._tmp_values.push( val )
-		
-							if( !this._tmp_value_map_cell[val] )
-								this._tmp_value_map_cell[val] = $()
-		
-							this._tmp_value_map_cell[val] = this._tmp_value_map_cell[val].add( cell )
-						}.bind(this))
-		
-					// 排序
-						this._tmp_values.sort(function(a, b){
-							if( is_ascending )
-								return a-b
-							else
-								return b-a
-						})
-		
-					// 根据排序结果，整理返回结果
-						let return_array = []
-						this._tmp_values.forEach(function(currentValue){
-							return_array.push( this._tmp_value_map_cell[currentValue] )
-						}, this)
-		
-					// delete 临时对象
-						delete this._tmp_values
-						delete this._tmp_value_map_cell
-		
-					return return_array
 				}
+	
+				this.sortedRow = $()
+	
+				while( sortData[i] ){
+					this._tmpDOM = sortData[i].parent()
+					this.sortedRow = this.sortedRow.add( this._tmpDOM )
+					this._tmpDOM.appendTo( this.dom.tbody )
+					i = order == 'reverse' ? i - 1 : i + 1
+				}
+	
+				// 修改排序提示按钮
+					this.dom.btn_compare_sort.removeClass('disabled').html('取消排序')
+	
+				this.lastSortedStat = stat
+				this.lastSortedOrder = order
+				this.lastSortedHeader = cell
+				delete this._tmpDOM
+			}
 
-			// 标记表格全部数据列中第一和第二高值的单元格
-				mark_high( cacheSortData ){
+		// 重置表格排序
+			sort_table_restore(){
+				if( !this.sortedRow )
+					return true
+	
+				// 还原所有DOM位置
+					let parent, arr = []
+					this.sortedRow.each(function(index, element){
+						var $this = $(element)
+							,trIndex = parseInt( $this.data('trindex') )
+						parent = parent || $this.parent()
+						arr.push({
+							'index': 	trIndex,
+							'el': 		$this,
+							'prev': 	parent.children('[data-trindex="' + (trIndex - 1) + '"]')
+						})
+					})
+					// 如果在上一步直接将DOM移动到上一个index行的后方，可能会因为目标DOM也为排序目标同时在当前DOM顺序后，造成结果不正常
+					// 故需要两步操作
+					arr.sort(function(a, b){
+						return a['index']-b['index']
+					})
+					arr.forEach(function(currentValue){
+						currentValue.el.insertAfter( currentValue.prev )
+					})
+	
+				// 修改排序提示按钮
+					this.dom.btn_compare_sort.addClass('disabled').html('点击表格标题可排序')
+	
+				// 重置其他样式
+					this.lastSortedHeader.removeClass('sorting desc asc')
+	
+				delete this.sortedRow
+				delete this.lastSortedStat
+				delete this.lastSortedOrder
+				delete this.lastSortedHeader
+				return true
+			}
+		/* v1
+			sort_column( nth, is_ascending, rows ){
+				if( !rows ){
 					let tbody = this.dom.tbody
-		
 					if( !tbody || !tbody.length )
 						tbody = this.dom.table.find('tbody')
-		
-					//let rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
-					let rows = tbody.find('tr.row:visible:not([data-donotcompare])')
-		
-					rows.find('td[data-value]').removeClass('sort-first sort-second')
-		
-					rows.eq(0).find('td[data-value]').each(function(index, element){
-						let is_ascending = false
-							,$this = $(element)
-							,stat = $this.data('stat')
-		
-						// 以下属性不进行标记，但仍计算排序
-							,noMark = stat.match(/\b(speed|range|extra_illust)\b/ )
-		
-						if( typeof this.sort_default_order_by_stat[stat] == 'undefined' ){
-							// 以下属性为升序
-								if( stat.match(/\b(consum_fuel|consum_ammo)\b/ ) )
-									is_ascending = true
-							this.sort_default_order_by_stat[stat] = is_ascending ? 'asc' : 'desc'
-						}else{
-							is_ascending = this.sort_default_order_by_stat[stat] == 'asc' ? true : false
-						}
-		
-						let sort = this.sort_column( index+1, is_ascending, rows )
-							,max = Math.min( 6, Math.ceil(rows.length / 2) + 1 )
-		
-						if( !noMark && sort.length > 1 && sort[0].length < max ){
-							sort[0].addClass('sort-first')
-							if( sort.length > 2 && sort[1].length < max )
-								sort[1].addClass('sort-second')
-						}
-						
-						//console.log(is_ascending, sort)
-		
-						// 将排序结果存储到表头对应的列中
-							if( cacheSortData )
-								this.sort_data_by_stat[stat] = sort
-							else
-								delete( this.sort_data_by_stat[stat] )
-		
+					//rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
+					rows = tbody.find('tr.row:visible:not([data-donotcompare])')
+				}
+				nth = nth || 1
+	
+				// 建立临时用对象，在函数结束时delete
+					this._tmp_values = []
+					this._tmp_value_map_cell = {}
+	
+				// 遍历，将值全部导出到 _tmp_values，_tmp_value_map_cell 中记录 值 -> jQuery DOM
+					rows.find('td:nth-of-type(' + nth + ')').each(function(index, element){
+						let cell = $(element)
+							//,val = cell.data('value')
+							,val = cell.attr('data-value')
+	
+						val = parseFloat(val)
+	
+						if( $.inArray( val, this._tmp_values ) < 0 )
+							this._tmp_values.push( val )
+	
+						if( !this._tmp_value_map_cell[val] )
+							this._tmp_value_map_cell[val] = $()
+	
+						this._tmp_value_map_cell[val] = this._tmp_value_map_cell[val].add( cell )
 					}.bind(this))
-		
-					return rows
-				}
+	
+				// 排序
+					this._tmp_values.sort(function(a, b){
+						if( is_ascending )
+							return a-b
+						else
+							return b-a
+					})
+	
+				// 根据排序结果，整理返回结果
+					let return_array = []
+					this._tmp_values.forEach(function(currentValue){
+						return_array.push( this._tmp_value_map_cell[currentValue] )
+					}, this)
+	
+				// delete 临时对象
+					delete this._tmp_values
+					delete this._tmp_value_map_cell
+	
+				return return_array
+			}
 
-			// thead td, thead th
-			// 点击表头单元格，表格排序
-				sort_table_from_theadcell( cell ){
-					if( !cell )
-						return
+		// 标记表格全部数据列中第一和第二高值的单元格
+			mark_high( cacheSortData ){
+				let tbody = this.dom.tbody
+	
+				if( !tbody || !tbody.length )
+					tbody = this.dom.table.find('tbody')
+	
+				//let rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
+				let rows = tbody.find('tr.row:visible:not([data-donotcompare])')
+	
+				rows.find('td[data-value]').removeClass('sort-first sort-second')
+	
+				rows.eq(0).find('td[data-value]').each(function(index, element){
+					let is_ascending = false
+						,$this = $(element)
+						,stat = $this.data('stat')
+	
+					// 以下属性不进行标记，但仍计算排序
+						,noMark = stat.match(/\b(speed|range|extra_illust)\b/ )
+	
+					if( typeof this.sort_default_order_by_stat[stat] == 'undefined' ){
+						// 以下属性为升序
+							if( stat.match(/\b(consum_fuel|consum_ammo)\b/ ) )
+								is_ascending = true
+						this.sort_default_order_by_stat[stat] = is_ascending ? 'asc' : 'desc'
+					}else{
+						is_ascending = this.sort_default_order_by_stat[stat] == 'asc' ? true : false
+					}
+	
+					let sort = this.sort_column( index+1, is_ascending, rows )
+						,max = Math.min( 6, Math.ceil(rows.length / 2) + 1 )
+	
+					if( !noMark && sort.length > 1 && sort[0].length < max ){
+						sort[0].addClass('sort-first')
+						if( sort.length > 2 && sort[1].length < max )
+							sort[1].addClass('sort-second')
+					}
 					
-					let stat = cell.data('stat')
-						,sortData = this.sort_data_by_stat[stat]
-					
-					console.log(stat, sortData)
-						
-					if( !stat || !sortData )
-						return false
-		
-					if( stat != this.lastSortedStat ){
-						if( this.lastSortedHeader )
-							this.lastSortedHeader.removeClass('sorting desc asc')
-						cell.addClass('sorting')
-					}
-		
-					let order = (stat == this.lastSortedStat && this.lastSortedOrder == 'obverse')
-									? 'reverse'
-									: 'obverse'
-						,i = order == 'reverse' ? sortData.length - 1 : 0
-		
-					if( this.sort_default_order_by_stat[stat] ){
-						let reverse = this.sort_default_order_by_stat[stat] == 'asc' ? 'desc' : 'asc'
-						if( order == 'obverse' ){
-							cell.removeClass(reverse).addClass(this.sort_default_order_by_stat[stat])
-						}else{
-							cell.removeClass(this.sort_default_order_by_stat[stat]).addClass(reverse)
-						}
-					}
-		
-					this.sortedRow = $()
-		
-					while( sortData[i] ){
-						this._tmpDOM = sortData[i].parent()
-						this.sortedRow = this.sortedRow.add( this._tmpDOM )
-						this._tmpDOM.appendTo( this.dom.tbody )
-						i = order == 'reverse' ? i - 1 : i + 1
-					}
-		
-					// 修改排序提示按钮
-						this.dom.btn_compare_sort.removeClass('disabled').html('取消排序')
-		
-					this.lastSortedStat = stat
-					this.lastSortedOrder = order
-					this.lastSortedHeader = cell
-					delete this._tmpDOM
-				}
+					//console.log(is_ascending, sort)
+	
+					// 将排序结果存储到表头对应的列中
+						if( cacheSortData )
+							this.sort_data_by_stat[stat] = sort
+						else
+							delete( this.sort_data_by_stat[stat] )
+	
+				}.bind(this))
+	
+				return rows
+			}
 
-			// 重置表格排序
-				sort_table_restore(){
-					if( !this.sortedRow )
-						return true
-		
-					// 还原所有DOM位置
-						let parent, arr = []
-						this.sortedRow.each(function(index, element){
-							var $this = $(element)
-								,trIndex = parseInt( $this.data('trindex') )
-							parent = parent || $this.parent()
-							arr.push({
-								'index': 	trIndex,
-								'el': 		$this,
-								'prev': 	parent.children('tr[data-trindex="' + (trIndex - 1) + '"]')
-							})
-						})
-						// 如果在上一步直接将DOM移动到上一个index行的后方，可能会因为目标DOM也为排序目标同时在当前DOM顺序后，造成结果不正常
-						// 故需要两步操作
-						arr.sort(function(a, b){
-							return a['index']-b['index']
-						})
-						arr.forEach(function(currentValue){
-							currentValue.el.insertAfter( currentValue.prev )
-						})
-		
-					// 修改排序提示按钮
-						this.dom.btn_compare_sort.addClass('disabled').html('点击表格标题可排序')
-		
-					// 重置其他样式
+		// thead td, thead th
+		// 点击表头单元格，表格排序
+			sort_table_from_theadcell( cell ){
+				if( !cell )
+					return
+				
+				let stat = cell.data('stat')
+					,sortData = this.sort_data_by_stat[stat]
+				
+				console.log(stat, sortData)
+					
+				if( !stat || !sortData )
+					return false
+	
+				if( stat != this.lastSortedStat ){
+					if( this.lastSortedHeader )
 						this.lastSortedHeader.removeClass('sorting desc asc')
-		
-					delete this.sortedRow
-					delete this.lastSortedStat
-					delete this.lastSortedOrder
-					delete this.lastSortedHeader
-					return true
+					cell.addClass('sorting')
 				}
-			*/
+	
+				let order = (stat == this.lastSortedStat && this.lastSortedOrder == 'obverse')
+								? 'reverse'
+								: 'obverse'
+					,i = order == 'reverse' ? sortData.length - 1 : 0
+	
+				if( this.sort_default_order_by_stat[stat] ){
+					let reverse = this.sort_default_order_by_stat[stat] == 'asc' ? 'desc' : 'asc'
+					if( order == 'obverse' ){
+						cell.removeClass(reverse).addClass(this.sort_default_order_by_stat[stat])
+					}else{
+						cell.removeClass(this.sort_default_order_by_stat[stat]).addClass(reverse)
+					}
+				}
+	
+				this.sortedRow = $()
+	
+				while( sortData[i] ){
+					this._tmpDOM = sortData[i].parent()
+					this.sortedRow = this.sortedRow.add( this._tmpDOM )
+					this._tmpDOM.appendTo( this.dom.tbody )
+					i = order == 'reverse' ? i - 1 : i + 1
+				}
+	
+				// 修改排序提示按钮
+					this.dom.btn_compare_sort.removeClass('disabled').html('取消排序')
+	
+				this.lastSortedStat = stat
+				this.lastSortedOrder = order
+				this.lastSortedHeader = cell
+				delete this._tmpDOM
+			}
+
+		// 重置表格排序
+			sort_table_restore(){
+				if( !this.sortedRow )
+					return true
+	
+				// 还原所有DOM位置
+					let parent, arr = []
+					this.sortedRow.each(function(index, element){
+						var $this = $(element)
+							,trIndex = parseInt( $this.data('trindex') )
+						parent = parent || $this.parent()
+						arr.push({
+							'index': 	trIndex,
+							'el': 		$this,
+							'prev': 	parent.children('tr[data-trindex="' + (trIndex - 1) + '"]')
+						})
+					})
+					// 如果在上一步直接将DOM移动到上一个index行的后方，可能会因为目标DOM也为排序目标同时在当前DOM顺序后，造成结果不正常
+					// 故需要两步操作
+					arr.sort(function(a, b){
+						return a['index']-b['index']
+					})
+					arr.forEach(function(currentValue){
+						currentValue.el.insertAfter( currentValue.prev )
+					})
+	
+				// 修改排序提示按钮
+					this.dom.btn_compare_sort.addClass('disabled').html('点击表格标题可排序')
+	
+				// 重置其他样式
+					this.lastSortedHeader.removeClass('sorting desc asc')
+	
+				delete this.sortedRow
+				delete this.lastSortedStat
+				delete this.lastSortedOrder
+				delete this.lastSortedHeader
+				return true
+			}
+		*/
+
+
+	// 高亮列相关
+		hovercolumn_delegate(e){
+			if( !$body_preventMouseover && e && e.originalEvent.path && this.dom.tbody ){
+				//clearTimeout(_p.el.tablelist.hovercolumn_mouseleave_delay)
+				//_p.el.tablelist.hovercolumn_mouseleave_delay = null
+				let index = e.currentTarget.getAttribute('data-index')
+				if( !index ){
+					let el = $(e.currentTarget)
+					index = el.index()
+					el.attr('data-index', index)
+				}else{
+					index = parseInt(index)
+				}
+				
+				//if( !this.dom.style )
+				//	this.dom.style = $('<style/>').prependTo(this.dom.container)
+				
+				//this.dom.style.html('.tablelist[data-index="'+this._index+'"] .tablelist-body > p.row > span:nth-child('+(index+1)+'){background-color:rgba(0,0,0,.2)}')
+				//_p.el.tablelist.hovercolumn_mouseenter( e.delegateTarget, index )
+				this.dom.tbody.find('.row:visible>span:nth-child('+(index+1)+')').addClass('state-hover-column')
+			}
+		}
+		hovercolumn_delegate_leave(e){
+			if( !$body_preventMouseover && e && e.originalEvent.path && this.dom.tbody ){
+				//_p.el.tablelist.hovercolumn_mouseleave_delay = setTimeout(function(){
+					//e.delegateTarget.removeAttribute('td-nth-hovered')
+					//this.dom.style.html('')
+					this.dom.tbody.find('span.state-hover-column').removeClass('state-hover-column')
+					_p.el.tablelist.hovercolumn_mouseleave_delay = null
+				//}.bind(this), 10)
+			}
+		}	
+		//hovercolumn_mouseenter( body, td_index ){
+		//	body.setAttribute( 'td-nth-hovered', td_index )
+				//.find('tbody tr td:nth-of-type(' + ( parseInt(td_index) + 1 ) + ')').addClass('state-hover-column')
+		//}
 }
 Tablelist.index = 0
 Tablelist.genId = function(text){

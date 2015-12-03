@@ -34,7 +34,5 @@
 // @koala-prepend "nw.js-base-framework/source/js-base/elements/form.js"
 // @koala-prepend "nw.js-base-framework/source/js-base/elements/flexgrid.js"
 // @koala-prepend "nw.js-base-framework/source/js-base/elements/input.js"
-// @koala-prepend "nw.js-base-framework/source/js-base/elements/table.js"
-// @koala-prepend "nw.js-base-framework/source/js-base/elements/tabview.js"
 
 // @koala-prepend "nw.js-base-framework/source/js-base/!last.js"

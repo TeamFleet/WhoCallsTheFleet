@@ -315,6 +315,7 @@
 	flex-flow: 	column nowrap;
 	position: 	relative;
 	border: 	0 solid transparent;
+	overflow: 	hidden;
 	@theader-background:	linear-gradient(
 								to bottom,
 								rgba(255, 255, 255, .35) 1px,
@@ -390,6 +391,7 @@
 				font-size: 	18px;
 				padding-top:18px;
 				position: 	relative;
+				font-weight:bold;
 				small{
 					padding-left:	.5em;
 					font-size:		75%;
@@ -451,6 +453,7 @@
 					display: 	block;
 				}
 				&>span{
+					transition-property: inherit;
 					sup{
 						padding-left: .35em;
 					}
@@ -464,7 +467,26 @@
 						//opacity:	.35;
 						color:		rgba(242, 242, 242, .35);
 					}
-					.state-hover-column{
+					/*
+					&:hover:after{
+						content: 	"";
+						position: 	absolute;
+						background: rgba(0,0,0,.2);
+						left: 		0;
+						top: 		-5000px;
+						height: 	10000px;
+						width: 		100%;
+						z-index: 	-1;
+					}
+					*/
+					//&:hover{
+					//	background-color:	transparent !important;
+					//}
+					&.state-hover-column{
+						background-color:	rgba(0, 0, 0, .2);
+						&:hover{
+							background-color:	transparent;
+						}
 						&[data-stat="fire"]{
 							background-color:	hsla(6, 85%, 40%, .25);
 						}
@@ -584,6 +606,10 @@
 		}
 	}
 */
+
+
+
+//.tablelist[td-nth-hovered]
 
 
 

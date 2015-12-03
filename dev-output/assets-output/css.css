@@ -5173,6 +5173,7 @@ body.mod-capture #tip {
           flex-flow: column nowrap;
   position: relative;
   border: 0 solid transparent;
+  overflow: hidden;
   background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.35) 1px, rgba(230, 230, 230, 0.25) 1px, rgba(230, 230, 230, 0.25) calc(100% - 1px), rgba(255, 255, 255, 0.35) calc(100% - 1px)) no-repeat 0 0;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35) 1px, rgba(230, 230, 230, 0.25) 1px, rgba(230, 230, 230, 0.25) calc(100% - 1px), rgba(255, 255, 255, 0.35) calc(100% - 1px)) no-repeat 0 0;
   background-size: 100% 31px;
@@ -5280,6 +5281,7 @@ body.mod-capture #tip {
   font-size: 18px;
   padding-top: 18px;
   position: relative;
+  font-weight: bold;
 }
 .tablelist-body > p.title small {
   padding-left: .5em;
@@ -5339,6 +5341,22 @@ body.mod-capture #tip {
 .tablelist-body > p.row > strong a {
   display: block;
 }
+.tablelist-body > p.row > span {
+  -webkit-transition-property: inherit;
+  transition-property: inherit;
+  /*
+					&:hover:after{
+						content: 	"";
+						position: 	absolute;
+						background: rgba(0,0,0,.2);
+						left: 		0;
+						top: 		-5000px;
+						height: 	10000px;
+						width: 		100%;
+						z-index: 	-1;
+					}
+					*/
+}
 .tablelist-body > p.row > span sup {
   padding-left: .35em;
 }
@@ -5350,19 +5368,25 @@ body.mod-capture #tip {
   font-size: 11px;
   color: rgba(242, 242, 242, 0.35);
 }
-.tablelist-body > p.row > span .state-hover-column[data-stat="fire"] {
+.tablelist-body > p.row > span.state-hover-column {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.tablelist-body > p.row > span.state-hover-column:hover {
+  background-color: transparent;
+}
+.tablelist-body > p.row > span.state-hover-column[data-stat="fire"] {
   background-color: rgba(189, 33, 15, 0.25);
 }
-.tablelist-body > p.row > span .state-hover-column[data-stat="torpedo"] {
+.tablelist-body > p.row > span.state-hover-column[data-stat="torpedo"] {
   background-color: rgba(15, 111, 189, 0.25);
 }
-.tablelist-body > p.row > span .state-hover-column[data-stat="nightpower"] {
+.tablelist-body > p.row > span.state-hover-column[data-stat="nightpower"] {
   background-color: rgba(102, 72, 102, 0.5);
 }
-.tablelist-body > p.row > span .state-hover-column[data-stat="aa"] {
+.tablelist-body > p.row > span.state-hover-column[data-stat="aa"] {
   background-color: rgba(189, 90, 15, 0.25);
 }
-.tablelist-body > p.row > span .state-hover-column[data-stat="armor"] {
+.tablelist-body > p.row > span.state-hover-column[data-stat="armor"] {
   background-color: rgba(189, 128, 15, 0.25);
 }
 .tablelist-body > p.row:hover {
@@ -12529,10 +12553,7 @@ main[data-theme="ship"]:after {
   color: #b3e5ff;
   text-shadow: 0 0 2px #00aaff, 0 0 1px #00334d;
 }
-.page-container[page="ships"] .tablelist-container.sortable .tablelist-header > span.sorting > .th-inner-wrapper > span > span {
-  position: relative;
-}
-.page-container[page="ships"] .tablelist-container.sortable .tablelist-header > span.sorting > .th-inner-wrapper > span > span:before {
+.page-container[page="ships"] .tablelist-container.sortable .tablelist-header > span.sorting:before {
   position: absolute;
   z-index: -1;
   top: 0;
@@ -12543,16 +12564,19 @@ main[data-theme="ship"]:after {
   margin-left: -6px;
   border: 6px solid transparent;
 }
-.page-container[page="ships"] .tablelist-container.sortable .tablelist-header > span.sorting.desc > .th-inner-wrapper > span > span:before {
+.page-container[page="ships"] .tablelist-container.sortable .tablelist-header > span.sorting.desc:before {
   border-top-color: #4dc3ff;
 }
-.page-container[page="ships"] .tablelist-container.sortable .tablelist-header > span.sorting.asc > .th-inner-wrapper > span > span:before {
+.page-container[page="ships"] .tablelist-container.sortable .tablelist-header > span.sorting.asc:before {
   border-bottom-color: #4dc3ff;
   border-top-width: 0;
 }
 main[data-theme="entities"]:after,
 main[data-theme="entity"]:after {
   background: rgba(37, 55, 55, 0.7);
+}
+.page-container[page="entities"] {
+  border-bottom-width: 0;
 }
 /*.page-container[page="entities"],
 .page-container.infos[data-infostype="entity"]{
