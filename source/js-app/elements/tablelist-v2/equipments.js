@@ -52,7 +52,7 @@ class TablelistEquipments extends Tablelist{
 			&& $.inArray(_g.data.ships[TablelistEquipments.shipId].type, [9, 10, 11] ) > -1
 		){
 			let k = 0
-				,el
+				,el, t
 	
 			while( this.dom.types[k++].attr('data-equipmentcollection') != 3
 				|| $.inArray((parseInt(this.dom.types[k].attr('data-type')) || null), TablelistEquipments.types) <= -1 ){
@@ -61,14 +61,18 @@ class TablelistEquipments extends Tablelist{
 			
 			el = el || this.dom.types[0]
 			
+			t = el[0].offsetTop
+			if( t )
+				t-= 32
+			
 			this.dom.type_radios[3].prop('checked', true).trigger('change')
-			this.dom.tbody.scrollTop(el[0].offsetTop || 0)
+			this.dom.tbody.scrollTop(t || 0)
 			return
 		}
 		
 		if( TablelistEquipments.types.length ){
 			let k = 0
-				,el
+				,el, t
 	
 			while( $.inArray((parseInt(this.dom.types[k++].attr('data-type')) || null), TablelistEquipments.types) <= -1 ){
 				el = this.dom.types[k]
@@ -76,8 +80,12 @@ class TablelistEquipments extends Tablelist{
 			
 			el = el || this.dom.types[0]
 			
+			t = el[0].offsetTop
+			if( t )
+				t-= 32
+			
 			this.dom.type_radios[parseInt(el.attr('data-equipmentcollection')) || 1].prop('checked', true).trigger('change')
-			this.dom.tbody.scrollTop(el[0].offsetTop || 0)
+			this.dom.tbody.scrollTop(t || 0)
 		}
 	}
 	

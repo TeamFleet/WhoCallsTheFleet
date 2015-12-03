@@ -5164,6 +5164,9 @@ body.mod-capture #tip {
   opacity: 1;
   z-index: 2;
 }
+#layout.mode-selection .tablelist > .msgs {
+  height: 0;
+}
 .tablelist-container {
   -webkit-box-flex: 0;
   -webkit-flex: 0 1 100%;
