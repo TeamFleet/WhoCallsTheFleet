@@ -5295,6 +5295,7 @@ _frame.infos.__ship_init = function ($el) {
 	    illust = illustMain.children('div'),
 	    imgs = illust.children('span'),
 	    s = imgs.eq(0),
+	    n = 'e' + _g.timeNow(),
 	    labels = illustMain.children('label'),
 	    inputs = illustMain.children('input[type="radio"]').on('change', function (e, scrollTime) {
 		var i = parseInt(e.target.getAttribute('value')) - 1;
@@ -5337,6 +5338,23 @@ _frame.infos.__ship_init = function ($el) {
 		}
 	}
 
+	function _resized() {
+		originalX = -1;
+		inputs.filter(':checked').trigger('change', 0);
+		if (isScrollSnap) scrollStart();
+	}
+	function _show(is_firsttime) {
+		$window.on('resized.' + n, _resized);
+		_resized();
+	}
+	function _hide() {
+		$window.off('resized.' + n);
+	}
+	$el.on({
+		'show': _show,
+		'hidden': _hide
+	});
+
 	if (isScrollSnap) {
 		(function () {
 			var scrollStart = function scrollStart() {
@@ -5345,23 +5363,6 @@ _frame.infos.__ship_init = function ($el) {
 				inputCur = parseInt(inputs.filter(':checked').val()) - 1;
 				sCount = Math.floor(illustWidth / (s.outerWidth() * 0.95));
 			};
-
-			var _resized = function _resized() {
-				originalX = -1;
-				inputs.filter(':checked').trigger('change', 0);
-				scrollStart();
-			};
-
-			var _show = function _show(is_firsttime) {
-				$window.on('resized.' + n, _resized);
-				_resized();
-			};
-
-			var _hide = function _hide() {
-				$window.off('resized.' + n);
-			};
-
-			var n = 'e' + _g.timeNow();
 
 			illustMain.addClass('mod-scroll-snap');
 			illust.on({
@@ -5376,10 +5377,6 @@ _frame.infos.__ship_init = function ($el) {
 						scrollStart();
 					}
 				}
-			});
-			$el.on({
-				'show': _show,
-				'hidden': _hide
 			});
 		})();
 	} else {

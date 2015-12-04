@@ -9193,6 +9193,7 @@ _frame.infos.__ship_init = function( $el ){
 		,illust = illustMain.children('div')
 		,imgs = illust.children('span')
 		,s = imgs.eq(0)
+		,n = 'e'+_g.timeNow()
 		,labels = illustMain.children('label')
 		,inputs = illustMain.children('input[type="radio"]')
 					.on('change', function(e, scrollTime){
@@ -9248,27 +9249,32 @@ _frame.infos.__ship_init = function( $el ){
 	//	isPanning = false
 	//	illust.scrollLeft( originalX + deltaX )
 	//}
+
+	function _resized(){
+		originalX = -1
+		inputs.filter(':checked').trigger('change', 0)
+		if( isScrollSnap )
+			scrollStart()
+	}
+	function _show( is_firsttime ){
+		$window.on('resized.'+n, _resized)
+		_resized()
+	}
+	function _hide(){
+		$window.off('resized.'+n)
+	}
+	$el.on({
+		'show': _show,
+		'hidden': _hide
+	})
 	
 	// scroll snap
 		if( isScrollSnap ){
-			let n = 'e'+_g.timeNow()
 			function scrollStart(){
 				originalX = illust.scrollLeft()
 				illustWidth = illust.width()
 				inputCur = parseInt(inputs.filter(':checked').val()) - 1
 				sCount = Math.floor(illustWidth / (s.outerWidth() * 0.95))
-			}
-			function _resized(){
-				originalX = -1
-				inputs.filter(':checked').trigger('change', 0)
-				scrollStart()
-			}
-			function _show( is_firsttime ){
-				$window.on('resized.'+n, _resized)
-				_resized()
-			}
-			function _hide(){
-				$window.off('resized.'+n)
 			}
 			illustMain.addClass('mod-scroll-snap')
 			illust.on({
@@ -9283,10 +9289,6 @@ _frame.infos.__ship_init = function( $el ){
 						scrollStart()
 					}
 				}
-			})
-			$el.on({
-				'show': _show,
-				'hidden': _hide
 			})
 		}else{
 			let isActualPanning = false

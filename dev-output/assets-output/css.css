@@ -11098,12 +11098,13 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
     right: auto;
     border-top-width: 0;
     margin-top: 35px;
-    min-height: 400px;
+    min-height: 350px;
     -webkit-box-flex: 1;
-    -webkit-flex: 1 0 75%;
-        -ms-flex: 1 0 75%;
-            flex: 1 0 75%;
-    height: 75%;
+    -webkit-flex: 1 0 auto;
+        -ms-flex: 1 0 auto;
+            flex: 1 0 auto;
+    height: 65%;
+    max-height: 600px;
     -webkit-box-ordinal-group: 31;
     -webkit-order: 30;
         -ms-flex-order: 30;
