@@ -9180,7 +9180,7 @@ _frame.infos.__ship = function( id ){
 
 _frame.infos.__ship_init = function( $el ){
 	let x
-		,originalX
+		,originalX = -1
 		,startX
 		,startY
 		,deltaX
@@ -9194,7 +9194,7 @@ _frame.infos.__ship_init = function( $el ){
 		,s = imgs.eq(0)
 		,labels = illustMain.children('label')
 		,inputs = illustMain.children('input[type="radio"]')
-					.on('change', function(e){
+					.on('change', function(e, scrollTime){
 						let i = parseInt( e.target.getAttribute('value') ) - 1
 						if( !labels.eq(i).is(':visible') ){
 							i--
@@ -9205,7 +9205,7 @@ _frame.infos.__ship_init = function( $el ){
 							illust.off('scroll')
 								.animate({
 									scrollLeft:		imgs.eq(i)[0].offsetLeft
-								}, 200, function(){
+								}, typeof scrollTime == 'undefined' ? 200 : scrollTime, function(){
 									illust.on('scroll', scrollHandler)
 								})
 						}else{
@@ -9216,18 +9216,14 @@ _frame.infos.__ship_init = function( $el ){
 		,inputCur = 0
 		,sCount = 1
 	
-	function scrollStart(){
-		originalX = illust.scrollLeft()
-		illustWidth = illust.width()
-		inputCur = parseInt(inputs.filter(':checked').val()) - 1
-		sCount = Math.floor(illustWidth / (s.outerWidth() * 0.95))
-	}
 	function scrollHandler(){
-		x = illust.scrollLeft()
-		if( !isPanning ){
-			requestAnimationFrame(scrollX);
+		if( originalX >= 0 ){
+			x = illust.scrollLeft()
+			if( !isPanning ){
+				requestAnimationFrame(scrollX);
+			}
+			isPanning = true
 		}
-		isPanning = true
 	}
 	function scrollX(){
 		let delta = x - originalX
@@ -9236,54 +9232,56 @@ _frame.infos.__ship_init = function( $el ){
 			//,pDelta = Math.abs(delta % illustWidth) > (illustWidth / 3) ? Math.ceil(delta / illustWidth) : Math.floor(delta / illustWidth)
 		//console.log(delta, pDelta)
 		isPanning = false
-		if( delta !== 0 )
-			inputs.eq(inputCur + pDelta * sCount).prop('checked', true)
+		if( delta !== 0 ){
+			let t = inputCur + pDelta * sCount
+			if( t < 0 )
+				t = 0
+			if( t + sCount > inputs.length )
+				t = inputs.length - sCount
+			//inputs.eq(t).prop('checked', true).trigger('change')
+			inputs.eq(t).prop('checked', true)
+		}
 		//inputs.eq( Math.floor(x / (s.outerWidth() * 0.95)) ).prop('checked', true)
 	}
 	//function scrollToX(){
 	//	isPanning = false
 	//	illust.scrollLeft( originalX + deltaX )
 	//}
-	function calcScrollbar(){
-		//illust.css('bottom',
-		//	0 - illust.outerHeight() + (s.height() + parseInt(illust.css('padding-top')) + parseInt(illust.css('padding-bottom')))
-		//)
-	}
 	
 	// scroll snap
 		if( isScrollSnap ){
+			let n = 'e'+_g.timeNow()
+			function scrollStart(){
+				originalX = illust.scrollLeft()
+				illustWidth = illust.width()
+				inputCur = parseInt(inputs.filter(':checked').val()) - 1
+				sCount = Math.floor(illustWidth / (s.outerWidth() * 0.95))
+			}
+			function _resized(){
+				originalX = -1
+				inputs.filter(':checked').trigger('change', 0)
+				scrollStart()
+			}
+			function _show( is_firsttime ){
+				$window.on('resized.'+n, _resized)
+				_resized()
+			}
+			function _hide(){
+				$window.off('resized.'+n)
+			}
 			illustMain.addClass('mod-scroll-snap')
-			$window.on('resized', function(){
-				scrollStart();
-				if( $el.data('is_show') )
-					inputs.filter(':checked').trigger('change')
-			})
 			illust.on({
 				'scroll': scrollHandler,
 				'pointerdown': function(e){
 					if( e.originalEvent.pointerType == 'touch' ){
 						scrollStart()
-						//isMoving = e.clientX
-						//illust.off('scroll')
 					}
-				}/*,
-				'pointermove': function(e){
-					if( isMoving ){
-						deltaX = isMoving - e.clientX
-						if( !isPanning ){
-							requestAnimationFrame(scrollToX);
-						}
-						isPanning = true
-					}
-				},
-				'pointerleave pointerup pointercancel': function(){
-					isMoving = 0
-					originalX = 0
-					illust.on('scroll', scrollHandler).trigger('scroll')
-					inputs.filter(':checked').trigger('change')
-				}*/
+				}
 			})
-			calcScrollbar()
+			$el.on({
+				'show': _show,
+				'hidden': _hide
+			})
 		}else{
 			let isActualPanning = false
 			function panEnd(){
@@ -9303,17 +9301,19 @@ _frame.infos.__ship_init = function( $el ){
 				illust/*.addClass('is-panning')*/.css('transform', 'translateX('+(deltaX * (half ? 0.3333 : 1) + originalX)+'px)')
 			}
 			function panHandler(){
-				if( !isPanning ){
-					requestAnimationFrame(panX);
-				}
-				isPanning = true
+				//if( originalX >= 0 ){
+					if( !isPanning ){
+						requestAnimationFrame(panX);
+					}
+					isPanning = true
+				//}
 			}
 			function bodyTouchMove(e){
 				if( (startX || startY) && e.originalEvent.targetTouches.length == 1 ){
+					deltaX = e.originalEvent.targetTouches[0].clientX - startX
 					if( isActualPanning ){
 						panHandler()
 					}else{
-						deltaX = e.originalEvent.targetTouches[0].clientX - startX
 						deltaY = e.originalEvent.targetTouches[0].clientY - startY
 						let absX = Math.abs(deltaX)
 							,absY = Math.abs(deltaY)
@@ -9336,11 +9336,17 @@ _frame.infos.__ship_init = function( $el ){
 			function bodyTouchEnd(e){
 				requestAnimationFrame(function(){
 					if( deltaX && Math.abs(deltaX) >= 30 ){
+						let t
 						if( deltaX < 0 && inputCur < inputs.length - 1 ){
-							inputs.eq(inputCur+ sCount ).prop('checked', true).trigger('change')
+							t = inputCur + sCount
 						}else if( deltaX > 0 && inputCur > 0 ){
-							inputs.eq(inputCur-1).prop('checked', true).trigger('change')
+							t = inputCur - 1
 						}
+						if( t < 0 )
+							t = 0
+						if( t + sCount > inputs.length )
+							t = inputs.length - sCount
+						inputs.eq(t).prop('checked', true).trigger('change')
 					}
 					panEnd()
 				})
@@ -9366,7 +9372,7 @@ _frame.infos.__ship_init = function( $el ){
 					},
 					'touchmove': function(e){
 						if( isActualPanning )
-							e.preventDefault()
+						e.preventDefault()
 					}
 				})
 			/* PEPjs

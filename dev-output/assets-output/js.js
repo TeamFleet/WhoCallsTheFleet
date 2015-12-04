@@ -5283,7 +5283,7 @@ _frame.infos = {
 
 _frame.infos.__ship_init = function ($el) {
 	var x = undefined,
-	    originalX = undefined,
+	    originalX = -1,
 	    startX = undefined,
 	    startY = undefined,
 	    deltaX = undefined,
@@ -5295,7 +5295,7 @@ _frame.infos.__ship_init = function ($el) {
 	    imgs = illust.children('span'),
 	    s = imgs.eq(0),
 	    labels = illustMain.children('label'),
-	    inputs = illustMain.children('input[type="radio"]').on('change', function (e) {
+	    inputs = illustMain.children('input[type="radio"]').on('change', function (e, scrollTime) {
 		var i = parseInt(e.target.getAttribute('value')) - 1;
 		if (!labels.eq(i).is(':visible')) {
 			i--;
@@ -5304,7 +5304,7 @@ _frame.infos.__ship_init = function ($el) {
 		if (isScrollSnap) {
 			illust.off('scroll').animate({
 				scrollLeft: imgs.eq(i)[0].offsetLeft
-			}, 200, function () {
+			}, typeof scrollTime == 'undefined' ? 200 : scrollTime, function () {
 				illust.on('scroll', scrollHandler);
 			});
 		} else {}
@@ -5313,43 +5313,69 @@ _frame.infos.__ship_init = function ($el) {
 	    inputCur = 0,
 	    sCount = 1;
 
-	function scrollStart() {
-		originalX = illust.scrollLeft();
-		illustWidth = illust.width();
-		inputCur = parseInt(inputs.filter(':checked').val()) - 1;
-		sCount = Math.floor(illustWidth / (s.outerWidth() * 0.95));
-	}
 	function scrollHandler() {
-		x = illust.scrollLeft();
-		if (!isPanning) {
-			requestAnimationFrame(scrollX);
+		if (originalX >= 0) {
+			x = illust.scrollLeft();
+			if (!isPanning) {
+				requestAnimationFrame(scrollX);
+			}
+			isPanning = !0;
 		}
-		isPanning = !0;
 	}
 	function scrollX() {
 		var delta = x - originalX,
 		    pDelta = (Math.floor(Math.abs(delta) / illustWidth) + (Math.abs(delta % illustWidth) > illustWidth / 2 ? 1 : 0)) * (x < originalX ? -1 : 1);
 
 		isPanning = !1;
-		if (delta !== 0) inputs.eq(inputCur + pDelta * sCount).prop('checked', !0);
+		if (delta !== 0) {
+			var t = inputCur + pDelta * sCount;
+			if (t < 0) t = 0;
+			if (t + sCount > inputs.length) t = inputs.length - sCount;
+
+			inputs.eq(t).prop('checked', !0);
+		}
 	}
 
-	function calcScrollbar() {}
-
 	if (isScrollSnap) {
-		illustMain.addClass('mod-scroll-snap');
-		$window.on('resized', function () {
-			scrollStart();
-			if ($el.data('is_show')) inputs.filter(':checked').trigger('change');
-		});
-		illust.on({
-			'scroll': scrollHandler,
-			'pointerdown': function pointerdown(e) {
-				if (e.originalEvent.pointerType == 'touch') {
-					scrollStart();
+		(function () {
+			var scrollStart = function scrollStart() {
+				originalX = illust.scrollLeft();
+				illustWidth = illust.width();
+				inputCur = parseInt(inputs.filter(':checked').val()) - 1;
+				sCount = Math.floor(illustWidth / (s.outerWidth() * 0.95));
+			};
+
+			var _resized = function _resized() {
+				originalX = -1;
+				inputs.filter(':checked').trigger('change', 0);
+				scrollStart();
+			};
+
+			var _show = function _show(is_firsttime) {
+				$window.on('resized.' + n, _resized);
+				_resized();
+			};
+
+			var _hide = function _hide() {
+				$window.off('resized.' + n);
+			};
+
+			var n = 'e' + _g.timeNow();
+
+			illustMain.addClass('mod-scroll-snap');
+			illust.on({
+				'scroll': scrollHandler,
+				'pointerdown': function pointerdown(e) {
+					if (e.originalEvent.pointerType == 'touch') {
+						scrollStart();
+					}
 				}
-			} });
-		calcScrollbar();
+			});
+			$el.on({
+				'show': _show,
+				'hidden': _hide
+			});
+		})();
 	} else {
 		(function () {
 			var panEnd = function panEnd() {
@@ -5379,10 +5405,10 @@ _frame.infos.__ship_init = function ($el) {
 
 			var bodyTouchMove = function bodyTouchMove(e) {
 				if ((startX || startY) && e.originalEvent.targetTouches.length == 1) {
+					deltaX = e.originalEvent.targetTouches[0].clientX - startX;
 					if (isActualPanning) {
 						panHandler();
 					} else {
-						deltaX = e.originalEvent.targetTouches[0].clientX - startX;
 						deltaY = e.originalEvent.targetTouches[0].clientY - startY;
 						var absX = Math.abs(deltaX),
 						    absY = Math.abs(deltaY);
@@ -5403,11 +5429,15 @@ _frame.infos.__ship_init = function ($el) {
 			var bodyTouchEnd = function bodyTouchEnd(e) {
 				requestAnimationFrame(function () {
 					if (deltaX && Math.abs(deltaX) >= 30) {
+						var t = undefined;
 						if (deltaX < 0 && inputCur < inputs.length - 1) {
-							inputs.eq(inputCur + sCount).prop('checked', !0).trigger('change');
+							t = inputCur + sCount;
 						} else if (deltaX > 0 && inputCur > 0) {
-							inputs.eq(inputCur - 1).prop('checked', !0).trigger('change');
+							t = inputCur - 1;
 						}
+						if (t < 0) t = 0;
+						if (t + sCount > inputs.length) t = inputs.length - sCount;
+						inputs.eq(t).prop('checked', !0).trigger('change');
 					}
 					panEnd();
 				});
