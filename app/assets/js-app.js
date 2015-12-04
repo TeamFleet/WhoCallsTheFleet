@@ -9274,7 +9274,12 @@ _frame.infos.__ship_init = function( $el ){
 			illust.on({
 				'scroll': scrollHandler,
 				'pointerdown': function(e){
-					if( e.originalEvent.pointerType == 'touch' ){
+					if( originalX < 0 && e.originalEvent.pointerType == 'touch' ){
+						scrollStart()
+					}
+				},
+				'touchstart': function(){
+					if( originalX < 0 ){
 						scrollStart()
 					}
 				}

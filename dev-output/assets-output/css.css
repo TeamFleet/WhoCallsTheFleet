@@ -10351,13 +10351,19 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
 }
 .infos-ship > div.add_equip > div > h4 {
   margin: 0;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 10px;
 }
 .infos-ship > div.add_equip > div > span {
   display: inline-block;
   background: no-repeat 0 50%;
   padding: 0 0 0 36px;
   line-height: 36px;
-  margin: 0 1em 0 0;
+  margin: -3px 1em -7px 0;
+}
+.infos-ship > div.add_equip.add_other > div > h4 {
+  margin-right: -20px;
 }
 .infos-ship > div.remodels {
   overflow: hidden;
@@ -10918,23 +10924,36 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
   }
 }
 @media all and (max-width: 720px), (min-width: 721px) and (min-height: 801px) and (max-aspect-ratio: 5/4) {
+  .infos-ship {
+    /*
+			&>div.add_equip{
+				&>div>h4{
+					display: 	inline-block;
+					vertical-align: top;
+					margin-right:10px;
+				}
+				&>div>span{
+					line-height:28px;
+					margin-right: .25em;
+				}
+			}
+			&>div.add_equip.add_other{
+				&>div>h4{
+					margin-right:-20px;
+				}
+			}
+			*/
+  }
   .infos-ship:after {
     display: none;
   }
   .infos-ship > div.title ~ div {
     padding-top: 25px;
   }
-  .infos-ship > div.add_equip > div > h4 {
-    display: inline-block;
-    vertical-align: top;
-    margin-right: 10px;
-  }
   .infos-ship > div.add_equip > div > span {
-    line-height: 28px;
+    margin-top: -7px;
+    margin-bottom: -7px;
     margin-right: .25em;
-  }
-  .infos-ship > div.add_equip.add_other > div > h4 {
-    margin-right: -20px;
   }
   .infos-ship > .entity {
     right: 0;
@@ -11063,7 +11082,8 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
             order: 12;
   }
   .infos-ship > div.add_equip > div > span {
-    line-height: 22px;
+    margin-top: -9px;
+    margin-bottom: -9px;
   }
   .infos-ship > div.remodels {
     -webkit-box-ordinal-group: 21;
