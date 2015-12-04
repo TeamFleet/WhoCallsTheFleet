@@ -3067,6 +3067,12 @@ main:after {
     padding-right: 25px;
   }
 }
+@media all and (max-width: 720px) {
+  .page-container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
 .page-container[page="ships"],
 .page-container[page="equipments"],
 .page-container[page="arsenal"],
@@ -4173,7 +4179,7 @@ body.mod-capture #tip {
     line-height: 20px;
     margin: 0 !important;
     padding: 15px 25px !important;
-    width: 320px;
+    width: auto;
     text-align: left;
     border-left: 0;
     border-right: 0;
@@ -4209,7 +4215,7 @@ body.mod-capture #tip {
     top: 0;
     display: block;
     z-index: 4;
-    padding: 0 10px 0 90px;
+    padding: 0 10px 0 85px;
     -webkit-app-region: no-drag;
     -webkit-transition-property: -webkit-transform;
     transition-property: -webkit-transform;
@@ -4222,7 +4228,7 @@ body.mod-capture #tip {
     border-right: 15px solid transparent;
     height: 100%;
     width: 54px;
-    left: 10px;
+    left: 5px;
     -webkit-transition-property: -webkit-transform;
     transition-property: -webkit-transform;
     transition-property: transform;
@@ -4876,6 +4882,12 @@ body.mod-capture #tip {
     padding-right: 25px;
   }
 }
+@media all and (max-width: 720px) {
+  .tablelist > .options > div {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
 .tablelist > .options > div.filters {
   -webkit-transition-delay: .5s;
           transition-delay: .5s;
@@ -5217,6 +5229,13 @@ body.mod-capture #tip {
     padding-right: 25px;
   }
 }
+@media all and (max-width: 720px) {
+  .tablelist-header > .wrapper,
+  .tablelist-body {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
 .tablelist-header > .wrapper,
 .tablelist-body > p.row {
   display: -webkit-box;
@@ -5450,6 +5469,11 @@ body.mod-capture #tip {
 @media all and (max-width: 800px) {
   .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body {
     padding-right: 15px;
+  }
+}
+@media all and (max-width: 720px) {
+  .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body {
+    padding-right: 10px;
   }
 }
 .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p {
@@ -6629,6 +6653,12 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
     padding-right: 25px;
   }
 }
+@media all and (max-width: 720px) {
+  .tablelist.entities {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
 .tablelist.entities .typetitle {
   height: 50px;
   font-weight: bold;
@@ -7171,6 +7201,13 @@ h6 + section.update_journal {
     width: calc(100% + 50px);
   }
 }
+@media all and (max-width: 720px) {
+  .infos-fleet {
+    margin-left: -20px;
+    margin-right: -20px;
+    width: calc(100% + 40px);
+  }
+}
 @media all and (max-height: 600px) {
   .infos-fleet {
     top: -10px;
@@ -7202,28 +7239,35 @@ h6 + section.update_journal {
   display: block;
   width: 100%;
   position: relative;
-  border-left: 4rem solid transparent;
-  border-right: 4rem solid transparent;
+  border-left: 80px solid transparent;
+  border-right: 80px solid transparent;
 }
 @media all and (max-width: 1152px) {
   .infos-fleet > header,
   .infos-fleet > .fleets {
-    border-left-width: 3rem;
-    border-right-width: 3rem;
+    border-left-width: 60px;
+    border-right-width: 60px;
   }
 }
 @media all and (max-width: 960px) {
   .infos-fleet > header,
   .infos-fleet > .fleets {
-    border-left-width: 2rem;
-    border-right-width: 2rem;
+    border-left-width: 40px;
+    border-right-width: 40px;
   }
 }
 @media all and (max-width: 800px) {
   .infos-fleet > header,
   .infos-fleet > .fleets {
-    border-left-width: 1.25rem;
-    border-right-width: 1.25rem;
+    border-left-width: 25px;
+    border-right-width: 25px;
+  }
+}
+@media all and (max-width: 720px) {
+  .infos-fleet > header,
+  .infos-fleet > .fleets {
+    border-left-width: 20px;
+    border-right-width: 20px;
   }
 }
 .infos-fleet h3[data-content],
@@ -7555,7 +7599,8 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   bottom: 0;
   left: 0;
   z-index: 1;
-  overflow: auto;
+  overflow: hidden;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   margin: 0 auto;
   padding-bottom: 0.5rem;
@@ -7584,6 +7629,12 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   .infos-fleet > .ships > dl {
     padding-left: 25px;
     padding-right: 25px;
+  }
+}
+@media all and (max-width: 720px) {
+  .infos-fleet > .ships > dl {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 .infos-fleet > .ships > dl:before {
@@ -11849,6 +11900,13 @@ body > .modal.update_journal > div > section {
     padding-right: 25px;
   }
 }
+@media all and (max-width: 720px) {
+  body > .modal.update_journal > div > header,
+  body > .modal.update_journal > div > section {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
 body > .modal.update_journal > div > header {
   line-height: 4rem;
   background: transparent;
@@ -11881,7 +11939,7 @@ body > .modal.update_journal > div > button.close {
   transition-property: color;
   -webkit-transition-duration: 0.3s;
           transition-duration: 0.3s;
-  left: 4rem;
+  left: 80px;
 }
 body > .modal.update_journal > div > button.close:hover {
   color: #fff;
@@ -11891,17 +11949,22 @@ body > .modal.update_journal > div > button.close:active {
 }
 @media all and (max-width: 1152px) {
   body > .modal.update_journal > div > button.close {
-    left: 3rem;
+    left: 60px;
   }
 }
 @media all and (max-width: 960px) {
   body > .modal.update_journal > div > button.close {
-    left: 2rem;
+    left: 40px;
   }
 }
 @media all and (max-width: 800px) {
   body > .modal.update_journal > div > button.close {
-    left: 1.25rem;
+    left: 25px;
+  }
+}
+@media all and (max-width: 720px) {
+  body > .modal.update_journal > div > button.close {
+    left: 25px;
   }
 }
 body > .modal.update_journal > div > section {
@@ -12753,6 +12816,13 @@ main[data-theme="arsenal"]:after {
   .page-container[page="arsenal"] > .main {
     padding-left: 25px;
     padding-right: 25px;
+  }
+}
+@media all and (max-width: 720px) {
+  .page-container[page="arsenal"] > .tabs,
+  .page-container[page="arsenal"] > .main {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 .page-container[page="arsenal"] > .tabs {

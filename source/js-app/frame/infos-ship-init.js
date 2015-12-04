@@ -39,6 +39,12 @@ _frame.infos.__ship_init = function( $el ){
 		,inputCur = 0
 		,sCount = 1
 	
+	function scrollStart(){
+		originalX = illust.scrollLeft()
+		illustWidth = illust.width()
+		inputCur = parseInt(inputs.filter(':checked').val()) - 1
+		sCount = Math.floor(illustWidth / (s.outerWidth() * 0.95))
+	}
 	function scrollHandler(){
 		if( originalX >= 0 ){
 			x = illust.scrollLeft()
@@ -91,12 +97,6 @@ _frame.infos.__ship_init = function( $el ){
 	
 	// scroll snap
 		if( isScrollSnap ){
-			function scrollStart(){
-				originalX = illust.scrollLeft()
-				illustWidth = illust.width()
-				inputCur = parseInt(inputs.filter(':checked').val()) - 1
-				sCount = Math.floor(illustWidth / (s.outerWidth() * 0.95))
-			}
 			illustMain.addClass('mod-scroll-snap')
 			illust.on({
 				'scroll': scrollHandler,
