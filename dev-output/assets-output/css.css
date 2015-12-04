@@ -5164,7 +5164,7 @@ body.mod-capture #tip {
   opacity: 1;
   z-index: 2;
 }
-#layout.mode-selection .tablelist > .msgs {
+#layout.mode-selection .tablelist > .msgs:not([data-msgs="comparestart"]) {
   height: 0;
 }
 .tablelist-container {
@@ -6298,6 +6298,17 @@ body.mod-capture #tip {
   width: 1px;
   background: rgba(255, 255, 255, 0.15);
 }
+@media all and (max-width: 720px) {
+  .tablelist.fleets > .options > div.filters button.export {
+    display: none;
+  }
+}
+html.ios .tablelist.fleets > .options > div.filters button.export {
+  display: none;
+}
+html.ios .tablelist.fleets > .options > div.filters button.export {
+  display: none;
+}
 .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.title {
   height: 17.5px;
   margin-bottom: 7.5px;
@@ -6552,6 +6563,12 @@ body.mod-capture #tip {
   display: block;
   font-weight: lighter;
 }
+@media all and (max-width: 720px) {
+  .tablelist.fleets .tablelist-container > .nocontent > div > span {
+    font-size: 10vw;
+    line-height: 1.16666667;
+  }
+}
 .tablelist.fleets .tablelist-container > .nocontent > div > button {
   height: 40px;
   font-size: 16px;
@@ -6571,6 +6588,13 @@ body.mod-capture #tip {
 .tablelist.fleets .tablelist-container > .nocontent > div > button:active {
   background: rgba(0, 0, 0, 0.325);
   color: rgba(255, 255, 255, 0.75);
+}
+@media all and (max-width: 720px) {
+  .tablelist.fleets .tablelist-container > .nocontent > div > button {
+    padding: 0;
+    width: 50vw;
+    max-width: 300px;
+  }
 }
 .tablelist.fleets .tablelist-container > .nocontent > div > span + button {
   margin-top: 14px;
@@ -6666,6 +6690,17 @@ body > .menus > .menu.menu-tablelistfleets-options.is-tablelist > .body .option-
   display: block;
 }
 body > .menus > .menu.menu-tablelistfleets-options.is-tablelist > .body .option-in-infos {
+  display: none;
+}
+@media all and (max-width: 720px) {
+  body > .menus > .menu.menu-fleets-new > .body menuitem.import_file {
+    display: none;
+  }
+}
+html.ios body > .menus > .menu.menu-fleets-new > .body menuitem.import_file {
+  display: none;
+}
+html.ios body > .menus > .menu.menu-fleets-new > .body menuitem.import_file {
   display: none;
 }
 section.update_journal ul > strong,

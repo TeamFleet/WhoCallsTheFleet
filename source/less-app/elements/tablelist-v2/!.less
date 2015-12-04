@@ -300,7 +300,9 @@
 			z-index:	2;
 		}
 		.mod-selection({
-			height: 	0;
+			&:not([data-msgs="comparestart"]){
+				height: 	0;
+			}
 		});
 	} // &>.msgs
 }

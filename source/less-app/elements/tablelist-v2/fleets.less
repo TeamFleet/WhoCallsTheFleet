@@ -38,6 +38,16 @@
 				//border-right:1px solid rgba(255, 255, 255, .15);
 			}
 		}
+		&>div.filters{
+			button.export{
+				@media all and (max-width: @mobileview-breaking-point){
+					display: 	none;
+				}
+				.ios({
+					display: 	none;
+				});
+			}
+		}
 	}
 	
 	// Default/List view HERE
@@ -248,6 +258,10 @@
 				letter-spacing:	.15em;
 				display:	block;
 				font-weight:lighter;
+				@media all and (max-width: @mobileview-breaking-point){
+					font-size: 	10vw;
+					line-height:(7 / 6);
+				}
 			}
 			&>button{
 				height: 	40px;
@@ -266,6 +280,11 @@
 				&:active{
 					background:	rgba(0,0,0, .325);
 					color:		rgba(255,255,255, .75);
+				}
+				@media all and (max-width: @mobileview-breaking-point){
+					padding: 	0;
+					width: 		50vw;
+					max-width: 	300px;
 				}
 			}
 			&>span + button{
@@ -326,5 +345,15 @@ body > .menus > .menu.menu-tablelistfleets-options{
 		.option-in-infos{
 			display: 	none;
 		}
+	}
+}
+body > .menus > .menu.menu-fleets-new > .body{
+	menuitem.import_file{
+		@media all and (max-width: @mobileview-breaking-point){
+			display: 	none;
+		}
+		.ios({
+			display: 	none;
+		});
 	}
 }

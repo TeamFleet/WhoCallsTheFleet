@@ -11279,8 +11279,9 @@ class TablelistFleets extends Tablelist{
 			if( !this.menu_new ){
 				this.menu_new = new _menu({
 					'target': 	this.dom.btn_new,
+					'className':'menu-fleets-new',
 					'items': [
-						$('<div class="menu_fleets_new"/>')
+						$('<div class="menu-fleets-new"/>')
 							.append(
 								$('<menuitem/>').html('新建配置')
 									.on('click', function(){
@@ -11332,7 +11333,7 @@ class TablelistFleets extends Tablelist{
 							)
 							.append(
 								TablelistFleets.support.buildfile
-									? $('<menuitem/>').html('导入配置文件').on('click', function(){
+									? $('<menuitem class="import_file"/>').html('导入配置文件').on('click', function(){
 											this.dbfile_selector.trigger('click')
 										}.bind(this))
 									: null

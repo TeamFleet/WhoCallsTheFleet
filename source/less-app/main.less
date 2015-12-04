@@ -526,7 +526,7 @@ nav{
 			padding-left: 20px;
 			transition-timing-function: ease-out;
 			.layout-nav-selection-info();
-			@media all and (max-width: 720px ){
+			@media all and (max-width: @mobileview-breaking-point ){
 				font-size: 	18px;
 			}
 		}
@@ -1786,7 +1786,7 @@ table{
 
 
 // Mobile View
-	@media all and (max-width: 720px ){
+	@media all and (max-width: @mobileview-breaking-point ){
 		#layout{
 			padding-top:50px;
 		}

@@ -2087,7 +2087,7 @@ _p.tip = {
 	},
 
 	show: function show(cont, el, pos) {
-		if ($('body').data('preventMouseover') || $body_preventMouseover || !cont) return !1;
+		if (!cont) return !1;
 
 		clearTimeout(this.timeout_fade);
 		this.timeout_fade = null;
@@ -8192,7 +8192,8 @@ var TablelistFleets = (function (_Tablelist4) {
 			if (!this.menu_new) {
 				this.menu_new = new _menu({
 					'target': this.dom.btn_new,
-					'items': [$('<div class="menu_fleets_new"/>').append($('<menuitem/>').html('新建配置').on('click', (function () {
+					'className': 'menu-fleets-new',
+					'items': [$('<div class="menu-fleets-new"/>').append($('<menuitem/>').html('新建配置').on('click', (function () {
 						this.action_new();
 					}).bind(this))).append($('<menuitem/>').html('导入配置代码').on('click', (function () {
 						if (!TablelistFleets.modalImport) {
@@ -8218,7 +8219,7 @@ var TablelistFleets = (function (_Tablelist4) {
 							'classname': 'infos_fleet infos_fleet_import',
 							'detach': !0
 						});
-					}).bind(this))).append(TablelistFleets.support.buildfile ? $('<menuitem/>').html('导入配置文件').on('click', (function () {
+					}).bind(this))).append(TablelistFleets.support.buildfile ? $('<menuitem class="import_file"/>').html('导入配置文件').on('click', (function () {
 						this.dbfile_selector.trigger('click');
 					}).bind(this)) : null)]
 				});
