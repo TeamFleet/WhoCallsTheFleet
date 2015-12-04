@@ -5286,6 +5286,7 @@ _frame.infos.__ship_init = function ($el) {
 	    originalX = -1,
 	    startX = undefined,
 	    startY = undefined,
+	    startTime = undefined,
 	    deltaX = undefined,
 	    deltaY = undefined,
 	    isPanning = !1,
@@ -5428,7 +5429,7 @@ _frame.infos.__ship_init = function ($el) {
 
 			var bodyTouchEnd = function bodyTouchEnd(e) {
 				requestAnimationFrame(function () {
-					if (deltaX && Math.abs(deltaX) >= 30) {
+					if (deltaX && (Math.abs(deltaX) > illustWidth / 3 || _g.timeNow() - startTime < 300)) {
 						var t = undefined;
 						if (deltaX < 0 && inputCur < inputs.length - 1) {
 							t = inputCur + sCount;
@@ -5452,8 +5453,10 @@ _frame.infos.__ship_init = function ($el) {
 						originalX = parseInt(matrix[12] || matrix[4] || 0);
 						startX = e.originalEvent.targetTouches[0].clientX;
 						startY = e.originalEvent.targetTouches[0].clientY;
+						startTime = _g.timeNow();
 						inputCur = parseInt(inputs.filter(':checked').val()) - 1;
 						sCount = Math.floor(illust.width() / (s.outerWidth() * 0.95));
+						illustWidth = illust.width();
 
 						$(document).on({
 							'touchmove.infosShipIllust': bodyTouchMove,
