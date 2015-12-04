@@ -2087,7 +2087,7 @@ _p.tip = {
 	},
 
 	show: function show(cont, el, pos) {
-		if ($('body').data('preventMouseover') || $body_preventMouseover || !cont) return !1;
+		if (!cont) return !1;
 
 		clearTimeout(this.timeout_fade);
 		this.timeout_fade = null;
@@ -5295,6 +5295,7 @@ _frame.infos.__ship_init = function ($el) {
 	    illust = illustMain.children('div'),
 	    imgs = illust.children('span'),
 	    s = imgs.eq(0),
+	    n = 'e' + _g.timeNow(),
 	    labels = illustMain.children('label'),
 	    inputs = illustMain.children('input[type="radio"]').on('change', function (e, scrollTime) {
 		var i = parseInt(e.target.getAttribute('value')) - 1;
@@ -5337,6 +5338,23 @@ _frame.infos.__ship_init = function ($el) {
 		}
 	}
 
+	function _resized() {
+		originalX = -1;
+		inputs.filter(':checked').trigger('change', 0);
+		if (isScrollSnap) scrollStart();
+	}
+	function _show(is_firsttime) {
+		$window.on('resized.' + n, _resized);
+		_resized();
+	}
+	function _hide() {
+		$window.off('resized.' + n);
+	}
+	$el.on({
+		'show': _show,
+		'hidden': _hide
+	});
+
 	if (isScrollSnap) {
 		(function () {
 			var scrollStart = function scrollStart() {
@@ -5345,23 +5363,6 @@ _frame.infos.__ship_init = function ($el) {
 				inputCur = parseInt(inputs.filter(':checked').val()) - 1;
 				sCount = Math.floor(illustWidth / (s.outerWidth() * 0.95));
 			};
-
-			var _resized = function _resized() {
-				originalX = -1;
-				inputs.filter(':checked').trigger('change', 0);
-				scrollStart();
-			};
-
-			var _show = function _show(is_firsttime) {
-				$window.on('resized.' + n, _resized);
-				_resized();
-			};
-
-			var _hide = function _hide() {
-				$window.off('resized.' + n);
-			};
-
-			var n = 'e' + _g.timeNow();
 
 			illustMain.addClass('mod-scroll-snap');
 			illust.on({
@@ -5376,10 +5377,6 @@ _frame.infos.__ship_init = function ($el) {
 						scrollStart();
 					}
 				}
-			});
-			$el.on({
-				'show': _show,
-				'hidden': _hide
 			});
 		})();
 	} else {
@@ -8195,7 +8192,8 @@ var TablelistFleets = (function (_Tablelist4) {
 			if (!this.menu_new) {
 				this.menu_new = new _menu({
 					'target': this.dom.btn_new,
-					'items': [$('<div class="menu_fleets_new"/>').append($('<menuitem/>').html('新建配置').on('click', (function () {
+					'className': 'menu-fleets-new',
+					'items': [$('<div class="menu-fleets-new"/>').append($('<menuitem/>').html('新建配置').on('click', (function () {
 						this.action_new();
 					}).bind(this))).append($('<menuitem/>').html('导入配置代码').on('click', (function () {
 						if (!TablelistFleets.modalImport) {
@@ -8221,7 +8219,7 @@ var TablelistFleets = (function (_Tablelist4) {
 							'classname': 'infos_fleet infos_fleet_import',
 							'detach': !0
 						});
-					}).bind(this))).append(TablelistFleets.support.buildfile ? $('<menuitem/>').html('导入配置文件').on('click', (function () {
+					}).bind(this))).append(TablelistFleets.support.buildfile ? $('<menuitem class="import_file"/>').html('导入配置文件').on('click', (function () {
 						this.dbfile_selector.trigger('click');
 					}).bind(this)) : null)]
 				});
