@@ -13648,6 +13648,11 @@ main[data-theme="about"]:after {
   padding-top: 0;
 }
 @media all and (max-width: 800px) {
+  .page-container[page="home"] .cols > h2 small {
+    display: block;
+    padding: 0;
+    margin-top: -0.5em;
+  }
   .page-container[page="home"] .cols > .col-66 + .col-33 {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 20px;
