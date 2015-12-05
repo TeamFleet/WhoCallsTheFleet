@@ -5862,10 +5862,47 @@ _frame.app_main.page['calctp'] = {
 			form.on('input', 'input', function(){
 				form.trigger('submit')
 			}).on('submit', function(e){
+				e.preventDefault()
+
 				let d = form.serializeObject()
 					,rA = 0
 					,rS = 0
+
+				for(let i in d){
+					let count = parseInt(d[i]) || 0;
+					switch(i){
+						case 'dd':
+							rS+= 5 * count;
+							break;
+						case 'cl':
+							rS+= 2 * count;
+							break;
+						case 'cav':
+							rS+= 4 * count;
+							break;
+						case 'av':
+							rS+= 9.5 * count;
+							break;
+						case 'lha':
+							rS+= 12.25 * count;
+							break;
+						case 'ao':
+							rS+= 14.75 * count;
+							break;
+						// canister
+						case 'e75':
+							rS+= 5 * count;
+							break;
+						case 'e68':
+							rS+= 8 * count;
+							break;
+					}
+				}
+				rA = rS * 0.7
+				resultA.html(Math.floor(rA))
+				resultS.html(Math.floor(rS))
 				
+				/* old
 				for(let i in d){
 					let count = parseInt(d[i]) || 0;
 					switch(i){
@@ -5897,10 +5934,10 @@ _frame.app_main.page['calctp'] = {
 							rS+= 8.3333 * count;
 							break;
 					}
-				}
-				e.preventDefault()
+				}				
 				resultA.html(Math.floor(rA))
 				resultS.html(Math.floor(rS))
+				*/
 			})
 		})
 	}
@@ -8870,9 +8907,9 @@ _frame.infos.__ship = function( id ){
 				slot.html( d['slot'][i] )
 			}else{
 				var item_data = _g.data.items[d['equip'][i]]
-					,item_icon = 'assets/images/itemicon/'
-									+ item_data.getIconId()
-									+ '.png'
+					//,item_icon = 'assets/images/itemicon/'
+					//				+ item_data.getIconId()
+					//				+ '.png'
 				equip.attr({
 					'data-equipmentid': 	d['equip'][i],
 					'data-tip-position': 	'left',
@@ -8884,10 +8921,11 @@ _frame.infos.__ship = function( id ){
 					item_data.getName(true)
 				)
 				slot.html( d['slot'][i] )
-				icon.css(
-					'background-image',
-					'url(' + item_icon + ')'
-				)
+				icon.addClass('equiptypeicon mod-' + item_data.getIconId())
+				//icon.css(
+				//	'background-image',
+				//	'url(' + item_icon + ')'
+				//)
 			}
 			i++
 		}
@@ -9471,6 +9509,7 @@ _p.tip.content_equipment = function( d ){
 		}
 	}
 
+	/*
 	var item_icon = 'assets/images/itemicon/'
 						+ d.getIconId()
 						+ '.png'
@@ -9492,8 +9531,27 @@ _p.tip.content_equipment = function( d ){
 				+ _stat('evasion', '回避')
 				+ _stat('los', '索敌')
 				+ _stat('range', '射程')
+	*/
 
-	return html
+	let item_name = d.getName()
+
+	return '<h3 class="itemstat">'
+			+ '<s class="equiptypeicon mod-'+d.getIconId()+'"></s>'
+			+ '<strong data-content="' + item_name + '">'
+				+ item_name
+			+ '</strong>'
+			+ '<small>' + _g.data.item_types[d['type']]['name']['zh_cn'] + '</small>'
+		+ '</h3>'
+		+ _stat('fire', '火力')
+		+ _stat('torpedo', '雷装')
+		+ _stat('aa', '对空')
+		+ _stat('asw', '对潜')
+		+ _stat('bomb', '爆装')
+		+ _stat('hit', '命中')
+		+ _stat('armor', '装甲')
+		+ _stat('evasion', '回避')
+		+ _stat('los', '索敌')
+		+ _stat('range', '射程')
 
 }}
 

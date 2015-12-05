@@ -4962,6 +4962,8 @@ _frame.app_main.page['calctp'] = {
 			form.on('input', 'input', function () {
 				form.trigger('submit');
 			}).on('submit', function (e) {
+				e.preventDefault();
+
 				var d = form.serializeObject(),
 				    rA = 0,
 				    rS = 0;
@@ -4970,35 +4972,33 @@ _frame.app_main.page['calctp'] = {
 					var count = parseInt(d[_i7]) || 0;
 					switch (_i7) {
 						case 'dd':
+							rS += 5 * count;
+							break;
 						case 'cl':
-							rA += 3 * count;
-							rS += 4.5 * count;
+							rS += 2 * count;
 							break;
 						case 'cav':
-							rA += 3 * count;
 							rS += 4 * count;
 							break;
 						case 'av':
-							rA += 8 * count;
-							rS += 10.5 * count;
+							rS += 9.5 * count;
 							break;
 						case 'lha':
+							rS += 12.25 * count;
+							break;
 						case 'ao':
-							rA += 10 * count;
-							rS += 13.5 * count;
+							rS += 14.75 * count;
 							break;
 
 						case 'e75':
-							rA += 3.5 * count;
 							rS += 5 * count;
 							break;
 						case 'e68':
-							rA += 5.5 * count;
-							rS += 8.3333 * count;
+							rS += 8 * count;
 							break;
 					}
 				}
-				e.preventDefault();
+				rA = rS * 0.7;
 				resultA.html(Math.floor(rA));
 				resultS.html(Math.floor(rS));
 			});
@@ -6961,11 +6961,9 @@ if (typeof _p.tip != 'undefined') {
 			}
 		}
 
-		var item_icon = 'assets/images/itemicon/' + d.getIconId() + '.png',
-		    item_name = d.getName(),
-		    html = '<h3 class="itemstat">' + '<s style="background-image: url(' + item_icon + ')"></s>' + '<strong data-content="' + item_name + '">' + item_name + '</strong>' + '<small>' + _g.data.item_types[d['type']]['name']['zh_cn'] + '</small>' + '</h3>' + _stat('fire', '火力') + _stat('torpedo', '雷装') + _stat('aa', '对空') + _stat('asw', '对潜') + _stat('bomb', '爆装') + _stat('hit', '命中') + _stat('armor', '装甲') + _stat('evasion', '回避') + _stat('los', '索敌') + _stat('range', '射程');
+		var item_name = d.getName();
 
-		return html;
+		return '<h3 class="itemstat">' + '<s class="equiptypeicon mod-' + d.getIconId() + '"></s>' + '<strong data-content="' + item_name + '">' + item_name + '</strong>' + '<small>' + _g.data.item_types[d['type']]['name']['zh_cn'] + '</small>' + '</h3>' + _stat('fire', '火力') + _stat('torpedo', '雷装') + _stat('aa', '对空') + _stat('asw', '对潜') + _stat('bomb', '爆装') + _stat('hit', '命中') + _stat('armor', '装甲') + _stat('evasion', '回避') + _stat('los', '索敌') + _stat('range', '射程');
 	};
 }
 

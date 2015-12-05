@@ -1970,6 +1970,30 @@ table{
 
 
 
+// Equipment Type Icons
+	.equiptypeicon{
+		background-image: 	~"url(@{folder_images}/equiptypeicon.png)";
+		background-repeat: 	no-repeat;
+		background-position:50% 0;
+		background-size: 	cover;
+		.loop(@n, @i: 1) when (@i =< @n) {
+			&.mod-@{i}{
+				background-position:	50% percentage((@i - 1) / (@count_equipment_icons - 1));
+			}
+			.loop(@n, (@i + 1));
+		}
+		.loop(@count_equipment_icons);
+	}
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -4344,6 +4344,117 @@ body.mod-capture #tip {
             transform: translateX(100%) !important;
   }
 }
+.equiptypeicon {
+  background-image: url(/!/assets/images/equiptypeicon.png);
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: cover;
+}
+.equiptypeicon.mod-1 {
+  background-position: 50% 0%;
+}
+.equiptypeicon.mod-2 {
+  background-position: 50% 2.94117647%;
+}
+.equiptypeicon.mod-3 {
+  background-position: 50% 5.88235294%;
+}
+.equiptypeicon.mod-4 {
+  background-position: 50% 8.82352941%;
+}
+.equiptypeicon.mod-5 {
+  background-position: 50% 11.76470588%;
+}
+.equiptypeicon.mod-6 {
+  background-position: 50% 14.70588235%;
+}
+.equiptypeicon.mod-7 {
+  background-position: 50% 17.64705882%;
+}
+.equiptypeicon.mod-8 {
+  background-position: 50% 20.58823529%;
+}
+.equiptypeicon.mod-9 {
+  background-position: 50% 23.52941176%;
+}
+.equiptypeicon.mod-10 {
+  background-position: 50% 26.47058824%;
+}
+.equiptypeicon.mod-11 {
+  background-position: 50% 29.41176471%;
+}
+.equiptypeicon.mod-12 {
+  background-position: 50% 32.35294118%;
+}
+.equiptypeicon.mod-13 {
+  background-position: 50% 35.29411765%;
+}
+.equiptypeicon.mod-14 {
+  background-position: 50% 38.23529412%;
+}
+.equiptypeicon.mod-15 {
+  background-position: 50% 41.17647059%;
+}
+.equiptypeicon.mod-16 {
+  background-position: 50% 44.11764706%;
+}
+.equiptypeicon.mod-17 {
+  background-position: 50% 47.05882353%;
+}
+.equiptypeicon.mod-18 {
+  background-position: 50% 50%;
+}
+.equiptypeicon.mod-19 {
+  background-position: 50% 52.94117647%;
+}
+.equiptypeicon.mod-20 {
+  background-position: 50% 55.88235294%;
+}
+.equiptypeicon.mod-21 {
+  background-position: 50% 58.82352941%;
+}
+.equiptypeicon.mod-22 {
+  background-position: 50% 61.76470588%;
+}
+.equiptypeicon.mod-23 {
+  background-position: 50% 64.70588235%;
+}
+.equiptypeicon.mod-24 {
+  background-position: 50% 67.64705882%;
+}
+.equiptypeicon.mod-25 {
+  background-position: 50% 70.58823529%;
+}
+.equiptypeicon.mod-26 {
+  background-position: 50% 73.52941176%;
+}
+.equiptypeicon.mod-27 {
+  background-position: 50% 76.47058824%;
+}
+.equiptypeicon.mod-28 {
+  background-position: 50% 79.41176471%;
+}
+.equiptypeicon.mod-29 {
+  background-position: 50% 82.35294118%;
+}
+.equiptypeicon.mod-30 {
+  background-position: 50% 85.29411765%;
+}
+.equiptypeicon.mod-31 {
+  background-position: 50% 88.23529412%;
+}
+.equiptypeicon.mod-32 {
+  background-position: 50% 91.17647059%;
+}
+.equiptypeicon.mod-33 {
+  background-position: 50% 94.11764706%;
+}
+.equiptypeicon.mod-34 {
+  background-position: 50% 97.05882353%;
+}
+.equiptypeicon.mod-35 {
+  background-position: 50% 100%;
+}
 @-webkit-keyframes layout-loading-logo {
   0% {
     -webkit-transform: translateY(10px);
@@ -5325,6 +5436,7 @@ body.mod-capture #tip {
   display: block;
   height: 50px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
 }
 .tablelist-body > p:empty {
   height: 0;
@@ -5339,6 +5451,13 @@ body.mod-capture #tip {
   padding-top: 18px;
   position: relative;
   font-weight: bold;
+}
+.tablelist-body > p.title .equiptypeicon {
+  display: block;
+  width: 36px;
+  height: 36px;
+  float: left;
+  margin: -6px 4px 0 2px;
 }
 .tablelist-body > p.title small {
   padding-left: .5em;
@@ -5899,14 +6018,6 @@ body.mod-capture #tip {
   .tablelist.ships > .options[viewtype=compare] ~ .tablelist-container .tablelist-body > p.row[data-shipid][compare-checked] > strong a {
     padding-left: 90px;
   }
-}
-.tablelist-equipments .tablelist-body > p.title span {
-  display: block;
-  width: 42px;
-  height: 30px;
-  background: no-repeat 50% 50%;
-  float: left;
-  margin-top: -4px;
 }
 .tablelist-equipments .tablelist-body > p.row[data-equipmentid] {
   height: auto;
@@ -10488,7 +10599,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
   height: 1.6rem;
   border-radius: 50%;
   overflow: hidden;
-  background: #182d31 no-repeat 50% 50%;
+  background-color: #182d31;
   border: 0.05rem solid #0874a6;
   -webkit-transition-property: background-color, border-color;
   transition-property: background-color, border-color;
@@ -12708,7 +12819,6 @@ body > .modal.update_journal.mod-blur-shot > div {
   position: absolute;
   top: 0;
   left: 0;
-  background: no-repeat 50% 50%;
 }
 #tip h3.itemstat > strong,
 #tip h3.shipinfo > strong {

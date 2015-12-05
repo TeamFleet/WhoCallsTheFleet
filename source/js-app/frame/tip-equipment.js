@@ -24,6 +24,7 @@ _p.tip.content_equipment = function( d ){
 		}
 	}
 
+	/*
 	var item_icon = 'assets/images/itemicon/'
 						+ d.getIconId()
 						+ '.png'
@@ -45,7 +46,26 @@ _p.tip.content_equipment = function( d ){
 				+ _stat('evasion', '回避')
 				+ _stat('los', '索敌')
 				+ _stat('range', '射程')
+	*/
 
-	return html
+	let item_name = d.getName()
+
+	return '<h3 class="itemstat">'
+			+ '<s class="equiptypeicon mod-'+d.getIconId()+'"></s>'
+			+ '<strong data-content="' + item_name + '">'
+				+ item_name
+			+ '</strong>'
+			+ '<small>' + _g.data.item_types[d['type']]['name']['zh_cn'] + '</small>'
+		+ '</h3>'
+		+ _stat('fire', '火力')
+		+ _stat('torpedo', '雷装')
+		+ _stat('aa', '对空')
+		+ _stat('asw', '对潜')
+		+ _stat('bomb', '爆装')
+		+ _stat('hit', '命中')
+		+ _stat('armor', '装甲')
+		+ _stat('evasion', '回避')
+		+ _stat('los', '索敌')
+		+ _stat('range', '射程')
 
 }}

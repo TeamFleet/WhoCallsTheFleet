@@ -158,9 +158,9 @@ _frame.infos.__ship = function( id ){
 				slot.html( d['slot'][i] )
 			}else{
 				var item_data = _g.data.items[d['equip'][i]]
-					,item_icon = 'assets/images/itemicon/'
-									+ item_data.getIconId()
-									+ '.png'
+					//,item_icon = 'assets/images/itemicon/'
+					//				+ item_data.getIconId()
+					//				+ '.png'
 				equip.attr({
 					'data-equipmentid': 	d['equip'][i],
 					'data-tip-position': 	'left',
@@ -172,10 +172,11 @@ _frame.infos.__ship = function( id ){
 					item_data.getName(true)
 				)
 				slot.html( d['slot'][i] )
-				icon.css(
-					'background-image',
-					'url(' + item_icon + ')'
-				)
+				icon.addClass('equiptypeicon mod-' + item_data.getIconId())
+				//icon.css(
+				//	'background-image',
+				//	'url(' + item_icon + ')'
+				//)
 			}
 			i++
 		}
