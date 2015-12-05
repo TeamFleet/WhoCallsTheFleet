@@ -570,6 +570,8 @@ nav{
 		right:		0;
 		z-index:	5;
 		height: 	100%;
+		height: 	inherit;
+		line-height:inherit;
 		text-align:	center;
 		display:	block;
 		-webkit-app-region:	no-drag;
@@ -1803,7 +1805,8 @@ table{
 				left: 		-321px;
 				z-index: 	10;
 				padding: 	0;
-				overflow: 	auto;
+				overflow: 	hidden;
+				overflow-y: auto;
 				background: rgba(0,0,0,.9);
 				backdrop-filter: 	~"blur(7.5px)";
 				border-right: 	1px solid rgba(255,255,255,.15);
@@ -1815,7 +1818,7 @@ table{
 					line-height:20px;
 					margin: 	0 !important;
 					padding: 	15px 25px !important;
-					width: 		auto;
+					width: 		100%;
 					text-align: left;
 					border-left: 0;
 					border-right:0;
