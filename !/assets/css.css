@@ -2811,6 +2811,8 @@ nav > section.options {
   right: 0;
   z-index: 5;
   height: 100%;
+  height: inherit;
+  line-height: inherit;
   text-align: center;
   display: block;
   -webkit-app-region: no-drag;
@@ -2823,7 +2825,6 @@ nav > section.options {
 }
 nav > section.options > button,
 nav > section.options > a {
-  height: 100%;
   color: rgba(255, 255, 255, 0.4);
   right: 0;
   display: inline-block;
@@ -4162,7 +4163,8 @@ body.mod-capture #tip {
     left: -321px;
     z-index: 10;
     padding: 0;
-    overflow: auto;
+    overflow: hidden;
+    overflow-y: auto;
     background: rgba(0, 0, 0, 0.9);
     -webkit-backdrop-filter: blur(7.5px);
             backdrop-filter: blur(7.5px);
@@ -4179,7 +4181,7 @@ body.mod-capture #tip {
     line-height: 20px;
     margin: 0 !important;
     padding: 15px 25px !important;
-    width: auto;
+    width: 100%;
     text-align: left;
     border-left: 0;
     border-right: 0;
@@ -5536,7 +5538,6 @@ body.mod-capture #tip {
   display: block;
   height: 50px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  overflow: hidden;
 }
 .tablelist-body > p:empty {
   height: 0;
