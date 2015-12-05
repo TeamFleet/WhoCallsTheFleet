@@ -7776,6 +7776,7 @@ body.mod-capture .infos-fleet > header:after {
   -webkit-flex: 0 0 auto;
       -ms-flex: 0 0 auto;
           flex: 0 0 auto;
+  overflow: visible;
 }
 .infos-fleet > .fleets .tabs {
   padding-right: 10rem;
@@ -11139,7 +11140,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
   position: absolute;
   width: 100%;
   top: 0;
-  bottom: 0;
+  bottom: -20px;
   left: 0;
   -webkit-box-flex: 0;
   -webkit-flex: none;
@@ -11149,7 +11150,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
   transition-property: -webkit-transform;
   transition-property: transform;
   transition-property: transform, -webkit-transform;
-  padding: 10px 0 55px 0;
+  padding: 10px 0 75px 0;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;

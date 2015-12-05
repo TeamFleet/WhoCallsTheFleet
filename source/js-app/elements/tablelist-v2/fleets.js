@@ -134,9 +134,6 @@ class TablelistFleets extends Tablelist{
 
 		// [创建] 表格框架
 			this.dom.table = $('<div class="tablelist-container" scrollbody/>').appendTo( this.dom.container )
-				.on('focus.number_input_select', 'input[type="number"]', function(e){
-						e.currentTarget.select()
-					})
 			this.dom.thead = $('<div class="wrapper"/>').appendTo($('<div class="tablelist-header"/>').appendTo( this.dom.table ))
 			this.dom.tbody = $('<div class="tablelist-body"/>').appendTo( this.dom.table )
 				.on('contextmenu.contextmenu_fleet', '.row[data-fleetid]', function(e){
@@ -173,6 +170,11 @@ class TablelistFleets extends Tablelist{
 					)
 				)
 				.appendTo( this.dom.table )
+		
+		// Auto select for number input
+			this.dom.container.on('focus.number_input_select', 'input[type="number"]', function(e){
+				e.currentTarget.select()
+			})
 
 		this.genlist()
 	}

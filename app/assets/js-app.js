@@ -3092,32 +3092,34 @@ _g.kancolle_calc = {
 					'version': 3
 				}
 				data.forEach(function(data_fleet, i){
-					result['f' + (i+1)] = {}
-					data_fleet.forEach(function(data_ship, j){
-						if( data_ship[0] ){
-							result['f' + (i+1)]['s' + (j+1)] = {
-								'id':	parseInt(data_ship[0]),
-								'lv':	parseInt(data_ship[1][0]) || null,
-								'luck':	parseInt(data_ship[1][1]) || -1,
-								'items':{
-									'ix': {}
-								}
-							}
-							data_ship[2].forEach(function(id_item, k){
-								if( id_item ){
-									result['f' + (i+1)]['s' + (j+1)].items['i' + (k+1)] = {
-										'id':	parseInt(id_item)
+					if( data_fleet ){
+						result['f' + (i+1)] = {}
+						data_fleet.forEach(function(data_ship, j){
+							if( data_ship && data_ship[0] ){
+								result['f' + (i+1)]['s' + (j+1)] = {
+									'id':	parseInt(data_ship[0]),
+									'lv':	parseInt(data_ship[1][0]) || null,
+									'luck':	parseInt(data_ship[1][1]) || -1,
+									'items':{
+										'ix': {}
 									}
-									if( data_ship[3] )
-										result['f' + (i+1)]['s' + (j+1)].items['i' + (k+1)].rf
-											= parseInt(data_ship[3][k]) || 0
-									if( data_ship[4] )
-										result['f' + (i+1)]['s' + (j+1)].items['i' + (k+1)].rp
-											= parseInt(data_ship[4][k]) || 0
 								}
-							})
-						}
-					})
+								data_ship[2].forEach(function(id_item, k){
+									if( id_item ){
+										result['f' + (i+1)]['s' + (j+1)].items['i' + (k+1)] = {
+											'id':	parseInt(id_item)
+										}
+										if( data_ship[3] )
+											result['f' + (i+1)]['s' + (j+1)].items['i' + (k+1)].rf
+												= parseInt(data_ship[3][k]) || 0
+										if( data_ship[4] )
+											result['f' + (i+1)]['s' + (j+1)].items['i' + (k+1)].rp
+												= parseInt(data_ship[4][k]) || 0
+									}
+								})
+							}
+						})
+					}
 				})
 				break;
 		}
@@ -6667,6 +6669,7 @@ class InfosFleet{
 
 		this.el.on({
 			'show': function(e, is_firstShow){
+					this.is_showing = true
 					if( !is_firstShow ){
 						// 再次显示时，重新计算分舰队的索敌能力
 						let i = 0
@@ -6689,7 +6692,11 @@ class InfosFleet{
 						InfosFleetShipEquipment.curHoverEquipment = null
 					}
 					*/
-				}.bind(this)/*,
+				}.bind(this),
+			'hidden': function(){
+					this.is_showing = false
+				}
+			/*,
 			'click': function(){
 					if( InfosFleetShipEquipment.curHoverEquipment ){
 						InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')//.trigger('tiphide')
@@ -7009,7 +7016,8 @@ class InfosFleet{
 		
 		// 事件: 默认司令部等级更新
 			$body.on('update_defaultHqLv.fleet'+this.data._id, function(e, val){
-				if( this.el.data('is_show') ){
+				//if( this.el.data('is_show') ){
+				if( this.is_showing ){
 					if( !this._hqlv )
 						this.doms['hqlvOption'].val(val)
 					this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(val) )
@@ -7355,7 +7363,7 @@ InfosFleet.modalExportText_show = function(data){
 	
 	let text = ''
 		,fleets = InfosFleet.decompress(data.data).filter(function(value){
-						return value.length
+						return (value && value.length)
 					}) || []
 	
 	text+= data.name || ''
@@ -7365,7 +7373,7 @@ InfosFleet.modalExportText_show = function(data){
 		text+= (text ? '\n' : '')
 			+ ( fleets.length > 1 ? '\n第 ' + (i+1) + ' 舰队' : '')
 		fleet.filter(function(value){
-			return value.length > 0 && value[0] 
+			return (value && value[0] && value.length > 0)
 		}).forEach(function(ship, j){
 			text+= '\n'
 				+ '(' + (i ? (i+1) + '-' : '') + (j+1) + ')'
@@ -7580,7 +7588,8 @@ class InfosFleetSubFleet{
 		
 		// 事件: 默认司令部等级更新
 			$body.on('update_defaultHqLv.fleet'+infosFleet.data._id+'-'+(index+1), function(){
-				if( this.infosFleet.el.data('is_show') )
+				if( this.infosFleet.is_showing )
+				//if( this.infosFleet.el.data('is_show') )
 					this.summaryCalc(true)
 			}.bind(this))
 	}
@@ -8633,7 +8642,7 @@ class InfosFleetShipEquipment{
 						if( _g.data.items[value].rankupgradable )
 							this.el.addClass('is-rankupgradable')
 					}else
-						this.el.removeClass('is-aircraft')
+						this.el.removeClass('is-aircraft is-rankupgradable')
 			}else{
 				this.infosFleetShip.data[2][this.index] = null
 				this.improvable = false
@@ -10998,9 +11007,6 @@ class TablelistFleets extends Tablelist{
 
 		// [创建] 表格框架
 			this.dom.table = $('<div class="tablelist-container" scrollbody/>').appendTo( this.dom.container )
-				.on('focus.number_input_select', 'input[type="number"]', function(e){
-						e.currentTarget.select()
-					})
 			this.dom.thead = $('<div class="wrapper"/>').appendTo($('<div class="tablelist-header"/>').appendTo( this.dom.table ))
 			this.dom.tbody = $('<div class="tablelist-body"/>').appendTo( this.dom.table )
 				.on('contextmenu.contextmenu_fleet', '.row[data-fleetid]', function(e){
@@ -11037,6 +11043,11 @@ class TablelistFleets extends Tablelist{
 					)
 				)
 				.appendTo( this.dom.table )
+		
+		// Auto select for number input
+			this.dom.container.on('focus.number_input_select', 'input[type="number"]', function(e){
+				e.currentTarget.select()
+			})
 
 		this.genlist()
 	}
