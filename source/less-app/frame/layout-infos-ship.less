@@ -238,10 +238,11 @@
 					}
 					&>span{
 						display: 	inline-block;
-						background: no-repeat 0 50%;
+						//background: no-repeat 0 50%;
+						background-size: 36px;
 						padding: 	0 0 0 36px;
 						line-height:36px;
-						margin: 	-3px 1em -7px 0;
+						margin: 	-4px 1em -6px 0;
 					}
 				}
 			}
@@ -676,6 +677,15 @@
 			//	}
 			//}
 		}
+		@media all and ( max-width: 800px ){
+			&>div.add_equip{
+				&>div>span{
+					margin-top: 	-7px;
+					margin-bottom: 	-7px;
+					margin-right: 	.25em;
+				}
+			}
+		}
 		@media all and (max-width: 720px)
 		,( min-width: 721px ) and (min-height: 801px) and (max-aspect-ratio: @aspect_ratio){
 			&:after{
@@ -702,13 +712,6 @@
 				}
 			}
 			*/
-			&>div.add_equip{
-				&>div>span{
-					margin-top: 	-7px;
-					margin-bottom: 	-7px;
-					margin-right: 	.25em;
-				}
-			}
 			&>.entity{
 				//right:	~"calc( 20% + @{size} )";
 				right: 	0;

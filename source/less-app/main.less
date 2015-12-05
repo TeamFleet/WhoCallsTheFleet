@@ -1976,13 +1976,24 @@ table{
 		background-repeat: 	no-repeat;
 		background-position:50% 0;
 		background-size: 	cover;
-		.loop(@n, @i: 1) when (@i =< @n) {
+		.loop(@n, @i: 2) when (@i =< @n) {
 			&.mod-@{i}{
 				background-position:	50% percentage((@i - 1) / (@count_equipment_icons - 1));
 			}
 			.loop(@n, (@i + 1));
 		}
 		.loop(@count_equipment_icons);
+		
+		&.mod-left{
+			background-position:0 0;
+			.loop-left(@n, @i: 2) when (@i =< @n) {
+				&.mod-@{i}{
+					background-position:	0 percentage((@i - 1) / (@count_equipment_icons - 1));
+				}
+				.loop-left(@n, (@i + 1));
+			}
+			.loop-left(@count_equipment_icons);
+		}
 	}
 
 

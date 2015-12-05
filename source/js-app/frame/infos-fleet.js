@@ -2047,6 +2047,7 @@ class InfosFleetShipEquipment{
 							'data-equipmentid': value,
 							'data-tip':			'[[EQUIPMENT::' +value+ ']]'
 						})
+						//.addClass('equiptypeicon mod-left mod-' + _g.data.items[value].getIconId())
 						.css('background-image', 'url('+_g.data.items[value]._icon+')')
 				this.elName.html(_g.data.items[value]._name)
 				// 如果装备为飞行器，标记样式

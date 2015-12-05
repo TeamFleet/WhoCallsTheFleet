@@ -120,9 +120,12 @@ _tmpl.improvement_inEquipmentInfos = function( equipment, returnHTML ){
 					+ '<b>'
 						+ ( upgrade_to
 							? '<span class="indicator true">可升级为</span>'
-								+ '<a style="background-image:url(../app/assets/images/itemicon/'
+								//+ '<a style="background-image:url(../app/assets/images/itemicon/'
+								//	+ upgrade_to.getIconId()
+								//	+ '.png)"'
+								+ '<a class="equiptypeicon mod-left mod-'
 									+ upgrade_to.getIconId()
-									+ '.png)"'
+									+ '"'
 									+ ' href="?infos=equipment&id='+upgrade_to['id']+'"'
 									+ ' data-infos="[[EQUIPMENT::'+upgrade_to['id']+']]"'
 									+ ' data-tip="[[EQUIPMENT::'+upgrade_to['id']+']]"'
@@ -155,18 +158,24 @@ _tmpl.improvement_inEquipmentInfos = function( equipment, returnHTML ){
 
 _tmpl.improvement__title = function(equipment, upgrade_to, upgrade_to_star){
 	return '<strong>'
-		+ '<a style="background-image:url(../app/assets/images/itemicon/'
+		//+ '<a style="background-image:url(../app/assets/images/itemicon/'
+		//	+ equipment.getIconId()
+		//	+ '.png)"'
+		+ '<a class="equiptypeicon mod-left mod-'
 			+ equipment.getIconId()
-			+ '.png)"'
+			+ '"'
 			+ ' href="?infos=equipment&id='+equipment['id']+'"'
 			+ ' data-infos="[[EQUIPMENT::'+equipment['id']+']]"'
 			+ ' data-tip="[[EQUIPMENT::'+equipment['id']+']]"'
 		+ '>' + equipment.getName(true) + '</a>'
 		+ ( upgrade_to
 			? '<b></b>'
-				+ '<a style="background-image:url(../app/assets/images/itemicon/'
+				//+ '<a style="background-image:url(../app/assets/images/itemicon/'
+				//	+ upgrade_to.getIconId()
+				//	+ '.png)"'
+				+ '<a class="equiptypeicon mod-left mod-'
 					+ upgrade_to.getIconId()
-					+ '.png)"'
+					+ '"'
 					+ ' href="?infos=equipment&id='+upgrade_to['id']+'"'
 					+ ' data-infos="[[EQUIPMENT::'+upgrade_to['id']+']]"'
 					+ ' data-tip="[[EQUIPMENT::'+upgrade_to['id']+']]"'
@@ -219,10 +228,13 @@ _tmpl.improvement__resource = function(improvement, upgradable){
 								+ '</i>'
 								+ ( improvement['resource'][i][4]
 									? (
-										'<a class="equipment"'
-											+ ' style="background-image:url(../app/assets/images/itemicon/'
+										//'<a class="equipment"'
+										//	+ ' style="background-image:url(../app/assets/images/itemicon/'
+										//	+ _g.data.items[improvement['resource'][i][4]].getIconId()
+										//	+ '.png)"'
+										'<a class="equiptypeicon mod-left mod-'
 											+ _g.data.items[improvement['resource'][i][4]].getIconId()
-											+ '.png)"'
+											+ '"'
 											+ ' href="?infos=equipment&id='+improvement['resource'][i][4]+'"'
 											+ ' data-infos="[[EQUIPMENT::'+improvement['resource'][i][4]+']]"'
 											+ ' data-tip="[[EQUIPMENT::'+improvement['resource'][i][4]+']]"'

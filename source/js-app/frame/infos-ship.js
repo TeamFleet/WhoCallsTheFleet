@@ -216,11 +216,12 @@ _frame.infos.__ship = function( id ){
 				_additional_equipment_types.append(
 					$('<span/>')
 						.html(_d['name'][_g.lang])
-						.css({
-							'background-image': 'url(assets/images/itemicon/'
-									+ _d['icon']
-									+ '.png'+')'
-						})
+						.addClass('equiptypeicon mod-left mod-'+_d['icon'])
+						//.css({
+						//	'background-image': 'url(assets/images/itemicon/'
+						//			+ _d['icon']
+						//			+ '.png'+')'
+						//})
 				)
 			})
 		}
