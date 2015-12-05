@@ -75,4 +75,54 @@
 		.loop_equipmenttypes(@n, (@i + 1))
 	}
 	.loop_equipmenttypes(@max_equipment_type);
+
+
+	@media all and (max-width: @main-sizing-t4-breaking-point ){
+		.tablelist-header > .wrapper,
+		.tablelist-body > p.row{
+			& > span{
+				flex-basis:	((12px + 3) * 2);
+			}
+		}
+		[data-stat="improvable"]{
+			display:	none !important;
+		}
+	}
+	@media all and (max-width: @main-sizing-t5-breaking-point ){
+		& > .options{
+			&>div.filters{
+				display: 	flex;
+				flex-flow: 	row nowrap;
+				&>.tab{
+					flex: 	1 0 auto;
+					&>i{
+						margin: 	0 !important;
+					}
+					span{
+						display: 	none !important;
+					}
+				} // &.filters
+			}
+		}
+		.tablelist-header > .wrapper,
+		.tablelist-body > p.row{
+			& > strong{
+				padding-left: 10px !important;
+				padding-right: .25em;
+				flex-basis:	100px;
+			}
+		}
+		.tablelist-header > .wrapper{
+			& > span{
+				flex-basis:	((12px + 1) * 2);
+				transform: rotate(-30deg);
+			}
+		}
+		.tablelist-body > p.row{
+			& > span{
+				flex-basis:	((12px + 1) * 2);
+				border-left: 1px solid rgba(255,255,255,.1);
+			}
+		}
+	}
 }}

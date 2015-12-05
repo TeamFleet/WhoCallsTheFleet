@@ -315,18 +315,29 @@
 				flex-grow: .75;
 			}
 		}
+		.tablelist-body > p.row{
+			& > span{
+				flex-grow: .75;
+				border-left: 1px solid rgba(255,255,255,.1);
+			}
+		}
 		[data-stat="nightpower"],
 		[data-stat="luck"]{
 			display:	none !important;
 		}
 	}
 	@media all and (max-width: @main-sizing-t6-breaking-point ){
+		.tablelist-header > .wrapper,
+		.tablelist-body > p.row{
+			& > strong{
+				flex-basis: 105px;
+			}
+		}
 		[data-stat="asw"],
 		[data-stat="carry"]{
 			display:	none !important;
 		}
 		&>.options[viewtype=compare]~.tablelist-container .tablelist-body>p.row[data-shipid][compare-checked]>strong{
-			flex-basis: 105px;
 			img{
 				left: 	-50px;
 			}

@@ -5870,20 +5870,28 @@ body.mod-capture #tip {
         -ms-flex-positive: .75;
             flex-grow: .75;
   }
+  .tablelist.ships .tablelist-body > p.row > span {
+    -webkit-box-flex: .75;
+    -webkit-flex-grow: .75;
+        -ms-flex-positive: .75;
+            flex-grow: .75;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+  }
   .tablelist.ships [data-stat="nightpower"],
   .tablelist.ships [data-stat="luck"] {
     display: none !important;
   }
 }
 @media all and (max-width: 540px) {
-  .tablelist.ships [data-stat="asw"],
-  .tablelist.ships [data-stat="carry"] {
-    display: none !important;
-  }
-  .tablelist.ships > .options[viewtype=compare] ~ .tablelist-container .tablelist-body > p.row[data-shipid][compare-checked] > strong {
+  .tablelist.ships .tablelist-header > .wrapper > strong,
+  .tablelist.ships .tablelist-body > p.row > strong {
     -webkit-flex-basis: 105px;
         -ms-flex-preferred-size: 105px;
             flex-basis: 105px;
+  }
+  .tablelist.ships [data-stat="asw"],
+  .tablelist.ships [data-stat="carry"] {
+    display: none !important;
   }
   .tablelist.ships > .options[viewtype=compare] ~ .tablelist-container .tablelist-body > p.row[data-shipid][compare-checked] > strong img {
     left: -50px;
@@ -6380,6 +6388,62 @@ body.mod-capture #tip {
 }
 .tablelist-equipments > [name="types"][class]:not(.type50) ~ .tablelist-container .tablelist-body p.title[data-type="50"] {
   opacity: .35;
+}
+@media all and (max-width: 640px) {
+  .tablelist-equipments .tablelist-header > .wrapper > span,
+  .tablelist-equipments .tablelist-body > p.row > span {
+    -webkit-flex-basis: 30px;
+        -ms-flex-preferred-size: 30px;
+            flex-basis: 30px;
+  }
+  .tablelist-equipments [data-stat="improvable"] {
+    display: none !important;
+  }
+}
+@media all and (max-width: 600px) {
+  .tablelist-equipments > .options > div.filters {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-flow: row nowrap;
+        -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+  }
+  .tablelist-equipments > .options > div.filters > .tab {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 auto;
+        -ms-flex: 1 0 auto;
+            flex: 1 0 auto;
+  }
+  .tablelist-equipments > .options > div.filters > .tab > i {
+    margin: 0 !important;
+  }
+  .tablelist-equipments > .options > div.filters > .tab span {
+    display: none !important;
+  }
+  .tablelist-equipments .tablelist-header > .wrapper > strong,
+  .tablelist-equipments .tablelist-body > p.row > strong {
+    padding-left: 10px !important;
+    padding-right: .25em;
+    -webkit-flex-basis: 100px;
+        -ms-flex-preferred-size: 100px;
+            flex-basis: 100px;
+  }
+  .tablelist-equipments .tablelist-header > .wrapper > span {
+    -webkit-flex-basis: 26px;
+        -ms-flex-preferred-size: 26px;
+            flex-basis: 26px;
+    -webkit-transform: rotate(-30deg);
+        -ms-transform: rotate(-30deg);
+            transform: rotate(-30deg);
+  }
+  .tablelist-equipments .tablelist-body > p.row > span {
+    -webkit-flex-basis: 26px;
+        -ms-flex-preferred-size: 26px;
+            flex-basis: 26px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+  }
 }
 .tablelist.fleets > .options .setting-hqlv {
   display: inline-block;
