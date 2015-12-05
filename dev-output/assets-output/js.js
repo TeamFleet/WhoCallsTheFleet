@@ -7674,7 +7674,6 @@ var TablelistEquipments = (function (_Tablelist3) {
 	_createClass(TablelistEquipments, [{
 		key: 'apply_types',
 		value: function apply_types() {
-			console.log('types: ' + TablelistEquipments.types);
 			this.dom.filter_types.removeAttr('class');
 
 			if (TablelistEquipments.types.length) {
@@ -7698,12 +7697,12 @@ var TablelistEquipments = (function (_Tablelist3) {
 					_el2 = this.dom.types[k + 1];
 				}
 
+				this.dom.type_radios[3].prop('checked', !0).trigger('change');
+
 				_el2 = _el2 || this.dom.types[0];
 
 				t = _el2[0].offsetTop;
 				if (t) t -= 32;
-
-				this.dom.type_radios[3].prop('checked', !0).trigger('change');
 				this.dom.tbody.scrollTop(t || 0);
 				return;
 			}
@@ -7717,12 +7716,12 @@ var TablelistEquipments = (function (_Tablelist3) {
 					_el3 = this.dom.types[k];
 				}
 
+				this.dom.type_radios[parseInt(_el3.attr('data-equipmentcollection')) || 1].prop('checked', !0).trigger('change');
+
 				_el3 = _el3 || this.dom.types[0];
 
 				t = _el3[0].offsetTop;
 				if (t) t -= 32;
-
-				this.dom.type_radios[parseInt(_el3.attr('data-equipmentcollection')) || 1].prop('checked', !0).trigger('change');
 				this.dom.tbody.scrollTop(t || 0);
 			}
 		}

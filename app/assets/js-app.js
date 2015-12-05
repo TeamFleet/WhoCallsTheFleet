@@ -10703,7 +10703,7 @@ class TablelistEquipments extends Tablelist{
 	}
 
 	apply_types(){
-		console.log('types: ' + TablelistEquipments.types)
+		//console.log('types: ' + TablelistEquipments.types)
 		this.dom.filter_types.removeAttr('class')
 		
 		if( TablelistEquipments.types.length ){
@@ -10731,13 +10731,13 @@ class TablelistEquipments extends Tablelist{
 				el = this.dom.types[k+1]
 			}
 			
+			this.dom.type_radios[3].prop('checked', true).trigger('change')
+			
 			el = el || this.dom.types[0]
 			
 			t = el[0].offsetTop
 			if( t )
 				t-= 32
-			
-			this.dom.type_radios[3].prop('checked', true).trigger('change')
 			this.dom.tbody.scrollTop(t || 0)
 			return
 		}
@@ -10750,13 +10750,13 @@ class TablelistEquipments extends Tablelist{
 				el = this.dom.types[k]
 			}
 			
+			this.dom.type_radios[parseInt(el.attr('data-equipmentcollection')) || 1].prop('checked', true).trigger('change')
+			
 			el = el || this.dom.types[0]
 			
 			t = el[0].offsetTop
 			if( t )
 				t-= 32
-			
-			this.dom.type_radios[parseInt(el.attr('data-equipmentcollection')) || 1].prop('checked', true).trigger('change')
 			this.dom.tbody.scrollTop(t || 0)
 		}
 	}
