@@ -4522,14 +4522,14 @@ _tmpl.improvement_inEquipmentInfos = function (equipment, returnHTML) {
 		var upgrade_to = improvement['upgrade'] ? _g.data.items[improvement['upgrade'][0]] : !1,
 		    requirements = this.improvement__reqdetails(improvement.req);
 
-		html += '<span class="unit improvement improvement-details">' + '<b>' + (upgrade_to ? '<span class="indicator true">可升级为</span>' + '<a style="background-image:url(/!/assets/images/itemicon/' + upgrade_to.getIconId() + '.png)"' + ' href="?infos=equipment&id=' + upgrade_to['id'] + '"' + ' data-infos="[[EQUIPMENT::' + upgrade_to['id'] + ']]"' + ' data-tip="[[EQUIPMENT::' + upgrade_to['id'] + ']]"' + '>' + upgrade_to.getName(!0) + '</a>' + (improvement['upgrade'][1] ? '<i>+' + improvement['upgrade'][1] + '</i>' : '') : '<span class="indicator false">不可升级</span>') + '</b>' + requirements + _tmpl.improvement__resource(improvement, upgrade_to ? !0 : !1) + '</span>';
+		html += '<span class="unit improvement improvement-details">' + '<b>' + (upgrade_to ? '<span class="indicator true">可升级为</span>' + '<a class="equiptypeicon mod-left mod-' + upgrade_to.getIconId() + '"' + ' href="?infos=equipment&id=' + upgrade_to['id'] + '"' + ' data-infos="[[EQUIPMENT::' + upgrade_to['id'] + ']]"' + ' data-tip="[[EQUIPMENT::' + upgrade_to['id'] + ']]"' + '>' + upgrade_to.getName(!0) + '</a>' + (improvement['upgrade'][1] ? '<i>+' + improvement['upgrade'][1] + '</i>' : '') : '<span class="indicator false">不可升级</span>') + '</b>' + requirements + _tmpl.improvement__resource(improvement, upgrade_to ? !0 : !1) + '</span>';
 	}, this);
 
 	return _tmpl.export(html, returnHTML);
 };
 
 _tmpl.improvement__title = function (equipment, upgrade_to, upgrade_to_star) {
-	return '<strong>' + '<a style="background-image:url(/!/assets/images/itemicon/' + equipment.getIconId() + '.png)"' + ' href="?infos=equipment&id=' + equipment['id'] + '"' + ' data-infos="[[EQUIPMENT::' + equipment['id'] + ']]"' + ' data-tip="[[EQUIPMENT::' + equipment['id'] + ']]"' + '>' + equipment.getName(!0) + '</a>' + (upgrade_to ? '<b></b>' + '<a style="background-image:url(/!/assets/images/itemicon/' + upgrade_to.getIconId() + '.png)"' + ' href="?infos=equipment&id=' + upgrade_to['id'] + '"' + ' data-infos="[[EQUIPMENT::' + upgrade_to['id'] + ']]"' + ' data-tip="[[EQUIPMENT::' + upgrade_to['id'] + ']]"' + '>' + upgrade_to.getName(!0) + '</a>' + (upgrade_to_star ? '<i>+' + upgrade_to_star + '</i>' : '') : '') + '</strong>';
+	return '<strong>' + '<a class="equiptypeicon mod-left mod-' + equipment.getIconId() + '"' + ' href="?infos=equipment&id=' + equipment['id'] + '"' + ' data-infos="[[EQUIPMENT::' + equipment['id'] + ']]"' + ' data-tip="[[EQUIPMENT::' + equipment['id'] + ']]"' + '>' + equipment.getName(!0) + '</a>' + (upgrade_to ? '<b></b>' + '<a class="equiptypeicon mod-left mod-' + upgrade_to.getIconId() + '"' + ' href="?infos=equipment&id=' + upgrade_to['id'] + '"' + ' data-infos="[[EQUIPMENT::' + upgrade_to['id'] + ']]"' + ' data-tip="[[EQUIPMENT::' + upgrade_to['id'] + ']]"' + '>' + upgrade_to.getName(!0) + '</a>' + (upgrade_to_star ? '<i>+' + upgrade_to_star + '</i>' : '') : '') + '</strong>';
 };
 _tmpl.improvement__resource = function (improvement, upgradable) {
 	function getValue(v) {
@@ -4552,7 +4552,7 @@ _tmpl.improvement__resource = function (improvement, upgradable) {
 			case 3:
 				title = '升级';break;
 		}
-		resource[i] = '<span>' + '<em>' + title + '</em>' + (i == 3 && !upgradable ? '<i class="no">-</i>' : '<i class="dev_mat">' + getValue(improvement['resource'][i][0]) + '<i>(' + getValue(improvement['resource'][i][1]) + ')</i>' + '</i>' + '<i class="imp_mat">' + getValue(improvement['resource'][i][2]) + '<i>(' + getValue(improvement['resource'][i][3]) + ')</i>' + '</i>' + (improvement['resource'][i][4] ? '<a class="equipment"' + ' style="background-image:url(/!/assets/images/itemicon/' + _g.data.items[improvement['resource'][i][4]].getIconId() + '.png)"' + ' href="?infos=equipment&id=' + improvement['resource'][i][4] + '"' + ' data-infos="[[EQUIPMENT::' + improvement['resource'][i][4] + ']]"' + ' data-tip="[[EQUIPMENT::' + improvement['resource'][i][4] + ']]"' + '>' + _g.data.items[improvement['resource'][i][4]].getName(!0) + '<i>x' + getValue(improvement['resource'][i][5]) + '</i>' + '</a>' : '')) + '</span>';
+		resource[i] = '<span>' + '<em>' + title + '</em>' + (i == 3 && !upgradable ? '<i class="no">-</i>' : '<i class="dev_mat">' + getValue(improvement['resource'][i][0]) + '<i>(' + getValue(improvement['resource'][i][1]) + ')</i>' + '</i>' + '<i class="imp_mat">' + getValue(improvement['resource'][i][2]) + '<i>(' + getValue(improvement['resource'][i][3]) + ')</i>' + '</i>' + (improvement['resource'][i][4] ? '<a class="equiptypeicon mod-left mod-' + _g.data.items[improvement['resource'][i][4]].getIconId() + '"' + ' href="?infos=equipment&id=' + improvement['resource'][i][4] + '"' + ' data-infos="[[EQUIPMENT::' + improvement['resource'][i][4] + ']]"' + ' data-tip="[[EQUIPMENT::' + improvement['resource'][i][4] + ']]"' + '>' + _g.data.items[improvement['resource'][i][4]].getName(!0) + '<i>x' + getValue(improvement['resource'][i][5]) + '</i>' + '</a>' : '')) + '</span>';
 	}
 
 	return '<span>' + resource['all'] + resource['1'] + resource['2'] + resource['3'] + '</span>';
@@ -4962,6 +4962,8 @@ _frame.app_main.page['calctp'] = {
 			form.on('input', 'input', function () {
 				form.trigger('submit');
 			}).on('submit', function (e) {
+				e.preventDefault();
+
 				var d = form.serializeObject(),
 				    rA = 0,
 				    rS = 0;
@@ -4970,35 +4972,33 @@ _frame.app_main.page['calctp'] = {
 					var count = parseInt(d[_i7]) || 0;
 					switch (_i7) {
 						case 'dd':
+							rS += 5 * count;
+							break;
 						case 'cl':
-							rA += 3 * count;
-							rS += 4.5 * count;
+							rS += 2 * count;
 							break;
 						case 'cav':
-							rA += 3 * count;
 							rS += 4 * count;
 							break;
 						case 'av':
-							rA += 8 * count;
-							rS += 10.5 * count;
+							rS += 9.5 * count;
 							break;
 						case 'lha':
+							rS += 12.25 * count;
+							break;
 						case 'ao':
-							rA += 10 * count;
-							rS += 13.5 * count;
+							rS += 14.75 * count;
 							break;
 
 						case 'e75':
-							rA += 3.5 * count;
 							rS += 5 * count;
 							break;
 						case 'e68':
-							rA += 5.5 * count;
-							rS += 8.3333 * count;
+							rS += 8 * count;
 							break;
 					}
 				}
-				e.preventDefault();
+				rA = rS * 0.7;
 				resultA.html(Math.floor(rA));
 				resultS.html(Math.floor(rS));
 			});
@@ -6961,11 +6961,9 @@ if (typeof _p.tip != 'undefined') {
 			}
 		}
 
-		var item_icon = '/!/assets/images/itemicon/' + d.getIconId() + '.png',
-		    item_name = d.getName(),
-		    html = '<h3 class="itemstat">' + '<s style="background-image: url(' + item_icon + ')"></s>' + '<strong data-content="' + item_name + '">' + item_name + '</strong>' + '<small>' + _g.data.item_types[d['type']]['name']['zh_cn'] + '</small>' + '</h3>' + _stat('fire', '火力') + _stat('torpedo', '雷装') + _stat('aa', '对空') + _stat('asw', '对潜') + _stat('bomb', '爆装') + _stat('hit', '命中') + _stat('armor', '装甲') + _stat('evasion', '回避') + _stat('los', '索敌') + _stat('range', '射程');
+		var item_name = d.getName();
 
-		return html;
+		return '<h3 class="itemstat">' + '<s class="equiptypeicon mod-' + d.getIconId() + '"></s>' + '<strong data-content="' + item_name + '">' + item_name + '</strong>' + '<small>' + _g.data.item_types[d['type']]['name']['zh_cn'] + '</small>' + '</h3>' + _stat('fire', '火力') + _stat('torpedo', '雷装') + _stat('aa', '对空') + _stat('asw', '对潜') + _stat('bomb', '爆装') + _stat('hit', '命中') + _stat('armor', '装甲') + _stat('evasion', '回避') + _stat('los', '索敌') + _stat('range', '射程');
 	};
 }
 

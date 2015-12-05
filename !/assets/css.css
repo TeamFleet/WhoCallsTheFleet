@@ -4344,6 +4344,219 @@ body.mod-capture #tip {
             transform: translateX(100%) !important;
   }
 }
+.equiptypeicon {
+  background-image: url(/!/assets/images/equiptypeicon.png);
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: cover;
+}
+.equiptypeicon.mod-2 {
+  background-position: 50% 2.94117647%;
+}
+.equiptypeicon.mod-3 {
+  background-position: 50% 5.88235294%;
+}
+.equiptypeicon.mod-4 {
+  background-position: 50% 8.82352941%;
+}
+.equiptypeicon.mod-5 {
+  background-position: 50% 11.76470588%;
+}
+.equiptypeicon.mod-6 {
+  background-position: 50% 14.70588235%;
+}
+.equiptypeicon.mod-7 {
+  background-position: 50% 17.64705882%;
+}
+.equiptypeicon.mod-8 {
+  background-position: 50% 20.58823529%;
+}
+.equiptypeicon.mod-9 {
+  background-position: 50% 23.52941176%;
+}
+.equiptypeicon.mod-10 {
+  background-position: 50% 26.47058824%;
+}
+.equiptypeicon.mod-11 {
+  background-position: 50% 29.41176471%;
+}
+.equiptypeicon.mod-12 {
+  background-position: 50% 32.35294118%;
+}
+.equiptypeicon.mod-13 {
+  background-position: 50% 35.29411765%;
+}
+.equiptypeicon.mod-14 {
+  background-position: 50% 38.23529412%;
+}
+.equiptypeicon.mod-15 {
+  background-position: 50% 41.17647059%;
+}
+.equiptypeicon.mod-16 {
+  background-position: 50% 44.11764706%;
+}
+.equiptypeicon.mod-17 {
+  background-position: 50% 47.05882353%;
+}
+.equiptypeicon.mod-18 {
+  background-position: 50% 50%;
+}
+.equiptypeicon.mod-19 {
+  background-position: 50% 52.94117647%;
+}
+.equiptypeicon.mod-20 {
+  background-position: 50% 55.88235294%;
+}
+.equiptypeicon.mod-21 {
+  background-position: 50% 58.82352941%;
+}
+.equiptypeicon.mod-22 {
+  background-position: 50% 61.76470588%;
+}
+.equiptypeicon.mod-23 {
+  background-position: 50% 64.70588235%;
+}
+.equiptypeicon.mod-24 {
+  background-position: 50% 67.64705882%;
+}
+.equiptypeicon.mod-25 {
+  background-position: 50% 70.58823529%;
+}
+.equiptypeicon.mod-26 {
+  background-position: 50% 73.52941176%;
+}
+.equiptypeicon.mod-27 {
+  background-position: 50% 76.47058824%;
+}
+.equiptypeicon.mod-28 {
+  background-position: 50% 79.41176471%;
+}
+.equiptypeicon.mod-29 {
+  background-position: 50% 82.35294118%;
+}
+.equiptypeicon.mod-30 {
+  background-position: 50% 85.29411765%;
+}
+.equiptypeicon.mod-31 {
+  background-position: 50% 88.23529412%;
+}
+.equiptypeicon.mod-32 {
+  background-position: 50% 91.17647059%;
+}
+.equiptypeicon.mod-33 {
+  background-position: 50% 94.11764706%;
+}
+.equiptypeicon.mod-34 {
+  background-position: 50% 97.05882353%;
+}
+.equiptypeicon.mod-35 {
+  background-position: 50% 100%;
+}
+.equiptypeicon.mod-left {
+  background-position: 0 0;
+}
+.equiptypeicon.mod-left.mod-2 {
+  background-position: 0 2.94117647%;
+}
+.equiptypeicon.mod-left.mod-3 {
+  background-position: 0 5.88235294%;
+}
+.equiptypeicon.mod-left.mod-4 {
+  background-position: 0 8.82352941%;
+}
+.equiptypeicon.mod-left.mod-5 {
+  background-position: 0 11.76470588%;
+}
+.equiptypeicon.mod-left.mod-6 {
+  background-position: 0 14.70588235%;
+}
+.equiptypeicon.mod-left.mod-7 {
+  background-position: 0 17.64705882%;
+}
+.equiptypeicon.mod-left.mod-8 {
+  background-position: 0 20.58823529%;
+}
+.equiptypeicon.mod-left.mod-9 {
+  background-position: 0 23.52941176%;
+}
+.equiptypeicon.mod-left.mod-10 {
+  background-position: 0 26.47058824%;
+}
+.equiptypeicon.mod-left.mod-11 {
+  background-position: 0 29.41176471%;
+}
+.equiptypeicon.mod-left.mod-12 {
+  background-position: 0 32.35294118%;
+}
+.equiptypeicon.mod-left.mod-13 {
+  background-position: 0 35.29411765%;
+}
+.equiptypeicon.mod-left.mod-14 {
+  background-position: 0 38.23529412%;
+}
+.equiptypeicon.mod-left.mod-15 {
+  background-position: 0 41.17647059%;
+}
+.equiptypeicon.mod-left.mod-16 {
+  background-position: 0 44.11764706%;
+}
+.equiptypeicon.mod-left.mod-17 {
+  background-position: 0 47.05882353%;
+}
+.equiptypeicon.mod-left.mod-18 {
+  background-position: 0 50%;
+}
+.equiptypeicon.mod-left.mod-19 {
+  background-position: 0 52.94117647%;
+}
+.equiptypeicon.mod-left.mod-20 {
+  background-position: 0 55.88235294%;
+}
+.equiptypeicon.mod-left.mod-21 {
+  background-position: 0 58.82352941%;
+}
+.equiptypeicon.mod-left.mod-22 {
+  background-position: 0 61.76470588%;
+}
+.equiptypeicon.mod-left.mod-23 {
+  background-position: 0 64.70588235%;
+}
+.equiptypeicon.mod-left.mod-24 {
+  background-position: 0 67.64705882%;
+}
+.equiptypeicon.mod-left.mod-25 {
+  background-position: 0 70.58823529%;
+}
+.equiptypeicon.mod-left.mod-26 {
+  background-position: 0 73.52941176%;
+}
+.equiptypeicon.mod-left.mod-27 {
+  background-position: 0 76.47058824%;
+}
+.equiptypeicon.mod-left.mod-28 {
+  background-position: 0 79.41176471%;
+}
+.equiptypeicon.mod-left.mod-29 {
+  background-position: 0 82.35294118%;
+}
+.equiptypeicon.mod-left.mod-30 {
+  background-position: 0 85.29411765%;
+}
+.equiptypeicon.mod-left.mod-31 {
+  background-position: 0 88.23529412%;
+}
+.equiptypeicon.mod-left.mod-32 {
+  background-position: 0 91.17647059%;
+}
+.equiptypeicon.mod-left.mod-33 {
+  background-position: 0 94.11764706%;
+}
+.equiptypeicon.mod-left.mod-34 {
+  background-position: 0 97.05882353%;
+}
+.equiptypeicon.mod-left.mod-35 {
+  background-position: 0 100%;
+}
 @-webkit-keyframes layout-loading-logo {
   0% {
     -webkit-transform: translateY(10px);
@@ -4425,7 +4638,9 @@ body.mod-capture #tip {
   display: inline-block;
   padding-left: 36px;
   height: 32px;
-  background: no-repeat 0 50%;
+  background-size: 36px;
+  margin-top: -2px;
+  padding-top: 2px;
   vertical-align: top;
   font-style: normal;
   text-shadow: 0 1px 0 #000;
@@ -4542,7 +4757,6 @@ body.mod-capture #tip {
 }
 .improvement > span > span > i,
 .improvement > span > span > a {
-  background: url(/!/assets/images/stats.png) no-repeat 0 0;
   min-width: 75px;
   padding-left: 20px;
   vertical-align: top;
@@ -4552,69 +4766,66 @@ body.mod-capture #tip {
   color: #7bcb52;
   padding-left: .25em;
 }
-.improvement > span > span > i.fuel,
-.improvement > span > span > a.fuel {
-  background-position: 0 -216px;
-  color: #7ebd75;
-}
-.improvement > span > span > i.ammo,
-.improvement > span > span > a.ammo {
-  background-position: 0 -234px;
-  color: #ccbf8e;
-}
-.improvement > span > span > i.steel,
-.improvement > span > span > a.steel {
-  background-position: 0 -288px;
-  color: #e3e3e3;
-}
-.improvement > span > span > i.bauxite,
-.improvement > span > span > a.bauxite {
-  background-position: 0 -306px;
-  color: #f2bb91;
-}
-.improvement > span > span > i.dev_mat,
-.improvement > span > span > a.dev_mat {
-  background-position: 0 -324px;
-}
-.improvement > span > span > i.imp_mat,
-.improvement > span > span > a.imp_mat {
-  background-position: 0 -342px;
-}
-.improvement > span > span > i.equipment,
-.improvement > span > span > a.equipment {
-  background-position: -2px 50%;
-  background-size: 22px 22px;
-  width: auto;
-  -webkit-transition-property: color;
-  transition-property: color;
-  /*
-					position:	relative;
-					&:before{
-						content:	'';
-						position:	absolute;
-						top:		-1px;
-						left:		-1px;
-						width:		20px;
-						height:		20px;
-						background:	rgba(0, 0, 0, .35);
-						z-index:	-1;
-						border-radius:	50%;
-					}
-					*/
-}
-.improvement > span > span > i.equipment:hover,
-.improvement > span > span > a.equipment:hover {
-  color: #aaff80;
-}
-.improvement > span > span > i.equipment:active,
-.improvement > span > span > a.equipment:active {
-  color: #7bcb52;
-}
 .improvement > span > span > i.no,
 .improvement > span > span > a.no {
   color: rgba(255, 255, 255, 0.35);
   background: none;
   padding-left: 6px;
+}
+.improvement > span > span > i {
+  background: url(/!/assets/images/stats.png) no-repeat 0 0;
+}
+.improvement > span > span > i.fuel {
+  background-position: 0 -216px;
+  color: #7ebd75;
+}
+.improvement > span > span > i.ammo {
+  background-position: 0 -234px;
+  color: #ccbf8e;
+}
+.improvement > span > span > i.steel {
+  background-position: 0 -288px;
+  color: #e3e3e3;
+}
+.improvement > span > span > i.bauxite {
+  background-position: 0 -306px;
+  color: #f2bb91;
+}
+.improvement > span > span > i.dev_mat {
+  background-position: 0 -324px;
+}
+.improvement > span > span > i.imp_mat {
+  background-position: 0 -342px;
+}
+.improvement > span > span > a.equiptypeicon {
+  background-size: 22px;
+  margin-top: -2px;
+  margin-left: -2px;
+  padding-top: 2px;
+  padding-left: 22px;
+  width: auto;
+  -webkit-transition-property: color;
+  transition-property: color;
+  /*
+				position:	relative;
+				&:before{
+					content:	'';
+					position:	absolute;
+					top:		-1px;
+					left:		-1px;
+					width:		20px;
+					height:		20px;
+					background:	rgba(0, 0, 0, .35);
+					z-index:	-1;
+					border-radius:	50%;
+				}
+				*/
+}
+.improvement > span > span > a.equiptypeicon:hover {
+  color: #aaff80;
+}
+.improvement > span > span > a.equiptypeicon:active {
+  color: #7bcb52;
 }
 .improvement.improvement-details {
   display: block;
@@ -5325,6 +5536,7 @@ body.mod-capture #tip {
   display: block;
   height: 50px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
 }
 .tablelist-body > p:empty {
   height: 0;
@@ -5339,6 +5551,13 @@ body.mod-capture #tip {
   padding-top: 18px;
   position: relative;
   font-weight: bold;
+}
+.tablelist-body > p.title .equiptypeicon {
+  display: block;
+  width: 36px;
+  height: 36px;
+  float: left;
+  margin: -6px 4px 0 2px;
 }
 .tablelist-body > p.title small {
   padding-left: .5em;
@@ -5899,14 +6118,6 @@ body.mod-capture #tip {
   .tablelist.ships > .options[viewtype=compare] ~ .tablelist-container .tablelist-body > p.row[data-shipid][compare-checked] > strong a {
     padding-left: 90px;
   }
-}
-.tablelist-equipments .tablelist-body > p.title span {
-  display: block;
-  width: 42px;
-  height: 30px;
-  background: no-repeat 50% 50%;
-  float: left;
-  margin-top: -4px;
 }
 .tablelist-equipments .tablelist-body > p.row[data-equipmentid] {
   height: auto;
@@ -7183,8 +7394,8 @@ h6 + section.update_journal {
   position: relative;
   display: inline-block;
   padding-left: 36px;
-  height: 1.6rem;
-  background: no-repeat 0 50%;
+  height: 32px;
+  background-size: 32px;
   vertical-align: top;
   -webkit-transition-property: color;
   transition-property: color;
@@ -10488,7 +10699,7 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
   height: 1.6rem;
   border-radius: 50%;
   overflow: hidden;
-  background: #182d31 no-repeat 50% 50%;
+  background-color: #182d31;
   border: 0.05rem solid #0874a6;
   -webkit-transition-property: background-color, border-color;
   transition-property: background-color, border-color;
@@ -10598,10 +10809,10 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
 }
 .infos-ship > div.add_equip > div > span {
   display: inline-block;
-  background: no-repeat 0 50%;
+  background-size: 36px;
   padding: 0 0 0 36px;
   line-height: 36px;
-  margin: -3px 1em -7px 0;
+  margin: -4px 1em -6px 0;
 }
 .infos-ship > div.add_equip.add_other > div > h4 {
   margin-right: -20px;
@@ -11164,6 +11375,13 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
     display: none;
   }
 }
+@media all and (max-width: 800px) {
+  .infos-ship > div.add_equip > div > span {
+    margin-top: -7px;
+    margin-bottom: -7px;
+    margin-right: .25em;
+  }
+}
 @media all and (max-width: 720px), (min-width: 721px) and (min-height: 801px) and (max-aspect-ratio: 5/4) {
   .infos-ship {
     /*
@@ -11190,11 +11408,6 @@ main[data-theme="10"] .infos-fleet > .ships > dl dd.mod-nomask[data-shipid] > dt
   }
   .infos-ship > div.title ~ div {
     padding-top: 25px;
-  }
-  .infos-ship > div.add_equip > div > span {
-    margin-top: -7px;
-    margin-bottom: -7px;
-    margin-right: .25em;
   }
   .infos-ship > .entity {
     right: 0;
@@ -12708,7 +12921,6 @@ body > .modal.update_journal.mod-blur-shot > div {
   position: absolute;
   top: 0;
   left: 0;
-  background: no-repeat 50% 50%;
 }
 #tip h3.itemstat > strong,
 #tip h3.shipinfo > strong {
