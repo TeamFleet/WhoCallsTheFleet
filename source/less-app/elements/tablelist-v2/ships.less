@@ -154,6 +154,26 @@
 		} // p.row
 	}
 	
+	// viewtype: list
+	&  > .options[viewtype="list"] ~ .tablelist-container{
+		.tablelist-body{
+			&>p.row[data-shipid]{
+				&>strong{
+					label.checkbox{
+						@media all and (max-width: @mobileview-breaking-point ){
+							left: 	0;
+						}
+					}
+					a{
+						@media all and (max-width: @mobileview-breaking-point ){
+							left: 	10px;
+						}
+					}
+				} // &>strong
+			} // p.row
+		}
+	}
+	
 	// viewtype: card
 	&  > .options[viewtype="card"] ~ .tablelist-container{
 		.tablelist-body{
@@ -253,20 +273,66 @@
 		}
 	}
 
-	@media all and (max-width: 900px ){
-		span[data-stat="consum_fuel"],
-		span[data-stat="consum_ammo"]{
+	@media all and (max-width: @main-sizing-t1-breaking-point ){
+		.tablelist-header > .wrapper,
+		.tablelist-body > p.row{
+			& > span{
+				flex-basis:	(12px * 2);
+			}
+		}
+		[data-stat="extra_illust"]{
 			display:	none !important;
 		}
 	}
-	@media all and (max-width: 800px ){
-		span[data-stat="range"]{
+	@media all and (max-width: @main-sizing-t2-breaking-point ){
+		[data-stat="consum_fuel"],
+		[data-stat="consum_ammo"]{
 			display:	none !important;
 		}
 	}
-	@media all and (max-width: 720px ){
-		span[data-stat="los"]{
+	@media all and (max-width: @main-sizing-t3-breaking-point ){
+		[data-stat="range"]{
 			display:	none !important;
+		}
+	}
+	@media all and (max-width: @mobileview-breaking-point ){
+		[data-stat="los"]{
+			display:	none !important;
+		}
+	}
+	@media all and (max-width: @main-sizing-t4-breaking-point ){
+		&>.options>div.filters>.viewtype{
+			display: 	none;
+		}
+		[data-stat="speed"]{
+			display:	none !important;
+		}
+	}
+	@media all and (max-width: @main-sizing-t5-breaking-point ){
+		.tablelist-header > .wrapper,
+		.tablelist-body > p.row{
+			& > span{
+				flex-grow: .75;
+			}
+		}
+		[data-stat="nightpower"],
+		[data-stat="luck"]{
+			display:	none !important;
+		}
+	}
+	@media all and (max-width: @main-sizing-t6-breaking-point ){
+		[data-stat="asw"],
+		[data-stat="carry"]{
+			display:	none !important;
+		}
+		&>.options[viewtype=compare]~.tablelist-container .tablelist-body>p.row[data-shipid][compare-checked]>strong{
+			flex-basis: 105px;
+			img{
+				left: 	-50px;
+			}
+			a{
+				padding-left: 90px;
+			}
 		}
 	}
 }}

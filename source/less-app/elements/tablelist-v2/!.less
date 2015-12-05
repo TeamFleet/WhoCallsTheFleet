@@ -419,6 +419,9 @@
 						margin: 	auto 8px auto -20px;
 						opacity: 	.175;
 						top: 		auto;
+						@media all and (max-width: @mobileview-breaking-point ){
+							margin-left: 0;
+						}
 					}
 					&:hover:before{
 						opacity: 	.75;
@@ -465,7 +468,7 @@
 				&>span{
 					transition-property: inherit;
 					sup{
-						padding-left: .35em;
+						padding-left: .25em;
 					}
 					&.negative{
 						color:		hsl(0, 90%, 70%);
