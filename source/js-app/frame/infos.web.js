@@ -142,7 +142,7 @@ _frame.infos = {
 		if( !isNaN(id) )
 			id = parseInt(id)
 
-		var title = null
+		let title = null
 		
 		//console.log('init infos: ' + type + ' - ' + id)
 
@@ -290,13 +290,13 @@ _frame.infos = {
 					// 显示内容
 						_frame.dom.layout.addClass('is-infos-on')
 					
-					if( title ){
-						_frame.app_main.title = title
-						document.title = _frame.app_main.page_title[_g.state2URI({
-								'infos':	type,
-								'id':		id
-							})]
-					}
+					//if( title ){
+					//	_frame.app_main.title = title
+					//}
+					document.title = _frame.app_main.page_title[_g.state2URI({
+							'infos':	type,
+							'id':		id
+						})]
 					
 					//console.log( _frame.infos.last )
 					

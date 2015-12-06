@@ -5231,13 +5231,10 @@ _frame.infos = {
 			setTimeout(function () {
 				_frame.dom.layout.addClass('is-infos-on');
 
-				if (title) {
-					_frame.app_main.title = title;
-					document.title = _frame.app_main.page_title[_g.state2URI({
-						'infos': type,
-						'id': id
-					})];
-				}
+				document.title = _frame.app_main.page_title[_g.state2URI({
+					'infos': type,
+					'id': id
+				})];
 
 				_ga.counter(location.search);
 			}, 1);
