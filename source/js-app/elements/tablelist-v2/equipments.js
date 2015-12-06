@@ -59,9 +59,9 @@ class TablelistEquipments extends Tablelist{
 				el = this.dom.types[k+1]
 			}
 			
-			this.dom.type_radios[3].prop('checked', true).trigger('change')
-			
 			el = el || this.dom.types[0]
+			
+			this.dom.type_radios[3].prop('checked', true).trigger('change')
 			
 			t = el[0].offsetTop
 			if( t )
@@ -78,9 +78,9 @@ class TablelistEquipments extends Tablelist{
 				el = this.dom.types[k]
 			}
 			
-			this.dom.type_radios[parseInt(el.attr('data-equipmentcollection')) || 1].prop('checked', true).trigger('change')
-			
 			el = el || this.dom.types[0]
+			
+			this.dom.type_radios[parseInt(el.attr('data-equipmentcollection')) || 1].prop('checked', true).trigger('change')
 			
 			t = el[0].offsetTop
 			if( t )

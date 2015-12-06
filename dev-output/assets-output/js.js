@@ -2643,15 +2643,16 @@ var Formula = {
 			'apshell': 0,
 			'radar': 0
 		},
-		    powerTorpedo = function powerTorpedo() {
+		    powerTorpedo = function powerTorpedo(options) {
+			options = options || {};
 			var result = 0;
-			if ($.inArray(ship.type, Formula.shipType.Carriers) > -1) {
-				return -1;
+			if ($.inArray(ship.type, Formula.shipType.Carriers) > -1 && !options.isNight) {
+				return options.returnZero ? 0 : -1;
 			} else {
 				result = ship.stat.torpedo_max || 0;
 				ship.slot.map(function (carry, index) {
 					if (equipments_by_slot[index]) {
-						result += equipments_by_slot[index].type == Formula.equipmentType.TorpedoBomber ? 0 : equipments_by_slot[index].stat.torpedo || 0;
+						result += equipments_by_slot[index].type == Formula.equipmentType.TorpedoBomber && !options.isNight ? 0 : equipments_by_slot[index].stat.torpedo || 0;
 
 						if (star_by_slot[index]) {
 							var multipler = 0;
@@ -2727,7 +2728,7 @@ var Formula = {
 					return '-';
 				} else {
 					result = Formula.calcByShip.shellingPower(ship, equipments_by_slot, star_by_slot, rank_by_slot);
-					if (result && result > -1) return Math.floor(result) + 5;
+					if (result && result > -1) return Math.floor(result);
 					return '-';
 				}
 				break;
@@ -2735,7 +2736,7 @@ var Formula = {
 			case 'torpedo':
 			case 'torpedoDamage':
 				result = powerTorpedo();
-				if (result && result > -1) return Math.floor(result) + 5;
+				if (result && result > -1) return Math.floor(result);
 				return '-';
 				break;
 
@@ -2745,7 +2746,7 @@ var Formula = {
 				} else {
 					result = Formula.calcByShip.shellingPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, {
 						isNight: !0
-					}) + powerTorpedo();
+					}) + powerTorpedo({ isNight: !0, returnZero: !0 });
 					if (count.torpedo >= 2) {
 						return '雷击CI ' + Math.floor(result * 1.5) + ' x 2';
 					} else if (count.main >= 3) {
@@ -3103,8 +3104,11 @@ Formula.calcByShip.shellingPower = function (ship, equipments_by_slot, star_by_s
 	if ($.inArray(ship.type, Formula.shipType.Carriers) > -1) {
 		isCV = !0;
 	} else {
-		equipments_by_slot.forEach(function (equipment) {
-			if (equipment && !isCV && $.inArray(equipment.type, Formula.equipmentType.CarrierBased) > -1) isCV = !0;
+		equipments_by_slot.some(function (equipment) {
+			if (equipment && !isCV && $.inArray(equipment.type, Formula.equipmentType.CarrierBased) > -1) {
+				isCV = !0;
+				return !0;
+			}
 		});
 	}
 
@@ -3122,7 +3126,7 @@ Formula.calcByShip.shellingPower = function (ship, equipments_by_slot, star_by_s
 				if ($.inArray(equipments_by_slot[index].type, Formula.equipmentType.SecondaryGuns) > -1) result += Math.sqrt((star_by_slot[index] || 0) * 1.5);
 			}
 		});
-		if (!torpedoDamage && !bombDamage) return -1;else result += (bombDamage * 1.3 + torpedoDamage + ship.stat.fire_max) * 1.5 + 50;
+		if (!torpedoDamage && !bombDamage) return -1;else result += Math.floor((Math.floor(bombDamage * 1.3) + torpedoDamage + ship.stat.fire_max) * 1.5) + 50;
 		return result;
 	} else {
 		result = ship.stat.fire_max || 0;
@@ -3134,8 +3138,8 @@ Formula.calcByShip.shellingPower = function (ship, equipments_by_slot, star_by_s
 				result += equipments_by_slot[index].stat.fire || 0;
 
 				if ($.inArray(ship.type, Formula.shipType.LightCruisers) > -1) {
-					if (equipments_by_slot[index].id == 4 || equipments_by_slot[index].id == 65) CLGunNavalNumber += 1;
-					if (equipments_by_slot[index].id == 119 || equipments_by_slot[index].id == 139) CLGunTwinNumber += 1;
+					if (equipments_by_slot[index].id == 4) CLGunNavalNumber += 1;
+					if (equipments_by_slot[index].id == 119 || equipments_by_slot[index].id == 65 || equipments_by_slot[index].id == 139) CLGunTwinNumber += 1;
 				}
 
 				if (star_by_slot[index]) {
@@ -7697,9 +7701,9 @@ var TablelistEquipments = (function (_Tablelist3) {
 					_el2 = this.dom.types[k + 1];
 				}
 
-				this.dom.type_radios[3].prop('checked', !0).trigger('change');
-
 				_el2 = _el2 || this.dom.types[0];
+
+				this.dom.type_radios[3].prop('checked', !0).trigger('change');
 
 				t = _el2[0].offsetTop;
 				if (t) t -= 32;
@@ -7716,9 +7720,9 @@ var TablelistEquipments = (function (_Tablelist3) {
 					_el3 = this.dom.types[k];
 				}
 
-				this.dom.type_radios[parseInt(_el3.attr('data-equipmentcollection')) || 1].prop('checked', !0).trigger('change');
-
 				_el3 = _el3 || this.dom.types[0];
+
+				this.dom.type_radios[parseInt(_el3.attr('data-equipmentcollection')) || 1].prop('checked', !0).trigger('change');
 
 				t = _el3[0].offsetTop;
 				if (t) t -= 32;

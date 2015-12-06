@@ -1661,23 +1661,23 @@ let Formula = {
 	
 	// 舰种
 		shipType: {
-			// 航空母舰
+			// 航母系列
 			Carriers: [
-				9,
-				10,
-				11
+				9,		// 轻型航母
+				10,		// 正规航母
+				11		// 装甲航母
 			],
-			// 轻巡系
+			// 轻巡系列
 			LightCruisers: [
-				2,
-				3,
-				21,
-				28
+				2,		// 轻巡洋舰
+				3,		// 重雷装巡洋舰
+				21,		// 练习巡洋舰
+				28		// 防空轻巡洋舰
 			],
-			// 潜艇
+			// 潜艇系列
 			Submarines: [
-				13,
-				14
+				13,		// 潜艇
+				14		// 航母潜艇
 			]
 		},
 	
@@ -1697,15 +1697,16 @@ let Formula = {
 					'apshell': 0,
 					'radar': 0
 				}
-			,powerTorpedo = function(){
+			,powerTorpedo = function( options ){
+					options = options || {}
 					let result = 0
-					if( $.inArray(ship.type, Formula.shipType.Carriers) > -1 ){
-						return -1
+					if( $.inArray(ship.type, Formula.shipType.Carriers) > -1 && !options.isNight ){
+						return options.returnZero ? 0 : -1
 					}else{
 						result = ship.stat.torpedo_max || 0
 						ship.slot.map(function(carry, index){
 							if( equipments_by_slot[index] ){
-								result+= equipments_by_slot[index].type == Formula.equipmentType.TorpedoBomber
+								result+= (equipments_by_slot[index].type == Formula.equipmentType.TorpedoBomber && !options.isNight)
 											? 0
 											: (equipments_by_slot[index].stat.torpedo || 0)
 									
@@ -1813,7 +1814,7 @@ let Formula = {
 				}else{
 					result = Formula.calcByShip.shellingPower(ship, equipments_by_slot, star_by_slot, rank_by_slot)
 					if( result && result > -1 )
-						return Math.floor(result) + 5
+						return Math.floor(result)// + 5
 					return '-'
 				}
 				break;
@@ -1823,7 +1824,7 @@ let Formula = {
 			case 'torpedoDamage':
 				result = powerTorpedo()
 				if( result && result > -1 )
-					return Math.floor(result) + 5
+					return Math.floor(result)// + 5
 				return '-'
 				break;
 			
@@ -1837,7 +1838,7 @@ let Formula = {
 					result = Formula.calcByShip.shellingPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, {
 									isNight: true
 								})
-							+ powerTorpedo()
+							+ powerTorpedo({isNight: true, returnZero: true})
 					if( count.torpedo >= 2 ){
 						return '雷击CI ' + Math.floor( result * 1.5 ) + ' x 2'
 					}else if( count.main >= 3 ){
@@ -2324,9 +2325,15 @@ Formula.losPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot
 			if( $.inArray(ship.type, Formula.shipType.Carriers) > -1 ){
 				isCV = true
 			}else{
-				equipments_by_slot.forEach(function(equipment){
-					if( equipment && !isCV && $.inArray(equipment.type, Formula.equipmentType.CarrierBased) > -1 )
+				//equipments_by_slot.forEach(function(equipment){
+				//	if( equipment && !isCV && $.inArray(equipment.type, Formula.equipmentType.CarrierBased) > -1 )
+				//		isCV = true
+				//})
+				equipments_by_slot.some(function(equipment){
+					if( equipment && !isCV && $.inArray(equipment.type, Formula.equipmentType.CarrierBased) > -1 ){
 						isCV = true
+						return true
+					}
 				})
 			}
 		
@@ -2351,7 +2358,7 @@ Formula.losPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot
 			if( !torpedoDamage && !bombDamage )
 				return -1
 			else
-				result+= ( bombDamage * 1.3 + torpedoDamage + ship.stat.fire_max ) * 1.5 + 50
+				result+= Math.floor(( Math.floor(bombDamage * 1.3) + torpedoDamage + ship.stat.fire_max ) * 1.5) + 50
 			return result
 		}else{
 			result = ship.stat.fire_max || 0
@@ -2364,9 +2371,13 @@ Formula.losPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot
 					
 					// 轻巡系主炮加成
 						if( $.inArray(ship.type, Formula.shipType.LightCruisers) > -1 ){
-							if( equipments_by_slot[index].id == 4 || equipments_by_slot[index].id == 65 )
+							// 4	14cm单装炮
+							// 65	15.2cm连装炮
+							// 119	14cm连装炮
+							// 139	15.2cm连装炮改
+							if( equipments_by_slot[index].id == 4 )
 								CLGunNavalNumber+= 1
-							if( equipments_by_slot[index].id == 119 || equipments_by_slot[index].id == 139 )
+							if( equipments_by_slot[index].id == 119 || equipments_by_slot[index].id == 65 || equipments_by_slot[index].id == 139 )
 								CLGunTwinNumber+= 1
 						}
 					
@@ -10731,9 +10742,9 @@ class TablelistEquipments extends Tablelist{
 				el = this.dom.types[k+1]
 			}
 			
-			this.dom.type_radios[3].prop('checked', true).trigger('change')
-			
 			el = el || this.dom.types[0]
+			
+			this.dom.type_radios[3].prop('checked', true).trigger('change')
 			
 			t = el[0].offsetTop
 			if( t )
@@ -10750,9 +10761,9 @@ class TablelistEquipments extends Tablelist{
 				el = this.dom.types[k]
 			}
 			
-			this.dom.type_radios[parseInt(el.attr('data-equipmentcollection')) || 1].prop('checked', true).trigger('change')
-			
 			el = el || this.dom.types[0]
+			
+			this.dom.type_radios[parseInt(el.attr('data-equipmentcollection')) || 1].prop('checked', true).trigger('change')
 			
 			t = el[0].offsetTop
 			if( t )
