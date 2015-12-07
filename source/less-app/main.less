@@ -243,7 +243,7 @@ fieldset{
 			background:	hsla(200, 100%, 50%, .575);
 		}
 	}
-	&>.gg{
+	&>.g{
 		position: 	absolute;
 		z-index: 	3;
 		width: 		100%;
@@ -337,13 +337,17 @@ nav{
 	}
 	&:before{
 		z-index: 	5;
-		left: 		(0 - @loading-bar-width);
+		//left: 		(0 - @loading-bar-width);
+		transform: 	translateX(-100%);
 		width: 		@loading-bar-width;
 		height: 	4px;
 		opacity: 	0;
 		background: rgba(255, 255, 255, .5);
 		.enable-transition();
 		transition-property: opacity;
+		@media all and (max-width: @mobileview-breaking-point ){
+			width: 		(@loading-bar-width * 2);
+		}
 	}
 	&:after{
 		z-index:	4;
@@ -579,6 +583,7 @@ nav{
 		transition-property: opacity;
 		transition-duration: @transition_duration_main;
 		opacity:	1;
+		overflow: 	hidden;
 		.layout-nav-options();
 		&>button, &>a{
 			.layout-nav-options-items();
@@ -1128,6 +1133,9 @@ main{
 	&:before{
 		opacity: 	1;
 		animation: 	global-loading-horizontal 1.5s linear infinite alternate;
+		@media all and (max-width: @mobileview-breaking-point ){
+			animation-name: global-loading-horizontal-mobile
+		}
 	}
 	&:after{
 		height: 	4px;
@@ -1142,9 +1150,9 @@ main{
 
 
 
-#layout.mod-gg{
+#layout.mod-g{
 	padding-bottom: 	51px;
-	&>.gg{
+	&>.g{
 		transform: 	translateY(0);
 	}
 	&.ready.only_bg>main{
@@ -2046,9 +2054,20 @@ table{
 
 @keyframes global-loading-horizontal {
 	0% {
-		left: 	0;
+		//left: 	0;
+		transform: 	translateX(0);
 	}
 	100% {
-		left: 	(100% - @loading-bar-width);
+		transform: 	translateX( (1000% - @loading-bar-width * 10) );
+		//left: 	(100% - @loading-bar-width);
+	}
+}
+
+@keyframes global-loading-horizontal-mobile{
+	0% {
+		transform: 	translateX(0);
+	}
+	100% {
+		transform: 	translateX( 400% );
 	}
 }

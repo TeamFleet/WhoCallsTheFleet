@@ -2487,7 +2487,7 @@ fieldset {
   content: attr(data-msgbadge);
   background: rgba(0, 170, 255, 0.575);
 }
-#layout > .gg {
+#layout > .g {
   position: absolute;
   z-index: 3;
   width: 100%;
@@ -2508,7 +2508,7 @@ fieldset {
       -ms-transform: translateY(100%);
           transform: translateY(100%);
 }
-#layout > .gg > .close {
+#layout > .g > .close {
   position: absolute;
   top: 0;
   right: 0;
@@ -2520,7 +2520,7 @@ fieldset {
   -webkit-transition-property: color;
   transition-property: color;
 }
-#layout > .gg > .close:before {
+#layout > .g > .close:before {
   content: "\00d7";
   font-family: 'Gothic';
   font-weight: lighter;
@@ -2532,7 +2532,7 @@ fieldset {
   width: 100%;
   text-align: center;
 }
-#layout > .gg > .close:hover {
+#layout > .g > .close:hover {
   color: #fff;
 }
 html.ready nav,
@@ -2565,7 +2565,9 @@ nav:after {
 }
 nav:before {
   z-index: 5;
-  left: -10%;
+  -webkit-transform: translateX(-100%);
+      -ms-transform: translateX(-100%);
+          transform: translateX(-100%);
   width: 10%;
   height: 4px;
   opacity: 0;
@@ -2574,6 +2576,11 @@ nav:before {
   transition: none 0.2s ease-out;
   -webkit-transition-property: opacity;
   transition-property: opacity;
+}
+@media all and (max-width: 720px) {
+  nav:before {
+    width: 20%;
+  }
 }
 nav:after {
   z-index: 4;
@@ -2822,6 +2829,7 @@ nav > section.options {
   -webkit-transition-duration: 0.75s;
           transition-duration: 0.75s;
   opacity: 1;
+  overflow: hidden;
 }
 nav > section.options > button,
 nav > section.options > a {
@@ -3723,18 +3731,24 @@ main:after {
   -webkit-animation: global-loading-horizontal 1.5s linear infinite alternate;
           animation: global-loading-horizontal 1.5s linear infinite alternate;
 }
+@media all and (max-width: 720px) {
+  #layout.is-loading nav:before {
+    -webkit-animation-name: global-loading-horizontal-mobile;
+            animation-name: global-loading-horizontal-mobile;
+  }
+}
 #layout.is-loading nav:after {
   height: 4px;
 }
-#layout.mod-gg {
+#layout.mod-g {
   padding-bottom: 51px;
 }
-#layout.mod-gg > .gg {
+#layout.mod-g > .g {
   -webkit-transform: translateY(0);
       -ms-transform: translateY(0);
           transform: translateY(0);
 }
-#layout.mod-gg.ready.only_bg > main {
+#layout.mod-g.ready.only_bg > main {
   top: calc(100% + 51px);
 }
 /*
@@ -4591,18 +4605,42 @@ body.mod-capture #tip {
 }
 @-webkit-keyframes global-loading-horizontal {
   0% {
-    left: 0;
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
   }
   100% {
-    left: 90%;
+    -webkit-transform: translateX(900%);
+            transform: translateX(900%);
   }
 }
 @keyframes global-loading-horizontal {
   0% {
-    left: 0;
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
   }
   100% {
-    left: 90%;
+    -webkit-transform: translateX(900%);
+            transform: translateX(900%);
+  }
+}
+@-webkit-keyframes global-loading-horizontal-mobile {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(400%);
+            transform: translateX(400%);
+  }
+}
+@keyframes global-loading-horizontal-mobile {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(400%);
+            transform: translateX(400%);
   }
 }
 /*
