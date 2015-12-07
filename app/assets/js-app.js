@@ -7539,7 +7539,7 @@ class InfosFleetSubFleet{
 		d = d || []
 		this.data = d
 
-		this.el = $('<dl class="fleetinfos-ships"/>')
+		this.el = $('<dl class="fleetships"/>')
 		
 		this.ships = []
 
@@ -8578,7 +8578,7 @@ class InfosFleetShipEquipment{
 								}.bind(this))
 							)
 							.append(
-								$('<span class="button remove"/>').html('×').on('click',function(){
+								$('<span class="button remove"/>')/*.html('×')*/.on('click',function(){
 									this.id = null
 								}.bind(this))
 							)

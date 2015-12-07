@@ -6144,7 +6144,7 @@ var InfosFleetSubFleet = (function () {
 		d = d || [];
 		this.data = d;
 
-		this.el = $('<dl class="fleetinfos-ships"/>');
+		this.el = $('<dl class="fleetships"/>');
 
 		this.ships = [];
 
@@ -6755,7 +6755,7 @@ var InfosFleetShipEquipment = (function () {
 			if (this.id) _frame.infos.show('[[EQUIPMENT::' + this.id + ']]');
 		}).bind(this))).append($('<span class="button change" icon="loop"/>').on('click', (function () {
 			this.selectEquipmentStart();
-		}).bind(this))).append($('<span class="button remove"/>').html('×').on('click', (function () {
+		}).bind(this))).append($('<span class="button remove"/>').on('click', (function () {
 			this.id = null;
 		}).bind(this))));
 	}
