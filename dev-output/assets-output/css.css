@@ -8470,7 +8470,7 @@ body.mod-capture .infos-fleet .fleetships dd > .equipments {
 }
 .infos-fleet .fleetships dd > .equipments > .equipment > .equipment-options .button.remove:before {
   content: "\00d7";
-  margin-top: -0.1em;
+  margin-top: -1px;
 }
 .infos-fleet .fleetships dd > .equipments > .equipment[data-carry].is-hover {
   background-color: rgba(0, 0, 0, 0.35);
@@ -10323,7 +10323,7 @@ main[data-theme="10"] .infos-fleet .fleetships dd.mod-nomask[data-shipid] > dt >
     padding-right: 4px;
   }
   .infos-fleet .fleetships dd > .equipments > .equipment {
-    background-position: 0 50%;
+    background-position: -2px 50%;
   }
   .infos-fleet .fleetships dd > .equipments > .equipment > .equipment-infos {
     padding-left: 34px;
@@ -10334,6 +10334,36 @@ main[data-theme="10"] .infos-fleet .fleetships dd.mod-nomask[data-shipid] > dt >
   }
   .infos-fleet .fleetships dd > .equipments > .equipment > .equipment-infos > .equipment-rank {
     top: 55%;
+  }
+  .infos-fleet .fleetships dd > .equipments > .equipment > .equipment-options {
+    padding-left: 32px;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-align-content: space-between;
+        -ms-flex-line-pack: justify;
+            align-content: space-between;
+  }
+  .infos-fleet .fleetships dd > .equipments > .equipment > .equipment-options:before {
+    left: 36px;
+  }
+  .infos-fleet .fleetships dd > .equipments > .equipment > .equipment-options .equipment-starinput,
+  .infos-fleet .fleetships dd > .equipments > .equipment > .equipment-options .equipment-rankselect {
+    -webkit-box-flex: 0.5;
+    -webkit-flex: 0.5 0 35px;
+        -ms-flex: 0.5 0 35px;
+            flex: 0.5 0 35px;
+    padding-left: 14px;
+    margin-right: 4px;
+  }
+  .infos-fleet .fleetships dd > .equipments > .equipment > .equipment-options .equipment-rankselect span {
+    left: 40%;
+  }
+  .infos-fleet .fleetships dd > .equipments > .equipment > .equipment-options .button {
+    -webkit-flex-basis: 16px;
+        -ms-flex-preferred-size: 16px;
+            flex-basis: 16px;
   }
   .infos-fleet .fleetships dd > .attributes {
     bottom: -21px;

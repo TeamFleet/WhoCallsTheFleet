@@ -759,7 +759,7 @@
 								font-family:Gothic;
 								&:before{
 									content: @iconcode-close;
-									margin-top: -.1em;
+									margin-top: -1px;
 								}
 							}
 						}
@@ -1910,7 +1910,7 @@ main{
 				height: 	~"calc(100% - 38px)";
 				padding-right: 4px;
 				&>.equipment{
-					background-position: 	0 50%;
+					background-position: 	-2px 50%;
 					&>.equipment-infos{
 						padding-left: 	34px;
 						&>.equipment-name{
@@ -1919,6 +1919,25 @@ main{
 						}
 						&>.equipment-rank{
 							top: 	55%;
+						}
+					}
+					&>.equipment-options{
+						padding-left: 	32px;
+						justify-content: flex-start;
+						align-content: 	space-between;
+						&:before{
+							left: 		36px;
+						}
+						.equipment-starinput, .equipment-rankselect{
+							flex:		0.5 0 35px;
+							padding-left:14px;
+							margin-right:4px;
+						}
+						.equipment-rankselect span{
+							left: 		40%;
+						}
+						.button{
+							flex-basis:	16px;
 						}
 					}
 				}
