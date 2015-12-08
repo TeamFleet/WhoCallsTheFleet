@@ -5014,15 +5014,14 @@ _frame.app_main.page['calctp'] = {
 
 _frame.gg = function () {
 	$.ajax({
-		'url': 'http://fleet.diablohu.com/!/gg/',
+		'url': 'http://fleet.diablohu.com/!/g/',
 		'method': 'get',
 		'dataType': 'html',
 		'success': function success(data) {
 			if (data) {
-				var gg = $('<div class="gg"/>').html(data).append($('<button type="button" class="close"/>').on('click', function () {
-					_frame.dom.layout.css('padding-bottom', '').removeClass('mod-gg');
-				}));
-				_frame.dom.layout.append(gg).addClass('mod-gg').css('padding-bottom', gg.height() + 1);
+				_frame.dom.layout.append($('<div class="g"/>').html(data).append($('<button type="button" class="close"/>').on('click', function () {
+					_frame.dom.layout.css('padding-bottom', '').removeClass('mod-g');
+				}))).addClass('mod-g');
 			}
 		}
 	});
@@ -5231,13 +5230,10 @@ _frame.infos = {
 			setTimeout(function () {
 				_frame.dom.layout.addClass('is-infos-on');
 
-				if (title) {
-					_frame.app_main.title = title;
-					document.title = _frame.app_main.page_title[_g.state2URI({
-						'infos': type,
-						'id': id
-					})];
-				}
+				document.title = _frame.app_main.page_title[_g.state2URI({
+					'infos': type,
+					'id': id
+				})];
 
 				_ga.counter(location.search);
 			}, 1);
@@ -6147,7 +6143,7 @@ var InfosFleetSubFleet = (function () {
 		d = d || [];
 		this.data = d;
 
-		this.el = $('<dl class="fleetinfos-ships"/>');
+		this.el = $('<dl class="fleetships"/>');
 
 		this.ships = [];
 
@@ -6758,7 +6754,7 @@ var InfosFleetShipEquipment = (function () {
 			if (this.id) _frame.infos.show('[[EQUIPMENT::' + this.id + ']]');
 		}).bind(this))).append($('<span class="button change" icon="loop"/>').on('click', (function () {
 			this.selectEquipmentStart();
-		}).bind(this))).append($('<span class="button remove"/>').html('×').on('click', (function () {
+		}).bind(this))).append($('<span class="button remove"/>').on('click', (function () {
 			this.id = null;
 		}).bind(this))));
 	}
