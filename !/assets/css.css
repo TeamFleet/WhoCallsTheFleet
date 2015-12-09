@@ -2459,6 +2459,10 @@ fieldset {
   -webkit-transition-duration: .75s;
           transition-duration: .75s;
 }
+body.mod-capture #layout {
+  -webkit-transition-property: none !important;
+  transition-property: none !important;
+}
 #layout[data-errorbadge]:after,
 #layout[data-msgbadge]:after {
   position: absolute;
@@ -8249,10 +8253,9 @@ body.mod-capture .infos-fleet .fleetships dd > .equipments {
   padding-right: 4px;
 }
 .infos-fleet .fleetships dd > .equipments > .equipment {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 auto;
-      -ms-flex: 1 0 auto;
-          flex: 1 0 auto;
+  width: calc(25% - 2px);
+  height: 100%;
+  display: inline-block;
   background: rgba(0, 0, 0, 0.125) no-repeat 2px 50%;
   margin: 0 2px 0 0;
   -webkit-transition-property: background-color;
@@ -8926,13 +8929,19 @@ body.mod-capture .infos-fleet .fleetships dd > .options {
   top: 50%;
   line-height: 0;
   width: 35%;
-  left: -40px;
+  left: 0;
+  -webkit-transform: translate(-40px);
+      -ms-transform: translate(-40px);
+          transform: translate(-40px);
+  opacity: .75;
   font-size: 333.33333333%;
   z-index: 2;
   -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
-  -webkit-transition-property: left;
-  transition-property: left;
+  -webkit-transition-property: -webkit-transform;
+  transition-property: -webkit-transform;
+  transition-property: transform;
+  transition-property: transform, -webkit-transform;
 }
 .infos-fleet .fleetships dd[data-shipid] > dt:after {
   right: 0;
@@ -8949,7 +8958,11 @@ body.mod-capture .infos-fleet .fleetships dd > .options {
 .infos-fleet .fleetships dd[data-shipid] > dt > div > div {
   display: block;
 }
-.infos-fleet .fleetships dd[data-shipid] > div {
+.infos-fleet .fleetships dd[data-shipid] > .equipments,
+.infos-fleet .fleetships dd[data-shipid] > .attributes {
+  display: block;
+}
+.infos-fleet .fleetships dd[data-shipid] > .options {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -8959,8 +8972,9 @@ body.mod-capture .infos-fleet .fleetships dd > .options {
   content: "\e615";
   color: #fff;
   text-shadow: 0 0 30px #000;
-  opacity: .75;
-  left: -12px;
+  -webkit-transform: translate(-12px);
+      -ms-transform: translate(-12px);
+          transform: translate(-12px);
 }
 .infos-fleet .fleetships dd[data-shipid].moving {
   opacity: .5;

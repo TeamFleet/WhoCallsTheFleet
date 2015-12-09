@@ -2433,6 +2433,7 @@ _g.joint = '・';
 _g.isNWjs = typeof node != 'undefined' || typeof nw != 'undefined';
 _g.isClient = _g.isNWjs ? !0 : !1;
 _g.defaultHqLv = 90;
+_g.shipMaxLv = 155;
 
 function eventName(event, name) {
 	name = name ? '.' + name : '';
@@ -3422,7 +3423,7 @@ var Ship = (function (_ItemBase3) {
 		key: 'getAttribute',
 		value: function getAttribute(attr, lvl) {
 			lvl = lvl || 1;
-			if (lvl > 150) lvl = 150;
+			if (lvl > Ship.lvlMax) lvl = Ship.lvlMax;
 
 			var getStatOfLvl = function getStatOfLvl(lvl, base, max) {
 				lvl = lvl || 1;
@@ -3538,6 +3539,8 @@ var Ship = (function (_ItemBase3) {
 
 	return Ship;
 })(ItemBase);
+
+Ship.lvlMax = 155;
 
 _g.kancolle_calc = {
 	version: 3,
@@ -5621,7 +5624,7 @@ var InfosFleet = (function () {
 			}).append(this.doms['hqlvOption'] = $('<input/>', {
 				'type': 'number',
 				'min': 0,
-				'max': 150,
+				'max': _g.shipMaxLv,
 				'placeholder': defaultHqLv
 			}).val(this._hqlv || defaultHqLv).on({
 				'input': (function () {
@@ -6317,7 +6320,7 @@ var InfosFleetShip = (function () {
 		this.el = $('<dd class="noship"/>').append($('<dt/>').append(this.elAvatar = $('<s touch-action="none"/>')).append(this.elInfos = $('<div/>').html('<span>' + (this.infosFleet.data._id ? '选择舰娘' : '无舰娘') + '...</span>').append(this.elInfosTitle = $('<div class="title"/>')).append($('<div class="info"/>').append($('<label/>').html('Lv.').append(this.elInputLevel = $('<input/>', {
 			'type': 'number',
 			'min': 0,
-			'max': 150
+			'max': _g.shipMaxLv
 		}).on({
 			'change': (function (e) {
 				var value = this.elInputLevel.val();
@@ -6328,9 +6331,9 @@ var InfosFleetShip = (function () {
 				if (value < 0) {
 					value = 0;
 					this.elInputLevel.val(0);
-				} else if (value > 150) {
-					value = 150;
-					this.elInputLevel.val(150);
+				} else if (value > _g.shipMaxLv) {
+					value = _g.shipMaxLv;
+					this.elInputLevel.val(_g.shipMaxLv);
 				}
 				if (!isNaN(value) && this.data[1][0] != value) this.shipLv = value;
 			}).bind(this),
@@ -7884,7 +7887,7 @@ var TablelistFleets = (function (_Tablelist4) {
 		}).append(_this13.dom.setting_hqlv_input = $('<input/>', {
 			'type': 'number',
 			'min': 0,
-			'max': 150
+			'max': _g.shipMaxLv
 		}).val(Lockr.get('hqLvDefault', _g.defaultHqLv)).on({
 			'input': (function () {
 				_g.updateDefaultHqLv(this.dom.setting_hqlv_input.val());
