@@ -96,7 +96,7 @@ class TablelistFleets extends Tablelist{
 										this.dom.setting_hqlv_input = $('<input/>',{
 												'type':		'number',
 												'min':		0,
-												'max':		150
+												'max':		_g.shipMaxLv
 											})
 											.val(Lockr.get('hqLvDefault', _g.defaultHqLv))
 											.on({

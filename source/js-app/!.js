@@ -16,6 +16,7 @@
 	_g.isNWjs = (typeof node != 'undefined' || typeof nw != 'undefined')
 	_g.isClient = _g.isNWjs ? true : false;
 	_g.defaultHqLv = 90;
+	_g.shipMaxLv = 155; // Ship.lvlMax
 	
 	function eventName(event, name){
 		name = name ? ('.' + name) : ''

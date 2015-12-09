@@ -16,6 +16,7 @@
 	_g.isNWjs = (typeof node != 'undefined' || typeof nw != 'undefined')
 	_g.isClient = _g.isNWjs ? true : false;
 	_g.defaultHqLv = 90;
+	_g.shipMaxLv = 155; // Ship.lvlMax
 	
 	function eventName(event, name){
 		name = name ? ('.' + name) : ''
@@ -121,7 +122,7 @@
 	}
 
 
-!function(root,factory){"undefined"!=typeof exports?"undefined"!=typeof module&&module.exports&&(exports=module.exports=factory(root,exports)):"function"==typeof define&&define.amd?define(["exports"],function(exports){root.Lockr=factory(root,exports)}):root.Lockr=factory(root,{})}(this,function(root,Lockr){"use strict";return Array.prototype.indexOf||(Array.prototype.indexOf=function(elt){var len=this.length>>>0,from=Number(arguments[1])||0;for(from=0>from?Math.ceil(from):Math.floor(from),0>from&&(from+=len);len>from;from++)if(from in this&&this[from]===elt)return from;return-1}),Lockr.prefix="",Lockr._getPrefixedKey=function(key,options){return options=options||{},options.noPrefix?key:this.prefix+key},Lockr.set=function(key,value,options){var query_key=this._getPrefixedKey(key,options);try{localStorage.setItem(query_key,JSON.stringify({data:value}))}catch(e){console&&console.warn("Lockr didn't successfully save the '{"+key+": "+value+"}' pair, because the localStorage is full.")}},Lockr.get=function(key,missing,options){var value,query_key=this._getPrefixedKey(key,options);try{value=JSON.parse(localStorage.getItem(query_key))}catch(e){value=localStorage[query_key]?JSON.parse('{"data":"'+localStorage.getItem(query_key)+'"}'):null}return null===value?missing:"undefined"!=typeof value.data?value.data:missing},Lockr.sadd=function(key,value,options){var json,query_key=this._getPrefixedKey(key,options),values=Lockr.smembers(key);if(values.indexOf(value)>-1)return null;try{values.push(value),json=JSON.stringify({data:values}),localStorage.setItem(query_key,json)}catch(e){console.log(e),console&&console.warn("Lockr didn't successfully add the "+value+" to "+key+" set, because the localStorage is full.")}},Lockr.smembers=function(key,options){var value,query_key=this._getPrefixedKey(key,options);try{value=JSON.parse(localStorage.getItem(query_key))}catch(e){value=null}return null===value?[]:value.data||[]},Lockr.sismember=function(key,value,options){this._getPrefixedKey(key,options);return Lockr.smembers(key).indexOf(value)>-1},Lockr.getAll=function(){var keys=Object.keys(localStorage);return keys.map(function(key){return Lockr.get(key)})},Lockr.srem=function(key,value,options){var json,index,query_key=this._getPrefixedKey(key,options),values=Lockr.smembers(key,value);index=values.indexOf(value),index>-1&&values.splice(index,1),json=JSON.stringify({data:values});try{localStorage.setItem(query_key,json)}catch(e){console&&console.warn("Lockr couldn't remove the "+value+" from the set "+key)}},Lockr.rm=function(key){localStorage.removeItem(key)},Lockr.flush=function(){localStorage.clear()},Lockr});
+!function(root,factory){"undefined"!=typeof exports?"undefined"!=typeof module&&module.exports&&(exports=module.exports=factory(root,exports)):"function"==typeof define&&define.amd?define(["exports"],function(exports){root.Lockr=factory(root,exports)}):root.Lockr=factory(root,{})}(this,function(root,Lockr){"use strict";return Array.prototype.indexOf||(Array.prototype.indexOf=function(elt){var len=this.length>>>0,from=Number(arguments[1])||0;for(from=0>from?Math.ceil(from):Math.floor(from),0>from&&(from+=len);len>from;from++)if(from in this&&this[from]===elt)return from;return-1}),Lockr.prefix="",Lockr._getPrefixedKey=function(key,options){return options=options||{},options.noPrefix?key:this.prefix+key},Lockr.set=function(key,value,options){var query_key=this._getPrefixedKey(key,options);try{localStorage.setItem(query_key,JSON.stringify({data:value}))}catch(e){console&&console.warn("Lockr didn't successfully save the '{"+key+": "+value+"}' pair, because the localStorage is full.")}},Lockr.get=function(key,missing,options){var value,query_key=this._getPrefixedKey(key,options);try{value=JSON.parse(localStorage.getItem(query_key))}catch(e){try{value=localStorage[query_key]?JSON.parse('{"data":"'+localStorage.getItem(query_key)+'"}'):null}catch(e){console&&console.warn("Lockr could not load the item with key "+key)}}return null===value?missing:"undefined"!=typeof value.data?value.data:missing},Lockr.sadd=function(key,value,options){var json,query_key=this._getPrefixedKey(key,options),values=Lockr.smembers(key);if(values.indexOf(value)>-1)return null;try{values.push(value),json=JSON.stringify({data:values}),localStorage.setItem(query_key,json)}catch(e){console.log(e),console&&console.warn("Lockr didn't successfully add the "+value+" to "+key+" set, because the localStorage is full.")}},Lockr.smembers=function(key,options){var value,query_key=this._getPrefixedKey(key,options);try{value=JSON.parse(localStorage.getItem(query_key))}catch(e){value=null}return null===value?[]:value.data||[]},Lockr.sismember=function(key,value,options){this._getPrefixedKey(key,options);return Lockr.smembers(key).indexOf(value)>-1},Lockr.getAll=function(){var keys=Object.keys(localStorage);return keys.map(function(key){return Lockr.get(key)})},Lockr.srem=function(key,value,options){var json,index,query_key=this._getPrefixedKey(key,options),values=Lockr.smembers(key,value);index=values.indexOf(value),index>-1&&values.splice(index,1),json=JSON.stringify({data:values});try{localStorage.setItem(query_key,json)}catch(e){console&&console.warn("Lockr couldn't remove the "+value+" from the set "+key)}},Lockr.rm=function(key){localStorage.removeItem(key)},Lockr.flush=function(){localStorage.clear()},Lockr});
 //
 // SmoothScroll for websites v1.3.8 (Balazs Galambosi)
 // Licensed under the terms of the MIT license.
@@ -2804,8 +2805,8 @@ class Ship extends ItemBase{
 	
 	getAttribute(attr, lvl){
 		lvl = lvl || 1
-		if( lvl > 150 )
-			lvl = 150
+		if( lvl > Ship.lvlMax )
+			lvl = Ship.lvlMax
 		
 		let getStatOfLvl = function( lvl, base, max ){
 			lvl = lvl || 1
@@ -2902,6 +2903,9 @@ class Ship extends ItemBase{
 		return this.getIllustrator()
 	}
 }
+
+Ship.lvlMax = 155;
+
 /* Perser for kancolle-calc.net
 
  *******************************************************************
@@ -6829,7 +6833,7 @@ class InfosFleet{
 								this.doms['hqlvOption'] = $('<input/>',{
 										'type':		'number',
 										'min':		0,
-										'max':		150,
+										'max':		_g.shipMaxLv,
 										'placeholder': defaultHqLv
 									})
 									.val(this._hqlv || defaultHqLv)
@@ -7864,7 +7868,7 @@ class InfosFleetShip{
 												this.elInputLevel = $('<input/>',{
 													'type':	'number',
 													'min':	0,
-													'max':	150
+													'max':	_g.shipMaxLv
 												}).on({
 													'change': function(e){
 														let value = this.elInputLevel.val()
@@ -7876,9 +7880,9 @@ class InfosFleetShip{
 														if( value < 0 ){
 															value = 0
 															this.elInputLevel.val(0)
-														}else if( value > 150 ){
-															value = 150
-															this.elInputLevel.val(150)
+														}else if( value > _g.shipMaxLv ){
+															value = _g.shipMaxLv
+															this.elInputLevel.val(_g.shipMaxLv)
 														}
 														if( !isNaN(value) && this.data[1][0] != value )
 															this.shipLv = value
@@ -8796,21 +8800,21 @@ _frame.infos.__ship = function( id ){
 		return val
 	}
 	function _add_stat( name, title, tar ){
-		let val99, val150
+		let val99, valMax
 
 		switch( name ){
 			case 'hp':
 				val99 = _val( d.getAttribute('hp', 99) )
-				val150 = _val( d.getAttribute('hp', 150) )
+				valMax = _val( d.getAttribute('hp', _g.shipMaxLv) )
 				break;
 			case 'asw':
 				val99 = _val( d.getAttribute('asw', 99), /^(5|8|9|12|24)$/.test(d['type']) )
-				val150 = _val( d.getAttribute('asw', 150), /^(5|8|9|12|24)$/.test(d['type']) )
+				valMax = _val( d.getAttribute('asw', _g.shipMaxLv), /^(5|8|9|12|24)$/.test(d['type']) )
 				break;
 			case 'evasion':
 			case 'los':
 				val99 = _val( d.getAttribute(name, 99) )
-				val150 = _val( d.getAttribute(name, 150) )
+				valMax = _val( d.getAttribute(name, _g.shipMaxLv) )
 				break;
 			case 'speed':
 				val99 = _g.getStatSpeed( d['stat']['speed'] )
@@ -8820,12 +8824,12 @@ _frame.infos.__ship = function( id ){
 				break;
 			case 'luck':
 				val99 = d['stat']['luck'] + '<sup>' + d['stat']['luck_max'] + '</sup>'
-				val150 = (d['stat']['luck'] + 3) + '<sup>' + d['stat']['luck_max'] + '</sup>'
+				valMax = (d['stat']['luck'] + 3) + '<sup>' + d['stat']['luck_max'] + '</sup>'
 				break;
 			case 'fuel':
 			case 'ammo':
 				val99 = d.getAttribute(name, 99)
-				val150 = d.getAttribute(name, 150)
+				valMax = d.getAttribute(name, _g.shipMaxLv)
 				break;
 			default:
 				val99 = _val( d.getAttribute(name, 99) )
@@ -8835,8 +8839,8 @@ _frame.infos.__ship = function( id ){
 		$('<span/>')
 			.html(
 				'<small class="stat-'+name+'">' + title + '</small>'
-				+ '<em'+( val150 ? ' class="lvl99"' : '' )+'>' + val99 + '</em>'
-				+ ( val150 ? '<em class="lvl150">' + val150 + '</em>' : '' )
+				+ '<em'+( valMax ? ' class="lvl99"' : '' )+'>' + val99 + '</em>'
+				+ ( valMax ? '<em class="lvl150">' + valMax + '</em>' : '' )
 				//+ '<em class="lvl99'+( !val150 ? ' lvl150' : '' )+'">' + val99 + '</em>'
 				//+ ( val150 ? '<em class="lvl150">' + val150 + '</em>' : '' )
 			)
@@ -8880,7 +8884,7 @@ _frame.infos.__ship = function( id ){
 								+ '<h4 data-content="基础属性">基础属性</h4>'
 								+ '<span>'
 									+ '<label for="'+lvlRadio99_id+'" class="lvl99">99</label>'
-									+ '<label for="'+lvlRadio150_id+'" class="lvl150">150</label>'
+									+ '<label for="'+lvlRadio150_id+'" class="lvl150">'+_g.shipMaxLv+'</label>'
 								+ '</span>'
 							+ '</div>'
 						)
@@ -10981,7 +10985,7 @@ class TablelistFleets extends Tablelist{
 										this.dom.setting_hqlv_input = $('<input/>',{
 												'type':		'number',
 												'min':		0,
-												'max':		150
+												'max':		_g.shipMaxLv
 											})
 											.val(Lockr.get('hqLvDefault', _g.defaultHqLv))
 											.on({

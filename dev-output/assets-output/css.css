@@ -8929,13 +8929,19 @@ body.mod-capture .infos-fleet .fleetships dd > .options {
   top: 50%;
   line-height: 0;
   width: 35%;
-  left: -40px;
+  left: 0;
+  -webkit-transform: translate(-40px);
+      -ms-transform: translate(-40px);
+          transform: translate(-40px);
+  opacity: .75;
   font-size: 333.33333333%;
   z-index: 2;
   -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
-  -webkit-transition-property: left;
-  transition-property: left;
+  -webkit-transition-property: -webkit-transform;
+  transition-property: -webkit-transform;
+  transition-property: transform;
+  transition-property: transform, -webkit-transform;
 }
 .infos-fleet .fleetships dd[data-shipid] > dt:after {
   right: 0;
@@ -8966,8 +8972,9 @@ body.mod-capture .infos-fleet .fleetships dd > .options {
   content: "\e615";
   color: #fff;
   text-shadow: 0 0 30px #000;
-  opacity: .75;
-  left: -12px;
+  -webkit-transform: translate(-12px);
+      -ms-transform: translate(-12px);
+          transform: translate(-12px);
 }
 .infos-fleet .fleetships dd[data-shipid].moving {
   opacity: .5;

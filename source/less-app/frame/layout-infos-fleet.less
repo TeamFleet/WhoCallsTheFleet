@@ -1174,11 +1174,15 @@
 							top: 		50%;
 							line-height:0;
 							width: 		35%;
-							left: 		-40px;
+							//left: 		-40px;
+							left: 		0;
+							transform: 	translate(-40px);
+							opacity: 	.75;
 							font-size: 	percentage(40 / @base_font_size);
 							z-index: 	2;
 							.enable-transition();
-							transition-property: 	left;
+							//transition-property: 	left;
+							transition-property: 	transform;
 						}
 					}
 					&:after{
@@ -1210,8 +1214,8 @@
 						content: 	@iconcode-move-vertical-alt2;
 						color: 		#fff;
 						text-shadow:0 0 30px #000;
-						opacity: 	.75;
-						left: 		-12px;
+						//left: 		-12px;
+						transform: 	translate(-12px);
 					}
 				}
 				&.moving{

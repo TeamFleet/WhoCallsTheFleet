@@ -238,7 +238,7 @@ class InfosFleet{
 								this.doms['hqlvOption'] = $('<input/>',{
 										'type':		'number',
 										'min':		0,
-										'max':		150,
+										'max':		_g.shipMaxLv,
 										'placeholder': defaultHqLv
 									})
 									.val(this._hqlv || defaultHqLv)
@@ -1273,7 +1273,7 @@ class InfosFleetShip{
 												this.elInputLevel = $('<input/>',{
 													'type':	'number',
 													'min':	0,
-													'max':	150
+													'max':	_g.shipMaxLv
 												}).on({
 													'change': function(e){
 														let value = this.elInputLevel.val()
@@ -1285,9 +1285,9 @@ class InfosFleetShip{
 														if( value < 0 ){
 															value = 0
 															this.elInputLevel.val(0)
-														}else if( value > 150 ){
-															value = 150
-															this.elInputLevel.val(150)
+														}else if( value > _g.shipMaxLv ){
+															value = _g.shipMaxLv
+															this.elInputLevel.val(_g.shipMaxLv)
 														}
 														if( !isNaN(value) && this.data[1][0] != value )
 															this.shipLv = value

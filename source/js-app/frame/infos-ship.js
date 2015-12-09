@@ -13,21 +13,21 @@ _frame.infos.__ship = function( id ){
 		return val
 	}
 	function _add_stat( name, title, tar ){
-		let val99, val150
+		let val99, valMax
 
 		switch( name ){
 			case 'hp':
 				val99 = _val( d.getAttribute('hp', 99) )
-				val150 = _val( d.getAttribute('hp', 150) )
+				valMax = _val( d.getAttribute('hp', _g.shipMaxLv) )
 				break;
 			case 'asw':
 				val99 = _val( d.getAttribute('asw', 99), /^(5|8|9|12|24)$/.test(d['type']) )
-				val150 = _val( d.getAttribute('asw', 150), /^(5|8|9|12|24)$/.test(d['type']) )
+				valMax = _val( d.getAttribute('asw', _g.shipMaxLv), /^(5|8|9|12|24)$/.test(d['type']) )
 				break;
 			case 'evasion':
 			case 'los':
 				val99 = _val( d.getAttribute(name, 99) )
-				val150 = _val( d.getAttribute(name, 150) )
+				valMax = _val( d.getAttribute(name, _g.shipMaxLv) )
 				break;
 			case 'speed':
 				val99 = _g.getStatSpeed( d['stat']['speed'] )
@@ -37,12 +37,12 @@ _frame.infos.__ship = function( id ){
 				break;
 			case 'luck':
 				val99 = d['stat']['luck'] + '<sup>' + d['stat']['luck_max'] + '</sup>'
-				val150 = (d['stat']['luck'] + 3) + '<sup>' + d['stat']['luck_max'] + '</sup>'
+				valMax = (d['stat']['luck'] + 3) + '<sup>' + d['stat']['luck_max'] + '</sup>'
 				break;
 			case 'fuel':
 			case 'ammo':
 				val99 = d.getAttribute(name, 99)
-				val150 = d.getAttribute(name, 150)
+				valMax = d.getAttribute(name, _g.shipMaxLv)
 				break;
 			default:
 				val99 = _val( d.getAttribute(name, 99) )
@@ -52,8 +52,8 @@ _frame.infos.__ship = function( id ){
 		$('<span/>')
 			.html(
 				'<small class="stat-'+name+'">' + title + '</small>'
-				+ '<em'+( val150 ? ' class="lvl99"' : '' )+'>' + val99 + '</em>'
-				+ ( val150 ? '<em class="lvl150">' + val150 + '</em>' : '' )
+				+ '<em'+( valMax ? ' class="lvl99"' : '' )+'>' + val99 + '</em>'
+				+ ( valMax ? '<em class="lvl150">' + valMax + '</em>' : '' )
 				//+ '<em class="lvl99'+( !val150 ? ' lvl150' : '' )+'">' + val99 + '</em>'
 				//+ ( val150 ? '<em class="lvl150">' + val150 + '</em>' : '' )
 			)
@@ -97,7 +97,7 @@ _frame.infos.__ship = function( id ){
 								+ '<h4 data-content="基础属性">基础属性</h4>'
 								+ '<span>'
 									+ '<label for="'+lvlRadio99_id+'" class="lvl99">99</label>'
-									+ '<label for="'+lvlRadio150_id+'" class="lvl150">150</label>'
+									+ '<label for="'+lvlRadio150_id+'" class="lvl150">'+_g.shipMaxLv+'</label>'
 								+ '</span>'
 							+ '</div>'
 						)
