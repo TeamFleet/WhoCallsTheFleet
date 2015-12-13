@@ -1,3 +1,5 @@
+@infos-fleet-base-font-size: 12;
+
 .layout-infos-fleet(){
 	//.fleet{
 
@@ -14,12 +16,11 @@
 	.flex-flow(~"column nowrap");
 	
 	.main-sizing-anti-padding();
-	@base_font_size: 12;
 	//top: 		-20px;
 	//transform: 	translateY(-20px);
 	margin-top: -20px;
 	height: 	~"calc(100% + 40px)";
-	font-size: 	unit( @base_font_size, px );
+	font-size: 	unit( @infos-fleet-base-font-size, px );
 	.user-select(none);
 	
 	@media all and (max-height: 600px){
@@ -27,11 +28,11 @@
 		height: ~"calc(100% + 20px)";
 	}
 	
-	@media all and (min-width: 1280px) and (min-height: 900px){
+	@media all and (min-width: 1281px) and (min-height: 900px){
 		font-size: 	12.5px;
 	}
 	
-	@media all and (min-width: 1280px) and (min-height: 960px){
+	@media all and (min-width: 1281px) and (min-height: 960px){
 		font-size: 	13px;
 	}
 	
@@ -92,7 +93,7 @@
 		@height: 	22;
 		h3{
 			//.font-size(20);
-			font-size: 	percentage(20 / @base_font_size);
+			font-size: 	percentage(20 / @infos-fleet-base-font-size);
 			line-height:percentage(@height / 20);
 			min-height: ~"calc(1.1em + 10px)";
 			padding: 	5px 10px 5px 0;
@@ -137,7 +138,7 @@
 			position:	absolute;
 			right:		0;
 			top:		0;
-			font-size: 	percentage(14 / @base_font_size);
+			font-size: 	percentage(14 / @infos-fleet-base-font-size);
 			line-height:percentage(@height / 13);
 			padding: 	6px 0;
 			button{
@@ -197,7 +198,7 @@
 				color:		rgba(255, 255, 255, 0.2625);
 				position:	relative;
 				//.font-size(14);
-				//font-size: 	percentage(14 / @base_font_size);
+				//font-size: 	percentage(14 / @infos-fleet-base-font-size);
 				font-size: 	14px;
 				font-weight:lighter;
 				.line-height(@tab_height);
@@ -230,7 +231,7 @@
 			right:		0;
 			.line-height(@tab_height);
 			color:		rgba(255, 255, 255, .5);
-			font-size: 	percentage(13 / @base_font_size);
+			font-size: 	percentage(13 / @infos-fleet-base-font-size);
 			&>.option{
 				display:	inline-block;
 				margin-left:1.25em;
@@ -423,7 +424,7 @@
 			text-align: 	center;
 			justify-content:center;
 			align-items: 	flex-end;
-			font-size: 		percentage(14 / @base_font_size);
+			font-size: 		percentage(14 / @infos-fleet-base-font-size);
 			font-weight: 	lighter;
 			margin-right: 	-1.5em;
 			h3, h4, h5{
@@ -467,10 +468,10 @@
 					}
 				}
 				.fuel:before{
-					background-position-y: 	unit(12 * -18, px);
+					background-position: 	0 unit(12 * -18, px);
 				}
 				.ammo:before{
-					background-position-y: 	unit(13 * -18, px);
+					background-position: 	0 unit(13 * -18, px);
 				}
 			}
 		}
@@ -529,7 +530,8 @@
 		&>dt{
 			display: 	flex;
 			height: 	100%;
-			width: 		~"calc(30% - 15px)";
+			//width: 		~"calc(30% - 15px)";
+			width: 		30%;
 			top: 		0;
 			left: 		0;
 			overflow: 	hidden;
@@ -587,12 +589,12 @@
 					}
 					h4{
 						//font-size: 	30px;
-						font-size: 	percentage(30 / @base_font_size);
-						line-height:35px;
+						font-size: 	percentage(28 / @infos-fleet-base-font-size);
+						line-height:32px;
 					}
 					h5{
 						//font-size: 	18px;
-						font-size: 	percentage(18 / @base_font_size);
+						font-size: 	percentage(18 / @infos-fleet-base-font-size);
 						margin-left:.35em;
 					}
 				}
@@ -605,14 +607,14 @@
 					label{
 						display: 	line-block;
 						//font-size: 	110%;
-						font-size: 	percentage(14 / @base_font_size);
+						//font-size: 	percentage(14 / @infos-fleet-base-font-size);
 						input{
 							//height: 	20px;
-							height: 	unit( (20 / 13), em );
+							height: 	unit( (20 / @infos-fleet-base-font-size), em );
 							//width: 		34px;
 							//width: 		unit( (30 / 12), em );
-							width: 		unit( (28 / 12), em );
-							margin: 	0 unit( (5 / 12), em ) 0 2px;
+							width: 		unit( (28 / @infos-fleet-base-font-size), em );
+							margin: 	0 unit( (5 / @infos-fleet-base-font-size), em ) 0 2px;
 							padding: 	0;
 						}
 					}
@@ -642,7 +644,7 @@
 			left: 		30%;
 			//height: 	~"calc(100% - 26px - 8px)";
 			height: 	~"calc(100% - 27px - 8px)";
-			padding-right: unit( 42 / @base_font_size, em );
+			padding-right: unit( 42 / @infos-fleet-base-font-size, em );
 			z-index: 	1;
 			.mod-capture({
 				padding-right: 4px;
@@ -676,7 +678,7 @@
 			}
 			&>span{
 				display: 	inline-block;
-				font-size: 	unit( 12 / @base_font_size, em );
+				font-size: 	unit( 12 / @infos-fleet-base-font-size, em );
 				padding: 	0 8px 0 28px;
 				position: 	relative;
 				font-weight:lighter;
@@ -752,7 +754,7 @@
 		&>.options{
 			right: 		0;
 			top: 		6px;
-			width: 		unit( 42 / @base_font_size, em );
+			width: 		unit( 42 / @infos-fleet-base-font-size, em );
 			z-index: 	2;
 			height: 	~"calc(100% - 27px - 8px)";
 			text-align: center;
@@ -764,7 +766,7 @@
 				color: 		rgba(255, 255, 255, .2);
 				transition-property: color, background-color;
 				//font-size: 	25px;
-				font-size: 	percentage(25 / @base_font_size);
+				font-size: 	percentage(25 / @infos-fleet-base-font-size);
 				width: 		25px;
 				line-height:25px;
 				text-align: center;
@@ -782,7 +784,7 @@
 				@font-size: 20;
 				color: 		rgba(255, 255, 255, .2);
 				transition-property: color, background-color;
-				font-size: 	percentage(@font-size / @base_font_size);
+				font-size: 	percentage(@font-size / @infos-fleet-base-font-size);
 				width: 		unit( 30 / @font-size, em );
 				line-height:unit( 30 / @font-size, em );
 				height: 	unit( 30 / @font-size, em );
@@ -844,7 +846,7 @@
 					&:before{
 						content: 	'+';
 						//.font-size(64);
-						font-size: 	percentage(64 / @base_font_size);
+						font-size: 	percentage(64 / @infos-fleet-base-font-size);
 						line-height:0;
 						height: 	0;
 						position: 	absolute;
@@ -862,7 +864,7 @@
 					color: 	#fff;
 					opacity: .25;
 					//.font-size(20);
-					font-size: 	percentage(20 / @base_font_size);
+					font-size: 	percentage(20 / @infos-fleet-base-font-size);
 					//.transition-property(opacity);
 				}
 			}
@@ -898,7 +900,8 @@
 					cursor: 	n-resize;
 					.mask(~"linear-gradient(to right, #000 70%, transparent)");
 					&:before{
-						content: 	'';
+						content: 	@iconcode-move-vertical-alt2;
+						color: 		#fff;
 						font-family:icons;
 						position: 	absolute;
 						top: 		50%;
@@ -906,17 +909,14 @@
 						width: 		35%;
 						//left: 		-40px;
 						left: 		0;
-						transform: 	translate(-40px);
+						transform: 	translateX(-40px);
 						opacity: 	.75;
-						font-size: 	percentage(40 / @base_font_size);
+						font-size: 	percentage(40 / @infos-fleet-base-font-size);
 						z-index: 	2;
-						.enable-transition();
-						//transition-property: 	left;
-						transition-property: 	transform;
 					}
 				}
 				&:after{
-					right: 		0;
+					right: 		15px;
 					background: rgba(255, 255, 255, .15);
 				}
 				&>div{
@@ -941,11 +941,12 @@
 			}
 			&:hover{
 				&>dt>s:before{
-					content: 	@iconcode-move-vertical-alt2;
-					color: 		#fff;
-					text-shadow:0 0 30px #000;
 					//left: 		-12px;
-					transform: 	translate(-12px);
+					transform: 	translateX(-12px);
+					text-shadow:0 0 30px #000;
+					.enable-transition();
+					//transition-property: 	left;
+					transition-property: 	transform;
 				}
 			}
 			&.moving{
@@ -1078,7 +1079,7 @@
 		width: 		~"calc(25% - 2px)";
 		height: 	100%;
 		display: 	inline-block;
-		background: rgba(0, 0, 0, .125) no-repeat 2px 50%;
+		background: rgba(0, 0, 0, .125) no-repeat 1px 50%;
 		margin: 	0 2px 0 0;
 		transition-property: background-color;
 		position: 	relative;
@@ -1106,7 +1107,7 @@
 			text-align: center;
 			z-index: 	10;
 			//font-size: 	20px;
-			font-size: 	percentage(20 / @base_font_size);
+			font-size: 	percentage(20 / @infos-fleet-base-font-size);
 		}
 		
 		&[data-carry]{
@@ -1272,7 +1273,7 @@
 		.equipment-add{
 			opacity: 	.25;
 			//font-size: 	16px;
-			font-size: 	percentage(16 / @base_font_size);
+			font-size: 	percentage(16 / @infos-fleet-base-font-size);
 			&:before{
 				font-family:icons;
 				content: 	@iconcode-plus;
@@ -1287,17 +1288,17 @@
 			//.fadein();
 		}
 		.equipment-infos{
-			padding-left: 	38px;
-			padding-right: 	32px;
+			padding-left: 	36px;
+			padding-right: 	30px;
 		}
 			.equipment-name{
 				flex: 		1 0 100%;
 				line-height:1.2em;
-				font-size: 	percentage(13 / @base_font_size);
+				//font-size: 	percentage(13 / @infos-fleet-base-font-size);
 			}
 			.equipment-star, .equipment-rank, .equipment-carry{
 				position: 	absolute;
-				right: 		6px;
+				right: 		4px;
 				flex: 		none;
 				text-align: right;
 				top: 		50%;
@@ -1306,10 +1307,10 @@
 				//font-size: 	13px;
 				opacity: 	.25;
 				&:before{
-					padding-right: 	3px;
+					padding-right: 	2px;
 					vertical-align: top;
 					//font-size: 	15px;
-					font-size: 	percentage(15 / @base_font_size);
+					font-size: 	percentage(15 / @infos-fleet-base-font-size);
 				}
 			}
 			.equipment-star, .equipment-rank{
@@ -1329,19 +1330,19 @@
 				&:before{
 					content: 	@iconcode-multiplication;
 					//font-size: 	18px;
-					font-size: 	percentage(18 / @base_font_size);
+					font-size: 	percentage(18 / @infos-fleet-base-font-size);
 				}
 			}
 		.equipment-options{
-			padding-left: 	42px;
+			padding-left: 	40px;
 			padding-right: 	4px;
 			&:before{
 				//content: 	'★';
 				content:	'\2605';
 				position: 	absolute;
 				top: 		50%;
-				left: 		~"calc(10% + 28px)";
-				font-size: 	percentage(15 / @base_font_size);
+				left: 		~"calc(10% + 30px)";
+				font-size: 	percentage(15 / @infos-fleet-base-font-size);
 				line-height:0;
 				opacity: 	.5;
 				pointer-events: none;
@@ -1375,10 +1376,10 @@
 					}
 				}
 				&[icon]{
-					font-size: 	percentage(16 / @base_font_size);
+					font-size: 	percentage(16 / @infos-fleet-base-font-size);
 				}
 				&.remove{
-					font-size: 	percentage(24 / @base_font_size);
+					font-size: 	percentage(24 / @infos-fleet-base-font-size);
 					font-weight:bold;
 					font-family:Gothic;
 					&:before{
@@ -1407,7 +1408,7 @@
 					line-height:0;
 					position: 	absolute;
 					top: 		50%;
-					left: 		50%;
+					left: 		40%;
 					//transform: 	translateY(-50%);
 				}
 			}
@@ -1865,6 +1866,58 @@ main{
 
 
 
+@media all and (min-width: 1281px ){.infos-fleet{
+	.ship{
+		&>dt{
+			&>div{
+				&>.title{
+					h4{
+						font-size: 	percentage(30 / @infos-fleet-base-font-size);
+						line-height:35px;
+					}
+				}
+				&>.info{
+					label{
+						font-size: 	percentage(14 / @infos-fleet-base-font-size);
+						input{
+							height: 	unit( (20 / 13), em );
+						}
+					}
+				}
+			}
+		}
+	} // dd.ship
+	.equipment{
+		background-position: 2px 50%;
+		margin-right: 	2p;
+	} // .equipment
+		.equipment-infos{
+			padding-left: 	38px;
+			padding-right: 	32px;
+		}
+			.equipment-name{
+				font-size: 	percentage(13 / @infos-fleet-base-font-size);
+			}
+			.equipment-star, .equipment-rank, .equipment-carry{
+				right: 		6px;
+				&:before{
+					padding-right: 	3px;
+				}
+			}
+		.equipment-options{
+			padding-left: 	42px;
+			&:before{
+				left: 		~"calc(10% + 32px)";
+			}
+		}
+			.equipment-rankselect{
+				span{
+					left: 		45%;
+				}
+			}
+}}
+
+
 @media all and (max-width: @main-sizing-t1-breaking-point ) and (min-width: (@main-sizing-t2-breaking-point + 1) ){.infos-fleet{
 	.fleetships{
 		padding-left: 	15px;
@@ -1872,7 +1925,7 @@ main{
 	}
 	.ship{
 		&>dt{
-			width: 		30%;
+			//width: 		30%;
 			&>s{
 				flex-basis: 110px;
 			}
@@ -1887,11 +1940,11 @@ main{
 				width: 		21px;
 			}
 		}
-		&[data-shipid]{
-			&>dt:after{
-				right: 		15px;
-			}
-		}
+		//&[data-shipid]{
+		//	&>dt:after{
+		//		right: 		15px;
+		//	}
+		//}
 	}
 	.equipment{
 		background-position:-2px 50%;
@@ -1900,9 +1953,9 @@ main{
 			padding-left: 	32px;
 			padding-right: 	28px;
 		}
-			.equipment-name{
-				font-size: 	100%;
-			}
+			//.equipment-name{
+			//	font-size: 	100%;
+			//}
 			.equipment-carry,
 			.equipment-rank,
 			.equipment-star{
@@ -1918,8 +1971,8 @@ main{
 
 
 @media all and (max-width: @main-sizing-t2-breaking-point ){.infos-fleet{
-	@base-height-ship: 	(70px + 20 + 5);
-	@base_font_size: 12;
+	@base-height-ship: 			(70px + 5);
+	@base-height-ship-selected: (70px + 20 + 5);
 	@avatar-size-x: 	15%;
 	&>.ships{
 		flex-basis: 	((@base-height-ship + 10) * 6 + (10 * 2) + 30);
@@ -1928,9 +1981,9 @@ main{
 		// - -- -------
 		// 150px, 30% - 150px, 70%
 		flex-basis: @base-height-ship;
-		height: 	@base-height-ship;
+		height: 	auto;
+		border-bottom: 5px solid transparent;
 		//margin-top: 20px;
-		border-bottom: 15px solid transparent;
 		&>dt{
 			width: 		100%;
 			z-index: 	1;
@@ -1951,17 +2004,17 @@ main{
 					display: 	none;
 				}
 				&>.title{
-					padding: 	4px 1em 0 4px;
+					padding: 	6px 1em 0 4px;
 					h4{
-						font-size: 	percentage(24 / @base_font_size);
+						font-size: 	percentage(20 / @infos-fleet-base-font-size);
 						line-height:1em;
 					}
 					h5{
-						font-size: 	percentage(16 / @base_font_size);
+						font-size: 	percentage(14 / @infos-fleet-base-font-size);
 					}
 				}
 				&>.info{
-					margin-top: 	6px;
+					margin-top: 	8px;
 					vertical-align: top;
 				}
 			}
@@ -1978,7 +2031,7 @@ main{
 			z-index: 	2;
 			top: 		34px;
 			height: 	~"calc(100% - 38px)";
-			padding-right: 4px;
+			padding-right: 2px;
 		}
 		&>.attributes{
 			bottom: 	-21px;
@@ -1997,7 +2050,7 @@ main{
 		}
 		&>.options{
 			top: 		0;
-			padding-right: 	6px;
+			padding-right: 	4px;
 			height: 	34px;
 			button{
 				&.options:before{
@@ -2015,7 +2068,13 @@ main{
 			}
 		}
 		&[data-shipid]{
+			flex-basis: @base-height-ship-selected;
+			//height: 	@base-height-ship-selected;
+			//border-bottom: 25px solid transparent;
 			border-bottom-width: 25px;
+			&>dt:after{
+				right: 	0;
+			}
 			&>dt>div>div{
 				display: inline-block;
 			}
@@ -2044,14 +2103,22 @@ main{
 		}
 	} // dd.ship
 	.equipment{
-		background-position: 	-2px 50%;
+		background-position: 	-3px 50%;
 	}
 		.equipment-infos{
-			padding-left: 	34px;
+			padding-left: 	30px;
+			padding-right: 	28px;
 		}
 			.equipment-name{
 				line-height:1.15em;
-				font-size: 	percentage(12 / @base_font_size);
+				//font-size: 	percentage(12 / @infos-fleet-base-font-size);
+			}
+			.equipment-carry,
+			.equipment-rank,
+			.equipment-star{
+				&:before{
+					padding-right: 1px;
+				}
 			}
 			.equipment-rank{
 				top: 	55%;
