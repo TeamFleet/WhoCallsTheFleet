@@ -2835,8 +2835,7 @@ nav > section.options {
   opacity: 1;
   overflow: hidden;
 }
-nav > section.options > button,
-nav > section.options > a {
+nav > section.options > [icon] {
   color: rgba(255, 255, 255, 0.4);
   right: 0;
   display: inline-block;
@@ -2851,12 +2850,10 @@ nav > section.options > a {
   position: relative;
   margin-left: 4px;
 }
-nav > section.options > button:hover,
-nav > section.options > a:hover {
+nav > section.options > [icon]:hover {
   color: #fff;
 }
-nav > section.options > button[icon]:before,
-nav > section.options > a[icon]:before {
+nav > section.options > [icon][icon]:before {
   padding-right: 0;
   font-size: 1em;
   opacity: 1;
@@ -3002,7 +2999,7 @@ main:after {
 	&>.tablelist{
 		&>.fixed-table-container{
 			&>.fixed-table-container-inner{
-				@media all and (max-width: 1152px ){
+				@media all and (max-width: @screen-width-t1-breaking-point ){
 					.padding-left(@nav_height - 20);
 					.padding-right(@nav_height - @scrollbar_width - 20);
 				}
@@ -3015,7 +3012,7 @@ main:after {
 					.padding-right(@nav_height - @scrollbar_width - 55);
 				}
 				.window-noframe({
-					@media all and (max-width: 1152px ){
+					@media all and (max-width: @screen-width-t1-breaking-point ){
 						.padding-right(@nav_height - @scrollbar_width - 20 + 2);
 					}
 					@media all and (max-width: 960px ){
@@ -3035,7 +3032,7 @@ main:after {
 						table{
 							tbody{
 								tr{
-									@media all and (min-width: 1152px ){
+									@media all and (min-width: @screen-width-t1-breaking-point ){
 										.flex-basis(190px);
 									}
 									@media all and (min-width: 1680px ){
@@ -3076,8 +3073,8 @@ main:after {
 }
 @media all and (max-width: 800px) {
   .page-container {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 }
 @media all and (max-width: 640px) {
@@ -3873,7 +3870,7 @@ table{
 	//		//@calc_number:	unit( ( @nav_height + @scrollbar_width ) / 2, px );
 	//		@calc_number:	unit( @nav_height / 2, px );
 	//		margin-left:	~"calc(-50% + @{calc_number})";
-	//		@media all and (max-width: 1152px ){
+	//		@media all and (max-width: @screen-width-t1-breaking-point ){
 	//			@calc_number:	unit( (@nav_height - 20) / 2, px );
 	//			margin-left:	~"calc(-50% + @{calc_number})";
 	//		}
@@ -4165,31 +4162,32 @@ body.mod-capture #tip {
 }
 @media all and (max-width: 720px) {
   #layout {
-    padding-top: 50px;
+    padding-top: 56px;
   }
   nav {
-    height: 50px;
-    line-height: 50px;
+    height: 56px;
+    line-height: 56px;
+    background: transparent;
   }
   nav > div.pages {
     margin-left: 0 !important;
     max-width: none;
-    width: 321px;
-    height: calc(100% - 50px);
+    width: 400px;
+    height: calc(100% - 56px);
     position: fixed;
-    top: 50px;
-    left: -321px;
+    top: 56px;
+    left: 0;
     z-index: 10;
     padding: 0;
     overflow: hidden;
     overflow-y: auto;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.8);
     -webkit-backdrop-filter: blur(7.5px);
             backdrop-filter: blur(7.5px);
     border-right: 1px solid rgba(255, 255, 255, 0.15);
-    -webkit-transform: translateX(0) !important;
-        -ms-transform: translateX(0) !important;
-            transform: translateX(0) !important;
+    -webkit-transform: translateX(-100%) !important;
+        -ms-transform: translateX(-100%) !important;
+            transform: translateX(-100%) !important;
     -webkit-transition-timing-function: ease-out;
             transition-timing-function: ease-out;
     -webkit-overflow-scrolling: touch;
@@ -4204,6 +4202,7 @@ body.mod-capture #tip {
     border-left: 0;
     border-right: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.75);
   }
   nav > div.pages .button[mod-state]:after {
     position: relative;
@@ -4216,6 +4215,7 @@ body.mod-capture #tip {
   }
   nav > div.pages .button:hover,
   nav > div.pages .button.on {
+    color: #fff;
     background-color: rgba(255, 255, 255, 0.15);
   }
   nav > div.pages .button.home {
@@ -4227,6 +4227,20 @@ body.mod-capture #tip {
     width: auto;
     text-indent: 0;
     padding: 15px 25px 15px 55px;
+  }
+  nav > section.options {
+    padding-right: 8px;
+  }
+  nav > section.options > [icon] {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 20px;
+    margin-left: 2px;
+    width: 46px;
+    -webkit-transition-property: none;
+    transition-property: none;
+  }
+  nav > section.options > [icon]:hover {
+    color: #fff;
   }
   nav > .title {
     position: absolute;
@@ -4244,11 +4258,11 @@ body.mod-capture #tip {
   }
   nav > .title label {
     position: absolute;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
     height: 100%;
-    width: 54px;
-    left: 10px;
+    width: 40px;
+    left: 14px;
     -webkit-transition-property: -webkit-transform;
     transition-property: -webkit-transform;
     transition-property: transform;
@@ -4258,6 +4272,18 @@ body.mod-capture #tip {
     -webkit-transform: translateY(-1px);
         -ms-transform: translateY(-1px);
             transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.75);
+    width: 100%;
+    height: 2px;
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    border-radius: 1px;
+    -webkit-transition-property: width,  -webkit-transform;
+    transition-property: width,  -webkit-transform;
+    transition-property: transform, /*background,*/ width;
+    transition-property: transform,  width,  -webkit-transform;
   }
   nav > .title label i:before,
   nav > .title label i:after {
@@ -4267,101 +4293,136 @@ body.mod-capture #tip {
             transform-origin: 100% 50%;
     -webkit-transition: none 0.2s ease-out;
     transition: none 0.2s ease-out;
-  }
-  nav > .title label i,
-  nav > .title label i:before,
-  nav > .title label i:after {
-    width: 100%;
-    height: 2px;
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: 0;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 1px;
-    -webkit-transition-property: background, width, -webkit-transform;
-    transition-property: background, width, -webkit-transform;
-    transition-property: transform, background, width;
-    transition-property: transform, background, width, -webkit-transform;
+    background: inherit;
+    width: inherit;
+    height: inherit;
+    display: inherit;
+    position: inherit;
+    top: inherit;
+    right: inherit;
+    border-radius: inherit;
+    -webkit-transition-property: inherit;
+    transition-property: inherit;
   }
   nav > .title label i:before {
-    -webkit-transform: translateY(-7px);
-        -ms-transform: translateY(-7px);
-            transform: translateY(-7px);
+    -webkit-transform: translateY(-6px);
+        -ms-transform: translateY(-6px);
+            transform: translateY(-6px);
   }
   nav > .title label i:after {
-    -webkit-transform: translateY(5px);
-        -ms-transform: translateY(5px);
-            transform: translateY(5px);
+    -webkit-transform: translateY(4px);
+        -ms-transform: translateY(4px);
+            transform: translateY(4px);
   }
-  nav > .title label:hover i,
-  nav > .title label:hover i:before,
-  nav > .title label:hover i:after {
-    background: rgba(255, 255, 255, 0.85);
+  nav > .title label:hover i {
+    background: #fff;
   }
-  nav > s:after {
-    background: rgba(0, 0, 0, 0.75);
+  nav > s {
+    display: none;
+  }
+  nav ~ .nav-mask:before,
+  nav ~ .nav-mask:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+  nav ~ .nav-mask:before {
+    top: 0;
+    height: 56px;
+    z-index: 4;
+    background: #333;
+    -webkit-transition: none 0.2s ease-out;
+    transition: none 0.2s ease-out;
+    -webkit-transition-property: -webkit-transform;
+    transition-property: -webkit-transform;
+    transition-property: transform;
+    transition-property: transform, -webkit-transform;
+    -webkit-transition-duration: 0.75s;
+            transition-duration: 0.75s;
+    -webkit-transform: translateY(-100%);
+        -ms-transform: translateY(-100%);
+            transform: translateY(-100%);
+  }
+  nav ~ .nav-mask:after {
+    z-index: -1;
+    top: 56px;
+    -webkit-transition: none 0.2s ease-out;
+    transition: none 0.2s ease-out;
+    -webkit-transition-property: background-color;
+    transition-property: background-color;
+  }
+  #layout.ready > nav ~ .nav-mask:before {
+    -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+            transform: translateY(0);
   }
   #view-mobile-menu:checked ~ nav > div.pages {
-    -webkit-transform: translateX(321px) !important;
-        -ms-transform: translateX(321px) !important;
-            transform: translateX(321px) !important;
-    opacity: 1 !important;
+    -webkit-transform: translateX(0) !important;
+        -ms-transform: translateX(0) !important;
+            transform: translateX(0) !important;
+    box-shadow: 0 10px 20px 5px #000;
   }
   #view-mobile-menu:checked ~ nav > .title label {
     -webkit-transform: rotate(180deg);
         -ms-transform: rotate(180deg);
             transform: rotate(180deg);
   }
+  #view-mobile-menu:checked ~ nav > .title label i {
+    background: #fff;
+  }
   #view-mobile-menu:checked ~ nav > .title label i:before,
   #view-mobile-menu:checked ~ nav > .title label i:after {
     width: 60%;
   }
   #view-mobile-menu:checked ~ nav > .title label i:before {
-    -webkit-transform: translateY(-1px) rotate(45deg);
-        -ms-transform: translateY(-1px) rotate(45deg);
-            transform: translateY(-1px) rotate(45deg);
+    -webkit-transform: translateY(-0.5px) rotate(45deg);
+        -ms-transform: translateY(-0.5px) rotate(45deg);
+            transform: translateY(-0.5px) rotate(45deg);
   }
   #view-mobile-menu:checked ~ nav > .title label i:after {
-    -webkit-transform: translateY(-1px) rotate(-45deg);
-        -ms-transform: translateY(-1px) rotate(-45deg);
-            transform: translateY(-1px) rotate(-45deg);
+    -webkit-transform: translateY(-1.5px) rotate(-45deg);
+        -ms-transform: translateY(-1.5px) rotate(-45deg);
+            transform: translateY(-1.5px) rotate(-45deg);
   }
   #view-mobile-menu:checked ~ nav > .history,
   #view-mobile-menu:checked ~ nav > .selection-info {
     opacity: 0;
   }
-  #view-mobile-menu:checked ~ .nav-mask {
+  #view-mobile-menu:checked ~ nav ~ .nav-mask:after {
     z-index: 4;
-    position: absolute;
-    top: 0;
-    right: 0;
     bottom: 0;
-    left: 0;
+    background: rgba(0, 0, 0, 0.5);
   }
 }
 @media all and (max-width: 640px) {
   #layout {
-    padding-top: 35px;
+    padding-top: 48px;
   }
   nav {
-    height: 35px;
-    line-height: 35px;
+    height: 48px;
+    line-height: 48px;
   }
   nav > div.pages {
-    width: 100%;
-    height: calc(100% - 35px);
-    top: 35px;
-    left: -100%;
-    border-right: 0;
+    max-width: 320px;
+    width: calc(100% - 56px);
+    height: calc(100% - 48px);
+    top: 48px;
+  }
+  nav > section.options {
+    padding-right: 3px;
+  }
+  nav > section.options > [icon] {
+    width: 40px;
   }
   nav > .title label {
-    left: -5px;
+    left: 0;
   }
-  #view-mobile-menu:checked ~ nav > div.pages {
-    -webkit-transform: translateX(100%) !important;
-        -ms-transform: translateX(100%) !important;
-            transform: translateX(100%) !important;
+  nav ~ .nav-mask:before {
+    height: 48px;
+  }
+  nav ~ .nav-mask:after {
+    top: 48px;
   }
 }
 .equiptypeicon {
@@ -5160,8 +5221,8 @@ body.mod-capture #tip {
 }
 @media all and (max-width: 800px) {
   .tablelist > .options > div {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 }
 @media all and (max-width: 640px) {
@@ -5507,8 +5568,8 @@ body.mod-capture #tip {
 @media all and (max-width: 800px) {
   .tablelist-header > .wrapper,
   .tablelist-body {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 }
 @media all and (max-width: 640px) {
@@ -5762,7 +5823,7 @@ body.mod-capture #tip {
 }
 @media all and (max-width: 800px) {
   .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body {
-    padding-right: 15px;
+    padding-right: 14px;
   }
 }
 @media all and (max-width: 640px) {
@@ -7058,8 +7119,8 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
 }
 @media all and (max-width: 800px) {
   .tablelist.entities {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 }
 @media all and (max-width: 640px) {
@@ -7607,9 +7668,9 @@ h6 + section.update_journal {
 }
 @media all and (max-width: 800px) {
   .infos-fleet {
-    margin-left: -25px;
-    margin-right: -25px;
-    width: calc(100% + 50px);
+    margin-left: -24px;
+    margin-right: -24px;
+    width: calc(100% + 48px);
   }
 }
 @media all and (max-width: 640px) {
@@ -7670,8 +7731,8 @@ h6 + section.update_journal {
 @media all and (max-width: 800px) {
   .infos-fleet > header,
   .infos-fleet > .fleets {
-    border-left-width: 25px;
-    border-right-width: 25px;
+    border-left-width: 24px;
+    border-right-width: 24px;
   }
 }
 @media all and (max-width: 640px) {
@@ -8039,8 +8100,8 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
 }
 @media all and (max-width: 800px) {
   .infos-fleet .fleetships {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 }
 @media all and (max-width: 640px) {
@@ -12494,8 +12555,8 @@ body > .modal.update_journal > div > section {
 @media all and (max-width: 800px) {
   body > .modal.update_journal > div > header,
   body > .modal.update_journal > div > section {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 }
 @media all and (max-width: 640px) {
@@ -12557,12 +12618,12 @@ body > .modal.update_journal > div > button.close:active {
 }
 @media all and (max-width: 800px) {
   body > .modal.update_journal > div > button.close {
-    left: 25px;
+    left: 24px;
   }
 }
 @media all and (max-width: 640px) {
   body > .modal.update_journal > div > button.close {
-    left: 25px;
+    left: 24px;
   }
 }
 body > .modal.update_journal > div > section {
@@ -13247,6 +13308,10 @@ main[data-theme="ships"]:after,
 main[data-theme="ship"]:after {
   background: rgba(37, 49, 55, 0.7);
 }
+main[data-theme="ships"] ~ .nav-mask:before,
+main[data-theme="ship"] ~ .nav-mask:before {
+  background: #123f54;
+}
 /*
 .page-container[page="ships"],
 .page-container.infos[data-infostype="ship"]{
@@ -13322,6 +13387,10 @@ main[data-theme="entities"]:after,
 main[data-theme="entity"]:after {
   background: rgba(37, 55, 55, 0.7);
 }
+main[data-theme="entities"] ~ .nav-mask:before,
+main[data-theme="entity"] ~ .nav-mask:before {
+  background: #125454;
+}
 .page-container[page="entities"] {
   border-bottom-width: 0;
 }
@@ -13333,6 +13402,10 @@ main[data-theme="entity"]:after {
 main[data-theme="equipments"]:after,
 main[data-theme="equipment"]:after {
   background: rgba(37, 55, 46, 0.7);
+}
+main[data-theme="equipments"] ~ .nav-mask:before,
+main[data-theme="equipment"] ~ .nav-mask:before {
+  background: #125432;
 }
 .page-container[page="equipments"] .helper,
 .page-container.infos[data-infostype="equipment"] .helper {
@@ -13357,6 +13430,9 @@ main[data-theme="equipment"]:after {
 }
 main[data-theme="arsenal"]:after {
   background: rgba(43, 55, 37, 0.7);
+}
+main[data-theme="arsenal"] ~ .nav-mask:before {
+  background: #285412;
 }
 .page-container[page="arsenal"] > input[type="radio"] {
   display: none;
@@ -13411,8 +13487,8 @@ main[data-theme="arsenal"]:after {
 @media all and (max-width: 800px) {
   .page-container[page="arsenal"] > .tabs,
   .page-container[page="arsenal"] > .main {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 }
 @media all and (max-width: 640px) {
@@ -13873,6 +13949,9 @@ main[data-theme="arsenal"]:after {
 main[data-theme="about"]:after {
   background: rgba(55, 37, 37, 0.7);
 }
+main[data-theme="about"] ~ .nav-mask:before {
+  background: #541212;
+}
 .page-container[page="about"] {
   font-size: 0.7000000000000001rem;
   line-height: 1.7em;
@@ -14119,6 +14198,9 @@ main[data-theme="about"]:after {
 }
 main[data-theme="calctp"]:after {
   background: rgba(55, 52, 37, 0.7);
+}
+main[data-theme="calctp"] ~ .nav-mask:before {
+  background: #544812;
 }
 .page-container[page="calctp"] {
   font-size: 14px;

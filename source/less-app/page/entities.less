@@ -1,6 +1,11 @@
-main[data-theme="entities"]:after,
-main[data-theme="entity"]:after{
-	background:	hsla(180, 20%, 18%, .70);
+main[data-theme="entities"],
+main[data-theme="entity"]{
+	&:after{
+		background:	hsla(180, 20%, 18%, .70);
+	}
+	& ~ .nav-mask:before{
+		background: hsl(180, 65%, 20%);
+	}
 }
 
 .page-container[page="entities"]{

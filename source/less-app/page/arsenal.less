@@ -1,5 +1,10 @@
-main[data-theme="arsenal"]:after{
-	background:	hsla(100, 20%, 18%, .70);
+main[data-theme="arsenal"]{
+	&:after{
+		background:	hsla(100, 20%, 18%, .70);
+	}
+	& ~ .nav-mask:before{
+		background: hsl(100, 65%, 20%);
+	}
 }
 
 .page-container[page="arsenal"]{
@@ -287,7 +292,7 @@ main[data-theme="arsenal"]:after{
 				padding-bottom:	1px;
 			}
 		}
-		@media all and (max-width: 1152px ){
+		@media all and (max-width: @screen-width-t1-breaking-point ){
 			height:		auto;
 			padding-top:10px !important;
 			padding-bottom:	15px;
