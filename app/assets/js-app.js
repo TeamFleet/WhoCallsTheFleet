@@ -7848,7 +7848,7 @@ class InfosFleetShip{
 		this.equipments = []
 		this.index = index
 		
-		this.el = $('<dd class="noship"/>')
+		this.el = $('<dd class="ship"/>')
 			// 头像 & 名称
 			.append(
 				$('<dt/>')
@@ -8273,7 +8273,7 @@ class InfosFleetShip{
 				stype = stype.replace(speed, '')
 					
 				this.el.attr('data-shipId', value)
-				this.el.removeClass('noship')
+				//this.el.removeClass('noship')
 				this.elAvatar.html('<img src="' + ship.getPic(10) + '"/>')
 				this.elInfosTitle.html('<h4 data-content="'+ship['name'][_g.lang]+'">' +ship['name'][_g.lang]+'</h4>'
 										+ ( suffix
@@ -8294,7 +8294,7 @@ class InfosFleetShip{
 					}
 			}else{
 				this.el.removeAttr('data-shipId')
-				this.el.addClass('noship')
+				//this.el.addClass('noship')
 				this.elAvatar.html('')
 				this.data[2] = []
 				this.data[3] = []

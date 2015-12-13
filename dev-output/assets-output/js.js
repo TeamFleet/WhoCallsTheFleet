@@ -6317,7 +6317,7 @@ var InfosFleetShip = (function () {
 		this.equipments = [];
 		this.index = index;
 
-		this.el = $('<dd class="noship"/>').append($('<dt/>').append(this.elAvatar = $('<s touch-action="none"/>')).append(this.elInfos = $('<div/>').html('<span>' + (this.infosFleet.data._id ? '选择舰娘' : '无舰娘') + '...</span>').append(this.elInfosTitle = $('<div class="title"/>')).append($('<div class="info"/>').append($('<label/>').html('Lv.').append(this.elInputLevel = $('<input/>', {
+		this.el = $('<dd class="ship"/>').append($('<dt/>').append(this.elAvatar = $('<s touch-action="none"/>')).append(this.elInfos = $('<div/>').html('<span>' + (this.infosFleet.data._id ? '选择舰娘' : '无舰娘') + '...</span>').append(this.elInfosTitle = $('<div class="title"/>')).append($('<div class="info"/>').append($('<label/>').html('Lv.').append(this.elInputLevel = $('<input/>', {
 			'type': 'number',
 			'min': 0,
 			'max': _g.shipMaxLv
@@ -6607,7 +6607,7 @@ var InfosFleetShip = (function () {
 				stype = stype.replace(speed, '');
 
 				this.el.attr('data-shipId', value);
-				this.el.removeClass('noship');
+
 				this.elAvatar.html('<img src="' + ship.getPic(10) + '"/>');
 				this.elInfosTitle.html('<h4 data-content="' + ship['name'][_g.lang] + '">' + ship['name'][_g.lang] + '</h4>' + (suffix ? '<h5 data-content="' + suffix + '">' + suffix + '</h5>' : ''));
 				this.elInfosInfo.html(speed + ' ' + stype);
@@ -6622,7 +6622,7 @@ var InfosFleetShip = (function () {
 				}
 			} else {
 				this.el.removeAttr('data-shipId');
-				this.el.addClass('noship');
+
 				this.elAvatar.html('');
 				this.data[2] = [];
 				this.data[3] = [];
