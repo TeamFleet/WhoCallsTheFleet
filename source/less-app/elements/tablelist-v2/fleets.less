@@ -322,18 +322,22 @@ body > .menus > .menu.menu-tablelistfleets-options{
 		}
 		menuitem.option-aircraftdefaultmax{
 			label{
-				position: 		relative;
-				padding-right: 	(21 + 24px * 0.65 + 4);
+				//position: 		relative;
+				//padding-right: 	(21 + 24px * 0.65 + 4);
 				&:after{
 					content: 	'';
-					position: 	absolute;
-					display: 	block;
+					//position: 	absolute;
+					//display: 	block;
 					width: 		(24px * 0.65);
 					height: 	(32px * 0.65);
 					background: ~"url(@{folder_images}/Aircraft_Proficiency.png) no-repeat 50% 100% / cover";
-					right: 		21px;
-					top: 		50%;
-					margin-top: (-16px * 0.65 + 1);
+					//right: 		21px;
+					//top: 		50%;
+					//margin-top: (-16px * 0.65 + 1);
+					display: 	inline-block;
+					margin-left:5px;
+					vertical-align: text-bottom;
+					transform: 	translateY(15%);
 				}
 			}
 		}
@@ -341,6 +345,9 @@ body > .menus > .menu.menu-tablelistfleets-options{
 	&.is-tablelist>.body{
 		.option-in-tablelist{
 			display: 	block;
+			&.inline{
+				display: 	inline;
+			}
 		}
 		.option-in-infos{
 			display: 	none;

@@ -608,6 +608,7 @@ class InfosFleet{
 				this.fleets.forEach(function(currentValue, i){
 					this.data.data[i] = currentValue.data
 				}, this)
+				InfosFleet.clean(this.data.data)
 				
 				// 更新时间
 				this.data.time_modify = _g.timeNow()
@@ -651,6 +652,7 @@ class InfosFleet{
 					}.bind(this), 200)
 				}
 			}else{
+				InfosFleet.clean(this.data.data)
 				// Web Version - 更新URI Search
 				this.updateURI()
 			}
@@ -895,6 +897,24 @@ InfosFleet.modalRemove_show = function(id, is_list){
 			'detach':		true
 		}
 	)
+}
+InfosFleet.clean = function(arr){
+	if( !arr )
+		return
+	function _clean(array){
+		if( array && array.length ){
+			array.forEach(function(v, i){
+				if( v && v.push ){
+					_clean(v)
+				}else if( i == array.length - 1 && v === null ){
+					array.pop()
+					_clean(array)
+				}
+			})
+		}
+	}
+	_clean(arr)
+	return arr
 }
 InfosFleet.decompress = function(code){
 	if( code && !code.push ){

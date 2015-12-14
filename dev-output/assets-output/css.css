@@ -7684,23 +7684,23 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
 body > .menus > .menu.menu-tablelistfleets-options > .body .option-in-tablelist {
   display: none;
 }
-body > .menus > .menu.menu-tablelistfleets-options > .body menuitem.option-aircraftdefaultmax label {
-  position: relative;
-  padding-right: 40.6px;
-}
 body > .menus > .menu.menu-tablelistfleets-options > .body menuitem.option-aircraftdefaultmax label:after {
   content: '';
-  position: absolute;
-  display: block;
   width: 15.6px;
   height: 20.8px;
   background: url(/!/assets/images/Aircraft_Proficiency.png) no-repeat 50% 100% / cover;
-  right: 21px;
-  top: 50%;
-  margin-top: -9.4px;
+  display: inline-block;
+  margin-left: 5px;
+  vertical-align: text-bottom;
+  -webkit-transform: translateY(15%);
+      -ms-transform: translateY(15%);
+          transform: translateY(15%);
 }
 body > .menus > .menu.menu-tablelistfleets-options.is-tablelist > .body .option-in-tablelist {
   display: block;
+}
+body > .menus > .menu.menu-tablelistfleets-options.is-tablelist > .body .option-in-tablelist.inline {
+  display: inline;
 }
 body > .menus > .menu.menu-tablelistfleets-options.is-tablelist > .body .option-in-infos {
   display: none;
@@ -13092,6 +13092,22 @@ body > .modal.infos_fleet > div > section button.button:active {
 }
 body > .modal.infos_fleet > div > section button.button + button.button {
   margin-left: 10px;
+}
+body > .modal.infos_fleet > div > section label.checkbox {
+  padding-left: 22px;
+  position: relative;
+}
+body > .modal.infos_fleet > div > section p.aircraftimportmax label.checkbox:after {
+  content: '';
+  width: 15.6px;
+  height: 20.8px;
+  background: url(/!/assets/images/Aircraft_Proficiency.png) no-repeat 50% 100% / cover;
+  display: inline-block;
+  margin-left: 5px;
+  vertical-align: text-bottom;
+  -webkit-transform: translateY(12.5%);
+      -ms-transform: translateY(12.5%);
+          transform: translateY(12.5%);
 }
 body > .modal.infos_fleet.infos_fleet_import > div,
 body > .modal.infos_fleet.infos_fleet_export > div,

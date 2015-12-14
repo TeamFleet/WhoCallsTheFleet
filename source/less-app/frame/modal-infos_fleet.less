@@ -66,6 +66,23 @@ body > .modal.infos_fleet{
 				margin-left: 	10px;
 			}
 		}
+		label.checkbox{
+			padding-left: 22px;
+			position: 	relative;
+		}
+		
+		p.aircraftimportmax{
+			label.checkbox:after{
+				content: 	'';
+				width: 		(24px * 0.65);
+				height: 	(32px * 0.65);
+				background: ~"url(@{folder_images}/Aircraft_Proficiency.png) no-repeat 50% 100% / cover";
+				display: 	inline-block;
+				margin-left:5px;
+				vertical-align: text-bottom;
+				transform: 	translateY(12.5%);
+			}
+		}
 	}
 	
 	&.infos_fleet_import,

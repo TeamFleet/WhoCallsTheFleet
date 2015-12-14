@@ -7232,6 +7232,7 @@ class InfosFleet{
 				this.fleets.forEach(function(currentValue, i){
 					this.data.data[i] = currentValue.data
 				}, this)
+				InfosFleet.clean(this.data.data)
 				
 				// 更新时间
 				this.data.time_modify = _g.timeNow()
@@ -7275,6 +7276,7 @@ class InfosFleet{
 					}.bind(this), 200)
 				}
 			}else{
+				InfosFleet.clean(this.data.data)
 				// Web Version - 更新URI Search
 				this.updateURI()
 			}
@@ -7519,6 +7521,24 @@ InfosFleet.modalRemove_show = function(id, is_list){
 			'detach':		true
 		}
 	)
+}
+InfosFleet.clean = function(arr){
+	if( !arr )
+		return
+	function _clean(array){
+		if( array && array.length ){
+			array.forEach(function(v, i){
+				if( v && v.push ){
+					_clean(v)
+				}else if( i == array.length - 1 && v === null ){
+					array.pop()
+					_clean(array)
+				}
+			})
+		}
+	}
+	_clean(arr)
+	return arr
 }
 InfosFleet.decompress = function(code){
 	if( code && !code.push ){
@@ -11445,10 +11465,41 @@ class TablelistFleets extends Tablelist{
 													$('<p/>').html('* 配置代码兼容<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
 												)
 												.append(
+													$('<p class="aircraftimportmax"/>')
+														.append(
+															TablelistFleets.modalImportCheckAircraftMax = $('<input/>',{
+																'type':	'checkbox',
+																'id':	'_input_g' + _g.inputIndex
+															}).prop('checked', Lockr.get( 'fleetlist-option-aircraftimportmax' ))
+														)
+														.append($('<label/>',{
+																'class':'checkbox',
+																'for':	'_input_g' + (_g.inputIndex++),
+																'html':	'飞行器熟练度自动提升至'
+															}) )
+												)
+												.append(
 													TablelistFleets.modalImportBtn = $('<button class="button"/>').html('导入')
+														.on('click', function(){
+															let val = TablelistFleets.modalImportTextarea.val()
+															//console.log(val)
+															if( val ){
+																val = JSON.parse(val)
+																if( !val.length || !val.push )
+																	val = _g.kancolle_calc.decode(val)
+																this.action_new({
+																	'data': 	val
+																},{
+																	'aircraftmax': TablelistFleets.modalImportCheckAircraftMax.prop('checked') || Lockr.get( 'fleetlist-option-aircraftimportmax' )
+																})
+																_frame.modal.hide()
+																TablelistFleets.modalImportTextarea.val('')
+															}
+														}.bind(this))
 												)
 										}
 										TablelistFleets.modalImportTextarea.val('')
+										/*
 										TablelistFleets.modalImportBtn.off('click.import')
 											.on('click', function(){
 												let val = TablelistFleets.modalImportTextarea.val()
@@ -11464,6 +11515,7 @@ class TablelistFleets extends Tablelist{
 													TablelistFleets.modalImportTextarea.val('')
 												}
 											}.bind(this))
+											*/
 										_frame.modal.show(
 											TablelistFleets.modalImport,
 											'导入配置代码',
@@ -11605,12 +11657,31 @@ class TablelistFleets extends Tablelist{
 		}
 
 	// [操作] 新建配置
-		action_new( dataDefault ){
+		action_new( dataDefault, options ){
 			dataDefault = dataDefault || {}
+			options = options || {}
 			//_frame.infos.show('[[FLEET::__NEW__]]')
-			console.log(dataDefault)
+			
+			if( dataDefault.data ){
+				dataDefault.data.forEach(function(fleet){
+					fleet.forEach(function(ship){
+						ship[2].forEach(function(equipmentId, index){
+							if( equipmentId && $.inArray(_g.data.items[equipmentId].type, Formula.equipmentType.Aircrafts) > -1 ){
+								if( _g.data.items[equipmentId].rankupgradable ){
+									if( options.aircraftmax )
+										ship[4][index] = 7
+									else
+										ship[4][index] = ship[3][index] || null
+								}
+								ship[3][index] = null
+							}
+						})
+					})
+				})
+				InfosFleet.clean(dataDefault.data)
+			}
 	
-			_db.fleets.insert( this.new_data(dataDefault), function(err, newDoc){
+			_db.fleets.insert( this.new_data(dataDefault, options), function(err, newDoc){
 				console.log(err, newDoc)
 				if(err){
 					_g.error(err)
@@ -11766,6 +11837,21 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 							'html':	'按主题颜色进行分组'
 						})),
 
+				$('<menuitem class="mod-checkbox donot_hide option-in-tablelist option-aircraftdefaultmax option-aircraftimportmax"/>')
+					.append($('<input/>',{
+							'type':	'checkbox',
+							'id':	'_input_g' + _g.inputIndex
+						}).prop('checked', Lockr.get( 'fleetlist-option-aircraftimportmax' ))
+						.on('change', function(e){
+							Lockr.set( 'fleetlist-option-aircraftimportmax', e.target.checked )
+						}))
+					.append($('<label/>',{
+							'for':	'_input_g' + (_g.inputIndex++),
+							'html':	'导入配置时提升飞行器熟练度至'
+						})),
+
+				//$('<hr class="option-in-tablelist"/>'),
+
 				$('<menuitem class="mod-checkbox donot_hide option-aircraftdefaultmax"/>')
 					.append($('<input/>',{
 							'type':	'checkbox',
@@ -11776,7 +11862,7 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 						}))
 					.append($('<label/>',{
 							'for':	'_input_g' + (_g.inputIndex++),
-							'html':	'新增飞行器熟练度默认为'
+							'html':	'<span class="inline option-in-tablelist">配装时</span>新增飞行器熟练度默认为'
 						})),
 
 				$('<hr class="option-in-infos"/>'),
