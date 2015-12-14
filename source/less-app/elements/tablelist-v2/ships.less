@@ -346,4 +346,88 @@
 			}
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	.mod-selection({
+		p[data-donotcompare="true"]{
+			display: 	none !important;
+		}
+		p.title{
+			label.shiptype{
+				position: 	absolute;
+				top: 		10px;
+				right: 		0;
+				bottom: 	0;
+				left: 		0;
+				display: 	block;
+				float: 		left;
+				z-index: 	5;
+				margin-left:-25px;
+				@media all and (max-width: @mobileview-breaking-point ){
+					margin-left: -5px;
+				}
+				&:before{
+					position: 	absolute;
+					content: 	'';
+					width: 		0;
+					height: 	0;
+					top: 		50%;
+					left: 		0;
+					margin: 	-7px auto auto 10px;
+					border: 	8px solid transparent;
+					border-right:0;
+					border-left-color: rgba(255,255,255,.45);
+					.enable-transition();
+					transition-property: 	transform, border-left-color;
+				}
+				&:hover:before{
+					border-left-color: rgba(255,255,255,.85);
+				}
+			}
+			label.checkbox{
+				transition-property: transform;
+			}
+		}
+		& > .options[viewtype="card"] ~ .tablelist-container p.title label.shiptype{
+			margin-left: 0;
+		}
+		.loop(@n, @i: 0) when (@i =< @n) {
+			&>.shiptype[value="@{i}"]:not(:checked){
+				&~.tablelist-container p.title[data-header="@{i}"]{
+					label.checkbox{
+						z-index: 	-1;
+						&:before{
+							opacity: 	0;
+						}
+					}
+				}
+				&~.tablelist-container p.row[data-header="@{i}"]{
+					display:	none !important;
+				}
+			}
+			&>.shiptype[value="@{i}"]:checked{
+				&~.tablelist-container p.title[data-header="@{i}"]{
+					label.shiptype{
+						width: 		30px;
+						&:before{
+							transform: rotate(90deg) translateX(-1px);
+						}
+					}
+					label.checkbox{
+						transform: translateX(30px);
+					}
+				}
+			}
+			.loop(@n, (@i + 1))
+		}
+		.loop(@count_ship_collections);
+	});
 }}

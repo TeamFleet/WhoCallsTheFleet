@@ -164,7 +164,7 @@ _frame.infos = {
 				case 'fleet':
 					cont = this.getContent(type, id)
 					this.dom.main.attr('data-infostype', 'fleet')
-					_frame.app_main.mode_selection_off()
+					//_frame.app_main.mode_selection_off()
 					TablelistEquipments.types = []
 					break;
 			}

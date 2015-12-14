@@ -5532,7 +5532,9 @@ class PAGE {
 		_callback_select = function(){
 			//callback_select.apply( callback_select, arguments )
 			callback_select(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6], arguments[7], arguments[8], arguments[9], arguments[10])
-			this.modeSelectionExit()
+			setTimeout(function(){
+				this.modeSelectionExit()
+			}.bind(this), 10)
 		}.bind(this)
 		
 		_frame.app_main.mode_selection_callback = _callback_select
@@ -5858,20 +5860,20 @@ _frame.app_main.page['about'].init = function( page ){
 
 	function addUpdateJournal( updateData ){
 		let id = 'update_journal_'+(i++)
-			,section = $('<input type="checkbox" id="'+(id)+'"/>')
+			,checkbox = $('<input type="checkbox" id="'+(id)+'"/>')
 						.prop('checked', (i<3 ? true : false))
-						.add(
-							$('<section class="update_journal" data-version-'+updateData['type']+'="'+updateData['version']+'"/>')
+						.appendTo(page)
+			,section = $('<section class="update_journal" data-version-'+updateData['type']+'="'+updateData['version']+'"/>')
 								.append(
 									$('<label for="'+id+'"/>')
 										.html(_frame.app_main.page['about'].journaltitle(updateData))
 								)
-						)
 						.appendTo(page)
 		try{
 			$(_frame.app_main.page['about'].journal_parse(updateData['journal'])).appendTo( section )
 		}catch(e){
 			_g.error(e)
+			checkbox.remove()
 			section.remove()
 		}
 	}
@@ -6189,7 +6191,7 @@ _frame.infos = {
 				case 'fleet':
 					cont = this.getContent(type, id)
 					this.dom.main.attr('data-infostype', 'fleet')
-					_frame.app_main.mode_selection_off()
+					//_frame.app_main.mode_selection_off()
 					TablelistEquipments.types = []
 					break;
 			}
@@ -10316,6 +10318,7 @@ class TablelistShips extends Tablelist{
 			['多立绘',	'extra_illust']
 		]
 		this.header_checkbox = []
+		this.mode_selection_filters = $()
 		this.checkbox = []
 		//this.last_item = null
 		//this.compare_checkbox
@@ -10657,6 +10660,20 @@ class TablelistShips extends Tablelist{
 						})
 						.data('ships', $())
 				this.header_checkbox[header_index] = checkbox
+				
+				// 舰种显示/隐藏相关元素
+					this.mode_selection_filters.add(
+						$('<input/>',{
+							'value': 	header_index,
+							'type':		'checkbox',
+							'class':	'shiptype',
+							'id':		'shiptype-'+header_index
+						}).prop('checked', !header_index).prependTo(this.dom.container)
+					)
+					$('<label/>',{
+						'for':		'shiptype-'+header_index,
+						'class':	'shiptype'
+					}).prependTo(tr)
 			}else{
 				let donotcompare = tr.attr('data-donotcompare')
 					//,ship_data = _g.data.ships[ tr.attr('data-shipid') ]

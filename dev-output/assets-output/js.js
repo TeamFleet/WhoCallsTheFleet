@@ -4751,7 +4751,9 @@ var PAGE = (function () {
 			callback_select = callback_select || function () {};
 			_callback_select = (function () {
 				callback_select(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6], arguments[7], arguments[8], arguments[9], arguments[10]);
-				this.modeSelectionExit();
+				setTimeout((function () {
+					this.modeSelectionExit();
+				}).bind(this), 10);
 			}).bind(this);
 
 			_frame.app_main.mode_selection_callback = _callback_select;
@@ -4941,11 +4943,13 @@ _frame.app_main.page['about'].init = function (page) {
 
 	function addUpdateJournal(updateData) {
 		var id = 'update_journal_' + i++,
-		    section = $('<input type="checkbox" id="' + id + '"/>').prop('checked', i < 3 ? !0 : !1).add($('<section class="update_journal" data-version-' + updateData['type'] + '="' + updateData['version'] + '"/>').append($('<label for="' + id + '"/>').html(_frame.app_main.page['about'].journaltitle(updateData)))).appendTo(page);
+		    checkbox = $('<input type="checkbox" id="' + id + '"/>').prop('checked', i < 3 ? !0 : !1).appendTo(page),
+		    section = $('<section class="update_journal" data-version-' + updateData['type'] + '="' + updateData['version'] + '"/>').append($('<label for="' + id + '"/>').html(_frame.app_main.page['about'].journaltitle(updateData))).appendTo(page);
 		try {
 			$(_frame.app_main.page['about'].journal_parse(updateData['journal'])).appendTo(section);
 		} catch (e) {
 			_g.error(e);
+			checkbox.remove();
 			section.remove();
 		}
 	}
@@ -5189,7 +5193,7 @@ _frame.infos = {
 					break;
 				case 'fleet':
 					this.dom.main.attr('data-infostype', 'fleet');
-					_frame.app_main.mode_selection_off();
+
 					TablelistEquipments.types = [];
 					break;
 			}
@@ -7402,6 +7406,7 @@ var TablelistShips = (function (_Tablelist2) {
 
 		_this10.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['夜战', 'nightpower'], ['对空', 'aa'], ['对潜', 'asw'], ['耐久', 'hp'], ['装甲', 'armor'], ['回避', 'evasion'], ['搭载', 'carry'], ['航速', 'speed'], ['射程', 'range'], ['索敌', 'los'], ['运', 'luck'], ['油耗', 'consum_fuel'], ['弹耗', 'consum_ammo'], ['多立绘', 'extra_illust']];
 		_this10.header_checkbox = [];
+		_this10.mode_selection_filters = $();
 		_this10.checkbox = [];
 
 		_frame.app_main.loading.push('tablelist_' + _this10._index);
@@ -7647,6 +7652,17 @@ var TablelistShips = (function (_Tablelist2) {
 							}
 						}).data('ships', $());
 						_this11.header_checkbox[header_index] = checkbox;
+
+						_this11.mode_selection_filters.add($('<input/>', {
+							'value': header_index,
+							'type': 'checkbox',
+							'class': 'shiptype',
+							'id': 'shiptype-' + header_index
+						}).prop('checked', !header_index).prependTo(_this11.dom.container));
+						$('<label/>', {
+							'for': 'shiptype-' + header_index,
+							'class': 'shiptype'
+						}).prependTo(tr);
 					})();
 				} else {
 					(function () {
