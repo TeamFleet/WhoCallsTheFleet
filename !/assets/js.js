@@ -2522,6 +2522,17 @@ _g.pageChangeBefore = function () {
 	_frame.dom.mobilemenu.prop('checked', !1);
 };
 
+_g.title = function (t) {
+	if (!t) {
+		var f = document.title.split(' - ');
+		if (f.length == 1) return f[0];
+		f.pop();
+		return f.join(' - ');
+	}
+	if (_frame.dom.title) _frame.dom.title.text(t);
+	return t;
+};
+
 var _ga = {
 	counter: function counter(path, title, screenName) {
 
@@ -4051,10 +4062,10 @@ _frame.app_main = {
 			_frame.infos.hide();
 
 			if (!options.callback_modeSelection_select) {
-				_frame.app_main.title = _frame.app_main.navtitle[page];
 				_frame.infos.last = null;
 
 				document.title = _frame.app_main.page_title[u];
+				_g.title(_frame.app_main.navtitle[page]);
 
 				_ga.counter(location.search);
 			}
@@ -4190,6 +4201,7 @@ _frame.app_main = {
 
 		_frame.dom.main = _frame.dom.layout.children('main');
 		_frame.dom.bgimg = $('<div class="bgimg" />').appendTo(_frame.dom.layout);
+		_frame.dom.title = _frame.dom.nav.children('.title').children('span');
 		$('<div class="nav-mask"/>').appendTo(_frame.dom.layout).on('click', function () {
 			_frame.dom.mobilemenu.prop('checked', !1);
 		});
@@ -4739,7 +4751,9 @@ var PAGE = (function () {
 			callback_select = callback_select || function () {};
 			_callback_select = (function () {
 				callback_select(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6], arguments[7], arguments[8], arguments[9], arguments[10]);
-				this.modeSelectionExit();
+				setTimeout((function () {
+					this.modeSelectionExit();
+				}).bind(this), 10);
 			}).bind(this);
 
 			_frame.app_main.mode_selection_callback = _callback_select;
@@ -4929,11 +4943,13 @@ _frame.app_main.page['about'].init = function (page) {
 
 	function addUpdateJournal(updateData) {
 		var id = 'update_journal_' + i++,
-		    section = $('<input type="checkbox" id="' + id + '"/>').prop('checked', i < 3 ? !0 : !1).add($('<section class="update_journal" data-version-' + updateData['type'] + '="' + updateData['version'] + '"/>').append($('<label for="' + id + '"/>').html(_frame.app_main.page['about'].journaltitle(updateData)))).appendTo(page);
+		    checkbox = $('<input type="checkbox" id="' + id + '"/>').prop('checked', i < 3 ? !0 : !1).appendTo(page),
+		    section = $('<section class="update_journal" data-version-' + updateData['type'] + '="' + updateData['version'] + '"/>').append($('<label for="' + id + '"/>').html(_frame.app_main.page['about'].journaltitle(updateData))).appendTo(page);
 		try {
 			$(_frame.app_main.page['about'].journal_parse(updateData['journal'])).appendTo(section);
 		} catch (e) {
 			_g.error(e);
+			checkbox.remove();
 			section.remove();
 		}
 	}
@@ -5141,8 +5157,6 @@ _frame.infos = {
 		type = type.toLowerCase();
 		if (!isNaN(id)) id = parseInt(id);
 
-		var title = null;
-
 		if (!this.dom) {
 			this.dom = {
 				'main': _frame.dom.main.children('.page-container.infos')
@@ -5175,12 +5189,27 @@ _frame.infos = {
 				case 'equipment':
 				case 'entity':
 					this.dom.main.attr('data-infostype', type);
-					title = cont.attr('data-infos-title');
+
 					break;
 				case 'fleet':
 					this.dom.main.attr('data-infostype', 'fleet');
-					_frame.app_main.mode_selection_off();
+
 					TablelistEquipments.types = [];
+					break;
+			}
+
+			switch (type) {
+				case 'ship':
+					_g.title(_frame.app_main.navtitle.ships);
+					break;
+				case 'equipment':
+					_g.title(_frame.app_main.navtitle.equipments);
+					break;
+				case 'entity':
+					_g.title(_frame.app_main.navtitle.entities);
+					break;
+				case 'fleet':
+					_g.title(_frame.app_main.navtitle.fleets);
 					break;
 			}
 
@@ -5840,6 +5869,7 @@ var InfosFleet = (function () {
 				this.fleets.forEach(function (currentValue, i) {
 					this.data.data[i] = currentValue.data;
 				}, this);
+				InfosFleet.clean(this.data.data);
 
 				this.data.time_modify = _g.timeNow();
 
@@ -5857,6 +5887,8 @@ var InfosFleet = (function () {
 					}).bind(this), 200);
 				}
 			} else {
+				InfosFleet.clean(this.data.data);
+
 				this.updateURI();
 			}
 
@@ -6098,6 +6130,23 @@ InfosFleet.modalRemove_show = function (id, is_list) {
 		'detach': !0
 	});
 };
+InfosFleet.clean = function (arr) {
+	if (!arr) return;
+	function _clean(array) {
+		if (array && array.length) {
+			array.forEach(function (v, i) {
+				if (v && v.push) {
+					_clean(v);
+				} else if (i == array.length - 1 && v === null) {
+					array.pop();
+					_clean(array);
+				}
+			});
+		}
+	}
+	_clean(arr);
+	return arr;
+};
 InfosFleet.decompress = function (code) {
 	if (code && !code.push) {
 		try {
@@ -6317,7 +6366,7 @@ var InfosFleetShip = (function () {
 		this.equipments = [];
 		this.index = index;
 
-		this.el = $('<dd class="noship"/>').append($('<dt/>').append(this.elAvatar = $('<s touch-action="none"/>')).append(this.elInfos = $('<div/>').html('<span>' + (this.infosFleet.data._id ? '选择舰娘' : '无舰娘') + '...</span>').append(this.elInfosTitle = $('<div class="title"/>')).append($('<div class="info"/>').append($('<label/>').html('Lv.').append(this.elInputLevel = $('<input/>', {
+		this.el = $('<dd class="ship"/>').append($('<dt/>').append(this.elAvatar = $('<s touch-action="none"/>')).append(this.elInfos = $('<div/>').html('<span>' + (this.infosFleet.data._id ? '选择舰娘' : '无舰娘') + '...</span>').append(this.elInfosTitle = $('<div class="title"/>')).append($('<div class="info"/>').append($('<label/>').html('Lv.').append(this.elInputLevel = $('<input/>', {
 			'type': 'number',
 			'min': 0,
 			'max': _g.shipMaxLv
@@ -6607,7 +6656,7 @@ var InfosFleetShip = (function () {
 				stype = stype.replace(speed, '');
 
 				this.el.attr('data-shipId', value);
-				this.el.removeClass('noship');
+
 				this.elAvatar.html('<img src="' + ship.getPic(10) + '"/>');
 				this.elInfosTitle.html('<h4 data-content="' + ship['name'][_g.lang] + '">' + ship['name'][_g.lang] + '</h4>' + (suffix ? '<h5 data-content="' + suffix + '">' + suffix + '</h5>' : ''));
 				this.elInfosInfo.html(speed + ' ' + stype);
@@ -6622,7 +6671,7 @@ var InfosFleetShip = (function () {
 				}
 			} else {
 				this.el.removeAttr('data-shipId');
-				this.el.addClass('noship');
+
 				this.elAvatar.html('');
 				this.data[2] = [];
 				this.data[3] = [];
@@ -7377,6 +7426,7 @@ var TablelistShips = (function (_Tablelist2) {
 
 		_this10.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['夜战', 'nightpower'], ['对空', 'aa'], ['对潜', 'asw'], ['耐久', 'hp'], ['装甲', 'armor'], ['回避', 'evasion'], ['搭载', 'carry'], ['航速', 'speed'], ['射程', 'range'], ['索敌', 'los'], ['运', 'luck'], ['油耗', 'consum_fuel'], ['弹耗', 'consum_ammo'], ['多立绘', 'extra_illust']];
 		_this10.header_checkbox = [];
+		_this10.mode_selection_filters = $();
 		_this10.checkbox = [];
 
 		_frame.app_main.loading.push('tablelist_' + _this10._index);
@@ -7622,6 +7672,17 @@ var TablelistShips = (function (_Tablelist2) {
 							}
 						}).data('ships', $());
 						_this11.header_checkbox[header_index] = checkbox;
+
+						_this11.mode_selection_filters.add($('<input/>', {
+							'value': header_index,
+							'type': 'checkbox',
+							'class': 'shiptype',
+							'id': 'shiptype-' + header_index
+						}).prop('checked', !header_index).prependTo(_this11.dom.container));
+						$('<label/>', {
+							'for': 'shiptype-' + header_index,
+							'class': 'shiptype'
+						}).prependTo(tr);
 					})();
 				} else {
 					(function () {
@@ -8205,22 +8266,31 @@ var TablelistFleets = (function (_Tablelist4) {
 						if (!TablelistFleets.modalImport) {
 							TablelistFleets.modalImport = $('<div/>').append(TablelistFleets.modalImportTextarea = $('<textarea/>', {
 								'placeholder': '输入配置代码...'
-							})).append($('<p/>').html('* 配置代码兼容<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')).append(TablelistFleets.modalImportBtn = $('<button class="button"/>').html('导入'));
+							})).append($('<p/>').html('* 配置代码兼容<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')).append($('<p class="aircraftimportmax"/>').append(TablelistFleets.modalImportCheckAircraftMax = $('<input/>', {
+								'type': 'checkbox',
+								'id': '_input_g' + _g.inputIndex
+							}).prop('checked', Lockr.get('fleetlist-option-aircraftimportmax'))).append($('<label/>', {
+								'class': 'checkbox',
+								'for': '_input_g' + _g.inputIndex++,
+								'html': '飞行器熟练度自动提升至'
+							}))).append(TablelistFleets.modalImportBtn = $('<button class="button"/>').html('导入').on('click', (function () {
+								var val = TablelistFleets.modalImportTextarea.val();
+
+								if (val) {
+									val = JSON.parse(val);
+									if (!val.length || !val.push) val = _g.kancolle_calc.decode(val);
+									this.action_new({
+										'data': val
+									}, {
+										'aircraftmax': TablelistFleets.modalImportCheckAircraftMax.prop('checked') || Lockr.get('fleetlist-option-aircraftimportmax')
+									});
+									_frame.modal.hide();
+									TablelistFleets.modalImportTextarea.val('');
+								}
+							}).bind(this)));
 						}
 						TablelistFleets.modalImportTextarea.val('');
-						TablelistFleets.modalImportBtn.off('click.import').on('click', (function () {
-							var val = TablelistFleets.modalImportTextarea.val();
 
-							if (val) {
-								val = JSON.parse(val);
-								if (!val.length || !val.push) val = _g.kancolle_calc.decode(val);
-								this.action_new({
-									'data': val
-								});
-								_frame.modal.hide();
-								TablelistFleets.modalImportTextarea.val('');
-							}
-						}).bind(this));
 						_frame.modal.show(TablelistFleets.modalImport, '导入配置代码', {
 							'classname': 'infos_fleet infos_fleet_import',
 							'detach': !0
@@ -8321,12 +8391,27 @@ var TablelistFleets = (function (_Tablelist4) {
 		}
 	}, {
 		key: 'action_new',
-		value: function action_new(dataDefault) {
+		value: function action_new(dataDefault, options) {
 			dataDefault = dataDefault || {};
+			options = options || {};
 
-			console.log(dataDefault);
+			if (dataDefault.data) {
+				dataDefault.data.forEach(function (fleet) {
+					fleet.forEach(function (ship) {
+						ship[2].forEach(function (equipmentId, index) {
+							if (equipmentId && $.inArray(_g.data.items[equipmentId].type, Formula.equipmentType.Aircrafts) > -1) {
+								if (_g.data.items[equipmentId].rankupgradable) {
+									if (options.aircraftmax) ship[4][index] = 7;else ship[4][index] = ship[3][index] || null;
+								}
+								ship[3][index] = null;
+							}
+						});
+					});
+				});
+				InfosFleet.clean(dataDefault.data);
+			}
 
-			_db.fleets.insert(this.new_data(dataDefault), (function (err, newDoc) {
+			_db.fleets.insert(this.new_data(dataDefault, options), (function (err, newDoc) {
 				console.log(err, newDoc);
 				if (err) {
 					_g.error(err);
@@ -8423,6 +8508,14 @@ TablelistFleets.menuOptions_show = function ($el, $el_tablelist) {
 		})).append($('<label/>', {
 			'for': '_input_g' + _g.inputIndex++,
 			'html': '按主题颜色进行分组'
+		})), $('<menuitem class="mod-checkbox donot_hide option-in-tablelist option-aircraftdefaultmax option-aircraftimportmax"/>').append($('<input/>', {
+			'type': 'checkbox',
+			'id': '_input_g' + _g.inputIndex
+		}).prop('checked', Lockr.get('fleetlist-option-aircraftimportmax')).on('change', function (e) {
+			Lockr.set('fleetlist-option-aircraftimportmax', e.target.checked);
+		})).append($('<label/>', {
+			'for': '_input_g' + _g.inputIndex++,
+			'html': '导入配置时提升飞行器熟练度至'
 		})), $('<menuitem class="mod-checkbox donot_hide option-aircraftdefaultmax"/>').append($('<input/>', {
 			'type': 'checkbox',
 			'id': '_input_g' + _g.inputIndex
@@ -8430,7 +8523,7 @@ TablelistFleets.menuOptions_show = function ($el, $el_tablelist) {
 			Lockr.set('fleetlist-option-aircraftdefaultmax', e.target.checked);
 		})).append($('<label/>', {
 			'for': '_input_g' + _g.inputIndex++,
-			'html': '新增飞行器熟练度默认为'
+			'html': '<span class="inline option-in-tablelist">配装时</span>新增飞行器熟练度默认为'
 		})), $('<hr class="option-in-infos"/>'), $('<menuitem/>', {
 			'class': 'option-in-infos',
 			'html': '移除配置'
