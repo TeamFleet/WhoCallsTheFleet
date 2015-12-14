@@ -279,6 +279,9 @@ function dev_output_form(){
 							.append(
 								$('<label for="view-mobile-menu"/>').html('<i></i>')
 							)
+							.append(
+								$('<span/>')
+							)
 							.appendTo( elNav )
 					
 						while( (searchRes = scrapePtrn.exec(dev_output_tmpl)) !== null ){

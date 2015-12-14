@@ -4160,6 +4160,15 @@ body.mod-capture #tip {
 #layout.debug-hashbar.ready > .debug_hashbar {
   top: 0;
 }
+@media all and (min-width: 721px) and (max-height: 719px) {
+  #layout {
+    padding-top: 65px;
+  }
+  nav {
+    height: 65px;
+    line-height: 65px;
+  }
+}
 @media all and (max-width: 720px) {
   #layout {
     padding-top: 56px;
@@ -4249,7 +4258,9 @@ body.mod-capture #tip {
     top: 0;
     display: block;
     z-index: 4;
-    padding: 0 10px 0 85px;
+    padding: 0 10px 0 72px;
+    color: #fff;
+    font-size: 18px;
     -webkit-app-region: no-drag;
     -webkit-transition-property: -webkit-transform;
     transition-property: -webkit-transform;
@@ -4316,6 +4327,10 @@ body.mod-capture #tip {
   }
   nav > .title label:hover i {
     background: #fff;
+  }
+  nav > .title > span {
+    -webkit-transition-property: opacity;
+    transition-property: opacity;
   }
   nav > s {
     display: none;
@@ -4415,8 +4430,12 @@ body.mod-capture #tip {
   nav > section.options > [icon] {
     width: 40px;
   }
+  nav > .title {
+    padding-left: 60px;
+    font-size: 16px;
+  }
   nav > .title label {
-    left: 0;
+    left: 5px;
   }
   nav ~ .nav-mask:before {
     height: 48px;
@@ -5262,6 +5281,7 @@ body.mod-capture #tip {
   vertical-align: top;
   padding-right: 4px;
   display: inline-block;
+  color: rgba(255, 255, 255, 0.75);
 }
 .tablelist > .options > div.filters > .viewtype label {
   width: 20px;

@@ -120,4 +120,17 @@
 	_g.pageChangeBefore = function(){
 		_frame.dom.mobilemenu.prop('checked', false)
 	}
+	
+	_g.title = function(t){
+		if( !t ){
+			let f = document.title.split(' - ')
+			if( f.length == 1 )
+				return f[0]
+			f.pop()
+			return f.join(' - ')
+		}
+		if( _frame.dom.title )
+			_frame.dom.title.text(t)
+		return t
+	}
 

@@ -142,7 +142,7 @@ _frame.infos = {
 		if( !isNaN(id) )
 			id = parseInt(id)
 
-		let title = null
+		//let title
 		
 		//console.log('init infos: ' + type + ' - ' + id)
 
@@ -209,13 +209,28 @@ _frame.infos = {
 					case 'entity':
 						//cont = this.getContent(type, id)
 						this.dom.main.attr('data-infostype', type)
-						title = cont.attr('data-infos-title')
+						//title = cont.attr('data-infos-title')
 						break;
 					case 'fleet':
 						//cont = this.getContent(type, id)
 						this.dom.main.attr('data-infostype', 'fleet')
 						_frame.app_main.mode_selection_off()
 						TablelistEquipments.types = []
+						break;
+				}
+				
+				switch(type){
+					case 'ship':
+						_g.title( _frame.app_main.navtitle.ships );
+						break;
+					case 'equipment':
+						_g.title( _frame.app_main.navtitle.equipments );
+						break;
+					case 'entity':
+						_g.title( _frame.app_main.navtitle.entities );
+						break;
+					case 'fleet':
+						_g.title( _frame.app_main.navtitle.fleets );
 						break;
 				}
 				

@@ -4,6 +4,8 @@
 @tablelist-thead-height: 	unit( @thead_height, px );
 @tablelist-cell-basis: 		(12px * 3);
 
+@tablelist-options-label-color: 	rgba(255,255,255, .75);
+
 @max_equipment_collection: 8;
 @max_equipment_type: 50;
 
@@ -30,7 +32,7 @@
 		//transition-property: height;
 		
 		label, button{
-			color:		rgba(255,255,255, .75);
+			color:		@tablelist-options-label-color;
 			transition-property: color, opacity, background-position;
 			&:hover{
 				color:	#fff;
@@ -92,6 +94,7 @@
 						vertical-align: top;
 						padding-right: 4px;
 						display: 	inline-block;
+						color: 		@tablelist-options-label-color;
 					}
 					label{
 						width: 		20px;

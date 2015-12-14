@@ -508,9 +508,15 @@ _frame.app_main = {
 			//_g.uriHash('page', page)
 		},
 		load_page_func: function( page, options ){
-			_g.pageChangeBefore()
+			if( this.load_page_lock )
+				return
+			this.load_page_lock = true
 			
+			_g.pageChangeBefore()
+
 			_g.log( 'PREPARE LOADING: ' + page )
+			//_g.log( 'CURRENT PAGE: ' + (this.cur_page || 'NO PAGE') )
+			
 			options = options || {}
 			
 			if( !page )
@@ -550,7 +556,8 @@ _frame.app_main = {
 			this.page_dom[page].trigger('show')
 
 			if( !options.callback_modeSelection_select ){
-				this.title = this.navtitle[page]
+				//this.title = this.navtitle[page]
+				_g.title(this.navtitle[page])
 				_frame.infos.last = null
 	
 				_ga.counter(
@@ -559,8 +566,10 @@ _frame.app_main = {
 			}
 
 			//_g.log(this.cur_page)
-			if( this.cur_page == page )
+			if( this.cur_page == page ){
+				this.load_page_lock = false
 				return page
+			}
 
 			this.page_dom[page].appendTo(_frame.dom.main).removeClass('off').trigger('on')
 
@@ -587,6 +596,7 @@ _frame.app_main = {
 			this.cur_page = page
 
 			_g.log( 'LOADED: ' + page )
+			this.load_page_lock = false
 		},
 
 
@@ -736,6 +746,9 @@ _frame.app_main = {
 				_frame.dom.navtitle = $('<span class="title"/>')
 							.append(
 								$('<label for="view-mobile-menu"/>').html('<i></i>')
+							)
+							.append(
+								_frame.dom.title = $('<span/>')
 							)
 							.appendTo( _frame.dom.nav )
 			_frame.dom.main = $('<main/>').appendTo( _frame.dom.layout )

@@ -100,7 +100,7 @@ _frame.infos = {
 			id = parseInt(id)
 
 		var cont = ''
-			,title = null
+			,title
 
 		// 第一次运行，创建相关DOM和变量
 			if( !this.dom ){
@@ -191,7 +191,7 @@ _frame.infos = {
 				}*/
 				//data-infos-history-skip-this
 
-				if( !contentDOM.data('is_infosinit') ){					
+				if( !contentDOM.data('is_infosinit') ){
 					if( _frame.infos['__' + type + '_init'] )
 						_frame.infos['__' + type + '_init']( contentDOM )
 						
@@ -236,7 +236,8 @@ _frame.infos = {
 			// 显示内容
 				_frame.dom.layout.addClass('is-infos-on')
 				
-			_frame.app_main.title = title
+			//_frame.app_main.title = title
+			//_g.title(title)
 			
 			//console.log( _frame.infos.last )
 			

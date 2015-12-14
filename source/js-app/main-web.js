@@ -533,11 +533,12 @@ _frame.app_main = {
 				_frame.infos.hide()
 	
 				if( !options.callback_modeSelection_select ){
-					_frame.app_main.title = _frame.app_main.navtitle[page]
+					//_frame.app_main.title = _frame.app_main.navtitle[page]
 					_frame.infos.last = null
 
 					//console.log(u, _frame.app_main.page_title[u])
 					document.title = _frame.app_main.page_title[u]
+					_g.title(_frame.app_main.navtitle[page])
 
 					_ga.counter(
 						location.search
@@ -752,6 +753,7 @@ _frame.app_main = {
 				*/
 			_frame.dom.main = _frame.dom.layout.children('main')
 			_frame.dom.bgimg = $('<div class="bgimg" />').appendTo( _frame.dom.layout )
+			_frame.dom.title = _frame.dom.nav.children('.title').children('span')
 			$('<div class="nav-mask"/>').appendTo( _frame.dom.layout )
 				.on('click', function(){
 					_frame.dom.mobilemenu.prop('checked', false)

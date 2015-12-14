@@ -2522,6 +2522,17 @@ _g.pageChangeBefore = function () {
 	_frame.dom.mobilemenu.prop('checked', !1);
 };
 
+_g.title = function (t) {
+	if (!t) {
+		var f = document.title.split(' - ');
+		if (f.length == 1) return f[0];
+		f.pop();
+		return f.join(' - ');
+	}
+	if (_frame.dom.title) _frame.dom.title.text(t);
+	return t;
+};
+
 var _ga = {
 	counter: function counter(path, title, screenName) {
 
@@ -4051,10 +4062,10 @@ _frame.app_main = {
 			_frame.infos.hide();
 
 			if (!options.callback_modeSelection_select) {
-				_frame.app_main.title = _frame.app_main.navtitle[page];
 				_frame.infos.last = null;
 
 				document.title = _frame.app_main.page_title[u];
+				_g.title(_frame.app_main.navtitle[page]);
 
 				_ga.counter(location.search);
 			}
@@ -4190,6 +4201,7 @@ _frame.app_main = {
 
 		_frame.dom.main = _frame.dom.layout.children('main');
 		_frame.dom.bgimg = $('<div class="bgimg" />').appendTo(_frame.dom.layout);
+		_frame.dom.title = _frame.dom.nav.children('.title').children('span');
 		$('<div class="nav-mask"/>').appendTo(_frame.dom.layout).on('click', function () {
 			_frame.dom.mobilemenu.prop('checked', !1);
 		});
@@ -5141,8 +5153,6 @@ _frame.infos = {
 		type = type.toLowerCase();
 		if (!isNaN(id)) id = parseInt(id);
 
-		var title = null;
-
 		if (!this.dom) {
 			this.dom = {
 				'main': _frame.dom.main.children('.page-container.infos')
@@ -5175,12 +5185,27 @@ _frame.infos = {
 				case 'equipment':
 				case 'entity':
 					this.dom.main.attr('data-infostype', type);
-					title = cont.attr('data-infos-title');
+
 					break;
 				case 'fleet':
 					this.dom.main.attr('data-infostype', 'fleet');
 					_frame.app_main.mode_selection_off();
 					TablelistEquipments.types = [];
+					break;
+			}
+
+			switch (type) {
+				case 'ship':
+					_g.title(_frame.app_main.navtitle.ships);
+					break;
+				case 'equipment':
+					_g.title(_frame.app_main.navtitle.equipments);
+					break;
+				case 'entity':
+					_g.title(_frame.app_main.navtitle.entities);
+					break;
+				case 'fleet':
+					_g.title(_frame.app_main.navtitle.fleets);
 					break;
 			}
 
