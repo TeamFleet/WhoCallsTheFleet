@@ -710,8 +710,8 @@ class TablelistFleets extends Tablelist{
 			//_frame.infos.show('[[FLEET::__NEW__]]')
 			
 			if( dataDefault.data ){
-				dataDefault.data.forEach(function(fleet){
-					fleet.forEach(function(ship){
+				dataDefault.data.forEach(function(fleet){if( fleet && fleet.push ){
+					fleet.forEach(function(ship){if( ship && ship.push ){
 						ship[2].forEach(function(equipmentId, index){
 							if( equipmentId && $.inArray(_g.data.items[equipmentId].type, Formula.equipmentType.Aircrafts) > -1 ){
 								if( _g.data.items[equipmentId].rankupgradable ){
@@ -723,8 +723,8 @@ class TablelistFleets extends Tablelist{
 								ship[3][index] = null
 							}
 						})
-					})
-				})
+					}})
+				}})
 				InfosFleet.clean(dataDefault.data)
 			}
 	
