@@ -8397,16 +8397,20 @@ var TablelistFleets = (function (_Tablelist4) {
 
 			if (dataDefault.data) {
 				dataDefault.data.forEach(function (fleet) {
-					fleet.forEach(function (ship) {
-						ship[2].forEach(function (equipmentId, index) {
-							if (equipmentId && $.inArray(_g.data.items[equipmentId].type, Formula.equipmentType.Aircrafts) > -1) {
-								if (_g.data.items[equipmentId].rankupgradable) {
-									if (options.aircraftmax) ship[4][index] = 7;else ship[4][index] = ship[3][index] || null;
-								}
-								ship[3][index] = null;
+					if (fleet && fleet.push) {
+						fleet.forEach(function (ship) {
+							if (ship && ship.push) {
+								ship[2].forEach(function (equipmentId, index) {
+									if (equipmentId && $.inArray(_g.data.items[equipmentId].type, Formula.equipmentType.Aircrafts) > -1) {
+										if (_g.data.items[equipmentId].rankupgradable) {
+											if (options.aircraftmax) ship[4][index] = 7;else ship[4][index] = ship[3][index] || null;
+										}
+										ship[3][index] = null;
+									}
+								});
 							}
 						});
-					});
+					}
 				});
 				InfosFleet.clean(dataDefault.data);
 			}
