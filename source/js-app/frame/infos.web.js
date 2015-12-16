@@ -165,17 +165,15 @@ _frame.infos = {
 									_frame.infos.hide_finish()
 								}
 							})
-				/*
 				if( _frame.dom.btnHistoryBack )
 					_frame.dom.btnHistoryBack.on(eventName('transitionend', 'infos_hide'), function(e){
 									if( e.currentTarget == e.target
 										&& e.originalEvent.propertyName == 'opacity'
-										&& parseFloat(_frame.dom.btnHistoryBack.css('opacity')) == 0
+										&& _frame.dom.btnHistoryBack.css('opacity') == 0
 									){
 										_frame.infos.hide_finish()
 									}
 								})
-				*/
 			}
 
 		// 计算历史记录相关，确定 Back/Forward 按钮是否可用
@@ -291,11 +289,15 @@ _frame.infos = {
 						// exit selection mode
 							//_frame.app_main.mode_selection_off()
 						
+						Page.off( _frame.app_main.cur_page )
+						/*
 						if( _frame.dom.navs[_frame.app_main.cur_page] )
 							_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
 						if( _frame.app_main.page_dom[_frame.app_main.cur_page] )
-							_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff').detach()
+							_frame.app_main.page_dom[_frame.app_main.cur_page].trigger('pageoff')
+							//_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff').detach()
 						_frame.app_main.cur_page = null
+						*/
 					}
 				
 				// 确定 theme

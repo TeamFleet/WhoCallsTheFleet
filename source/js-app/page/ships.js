@@ -1,4 +1,4 @@
-//class PageShips extends PAGE
+//class PageShips extends Page
 
 _frame.app_main.page['ships'] = {
 	init: function( $page ){
@@ -16,7 +16,7 @@ _frame.app_main.page['ships'] = {
 		})
 		*/
 		
-		this.object = new class extends PAGE{
+		this.object = new class extends Page{
 			constructor( $page ){
 				super( $page )
 				

@@ -144,7 +144,6 @@ class InfosFleet{
 		*/
 
 		/*
-		if( !_g.isClient )
 			this.doms.warning = $('<div/>',{
 					'class':	'warning',
 					'html':		'功能移植/测试中，请勿日常使用'
@@ -339,7 +338,7 @@ class InfosFleet{
 												InfosFleet.menuCur.modalExportText_show()
 											})
 									])
-									if( _g.isClient ){
+									if( _g.isNWjs ){
 										menuitems.push($('<menuitem/>',{
 													'html':		'生成图片'
 												}).on('click', function(){
@@ -582,7 +581,7 @@ class InfosFleet{
 	
 	// Web Version - 更新URI Search
 		updateURI(){
-			if( !_g.isClient && this.data._id && _g.uriSearch() ){
+			if( !_g.isNWjs && this.data._id && _g.uriSearch() ){
 				let d = $.extend(true, {}, this.data)
 					,_id = d._id
 				delete d._id
@@ -2034,8 +2033,8 @@ class InfosFleetShipEquipment{
 									&& _g.data.items[id].rankupgradable
 									&& $.inArray(_g.data.items[id].type, Formula.equipmentType.Aircrafts) > -1
 								) ? 7 : 0
-					TablelistEquipments.types = []
-					TablelistEquipments.shipId = null
+					//TablelistEquipments.types = []
+					//TablelistEquipments.shipId = null
 					if( this.infosFleetShip.infosFleet )
 						_frame.infos.dom.main.attr('data-theme', this.infosFleetShip.infosFleet.data['theme'])
 				}.bind(this),

@@ -557,7 +557,7 @@ _frame.app_main = {
 
 			if( !options.callback_modeSelection_select ){
 				//this.title = this.navtitle[page]
-				_g.title(this.navtitle[page])
+				_g.title(this.navtitle[page] || true)
 				_frame.infos.last = null
 	
 				_ga.counter(
@@ -575,10 +575,13 @@ _frame.app_main = {
 
 			// 关闭之前的页面
 				if( this.cur_page ){
+					Page.off(this.cur_page)
+					/*
 					if( _frame.dom.navs[this.cur_page] )
 						_frame.dom.navs[this.cur_page].removeClass('on')
 					if( this.page_dom[this.cur_page] )
-						this.page_dom[this.cur_page].addClass('off').trigger('pageoff').detach()
+						//this.page_dom[this.cur_page].addClass('off').trigger('pageoff').detach()
+					*/
 				}
 
 			if( _frame.dom.navs[page] )
@@ -616,57 +619,59 @@ _frame.app_main = {
 						.on(eventName('transitionend', 'only_bg_off'), function(e){
 							if( e.currentTarget == e.target
 								&& e.originalEvent.propertyName == 'bottom'
-								&& _frame.dom.layout.hasClass('only_bg')
-								&& $(this).offset().top >= $body.height()
+								//&& _frame.dom.layout.hasClass('mod-only-bg')
+								&& _frame.app_main.only_bg
+								//&& _frame.dom.bg_controls.offset().top >= $body.height()
+								&& parseInt( _frame.dom.bg_controls.css('bottom') ) < 0
 							){
-								_frame.dom.layout.removeClass('only_bg')
+								_frame.dom.layout.removeClass('mod-only-bg')
 								_frame.app_main.only_bg = false
 							}
 						})
+						.append(
+							$('<button class="prev" icon="arrow-left"/>')
+									.on('click', function(){
+										var pathParse = node.path.parse(_frame.app_main.bgimg_path)
+											,index = $.inArray( pathParse['base'], _frame.app_main.bgimgs ) - 1
+										if( index < 0 )
+											index = _frame.app_main.bgimgs.length - 1
+										_frame.app_main.change_bgimg( [_frame.app_main.bgimgs[index]] )
+									})
+						)
+						.append(
+							$('<button class="back"/>')
+									.html('返回')
+									.on('click', function(){
+										_frame.app_main.only_bg_off()
+									})
+						)
+						.append(
+							$('<button class="back"/>')
+									.html('保存图片')
+									.on('click', function(){
+										var pathParse = node.path.parse(_frame.app_main.bgimg_path)
+											,index = $.inArray( pathParse['base'], _frame.app_main.bgimgs )
+										_g.file_save_as( _frame.app_main.bgimg_path, (index + 1) + pathParse['ext'] )
+									})
+						)
+						.append(
+							$('<button class="next" icon="arrow-right"/>')
+									.on('click', function(){
+										var pathParse = node.path.parse(_frame.app_main.bgimg_path)
+											,index = $.inArray( pathParse['base'], _frame.app_main.bgimgs ) + 1
+										if( index >= _frame.app_main.bgimgs.length )
+											index = 0
+										_frame.app_main.change_bgimg( [_frame.app_main.bgimgs[index]] )
+									})
+						)
 						.appendTo(_frame.dom.layout)
 
 				this.cur_bgimg_el = this.cur_bgimg_el.add(
 						this.cur_bgimg_el.eq(0).clone().appendTo( _frame.dom.bg_controls)
 					)
-
-				$('<button class="prev" icon="arrow-left"/>')
-						.on('click', function(){
-							var pathParse = node.path.parse(_frame.app_main.bgimg_path)
-								,index = $.inArray( pathParse['base'], _frame.app_main.bgimgs ) - 1
-							if( index < 0 )
-								index = _frame.app_main.bgimgs.length - 1
-							_frame.app_main.change_bgimg( [_frame.app_main.bgimgs[index]] )
-						})
-						.appendTo(_frame.dom.bg_controls)
-
-				$('<button class="back"/>')
-						.html('返回')
-						.on('click', function(){
-							_frame.app_main.only_bg_off()
-						})
-						.appendTo(_frame.dom.bg_controls)
-
-				$('<button class="back"/>')
-						.html('保存图片')
-						.on('click', function(){
-							var pathParse = node.path.parse(_frame.app_main.bgimg_path)
-								,index = $.inArray( pathParse['base'], _frame.app_main.bgimgs )
-							_g.file_save_as( _frame.app_main.bgimg_path, (index + 1) + pathParse['ext'] )
-						})
-						.appendTo(_frame.dom.bg_controls)
-
-				$('<button class="next" icon="arrow-right"/>')
-						.on('click', function(){
-							var pathParse = node.path.parse(_frame.app_main.bgimg_path)
-								,index = $.inArray( pathParse['base'], _frame.app_main.bgimgs ) + 1
-							if( index >= _frame.app_main.bgimgs.length )
-								index = 0
-							_frame.app_main.change_bgimg( [_frame.app_main.bgimgs[index]] )
-						})
-						.appendTo(_frame.dom.bg_controls)
 			}
 
-			_frame.dom.layout.addClass('only_bg')
+			_frame.dom.layout.addClass('mod-only-bg')
 			setTimeout(function(){
 				_frame.dom.bg_controls.addClass('on')
 			}, 10)
@@ -729,9 +734,9 @@ _frame.app_main = {
 												.on('click', function(){_frame.app_main.load_page('donate')}).appendTo( _frame.dom.globaloptions )
 						_frame.dom.btnShowOnlyBg = $('<button class="show_only_bg" icon="images"/>')
 												.on('click', function(){_frame.app_main.only_bg_toggle()}).appendTo( _frame.dom.globaloptions )
-					_frame.dom.btnShowOnlyBgBack = $('<button class="show_only_bg_back" icon="arrow-set2-left"/>')
-											.on('click', function(){_frame.app_main.only_bg_off()}).appendTo( _frame.dom.nav )
-				_frame.dom.btnsHistory = $('<div class="history"/>').appendTo( _frame.dom.nav )
+					//_frame.dom.btnShowOnlyBgBack = $('<button class="show_only_bg_back" icon="arrow-set2-left"/>')
+					//						.on('click', function(){_frame.app_main.only_bg_off()}).appendTo( _frame.dom.nav )
+				_frame.dom.btnsHistory = $('<div class="history"/>').insertBefore( _frame.dom.navlinks )
 					_frame.dom.btnHistoryBack = $('<button class="button back" icon="arrow-set2-left"/>')
 							.on({
 								'click': function(){

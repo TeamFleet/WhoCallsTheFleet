@@ -13,10 +13,14 @@
 	_g.inputIndex = 0;
 	_g.lang = 'zh_cn';
 	_g.joint = '・';
-	_g.isNWjs = (typeof node != 'undefined' || typeof nw != 'undefined')
-	_g.isClient = _g.isNWjs ? true : false;
 	_g.defaultHqLv = 90;
 	_g.shipMaxLv = 155; // Ship.lvlMax
+	
+	// check for NW.js app
+		_g.isNWjs = (typeof node != 'undefined' || typeof nw != 'undefined')
+	
+	// check for client/app enviroment, eg. NW.js, Native Web App, Universal Windows App
+		_g.isClient = _g.isNWjs ? true : false;
 	
 	function eventName(event, name){
 		name = name ? ('.' + name) : ''
@@ -130,7 +134,7 @@
 			return f.join(' - ')
 		}
 		if( _frame.dom.title )
-			_frame.dom.title.text(t)
+			_frame.dom.title.text(t === true ? '是谁呼叫舰队' : t)
 		return t
 	}
 

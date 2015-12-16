@@ -1,5 +1,8 @@
-class PAGE {
+class Page {
 	constructor( $page ) {
+		$page.on('pageoff', function(){
+			this.modeSelectionExit()
+		}.bind(this))
 	}
 	
 	modeSelectionEnter(callback_select, callback_enter){
@@ -27,4 +30,17 @@ class PAGE {
 
 		_frame.app_main.mode_selection_off()
 	}
+}
+
+Page.off = function(page){
+	page = page || _frame.app_main.cur_page
+	if( typeof page == 'string' ){
+		if( _frame.dom.navs[page] )
+			_frame.dom.navs[page].removeClass('on')
+		if( _frame.app_main.page_dom[page] )
+			_frame.app_main.page_dom[page].addClass('off').trigger('pageoff').detach()
+	}else{
+		page.addClass('off').trigger('pageoff').detach()
+	}
+	_frame.app_main.cur_page = null
 }

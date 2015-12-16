@@ -40,8 +40,8 @@ _frame.infos = {
 
 	show: function(cont, el, doNotPushHistory){
 		var exp			= /^\[\[([^\:]+)\:\:(.+)\]\]$/.exec(cont)
-			,infosType 	= null
-			,infosId 	= null
+			,infosType
+			,infosId
 
 		if( exp && exp.length > 2 ){
 			infosType = exp[1].toLowerCase()
@@ -57,7 +57,7 @@ _frame.infos = {
 					break;
 			}
 		}else{
-			return false
+			return
 		}
 
 		// 如果为相同内容，不运行
@@ -168,6 +168,21 @@ _frame.infos = {
 					TablelistEquipments.types = []
 					break;
 			}
+				
+			switch(type){
+				case 'ship':
+					_g.title( _frame.app_main.navtitle.ships );
+					break;
+				case 'equipment':
+					_g.title( _frame.app_main.navtitle.equipments );
+					break;
+				case 'entity':
+					_g.title( _frame.app_main.navtitle.entities );
+					break;
+				case 'fleet':
+					_g.title( _frame.app_main.navtitle.fleets );
+					break;
+			}
 			//var hashcode = (cont.append) ? cont[0].outerHTML.hashCode() : cont.hashCode()
 			//if( this.curContent != hashcode ){
 				var contentDOM = cont.append ? cont : $(cont)
@@ -222,11 +237,14 @@ _frame.infos = {
 				// exit selection mode
 					//_frame.app_main.mode_selection_off()
 				
+				Page.off(_frame.app_main.cur_page)
+				/*
 				if( _frame.dom.navs[_frame.app_main.cur_page] )
 					_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
 				if( _frame.app_main.page_dom[_frame.app_main.cur_page] )
 					_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff').detach()
 				_frame.app_main.cur_page = null
+				*/
 			}
 		
 		// 确定 theme

@@ -51,7 +51,7 @@ class TablelistFleets extends Tablelist{
 					this.dom.btn_exportFile = $('<button class="export" icon="floppy-disk"/>').html('导出配置文件')
 									.on('click',function(){
 										_db.fleets.persistence.compactDatafile()
-										if( _g.isClient ){
+										if( _g.isNWjs ){
 											_g.file_save_as(_db.fleets.filename, 'fleets.json')
 										}else{
 											if( !TablelistFleets.btn_exportFile_link ){
@@ -125,7 +125,6 @@ class TablelistFleets extends Tablelist{
 									}.bind(this))
 									.appendTo(this.dom.buttons_right)
 			/*
-			if( !_g.isClient )
 				this.dom.warning = $('<div/>',{
 						'class':	'warning',
 						'html':		'功能移植/测试中，请勿日常使用'

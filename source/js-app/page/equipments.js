@@ -1,8 +1,8 @@
-//class PageEquipments extends PAGE
+//class PageEquipments extends Page
 
 _frame.app_main.page['equipments'] = {
 	init: function( $page ){
-		this.object = new class extends PAGE{
+		this.object = new class extends Page{
 			constructor( $page ){
 				super( $page )
 				
@@ -28,6 +28,11 @@ _frame.app_main.page['equipments'] = {
 							this.tablelistObj.thead_redraw()
 							this.tablelistObj.apply_types()
 						}
+					}.bind(this),
+					'pageoff': function(){
+						TablelistEquipments.types = []
+						TablelistEquipments.shipId = null
+						this.tablelistObj.apply_types()
 					}.bind(this)
 				})
 			}

@@ -9,6 +9,7 @@ _frame.infos.__ship_init = function( $el ){
 		,deltaY
 		,isPanning = false
 		,isScrollSnap = ( _huCss.csscheck_full('scroll-snap-type') && !bFirefox )
+		//,isScrollSnap = _huCss.csscheck_full('scroll-snap-type')
 		//,isMoving = 0
 		,illustMain = $el.find('.illustrations')
 		,illust = illustMain.children('div')

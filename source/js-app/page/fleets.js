@@ -1,8 +1,8 @@
-//class PageFleets extends PAGE
+//class PageFleets extends Page
 
 _frame.app_main.page['fleets'] = {
 	init: function( $page ){		
-		this.object = new class extends PAGE{
+		this.object = new class extends Page{
 			constructor( $page ){
 				super( $page )
 				//this.inited = false
