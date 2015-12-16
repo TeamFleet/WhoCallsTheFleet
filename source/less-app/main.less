@@ -936,34 +936,33 @@ main{
 	}
 }
 .layout-nav-btns-history-on(){
-	// #layout
-	nav>div{
-		.button{
-			@media all and (max-width: 900px ){
-				font-size: 	20px;
-			}
-			@media all and (max-width: 800px ){
-				font-size: 	18px;
-			}
-			/*
-			.top(0 - @nav_height);
-			.delays(@n, @i: 1) when (@i =< @n) {
-				&:nth-of-type(@{i}){
-					@delay:		((@i - 1) * 0.1s);
-					.transition-delay(~"0, 0, @{delay}");
-				}
-				.delays(@n, (@i + 1))
-			}
-			.delays(10);
-			*/
-		}
-	}
 	nav>div.history{
 		//transform:	none;
 		z-index:	5;
 		display: 	block;
 		.button{
 			opacity:	1;
+		}
+		&, & ~ div.pages{
+			.button{
+				@media all and (max-width: 900px ){
+					font-size: 	20px;
+				}
+				@media all and (max-width: 800px ){
+					font-size: 	18px;
+				}
+				/*
+				.top(0 - @nav_height);
+				.delays(@n, @i: 1) when (@i =< @n) {
+					&:nth-of-type(@{i}){
+						@delay:		((@i - 1) * 0.1s);
+						.transition-delay(~"0, 0, @{delay}");
+					}
+					.delays(@n, (@i + 1))
+				}
+				.delays(10);
+				*/
+			}
 		}
 	}
 	nav>div.history ~ div{

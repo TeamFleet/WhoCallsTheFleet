@@ -4369,9 +4369,14 @@ _frame.app_main = {
 				} else if (parse.infos) {
 					_frame.infos.click(el.attr('data-infos', '[[' + parse.infos.toUpperCase() + '::' + parse.id + ']]'));
 				}
+			},
+			    link_external = function link_external(e) {
+				if (e.currentTarget.getAttribute('href').indexOf('//' + location.host) < 0) {
+					return e.currentTarget.setAttribute('target', '_blank');
+				}
 			};
 
-			$body.on('click.global_delegate_page', 'a[href^="?page="]', link_page).on('click.global_delegate_infos', 'a[href^="?infos="]', link_infos).on('click.global_delegate_default', 'a[href^="/"]', link_default);
+			$body.on('click.global_delegate_page', 'a[href^="?page="]', link_page).on('click.global_delegate_infos', 'a[href^="?infos="]', link_infos).on('click.global_delegate_default', 'a[href^="/"]', link_default).on('click.global_external_links pointerdown.global_external_links', 'a:not([target]):not([href^="/"]):not([href^="javascript:"])', link_external);
 
 			_frame.dom.bgimg.on(_g.event.animationend, 'div', function () {
 				_frame.app_main.change_bgimg_after();
@@ -5599,6 +5604,7 @@ var InfosFleet = (function () {
 			this.el.on({
 				'show': (function (e, is_firstShow) {
 					this.is_showing = !0;
+					if (InfosFleetShipEquipment.curHoverEquipment) InfosFleetShipEquipment.curHoverEquipment.trigger('blur');
 					if (!is_firstShow) {
 						var _i8 = 0,
 						    _l2 = Lockr.get('hqLvDefault', _g.defaultHqLv);
@@ -5616,6 +5622,7 @@ var InfosFleet = (function () {
 				}).bind(this),
 				'hidden': function hidden() {
 					this.is_showing = !1;
+					if (InfosFleetShipEquipment.curHoverEquipment) InfosFleetShipEquipment.curHoverEquipment.trigger('blur');
 				}
 			}).on('focus.number_input_select', 'input[type="number"]:not([readonly])', function (e) {
 				e.currentTarget.select();
@@ -6761,19 +6768,21 @@ var InfosFleetShipEquipment = (function () {
 
 		this.el = $('<div class="equipment" touch-action="none" tabindex="0"/>').on({
 			'focus': (function () {
-				this.el.addClass('is-hover');
+				InfosFleetShipEquipment.curHoverEquipment = this.el.addClass('is-hover');
 			}).bind(this),
 			'blur': (function () {
 				this.el.removeClass('is-hover');
+				InfosFleetShipEquipment.curHoverEquipment = null;
 			}).bind(this),
 			'pointerenter': (function (e) {
 				if (e.originalEvent.pointerType != 'touch') {
-					this.el.addClass('is-hover');
+					InfosFleetShipEquipment.curHoverEquipment = this.el.addClass('is-hover');
 				}
 			}).bind(this),
 			'pointerleave': (function (e) {
 				if (e.originalEvent.pointerType != 'touch') {
 					this.el.removeClass('is-hover').blur();
+					InfosFleetShipEquipment.curHoverEquipment = null;
 				}
 			}).bind(this)
 		}).append(this.elCarry = $('<div class="equipment-layer equipment-add"/>').on('click', (function () {

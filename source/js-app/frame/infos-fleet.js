@@ -91,6 +91,8 @@ class InfosFleet{
 		this.el.on({
 			'show': function(e, is_firstShow){
 					this.is_showing = true
+					if( InfosFleetShipEquipment.curHoverEquipment )
+						InfosFleetShipEquipment.curHoverEquipment.trigger('blur')
 					if( !is_firstShow ){
 						// 再次显示时，重新计算分舰队的索敌能力
 						let i = 0
@@ -116,6 +118,8 @@ class InfosFleet{
 				}.bind(this),
 			'hidden': function(){
 					this.is_showing = false
+					if( InfosFleetShipEquipment.curHoverEquipment )
+						InfosFleetShipEquipment.curHoverEquipment.trigger('blur')
 				}
 			/*,
 			'click': function(){
@@ -1898,14 +1902,15 @@ class InfosFleetShipEquipment{
 						}.bind(this)
 						*/
 						'focus': function(){
-								this.el.addClass('is-hover')
+								InfosFleetShipEquipment.curHoverEquipment = this.el.addClass('is-hover')
 							}.bind(this),
 						'blur': function(){
 								this.el.removeClass('is-hover')
+								InfosFleetShipEquipment.curHoverEquipment = null
 							}.bind(this),
 						'pointerenter': function(e){
 								if( e.originalEvent.pointerType != 'touch' ){
-									this.el.addClass('is-hover')
+									InfosFleetShipEquipment.curHoverEquipment = this.el.addClass('is-hover')
 											//.focus()
 								}
 							}.bind(this),
@@ -1913,6 +1918,7 @@ class InfosFleetShipEquipment{
 								if( e.originalEvent.pointerType != 'touch' ){
 									this.el.removeClass('is-hover')
 											.blur()
+									InfosFleetShipEquipment.curHoverEquipment = null
 								}
 							}.bind(this)
 					})
@@ -1920,6 +1926,7 @@ class InfosFleetShipEquipment{
 						this.elCarry = $('<div class="equipment-layer equipment-add"/>')
 										.on('click', function(){
 											this.selectEquipmentStart()
+											//this.el.trigger('blur')
 										}.bind(this))
 					)
 					.append(

@@ -978,11 +978,17 @@ _frame.app_main = {
 								//el.attr('data-infos', '[[' + parse.infos.toUpperCase() + '::' + parse.id + ']]')
 								//el.off('click.global_delegate').trigger('click')
 							}
+						},
+					link_external = function(e){
+						if( e.currentTarget.getAttribute('href').indexOf('//' + location.host) < 0 ){
+							return e.currentTarget.setAttribute('target', '_blank');
 						}
+					}
 
 				$body.on('click.global_delegate_page', 'a[href^="?page="]', link_page)
 					.on('click.global_delegate_infos', 'a[href^="?infos="]', link_infos)
 					.on('click.global_delegate_default', 'a[href^="/"]', link_default)
+					.on('click.global_external_links pointerdown.global_external_links', 'a:not([target]):not([href^="/"]):not([href^="javascript:"])', link_external)
 
 				_frame.dom.bgimg.on(_g.event.animationend, 'div', function(){
 					_frame.app_main.change_bgimg_after()
