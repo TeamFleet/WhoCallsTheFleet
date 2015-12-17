@@ -782,6 +782,9 @@
 				&>dt>s:before{
 					display: 	none;
 				}
+				.equipments{
+					z-index: 	-1;
+				}
 			}
 			/*
 			@media all and (min-width: 1680px) and (min-height: 900px){
@@ -1028,6 +1031,7 @@
 		margin: 	0 2px 0 0;
 		transition-property: background-color;
 		position: 	relative;
+		//z-index: 	1;
 		//overflow: 	hidden;
 		&:first-child{
 			border-radius: 	5px 0 0 5px;
@@ -2162,38 +2166,12 @@ main{
 
 
 @media all and (max-width: @screen-width-t4-breaking-point ){.infos-fleet{
-	&>.fleets{
-		.tabs label{
-			padding-left: 6px;
-			padding-right: 6px;
-		}
-		.options{
-			font-size: 	12px;
-			&>.option,
-			&>.icon{
-				margin-left: 	6px;
-			}
-			&>.option-hqlv{
-				input{
-					width: 		26px;
-					height: 	20px;
-					margin-left:2px;
-				}
-			}
-			&>.option.mod-dropdown{
-				padding-right: 	12px;
-			}
-		}
-	}
-
 	.ship{
 		&:before{
 			left: 		-6px;
 			border-right-width: 3px;
 		}
-		&>.equipments{
-			position: 	static;
-		}
+		&>.equipments,
 		&>.attributes{
 			position: 	relative;
 		}
@@ -2237,6 +2215,8 @@ main{
 		height: 	auto;
 		padding: 	4px 2px 4px 4px;
 		overflow: 	hidden;
+		left: 		0;
+		top: 		0;
 	}
 	
 	.attributes{
@@ -2263,5 +2243,32 @@ main{
 		margin-top: 2px;
 		width: 		~"calc(50% - 2px)";
 		border-radius: 0 !important;
+	}
+}}
+
+
+@media all and (max-width: @screen-width-t7-breaking-point ){.infos-fleet{
+	&>.fleets{
+		.tabs label{
+			padding-left: 6px;
+			padding-right: 6px;
+		}
+		.options{
+			font-size: 	12px;
+			&>.option,
+			&>.icon{
+				margin-left: 	6px;
+			}
+			&>.option-hqlv{
+				input{
+					width: 		26px;
+					height: 	20px;
+					margin-left:2px;
+				}
+			}
+			&>.option.mod-dropdown{
+				padding-right: 	12px;
+			}
+		}
 	}
 }}

@@ -60,6 +60,8 @@
 			p.title{
 				height: 	17.5px;
 				margin-bottom: 7.5px;
+				margin-left: -10px;
+				width: 		~"calc(100% + 10px)";
 				//margin: 	0 auto 7.5px -20px;
 				//width: 		~"calc(100% + 30px)";
 				&:last-child{
@@ -236,6 +238,38 @@
 				}
 				&[data-theme="10"]{
 					.theme( hsl(331, 100%, 83%) );
+				}
+			}
+		}
+		@media all and (max-width: @screen-width-t4-breaking-point ){
+			.tablelist-body{
+				display: 	block;
+				&>p.title{
+					margin-bottom: 	15px;
+				}
+				&>p.row[data-fleetid]{
+					&>strong{
+						padding-right: 0;
+					}
+				}
+			}
+		}
+		@media all and (max-width: @screen-width-t7-breaking-point ){
+			.tablelist-body{
+				&>p.row[data-fleetid]{
+					height: 	auto;
+					min-height: 40px;
+					&>strong{
+						display: 	block;
+						padding: 	38px 1em 4px 1em;
+						line-height:18px;
+						&>strong{
+							line-height:inherit;
+						}
+					}
+					&:hover:before{
+						height: 	100%;
+					}
 				}
 			}
 		}

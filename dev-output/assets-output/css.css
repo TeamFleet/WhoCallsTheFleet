@@ -5875,6 +5875,8 @@ body.mod-capture #tip {
 }
 .tablelist-header > .wrapper > strong,
 .tablelist-body > p.row > strong {
+  height: 100%;
+  width: 100%;
   -webkit-box-flex: 7.5;
   -webkit-flex: 7.5 0 155px;
       -ms-flex: 7.5 0 155px;
@@ -6132,6 +6134,7 @@ body.mod-capture #tip {
 }
 .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row {
   border-bottom: 0;
+  display: block;
 }
 .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row > span {
   display: none;
@@ -7573,6 +7576,8 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
 .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.title {
   height: 17.5px;
   margin-bottom: 7.5px;
+  margin-left: -10px;
+  width: calc(100% + 10px);
 }
 .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.title:last-child {
   margin-bottom: 0;
@@ -7786,6 +7791,34 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
 }
 .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="10"]:hover {
   background: rgba(255, 168, 210, 0.15) !important;
+}
+@media all and (max-width: 720px) {
+  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body {
+    display: block;
+  }
+  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.title {
+    margin-bottom: 15px;
+  }
+  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid] > strong {
+    padding-right: 0;
+  }
+}
+@media all and (max-width: 540px) {
+  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid] {
+    height: auto;
+    min-height: 40px;
+  }
+  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid] > strong {
+    display: block;
+    padding: 38px 1em 4px 1em;
+    line-height: 18px;
+  }
+  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid] > strong > strong {
+    line-height: inherit;
+  }
+  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid]:hover:before {
+    height: 100%;
+  }
 }
 .tablelist.fleets .tablelist-container > .nocontent {
   position: absolute;
@@ -9322,6 +9355,9 @@ body.mod-capture .infos-fleet .ship > .options {
 }
 .infos-fleet .ship[data-shipid].moving > dt > s:before {
   display: none;
+}
+.infos-fleet .ship[data-shipid].moving .equipments {
+  z-index: -1;
 }
 .infos-fleet .ship.mod-nomask > .attributes > .bg {
   position: absolute;
@@ -11347,32 +11383,11 @@ main[data-theme="10"] .infos-fleet .equipment-name {
   }
 }
 @media all and (max-width: 720px) {
-  .infos-fleet > .fleets .tabs label {
-    padding-left: 6px;
-    padding-right: 6px;
-  }
-  .infos-fleet > .fleets .options {
-    font-size: 12px;
-  }
-  .infos-fleet > .fleets .options > .option,
-  .infos-fleet > .fleets .options > .icon {
-    margin-left: 6px;
-  }
-  .infos-fleet > .fleets .options > .option-hqlv input {
-    width: 26px;
-    height: 20px;
-    margin-left: 2px;
-  }
-  .infos-fleet > .fleets .options > .option.mod-dropdown {
-    padding-right: 12px;
-  }
   .infos-fleet .ship:before {
     left: -6px;
     border-right-width: 3px;
   }
-  .infos-fleet .ship > .equipments {
-    position: static;
-  }
+  .infos-fleet .ship > .equipments,
   .infos-fleet .ship > .attributes {
     position: relative;
   }
@@ -11414,6 +11429,8 @@ main[data-theme="10"] .infos-fleet .equipment-name {
     height: auto;
     padding: 4px 2px 4px 4px;
     overflow: hidden;
+    left: 0;
+    top: 0;
   }
   .infos-fleet .attributes {
     position: relative;
@@ -11441,6 +11458,27 @@ main[data-theme="10"] .infos-fleet .equipment-name {
     margin-top: 2px;
     width: calc(50% - 2px);
     border-radius: 0 !important;
+  }
+}
+@media all and (max-width: 540px) {
+  .infos-fleet > .fleets .tabs label {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  .infos-fleet > .fleets .options {
+    font-size: 12px;
+  }
+  .infos-fleet > .fleets .options > .option,
+  .infos-fleet > .fleets .options > .icon {
+    margin-left: 6px;
+  }
+  .infos-fleet > .fleets .options > .option-hqlv input {
+    width: 26px;
+    height: 20px;
+    margin-left: 2px;
+  }
+  .infos-fleet > .fleets .options > .option.mod-dropdown {
+    padding-right: 12px;
   }
 }
 .infos-ship {
