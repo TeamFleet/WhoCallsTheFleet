@@ -5875,6 +5875,8 @@ body.mod-capture #tip {
 }
 .tablelist-header > .wrapper > strong,
 .tablelist-body > p.row > strong {
+  height: 100%;
+  width: 100%;
   -webkit-box-flex: 7.5;
   -webkit-flex: 7.5 0 155px;
       -ms-flex: 7.5 0 155px;
@@ -6132,6 +6134,7 @@ body.mod-capture #tip {
 }
 .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row {
   border-bottom: 0;
+  display: block;
 }
 .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row > span {
   display: none;
@@ -7573,6 +7576,8 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
 .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.title {
   height: 17.5px;
   margin-bottom: 7.5px;
+  margin-left: -10px;
+  width: calc(100% + 10px);
 }
 .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.title:last-child {
   margin-bottom: 0;
@@ -7786,6 +7791,34 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
 }
 .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="10"]:hover {
   background: rgba(255, 168, 210, 0.15) !important;
+}
+@media all and (max-width: 720px) {
+  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body {
+    display: block;
+  }
+  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.title {
+    margin-bottom: 15px;
+  }
+  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid] > strong {
+    padding-right: 0;
+  }
+}
+@media all and (max-width: 540px) {
+  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid] {
+    height: auto;
+    min-height: 40px;
+  }
+  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid] > strong {
+    display: block;
+    padding: 38px 1em 4px 1em;
+    line-height: 18px;
+  }
+  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid] > strong > strong {
+    line-height: inherit;
+  }
+  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid]:hover:before {
+    height: 100%;
+  }
 }
 .tablelist.fleets .tablelist-container > .nocontent {
   position: absolute;
@@ -8794,7 +8827,7 @@ body.mod-capture .infos-fleet > .fleets .options > .icon {
 .infos-fleet > .fleets .options > .option-theme-value[value="10"] + .option-theme:before {
   background: rgba(255, 0, 123, 0.35);
 }
-.infos-fleet > .fleets .options > .option-hqlv input[type="number"] {
+.infos-fleet > .fleets .options > .option-hqlv input {
   width: 2.25em;
   line-height: normal;
   height: 24px;
@@ -8844,7 +8877,6 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   margin: 0 auto;
-  padding-bottom: 0.5rem;
   display: none;
   animation: fadein 0.3s ease-out;
   -webkit-animation: fadein 0.3s ease-out;
@@ -8903,92 +8935,16 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
       -ms-flex: 0.25 0 auto;
           flex: 0.25 0 auto;
 }
-.infos-fleet .fleetships > .summary {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-flex: 0.5;
-  -webkit-flex: 0.5 0 30px;
-      -ms-flex: 0.5 0 30px;
-          flex: 0.5 0 30px;
-  margin-top: 0.5rem;
-  text-align: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: end;
-  -webkit-align-items: flex-end;
-      -ms-flex-align: end;
-          align-items: flex-end;
-  font-size: 116.66666667%;
-  font-weight: lighter;
-  margin-right: -1.5em;
-}
-.infos-fleet .fleetships > .summary h3,
-.infos-fleet .fleetships > .summary h4,
-.infos-fleet .fleetships > .summary h5 {
-  display: inline-block;
-}
-.infos-fleet .fleetships > .summary .summary-item {
-  margin-right: 1.5em;
-  line-height: 1.78571429em;
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0 0 0 .5em;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.infos-fleet .fleetships > .summary .summary-item strong {
-  display: inline-block;
-  padding: 0 .5em;
-  margin: 0 0 0 .5em;
-  line-height: inherit;
-  background: rgba(0, 0, 0, 0.25);
-  font-weight: normal;
-}
-.infos-fleet .fleetships > .summary .summary-item-consummation .fuel,
-.infos-fleet .fleetships > .summary .summary-item-consummation .ammo {
-  position: relative;
-  padding: 0 0 0 20px;
-  display: inline-block;
-}
-.infos-fleet .fleetships > .summary .summary-item-consummation .fuel:before,
-.infos-fleet .fleetships > .summary .summary-item-consummation .ammo:before {
-  display: block;
-  position: absolute;
-  background: url(/!/assets/images/stats.png) no-repeat 0 0;
-  width: 18px;
-  height: 18px;
-  top: 50%;
-  left: 0;
-  margin-top: -9px;
-  content: "";
-  opacity: .5;
-}
-.infos-fleet .fleetships > .summary .summary-item-consummation .fuel + .fuel,
-.infos-fleet .fleetships > .summary .summary-item-consummation .ammo + .fuel,
-.infos-fleet .fleetships > .summary .summary-item-consummation .fuel + .ammo,
-.infos-fleet .fleetships > .summary .summary-item-consummation .ammo + .ammo {
-  margin-left: .25em;
-}
-.infos-fleet .fleetships > .summary .summary-item-consummation .fuel:before {
-  background-position: 0 -216px;
-}
-.infos-fleet .fleetships > .summary .summary-item-consummation .ammo:before {
-  background-position: 0 -234px;
-}
 .infos-fleet .ship {
   -webkit-box-flex: 0.5;
   -webkit-flex: 0.5 0 70px;
       -ms-flex: 0.5 0 70px;
           flex: 0.5 0 70px;
   position: relative;
-  left: 0.4rem;
+  left: 8px;
   right: 0;
   height: 3.5rem;
   margin: 10px 0 0 0;
-  width: calc(100% - 8px);
 }
 .infos-fleet .ship:before {
   content: "";
@@ -9026,9 +8982,6 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
 }
 .infos-fleet .ship > dt,
 .infos-fleet .ship > div {
-  -webkit-flex-flow: row nowrap;
-      -ms-flex-flow: row nowrap;
-          flex-flow: row nowrap;
   position: absolute;
 }
 .infos-fleet .ship > div {
@@ -9039,6 +8992,9 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-flow: row nowrap;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
   height: 100%;
   width: 30%;
   top: 0;
@@ -9147,119 +9103,6 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.15) 25%, transparent);
   background: linear-gradient(to right, rgba(255, 255, 255, 0.15) 25%, transparent);
   display: block;
-}
-.infos-fleet .ship > .equipments,
-.infos-fleet .ship > .attributes {
-  left: 30%;
-  width: 70%;
-}
-.infos-fleet .ship > .equipments {
-  top: 6px;
-  left: 30%;
-  height: calc(100% - 27px - 8px);
-  padding-right: 3.5em;
-  z-index: 1;
-}
-body.mod-capture .infos-fleet .ship > .equipments {
-  padding-right: 4px;
-}
-.infos-fleet .ship > .attributes {
-  bottom: 0%;
-  height: 25px;
-  line-height: 24px;
-  font-size: 1em;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  opacity: .6;
-}
-.infos-fleet .ship > .attributes:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: -15px;
-  bottom: 0;
-  left: 0;
-  -webkit-transform: skew(-30deg);
-      -ms-transform: skew(-30deg);
-          transform: skew(-30deg);
-  -webkit-transform-origin: 0 0;
-      -ms-transform-origin: 0 0;
-          transform-origin: 0 0;
-  z-index: -1;
-  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.15) 20%, transparent);
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 20%, transparent);
-  mask: linear-gradient(to left, transparent 15px, #000 75%);
-  -webkit-mask: -webkit-linear-gradient(right, transparent 15px, #000 75%);
-}
-.infos-fleet .ship > .attributes > span {
-  display: inline-block;
-  font-size: 1em;
-  padding: 0 8px 0 28px;
-  position: relative;
-  font-weight: lighter;
-  min-width: calc(2.5em + 28px);
-}
-.infos-fleet .ship > .attributes > span:before {
-  content: "";
-  background: url(/!/assets/images/stats.png) no-repeat 0 0;
-  position: absolute;
-  top: 50%;
-  left: 6px;
-  width: 18px;
-  height: 18px;
-  line-height: 0;
-  -webkit-transform: translateY(-9px);
-      -ms-transform: translateY(-9px);
-          transform: translateY(-9px);
-  opacity: .65;
-  display: inline-block;
-}
-.infos-fleet .ship > .attributes > span.negative {
-  color: #ff8a80;
-}
-.infos-fleet .ship > .attributes > span.shelling:before {
-  background-position-y: -72px;
-}
-.infos-fleet .ship > .attributes > span.torpedo:before {
-  background-position-y: -90px;
-}
-.infos-fleet .ship > .attributes > span.hitsum:before {
-  background-position-y: -270px;
-}
-.infos-fleet .ship > .attributes > span.armor:before {
-  background-position-y: -18px;
-}
-.infos-fleet .ship > .attributes > span.evasion:before {
-  background-position-y: -36px;
-}
-.infos-fleet .ship > .attributes > span + [data-text] {
-  margin-left: 1em;
-}
-.infos-fleet .ship > .attributes > span[data-text] {
-  /*
-					&:after{
-						background: linear-gradient(to bottom, rgba(255,255,255,.15), transparent);
-						position: 	absolute;
-						top: 		0;
-						left: 		0;
-						transform: 	skew(-30deg);
-						z-index: 	-1;
-						color: 		transparent;
-					}*/
-}
-.infos-fleet .ship > .attributes > span[data-text]:before {
-  font-size: 12px;
-  padding: 0 8px 0 0;
-  line-height: inherit;
-  content: attr(data-text);
-  background: none transparent;
-  position: relative;
-  margin: 0 0 0 -32px;
-  top: auto;
-  left: auto;
-  -webkit-transform: none;
-      -ms-transform: none;
-          transform: none;
-  display: inline;
 }
 .infos-fleet .ship > .options {
   right: 0;
@@ -9513,6 +9356,9 @@ body.mod-capture .infos-fleet .ship > .options {
 .infos-fleet .ship[data-shipid].moving > dt > s:before {
   display: none;
 }
+.infos-fleet .ship[data-shipid].moving .equipments {
+  z-index: -1;
+}
 .infos-fleet .ship.mod-nomask > .attributes > .bg {
   position: absolute;
   top: 0;
@@ -9561,6 +9407,119 @@ body.mod-capture .infos-fleet .ship > .options {
 					0 1px 0 @color;
 	*/
   text-shadow: -2px 0 1px #333, 2px 0 1px #333, 0 -2px 1px #333, 0 2px 1px #333, 0 0 2px #333;
+}
+.infos-fleet .equipments,
+.infos-fleet .attributes {
+  left: 30%;
+  width: 70%;
+}
+.infos-fleet .equipments {
+  top: 6px;
+  left: 30%;
+  height: calc(100% - 27px - 8px);
+  padding-right: 3.5em;
+  z-index: 1;
+}
+body.mod-capture .infos-fleet .equipments {
+  padding-right: 4px;
+}
+.infos-fleet .attributes {
+  bottom: 0%;
+  height: 25px;
+  line-height: 24px;
+  font-size: 1em;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: .6;
+}
+.infos-fleet .attributes:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -15px;
+  bottom: 0;
+  left: 0;
+  -webkit-transform: skew(-30deg);
+      -ms-transform: skew(-30deg);
+          transform: skew(-30deg);
+  -webkit-transform-origin: 0 0;
+      -ms-transform-origin: 0 0;
+          transform-origin: 0 0;
+  z-index: -1;
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.15) 20%, transparent);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 20%, transparent);
+  mask: linear-gradient(to left, transparent 15px, #000 75%);
+  -webkit-mask: -webkit-linear-gradient(right, transparent 15px, #000 75%);
+}
+.infos-fleet .attributes > span {
+  display: inline-block;
+  font-size: 1em;
+  padding: 0 8px 0 28px;
+  position: relative;
+  font-weight: lighter;
+  min-width: calc(2.5em + 28px);
+}
+.infos-fleet .attributes > span:before {
+  content: "";
+  background: url(/!/assets/images/stats.png) no-repeat 0 0;
+  position: absolute;
+  top: 50%;
+  left: 6px;
+  width: 18px;
+  height: 18px;
+  line-height: 0;
+  -webkit-transform: translateY(-9px);
+      -ms-transform: translateY(-9px);
+          transform: translateY(-9px);
+  opacity: .65;
+  display: inline-block;
+}
+.infos-fleet .attributes > span.negative {
+  color: #ff8a80;
+}
+.infos-fleet .attributes > span.shelling:before {
+  background-position-y: -72px;
+}
+.infos-fleet .attributes > span.torpedo:before {
+  background-position-y: -90px;
+}
+.infos-fleet .attributes > span.hitsum:before {
+  background-position-y: -270px;
+}
+.infos-fleet .attributes > span.armor:before {
+  background-position-y: -18px;
+}
+.infos-fleet .attributes > span.evasion:before {
+  background-position-y: -36px;
+}
+.infos-fleet .attributes > span + [data-text] {
+  margin-left: 1em;
+}
+.infos-fleet .attributes > span[data-text] {
+  /*
+				&:after{
+					background: linear-gradient(to bottom, rgba(255,255,255,.15), transparent);
+					position: 	absolute;
+					top: 		0;
+					left: 		0;
+					transform: 	skew(-30deg);
+					z-index: 	-1;
+					color: 		transparent;
+				}*/
+}
+.infos-fleet .attributes > span[data-text]:before {
+  font-size: 12px;
+  padding: 0 8px 0 0;
+  line-height: inherit;
+  content: attr(data-text);
+  background: none transparent;
+  position: relative;
+  margin: 0 0 0 -32px;
+  top: auto;
+  left: auto;
+  -webkit-transform: none;
+      -ms-transform: none;
+          transform: none;
+  display: inline;
 }
 .infos-fleet .equipment {
   width: calc(25% - 2px);
@@ -9940,6 +9899,67 @@ body.mod-capture .infos-fleet .ship > .options {
   top: 50%;
   left: 40%;
 }
+.infos-fleet .summary {
+  -webkit-box-flex: 0.5;
+  -webkit-flex: 0.5 0 auto;
+      -ms-flex: 0.5 0 auto;
+          flex: 0.5 0 auto;
+  min-height: 30px;
+  margin-top: 5px;
+  text-align: center;
+  font-size: 116.66666667%;
+  font-weight: lighter;
+  margin-right: -1.5em;
+  margin-bottom: 10px;
+}
+.infos-fleet .summary-item {
+  margin-right: 1.5em;
+  margin-top: 5px;
+  line-height: 1.78571429em;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0 0 0 .5em;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.infos-fleet .summary-item strong {
+  display: inline-block;
+  padding: 0 .5em;
+  margin: 0 0 0 .5em;
+  line-height: inherit;
+  background: rgba(0, 0, 0, 0.25);
+  font-weight: normal;
+}
+.infos-fleet .summary-item-consummation .fuel,
+.infos-fleet .summary-item-consummation .ammo {
+  position: relative;
+  padding: 0 0 0 20px;
+  display: inline-block;
+}
+.infos-fleet .summary-item-consummation .fuel:before,
+.infos-fleet .summary-item-consummation .ammo:before {
+  display: block;
+  position: absolute;
+  background: url(/!/assets/images/stats.png) no-repeat 0 0;
+  width: 18px;
+  height: 18px;
+  top: 50%;
+  left: 0;
+  margin-top: -9px;
+  content: "";
+  opacity: .5;
+}
+.infos-fleet .summary-item-consummation .fuel + .fuel,
+.infos-fleet .summary-item-consummation .ammo + .fuel,
+.infos-fleet .summary-item-consummation .fuel + .ammo,
+.infos-fleet .summary-item-consummation .ammo + .ammo {
+  margin-left: .25em;
+}
+.infos-fleet .summary-item-consummation .fuel:before {
+  background-position: 0 -216px;
+}
+.infos-fleet .summary-item-consummation .ammo:before {
+  background-position: 0 -234px;
+}
 .infos-fleet > input[type="radio"] {
   display: none;
 }
@@ -9947,6 +9967,7 @@ body.mod-capture .infos-fleet .ship > .options {
   color: #fff;
   background-position: 0 0;
   border-color: rgba(255, 255, 255, 0.175);
+  cursor: default;
 }
 .infos-fleet > input[type="radio"][value="0"]:checked ~ .fleets .tabs label[data-fleet="0"]:after {
   background-position: 0 0;
@@ -9962,6 +9983,7 @@ body.mod-capture .infos-fleet .ship > .options {
   color: #fff;
   background-position: 0 0;
   border-color: rgba(255, 255, 255, 0.175);
+  cursor: default;
 }
 .infos-fleet > input[type="radio"][value="1"]:checked ~ .fleets .tabs label[data-fleet="1"]:after {
   background-position: 0 0;
@@ -9977,6 +9999,7 @@ body.mod-capture .infos-fleet .ship > .options {
   color: #fff;
   background-position: 0 0;
   border-color: rgba(255, 255, 255, 0.175);
+  cursor: default;
 }
 .infos-fleet > input[type="radio"][value="2"]:checked ~ .fleets .tabs label[data-fleet="2"]:after {
   background-position: 0 0;
@@ -9992,6 +10015,7 @@ body.mod-capture .infos-fleet .ship > .options {
   color: #fff;
   background-position: 0 0;
   border-color: rgba(255, 255, 255, 0.175);
+  cursor: default;
 }
 .infos-fleet > input[type="radio"][value="3"]:checked ~ .fleets .tabs label[data-fleet="3"]:after {
   background-position: 0 0;
@@ -10007,6 +10031,7 @@ body.mod-capture .infos-fleet .ship > .options {
   color: #fff;
   background-position: 0 0;
   border-color: rgba(255, 255, 255, 0.175);
+  cursor: default;
 }
 .infos-fleet > input[type="radio"][value="4"]:checked ~ .fleets .tabs label[data-fleet="4"]:after {
   background-position: 0 0;
@@ -11147,15 +11172,15 @@ main[data-theme="10"] .infos-fleet .equipment-name {
         -ms-flex-preferred-size: 110px;
             flex-basis: 110px;
   }
-  .infos-fleet .ship > .equipments {
-    padding-right: 25px;
-  }
   .infos-fleet .ship > .options {
     width: auto;
     padding-right: 3px;
   }
   .infos-fleet .ship > .options button {
     width: 21px;
+  }
+  .infos-fleet .equipments {
+    padding-right: 25px;
   }
   .infos-fleet .equipment {
     background-position: -2px 50%;
@@ -11188,6 +11213,7 @@ main[data-theme="10"] .infos-fleet .equipment-name {
             flex-basis: 75px;
     height: auto;
     border-bottom: 5px solid transparent;
+    left: 0;
   }
   .infos-fleet .ship > dt {
     width: 100%;
@@ -11233,36 +11259,6 @@ main[data-theme="10"] .infos-fleet .equipment-name {
   .infos-fleet .ship > dt:after {
     right: 0;
   }
-  .infos-fleet .ship > .equipments,
-  .infos-fleet .ship > .attributes {
-    left: calc(15% + 4px);
-    width: calc(85% - 4px);
-  }
-  .infos-fleet .ship > .equipments {
-    z-index: 2;
-    top: 34px;
-    height: calc(100% - 38px);
-    padding-right: 2px;
-  }
-  .infos-fleet .ship > .attributes {
-    bottom: -21px;
-    height: 21px;
-    line-height: 20px;
-    border-top: 0;
-    padding-left: 8px;
-  }
-  .infos-fleet .ship > .attributes:after {
-    left: 10px;
-    -webkit-transform: skew(30deg);
-        -ms-transform: skew(30deg);
-            transform: skew(30deg);
-    -webkit-transform-origin: 0 100%;
-        -ms-transform-origin: 0 100%;
-            transform-origin: 0 100%;
-    background: rgba(0, 0, 0, 0.2);
-    border-left: 1px solid rgba(255, 255, 255, 0.25);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-  }
   .infos-fleet .ship > .options {
     top: 0;
     padding-right: 4px;
@@ -11291,12 +11287,6 @@ main[data-theme="10"] .infos-fleet .equipment-name {
   .infos-fleet .ship[data-shipid] > dt > div > div {
     display: inline-block;
   }
-  .infos-fleet .ship[data-shipid] > div {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-  }
   .infos-fleet .ship[data-shipid]:after {
     -webkit-mask: none;
             mask: none;
@@ -11309,6 +11299,36 @@ main[data-theme="10"] .infos-fleet .equipment-name {
   }
   .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
     text-shadow: none;
+  }
+  .infos-fleet .equipments,
+  .infos-fleet .attributes {
+    left: calc(15% + 4px);
+    width: calc(85% - 4px);
+  }
+  .infos-fleet .equipments {
+    z-index: 2;
+    top: 34px;
+    height: calc(100% - 38px);
+    padding-right: 2px;
+  }
+  .infos-fleet .attributes {
+    bottom: -21px;
+    height: 21px;
+    line-height: 20px;
+    border-top: 0;
+    padding-left: 8px;
+  }
+  .infos-fleet .attributes:after {
+    left: 10px;
+    -webkit-transform: skew(30deg);
+        -ms-transform: skew(30deg);
+            transform: skew(30deg);
+    -webkit-transform-origin: 0 100%;
+        -ms-transform-origin: 0 100%;
+            transform-origin: 0 100%;
+    background: rgba(0, 0, 0, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.25);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
   }
   .infos-fleet .equipment {
     background-position: -3px 50%;
@@ -11357,6 +11377,108 @@ main[data-theme="10"] .infos-fleet .equipment-name {
   }
   .infos-fleet .equipment-rankselect span {
     left: 40%;
+  }
+  .infos-fleet .summary {
+    margin-bottom: 20px;
+  }
+}
+@media all and (max-width: 720px) {
+  .infos-fleet .ship:before {
+    left: -6px;
+    border-right-width: 3px;
+  }
+  .infos-fleet .ship > .equipments,
+  .infos-fleet .ship > .attributes {
+    position: relative;
+  }
+  .infos-fleet .ship > .options {
+    height: 40px;
+  }
+  .infos-fleet .ship[data-shipid] {
+    border-bottom-width: 10px;
+    -webkit-flex-basis: auto;
+        -ms-flex-preferred-size: auto;
+            flex-basis: auto;
+  }
+  .infos-fleet .ship[data-shipid]:before {
+    height: 40px;
+  }
+  .infos-fleet .ship[data-shipid] > dt {
+    height: 40px;
+    line-height: 45px;
+    position: static;
+  }
+  .infos-fleet .ship[data-shipid] > dt > div > .title {
+    padding-top: 0;
+  }
+  .infos-fleet .ship[data-shipid] > dt > div > .info {
+    margin-top: 0;
+    line-height: inherit;
+  }
+  .infos-fleet .ship[data-shipid] > dt:after {
+    bottom: auto;
+    top: 0;
+    height: 40px;
+    z-index: -1;
+    background: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.1) 20%, transparent);
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.1) 20%, transparent);
+    border-bottom: rgba(255, 255, 255, 0.15) 1px solid;
+  }
+  .infos-fleet .equipments {
+    width: auto;
+    height: auto;
+    padding: 4px 2px 4px 4px;
+    overflow: hidden;
+    left: 0;
+    top: 0;
+  }
+  .infos-fleet .attributes {
+    position: relative;
+    left: 0;
+    width: 100%;
+    height: auto;
+    bottom: auto;
+    padding: 0 4px 4px 4px;
+    line-height: 22px;
+  }
+  .infos-fleet .attributes:after {
+    -webkit-transform: none;
+        -ms-transform: none;
+            transform: none;
+    left: 0;
+    right: 0;
+    -webkit-mask: none;
+            mask: none;
+    border: 0;
+    background: transparent;
+  }
+  .infos-fleet .equipment {
+    float: left;
+    height: 36px;
+    margin-top: 2px;
+    width: calc(50% - 2px);
+    border-radius: 0 !important;
+  }
+}
+@media all and (max-width: 540px) {
+  .infos-fleet > .fleets .tabs label {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  .infos-fleet > .fleets .options {
+    font-size: 12px;
+  }
+  .infos-fleet > .fleets .options > .option,
+  .infos-fleet > .fleets .options > .icon {
+    margin-left: 6px;
+  }
+  .infos-fleet > .fleets .options > .option-hqlv input {
+    width: 26px;
+    height: 20px;
+    margin-left: 2px;
+  }
+  .infos-fleet > .fleets .options > .option.mod-dropdown {
+    padding-right: 12px;
   }
 }
 .infos-ship {
