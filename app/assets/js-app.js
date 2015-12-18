@@ -17,10 +17,13 @@
 	_g.shipMaxLv = 155; // Ship.lvlMax
 	
 	// check for NW.js app
-		_g.isNWjs = (typeof node != 'undefined' || typeof nw != 'undefined')
+		_g.isNWjs = (typeof node != 'undefined' || typeof nw != 'undefined');
+	
+	// Web App for Android/iOS
+		_g.isWebApp = (navigator.standalone || _g.uriSearch('utm_source') == 'web_app_manifest');
 	
 	// check for client/app enviroment, eg. NW.js, Native Web App, Universal Windows App
-		_g.isClient = _g.isNWjs ? true : false;
+		_g.isClient = (_g.isNWjs || _g.isWebApp);
 	
 	function eventName(event, name){
 		name = name ? ('.' + name) : ''
@@ -6866,7 +6869,7 @@ class InfosFleet{
 								if( typeof content == 'undefined' ){
 									content = this.doms['name'].text()
 								}
-								
+								this.doms['name'].html(content)
 								this._name = content
 								return this.doms['name']
 							}.bind(this),
