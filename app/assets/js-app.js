@@ -1733,10 +1733,10 @@ let Formula = {
 										let multipler = 0
 										// 鱼雷
 											if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.Torpedos ) > -1 )
-												multipler = 1.2
+												multipler = options.isNight ? 1 : 1.2
 										// 机枪
 											if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.AAGuns ) > -1 )
-												multipler = 1
+												multipler = options.isNight ? 1 : 1.2
 										result+= Math.sqrt(star_by_slot[index]) * multipler
 									}
 							}
@@ -2406,14 +2406,10 @@ Formula.losPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot
 								let multipler = 1
 								// 对潜装备
 									if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.AntiSubmarines ) > -1 )
-										multipler = 0.75
+										multipler = options.isNight ? 0 : 0.75
 								// 大口径主炮
-									if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.LargeCalibers ) > -1 ){
-										if( options.isNight )
-											multipler = 1
-										else
-											multipler = 1.5
-									}
+									if( $.inArray( equipments_by_slot[index].type, Formula.equipmentType.LargeCalibers ) > -1 )
+										multipler = options.isNight ? 1 : 1.5
 								result+= Math.sqrt(star_by_slot[index]) * multipler
 							}
 						}

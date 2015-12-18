@@ -2670,9 +2670,9 @@ var Formula = {
 						if (star_by_slot[index]) {
 							var multipler = 0;
 
-							if ($.inArray(equipments_by_slot[index].type, Formula.equipmentType.Torpedos) > -1) multipler = 1.2;
+							if ($.inArray(equipments_by_slot[index].type, Formula.equipmentType.Torpedos) > -1) multipler = options.isNight ? 1 : 1.2;
 
-							if ($.inArray(equipments_by_slot[index].type, Formula.equipmentType.AAGuns) > -1) multipler = 1;
+							if ($.inArray(equipments_by_slot[index].type, Formula.equipmentType.AAGuns) > -1) multipler = options.isNight ? 1 : 1.2;
 							result += Math.sqrt(star_by_slot[index]) * multipler;
 						}
 					}
@@ -3159,11 +3159,9 @@ Formula.calcByShip.shellingPower = function (ship, equipments_by_slot, star_by_s
 					if ($.inArray(equipments_by_slot[index].type, Formula.equipmentType.Torpedos.concat(Formula.equipmentType.Radars)) < 0) {
 						var multipler = 1;
 
-						if ($.inArray(equipments_by_slot[index].type, Formula.equipmentType.AntiSubmarines) > -1) multipler = 0.75;
+						if ($.inArray(equipments_by_slot[index].type, Formula.equipmentType.AntiSubmarines) > -1) multipler = options.isNight ? 0 : 0.75;
 
-						if ($.inArray(equipments_by_slot[index].type, Formula.equipmentType.LargeCalibers) > -1) {
-							if (options.isNight) multipler = 1;else multipler = 1.5;
-						}
+						if ($.inArray(equipments_by_slot[index].type, Formula.equipmentType.LargeCalibers) > -1) multipler = options.isNight ? 1 : 1.5;
 						result += Math.sqrt(star_by_slot[index]) * multipler;
 					}
 				}
