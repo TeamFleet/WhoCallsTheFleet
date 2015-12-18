@@ -2136,7 +2136,7 @@ table{
 			display: 	none;
 		}
 		main:after{
-			background: rgba(0,0,0,.85);
+			background: rgba(0,0,0,.8);
 		}
 		#layout.ready{
 			//nav,
@@ -2152,6 +2152,14 @@ table{
 			main{
 				top: 		0;
 				transform: 	translateY(100%);
+			}
+			&>.bg_controls{
+				&>s{
+					display: 	none;
+				}
+				&:after{
+					background: rgba(0, 0, 0, .8);
+				}
 			}
 		}
 		#layout.is-infos-on,

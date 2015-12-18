@@ -166,6 +166,10 @@
 		if( debugmode )
 			console.log.apply(console, arguments)
 	}
+	
+	_g.save = function( url, n ){
+		_g.file_save_as(url, n)
+	}
 
 
 

@@ -52,12 +52,8 @@ class TablelistFleets extends Tablelist{
 									.on('click',function(){
 										_db.fleets.persistence.compactDatafile()
 										if( _g.isNWjs ){
-											_g.file_save_as(_db.fleets.filename, 'fleets.json')
+											_g.save(_db.fleets.filename, 'fleets.json')
 										}else{
-											if( !TablelistFleets.btn_exportFile_link ){
-												TablelistFleets.btn_exportFile_link = document.createElement('a')
-												TablelistFleets.btn_exportFile_link.download = 'fleets.json'
-											}
 											_frame.app_main.loading_start('tablelist_fleets_export', false)
 											let data = ''
 											_db.fleets.find({}, function(err, docs){
@@ -68,10 +64,9 @@ class TablelistFleets extends Tablelist{
 														data+= JSON.stringify(doc) + '\n'
 													})
 													let blob = new Blob([data], {type: "application/json"})
-													TablelistFleets.btn_exportFile_link.href = URL.createObjectURL(blob)
-													TablelistFleets.btn_exportFile_link.click()
-													_frame.app_main.loading_complete('tablelist_fleets_export')
+													_g.save( URL.createObjectURL(blob), 'fleets.json' )
 												}
+												_frame.app_main.loading_complete('tablelist_fleets_export')
 											})
 										}
 									})

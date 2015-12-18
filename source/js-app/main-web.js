@@ -175,6 +175,17 @@
 			return '/' + t + '/' + state.id + '/' + extra
 		}
 	}
+	
+	_g.save = function( url, n ){
+		if( !_g.save_ )
+			_g.save_ = document.createElement('a')
+		_g.save_.href = url
+		if( typeof _g.save_.download != 'undefined' )
+			_g.save_.download = n
+		else
+			_g.save_.target = '_blank'
+		_g.save_.click()
+	}
 
 
 
@@ -653,8 +664,12 @@ _frame.app_main = {
 						.append(
 							$('<button class="prev" icon="arrow-left"/>')
 									.on('click', function(){
-										var pathParse = node.path.parse(_frame.app_main.bgimg_path)
-											,index = $.inArray( pathParse['base'], _frame.app_main.bgimgs ) - 1
+										let index = $.inArray(
+												_frame.app_main.bgimg_path.substr(
+													_frame.app_main.bgimg_path.indexOf(_g.path.bgimg_dir) + _g.path.bgimg_dir.length
+												),
+												_frame.app_main.bgimgs
+											) - 1
 										if( index < 0 )
 											index = _frame.app_main.bgimgs.length - 1
 										_frame.app_main.change_bgimg( [_frame.app_main.bgimgs[index]] )
@@ -671,16 +686,28 @@ _frame.app_main = {
 							$('<button class="back"/>')
 									.html('保存图片')
 									.on('click', function(){
+										_g.save(
+											_frame.app_main.bgimg_path,
+											_frame.app_main.bgimg_path.substr(
+													_frame.app_main.bgimg_path.indexOf(_g.path.bgimg_dir) + _g.path.bgimg_dir.length
+												)
+										)
+										/*
 										var pathParse = node.path.parse(_frame.app_main.bgimg_path)
 											,index = $.inArray( pathParse['base'], _frame.app_main.bgimgs )
 										_g.file_save_as( _frame.app_main.bgimg_path, (index + 1) + pathParse['ext'] )
+										*/
 									})
 						)
 						.append(
 							$('<button class="next" icon="arrow-right"/>')
 									.on('click', function(){
-										var pathParse = node.path.parse(_frame.app_main.bgimg_path)
-											,index = $.inArray( pathParse['base'], _frame.app_main.bgimgs ) + 1
+										let index = $.inArray(
+												_frame.app_main.bgimg_path.substr(
+													_frame.app_main.bgimg_path.indexOf(_g.path.bgimg_dir) + _g.path.bgimg_dir.length
+												),
+												_frame.app_main.bgimgs
+											) + 1
 										if( index >= _frame.app_main.bgimgs.length )
 											index = 0
 										_frame.app_main.change_bgimg( [_frame.app_main.bgimgs[index]] )
