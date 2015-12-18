@@ -2,6 +2,9 @@ main[data-theme="equipments"],
 main[data-theme="equipment"]{
 	&:after{
 		background:	hsla(149, 20%, 18%, .70);
+		@media all and (max-width: @mobileview-breaking-point ){
+			background-color:	hsla(149, 20%, 18%, .95);
+		}
 	}
 	& ~ .nav-mask:before{
 		background: hsl(149, 65%, 20%);

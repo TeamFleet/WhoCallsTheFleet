@@ -2938,8 +2938,10 @@ main {
   line-height: 1.5;
   color: #f2f2f2;
   top: 100%;
-  -webkit-transition-property: top;
-  transition-property: top;
+  -webkit-transition-property: top, -webkit-transform;
+  transition-property: top, -webkit-transform;
+  transition-property: top, transform;
+  transition-property: top, transform, -webkit-transform;
 }
 main h1,
 main h2,
@@ -4581,10 +4583,32 @@ body.mod-capture #tip {
     -webkit-transition-property: background-color;
     transition-property: background-color;
   }
-  #layout.ready nav ~ .nav-mask:before {
+  main {
+    top: 0;
+    -webkit-transform: translateY(100%);
+        -ms-transform: translateY(100%);
+            transform: translateY(100%);
+  }
+  main > s {
+    display: none;
+  }
+  main:after {
+    background: rgba(0, 0, 0, 0.85);
+  }
+  #layout.ready nav ~ .nav-mask:before,
+  #layout.ready main {
     -webkit-transform: translateY(0);
         -ms-transform: translateY(0);
             transform: translateY(0);
+  }
+  #layout.ready.mod-only-bg nav {
+    opacity: 1;
+  }
+  #layout.ready.mod-only-bg main {
+    top: 0;
+    -webkit-transform: translateY(100%);
+        -ms-transform: translateY(100%);
+            transform: translateY(100%);
   }
   #layout.is-infos-on nav > div.history .button,
   #layout.mode-selection nav > div.history .button {
@@ -8483,6 +8507,7 @@ h6 + section.update_journal {
 @media all and (max-height: 600px) {
   .infos-fleet {
     top: -10px;
+    margin-top: 0;
     height: calc(100% + 20px);
   }
 }
@@ -10108,6 +10133,11 @@ main[data-theme="2"]:after {
   background-repeat: repeat-x;
   background-position: 0 0;
 }
+@media all and (max-width: 720px) {
+  main[data-theme="2"]:after {
+    background-color: rgba(63, 54, 52, 0.95);
+  }
+}
 main[data-theme="2"] .infos-fleet h3[data-content],
 main[data-theme="2"] .infos-fleet h4[data-content],
 main[data-theme="2"] .infos-fleet h5[data-content] {
@@ -10205,6 +10235,11 @@ main[data-theme="3"]:after {
   background-image: linear-gradient(to bottom, #fff099 4px, rgba(255, 236, 128, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
+}
+@media all and (max-width: 720px) {
+  main[data-theme="3"]:after {
+    background-color: rgba(63, 61, 52, 0.95);
+  }
 }
 main[data-theme="3"] .infos-fleet h3[data-content],
 main[data-theme="3"] .infos-fleet h4[data-content],
@@ -10304,6 +10339,11 @@ main[data-theme="4"]:after {
   background-repeat: repeat-x;
   background-position: 0 0;
 }
+@media all and (max-width: 720px) {
+  main[data-theme="4"]:after {
+    background-color: rgba(57, 63, 52, 0.95);
+  }
+}
 main[data-theme="4"] .infos-fleet h3[data-content],
 main[data-theme="4"] .infos-fleet h4[data-content],
 main[data-theme="4"] .infos-fleet h5[data-content] {
@@ -10401,6 +10441,11 @@ main[data-theme="5"]:after {
   background-image: linear-gradient(to bottom, #99ffac 4px, rgba(128, 255, 151, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
+}
+@media all and (max-width: 720px) {
+  main[data-theme="5"]:after {
+    background-color: rgba(52, 63, 54, 0.95);
+  }
 }
 main[data-theme="5"] .infos-fleet h3[data-content],
 main[data-theme="5"] .infos-fleet h4[data-content],
@@ -10500,6 +10545,11 @@ main[data-theme="6"]:after {
   background-repeat: repeat-x;
   background-position: 0 0;
 }
+@media all and (max-width: 720px) {
+  main[data-theme="6"]:after {
+    background-color: rgba(52, 63, 61, 0.95);
+  }
+}
 main[data-theme="6"] .infos-fleet h3[data-content],
 main[data-theme="6"] .infos-fleet h4[data-content],
 main[data-theme="6"] .infos-fleet h5[data-content] {
@@ -10597,6 +10647,11 @@ main[data-theme="7"]:after {
   background-image: linear-gradient(to bottom, #99caff 4px, rgba(128, 189, 255, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
+}
+@media all and (max-width: 720px) {
+  main[data-theme="7"]:after {
+    background-color: rgba(52, 57, 63, 0.95);
+  }
 }
 main[data-theme="7"] .infos-fleet h3[data-content],
 main[data-theme="7"] .infos-fleet h4[data-content],
@@ -10696,6 +10751,11 @@ main[data-theme="8"]:after {
   background-repeat: repeat-x;
   background-position: 0 0;
 }
+@media all and (max-width: 720px) {
+  main[data-theme="8"]:after {
+    background-color: rgba(54, 52, 63, 0.95);
+  }
+}
 main[data-theme="8"] .infos-fleet h3[data-content],
 main[data-theme="8"] .infos-fleet h4[data-content],
 main[data-theme="8"] .infos-fleet h5[data-content] {
@@ -10794,6 +10854,11 @@ main[data-theme="9"]:after {
   background-repeat: repeat-x;
   background-position: 0 0;
 }
+@media all and (max-width: 720px) {
+  main[data-theme="9"]:after {
+    background-color: rgba(61, 52, 63, 0.95);
+  }
+}
 main[data-theme="9"] .infos-fleet h3[data-content],
 main[data-theme="9"] .infos-fleet h4[data-content],
 main[data-theme="9"] .infos-fleet h5[data-content] {
@@ -10891,6 +10956,11 @@ main[data-theme="10"]:after {
   background-image: linear-gradient(to bottom, #ffb3d7 4px, rgba(255, 153, 202, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
+}
+@media all and (max-width: 720px) {
+  main[data-theme="10"]:after {
+    background-color: rgba(63, 52, 57, 0.95);
+  }
 }
 main[data-theme="10"] .infos-fleet h3[data-content],
 main[data-theme="10"] .infos-fleet h4[data-content],
@@ -11383,6 +11453,10 @@ main[data-theme="10"] .infos-fleet .equipment-name {
   }
 }
 @media all and (max-width: 720px) {
+  .infos-fleet header .preview {
+    position: relative;
+    font-size: 100%;
+  }
   .infos-fleet .ship:before {
     left: -6px;
     border-right-width: 3px;
@@ -11466,7 +11540,7 @@ main[data-theme="10"] .infos-fleet .equipment-name {
     padding-right: 6px;
   }
   .infos-fleet > .fleets .options {
-    font-size: 12px;
+    font-size: 100%;
   }
   .infos-fleet > .fleets .options > .option,
   .infos-fleet > .fleets .options > .icon {
@@ -14304,6 +14378,12 @@ main[data-theme="ships"]:after,
 main[data-theme="ship"]:after {
   background: rgba(37, 49, 55, 0.7);
 }
+@media all and (max-width: 720px) {
+  main[data-theme="ships"]:after,
+  main[data-theme="ship"]:after {
+    background-color: rgba(37, 49, 55, 0.95);
+  }
+}
 main[data-theme="ships"] ~ .nav-mask:before,
 main[data-theme="ship"] ~ .nav-mask:before {
   background: #123f54;
@@ -14383,6 +14463,12 @@ main[data-theme="entities"]:after,
 main[data-theme="entity"]:after {
   background: rgba(37, 55, 55, 0.7);
 }
+@media all and (max-width: 720px) {
+  main[data-theme="entities"]:after,
+  main[data-theme="entity"]:after {
+    background-color: rgba(37, 55, 55, 0.95);
+  }
+}
 main[data-theme="entities"] ~ .nav-mask:before,
 main[data-theme="entity"] ~ .nav-mask:before {
   background: #125454;
@@ -14398,6 +14484,12 @@ main[data-theme="entity"] ~ .nav-mask:before {
 main[data-theme="equipments"]:after,
 main[data-theme="equipment"]:after {
   background: rgba(37, 55, 46, 0.7);
+}
+@media all and (max-width: 720px) {
+  main[data-theme="equipments"]:after,
+  main[data-theme="equipment"]:after {
+    background-color: rgba(37, 55, 46, 0.95);
+  }
 }
 main[data-theme="equipments"] ~ .nav-mask:before,
 main[data-theme="equipment"] ~ .nav-mask:before {
@@ -14426,6 +14518,11 @@ main[data-theme="equipment"] ~ .nav-mask:before {
 }
 main[data-theme="arsenal"]:after {
   background: rgba(43, 55, 37, 0.7);
+}
+@media all and (max-width: 720px) {
+  main[data-theme="arsenal"]:after {
+    background-color: rgba(43, 55, 37, 0.95);
+  }
 }
 main[data-theme="arsenal"] ~ .nav-mask:before {
   background: #285412;
@@ -14945,6 +15042,11 @@ main[data-theme="arsenal"] ~ .nav-mask:before {
 main[data-theme="about"]:after {
   background: rgba(55, 37, 37, 0.7);
 }
+@media all and (max-width: 720px) {
+  main[data-theme="about"]:after {
+    background-color: rgba(55, 37, 37, 0.95);
+  }
+}
 main[data-theme="about"] ~ .nav-mask:before {
   background: #541212;
 }
@@ -15194,6 +15296,11 @@ main[data-theme="about"] ~ .nav-mask:before {
 }
 main[data-theme="calctp"]:after {
   background: rgba(55, 52, 37, 0.7);
+}
+@media all and (max-width: 720px) {
+  main[data-theme="calctp"]:after {
+    background-color: rgba(55, 52, 37, 0.95);
+  }
 }
 main[data-theme="calctp"] ~ .nav-mask:before {
   background: #544812;

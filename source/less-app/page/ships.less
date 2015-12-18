@@ -2,6 +2,9 @@ main[data-theme="ships"],
 main[data-theme="ship"]{
 	&:after{
 		background:	hsla(@hue_theme_ship, 20%, 18%, .70);
+		@media all and (max-width: @mobileview-breaking-point ){
+			background-color:	hsla(@hue_theme_ship, 20%, 18%, .95);
+		}
 	}
 	& ~ .nav-mask:before{
 		background: hsl(@hue_theme_ship, 65%, 20%);

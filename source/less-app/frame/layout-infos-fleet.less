@@ -25,6 +25,7 @@
 	
 	@media all and (max-height: 600px){
 		top: 	-10px;
+		margin-top: 0;
 		height: ~"calc(100% + 20px)";
 	}
 	
@@ -1549,6 +1550,9 @@ main{
 			background-image: 	linear-gradient(to bottom, @color2 4px, @color3 4px, transparent 25%);
 			background-repeat: 	repeat-x;
 			background-position:0 0;
+			@media all and (max-width: @mobileview-breaking-point ){
+				background-color:	hsla(@hue, 10%, 22.5%, .95);
+			}
 		}
 		//&>.wrapper{
 			.infos-fleet{
@@ -2166,6 +2170,11 @@ main{
 
 
 @media all and (max-width: @screen-width-t4-breaking-point ){.infos-fleet{
+	header .preview{
+		position: 	relative;
+		font-size: 	100%;
+	}
+	
 	.ship{
 		&:before{
 			left: 		-6px;
@@ -2254,7 +2263,7 @@ main{
 			padding-right: 6px;
 		}
 		.options{
-			font-size: 	12px;
+			font-size: 	100%;
 			&>.option,
 			&>.icon{
 				margin-left: 	6px;
