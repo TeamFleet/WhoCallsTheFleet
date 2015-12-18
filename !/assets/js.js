@@ -2434,7 +2434,9 @@ _g.defaultHqLv = 90;
 _g.shipMaxLv = 155;
 _g.isNWjs = typeof node != 'undefined' || typeof nw != 'undefined';
 
-_g.isClient = _g.isNWjs ? !0 : !1;
+_g.isWebApp = navigator.standalone || _g.uriSearch('utm_source') == 'web_app_manifest';
+
+_g.isClient = _g.isNWjs || _g.isWebApp;
 
 function eventName(event, name) {
 	name = name ? '.' + name : '';
