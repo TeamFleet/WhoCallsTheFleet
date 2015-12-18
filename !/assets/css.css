@@ -1184,7 +1184,6 @@ body > .menus > .menu {
   max-width: 100%;
   max-height: 100%;
   -webkit-transform: translateY(-10px);
-      -ms-transform: translateY(-10px);
           transform: translateY(-10px);
   border: 0.05rem solid rgba(255, 255, 255, 0.3);
 }
@@ -1281,12 +1280,10 @@ body > .menus > .menu.mod-blur-shot > .body {
 body > .menus > .menu.on {
   opacity: 1;
   -webkit-transform: translateY(0);
-      -ms-transform: translateY(0);
           transform: translateY(0);
 }
 body > .menus > .menu.on > .blured {
   -webkit-transform: translateY(0);
-      -ms-transform: translateY(0);
           transform: translateY(0);
 }
 body > .menus > .menu.on.mod-blur-backdrop {
@@ -1316,7 +1313,6 @@ body > .menus > .menu > .blured {
   transition-property: transform;
   transition-property: transform, -webkit-transform;
   -webkit-transform: translateY(10px);
-      -ms-transform: translateY(10px);
           transform: translateY(10px);
 }
 body > .modal {
@@ -2478,7 +2474,6 @@ body.mod-capture #layout {
   -ms-user-select: none;
   pointer-events: none;
   -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
           transform: translateX(-50%);
   animation: fadein 0.3s ease-out;
   -webkit-animation: fadein 0.3s ease-out;
@@ -2509,7 +2504,6 @@ body.mod-capture #layout {
   -webkit-transition-duration: .75s;
           transition-duration: .75s;
   -webkit-transform: translateY(100%);
-      -ms-transform: translateY(100%);
           transform: translateY(100%);
 }
 #layout > .g > .close {
@@ -2572,7 +2566,6 @@ nav:after {
 nav:before {
   z-index: 5;
   -webkit-transform: translateX(-100%);
-      -ms-transform: translateX(-100%);
           transform: translateX(-100%);
   width: 10%;
   height: 4px;
@@ -2751,7 +2744,6 @@ nav > div .button[mod-state]:after {
   top: 50%;
   left: 0;
   -webkit-transform: translateY(-28px);
-      -ms-transform: translateY(-28px);
           transform: translateY(-28px);
   line-height: 12px;
   padding: 0 3px;
@@ -3315,7 +3307,6 @@ main:after {
   top: 0;
   left: 50%;
   -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
           transform: translateX(-50%);
   background: rgba(255, 64, 64, 0.5);
   font-size: 16px;
@@ -3423,20 +3414,17 @@ main:after {
 }
 #layout.is-infos-on nav > div.history ~ div {
   -webkit-transform: translateX(140px);
-      -ms-transform: translateX(140px);
           transform: translateX(140px);
 }
 @media all and (max-width: 900px) {
   #layout.is-infos-on nav > div.history ~ div {
     -webkit-transform: translateX(120px);
-        -ms-transform: translateX(120px);
             transform: translateX(120px);
   }
 }
 @media all and (max-width: 800px) {
   #layout.is-infos-on nav > div.history ~ div {
     -webkit-transform: translateX(110px);
-        -ms-transform: translateX(110px);
             transform: translateX(110px);
   }
 }
@@ -3636,7 +3624,6 @@ main:after {
 #layout.ready.mod-only-bg > nav {
   opacity: 0;
   -webkit-transform: translateY(-100%);
-      -ms-transform: translateY(-100%);
           transform: translateY(-100%);
   /*
 			.top( -44 );
@@ -3665,7 +3652,6 @@ main:after {
 }
 #layout.ready.mod-only-bg > nav ~ .nav-mask:before {
   -webkit-transform: translateY(-100%);
-      -ms-transform: translateY(-100%);
           transform: translateY(-100%);
 }
 #layout.ready.mod-only-bg > main {
@@ -3723,20 +3709,17 @@ main:after {
 }
 .mode-selection nav > div.history ~ div {
   -webkit-transform: translateX(140px);
-      -ms-transform: translateX(140px);
           transform: translateX(140px);
 }
 @media all and (max-width: 900px) {
   .mode-selection nav > div.history ~ div {
     -webkit-transform: translateX(120px);
-        -ms-transform: translateX(120px);
             transform: translateX(120px);
   }
 }
 @media all and (max-width: 800px) {
   .mode-selection nav > div.history ~ div {
     -webkit-transform: translateX(110px);
-        -ms-transform: translateX(110px);
             transform: translateX(110px);
   }
 }
@@ -3752,7 +3735,6 @@ main:after {
 }
 .mode-selection > nav > div.pages {
   -webkit-transform: translateY(-100%);
-      -ms-transform: translateY(-100%);
           transform: translateY(-100%);
   opacity: 0;
 }
@@ -3881,7 +3863,6 @@ main:after {
 .layout-only_bg #layout.ready.mod-only-bg > nav {
   opacity: 0;
   -webkit-transform: translateY(-100%);
-      -ms-transform: translateY(-100%);
           transform: translateY(-100%);
   /*
 			.top( -44 );
@@ -3910,7 +3891,6 @@ main:after {
 }
 .layout-only_bg #layout.ready.mod-only-bg > nav ~ .nav-mask:before {
   -webkit-transform: translateY(-100%);
-      -ms-transform: translateY(-100%);
           transform: translateY(-100%);
 }
 .layout-only_bg #layout.ready.mod-only-bg > main {
@@ -3952,7 +3932,6 @@ main:after {
 }
 #layout.mod-g > .g {
   -webkit-transform: translateY(0);
-      -ms-transform: translateY(0);
           transform: translateY(0);
 }
 #layout.mod-g.ready.only_bg > main {
@@ -4402,7 +4381,6 @@ body.mod-capture #tip {
             backdrop-filter: blur(7.5px);
     border-right: 1px solid rgba(255, 255, 255, 0.15);
     -webkit-transform: translateX(-100%) !important;
-        -ms-transform: translateX(-100%) !important;
             transform: translateX(-100%) !important;
     -webkit-transition-timing-function: ease-out;
             transition-timing-function: ease-out;
@@ -4425,7 +4403,6 @@ body.mod-capture #tip {
     top: -0.5em;
     left: .5em;
     -webkit-transform: none;
-        -ms-transform: none;
             transform: none;
     vertical-align: super;
   }
@@ -4488,7 +4465,6 @@ body.mod-capture #tip {
   }
   nav > .title label i {
     -webkit-transform: translateY(-1px);
-        -ms-transform: translateY(-1px);
             transform: translateY(-1px);
     background: rgba(255, 255, 255, 0.75);
     width: 100%;
@@ -4507,7 +4483,6 @@ body.mod-capture #tip {
   nav > .title label i:after {
     content: "";
     -webkit-transform-origin: 100% 50%;
-        -ms-transform-origin: 100% 50%;
             transform-origin: 100% 50%;
     -webkit-transition: none 0.2s ease-out;
     transition: none 0.2s ease-out;
@@ -4524,12 +4499,10 @@ body.mod-capture #tip {
   }
   nav > .title label i:before {
     -webkit-transform: translateY(-6px);
-        -ms-transform: translateY(-6px);
             transform: translateY(-6px);
   }
   nav > .title label i:after {
     -webkit-transform: translateY(4px);
-        -ms-transform: translateY(4px);
             transform: translateY(4px);
   }
   nav > .title label:hover i {
@@ -4548,7 +4521,6 @@ body.mod-capture #tip {
     margin-left: 0;
     padding-left: 0;
     -webkit-transform: translateX(72px) !important;
-        -ms-transform: translateX(72px) !important;
             transform: translateX(72px) !important;
   }
   nav ~ .nav-mask:before,
@@ -4572,7 +4544,6 @@ body.mod-capture #tip {
     -webkit-transition-duration: 0.75s;
             transition-duration: 0.75s;
     -webkit-transform: translateY(-100%);
-        -ms-transform: translateY(-100%);
             transform: translateY(-100%);
   }
   nav ~ .nav-mask:after {
@@ -4586,7 +4557,6 @@ body.mod-capture #tip {
   main {
     top: 0;
     -webkit-transform: translateY(100%);
-        -ms-transform: translateY(100%);
             transform: translateY(100%);
   }
   main > s {
@@ -4598,7 +4568,6 @@ body.mod-capture #tip {
   #layout.ready nav ~ .nav-mask:before,
   #layout.ready main {
     -webkit-transform: translateY(0);
-        -ms-transform: translateY(0);
             transform: translateY(0);
   }
   #layout.ready.mod-only-bg nav {
@@ -4607,7 +4576,6 @@ body.mod-capture #tip {
   #layout.ready.mod-only-bg main {
     top: 0;
     -webkit-transform: translateY(100%);
-        -ms-transform: translateY(100%);
             transform: translateY(100%);
   }
   #layout.ready.mod-only-bg > .bg_controls > s {
@@ -4627,7 +4595,6 @@ body.mod-capture #tip {
   #layout.is-infos-on nav > div.history ~ .title label,
   #layout.mode-selection nav > div.history ~ .title label {
     -webkit-transform: rotate(180deg);
-        -ms-transform: rotate(180deg);
             transform: rotate(180deg);
   }
   #layout.is-infos-on nav > div.history ~ .title label i,
@@ -4643,24 +4610,20 @@ body.mod-capture #tip {
   #layout.is-infos-on nav > div.history ~ .title label i:before,
   #layout.mode-selection nav > div.history ~ .title label i:before {
     -webkit-transform: translateY(-0.5px) rotate(45deg);
-        -ms-transform: translateY(-0.5px) rotate(45deg);
             transform: translateY(-0.5px) rotate(45deg);
   }
   #layout.is-infos-on nav > div.history ~ .title label i:after,
   #layout.mode-selection nav > div.history ~ .title label i:after {
     -webkit-transform: translateY(-1.5px) rotate(-45deg);
-        -ms-transform: translateY(-1.5px) rotate(-45deg);
             transform: translateY(-1.5px) rotate(-45deg);
   }
   #view-mobile-menu:checked ~ nav > div.pages {
     -webkit-transform: translateX(0) !important;
-        -ms-transform: translateX(0) !important;
             transform: translateX(0) !important;
     box-shadow: 0 10px 20px 5px #000;
   }
   #view-mobile-menu:checked ~ nav > .title label {
     -webkit-transform: rotate(180deg);
-        -ms-transform: rotate(180deg);
             transform: rotate(180deg);
   }
   #view-mobile-menu:checked ~ nav > .title label i {
@@ -4672,12 +4635,10 @@ body.mod-capture #tip {
   }
   #view-mobile-menu:checked ~ nav > .title label i:before {
     -webkit-transform: translateY(-0.5px) rotate(45deg);
-        -ms-transform: translateY(-0.5px) rotate(45deg);
             transform: translateY(-0.5px) rotate(45deg);
   }
   #view-mobile-menu:checked ~ nav > .title label i:after {
     -webkit-transform: translateY(-1.5px) rotate(-45deg);
-        -ms-transform: translateY(-1.5px) rotate(-45deg);
             transform: translateY(-1.5px) rotate(-45deg);
   }
   #view-mobile-menu:checked ~ nav > .history,
@@ -4721,7 +4682,6 @@ body.mod-capture #tip {
     color: #fff;
     font-size: 16px;
     -webkit-transform: translateX(60px) !important;
-        -ms-transform: translateX(60px) !important;
             transform: translateX(60px) !important;
   }
   nav ~ .nav-mask:before {
@@ -5083,7 +5043,6 @@ body.mod-capture #tip {
 				.clip-path(~"polygon(0% 35%, 60% 35%, 60% 0%, 100% 50%, 60% 100%, 60% 65%, 0% 65%)");
 			*/
   -webkit-transform: scaleY(0.85);
-      -ms-transform: scaleY(0.85);
           transform: scaleY(0.85);
 }
 .improvement > strong > b:before,
@@ -5750,7 +5709,6 @@ body.mod-capture #tip {
   z-index: 5;
   left: 50%;
   -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
           transform: translateX(-50%);
   background: rgba(255, 64, 64, 0.5);
   font-size: 16px;
@@ -6430,7 +6388,6 @@ body.mod-capture #tip {
   font-size: 22px;
   color: #ffffff;
   -webkit-transform: rotate(15deg);
-      -ms-transform: rotate(15deg);
           transform: rotate(15deg);
   top: 0;
   left: 80px;
@@ -6597,12 +6554,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="0"]:checked ~ .tablelist-container p.title[data-header="0"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="0"]:checked ~ .tablelist-container p.title[data-header="0"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="1"]:not(:checked) ~ .tablelist-container p.title[data-header="1"] label.checkbox {
@@ -6619,12 +6574,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="1"]:checked ~ .tablelist-container p.title[data-header="1"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="1"]:checked ~ .tablelist-container p.title[data-header="1"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="2"]:not(:checked) ~ .tablelist-container p.title[data-header="2"] label.checkbox {
@@ -6641,12 +6594,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="2"]:checked ~ .tablelist-container p.title[data-header="2"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="2"]:checked ~ .tablelist-container p.title[data-header="2"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="3"]:not(:checked) ~ .tablelist-container p.title[data-header="3"] label.checkbox {
@@ -6663,12 +6614,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="3"]:checked ~ .tablelist-container p.title[data-header="3"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="3"]:checked ~ .tablelist-container p.title[data-header="3"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="4"]:not(:checked) ~ .tablelist-container p.title[data-header="4"] label.checkbox {
@@ -6685,12 +6634,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="4"]:checked ~ .tablelist-container p.title[data-header="4"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="4"]:checked ~ .tablelist-container p.title[data-header="4"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="5"]:not(:checked) ~ .tablelist-container p.title[data-header="5"] label.checkbox {
@@ -6707,12 +6654,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="5"]:checked ~ .tablelist-container p.title[data-header="5"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="5"]:checked ~ .tablelist-container p.title[data-header="5"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="6"]:not(:checked) ~ .tablelist-container p.title[data-header="6"] label.checkbox {
@@ -6729,12 +6674,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="6"]:checked ~ .tablelist-container p.title[data-header="6"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="6"]:checked ~ .tablelist-container p.title[data-header="6"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="7"]:not(:checked) ~ .tablelist-container p.title[data-header="7"] label.checkbox {
@@ -6751,12 +6694,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="7"]:checked ~ .tablelist-container p.title[data-header="7"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="7"]:checked ~ .tablelist-container p.title[data-header="7"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="8"]:not(:checked) ~ .tablelist-container p.title[data-header="8"] label.checkbox {
@@ -6773,12 +6714,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="8"]:checked ~ .tablelist-container p.title[data-header="8"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="8"]:checked ~ .tablelist-container p.title[data-header="8"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="9"]:not(:checked) ~ .tablelist-container p.title[data-header="9"] label.checkbox {
@@ -6795,12 +6734,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="9"]:checked ~ .tablelist-container p.title[data-header="9"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="9"]:checked ~ .tablelist-container p.title[data-header="9"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="10"]:not(:checked) ~ .tablelist-container p.title[data-header="10"] label.checkbox {
@@ -6817,12 +6754,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="10"]:checked ~ .tablelist-container p.title[data-header="10"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="10"]:checked ~ .tablelist-container p.title[data-header="10"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="11"]:not(:checked) ~ .tablelist-container p.title[data-header="11"] label.checkbox {
@@ -6839,12 +6774,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="11"]:checked ~ .tablelist-container p.title[data-header="11"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="11"]:checked ~ .tablelist-container p.title[data-header="11"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="12"]:not(:checked) ~ .tablelist-container p.title[data-header="12"] label.checkbox {
@@ -6861,12 +6794,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="12"]:checked ~ .tablelist-container p.title[data-header="12"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="12"]:checked ~ .tablelist-container p.title[data-header="12"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="13"]:not(:checked) ~ .tablelist-container p.title[data-header="13"] label.checkbox {
@@ -6883,12 +6814,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="13"]:checked ~ .tablelist-container p.title[data-header="13"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="13"]:checked ~ .tablelist-container p.title[data-header="13"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="14"]:not(:checked) ~ .tablelist-container p.title[data-header="14"] label.checkbox {
@@ -6905,12 +6834,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="14"]:checked ~ .tablelist-container p.title[data-header="14"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="14"]:checked ~ .tablelist-container p.title[data-header="14"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="15"]:not(:checked) ~ .tablelist-container p.title[data-header="15"] label.checkbox {
@@ -6927,12 +6854,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="15"]:checked ~ .tablelist-container p.title[data-header="15"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="15"]:checked ~ .tablelist-container p.title[data-header="15"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="16"]:not(:checked) ~ .tablelist-container p.title[data-header="16"] label.checkbox {
@@ -6949,12 +6874,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="16"]:checked ~ .tablelist-container p.title[data-header="16"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="16"]:checked ~ .tablelist-container p.title[data-header="16"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="17"]:not(:checked) ~ .tablelist-container p.title[data-header="17"] label.checkbox {
@@ -6971,12 +6894,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="17"]:checked ~ .tablelist-container p.title[data-header="17"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="17"]:checked ~ .tablelist-container p.title[data-header="17"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="18"]:not(:checked) ~ .tablelist-container p.title[data-header="18"] label.checkbox {
@@ -6993,12 +6914,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="18"]:checked ~ .tablelist-container p.title[data-header="18"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="18"]:checked ~ .tablelist-container p.title[data-header="18"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="19"]:not(:checked) ~ .tablelist-container p.title[data-header="19"] label.checkbox {
@@ -7015,12 +6934,10 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="19"]:checked ~ .tablelist-container p.title[data-header="19"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
-      -ms-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships > .shiptype[value="19"]:checked ~ .tablelist-container p.title[data-header="19"] label.checkbox {
   -webkit-transform: translateX(30px);
-      -ms-transform: translateX(30px);
           transform: translateX(30px);
 }
 .tablelist-equipments .tablelist-body > p.row[data-equipmentid] {
@@ -7550,7 +7467,6 @@ body.mod-capture #tip {
         -ms-flex-preferred-size: 26px;
             flex-basis: 26px;
     -webkit-transform: rotate(-30deg);
-        -ms-transform: rotate(-30deg);
             transform: rotate(-30deg);
   }
   .tablelist-equipments .tablelist-body > p.row > span {
@@ -8010,7 +7926,6 @@ body > .menus > .menu.menu-tablelistfleets-options > .body menuitem.option-aircr
   margin-left: 5px;
   vertical-align: text-bottom;
   -webkit-transform: translateY(15%);
-      -ms-transform: translateY(15%);
           transform: translateY(15%);
 }
 body > .menus > .menu.menu-tablelistfleets-options.is-tablelist > .body .option-in-tablelist {
@@ -8690,7 +8605,6 @@ body.mod-capture .infos-fleet > header:after {
   height: 48px;
   line-height: 48px;
   -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
           transform: translateY(-50%);
 }
 body.mod-capture .infos-fleet > header:before {
@@ -9063,7 +8977,6 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   top: 0;
   left: 50%;
   -webkit-transform: translateX(-27.5%);
-      -ms-transform: translateX(-27.5%);
           transform: translateX(-27.5%);
   mask: linear-gradient(to right, transparent, #000 5%);
   -webkit-mask: -webkit-linear-gradient(left, transparent, #000 5%);
@@ -9338,7 +9251,6 @@ body.mod-capture .infos-fleet .ship > .options {
   width: 35%;
   left: 0;
   -webkit-transform: translateX(-40px);
-      -ms-transform: translateX(-40px);
           transform: translateX(-40px);
   opacity: .75;
   font-size: 333.33333333%;
@@ -9371,7 +9283,6 @@ body.mod-capture .infos-fleet .ship > .options {
 }
 .infos-fleet .ship[data-shipid]:hover > dt > s:before {
   -webkit-transform: translateX(-12px);
-      -ms-transform: translateX(-12px);
           transform: translateX(-12px);
   text-shadow: 0 0 30px #000;
   -webkit-transition: none 0.2s ease-out;
@@ -9407,10 +9318,8 @@ body.mod-capture .infos-fleet .ship > .options {
   bottom: 0;
   left: 15px;
   -webkit-transform: skew(-30deg);
-      -ms-transform: skew(-30deg);
           transform: skew(-30deg);
   -webkit-transform-origin: 0 0;
-      -ms-transform-origin: 0 0;
           transform-origin: 0 0;
   background: rgba(0, 0, 0, 0.35);
 }
@@ -9470,10 +9379,8 @@ body.mod-capture .infos-fleet .equipments {
   bottom: 0;
   left: 0;
   -webkit-transform: skew(-30deg);
-      -ms-transform: skew(-30deg);
           transform: skew(-30deg);
   -webkit-transform-origin: 0 0;
-      -ms-transform-origin: 0 0;
           transform-origin: 0 0;
   z-index: -1;
   background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.15) 20%, transparent);
@@ -9499,7 +9406,6 @@ body.mod-capture .infos-fleet .equipments {
   height: 18px;
   line-height: 0;
   -webkit-transform: translateY(-9px);
-      -ms-transform: translateY(-9px);
           transform: translateY(-9px);
   opacity: .65;
   display: inline-block;
@@ -9548,7 +9454,6 @@ body.mod-capture .infos-fleet .equipments {
   top: auto;
   left: auto;
   -webkit-transform: none;
-      -ms-transform: none;
           transform: none;
   display: inline;
 }
@@ -9653,7 +9558,6 @@ body.mod-capture .infos-fleet .equipments {
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank]:not([data-rank=""]) > .equipment-infos > .equipment-rank {
   opacity: 1;
   -webkit-transform: translateY(calc(-50% - 8px));
-      -ms-transform: translateY(calc(-50% - 8px));
           transform: translateY(calc(-50% - 8px));
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank]:not([data-rank=""]) > .equipment-infos > .equipment-rank:before {
@@ -9662,7 +9566,6 @@ body.mod-capture .infos-fleet .equipments {
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank]:not([data-rank=""]) > .equipment-options .equipment-rankselect span {
   color: transparent;
   -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
           transform: translateY(-50%);
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank="1"] > .equipment-infos > .equipment-rank {
@@ -9737,7 +9640,6 @@ body.mod-capture .infos-fleet .equipments {
   background: url(/!/assets/images/improve-max.svg) no-repeat 100% 50%;
   background-size: 24px 15px;
   -webkit-transform: translateY(-95%);
-      -ms-transform: translateY(-95%);
           transform: translateY(-95%);
 }
 .infos-fleet .equipment[data-star="10"] > .equipment-infos > .equipment-star:before {
@@ -9812,7 +9714,6 @@ body.mod-capture .infos-fleet .equipments {
 .infos-fleet .equipment-star,
 .infos-fleet .equipment-rank {
   -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
           transform: translateY(-50%);
 }
 .infos-fleet .equipment-star:before,
@@ -9826,7 +9727,6 @@ body.mod-capture .infos-fleet .equipments {
 }
 .infos-fleet .equipment-carry {
   -webkit-transform: translateY(50%);
-      -ms-transform: translateY(50%);
           transform: translateY(50%);
 }
 .infos-fleet .equipment-carry:before {
@@ -11342,13 +11242,11 @@ main[data-theme="10"] .infos-fleet .equipment-name {
   }
   .infos-fleet .ship > .options button.options:before {
     -webkit-transform: rotate(90deg);
-        -ms-transform: rotate(90deg);
             transform: rotate(90deg);
   }
   .infos-fleet .ship:not([data-shipid]) > dt > div {
     top: 50%;
     -webkit-transform: translateY(-50%);
-        -ms-transform: translateY(-50%);
             transform: translateY(-50%);
   }
   .infos-fleet .ship[data-shipid] {
@@ -11397,10 +11295,8 @@ main[data-theme="10"] .infos-fleet .equipment-name {
   .infos-fleet .attributes:after {
     left: 10px;
     -webkit-transform: skew(30deg);
-        -ms-transform: skew(30deg);
             transform: skew(30deg);
     -webkit-transform-origin: 0 100%;
-        -ms-transform-origin: 0 100%;
             transform-origin: 0 100%;
     background: rgba(0, 0, 0, 0.2);
     border-left: 1px solid rgba(255, 255, 255, 0.25);
@@ -11523,7 +11419,6 @@ main[data-theme="10"] .infos-fleet .equipment-name {
   }
   .infos-fleet .attributes:after {
     -webkit-transform: none;
-        -ms-transform: none;
             transform: none;
     left: 0;
     right: 0;
@@ -12256,7 +12151,6 @@ main[data-theme="10"] .infos-fleet .equipment-name {
   font-size: 24px;
   color: rgba(229, 247, 255, 0.75);
   -webkit-transform: rotate(15deg);
-      -ms-transform: rotate(15deg);
           transform: rotate(15deg);
 }
 .infos-ship > div.remodels .flexgrid > a.unit:before,
@@ -12342,7 +12236,6 @@ main[data-theme="10"] .infos-fleet .equipment-name {
 .infos-ship > div.remodels .flexgrid > a.unit.on em {
   top: -2px;
   -webkit-transform: none;
-      -ms-transform: none;
           transform: none;
 }
 .infos-ship > div.remodels .flexgrid > .unit[icon="loop-alt3"] {
@@ -12470,7 +12363,6 @@ main[data-theme="10"] .infos-fleet .equipment-name {
   background: #fff;
   background: rgba(255, 255, 255, 0.25);
   -webkit-transform: scale(0.3333333333333333);
-      -ms-transform: scale(0.3333333333333333);
           transform: scale(0.3333333333333333);
   left: 0;
   border: 0.1rem solid transparent;
@@ -12563,7 +12455,6 @@ main[data-theme="10"] .infos-fleet .equipment-name {
   background-color: rgba(63, 192, 255, 0.25);
   border-color: rgba(63, 192, 255, 0.75);
   -webkit-transform: scale(0.5333333333333333);
-      -ms-transform: scale(0.5333333333333333);
           transform: scale(0.5333333333333333);
 }
 .infos-ship > aside.mod-scroll-snap > div {
@@ -12573,52 +12464,42 @@ main[data-theme="10"] .infos-fleet .equipment-name {
 }
 .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="1"]:checked ~ div {
   -webkit-transform: translateX(0%);
-      -ms-transform: translateX(0%);
           transform: translateX(0%);
 }
 .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="2"]:checked ~ div {
   -webkit-transform: translateX(-100%);
-      -ms-transform: translateX(-100%);
           transform: translateX(-100%);
 }
 .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="3"]:checked ~ div {
   -webkit-transform: translateX(-200%);
-      -ms-transform: translateX(-200%);
           transform: translateX(-200%);
 }
 .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="4"]:checked ~ div {
   -webkit-transform: translateX(-300%);
-      -ms-transform: translateX(-300%);
           transform: translateX(-300%);
 }
 .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="5"]:checked ~ div {
   -webkit-transform: translateX(-400%);
-      -ms-transform: translateX(-400%);
           transform: translateX(-400%);
 }
 .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="6"]:checked ~ div {
   -webkit-transform: translateX(-500%);
-      -ms-transform: translateX(-500%);
           transform: translateX(-500%);
 }
 .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="7"]:checked ~ div {
   -webkit-transform: translateX(-600%);
-      -ms-transform: translateX(-600%);
           transform: translateX(-600%);
 }
 .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="8"]:checked ~ div {
   -webkit-transform: translateX(-700%);
-      -ms-transform: translateX(-700%);
           transform: translateX(-700%);
 }
 .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="9"]:checked ~ div {
   -webkit-transform: translateX(-800%);
-      -ms-transform: translateX(-800%);
           transform: translateX(-800%);
 }
 .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="10"]:checked ~ div {
   -webkit-transform: translateX(-900%);
-      -ms-transform: translateX(-900%);
           transform: translateX(-900%);
 }
 @media all and (min-width: 1601px) and (min-aspect-ratio: 5/4) {
@@ -12645,52 +12526,42 @@ main[data-theme="10"] .infos-fleet .equipment-name {
   }
   .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="1"]:checked ~ div {
     -webkit-transform: translateX(0%);
-        -ms-transform: translateX(0%);
             transform: translateX(0%);
   }
   .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="2"]:checked ~ div {
     -webkit-transform: translateX(0%);
-        -ms-transform: translateX(0%);
             transform: translateX(0%);
   }
   .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="3"]:checked ~ div {
     -webkit-transform: translateX(-100%);
-        -ms-transform: translateX(-100%);
             transform: translateX(-100%);
   }
   .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="4"]:checked ~ div {
     -webkit-transform: translateX(-100%);
-        -ms-transform: translateX(-100%);
             transform: translateX(-100%);
   }
   .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="5"]:checked ~ div {
     -webkit-transform: translateX(-200%);
-        -ms-transform: translateX(-200%);
             transform: translateX(-200%);
   }
   .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="6"]:checked ~ div {
     -webkit-transform: translateX(-200%);
-        -ms-transform: translateX(-200%);
             transform: translateX(-200%);
   }
   .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="7"]:checked ~ div {
     -webkit-transform: translateX(-300%);
-        -ms-transform: translateX(-300%);
             transform: translateX(-300%);
   }
   .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="8"]:checked ~ div {
     -webkit-transform: translateX(-300%);
-        -ms-transform: translateX(-300%);
             transform: translateX(-300%);
   }
   .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="9"]:checked ~ div {
     -webkit-transform: translateX(-400%);
-        -ms-transform: translateX(-400%);
             transform: translateX(-400%);
   }
   .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="10"]:checked ~ div {
     -webkit-transform: translateX(-400%);
-        -ms-transform: translateX(-400%);
             transform: translateX(-400%);
   }
 }
@@ -13562,7 +13433,6 @@ body > .modal.infos_fleet > div > section p.aircraftimportmax label.checkbox:aft
   margin-left: 5px;
   vertical-align: text-bottom;
   -webkit-transform: translateY(12.5%);
-      -ms-transform: translateY(12.5%);
           transform: translateY(12.5%);
 }
 body > .modal.infos_fleet.infos_fleet_import > div,
@@ -14619,10 +14489,8 @@ main[data-theme="arsenal"] ~ .nav-mask:before {
 .page-container[page="arsenal"] > .tabs .akashi span {
   display: block;
   -webkit-transform: scale(0.649);
-      -ms-transform: scale(0.649);
           transform: scale(0.649);
   -webkit-transform-origin: 0 0;
-      -ms-transform-origin: 0 0;
           transform-origin: 0 0;
   background: url(/!/assets/images/akashi.png) no-repeat 0 0;
   position: relative;
@@ -15194,7 +15062,6 @@ main[data-theme="about"] ~ .nav-mask:before {
 }
 .page-container[page="about"] input[type="checkbox"]:checked + section.update_journal:before {
   -webkit-transform: rotate(90deg);
-      -ms-transform: rotate(90deg);
           transform: rotate(90deg);
 }
 .page-container[page="fleets"] {

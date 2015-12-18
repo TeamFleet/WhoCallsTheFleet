@@ -5657,7 +5657,7 @@ var InfosFleet = (function () {
 					if (typeof content == 'undefined') {
 						content = this.doms['name'].text();
 					}
-
+					this.doms['name'].html(content);
 					this._name = content;
 					return this.doms['name'];
 				}).bind(this),
