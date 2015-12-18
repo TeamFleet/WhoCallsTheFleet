@@ -4593,7 +4593,7 @@ body.mod-capture #tip {
     display: none;
   }
   main:after {
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.8);
   }
   #layout.ready nav ~ .nav-mask:before,
   #layout.ready main {
@@ -4609,6 +4609,12 @@ body.mod-capture #tip {
     -webkit-transform: translateY(100%);
         -ms-transform: translateY(100%);
             transform: translateY(100%);
+  }
+  #layout.ready.mod-only-bg > .bg_controls > s {
+    display: none;
+  }
+  #layout.ready.mod-only-bg > .bg_controls:after {
+    background: rgba(0, 0, 0, 0.8);
   }
   #layout.is-infos-on nav > div.history .button,
   #layout.mode-selection nav > div.history .button {

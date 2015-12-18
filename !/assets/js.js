@@ -3808,6 +3808,13 @@ _g.state2URI = function (state) {
 	}
 };
 
+_g.save = function (url, n) {
+	if (!_g.save_) _g.save_ = document.createElement('a');
+	_g.save_.href = url;
+	if (typeof _g.save_.download != 'undefined') _g.save_.download = n;else _g.save_.target = '_blank';
+	_g.save_.click();
+};
+
 _frame.app_main = {
 	page: {},
 	page_dom: {},
@@ -4138,19 +4145,15 @@ _frame.app_main = {
 					_frame.app_main.only_bg = !1;
 				}
 			}).append($('<button class="prev" icon="arrow-left"/>').on('click', function () {
-				var pathParse = node.path.parse(_frame.app_main.bgimg_path),
-				    index = $.inArray(pathParse['base'], _frame.app_main.bgimgs) - 1;
+				var index = $.inArray(_frame.app_main.bgimg_path.substr(_frame.app_main.bgimg_path.indexOf(_g.path.bgimg_dir) + _g.path.bgimg_dir.length), _frame.app_main.bgimgs) - 1;
 				if (index < 0) index = _frame.app_main.bgimgs.length - 1;
 				_frame.app_main.change_bgimg([_frame.app_main.bgimgs[index]]);
 			})).append($('<button class="back"/>').html('返回').on('click', function () {
 				_frame.app_main.only_bg_off();
 			})).append($('<button class="back"/>').html('保存图片').on('click', function () {
-				var pathParse = node.path.parse(_frame.app_main.bgimg_path),
-				    index = $.inArray(pathParse['base'], _frame.app_main.bgimgs);
-				_g.file_save_as(_frame.app_main.bgimg_path, index + 1 + pathParse['ext']);
+				_g.save(_frame.app_main.bgimg_path, _frame.app_main.bgimg_path.substr(_frame.app_main.bgimg_path.indexOf(_g.path.bgimg_dir) + _g.path.bgimg_dir.length));
 			})).append($('<button class="next" icon="arrow-right"/>').on('click', function () {
-				var pathParse = node.path.parse(_frame.app_main.bgimg_path),
-				    index = $.inArray(pathParse['base'], _frame.app_main.bgimgs) + 1;
+				var index = $.inArray(_frame.app_main.bgimg_path.substr(_frame.app_main.bgimg_path.indexOf(_g.path.bgimg_dir) + _g.path.bgimg_dir.length), _frame.app_main.bgimgs) + 1;
 				if (index >= _frame.app_main.bgimgs.length) index = 0;
 				_frame.app_main.change_bgimg([_frame.app_main.bgimgs[index]]);
 			})).appendTo(_frame.dom.layout);
@@ -7939,13 +7942,9 @@ var TablelistFleets = (function (_Tablelist4) {
 			_this13.dom.btn_exportFile = $('<button class="export" icon="floppy-disk"/>').html('导出配置文件').on('click', function () {
 				_db.fleets.persistence.compactDatafile();
 				if (_g.isNWjs) {
-					_g.file_save_as(_db.fleets.filename, 'fleets.json');
+					_g.save(_db.fleets.filename, 'fleets.json');
 				} else {
 					(function () {
-						if (!TablelistFleets.btn_exportFile_link) {
-							TablelistFleets.btn_exportFile_link = document.createElement('a');
-							TablelistFleets.btn_exportFile_link.download = 'fleets.json';
-						}
 						_frame.app_main.loading_start('tablelist_fleets_export', !1);
 						var data = '';
 						_db.fleets.find({}, function (err, docs) {
@@ -7956,10 +7955,9 @@ var TablelistFleets = (function (_Tablelist4) {
 									data += JSON.stringify(doc) + '\n';
 								});
 								var blob = new Blob([data], { type: "application/json" });
-								TablelistFleets.btn_exportFile_link.href = URL.createObjectURL(blob);
-								TablelistFleets.btn_exportFile_link.click();
-								_frame.app_main.loading_complete('tablelist_fleets_export');
+								_g.save(URL.createObjectURL(blob), 'fleets.json');
 							}
+							_frame.app_main.loading_complete('tablelist_fleets_export');
 						});
 					})();
 				}
