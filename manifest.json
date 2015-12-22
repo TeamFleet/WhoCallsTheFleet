@@ -3,7 +3,7 @@
 	"short_name": "呼叫舰队",
 	"start_url": "./?utm_source=web_app_manifest",
 	"display": "standalone",
-	"orientation": "portrait-primary",
+	"orientation": "any",
 	"icons": [
 		{
 			"src": "favicon.png",
@@ -14,5 +14,7 @@
 			"src": "favicon.ico",
 			"sizes": "16x16 32x32 48x48 64x64 128x128"
 		}
-	]
+	],
+	"background_color": "#d0f8fa",
+	"theme_color": "#082b64"
 }

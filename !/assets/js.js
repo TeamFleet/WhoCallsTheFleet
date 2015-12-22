@@ -5607,7 +5607,7 @@ var InfosFleet = (function () {
 			this.el.on({
 				'show': (function (e, is_firstShow) {
 					this.is_showing = !0;
-					if (InfosFleetShipEquipment.curHoverEquipment) InfosFleetShipEquipment.curHoverEquipment.trigger('blur');
+					if (InfosFleetShipEquipment.cur) InfosFleetShipEquipment.cur.trigger('blur');
 					if (!is_firstShow) {
 						var _i8 = 0,
 						    _l2 = Lockr.get('hqLvDefault', _g.defaultHqLv);
@@ -5625,7 +5625,7 @@ var InfosFleet = (function () {
 				}).bind(this),
 				'hidden': function hidden() {
 					this.is_showing = !1;
-					if (InfosFleetShipEquipment.curHoverEquipment) InfosFleetShipEquipment.curHoverEquipment.trigger('blur');
+					if (InfosFleetShipEquipment.cur) InfosFleetShipEquipment.cur.trigger('blur');
 				}
 			}).on('focus.number_input_select', 'input[type="number"]:not([readonly])', function (e) {
 				e.currentTarget.select();
@@ -6769,23 +6769,23 @@ var InfosFleetShipEquipment = (function () {
 
 		if (this.el) return this.el;
 
-		this.el = $('<div class="equipment" touch-action="none" tabindex="0"/>').on({
+		this.el = $('<div class="equipment" tabindex="0"/>').on({
 			'focus': (function () {
-				InfosFleetShipEquipment.curHoverEquipment = this.el.addClass('is-hover');
+				InfosFleetShipEquipment.cur = this.el.addClass('is-hover');
 			}).bind(this),
 			'blur': (function () {
 				this.el.removeClass('is-hover');
-				InfosFleetShipEquipment.curHoverEquipment = null;
+				InfosFleetShipEquipment.cur = null;
 			}).bind(this),
 			'pointerenter': (function (e) {
 				if (e.originalEvent.pointerType != 'touch') {
-					InfosFleetShipEquipment.curHoverEquipment = this.el.addClass('is-hover');
+					InfosFleetShipEquipment.cur = this.el.addClass('is-hover');
 				}
 			}).bind(this),
 			'pointerleave': (function (e) {
 				if (e.originalEvent.pointerType != 'touch') {
 					this.el.removeClass('is-hover').blur();
-					InfosFleetShipEquipment.curHoverEquipment = null;
+					InfosFleetShipEquipment.cur = null;
 				}
 			}).bind(this)
 		}).append(this.elCarry = $('<div class="equipment-layer equipment-add"/>').on('click', (function () {
@@ -6905,7 +6905,8 @@ var InfosFleetShipEquipment = (function () {
 				this.improvable = _g.data.items[value].improvable || !1;
 				this.el.attr({
 					'data-equipmentid': value,
-					'data-tip': '[[EQUIPMENT::' + value + ']]'
+					'data-tip': '[[EQUIPMENT::' + value + ']]',
+					'touch-action': 'none'
 				}).css('background-image', 'url(' + _g.data.items[value]._icon + ')');
 				this.elName.html(_g.data.items[value]._name);
 
@@ -6916,7 +6917,7 @@ var InfosFleetShipEquipment = (function () {
 			} else {
 				this.infosFleetShip.data[2][this.index] = null;
 				this.improvable = !1;
-				this.el.removeAttr('data-equipmentId').removeAttr('data-tip').removeAttr('data-star').removeAttr('data-rank').css('background-image', '').removeClass('is-aircraft is-rankupgradable');
+				this.el.removeAttr('data-equipmentId').removeAttr('data-tip').removeAttr('data-star').removeAttr('data-rank').removeAttr('touch-action').css('background-image', '').removeClass('is-aircraft is-rankupgradable');
 				this.elName.html('');
 			}
 
