@@ -6766,8 +6766,8 @@ class InfosFleet{
 		this.el.on({
 			'show': function(e, is_firstShow){
 					this.is_showing = true
-					if( InfosFleetShipEquipment.curHoverEquipment )
-						InfosFleetShipEquipment.curHoverEquipment.trigger('blur')
+					if( InfosFleetShipEquipment.cur )
+						InfosFleetShipEquipment.cur.trigger('blur')
 					if( !is_firstShow ){
 						// 再次显示时，重新计算分舰队的索敌能力
 						let i = 0
@@ -6785,22 +6785,22 @@ class InfosFleet{
 						this.updateURI()
 					}
 					/*
-					if( InfosFleetShipEquipment.curHoverEquipment ){
-						InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')//.trigger('tiphide')
-						InfosFleetShipEquipment.curHoverEquipment = null
+					if( InfosFleetShipEquipment.cur ){
+						InfosFleetShipEquipment.cur.removeClass('is-hover')//.trigger('tiphide')
+						InfosFleetShipEquipment.cur = null
 					}
 					*/
 				}.bind(this),
 			'hidden': function(){
 					this.is_showing = false
-					if( InfosFleetShipEquipment.curHoverEquipment )
-						InfosFleetShipEquipment.curHoverEquipment.trigger('blur')
+					if( InfosFleetShipEquipment.cur )
+						InfosFleetShipEquipment.cur.trigger('blur')
 				}
 			/*,
 			'click': function(){
-					if( InfosFleetShipEquipment.curHoverEquipment ){
-						InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')//.trigger('tiphide')
-						InfosFleetShipEquipment.curHoverEquipment = null
+					if( InfosFleetShipEquipment.cur ){
+						InfosFleetShipEquipment.cur.removeClass('is-hover')//.trigger('tiphide')
+						InfosFleetShipEquipment.cur = null
 					}
 			}*/
 		})
@@ -6809,15 +6809,15 @@ class InfosFleet{
 		})
 		/*
 		.on('click', '.equipment', function(e){
-			if( InfosFleetShipEquipment.curHoverEquipment && InfosFleetShipEquipment.curHoverEquipment[0] != e.currentTarget ){
-				InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide')
-				InfosFleetShipEquipment.curHoverEquipment = null
+			if( InfosFleetShipEquipment.cur && InfosFleetShipEquipment.cur[0] != e.currentTarget ){
+				InfosFleetShipEquipment.cur.removeClass('is-hover').trigger('tiphide')
+				InfosFleetShipEquipment.cur = null
 			}
 		}.bind(this))
 		.on('click', ':not(.equipment)', function(){
-			if( InfosFleetShipEquipment.curHoverEquipment ){
-				InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover').trigger('tiphide')
-				InfosFleetShipEquipment.curHoverEquipment = null
+			if( InfosFleetShipEquipment.cur ){
+				InfosFleetShipEquipment.cur.removeClass('is-hover').trigger('tiphide')
+				InfosFleetShipEquipment.cur = null
 			}
 		}.bind(this))
 		*/
@@ -8467,9 +8467,9 @@ InfosFleetShip.dragStart = function(infosFleetShip){
 		return false
 
 	/*
-	if( InfosFleetShipEquipment.curHoverEquipment ){
-		InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')//.trigger('tiphide')
-		InfosFleetShipEquipment.curHoverEquipment = null
+	if( InfosFleetShipEquipment.cur ){
+		InfosFleetShipEquipment.cur.removeClass('is-hover')//.trigger('tiphide')
+		InfosFleetShipEquipment.cur = null
 	}
 	*/
 
@@ -8495,9 +8495,9 @@ InfosFleetShip.dragEnter = function(infosFleetShip_enter){
 		return false
 
 	/*
-	if( InfosFleetShipEquipment.curHoverEquipment ){
-		InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')//.trigger('tiphide')
-		InfosFleetShipEquipment.curHoverEquipment = null
+	if( InfosFleetShipEquipment.cur ){
+		InfosFleetShipEquipment.cur.removeClass('is-hover')//.trigger('tiphide')
+		InfosFleetShipEquipment.cur = null
 	}
 	*/
 	
@@ -8546,22 +8546,23 @@ class InfosFleetShipEquipment{
 		if( this.el )
 			return this.el
 		
-		this.el = $('<div class="equipment" touch-action="none" tabindex="0"/>')
+		//this.el = $('<div class="equipment" touch-action="none" tabindex="0"/>')
+		this.el = $('<div class="equipment" tabindex="0"/>')
 					.on({
 						/*
 						'pointerenter': function(e){
 							if( e.originalEvent.pointerType != 'touch' ){
-								if( InfosFleetShipEquipment.curHoverEquipment )
-									InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')
-								InfosFleetShipEquipment.curHoverEquipment = this.el.addClass('is-hover')
+								if( InfosFleetShipEquipment.cur )
+									InfosFleetShipEquipment.cur.removeClass('is-hover')
+								InfosFleetShipEquipment.cur = this.el.addClass('is-hover')
 							}
 						}.bind(this),
 						'pointerup pointercancel': function(e){
 							if( e.originalEvent.pointerType == 'touch' ){
 								setTimeout(function(){
-									if( InfosFleetShipEquipment.curHoverEquipment )
-										InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')//.trigger('tiphide')
-									InfosFleetShipEquipment.curHoverEquipment
+									if( InfosFleetShipEquipment.cur )
+										InfosFleetShipEquipment.cur.removeClass('is-hover')//.trigger('tiphide')
+									InfosFleetShipEquipment.cur
 										= this.el.addClass('is-hover')
 												//.trigger('tipshow')
 								}.bind(this), bIOS ? 400 : 10)
@@ -8570,22 +8571,22 @@ class InfosFleetShipEquipment{
 						'pointerleave': function(e){
 							if( e.originalEvent.pointerType != 'touch' ){
 								this.el.removeClass('is-hover')
-								//if( InfosFleetShipEquipment.curHoverEquipment )
-								//	InfosFleetShipEquipment.curHoverEquipment.removeClass('is-hover')
-								//InfosFleetShipEquipment.curHoverEquipment = null
+								//if( InfosFleetShipEquipment.cur )
+								//	InfosFleetShipEquipment.cur.removeClass('is-hover')
+								//InfosFleetShipEquipment.cur = null
 							}
 						}.bind(this)
 						*/
 						'focus': function(){
-								InfosFleetShipEquipment.curHoverEquipment = this.el.addClass('is-hover')
+								InfosFleetShipEquipment.cur = this.el.addClass('is-hover')
 							}.bind(this),
 						'blur': function(){
 								this.el.removeClass('is-hover')
-								InfosFleetShipEquipment.curHoverEquipment = null
+								InfosFleetShipEquipment.cur = null
 							}.bind(this),
 						'pointerenter': function(e){
 								if( e.originalEvent.pointerType != 'touch' ){
-									InfosFleetShipEquipment.curHoverEquipment = this.el.addClass('is-hover')
+									InfosFleetShipEquipment.cur = this.el.addClass('is-hover')
 											//.focus()
 								}
 							}.bind(this),
@@ -8593,7 +8594,7 @@ class InfosFleetShipEquipment{
 								if( e.originalEvent.pointerType != 'touch' ){
 									this.el.removeClass('is-hover')
 											.blur()
-									InfosFleetShipEquipment.curHoverEquipment = null
+									InfosFleetShipEquipment.cur = null
 								}
 							}.bind(this)
 					})
@@ -8747,13 +8748,14 @@ class InfosFleetShipEquipment{
 			
 			if( value != this.infosFleetShip.data[2][this.index] )
 				this.star = 0
-			
+
 			if( value && !isNaN(value) ){
 				this.infosFleetShip.data[2][this.index] = value
 				this.improvable = _g.data.items[value].improvable || false
 				this.el.attr({
 							'data-equipmentid': value,
-							'data-tip':			'[[EQUIPMENT::' +value+ ']]'
+							'data-tip':			'[[EQUIPMENT::' +value+ ']]',
+                            'touch-action':     'none'
 						})
 						//.addClass('equiptypeicon mod-left mod-' + _g.data.items[value].getIconId())
 						.css('background-image', 'url('+_g.data.items[value]._icon+')')
@@ -8772,6 +8774,7 @@ class InfosFleetShipEquipment{
 						.removeAttr('data-tip')
 						.removeAttr('data-star')
 						.removeAttr('data-rank')
+						.removeAttr('touch-action')
 						.css('background-image', '')
 						.removeClass('is-aircraft is-rankupgradable')
 				this.elName.html('')

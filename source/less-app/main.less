@@ -1970,7 +1970,7 @@ table{
 				padding: 	0;
 				overflow: 	hidden;
 				overflow-y: auto;
-				background: rgba(0,0,0,.8);
+				background: rgba(0,0,0,.85);
 				opacity: 	1 !important;
 				backdrop-filter: 	~"blur(7.5px)";
 				border-right: 	1px solid rgba(255,255,255,.15);
@@ -2192,7 +2192,7 @@ table{
 				& ~ .nav-mask:after{
 					z-index: 	4;
 					bottom: 	0;
-					background: rgba(0,0,0,.5);
+					//background: rgba(0,0,0,.5);
 				}
 			}
 		}
@@ -2214,6 +2214,10 @@ table{
 				//left: 		-100%;
 				//border-right: 	0;
 			}
+            &>div.history{
+                margin-left:    0;
+                padding-left:   5px;
+            }
 			&>section.options{
 				padding-right: 	3px;
 				&>[icon]{

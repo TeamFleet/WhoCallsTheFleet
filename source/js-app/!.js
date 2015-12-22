@@ -127,7 +127,6 @@
 	_g.pageChangeBefore = function(){
 		_frame.dom.mobilemenu.prop('checked', false)
 	}
-	
 	_g.title = function(t){
 		if( !t ){
 			let f = document.title.split(' - ')
