@@ -6024,25 +6024,25 @@ body.mod-capture #tip {
   font-size: 11px;
   color: rgba(242, 242, 242, 0.35);
 }
-.tablelist-body > p.row > span.state-hover-column {
+.tablelist-body > p.row > span.is-hover {
   background-color: rgba(0, 0, 0, 0.2);
 }
-.tablelist-body > p.row > span.state-hover-column:hover {
+.tablelist-body > p.row > span.is-hover:hover {
   background-color: transparent;
 }
-.tablelist-body > p.row > span.state-hover-column[data-stat="fire"] {
+.tablelist-body > p.row > span.is-hover[data-stat="fire"] {
   background-color: rgba(189, 33, 15, 0.25);
 }
-.tablelist-body > p.row > span.state-hover-column[data-stat="torpedo"] {
+.tablelist-body > p.row > span.is-hover[data-stat="torpedo"] {
   background-color: rgba(15, 111, 189, 0.25);
 }
-.tablelist-body > p.row > span.state-hover-column[data-stat="nightpower"] {
+.tablelist-body > p.row > span.is-hover[data-stat="nightpower"] {
   background-color: rgba(102, 72, 102, 0.5);
 }
-.tablelist-body > p.row > span.state-hover-column[data-stat="aa"] {
+.tablelist-body > p.row > span.is-hover[data-stat="aa"] {
   background-color: rgba(189, 90, 15, 0.25);
 }
-.tablelist-body > p.row > span.state-hover-column[data-stat="armor"] {
+.tablelist-body > p.row > span.is-hover[data-stat="armor"] {
   background-color: rgba(189, 128, 15, 0.25);
 }
 .tablelist-body > p.row:hover {
@@ -6058,17 +6058,17 @@ body.mod-capture #tip {
   -webkit-transition-property: color, text-shadow;
   transition-property: color, text-shadow;
 }
-.tablelist > .options[filter-hide-premodel="true"] ~ .tablelist-container .premodeled:not([compare-checked]) {
+.tablelist > [filter-hide-premodel="true"] ~ .tablelist-container .premodeled:not([compare-checked]) {
   display: none !important;
 }
-.tablelist > .options[viewtype="card"] ~ .tablelist-container {
+.tablelist > [viewtype="card"] ~ .tablelist-container {
   padding-top: 10px;
   background-size: 100% 9px;
 }
-.tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-header {
+.tablelist > [viewtype="card"] ~ .tablelist-container .tablelist-header {
   display: none;
 }
-.tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body {
+.tablelist > [viewtype="card"] ~ .tablelist-container .tablelist-body {
   padding-right: 70px;
   background-size: 100% 9px;
   display: -webkit-box;
@@ -6083,54 +6083,54 @@ body.mod-capture #tip {
           align-content: flex-start;
 }
 @media all and (max-width: 1152px) {
-  .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body {
+  .tablelist > [viewtype="card"] ~ .tablelist-container .tablelist-body {
     padding-right: 50px;
   }
 }
 @media all and (max-width: 960px) {
-  .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body {
+  .tablelist > [viewtype="card"] ~ .tablelist-container .tablelist-body {
     padding-right: 30px;
   }
 }
 @media all and (max-width: 800px) {
-  .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body {
+  .tablelist > [viewtype="card"] ~ .tablelist-container .tablelist-body {
     padding-right: 14px;
   }
 }
 @media all and (max-width: 640px) {
-  .tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body {
+  .tablelist > [viewtype="card"] ~ .tablelist-container .tablelist-body {
     padding-right: 0px;
   }
 }
-.tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p {
+.tablelist > [viewtype="card"] ~ .tablelist-container .tablelist-body > p {
   -webkit-box-flex: 1;
   -webkit-flex: 1 0 155px;
       -ms-flex: 1 0 155px;
           flex: 1 0 155px;
   margin-right: 10px;
 }
-.tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.title {
+.tablelist > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.title {
   -webkit-box-flex: 0 !important;
   -webkit-flex: none !important;
       -ms-flex: none !important;
           flex: none !important;
   width: calc(100% - 10px);
 }
-.tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.title label.checkbox:before {
+.tablelist > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.title label.checkbox:before {
   margin-left: 5px;
 }
-.tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.title label.checkbox:after,
-.tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.title input[type="checkbox"]:indeterminate + label.checkbox:after {
+.tablelist > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.title label.checkbox:after,
+.tablelist > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.title input[type="checkbox"]:indeterminate + label.checkbox:after {
   margin-left: 5px;
 }
-.tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row {
+.tablelist > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.row {
   border-bottom: 0;
   display: block;
 }
-.tablelist > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row > span {
+.tablelist > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.row > span {
   display: none;
 }
-.tablelist > .options[viewtype="compare"] ~ .tablelist-container .tablelist-body > p.title {
+.tablelist > [viewtype="compare"] ~ .tablelist-container .tablelist-body > p.title {
   display: none;
 }
 .tablelist > .options[viewtype="compare"] > div.filters {
@@ -6297,8 +6297,9 @@ body.mod-capture #tip {
   height: 100%;
   overflow: hidden;
 }
-.tablelist.ships .tablelist-body > p.row[data-shipid] > strong a strong {
-  text-align: inherit !important;
+.tablelist.ships .tablelist-body > p.row[data-shipid] > strong a > strong {
+  text-align: inherit;
+  margin-top: -2px !important;
 }
 .tablelist.ships .tablelist-body > p.row[data-shipid] > strong a img {
   left: -35px;
@@ -6328,64 +6329,64 @@ body.mod-capture #tip {
   display: none !important;
 }
 @media all and (max-width: 720px) {
-  .tablelist.ships > .options[viewtype="list"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] > strong label.checkbox {
+  .tablelist.ships > [viewtype="list"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] > strong label.checkbox {
     left: 0;
   }
 }
 @media all and (max-width: 720px) {
-  .tablelist.ships > .options[viewtype="list"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] > strong a {
+  .tablelist.ships > [viewtype="list"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] > strong a {
     left: 10px;
   }
 }
-.tablelist.ships > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p[data-shipid] {
+.tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body > p[data-shipid] {
   margin-left: 30px;
 }
 @media all and (min-width: 1152px) {
-  .tablelist.ships > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p[data-shipid] {
+  .tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body > p[data-shipid] {
     -webkit-flex-basis: 175px;
         -ms-flex-preferred-size: 175px;
             flex-basis: 175px;
   }
 }
 @media all and (min-width: 1680px) {
-  .tablelist.ships > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p[data-shipid] {
+  .tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body > p[data-shipid] {
     -webkit-flex-basis: 185px;
         -ms-flex-preferred-size: 185px;
             flex-basis: 185px;
   }
 }
-.tablelist.ships > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] {
+.tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] {
   height: 40px;
   margin-top: 10px;
 }
-.tablelist.ships > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] label.checkbox {
+.tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] label.checkbox {
   position: absolute;
   left: -25px;
   line-height: 40px;
 }
-.tablelist.ships > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] label.checkbox:after {
+.tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] label.checkbox:after {
   height: 100%;
   top: 0;
 }
-.tablelist.ships > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] > strong {
+.tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] > strong {
   line-height: 40px;
   padding-top: 0;
   padding-bottom: 0;
 }
-.tablelist.ships > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] > strong a {
+.tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] > strong a {
   padding-left: 100px;
 }
-.tablelist.ships > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] > strong img {
+.tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] > strong img {
   top: 0;
   margin-left: -10px;
   -webkit-mask-image: -webkit-linear-gradient(left, transparent 0, transparent 50px, #000 58px, #000 calc(100% - 60px), transparent calc(100% - 10px));
           mask-image: linear-gradient(to right, transparent 0, transparent 50px, #000 58px, #000 calc(100% - 60px), transparent calc(100% - 10px));
 }
-.tablelist.ships > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] > strong img.nomask {
+.tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] > strong img.nomask {
   -webkit-mask-image: -webkit-linear-gradient(left, transparent 0, transparent 50px, #000 58px, #000);
           mask-image: linear-gradient(to right, transparent 0, transparent 50px, #000 58px, #000);
 }
-.tablelist.ships > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] [icon]:before {
+.tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] [icon]:before {
   position: absolute;
   display: block;
   font-size: 22px;
@@ -6396,29 +6397,29 @@ body.mod-capture #tip {
   left: 80px;
   z-index: 10;
 }
-.tablelist.ships > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid]:active {
+.tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-shipid]:active {
   opacity: .5;
 }
-.tablelist.ships > .options[viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] label.checkbox {
+.tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] label.checkbox {
   display: none;
 }
-.tablelist.ships > .options[viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] > strong em {
+.tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid] > strong em {
   display: none !important;
 }
-.tablelist.ships > .options[viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid][compare-checked] > strong img {
+.tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid][compare-checked] > strong img {
   left: 0;
   -webkit-mask-image: -webkit-linear-gradient(left, #000 50px, #000 calc(100% - 60px), transparent calc(100% - 10px));
           mask-image: linear-gradient(to right, #000 50px, #000 calc(100% - 60px), transparent calc(100% - 10px));
 }
-.tablelist.ships > .options[viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid][compare-checked] > strong img.nomask {
+.tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid][compare-checked] > strong img.nomask {
   -webkit-mask-image: -webkit-linear-gradient(left, #000 50px, #000);
           mask-image: linear-gradient(to right, #000 50px, #000);
 }
-.tablelist.ships > .options[viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid][compare-checked] > strong a {
+.tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid][compare-checked] > strong a {
   left: 0;
   padding-left: 146px;
 }
-.tablelist.ships > .options[viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid]:not([compare-checked]) {
+.tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body > p.row[data-shipid]:not([compare-checked]) {
   display: none;
 }
 @media all and (max-width: 1152px) {
@@ -7522,28 +7523,28 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
 html.ios .tablelist.fleets > .options > div.filters button.export {
   display: none;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.title {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.title {
   height: 17.5px;
   margin-bottom: 7.5px;
   margin-left: -10px;
   width: calc(100% + 10px);
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.title:last-child {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.title:last-child {
   margin-bottom: 0;
   border: 0;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p[data-fleetid] {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p[data-fleetid] {
   -webkit-flex-basis: 500px !important;
       -ms-flex-preferred-size: 500px !important;
           flex-basis: 500px !important;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] {
   margin-top: 10px;
   position: relative;
   height: 40px;
   border-bottom: 0;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid]:before {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid]:before {
   content: "";
   position: absolute;
   top: 5px;
@@ -7561,7 +7562,7 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
   -webkit-transition-property: top, height, border;
   transition-property: top, height, border;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -7573,7 +7574,7 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
   padding-left: 350px;
   padding-right: 30px;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > i > .img {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > i > .img {
   -webkit-box-flex: 0;
   -webkit-flex: none;
       -ms-flex: none;
@@ -7591,42 +7592,42 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
   -webkit-mask-size: 100% 100%;
           mask-size: 100% 100%;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > i > .img + .img {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > i > .img + .img {
   z-index: 5;
   left: 22px;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > i > .img + .img + .img {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > i > .img + .img + .img {
   z-index: 4;
   left: 77px;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > i > .img + .img + .img + .img {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > i > .img + .img + .img + .img {
   z-index: 3;
   left: 132px;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > i > .img + .img + .img + .img + .img {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > i > .img + .img + .img + .img + .img {
   z-index: 2;
   left: 187px;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > i > .img + .img + .img + .img + .img + .img {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > i > .img + .img + .img + .img + .img + .img {
   z-index: 1;
   left: 242px;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > i > img.nomask {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > i > img.nomask {
   -webkit-mask: none;
           mask: none;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > i > s {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > i > s {
   background: rgba(255, 255, 255, 0.15);
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > i > s.nomask {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > i > s.nomask {
   background: -webkit-linear-gradient(left, transparent 0, transparent 36px, rgba(255,255,255, .15) 40px, rgba(255,255,255, .15) calc(100% - 30px), transparent calc(100% - 10px));
   background: linear-gradient(to right, transparent 0, transparent 36px, rgba(255,255,255, .15) 40px, rgba(255,255,255, .15) calc(100% - 30px), transparent calc(100% - 10px));
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > strong {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > strong {
   font-weight: lighter;
   line-height: 16px;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > em {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > em {
   display: none;
   position: absolute;
   right: 0;
@@ -7639,7 +7640,7 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
   -webkit-transition-property: color;
   transition-property: color;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > em:before {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > em:before {
   content: "\ec59";
   font-family: icons;
   position: absolute;
@@ -7652,120 +7653,120 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
   line-height: 0;
   font-size: 24px;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > em:hover {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > em:hover {
   color: rgba(255, 255, 255, 0.8) !important;
 }
 @media all and (min-width: 1152px) {
-  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > em {
+  .tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid] > strong > em {
     display: block;
   }
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid]:hover {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid]:hover {
   background: rgba(230, 230, 230, 0.15) !important;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid]:hover:before {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid]:hover:before {
   top: 0;
   height: 40px;
   border-top-width: 0;
   border-bottom-width: 0;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="2"]:before {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="2"]:before {
   border-right-color: rgba(255, 184, 168, 0.8);
   -webkit-filter: drop-shadow(0 0 10px #ffb8a8);
           filter: drop-shadow(0 0 10px #ffb8a8);
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="2"]:hover {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="2"]:hover {
   background: rgba(255, 184, 168, 0.15) !important;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="3"]:before {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="3"]:before {
   border-right-color: rgba(255, 242, 168, 0.8);
   -webkit-filter: drop-shadow(0 0 10px #fff2a8);
           filter: drop-shadow(0 0 10px #fff2a8);
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="3"]:hover {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="3"]:hover {
   background: rgba(255, 242, 168, 0.15) !important;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="4"]:before {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="4"]:before {
   border-right-color: rgba(210, 255, 168, 0.8);
   -webkit-filter: drop-shadow(0 0 10px #d2ffa8);
           filter: drop-shadow(0 0 10px #d2ffa8);
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="4"]:hover {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="4"]:hover {
   background: rgba(210, 255, 168, 0.15) !important;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="5"]:before {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="5"]:before {
   border-right-color: rgba(168, 255, 184, 0.8);
   -webkit-filter: drop-shadow(0 0 10px #a8ffb8);
           filter: drop-shadow(0 0 10px #a8ffb8);
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="5"]:hover {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="5"]:hover {
   background: rgba(168, 255, 184, 0.15) !important;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="6"]:before {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="6"]:before {
   border-right-color: rgba(168, 255, 242, 0.8);
   -webkit-filter: drop-shadow(0 0 10px #a8fff2);
           filter: drop-shadow(0 0 10px #a8fff2);
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="6"]:hover {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="6"]:hover {
   background: rgba(168, 255, 242, 0.15) !important;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="7"]:before {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="7"]:before {
   border-right-color: rgba(168, 210, 255, 0.8);
   -webkit-filter: drop-shadow(0 0 10px #a8d2ff);
           filter: drop-shadow(0 0 10px #a8d2ff);
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="7"]:hover {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="7"]:hover {
   background: rgba(168, 210, 255, 0.15) !important;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="8"]:before {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="8"]:before {
   border-right-color: rgba(184, 168, 255, 0.8);
   -webkit-filter: drop-shadow(0 0 10px #b8a8ff);
           filter: drop-shadow(0 0 10px #b8a8ff);
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="8"]:hover {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="8"]:hover {
   background: rgba(184, 168, 255, 0.15) !important;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="9"]:before {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="9"]:before {
   border-right-color: rgba(242, 168, 255, 0.8);
   -webkit-filter: drop-shadow(0 0 10px #f2a8ff);
           filter: drop-shadow(0 0 10px #f2a8ff);
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="9"]:hover {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="9"]:hover {
   background: rgba(242, 168, 255, 0.15) !important;
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="10"]:before {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="10"]:before {
   border-right-color: rgba(255, 168, 210, 0.8);
   -webkit-filter: drop-shadow(0 0 10px #ffa8d2);
           filter: drop-shadow(0 0 10px #ffa8d2);
 }
-.tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="10"]:hover {
+.tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body p.row[data-fleetid][data-theme="10"]:hover {
   background: rgba(255, 168, 210, 0.15) !important;
 }
 @media all and (max-width: 720px) {
-  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body {
+  .tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body {
     display: block;
   }
-  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.title {
+  .tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.title {
     margin-bottom: 15px;
   }
-  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid] > strong {
+  .tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid] > strong {
     padding-right: 0;
   }
 }
 @media all and (max-width: 540px) {
-  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid] {
+  .tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid] {
     height: auto;
     min-height: 40px;
   }
-  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid] > strong {
+  .tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid] > strong {
     display: block;
     padding: 38px 1em 4px 1em;
     line-height: 18px;
   }
-  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid] > strong > strong {
+  .tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid] > strong > strong {
     line-height: inherit;
   }
-  .tablelist.fleets > .options[viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid]:hover:before {
+  .tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body > p.row[data-fleetid]:hover:before {
     height: 100%;
   }
 }

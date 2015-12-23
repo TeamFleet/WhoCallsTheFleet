@@ -114,8 +114,9 @@
 					text-align: 	left !important;
 					padding-left: 	106px;
 					overflow: 	hidden;
-					strong{
-						text-align: 	inherit !important;
+					&>strong{
+						text-align: 	inherit;
+                        margin-top:     -2px !important;
 					}
 					img{
 						left: 	-35px;
@@ -155,7 +156,7 @@
 	}
 	
 	// viewtype: list
-	&  > .options[viewtype="list"] ~ .tablelist-container{
+	&  > [viewtype="list"] ~ .tablelist-container{
 		.tablelist-body{
 			&>p.row[data-shipid]{
 				&>strong{
@@ -175,7 +176,7 @@
 	}
 	
 	// viewtype: card
-	&  > .options[viewtype="card"] ~ .tablelist-container{
+	&  > [viewtype="card"] ~ .tablelist-container{
 		.tablelist-body{
 			//&>p{
 				//margin: 	0 10px 0 30px;
@@ -242,7 +243,7 @@
 	}
 	
 	// viewtype: compare
-	&  > .options[viewtype="compare"] ~ .tablelist-container{
+	&  > [viewtype="compare"] ~ .tablelist-container{
 		.tablelist-body{
 			&>p.row[data-shipid]{
 				label.checkbox{

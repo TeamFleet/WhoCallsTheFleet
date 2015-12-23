@@ -52,7 +52,7 @@
 	
 	// Default/List view HERE
 	
-	& > .options[viewtype="card"] ~ .tablelist-container{
+	& > [viewtype="card"] ~ .tablelist-container{
 		.tablelist-body{
 			@color:		hsl(50, 0%, 90%);
 			@color2:	fade(@color, 80%);
@@ -275,7 +275,7 @@
 		}
 	}
 	
-	.tablelist-container>.nocontent{
+	.tablelist-container > .nocontent{
 		position:	absolute;
 		top:		0;
 		right:		0;

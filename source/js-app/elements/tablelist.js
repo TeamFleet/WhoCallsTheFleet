@@ -607,7 +607,7 @@ class Tablelist{
 				
 				//this.dom.style.html('.tablelist[data-index="'+this._index+'"] .tablelist-body > p.row > span:nth-child('+(index+1)+'){background-color:rgba(0,0,0,.2)}')
 				//_p.el.tablelist.hovercolumn_mouseenter( e.delegateTarget, index )
-				this.dom.tbody.find('.row:visible>span:nth-child('+(index+1)+')').addClass('state-hover-column')
+				this.dom.tbody.find('.row:visible>span:nth-child('+(index+1)+')').addClass('is-hover')
 			}
 		}
 		hovercolumn_delegate_leave(e){
@@ -615,7 +615,7 @@ class Tablelist{
 				//_p.el.tablelist.hovercolumn_mouseleave_delay = setTimeout(function(){
 					//e.delegateTarget.removeAttribute('td-nth-hovered')
 					//this.dom.style.html('')
-					this.dom.tbody.find('span.state-hover-column').removeClass('state-hover-column')
+					this.dom.tbody.find('span.is-hover').removeClass('is-hover')
 					_p.el.tablelist.hovercolumn_mouseleave_delay = null
 				//}.bind(this), 10)
 			}

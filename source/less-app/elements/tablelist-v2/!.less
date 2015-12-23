@@ -511,7 +511,7 @@
 					//&:hover{
 					//	background-color:	transparent !important;
 					//}
-					&.state-hover-column{
+					&.is-hover{
 						background-color:	rgba(0, 0, 0, .2);
 						&:hover{
 							background-color:	transparent;
@@ -557,13 +557,13 @@
 
 
 
-.tablelist > .options[filter-hide-premodel="true"]{
-	&~.tablelist-container .premodeled:not([compare-checked]){
+.tablelist > [filter-hide-premodel="true"] ~ .tablelist-container{
+	.premodeled:not([compare-checked]){
 		display:	none !important;
 	}
 }
 
-.tablelist > .options[viewtype="card"] ~ .tablelist-container{
+.tablelist > [viewtype="card"] ~ .tablelist-container{
 	padding-top: 	10px;
 	background-size:100% 9px;
 	.tablelist-header{
@@ -604,14 +604,14 @@
 	}
 } // &[viewtype="card"]
 
+.tablelist > [viewtype="compare"] ~ .tablelist-container{
+    .tablelist-body{
+        &>p.title{
+            display: none;
+        }
+    }
+}
 .tablelist > .options[viewtype="compare"]{
-	& ~ .tablelist-container{
-		.tablelist-body{
-			&>p.title{
-				display: none;
-			}
-		}
-	}
 	&>div.filters{
 		transition-delay: 0;
 		opacity:	0;

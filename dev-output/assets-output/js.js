@@ -7390,14 +7390,14 @@ var Tablelist = (function () {
 					index = parseInt(index);
 				}
 
-				this.dom.tbody.find('.row:visible>span:nth-child(' + (index + 1) + ')').addClass('state-hover-column');
+				this.dom.tbody.find('.row:visible>span:nth-child(' + (index + 1) + ')').addClass('is-hover');
 			}
 		}
 	}, {
 		key: 'hovercolumn_delegate_leave',
 		value: function hovercolumn_delegate_leave(e) {
 			if (!$body_preventMouseover && e && e.originalEvent.path && this.dom.tbody) {
-				this.dom.tbody.find('span.state-hover-column').removeClass('state-hover-column');
+				this.dom.tbody.find('span.is-hover').removeClass('is-hover');
 				_p.el.tablelist.hovercolumn_mouseleave_delay = null;
 			}
 		}
