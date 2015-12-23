@@ -2524,7 +2524,6 @@ _g.badgeError = function (cont) {
 _g.pageChangeBefore = function () {
 	_frame.dom.mobilemenu.prop('checked', !1);
 };
-
 _g.title = function (t) {
 	if (!t) {
 		var f = document.title.split(' - ');

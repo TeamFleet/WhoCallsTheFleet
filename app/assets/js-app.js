@@ -127,7 +127,6 @@
 	_g.pageChangeBefore = function(){
 		_frame.dom.mobilemenu.prop('checked', false)
 	}
-	
 	_g.title = function(t){
 		if( !t ){
 			let f = document.title.split(' - ')
@@ -4393,6 +4392,13 @@ _frame.app_main = {
 						}
 				$body.on('click.pagechange', 'a[href^="?page="]', link_page)
 					.on('click.pagechange', 'a[href^="?infos="]', link_infos)
+                    .on('keydown', function(e){
+                        switch(e.keyCode){
+                            case 123:
+                                node.win.showDevTools()
+                                break;
+                        }
+                    })
 				_frame.dom.bgimg.on(_g.event.animationend, 'div', function(){
 					_frame.app_main.change_bgimg_after()
 				})
