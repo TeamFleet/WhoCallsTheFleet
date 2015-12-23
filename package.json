@@ -83,7 +83,7 @@
       "package.json"
     ],
     "dataVersion": {
-      "app": "0.9.2.1",
+      "app": "0.9.2.2",
       "app-db": "1.9.2.0",
       "pics": "1.9.2.0"
     },

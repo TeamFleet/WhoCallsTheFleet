@@ -1326,15 +1326,20 @@ main{
 					vertical-align: top;
 				}
 			}
+			&.done{
+				color: 		hsla(120, 100%, 75%, 0.75);
+			}
 			&.done>s{
 				.transition-property(~"width, top, right, bottom, border-radius, background");
 				.transition-timing-function(ease-out);
 				.transition-duration(@transition_duration);
-				top:		~"calc(100% - 18px)";
+				//top:		~"calc(100% - 18px)";
 				right:		2px;
-				bottom:		2px;
+				//bottom:		2px;
 				left:		auto;
 				width:		16px;
+				height: 	16px;
+				margin-top: -10px;
 				border-radius:	50%;
 				background:	rgba(127, 255, 127, .5);
 				&:before{
