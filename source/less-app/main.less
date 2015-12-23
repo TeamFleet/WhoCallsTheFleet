@@ -1301,11 +1301,13 @@ main{
 				display:	inline-block;
 			}
 			&>s{
-				top:		~"calc(100% - 4px)";
-				right:		0;
-				bottom:		0;
+				//top:		~"calc(100% - 4px)";
+				//right:		0;
+				//bottom:		0;
+				top: 		67.5%;
 				left:		0;
 				width:		0;
+				height: 	4px;
 				background:	rgba(255,255,255,.4);
 				text-align:	center;
 				position:	absolute;
@@ -1313,6 +1315,7 @@ main{
 				overflow:	hidden;
 				.transition-timing-function(linear);
 				.transition-duration(1s);
+				transition-property: width;
 				&:before{
 					content:	"✓";
 					color:		transparent;
