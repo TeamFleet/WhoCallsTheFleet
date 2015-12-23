@@ -32,6 +32,10 @@ camelCase('STRING 1.2', 'tr') //=> "strıng1_2"
 camelCase('string 1 2 3', null, true) //=> "string123"
 ```
 
+## Typings
+
+Includes a [TypeScript definition](camel-case.d.ts).
+
 ## License
 
 MIT

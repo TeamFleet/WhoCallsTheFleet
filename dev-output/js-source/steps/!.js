@@ -2,7 +2,6 @@
 
 
 
-var babel = require("../dev-output/js-source/node_modules/babel-core");
 var minify = require("../dev-output/js-source/node_modules/html-minifier").minify;
 
 let dev_output_steps = []

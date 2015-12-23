@@ -24,6 +24,10 @@ upperCaseFirst(null)     //=> ""
 upperCaseFirst('string') //=> "String"
 ```
 
+## Typings
+
+Includes a [TypeScript definition](upper-case-first.d.ts).
+
 ## License
 
 MIT

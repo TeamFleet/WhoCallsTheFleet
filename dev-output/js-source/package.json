@@ -9,7 +9,6 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.0.12",
     "html-minifier": "^1.0.0"
   }
 }

@@ -1,4 +1,4 @@
-var sentenceCase = require('sentence-case');
+var sentenceCase = require('sentence-case')
 
 /**
  * Snake case a string.
@@ -8,5 +8,5 @@ var sentenceCase = require('sentence-case');
  * @return {String}
  */
 module.exports = function (str, locale) {
-  return sentenceCase(str, locale, '_');
-};
+  return sentenceCase(str, locale, '_')
+}

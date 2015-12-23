@@ -26,6 +26,10 @@ titleCase('PascalCase') //=> "Pascal Case"
 titleCase('STRING', 'tr') //=> "Strıng"
 ```
 
+## Typings
+
+Includes a [TypeScript definition](title-case.d.ts).
+
 ## License
 
 MIT
