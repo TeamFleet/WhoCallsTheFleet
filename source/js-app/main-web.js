@@ -540,12 +540,12 @@ _frame.app_main = {
 			let u = _g.state2URI({page: page})
 			
 			function callback(){
-				_frame.app_main.page_dom[page].trigger('show')
+				//_frame.app_main.page_dom[page].trigger('show')
 				_frame.infos.hide()
 	
 				if( !options.callback_modeSelection_select ){
 					//_frame.app_main.title = _frame.app_main.navtitle[page]
-					_frame.infos.last = null
+					//_frame.infos.last = null
 
 					//console.log(u, _frame.app_main.page_title[u])
 					document.title = _frame.app_main.page_title[u]
@@ -559,26 +559,27 @@ _frame.app_main = {
 				if( _frame.app_main.cur_page == page )
 					return page
 	
-				_frame.app_main.page_dom[page].appendTo(_frame.dom.main).removeClass('off').trigger('on')
+				//_frame.app_main.page_dom[page].appendTo(_frame.dom.main).removeClass('off').trigger('on')
+				Page.show(page)
 	
 				// 关闭之前的页面
-					if( _frame.app_main.cur_page ){
-						setTimeout((function(p){
-							Page.off(p)
-						})(_frame.app_main.cur_page), 100)
+					//if( _frame.app_main.cur_page ){
+					//	setTimeout((function(p){
+					//		Page.hide(p)
+					//	})(_frame.app_main.cur_page), 100)
 						/*
 						if( _frame.dom.navs[_frame.app_main.cur_page] )
 							_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
 						if( _frame.app_main.page_dom[_frame.app_main.cur_page] )
 							setTimeout((function(p){
-								_frame.app_main.page_dom[p].trigger('pageoff')
-								//_frame.app_main.page_dom[p].addClass('off').trigger('pageoff').detach()
+								_frame.app_main.page_dom[p].trigger('pageHide')
+								//_frame.app_main.page_dom[p].addClass('off').trigger('pageHide').detach()
 							})(_frame.app_main.cur_page), 100)
 						*/
-					}
+					//}
 
-				if( _frame.dom.navs[page] )
-					_frame.dom.navs[page].addClass('on')
+				//if( _frame.dom.navs[page] )
+				//	_frame.dom.navs[page].addClass('on')
 	
 				if( !options.callback_modeSelection_select ){
 					//if( _frame.dom.layout.hasClass('ready') )
@@ -588,8 +589,8 @@ _frame.app_main = {
 						Lockr.set('last_page', page)
 				}
 	
-				_frame.dom.main.attr('data-theme', page)
-				_frame.app_main.cur_page = page
+				//_frame.dom.main.attr('data-theme', page)
+				//_frame.app_main.cur_page = page
 	
 				_g.log( 'LOADED: ' + page )
 
@@ -606,7 +607,8 @@ _frame.app_main = {
 			if( !this.page_dom[page] ){
 				this.page_dom[page] = _frame.dom.main.find('.page-container[page="'+page+'"]')
 				if( this.page_dom[page].length ){
-					this.page_init(page)
+					//this.page_init(page)
+					Page.init(page)
 					this.page_title[u] = document.title
 					callback()
 				}else{
@@ -620,7 +622,8 @@ _frame.app_main = {
 								if( u != location.pathname )
 									_frame.app_main.page_dom[page].addClass('off')
 								//_frame.app_main.page_dom[page].html( html )
-								_frame.app_main.page_init(page)
+								//_frame.app_main.page_init(page)
+								Page.init(page)
 							}
 						},
 						successAfter: callback,
@@ -830,7 +833,9 @@ _frame.app_main = {
 					_frame.app_main.navtitle[p] = t
 					if( !$el.hasClass('button') )
 						$el = $el.parent()
-					_frame.dom.navs[p] = $el
+					_frame.dom.navs[p] = $el.on('click', function(){
+						Page.resetScroll(p)
+					})
 				})
 				return _frame.app_main.nav
 			})

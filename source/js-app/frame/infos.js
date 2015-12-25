@@ -237,12 +237,12 @@ _frame.infos = {
 				// exit selection mode
 					//_frame.app_main.mode_selection_off()
 				
-				Page.off(_frame.app_main.cur_page)
+				Page.hide(_frame.app_main.cur_page)
 				/*
 				if( _frame.dom.navs[_frame.app_main.cur_page] )
 					_frame.dom.navs[_frame.app_main.cur_page].removeClass('on')
 				if( _frame.app_main.page_dom[_frame.app_main.cur_page] )
-					_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageoff').detach()
+					_frame.app_main.page_dom[_frame.app_main.cur_page].addClass('off').trigger('pageHide').detach()
 				_frame.app_main.cur_page = null
 				*/
 			}

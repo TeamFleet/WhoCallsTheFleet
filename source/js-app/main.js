@@ -551,13 +551,14 @@ _frame.app_main = {
 				this.page_html[page] = node.fs.readFileSync(_g.path.page + page + '.html', 'utf8')
 				if(this.page_html[page]){
 					this.page_dom[page].html( this.page_html[page] )
-					if( this.page[page] && this.page[page].init )
-						this.page[page].init(this.page_dom[page])
-					_p.initDOM(this.page_dom[page])
+					Page.init(page)
+					//if( this.page[page] && this.page[page].init )
+					//	this.page[page].init(this.page_dom[page])
+					//_p.initDOM(this.page_dom[page])
 				}
 			}
 			
-			this.page_dom[page].trigger('show')
+			//this.page_dom[page].trigger('show')
 
 			if( !options.callback_modeSelection_select ){
 				//this.title = this.navtitle[page]
@@ -575,21 +576,22 @@ _frame.app_main = {
 				return page
 			}
 
-			this.page_dom[page].appendTo(_frame.dom.main).removeClass('off').trigger('on')
+			//this.page_dom[page].appendTo(_frame.dom.main).removeClass('off').trigger('on')
+			Page.show(page)
 
 			// 关闭之前的页面
-				if( this.cur_page ){
-					Page.off(this.cur_page)
+				//if( this.cur_page ){
+				//	Page.hide(this.cur_page)
 					/*
 					if( _frame.dom.navs[this.cur_page] )
 						_frame.dom.navs[this.cur_page].removeClass('on')
 					if( this.page_dom[this.cur_page] )
-						//this.page_dom[this.cur_page].addClass('off').trigger('pageoff').detach()
+						//this.page_dom[this.cur_page].addClass('off').trigger('pageHide').detach()
 					*/
-				}
+				//}
 
-			if( _frame.dom.navs[page] )
-				_frame.dom.navs[page].addClass('on')
+			//if( _frame.dom.navs[page] )
+			//	_frame.dom.navs[page].addClass('on')
 
 			if( !options.callback_modeSelection_select ){
 				if( _frame.dom.layout.hasClass('ready') )
@@ -599,8 +601,8 @@ _frame.app_main = {
 					Lockr.set('last_page', page)
 			}
 			
-			_frame.dom.main.attr('data-theme', page)
-			this.cur_page = page
+			//_frame.dom.main.attr('data-theme', page)
+			//this.cur_page = page
 
 			_g.log( 'LOADED: ' + page )
 			this.load_page_lock = false
@@ -786,6 +788,7 @@ _frame.app_main = {
 					_frame.app_main.navtitle[o.page] = o.title
 					_frame.dom.navs[o.page] = (function(page){
 								return $('<button class="button" />').on('click', function(){
+										Page.resetScroll(page)
 										_frame.app_main.load_page(page)
 									})
 							})(o.page).html(o.title).appendTo( _frame.dom.navlinks )
@@ -1231,6 +1234,7 @@ _frame.app_main = {
 								_frame.infos.click(el)
 							}
 						}
+					
 				$body.on('click.pagechange', 'a[href^="?page="]', link_page)
 					.on('click.pagechange', 'a[href^="?infos="]', link_infos)
                     .on('keydown', function(e){

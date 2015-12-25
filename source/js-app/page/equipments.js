@@ -10,29 +10,25 @@ _frame.app_main.page['equipments'] = {
 				this.tablelistObj = this.tablelist.data('tablelist')
 			
 				$page.on({
-					'on': function(){
-						if( !this.tablelistObj )
-							this.tablelistObj
-								= this.tablelist.data('tablelist')
-				
-						if( this.tablelistObj ){
-							this.tablelistObj.thead_redraw()
-							this.tablelistObj.apply_types()
-						}
-					}.bind(this),
 					'modeSelectionEnter': function(e, callback_select, callback_enter){
 						this.modeSelectionEnter(callback_select, callback_enter)
 					}.bind(this),
-					'show': function(){
+					'pageShow': function(){
+						if( !this.tablelistObj )
+							this.tablelistObj
+								= this.tablelist.data('tablelist')
+
 						if( this.tablelistObj ){
 							this.tablelistObj.thead_redraw()
 							this.tablelistObj.apply_types()
 						}
 					}.bind(this),
-					'pageoff': function(){
+					'pageHide': function(){
 						TablelistEquipments.types = []
 						TablelistEquipments.shipId = null
-						this.tablelistObj.apply_types()
+						if( this.tablelistObj ){
+							this.tablelistObj.apply_types()
+						}
 					}.bind(this)
 				})
 			}

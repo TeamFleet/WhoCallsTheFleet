@@ -35,7 +35,7 @@ _frame.app_main.page['arsenal'].init = function( page ){
 							.appendTo($('<div class="akashi"/>').prependTo(tabs))
 
 	// contents
-		this.elMain = $('<div class="main"/>')
+		this.elMain = $('<div class="main" scrollbody/>')
 			.append(this.init_weekday())
 			.append(this.init_all())
 			.appendTo(page)

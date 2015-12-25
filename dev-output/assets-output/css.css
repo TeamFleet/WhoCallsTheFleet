@@ -6898,7 +6898,7 @@ body.mod-capture #tip {
 }
 .tablelist-equipments .tablelist-body > p.row[data-equipmentid] > strong,
 .tablelist-equipments .tablelist-body > p.row[data-equipmentid] > span {
-  line-height: 15px;
+  line-height: 14px;
   padding-top: 5px;
   padding-bottom: 5px;
   display: -webkit-box;

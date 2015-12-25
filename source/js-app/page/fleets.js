@@ -7,7 +7,7 @@ _frame.app_main.page['fleets'] = {
 				super( $page )
 				//this.inited = false
 				$page.on({
-					'show': function(){
+					'pageShow': function(){
 						if( this.inited ){
 							/*
 							$page.html( _frame.app_main.page_html['fleets'] )

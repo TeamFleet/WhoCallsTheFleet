@@ -4065,12 +4065,9 @@ _frame.app_main = {
 		var u = _g.state2URI({ page: page });
 
 		function callback() {
-			_frame.app_main.page_dom[page].trigger('show');
 			_frame.infos.hide();
 
 			if (!options.callback_modeSelection_select) {
-				_frame.infos.last = null;
-
 				document.title = _frame.app_main.page_title[u];
 				_g.title(_frame.app_main.navtitle[page] || !0);
 
@@ -4079,23 +4076,12 @@ _frame.app_main = {
 
 			if (_frame.app_main.cur_page == page) return page;
 
-			_frame.app_main.page_dom[page].appendTo(_frame.dom.main).removeClass('off').trigger('on');
-
-			if (_frame.app_main.cur_page) {
-				setTimeout((function (p) {
-					Page.off(p);
-				})(_frame.app_main.cur_page), 100);
-			}
-
-			if (_frame.dom.navs[page]) _frame.dom.navs[page].addClass('on');
+			Page.show(page);
 
 			if (!options.callback_modeSelection_select) {
 
 				if (page != 'about') Lockr.set('last_page', page);
 			}
-
-			_frame.dom.main.attr('data-theme', page);
-			_frame.app_main.cur_page = page;
 
 			_g.log('LOADED: ' + page);
 
@@ -4109,7 +4095,7 @@ _frame.app_main = {
 		if (!this.page_dom[page]) {
 			this.page_dom[page] = _frame.dom.main.find('.page-container[page="' + page + '"]');
 			if (this.page_dom[page].length) {
-				this.page_init(page);
+				Page.init(page);
 				this.page_title[u] = document.title;
 				callback();
 			} else {
@@ -4119,7 +4105,7 @@ _frame.app_main = {
 							_frame.app_main.page_dom[page] = $(html).appendTo(_frame.dom.main);
 							if (u != location.pathname) _frame.app_main.page_dom[page].addClass('off');
 
-							_frame.app_main.page_init(page);
+							Page.init(page);
 						}
 					},
 					successAfter: callback,
@@ -4229,7 +4215,9 @@ _frame.app_main = {
 				});
 				_frame.app_main.navtitle[p] = t;
 				if (!$el.hasClass('button')) $el = $el.parent();
-				_frame.dom.navs[p] = $el;
+				_frame.dom.navs[p] = $el.on('click', function () {
+					Page.resetScroll(p);
+				});
 			});
 			return _frame.app_main.nav;
 		}).then(function () {
@@ -4404,12 +4392,6 @@ _g.error = function (err) {
 };
 
 var debugmode = !1;
-
-_frame.app_main.page_init = function (page, $page) {
-	$page = $page || this.page_dom[page];
-	if (this.page[page] && this.page[page].init) this.page[page].init($page);
-	_p.initDOM($page);
-};
 
 var ShareBar = (function () {
 	function ShareBar(options) {
@@ -4751,9 +4733,11 @@ var Page = (function () {
 	function Page($page) {
 		_classCallCheck(this, Page);
 
-		$page.on('pageoff', (function () {
-			this.modeSelectionExit();
-		}).bind(this));
+		$page.on({
+			'pageHide': (function () {
+				this.modeSelectionExit();
+			}).bind(this)
+		});
 	}
 
 	_createClass(Page, [{
@@ -4787,15 +4771,87 @@ var Page = (function () {
 	return Page;
 })();
 
-Page.off = function (page) {
+Page.hide = function (page) {
 	page = page || _frame.app_main.cur_page;
 	if (typeof page == 'string') {
+		if (_frame.app_main.page_dom[page]) _frame.app_main.page_dom[page].addClass('off').trigger('pageHide').detach();
 		if (_frame.dom.navs[page]) _frame.dom.navs[page].removeClass('on');
-		if (_frame.app_main.page_dom[page]) _frame.app_main.page_dom[page].addClass('off').trigger('pageoff').detach();
 	} else {
-		page.addClass('off').trigger('pageoff').detach();
+		page.addClass('off').trigger('pageHide').detach();
+		var p = page.attr('page');
+		if (p && _frame.dom.navs[p]) _frame.dom.navs[p].removeClass('on');
 	}
 	_frame.app_main.cur_page = null;
+};
+
+Page.show = function (page) {
+	page = page || _frame.app_main.cur_page;
+	var p = undefined;
+
+	if (typeof page == 'string') {
+		if (_frame.app_main.page_dom[page]) _frame.app_main.page_dom[page].appendTo(_frame.dom.main).removeClass('off').trigger('pageShow');
+		if (_frame.dom.navs[page]) _frame.dom.navs[page].addClass('on');
+		p = page;
+	} else {
+		page.appendTo(_frame.dom.main).removeClass('off').trigger('pageShow');
+		p = page.attr('page');
+	}
+
+	if (_frame.app_main.cur_page) Page.hide(_frame.app_main.cur_page);
+
+	if (p) {
+		if (_frame.dom.navs[p]) _frame.dom.navs[p].addClass('on');
+		_frame.dom.main.attr('data-theme', p);
+		_frame.app_main.cur_page = p;
+	}
+};
+
+Page.resetScroll = function (page) {
+	page = page || _frame.app_main.cur_page;
+	if (typeof page == 'string') page = _frame.app_main.page_dom[page];
+
+	if (page && page.length) {
+		page.attr('scrollbody', 0);
+		page.find('[scrollbody]').each(function (i, el) {
+			el.setAttribute('scrollbody', 0);
+		});
+	}
+};
+
+Page.init = function (page) {
+	page = page || _frame.app_main.cur_page;
+	var p = undefined;
+
+	if (typeof page == 'string') {
+		p = page;
+		page = _frame.app_main.page_dom[page];
+	} else {
+		page.appendTo(_frame.dom.main).removeClass('off').trigger('pageShow');
+		p = page.attr('page');
+	}
+
+	if (!page || !page.length) return;
+
+	function handlerScroll(e) {
+		e.currentTarget.setAttribute('scrollbody', e.currentTarget.scrollTop);
+	}
+
+	if (p && _frame.app_main.page[p] && _frame.app_main.page[p].init) _frame.app_main.page[p].init(page);
+	_p.initDOM(page);
+
+	page.find('[scrollbody]').on('scroll', handlerScroll);
+
+	page.on({
+		'scroll': handlerScroll,
+		'pageShow.scrollbody': function pageShowScrollbody() {
+			page.scrollTop(page.attr('scrollbody') || 0);
+			setTimeout(function () {
+				page.find('[scrollbody]').each(function (i, el) {
+					el.scrollTop = el.getAttribute('scrollbody') || 0;
+				});
+			}, 0);
+		}
+	});
 };
 
 _frame.app_main.page['fleets'] = {
@@ -4809,7 +4865,7 @@ _frame.app_main.page['fleets'] = {
 				var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this, $page));
 
 				$page.on({
-					'show': function show() {
+					'pageShow': function pageShow() {
 						if (this.inited) {
 							$page.children('.tablelist').data('tablelist').refresh();
 						}
@@ -4835,15 +4891,7 @@ _frame.app_main.page['ships'] = {
 
 				var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(_class2).call(this, $page));
 
-				_this5.tablelist = $page.find('.tablelist');
-				_this5.tablelistObj = _this5.tablelist.data('tablelist');
-
 				$page.on({
-					'on': (function () {
-						if (!this.tablelistObj) this.tablelistObj = this.tablelist.data('tablelist');
-
-						if (this.tablelistObj) this.tablelistObj.thead_redraw();
-					}).bind(_this5),
 					'modeSelectionEnter': (function (e, callback_select) {
 						this.modeSelectionEnter(callback_select);
 					}).bind(_this5)
@@ -4870,7 +4918,10 @@ _frame.app_main.page['equipments'] = {
 				_this6.tablelistObj = _this6.tablelist.data('tablelist');
 
 				$page.on({
-					'on': (function () {
+					'modeSelectionEnter': (function (e, callback_select, callback_enter) {
+						this.modeSelectionEnter(callback_select, callback_enter);
+					}).bind(_this6),
+					'pageShow': (function () {
 						if (!this.tablelistObj) this.tablelistObj = this.tablelist.data('tablelist');
 
 						if (this.tablelistObj) {
@@ -4878,19 +4929,12 @@ _frame.app_main.page['equipments'] = {
 							this.tablelistObj.apply_types();
 						}
 					}).bind(_this6),
-					'modeSelectionEnter': (function (e, callback_select, callback_enter) {
-						this.modeSelectionEnter(callback_select, callback_enter);
-					}).bind(_this6),
-					'show': (function () {
-						if (this.tablelistObj) {
-							this.tablelistObj.thead_redraw();
-							this.tablelistObj.apply_types();
-						}
-					}).bind(_this6),
-					'pageoff': (function () {
+					'pageHide': (function () {
 						TablelistEquipments.types = [];
 						TablelistEquipments.shipId = null;
-						this.tablelistObj.apply_types();
+						if (this.tablelistObj) {
+							this.tablelistObj.apply_types();
+						}
 					}).bind(_this6)
 				});
 				return _this6;
@@ -5286,7 +5330,7 @@ _frame.infos = {
 
 			if (_frame.app_main.cur_page) {
 
-				Page.off(_frame.app_main.cur_page);
+				Page.hide(_frame.app_main.cur_page);
 			}
 
 			_frame.dom.main.attr('data-theme', cont.attr('data-theme') || type);
