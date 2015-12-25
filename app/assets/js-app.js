@@ -5665,12 +5665,13 @@ Page.init = function(page){
 		'scroll': handlerScroll,
 		'pageShow.scrollbody': function(){
 			page.scrollTop( page.attr('scrollbody') || 0 )
-			setTimeout(function(){
-				page.find('[scrollbody]').each(function(i, el){
-					//el.scrollTop = $(el).data('scrollTop')
+			page.find('[scrollbody]').each(function(i, el){
+				//el.scrollTop = $(el).data('scrollTop')
+				el.scrollTop = el.getAttribute('scrollbody') || 0
+				setTimeout(function(){
 					el.scrollTop = el.getAttribute('scrollbody') || 0
-				})
-			}, 0)
+				}, 10)
+			})
 		}
 	})
 }
@@ -11914,7 +11915,7 @@ class TablelistFleets extends Tablelist{
 	
 	
 	// 生成列表
-		genlist(){
+		genlist(callback){
 			Q.fcall(function(){})
 	
 				//promise_chain
@@ -11951,6 +11952,8 @@ class TablelistFleets extends Tablelist{
 					_g.log(err)
 				})
 				.done(function(){
+					if( callback )
+						callback()
 					_g.log('Fleets list DONE')
 				})
 		}
@@ -11960,7 +11963,9 @@ class TablelistFleets extends Tablelist{
 		refresh(){
 			console.log('refresh')
 			this.dom.tbody.empty()
-			this.genlist()
+			this.genlist(function(){
+				this.dom.tbody.scrollTop(this.dom.tbody.attr('scrollbody') || 0)
+			}.bind(this))
 		}
 }
 TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){

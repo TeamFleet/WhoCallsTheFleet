@@ -4845,11 +4845,12 @@ Page.init = function (page) {
 		'scroll': handlerScroll,
 		'pageShow.scrollbody': function pageShowScrollbody() {
 			page.scrollTop(page.attr('scrollbody') || 0);
-			setTimeout(function () {
-				page.find('[scrollbody]').each(function (i, el) {
+			page.find('[scrollbody]').each(function (i, el) {
+				el.scrollTop = el.getAttribute('scrollbody') || 0;
+				setTimeout(function () {
 					el.scrollTop = el.getAttribute('scrollbody') || 0;
-				});
-			}, 0);
+				}, 10);
+			});
 		}
 	});
 };
@@ -8541,7 +8542,7 @@ var TablelistFleets = (function (_Tablelist4) {
 		}
 	}, {
 		key: 'genlist',
-		value: function genlist() {
+		value: function genlist(callback) {
 			Q.fcall(function () {}).then((function () {
 				return this.loaddata();
 			}).bind(this)).then((function (arr) {
@@ -8557,6 +8558,7 @@ var TablelistFleets = (function (_Tablelist4) {
 			}).bind(this)).catch(function (err) {
 				_g.log(err);
 			}).done(function () {
+				if (callback) callback();
 				_g.log('Fleets list DONE');
 			});
 		}
@@ -8565,7 +8567,9 @@ var TablelistFleets = (function (_Tablelist4) {
 		value: function refresh() {
 			console.log('refresh');
 			this.dom.tbody.empty();
-			this.genlist();
+			this.genlist((function () {
+				this.dom.tbody.scrollTop(this.dom.tbody.attr('scrollbody') || 0);
+			}).bind(this));
 		}
 	}]);
 

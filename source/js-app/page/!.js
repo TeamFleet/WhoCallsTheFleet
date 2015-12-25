@@ -120,12 +120,13 @@ Page.init = function(page){
 		'scroll': handlerScroll,
 		'pageShow.scrollbody': function(){
 			page.scrollTop( page.attr('scrollbody') || 0 )
-			setTimeout(function(){
-				page.find('[scrollbody]').each(function(i, el){
-					//el.scrollTop = $(el).data('scrollTop')
+			page.find('[scrollbody]').each(function(i, el){
+				//el.scrollTop = $(el).data('scrollTop')
+				el.scrollTop = el.getAttribute('scrollbody') || 0
+				setTimeout(function(){
 					el.scrollTop = el.getAttribute('scrollbody') || 0
-				})
-			}, 0)
+				}, 10)
+			})
 		}
 	})
 }
