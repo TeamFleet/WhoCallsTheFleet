@@ -4483,7 +4483,7 @@ body.mod-capture #tip {
     top: 0;
     height: 56px;
     z-index: 4;
-    background: #333;
+    background: #464339;
     -webkit-transition: none 0.2s ease-out;
     transition: none 0.2s ease-out;
     -webkit-transition-property: -webkit-transform;
@@ -4498,10 +4498,6 @@ body.mod-capture #tip {
   nav ~ .nav-mask:after {
     z-index: -1;
     top: 56px;
-    -webkit-transition: none 0.2s ease-out;
-    transition: none 0.2s ease-out;
-    -webkit-transition-property: background-color;
-    transition-property: background-color;
   }
   main {
     top: 0;

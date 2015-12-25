@@ -6,11 +6,13 @@ $('#titlebar > .buttons').prepend( $('<button/>',{
 		'class':	'console',
 		'html':		'Debug'
 	}).on('click', function(){
-		debug.init()
-		debug.container.toggleClass('on')
+		debug.init().toggleClass('on')
 	}) )
 
 debug.init = function(){
+	if( debug.container )
+		return debug.container
+
 	debug.container = $('<div class="debug"/>').appendTo(_frame.dom.main)
 		.append($('<style/>').html(`
 .debug{
@@ -166,6 +168,8 @@ debug.init = function(){
 					}catch(e){}
 				}
 		})
+	
+	return debug.container
 }
 
 return debug
