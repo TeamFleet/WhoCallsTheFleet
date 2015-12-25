@@ -8002,9 +8002,9 @@ var TablelistFleets = (function (_Tablelist4) {
 			this.btn_settings();
 		}).bind(_this13)).appendTo(_this13.dom.buttons_right);
 
-		_this13.dom.table = $('<div class="tablelist-container" scrollbody/>').appendTo(_this13.dom.container);
+		_this13.dom.table = $('<div class="tablelist-container"/>').appendTo(_this13.dom.container);
 		_this13.dom.thead = $('<div class="wrapper"/>').appendTo($('<div class="tablelist-header"/>').appendTo(_this13.dom.table));
-		_this13.dom.tbody = $('<div class="tablelist-body"/>').appendTo(_this13.dom.table).on('contextmenu.contextmenu_fleet', '.row[data-fleetid]', (function (e) {
+		_this13.dom.tbody = $('<div class="tablelist-body" scrollbody/>').appendTo(_this13.dom.table).on('contextmenu.contextmenu_fleet', '.row[data-fleetid]', (function (e) {
 			this.contextmenu_show($(e.currentTarget), null, e);
 			e.preventDefault();
 		}).bind(_this13)).on('click.contextmenu_fleet', '.row[data-fleetid]>strong>em', (function (e) {

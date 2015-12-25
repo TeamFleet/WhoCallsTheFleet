@@ -13,3 +13,5 @@
 // @koala-prepend "steps/tips.js"
 
 // @koala-prepend "steps/assets.js"
+
+// @koala-prepend "debug.js"

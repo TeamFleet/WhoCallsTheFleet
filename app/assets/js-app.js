@@ -11147,9 +11147,9 @@ class TablelistFleets extends Tablelist{
 			*/
 
 		// [创建] 表格框架
-			this.dom.table = $('<div class="tablelist-container" scrollbody/>').appendTo( this.dom.container )
+			this.dom.table = $('<div class="tablelist-container"/>').appendTo( this.dom.container )
 			this.dom.thead = $('<div class="wrapper"/>').appendTo($('<div class="tablelist-header"/>').appendTo( this.dom.table ))
-			this.dom.tbody = $('<div class="tablelist-body"/>').appendTo( this.dom.table )
+			this.dom.tbody = $('<div class="tablelist-body" scrollbody/>').appendTo( this.dom.table )
 				.on('contextmenu.contextmenu_fleet', '.row[data-fleetid]', function(e){
 						this.contextmenu_show($(e.currentTarget), null , e)
 						e.preventDefault()

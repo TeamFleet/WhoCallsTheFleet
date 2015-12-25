@@ -2868,58 +2868,6 @@ nav > section.options > [icon][icon]:before {
   font-size: 1em;
   opacity: 1;
 }
-nav > section.options > button.update_progress {
-  display: none;
-}
-nav > section.options > button.update_progress.on {
-  display: inline-block;
-}
-nav > section.options > button.update_progress > s {
-  top: 67.5%;
-  left: 0;
-  width: 0;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.4);
-  text-align: center;
-  position: absolute;
-  display: block;
-  overflow: hidden;
-  -webkit-transition-timing-function: linear;
-          transition-timing-function: linear;
-  -webkit-transition-duration: 1s;
-          transition-duration: 1s;
-  -webkit-transition-property: width;
-  transition-property: width;
-}
-nav > section.options > button.update_progress > s:before {
-  content: "✓";
-  color: transparent;
-  -webkit-transition: none 0.2s ease-out;
-  transition: none 0.2s ease-out;
-  -webkit-transition-property: color;
-  transition-property: color;
-  font-size: 12px;
-  line-height: 16px;
-  vertical-align: top;
-}
-nav > section.options > button.update_progress.done > s {
-  -webkit-transition-property: width, top, right, bottom, border-radius, background;
-  transition-property: width, top, right, bottom, border-radius, background;
-  -webkit-transition-timing-function: ease-out;
-          transition-timing-function: ease-out;
-  -webkit-transition-duration: 0.2s;
-          transition-duration: 0.2s;
-  top: calc(100% - 18px);
-  right: 2px;
-  bottom: 2px;
-  left: auto;
-  width: 16px;
-  border-radius: 50%;
-  background: rgba(127, 255, 127, 0.5);
-}
-nav > section.options > button.update_progress.done > s:before {
-  color: #fff;
-}
 main {
   display: block;
   position: relative;
