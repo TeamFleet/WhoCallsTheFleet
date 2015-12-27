@@ -9,6 +9,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "animate.css": "^3.4.0",
     "kctip": "^0.4.1",
     "lockr": "^0.8.3",
     "lz-string": "^1.4.4",

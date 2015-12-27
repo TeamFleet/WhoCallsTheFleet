@@ -69,23 +69,22 @@ main[data-theme="arsenal"]{
 				transform-origin:	0 0;
 				background:	~"url(@{folder_images}/akashi.png) no-repeat 0 0";
 				position:	relative;
-				.width(214);
-				.height(77);
+				width: 		214px;
+				height: 	77px;
 				&:before{
 				    content:	'';
 				    background: ~"url(@{folder_images}/akashi-eye.png) no-repeat 0 0";
 				    display:	block;
 				    position:	absolute;
-				    .width(55);
-				    .height(34);
-				    .top(19);
-				    .left(22);
-				    .animation(~"3s steps(1) infinite");
-					.animation-delay(3s);
+					width: 		55px;
+					height: 	34px;
+					top: 		19px;
+					left: 		22px;
+					animation: 	none 3s steps(1) 3s infinite;
 				}
 				.loop(@n, @i: 1) when (@i =< @n) {
 					&[animation="@{i}"]:before{
-						.animation-name(~"akashi-blink-@{i}");
+						animation-name: ~"akashi-blink-@{i}";
 					}
 					.loop(@n, (@i + 1))
 				}
@@ -102,7 +101,7 @@ main[data-theme="arsenal"]{
 		-webkit-overflow-scrolling: touch;
 		&>.body{
 			display:	none;
-			.fadein();
+			.animate(fadeIn);
 			padding-bottom:	20px;
 		}
 	}
@@ -231,7 +230,7 @@ main[data-theme="arsenal"]{
 
 	&>.content{
 		display:	none;
-		.fadein();
+		.animate(fadeIn);
 		&>.flexgrid{
 			&>.unit{
 				flex:		1 0 490px;
@@ -265,7 +264,7 @@ main[data-theme="arsenal"]{
 			&>span{
 				//display:	block;
 				opacity:	1;
-				//.fadein();
+				//.animate(fadeIn);
 			}
 		}
 	}

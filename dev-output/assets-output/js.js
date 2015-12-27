@@ -5120,6 +5120,19 @@ _frame.gg = function () {
 	});
 };
 
+var BgImg = function BgImg(options) {
+	_classCallCheck(this, BgImg);
+
+	options = options || {};
+	this.settings = $.extend(!0, {}, ShareBar.defaults, options);
+};
+
+BgImg.default = {
+	enable: !0
+};
+
+BgImg.obj = [];
+
 _frame.infos = {
 	historyLength: -1,
 	historyCurrent: -1,
