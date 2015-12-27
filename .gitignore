@@ -49,3 +49,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 /errorlog.txt
+/node_modules
+/dev-output/js-source/node_modules
+/source/libs/node_modules

@@ -38,6 +38,8 @@
 // @koala-prepend "js-app/page/calctp.js"
 
 // @koala-prepend "js-app/frame/ad.js"
+// @koala-prepend "js-app/frame/bgimg.js"
+// @koala-prepend "js-app/frame/bgimg.client.js"
 // @koala-prepend "js-app/frame/infos.js"
 // @koala-prepend "js-app/frame/infos-entity.js"
 // @koala-prepend "js-app/frame/infos-equipment.js"

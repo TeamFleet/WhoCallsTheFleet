@@ -73,6 +73,8 @@
 // @koala-prepend "../../source/js-app/page/calctp.js"
 
 // @koala-prepend "../../source/js-app/frame/ad.js"
+// @koala-prepend "../../source/js-app/frame/bgimg.js"
+// @koala-prepend "../../source/js-app/frame/bgimg.web.js"
 // @koala-prepend "../../source/js-app/frame/infos.web.js"
 // @koala-prepend "../../source/js-app/frame/infos-ship-init.js"
 // @koala-prepend "../../source/js-app/frame/infos-fleet.js"
