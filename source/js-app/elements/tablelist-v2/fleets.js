@@ -128,13 +128,13 @@ class TablelistFleets extends Tablelist{
 
 		// [创建] 表格框架
 			this.dom.table = $('<div class="tablelist-container"/>').appendTo( this.dom.container )
-			this.dom.thead = $('<div class="wrapper"/>').appendTo($('<div class="tablelist-header"/>').appendTo( this.dom.table ))
+			this.dom.thead = $('<dl/>').appendTo($('<div class="tablelist-header"/>').appendTo( this.dom.table ))
 			this.dom.tbody = $('<div class="tablelist-body" scrollbody/>').appendTo( this.dom.table )
-				.on('contextmenu.contextmenu_fleet', '.row[data-fleetid]', function(e){
+				.on('contextmenu.contextmenu_fleet', '[data-fleetid]', function(e){
 						this.contextmenu_show($(e.currentTarget), null , e)
 						e.preventDefault()
 					}.bind(this))
-				.on('click.contextmenu_fleet', '.row[data-fleetid]>strong>em', function(e){
+				.on('click.contextmenu_fleet', '[data-fleetid]>dt>em', function(e){
 						this.contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget))
 						e.stopImmediatePropagation()
 						e.stopPropagation()
@@ -142,12 +142,12 @@ class TablelistFleets extends Tablelist{
 			
 			this.columns.forEach(function(v, i){
 				if( typeof v == 'object' ){
-					$('<span data-stat="' + v[1] + '"/>',{
-						'data-stat':v[1],
+					$('<dd/>',{
+						'stat': 	v[1],
 						'html':		v[0]
 					}).appendTo(this.dom.thead)
 				}else{
-					$('<strong/>').html(v[0]).appendTo(this.dom.thead)
+					$('<dt/>').html(v[0]).appendTo(this.dom.thead)
 				}
 			}.bind(this))
 
@@ -352,9 +352,9 @@ class TablelistFleets extends Tablelist{
 						// 创建flexgrid placeholder
 							while(k < this.flexgrid_empty_count){
 								if( !k )
-									this.flexgrid_ph = $('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
+									this.flexgrid_ph = $('<dl data-fleetid trindex="99999"/>').appendTo(this.dom.tbody)
 								else
-									$('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
+									$('<dl data-fleetid trindex="99999"/>').appendTo(this.dom.tbody)
 								k++
 							}
 
@@ -369,9 +369,8 @@ class TablelistFleets extends Tablelist{
 							}.bind(this))
 
 						// 创建强制换行
-							$('<p/>',{
-									'class':	'title',
-									'data-trindex': ++this.trIndex,
+							$('<h4/>',{
+									'trindex': 	++this.trIndex,
 									'html': 	'&nbsp;'
 								})
 								.appendTo( this.dom.tbody )
@@ -381,9 +380,9 @@ class TablelistFleets extends Tablelist{
 				// 创建flexgrid placeholder
 					while(k < this.flexgrid_empty_count){
 						if( !k )
-							this.flexgrid_ph = $('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
+							this.flexgrid_ph = $('<dl data-fleetid trindex="99999"/>').appendTo(this.dom.tbody)
 						else
-							$('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
+							$('<dl data-fleetid trindex="99999"/>').appendTo(this.dom.tbody)
 						k++
 					}
 		
@@ -415,9 +414,9 @@ class TablelistFleets extends Tablelist{
 			
 			//_g.log(data)
 			
-			let tr = $('<p class="row"/>')
+			let tr = $('<dl/>')
 						.attr({
-							'data-trindex': index,
+							'trindex': 		index,
 							'data-fleetid': data._id || 'PLACEHOLDER',
 							//'data-infos': 	'[[FLEET::'+JSON.stringify(data)+']]'
 							'data-infos': 	'[[FLEET::'+data._id+']]',
@@ -445,9 +444,9 @@ class TablelistFleets extends Tablelist{
 							j++
 						}
 						html+='</i>'
-						$('<strong/>')
+						$('<dt/>')
 							.attr(
-								'data-value',
+								'value',
 								data['name']
 							)
 							.html(
@@ -459,9 +458,9 @@ class TablelistFleets extends Tablelist{
 						break;
 					default:
 						var datavalue = data[column[1]]
-						$('<span/>')
+						$('<dd/>')
 							.attr(
-								'data-value',
+								'value',
 								datavalue
 							)
 							.html( datavalue )

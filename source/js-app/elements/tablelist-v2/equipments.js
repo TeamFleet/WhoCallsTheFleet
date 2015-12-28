@@ -151,9 +151,9 @@ class TablelistEquipments extends Tablelist{
 		
 		let header_index = -1
 
-		this.dom.tbody.children('p.title,p.row').each(function(index, tr){
+		this.dom.tbody.children('h4, dl').each(function(index, tr){
 			tr = $(tr)
-			if( tr.hasClass('title') ){
+			if( tr[0].tagName == 'H4' ){
 				header_index++
 				this.dom.types[header_index] = tr
 			}else{

@@ -57,8 +57,8 @@ class Tablelist{
 		this.sort_default_order_by_stat = options.sort_default_order_by_stat || {}
 		
 		container//.attr('data-index', this._index)
-			.on('mouseenter.hovercolumn', '.tablelist-body>p.row>span', this.hovercolumn_delegate.bind(this))
-			.on('mouseleave.hovercolumn', '.tablelist-body>p.row>span', this.hovercolumn_delegate_leave.bind(this))
+			.on('mouseenter.hovercolumn', '.tablelist-body dd', this.hovercolumn_delegate.bind(this))
+			.on('mouseleave.hovercolumn', '.tablelist-body dd', this.hovercolumn_delegate_leave.bind(this))
 		/*
 		if( this.is_init )
 			return true
@@ -204,7 +204,7 @@ class Tablelist{
 					if( !tbody || !tbody.length )
 						tbody = this.dom.table.children('.tablelist-body')
 					//rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
-					rows = tbody.children('p.row:visible:not([data-donotcompare])')
+					rows = tbody.children('dl:visible:not([data-donotcompare])')
 				}
 				nth = nth || 1
 	
@@ -213,10 +213,10 @@ class Tablelist{
 					this._tmp_value_map_cell = {}
 	
 				// 遍历，将值全部导出到 _tmp_values，_tmp_value_map_cell 中记录 值 -> jQuery DOM
-					rows.children('span:nth-of-type(' + nth + ')').each(function(index, element){
+					rows.children('dd:nth-of-type(' + nth + ')').each(function(index, element){
 						let cell = $(element)
 							//,val = cell.data('value')
-							,val = cell.attr('data-value')
+							,val = cell.attr('value')
 	
 						val = parseFloat(val)
 	
@@ -258,14 +258,14 @@ class Tablelist{
 					tbody = this.dom.table.children('.tablelist-body')
 	
 				//let rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
-				let rows = tbody.children('p.row:visible:not([data-donotcompare])')
+				let rows = tbody.children('dl:visible:not([data-donotcompare])')
 	
-				rows.children('span[data-value]').removeClass('sort-first sort-second')
+				rows.children('dd[value]').removeClass('sort-first sort-second')
 	
-				rows.eq(0).children('span[data-value]').each(function(index, element){
+				rows.eq(0).children('dd[value]').each(function(index, element){
 					let is_ascending = false
 						,$this = $(element)
-						,stat = $this.data('stat')
+						,stat = $this.attr('stat')
 	
 					// 以下属性不进行标记，但仍计算排序
 						,noMark = stat.match(/\b(speed|range|extra_illust)\b/ )
@@ -307,7 +307,7 @@ class Tablelist{
 				if( !cell )
 					return
 				
-				let stat = cell.data('stat')
+				let stat = cell.attr('stat')
 					,sortData = this.sort_data_by_stat[stat]
 				
 				console.log(stat, sortData)
@@ -362,12 +362,12 @@ class Tablelist{
 					let parent, arr = []
 					this.sortedRow.each(function(index, element){
 						var $this = $(element)
-							,trIndex = parseInt( $this.data('trindex') )
+							,trIndex = parseInt( $this.attr('trindex') )
 						parent = parent || $this.parent()
 						arr.push({
 							'index': 	trIndex,
 							'el': 		$this,
-							'prev': 	parent.children('[data-trindex="' + (trIndex - 1) + '"]')
+							'prev': 	parent.children('[trindex="' + (trIndex - 1) + '"]')
 						})
 					})
 					// 如果在上一步直接将DOM移动到上一个index行的后方，可能会因为目标DOM也为排序目标同时在当前DOM顺序后，造成结果不正常
@@ -607,7 +607,7 @@ class Tablelist{
 				
 				//this.dom.style.html('.tablelist[data-index="'+this._index+'"] .tablelist-body > p.row > span:nth-child('+(index+1)+'){background-color:rgba(0,0,0,.2)}')
 				//_p.el.tablelist.hovercolumn_mouseenter( e.delegateTarget, index )
-				this.dom.tbody.find('.row:visible>span:nth-child('+(index+1)+')').addClass('is-hover')
+				this.dom.tbody.find('dl:visible dd:nth-child('+(index+1)+')').addClass('is-hover')
 			}
 		}
 		hovercolumn_delegate_leave(e){
@@ -615,7 +615,7 @@ class Tablelist{
 				//_p.el.tablelist.hovercolumn_mouseleave_delay = setTimeout(function(){
 					//e.delegateTarget.removeAttribute('td-nth-hovered')
 					//this.dom.style.html('')
-					this.dom.tbody.find('span.is-hover').removeClass('is-hover')
+					this.dom.tbody.find('dd.is-hover').removeClass('is-hover')
 					_p.el.tablelist.hovercolumn_mouseleave_delay = null
 				//}.bind(this), 10)
 			}

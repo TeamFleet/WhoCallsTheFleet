@@ -57,7 +57,7 @@
 			@color:		hsl(50, 0%, 90%);
 			@color2:	fade(@color, 80%);
 			@color3:	fade(@color, 15%);
-			p.title{
+			h4{
 				height: 	17.5px;
 				margin-bottom: 7.5px;
 				margin-left: -10px;
@@ -69,10 +69,10 @@
 					border: 		0;
 				}
 			}
-			p[data-fleetid]{
+			dl[data-fleetid]{
 				flex-basis: 500px !important;
 			}
-			p.row[data-fleetid]{
+			dl[data-fleetid]:not(:empty){
 				margin-top: 10px;
 				position: 	relative;
 				height: 	40px;
@@ -92,7 +92,7 @@
 					.enable-transition();
 					transition-property: top, height, border;
 				}
-				&>strong{
+				dt{
 					display: 	flex;
 					align-items:center;
 					padding-left:350px;
@@ -244,11 +244,11 @@
 		@media all and (max-width: @screen-width-t4-breaking-point ){
 			.tablelist-body{
 				display: 	block;
-				&>p.title{
+				h4{
 					margin-bottom: 	15px;
 				}
-				&>p.row[data-fleetid]{
-					&>strong{
+				dl[data-fleetid]:not(:empty){
+					dt{
 						padding-right: 0;
 					}
 				}
@@ -256,10 +256,10 @@
 		}
 		@media all and (max-width: @screen-width-t7-breaking-point ){
 			.tablelist-body{
-				&>p.row[data-fleetid]{
+				dl[data-fleetid]:not(:empty){
 					height: 	auto;
 					min-height: 40px;
-					&>strong{
+					dt{
 						display: 	block;
 						padding: 	38px 1em 4px 1em;
 						line-height:18px;

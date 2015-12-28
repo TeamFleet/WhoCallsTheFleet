@@ -1,8 +1,8 @@
 .tablelist-ships(){.tablelist.ships{
 	
 	.tablelist-body{
-		&>p.row[data-shipid]{
-			&>strong{
+		dl[data-shipid]{
+			dt{
 				label.checkbox{
 					position:	absolute;
 					z-index:	2;
@@ -128,7 +128,7 @@
 					}
 				}
 			} // &>strong
-			&>span{
+			dd{
 				position:	relative;
 				&.sort-first{
 					background-image:	linear-gradient(to bottom, rgba(255,255,255,.5), rgba(255,255,255,.5) ~"calc(100% - 1px)", transparent ~"calc(100% - 1px)");
@@ -142,13 +142,13 @@
 				label.checkbox{
 					opacity:	.9;
 				}
-				&>strong em{
+				dt em{
 					color: 	rgba(255, 255, 255, .4);
 				}
 			}
 			
 			&[data-donotcompare="true"]{
-				&>strong em{
+				dt em{
 					display: 	none !important;
 				}
 			}
@@ -158,8 +158,8 @@
 	// viewtype: list
 	&  > [viewtype="list"] ~ .tablelist-container{
 		.tablelist-body{
-			&>p.row[data-shipid]{
-				&>strong{
+			dl[data-shipid]{
+				dt{
 					label.checkbox{
 						@media all and (max-width: @mobileview-breaking-point ){
 							left: 	0;
@@ -181,7 +181,7 @@
 			//&>p{
 				//margin: 	0 10px 0 30px;
 			//}
-			&>p[data-shipid]{
+			dl[data-shipid]{
 				margin-left:30px;
 				@media all and (min-width: @screen-width-t1-breaking-point ){
 					flex-basis: 175px;
@@ -189,11 +189,11 @@
 				@media all and (min-width: 1680px ){
 					flex-basis: 185px;
 				}
-			}
-			&>p.row[data-shipid]{
-				height: 	40px;
-				margin-top: 10px;
-				//transition-property: background, color, opacity;
+				&:not(:empty){
+					height: 	40px;
+					margin-top: 10px;
+					//transition-property: background, color, opacity;
+				}
 				label.checkbox{
 					position:	absolute;
 					left: 		-25px;
@@ -203,7 +203,7 @@
 						top: 		0;
 					}
 				}
-				&>strong{
+				dt{
 					line-height:	40px;
 					padding-top:	0;
 					padding-bottom:	0;
@@ -245,15 +245,15 @@
 	// viewtype: compare
 	&  > [viewtype="compare"] ~ .tablelist-container{
 		.tablelist-body{
-			&>p.row[data-shipid]{
+			dl[data-shipid]{
 				label.checkbox{
 					display: 	none;
 				}
-				&>strong em{
+				dt em{
 					display: 	none !important;
 				}
 				&[compare-checked]{
-					&>strong{
+					dt{
 						img{
 							left:	0;
 							mask-image: ~"linear-gradient(to right, #000 50px, #000 calc(100% - 60px), transparent calc(100% - 10px))";
@@ -275,29 +275,28 @@
 	}
 
 	@media all and (max-width: @main-sizing-t1-breaking-point ){
-		.tablelist-header > .wrapper,
-		.tablelist-body > p.row{
-			& > span{
+		dl{
+			dd{
 				flex-basis:	(12px * 2);
 			}
 		}
-		[data-stat="extra_illust"]{
+		[stat="extra_illust"]{
 			display:	none !important;
 		}
 	}
 	@media all and (max-width: @main-sizing-t2-breaking-point ){
-		[data-stat="consum_fuel"],
-		[data-stat="consum_ammo"]{
+		[stat="consum_fuel"],
+		[stat="consum_ammo"]{
 			display:	none !important;
 		}
 	}
 	@media all and (max-width: @main-sizing-t3-breaking-point ){
-		[data-stat="range"]{
+		[stat="range"]{
 			display:	none !important;
 		}
 	}
 	@media all and (max-width: @mobileview-breaking-point ){
-		[data-stat="los"]{
+		[stat="los"]{
 			display:	none !important;
 		}
 	}
@@ -305,40 +304,38 @@
 		&>.options>div.filters>.viewtype{
 			display: 	none;
 		}
-		[data-stat="speed"]{
+		[stat="speed"]{
 			display:	none !important;
 		}
 	}
 	@media all and (max-width: @main-sizing-t5-breaking-point ){
-		.tablelist-header > .wrapper,
-		.tablelist-body > p.row{
-			& > span{
+		dl{
+			dd{
 				flex-grow: .75;
 			}
 		}
-		.tablelist-body > p.row{
-			& > span{
-				flex-grow: .75;
+		.tablelist-body dl{
+			dd{
+				//flex-grow: .75;
 				border-left: 1px solid rgba(255,255,255,.1);
 			}
 		}
-		[data-stat="nightpower"],
-		[data-stat="luck"]{
+		[stat="nightpower"],
+		[stat="luck"]{
 			display:	none !important;
 		}
 	}
 	@media all and (max-width: @main-sizing-t6-breaking-point ){
-		.tablelist-header > .wrapper,
-		.tablelist-body > p.row{
-			& > strong{
+		dl{
+			dt{
 				flex-basis: 105px;
 			}
 		}
-		[data-stat="asw"],
-		[data-stat="carry"]{
+		[stat="asw"],
+		[stat="carry"]{
 			display:	none !important;
 		}
-		&>.options[viewtype=compare]~.tablelist-container .tablelist-body>p.row[data-shipid][compare-checked]>strong{
+		& > [viewtype=compare] ~ .tablelist-container .tablelist-body dl[data-shipid][compare-checked] dt{
 			img{
 				left: 	-50px;
 			}
@@ -358,10 +355,10 @@
 	
 	
 	.mod-selection({
-		p[data-donotcompare="true"]{
+		[data-donotcompare="true"]{
 			display: 	none !important;
 		}
-		p.title{
+		h4{
 			label.shiptype{
 				position: 	absolute;
 				top: 		10px;
@@ -397,12 +394,12 @@
 				transition-property: transform;
 			}
 		}
-		& > .options[viewtype="card"] ~ .tablelist-container p.title label.shiptype{
+		& > [viewtype="card"] ~ .tablelist-container h4 label.shiptype{
 			margin-left: 0;
 		}
 		.loop(@n, @i: 0) when (@i =< @n) {
 			&>.shiptype[value="@{i}"]:not(:checked){
-				&~.tablelist-container p.title[data-header="@{i}"]{
+				&~.tablelist-container h4[data-header="@{i}"]{
 					label.checkbox{
 						z-index: 	-1;
 						&:before{
@@ -410,12 +407,12 @@
 						}
 					}
 				}
-				&~.tablelist-container p.row[data-header="@{i}"]{
+				&~.tablelist-container dl[data-header="@{i}"]{
 					display:	none !important;
 				}
 			}
 			&>.shiptype[value="@{i}"]:checked{
-				&~.tablelist-container p.title[data-header="@{i}"]{
+				&~.tablelist-container h4[data-header="@{i}"]{
 					label.shiptype{
 						width: 		30px;
 						&:before{

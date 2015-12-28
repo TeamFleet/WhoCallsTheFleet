@@ -9932,8 +9932,8 @@ class Tablelist{
 		this.sort_default_order_by_stat = options.sort_default_order_by_stat || {}
 		
 		container//.attr('data-index', this._index)
-			.on('mouseenter.hovercolumn', '.tablelist-body>p.row>span', this.hovercolumn_delegate.bind(this))
-			.on('mouseleave.hovercolumn', '.tablelist-body>p.row>span', this.hovercolumn_delegate_leave.bind(this))
+			.on('mouseenter.hovercolumn', '.tablelist-body dd', this.hovercolumn_delegate.bind(this))
+			.on('mouseleave.hovercolumn', '.tablelist-body dd', this.hovercolumn_delegate_leave.bind(this))
 		/*
 		if( this.is_init )
 			return true
@@ -10079,7 +10079,7 @@ class Tablelist{
 					if( !tbody || !tbody.length )
 						tbody = this.dom.table.children('.tablelist-body')
 					//rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
-					rows = tbody.children('p.row:visible:not([data-donotcompare])')
+					rows = tbody.children('dl:visible:not([data-donotcompare])')
 				}
 				nth = nth || 1
 	
@@ -10088,10 +10088,10 @@ class Tablelist{
 					this._tmp_value_map_cell = {}
 	
 				// 遍历，将值全部导出到 _tmp_values，_tmp_value_map_cell 中记录 值 -> jQuery DOM
-					rows.children('span:nth-of-type(' + nth + ')').each(function(index, element){
+					rows.children('dd:nth-of-type(' + nth + ')').each(function(index, element){
 						let cell = $(element)
 							//,val = cell.data('value')
-							,val = cell.attr('data-value')
+							,val = cell.attr('value')
 	
 						val = parseFloat(val)
 	
@@ -10133,14 +10133,14 @@ class Tablelist{
 					tbody = this.dom.table.children('.tablelist-body')
 	
 				//let rows = tbody.find('tr.row:visible').not('[data-donotcompare]')
-				let rows = tbody.children('p.row:visible:not([data-donotcompare])')
+				let rows = tbody.children('dl:visible:not([data-donotcompare])')
 	
-				rows.children('span[data-value]').removeClass('sort-first sort-second')
+				rows.children('dd[value]').removeClass('sort-first sort-second')
 	
-				rows.eq(0).children('span[data-value]').each(function(index, element){
+				rows.eq(0).children('dd[value]').each(function(index, element){
 					let is_ascending = false
 						,$this = $(element)
-						,stat = $this.data('stat')
+						,stat = $this.attr('stat')
 	
 					// 以下属性不进行标记，但仍计算排序
 						,noMark = stat.match(/\b(speed|range|extra_illust)\b/ )
@@ -10182,7 +10182,7 @@ class Tablelist{
 				if( !cell )
 					return
 				
-				let stat = cell.data('stat')
+				let stat = cell.attr('stat')
 					,sortData = this.sort_data_by_stat[stat]
 				
 				console.log(stat, sortData)
@@ -10237,12 +10237,12 @@ class Tablelist{
 					let parent, arr = []
 					this.sortedRow.each(function(index, element){
 						var $this = $(element)
-							,trIndex = parseInt( $this.data('trindex') )
+							,trIndex = parseInt( $this.attr('trindex') )
 						parent = parent || $this.parent()
 						arr.push({
 							'index': 	trIndex,
 							'el': 		$this,
-							'prev': 	parent.children('[data-trindex="' + (trIndex - 1) + '"]')
+							'prev': 	parent.children('[trindex="' + (trIndex - 1) + '"]')
 						})
 					})
 					// 如果在上一步直接将DOM移动到上一个index行的后方，可能会因为目标DOM也为排序目标同时在当前DOM顺序后，造成结果不正常
@@ -10482,7 +10482,7 @@ class Tablelist{
 				
 				//this.dom.style.html('.tablelist[data-index="'+this._index+'"] .tablelist-body > p.row > span:nth-child('+(index+1)+'){background-color:rgba(0,0,0,.2)}')
 				//_p.el.tablelist.hovercolumn_mouseenter( e.delegateTarget, index )
-				this.dom.tbody.find('.row:visible>span:nth-child('+(index+1)+')').addClass('is-hover')
+				this.dom.tbody.find('dl:visible dd:nth-child('+(index+1)+')').addClass('is-hover')
 			}
 		}
 		hovercolumn_delegate_leave(e){
@@ -10490,7 +10490,7 @@ class Tablelist{
 				//_p.el.tablelist.hovercolumn_mouseleave_delay = setTimeout(function(){
 					//e.delegateTarget.removeAttribute('td-nth-hovered')
 					//this.dom.style.html('')
-					this.dom.tbody.find('span.is-hover').removeClass('is-hover')
+					this.dom.tbody.find('dd.is-hover').removeClass('is-hover')
 					_p.el.tablelist.hovercolumn_mouseleave_delay = null
 				//}.bind(this), 10)
 			}
@@ -10788,30 +10788,31 @@ class TablelistShips extends Tablelist{
 		// 生成表格框架
 			this.dom.table = this.dom.container.children('.tablelist-container')
 			this.dom.thead = this.dom.table.children('.tablelist-header')
-				.on('click', 'span[data-stat]', function(e){
+				.on('click', '[stat]', function(e){
 						this.sort_table_from_theadcell($(e.currentTarget))
 					}.bind(this))
 			this.dom.tbody = this.dom.table.children('.tablelist-body')
-				.on('contextmenu.contextmenu_ship', '.row[data-shipid]', function(e){
+				.on('contextmenu.contextmenu_ship', '[data-shipid]', function(e){
 						this.contextmenu_show($(e.currentTarget), null, e)
 						e.preventDefault()
 					}.bind(this))
-				.on('click.contextmenu_ship', '.row[data-shipid]>strong>em', function(e){
+				/*.on('click.contextmenu_ship', '[data-shipid]>strong>em', function(e){
 						this.contextmenu_show($(e.currentTarget).parent().parent())
 						e.stopImmediatePropagation()
 						e.stopPropagation()
-					}.bind(this))
-				.on('click', '.row[data-shipid]', function(e, forceInfos){
+					}.bind(this))*/
+				.on('click', '[data-shipid]', function(e, forceInfos){
 						if( e.target.tagName.toLowerCase() == 'label' ){
 							this.checkbox[e.currentTarget.getAttribute('data-shipid')]
 								.prop('checked', !this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked'))
 								.trigger('change')
 							e.stopPropagation()
-						}/*else if( e.target.tagName.toLowerCase() == 'em' ){
+						}else if( e.target.tagName.toLowerCase() == 'em' ){
+							this.contextmenu_show($(e.target))
 							e.preventDefault()
 							e.stopImmediatePropagation()
 							e.stopPropagation()
-						}*/else if( !forceInfos && _frame.app_main.is_mode_selection() ){
+						}else if( !forceInfos && _frame.app_main.is_mode_selection() ){
 							e.preventDefault()
 							e.stopImmediatePropagation()
 							e.stopPropagation()
@@ -10847,9 +10848,10 @@ class TablelistShips extends Tablelist{
 	parse_all_items(){
 		let header_index = -1
 
-		this.dom.tbody.children('p.title,p.row').each(function(index, tr){
+		this.dom.tbody.children('h4, dl').each(function(index, tr){
 			tr = $(tr)
-			if( tr.hasClass('title') ){
+			tr.attr('trindex', index)
+			if( tr[0].tagName == 'H4' ){
 				header_index++
 				this.last_item = tr
 				let checkbox = tr.find('input[type="checkbox"]')
@@ -10898,7 +10900,7 @@ class TablelistShips extends Tablelist{
 						'for':		'shiptype-'+header_index,
 						'class':	'shiptype'
 					}).prependTo(tr)
-			}else{
+			}else if( tr.attr('data-shipid') ){
 				let donotcompare = tr.attr('data-donotcompare')
 					//,ship_data = _g.data.ships[ tr.attr('data-shipid') ]
 					,ship_id = tr.attr('data-shipid')
@@ -11107,9 +11109,9 @@ class TablelistEquipments extends Tablelist{
 		
 		let header_index = -1
 
-		this.dom.tbody.children('p.title,p.row').each(function(index, tr){
+		this.dom.tbody.children('h4, dl').each(function(index, tr){
 			tr = $(tr)
-			if( tr.hasClass('title') ){
+			if( tr[0].tagName == 'H4' ){
 				header_index++
 				this.dom.types[header_index] = tr
 			}else{
@@ -11285,13 +11287,13 @@ class TablelistFleets extends Tablelist{
 
 		// [创建] 表格框架
 			this.dom.table = $('<div class="tablelist-container"/>').appendTo( this.dom.container )
-			this.dom.thead = $('<div class="wrapper"/>').appendTo($('<div class="tablelist-header"/>').appendTo( this.dom.table ))
+			this.dom.thead = $('<dl/>').appendTo($('<div class="tablelist-header"/>').appendTo( this.dom.table ))
 			this.dom.tbody = $('<div class="tablelist-body" scrollbody/>').appendTo( this.dom.table )
-				.on('contextmenu.contextmenu_fleet', '.row[data-fleetid]', function(e){
+				.on('contextmenu.contextmenu_fleet', '[data-fleetid]', function(e){
 						this.contextmenu_show($(e.currentTarget), null , e)
 						e.preventDefault()
 					}.bind(this))
-				.on('click.contextmenu_fleet', '.row[data-fleetid]>strong>em', function(e){
+				.on('click.contextmenu_fleet', '[data-fleetid]>dt>em', function(e){
 						this.contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget))
 						e.stopImmediatePropagation()
 						e.stopPropagation()
@@ -11299,12 +11301,12 @@ class TablelistFleets extends Tablelist{
 			
 			this.columns.forEach(function(v, i){
 				if( typeof v == 'object' ){
-					$('<span data-stat="' + v[1] + '"/>',{
-						'data-stat':v[1],
+					$('<dd/>',{
+						'stat': 	v[1],
 						'html':		v[0]
 					}).appendTo(this.dom.thead)
 				}else{
-					$('<strong/>').html(v[0]).appendTo(this.dom.thead)
+					$('<dt/>').html(v[0]).appendTo(this.dom.thead)
 				}
 			}.bind(this))
 
@@ -11509,9 +11511,9 @@ class TablelistFleets extends Tablelist{
 						// 创建flexgrid placeholder
 							while(k < this.flexgrid_empty_count){
 								if( !k )
-									this.flexgrid_ph = $('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
+									this.flexgrid_ph = $('<dl data-fleetid trindex="99999"/>').appendTo(this.dom.tbody)
 								else
-									$('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
+									$('<dl data-fleetid trindex="99999"/>').appendTo(this.dom.tbody)
 								k++
 							}
 
@@ -11526,9 +11528,8 @@ class TablelistFleets extends Tablelist{
 							}.bind(this))
 
 						// 创建强制换行
-							$('<p/>',{
-									'class':	'title',
-									'data-trindex': ++this.trIndex,
+							$('<h4/>',{
+									'trindex': 	++this.trIndex,
 									'html': 	'&nbsp;'
 								})
 								.appendTo( this.dom.tbody )
@@ -11538,9 +11539,9 @@ class TablelistFleets extends Tablelist{
 				// 创建flexgrid placeholder
 					while(k < this.flexgrid_empty_count){
 						if( !k )
-							this.flexgrid_ph = $('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
+							this.flexgrid_ph = $('<dl data-fleetid trindex="99999"/>').appendTo(this.dom.tbody)
 						else
-							$('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody)
+							$('<dl data-fleetid trindex="99999"/>').appendTo(this.dom.tbody)
 						k++
 					}
 		
@@ -11572,9 +11573,9 @@ class TablelistFleets extends Tablelist{
 			
 			//_g.log(data)
 			
-			let tr = $('<p class="row"/>')
+			let tr = $('<dl/>')
 						.attr({
-							'data-trindex': index,
+							'trindex': 		index,
 							'data-fleetid': data._id || 'PLACEHOLDER',
 							//'data-infos': 	'[[FLEET::'+JSON.stringify(data)+']]'
 							'data-infos': 	'[[FLEET::'+data._id+']]',
@@ -11602,9 +11603,9 @@ class TablelistFleets extends Tablelist{
 							j++
 						}
 						html+='</i>'
-						$('<strong/>')
+						$('<dt/>')
 							.attr(
-								'data-value',
+								'value',
 								data['name']
 							)
 							.html(
@@ -11616,9 +11617,9 @@ class TablelistFleets extends Tablelist{
 						break;
 					default:
 						var datavalue = data[column[1]]
-						$('<span/>')
+						$('<dd/>')
 							.attr(
-								'data-value',
+								'value',
 								datavalue
 							)
 							.html( datavalue )

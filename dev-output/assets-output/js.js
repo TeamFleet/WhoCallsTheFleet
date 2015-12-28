@@ -7176,7 +7176,7 @@ var Tablelist = (function () {
 		this.sort_data_by_stat = options.sort_data_by_stat || {};
 		this.sort_default_order_by_stat = options.sort_default_order_by_stat || {};
 
-		container.on('mouseenter.hovercolumn', '.tablelist-body>p.row>span', this.hovercolumn_delegate.bind(this)).on('mouseleave.hovercolumn', '.tablelist-body>p.row>span', this.hovercolumn_delegate_leave.bind(this));
+		container.on('mouseenter.hovercolumn', '.tablelist-body dd', this.hovercolumn_delegate.bind(this)).on('mouseleave.hovercolumn', '.tablelist-body dd', this.hovercolumn_delegate_leave.bind(this));
 	}
 
 	_createClass(Tablelist, [{
@@ -7284,16 +7284,16 @@ var Tablelist = (function () {
 				var tbody = this.dom.tbody;
 				if (!tbody || !tbody.length) tbody = this.dom.table.children('.tablelist-body');
 
-				rows = tbody.children('p.row:visible:not([data-donotcompare])');
+				rows = tbody.children('dl:visible:not([data-donotcompare])');
 			}
 			nth = nth || 1;
 
 			this._tmp_values = [];
 			this._tmp_value_map_cell = {};
 
-			rows.children('span:nth-of-type(' + nth + ')').each((function (index, element) {
+			rows.children('dd:nth-of-type(' + nth + ')').each((function (index, element) {
 				var cell = $(element),
-				    val = cell.attr('data-value');
+				    val = cell.attr('value');
 
 				val = parseFloat(val);
 
@@ -7325,14 +7325,14 @@ var Tablelist = (function () {
 
 			if (!tbody || !tbody.length) tbody = this.dom.table.children('.tablelist-body');
 
-			var rows = tbody.children('p.row:visible:not([data-donotcompare])');
+			var rows = tbody.children('dl:visible:not([data-donotcompare])');
 
-			rows.children('span[data-value]').removeClass('sort-first sort-second');
+			rows.children('dd[value]').removeClass('sort-first sort-second');
 
-			rows.eq(0).children('span[data-value]').each((function (index, element) {
+			rows.eq(0).children('dd[value]').each((function (index, element) {
 				var is_ascending = !1,
 				    $this = $(element),
-				    stat = $this.data('stat'),
+				    stat = $this.attr('stat'),
 				    noMark = stat.match(/\b(speed|range|extra_illust)\b/);
 
 				if (typeof this.sort_default_order_by_stat[stat] == 'undefined') {
@@ -7360,7 +7360,7 @@ var Tablelist = (function () {
 		value: function sort_table_from_theadcell(cell) {
 			if (!cell) return;
 
-			var stat = cell.data('stat'),
+			var stat = cell.attr('stat'),
 			    sortData = this.sort_data_by_stat[stat];
 
 			console.log(stat, sortData);
@@ -7409,12 +7409,12 @@ var Tablelist = (function () {
 			    arr = [];
 			this.sortedRow.each(function (index, element) {
 				var $this = $(element),
-				    trIndex = parseInt($this.data('trindex'));
+				    trIndex = parseInt($this.attr('trindex'));
 				parent = parent || $this.parent();
 				arr.push({
 					'index': trIndex,
 					'el': $this,
-					'prev': parent.children('[data-trindex="' + (trIndex - 1) + '"]')
+					'prev': parent.children('[trindex="' + (trIndex - 1) + '"]')
 				});
 			});
 
@@ -7448,14 +7448,14 @@ var Tablelist = (function () {
 					index = parseInt(index);
 				}
 
-				this.dom.tbody.find('.row:visible>span:nth-child(' + (index + 1) + ')').addClass('is-hover');
+				this.dom.tbody.find('dl:visible dd:nth-child(' + (index + 1) + ')').addClass('is-hover');
 			}
 		}
 	}, {
 		key: 'hovercolumn_delegate_leave',
 		value: function hovercolumn_delegate_leave(e) {
 			if (!$body_preventMouseover && e && e.originalEvent.path && this.dom.tbody) {
-				this.dom.tbody.find('span.is-hover').removeClass('is-hover');
+				this.dom.tbody.find('dd.is-hover').removeClass('is-hover');
 				_p.el.tablelist.hovercolumn_mouseleave_delay = null;
 			}
 		}
@@ -7689,26 +7689,27 @@ var TablelistShips = (function (_Tablelist2) {
 			this.dom.filters.find('input').trigger('change');
 
 			this.dom.table = this.dom.container.children('.tablelist-container');
-			this.dom.thead = this.dom.table.children('.tablelist-header').on('click', 'span[data-stat]', (function (e) {
+			this.dom.thead = this.dom.table.children('.tablelist-header').on('click', '[stat]', (function (e) {
 				this.sort_table_from_theadcell($(e.currentTarget));
 			}).bind(this));
-			this.dom.tbody = this.dom.table.children('.tablelist-body').on('contextmenu.contextmenu_ship', '.row[data-shipid]', (function (e) {
+			this.dom.tbody = this.dom.table.children('.tablelist-body').on('contextmenu.contextmenu_ship', '[data-shipid]', (function (e) {
 				this.contextmenu_show($(e.currentTarget), null, e);
 				e.preventDefault();
-			}).bind(this)).on('click.contextmenu_ship', '.row[data-shipid]>strong>em', (function (e) {
-				this.contextmenu_show($(e.currentTarget).parent().parent());
-				e.stopImmediatePropagation();
-				e.stopPropagation();
-			}).bind(this)).on('click', '.row[data-shipid]', (function (e, forceInfos) {
+			}).bind(this)).on('click', '[data-shipid]', (function (e, forceInfos) {
 				if (e.target.tagName.toLowerCase() == 'label') {
 					this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked', !this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked')).trigger('change');
 					e.stopPropagation();
+				} else if (e.target.tagName.toLowerCase() == 'em') {
+					this.contextmenu_show($(e.target));
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					e.stopPropagation();
 				} else if (!forceInfos && _frame.app_main.is_mode_selection()) {
-						e.preventDefault();
-						e.stopImmediatePropagation();
-						e.stopPropagation();
-						if (!e.currentTarget.getAttribute('data-donotcompare')) _frame.app_main.mode_selection_callback(e.currentTarget.getAttribute('data-shipid'));
-					}
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					e.stopPropagation();
+					if (!e.currentTarget.getAttribute('data-donotcompare')) _frame.app_main.mode_selection_callback(e.currentTarget.getAttribute('data-shipid'));
+				}
 			}).bind(this));
 
 			this.dom.msg_container = this.dom.container.children('.msgs');
@@ -7730,11 +7731,12 @@ var TablelistShips = (function (_Tablelist2) {
 		value: function parse_all_items() {
 			var header_index = -1;
 
-			this.dom.tbody.children('p.title,p.row').each((function (index, tr) {
+			this.dom.tbody.children('h4, dl').each((function (index, tr) {
 				var _this11 = this;
 
 				tr = $(tr);
-				if (tr.hasClass('title')) {
+				tr.attr('trindex', index);
+				if (tr[0].tagName == 'H4') {
 					(function () {
 						header_index++;
 						_this11.last_item = tr;
@@ -7778,7 +7780,7 @@ var TablelistShips = (function (_Tablelist2) {
 							'class': 'shiptype'
 						}).prependTo(tr);
 					})();
-				} else {
+				} else if (tr.attr('data-shipid')) {
 					(function () {
 						var donotcompare = tr.attr('data-donotcompare'),
 						    ship_id = tr.attr('data-shipid'),
@@ -7925,9 +7927,9 @@ var TablelistEquipments = (function (_Tablelist3) {
 
 			var header_index = -1;
 
-			this.dom.tbody.children('p.title,p.row').each((function (index, tr) {
+			this.dom.tbody.children('h4, dl').each((function (index, tr) {
 				tr = $(tr);
-				if (tr.hasClass('title')) {
+				if (tr[0].tagName == 'H4') {
 					header_index++;
 					this.dom.types[header_index] = tr;
 				} else {
@@ -8061,11 +8063,11 @@ var TablelistFleets = (function (_Tablelist4) {
 		}).bind(_this13)).appendTo(_this13.dom.buttons_right);
 
 		_this13.dom.table = $('<div class="tablelist-container"/>').appendTo(_this13.dom.container);
-		_this13.dom.thead = $('<div class="wrapper"/>').appendTo($('<div class="tablelist-header"/>').appendTo(_this13.dom.table));
-		_this13.dom.tbody = $('<div class="tablelist-body" scrollbody/>').appendTo(_this13.dom.table).on('contextmenu.contextmenu_fleet', '.row[data-fleetid]', (function (e) {
+		_this13.dom.thead = $('<dl/>').appendTo($('<div class="tablelist-header"/>').appendTo(_this13.dom.table));
+		_this13.dom.tbody = $('<div class="tablelist-body" scrollbody/>').appendTo(_this13.dom.table).on('contextmenu.contextmenu_fleet', '[data-fleetid]', (function (e) {
 			this.contextmenu_show($(e.currentTarget), null, e);
 			e.preventDefault();
-		}).bind(_this13)).on('click.contextmenu_fleet', '.row[data-fleetid]>strong>em', (function (e) {
+		}).bind(_this13)).on('click.contextmenu_fleet', '[data-fleetid]>dt>em', (function (e) {
 			this.contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget));
 			e.stopImmediatePropagation();
 			e.stopPropagation();
@@ -8073,12 +8075,12 @@ var TablelistFleets = (function (_Tablelist4) {
 
 		_this13.columns.forEach((function (v, i) {
 			if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) == 'object') {
-				$('<span data-stat="' + v[1] + '"/>', {
-					'data-stat': v[1],
+				$('<dd/>', {
+					'stat': v[1],
 					'html': v[0]
 				}).appendTo(this.dom.thead);
 			} else {
-				$('<strong/>').html(v[0]).appendTo(this.dom.thead);
+				$('<dt/>').html(v[0]).appendTo(this.dom.thead);
 			}
 		}).bind(_this13));
 
@@ -8260,7 +8262,7 @@ var TablelistFleets = (function (_Tablelist4) {
 						k = 0;
 
 						while (k < _this14.flexgrid_empty_count) {
-							if (!k) _this14.flexgrid_ph = $('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(_this14.dom.tbody);else $('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(_this14.dom.tbody);
+							if (!k) _this14.flexgrid_ph = $('<dl data-fleetid trindex="99999"/>').appendTo(_this14.dom.tbody);else $('<dl data-fleetid trindex="99999"/>').appendTo(_this14.dom.tbody);
 							k++;
 						}
 
@@ -8272,9 +8274,8 @@ var TablelistFleets = (function (_Tablelist4) {
 							}).bind(this)(index), 0);
 						}).bind(_this14));
 
-						$('<p/>', {
-							'class': 'title',
-							'data-trindex': ++_this14.trIndex,
+						$('<h4/>', {
+							'trindex': ++_this14.trIndex,
 							'html': '&nbsp;'
 						}).appendTo(_this14.dom.tbody);
 						_this14.trIndex++;
@@ -8282,7 +8283,7 @@ var TablelistFleets = (function (_Tablelist4) {
 				})();
 			} else {
 				while (k < this.flexgrid_empty_count) {
-					if (!k) this.flexgrid_ph = $('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody);else $('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody);
+					if (!k) this.flexgrid_ph = $('<dl data-fleetid trindex="99999"/>').appendTo(this.dom.tbody);else $('<dl data-fleetid trindex="99999"/>').appendTo(this.dom.tbody);
 					k++;
 				}
 
@@ -8308,8 +8309,8 @@ var TablelistFleets = (function (_Tablelist4) {
 				this.trIndex++;
 			}
 
-			var tr = $('<p class="row"/>').attr({
-				'data-trindex': index,
+			var tr = $('<dl/>').attr({
+				'trindex': index,
 				'data-fleetid': data._id || 'PLACEHOLDER',
 
 				'data-infos': '[[FLEET::' + data._id + ']]',
@@ -8329,11 +8330,11 @@ var TablelistFleets = (function (_Tablelist4) {
 							j++;
 						}
 						html += '</i>';
-						$('<strong/>').attr('data-value', data['name']).html(html + '<strong>' + data['name'] + '</strong>' + '<em></em>').appendTo(tr);
+						$('<dt/>').attr('value', data['name']).html(html + '<strong>' + data['name'] + '</strong>' + '<em></em>').appendTo(tr);
 						break;
 					default:
 						var datavalue = data[column[1]];
-						$('<span/>').attr('data-value', datavalue).html(datavalue).appendTo(tr);
+						$('<dd/>').attr('value', datavalue).html(datavalue).appendTo(tr);
 						break;
 				}
 			});

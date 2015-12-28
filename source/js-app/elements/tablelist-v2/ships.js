@@ -270,30 +270,31 @@ class TablelistShips extends Tablelist{
 		// 生成表格框架
 			this.dom.table = this.dom.container.children('.tablelist-container')
 			this.dom.thead = this.dom.table.children('.tablelist-header')
-				.on('click', 'span[data-stat]', function(e){
+				.on('click', '[stat]', function(e){
 						this.sort_table_from_theadcell($(e.currentTarget))
 					}.bind(this))
 			this.dom.tbody = this.dom.table.children('.tablelist-body')
-				.on('contextmenu.contextmenu_ship', '.row[data-shipid]', function(e){
+				.on('contextmenu.contextmenu_ship', '[data-shipid]', function(e){
 						this.contextmenu_show($(e.currentTarget), null, e)
 						e.preventDefault()
 					}.bind(this))
-				.on('click.contextmenu_ship', '.row[data-shipid]>strong>em', function(e){
+				/*.on('click.contextmenu_ship', '[data-shipid]>strong>em', function(e){
 						this.contextmenu_show($(e.currentTarget).parent().parent())
 						e.stopImmediatePropagation()
 						e.stopPropagation()
-					}.bind(this))
-				.on('click', '.row[data-shipid]', function(e, forceInfos){
+					}.bind(this))*/
+				.on('click', '[data-shipid]', function(e, forceInfos){
 						if( e.target.tagName.toLowerCase() == 'label' ){
 							this.checkbox[e.currentTarget.getAttribute('data-shipid')]
 								.prop('checked', !this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked'))
 								.trigger('change')
 							e.stopPropagation()
-						}/*else if( e.target.tagName.toLowerCase() == 'em' ){
+						}else if( e.target.tagName.toLowerCase() == 'em' ){
+							this.contextmenu_show($(e.target))
 							e.preventDefault()
 							e.stopImmediatePropagation()
 							e.stopPropagation()
-						}*/else if( !forceInfos && _frame.app_main.is_mode_selection() ){
+						}else if( !forceInfos && _frame.app_main.is_mode_selection() ){
 							e.preventDefault()
 							e.stopImmediatePropagation()
 							e.stopPropagation()
@@ -329,9 +330,10 @@ class TablelistShips extends Tablelist{
 	parse_all_items(){
 		let header_index = -1
 
-		this.dom.tbody.children('p.title,p.row').each(function(index, tr){
+		this.dom.tbody.children('h4, dl').each(function(index, tr){
 			tr = $(tr)
-			if( tr.hasClass('title') ){
+			tr.attr('trindex', index)
+			if( tr[0].tagName == 'H4' ){
 				header_index++
 				this.last_item = tr
 				let checkbox = tr.find('input[type="checkbox"]')
@@ -380,7 +382,7 @@ class TablelistShips extends Tablelist{
 						'for':		'shiptype-'+header_index,
 						'class':	'shiptype'
 					}).prependTo(tr)
-			}else{
+			}else if( tr.attr('data-shipid') ){
 				let donotcompare = tr.attr('data-donotcompare')
 					//,ship_data = _g.data.ships[ tr.attr('data-shipid') ]
 					,ship_id = tr.attr('data-shipid')

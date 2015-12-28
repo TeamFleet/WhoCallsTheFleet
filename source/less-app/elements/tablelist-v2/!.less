@@ -347,25 +347,26 @@
 		border-bottom-width: 	1px !important;
 	});
 }
-	.tablelist-header > .wrapper,
+	.tablelist-header dl,
 	.tablelist-body{
 		.main-sizing-padding();
 	}
-	.tablelist-header > .wrapper,
-	.tablelist-body > p.row{
+	.tablelist-container dl{
 		display: 	flex;
 		flex-flow: 	row nowrap;
-		& > strong,
-		& > span{
+		margin: 	0;
+		dt,
+		dd{
 			display: 	inline-block;
 			position: 	relative;
+			margin: 	0;
 		}
-		& > strong{
+		dt{
 			height: 	100%;
 			width: 		100%;
 			flex: 		7.5 0 155px;
 		}
-		& > span{
+		dd{
 			flex: 		1 0 @tablelist-cell-basis;
 			text-align: center;
 		}
@@ -380,7 +381,7 @@
 		border-right: 20px solid transparent;
 		overflow: 	hidden;
 		width: 		100%;
-		& > .wrapper{
+		dl{
 			margin-right: -20px;
 			overflow-y: scroll;
 		}
@@ -390,152 +391,154 @@
 		flex: 		1 1 100%;
 		font-size: 	14px;
 		padding-bottom: 30px;
-		&>p{
-			display: 	block;
+		h4, dl{
+			//display: 	block;
 			height: 	50px;
 			border-bottom:1px solid rgba(255,255,255,.1);
 			//overflow: 	hidden;
+		}
+		h4{
+			//font-family:@font_famliy_Song;
+			text-shadow:0 1px 0 #000;
+			font-size: 	18px;
+			padding-top:18px;
+			position: 	relative;
+			font-weight:bold;
+			margin: 	0;
+			color: 		#f2f2f2;
+			.equiptypeicon{
+				display:	block;
+				width: 		36px;
+				height: 	36px;
+				//background:	no-repeat 50% 50%;
+				float:		left;
+				//margin-top: -8px;
+				margin: 	-6px 4px 0 2px;
+			}
+			small{
+				padding-left:	.5em;
+				font-size:		75%;
+				opacity:		.75;
+			}
+			label.checkbox{
+				position: 	relative;
+				display: 	inline-block;
+				&:before, &:after{
+					.enable-transition();
+					transition-property: opacity;
+				}
+				&:before{
+					position: 	relative;
+					text-shadow:none;
+					margin: 	auto 8px auto -20px;
+					opacity: 	.175;
+					top: 		auto;
+					@media all and (max-width: @mobileview-breaking-point ){
+						margin-left: 0;
+					}
+				}
+				&:hover:before{
+					opacity: 	.75;
+				}
+			}
+			input[type="checkbox"]:indeterminate + label.checkbox{
+				&:before{
+					opacity: 	.45;
+				}
+				&:after{
+					opacity: 	.45;
+					left: 		4px;
+					margin: 	-5px auto auto -20px;
+				}
+				&:hover:before,
+				&:hover:after{
+					opacity: 	.75;
+				}
+			}
+			input[type="checkbox"]:checked + label.checkbox{
+				&:before{
+					opacity: 	1;
+				}
+				&:hover:before{
+					opacity: 	1;
+				}
+			}
+			input[type="checkbox"][disabled] + label.checkbox{
+				&:before{
+					opacity: 	0;
+					z-index:	-100;
+				}
+				&:hover:before{
+					opacity: 	0;
+				}
+			}
+		}
+		dl{
+			line-height:50px;
+			transition-property: background,color;
 			&:empty{
 				height: 	0;
 				line-height:0;
 				border: 	0;
 				pointer-events: none;
 			}
-			&.title{
-				font-family:@font_famliy_Song;
-				text-shadow:0 1px 0 #000;
-				font-size: 	18px;
-				padding-top:18px;
-				position: 	relative;
-				font-weight:bold;
-				.equiptypeicon{
-					display:	block;
-					width: 		36px;
-					height: 	36px;
-					//background:	no-repeat 50% 50%;
-					float:		left;
-					//margin-top: -8px;
-					margin: 	-6px 4px 0 2px;
+			dt a{
+				display: 	block;
+			}
+			dd{
+				transition-property: inherit;
+				sup{
+					padding-left: .25em;
 				}
-				small{
-					padding-left:	.5em;
-					font-size:		75%;
-					opacity:		.75;
+				&.negative{
+					color:		hsl(0, 90%, 70%);
 				}
-				label.checkbox{
-					position: 	relative;
-					display: 	inline-block;
-					&:before, &:after{
-						.enable-transition();
-						transition-property: opacity;
-					}
-					&:before{
-						position: 	relative;
-						text-shadow:none;
-						margin: 	auto 8px auto -20px;
-						opacity: 	.175;
-						top: 		auto;
-						@media all and (max-width: @mobileview-breaking-point ){
-							margin-left: 0;
-						}
-					}
-					&:hover:before{
-						opacity: 	.75;
-					}
+				&[value="0"],
+				&[value="-1"]:not(.negative){
+				//small.zero{
+					font-size: 	11px;
+					//opacity:	.35;
+					color:		rgba(242, 242, 242, .35);
 				}
-				input[type="checkbox"]:indeterminate + label.checkbox{
-					&:before{
-						opacity: 	.45;
-					}
-					&:after{
-						opacity: 	.45;
-						left: 		4px;
-						margin: 	-5px auto auto -20px;
-					}
-					&:hover:before,
-					&:hover:after{
-						opacity: 	.75;
-					}
+				/*
+				&:hover:after{
+					content: 	"";
+					position: 	absolute;
+					background: rgba(0,0,0,.2);
+					left: 		0;
+					top: 		-5000px;
+					height: 	10000px;
+					width: 		100%;
+					z-index: 	-1;
 				}
-				input[type="checkbox"]:checked + label.checkbox{
-					&:before{
-						opacity: 	1;
+				*/
+				//&:hover{
+				//	background-color:	transparent !important;
+				//}
+				&.is-hover{
+					background-color:	rgba(0, 0, 0, .2);
+					&:hover{
+						background-color:	transparent;
 					}
-					&:hover:before{
-						opacity: 	1;
+					&[stat="fire"]{
+						background-color:	hsla(6, 85%, 40%, .25);
 					}
-				}
-				input[type="checkbox"][disabled] + label.checkbox{
-					&:before{
-						opacity: 	0;
-						z-index:	-100;
+					&[stat="torpedo"]{
+						background-color:	hsla(207, 85%, 40%, .25);
 					}
-					&:hover:before{
-						opacity: 	0;
+					&[stat="nightpower"]{
+						background-color:	fade(mix(hsl(6, 85%, 40%), hsl(207, 85%, 40%)), 50%);
+					}
+					&[stat="aa"]{
+						background-color:	hsla(26, 85%, 40%, .25);
+					}
+					&[stat="armor"]{
+						background-color:	hsla(39, 85%, 40%, .25);
 					}
 				}
 			}
-			&.row{
-				line-height:50px;
-				transition-property: background,color;
-				&>strong a{
-					display: 	block;
-				}
-				&>span{
-					transition-property: inherit;
-					sup{
-						padding-left: .25em;
-					}
-					&.negative{
-						color:		hsl(0, 90%, 70%);
-					}
-					&[data-value="0"],
-					&[data-value="-1"]:not(.negative){
-					//small.zero{
-						font-size: 	11px;
-						//opacity:	.35;
-						color:		rgba(242, 242, 242, .35);
-					}
-					/*
-					&:hover:after{
-						content: 	"";
-						position: 	absolute;
-						background: rgba(0,0,0,.2);
-						left: 		0;
-						top: 		-5000px;
-						height: 	10000px;
-						width: 		100%;
-						z-index: 	-1;
-					}
-					*/
-					//&:hover{
-					//	background-color:	transparent !important;
-					//}
-					&.is-hover{
-						background-color:	rgba(0, 0, 0, .2);
-						&:hover{
-							background-color:	transparent;
-						}
-						&[data-stat="fire"]{
-							background-color:	hsla(6, 85%, 40%, .25);
-						}
-						&[data-stat="torpedo"]{
-							background-color:	hsla(207, 85%, 40%, .25);
-						}
-						&[data-stat="nightpower"]{
-							background-color:	fade(mix(hsl(6, 85%, 40%), hsl(207, 85%, 40%)), 50%);
-						}
-						&[data-stat="aa"]{
-							background-color:	hsla(26, 85%, 40%, .25);
-						}
-						&[data-stat="armor"]{
-							background-color:	hsla(39, 85%, 40%, .25);
-						}
-					}
-				}
-				&:hover{
-					background-color:	rgba(0,0,0,.2);
-				}
+			&:hover{
+				background-color:	rgba(0,0,0,.2);
 			}
 		}
 	}
@@ -543,7 +546,7 @@
 .tablelist-container.sortable{
 	.tablelist-header{
 		user-select: none;
-		span[data-stat]{
+		[stat]{
 			transition-property: color, text-shadow;
 		}
 	}
@@ -575,30 +578,28 @@
 		display: 		flex;
 		flex-flow: 		row wrap;
 		align-content: 	flex-start;
-		&>p{
-			flex: 		1 0 155px;
-			margin-right:10px;
-			&.title{
-				flex: 	none !important;
-				width: 	~"calc(100% - 10px)";
-				//margin: 0 10px 0 0;
-				label.checkbox{
-					&:before{
-						margin-left:5px;
-					}
-				}
-				label.checkbox, input[type="checkbox"]:indeterminate + label.checkbox{
-					&:after{
-						margin-left:5px;
-					}
+		h4{
+			//display: 	block;
+			width: 	~"calc(100% - 10px)";
+			//margin: 0 10px 0 0;
+			label.checkbox{
+				&:before{
+					margin-left:5px;
 				}
 			}
-			&.row{
-				border-bottom:0;
-				display: 	block;
-				&>span{
-					display: 	none;
+			label.checkbox, input[type="checkbox"]:indeterminate + label.checkbox{
+				&:after{
+					margin-left:5px;
 				}
+			}
+		}
+		dl{
+			flex: 		1 0 155px;
+			margin-right:10px;
+			border-bottom:0;
+			display: 	block;
+			dd{
+				display: 	none;
 			}
 		}
 	}
@@ -606,7 +607,7 @@
 
 .tablelist > [viewtype="compare"] ~ .tablelist-container{
     .tablelist-body{
-        &>p.title{
+        h4{
             display: none;
         }
     }

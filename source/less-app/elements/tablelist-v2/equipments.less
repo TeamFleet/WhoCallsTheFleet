@@ -4,20 +4,20 @@
 	@base-cell-line-height:	15px;
 	
 	.tablelist-body{
-		&>p.row[data-equipmentid]{
+		dl{
 			height: 	auto;
-			&>strong, &>span{
+			dt, dd{
 				line-height:(@base-cell-line-height - 1);
 				padding-top: ((@base-cell-height - @base-cell-line-height) / 2);
 				padding-bottom: ((@base-cell-height - @base-cell-line-height) / 2);
 				display: flex;
 				align-items: center;
 			}
-			&>strong{
+			dt{
 				font-weight:	lighter;
 				padding-left: 	42px;
 			}
-			&>span{
+			dd{
 				font-size: 		12px;
 				justify-content: center;
 			}
@@ -44,7 +44,7 @@
 				.tab-on();
 				color: 	#fff;
 			}
-			&~.tablelist-container .tablelist-body p:not([data-equipmentcollection="@{i}"]){
+			& ~ .tablelist-container .tablelist-body > :not([data-equipmentcollection="@{i}"]){
 				display:	none !important;
 			}
 		}
@@ -54,11 +54,11 @@
 	
 	.loop_equipmenttypes(@n, @i: 1) when (@i =< @n) {
 		&>[name="types"][class]:not(.type@{i}) ~ .tablelist-container .tablelist-body{
-			p[data-equipmenttype="@{i}"]{
+			& > [data-equipmenttype="@{i}"]{
 				display:	none;
 				opacity: 	.35;
 			}
-			p.title[data-type="@{i}"]{
+			h4[data-type="@{i}"]{
 				opacity: 	.35;
 			}
 		}
@@ -68,13 +68,12 @@
 
 
 	@media all and (max-width: @main-sizing-t4-breaking-point ){
-		.tablelist-header > .wrapper,
-		.tablelist-body > p.row{
-			& > span{
+		dl{
+			dd{
 				flex-basis:	((12px + 3) * 2);
 			}
 		}
-		[data-stat="improvable"]{
+		[stat="improvable"]{
 			display:	none !important;
 		}
 	}
@@ -94,22 +93,21 @@
 				} // &.filters
 			}
 		}
-		.tablelist-header > .wrapper,
-		.tablelist-body > p.row{
-			& > strong{
+		dl{
+			dt{
 				padding-left: 10px !important;
 				padding-right: .25em;
 				flex-basis:	100px;
 			}
 		}
-		.tablelist-header > .wrapper{
-			& > span{
+		.tablelist-header dl{
+			dd{
 				flex-basis:	((12px + 1) * 2);
 				transform: rotate(-30deg);
 			}
 		}
-		.tablelist-body > p.row{
-			& > span{
+		.tablelist-body dl{
+			dd{
 				flex-basis:	((12px + 1) * 2);
 				border-left: 1px solid rgba(255,255,255,.1);
 			}
