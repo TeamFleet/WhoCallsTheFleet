@@ -4065,12 +4065,9 @@ _frame.app_main = {
 		var u = _g.state2URI({ page: page });
 
 		function callback() {
-			_frame.app_main.page_dom[page].trigger('show');
 			_frame.infos.hide();
 
 			if (!options.callback_modeSelection_select) {
-				_frame.infos.last = null;
-
 				document.title = _frame.app_main.page_title[u];
 				_g.title(_frame.app_main.navtitle[page] || !0);
 
@@ -4079,23 +4076,12 @@ _frame.app_main = {
 
 			if (_frame.app_main.cur_page == page) return page;
 
-			_frame.app_main.page_dom[page].appendTo(_frame.dom.main).removeClass('off').trigger('on');
-
-			if (_frame.app_main.cur_page) {
-				setTimeout((function (p) {
-					Page.off(p);
-				})(_frame.app_main.cur_page), 100);
-			}
-
-			if (_frame.dom.navs[page]) _frame.dom.navs[page].addClass('on');
+			Page.show(page);
 
 			if (!options.callback_modeSelection_select) {
 
 				if (page != 'about') Lockr.set('last_page', page);
 			}
-
-			_frame.dom.main.attr('data-theme', page);
-			_frame.app_main.cur_page = page;
 
 			_g.log('LOADED: ' + page);
 
@@ -4109,7 +4095,7 @@ _frame.app_main = {
 		if (!this.page_dom[page]) {
 			this.page_dom[page] = _frame.dom.main.find('.page-container[page="' + page + '"]');
 			if (this.page_dom[page].length) {
-				this.page_init(page);
+				Page.init(page);
 				this.page_title[u] = document.title;
 				callback();
 			} else {
@@ -4119,7 +4105,7 @@ _frame.app_main = {
 							_frame.app_main.page_dom[page] = $(html).appendTo(_frame.dom.main);
 							if (u != location.pathname) _frame.app_main.page_dom[page].addClass('off');
 
-							_frame.app_main.page_init(page);
+							Page.init(page);
 						}
 					},
 					successAfter: callback,
@@ -4229,7 +4215,9 @@ _frame.app_main = {
 				});
 				_frame.app_main.navtitle[p] = t;
 				if (!$el.hasClass('button')) $el = $el.parent();
-				_frame.dom.navs[p] = $el;
+				_frame.dom.navs[p] = $el.on('click', function () {
+					Page.resetScroll(p);
+				});
 			});
 			return _frame.app_main.nav;
 		}).then(function () {
@@ -4404,12 +4392,6 @@ _g.error = function (err) {
 };
 
 var debugmode = !1;
-
-_frame.app_main.page_init = function (page, $page) {
-	$page = $page || this.page_dom[page];
-	if (this.page[page] && this.page[page].init) this.page[page].init($page);
-	_p.initDOM($page);
-};
 
 var ShareBar = (function () {
 	function ShareBar(options) {
@@ -4751,9 +4733,11 @@ var Page = (function () {
 	function Page($page) {
 		_classCallCheck(this, Page);
 
-		$page.on('pageoff', (function () {
-			this.modeSelectionExit();
-		}).bind(this));
+		$page.on({
+			'pageHide': (function () {
+				this.modeSelectionExit();
+			}).bind(this)
+		});
 	}
 
 	_createClass(Page, [{
@@ -4787,15 +4771,88 @@ var Page = (function () {
 	return Page;
 })();
 
-Page.off = function (page) {
+Page.hide = function (page) {
 	page = page || _frame.app_main.cur_page;
 	if (typeof page == 'string') {
+		if (_frame.app_main.page_dom[page]) _frame.app_main.page_dom[page].addClass('off').trigger('pageHide').detach();
 		if (_frame.dom.navs[page]) _frame.dom.navs[page].removeClass('on');
-		if (_frame.app_main.page_dom[page]) _frame.app_main.page_dom[page].addClass('off').trigger('pageoff').detach();
 	} else {
-		page.addClass('off').trigger('pageoff').detach();
+		page.addClass('off').trigger('pageHide').detach();
+		var p = page.attr('page');
+		if (p && _frame.dom.navs[p]) _frame.dom.navs[p].removeClass('on');
 	}
 	_frame.app_main.cur_page = null;
+};
+
+Page.show = function (page) {
+	page = page || _frame.app_main.cur_page;
+	var p = undefined;
+
+	if (typeof page == 'string') {
+		if (_frame.app_main.page_dom[page]) _frame.app_main.page_dom[page].appendTo(_frame.dom.main).removeClass('off').trigger('pageShow');
+		if (_frame.dom.navs[page]) _frame.dom.navs[page].addClass('on');
+		p = page;
+	} else {
+		page.appendTo(_frame.dom.main).removeClass('off').trigger('pageShow');
+		p = page.attr('page');
+	}
+
+	if (_frame.app_main.cur_page) Page.hide(_frame.app_main.cur_page);
+
+	if (p) {
+		if (_frame.dom.navs[p]) _frame.dom.navs[p].addClass('on');
+		_frame.dom.main.attr('data-theme', p);
+		_frame.app_main.cur_page = p;
+	}
+};
+
+Page.resetScroll = function (page) {
+	page = page || _frame.app_main.cur_page;
+	if (typeof page == 'string') page = _frame.app_main.page_dom[page];
+
+	if (page && page.length) {
+		page.attr('scrollbody', 0);
+		page.find('[scrollbody]').each(function (i, el) {
+			el.setAttribute('scrollbody', 0);
+		});
+	}
+};
+
+Page.init = function (page) {
+	page = page || _frame.app_main.cur_page;
+	var p = undefined;
+
+	if (typeof page == 'string') {
+		p = page;
+		page = _frame.app_main.page_dom[page];
+	} else {
+		page.appendTo(_frame.dom.main).removeClass('off').trigger('pageShow');
+		p = page.attr('page');
+	}
+
+	if (!page || !page.length) return;
+
+	function handlerScroll(e) {
+		e.currentTarget.setAttribute('scrollbody', e.currentTarget.scrollTop);
+	}
+
+	if (p && _frame.app_main.page[p] && _frame.app_main.page[p].init) _frame.app_main.page[p].init(page);
+	_p.initDOM(page);
+
+	page.find('[scrollbody]').on('scroll', handlerScroll);
+
+	page.on({
+		'scroll': handlerScroll,
+		'pageShow.scrollbody': function pageShowScrollbody() {
+			page.scrollTop(page.attr('scrollbody') || 0);
+			page.find('[scrollbody]').each(function (i, el) {
+				el.scrollTop = el.getAttribute('scrollbody') || 0;
+				setTimeout(function () {
+					el.scrollTop = el.getAttribute('scrollbody') || 0;
+				}, 10);
+			});
+		}
+	});
 };
 
 _frame.app_main.page['fleets'] = {
@@ -4809,7 +4866,7 @@ _frame.app_main.page['fleets'] = {
 				var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this, $page));
 
 				$page.on({
-					'show': function show() {
+					'pageShow': function pageShow() {
 						if (this.inited) {
 							$page.children('.tablelist').data('tablelist').refresh();
 						}
@@ -4835,15 +4892,7 @@ _frame.app_main.page['ships'] = {
 
 				var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(_class2).call(this, $page));
 
-				_this5.tablelist = $page.find('.tablelist');
-				_this5.tablelistObj = _this5.tablelist.data('tablelist');
-
 				$page.on({
-					'on': (function () {
-						if (!this.tablelistObj) this.tablelistObj = this.tablelist.data('tablelist');
-
-						if (this.tablelistObj) this.tablelistObj.thead_redraw();
-					}).bind(_this5),
 					'modeSelectionEnter': (function (e, callback_select) {
 						this.modeSelectionEnter(callback_select);
 					}).bind(_this5)
@@ -4870,7 +4919,10 @@ _frame.app_main.page['equipments'] = {
 				_this6.tablelistObj = _this6.tablelist.data('tablelist');
 
 				$page.on({
-					'on': (function () {
+					'modeSelectionEnter': (function (e, callback_select, callback_enter) {
+						this.modeSelectionEnter(callback_select, callback_enter);
+					}).bind(_this6),
+					'pageShow': (function () {
 						if (!this.tablelistObj) this.tablelistObj = this.tablelist.data('tablelist');
 
 						if (this.tablelistObj) {
@@ -4878,19 +4930,12 @@ _frame.app_main.page['equipments'] = {
 							this.tablelistObj.apply_types();
 						}
 					}).bind(_this6),
-					'modeSelectionEnter': (function (e, callback_select, callback_enter) {
-						this.modeSelectionEnter(callback_select, callback_enter);
-					}).bind(_this6),
-					'show': (function () {
-						if (this.tablelistObj) {
-							this.tablelistObj.thead_redraw();
-							this.tablelistObj.apply_types();
-						}
-					}).bind(_this6),
-					'pageoff': (function () {
+					'pageHide': (function () {
 						TablelistEquipments.types = [];
 						TablelistEquipments.shipId = null;
-						this.tablelistObj.apply_types();
+						if (this.tablelistObj) {
+							this.tablelistObj.apply_types();
+						}
 					}).bind(_this6)
 				});
 				return _this6;
@@ -5074,6 +5119,19 @@ _frame.gg = function () {
 		}
 	});
 };
+
+var BgImg = function BgImg(options) {
+	_classCallCheck(this, BgImg);
+
+	options = options || {};
+	this.settings = $.extend(!0, {}, ShareBar.defaults, options);
+};
+
+BgImg.default = {
+	enable: !0
+};
+
+BgImg.obj = [];
 
 _frame.infos = {
 	historyLength: -1,
@@ -5286,7 +5344,7 @@ _frame.infos = {
 
 			if (_frame.app_main.cur_page) {
 
-				Page.off(_frame.app_main.cur_page);
+				Page.hide(_frame.app_main.cur_page);
 			}
 
 			_frame.dom.main.attr('data-theme', cont.attr('data-theme') || type);
@@ -5656,7 +5714,7 @@ var InfosFleet = (function () {
 					if (typeof content == 'undefined') {
 						content = this.doms['name'].text();
 					}
-					this.doms['name'].html(content);
+					if (content != this.doms['name'].html()) this.doms['name'].html(content);
 					this._name = content;
 					return this.doms['name'];
 				}).bind(this),
@@ -7118,7 +7176,7 @@ var Tablelist = (function () {
 		this.sort_data_by_stat = options.sort_data_by_stat || {};
 		this.sort_default_order_by_stat = options.sort_default_order_by_stat || {};
 
-		container.on('mouseenter.hovercolumn', '.tablelist-body>p.row>span', this.hovercolumn_delegate.bind(this)).on('mouseleave.hovercolumn', '.tablelist-body>p.row>span', this.hovercolumn_delegate_leave.bind(this));
+		container.on('mouseenter.hovercolumn', '.tablelist-body dd', this.hovercolumn_delegate.bind(this)).on('mouseleave.hovercolumn', '.tablelist-body dd', this.hovercolumn_delegate_leave.bind(this));
 	}
 
 	_createClass(Tablelist, [{
@@ -7226,16 +7284,16 @@ var Tablelist = (function () {
 				var tbody = this.dom.tbody;
 				if (!tbody || !tbody.length) tbody = this.dom.table.children('.tablelist-body');
 
-				rows = tbody.children('p.row:visible:not([data-donotcompare])');
+				rows = tbody.children('dl:visible:not([data-donotcompare])');
 			}
 			nth = nth || 1;
 
 			this._tmp_values = [];
 			this._tmp_value_map_cell = {};
 
-			rows.children('span:nth-of-type(' + nth + ')').each((function (index, element) {
+			rows.children('dd:nth-of-type(' + nth + ')').each((function (index, element) {
 				var cell = $(element),
-				    val = cell.attr('data-value');
+				    val = cell.attr('value');
 
 				val = parseFloat(val);
 
@@ -7267,14 +7325,14 @@ var Tablelist = (function () {
 
 			if (!tbody || !tbody.length) tbody = this.dom.table.children('.tablelist-body');
 
-			var rows = tbody.children('p.row:visible:not([data-donotcompare])');
+			var rows = tbody.children('dl:visible:not([data-donotcompare])');
 
-			rows.children('span[data-value]').removeClass('sort-first sort-second');
+			rows.children('dd[value]').removeClass('sort-first sort-second');
 
-			rows.eq(0).children('span[data-value]').each((function (index, element) {
+			rows.eq(0).children('dd[value]').each((function (index, element) {
 				var is_ascending = !1,
 				    $this = $(element),
-				    stat = $this.data('stat'),
+				    stat = $this.attr('stat'),
 				    noMark = stat.match(/\b(speed|range|extra_illust)\b/);
 
 				if (typeof this.sort_default_order_by_stat[stat] == 'undefined') {
@@ -7302,7 +7360,7 @@ var Tablelist = (function () {
 		value: function sort_table_from_theadcell(cell) {
 			if (!cell) return;
 
-			var stat = cell.data('stat'),
+			var stat = cell.attr('stat'),
 			    sortData = this.sort_data_by_stat[stat];
 
 			console.log(stat, sortData);
@@ -7351,12 +7409,12 @@ var Tablelist = (function () {
 			    arr = [];
 			this.sortedRow.each(function (index, element) {
 				var $this = $(element),
-				    trIndex = parseInt($this.data('trindex'));
+				    trIndex = parseInt($this.attr('trindex'));
 				parent = parent || $this.parent();
 				arr.push({
 					'index': trIndex,
 					'el': $this,
-					'prev': parent.children('[data-trindex="' + (trIndex - 1) + '"]')
+					'prev': parent.children('[trindex="' + (trIndex - 1) + '"]')
 				});
 			});
 
@@ -7390,14 +7448,14 @@ var Tablelist = (function () {
 					index = parseInt(index);
 				}
 
-				this.dom.tbody.find('.row:visible>span:nth-child(' + (index + 1) + ')').addClass('is-hover');
+				this.dom.tbody.find('dl:visible dd:nth-child(' + (index + 1) + ')').addClass('is-hover');
 			}
 		}
 	}, {
 		key: 'hovercolumn_delegate_leave',
 		value: function hovercolumn_delegate_leave(e) {
 			if (!$body_preventMouseover && e && e.originalEvent.path && this.dom.tbody) {
-				this.dom.tbody.find('span.is-hover').removeClass('is-hover');
+				this.dom.tbody.find('dd.is-hover').removeClass('is-hover');
 				_p.el.tablelist.hovercolumn_mouseleave_delay = null;
 			}
 		}
@@ -7631,26 +7689,27 @@ var TablelistShips = (function (_Tablelist2) {
 			this.dom.filters.find('input').trigger('change');
 
 			this.dom.table = this.dom.container.children('.tablelist-container');
-			this.dom.thead = this.dom.table.children('.tablelist-header').on('click', 'span[data-stat]', (function (e) {
+			this.dom.thead = this.dom.table.children('.tablelist-header').on('click', '[stat]', (function (e) {
 				this.sort_table_from_theadcell($(e.currentTarget));
 			}).bind(this));
-			this.dom.tbody = this.dom.table.children('.tablelist-body').on('contextmenu.contextmenu_ship', '.row[data-shipid]', (function (e) {
+			this.dom.tbody = this.dom.table.children('.tablelist-body').on('contextmenu.contextmenu_ship', '[data-shipid]', (function (e) {
 				this.contextmenu_show($(e.currentTarget), null, e);
 				e.preventDefault();
-			}).bind(this)).on('click.contextmenu_ship', '.row[data-shipid]>strong>em', (function (e) {
-				this.contextmenu_show($(e.currentTarget).parent().parent());
-				e.stopImmediatePropagation();
-				e.stopPropagation();
-			}).bind(this)).on('click', '.row[data-shipid]', (function (e, forceInfos) {
+			}).bind(this)).on('click', '[data-shipid]', (function (e, forceInfos) {
 				if (e.target.tagName.toLowerCase() == 'label') {
 					this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked', !this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked')).trigger('change');
 					e.stopPropagation();
+				} else if (e.target.tagName.toLowerCase() == 'em') {
+					this.contextmenu_show($(e.target), e.currentTarget.getAttribute('data-shipid'));
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					e.stopPropagation();
 				} else if (!forceInfos && _frame.app_main.is_mode_selection()) {
-						e.preventDefault();
-						e.stopImmediatePropagation();
-						e.stopPropagation();
-						if (!e.currentTarget.getAttribute('data-donotcompare')) _frame.app_main.mode_selection_callback(e.currentTarget.getAttribute('data-shipid'));
-					}
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					e.stopPropagation();
+					if (!e.currentTarget.getAttribute('data-donotcompare')) _frame.app_main.mode_selection_callback(e.currentTarget.getAttribute('data-shipid'));
+				}
 			}).bind(this));
 
 			this.dom.msg_container = this.dom.container.children('.msgs');
@@ -7672,11 +7731,12 @@ var TablelistShips = (function (_Tablelist2) {
 		value: function parse_all_items() {
 			var header_index = -1;
 
-			this.dom.tbody.children('p.title,p.row').each((function (index, tr) {
+			this.dom.tbody.children('h4, dl').each((function (index, tr) {
 				var _this11 = this;
 
 				tr = $(tr);
-				if (tr.hasClass('title')) {
+				tr.attr('trindex', index);
+				if (tr[0].tagName == 'H4') {
 					(function () {
 						header_index++;
 						_this11.last_item = tr;
@@ -7720,7 +7780,7 @@ var TablelistShips = (function (_Tablelist2) {
 							'class': 'shiptype'
 						}).prependTo(tr);
 					})();
-				} else {
+				} else if (tr.attr('data-shipid')) {
 					(function () {
 						var donotcompare = tr.attr('data-donotcompare'),
 						    ship_id = tr.attr('data-shipid'),
@@ -7867,9 +7927,9 @@ var TablelistEquipments = (function (_Tablelist3) {
 
 			var header_index = -1;
 
-			this.dom.tbody.children('p.title,p.row').each((function (index, tr) {
+			this.dom.tbody.children('h4, dl').each((function (index, tr) {
 				tr = $(tr);
-				if (tr.hasClass('title')) {
+				if (tr[0].tagName == 'H4') {
 					header_index++;
 					this.dom.types[header_index] = tr;
 				} else {
@@ -8002,12 +8062,12 @@ var TablelistFleets = (function (_Tablelist4) {
 			this.btn_settings();
 		}).bind(_this13)).appendTo(_this13.dom.buttons_right);
 
-		_this13.dom.table = $('<div class="tablelist-container" scrollbody/>').appendTo(_this13.dom.container);
-		_this13.dom.thead = $('<div class="wrapper"/>').appendTo($('<div class="tablelist-header"/>').appendTo(_this13.dom.table));
-		_this13.dom.tbody = $('<div class="tablelist-body"/>').appendTo(_this13.dom.table).on('contextmenu.contextmenu_fleet', '.row[data-fleetid]', (function (e) {
+		_this13.dom.table = $('<div class="tablelist-container"/>').appendTo(_this13.dom.container);
+		_this13.dom.thead = $('<dl/>').appendTo($('<div class="tablelist-header"/>').appendTo(_this13.dom.table));
+		_this13.dom.tbody = $('<div class="tablelist-body" scrollbody/>').appendTo(_this13.dom.table).on('contextmenu.contextmenu_fleet', '[data-fleetid]', (function (e) {
 			this.contextmenu_show($(e.currentTarget), null, e);
 			e.preventDefault();
-		}).bind(_this13)).on('click.contextmenu_fleet', '.row[data-fleetid]>strong>em', (function (e) {
+		}).bind(_this13)).on('click.contextmenu_fleet', '[data-fleetid]>dt>em', (function (e) {
 			this.contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget));
 			e.stopImmediatePropagation();
 			e.stopPropagation();
@@ -8015,12 +8075,12 @@ var TablelistFleets = (function (_Tablelist4) {
 
 		_this13.columns.forEach((function (v, i) {
 			if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) == 'object') {
-				$('<span data-stat="' + v[1] + '"/>', {
-					'data-stat': v[1],
+				$('<dd/>', {
+					'stat': v[1],
 					'html': v[0]
 				}).appendTo(this.dom.thead);
 			} else {
-				$('<strong/>').html(v[0]).appendTo(this.dom.thead);
+				$('<dt/>').html(v[0]).appendTo(this.dom.thead);
 			}
 		}).bind(_this13));
 
@@ -8202,7 +8262,7 @@ var TablelistFleets = (function (_Tablelist4) {
 						k = 0;
 
 						while (k < _this14.flexgrid_empty_count) {
-							if (!k) _this14.flexgrid_ph = $('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(_this14.dom.tbody);else $('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(_this14.dom.tbody);
+							if (!k) _this14.flexgrid_ph = $('<dl data-fleetid trindex="99999"/>').appendTo(_this14.dom.tbody);else $('<dl data-fleetid trindex="99999"/>').appendTo(_this14.dom.tbody);
 							k++;
 						}
 
@@ -8214,9 +8274,8 @@ var TablelistFleets = (function (_Tablelist4) {
 							}).bind(this)(index), 0);
 						}).bind(_this14));
 
-						$('<p/>', {
-							'class': 'title',
-							'data-trindex': ++_this14.trIndex,
+						$('<h4/>', {
+							'trindex': ++_this14.trIndex,
 							'html': '&nbsp;'
 						}).appendTo(_this14.dom.tbody);
 						_this14.trIndex++;
@@ -8224,7 +8283,7 @@ var TablelistFleets = (function (_Tablelist4) {
 				})();
 			} else {
 				while (k < this.flexgrid_empty_count) {
-					if (!k) this.flexgrid_ph = $('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody);else $('<p class="empty" data-fleetid="-1" data-trindex="99999"/>').appendTo(this.dom.tbody);
+					if (!k) this.flexgrid_ph = $('<dl data-fleetid trindex="99999"/>').appendTo(this.dom.tbody);else $('<dl data-fleetid trindex="99999"/>').appendTo(this.dom.tbody);
 					k++;
 				}
 
@@ -8250,8 +8309,8 @@ var TablelistFleets = (function (_Tablelist4) {
 				this.trIndex++;
 			}
 
-			var tr = $('<p class="row"/>').attr({
-				'data-trindex': index,
+			var tr = $('<dl/>').attr({
+				'trindex': index,
 				'data-fleetid': data._id || 'PLACEHOLDER',
 
 				'data-infos': '[[FLEET::' + data._id + ']]',
@@ -8271,11 +8330,11 @@ var TablelistFleets = (function (_Tablelist4) {
 							j++;
 						}
 						html += '</i>';
-						$('<strong/>').attr('data-value', data['name']).html(html + '<strong>' + data['name'] + '</strong>' + '<em></em>').appendTo(tr);
+						$('<dt/>').attr('value', data['name']).html(html + '<strong>' + data['name'] + '</strong>' + '<em></em>').appendTo(tr);
 						break;
 					default:
 						var datavalue = data[column[1]];
-						$('<span/>').attr('data-value', datavalue).html(datavalue).appendTo(tr);
+						$('<dd/>').attr('value', datavalue).html(datavalue).appendTo(tr);
 						break;
 				}
 			});
@@ -8497,7 +8556,7 @@ var TablelistFleets = (function (_Tablelist4) {
 		}
 	}, {
 		key: 'genlist',
-		value: function genlist() {
+		value: function genlist(callback) {
 			Q.fcall(function () {}).then((function () {
 				return this.loaddata();
 			}).bind(this)).then((function (arr) {
@@ -8513,6 +8572,7 @@ var TablelistFleets = (function (_Tablelist4) {
 			}).bind(this)).catch(function (err) {
 				_g.log(err);
 			}).done(function () {
+				if (callback) callback();
 				_g.log('Fleets list DONE');
 			});
 		}
@@ -8521,7 +8581,9 @@ var TablelistFleets = (function (_Tablelist4) {
 		value: function refresh() {
 			console.log('refresh');
 			this.dom.tbody.empty();
-			this.genlist();
+			this.genlist((function () {
+				this.dom.tbody.scrollTop(this.dom.tbody.attr('scrollbody') || 0);
+			}).bind(this));
 		}
 	}]);
 
