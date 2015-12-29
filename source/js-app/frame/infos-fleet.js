@@ -558,7 +558,8 @@ class InfosFleet{
 			this.doms['theme'].val(this.data['theme']).attr('value', this.data['theme'])
 			_frame.infos.dom.main.attr('data-theme', this.data['theme'])
 			this.el.attr('data-theme', this.data['theme'])
-			_frame.dom.main.attr('data-theme', this.data['theme'])
+			//_frame.dom.main.attr('data-theme', this.data['theme'])
+			_frame.dom.layout.attr('data-theme', this.data['theme'])
 			this.save()
 		}
 	

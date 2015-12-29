@@ -1970,7 +1970,9 @@ _frame.modal = {
 			}
 		}
 
-		this.dom.container.addClass('on ' + settings.classname).data('customclass', settings.classname);
+		setTimeout(function () {
+			_frame.modal.dom.container.addClass('on ' + settings.classname).data('customclass', settings.classname);
+		}, 0);
 		_p.initDOM(this.dom.content);
 
 		this.dom.bg.off('click.blank_to_close').on('click.blank_to_close', function () {
@@ -3916,10 +3918,6 @@ _frame.app_main = {
 		}
 	},
 
-	toggle_hidecontent: function toggle_hidecontent() {
-		_frame.dom.layout.toggleClass('hidecontent');
-	},
-
 	loading_queue: [],
 	loading_state: {},
 
@@ -4801,7 +4799,8 @@ Page.show = function (page) {
 
 	if (p) {
 		if (_frame.dom.navs[p]) _frame.dom.navs[p].addClass('on');
-		_frame.dom.main.attr('data-theme', p);
+
+		_frame.dom.layout.attr('data-theme', p);
 		_frame.app_main.cur_page = p;
 	}
 };
@@ -5129,10 +5128,14 @@ var BgImg = function BgImg(options) {
 };
 
 BgImg.default = {
-	enable: !0
+	isEnable: !0,
+	isDefault: !0
 };
+BgImg.list = [];
 
-BgImg.obj = [];
+BgImg.controlsInit = function () {};
+BgImg.controlsShow = function () {};
+BgImg.controlsHide = function () {};
 
 _frame.infos = {
 	historyLength: -1,
@@ -5349,6 +5352,7 @@ _frame.infos = {
 			}
 
 			_frame.dom.main.attr('data-theme', cont.attr('data-theme') || type);
+			_frame.dom.layout.attr('data-theme', cont.attr('data-theme') || type);
 
 			setTimeout(function () {
 				_frame.dom.layout.addClass('is-infos-on');
@@ -6086,7 +6090,8 @@ var InfosFleet = (function () {
 			this.doms['theme'].val(this.data['theme']).attr('value', this.data['theme']);
 			_frame.infos.dom.main.attr('data-theme', this.data['theme']);
 			this.el.attr('data-theme', this.data['theme']);
-			_frame.dom.main.attr('data-theme', this.data['theme']);
+
+			_frame.dom.layout.attr('data-theme', this.data['theme']);
 			this.save();
 		}
 	}, {

@@ -72,7 +72,8 @@ Page.show = function(page){
 	if( p ){
 		if( _frame.dom.navs[p] )
 			_frame.dom.navs[p].addClass('on')
-		_frame.dom.main.attr('data-theme', p)
+		//_frame.dom.main.attr('data-theme', p)
+		_frame.dom.layout.attr('data-theme', p)
 		_frame.app_main.cur_page = p
 	}
 }

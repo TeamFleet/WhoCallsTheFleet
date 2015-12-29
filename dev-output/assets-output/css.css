@@ -3112,10 +3112,6 @@ main:after {
 			//}
 			*/
 }
-#layout.ready.mod-only-bg > nav ~ .nav-mask:before {
-  -webkit-transform: translateY(-100%);
-          transform: translateY(-100%);
-}
 #layout.ready.mod-only-bg > main {
   top: 100%;
 }
@@ -3350,10 +3346,6 @@ main:after {
 			//	left:		0;
 			//}
 			*/
-}
-.layout-only_bg #layout.ready.mod-only-bg > nav ~ .nav-mask:before {
-  -webkit-transform: translateY(-100%);
-          transform: translateY(-100%);
 }
 .layout-only_bg #layout.ready.mod-only-bg > main {
   top: 100%;
@@ -3823,7 +3815,7 @@ body.mod-capture #tip {
   nav {
     height: 56px;
     line-height: 56px;
-    background: transparent;
+    background: #464339;
   }
   nav > div.pages {
     margin-left: 0 !important;
@@ -3985,31 +3977,33 @@ body.mod-capture #tip {
     -webkit-transform: translateX(72px) !important;
             transform: translateX(72px) !important;
   }
-  nav ~ .nav-mask:before,
+  nav ~ .nav-mask {
+    /*
+				&:before, &:after{
+					content: 	'';
+					position: 	absolute;
+					left: 		0;
+					right: 		0;
+				}
+				&:before{
+					top: 		0;
+					height: 	@_nav_height;
+					z-index: 	4;
+					//background: #333;
+					background: hsl(47, 10%, 25%);
+					.enable-transition();
+					transition-property: transform;
+					transition-duration: @transition_duration_main;
+					transform: 	translateY(-100%);
+				}
+				*/
+  }
   nav ~ .nav-mask:after {
+    z-index: -1;
     content: '';
     position: absolute;
     left: 0;
     right: 0;
-  }
-  nav ~ .nav-mask:before {
-    top: 0;
-    height: 56px;
-    z-index: 4;
-    background: #464339;
-    -webkit-transition: none 0.2s ease-out;
-    transition: none 0.2s ease-out;
-    -webkit-transition-property: -webkit-transform;
-    transition-property: -webkit-transform;
-    transition-property: transform;
-    transition-property: transform, -webkit-transform;
-    -webkit-transition-duration: 0.75s;
-            transition-duration: 0.75s;
-    -webkit-transform: translateY(-100%);
-            transform: translateY(-100%);
-  }
-  nav ~ .nav-mask:after {
-    z-index: -1;
     top: 56px;
   }
   main {
@@ -4023,7 +4017,6 @@ body.mod-capture #tip {
   main:after {
     background: rgba(0, 0, 0, 0.8);
   }
-  #layout.ready nav ~ .nav-mask:before,
   #layout.ready main {
     -webkit-transform: translateY(0);
             transform: translateY(0);
@@ -4144,9 +4137,6 @@ body.mod-capture #tip {
     font-size: 16px;
     -webkit-transform: translateX(60px) !important;
             transform: translateX(60px) !important;
-  }
-  nav ~ .nav-mask:before {
-    height: 48px;
   }
   nav ~ .nav-mask:after {
     top: 48px;
@@ -9401,10 +9391,10 @@ body.mod-capture .infos-fleet .equipments {
 .infos-fleet.mod-preview .equipment[data-carry]:not([data-equipmentid]):hover {
   background-color: rgba(0, 0, 0, 0.125);
 }
-main[data-theme="1"] {
+#layout[data-theme="1"] main {
   background-color: rgba(128, 128, 128, 0.65);
 }
-main[data-theme="2"]:after {
+#layout[data-theme="2"] main:after {
   background-color: rgba(60, 56, 55, 0.75);
   background-image: -webkit-linear-gradient(top, #fcad9c 4px, rgba(252, 153, 131, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #fcad9c 4px, rgba(252, 153, 131, 0.2) 4px, transparent 25%);
@@ -9412,40 +9402,40 @@ main[data-theme="2"]:after {
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
-  main[data-theme="2"]:after {
+  #layout[data-theme="2"] main:after {
     background-color: rgba(63, 54, 52, 0.95);
   }
 }
-main[data-theme="2"] .infos-fleet h3[data-content],
-main[data-theme="2"] .infos-fleet h4[data-content],
-main[data-theme="2"] .infos-fleet h5[data-content] {
+#layout[data-theme="2"] .infos-fleet h3[data-content],
+#layout[data-theme="2"] .infos-fleet h4[data-content],
+#layout[data-theme="2"] .infos-fleet h5[data-content] {
   color: #f59d89;
 }
-main[data-theme="2"] .infos-fleet h3[data-content]:before,
-main[data-theme="2"] .infos-fleet h4[data-content]:before,
-main[data-theme="2"] .infos-fleet h5[data-content]:before {
+#layout[data-theme="2"] .infos-fleet h3[data-content]:before,
+#layout[data-theme="2"] .infos-fleet h4[data-content]:before,
+#layout[data-theme="2"] .infos-fleet h5[data-content]:before {
   color: #f9f6f6;
 }
-main[data-theme="2"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="2"] .infos-fleet > header h3:not([data-content]) {
   color: #b8867a;
 }
-main[data-theme="2"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="2"] .infos-fleet > header h3[data-content] {
   color: #fb846a;
 }
-main[data-theme="2"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="2"] .infos-fleet > header h3[data-content]:before {
   color: #fff3f0;
 }
-main[data-theme="2"] .infos-fleet .fleetships {
+#layout[data-theme="2"] .infos-fleet .fleetships {
   color: rgba(254, 235, 230, 0.75);
 }
-main[data-theme="2"] .infos-fleet .ship:before {
+#layout[data-theme="2"] .infos-fleet .ship:before {
   border-right-color: rgba(255, 243, 240, 0.8);
   filter: drop-shadow(0 0 10px	rgba(255, 243, 240, 0.8));
   -webkit-filter: drop-shadow(0 0 10px	rgba(255, 243, 240, 0.8));
   -moz-filter: drop-shadow(0 0 10px	rgba(255, 243, 240, 0.8));
   -ms-filter: drop-shadow(0 0 10px	rgba(255, 243, 240, 0.8));
 }
-main[data-theme="2"] .infos-fleet .ship > dt {
+#layout[data-theme="2"] .infos-fleet .ship > dt {
   /*
 						&>div{
 							h4, h5{
@@ -9461,11 +9451,11 @@ main[data-theme="2"] .infos-fleet .ship > dt {
 							}
 						}*/
 }
-main[data-theme="2"] .infos-fleet .ship > dt > s:after {
+#layout[data-theme="2"] .infos-fleet .ship > dt > s:after {
   background: -webkit-linear-gradient(left, rgba(254, 235, 230, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(254, 235, 230, 0.5) 25%, transparent) repeat-y 0 0;
 }
-main[data-theme="2"] .infos-fleet .ship:hover {
+#layout[data-theme="2"] .infos-fleet .ship:hover {
   /*
 						&>dt{
 							&>div{
@@ -9479,16 +9469,16 @@ main[data-theme="2"] .infos-fleet .ship:hover {
 						}
 						*/
 }
-main[data-theme="2"] .infos-fleet .ship:hover:before {
+#layout[data-theme="2"] .infos-fleet .ship:hover:before {
   border-right-color: rgba(252, 173, 156, 0.95);
 }
-main[data-theme="2"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
+#layout[data-theme="2"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(225, 216, 214, 0.75);
 }
-main[data-theme="2"] .infos-fleet .ship:not([data-shipid]) > dt > div {
+#layout[data-theme="2"] .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #fee2dc;
 }
-main[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
+#layout[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
 							&>.info{
 								//.convertColor(hsla(@hue, 100%, 95%, .95));
@@ -9497,17 +9487,17 @@ main[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
 							}
 							*/
 }
-main[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
+#layout[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   background: -webkit-linear-gradient(left, rgba(18, 9, 7, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(18, 9, 7, 0.4) 50%, transparent);
 }
-main[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
+#layout[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
   color: #feebe6;
 }
-main[data-theme="2"] .infos-fleet .equipment-name {
+#layout[data-theme="2"] .infos-fleet .equipment-name {
   color: #fee6e1;
 }
-main[data-theme="3"]:after {
+#layout[data-theme="3"] main:after {
   background-color: rgba(63, 61, 52, 0.75);
   background-image: -webkit-linear-gradient(top, #fff099 4px, rgba(255, 236, 128, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #fff099 4px, rgba(255, 236, 128, 0.2) 4px, transparent 25%);
@@ -9515,40 +9505,40 @@ main[data-theme="3"]:after {
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
-  main[data-theme="3"]:after {
+  #layout[data-theme="3"] main:after {
     background-color: rgba(63, 61, 52, 0.95);
   }
 }
-main[data-theme="3"] .infos-fleet h3[data-content],
-main[data-theme="3"] .infos-fleet h4[data-content],
-main[data-theme="3"] .infos-fleet h5[data-content] {
+#layout[data-theme="3"] .infos-fleet h3[data-content],
+#layout[data-theme="3"] .infos-fleet h4[data-content],
+#layout[data-theme="3"] .infos-fleet h5[data-content] {
   color: #f9e786;
 }
-main[data-theme="3"] .infos-fleet h3[data-content]:before,
-main[data-theme="3"] .infos-fleet h4[data-content]:before,
-main[data-theme="3"] .infos-fleet h5[data-content]:before {
+#layout[data-theme="3"] .infos-fleet h3[data-content]:before,
+#layout[data-theme="3"] .infos-fleet h4[data-content]:before,
+#layout[data-theme="3"] .infos-fleet h5[data-content]:before {
   color: #f9f9f6;
 }
-main[data-theme="3"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="3"] .infos-fleet > header h3:not([data-content]) {
   color: #bdb275;
 }
-main[data-theme="3"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="3"] .infos-fleet > header h3[data-content] {
   color: #ffe866;
 }
-main[data-theme="3"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="3"] .infos-fleet > header h3[data-content]:before {
   color: #fffdf0;
 }
-main[data-theme="3"] .infos-fleet .fleetships {
+#layout[data-theme="3"] .infos-fleet .fleetships {
   color: rgba(255, 251, 229, 0.75);
 }
-main[data-theme="3"] .infos-fleet .ship:before {
+#layout[data-theme="3"] .infos-fleet .ship:before {
   border-right-color: rgba(255, 253, 240, 0.8);
   filter: drop-shadow(0 0 10px	rgba(255, 253, 240, 0.8));
   -webkit-filter: drop-shadow(0 0 10px	rgba(255, 253, 240, 0.8));
   -moz-filter: drop-shadow(0 0 10px	rgba(255, 253, 240, 0.8));
   -ms-filter: drop-shadow(0 0 10px	rgba(255, 253, 240, 0.8));
 }
-main[data-theme="3"] .infos-fleet .ship > dt {
+#layout[data-theme="3"] .infos-fleet .ship > dt {
   /*
 						&>div{
 							h4, h5{
@@ -9564,11 +9554,11 @@ main[data-theme="3"] .infos-fleet .ship > dt {
 							}
 						}*/
 }
-main[data-theme="3"] .infos-fleet .ship > dt > s:after {
+#layout[data-theme="3"] .infos-fleet .ship > dt > s:after {
   background: -webkit-linear-gradient(left, rgba(255, 251, 229, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(255, 251, 229, 0.5) 25%, transparent) repeat-y 0 0;
 }
-main[data-theme="3"] .infos-fleet .ship:hover {
+#layout[data-theme="3"] .infos-fleet .ship:hover {
   /*
 						&>dt{
 							&>div{
@@ -9582,16 +9572,16 @@ main[data-theme="3"] .infos-fleet .ship:hover {
 						}
 						*/
 }
-main[data-theme="3"] .infos-fleet .ship:hover:before {
+#layout[data-theme="3"] .infos-fleet .ship:hover:before {
   border-right-color: rgba(255, 240, 153, 0.95);
 }
-main[data-theme="3"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
+#layout[data-theme="3"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(226, 224, 212, 0.75);
 }
-main[data-theme="3"] .infos-fleet .ship:not([data-shipid]) > dt > div {
+#layout[data-theme="3"] .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #fffadb;
 }
-main[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
+#layout[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
 							&>.info{
 								//.convertColor(hsla(@hue, 100%, 95%, .95));
@@ -9600,17 +9590,17 @@ main[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
 							}
 							*/
 }
-main[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
+#layout[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   background: -webkit-linear-gradient(left, rgba(19, 17, 6, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(19, 17, 6, 0.4) 50%, transparent);
 }
-main[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
+#layout[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
   color: #fffbe5;
 }
-main[data-theme="3"] .infos-fleet .equipment-name {
+#layout[data-theme="3"] .infos-fleet .equipment-name {
   color: #fffae0;
 }
-main[data-theme="4"]:after {
+#layout[data-theme="4"] main:after {
   background-color: rgba(57, 57, 57, 0.75);
   background-image: -webkit-linear-gradient(top, #cafa9e 4px, rgba(189, 249, 134, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #cafa9e 4px, rgba(189, 249, 134, 0.2) 4px, transparent 25%);
@@ -9618,40 +9608,40 @@ main[data-theme="4"]:after {
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
-  main[data-theme="4"]:after {
+  #layout[data-theme="4"] main:after {
     background-color: rgba(57, 63, 52, 0.95);
   }
 }
-main[data-theme="4"] .infos-fleet h3[data-content],
-main[data-theme="4"] .infos-fleet h4[data-content],
-main[data-theme="4"] .infos-fleet h5[data-content] {
+#layout[data-theme="4"] .infos-fleet h3[data-content],
+#layout[data-theme="4"] .infos-fleet h4[data-content],
+#layout[data-theme="4"] .infos-fleet h5[data-content] {
   color: #bef28c;
 }
-main[data-theme="4"] .infos-fleet h3[data-content]:before,
-main[data-theme="4"] .infos-fleet h4[data-content]:before,
-main[data-theme="4"] .infos-fleet h5[data-content]:before {
+#layout[data-theme="4"] .infos-fleet h3[data-content]:before,
+#layout[data-theme="4"] .infos-fleet h4[data-content]:before,
+#layout[data-theme="4"] .infos-fleet h5[data-content]:before {
   color: #f7f8f6;
 }
-main[data-theme="4"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="4"] .infos-fleet > header h3:not([data-content]) {
   color: #98b380;
 }
-main[data-theme="4"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="4"] .infos-fleet > header h3[data-content] {
   color: #b0f76e;
 }
-main[data-theme="4"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="4"] .infos-fleet > header h3[data-content]:before {
   color: #f7fef0;
 }
-main[data-theme="4"] .infos-fleet .fleetships {
+#layout[data-theme="4"] .infos-fleet .fleetships {
   color: rgba(242, 254, 231, 0.75);
 }
-main[data-theme="4"] .infos-fleet .ship:before {
+#layout[data-theme="4"] .infos-fleet .ship:before {
   border-right-color: rgba(247, 254, 240, 0.8);
   filter: drop-shadow(0 0 10px	rgba(247, 254, 240, 0.8));
   -webkit-filter: drop-shadow(0 0 10px	rgba(247, 254, 240, 0.8));
   -moz-filter: drop-shadow(0 0 10px	rgba(247, 254, 240, 0.8));
   -ms-filter: drop-shadow(0 0 10px	rgba(247, 254, 240, 0.8));
 }
-main[data-theme="4"] .infos-fleet .ship > dt {
+#layout[data-theme="4"] .infos-fleet .ship > dt {
   /*
 						&>div{
 							h4, h5{
@@ -9667,11 +9657,11 @@ main[data-theme="4"] .infos-fleet .ship > dt {
 							}
 						}*/
 }
-main[data-theme="4"] .infos-fleet .ship > dt > s:after {
+#layout[data-theme="4"] .infos-fleet .ship > dt > s:after {
   background: -webkit-linear-gradient(left, rgba(242, 254, 231, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(242, 254, 231, 0.5) 25%, transparent) repeat-y 0 0;
 }
-main[data-theme="4"] .infos-fleet .ship:hover {
+#layout[data-theme="4"] .infos-fleet .ship:hover {
   /*
 						&>dt{
 							&>div{
@@ -9685,16 +9675,16 @@ main[data-theme="4"] .infos-fleet .ship:hover {
 						}
 						*/
 }
-main[data-theme="4"] .infos-fleet .ship:hover:before {
+#layout[data-theme="4"] .infos-fleet .ship:hover:before {
   border-right-color: rgba(202, 250, 158, 0.95);
 }
-main[data-theme="4"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
+#layout[data-theme="4"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(219, 223, 216, 0.75);
 }
-main[data-theme="4"] .infos-fleet .ship:not([data-shipid]) > dt > div {
+#layout[data-theme="4"] .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #edfddd;
 }
-main[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
+#layout[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
 							&>.info{
 								//.convertColor(hsla(@hue, 100%, 95%, .95));
@@ -9703,17 +9693,17 @@ main[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
 							}
 							*/
 }
-main[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
+#layout[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   background: -webkit-linear-gradient(left, rgba(13, 18, 8, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(13, 18, 8, 0.4) 50%, transparent);
 }
-main[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
+#layout[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
   color: #f2fee7;
 }
-main[data-theme="4"] .infos-fleet .equipment-name {
+#layout[data-theme="4"] .infos-fleet .equipment-name {
   color: #effde2;
 }
-main[data-theme="5"]:after {
+#layout[data-theme="5"] main:after {
   background-color: rgba(52, 63, 54, 0.75);
   background-image: -webkit-linear-gradient(top, #99ffac 4px, rgba(128, 255, 151, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #99ffac 4px, rgba(128, 255, 151, 0.2) 4px, transparent 25%);
@@ -9721,40 +9711,40 @@ main[data-theme="5"]:after {
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
-  main[data-theme="5"]:after {
+  #layout[data-theme="5"] main:after {
     background-color: rgba(52, 63, 54, 0.95);
   }
 }
-main[data-theme="5"] .infos-fleet h3[data-content],
-main[data-theme="5"] .infos-fleet h4[data-content],
-main[data-theme="5"] .infos-fleet h5[data-content] {
+#layout[data-theme="5"] .infos-fleet h3[data-content],
+#layout[data-theme="5"] .infos-fleet h4[data-content],
+#layout[data-theme="5"] .infos-fleet h5[data-content] {
   color: #86f99b;
 }
-main[data-theme="5"] .infos-fleet h3[data-content]:before,
-main[data-theme="5"] .infos-fleet h4[data-content]:before,
-main[data-theme="5"] .infos-fleet h5[data-content]:before {
+#layout[data-theme="5"] .infos-fleet h3[data-content]:before,
+#layout[data-theme="5"] .infos-fleet h4[data-content]:before,
+#layout[data-theme="5"] .infos-fleet h5[data-content]:before {
   color: #f6f9f6;
 }
-main[data-theme="5"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="5"] .infos-fleet > header h3:not([data-content]) {
   color: #75bd82;
 }
-main[data-theme="5"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="5"] .infos-fleet > header h3[data-content] {
   color: #66ff82;
 }
-main[data-theme="5"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="5"] .infos-fleet > header h3[data-content]:before {
   color: #f0fff3;
 }
-main[data-theme="5"] .infos-fleet .fleetships {
+#layout[data-theme="5"] .infos-fleet .fleetships {
   color: rgba(229, 255, 234, 0.75);
 }
-main[data-theme="5"] .infos-fleet .ship:before {
+#layout[data-theme="5"] .infos-fleet .ship:before {
   border-right-color: rgba(240, 255, 243, 0.8);
   filter: drop-shadow(0 0 10px	rgba(240, 255, 243, 0.8));
   -webkit-filter: drop-shadow(0 0 10px	rgba(240, 255, 243, 0.8));
   -moz-filter: drop-shadow(0 0 10px	rgba(240, 255, 243, 0.8));
   -ms-filter: drop-shadow(0 0 10px	rgba(240, 255, 243, 0.8));
 }
-main[data-theme="5"] .infos-fleet .ship > dt {
+#layout[data-theme="5"] .infos-fleet .ship > dt {
   /*
 						&>div{
 							h4, h5{
@@ -9770,11 +9760,11 @@ main[data-theme="5"] .infos-fleet .ship > dt {
 							}
 						}*/
 }
-main[data-theme="5"] .infos-fleet .ship > dt > s:after {
+#layout[data-theme="5"] .infos-fleet .ship > dt > s:after {
   background: -webkit-linear-gradient(left, rgba(229, 255, 234, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(229, 255, 234, 0.5) 25%, transparent) repeat-y 0 0;
 }
-main[data-theme="5"] .infos-fleet .ship:hover {
+#layout[data-theme="5"] .infos-fleet .ship:hover {
   /*
 						&>dt{
 							&>div{
@@ -9788,16 +9778,16 @@ main[data-theme="5"] .infos-fleet .ship:hover {
 						}
 						*/
 }
-main[data-theme="5"] .infos-fleet .ship:hover:before {
+#layout[data-theme="5"] .infos-fleet .ship:hover:before {
   border-right-color: rgba(153, 255, 172, 0.95);
 }
-main[data-theme="5"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
+#layout[data-theme="5"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(212, 226, 215, 0.75);
 }
-main[data-theme="5"] .infos-fleet .ship:not([data-shipid]) > dt > div {
+#layout[data-theme="5"] .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #dbffe2;
 }
-main[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
+#layout[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
 							&>.info{
 								//.convertColor(hsla(@hue, 100%, 95%, .95));
@@ -9806,17 +9796,17 @@ main[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
 							}
 							*/
 }
-main[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
+#layout[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   background: -webkit-linear-gradient(left, rgba(6, 19, 9, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(6, 19, 9, 0.4) 50%, transparent);
 }
-main[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
+#layout[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
   color: #e5ffea;
 }
-main[data-theme="5"] .infos-fleet .equipment-name {
+#layout[data-theme="5"] .infos-fleet .equipment-name {
   color: #e0ffe6;
 }
-main[data-theme="6"]:after {
+#layout[data-theme="6"] main:after {
   background-color: rgba(52, 63, 61, 0.75);
   background-image: -webkit-linear-gradient(top, #99fff0 4px, rgba(128, 255, 236, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #99fff0 4px, rgba(128, 255, 236, 0.2) 4px, transparent 25%);
@@ -9824,40 +9814,40 @@ main[data-theme="6"]:after {
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
-  main[data-theme="6"]:after {
+  #layout[data-theme="6"] main:after {
     background-color: rgba(52, 63, 61, 0.95);
   }
 }
-main[data-theme="6"] .infos-fleet h3[data-content],
-main[data-theme="6"] .infos-fleet h4[data-content],
-main[data-theme="6"] .infos-fleet h5[data-content] {
+#layout[data-theme="6"] .infos-fleet h3[data-content],
+#layout[data-theme="6"] .infos-fleet h4[data-content],
+#layout[data-theme="6"] .infos-fleet h5[data-content] {
   color: #86f9e7;
 }
-main[data-theme="6"] .infos-fleet h3[data-content]:before,
-main[data-theme="6"] .infos-fleet h4[data-content]:before,
-main[data-theme="6"] .infos-fleet h5[data-content]:before {
+#layout[data-theme="6"] .infos-fleet h3[data-content]:before,
+#layout[data-theme="6"] .infos-fleet h4[data-content]:before,
+#layout[data-theme="6"] .infos-fleet h5[data-content]:before {
   color: #f6f9f9;
 }
-main[data-theme="6"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="6"] .infos-fleet > header h3:not([data-content]) {
   color: #75bdb2;
 }
-main[data-theme="6"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="6"] .infos-fleet > header h3[data-content] {
   color: #66ffe8;
 }
-main[data-theme="6"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="6"] .infos-fleet > header h3[data-content]:before {
   color: #f0fffd;
 }
-main[data-theme="6"] .infos-fleet .fleetships {
+#layout[data-theme="6"] .infos-fleet .fleetships {
   color: rgba(229, 255, 251, 0.75);
 }
-main[data-theme="6"] .infos-fleet .ship:before {
+#layout[data-theme="6"] .infos-fleet .ship:before {
   border-right-color: rgba(240, 255, 253, 0.8);
   filter: drop-shadow(0 0 10px	rgba(240, 255, 253, 0.8));
   -webkit-filter: drop-shadow(0 0 10px	rgba(240, 255, 253, 0.8));
   -moz-filter: drop-shadow(0 0 10px	rgba(240, 255, 253, 0.8));
   -ms-filter: drop-shadow(0 0 10px	rgba(240, 255, 253, 0.8));
 }
-main[data-theme="6"] .infos-fleet .ship > dt {
+#layout[data-theme="6"] .infos-fleet .ship > dt {
   /*
 						&>div{
 							h4, h5{
@@ -9873,11 +9863,11 @@ main[data-theme="6"] .infos-fleet .ship > dt {
 							}
 						}*/
 }
-main[data-theme="6"] .infos-fleet .ship > dt > s:after {
+#layout[data-theme="6"] .infos-fleet .ship > dt > s:after {
   background: -webkit-linear-gradient(left, rgba(229, 255, 251, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(229, 255, 251, 0.5) 25%, transparent) repeat-y 0 0;
 }
-main[data-theme="6"] .infos-fleet .ship:hover {
+#layout[data-theme="6"] .infos-fleet .ship:hover {
   /*
 						&>dt{
 							&>div{
@@ -9891,16 +9881,16 @@ main[data-theme="6"] .infos-fleet .ship:hover {
 						}
 						*/
 }
-main[data-theme="6"] .infos-fleet .ship:hover:before {
+#layout[data-theme="6"] .infos-fleet .ship:hover:before {
   border-right-color: rgba(153, 255, 240, 0.95);
 }
-main[data-theme="6"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
+#layout[data-theme="6"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(212, 226, 224, 0.75);
 }
-main[data-theme="6"] .infos-fleet .ship:not([data-shipid]) > dt > div {
+#layout[data-theme="6"] .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #dbfffa;
 }
-main[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
+#layout[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
 							&>.info{
 								//.convertColor(hsla(@hue, 100%, 95%, .95));
@@ -9909,17 +9899,17 @@ main[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
 							}
 							*/
 }
-main[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
+#layout[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   background: -webkit-linear-gradient(left, rgba(6, 19, 17, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(6, 19, 17, 0.4) 50%, transparent);
 }
-main[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
+#layout[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
   color: #e5fffb;
 }
-main[data-theme="6"] .infos-fleet .equipment-name {
+#layout[data-theme="6"] .infos-fleet .equipment-name {
   color: #e0fffa;
 }
-main[data-theme="7"]:after {
+#layout[data-theme="7"] main:after {
   background-color: rgba(49, 57, 66, 0.75);
   background-image: -webkit-linear-gradient(top, #99caff 4px, rgba(128, 189, 255, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #99caff 4px, rgba(128, 189, 255, 0.2) 4px, transparent 25%);
@@ -9927,40 +9917,40 @@ main[data-theme="7"]:after {
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
-  main[data-theme="7"]:after {
+  #layout[data-theme="7"] main:after {
     background-color: rgba(52, 57, 63, 0.95);
   }
 }
-main[data-theme="7"] .infos-fleet h3[data-content],
-main[data-theme="7"] .infos-fleet h4[data-content],
-main[data-theme="7"] .infos-fleet h5[data-content] {
+#layout[data-theme="7"] .infos-fleet h3[data-content],
+#layout[data-theme="7"] .infos-fleet h4[data-content],
+#layout[data-theme="7"] .infos-fleet h5[data-content] {
   color: #83bdfc;
 }
-main[data-theme="7"] .infos-fleet h3[data-content]:before,
-main[data-theme="7"] .infos-fleet h4[data-content]:before,
-main[data-theme="7"] .infos-fleet h5[data-content]:before {
+#layout[data-theme="7"] .infos-fleet h3[data-content]:before,
+#layout[data-theme="7"] .infos-fleet h4[data-content]:before,
+#layout[data-theme="7"] .infos-fleet h5[data-content]:before {
   color: #f5f7fa;
 }
-main[data-theme="7"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="7"] .infos-fleet > header h3:not([data-content]) {
   color: #7098c2;
 }
-main[data-theme="7"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="7"] .infos-fleet > header h3[data-content] {
   color: #66b0ff;
 }
-main[data-theme="7"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="7"] .infos-fleet > header h3[data-content]:before {
   color: #f0f7ff;
 }
-main[data-theme="7"] .infos-fleet .fleetships {
+#layout[data-theme="7"] .infos-fleet .fleetships {
   color: rgba(229, 242, 255, 0.75);
 }
-main[data-theme="7"] .infos-fleet .ship:before {
+#layout[data-theme="7"] .infos-fleet .ship:before {
   border-right-color: rgba(240, 247, 255, 0.8);
   filter: drop-shadow(0 0 10px	rgba(240, 247, 255, 0.8));
   -webkit-filter: drop-shadow(0 0 10px	rgba(240, 247, 255, 0.8));
   -moz-filter: drop-shadow(0 0 10px	rgba(240, 247, 255, 0.8));
   -ms-filter: drop-shadow(0 0 10px	rgba(240, 247, 255, 0.8));
 }
-main[data-theme="7"] .infos-fleet .ship > dt {
+#layout[data-theme="7"] .infos-fleet .ship > dt {
   /*
 						&>div{
 							h4, h5{
@@ -9976,11 +9966,11 @@ main[data-theme="7"] .infos-fleet .ship > dt {
 							}
 						}*/
 }
-main[data-theme="7"] .infos-fleet .ship > dt > s:after {
+#layout[data-theme="7"] .infos-fleet .ship > dt > s:after {
   background: -webkit-linear-gradient(left, rgba(229, 242, 255, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(229, 242, 255, 0.5) 25%, transparent) repeat-y 0 0;
 }
-main[data-theme="7"] .infos-fleet .ship:hover {
+#layout[data-theme="7"] .infos-fleet .ship:hover {
   /*
 						&>dt{
 							&>div{
@@ -9994,16 +9984,16 @@ main[data-theme="7"] .infos-fleet .ship:hover {
 						}
 						*/
 }
-main[data-theme="7"] .infos-fleet .ship:hover:before {
+#layout[data-theme="7"] .infos-fleet .ship:hover:before {
   border-right-color: rgba(153, 202, 255, 0.95);
 }
-main[data-theme="7"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
+#layout[data-theme="7"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(210, 219, 228, 0.75);
 }
-main[data-theme="7"] .infos-fleet .ship:not([data-shipid]) > dt > div {
+#layout[data-theme="7"] .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #dbedff;
 }
-main[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
+#layout[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
 							&>.info{
 								//.convertColor(hsla(@hue, 100%, 95%, .95));
@@ -10012,17 +10002,17 @@ main[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
 							}
 							*/
 }
-main[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
+#layout[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   background: -webkit-linear-gradient(left, rgba(6, 13, 20, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(6, 13, 20, 0.4) 50%, transparent);
 }
-main[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
+#layout[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
   color: #e5f2ff;
 }
-main[data-theme="7"] .infos-fleet .equipment-name {
+#layout[data-theme="7"] .infos-fleet .equipment-name {
   color: #e0efff;
 }
-main[data-theme="8"]:after {
+#layout[data-theme="8"] main:after {
   background-color: rgba(66, 63, 77, 0.75);
   background-image: -webkit-linear-gradient(top, #c1b3ff 4px, rgba(172, 153, 255, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #c1b3ff 4px, rgba(172, 153, 255, 0.2) 4px, transparent 25%);
@@ -10030,40 +10020,40 @@ main[data-theme="8"]:after {
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
-  main[data-theme="8"]:after {
+  #layout[data-theme="8"] main:after {
     background-color: rgba(54, 52, 63, 0.95);
   }
 }
-main[data-theme="8"] .infos-fleet h3[data-content],
-main[data-theme="8"] .infos-fleet h4[data-content],
-main[data-theme="8"] .infos-fleet h5[data-content] {
+#layout[data-theme="8"] .infos-fleet h3[data-content],
+#layout[data-theme="8"] .infos-fleet h4[data-content],
+#layout[data-theme="8"] .infos-fleet h5[data-content] {
   color: #af9efa;
 }
-main[data-theme="8"] .infos-fleet h3[data-content]:before,
-main[data-theme="8"] .infos-fleet h4[data-content]:before,
-main[data-theme="8"] .infos-fleet h5[data-content]:before {
+#layout[data-theme="8"] .infos-fleet h3[data-content]:before,
+#layout[data-theme="8"] .infos-fleet h4[data-content]:before,
+#layout[data-theme="8"] .infos-fleet h5[data-content]:before {
   color: #ffffff;
 }
-main[data-theme="8"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="8"] .infos-fleet > header h3:not([data-content]) {
   color: #9287c5;
 }
-main[data-theme="8"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="8"] .infos-fleet > header h3[data-content] {
   color: #9780ff;
 }
-main[data-theme="8"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="8"] .infos-fleet > header h3[data-content]:before {
   color: #ffffff;
 }
-main[data-theme="8"] .infos-fleet .fleetships {
+#layout[data-theme="8"] .infos-fleet .fleetships {
   color: rgba(255, 255, 255, 0.75);
 }
-main[data-theme="8"] .infos-fleet .ship:before {
+#layout[data-theme="8"] .infos-fleet .ship:before {
   border-right-color: rgba(255, 255, 255, 0.8);
   filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
   -webkit-filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
   -moz-filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
   -ms-filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
 }
-main[data-theme="8"] .infos-fleet .ship > dt {
+#layout[data-theme="8"] .infos-fleet .ship > dt {
   /*
 						&>div{
 							h4, h5{
@@ -10079,11 +10069,11 @@ main[data-theme="8"] .infos-fleet .ship > dt {
 							}
 						}*/
 }
-main[data-theme="8"] .infos-fleet .ship > dt > s:after {
+#layout[data-theme="8"] .infos-fleet .ship > dt > s:after {
   background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(255, 255, 255, 0.5) 25%, transparent) repeat-y 0 0;
 }
-main[data-theme="8"] .infos-fleet .ship:hover {
+#layout[data-theme="8"] .infos-fleet .ship:hover {
   /*
 						&>dt{
 							&>div{
@@ -10097,16 +10087,16 @@ main[data-theme="8"] .infos-fleet .ship:hover {
 						}
 						*/
 }
-main[data-theme="8"] .infos-fleet .ship:hover:before {
+#layout[data-theme="8"] .infos-fleet .ship:hover:before {
   border-right-color: rgba(193, 179, 255, 0.95);
 }
-main[data-theme="8"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
+#layout[data-theme="8"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(229, 227, 237, 0.75);
 }
-main[data-theme="8"] .infos-fleet .ship:not([data-shipid]) > dt > div {
+#layout[data-theme="8"] .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #f7f5ff;
 }
-main[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
+#layout[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
 							&>.info{
 								//.convertColor(hsla(@hue, 100%, 95%, .95));
@@ -10115,17 +10105,17 @@ main[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
 							}
 							*/
 }
-main[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
+#layout[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   background: -webkit-linear-gradient(left, rgba(17, 13, 38, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(17, 13, 38, 0.4) 50%, transparent);
 }
-main[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
+#layout[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
   color: #ffffff;
 }
-main[data-theme="8"] .infos-fleet .equipment-name {
+#layout[data-theme="8"] .infos-fleet .equipment-name {
   color: #fbfaff;
 }
-main[data-theme="9"]:after {
+#layout[data-theme="9"] main:after {
   background-color: rgba(61, 52, 63, 0.75);
   background-image: -webkit-linear-gradient(top, #f099ff 4px, rgba(236, 128, 255, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #f099ff 4px, rgba(236, 128, 255, 0.2) 4px, transparent 25%);
@@ -10133,40 +10123,40 @@ main[data-theme="9"]:after {
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
-  main[data-theme="9"]:after {
+  #layout[data-theme="9"] main:after {
     background-color: rgba(61, 52, 63, 0.95);
   }
 }
-main[data-theme="9"] .infos-fleet h3[data-content],
-main[data-theme="9"] .infos-fleet h4[data-content],
-main[data-theme="9"] .infos-fleet h5[data-content] {
+#layout[data-theme="9"] .infos-fleet h3[data-content],
+#layout[data-theme="9"] .infos-fleet h4[data-content],
+#layout[data-theme="9"] .infos-fleet h5[data-content] {
   color: #e786f9;
 }
-main[data-theme="9"] .infos-fleet h3[data-content]:before,
-main[data-theme="9"] .infos-fleet h4[data-content]:before,
-main[data-theme="9"] .infos-fleet h5[data-content]:before {
+#layout[data-theme="9"] .infos-fleet h3[data-content]:before,
+#layout[data-theme="9"] .infos-fleet h4[data-content]:before,
+#layout[data-theme="9"] .infos-fleet h5[data-content]:before {
   color: #f9f6f9;
 }
-main[data-theme="9"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="9"] .infos-fleet > header h3:not([data-content]) {
   color: #b275bd;
 }
-main[data-theme="9"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="9"] .infos-fleet > header h3[data-content] {
   color: #e866ff;
 }
-main[data-theme="9"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="9"] .infos-fleet > header h3[data-content]:before {
   color: #fdf0ff;
 }
-main[data-theme="9"] .infos-fleet .fleetships {
+#layout[data-theme="9"] .infos-fleet .fleetships {
   color: rgba(251, 229, 255, 0.75);
 }
-main[data-theme="9"] .infos-fleet .ship:before {
+#layout[data-theme="9"] .infos-fleet .ship:before {
   border-right-color: rgba(253, 240, 255, 0.8);
   filter: drop-shadow(0 0 10px	rgba(253, 240, 255, 0.8));
   -webkit-filter: drop-shadow(0 0 10px	rgba(253, 240, 255, 0.8));
   -moz-filter: drop-shadow(0 0 10px	rgba(253, 240, 255, 0.8));
   -ms-filter: drop-shadow(0 0 10px	rgba(253, 240, 255, 0.8));
 }
-main[data-theme="9"] .infos-fleet .ship > dt {
+#layout[data-theme="9"] .infos-fleet .ship > dt {
   /*
 						&>div{
 							h4, h5{
@@ -10182,11 +10172,11 @@ main[data-theme="9"] .infos-fleet .ship > dt {
 							}
 						}*/
 }
-main[data-theme="9"] .infos-fleet .ship > dt > s:after {
+#layout[data-theme="9"] .infos-fleet .ship > dt > s:after {
   background: -webkit-linear-gradient(left, rgba(251, 229, 255, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(251, 229, 255, 0.5) 25%, transparent) repeat-y 0 0;
 }
-main[data-theme="9"] .infos-fleet .ship:hover {
+#layout[data-theme="9"] .infos-fleet .ship:hover {
   /*
 						&>dt{
 							&>div{
@@ -10200,16 +10190,16 @@ main[data-theme="9"] .infos-fleet .ship:hover {
 						}
 						*/
 }
-main[data-theme="9"] .infos-fleet .ship:hover:before {
+#layout[data-theme="9"] .infos-fleet .ship:hover:before {
   border-right-color: rgba(240, 153, 255, 0.95);
 }
-main[data-theme="9"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
+#layout[data-theme="9"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(224, 212, 226, 0.75);
 }
-main[data-theme="9"] .infos-fleet .ship:not([data-shipid]) > dt > div {
+#layout[data-theme="9"] .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #fadbff;
 }
-main[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
+#layout[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
 							&>.info{
 								//.convertColor(hsla(@hue, 100%, 95%, .95));
@@ -10218,17 +10208,17 @@ main[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
 							}
 							*/
 }
-main[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
+#layout[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   background: -webkit-linear-gradient(left, rgba(17, 6, 19, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(17, 6, 19, 0.4) 50%, transparent);
 }
-main[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
+#layout[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
   color: #fbe5ff;
 }
-main[data-theme="9"] .infos-fleet .equipment-name {
+#layout[data-theme="9"] .infos-fleet .equipment-name {
   color: #fae0ff;
 }
-main[data-theme="10"]:after {
+#layout[data-theme="10"] main:after {
   background-color: rgba(77, 63, 70, 0.75);
   background-image: -webkit-linear-gradient(top, #ffb3d7 4px, rgba(255, 153, 202, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #ffb3d7 4px, rgba(255, 153, 202, 0.2) 4px, transparent 25%);
@@ -10236,40 +10226,40 @@ main[data-theme="10"]:after {
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
-  main[data-theme="10"]:after {
+  #layout[data-theme="10"] main:after {
     background-color: rgba(63, 52, 57, 0.95);
   }
 }
-main[data-theme="10"] .infos-fleet h3[data-content],
-main[data-theme="10"] .infos-fleet h4[data-content],
-main[data-theme="10"] .infos-fleet h5[data-content] {
+#layout[data-theme="10"] .infos-fleet h3[data-content],
+#layout[data-theme="10"] .infos-fleet h4[data-content],
+#layout[data-theme="10"] .infos-fleet h5[data-content] {
   color: #fa9eca;
 }
-main[data-theme="10"] .infos-fleet h3[data-content]:before,
-main[data-theme="10"] .infos-fleet h4[data-content]:before,
-main[data-theme="10"] .infos-fleet h5[data-content]:before {
+#layout[data-theme="10"] .infos-fleet h3[data-content]:before,
+#layout[data-theme="10"] .infos-fleet h4[data-content]:before,
+#layout[data-theme="10"] .infos-fleet h5[data-content]:before {
   color: #ffffff;
 }
-main[data-theme="10"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="10"] .infos-fleet > header h3:not([data-content]) {
   color: #c587a5;
 }
-main[data-theme="10"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="10"] .infos-fleet > header h3[data-content] {
   color: #ff80bd;
 }
-main[data-theme="10"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="10"] .infos-fleet > header h3[data-content]:before {
   color: #ffffff;
 }
-main[data-theme="10"] .infos-fleet .fleetships {
+#layout[data-theme="10"] .infos-fleet .fleetships {
   color: rgba(255, 255, 255, 0.75);
 }
-main[data-theme="10"] .infos-fleet .ship:before {
+#layout[data-theme="10"] .infos-fleet .ship:before {
   border-right-color: rgba(255, 255, 255, 0.8);
   filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
   -webkit-filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
   -moz-filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
   -ms-filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
 }
-main[data-theme="10"] .infos-fleet .ship > dt {
+#layout[data-theme="10"] .infos-fleet .ship > dt {
   /*
 						&>div{
 							h4, h5{
@@ -10285,11 +10275,11 @@ main[data-theme="10"] .infos-fleet .ship > dt {
 							}
 						}*/
 }
-main[data-theme="10"] .infos-fleet .ship > dt > s:after {
+#layout[data-theme="10"] .infos-fleet .ship > dt > s:after {
   background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(255, 255, 255, 0.5) 25%, transparent) repeat-y 0 0;
 }
-main[data-theme="10"] .infos-fleet .ship:hover {
+#layout[data-theme="10"] .infos-fleet .ship:hover {
   /*
 						&>dt{
 							&>div{
@@ -10303,16 +10293,16 @@ main[data-theme="10"] .infos-fleet .ship:hover {
 						}
 						*/
 }
-main[data-theme="10"] .infos-fleet .ship:hover:before {
+#layout[data-theme="10"] .infos-fleet .ship:hover:before {
   border-right-color: rgba(255, 179, 215, 0.95);
 }
-main[data-theme="10"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
+#layout[data-theme="10"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(237, 227, 232, 0.75);
 }
-main[data-theme="10"] .infos-fleet .ship:not([data-shipid]) > dt > div {
+#layout[data-theme="10"] .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #fff5fa;
 }
-main[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
+#layout[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
 							&>.info{
 								//.convertColor(hsla(@hue, 100%, 95%, .95));
@@ -10321,14 +10311,14 @@ main[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
 							}
 							*/
 }
-main[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
+#layout[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   background: -webkit-linear-gradient(left, rgba(38, 13, 25, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(38, 13, 25, 0.4) 50%, transparent);
 }
-main[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
+#layout[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
   color: #ffffff;
 }
-main[data-theme="10"] .infos-fleet .equipment-name {
+#layout[data-theme="10"] .infos-fleet .equipment-name {
   color: #fffafc;
 }
 .menu.contextmenu-infos_fleet_themes > .body > div {
@@ -13642,18 +13632,18 @@ body > .modal.update_journal.mod-blur-shot > div {
 #tip h4.item_equipable_on ~ span {
   display: inline-block;
 }
-main[data-theme="ships"]:after,
-main[data-theme="ship"]:after {
+#layout[data-theme="ships"] main:after,
+#layout[data-theme="ship"] main:after {
   background: rgba(37, 49, 55, 0.7);
 }
 @media all and (max-width: 720px) {
-  main[data-theme="ships"]:after,
-  main[data-theme="ship"]:after {
+  #layout[data-theme="ships"] main:after,
+  #layout[data-theme="ship"] main:after {
     background-color: rgba(37, 49, 55, 0.95);
   }
 }
-main[data-theme="ships"] ~ .nav-mask:before,
-main[data-theme="ship"] ~ .nav-mask:before {
+#layout[data-theme="ships"] nav,
+#layout[data-theme="ship"] nav {
   background: #123f54;
 }
 /*
@@ -13727,18 +13717,18 @@ main[data-theme="ship"] ~ .nav-mask:before {
   border-bottom-color: #4dc3ff;
   border-top-width: 0;
 }
-main[data-theme="entities"]:after,
-main[data-theme="entity"]:after {
+#layout[data-theme="entities"] main:after,
+#layout[data-theme="entity"] main:after {
   background: rgba(37, 55, 55, 0.7);
 }
 @media all and (max-width: 720px) {
-  main[data-theme="entities"]:after,
-  main[data-theme="entity"]:after {
+  #layout[data-theme="entities"] main:after,
+  #layout[data-theme="entity"] main:after {
     background-color: rgba(37, 55, 55, 0.95);
   }
 }
-main[data-theme="entities"] ~ .nav-mask:before,
-main[data-theme="entity"] ~ .nav-mask:before {
+#layout[data-theme="entities"] nav,
+#layout[data-theme="entity"] nav {
   background: #125454;
 }
 .page-container[page="entities"] {
@@ -13749,18 +13739,18 @@ main[data-theme="entity"] ~ .nav-mask:before {
 	background:	hsla(180, 20%, 18%, .70);
 }
 */
-main[data-theme="equipments"]:after,
-main[data-theme="equipment"]:after {
+#layout[data-theme="equipments"] main:after,
+#layout[data-theme="equipment"] main:after {
   background: rgba(37, 55, 46, 0.7);
 }
 @media all and (max-width: 720px) {
-  main[data-theme="equipments"]:after,
-  main[data-theme="equipment"]:after {
+  #layout[data-theme="equipments"] main:after,
+  #layout[data-theme="equipment"] main:after {
     background-color: rgba(37, 55, 46, 0.95);
   }
 }
-main[data-theme="equipments"] ~ .nav-mask:before,
-main[data-theme="equipment"] ~ .nav-mask:before {
+#layout[data-theme="equipments"] nav,
+#layout[data-theme="equipment"] nav {
   background: #125432;
 }
 .page-container[page="equipments"] .helper,
@@ -13784,15 +13774,15 @@ main[data-theme="equipment"] ~ .nav-mask:before {
 .page-container[page="equipments"] {
   border-width: 0 !important;
 }
-main[data-theme="arsenal"]:after {
+#layout[data-theme="arsenal"] main:after {
   background: rgba(43, 55, 37, 0.7);
 }
 @media all and (max-width: 720px) {
-  main[data-theme="arsenal"]:after {
+  #layout[data-theme="arsenal"] main:after {
     background-color: rgba(43, 55, 37, 0.95);
   }
 }
-main[data-theme="arsenal"] ~ .nav-mask:before {
+#layout[data-theme="arsenal"] nav {
   background: #285412;
 }
 .page-container[page="arsenal"] > input[type="radio"] {
@@ -14303,15 +14293,15 @@ main[data-theme="arsenal"] ~ .nav-mask:before {
     background-position: 0 0;
   }
 }
-main[data-theme="about"]:after {
+#layout[data-theme="about"] main:after {
   background: rgba(55, 37, 37, 0.7);
 }
 @media all and (max-width: 720px) {
-  main[data-theme="about"]:after {
+  #layout[data-theme="about"] main:after {
     background-color: rgba(55, 37, 37, 0.95);
   }
 }
-main[data-theme="about"] ~ .nav-mask:before {
+#layout[data-theme="about"] nav {
   background: #541212;
 }
 .page-container[page="about"] {
@@ -14557,15 +14547,15 @@ main[data-theme="about"] ~ .nav-mask:before {
 .page-container[page="home"] p {
   margin-top: 1em;
 }
-main[data-theme="calctp"]:after {
+#layout[data-theme="calctp"] main:after {
   background: rgba(55, 52, 37, 0.7);
 }
 @media all and (max-width: 720px) {
-  main[data-theme="calctp"]:after {
+  #layout[data-theme="calctp"] main:after {
     background-color: rgba(55, 52, 37, 0.95);
   }
 }
-main[data-theme="calctp"] ~ .nav-mask:before {
+#layout[data-theme="calctp"] nav {
   background: #544812;
 }
 .page-container[page="calctp"] {

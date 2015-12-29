@@ -248,7 +248,8 @@ _frame.infos = {
 			}
 		
 		// 确定 theme
-			_frame.dom.main.attr('data-theme', cont.attr('data-theme') || type)
+			//_frame.dom.main.attr('data-theme', cont.attr('data-theme') || type)
+			_frame.dom.layout.attr('data-theme', cont.attr('data-theme') || type)
 
 		setTimeout(function(){
 			// 显示内容

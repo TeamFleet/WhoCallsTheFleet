@@ -1522,7 +1522,7 @@
 //	padding:	0 !important;
 //	border:		0 !important;
 //}
-main{
+#layout{
 	//&>.wrapper{
 	//	&>.fleet{
 	//	}
@@ -1542,7 +1542,7 @@ main{
 			@color3: darken( lighten( desaturate( saturate(@_color, @saturationInc), @saturationDec), @lightnessInc), @lightnessDec);
 		}
 		
-		&:after{
+		main:after{
 			//.convertColor(hsla(@hue, 40%, 40%, .65));
 			//.convertColor(hsla(@hue, 20%, 18%, .8));
 			//.convertColor(hsla(@hue, 30%, 18%, .65));
@@ -1698,7 +1698,9 @@ main{
 		//}
 	}
 	&[data-theme="1"]{
-		background-color:	hsla(0, 0%, 50%, .65);
+		main{
+			background-color:	hsla(0, 0%, 50%, .65);
+		}
 	}
 	&[data-theme="2"]{
 		.theme(11, 0%, 5%, 0%, 0%);

@@ -356,9 +356,9 @@ _frame.app_main = {
 
 
 	// 隐藏内容，只显示背景图
-		toggle_hidecontent: function(){
-			_frame.dom.layout.toggleClass('hidecontent')
-		},
+		//toggle_hidecontent: function(){
+		//	_frame.dom.layout.toggleClass('hidecontent')
+		//},
 	
 	
 	

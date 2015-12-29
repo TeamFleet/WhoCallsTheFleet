@@ -3515,9 +3515,9 @@ _frame.app_main = {
 
 
 	// 隐藏内容，只显示背景图
-		toggle_hidecontent: function(){
-			_frame.dom.layout.toggleClass('hidecontent')
-		},
+		//toggle_hidecontent: function(){
+		//	_frame.dom.layout.toggleClass('hidecontent')
+		//},
 	
 	
 	
@@ -5620,7 +5620,8 @@ Page.show = function(page){
 	if( p ){
 		if( _frame.dom.navs[p] )
 			_frame.dom.navs[p].addClass('on')
-		_frame.dom.main.attr('data-theme', p)
+		//_frame.dom.main.attr('data-theme', p)
+		_frame.dom.layout.attr('data-theme', p)
 		_frame.app_main.cur_page = p
 	}
 }
@@ -6160,24 +6161,27 @@ _frame.gg = function(){
 
 static
 	cur
+	list
+	isInit: false
 
 	init()
-		controls_init()
+		controlsInit()
 		get_default_imgs()
-	change(index = random || first)
-	controls_show()
-	controls_hide()
-	save(index = current)
 	_get(index || object || name)
+	change(index = random || first)
+	save(index = current)
 	add(new)
 	delete(index)
 		only work on custom img
 	generate(index || object, blur || thumbnail)
 	set(index || object, blur || thumbnail)
+	controlsShow()
+	controlsHide()
 
 class
 	name
-	enable
+	isEnable
+	isDefault
 
 	show()
 	hide()
@@ -6189,6 +6193,22 @@ class
 	get thumbnail()
 	set thumbnail()
 
+to modify
+	_frame.app_main.bgimgs
+	_frame.app_main.change_bgimg
+	_frame.app_main.cur_bgimg_el
+	_frame.app_main.change_bgimg_oldEl
+	_frame.app_main.bgimg_path
+	_frame.app_main.change_bgimg_fadein
+	
+	_frame.dom.bgimg
+	
+	_frame.app_main.only_bg_on
+	_frame.app_main.only_bg_off
+	_frame.app_main.only_bg_toggle
+	_frame.dom.bg_controls
+	_frame.app_main.only_bg
+
 */
 
 class BgImg{
@@ -6198,11 +6218,30 @@ class BgImg{
 	}
 }
 
-BgImg.default = {
-	enable: 	true
-}
 
-BgImg.obj = []
+
+
+
+BgImg.default = {
+	isEnable: 	true,
+	isDefault:	true
+};
+BgImg.list = [];
+
+
+
+
+
+// controls
+	BgImg.controlsInit = function(){
+		
+	};
+	BgImg.controlsShow = function(){
+		
+	};
+	BgImg.controlsHide = function(){
+		
+	};
 
 
 /* 
@@ -6455,7 +6494,8 @@ _frame.infos = {
 			}
 		
 		// 确定 theme
-			_frame.dom.main.attr('data-theme', cont.attr('data-theme') || type)
+			//_frame.dom.main.attr('data-theme', cont.attr('data-theme') || type)
+			_frame.dom.layout.attr('data-theme', cont.attr('data-theme') || type)
 
 		setTimeout(function(){
 			// 显示内容
@@ -7380,7 +7420,8 @@ class InfosFleet{
 			this.doms['theme'].val(this.data['theme']).attr('value', this.data['theme'])
 			_frame.infos.dom.main.attr('data-theme', this.data['theme'])
 			this.el.attr('data-theme', this.data['theme'])
-			_frame.dom.main.attr('data-theme', this.data['theme'])
+			//_frame.dom.main.attr('data-theme', this.data['theme'])
+			_frame.dom.layout.attr('data-theme', this.data['theme'])
 			this.save()
 		}
 	

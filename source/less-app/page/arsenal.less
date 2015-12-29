@@ -1,11 +1,11 @@
-main[data-theme="arsenal"]{
-	&:after{
+#layout[data-theme="arsenal"]{
+	main:after{
 		background:	hsla(100, 20%, 18%, .70);
 		@media all and (max-width: @mobileview-breaking-point ){
 			background-color:	hsla(100, 20%, 18%, .95);
 		}
 	}
-	& ~ .nav-mask:before{
+	nav{
 		background: hsl(100, 65%, 20%);
 	}
 }
