@@ -194,7 +194,8 @@ class InfosFleet{
 								if( typeof content == 'undefined' ){
 									content = this.doms['name'].text()
 								}
-								this.doms['name'].html(content)
+								if( content != this.doms['name'].html() )
+									this.doms['name'].html(content)
 								this._name = content
 								return this.doms['name']
 							}.bind(this),

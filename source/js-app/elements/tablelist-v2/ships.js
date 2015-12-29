@@ -290,7 +290,7 @@ class TablelistShips extends Tablelist{
 								.trigger('change')
 							e.stopPropagation()
 						}else if( e.target.tagName.toLowerCase() == 'em' ){
-							this.contextmenu_show($(e.target))
+							this.contextmenu_show($(e.target), e.currentTarget.getAttribute('data-shipid'))
 							e.preventDefault()
 							e.stopImmediatePropagation()
 							e.stopPropagation()

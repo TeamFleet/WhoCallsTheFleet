@@ -5714,7 +5714,7 @@ var InfosFleet = (function () {
 					if (typeof content == 'undefined') {
 						content = this.doms['name'].text();
 					}
-					this.doms['name'].html(content);
+					if (content != this.doms['name'].html()) this.doms['name'].html(content);
 					this._name = content;
 					return this.doms['name'];
 				}).bind(this),
@@ -7700,7 +7700,7 @@ var TablelistShips = (function (_Tablelist2) {
 					this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked', !this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked')).trigger('change');
 					e.stopPropagation();
 				} else if (e.target.tagName.toLowerCase() == 'em') {
-					this.contextmenu_show($(e.target));
+					this.contextmenu_show($(e.target), e.currentTarget.getAttribute('data-shipid'));
 					e.preventDefault();
 					e.stopImmediatePropagation();
 					e.stopPropagation();

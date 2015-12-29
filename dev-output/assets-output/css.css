@@ -5873,7 +5873,7 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships h4 label.shiptype {
   position: absolute;
-  top: 10px;
+  top: 6px;
   right: 0;
   bottom: 0;
   left: 0;
@@ -8786,19 +8786,19 @@ body.mod-capture .infos-fleet .equipments {
   color: #ff8a80;
 }
 .infos-fleet .attributes > span.shelling:before {
-  background-position-y: -72px;
+  background-position: 0 -72px;
 }
 .infos-fleet .attributes > span.torpedo:before {
-  background-position-y: -90px;
+  background-position: 0 -90px;
 }
 .infos-fleet .attributes > span.hitsum:before {
-  background-position-y: -270px;
+  background-position: 0 -270px;
 }
 .infos-fleet .attributes > span.armor:before {
-  background-position-y: -18px;
+  background-position: 0 -18px;
 }
 .infos-fleet .attributes > span.evasion:before {
-  background-position-y: -36px;
+  background-position: 0 -36px;
 }
 .infos-fleet .attributes > span + [data-text] {
   margin-left: 1em;
