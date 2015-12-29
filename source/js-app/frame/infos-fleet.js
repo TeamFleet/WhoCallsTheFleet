@@ -306,9 +306,11 @@ class InfosFleet{
 							this.doms['exportOption'] = $('<button class="option mod-dropdown"/>').html('分享').on('click', function(){
 								if( !InfosFleet.menuExport ){
 									let menuitems = []
-									if( !_g.isClient ){
+									if( !_g.isClient || _g.isOnline ){
 										menuitems.push($('<div class="item"/>')
-											.append('分享当前配置<small>可直接分享网址</small>')
+											.html(
+												'分享当前配置' + (!_g.isClient ? '<small>可直接分享网址</small>' : '' )
+											)
 											.add(
 												(new ShareBar({
 													title: function(){
@@ -325,6 +327,9 @@ class InfosFleet{
 													uid:	1552359,
 													modifyItem: function(el){
 														el.addClass('menuitem')
+													},
+													url: 	function(){
+														return InfosFleet.menuCur.url
 													}
 												})).el.addClass('item')
 											)
@@ -599,6 +604,20 @@ class InfosFleet{
 					document.title,
 					location.pathname + '?i=' + _id + '&d=' + LZString.compressToEncodedURIComponent( JSON.stringify( d ) )
 				);
+			}
+		}
+	
+	// 获取URL
+		get url(){
+			if( this.data._id ){
+				let d = $.extend(true, {}, this.data)
+					,_id = d._id
+				delete d._id
+				delete d.time_create
+				delete d.time_modify
+				delete d.rating
+				delete d.user
+				return 'http://fleet.diablohu.com/fleets/build/?i=' + _id + '&d=' + LZString.compressToEncodedURIComponent( JSON.stringify( d ) )
 			}
 		}
 	

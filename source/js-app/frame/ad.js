@@ -6,6 +6,7 @@ _frame.gg = function(){
 		'method':	'get',
 		'dataType':	'html',
 		'success':	function(data){
+			_g.isOnline = true;
 			if( data ){
 				_frame.dom.layout.append(
 					$('<div class="g"/>').html(data)

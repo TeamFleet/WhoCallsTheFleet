@@ -5111,6 +5111,7 @@ _frame.gg = function () {
 		'method': 'get',
 		'dataType': 'html',
 		'success': function success(data) {
+			_g.isOnline = !0;
 			if (data) {
 				_frame.dom.layout.append($('<div class="g"/>').html(data).append($('<button type="button" class="close"/>').on('click', function () {
 					_frame.dom.layout.css('padding-bottom', '').removeClass('mod-g');
@@ -5798,8 +5799,8 @@ var InfosFleet = (function () {
 			}).bind(this))).append(this.doms['exportOption'] = $('<button class="option mod-dropdown"/>').html('分享').on('click', (function () {
 				if (!InfosFleet.menuExport) {
 					var menuitems = [];
-					if (!_g.isClient) {
-						menuitems.push($('<div class="item"/>').append('分享当前配置<small>可直接分享网址</small>').add(new ShareBar({
+					if (!_g.isClient || _g.isOnline) {
+						menuitems.push($('<div class="item"/>').html('分享当前配置' + (!_g.isClient ? '<small>可直接分享网址</small>' : '')).add(new ShareBar({
 							title: function title() {
 								return InfosFleet.menuCur.data.name;
 							},
@@ -5808,6 +5809,9 @@ var InfosFleet = (function () {
 							uid: 1552359,
 							modifyItem: function modifyItem(el) {
 								el.addClass('menuitem');
+							},
+							url: function url() {
+								return InfosFleet.menuCur.url;
 							}
 						}).el.addClass('item')).add($('<hr/>')));
 					}
@@ -6109,6 +6113,20 @@ var InfosFleet = (function () {
 					_i10++;
 				}
 				this.save();
+			}
+		}
+	}, {
+		key: 'url',
+		get: function get() {
+			if (this.data._id) {
+				var d = $.extend(!0, {}, this.data),
+				    _id = d._id;
+				delete d._id;
+				delete d.time_create;
+				delete d.time_modify;
+				delete d.rating;
+				delete d.user;
+				return 'http://fleet.diablohu.com/fleets/build/?i=' + _id + '&d=' + LZString.compressToEncodedURIComponent(JSON.stringify(d));
 			}
 		}
 	}]);

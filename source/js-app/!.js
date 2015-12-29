@@ -16,6 +16,9 @@
 	_g.defaultHqLv = 90;
 	_g.shipMaxLv = 155; // Ship.lvlMax
 	
+	// check wheather connect online
+		//_g.isOnline = false
+	
 	// check for NW.js app
 		_g.isNWjs = (typeof node != 'undefined' || typeof nw != 'undefined');
 	

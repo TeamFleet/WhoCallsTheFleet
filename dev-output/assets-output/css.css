@@ -10736,6 +10736,9 @@ main[data-theme="10"] .infos-fleet .equipment-name {
         -ms-flex-positive: 0;
             flex-grow: 0;
   }
+  .infos-fleet header h3 {
+    max-width: 100%;
+  }
   .infos-fleet header .preview {
     position: relative;
     font-size: 100%;
