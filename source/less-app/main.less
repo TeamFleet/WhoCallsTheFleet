@@ -1279,12 +1279,20 @@ main{
 			animation-fill-mode: forwards;
 		}
 		
-		&>.wrapper, &>.wrapper:after, .bgimgs, .bgimg{
+		&:before, &>.wrapper, &>.wrapper:after, .bgimgs, .bgimg{
 			position: 	absolute;
 			top: 		0;
 			left: 		0;
 			width: 		100%;
 			height: 	100%;
+		}
+		
+		&:before{
+			content: 	'';
+			z-index: 	100;
+			pointer-events: none;
+			.enable-transition();
+			transition-property: background;
 		}
 		
 		&>.wrapper{
@@ -1374,6 +1382,8 @@ main{
 				margin: 	0 10px 0 0;
 				padding: 	0;
 				border-bottom: 	1px solid rgba(255,255,255,.1);
+				color: 		rgba(255,255,255,.5);
+				line-height:1.7;
 			}
 			dd{
 				display: 	inline-block;
@@ -1385,7 +1395,7 @@ main{
 					display: 		block;
 					padding-bottom: 100%;
 					height: 		0;
-					background: 	no-repeat 50% 50% / cover;
+					background: 	no-repeat 50% 38.2% / cover;
 					opacity: 		.25;
 				}
 				&:before{
@@ -1420,6 +1430,13 @@ main{
 			//}
 			.bgimgs{
 				opacity: 	0;
+			}
+		}
+		
+		&.is-loading{
+			&:before{
+				pointer-events: all;
+				background-color: rgba(0,0,0,.65);
 			}
 		}
 	}

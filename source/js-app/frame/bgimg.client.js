@@ -1,22 +1,33 @@
 BgImg.getDefaultImgs = function( deferred ){
-	node.fs.readdirSync( _g.path.bgimg_dir )
-		.filter(function(file){
-			return !node.fs.lstatSync( node.path.join( _g.path.bgimg_dir , file) ).isDirectory()
-		})
-		.map(function(v) { 
-			return {
-				name: v,
-				time: node.fs.statSync( node.path.join( _g.path.bgimg_dir , v) ).mtime.getTime()
-			}; 
-		})
-		.sort(function(a, b) { return b.time - a.time; })
-		.map(function(v) { return v.name; })
+	
+	function _list(p){
+		return node.fs.readdirSync( p )
+			.filter(function(file){
+				return !node.fs.lstatSync( node.path.join( p , file) ).isDirectory()
+			})
+			.map(function(v) { 
+				return {
+					name: v,
+					time: node.fs.statSync( node.path.join( p , v) ).mtime.getTime()
+				}; 
+			})
+			.sort(function(a, b) { return b.time - a.time; })
+			.map(function(v) { return v.name; })
+	}
+	
+	_list( _g.path.bgimg_dir )
 		.forEach(function(name){
 			BgImg.list.push( new BgImg({
 				'name': 	name,
 				'isDefault':true
 			}) )
-			//_frame.app_main.bgimgs.push( name )
+		})
+	
+	_list( _g.path.bgimg_custom_dir )
+		.forEach(function(name){
+			BgImg.list.push( new BgImg({
+				'name': 	name
+			}) )
 		})
 
 	deferred.resolve()
@@ -74,13 +85,76 @@ BgImg.getDefaultImgs = function( deferred ){
 BgImg.getPath = function(o, t){
 	o = BgImg.getObj(o)
 	
+	let folder = o.isDefault ? _g.path.bgimg_dir : _g.path.bgimg_custom_dir
+	
 	if( t )
-		return 'file://' + encodeURI( node.path.join( _g.path.bgimg_dir , t, o.name ).replace(/\\/g, '/') )
+		return 'file://' + encodeURI( node.path.join( folder , t, o.name ).replace(/\\/g, '/') )
 
-	return 'file://' + encodeURI( node.path.join( _g.path.bgimg_dir , o.name ).replace(/\\/g, '/') )
+	return 'file://' + encodeURI( node.path.join( folder , o.name ).replace(/\\/g, '/') )
 };
 
 BgImg.save = function(o){
 	o = BgImg.getObj(o)
-	_g.save( node.path.join( _g.path.bgimg_dir , o.name ), o.name )
+	_g.save( node.path.join( o.isDefault ? _g.path.bgimg_dir : _g.path.bgimg_custom_dir , o.name ), o.name )
+};
+
+BgImg.readFile = function( e ){
+	// make sure custom bgimg folder exists
+		node.mkdirp.sync( node.path.normalize(_g.path.bgimg_custom_dir) )
+		node.mkdirp.sync( node.path.join(_g.path.bgimg_custom_dir, 'blured') )
+		node.mkdirp.sync( node.path.join(_g.path.bgimg_custom_dir, 'thumbnail') )
+
+	let deferred = Q.defer()
+		,path = BgImg.fileSelector.val()
+		,pathParse = node.path.parse( path )
+		,streamRead = node.fs.createReadStream( path )
+		,streamWrite = node.fs.createWriteStream( node.path.join(_g.path.bgimg_custom_dir, pathParse.base) )
+
+	streamRead.on('error', function(err){
+		deferred.reject('文件载入失败', new Error(err))
+	});
+
+	streamRead.on('close', function(err){
+		let o = new BgImg({
+			'name':	pathParse.base
+		})
+		deferred.resolve(o)
+	});
+	streamRead.pipe(streamWrite)
+
+	return deferred.promise
+};
+
+BgImg.set = function(o, t, canvas){
+	o = BgImg.getObj(o)
+	let base64 = canvas.toDataURL("image/jpeg", 0.4)
+		,deferred = Q.defer()
+	
+	function decodeBase64Image(dataString) {
+		var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+		response = {};
+
+		if (matches.length !== 3) {
+			return new Error('Invalid input string');
+		}
+
+		response.type = matches[1];
+		response.data = new Buffer(matches[2], 'base64');
+
+		return response;
+	}
+	
+	let imageBuffer = decodeBase64Image(base64)
+		,folder = o.isDefault ? _g.path.bgimg_dir : _g.path.bgimg_custom_dir
+
+	node.fs.writeFile(
+		node.path.join( folder , t, o.name ),
+		imageBuffer.data,
+		function(err) {
+			canvas.remove()
+			deferred.resolve()
+		}
+	);
+
+	return deferred.promise
 };

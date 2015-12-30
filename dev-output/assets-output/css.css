@@ -3105,6 +3105,7 @@ main:after {
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
 }
+.bgcontrols:before,
 .bgcontrols > .wrapper,
 .bgcontrols > .wrapper:after,
 .bgcontrols .bgimgs,
@@ -3114,6 +3115,15 @@ main:after {
   left: 0;
   width: 100%;
   height: 100%;
+}
+.bgcontrols:before {
+  content: '';
+  z-index: 100;
+  pointer-events: none;
+  -webkit-transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
+  -webkit-transition-property: background;
+  transition-property: background;
 }
 .bgcontrols > .wrapper {
   border-left: 2px solid rgba(255, 255, 255, 0.35);
@@ -3195,6 +3205,8 @@ main:after {
   margin: 0 10px 0 0;
   padding: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.7;
 }
 .bgcontrols dl dd {
   display: inline-block;
@@ -3207,7 +3219,7 @@ main:after {
   display: block;
   padding-bottom: 100%;
   height: 0;
-  background: no-repeat 50% 50% / cover;
+  background: no-repeat 50% 38.2% / cover;
   opacity: .25;
 }
 .bgcontrols dl dd:before {
@@ -3231,6 +3243,10 @@ main:after {
 }
 .bgcontrols.mod-viewing .bgimgs {
   opacity: 0;
+}
+.bgcontrols.is-loading:before {
+  pointer-events: all;
+  background-color: rgba(0, 0, 0, 0.65);
 }
 #layout.mod-bgcontrols nav {
   -webkit-transform: translateY(-100%);

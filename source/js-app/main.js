@@ -25,6 +25,7 @@
 		'db': 		node.path.join(_g.root, '/app-db/'),
 		'page': 	node.path.join(_g.root, '/app/page/'),
 		'bgimg_dir':node.path.join(_g.root, '/app/assets/images/homebg/'),
+		'bgimg_custom_dir':node.path.join(_g.root, '/app/assets/images/homebg-custom/'),
 		'pics': {
 			'ships': 	node.path.join(_g.root, '/pics/ships/'),
 			'items': 	node.path.join(_g.root, '/pics/items/')
