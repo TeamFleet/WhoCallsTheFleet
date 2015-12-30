@@ -292,7 +292,10 @@ fieldset{
 
 html.ready{
 	nav, main{
-		.transition-duration(@transition_duration_main);
+		&, &>.bgimg{
+			transition-duration: @transition_duration_main;
+			//transition-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+		}
 	}
 }
 
@@ -320,7 +323,8 @@ html.ready{
 nav{
 	display:	block;
 	position:	absolute;
-	top: 		(0 - @nav_height_px);
+	//top: 		(0 - @nav_height_px);
+	top: 		0;
 	left:		0;
 	height: 	@nav_height_px;
 	line-height:@nav_height_px;
@@ -330,6 +334,8 @@ nav{
 	//background:	#000;
 	background:	rgba(0, 0, 0, .5);
 	user-select:none;
+	transform: 	translateY(-100%);
+	overflow: 	hidden;
 	.window-noframe({
 		-webkit-app-region:	drag;
 	});
@@ -361,26 +367,6 @@ nav{
 		background:	fade(#e5e5e5, 25%);
 		.enable-transition();
 		transition-property: height;
-	}
-	&>.logo{
-		position:	fixed;
-		overflow:	hidden;
-		top:		0;
-		left:		0;
-		width:		100%;
-		height:		100%;
-		pointer-events: none;
-		-webkit-app-region:	no-drag;
-		&:before{
-			content:	"";
-			position:	absolute;
-			animation: 	layout-loading-logo 1.2s ease-out infinite alternate;
-			top:		0;
-			left:		0;
-			width:		100%;
-			height:		100%;
-			background:	~"url(@{folder_images}/boat.png) no-repeat 50% 50%";
-		}
 	}
 	// buttons group
 	&>div{
@@ -542,7 +528,7 @@ nav{
 			padding-left: 0;
 		}
 	} // &>div
-	&>s{
+	&>.bgimg{
 		display:	block;
 		position:	absolute;
 		z-index:	2;
@@ -550,12 +536,9 @@ nav{
 		height:		100%;
 		top:		0;
 		left:		0;
-		background:	~"no-repeat 50% 38.2% / cover";
-		background-attachment:	fixed;
+		transition-property: 	transform;
+		transform: 	translateY(100%);
 		//opacity:	.5;
-		&.fadein{
-			.animate(fadeIn);
-		}
 		&:after{
 			content:	'';
 			position:	absolute;
@@ -642,14 +625,16 @@ main{
 	.font-size(14);
 	line-height:1.5;
 	color:		#f2f2f2;
-	top:		100%;
+	//top:		100%;
+	top: 		0;
 	transition-property: top, transform;
+	transform: 	translateY(100%);
 	h1, h2, h3, h4, h5, h6{
 		//color:		#73d3ff;
 		line-height:1.25em;
 		margin-bottom:0.5em;
 	}
-	&>s{
+	&>.bgimg{
 		display:	block;
 		position:	absolute;
 		z-index:	1;
@@ -657,12 +642,9 @@ main{
 		height:		100%;
 		top:		0;
 		left:		0;
-		background:	~"no-repeat 50% 38.2% / cover";
-		background-attachment:	fixed;
+		transition-property: transform;
+		transform: 	translateY(-100%);
 		//opacity:	.5;
-		&.fadein{
-			.animate(fadeIn);
-		}
 		/*
 		&:after{
 			content:	'';
@@ -832,6 +814,42 @@ main{
 		z-index:	-1;
 	}
 }
+
+
+
+
+
+
+
+
+#layout > .logo{
+	overflow:	hidden;
+	z-index: 	100;
+	&, &:before{
+		position:	absolute;
+		top:		0;
+		right: 		0;
+		bottom: 	0;
+		left:		0;
+		pointer-events: none;
+	}
+	&:before{
+		content: 	'';
+		animation: 	logoLoading 1.2s ease-out infinite alternate;
+		background:	~"url(@{folder_images}/boat.png) no-repeat 50% 50%";
+	}
+}
+#layout.ready > .logo{
+	animation: 	fadeOut 1s ease-out;
+	&.ready-animated{
+		display:	none;
+	}
+}
+
+
+
+
+
 
 
 
@@ -1008,7 +1026,7 @@ main{
 
 
 
-#layout>.bgimg{
+#layout>.bgimgs{
 	position:	absolute;
 	z-index:	2;
 	width:		100%;
@@ -1016,14 +1034,20 @@ main{
 	top:		0;
 	left:		0;
 	overflow:	hidden;
-	&>div{
+	&>.bgimg{
 		position:	absolute;
 		top:		0;
 		left:		0;
 		width:		100%;
 		height:		100%;
+	}
+}
+.bgimg{
+	display: 	block;
+	background:	~"no-repeat 50% 38.2% / cover";
+	background-attachment:	fixed;
+	&.fadein{
 		.animate(fadeIn);
-		background:	~"no-repeat 50% 38.2% / cover";
 	}
 }
 
@@ -1040,7 +1064,8 @@ main{
 
 
 #layout.ready{
-	&>nav{
+	/*
+	nav{
 		top:	0;
 		&>.logo{
 			animation: 	layout-ready-logo 1s ease-in-out;
@@ -1051,14 +1076,21 @@ main{
 			}
 		}
 	}
-	&>main{
+	main{
 		top:	0;
+	}
+	*/
+	nav, main{
+		&, &>.bgimg{
+			transform: 	none;
+		}
 	}
 }
 
 //#layout.ready.hidecontent{}
 
-.layout-only_bg();
+//.layout-only_bg();
+.layout-bgcontrols();
 .layout-mode-selection();
 
 
@@ -1082,7 +1114,7 @@ main{
 
 
 
-.layout-only_bg{#layout.ready{
+.layout-only_bg(){#layout.ready{
 	@width:		300;
 	@width_half:(@width / 2);
 	@height:	44;
@@ -1101,7 +1133,7 @@ main{
 		overflow:	hidden;
 		.border(2, solid, rgba(255,255,255,.25));
 		.font-size(14);
-		&>s{
+		&>.bgimg{
 			display:	none;
 			position:	absolute;
 			z-index:	1;
@@ -1109,12 +1141,7 @@ main{
 			height:		100%;
 			top:		0;
 			left:		0;
-			background:	~"no-repeat 50% 38.2% / cover";
-			background-attachment:	fixed;
 			flex:		none;
-			&.fadein{
-				.animate(fadeIn);
-			}
 		}
 		&:after{
 			flex:		none;
@@ -1186,7 +1213,7 @@ main{
 	
 	&.mod-only-bg{
 		&>nav{
-			opacity: 	0;
+			//opacity: 	0;
 			transform: 	translateY(-100%);
 			/*
 			.top( -44 );
@@ -1222,7 +1249,7 @@ main{
 		&>.bg_controls{
 			.flexbox();
 			.flex-flow(~"row nowrap");
-			&>s{
+			&>.bgimg{
 				display:	block;
 			}
 			&.on{
@@ -1233,6 +1260,211 @@ main{
 		}
 	}
 }}
+.layout-bgcontrols(){
+	@width: 			220px;
+	@controls_height: 	40px;
+	.bgcontrols{
+		position: 	absolute;
+		display: 	none;
+		transform: 	translateX(100%);
+		top: 		0;
+		right: 		0;
+		bottom: 	-2px;
+		width: 		@width;
+		z-index: 	6;
+		overflow: 	hidden;
+		
+		&, .bgimgs{
+			animation: 	none @transition_duration_main ease-out @transition_duration_main;
+			animation-fill-mode: forwards;
+		}
+		
+		&>.wrapper, &>.wrapper:after, .bgimgs, .bgimg{
+			position: 	absolute;
+			top: 		0;
+			left: 		0;
+			width: 		100%;
+			height: 	100%;
+		}
+		
+		&>.wrapper{
+			border-left:2px solid rgba(255,255,255,.35);
+			border-bottom: 2px solid rgba(255,255,255,.35);
+			padding-bottom: @controls_height;
+			//transition: 	transform .5s;
+			transition-property: transform;
+			.window-noframe({
+				padding-right: 	2px;
+				padding-bottom: (@controls_height + 2px);
+			});
+			.window-maxmize({
+				padding-right: 	0;
+				padding-bottom: @controls_height;
+			});
+			&:after{
+				content:	'';
+				z-index:	2;
+				background:	rgba(0, 0, 0, .5);
+			}
+		}
+
+		.bgimgs{
+			z-index: 	1;
+			//transition: opacity .5s;
+			transition-property: opacity;
+		}
+		
+		.controls{
+			z-index: 	4;
+			position: 	absolute;
+			bottom: 	0;
+			left: 		0;
+			right: 		0;
+			height: 	@controls_height;
+			//padding: 	0 20px;
+			background:	rgba(0, 0, 0, .5);
+			display: 	flex;
+			flex-flow: 	row nowrap;
+			.window-noframe({
+				height: 	(@controls_height + 2px);
+			});
+			.window-maxmize({
+				height: 	@controls_height;
+			});
+			button{
+				display: 	block;
+				flex: 		1 1 @controls_height;
+				position: 	relative;
+				color: 		rgba(255,255,255,.65);
+				transition-property: color;
+				&[icon]:before{
+					padding: 	0;
+					position: 	absolute;
+					top: 		50%;
+					line-height:0;
+					width: 		100%;
+					left: 		0;
+					text-align: center;
+					font-size: 	20px;
+					opacity: 	1;
+				}
+				&:hover{
+					color: 		#fff;
+				}
+				&.on{
+					background: hsl(42, 100%, 40%);
+					color: 		#fff;
+				}
+			}
+		}
+		
+		.list{
+			position: 	relative;
+			overflow: 	auto;
+			z-index: 	3;
+			height: 	100%;
+			padding: 	20px 0 0 10px;
+			transition-property: opacity;
+			//transition-duration: .5s;
+		}
+		
+		dl{
+			margin: 	0 0 20px 0;
+			dt{
+				margin: 	0 10px 0 0;
+				padding: 	0;
+				border-bottom: 	1px solid rgba(255,255,255,.1);
+			}
+			dd{
+				display: 	inline-block;
+				width: 		~"calc(50% - 10px)";
+				margin: 	10px 10px 0 0;
+				background: rgba(255,255,255,.1);
+				position: 	relative;
+				s{
+					display: 		block;
+					padding-bottom: 100%;
+					height: 		0;
+					background: 	no-repeat 50% 50% / cover;
+					opacity: 		.25;
+				}
+				&:before{
+					content: 	'';
+					position: 	absolute;
+					top: 		0;
+					right: 		0;
+					bottom: 	0;
+					left: 		0;
+					z-index: 	2;
+					border: 	1px solid rgba(255,255,255,.35);
+				}
+				&:hover{
+					s{
+						opacity: 	.5;
+					}
+				}
+				&.on{
+					s{
+						opacity: 	1;
+					}
+					&:before{
+						border: 	2px solid hsl(42, 100%, 75%);
+					}
+				}
+			}
+		}
+
+		&.mod-viewing{
+			//&>.wrapper:after{
+			//	background: 	rgba(0,0,0,.85);
+			//}
+			.bgimgs{
+				opacity: 	0;
+			}
+		}
+	}
+	
+	#layout.mod-bgcontrols{
+		nav{
+			transform: 	translateY(-100%);
+			-webkit-app-region:	no-drag !important;
+			&>.bgimg{
+				transform: 	translateY(100%);
+			}
+		}
+		main{
+			transform: 	translateY(100%);
+			&>.bgimg{
+				transform: 	translateY(-100%);
+			}
+		}
+		.bgcontrols{
+			display: 	block;
+			animation-name: sideInRight;
+			&>.wrapper ,.bgimgs{
+				transition-duration: .5s;
+			}
+			.bgimgs{
+				animation-name: sideInRightReverse;
+			}
+			&.is-on{
+				.bgimgs{
+					animation-name: none;
+				}
+			}
+			&.is-hiding{
+				animation-name: sideOutRight;
+				&, .bgimgs{
+					animation-delay: 0s;
+					//animation-fill-mode: forwards;
+				}
+				.bgimgs{
+					animation-name: sideOutRightReverse;
+				}
+			}
+		}
+	}
+}
 
 
 
@@ -1911,6 +2143,7 @@ table{
 			height: 	@_nav_height;
 			line-height:@_nav_height;
 			background: hsl(47, 10%, 25%);
+			overflow: 	visible;
 			//top: 		0;
 			//transform: 	translateY(-100%);
 			&>div.pages{
@@ -1918,8 +2151,11 @@ table{
 				max-width: 	none;
 				width: 		@_nav_width;
 				height: 	~"calc(100% - @{_nav_height})";
+				height: 	~"calc(100vh - @{_nav_height})";
+				//height: 	auto;
 				position: 	fixed;
-				top: 		@_nav_height;
+				//top: 		@_nav_height;
+				top: 		100%;
 				//left: 		-321px;
 				left: 		0;
 				z-index: 	10;
@@ -2046,7 +2282,7 @@ table{
 					transition-property: opacity;
 				}
 			}
-			&>s{
+			&>.bgimg{
 				display: 	none;
 			}
 			&>div.selection-info{
@@ -2091,23 +2327,24 @@ table{
 				}
 			}
 		}
-		main{
-			top: 		0;
-			transform: 	translateY(100%);
-		}
-		main>s{
+		//main{
+		//	top: 		0;
+		//	transform: 	translateY(100%);
+		//}
+		main>.bgimg{
 			display: 	none;
 		}
 		main:after{
 			background: rgba(0,0,0,.8);
 		}
-		#layout.ready{
+		//#layout.ready{
 			//nav,
 			//nav ~ .nav-mask:before,
-			main{
-				transform: 	translateY(0);
-			}
-		}
+			//main{
+			//	transform: 	translateY(0);
+			//}
+		//}
+		/*
 		#layout.ready.mod-only-bg{
 			nav{
 				opacity: 	1;
@@ -2117,7 +2354,7 @@ table{
 				transform: 	translateY(100%);
 			}
 			&>.bg_controls{
-				&>s{
+				&>.bgimg{
 					display: 	none;
 				}
 				&:after{
@@ -2125,6 +2362,7 @@ table{
 				}
 			}
 		}
+		*/
 		#layout.is-infos-on,
 		#layout.mode-selection{
 			nav > div.history{

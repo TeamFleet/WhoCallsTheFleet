@@ -3822,8 +3822,6 @@ _frame.app_main = {
 	page_html: {},
 	page_title: {},
 
-	bgimgs: [],
-
 	loading: ['dbs', 'bgimgs'],
 
 	functions_on_ready: [],
@@ -3878,43 +3876,6 @@ _frame.app_main = {
 		}
 		if (stateObj['page']) {
 			this.load_page_func(stateObj['page']);
-		}
-	},
-
-	change_bgimg: function change_bgimg(bgimgs_new) {
-		if (!this.bgimgs.length) return !1;
-
-		var bgimgs = bgimgs_new && bgimgs_new.length ? bgimgs_new : this.bgimgs,
-		    img_new = bgimgs[_g.randInt(bgimgs.length)],
-		    img_old = this.cur_bgimg_el ? this.cur_bgimg_el.css('background-image') : null;
-
-		img_old = img_old ? img_old.split('/') : null;
-		img_old = img_old ? img_old[img_old.length - 1].split(')') : null;
-		img_old = img_old ? img_old[0] : null;
-
-		while (img_new == img_old) {
-			img_new = bgimgs[_g.randInt(bgimgs.length - 1)];
-		}
-
-		var img_new_blured = _g.path.bgimg_dir + 'blured/' + img_new;
-		this.bgimg_path = _g.path.bgimg_dir + img_new;
-		img_new = this.bgimg_path;
-
-		if (img_old) {
-			this.change_bgimg_oldEl = this.cur_bgimg_el;
-		}
-
-		this.cur_bgimg_el = $('<div/>').css('background-image', 'url(' + img_new + ')').appendTo(_frame.dom.bgimg).add($('<s' + (this.change_bgimg_fadein ? ' class="fadein"' : '') + '/>').css('background-image', 'url(' + img_new_blured + ')').appendTo(_frame.dom.nav)).add($('<s' + (this.change_bgimg_fadein ? ' class="fadein"' : '') + '/>').css('background-image', 'url(' + img_new_blured + ')').appendTo(_frame.dom.main));
-
-		if (_frame.dom.bg_controls) this.cur_bgimg_el = this.cur_bgimg_el.add($('<s' + (this.change_bgimg_fadein ? ' class="fadein"' : '') + '/>').css('background-image', 'url(' + img_new_blured + ')').appendTo(_frame.dom.bg_controls));
-
-		this.change_bgimg_fadein = !0;
-	},
-	change_bgimg_after: function change_bgimg_after(oldEl) {
-		oldEl = oldEl || this.change_bgimg_oldEl;
-		if (oldEl) {
-			this.change_bgimg_oldEl.remove();
-			this.change_bgimg_oldEl = null;
 		}
 	},
 
@@ -4118,62 +4079,18 @@ _frame.app_main = {
 		}
 	},
 
-	only_bg_on: function only_bg_on() {
-		if (this.only_bg) return !0;
-
-		if (!_frame.dom.bg_controls) {
-			_frame.dom.bg_controls = $('<div class="bg_controls"/>').on(eventName('transitionend', 'only_bg_off'), function (e) {
-				if (e.currentTarget == e.target && e.originalEvent.propertyName == 'bottom' && _frame.app_main.only_bg && parseInt(_frame.dom.bg_controls.css('bottom')) < 0) {
-					_frame.dom.layout.removeClass('mod-only-bg');
-					_frame.app_main.only_bg = !1;
-				}
-			}).append($('<button class="prev" icon="arrow-left"/>').on('click', function () {
-				var index = $.inArray(_frame.app_main.bgimg_path.substr(_frame.app_main.bgimg_path.indexOf(_g.path.bgimg_dir) + _g.path.bgimg_dir.length), _frame.app_main.bgimgs) - 1;
-				if (index < 0) index = _frame.app_main.bgimgs.length - 1;
-				_frame.app_main.change_bgimg([_frame.app_main.bgimgs[index]]);
-			})).append($('<button class="back"/>').html('返回').on('click', function () {
-				_frame.app_main.only_bg_off();
-			})).append($('<button class="back"/>').html('保存图片').on('click', function () {
-				_g.save(_frame.app_main.bgimg_path, _frame.app_main.bgimg_path.substr(_frame.app_main.bgimg_path.indexOf(_g.path.bgimg_dir) + _g.path.bgimg_dir.length));
-			})).append($('<button class="next" icon="arrow-right"/>').on('click', function () {
-				var index = $.inArray(_frame.app_main.bgimg_path.substr(_frame.app_main.bgimg_path.indexOf(_g.path.bgimg_dir) + _g.path.bgimg_dir.length), _frame.app_main.bgimgs) + 1;
-				if (index >= _frame.app_main.bgimgs.length) index = 0;
-				_frame.app_main.change_bgimg([_frame.app_main.bgimgs[index]]);
-			})).appendTo(_frame.dom.layout);
-
-			this.cur_bgimg_el = this.cur_bgimg_el.add(this.cur_bgimg_el.eq(0).clone().appendTo(_frame.dom.bg_controls));
-		}
-
-		_frame.dom.layout.addClass('mod-only-bg');
-		setTimeout(function () {
-			_frame.dom.bg_controls.addClass('on');
-		}, 10);
-
-		this.only_bg = !0;
-	},
-	only_bg_off: function only_bg_off() {
-		if (!this.only_bg) return !0;
-		_frame.dom.bg_controls.removeClass('on');
-	},
-	only_bg_toggle: function only_bg_toggle() {
-		if (this.only_bg) return this.only_bg_off();
-		return this.only_bg_on();
-	},
-
 	init: function init() {
 		if (this.is_init) return !0;
 
 		_frame.dom.mobilemenu = _frame.dom.layout.children('#view-mobile-menu');
-		_frame.dom.nav = _frame.dom.layout.children('nav');
-		_frame.dom.logo = $('<button class="logo"/>').on(_g.event.animationend, function (e) {
+		_frame.dom.logo = $('<div class="logo"/>').on(_g.event.animationend, function () {
 			_frame.dom.logo.addClass('ready-animated');
-		}).appendTo(_frame.dom.nav);
+		}).appendTo(_frame.dom.layout);
+		_frame.dom.nav = _frame.dom.layout.children('nav');
 		_frame.dom.navlinks = _frame.dom.nav.children('.pages');
-		_frame.dom.globaloptions = _frame.dom.nav.children('section.options');
-
-		_frame.dom.btnShowOnlyBg = $('<button class="show_only_bg" icon="images"/>').on('click', function () {
-			_frame.app_main.only_bg_toggle();
-		}).appendTo(_frame.dom.globaloptions);
+		_frame.dom.globaloptions = _frame.dom.nav.children('section.options').append($('<button class="show_only_bg" icon="images"/>').on('click', function () {
+			BgImg.controlsToggle();
+		}));
 
 		if (_g.isClient) {
 			_frame.dom.btnsHistory = $('<div class="history"/>').insertBefore(_frame.dom.navlinks);
@@ -4188,7 +4105,7 @@ _frame.app_main = {
 			}).appendTo(_frame.dom.btnsHistory);
 		}
 		_frame.dom.main = _frame.dom.layout.children('main');
-		_frame.dom.bgimg = $('<div class="bgimg" />').appendTo(_frame.dom.layout);
+
 		_frame.dom.title = _frame.dom.nav.children('.title').children('span');
 		$('<div class="nav-mask"/>').appendTo(_frame.dom.layout).on('click', function () {
 			_frame.dom.mobilemenu.prop('checked', !1);
@@ -4218,18 +4135,7 @@ _frame.app_main = {
 				});
 			});
 			return _frame.app_main.nav;
-		}).then(function () {
-			for (var _i6 = 0; _i6 < _g.bgimg_count; _i6++) {
-				_frame.app_main.bgimgs.push(_i6 + '.jpg');
-			}
-
-			_frame.app_main.change_bgimg();
-			_frame.app_main.loaded('bgimgs');
-
-			_g.log('BGs: ' + _frame.app_main.bgimgs.join(', '));
-
-			return _frame.app_main.bgimgs;
-		}).then(function () {
+		}).then(BgImg.init).then(function () {
 			_g.log('Preload All DBs (JSON ver.): START');
 
 			var dbchain = Q(),
@@ -4365,10 +4271,6 @@ _frame.app_main = {
 			};
 
 			$body.on('click.global_delegate_page', 'a[href^="?page="]', link_page).on('click.global_delegate_infos', 'a[href^="?infos="]', link_infos).on('click.global_delegate_default', 'a[href^="/"]', link_default).on('click.global_external_links pointerdown.global_external_links', 'a:not([target]):not([href^="/"]):not([href^="javascript:"])', link_external);
-
-			_frame.dom.bgimg.on(_g.event.animationend, 'div', function () {
-				_frame.app_main.change_bgimg_after();
-			});
 
 			return !0;
 		}).then(function () {
@@ -5066,9 +4968,9 @@ _frame.app_main.page['calctp'] = {
 				    rA = 0,
 				    rS = 0;
 
-				for (var _i7 in d) {
-					var count = parseInt(d[_i7]) || 0;
-					switch (_i7) {
+				for (var _i6 in d) {
+					var count = parseInt(d[_i6]) || 0;
+					switch (_i6) {
 						case 'dd':
 							rS += 5 * count;
 							break;
@@ -5120,22 +5022,254 @@ _frame.gg = function () {
 	});
 };
 
-var BgImg = function BgImg(options) {
-	_classCallCheck(this, BgImg);
+var BgImg = (function () {
+	function BgImg(options) {
+		_classCallCheck(this, BgImg);
 
-	options = options || {};
-	this.settings = $.extend(!0, {}, ShareBar.defaults, options);
-};
+		options = options || {};
+		$.extend(!0, this, BgImg.defaults, options);
+	}
+
+	_createClass(BgImg, [{
+		key: 'save',
+		value: function save() {
+			BgImg.save(this);
+		}
+	}, {
+		key: 'index',
+		get: function get() {
+			var i = -1;
+			BgImg.list.some((function (o, index) {
+				if (o.name === this.name) i = index;
+				return o.name === this.name;
+			}).bind(this));
+			return i;
+		}
+	}, {
+		key: 'els',
+		get: function get() {
+			if (!this._els) {
+				this._els = $('<s class="bgimg"/>').css('background-image', 'url(' + this.path + ')').add($('<s class="bgimg"/>').css('background-image', 'url(' + this.blur + ')')).add($('<s class="bgimg"/>').css('background-image', 'url(' + this.blur + ')')).add($('<s class="bgimg"/>').css('background-image', 'url(' + this.blur + ')'));
+			}
+			return this._els;
+		}
+	}, {
+		key: 'elThumbnail',
+		get: function get() {
+			if (!this._elThumbnail) {
+				this._elThumbnail = $('<dd/>').on('click', (function () {
+					BgImg.change(this);
+				}).bind(this)).append($('<s/>').css('background-image', 'url(' + this.thumbnail + ')'));
+			}
+			return this._elThumbnail;
+		}
+	}, {
+		key: 'path',
+		get: function get() {
+			if (!this._path) this._path = BgImg.getPath(this);
+			return this._path;
+		}
+	}, {
+		key: 'blur',
+		get: function get() {
+			if (!this._blur) {
+				if (this.isDefault) {
+					this._blur = BgImg.getPath(this, 'blured');
+				} else {
+					this._blur = BgImg.getPath(this, 'blured');
+				}
+			}
+			return this._blur;
+		}
+	}, {
+		key: 'thumbnail',
+		get: function get() {
+			if (!this._thumbnail) {
+				if (this.isDefault) {
+					this._thumbnail = BgImg.getPath(this, 'thumbnail');
+				} else {
+					this._thumbnail = BgImg.getPath(this, 'thumbnail');
+				}
+			}
+			return this._thumbnail;
+		}
+	}]);
+
+	return BgImg;
+})();
 
 BgImg.default = {
-	isEnable: !0,
-	isDefault: !0
-};
+	isEnable: !0 };
 BgImg.list = [];
 
-BgImg.controlsInit = function () {};
-BgImg.controlsShow = function () {};
-BgImg.controlsHide = function () {};
+BgImg.init = function () {
+	if (BgImg.isInit) return BgImg.list;
+
+	_g.log('背景图: START');
+
+	BgImg.controlsInit();
+
+	_frame.dom.bgimg = $('<div class="bgimgs"/>').appendTo(_frame.dom.layout).on(_g.event.animationend, 's', function () {
+		BgImg.changeAfter();
+	});
+
+	var deferred = Q.defer(),
+	    _new = [];
+
+	BgImg.getDefaultImgs(deferred);
+
+	BgImg.list.some(function (o) {
+		if (o.name != Lockr.get('BgImgLast', '')) _new.push(o.name);
+		return o.name == Lockr.get('BgImgLast', '');
+	});
+
+	Lockr.set('BgImgLast', BgImg.list[0].name);
+
+	BgImg.change(_new[0]);
+	_frame.app_main.loaded('bgimgs');
+
+	BgImg.isInit = !0;
+
+	_g.log('背景图: DONE');
+	return deferred.promise;
+};
+
+BgImg.getObj = function (o) {
+	if (typeof o == 'string') {
+		var r = undefined;
+		BgImg.list.some(function (obj) {
+			if (obj.name === o) r = obj;
+			return obj.name === o;
+		});
+		return r;
+	}
+
+	if (typeof o == 'number') {
+		return BgImg.list[o];
+	}
+
+	if (typeof o == 'undefined') {
+		return BgImg.cur;
+	}
+
+	return o;
+};
+
+BgImg.change = function (o) {
+	if (!BgImg.list.length) return;
+
+	if (typeof o == 'undefined') {
+		o = BgImg.list[_g.randInt(BgImg.list.length - 1)];
+		if (BgImg.cur && o.name === BgImg.cur.name) return BgImg.change();
+	} else {
+		o = BgImg.getObj(o);
+		if (BgImg.cur && o.name === BgImg.cur.name) return o;
+	}
+
+	var isFadeIn = !1;
+
+	if (BgImg.cur) {
+		BgImg.lastToHide = BgImg.cur;
+		isFadeIn = !0;
+		BgImg.cur.elThumbnail.removeClass('on');
+	}
+
+	o.els.addClass(isFadeIn ? 'fadein' : '');
+	o.els.eq(0).appendTo(_frame.dom.bgimg);
+	o.els.eq(1).appendTo(_frame.dom.nav);
+	o.els.eq(2).appendTo(_frame.dom.main);
+	o.els.eq(3).appendTo(BgImg.controlsEls.bgimgs);
+	o.elThumbnail.addClass('on');
+
+	BgImg.cur = o;
+	return o;
+};
+
+BgImg.changeAfter = function () {
+	if (BgImg.lastToHide) {
+		BgImg.lastToHide.els.detach();
+		delete BgImg.lastToHide;
+	}
+};
+
+BgImg.controlsInit = function () {
+	if (BgImg.controlsEls) return BgImg.controlsEls.container;
+
+	BgImg.controlsEls = {};
+	BgImg.controlsEls.body = $('<div class="bgcontrols"/>').appendTo(_frame.dom.layout).on(_g.event.animationend, function (e) {
+		if (e.currentTarget == e.target) {
+			if (BgImg.controlsShowing) {
+				BgImg.controlsHideAfter();
+			} else {
+				BgImg.controlsShowAfter();
+			}
+		}
+	}).append(BgImg.controlsEls.container = $('<div class="wrapper"/>').append(BgImg.controlsEls.bgimgs = $('<div class="bgimgs"/>')));
+
+	return BgImg.controlsEls.container;
+};
+BgImg.controlsShow = function () {
+	if (!BgImg.controlsEls || BgImg.controlsShowing) return;
+	if (!BgImg.controlsEls.listDefault) {
+		$('<div class="controls"/>').appendTo(BgImg.controlsEls.container).append(BgImg.controlsEls.btnViewingToggle = $('<button icon="eye"/>').on('click', BgImg.controlsViewingToggle)).append($('<button icon="floppy-disk"/>').on('click', function () {
+			BgImg.save();
+		})).append($('<button icon="arrow-set2-right"/>').on('click', BgImg.controlsHide));
+		$('<div class="list"/>').appendTo(BgImg.controlsEls.container).append(BgImg.controlsEls.listDefault = $('<dl/>', {
+			'html': '<dt></dt>'
+		}));
+		BgImg.list.forEach(function (o) {
+			o.elThumbnail.appendTo(BgImg.controlsEls.listDefault);
+			if (BgImg.cur && BgImg.cur.name === o.name) o.elThumbnail.addClass('on');
+		});
+	}
+	_frame.dom.layout.addClass('mod-bgcontrols');
+};
+BgImg.controlsShowAfter = function () {
+	if (!BgImg.controlsEls || BgImg.controlsShowing) return;
+	BgImg.controlsEls.body.addClass('is-on');
+	BgImg.controlsShowing = !0;
+};
+BgImg.controlsHide = function () {
+	if (!BgImg.controlsEls || !BgImg.controlsShowing) return;
+	BgImg.controlsEls.body.addClass('is-hiding');
+};
+BgImg.controlsHideAfter = function () {
+	if (!BgImg.controlsEls || !BgImg.controlsShowing) return;
+	_frame.dom.layout.removeClass('mod-bgcontrols');
+	BgImg.controlsEls.body.removeClass('is-on is-hiding');
+	BgImg.controlsShowing = !1;
+};
+BgImg.controlsToggle = function () {
+	if (BgImg.controlsShowing) return BgImg.controlsHide();
+	return BgImg.controlsShow();
+};
+BgImg.controlsViewingToggle = function () {
+	BgImg.controlsEls.body.toggleClass('mod-viewing');
+	BgImg.controlsEls.btnViewingToggle.toggleClass('on');
+};
+
+BgImg.getDefaultImgs = function (deferred) {
+	for (var _i7 = _g.bgimg_count - 1; _i7 >= 0; _i7--) {
+		BgImg.list.push(new BgImg({
+			'name': _i7 + '.jpg',
+			'isDefault': !0
+		}));
+	}
+
+	deferred.resolve();
+	return BgImg.list;
+};
+
+BgImg.getPath = function (o, t) {
+	o = BgImg.getObj(o);
+
+	return _g.path.bgimg_dir + (t ? t + '/' : '') + o.name;
+};
+
+BgImg.save = function (o) {
+	o = BgImg.getObj(o);
+	_g.save(o.path, 'fleet.diablohu.com - ' + o.name);
+};
 
 _frame.infos = {
 	historyLength: -1,

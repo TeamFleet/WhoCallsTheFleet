@@ -193,9 +193,6 @@ _frame.app_main = {
 	page_html: {},
 
 	// is_init: false
-	//bgimg_dir: 	'./app/assets/images/homebg',
-	bgimgs: 	[],
-	// cur_bgimg_el: null
 
 	// cur_page: null
 
@@ -292,70 +289,6 @@ _frame.app_main = {
 				this.load_page_func( stateObj['page'] )
 			}
 		},
-
-
-	// 更换背景图
-		//change_bgimg_fadein: false,
-		//change_bgimg_oldEl: null,
-		change_bgimg: function( bgimgs_new ){
-			// _frame.app_main.bgimgs 未生成，函数不予执行
-			if( !this.bgimgs.length )
-				return false
-
-			var bgimgs = bgimgs_new && bgimgs_new.length ? bgimgs_new : this.bgimgs
-				,img_new = bgimgs[_g.randInt(bgimgs.length)]
-				,img_old = this.cur_bgimg_el ? this.cur_bgimg_el.css('background-image') : null
-
-			img_old = img_old ? img_old.split('/') : null
-			img_old = img_old ? img_old[img_old.length - 1].split(')') : null
-			img_old = img_old ? img_old[0] : null
-
-			while( img_new == img_old ){
-				img_new = bgimgs[_g.randInt(bgimgs.length - 1)]
-			}
-
-			var img_new_blured = 'file://' + encodeURI( node.path.join( _g.path.bgimg_dir , '/blured/' + img_new ).replace(/\\/g, '/') )
-			this.bgimg_path = node.path.join( _g.path.bgimg_dir , '/' + img_new )
-			img_new = 'file://' + encodeURI( this.bgimg_path.replace(/\\/g, '/') )
-
-			//function delete_old_dom( old_dom ){
-			//	setTimeout(function(){
-			//		old_dom.remove()
-			//	}, _g.animate_duration_delay)
-			//}
-
-			if( img_old ){
-				this.change_bgimg_oldEl = this.cur_bgimg_el
-				//delete_old_dom( this.cur_bgimg_el )
-			}
-
-			//this.cur_bgimg_el = $('<img src="' + img_new + '" />').appendTo( _frame.dom.bgimg )
-			this.cur_bgimg_el = $('<div/>').css('background-image','url('+img_new+')').appendTo( _frame.dom.bgimg )
-									.add( $('<s'+( this.change_bgimg_fadein ? ' class="fadein"' : '' )+'/>').css('background-image','url('+img_new_blured+')').appendTo( _frame.dom.nav ) )
-									.add( $('<s'+( this.change_bgimg_fadein ? ' class="fadein"' : '' )+'/>').css('background-image','url('+img_new_blured+')').appendTo( _frame.dom.main ) )
-
-			if( _frame.dom.bg_controls )
-				this.cur_bgimg_el = this.cur_bgimg_el
-									.add( $('<s'+( this.change_bgimg_fadein ? ' class="fadein"' : '' )+'/>').css('background-image','url('+img_new_blured+')').appendTo( _frame.dom.bg_controls) )
-
-			this.change_bgimg_fadein = true
-		},
-		change_bgimg_after: function(oldEl){
-			oldEl = oldEl || this.change_bgimg_oldEl
-			if( oldEl ){
-				this.change_bgimg_oldEl.remove()
-				this.change_bgimg_oldEl = null
-			}
-		},
-
-
-
-
-
-	// 隐藏内容，只显示背景图
-		//toggle_hidecontent: function(){
-		//	_frame.dom.layout.toggleClass('hidecontent')
-		//},
 	
 	
 	
@@ -595,7 +528,7 @@ _frame.app_main = {
 
 			if( !options.callback_modeSelection_select ){
 				if( _frame.dom.layout.hasClass('ready') )
-					this.change_bgimg()
+					BgImg.change()
 
 				if( page != 'about' )
 					Lockr.set('last_page', page)
@@ -614,95 +547,6 @@ _frame.app_main = {
 
 
 
-	// 仅显示背景图
-		// only_bg: false,
-		only_bg_on: function(){
-			if( this.only_bg )
-				return true
-
-			if( !_frame.dom.bg_controls ){
-				_frame.dom.bg_controls = $('<div class="bg_controls"/>')
-						.on(eventName('transitionend', 'only_bg_off'), function(e){
-							if( e.currentTarget == e.target
-								&& e.originalEvent.propertyName == 'bottom'
-								//&& _frame.dom.layout.hasClass('mod-only-bg')
-								&& _frame.app_main.only_bg
-								//&& _frame.dom.bg_controls.offset().top >= $body.height()
-								&& parseInt( _frame.dom.bg_controls.css('bottom') ) < 0
-							){
-								_frame.dom.layout.removeClass('mod-only-bg')
-								_frame.app_main.only_bg = false
-							}
-						})
-						.append(
-							$('<button class="prev" icon="arrow-left"/>')
-									.on('click', function(){
-										var pathParse = node.path.parse(_frame.app_main.bgimg_path)
-											,index = $.inArray( pathParse['base'], _frame.app_main.bgimgs ) - 1
-										if( index < 0 )
-											index = _frame.app_main.bgimgs.length - 1
-										_frame.app_main.change_bgimg( [_frame.app_main.bgimgs[index]] )
-									})
-						)
-						.append(
-							$('<button class="back"/>')
-									.html('返回')
-									.on('click', function(){
-										_frame.app_main.only_bg_off()
-									})
-						)
-						.append(
-							$('<button class="back"/>')
-									.html('保存图片')
-									.on('click', function(){
-										var pathParse = node.path.parse(_frame.app_main.bgimg_path)
-											,index = $.inArray( pathParse['base'], _frame.app_main.bgimgs )
-										_g.file_save_as( _frame.app_main.bgimg_path, (index + 1) + pathParse['ext'] )
-									})
-						)
-						.append(
-							$('<button class="next" icon="arrow-right"/>')
-									.on('click', function(){
-										var pathParse = node.path.parse(_frame.app_main.bgimg_path)
-											,index = $.inArray( pathParse['base'], _frame.app_main.bgimgs ) + 1
-										if( index >= _frame.app_main.bgimgs.length )
-											index = 0
-										_frame.app_main.change_bgimg( [_frame.app_main.bgimgs[index]] )
-									})
-						)
-						.appendTo(_frame.dom.layout)
-
-				this.cur_bgimg_el = this.cur_bgimg_el.add(
-						this.cur_bgimg_el.eq(0).clone().appendTo( _frame.dom.bg_controls)
-					)
-			}
-
-			_frame.dom.layout.addClass('mod-only-bg')
-			setTimeout(function(){
-				_frame.dom.bg_controls.addClass('on')
-			}, 10)
-
-			this.only_bg = true
-		},
-		only_bg_off: function(){
-			if( !this.only_bg )
-				return true
-			_frame.dom.bg_controls.removeClass('on')
-			//_frame.dom.layout.removeClass('only_bg')
-			//this.only_bg = false
-		},
-		only_bg_toggle: function(){
-			if( this.only_bg )
-				return this.only_bg_off()
-			return this.only_bg_on()
-		},
-
-
-
-
-
-
-
 
 	init: function(){
 		if( this.is_init )
@@ -710,38 +554,22 @@ _frame.app_main = {
 
 		// 创建基础框架
 			_frame.dom.mobilemenu = $('<input type="checkbox" id="view-mobile-menu"/>').prependTo( _frame.dom.layout )
+			_frame.dom.logo = $('<div class="logo"/>')
+								.on(_g.event.animationend, function(){
+									_frame.dom.logo.addClass('ready-animated')
+								})
+								.appendTo( _frame.dom.layout )
 			_frame.dom.nav = $('<nav/>').appendTo( _frame.dom.layout )
-				_frame.dom.logo = $('<button class="logo" />')
-									.on(_g.event.animationend, function(){
-										_frame.dom.logo.addClass('ready-animated')
-									})
-									/*
-									.on({
-										'animationend, webkitAnimationEnd': function(e){
-											$(this).addClass('ready-animated')
-										}
-									})*/
-									.appendTo( _frame.dom.nav )
-				/*
-				_frame.dom.logo = $('<button class="logo" />').on('click', function(){
-										_frame.app_main.toggle_hidecontent()
-									})
-									.html('<strong>' + node.gui.App.manifest['name'] + '</strong><b>' + node.gui.App.manifest['name'] + '</b>')
-									.on({
-										'animationend, webkitAnimationEnd': function(e){
-											$(this).addClass('ready-animated')
-										}
-									})
-									.appendTo( _frame.dom.nav )
-				*/
 				_frame.dom.navlinks = $('<div class="pages"/>').appendTo( _frame.dom.nav )
 					_frame.dom.globaloptions = $('<section class="options"/>').appendTo( _frame.dom.nav )
-						_frame.dom.btnDonates = $('<button class="donate" icon="heart4"/>')
-												.on('click', function(){_frame.app_main.load_page('donate')}).appendTo( _frame.dom.globaloptions )
-						_frame.dom.btnShowOnlyBg = $('<button class="show_only_bg" icon="images"/>')
-												.on('click', function(){_frame.app_main.only_bg_toggle()}).appendTo( _frame.dom.globaloptions )
-					//_frame.dom.btnShowOnlyBgBack = $('<button class="show_only_bg_back" icon="arrow-set2-left"/>')
-					//						.on('click', function(){_frame.app_main.only_bg_off()}).appendTo( _frame.dom.nav )
+						.append(
+							$('<button class="donate" icon="heart4"/>')
+								.on('click', function(){_frame.app_main.load_page('donate')})
+						)
+						.append(
+							$('<button class="show_only_bg" icon="images"/>')
+								.on('click', function(){BgImg.controlsToggle()})
+						)
 				_frame.dom.btnsHistory = $('<div class="history"/>').insertBefore( _frame.dom.navlinks )
 					_frame.dom.btnHistoryBack = $('<button class="button back" icon="arrow-set2-left"/>')
 							.on({
@@ -763,7 +591,7 @@ _frame.app_main = {
 							)
 							.appendTo( _frame.dom.nav )
 			_frame.dom.main = $('<main/>').appendTo( _frame.dom.layout )
-			_frame.dom.bgimg = $('<div class="bgimg" />').appendTo( _frame.dom.layout )
+			//_frame.dom.bgimg = $('<div class="bgimg" />').appendTo( _frame.dom.layout )
 			$('<div class="nav-mask"/>').appendTo( _frame.dom.layout )
 				.on('click', function(){
 					_frame.dom.mobilemenu.prop('checked', false)
@@ -827,56 +655,7 @@ _frame.app_main = {
 			})
 
 		// 获取背景图列表，生成背景图
-			.then(function(){
-				_g.log('背景图: START')
-				var deferred = Q.defer()
-				node.fs.readdir(_g.path.bgimg_dir, function(err, files){
-					if( err ){
-						deferred.reject(new Error(err))
-					}else{
-						var bgimgs_last = _config.get('bgimgs')
-							,bgimgs_new = []
-						bgimgs_last = bgimgs_last ? bgimgs_last.split(',') : []
-						files.forEach(function(file){
-							var lstat = node.fs.lstatSync( node.path.join( _g.path.bgimg_dir , '/' + file) )
-							if( !lstat.isDirectory() ){
-								_frame.app_main.bgimgs.push( file )
-
-								// 存在bgimgs_last：直接比对
-								// 不存在bgimgs_last：比对每个文件，找出最新者
-								if( bgimgs_last.length ){
-									if( $.inArray( file, bgimgs_last ) < 0 )
-										bgimgs_new.push( file )
-								}else{
-									var ctime = parseInt(lstat.ctime.valueOf())
-									if( bgimgs_new.length ){
-										if( ctime > bgimgs_new[1] )
-											bgimgs_new = [ file, ctime ]
-									}else{
-										bgimgs_new = [ file, ctime ]
-									}
-								}
-							}
-						})
-						if( !bgimgs_last.length )
-							bgimgs_new.pop()
-						_config.set(
-							'bgimgs',
-							_frame.app_main.bgimgs
-						)
-						_frame.app_main.change_bgimg( bgimgs_new );
-						_frame.app_main.loaded('bgimgs')
-						//if( !_g.uriHash('page') )
-						//	_frame.app_main.load_page( _frame.app_main.nav[0].page )
-						//setTimeout(function(){
-						//	_frame.dom.layout.addClass('ready')
-						//}, 1000)
-						_g.log('背景图: DONE')
-						deferred.resolve()
-					}
-				})
-				return deferred.promise
-			})
+			.then(BgImg.init)
 
 		// 读取db
 			.then(function(){
@@ -1244,9 +1023,6 @@ _frame.app_main = {
                                 break;
                         }
                     })
-				_frame.dom.bgimg.on(_g.event.animationend, 'div', function(){
-					_frame.app_main.change_bgimg_after()
-				})
 				/*
 					$html.on('click.openShipModal', '[data-shipid][modal="true"]', function(e){
 						if( !(e.target.tagName.toLowerCase() == 'input' && e.target.className == 'compare') ){

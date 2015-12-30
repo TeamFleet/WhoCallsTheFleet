@@ -109,7 +109,9 @@ dev_output_steps.push(function(){
 			dev_output_log('开始处理: BG IMAGES')
 			
 			let deferred = Q.defer()
-
+				,files = []
+			
+			/*
 			node.fs.readdir(node.path.join( _g.path.bgimg_dir, 'blured'), function(err, files){
 				if( err ){
 					deferred.reject(new Error(err))
@@ -118,7 +120,24 @@ dev_output_steps.push(function(){
 					deferred.resolve(files)
 				}
 			})
-			
+			*/
+			node.fs.readdirSync( _g.path.bgimg_dir )
+				.filter(function(file){
+					return !node.fs.lstatSync( node.path.join( _g.path.bgimg_dir , file) ).isDirectory()
+				})
+				.map(function(v) { 
+					return {
+						name: v,
+						time: node.fs.statSync( node.path.join( _g.path.bgimg_dir , v) ).mtime.getTime()
+					}; 
+				})
+				.sort(function(a, b) { return a.time - b.time; })
+				.map(function(v) { return v.name; })
+				.forEach(function(name){
+					files.push( name )
+				})
+			bgimg_count = files.length
+			deferred.resolve(files)
 			return deferred.promise
 		})
 		.then(function(files){
@@ -131,32 +150,61 @@ dev_output_steps.push(function(){
 					let _deferred = Q.defer()
 						,filePath1 = node.path.join( _g.path.bgimg_dir, file )
 						,filePath2 = node.path.join( _g.path.bgimg_dir, 'blured', file )
+						,filePath3 = node.path.join( _g.path.bgimg_dir, 'thumbnail', file )
 						,outputPath1 = node.path.join( dev_output_dir, '!', 'assets', 'images', 'homebg', index + '.jpg' )
 						,outputPath2 = node.path.join( dev_output_dir, '!', 'assets', 'images', 'homebg', 'blured', index + '.jpg' )
-
-					copyFile2(
-						filePath1,
-						outputPath1,
-						function(err){
-							if( err ){
-								_deferred.reject(new Error(err))
-							}else{
-								dev_output_log('生成文件: ' + outputPath1)
-								copyFile2(
-									filePath2,
-									outputPath2,
-									function(err){
-										if( err ){
-											_deferred.reject(new Error(err))
-										}else{
-											dev_output_log('生成文件: ' + outputPath2)
-											_deferred.resolve()
-										}
-									}
-								)
+						,outputPath3 = node.path.join( dev_output_dir, '!', 'assets', 'images', 'homebg', 'thumbnail', index + '.jpg' )
+					
+					Q.fcall(function(){})
+					.then(function(){
+						let __deferred = Q.defer()
+						copyFile2(
+							filePath1,
+							outputPath1,
+							function(err){
+								if( err ){
+									__deferred.reject(new Error(err))
+								}else{
+									dev_output_log('生成文件: ' + outputPath1)
+									__deferred.resolve()
+								}
 							}
-						}
-					)
+						)
+						return __deferred.promise
+					})
+					.then(function(){
+						let __deferred = Q.defer()
+						copyFile2(
+							filePath2,
+							outputPath2,
+							function(err){
+								if( err ){
+									__deferred.reject(new Error(err))
+								}else{
+									dev_output_log('生成文件: ' + outputPath2)
+									__deferred.resolve()
+								}
+							}
+						)
+						return __deferred.promise
+					})
+					.then(function(){
+						let __deferred = Q.defer()
+						copyFile2(
+							filePath3,
+							outputPath3,
+							function(err){
+								if( err ){
+									__deferred.reject(new Error(err))
+								}else{
+									dev_output_log('生成文件: ' + outputPath3)
+									__deferred.resolve()
+									_deferred.resolve()
+								}
+							}
+						)
+						return __deferred.promise
+					})
 
 					return _deferred.promise
 				});
