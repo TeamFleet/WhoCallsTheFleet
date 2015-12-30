@@ -5,6 +5,7 @@
 // @koala-prepend "libs/node_modules/lz-string/libs/lz-string.js"
 // @koala-prepend "libs/node_modules/sprintf-js/src/sprintf.js"
 // @koala-prepend "libs/node_modules/pepjs/dist/pep.min.js"
+// @koala-prepend "libs/node_modules/localforage/dist/localforage.nopromises.min.js"
 
 // @koala-prepend "js-app/google_analytics.js"
 
