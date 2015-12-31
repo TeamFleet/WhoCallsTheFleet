@@ -1594,6 +1594,10 @@ html.ie6 * {
   font-weight: normal;
   font-style: normal;
 }
+.bgcontrols.mod-viewing > .wrapper {
+  -webkit-transform: translateY(calc(-100% + 40px));
+          transform: translateY(calc(-100% + 40px));
+}
 [icon="arrow-up"]:before {
   content: "\e60b" !important;
 }
@@ -1631,6 +1635,9 @@ html.ie6 * {
 }
 [icon="cog"]:before {
   content: "\e613" !important;
+}
+[icon="eye"]:before {
+  content: "\ecab" !important;
 }
 [icon="floppy-disk"]:before {
   content: "\ea86" !important;
@@ -1739,7 +1746,23 @@ menuitem {
     opacity: 1;
   }
 }
-@-webkit-keyframes layout-loading-logo {
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes logoLoading {
   0% {
     -webkit-transform: translateY(10px);
             transform: translateY(10px);
@@ -1749,7 +1772,7 @@ menuitem {
             transform: translateY(-10px);
   }
 }
-@keyframes layout-loading-logo {
+@keyframes logoLoading {
   0% {
     -webkit-transform: translateY(10px);
             transform: translateY(10px);
@@ -1757,16 +1780,6 @@ menuitem {
   100% {
     -webkit-transform: translateY(-10px);
             transform: translateY(-10px);
-  }
-}
-@-webkit-keyframes layout-ready-logo {
-  100% {
-    opacity: 0;
-  }
-}
-@keyframes layout-ready-logo {
-  100% {
-    opacity: 0;
   }
 }
 @-webkit-keyframes global-loading-horizontal {
@@ -1807,6 +1820,86 @@ menuitem {
   100% {
     -webkit-transform: translateX(400%);
             transform: translateX(400%);
+  }
+}
+@-webkit-keyframes sideInRight {
+  0% {
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%);
+  }
+  100% {
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+@keyframes sideInRight {
+  0% {
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%);
+  }
+  100% {
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+@-webkit-keyframes sideInRightReverse {
+  0% {
+    -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
+  }
+  100% {
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+@keyframes sideInRightReverse {
+  0% {
+    -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
+  }
+  100% {
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+@-webkit-keyframes sideOutRight {
+  0% {
+    -webkit-transform: none;
+            transform: none;
+  }
+  100% {
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%);
+  }
+}
+@keyframes sideOutRight {
+  0% {
+    -webkit-transform: none;
+            transform: none;
+  }
+  100% {
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%);
+  }
+}
+@-webkit-keyframes sideOutRightReverse {
+  0% {
+    -webkit-transform: none;
+            transform: none;
+  }
+  100% {
+    -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
+  }
+}
+@keyframes sideOutRightReverse {
+  0% {
+    -webkit-transform: none;
+            transform: none;
+  }
+  100% {
+    -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
   }
 }
 ::-webkit-scrollbar {
@@ -2047,14 +2140,16 @@ body.mod-capture #layout {
   color: #fff;
 }
 html.ready nav,
-html.ready main {
+html.ready main,
+html.ready nav > .bgimg,
+html.ready main > .bgimg {
   -webkit-transition-duration: 0.75s;
           transition-duration: 0.75s;
 }
 nav {
   display: block;
   position: absolute;
-  top: -80px;
+  top: 0;
   left: 0;
   height: 80px;
   line-height: 80px;
@@ -2069,6 +2164,9 @@ nav {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  -webkit-transform: translateY(-100%);
+          transform: translateY(-100%);
+  overflow: hidden;
 }
 nav:before,
 nav:after {
@@ -2104,27 +2202,6 @@ nav:after {
   transition: none 0.2s ease-out;
   -webkit-transition-property: height;
   transition-property: height;
-}
-nav > .logo {
-  position: fixed;
-  overflow: hidden;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  -webkit-app-region: no-drag;
-}
-nav > .logo:before {
-  content: "";
-  position: absolute;
-  -webkit-animation: layout-loading-logo 1.2s ease-out infinite alternate;
-          animation: layout-loading-logo 1.2s ease-out infinite alternate;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url(/!/assets/images/boat.png) no-repeat 50% 50%;
 }
 nav > div {
   z-index: 4;
@@ -2310,7 +2387,7 @@ nav > div.selection-info {
 nav > div.history ~ .selection-info {
   padding-left: 0;
 }
-nav > s {
+nav > .bgimg {
   display: block;
   position: absolute;
   z-index: 2;
@@ -2318,14 +2395,14 @@ nav > s {
   height: 100%;
   top: 0;
   left: 0;
-  background: no-repeat 50% 38.2% / cover;
-  background-attachment: fixed;
+  -webkit-transition-property: -webkit-transform;
+  transition-property: -webkit-transform;
+  transition-property: transform;
+  transition-property: transform, -webkit-transform;
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
 }
-nav > s.fadein {
-  -webkit-animation: fadeIn 0.3s ease-out;
-          animation: fadeIn 0.3s ease-out;
-}
-nav > s:after {
+nav > .bgimg:after {
   content: '';
   position: absolute;
   top: 0;
@@ -2391,11 +2468,13 @@ main {
   font-size: 0.7000000000000001rem;
   line-height: 1.5;
   color: #f2f2f2;
-  top: 100%;
+  top: 0;
   -webkit-transition-property: top, -webkit-transform;
   transition-property: top, -webkit-transform;
   transition-property: top, transform;
   transition-property: top, transform, -webkit-transform;
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
 }
 main h1,
 main h2,
@@ -2406,7 +2485,7 @@ main h6 {
   line-height: 1.25em;
   margin-bottom: 0.5em;
 }
-main > s {
+main > .bgimg {
   display: block;
   position: absolute;
   z-index: 1;
@@ -2414,8 +2493,12 @@ main > s {
   height: 100%;
   top: 0;
   left: 0;
-  background: no-repeat 50% 38.2% / cover;
-  background-attachment: fixed;
+  -webkit-transition-property: -webkit-transform;
+  transition-property: -webkit-transform;
+  transition-property: transform;
+  transition-property: transform, -webkit-transform;
+  -webkit-transform: translateY(-100%);
+          transform: translateY(-100%);
   /*
 		&:after{
 			content:	'';
@@ -2427,10 +2510,6 @@ main > s {
 			z-index:	1;
 			background:	fade( #20333c, 50% );
 		}*/
-}
-main > s.fadein {
-  -webkit-animation: fadeIn 0.3s ease-out;
-          animation: fadeIn 0.3s ease-out;
 }
 main:after {
   content: '';
@@ -2832,6 +2911,32 @@ main:after {
   left: 0;
   z-index: -1;
 }
+#layout > .logo {
+  overflow: hidden;
+  z-index: 100;
+}
+#layout > .logo,
+#layout > .logo:before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+}
+#layout > .logo:before {
+  content: '';
+  -webkit-animation: logoLoading 1.2s ease-out infinite alternate;
+          animation: logoLoading 1.2s ease-out infinite alternate;
+  background: url(/!/assets/images/boat.png) no-repeat 50% 50%;
+}
+#layout.ready > .logo {
+  -webkit-animation: fadeOut 1s ease-out;
+          animation: fadeOut 1s ease-out;
+}
+#layout.ready > .logo.ready-animated {
+  display: none;
+}
 #layout.is-infos-show nav > div.history {
   display: block;
 }
@@ -2931,7 +3036,7 @@ main:after {
 #layout.is-infos-on .infosbody + .infosbody {
   opacity: 0;
 }
-#layout > .bgimg {
+#layout > .bgimgs {
   position: absolute;
   z-index: 2;
   width: 100%;
@@ -2940,186 +3045,113 @@ main:after {
   left: 0;
   overflow: hidden;
 }
-#layout > .bgimg > div {
+#layout > .bgimgs > .bgimg {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+}
+.bgimg {
+  display: block;
+  background: no-repeat 50% 38.2% / cover;
+  background-attachment: fixed;
+}
+.bgimg.fadein {
   -webkit-animation: fadeIn 0.3s ease-out;
           animation: fadeIn 0.3s ease-out;
-  background: no-repeat 50% 38.2% / cover;
-}
-#layout.ready > nav {
-  top: 0;
-}
-#layout.ready > nav > .logo {
-  -webkit-animation: layout-ready-logo 1s ease-in-out;
-          animation: layout-ready-logo 1s ease-in-out;
-  -webkit-animation-iteration-count: 1;
-          animation-iteration-count: 1;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
-}
-#layout.ready > nav > .logo.ready-animated {
-  display: none;
-}
-#layout.ready > main {
-  top: 0;
 }
 #layout.ready {
   /*
-	&>nav>button.show_only_bg_back{
-		position:	absolute;
-		bottom:		0;
-		z-index:	4;
-		text-align:	center;
-		display:	block;
-		-webkit-app-region:	no-drag;
-		color:		rgba(255,255,255,.75);
-		left:	-50px;
-		.width(50);
-		.height(30);
-		.font-size(20);
-		.transition-property(~"color, left");
-		.transition-duration(@transition_duration_main);
-		.height( 32 );
-		.window-noframe({
-			.height( 34 );
-		});
-		.window-maxmize({
-			.height( 32 ) !important;
-		});
-		&:hover{
-			color:	#fff;
+	nav{
+		top:	0;
+		&>.logo{
+			animation: 	layout-ready-logo 1s ease-in-out;
+			animation-iteration-count: 1;
+			animation-fill-mode: forwards;
+			&.ready-animated{
+				display:	none;
+			}
 		}
+	}
+	main{
+		top:	0;
 	}
 	*/
 }
-#layout.ready > .bg_controls {
-  width: 15rem;
-  height: 2.4000000000000004rem;
-  left: calc( 50% - 150px );
-  bottom: -60px;
-  position: absolute;
-  border-radius: 44px;
-  z-index: 3;
-  -webkit-transition-property: bottom;
-  transition-property: bottom;
-  -webkit-transition-duration: 0.5s;
-          transition-duration: 0.5s;
-  -webkit-transition-timing-function: cubic-bezier(0.680, -0.550, 0.265, 1.550);
-          transition-timing-function: cubic-bezier(0.680, -0.550, 0.265, 1.550);
-  overflow: hidden;
-  border: 0.1rem solid rgba(255, 255, 255, 0.25);
-  font-size: 0.7000000000000001rem;
+#layout.ready nav,
+#layout.ready main,
+#layout.ready nav > .bgimg,
+#layout.ready main > .bgimg {
+  -webkit-transform: none;
+          transform: none;
 }
-#layout.ready > .bg_controls > s {
+.bgcontrols {
+  position: absolute;
   display: none;
+  -webkit-transform: translateX(100%);
+          transform: translateX(100%);
+  top: 0;
+  right: 0;
+  bottom: -2px;
+  width: 220px;
+  z-index: 6;
+  overflow: hidden;
+}
+.bgcontrols,
+.bgcontrols .bgimgs {
+  -webkit-animation: none 0.75s ease-out 0.75s;
+          animation: none 0.75s ease-out 0.75s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+.bgcontrols:before,
+.bgcontrols > .wrapper,
+.bgcontrols > .wrapper:after,
+.bgcontrols .bgimgs,
+.bgcontrols .bgimg {
   position: absolute;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
   top: 0;
   left: 0;
-  background: no-repeat 50% 38.2% / cover;
-  background-attachment: fixed;
-  -webkit-box-flex: 0;
-  -webkit-flex: none;
-      -ms-flex: none;
-          flex: none;
+  width: 100%;
+  height: 100%;
 }
-#layout.ready > .bg_controls > s.fadein {
-  -webkit-animation: fadeIn 0.3s ease-out;
-          animation: fadeIn 0.3s ease-out;
-}
-#layout.ready > .bg_controls:after {
-  -webkit-box-flex: 0;
-  -webkit-flex: none;
-      -ms-flex: none;
-          flex: none;
+.bgcontrols:before {
   content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  z-index: 100;
+  pointer-events: none;
+  -webkit-transition: none 0.2s ease-out;
+  transition: none 0.2s ease-out;
+  -webkit-transition-property: background;
+  transition-property: background;
+}
+.bgcontrols > .wrapper {
+  border-left: 2px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.35);
+  padding-bottom: 40px;
+  -webkit-transition-property: -webkit-transform;
+  transition-property: -webkit-transform;
+  transition-property: transform;
+  transition-property: transform, -webkit-transform;
+}
+.bgcontrols > .wrapper:after {
+  content: '';
   z-index: 2;
   background: rgba(0, 0, 0, 0.5);
 }
-#layout.ready > .bg_controls > button {
-  position: relative;
-  z-index: 3;
-  display: inline-block;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 1 50%;
-      -ms-flex: 1 1 50%;
-          flex: 1 1 50%;
-  line-height: 2.2rem;
-  color: rgba(255, 255, 255, 0.5);
-  border-left: 0.05rem solid rgba(255, 255, 255, 0.25);
-  border-right: 0.05rem solid rgba(255, 255, 255, 0.25);
-  -webkit-transition-property: color, background-color, padding;
-  transition-property: color, background-color, padding;
+.bgcontrols .bgimgs {
+  z-index: 1;
+  -webkit-transition-property: opacity;
+  transition-property: opacity;
 }
-#layout.ready > .bg_controls > button.prev,
-#layout.ready > .bg_controls > button.next {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 44px;
-      -ms-flex: 0 0 44px;
-          flex: 0 0 44px;
-}
-#layout.ready > .bg_controls > button:first-child {
-  border-left-width: 0;
-}
-#layout.ready > .bg_controls > button:last-child {
-  border-right-width: 0;
-}
-#layout.ready > .bg_controls > button:hover {
-  background: rgba(0, 0, 0, 0.35);
-  color: #fff;
-}
-#layout.ready > .bg_controls > button:active {
-  background: rgba(0, 0, 0, 0.65);
-  padding-top: 0.05rem;
-}
-#layout.ready.mod-only-bg > nav {
-  opacity: 0;
-  -webkit-transform: translateY(-100%);
-          transform: translateY(-100%);
-  /*
-			.top( -44 );
-			.window-noframe({
-				.top( -46 );
-			});
-			.window-maxmize({
-				.top( -49 ) !important;
-			});
-			&>div{
-				.top(-10);
-			}
-			&>s:after{
-				background:	rgba(0, 0, 0, .375);
-				.window-blured({
-					background:	rgba(0, 0, 0, .175);
-				})
-			}
-			&>section.options{
-				opacity:	0;
-			}
-			//&>button.show_only_bg_back{
-			//	left:		0;
-			//}
-			*/
-}
-#layout.ready.mod-only-bg > nav ~ .nav-mask:before {
-  -webkit-transform: translateY(-100%);
-          transform: translateY(-100%);
-}
-#layout.ready.mod-only-bg > main {
-  top: 100%;
-}
-#layout.ready.mod-only-bg > .bg_controls {
+.bgcontrols .controls {
+  z-index: 4;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.5);
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -3128,13 +3160,141 @@ main:after {
       -ms-flex-flow: row nowrap;
           flex-flow: row nowrap;
 }
-#layout.ready.mod-only-bg > .bg_controls > s {
+.bgcontrols .controls button {
   display: block;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 40px;
+      -ms-flex: 1 1 40px;
+          flex: 1 1 40px;
+  position: relative;
+  color: rgba(255, 255, 255, 0.65);
+  -webkit-transition-property: color;
+  transition-property: color;
 }
-#layout.ready.mod-only-bg > .bg_controls.on {
-  -webkit-transition-delay: 0.75s;
-          transition-delay: 0.75s;
-  bottom: 64px;
+.bgcontrols .controls button[icon]:before {
+  padding: 0;
+  position: absolute;
+  top: 50%;
+  line-height: 0;
+  width: 100%;
+  left: 0;
+  text-align: center;
+  font-size: 20px;
+  opacity: 1;
+}
+.bgcontrols .controls button:hover {
+  color: #fff;
+}
+.bgcontrols .controls button.on {
+  background: #cc8f00;
+  color: #fff;
+}
+.bgcontrols .list {
+  position: relative;
+  overflow: auto;
+  z-index: 3;
+  height: 100%;
+  padding: 20px 0 0 10px;
+  -webkit-transition-property: opacity;
+  transition-property: opacity;
+}
+.bgcontrols dl {
+  margin: 0 0 20px 0;
+}
+.bgcontrols dl dt {
+  margin: 0 10px 0 0;
+  padding: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.7;
+}
+.bgcontrols dl dd {
+  display: inline-block;
+  width: calc(50% - 10px);
+  margin: 10px 10px 0 0;
+  background: rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+.bgcontrols dl dd s {
+  display: block;
+  padding-bottom: 100%;
+  height: 0;
+  background: no-repeat 50% 38.2% / cover;
+  opacity: .25;
+}
+.bgcontrols dl dd:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+.bgcontrols dl dd:hover s {
+  opacity: .5;
+}
+.bgcontrols dl dd.on s {
+  opacity: 1;
+}
+.bgcontrols dl dd.on:before {
+  border: 2px solid #ffd980;
+}
+.bgcontrols.mod-viewing .bgimgs {
+  opacity: 0;
+}
+.bgcontrols.is-loading:before {
+  pointer-events: all;
+  background-color: rgba(0, 0, 0, 0.65);
+}
+#layout.mod-bgcontrols nav {
+  -webkit-transform: translateY(-100%);
+          transform: translateY(-100%);
+  -webkit-app-region: no-drag !important;
+}
+#layout.mod-bgcontrols nav > .bgimg {
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
+}
+#layout.mod-bgcontrols main {
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
+}
+#layout.mod-bgcontrols main > .bgimg {
+  -webkit-transform: translateY(-100%);
+          transform: translateY(-100%);
+}
+#layout.mod-bgcontrols .bgcontrols {
+  display: block;
+  -webkit-animation-name: sideInRight;
+          animation-name: sideInRight;
+}
+#layout.mod-bgcontrols .bgcontrols > .wrapper,
+#layout.mod-bgcontrols .bgcontrols .bgimgs {
+  -webkit-transition-duration: .5s;
+          transition-duration: .5s;
+}
+#layout.mod-bgcontrols .bgcontrols .bgimgs {
+  -webkit-animation-name: sideInRightReverse;
+          animation-name: sideInRightReverse;
+}
+#layout.mod-bgcontrols .bgcontrols.is-on .bgimgs {
+  -webkit-animation-name: none;
+          animation-name: none;
+}
+#layout.mod-bgcontrols .bgcontrols.is-hiding {
+  -webkit-animation-name: sideOutRight;
+          animation-name: sideOutRight;
+}
+#layout.mod-bgcontrols .bgcontrols.is-hiding,
+#layout.mod-bgcontrols .bgcontrols.is-hiding .bgimgs {
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s;
+}
+#layout.mod-bgcontrols .bgcontrols.is-hiding .bgimgs {
+  -webkit-animation-name: sideOutRightReverse;
+          animation-name: sideOutRightReverse;
 }
 .mode-selection nav > div.history {
   z-index: 5;
@@ -3205,175 +3365,6 @@ main:after {
 }
 .mode-selection > nav > .title > span {
   opacity: 0;
-}
-.layout-only_bg #layout.ready {
-  /*
-	&>nav>button.show_only_bg_back{
-		position:	absolute;
-		bottom:		0;
-		z-index:	4;
-		text-align:	center;
-		display:	block;
-		-webkit-app-region:	no-drag;
-		color:		rgba(255,255,255,.75);
-		left:	-50px;
-		.width(50);
-		.height(30);
-		.font-size(20);
-		.transition-property(~"color, left");
-		.transition-duration(@transition_duration_main);
-		.height( 32 );
-		.window-noframe({
-			.height( 34 );
-		});
-		.window-maxmize({
-			.height( 32 ) !important;
-		});
-		&:hover{
-			color:	#fff;
-		}
-	}
-	*/
-}
-.layout-only_bg #layout.ready > .bg_controls {
-  width: 15rem;
-  height: 2.4000000000000004rem;
-  left: calc( 50% - 150px );
-  bottom: -60px;
-  position: absolute;
-  border-radius: 44px;
-  z-index: 3;
-  -webkit-transition-property: bottom;
-  transition-property: bottom;
-  -webkit-transition-duration: 0.5s;
-          transition-duration: 0.5s;
-  -webkit-transition-timing-function: cubic-bezier(0.680, -0.550, 0.265, 1.550);
-          transition-timing-function: cubic-bezier(0.680, -0.550, 0.265, 1.550);
-  overflow: hidden;
-  border: 0.1rem solid rgba(255, 255, 255, 0.25);
-  font-size: 0.7000000000000001rem;
-}
-.layout-only_bg #layout.ready > .bg_controls > s {
-  display: none;
-  position: absolute;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: no-repeat 50% 38.2% / cover;
-  background-attachment: fixed;
-  -webkit-box-flex: 0;
-  -webkit-flex: none;
-      -ms-flex: none;
-          flex: none;
-}
-.layout-only_bg #layout.ready > .bg_controls > s.fadein {
-  -webkit-animation: fadeIn 0.3s ease-out;
-          animation: fadeIn 0.3s ease-out;
-}
-.layout-only_bg #layout.ready > .bg_controls:after {
-  -webkit-box-flex: 0;
-  -webkit-flex: none;
-      -ms-flex: none;
-          flex: none;
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  background: rgba(0, 0, 0, 0.5);
-}
-.layout-only_bg #layout.ready > .bg_controls > button {
-  position: relative;
-  z-index: 3;
-  display: inline-block;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 1 50%;
-      -ms-flex: 1 1 50%;
-          flex: 1 1 50%;
-  line-height: 2.2rem;
-  color: rgba(255, 255, 255, 0.5);
-  border-left: 0.05rem solid rgba(255, 255, 255, 0.25);
-  border-right: 0.05rem solid rgba(255, 255, 255, 0.25);
-  -webkit-transition-property: color, background-color, padding;
-  transition-property: color, background-color, padding;
-}
-.layout-only_bg #layout.ready > .bg_controls > button.prev,
-.layout-only_bg #layout.ready > .bg_controls > button.next {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 44px;
-      -ms-flex: 0 0 44px;
-          flex: 0 0 44px;
-}
-.layout-only_bg #layout.ready > .bg_controls > button:first-child {
-  border-left-width: 0;
-}
-.layout-only_bg #layout.ready > .bg_controls > button:last-child {
-  border-right-width: 0;
-}
-.layout-only_bg #layout.ready > .bg_controls > button:hover {
-  background: rgba(0, 0, 0, 0.35);
-  color: #fff;
-}
-.layout-only_bg #layout.ready > .bg_controls > button:active {
-  background: rgba(0, 0, 0, 0.65);
-  padding-top: 0.05rem;
-}
-.layout-only_bg #layout.ready.mod-only-bg > nav {
-  opacity: 0;
-  -webkit-transform: translateY(-100%);
-          transform: translateY(-100%);
-  /*
-			.top( -44 );
-			.window-noframe({
-				.top( -46 );
-			});
-			.window-maxmize({
-				.top( -49 ) !important;
-			});
-			&>div{
-				.top(-10);
-			}
-			&>s:after{
-				background:	rgba(0, 0, 0, .375);
-				.window-blured({
-					background:	rgba(0, 0, 0, .175);
-				})
-			}
-			&>section.options{
-				opacity:	0;
-			}
-			//&>button.show_only_bg_back{
-			//	left:		0;
-			//}
-			*/
-}
-.layout-only_bg #layout.ready.mod-only-bg > nav ~ .nav-mask:before {
-  -webkit-transform: translateY(-100%);
-          transform: translateY(-100%);
-}
-.layout-only_bg #layout.ready.mod-only-bg > main {
-  top: 100%;
-}
-.layout-only_bg #layout.ready.mod-only-bg > .bg_controls {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-flow: row nowrap;
-      -ms-flex-flow: row nowrap;
-          flex-flow: row nowrap;
-}
-.layout-only_bg #layout.ready.mod-only-bg > .bg_controls > s {
-  display: block;
-}
-.layout-only_bg #layout.ready.mod-only-bg > .bg_controls.on {
-  -webkit-transition-delay: 0.75s;
-          transition-delay: 0.75s;
-  bottom: 64px;
 }
 #layout.is-loading nav:before {
   opacity: 1;
@@ -3823,15 +3814,17 @@ body.mod-capture #tip {
   nav {
     height: 56px;
     line-height: 56px;
-    background: transparent;
+    background: #464339;
+    overflow: visible;
   }
   nav > div.pages {
     margin-left: 0 !important;
     max-width: none;
     width: 400px;
     height: calc(100% - 56px);
+    height: calc(100vh - 56px);
     position: fixed;
-    top: 56px;
+    top: 100%;
     left: 0;
     z-index: 10;
     padding: 0;
@@ -3974,7 +3967,7 @@ body.mod-capture #tip {
     -webkit-transition-property: opacity;
     transition-property: opacity;
   }
-  nav > s {
+  nav > .bgimg {
     display: none;
   }
   nav > div.selection-info {
@@ -3985,63 +3978,60 @@ body.mod-capture #tip {
     -webkit-transform: translateX(72px) !important;
             transform: translateX(72px) !important;
   }
-  nav ~ .nav-mask:before,
+  nav ~ .nav-mask {
+    /*
+				&:before, &:after{
+					content: 	'';
+					position: 	absolute;
+					left: 		0;
+					right: 		0;
+				}
+				&:before{
+					top: 		0;
+					height: 	@_nav_height;
+					z-index: 	4;
+					//background: #333;
+					background: hsl(47, 10%, 25%);
+					.enable-transition();
+					transition-property: transform;
+					transition-duration: @transition_duration_main;
+					transform: 	translateY(-100%);
+				}
+				*/
+  }
   nav ~ .nav-mask:after {
+    z-index: -1;
     content: '';
     position: absolute;
     left: 0;
     right: 0;
-  }
-  nav ~ .nav-mask:before {
-    top: 0;
-    height: 56px;
-    z-index: 4;
-    background: #464339;
-    -webkit-transition: none 0.2s ease-out;
-    transition: none 0.2s ease-out;
-    -webkit-transition-property: -webkit-transform;
-    transition-property: -webkit-transform;
-    transition-property: transform;
-    transition-property: transform, -webkit-transform;
-    -webkit-transition-duration: 0.75s;
-            transition-duration: 0.75s;
-    -webkit-transform: translateY(-100%);
-            transform: translateY(-100%);
-  }
-  nav ~ .nav-mask:after {
-    z-index: -1;
     top: 56px;
   }
-  main {
-    top: 0;
-    -webkit-transform: translateY(100%);
-            transform: translateY(100%);
-  }
-  main > s {
+  main > .bgimg {
     display: none;
   }
   main:after {
     background: rgba(0, 0, 0, 0.8);
   }
-  #layout.ready nav ~ .nav-mask:before,
-  #layout.ready main {
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
-  }
-  #layout.ready.mod-only-bg nav {
-    opacity: 1;
-  }
-  #layout.ready.mod-only-bg main {
-    top: 0;
-    -webkit-transform: translateY(100%);
-            transform: translateY(100%);
-  }
-  #layout.ready.mod-only-bg > .bg_controls > s {
-    display: none;
-  }
-  #layout.ready.mod-only-bg > .bg_controls:after {
-    background: rgba(0, 0, 0, 0.8);
-  }
+  /*
+		#layout.ready.mod-only-bg{
+			nav{
+				opacity: 	1;
+			}
+			main{
+				top: 		0;
+				transform: 	translateY(100%);
+			}
+			&>.bg_controls{
+				&>.bgimg{
+					display: 	none;
+				}
+				&:after{
+					background: rgba(0, 0, 0, .8);
+				}
+			}
+		}
+		*/
   #layout.is-infos-on nav > div.history .button,
   #layout.mode-selection nav > div.history .button {
     opacity: 0;
@@ -4144,9 +4134,6 @@ body.mod-capture #tip {
     font-size: 16px;
     -webkit-transform: translateX(60px) !important;
             transform: translateX(60px) !important;
-  }
-  nav ~ .nav-mask:before {
-    height: 48px;
   }
   nav ~ .nav-mask:after {
     top: 48px;
@@ -9401,10 +9388,10 @@ body.mod-capture .infos-fleet .equipments {
 .infos-fleet.mod-preview .equipment[data-carry]:not([data-equipmentid]):hover {
   background-color: rgba(0, 0, 0, 0.125);
 }
-main[data-theme="1"] {
+#layout[data-theme="1"] main {
   background-color: rgba(128, 128, 128, 0.65);
 }
-main[data-theme="2"]:after {
+#layout[data-theme="2"] main:after {
   background-color: rgba(60, 56, 55, 0.75);
   background-image: -webkit-linear-gradient(top, #fcad9c 4px, rgba(252, 153, 131, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #fcad9c 4px, rgba(252, 153, 131, 0.2) 4px, transparent 25%);
@@ -9412,40 +9399,40 @@ main[data-theme="2"]:after {
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
-  main[data-theme="2"]:after {
+  #layout[data-theme="2"] main:after {
     background-color: rgba(63, 54, 52, 0.95);
   }
 }
-main[data-theme="2"] .infos-fleet h3[data-content],
-main[data-theme="2"] .infos-fleet h4[data-content],
-main[data-theme="2"] .infos-fleet h5[data-content] {
+#layout[data-theme="2"] .infos-fleet h3[data-content],
+#layout[data-theme="2"] .infos-fleet h4[data-content],
+#layout[data-theme="2"] .infos-fleet h5[data-content] {
   color: #f59d89;
 }
-main[data-theme="2"] .infos-fleet h3[data-content]:before,
-main[data-theme="2"] .infos-fleet h4[data-content]:before,
-main[data-theme="2"] .infos-fleet h5[data-content]:before {
+#layout[data-theme="2"] .infos-fleet h3[data-content]:before,
+#layout[data-theme="2"] .infos-fleet h4[data-content]:before,
+#layout[data-theme="2"] .infos-fleet h5[data-content]:before {
   color: #f9f6f6;
 }
-main[data-theme="2"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="2"] .infos-fleet > header h3:not([data-content]) {
   color: #b8867a;
 }
-main[data-theme="2"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="2"] .infos-fleet > header h3[data-content] {
   color: #fb846a;
 }
-main[data-theme="2"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="2"] .infos-fleet > header h3[data-content]:before {
   color: #fff3f0;
 }
-main[data-theme="2"] .infos-fleet .fleetships {
+#layout[data-theme="2"] .infos-fleet .fleetships {
   color: rgba(254, 235, 230, 0.75);
 }
-main[data-theme="2"] .infos-fleet .ship:before {
+#layout[data-theme="2"] .infos-fleet .ship:before {
   border-right-color: rgba(255, 243, 240, 0.8);
   filter: drop-shadow(0 0 10px	rgba(255, 243, 240, 0.8));
   -webkit-filter: drop-shadow(0 0 10px	rgba(255, 243, 240, 0.8));
   -moz-filter: drop-shadow(0 0 10px	rgba(255, 243, 240, 0.8));
   -ms-filter: drop-shadow(0 0 10px	rgba(255, 243, 240, 0.8));
 }
-main[data-theme="2"] .infos-fleet .ship > dt {
+#layout[data-theme="2"] .infos-fleet .ship > dt {
   /*
 						&>div{
 							h4, h5{
@@ -9461,11 +9448,11 @@ main[data-theme="2"] .infos-fleet .ship > dt {
 							}
 						}*/
 }
-main[data-theme="2"] .infos-fleet .ship > dt > s:after {
+#layout[data-theme="2"] .infos-fleet .ship > dt > s:after {
   background: -webkit-linear-gradient(left, rgba(254, 235, 230, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(254, 235, 230, 0.5) 25%, transparent) repeat-y 0 0;
 }
-main[data-theme="2"] .infos-fleet .ship:hover {
+#layout[data-theme="2"] .infos-fleet .ship:hover {
   /*
 						&>dt{
 							&>div{
@@ -9479,16 +9466,16 @@ main[data-theme="2"] .infos-fleet .ship:hover {
 						}
 						*/
 }
-main[data-theme="2"] .infos-fleet .ship:hover:before {
+#layout[data-theme="2"] .infos-fleet .ship:hover:before {
   border-right-color: rgba(252, 173, 156, 0.95);
 }
-main[data-theme="2"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
+#layout[data-theme="2"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(225, 216, 214, 0.75);
 }
-main[data-theme="2"] .infos-fleet .ship:not([data-shipid]) > dt > div {
+#layout[data-theme="2"] .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #fee2dc;
 }
-main[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
+#layout[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
 							&>.info{
 								//.convertColor(hsla(@hue, 100%, 95%, .95));
@@ -9497,17 +9484,17 @@ main[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
 							}
 							*/
 }
-main[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
+#layout[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   background: -webkit-linear-gradient(left, rgba(18, 9, 7, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(18, 9, 7, 0.4) 50%, transparent);
 }
-main[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
+#layout[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
   color: #feebe6;
 }
-main[data-theme="2"] .infos-fleet .equipment-name {
+#layout[data-theme="2"] .infos-fleet .equipment-name {
   color: #fee6e1;
 }
-main[data-theme="3"]:after {
+#layout[data-theme="3"] main:after {
   background-color: rgba(63, 61, 52, 0.75);
   background-image: -webkit-linear-gradient(top, #fff099 4px, rgba(255, 236, 128, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #fff099 4px, rgba(255, 236, 128, 0.2) 4px, transparent 25%);
@@ -9515,40 +9502,40 @@ main[data-theme="3"]:after {
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
-  main[data-theme="3"]:after {
+  #layout[data-theme="3"] main:after {
     background-color: rgba(63, 61, 52, 0.95);
   }
 }
-main[data-theme="3"] .infos-fleet h3[data-content],
-main[data-theme="3"] .infos-fleet h4[data-content],
-main[data-theme="3"] .infos-fleet h5[data-content] {
+#layout[data-theme="3"] .infos-fleet h3[data-content],
+#layout[data-theme="3"] .infos-fleet h4[data-content],
+#layout[data-theme="3"] .infos-fleet h5[data-content] {
   color: #f9e786;
 }
-main[data-theme="3"] .infos-fleet h3[data-content]:before,
-main[data-theme="3"] .infos-fleet h4[data-content]:before,
-main[data-theme="3"] .infos-fleet h5[data-content]:before {
+#layout[data-theme="3"] .infos-fleet h3[data-content]:before,
+#layout[data-theme="3"] .infos-fleet h4[data-content]:before,
+#layout[data-theme="3"] .infos-fleet h5[data-content]:before {
   color: #f9f9f6;
 }
-main[data-theme="3"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="3"] .infos-fleet > header h3:not([data-content]) {
   color: #bdb275;
 }
-main[data-theme="3"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="3"] .infos-fleet > header h3[data-content] {
   color: #ffe866;
 }
-main[data-theme="3"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="3"] .infos-fleet > header h3[data-content]:before {
   color: #fffdf0;
 }
-main[data-theme="3"] .infos-fleet .fleetships {
+#layout[data-theme="3"] .infos-fleet .fleetships {
   color: rgba(255, 251, 229, 0.75);
 }
-main[data-theme="3"] .infos-fleet .ship:before {
+#layout[data-theme="3"] .infos-fleet .ship:before {
   border-right-color: rgba(255, 253, 240, 0.8);
   filter: drop-shadow(0 0 10px	rgba(255, 253, 240, 0.8));
   -webkit-filter: drop-shadow(0 0 10px	rgba(255, 253, 240, 0.8));
   -moz-filter: drop-shadow(0 0 10px	rgba(255, 253, 240, 0.8));
   -ms-filter: drop-shadow(0 0 10px	rgba(255, 253, 240, 0.8));
 }
-main[data-theme="3"] .infos-fleet .ship > dt {
+#layout[data-theme="3"] .infos-fleet .ship > dt {
   /*
 						&>div{
 							h4, h5{
@@ -9564,11 +9551,11 @@ main[data-theme="3"] .infos-fleet .ship > dt {
 							}
 						}*/
 }
-main[data-theme="3"] .infos-fleet .ship > dt > s:after {
+#layout[data-theme="3"] .infos-fleet .ship > dt > s:after {
   background: -webkit-linear-gradient(left, rgba(255, 251, 229, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(255, 251, 229, 0.5) 25%, transparent) repeat-y 0 0;
 }
-main[data-theme="3"] .infos-fleet .ship:hover {
+#layout[data-theme="3"] .infos-fleet .ship:hover {
   /*
 						&>dt{
 							&>div{
@@ -9582,16 +9569,16 @@ main[data-theme="3"] .infos-fleet .ship:hover {
 						}
 						*/
 }
-main[data-theme="3"] .infos-fleet .ship:hover:before {
+#layout[data-theme="3"] .infos-fleet .ship:hover:before {
   border-right-color: rgba(255, 240, 153, 0.95);
 }
-main[data-theme="3"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
+#layout[data-theme="3"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(226, 224, 212, 0.75);
 }
-main[data-theme="3"] .infos-fleet .ship:not([data-shipid]) > dt > div {
+#layout[data-theme="3"] .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #fffadb;
 }
-main[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
+#layout[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
 							&>.info{
 								//.convertColor(hsla(@hue, 100%, 95%, .95));
@@ -9600,17 +9587,17 @@ main[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
 							}
 							*/
 }
-main[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
+#layout[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   background: -webkit-linear-gradient(left, rgba(19, 17, 6, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(19, 17, 6, 0.4) 50%, transparent);
 }
-main[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
+#layout[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
   color: #fffbe5;
 }
-main[data-theme="3"] .infos-fleet .equipment-name {
+#layout[data-theme="3"] .infos-fleet .equipment-name {
   color: #fffae0;
 }
-main[data-theme="4"]:after {
+#layout[data-theme="4"] main:after {
   background-color: rgba(57, 57, 57, 0.75);
   background-image: -webkit-linear-gradient(top, #cafa9e 4px, rgba(189, 249, 134, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #cafa9e 4px, rgba(189, 249, 134, 0.2) 4px, transparent 25%);
@@ -9618,40 +9605,40 @@ main[data-theme="4"]:after {
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
-  main[data-theme="4"]:after {
+  #layout[data-theme="4"] main:after {
     background-color: rgba(57, 63, 52, 0.95);
   }
 }
-main[data-theme="4"] .infos-fleet h3[data-content],
-main[data-theme="4"] .infos-fleet h4[data-content],
-main[data-theme="4"] .infos-fleet h5[data-content] {
+#layout[data-theme="4"] .infos-fleet h3[data-content],
+#layout[data-theme="4"] .infos-fleet h4[data-content],
+#layout[data-theme="4"] .infos-fleet h5[data-content] {
   color: #bef28c;
 }
-main[data-theme="4"] .infos-fleet h3[data-content]:before,
-main[data-theme="4"] .infos-fleet h4[data-content]:before,
-main[data-theme="4"] .infos-fleet h5[data-content]:before {
+#layout[data-theme="4"] .infos-fleet h3[data-content]:before,
+#layout[data-theme="4"] .infos-fleet h4[data-content]:before,
+#layout[data-theme="4"] .infos-fleet h5[data-content]:before {
   color: #f7f8f6;
 }
-main[data-theme="4"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="4"] .infos-fleet > header h3:not([data-content]) {
   color: #98b380;
 }
-main[data-theme="4"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="4"] .infos-fleet > header h3[data-content] {
   color: #b0f76e;
 }
-main[data-theme="4"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="4"] .infos-fleet > header h3[data-content]:before {
   color: #f7fef0;
 }
-main[data-theme="4"] .infos-fleet .fleetships {
+#layout[data-theme="4"] .infos-fleet .fleetships {
   color: rgba(242, 254, 231, 0.75);
 }
-main[data-theme="4"] .infos-fleet .ship:before {
+#layout[data-theme="4"] .infos-fleet .ship:before {
   border-right-color: rgba(247, 254, 240, 0.8);
   filter: drop-shadow(0 0 10px	rgba(247, 254, 240, 0.8));
   -webkit-filter: drop-shadow(0 0 10px	rgba(247, 254, 240, 0.8));
   -moz-filter: drop-shadow(0 0 10px	rgba(247, 254, 240, 0.8));
   -ms-filter: drop-shadow(0 0 10px	rgba(247, 254, 240, 0.8));
 }
-main[data-theme="4"] .infos-fleet .ship > dt {
+#layout[data-theme="4"] .infos-fleet .ship > dt {
   /*
 						&>div{
 							h4, h5{
@@ -9667,11 +9654,11 @@ main[data-theme="4"] .infos-fleet .ship > dt {
 							}
 						}*/
 }
-main[data-theme="4"] .infos-fleet .ship > dt > s:after {
+#layout[data-theme="4"] .infos-fleet .ship > dt > s:after {
   background: -webkit-linear-gradient(left, rgba(242, 254, 231, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(242, 254, 231, 0.5) 25%, transparent) repeat-y 0 0;
 }
-main[data-theme="4"] .infos-fleet .ship:hover {
+#layout[data-theme="4"] .infos-fleet .ship:hover {
   /*
 						&>dt{
 							&>div{
@@ -9685,16 +9672,16 @@ main[data-theme="4"] .infos-fleet .ship:hover {
 						}
 						*/
 }
-main[data-theme="4"] .infos-fleet .ship:hover:before {
+#layout[data-theme="4"] .infos-fleet .ship:hover:before {
   border-right-color: rgba(202, 250, 158, 0.95);
 }
-main[data-theme="4"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
+#layout[data-theme="4"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(219, 223, 216, 0.75);
 }
-main[data-theme="4"] .infos-fleet .ship:not([data-shipid]) > dt > div {
+#layout[data-theme="4"] .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #edfddd;
 }
-main[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
+#layout[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
 							&>.info{
 								//.convertColor(hsla(@hue, 100%, 95%, .95));
@@ -9703,17 +9690,17 @@ main[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
 							}
 							*/
 }
-main[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
+#layout[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   background: -webkit-linear-gradient(left, rgba(13, 18, 8, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(13, 18, 8, 0.4) 50%, transparent);
 }
-main[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
+#layout[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
   color: #f2fee7;
 }
-main[data-theme="4"] .infos-fleet .equipment-name {
+#layout[data-theme="4"] .infos-fleet .equipment-name {
   color: #effde2;
 }
-main[data-theme="5"]:after {
+#layout[data-theme="5"] main:after {
   background-color: rgba(52, 63, 54, 0.75);
   background-image: -webkit-linear-gradient(top, #99ffac 4px, rgba(128, 255, 151, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #99ffac 4px, rgba(128, 255, 151, 0.2) 4px, transparent 25%);
@@ -9721,40 +9708,40 @@ main[data-theme="5"]:after {
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
-  main[data-theme="5"]:after {
+  #layout[data-theme="5"] main:after {
     background-color: rgba(52, 63, 54, 0.95);
   }
 }
-main[data-theme="5"] .infos-fleet h3[data-content],
-main[data-theme="5"] .infos-fleet h4[data-content],
-main[data-theme="5"] .infos-fleet h5[data-content] {
+#layout[data-theme="5"] .infos-fleet h3[data-content],
+#layout[data-theme="5"] .infos-fleet h4[data-content],
+#layout[data-theme="5"] .infos-fleet h5[data-content] {
   color: #86f99b;
 }
-main[data-theme="5"] .infos-fleet h3[data-content]:before,
-main[data-theme="5"] .infos-fleet h4[data-content]:before,
-main[data-theme="5"] .infos-fleet h5[data-content]:before {
+#layout[data-theme="5"] .infos-fleet h3[data-content]:before,
+#layout[data-theme="5"] .infos-fleet h4[data-content]:before,
+#layout[data-theme="5"] .infos-fleet h5[data-content]:before {
   color: #f6f9f6;
 }
-main[data-theme="5"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="5"] .infos-fleet > header h3:not([data-content]) {
   color: #75bd82;
 }
-main[data-theme="5"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="5"] .infos-fleet > header h3[data-content] {
   color: #66ff82;
 }
-main[data-theme="5"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="5"] .infos-fleet > header h3[data-content]:before {
   color: #f0fff3;
 }
-main[data-theme="5"] .infos-fleet .fleetships {
+#layout[data-theme="5"] .infos-fleet .fleetships {
   color: rgba(229, 255, 234, 0.75);
 }
-main[data-theme="5"] .infos-fleet .ship:before {
+#layout[data-theme="5"] .infos-fleet .ship:before {
   border-right-color: rgba(240, 255, 243, 0.8);
   filter: drop-shadow(0 0 10px	rgba(240, 255, 243, 0.8));
   -webkit-filter: drop-shadow(0 0 10px	rgba(240, 255, 243, 0.8));
   -moz-filter: drop-shadow(0 0 10px	rgba(240, 255, 243, 0.8));
   -ms-filter: drop-shadow(0 0 10px	rgba(240, 255, 243, 0.8));
 }
-main[data-theme="5"] .infos-fleet .ship > dt {
+#layout[data-theme="5"] .infos-fleet .ship > dt {
   /*
 						&>div{
 							h4, h5{
@@ -9770,11 +9757,11 @@ main[data-theme="5"] .infos-fleet .ship > dt {
 							}
 						}*/
 }
-main[data-theme="5"] .infos-fleet .ship > dt > s:after {
+#layout[data-theme="5"] .infos-fleet .ship > dt > s:after {
   background: -webkit-linear-gradient(left, rgba(229, 255, 234, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(229, 255, 234, 0.5) 25%, transparent) repeat-y 0 0;
 }
-main[data-theme="5"] .infos-fleet .ship:hover {
+#layout[data-theme="5"] .infos-fleet .ship:hover {
   /*
 						&>dt{
 							&>div{
@@ -9788,16 +9775,16 @@ main[data-theme="5"] .infos-fleet .ship:hover {
 						}
 						*/
 }
-main[data-theme="5"] .infos-fleet .ship:hover:before {
+#layout[data-theme="5"] .infos-fleet .ship:hover:before {
   border-right-color: rgba(153, 255, 172, 0.95);
 }
-main[data-theme="5"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
+#layout[data-theme="5"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(212, 226, 215, 0.75);
 }
-main[data-theme="5"] .infos-fleet .ship:not([data-shipid]) > dt > div {
+#layout[data-theme="5"] .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #dbffe2;
 }
-main[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
+#layout[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
 							&>.info{
 								//.convertColor(hsla(@hue, 100%, 95%, .95));
@@ -9806,17 +9793,17 @@ main[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
 							}
 							*/
 }
-main[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
+#layout[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   background: -webkit-linear-gradient(left, rgba(6, 19, 9, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(6, 19, 9, 0.4) 50%, transparent);
 }
-main[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
+#layout[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
   color: #e5ffea;
 }
-main[data-theme="5"] .infos-fleet .equipment-name {
+#layout[data-theme="5"] .infos-fleet .equipment-name {
   color: #e0ffe6;
 }
-main[data-theme="6"]:after {
+#layout[data-theme="6"] main:after {
   background-color: rgba(52, 63, 61, 0.75);
   background-image: -webkit-linear-gradient(top, #99fff0 4px, rgba(128, 255, 236, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #99fff0 4px, rgba(128, 255, 236, 0.2) 4px, transparent 25%);
@@ -9824,40 +9811,40 @@ main[data-theme="6"]:after {
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
-  main[data-theme="6"]:after {
+  #layout[data-theme="6"] main:after {
     background-color: rgba(52, 63, 61, 0.95);
   }
 }
-main[data-theme="6"] .infos-fleet h3[data-content],
-main[data-theme="6"] .infos-fleet h4[data-content],
-main[data-theme="6"] .infos-fleet h5[data-content] {
+#layout[data-theme="6"] .infos-fleet h3[data-content],
+#layout[data-theme="6"] .infos-fleet h4[data-content],
+#layout[data-theme="6"] .infos-fleet h5[data-content] {
   color: #86f9e7;
 }
-main[data-theme="6"] .infos-fleet h3[data-content]:before,
-main[data-theme="6"] .infos-fleet h4[data-content]:before,
-main[data-theme="6"] .infos-fleet h5[data-content]:before {
+#layout[data-theme="6"] .infos-fleet h3[data-content]:before,
+#layout[data-theme="6"] .infos-fleet h4[data-content]:before,
+#layout[data-theme="6"] .infos-fleet h5[data-content]:before {
   color: #f6f9f9;
 }
-main[data-theme="6"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="6"] .infos-fleet > header h3:not([data-content]) {
   color: #75bdb2;
 }
-main[data-theme="6"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="6"] .infos-fleet > header h3[data-content] {
   color: #66ffe8;
 }
-main[data-theme="6"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="6"] .infos-fleet > header h3[data-content]:before {
   color: #f0fffd;
 }
-main[data-theme="6"] .infos-fleet .fleetships {
+#layout[data-theme="6"] .infos-fleet .fleetships {
   color: rgba(229, 255, 251, 0.75);
 }
-main[data-theme="6"] .infos-fleet .ship:before {
+#layout[data-theme="6"] .infos-fleet .ship:before {
   border-right-color: rgba(240, 255, 253, 0.8);
   filter: drop-shadow(0 0 10px	rgba(240, 255, 253, 0.8));
   -webkit-filter: drop-shadow(0 0 10px	rgba(240, 255, 253, 0.8));
   -moz-filter: drop-shadow(0 0 10px	rgba(240, 255, 253, 0.8));
   -ms-filter: drop-shadow(0 0 10px	rgba(240, 255, 253, 0.8));
 }
-main[data-theme="6"] .infos-fleet .ship > dt {
+#layout[data-theme="6"] .infos-fleet .ship > dt {
   /*
 						&>div{
 							h4, h5{
@@ -9873,11 +9860,11 @@ main[data-theme="6"] .infos-fleet .ship > dt {
 							}
 						}*/
 }
-main[data-theme="6"] .infos-fleet .ship > dt > s:after {
+#layout[data-theme="6"] .infos-fleet .ship > dt > s:after {
   background: -webkit-linear-gradient(left, rgba(229, 255, 251, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(229, 255, 251, 0.5) 25%, transparent) repeat-y 0 0;
 }
-main[data-theme="6"] .infos-fleet .ship:hover {
+#layout[data-theme="6"] .infos-fleet .ship:hover {
   /*
 						&>dt{
 							&>div{
@@ -9891,16 +9878,16 @@ main[data-theme="6"] .infos-fleet .ship:hover {
 						}
 						*/
 }
-main[data-theme="6"] .infos-fleet .ship:hover:before {
+#layout[data-theme="6"] .infos-fleet .ship:hover:before {
   border-right-color: rgba(153, 255, 240, 0.95);
 }
-main[data-theme="6"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
+#layout[data-theme="6"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(212, 226, 224, 0.75);
 }
-main[data-theme="6"] .infos-fleet .ship:not([data-shipid]) > dt > div {
+#layout[data-theme="6"] .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #dbfffa;
 }
-main[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
+#layout[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
 							&>.info{
 								//.convertColor(hsla(@hue, 100%, 95%, .95));
@@ -9909,17 +9896,17 @@ main[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
 							}
 							*/
 }
-main[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
+#layout[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   background: -webkit-linear-gradient(left, rgba(6, 19, 17, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(6, 19, 17, 0.4) 50%, transparent);
 }
-main[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
+#layout[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
   color: #e5fffb;
 }
-main[data-theme="6"] .infos-fleet .equipment-name {
+#layout[data-theme="6"] .infos-fleet .equipment-name {
   color: #e0fffa;
 }
-main[data-theme="7"]:after {
+#layout[data-theme="7"] main:after {
   background-color: rgba(49, 57, 66, 0.75);
   background-image: -webkit-linear-gradient(top, #99caff 4px, rgba(128, 189, 255, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #99caff 4px, rgba(128, 189, 255, 0.2) 4px, transparent 25%);
@@ -9927,40 +9914,40 @@ main[data-theme="7"]:after {
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
-  main[data-theme="7"]:after {
+  #layout[data-theme="7"] main:after {
     background-color: rgba(52, 57, 63, 0.95);
   }
 }
-main[data-theme="7"] .infos-fleet h3[data-content],
-main[data-theme="7"] .infos-fleet h4[data-content],
-main[data-theme="7"] .infos-fleet h5[data-content] {
+#layout[data-theme="7"] .infos-fleet h3[data-content],
+#layout[data-theme="7"] .infos-fleet h4[data-content],
+#layout[data-theme="7"] .infos-fleet h5[data-content] {
   color: #83bdfc;
 }
-main[data-theme="7"] .infos-fleet h3[data-content]:before,
-main[data-theme="7"] .infos-fleet h4[data-content]:before,
-main[data-theme="7"] .infos-fleet h5[data-content]:before {
+#layout[data-theme="7"] .infos-fleet h3[data-content]:before,
+#layout[data-theme="7"] .infos-fleet h4[data-content]:before,
+#layout[data-theme="7"] .infos-fleet h5[data-content]:before {
   color: #f5f7fa;
 }
-main[data-theme="7"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="7"] .infos-fleet > header h3:not([data-content]) {
   color: #7098c2;
 }
-main[data-theme="7"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="7"] .infos-fleet > header h3[data-content] {
   color: #66b0ff;
 }
-main[data-theme="7"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="7"] .infos-fleet > header h3[data-content]:before {
   color: #f0f7ff;
 }
-main[data-theme="7"] .infos-fleet .fleetships {
+#layout[data-theme="7"] .infos-fleet .fleetships {
   color: rgba(229, 242, 255, 0.75);
 }
-main[data-theme="7"] .infos-fleet .ship:before {
+#layout[data-theme="7"] .infos-fleet .ship:before {
   border-right-color: rgba(240, 247, 255, 0.8);
   filter: drop-shadow(0 0 10px	rgba(240, 247, 255, 0.8));
   -webkit-filter: drop-shadow(0 0 10px	rgba(240, 247, 255, 0.8));
   -moz-filter: drop-shadow(0 0 10px	rgba(240, 247, 255, 0.8));
   -ms-filter: drop-shadow(0 0 10px	rgba(240, 247, 255, 0.8));
 }
-main[data-theme="7"] .infos-fleet .ship > dt {
+#layout[data-theme="7"] .infos-fleet .ship > dt {
   /*
 						&>div{
 							h4, h5{
@@ -9976,11 +9963,11 @@ main[data-theme="7"] .infos-fleet .ship > dt {
 							}
 						}*/
 }
-main[data-theme="7"] .infos-fleet .ship > dt > s:after {
+#layout[data-theme="7"] .infos-fleet .ship > dt > s:after {
   background: -webkit-linear-gradient(left, rgba(229, 242, 255, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(229, 242, 255, 0.5) 25%, transparent) repeat-y 0 0;
 }
-main[data-theme="7"] .infos-fleet .ship:hover {
+#layout[data-theme="7"] .infos-fleet .ship:hover {
   /*
 						&>dt{
 							&>div{
@@ -9994,16 +9981,16 @@ main[data-theme="7"] .infos-fleet .ship:hover {
 						}
 						*/
 }
-main[data-theme="7"] .infos-fleet .ship:hover:before {
+#layout[data-theme="7"] .infos-fleet .ship:hover:before {
   border-right-color: rgba(153, 202, 255, 0.95);
 }
-main[data-theme="7"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
+#layout[data-theme="7"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(210, 219, 228, 0.75);
 }
-main[data-theme="7"] .infos-fleet .ship:not([data-shipid]) > dt > div {
+#layout[data-theme="7"] .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #dbedff;
 }
-main[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
+#layout[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
 							&>.info{
 								//.convertColor(hsla(@hue, 100%, 95%, .95));
@@ -10012,17 +9999,17 @@ main[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
 							}
 							*/
 }
-main[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
+#layout[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   background: -webkit-linear-gradient(left, rgba(6, 13, 20, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(6, 13, 20, 0.4) 50%, transparent);
 }
-main[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
+#layout[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
   color: #e5f2ff;
 }
-main[data-theme="7"] .infos-fleet .equipment-name {
+#layout[data-theme="7"] .infos-fleet .equipment-name {
   color: #e0efff;
 }
-main[data-theme="8"]:after {
+#layout[data-theme="8"] main:after {
   background-color: rgba(66, 63, 77, 0.75);
   background-image: -webkit-linear-gradient(top, #c1b3ff 4px, rgba(172, 153, 255, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #c1b3ff 4px, rgba(172, 153, 255, 0.2) 4px, transparent 25%);
@@ -10030,40 +10017,40 @@ main[data-theme="8"]:after {
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
-  main[data-theme="8"]:after {
+  #layout[data-theme="8"] main:after {
     background-color: rgba(54, 52, 63, 0.95);
   }
 }
-main[data-theme="8"] .infos-fleet h3[data-content],
-main[data-theme="8"] .infos-fleet h4[data-content],
-main[data-theme="8"] .infos-fleet h5[data-content] {
+#layout[data-theme="8"] .infos-fleet h3[data-content],
+#layout[data-theme="8"] .infos-fleet h4[data-content],
+#layout[data-theme="8"] .infos-fleet h5[data-content] {
   color: #af9efa;
 }
-main[data-theme="8"] .infos-fleet h3[data-content]:before,
-main[data-theme="8"] .infos-fleet h4[data-content]:before,
-main[data-theme="8"] .infos-fleet h5[data-content]:before {
+#layout[data-theme="8"] .infos-fleet h3[data-content]:before,
+#layout[data-theme="8"] .infos-fleet h4[data-content]:before,
+#layout[data-theme="8"] .infos-fleet h5[data-content]:before {
   color: #ffffff;
 }
-main[data-theme="8"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="8"] .infos-fleet > header h3:not([data-content]) {
   color: #9287c5;
 }
-main[data-theme="8"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="8"] .infos-fleet > header h3[data-content] {
   color: #9780ff;
 }
-main[data-theme="8"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="8"] .infos-fleet > header h3[data-content]:before {
   color: #ffffff;
 }
-main[data-theme="8"] .infos-fleet .fleetships {
+#layout[data-theme="8"] .infos-fleet .fleetships {
   color: rgba(255, 255, 255, 0.75);
 }
-main[data-theme="8"] .infos-fleet .ship:before {
+#layout[data-theme="8"] .infos-fleet .ship:before {
   border-right-color: rgba(255, 255, 255, 0.8);
   filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
   -webkit-filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
   -moz-filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
   -ms-filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
 }
-main[data-theme="8"] .infos-fleet .ship > dt {
+#layout[data-theme="8"] .infos-fleet .ship > dt {
   /*
 						&>div{
 							h4, h5{
@@ -10079,11 +10066,11 @@ main[data-theme="8"] .infos-fleet .ship > dt {
 							}
 						}*/
 }
-main[data-theme="8"] .infos-fleet .ship > dt > s:after {
+#layout[data-theme="8"] .infos-fleet .ship > dt > s:after {
   background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(255, 255, 255, 0.5) 25%, transparent) repeat-y 0 0;
 }
-main[data-theme="8"] .infos-fleet .ship:hover {
+#layout[data-theme="8"] .infos-fleet .ship:hover {
   /*
 						&>dt{
 							&>div{
@@ -10097,16 +10084,16 @@ main[data-theme="8"] .infos-fleet .ship:hover {
 						}
 						*/
 }
-main[data-theme="8"] .infos-fleet .ship:hover:before {
+#layout[data-theme="8"] .infos-fleet .ship:hover:before {
   border-right-color: rgba(193, 179, 255, 0.95);
 }
-main[data-theme="8"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
+#layout[data-theme="8"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(229, 227, 237, 0.75);
 }
-main[data-theme="8"] .infos-fleet .ship:not([data-shipid]) > dt > div {
+#layout[data-theme="8"] .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #f7f5ff;
 }
-main[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
+#layout[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
 							&>.info{
 								//.convertColor(hsla(@hue, 100%, 95%, .95));
@@ -10115,17 +10102,17 @@ main[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
 							}
 							*/
 }
-main[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
+#layout[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   background: -webkit-linear-gradient(left, rgba(17, 13, 38, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(17, 13, 38, 0.4) 50%, transparent);
 }
-main[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
+#layout[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
   color: #ffffff;
 }
-main[data-theme="8"] .infos-fleet .equipment-name {
+#layout[data-theme="8"] .infos-fleet .equipment-name {
   color: #fbfaff;
 }
-main[data-theme="9"]:after {
+#layout[data-theme="9"] main:after {
   background-color: rgba(61, 52, 63, 0.75);
   background-image: -webkit-linear-gradient(top, #f099ff 4px, rgba(236, 128, 255, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #f099ff 4px, rgba(236, 128, 255, 0.2) 4px, transparent 25%);
@@ -10133,40 +10120,40 @@ main[data-theme="9"]:after {
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
-  main[data-theme="9"]:after {
+  #layout[data-theme="9"] main:after {
     background-color: rgba(61, 52, 63, 0.95);
   }
 }
-main[data-theme="9"] .infos-fleet h3[data-content],
-main[data-theme="9"] .infos-fleet h4[data-content],
-main[data-theme="9"] .infos-fleet h5[data-content] {
+#layout[data-theme="9"] .infos-fleet h3[data-content],
+#layout[data-theme="9"] .infos-fleet h4[data-content],
+#layout[data-theme="9"] .infos-fleet h5[data-content] {
   color: #e786f9;
 }
-main[data-theme="9"] .infos-fleet h3[data-content]:before,
-main[data-theme="9"] .infos-fleet h4[data-content]:before,
-main[data-theme="9"] .infos-fleet h5[data-content]:before {
+#layout[data-theme="9"] .infos-fleet h3[data-content]:before,
+#layout[data-theme="9"] .infos-fleet h4[data-content]:before,
+#layout[data-theme="9"] .infos-fleet h5[data-content]:before {
   color: #f9f6f9;
 }
-main[data-theme="9"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="9"] .infos-fleet > header h3:not([data-content]) {
   color: #b275bd;
 }
-main[data-theme="9"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="9"] .infos-fleet > header h3[data-content] {
   color: #e866ff;
 }
-main[data-theme="9"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="9"] .infos-fleet > header h3[data-content]:before {
   color: #fdf0ff;
 }
-main[data-theme="9"] .infos-fleet .fleetships {
+#layout[data-theme="9"] .infos-fleet .fleetships {
   color: rgba(251, 229, 255, 0.75);
 }
-main[data-theme="9"] .infos-fleet .ship:before {
+#layout[data-theme="9"] .infos-fleet .ship:before {
   border-right-color: rgba(253, 240, 255, 0.8);
   filter: drop-shadow(0 0 10px	rgba(253, 240, 255, 0.8));
   -webkit-filter: drop-shadow(0 0 10px	rgba(253, 240, 255, 0.8));
   -moz-filter: drop-shadow(0 0 10px	rgba(253, 240, 255, 0.8));
   -ms-filter: drop-shadow(0 0 10px	rgba(253, 240, 255, 0.8));
 }
-main[data-theme="9"] .infos-fleet .ship > dt {
+#layout[data-theme="9"] .infos-fleet .ship > dt {
   /*
 						&>div{
 							h4, h5{
@@ -10182,11 +10169,11 @@ main[data-theme="9"] .infos-fleet .ship > dt {
 							}
 						}*/
 }
-main[data-theme="9"] .infos-fleet .ship > dt > s:after {
+#layout[data-theme="9"] .infos-fleet .ship > dt > s:after {
   background: -webkit-linear-gradient(left, rgba(251, 229, 255, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(251, 229, 255, 0.5) 25%, transparent) repeat-y 0 0;
 }
-main[data-theme="9"] .infos-fleet .ship:hover {
+#layout[data-theme="9"] .infos-fleet .ship:hover {
   /*
 						&>dt{
 							&>div{
@@ -10200,16 +10187,16 @@ main[data-theme="9"] .infos-fleet .ship:hover {
 						}
 						*/
 }
-main[data-theme="9"] .infos-fleet .ship:hover:before {
+#layout[data-theme="9"] .infos-fleet .ship:hover:before {
   border-right-color: rgba(240, 153, 255, 0.95);
 }
-main[data-theme="9"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
+#layout[data-theme="9"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(224, 212, 226, 0.75);
 }
-main[data-theme="9"] .infos-fleet .ship:not([data-shipid]) > dt > div {
+#layout[data-theme="9"] .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #fadbff;
 }
-main[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
+#layout[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
 							&>.info{
 								//.convertColor(hsla(@hue, 100%, 95%, .95));
@@ -10218,17 +10205,17 @@ main[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
 							}
 							*/
 }
-main[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
+#layout[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   background: -webkit-linear-gradient(left, rgba(17, 6, 19, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(17, 6, 19, 0.4) 50%, transparent);
 }
-main[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
+#layout[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
   color: #fbe5ff;
 }
-main[data-theme="9"] .infos-fleet .equipment-name {
+#layout[data-theme="9"] .infos-fleet .equipment-name {
   color: #fae0ff;
 }
-main[data-theme="10"]:after {
+#layout[data-theme="10"] main:after {
   background-color: rgba(77, 63, 70, 0.75);
   background-image: -webkit-linear-gradient(top, #ffb3d7 4px, rgba(255, 153, 202, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #ffb3d7 4px, rgba(255, 153, 202, 0.2) 4px, transparent 25%);
@@ -10236,40 +10223,40 @@ main[data-theme="10"]:after {
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
-  main[data-theme="10"]:after {
+  #layout[data-theme="10"] main:after {
     background-color: rgba(63, 52, 57, 0.95);
   }
 }
-main[data-theme="10"] .infos-fleet h3[data-content],
-main[data-theme="10"] .infos-fleet h4[data-content],
-main[data-theme="10"] .infos-fleet h5[data-content] {
+#layout[data-theme="10"] .infos-fleet h3[data-content],
+#layout[data-theme="10"] .infos-fleet h4[data-content],
+#layout[data-theme="10"] .infos-fleet h5[data-content] {
   color: #fa9eca;
 }
-main[data-theme="10"] .infos-fleet h3[data-content]:before,
-main[data-theme="10"] .infos-fleet h4[data-content]:before,
-main[data-theme="10"] .infos-fleet h5[data-content]:before {
+#layout[data-theme="10"] .infos-fleet h3[data-content]:before,
+#layout[data-theme="10"] .infos-fleet h4[data-content]:before,
+#layout[data-theme="10"] .infos-fleet h5[data-content]:before {
   color: #ffffff;
 }
-main[data-theme="10"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="10"] .infos-fleet > header h3:not([data-content]) {
   color: #c587a5;
 }
-main[data-theme="10"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="10"] .infos-fleet > header h3[data-content] {
   color: #ff80bd;
 }
-main[data-theme="10"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="10"] .infos-fleet > header h3[data-content]:before {
   color: #ffffff;
 }
-main[data-theme="10"] .infos-fleet .fleetships {
+#layout[data-theme="10"] .infos-fleet .fleetships {
   color: rgba(255, 255, 255, 0.75);
 }
-main[data-theme="10"] .infos-fleet .ship:before {
+#layout[data-theme="10"] .infos-fleet .ship:before {
   border-right-color: rgba(255, 255, 255, 0.8);
   filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
   -webkit-filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
   -moz-filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
   -ms-filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
 }
-main[data-theme="10"] .infos-fleet .ship > dt {
+#layout[data-theme="10"] .infos-fleet .ship > dt {
   /*
 						&>div{
 							h4, h5{
@@ -10285,11 +10272,11 @@ main[data-theme="10"] .infos-fleet .ship > dt {
 							}
 						}*/
 }
-main[data-theme="10"] .infos-fleet .ship > dt > s:after {
+#layout[data-theme="10"] .infos-fleet .ship > dt > s:after {
   background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(255, 255, 255, 0.5) 25%, transparent) repeat-y 0 0;
 }
-main[data-theme="10"] .infos-fleet .ship:hover {
+#layout[data-theme="10"] .infos-fleet .ship:hover {
   /*
 						&>dt{
 							&>div{
@@ -10303,16 +10290,16 @@ main[data-theme="10"] .infos-fleet .ship:hover {
 						}
 						*/
 }
-main[data-theme="10"] .infos-fleet .ship:hover:before {
+#layout[data-theme="10"] .infos-fleet .ship:hover:before {
   border-right-color: rgba(255, 179, 215, 0.95);
 }
-main[data-theme="10"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
+#layout[data-theme="10"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(237, 227, 232, 0.75);
 }
-main[data-theme="10"] .infos-fleet .ship:not([data-shipid]) > dt > div {
+#layout[data-theme="10"] .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #fff5fa;
 }
-main[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
+#layout[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
 							&>.info{
 								//.convertColor(hsla(@hue, 100%, 95%, .95));
@@ -10321,14 +10308,14 @@ main[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
 							}
 							*/
 }
-main[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
+#layout[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   background: -webkit-linear-gradient(left, rgba(38, 13, 25, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(38, 13, 25, 0.4) 50%, transparent);
 }
-main[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
+#layout[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
   color: #ffffff;
 }
-main[data-theme="10"] .infos-fleet .equipment-name {
+#layout[data-theme="10"] .infos-fleet .equipment-name {
   color: #fffafc;
 }
 .menu.contextmenu-infos_fleet_themes > .body > div {
@@ -10735,6 +10722,9 @@ main[data-theme="10"] .infos-fleet .equipment-name {
     -webkit-flex-grow: 0;
         -ms-flex-positive: 0;
             flex-grow: 0;
+  }
+  .infos-fleet header h3 {
+    max-width: 100%;
   }
   .infos-fleet header .preview {
     position: relative;
@@ -13639,18 +13629,18 @@ body > .modal.update_journal.mod-blur-shot > div {
 #tip h4.item_equipable_on ~ span {
   display: inline-block;
 }
-main[data-theme="ships"]:after,
-main[data-theme="ship"]:after {
+#layout[data-theme="ships"] main:after,
+#layout[data-theme="ship"] main:after {
   background: rgba(37, 49, 55, 0.7);
 }
 @media all and (max-width: 720px) {
-  main[data-theme="ships"]:after,
-  main[data-theme="ship"]:after {
+  #layout[data-theme="ships"] main:after,
+  #layout[data-theme="ship"] main:after {
     background-color: rgba(37, 49, 55, 0.95);
   }
 }
-main[data-theme="ships"] ~ .nav-mask:before,
-main[data-theme="ship"] ~ .nav-mask:before {
+#layout[data-theme="ships"] nav,
+#layout[data-theme="ship"] nav {
   background: #123f54;
 }
 /*
@@ -13724,18 +13714,18 @@ main[data-theme="ship"] ~ .nav-mask:before {
   border-bottom-color: #4dc3ff;
   border-top-width: 0;
 }
-main[data-theme="entities"]:after,
-main[data-theme="entity"]:after {
+#layout[data-theme="entities"] main:after,
+#layout[data-theme="entity"] main:after {
   background: rgba(37, 55, 55, 0.7);
 }
 @media all and (max-width: 720px) {
-  main[data-theme="entities"]:after,
-  main[data-theme="entity"]:after {
+  #layout[data-theme="entities"] main:after,
+  #layout[data-theme="entity"] main:after {
     background-color: rgba(37, 55, 55, 0.95);
   }
 }
-main[data-theme="entities"] ~ .nav-mask:before,
-main[data-theme="entity"] ~ .nav-mask:before {
+#layout[data-theme="entities"] nav,
+#layout[data-theme="entity"] nav {
   background: #125454;
 }
 .page-container[page="entities"] {
@@ -13746,18 +13736,18 @@ main[data-theme="entity"] ~ .nav-mask:before {
 	background:	hsla(180, 20%, 18%, .70);
 }
 */
-main[data-theme="equipments"]:after,
-main[data-theme="equipment"]:after {
+#layout[data-theme="equipments"] main:after,
+#layout[data-theme="equipment"] main:after {
   background: rgba(37, 55, 46, 0.7);
 }
 @media all and (max-width: 720px) {
-  main[data-theme="equipments"]:after,
-  main[data-theme="equipment"]:after {
+  #layout[data-theme="equipments"] main:after,
+  #layout[data-theme="equipment"] main:after {
     background-color: rgba(37, 55, 46, 0.95);
   }
 }
-main[data-theme="equipments"] ~ .nav-mask:before,
-main[data-theme="equipment"] ~ .nav-mask:before {
+#layout[data-theme="equipments"] nav,
+#layout[data-theme="equipment"] nav {
   background: #125432;
 }
 .page-container[page="equipments"] .helper,
@@ -13781,15 +13771,15 @@ main[data-theme="equipment"] ~ .nav-mask:before {
 .page-container[page="equipments"] {
   border-width: 0 !important;
 }
-main[data-theme="arsenal"]:after {
+#layout[data-theme="arsenal"] main:after {
   background: rgba(43, 55, 37, 0.7);
 }
 @media all and (max-width: 720px) {
-  main[data-theme="arsenal"]:after {
+  #layout[data-theme="arsenal"] main:after {
     background-color: rgba(43, 55, 37, 0.95);
   }
 }
-main[data-theme="arsenal"] ~ .nav-mask:before {
+#layout[data-theme="arsenal"] nav {
   background: #285412;
 }
 .page-container[page="arsenal"] > input[type="radio"] {
@@ -14300,15 +14290,15 @@ main[data-theme="arsenal"] ~ .nav-mask:before {
     background-position: 0 0;
   }
 }
-main[data-theme="about"]:after {
+#layout[data-theme="about"] main:after {
   background: rgba(55, 37, 37, 0.7);
 }
 @media all and (max-width: 720px) {
-  main[data-theme="about"]:after {
+  #layout[data-theme="about"] main:after {
     background-color: rgba(55, 37, 37, 0.95);
   }
 }
-main[data-theme="about"] ~ .nav-mask:before {
+#layout[data-theme="about"] nav {
   background: #541212;
 }
 .page-container[page="about"] {
@@ -14554,15 +14544,15 @@ main[data-theme="about"] ~ .nav-mask:before {
 .page-container[page="home"] p {
   margin-top: 1em;
 }
-main[data-theme="calctp"]:after {
+#layout[data-theme="calctp"] main:after {
   background: rgba(55, 52, 37, 0.7);
 }
 @media all and (max-width: 720px) {
-  main[data-theme="calctp"]:after {
+  #layout[data-theme="calctp"] main:after {
     background-color: rgba(55, 52, 37, 0.95);
   }
 }
-main[data-theme="calctp"] ~ .nav-mask:before {
+#layout[data-theme="calctp"] nav {
   background: #544812;
 }
 .page-container[page="calctp"] {
