@@ -78,6 +78,9 @@ debug.init = function(){
 	top:		50%;
 	transform:	translateY(-50%);
 }
+.debug textarea{
+	background:	#000;
+}
 `))
 
 	// updater progress indicator
@@ -151,6 +154,7 @@ debug.init = function(){
 			.append(
 				debug._icons = $('<div class="icons"/>')
 			)
+		/*
 		node.fs.readFile(node.path.join(_g.root, 'source', 'less-app', 'icons.less'), 'utf8', function(err, data){
 			if( err || !data )
 				return
@@ -167,6 +171,159 @@ debug.init = function(){
 						}
 					}catch(e){}
 				}
+		})
+		*/
+		let data = node.fs.readFileSync(node.path.join(_g.root, 'source', 'less-app', 'icons.less'), 'utf8')
+			data = data.replace(/^\s*[\r\n]/gm, '')
+
+			let searchRes
+				,scrapePtrn = /\@iconcode\-([a-zA-Z0-9-_]+):[\t]*\"([^\"]+)\";/gi
+				while( (searchRes = scrapePtrn.exec(data)) !== null ){
+					try{
+						if( searchRes && searchRes.length > 1 ){
+							//console.log( searchRes[1], searchRes[2] )
+							//$(`<dl><dt icon=${searchRes[1]}>${searchRes[1]}</dt><dd>${searchRes[2]}</dd></dl>`).appendTo(debug._icons)
+							$(`<dl><dt icon=${searchRes[1]}></dt><dd>${searchRes[1]}</dd></dl>`).appendTo(debug._icons)
+						}
+					}catch(e){}
+				}
+
+	// Output Release Notes
+		Q.fcall(function(){
+			let deferred = Q.defer()
+			function releaseNotesGet( _id ){
+				let deferred = Q.defer()
+				_db.updates.find({'_id':_id}).exec(function(err, docs){
+					let content = '';
+					if( docs && docs.length ){
+						content+= docs[0].journal
+					}
+					deferred.resolve(content);
+				})
+				return deferred.promise
+			}
+			function releaseNotesToGitHub(){
+				Q.fcall(function(){
+					return releaseNotesGet( debug._releasenotesselect.val() )
+				})
+				.then(function(content){
+					let searchRes
+						,scrapePtrn = /\[\[([^\:]+)\:([0-9]+)(\:TEXT)?\]\]/gi
+						,result = content
+					while( (searchRes = scrapePtrn.exec(content)) !== null ){
+						try{
+							result = result.replace( searchRes[0], '`' + _tmpl['textlink_'+searchRes[1].toLowerCase()](searchRes[2], null, false).text() + '`' )
+						}catch(e){}
+					}
+					debug._releasenotesresult.html(result)
+				})
+			}
+			function releaseNotesToNGA(){
+				Q.fcall(function(){
+					return releaseNotesGet( debug._releasenotesselect.val() )
+				})
+				.then(function(content){
+					let searchRes
+						,scrapePtrn = /\[\[([^\:]+)\:([0-9]+)(\:TEXT)?\]\]/gi
+						,result = markdown.toHTML( content )
+					while( (searchRes = scrapePtrn.exec(content)) !== null ){
+						try{
+							var t = searchRes[1].toLowerCase()
+							switch(t){
+								case 'ship':		t = 'ships';		break;
+								case 'equipment':	t = 'equipments';	break;
+								case 'entity':		t = 'entities';		break;
+							}
+							result = result.replace( searchRes[0],
+								'[url=http://fleet.diablohu.com/'+t+'/'+searchRes[2]+']'
+								+ _tmpl['textlink_'+searchRes[1].toLowerCase()](searchRes[2], null, false).text()
+								+ '[/url]'
+							)
+						}catch(e){}
+					}
+					content = result
+					searchRes = null
+					scrapePtrn = /\<p\>\<strong\>([^\<]+)\<\/strong\>\<\/p\>/gi
+					while( (searchRes = scrapePtrn.exec(content)) !== null ){
+						try{
+							result = result.replace( searchRes[0], '[b]' + searchRes[1] + '[/b]' )
+						}catch(e){}
+					}
+					content = result
+					searchRes = null
+					scrapePtrn = /\<li\>/gi
+					while( (searchRes = scrapePtrn.exec(content)) !== null ){
+						try{
+							result = result.replace( searchRes[0], '[*]' )
+						}catch(e){}
+					}
+					content = result
+					searchRes = null
+					scrapePtrn = /\<\/li\>/gi
+					while( (searchRes = scrapePtrn.exec(content)) !== null ){
+						try{
+							result = result.replace( searchRes[0], '' )
+						}catch(e){}
+					}
+					content = result
+					searchRes = null
+					scrapePtrn = /\<ul\>/gi
+					while( (searchRes = scrapePtrn.exec(content)) !== null ){
+						try{
+							result = result.replace( searchRes[0], '[list]' )
+						}catch(e){}
+					}
+					content = result
+					searchRes = null
+					scrapePtrn = /\<\/ul\>/gi
+					while( (searchRes = scrapePtrn.exec(content)) !== null ){
+						try{
+							result = result.replace( searchRes[0], '[/list]' )
+						}catch(e){}
+					}
+					debug._releasenotesresult.html(result)
+				})
+			}
+			debug.container
+				.append($('<h3/>',{
+					'html': 	'Output Release Notes'
+				}))
+				.append(
+					$('<p/>')
+						.append(
+							debug._releasenotesselect = $('<select/>')
+						)
+						.append( $('<span/>',{
+							'class':'divider'
+						}) )
+						.append( $('<span/>',{
+							'html':	'Target'
+						}) )
+						.append( $('<button/>',{
+							'type':	'button',
+							'html':	'GitHub'
+						}).on('click', releaseNotesToGitHub) )
+						.append( $('<button/>',{
+							'type':	'button',
+							'html':	'NGA'
+						}).on('click', releaseNotesToNGA) )
+				).append(
+					$('<p/>')
+						.append(
+							debug._releasenotesresult = $('<textarea/>')
+						)
+				)
+			_db.updates.find({$not:{'date':""}}).sort({'date': -1, 'version': -1}).exec(function(err, docs){
+				docs.forEach(function(doc){
+					$('<option/>',{
+						'value':	doc._id,
+						'html':		(doc.type != 'app' ? '['+doc.type+'] ' : '') + doc.version
+					}).appendTo(debug._releasenotesselect)
+				})
+				deferred.resolve();
+			})
+			
+			return deferred.promise
 		})
 	
 	return debug.container

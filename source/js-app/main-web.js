@@ -185,7 +185,15 @@
 		else
 			_g.save_.target = '_blank'
 		_g.save_.click()
-	}
+	};
+	
+	_g.getScriptCanvas = function(){
+		let deferred = Q.defer();
+		$.getScript('/!/assets/lib.canvas.min.js', function(){
+			deferred.resolve();
+		});
+		return deferred.promise
+	};
 
 
 

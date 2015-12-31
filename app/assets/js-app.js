@@ -6825,9 +6825,9 @@ class BgImg{
 	}
 	
 	get blur(){
-		if( !this._blur )
-			this._blur = BgImg.getPath(this, 'blured')
-		return this._blur
+		if( !this._blured )
+			this._blured = BgImg.getPath(this, 'blured')
+		return this._blured
 	}
 	
 	get thumbnail(){
@@ -6869,22 +6869,24 @@ BgImg.list = [];
 		let deferred = Q.defer()
 			,_new = []
 
-		BgImg.getDefaultImgs( deferred )
+		Q.fcall(BgImg.getDefaultImgs)
+		.then(function(){
+			BgImg.list.some(function(o){
+				if( o.name != Lockr.get('BgImgLast', '') )
+					_new.push(o.name)
+				return o.name == Lockr.get('BgImgLast', '')
+			})
 
-		BgImg.list.some(function(o){
-			if( o.name != Lockr.get('BgImgLast', '') )
-				_new.push(o.name)
-			return o.name == Lockr.get('BgImgLast', '')
+			Lockr.set('BgImgLast', BgImg.list[0].name)
+
+			BgImg.change( _new[0] );
+			_frame.app_main.loaded('bgimgs')
+
+			BgImg.isInit = true
+			
+			_g.log('背景图: DONE')
+			deferred.resolve()
 		})
-
-		Lockr.set('BgImgLast', BgImg.list[0].name)
-
-		BgImg.change( _new[0] );
-		_frame.app_main.loaded('bgimgs')
-
-		BgImg.isInit = true
-		
-		_g.log('背景图: DONE')
 		return deferred.promise
 	};
 	
@@ -6954,12 +6956,11 @@ BgImg.list = [];
 		if( !BgImg.fileSelector ){
 			BgImg.fileSelector = $('<input type="file" class="none"/>')
 				.on('change', function(e){
-					BgImg.controlsEls.body.addClass('is-loading')
-					BgImg.fileSelector.prop('disabled', true)
-					
 					let o
 					
 					Q.fcall(function(){
+						BgImg.controlsEls.body.addClass('is-loading')
+						BgImg.fileSelector.prop('disabled', true)
 						return BgImg.readFile(e)
 					})
 					.then(function(obj){
@@ -6979,6 +6980,9 @@ BgImg.list = [];
 						o.add()
 						o.show()
 					})
+					.catch(function(err){
+						_g.error(err)
+					})
 					.done(function(){
 						BgImg.controlsEls.body.removeClass('is-loading')
 						BgImg.fileSelector.prop('disabled', false)
@@ -6988,11 +6992,11 @@ BgImg.list = [];
 		}
 		BgImg.fileSelector.trigger('click')
 	};
-	
+
 	BgImg.generate = function(o, t){
 		o = BgImg.getObj(o)
 		let deferred = Q.defer()
-		
+
 		switch( t ){
 			case 'thumbnail':
 				var img = $('<img/>',{
@@ -7081,7 +7085,6 @@ BgImg.list = [];
 					$('<button icon="arrow-set2-right"/>').on('click', BgImg.controlsHide)
 				)
 			$('<div class="list"/>').appendTo( BgImg.controlsEls.container )
-			/*
 				.append( BgImg.controlsEls.listCustom =
 					$('<dl/>',{
 						'html':	'<dt>自定义</dt>'
@@ -7095,7 +7098,6 @@ BgImg.list = [];
 						})
 					)
 				)
-			*/
 				.append( BgImg.controlsEls.listDefault =
 					$('<dl/>',{
 						'html':	'<dt></dt>'
@@ -7132,7 +7134,7 @@ BgImg.list = [];
 		BgImg.controlsEls.btnViewingToggle.toggleClass('on')
 	};
 
-BgImg.getDefaultImgs = function( deferred ){
+BgImg.getDefaultImgs = function(){
 	
 	function _list(p){
 		return node.fs.readdirSync( p )
@@ -7164,7 +7166,6 @@ BgImg.getDefaultImgs = function( deferred ){
 			}) )
 		})
 
-	deferred.resolve()
 	return BgImg.list
 	
 	/*
@@ -7249,10 +7250,14 @@ BgImg.readFile = function( e ){
 	});
 
 	streamRead.on('close', function(err){
-		let o = new BgImg({
-			'name':	pathParse.base
-		})
-		deferred.resolve(o)
+		//let o = new BgImg({
+		//	'name':	pathParse.base
+		//})
+		deferred.resolve(
+			new BgImg({
+				'name':	pathParse.base
+			})
+		)
 	});
 	streamRead.pipe(streamWrite)
 

@@ -3816,6 +3816,14 @@ _g.save = function (url, n) {
 	_g.save_.click();
 };
 
+_g.getScriptCanvas = function () {
+	var deferred = Q.defer();
+	$.getScript('/!/assets/lib.canvas.min.js', function () {
+		deferred.resolve();
+	});
+	return deferred.promise;
+};
+
 _frame.app_main = {
 	page: {},
 	page_dom: {},
@@ -5087,8 +5095,8 @@ var BgImg = (function () {
 	}, {
 		key: 'blur',
 		get: function get() {
-			if (!this._blur) this._blur = BgImg.getPath(this, 'blured');
-			return this._blur;
+			if (!this._blured) this._blured = BgImg.getPath(this, 'blured');
+			return this._blured;
 		}
 	}, {
 		key: 'thumbnail',
@@ -5119,21 +5127,22 @@ BgImg.init = function () {
 	var deferred = Q.defer(),
 	    _new = [];
 
-	BgImg.getDefaultImgs(deferred);
+	Q.fcall(BgImg.getDefaultImgs).then(function () {
+		BgImg.list.some(function (o) {
+			if (o.name != Lockr.get('BgImgLast', '')) _new.push(o.name);
+			return o.name == Lockr.get('BgImgLast', '');
+		});
 
-	BgImg.list.some(function (o) {
-		if (o.name != Lockr.get('BgImgLast', '')) _new.push(o.name);
-		return o.name == Lockr.get('BgImgLast', '');
+		Lockr.set('BgImgLast', BgImg.list[0].name);
+
+		BgImg.change(_new[0]);
+		_frame.app_main.loaded('bgimgs');
+
+		BgImg.isInit = !0;
+
+		_g.log('背景图: DONE');
+		deferred.resolve();
 	});
-
-	Lockr.set('BgImgLast', BgImg.list[0].name);
-
-	BgImg.change(_new[0]);
-	_frame.app_main.loaded('bgimgs');
-
-	BgImg.isInit = !0;
-
-	_g.log('背景图: DONE');
 	return deferred.promise;
 };
 
@@ -5198,12 +5207,11 @@ BgImg.changeAfter = function () {
 BgImg.upload = function () {
 	if (!BgImg.fileSelector) {
 		BgImg.fileSelector = $('<input type="file" class="none"/>').on('change', function (e) {
-			BgImg.controlsEls.body.addClass('is-loading');
-			BgImg.fileSelector.prop('disabled', !0);
-
 			var o = undefined;
 
 			Q.fcall(function () {
+				BgImg.controlsEls.body.addClass('is-loading');
+				BgImg.fileSelector.prop('disabled', !0);
 				return BgImg.readFile(e);
 			}).then(function (obj) {
 				o = obj;
@@ -5217,6 +5225,8 @@ BgImg.upload = function () {
 			}).then(function () {
 				o.add();
 				o.show();
+			}).catch(function (err) {
+				_g.error(err);
 			}).done((function () {
 				BgImg.controlsEls.body.removeClass('is-loading');
 				BgImg.fileSelector.prop('disabled', !1);
@@ -5283,7 +5293,14 @@ BgImg.controlsShow = function () {
 		$('<div class="controls"/>').appendTo(BgImg.controlsEls.container).append(BgImg.controlsEls.btnViewingToggle = $('<button icon="eye"/>').on('click', BgImg.controlsViewingToggle)).append($('<button icon="floppy-disk"/>').on('click', function () {
 			BgImg.save();
 		})).append($('<button icon="arrow-set2-right"/>').on('click', BgImg.controlsHide));
-		$('<div class="list"/>').appendTo(BgImg.controlsEls.container).append(BgImg.controlsEls.listDefault = $('<dl/>', {
+		$('<div class="list"/>').appendTo(BgImg.controlsEls.container).append(BgImg.controlsEls.listCustom = $('<dl/>', {
+			'html': '<dt>自定义</dt>'
+		}).append(BgImg.controlsEls.listCustomAdd = $('<dd/>', {
+			'class': 'add',
+			'html': '<s></s>'
+		}).on('click', function () {
+			BgImg.upload();
+		}))).append(BgImg.controlsEls.listDefault = $('<dl/>', {
 			'html': '<dt></dt>'
 		}));
 		BgImg.list.forEach(function (o) {
@@ -5316,7 +5333,8 @@ BgImg.controlsViewingToggle = function () {
 	BgImg.controlsEls.btnViewingToggle.toggleClass('on');
 };
 
-BgImg.getDefaultImgs = function (deferred) {
+BgImg.getDefaultImgs = function () {
+	var deferred = Q.defer();
 	for (var _i7 = _g.bgimg_count - 1; _i7 >= 0; _i7--) {
 		BgImg.list.push(new BgImg({
 			'name': _i7 + '.jpg',
@@ -5324,14 +5342,29 @@ BgImg.getDefaultImgs = function (deferred) {
 		}));
 	}
 
+	BgImg.dataCustom = {};
+	localforage.getItem('bgcustomlist', function (err, value) {
+		BgImg.dataCustom = value || {};
+		for (var _i8 in BgImg.dataCustom) {
+			var o = BgImg.dataCustom[_i8];
+			o.name = _i8;
+			BgImg.list.push(new BgImg(o));
+		}
+		deferred.resolve(BgImg.list);
+	});
+
 	deferred.resolve();
-	return BgImg.list;
+	return deferred.promise;
 };
 
 BgImg.getPath = function (o, t) {
 	o = BgImg.getObj(o);
 
-	return _g.path.bgimg_dir + (t ? t + '/' : '') + o.name;
+	if (o.isDefault) return _g.path.bgimg_dir + (t ? t + '/' : '') + o.name;
+
+	if (t) return o['_' + t];
+
+	return o._path;
 };
 
 BgImg.save = function (o) {
@@ -5342,15 +5375,41 @@ BgImg.save = function (o) {
 BgImg.readFile = function (e) {
 	var deferred = Q.defer();
 
-	for (var _i8 = 0, f = undefined; f = e.target.files[_i8]; _i8++) {
-		var reader = new FileReader();
-		reader.onload = (function (theFile) {
-			return function (r) {
-				return deferred.resolve(r.target.result);
-			};
-		})(f);
-		reader.readAsText(f);
-	}
+	Q.fcall(_g.getScriptCanvas).then(function () {
+		for (var _i9 = 0, f = undefined; f = e.target.files[_i9]; _i9++) {
+			var reader = new FileReader();
+			reader.onload = (function (theFile) {
+				return function (r) {
+					BgImg.dataCustom[theFile.name] = {
+						'_path': r.target.result
+					};
+					localforage.setItem('bgcustomlist', BgImg.dataCustom, function (err, result) {
+						deferred.resolve(new BgImg({
+							'name': theFile.name,
+							'_path': r.target.result
+						}));
+					});
+				};
+			})(f);
+			reader.readAsDataURL(f);
+		}
+	});
+
+	return deferred.promise;
+};
+
+BgImg.set = function (o, t, canvas) {
+	o = BgImg.getObj(o);
+
+	var base64 = canvas.toDataURL("image/jpeg", t == 'blured' ? 0.4 : 0.6),
+	    deferred = Q.defer();
+
+	o['_' + t] = base64;
+	BgImg.dataCustom[o.name]['_' + t] = base64;
+
+	localforage.setItem('bgcustomlist', BgImg.dataCustom, function (err, result) {
+		deferred.resolve();
+	});
 
 	return deferred.promise;
 };
@@ -5889,11 +5948,11 @@ var InfosFleet = (function () {
 					this.is_showing = !0;
 					if (InfosFleetShipEquipment.cur) InfosFleetShipEquipment.cur.trigger('blur');
 					if (!is_firstShow) {
-						var _i9 = 0,
+						var _i10 = 0,
 						    _l2 = Lockr.get('hqLvDefault', _g.defaultHqLv);
-						while (_i9 < 4) {
-							this.fleets[_i9].summaryCalc(!0);
-							_i9++;
+						while (_i10 < 4) {
+							this.fleets[_i10].summaryCalc(!0);
+							_i10++;
 						}
 						if (!this._hqlv) this.doms['hqlvOption'].val(_l2);
 						this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(_l2));
@@ -6001,15 +6060,15 @@ var InfosFleet = (function () {
 				if (!InfosFleet.menuTheme) {
 					InfosFleet.menuThemeItems = $('<div/>');
 
-					var _loop = function _loop(_i10) {
-						$('<button class="theme-' + _i10 + '"/>').html(_i10).on('click', (function () {
-							InfosFleet.menuCur._theme = _i10;
+					var _loop = function _loop(_i11) {
+						$('<button class="theme-' + _i11 + '"/>').html(_i11).on('click', (function () {
+							InfosFleet.menuCur._theme = _i11;
 							this.el.attr('data-theme', this._theme);
 						}).bind(_this7)).appendTo(InfosFleet.menuThemeItems);
 					};
 
-					for (var _i10 = 1; _i10 < 11; _i10++) {
-						_loop(_i10);
+					for (var _i11 = 1; _i11 < 11; _i11++) {
+						_loop(_i11);
 					}
 					InfosFleet.menuTheme = new _menu({
 						'className': 'contextmenu-infos_fleet_themes',
@@ -6330,10 +6389,10 @@ var InfosFleet = (function () {
 				this.doms['hqlvOption'].val(Lockr.get('hqLvDefault', _g.defaultHqLv));
 			}
 			if (last != value) {
-				var _i11 = 0;
-				while (_i11 < 4) {
-					this.fleets[_i11].summaryCalc(!0);
-					_i11++;
+				var _i12 = 0;
+				while (_i12 < 4) {
+					this.fleets[_i12].summaryCalc(!0);
+					_i12++;
 				}
 				this.save();
 			}
@@ -6650,8 +6709,8 @@ var InfosFleetSubFleet = (function () {
 					}) || [];
 					equipments_by_slot.forEach(function (equipment) {
 						if (equipment) {
-							for (var _i12 in x) {
-								if (Formula.equipmentType[_i12] && Formula.equipmentType[_i12].push && Formula.equipmentType[_i12].indexOf(equipment.type) > -1) x[_i12] += equipment.stat.los;
+							for (var _i13 in x) {
+								if (Formula.equipmentType[_i13] && Formula.equipmentType[_i13].push && Formula.equipmentType[_i13].indexOf(equipment.type) > -1) x[_i13] += equipment.stat.los;
 							}
 						}
 					});
@@ -6724,9 +6783,9 @@ var InfosFleetShip = (function () {
 			}).bind(this)
 		}))).append(this.elInfosInfo = $('<span/>'))))).append($('<div class="equipments"/>').append((function () {
 			var els = $();
-			for (var _i13 = 0; _i13 < 4; _i13++) {
-				this.equipments[_i13] = new InfosFleetShipEquipment(this, _i13);
-				els = els.add(this.equipments[_i13].el);
+			for (var _i14 = 0; _i14 < 4; _i14++) {
+				this.equipments[_i14] = new InfosFleetShipEquipment(this, _i14);
+				els = els.add(this.equipments[_i14].el);
 			}
 
 			return els;
@@ -6844,10 +6903,10 @@ var InfosFleetShip = (function () {
 
 			if (this.data[1][0]) this.shipLv = this.data[1][0];
 
-			for (var _i14 = 0; _i14 < 4; _i14++) {
-				this.equipments[_i14].id = this.data[2][_i14];
-				this.equipments[_i14].star = this.data[3][_i14];
-				this.equipments[_i14].rank = this.data[4][_i14];
+			for (var _i15 = 0; _i15 < 4; _i15++) {
+				this.equipments[_i15].id = this.data[2][_i15];
+				this.equipments[_i15].star = this.data[3][_i15];
+				this.equipments[_i15].rank = this.data[4][_i15];
 			}
 
 			this.updateAttrs();
@@ -6994,12 +7053,12 @@ var InfosFleetShip = (function () {
 				this.elInfosTitle.html('<h4 data-content="' + ship['name'][_g.lang] + '">' + ship['name'][_g.lang] + '</h4>' + (suffix ? '<h5 data-content="' + suffix + '">' + suffix + '</h5>' : ''));
 				this.elInfosInfo.html(speed + ' ' + stype);
 
-				for (var _i15 = 0; _i15 < 4; _i15++) {
-					this.equipments[_i15].carry = ship.slot[_i15];
+				for (var _i16 = 0; _i16 < 4; _i16++) {
+					this.equipments[_i16].carry = ship.slot[_i16];
 					if (!this._updating) {
-						this.equipments[_i15].id = null;
-						this.equipments[_i15].star = null;
-						this.equipments[_i15].rank = null;
+						this.equipments[_i16].id = null;
+						this.equipments[_i16].star = null;
+						this.equipments[_i16].rank = null;
 					}
 				}
 			} else {
@@ -7121,14 +7180,14 @@ var InfosFleetShipEquipment = (function () {
 			if (!InfosFleet.menuRankSelect) {
 				InfosFleet.menuRankSelectItems = $('<div/>');
 
-				var _loop2 = function _loop2(_i16) {
-					$('<button class="rank-' + _i16 + '"/>').html(!_i16 ? '无' : '').on('click', function () {
-						InfosFleet.menuRankSelectCur.rank = _i16;
+				var _loop2 = function _loop2(_i17) {
+					$('<button class="rank-' + _i17 + '"/>').html(!_i17 ? '无' : '').on('click', function () {
+						InfosFleet.menuRankSelectCur.rank = _i17;
 					}).appendTo(InfosFleet.menuRankSelectItems);
 				};
 
-				for (var _i16 = 0; _i16 < 8; _i16++) {
-					_loop2(_i16);
+				for (var _i17 = 0; _i17 < 8; _i17++) {
+					_loop2(_i17);
 				}
 				InfosFleet.menuRankSelect = new _menu({
 					'className': 'contextmenu-infos_fleet_rank_select',
@@ -8499,7 +8558,7 @@ var TablelistFleets = (function (_Tablelist4) {
 						sorted[cur.theme].push(i);
 					});
 
-					for (var _i17 in sorted) {
+					for (var _i18 in sorted) {
 						k = 0;
 
 						while (k < _this14.flexgrid_empty_count) {
@@ -8507,7 +8566,7 @@ var TablelistFleets = (function (_Tablelist4) {
 							k++;
 						}
 
-						sorted[_i17].forEach((function (index) {
+						sorted[_i18].forEach((function (index) {
 							setTimeout((function (i) {
 								this.append_item(arr[i]);
 								count++;
@@ -8644,7 +8703,7 @@ var TablelistFleets = (function (_Tablelist4) {
 								if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
 							});
 						} else {
-							for (var _i18 = 0, f = undefined; f = e.target.files[_i18]; _i18++) {
+							for (var _i19 = 0, f = undefined; f = e.target.files[_i19]; _i19++) {
 								var reader = new FileReader();
 								reader.onload = (function (theFile) {
 									return function (r) {

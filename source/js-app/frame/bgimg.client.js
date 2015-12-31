@@ -1,4 +1,4 @@
-BgImg.getDefaultImgs = function( deferred ){
+BgImg.getDefaultImgs = function(){
 	
 	function _list(p){
 		return node.fs.readdirSync( p )
@@ -30,7 +30,6 @@ BgImg.getDefaultImgs = function( deferred ){
 			}) )
 		})
 
-	deferred.resolve()
 	return BgImg.list
 	
 	/*
@@ -115,10 +114,14 @@ BgImg.readFile = function( e ){
 	});
 
 	streamRead.on('close', function(err){
-		let o = new BgImg({
-			'name':	pathParse.base
-		})
-		deferred.resolve(o)
+		//let o = new BgImg({
+		//	'name':	pathParse.base
+		//})
+		deferred.resolve(
+			new BgImg({
+				'name':	pathParse.base
+			})
+		)
 	});
 	streamRead.pipe(streamWrite)
 
