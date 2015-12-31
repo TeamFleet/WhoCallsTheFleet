@@ -17,6 +17,10 @@
 // @koala-prepend "KanColle-JS-Kit/js/class-item/ship.js"
 // @koala-prepend "KanColle-JS-Kit/js/parser/kancolle-calc.js"
 
+// @koala-prepend "js-app/canvas/!.js"
+// @koala-prepend "js-app/canvas/blur.js"
+// @koala-prepend "js-app/canvas/downScale.js"
+
 // @koala-prepend "js-app/main.js"
 // @koala-prepend "js-app/errorlog.js"
 // @koala-prepend "js-app/updater.js"

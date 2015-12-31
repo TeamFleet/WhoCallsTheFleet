@@ -42,6 +42,7 @@ BgImg.readFile = function( e ){
 	return deferred.promise
 };
 
+/*
 BgImg.upload11 = function(){
 					BgImg.fileSelector.prop('disabled', true)
 
@@ -150,3 +151,4 @@ BgImg.upload11 = function(){
 								this.dbfile_selector.prop('disabled', false)
 							}.bind(this))
 };
+*/

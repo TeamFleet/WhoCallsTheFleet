@@ -5237,7 +5237,7 @@ BgImg.generate = function (o, t) {
 				'src': o.path
 			}).on({
 				'load': function load() {
-					var cv = BgImg.canvasDownscale(img[0], 150 / Math.min(img[0].width, img[0].height));
+					var cv = canvas.downScale(img[0], 150 / Math.min(img[0].width, img[0].height));
 					img.remove();
 					deferred.resolve(cv);
 				}
@@ -5250,7 +5250,7 @@ BgImg.generate = function (o, t) {
 			}).on({
 				'load': function load() {
 					var cv = $('<canvas/>');
-					StackBlur.image(img[0], cv[0], 20 * Math.min(img[0].width, img[0].height) / 1080);
+					canvas.blur.image(img[0], cv[0], 20 * Math.min(img[0].width, img[0].height) / 1080);
 					img.remove();
 					deferred.resolve(cv[0]);
 				}
@@ -5283,14 +5283,7 @@ BgImg.controlsShow = function () {
 		$('<div class="controls"/>').appendTo(BgImg.controlsEls.container).append(BgImg.controlsEls.btnViewingToggle = $('<button icon="eye"/>').on('click', BgImg.controlsViewingToggle)).append($('<button icon="floppy-disk"/>').on('click', function () {
 			BgImg.save();
 		})).append($('<button icon="arrow-set2-right"/>').on('click', BgImg.controlsHide));
-		$('<div class="list"/>').appendTo(BgImg.controlsEls.container).append(BgImg.controlsEls.listCustom = $('<dl/>', {
-			'html': '<dt>自定义</dt>'
-		}).append(BgImg.controlsEls.listCustomAdd = $('<dd/>', {
-			'class': 'add',
-			'html': '<s></s>'
-		}).on('click', function () {
-			BgImg.upload();
-		}))).append(BgImg.controlsEls.listDefault = $('<dl/>', {
+		$('<div class="list"/>').appendTo(BgImg.controlsEls.container).append(BgImg.controlsEls.listDefault = $('<dl/>', {
 			'html': '<dt></dt>'
 		}));
 		BgImg.list.forEach(function (o) {
@@ -5323,668 +5316,6 @@ BgImg.controlsViewingToggle = function () {
 	BgImg.controlsEls.btnViewingToggle.toggleClass('on');
 };
 
-BgImg.canvasDownscale = function (img, scale) {
-	function downScaleImage(img, scale) {
-		var imgCV = document.createElement('canvas');
-		imgCV.width = img.width;
-		imgCV.height = img.height;
-		var imgCtx = imgCV.getContext('2d');
-		imgCtx.drawImage(img, 0, 0);
-		return downScaleCanvas(imgCV, scale);
-	}
-
-	function downScaleCanvas(cv, scale) {
-		if (!(scale < 1) || !(scale > 0)) throw 'scale must be a positive number <1 ';
-		var sqScale = scale * scale;
-		var sw = cv.width;
-		var sh = cv.height;
-		var tw = Math.floor(sw * scale);
-		var th = Math.floor(sh * scale);
-		var sx = 0,
-		    sy = 0,
-		    sIndex = 0;
-		var tx = 0,
-		    ty = 0,
-		    yIndex = 0,
-		    tIndex = 0;
-		var tX = 0,
-		    tY = 0;
-		var w = 0,
-		    nw = 0,
-		    wx = 0,
-		    nwx = 0,
-		    wy = 0,
-		    nwy = 0;
-		var crossX = !1;
-		var crossY = !1;
-		var sBuffer = cv.getContext('2d').getImageData(0, 0, sw, sh).data;
-		var tBuffer = new Float32Array(3 * tw * th);
-		var sR = 0,
-		    sG = 0,
-		    sB = 0;
-
-		for (sy = 0; sy < sh; sy++) {
-			ty = sy * scale;
-			tY = 0 | ty;
-			yIndex = 3 * tY * tw;
-			crossY = tY != (0 | ty + scale);
-			if (crossY) {
-				wy = tY + 1 - ty;
-				nwy = ty + scale - tY - 1;
-			}
-			for (sx = 0; sx < sw; sx++, sIndex += 4) {
-				tx = sx * scale;
-				tX = 0 | tx;
-				tIndex = yIndex + tX * 3;
-				crossX = tX != (0 | tx + scale);
-				if (crossX) {
-					wx = tX + 1 - tx;
-					nwx = tx + scale - tX - 1;
-				}
-				sR = sBuffer[sIndex];
-				sG = sBuffer[sIndex + 1];
-				sB = sBuffer[sIndex + 2];
-
-				if (!crossX && !crossY) {
-					tBuffer[tIndex] += sR * sqScale;
-					tBuffer[tIndex + 1] += sG * sqScale;
-					tBuffer[tIndex + 2] += sB * sqScale;
-				} else if (crossX && !crossY) {
-					w = wx * scale;
-
-					tBuffer[tIndex] += sR * w;
-					tBuffer[tIndex + 1] += sG * w;
-					tBuffer[tIndex + 2] += sB * w;
-
-					nw = nwx * scale;
-					tBuffer[tIndex + 3] += sR * nw;
-					tBuffer[tIndex + 4] += sG * nw;
-					tBuffer[tIndex + 5] += sB * nw;
-				} else if (crossY && !crossX) {
-					w = wy * scale;
-
-					tBuffer[tIndex] += sR * w;
-					tBuffer[tIndex + 1] += sG * w;
-					tBuffer[tIndex + 2] += sB * w;
-
-					nw = nwy * scale;
-					tBuffer[tIndex + 3 * tw] += sR * nw;
-					tBuffer[tIndex + 3 * tw + 1] += sG * nw;
-					tBuffer[tIndex + 3 * tw + 2] += sB * nw;
-				} else {
-					w = wx * wy;
-					tBuffer[tIndex] += sR * w;
-					tBuffer[tIndex + 1] += sG * w;
-					tBuffer[tIndex + 2] += sB * w;
-
-					nw = nwx * wy;
-					tBuffer[tIndex + 3] += sR * nw;
-					tBuffer[tIndex + 4] += sG * nw;
-					tBuffer[tIndex + 5] += sB * nw;
-
-					nw = wx * nwy;
-					tBuffer[tIndex + 3 * tw] += sR * nw;
-					tBuffer[tIndex + 3 * tw + 1] += sG * nw;
-					tBuffer[tIndex + 3 * tw + 2] += sB * nw;
-
-					nw = nwx * nwy;
-					tBuffer[tIndex + 3 * tw + 3] += sR * nw;
-					tBuffer[tIndex + 3 * tw + 4] += sG * nw;
-					tBuffer[tIndex + 3 * tw + 5] += sB * nw;
-				}
-			}
-		}
-		var resCV = document.createElement('canvas');
-		resCV.width = tw;
-		resCV.height = th;
-		var resCtx = resCV.getContext('2d');
-		var imgRes = resCtx.getImageData(0, 0, tw, th);
-		var tByteBuffer = imgRes.data;
-
-		var pxIndex = 0;
-		for (sIndex = 0, tIndex = 0; pxIndex < tw * th; sIndex += 3, tIndex += 4, pxIndex++) {
-			tByteBuffer[tIndex] = Math.ceil(tBuffer[sIndex]);
-			tByteBuffer[tIndex + 1] = Math.ceil(tBuffer[sIndex + 1]);
-			tByteBuffer[tIndex + 2] = Math.ceil(tBuffer[sIndex + 2]);
-			tByteBuffer[tIndex + 3] = 255;
-		}
-
-		resCtx.putImageData(imgRes, 0, 0);
-		return resCV;
-	}
-
-	return downScaleImage(img, scale);
-};
-
-(function (f) {
-	if ((typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === "object" && typeof module !== "undefined") {
-		module.exports = f();
-	} else if (typeof define === "function" && define.amd) {
-		define([], f);
-	} else {
-		var g;if (typeof window !== "undefined") {
-			g = window;
-		} else if (typeof global !== "undefined") {
-			g = global;
-		} else if (typeof self !== "undefined") {
-			g = self;
-		} else {
-			g = this;
-		}g.StackBlur = f();
-	}
-})(function () {
-	var define, module, exports;return (function e(t, n, r) {
-		function s(o, u) {
-			if (!n[o]) {
-				if (!t[o]) {
-					var a = typeof require == "function" && require;if (!u && a) return a(o, !0);if (i) return i(o, !0);var f = new Error("Cannot find module '" + o + "'");throw f.code = "MODULE_NOT_FOUND", f;
-				}var l = n[o] = { exports: {} };t[o][0].call(l.exports, function (e) {
-					var n = t[o][1][e];return s(n ? n : e);
-				}, l, l.exports, e, t, n, r);
-			}return n[o].exports;
-		}var i = typeof require == "function" && require;for (var o = 0; o < r.length; o++) s(r[o]);return s;
-	})({ 1: [function (require, module, exports) {
-
-			var mul_table = [512, 512, 456, 512, 328, 456, 335, 512, 405, 328, 271, 456, 388, 335, 292, 512, 454, 405, 364, 328, 298, 271, 496, 456, 420, 388, 360, 335, 312, 292, 273, 512, 482, 454, 428, 405, 383, 364, 345, 328, 312, 298, 284, 271, 259, 496, 475, 456, 437, 420, 404, 388, 374, 360, 347, 335, 323, 312, 302, 292, 282, 273, 265, 512, 497, 482, 468, 454, 441, 428, 417, 405, 394, 383, 373, 364, 354, 345, 337, 328, 320, 312, 305, 298, 291, 284, 278, 271, 265, 259, 507, 496, 485, 475, 465, 456, 446, 437, 428, 420, 412, 404, 396, 388, 381, 374, 367, 360, 354, 347, 341, 335, 329, 323, 318, 312, 307, 302, 297, 292, 287, 282, 278, 273, 269, 265, 261, 512, 505, 497, 489, 482, 475, 468, 461, 454, 447, 441, 435, 428, 422, 417, 411, 405, 399, 394, 389, 383, 378, 373, 368, 364, 359, 354, 350, 345, 341, 337, 332, 328, 324, 320, 316, 312, 309, 305, 301, 298, 294, 291, 287, 284, 281, 278, 274, 271, 268, 265, 262, 259, 257, 507, 501, 496, 491, 485, 480, 475, 470, 465, 460, 456, 451, 446, 442, 437, 433, 428, 424, 420, 416, 412, 408, 404, 400, 396, 392, 388, 385, 381, 377, 374, 370, 367, 363, 360, 357, 354, 350, 347, 344, 341, 338, 335, 332, 329, 326, 323, 320, 318, 315, 312, 310, 307, 304, 302, 299, 297, 294, 292, 289, 287, 285, 282, 280, 278, 275, 273, 271, 269, 267, 265, 263, 261, 259];
-
-			var shg_table = [9, 11, 12, 13, 13, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16, 17, 17, 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18, 18, 18, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24];
-
-			function processImage(img, canvas, radius, blurAlphaChannel) {
-				if (typeof img == 'string') {
-					var img = document.getElementById(img);
-				} else if (_instanceof(!img, HTMLImageElement)) {
-					return;
-				}
-				var w = img.naturalWidth;
-				var h = img.naturalHeight;
-
-				if (typeof canvas == 'string') {
-					var canvas = document.getElementById(canvas);
-				} else if (_instanceof(!canvas, HTMLCanvasElement)) {
-					return;
-				}
-
-				canvas.style.width = w + 'px';
-				canvas.style.height = h + 'px';
-				canvas.width = w;
-				canvas.height = h;
-
-				var context = canvas.getContext('2d');
-				context.clearRect(0, 0, w, h);
-				context.drawImage(img, 0, 0);
-
-				if (isNaN(radius) || radius < 1) return;
-
-				if (blurAlphaChannel) processCanvasRGBA(canvas, 0, 0, w, h, radius);else processCanvasRGB(canvas, 0, 0, w, h, radius);
-			}
-
-			function getImageDataFromCanvas(canvas, top_x, top_y, width, height) {
-				if (typeof canvas == 'string') var canvas = document.getElementById(canvas);else if (_instanceof(!canvas, HTMLCanvasElement)) return;
-
-				var context = canvas.getContext('2d');
-				var imageData;
-
-				try {
-					try {
-						imageData = context.getImageData(top_x, top_y, width, height);
-					} catch (e) {
-						try {
-							netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
-							imageData = context.getImageData(top_x, top_y, width, height);
-						} catch (e) {
-							alert("Cannot access local image");
-							throw new Error("unable to access local image data: " + e);
-							return;
-						}
-					}
-				} catch (e) {
-					alert("Cannot access image");
-					throw new Error("unable to access image data: " + e);
-				}
-
-				return imageData;
-			}
-
-			function processCanvasRGBA(canvas, top_x, top_y, width, height, radius) {
-				if (isNaN(radius) || radius < 1) return;
-				radius |= 0;
-
-				var imageData = getImageDataFromCanvas(canvas, top_x, top_y, width, height);
-
-				imageData = processImageDataRGBA(imageData, top_x, top_y, width, height, radius);
-
-				canvas.getContext('2d').putImageData(imageData, top_x, top_y);
-			}
-
-			function processImageDataRGBA(imageData, top_x, top_y, width, height, radius) {
-				var pixels = imageData.data;
-
-				var x, y, i, p, yp, yi, yw, r_sum, g_sum, b_sum, a_sum, r_out_sum, g_out_sum, b_out_sum, a_out_sum, r_in_sum, g_in_sum, b_in_sum, a_in_sum, pr, pg, pb, pa, rbs;
-
-				var div = radius + radius + 1;
-				var w4 = width << 2;
-				var widthMinus1 = width - 1;
-				var heightMinus1 = height - 1;
-				var radiusPlus1 = radius + 1;
-				var sumFactor = radiusPlus1 * (radiusPlus1 + 1) / 2;
-
-				var stackStart = new BlurStack();
-				var stack = stackStart;
-				for (i = 1; i < div; i++) {
-					stack = stack.next = new BlurStack();
-					if (i == radiusPlus1) var stackEnd = stack;
-				}
-				stack.next = stackStart;
-				var stackIn = null;
-				var stackOut = null;
-
-				yw = yi = 0;
-
-				var mul_sum = mul_table[radius];
-				var shg_sum = shg_table[radius];
-
-				for (y = 0; y < height; y++) {
-					r_in_sum = g_in_sum = b_in_sum = a_in_sum = r_sum = g_sum = b_sum = a_sum = 0;
-
-					r_out_sum = radiusPlus1 * (pr = pixels[yi]);
-					g_out_sum = radiusPlus1 * (pg = pixels[yi + 1]);
-					b_out_sum = radiusPlus1 * (pb = pixels[yi + 2]);
-					a_out_sum = radiusPlus1 * (pa = pixels[yi + 3]);
-
-					r_sum += sumFactor * pr;
-					g_sum += sumFactor * pg;
-					b_sum += sumFactor * pb;
-					a_sum += sumFactor * pa;
-
-					stack = stackStart;
-
-					for (i = 0; i < radiusPlus1; i++) {
-						stack.r = pr;
-						stack.g = pg;
-						stack.b = pb;
-						stack.a = pa;
-						stack = stack.next;
-					}
-
-					for (i = 1; i < radiusPlus1; i++) {
-						p = yi + ((widthMinus1 < i ? widthMinus1 : i) << 2);
-						r_sum += (stack.r = pr = pixels[p]) * (rbs = radiusPlus1 - i);
-						g_sum += (stack.g = pg = pixels[p + 1]) * rbs;
-						b_sum += (stack.b = pb = pixels[p + 2]) * rbs;
-						a_sum += (stack.a = pa = pixels[p + 3]) * rbs;
-
-						r_in_sum += pr;
-						g_in_sum += pg;
-						b_in_sum += pb;
-						a_in_sum += pa;
-
-						stack = stack.next;
-					}
-
-					stackIn = stackStart;
-					stackOut = stackEnd;
-					for (x = 0; x < width; x++) {
-						pixels[yi + 3] = pa = a_sum * mul_sum >> shg_sum;
-						if (pa != 0) {
-							pa = 255 / pa;
-							pixels[yi] = (r_sum * mul_sum >> shg_sum) * pa;
-							pixels[yi + 1] = (g_sum * mul_sum >> shg_sum) * pa;
-							pixels[yi + 2] = (b_sum * mul_sum >> shg_sum) * pa;
-						} else {
-							pixels[yi] = pixels[yi + 1] = pixels[yi + 2] = 0;
-						}
-
-						r_sum -= r_out_sum;
-						g_sum -= g_out_sum;
-						b_sum -= b_out_sum;
-						a_sum -= a_out_sum;
-
-						r_out_sum -= stackIn.r;
-						g_out_sum -= stackIn.g;
-						b_out_sum -= stackIn.b;
-						a_out_sum -= stackIn.a;
-
-						p = yw + ((p = x + radius + 1) < widthMinus1 ? p : widthMinus1) << 2;
-
-						r_in_sum += stackIn.r = pixels[p];
-						g_in_sum += stackIn.g = pixels[p + 1];
-						b_in_sum += stackIn.b = pixels[p + 2];
-						a_in_sum += stackIn.a = pixels[p + 3];
-
-						r_sum += r_in_sum;
-						g_sum += g_in_sum;
-						b_sum += b_in_sum;
-						a_sum += a_in_sum;
-
-						stackIn = stackIn.next;
-
-						r_out_sum += pr = stackOut.r;
-						g_out_sum += pg = stackOut.g;
-						b_out_sum += pb = stackOut.b;
-						a_out_sum += pa = stackOut.a;
-
-						r_in_sum -= pr;
-						g_in_sum -= pg;
-						b_in_sum -= pb;
-						a_in_sum -= pa;
-
-						stackOut = stackOut.next;
-
-						yi += 4;
-					}
-					yw += width;
-				}
-
-				for (x = 0; x < width; x++) {
-					g_in_sum = b_in_sum = a_in_sum = r_in_sum = g_sum = b_sum = a_sum = r_sum = 0;
-
-					yi = x << 2;
-					r_out_sum = radiusPlus1 * (pr = pixels[yi]);
-					g_out_sum = radiusPlus1 * (pg = pixels[yi + 1]);
-					b_out_sum = radiusPlus1 * (pb = pixels[yi + 2]);
-					a_out_sum = radiusPlus1 * (pa = pixels[yi + 3]);
-
-					r_sum += sumFactor * pr;
-					g_sum += sumFactor * pg;
-					b_sum += sumFactor * pb;
-					a_sum += sumFactor * pa;
-
-					stack = stackStart;
-
-					for (i = 0; i < radiusPlus1; i++) {
-						stack.r = pr;
-						stack.g = pg;
-						stack.b = pb;
-						stack.a = pa;
-						stack = stack.next;
-					}
-
-					yp = width;
-
-					for (i = 1; i <= radius; i++) {
-						yi = yp + x << 2;
-
-						r_sum += (stack.r = pr = pixels[yi]) * (rbs = radiusPlus1 - i);
-						g_sum += (stack.g = pg = pixels[yi + 1]) * rbs;
-						b_sum += (stack.b = pb = pixels[yi + 2]) * rbs;
-						a_sum += (stack.a = pa = pixels[yi + 3]) * rbs;
-
-						r_in_sum += pr;
-						g_in_sum += pg;
-						b_in_sum += pb;
-						a_in_sum += pa;
-
-						stack = stack.next;
-
-						if (i < heightMinus1) {
-							yp += width;
-						}
-					}
-
-					yi = x;
-					stackIn = stackStart;
-					stackOut = stackEnd;
-					for (y = 0; y < height; y++) {
-						p = yi << 2;
-						pixels[p + 3] = pa = a_sum * mul_sum >> shg_sum;
-						if (pa > 0) {
-							pa = 255 / pa;
-							pixels[p] = (r_sum * mul_sum >> shg_sum) * pa;
-							pixels[p + 1] = (g_sum * mul_sum >> shg_sum) * pa;
-							pixels[p + 2] = (b_sum * mul_sum >> shg_sum) * pa;
-						} else {
-							pixels[p] = pixels[p + 1] = pixels[p + 2] = 0;
-						}
-
-						r_sum -= r_out_sum;
-						g_sum -= g_out_sum;
-						b_sum -= b_out_sum;
-						a_sum -= a_out_sum;
-
-						r_out_sum -= stackIn.r;
-						g_out_sum -= stackIn.g;
-						b_out_sum -= stackIn.b;
-						a_out_sum -= stackIn.a;
-
-						p = x + ((p = y + radiusPlus1) < heightMinus1 ? p : heightMinus1) * width << 2;
-
-						r_sum += r_in_sum += stackIn.r = pixels[p];
-						g_sum += g_in_sum += stackIn.g = pixels[p + 1];
-						b_sum += b_in_sum += stackIn.b = pixels[p + 2];
-						a_sum += a_in_sum += stackIn.a = pixels[p + 3];
-
-						stackIn = stackIn.next;
-
-						r_out_sum += pr = stackOut.r;
-						g_out_sum += pg = stackOut.g;
-						b_out_sum += pb = stackOut.b;
-						a_out_sum += pa = stackOut.a;
-
-						r_in_sum -= pr;
-						g_in_sum -= pg;
-						b_in_sum -= pb;
-						a_in_sum -= pa;
-
-						stackOut = stackOut.next;
-
-						yi += width;
-					}
-				}
-				return imageData;
-			}
-
-			function processCanvasRGB(canvas, top_x, top_y, width, height, radius) {
-				if (isNaN(radius) || radius < 1) return;
-				radius |= 0;
-
-				var imageData = getImageDataFromCanvas(canvas, top_x, top_y, width, height);
-				imageData = processImageDataRGB(imageData, top_x, top_y, width, height, radius);
-
-				canvas.getContext('2d').putImageData(imageData, top_x, top_y);
-			}
-
-			function processImageDataRGB(imageData, top_x, top_y, width, height, radius) {
-				var pixels = imageData.data;
-
-				var x, y, i, p, yp, yi, yw, r_sum, g_sum, b_sum, r_out_sum, g_out_sum, b_out_sum, r_in_sum, g_in_sum, b_in_sum, pr, pg, pb, rbs;
-
-				var div = radius + radius + 1;
-				var w4 = width << 2;
-				var widthMinus1 = width - 1;
-				var heightMinus1 = height - 1;
-				var radiusPlus1 = radius + 1;
-				var sumFactor = radiusPlus1 * (radiusPlus1 + 1) / 2;
-
-				var stackStart = new BlurStack();
-				var stack = stackStart;
-				for (i = 1; i < div; i++) {
-					stack = stack.next = new BlurStack();
-					if (i == radiusPlus1) var stackEnd = stack;
-				}
-				stack.next = stackStart;
-				var stackIn = null;
-				var stackOut = null;
-
-				yw = yi = 0;
-
-				var mul_sum = mul_table[radius];
-				var shg_sum = shg_table[radius];
-
-				for (y = 0; y < height; y++) {
-					r_in_sum = g_in_sum = b_in_sum = r_sum = g_sum = b_sum = 0;
-
-					r_out_sum = radiusPlus1 * (pr = pixels[yi]);
-					g_out_sum = radiusPlus1 * (pg = pixels[yi + 1]);
-					b_out_sum = radiusPlus1 * (pb = pixels[yi + 2]);
-
-					r_sum += sumFactor * pr;
-					g_sum += sumFactor * pg;
-					b_sum += sumFactor * pb;
-
-					stack = stackStart;
-
-					for (i = 0; i < radiusPlus1; i++) {
-						stack.r = pr;
-						stack.g = pg;
-						stack.b = pb;
-						stack = stack.next;
-					}
-
-					for (i = 1; i < radiusPlus1; i++) {
-						p = yi + ((widthMinus1 < i ? widthMinus1 : i) << 2);
-						r_sum += (stack.r = pr = pixels[p]) * (rbs = radiusPlus1 - i);
-						g_sum += (stack.g = pg = pixels[p + 1]) * rbs;
-						b_sum += (stack.b = pb = pixels[p + 2]) * rbs;
-
-						r_in_sum += pr;
-						g_in_sum += pg;
-						b_in_sum += pb;
-
-						stack = stack.next;
-					}
-
-					stackIn = stackStart;
-					stackOut = stackEnd;
-					for (x = 0; x < width; x++) {
-						pixels[yi] = r_sum * mul_sum >> shg_sum;
-						pixels[yi + 1] = g_sum * mul_sum >> shg_sum;
-						pixels[yi + 2] = b_sum * mul_sum >> shg_sum;
-
-						r_sum -= r_out_sum;
-						g_sum -= g_out_sum;
-						b_sum -= b_out_sum;
-
-						r_out_sum -= stackIn.r;
-						g_out_sum -= stackIn.g;
-						b_out_sum -= stackIn.b;
-
-						p = yw + ((p = x + radius + 1) < widthMinus1 ? p : widthMinus1) << 2;
-
-						r_in_sum += stackIn.r = pixels[p];
-						g_in_sum += stackIn.g = pixels[p + 1];
-						b_in_sum += stackIn.b = pixels[p + 2];
-
-						r_sum += r_in_sum;
-						g_sum += g_in_sum;
-						b_sum += b_in_sum;
-
-						stackIn = stackIn.next;
-
-						r_out_sum += pr = stackOut.r;
-						g_out_sum += pg = stackOut.g;
-						b_out_sum += pb = stackOut.b;
-
-						r_in_sum -= pr;
-						g_in_sum -= pg;
-						b_in_sum -= pb;
-
-						stackOut = stackOut.next;
-
-						yi += 4;
-					}
-					yw += width;
-				}
-
-				for (x = 0; x < width; x++) {
-					g_in_sum = b_in_sum = r_in_sum = g_sum = b_sum = r_sum = 0;
-
-					yi = x << 2;
-					r_out_sum = radiusPlus1 * (pr = pixels[yi]);
-					g_out_sum = radiusPlus1 * (pg = pixels[yi + 1]);
-					b_out_sum = radiusPlus1 * (pb = pixels[yi + 2]);
-
-					r_sum += sumFactor * pr;
-					g_sum += sumFactor * pg;
-					b_sum += sumFactor * pb;
-
-					stack = stackStart;
-
-					for (i = 0; i < radiusPlus1; i++) {
-						stack.r = pr;
-						stack.g = pg;
-						stack.b = pb;
-						stack = stack.next;
-					}
-
-					yp = width;
-
-					for (i = 1; i <= radius; i++) {
-						yi = yp + x << 2;
-
-						r_sum += (stack.r = pr = pixels[yi]) * (rbs = radiusPlus1 - i);
-						g_sum += (stack.g = pg = pixels[yi + 1]) * rbs;
-						b_sum += (stack.b = pb = pixels[yi + 2]) * rbs;
-
-						r_in_sum += pr;
-						g_in_sum += pg;
-						b_in_sum += pb;
-
-						stack = stack.next;
-
-						if (i < heightMinus1) {
-							yp += width;
-						}
-					}
-
-					yi = x;
-					stackIn = stackStart;
-					stackOut = stackEnd;
-					for (y = 0; y < height; y++) {
-						p = yi << 2;
-						pixels[p] = r_sum * mul_sum >> shg_sum;
-						pixels[p + 1] = g_sum * mul_sum >> shg_sum;
-						pixels[p + 2] = b_sum * mul_sum >> shg_sum;
-
-						r_sum -= r_out_sum;
-						g_sum -= g_out_sum;
-						b_sum -= b_out_sum;
-
-						r_out_sum -= stackIn.r;
-						g_out_sum -= stackIn.g;
-						b_out_sum -= stackIn.b;
-
-						p = x + ((p = y + radiusPlus1) < heightMinus1 ? p : heightMinus1) * width << 2;
-
-						r_sum += r_in_sum += stackIn.r = pixels[p];
-						g_sum += g_in_sum += stackIn.g = pixels[p + 1];
-						b_sum += b_in_sum += stackIn.b = pixels[p + 2];
-
-						stackIn = stackIn.next;
-
-						r_out_sum += pr = stackOut.r;
-						g_out_sum += pg = stackOut.g;
-						b_out_sum += pb = stackOut.b;
-
-						r_in_sum -= pr;
-						g_in_sum -= pg;
-						b_in_sum -= pb;
-
-						stackOut = stackOut.next;
-
-						yi += width;
-					}
-				}
-
-				return imageData;
-			}
-
-			function BlurStack() {
-				this.r = 0;
-				this.g = 0;
-				this.b = 0;
-				this.a = 0;
-				this.next = null;
-			}
-
-			module.exports = {
-				image: processImage,
-				canvasRGBA: processCanvasRGBA,
-				canvasRGB: processCanvasRGB,
-				imageDataRGBA: processImageDataRGBA,
-				imageDataRGB: processImageDataRGB
-			};
-		}, {}] }, {}, [1])(1);
-});
 BgImg.getDefaultImgs = function (deferred) {
 	for (var _i7 = _g.bgimg_count - 1; _i7 >= 0; _i7--) {
 		BgImg.list.push(new BgImg({
@@ -6022,88 +5353,6 @@ BgImg.readFile = function (e) {
 	}
 
 	return deferred.promise;
-};
-
-BgImg.upload11 = function () {
-	BgImg.fileSelector.prop('disabled', !0);
-
-	_frame.app_main.loading_start('tablelist_fleets_import', !1);
-
-	var file = this.dbfile_selector.val(),
-	    promise_chain = Q.fcall(function () {});
-
-	promise_chain.then(function () {
-		var deferred = Q.defer();
-		if (_g.isNWjs) {
-			node.fs.readFile(file, 'utf8', function (err, data) {
-				if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
-			});
-		} else {
-			for (var _i9 = 0, f = undefined; f = e.target.files[_i9]; _i9++) {
-				var reader = new FileReader();
-				reader.onload = (function (theFile) {
-					return function (r) {
-						return deferred.resolve(r.target.result);
-					};
-				})(f);
-				reader.readAsText(f);
-			}
-		}
-		return deferred.promise;
-	}).then((function (data) {
-		this.dbfile_selector.val('');
-
-		var array = [],
-		    deferred = Q.defer();
-		data.split('\n').forEach(function (line) {
-			if (line) {
-				try {
-					array.push(JSON.parse(line));
-				} catch (e) {
-					deferred.reject('文件格式错误', e);
-				}
-				deferred.resolve(array);
-			} else {
-				deferred.reject('文件无内容');
-			}
-		});
-		return deferred.promise;
-	}).bind(this)).then(function (array) {
-		var the_promises = [],
-		    complete = 0;
-
-		array.forEach(function (data) {
-			var deferred = Q.defer();
-			the_promises.push(deferred.promise);
-
-			_db.fleets.insert(data, function (err) {
-				complete++;
-				if (err && err.errorType == "uniqueViolated") {
-					_db.fleets.update({
-						_id: data._id
-					}, data, {}, function (err, numReplaced) {
-						deferred.resolve();
-						if (err) _g.log(err);else _g.log(numReplaced);
-					});
-				} else {
-						deferred.resolve();
-					}
-			});
-		});
-
-		return Q.all(the_promises);
-	}).then((function () {
-		this.refresh();
-		_g.badgeMsg('成功导入配置');
-	}).bind(this)).catch(function (msg, err) {
-		_g.log(msg);
-		_g.error(err);
-		_g.badgeError(msg);
-	}).done((function () {
-		_g.log('import complete');
-		_frame.app_main.loading_complete('tablelist_fleets_import');
-		this.dbfile_selector.prop('disabled', !1);
-	}).bind(this));
 };
 
 _frame.infos = {
@@ -6640,11 +5889,11 @@ var InfosFleet = (function () {
 					this.is_showing = !0;
 					if (InfosFleetShipEquipment.cur) InfosFleetShipEquipment.cur.trigger('blur');
 					if (!is_firstShow) {
-						var _i10 = 0,
+						var _i9 = 0,
 						    _l2 = Lockr.get('hqLvDefault', _g.defaultHqLv);
-						while (_i10 < 4) {
-							this.fleets[_i10].summaryCalc(!0);
-							_i10++;
+						while (_i9 < 4) {
+							this.fleets[_i9].summaryCalc(!0);
+							_i9++;
 						}
 						if (!this._hqlv) this.doms['hqlvOption'].val(_l2);
 						this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(_l2));
@@ -6752,15 +6001,15 @@ var InfosFleet = (function () {
 				if (!InfosFleet.menuTheme) {
 					InfosFleet.menuThemeItems = $('<div/>');
 
-					var _loop = function _loop(_i11) {
-						$('<button class="theme-' + _i11 + '"/>').html(_i11).on('click', (function () {
-							InfosFleet.menuCur._theme = _i11;
+					var _loop = function _loop(_i10) {
+						$('<button class="theme-' + _i10 + '"/>').html(_i10).on('click', (function () {
+							InfosFleet.menuCur._theme = _i10;
 							this.el.attr('data-theme', this._theme);
 						}).bind(_this7)).appendTo(InfosFleet.menuThemeItems);
 					};
 
-					for (var _i11 = 1; _i11 < 11; _i11++) {
-						_loop(_i11);
+					for (var _i10 = 1; _i10 < 11; _i10++) {
+						_loop(_i10);
 					}
 					InfosFleet.menuTheme = new _menu({
 						'className': 'contextmenu-infos_fleet_themes',
@@ -7081,10 +6330,10 @@ var InfosFleet = (function () {
 				this.doms['hqlvOption'].val(Lockr.get('hqLvDefault', _g.defaultHqLv));
 			}
 			if (last != value) {
-				var _i12 = 0;
-				while (_i12 < 4) {
-					this.fleets[_i12].summaryCalc(!0);
-					_i12++;
+				var _i11 = 0;
+				while (_i11 < 4) {
+					this.fleets[_i11].summaryCalc(!0);
+					_i11++;
 				}
 				this.save();
 			}
@@ -7401,8 +6650,8 @@ var InfosFleetSubFleet = (function () {
 					}) || [];
 					equipments_by_slot.forEach(function (equipment) {
 						if (equipment) {
-							for (var _i13 in x) {
-								if (Formula.equipmentType[_i13] && Formula.equipmentType[_i13].push && Formula.equipmentType[_i13].indexOf(equipment.type) > -1) x[_i13] += equipment.stat.los;
+							for (var _i12 in x) {
+								if (Formula.equipmentType[_i12] && Formula.equipmentType[_i12].push && Formula.equipmentType[_i12].indexOf(equipment.type) > -1) x[_i12] += equipment.stat.los;
 							}
 						}
 					});
@@ -7475,9 +6724,9 @@ var InfosFleetShip = (function () {
 			}).bind(this)
 		}))).append(this.elInfosInfo = $('<span/>'))))).append($('<div class="equipments"/>').append((function () {
 			var els = $();
-			for (var _i14 = 0; _i14 < 4; _i14++) {
-				this.equipments[_i14] = new InfosFleetShipEquipment(this, _i14);
-				els = els.add(this.equipments[_i14].el);
+			for (var _i13 = 0; _i13 < 4; _i13++) {
+				this.equipments[_i13] = new InfosFleetShipEquipment(this, _i13);
+				els = els.add(this.equipments[_i13].el);
 			}
 
 			return els;
@@ -7595,10 +6844,10 @@ var InfosFleetShip = (function () {
 
 			if (this.data[1][0]) this.shipLv = this.data[1][0];
 
-			for (var _i15 = 0; _i15 < 4; _i15++) {
-				this.equipments[_i15].id = this.data[2][_i15];
-				this.equipments[_i15].star = this.data[3][_i15];
-				this.equipments[_i15].rank = this.data[4][_i15];
+			for (var _i14 = 0; _i14 < 4; _i14++) {
+				this.equipments[_i14].id = this.data[2][_i14];
+				this.equipments[_i14].star = this.data[3][_i14];
+				this.equipments[_i14].rank = this.data[4][_i14];
 			}
 
 			this.updateAttrs();
@@ -7745,12 +6994,12 @@ var InfosFleetShip = (function () {
 				this.elInfosTitle.html('<h4 data-content="' + ship['name'][_g.lang] + '">' + ship['name'][_g.lang] + '</h4>' + (suffix ? '<h5 data-content="' + suffix + '">' + suffix + '</h5>' : ''));
 				this.elInfosInfo.html(speed + ' ' + stype);
 
-				for (var _i16 = 0; _i16 < 4; _i16++) {
-					this.equipments[_i16].carry = ship.slot[_i16];
+				for (var _i15 = 0; _i15 < 4; _i15++) {
+					this.equipments[_i15].carry = ship.slot[_i15];
 					if (!this._updating) {
-						this.equipments[_i16].id = null;
-						this.equipments[_i16].star = null;
-						this.equipments[_i16].rank = null;
+						this.equipments[_i15].id = null;
+						this.equipments[_i15].star = null;
+						this.equipments[_i15].rank = null;
 					}
 				}
 			} else {
@@ -7872,14 +7121,14 @@ var InfosFleetShipEquipment = (function () {
 			if (!InfosFleet.menuRankSelect) {
 				InfosFleet.menuRankSelectItems = $('<div/>');
 
-				var _loop2 = function _loop2(_i17) {
-					$('<button class="rank-' + _i17 + '"/>').html(!_i17 ? '无' : '').on('click', function () {
-						InfosFleet.menuRankSelectCur.rank = _i17;
+				var _loop2 = function _loop2(_i16) {
+					$('<button class="rank-' + _i16 + '"/>').html(!_i16 ? '无' : '').on('click', function () {
+						InfosFleet.menuRankSelectCur.rank = _i16;
 					}).appendTo(InfosFleet.menuRankSelectItems);
 				};
 
-				for (var _i17 = 0; _i17 < 8; _i17++) {
-					_loop2(_i17);
+				for (var _i16 = 0; _i16 < 8; _i16++) {
+					_loop2(_i16);
 				}
 				InfosFleet.menuRankSelect = new _menu({
 					'className': 'contextmenu-infos_fleet_rank_select',
@@ -9250,7 +8499,7 @@ var TablelistFleets = (function (_Tablelist4) {
 						sorted[cur.theme].push(i);
 					});
 
-					for (var _i18 in sorted) {
+					for (var _i17 in sorted) {
 						k = 0;
 
 						while (k < _this14.flexgrid_empty_count) {
@@ -9258,7 +8507,7 @@ var TablelistFleets = (function (_Tablelist4) {
 							k++;
 						}
 
-						sorted[_i18].forEach((function (index) {
+						sorted[_i17].forEach((function (index) {
 							setTimeout((function (i) {
 								this.append_item(arr[i]);
 								count++;
@@ -9395,7 +8644,7 @@ var TablelistFleets = (function (_Tablelist4) {
 								if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
 							});
 						} else {
-							for (var _i19 = 0, f = undefined; f = e.target.files[_i19]; _i19++) {
+							for (var _i18 = 0, f = undefined; f = e.target.files[_i18]; _i18++) {
 								var reader = new FileReader();
 								reader.onload = (function (theFile) {
 									return function (r) {
