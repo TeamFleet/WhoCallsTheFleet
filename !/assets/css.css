@@ -700,7 +700,7 @@ body > .menus > .menu.mod-blur-backdrop {
   background: transparent;
 }
 body > .menus > .menu.mod-blur-backdrop > .body {
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.3);
   border-color: rgba(255, 255, 255, 0.2);
 }
 body > .menus > .menu.mod-blur-shot {
@@ -873,7 +873,7 @@ body > .modal > s {
   background: rgba(16, 16, 16, 0.25);
 }
 body > .modal.mod-blur-backdrop > div {
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.3);
 }
 body > .modal.mod-blur-shot > s {
   background: transparent;
@@ -993,7 +993,7 @@ body > .modal.hastitle > div > .close {
   background: transparent;
 }
 #tip.mod-blur-backdrop > .body {
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.3);
 }
 #tip.mod-blur-shot {
   background: rgba(0, 0, 0, 0.5);
