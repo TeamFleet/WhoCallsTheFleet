@@ -7085,6 +7085,7 @@ BgImg.list = [];
 					$('<button icon="arrow-set2-right"/>').on('click', BgImg.controlsHide)
 				)
 			$('<div class="list"/>').appendTo( BgImg.controlsEls.container )
+			/*
 				.append( BgImg.controlsEls.listCustom =
 					$('<dl/>',{
 						'html':	'<dt>自定义</dt>'
@@ -7098,6 +7099,7 @@ BgImg.list = [];
 						})
 					)
 				)
+				*/
 				.append( BgImg.controlsEls.listDefault =
 					$('<dl/>',{
 						'html':	'<dt></dt>'

@@ -1439,6 +1439,15 @@ main{
 				background-color: rgba(0,0,0,.65);
 			}
 		}
+		
+		@media all and (max-width: @mobileview-breaking-point ){
+			.bgimgs{
+				display: 	none;
+			}
+			&:after{
+				background: rgba(0,0,0,.75);
+			}
+		}
 	}
 	
 	#layout.mod-bgcontrols{
@@ -2171,8 +2180,8 @@ table{
 				height: 	~"calc(100vh - @{_nav_height})";
 				//height: 	auto;
 				position: 	fixed;
-				//top: 		@_nav_height;
-				top: 		100%;
+				top: 		@_nav_height;
+				//top: 		100%;
 				//left: 		-321px;
 				left: 		0;
 				z-index: 	10;

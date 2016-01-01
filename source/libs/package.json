@@ -16,7 +16,6 @@
     "lz-string": "^1.4.4",
     "nedb": "^1.5.0",
     "pepjs": "^0.4.0",
-    "sprintf-js": "^1.0.3",
-    "stackblur-canvas": "^1.1.0"
+    "sprintf-js": "^1.0.3"
   }
 }

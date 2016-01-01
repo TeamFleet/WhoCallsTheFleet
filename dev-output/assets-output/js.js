@@ -5293,14 +5293,7 @@ BgImg.controlsShow = function () {
 		$('<div class="controls"/>').appendTo(BgImg.controlsEls.container).append(BgImg.controlsEls.btnViewingToggle = $('<button icon="eye"/>').on('click', BgImg.controlsViewingToggle)).append($('<button icon="floppy-disk"/>').on('click', function () {
 			BgImg.save();
 		})).append($('<button icon="arrow-set2-right"/>').on('click', BgImg.controlsHide));
-		$('<div class="list"/>').appendTo(BgImg.controlsEls.container).append(BgImg.controlsEls.listCustom = $('<dl/>', {
-			'html': '<dt>自定义</dt>'
-		}).append(BgImg.controlsEls.listCustomAdd = $('<dd/>', {
-			'class': 'add',
-			'html': '<s></s>'
-		}).on('click', function () {
-			BgImg.upload();
-		}))).append(BgImg.controlsEls.listDefault = $('<dl/>', {
+		$('<div class="list"/>').appendTo(BgImg.controlsEls.container).append(BgImg.controlsEls.listDefault = $('<dl/>', {
 			'html': '<dt></dt>'
 		}));
 		BgImg.list.forEach(function (o) {
