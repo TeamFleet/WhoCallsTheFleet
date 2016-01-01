@@ -80,7 +80,8 @@ _frame.infos.__entity = function( id ){
 		d.relation[t].forEach(function(seriesShipIds){
 			flexgrid.appendDOM(
 				_tmpl.link_ship(seriesShipIds[seriesShipIds.length-1], {
-					mode:	'names'
+					mode:		'names',
+					extraIllust:(t == 'illustrator')
 				}).addClass('unit')
 			)
 		})

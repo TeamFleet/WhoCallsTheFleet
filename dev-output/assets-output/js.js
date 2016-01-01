@@ -4563,10 +4563,10 @@ _tmpl.link_equipment = function (equipment, tagName, returnHTML, improvementStar
 	return _tmpl.export('<' + tagName + (tagName == 'a' ? ' href="?infos=equipment&id=' + equipmentId + '"' : '') + ' class="link_equipment"' + ' data-equipmentid="' + equipmentId + '"' + ' data-tip-position="right"' + ' data-infos="[[EQUIPMENT::' + equipmentId + ']]"' + ' data-tip="[[EQUIPMENT::' + equipmentId + ']]"' + '>' + '<i style="background-image:url(assets/images/itemicon/' + equipment.getIconId() + '.png)"></i>' + '<span>' + equipment.getName(!0) + '</span>' + (improvementStar !== null ? '<em' + (improvementStar <= 0 ? ' class="zero"' : '') + '>+' + improvementStar + '</em>' : '') + '</' + tagName + '>', returnHTML);
 };
 
-_tmpl.link_ship = function (ship, tagName, returnHTML, mode) {
+_tmpl.link_ship = function (ship, tagName, returnHTML, mode, extraIllust) {
 	if (!ship) return !1;
 
-	if (tagName && (typeof tagName === 'undefined' ? 'undefined' : _typeof(tagName)) == 'object') return _tmpl.link_ship(ship, tagName['tagName'] || null, tagName['returnHTML'] || null, tagName['mode'] || null);
+	if (tagName && (typeof tagName === 'undefined' ? 'undefined' : _typeof(tagName)) == 'object') return _tmpl.link_ship(ship, tagName['tagName'] || null, tagName['returnHTML'] || null, tagName['mode'] || null, tagName['extraIllust'] || null);
 
 	tagName = tagName || 'a';
 	returnHTML = returnHTML || !1;
@@ -4580,7 +4580,8 @@ _tmpl.link_ship = function (ship, tagName, returnHTML, mode) {
 	}
 
 	var content = '',
-	    shipType = ship.getType();
+	    shipType = ship.getType(),
+	    hasExtraIllust = !1;
 
 	switch (mode) {
 		case 'names':
@@ -4596,7 +4597,20 @@ _tmpl.link_ship = function (ship, tagName, returnHTML, mode) {
 			break;
 	}
 
-	return _tmpl.export('<' + tagName + (tagName == 'a' ? ' href="?infos=ship&id=' + shipId + '"' : '') + ' class="link_ship" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">' + '<img src="' + node.path.normalize(_g.path.pics.ships) + '/' + shipId + '/0.webp"/>' + '<span>' + content + '</span>' + '</' + tagName + '>', returnHTML);
+	if (extraIllust) {
+		(function () {
+			var seriesData = ship.getSeriesData();
+			seriesData.forEach(function (data_cur, i) {
+				hasExtraIllust = data_cur.illust_extra && data_cur.illust_extra.length && data_cur.illust_extra[0] ? !0 : !1;
+				if (!hasExtraIllust && data_cur.illust_delete) {
+					var data_prev = i ? seriesData[i - 1] : null;
+					if (data_prev) hasExtraIllust = data_prev.illust_extra && data_prev.illust_extra.length && data_prev.illust_extra[0] ? !0 : !1;
+				}
+			});
+		})();
+	}
+
+	return _tmpl.export('<' + tagName + (tagName == 'a' ? ' href="?infos=ship&id=' + shipId + '"' : '') + (' class="link_ship" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]"') + (hasExtraIllust ? ' icon="hanger"' : '') + '>' + ('<img src="' + node.path.normalize(_g.path.pics.ships) + '/' + shipId + '/0.webp"/>') + ('<span>' + content + '</span>') + ('</' + tagName + '>'), returnHTML);
 };
 
 _tmpl.textlink_entity = function (entity, tagName, returnHTML) {
@@ -5293,7 +5307,14 @@ BgImg.controlsShow = function () {
 		$('<div class="controls"/>').appendTo(BgImg.controlsEls.container).append(BgImg.controlsEls.btnViewingToggle = $('<button icon="eye"/>').on('click', BgImg.controlsViewingToggle)).append($('<button icon="floppy-disk"/>').on('click', function () {
 			BgImg.save();
 		})).append($('<button icon="arrow-set2-right"/>').on('click', BgImg.controlsHide));
-		$('<div class="list"/>').appendTo(BgImg.controlsEls.container).append(BgImg.controlsEls.listDefault = $('<dl/>', {
+		$('<div class="list"/>').appendTo(BgImg.controlsEls.container).append(BgImg.controlsEls.listCustom = $('<dl/>', {
+			'html': '<dt>自定义</dt>'
+		}).append(BgImg.controlsEls.listCustomAdd = $('<dd/>', {
+			'class': 'add',
+			'html': '<s></s>'
+		}).on('click', function () {
+			BgImg.upload();
+		}))).append(BgImg.controlsEls.listDefault = $('<dl/>', {
 			'html': '<dt></dt>'
 		}));
 		BgImg.list.forEach(function (o) {

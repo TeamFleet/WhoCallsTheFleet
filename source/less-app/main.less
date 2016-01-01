@@ -39,7 +39,12 @@
 		.width(@scrollbar_width);
 	}
 	::-webkit-scrollbar-button{
-		display:	none;
+		//display:	none;
+		height: 	1px;
+		border: 	0;
+		margin: 	0;
+		padding: 	0;
+		background: transparent;
 	}
 	::-webkit-scrollbar-track{
 		//background:	rgba(0, 0, 0, .5);
@@ -1373,6 +1378,7 @@ main{
 			height: 	100%;
 			padding: 	20px 0 0 10px;
 			transition-property: opacity;
+			-webkit-overflow-scrolling: touch;
 			//transition-duration: .5s;
 		}
 		
@@ -1398,17 +1404,27 @@ main{
 					background: 	no-repeat 50% 38.2% / cover;
 					opacity: 		.25;
 				}
-				&:before{
+				&:before, &:after{
 					content: 	'';
 					position: 	absolute;
+					z-index: 	2;
+				}
+				&:before{
 					top: 		0;
 					right: 		0;
 					bottom: 	0;
 					left: 		0;
-					z-index: 	2;
 					border: 	1px solid rgba(255,255,255,.35);
 				}
+				&:after{
+					top: 		1px;
+					right: 		1px;
+					bottom: 	1px;
+					left: 		1px;
+					border: 	1px solid rgba(0,0,0,.15);
+				}
 				&:hover{
+					background: rgba(255,255,255,.35);
 					s{
 						opacity: 	.5;
 					}
@@ -1418,7 +1434,38 @@ main{
 						opacity: 	1;
 					}
 					&:before{
-						border: 	2px solid hsl(42, 100%, 75%);
+						border: 	3px solid hsl(42, 100%, 75%);
+					}
+					&:after{
+						display: 	none;
+					}
+				}
+				&.add{
+					s{
+						opacity: 	.25;
+						&:before, &:after{
+							content: 	'';
+							position: 	absolute;
+							background: #fff;
+							top: 		50%;
+							left: 		50%;
+						}
+						&:before{
+							height: 	50%;
+							width: 		6px;
+							margin: 	-25% auto auto -3px;
+						}
+						&:after{
+							height: 	6px;
+							width: 		50%;
+							margin: 	-3px auto auto -25%;
+						}
+					}
+					&:hover{
+						background: rgba(255,255,255,.2);
+						s{
+							opacity: 	.35;
+						}
 					}
 				}
 			}
@@ -1444,7 +1491,7 @@ main{
 			.bgimgs{
 				display: 	none;
 			}
-			&:after{
+			&>.wrapper:after{
 				background: rgba(0,0,0,.75);
 			}
 		}
@@ -1555,6 +1602,23 @@ main{
 .global_options(){
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// common elements
+	[scrollbody]{
+		-webkit-overflow-scrolling: touch;
+	}
 
 
 

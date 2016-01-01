@@ -5979,7 +5979,7 @@ _tmpl.link_equipment = function( equipment, tagName, returnHTML, improvementStar
 		)
 }
 
-_tmpl.link_ship = function( ship, tagName, returnHTML, mode ){
+_tmpl.link_ship = function( ship, tagName, returnHTML, mode, extraIllust ){
 	if( !ship )
 		return false
 
@@ -5988,7 +5988,8 @@ _tmpl.link_ship = function( ship, tagName, returnHTML, mode ){
 					ship,
 					tagName['tagName'] || null,
 					tagName['returnHTML'] || null,
-					tagName['mode'] || null
+					tagName['mode'] || null,
+					tagName['extraIllust'] || null
 				)
 
 	tagName = tagName || 'a'
@@ -6004,6 +6005,7 @@ _tmpl.link_ship = function( ship, tagName, returnHTML, mode ){
 	
 	let content = ''
 		,shipType = ship.getType()
+		,hasExtraIllust = false
 	
 	switch(mode){
 		case 'names':
@@ -6020,8 +6022,29 @@ _tmpl.link_ship = function( ship, tagName, returnHTML, mode ){
 						+ ship.getName(_g.joint)
 			break;
 	}
+	
+	if( extraIllust ){
+		let seriesData = ship.getSeriesData()
+		seriesData.forEach(function(data_cur, i){
+			hasExtraIllust = data_cur.illust_extra && data_cur.illust_extra.length && data_cur.illust_extra[0] ? true : false
+			if( !hasExtraIllust && data_cur.illust_delete ){
+				let data_prev = i ? seriesData[ i - 1 ] : null
+				if( data_prev )
+					hasExtraIllust = data_prev.illust_extra && data_prev.illust_extra.length && data_prev.illust_extra[0] ? true : false
+			}
+		})
+	}
 
 	return _tmpl.export(
+			`<${tagName}`
+				+ (tagName == 'a' ? ` href="?infos=ship&id=${shipId}"` : '')
+				+ ` class="link_ship" data-shipid="${shipId}" data-infos="[[SHIP::${shipId}]]"`
+				+ (hasExtraIllust ? ` icon="hanger"` : '')
+			+ `>`
+				+ `<img src="${node.path.normalize(_g.path.pics.ships)}/${shipId}/0.webp"/>`
+				+ `<span>${content}</span>`
+			+ `</${tagName}>`,
+		/*
 			'<' + tagName
 				+ (tagName == 'a' ? ' href="?infos=ship&id='+shipId+'"' : '')
 				+ ' class="link_ship" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]">'
@@ -6030,6 +6053,7 @@ _tmpl.link_ship = function( ship, tagName, returnHTML, mode ){
 					+ content
 				+ '</span>'
 			+ '</' + tagName + '>',
+		*/
 			/*
 			`<${tagName} class="unit link_ship" data-shipid="${shipId}" data-infos="[[SHIP::${shipId}]]">
 				<img src="${_g.path.pics.ships}/${shipId}/0.webp"/>
@@ -7085,7 +7109,6 @@ BgImg.list = [];
 					$('<button icon="arrow-set2-right"/>').on('click', BgImg.controlsHide)
 				)
 			$('<div class="list"/>').appendTo( BgImg.controlsEls.container )
-			/*
 				.append( BgImg.controlsEls.listCustom =
 					$('<dl/>',{
 						'html':	'<dt>自定义</dt>'
@@ -7099,7 +7122,6 @@ BgImg.list = [];
 						})
 					)
 				)
-				*/
 				.append( BgImg.controlsEls.listDefault =
 					$('<dl/>',{
 						'html':	'<dt></dt>'
@@ -7741,7 +7763,8 @@ _frame.infos.__entity = function( id ){
 		d.relation[t].forEach(function(seriesShipIds){
 			flexgrid.appendDOM(
 				_tmpl.link_ship(seriesShipIds[seriesShipIds.length-1], {
-					mode:	'names'
+					mode:		'names',
+					extraIllust:(t == 'illustrator')
 				}).addClass('unit')
 			)
 		})
