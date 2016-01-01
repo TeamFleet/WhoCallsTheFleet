@@ -700,7 +700,8 @@ body > .menus > .menu.mod-blur-backdrop {
   background: transparent;
 }
 body > .menus > .menu.mod-blur-backdrop > .body {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 body > .menus > .menu.mod-blur-shot {
   background: rgba(0, 0, 0, 0.5);
