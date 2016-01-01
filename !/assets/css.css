@@ -867,25 +867,23 @@ body > .modal > s {
   -webkit-animation: fadein 0.3s ease-out;
   background: rgba(16, 16, 16, 0.25);
 }
-body > .modal.mod-blur-backdrop > div,
-body > .modal.mod-blur-shot > div {
-  background: transparent;
+body > .modal.mod-blur-backdrop > div {
+  background: rgba(0, 0, 0, 0.4);
 }
-body > .modal.mod-blur-backdrop > s,
 body > .modal.mod-blur-shot > s {
   background: transparent;
+  box-shadow: inset 0 0 50px 25px #666666;
 }
-body > .modal.mod-blur-backdrop > s:before,
 body > .modal.mod-blur-shot > s:before {
   z-index: 2;
   content: '';
-  background: rgba(0, 0, 0, 0.35);
-}
-body > .modal.mod-blur-shot > s {
-  box-shadow: inset 0 0 50px 25px #666666;
+  background: rgba(0, 0, 0, 0.4);
 }
 body > .modal.mod-blur-shot > s > img {
   -webkit-filter: blur(10px);
+}
+body > .modal.mod-blur-shot > div {
+  background: transparent;
 }
 body > .modal.on {
   opacity: 1;
@@ -986,11 +984,15 @@ body > .modal.hastitle > div > .close {
   background: no-repeat 50% 50% / cover;
   background-attachment: fixed;
 }
-#tip.mod-blur-backdrop,
+#tip.mod-blur-backdrop {
+  background: transparent;
+}
+#tip.mod-blur-backdrop > .body {
+  background: rgba(0, 0, 0, 0.4);
+}
 #tip.mod-blur-shot {
   background: rgba(0, 0, 0, 0.5);
 }
-#tip.mod-blur-backdrop > .body,
 #tip.mod-blur-shot > .body {
   background: rgba(0, 0, 0, 0.4);
 }
@@ -3197,6 +3199,7 @@ main:after {
   padding: 20px 0 0 10px;
   -webkit-transition-property: opacity;
   transition-property: opacity;
+  -webkit-overflow-scrolling: touch;
 }
 .bgcontrols dl {
   margin: 0 0 20px 0;
@@ -3222,15 +3225,28 @@ main:after {
   background: no-repeat 50% 38.2% / cover;
   opacity: .25;
 }
-.bgcontrols dl dd:before {
+.bgcontrols dl dd:before,
+.bgcontrols dl dd:after {
   content: '';
   position: absolute;
+  z-index: 2;
+}
+.bgcontrols dl dd:before {
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 2;
   border: 1px solid rgba(255, 255, 255, 0.35);
+}
+.bgcontrols dl dd:after {
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+  left: 1px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+.bgcontrols dl dd:hover {
+  background: rgba(255, 255, 255, 0.35);
 }
 .bgcontrols dl dd:hover s {
   opacity: .5;
@@ -3239,7 +3255,37 @@ main:after {
   opacity: 1;
 }
 .bgcontrols dl dd.on:before {
-  border: 2px solid #ffd980;
+  border: 3px solid #ffd980;
+}
+.bgcontrols dl dd.on:after {
+  display: none;
+}
+.bgcontrols dl dd.add s {
+  opacity: .25;
+}
+.bgcontrols dl dd.add s:before,
+.bgcontrols dl dd.add s:after {
+  content: '';
+  position: absolute;
+  background: #fff;
+  top: 50%;
+  left: 50%;
+}
+.bgcontrols dl dd.add s:before {
+  height: 50%;
+  width: 6px;
+  margin: -25% auto auto -3px;
+}
+.bgcontrols dl dd.add s:after {
+  height: 6px;
+  width: 50%;
+  margin: -3px auto auto -25%;
+}
+.bgcontrols dl dd.add:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.bgcontrols dl dd.add:hover s {
+  opacity: .35;
 }
 .bgcontrols.mod-viewing .bgimgs {
   opacity: 0;
@@ -3252,7 +3298,7 @@ main:after {
   .bgcontrols .bgimgs {
     display: none;
   }
-  .bgcontrols:after {
+  .bgcontrols > .wrapper:after {
     background: rgba(0, 0, 0, 0.75);
   }
 }
@@ -3397,6 +3443,9 @@ main:after {
 }
 #layout.mod-g.ready.only_bg > main {
   top: calc(100% + 51px);
+}
+[scrollbody] {
+  -webkit-overflow-scrolling: touch;
 }
 /*
 .tabview{
@@ -4705,6 +4754,17 @@ body.mod-capture #tip {
 .link_ship img.nomask {
   mask: none;
   -webkit-mask: none;
+}
+.link_ship[icon]:before {
+  position: absolute;
+  display: block;
+  font-size: 22px;
+  color: #ffffff;
+  -webkit-transform: rotate(15deg);
+          transform: rotate(15deg);
+  top: 0;
+  left: 74px;
+  z-index: 10;
 }
 .link_entity > i {
   display: block;
