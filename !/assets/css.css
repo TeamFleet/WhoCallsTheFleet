@@ -696,11 +696,15 @@ body > .menus > .menu > .body hr {
   border-top: 0.05rem solid rgba(255, 255, 255, 0.2);
   margin: 8px 0;
 }
-body > .menus > .menu.mod-blur-backdrop,
+body > .menus > .menu.mod-blur-backdrop {
+  background: transparent;
+}
+body > .menus > .menu.mod-blur-backdrop > .body {
+  background: rgba(0, 0, 0, 0.4);
+}
 body > .menus > .menu.mod-blur-shot {
   background: rgba(0, 0, 0, 0.5);
 }
-body > .menus > .menu.mod-blur-backdrop > .body,
 body > .menus > .menu.mod-blur-shot > .body {
   background: rgba(0, 0, 0, 0.4);
 }
@@ -868,7 +872,7 @@ body > .modal > s {
   background: rgba(16, 16, 16, 0.25);
 }
 body > .modal.mod-blur-backdrop > div {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(128, 128, 0, 0.2);
 }
 body > .modal.mod-blur-shot > s {
   background: transparent;
