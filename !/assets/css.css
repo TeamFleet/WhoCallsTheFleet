@@ -3248,6 +3248,14 @@ main:after {
   pointer-events: all;
   background-color: rgba(0, 0, 0, 0.65);
 }
+@media all and (max-width: 720px) {
+  .bgcontrols .bgimgs {
+    display: none;
+  }
+  .bgcontrols:after {
+    background: rgba(0, 0, 0, 0.75);
+  }
+}
 #layout.mod-bgcontrols nav {
   -webkit-transform: translateY(-100%);
           transform: translateY(-100%);
@@ -3824,7 +3832,7 @@ body.mod-capture #tip {
     height: calc(100% - 56px);
     height: calc(100vh - 56px);
     position: fixed;
-    top: 100%;
+    top: 56px;
     left: 0;
     z-index: 10;
     padding: 0;
