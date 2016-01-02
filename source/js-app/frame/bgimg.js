@@ -24,6 +24,8 @@ static
 
 class
 	name
+		when isDefault === true, name leads as *
+		use .filename to get real filename / name
 	isEnable
 	isDefault
 
@@ -66,6 +68,10 @@ class BgImg{
 		}
 		if( BgImg.cur && BgImg.cur.name === this.name )
 			this.elThumbnail.addClass('on')
+	}
+	
+	get filename(){
+		return this.isDefault ? this.name.substr(1) : this.name
 	}
 	
 	get index(){
@@ -150,19 +156,19 @@ BgImg.list = [];
 			})
 		
 		let deferred = Q.defer()
-			,_new = []
+			,_new
 
 		Q.fcall(BgImg.getDefaultImgs)
 		.then(function(){
 			BgImg.list.some(function(o){
 				if( o.name != Lockr.get('BgImgLast', '') )
-					_new.push(o.name)
+					_new = o
 				return o.name == Lockr.get('BgImgLast', '')
 			})
 
 			Lockr.set('BgImgLast', BgImg.list[0].name)
 
-			BgImg.change( _new[0] );
+			BgImg.change( _new );
 			_frame.app_main.loaded('bgimgs')
 
 			BgImg.isInit = true
@@ -248,6 +254,7 @@ BgImg.list = [];
 					})
 					.then(function(obj){
 						o = obj
+						BgImg.list.push(o)
 						return BgImg.generate(o, 'thumbnail')
 					})
 					.then(function(canvas){
@@ -313,6 +320,18 @@ BgImg.list = [];
 		}
 
 		return deferred.promise
+	};
+	
+	BgImg.getUniqueName = function( n ){
+		let o, i=1, n2 = n
+		if( typeof n == 'number' )
+			n = '' + n
+		while( o = BgImg.getObj(n2) ){
+			n2 = n.split('.')
+			let ext = n2.pop()
+			n2 = n2.join('.') + '-' + (i++) + '.' + ext
+		}
+		return n2
 	};
 
 

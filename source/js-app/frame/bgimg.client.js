@@ -18,7 +18,7 @@ BgImg.getDefaultImgs = function(){
 	_list( _g.path.bgimg_dir )
 		.forEach(function(name){
 			BgImg.list.push( new BgImg({
-				'name': 	name,
+				'name': 	'*' + name,
 				'isDefault':true
 			}) )
 		})
@@ -87,14 +87,14 @@ BgImg.getPath = function(o, t){
 	let folder = o.isDefault ? _g.path.bgimg_dir : _g.path.bgimg_custom_dir
 	
 	if( t )
-		return 'file://' + encodeURI( node.path.join( folder , t, o.name ).replace(/\\/g, '/') )
+		return 'file://' + encodeURI( node.path.join( folder , t, o.filename ).replace(/\\/g, '/') )
 
-	return 'file://' + encodeURI( node.path.join( folder , o.name ).replace(/\\/g, '/') )
+	return 'file://' + encodeURI( node.path.join( folder , o.filename ).replace(/\\/g, '/') )
 };
 
 BgImg.save = function(o){
 	o = BgImg.getObj(o)
-	_g.save( node.path.join( o.isDefault ? _g.path.bgimg_dir : _g.path.bgimg_custom_dir , o.name ), o.name )
+	_g.save( node.path.join( o.isDefault ? _g.path.bgimg_dir : _g.path.bgimg_custom_dir , o.filename ), o.filename )
 };
 
 BgImg.readFile = function( e ){

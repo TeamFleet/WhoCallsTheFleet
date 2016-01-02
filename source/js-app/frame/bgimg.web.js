@@ -2,7 +2,7 @@ BgImg.getDefaultImgs = function(){
 	let deferred = Q.defer()
 	for( let i=_g.bgimg_count-1; i>=0; i-- ){
 		BgImg.list.push( new BgImg({
-			'name': 	i + '.jpg',
+			'name': 	'*' + i + '.jpg',
 			'isDefault':true
 		}) )
 		//_frame.app_main.bgimgs.push( i + '.jpg' )
@@ -22,7 +22,6 @@ BgImg.getDefaultImgs = function(){
 		}
 	);
 
-	deferred.resolve()
 	return deferred.promise
 	//return BgImg.list
 };
@@ -33,7 +32,7 @@ BgImg.getPath = function(o, t){
 	if( o.isDefault )
 		return _g.path.bgimg_dir
 				+ ( t ? t + '/' : '' )
-				+ o.name
+				+ o.filename
 	
 	if( t )
 		return o['_'+t]
@@ -43,7 +42,7 @@ BgImg.getPath = function(o, t){
 
 BgImg.save = function(o){
 	o = BgImg.getObj(o)
-	_g.save( o.path, 'fleet.diablohu.com - ' + o.name )
+	_g.save( o.path, 'fleet.diablohu.com - ' + o.filename )
 };
 
 BgImg.readFile = function( e ){
@@ -59,7 +58,8 @@ BgImg.readFile = function( e ){
 				return function(r) {
 					//return deferred.resolve(r.target.result)
 					//let n = _g.timeNow() + '.' + theFile.name.split('.').pop();
-					BgImg.dataCustom[theFile.name] = {
+					let n = BgImg.getUniqueName(theFile.name)
+					BgImg.dataCustom[n] = {
 						'_path':	r.target.result
 					}
 					localforage.setItem(
@@ -68,7 +68,7 @@ BgImg.readFile = function( e ){
 						function(err, result){
 							deferred.resolve(
 								new BgImg({
-									'name':		theFile.name,
+									'name':		n,
 									'_path':	r.target.result
 								})
 							)

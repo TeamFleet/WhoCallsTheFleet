@@ -5073,6 +5073,11 @@ var BgImg = (function () {
 			if (BgImg.cur && BgImg.cur.name === this.name) this.elThumbnail.addClass('on');
 		}
 	}, {
+		key: 'filename',
+		get: function get() {
+			return this.isDefault ? this.name.substr(1) : this.name;
+		}
+	}, {
 		key: 'index',
 		get: function get() {
 			var i = -1;
@@ -5139,17 +5144,17 @@ BgImg.init = function () {
 	});
 
 	var deferred = Q.defer(),
-	    _new = [];
+	    _new = undefined;
 
 	Q.fcall(BgImg.getDefaultImgs).then(function () {
 		BgImg.list.some(function (o) {
-			if (o.name != Lockr.get('BgImgLast', '')) _new.push(o.name);
+			if (o.name != Lockr.get('BgImgLast', '')) _new = o;
 			return o.name == Lockr.get('BgImgLast', '');
 		});
 
 		Lockr.set('BgImgLast', BgImg.list[0].name);
 
-		BgImg.change(_new[0]);
+		BgImg.change(_new);
 		_frame.app_main.loaded('bgimgs');
 
 		BgImg.isInit = !0;
@@ -5229,6 +5234,7 @@ BgImg.upload = function () {
 				return BgImg.readFile(e);
 			}).then(function (obj) {
 				o = obj;
+				BgImg.list.push(o);
 				return BgImg.generate(o, 'thumbnail');
 			}).then(function (canvas) {
 				return BgImg.set(o, 'thumbnail', canvas);
@@ -5283,6 +5289,19 @@ BgImg.generate = function (o, t) {
 	}
 
 	return deferred.promise;
+};
+
+BgImg.getUniqueName = function (n) {
+	var o = undefined,
+	    i = 1,
+	    n2 = n;
+	if (typeof n == 'number') n = '' + n;
+	while (o = BgImg.getObj(n2)) {
+		n2 = n.split('.');
+		var ext = n2.pop();
+		n2 = n2.join('.') + '-' + i++ + '.' + ext;
+	}
+	return n2;
 };
 
 BgImg.controlsInit = function () {
@@ -5351,7 +5370,7 @@ BgImg.getDefaultImgs = function () {
 	var deferred = Q.defer();
 	for (var _i7 = _g.bgimg_count - 1; _i7 >= 0; _i7--) {
 		BgImg.list.push(new BgImg({
-			'name': _i7 + '.jpg',
+			'name': '*' + _i7 + '.jpg',
 			'isDefault': !0
 		}));
 	}
@@ -5367,14 +5386,13 @@ BgImg.getDefaultImgs = function () {
 		deferred.resolve(BgImg.list);
 	});
 
-	deferred.resolve();
 	return deferred.promise;
 };
 
 BgImg.getPath = function (o, t) {
 	o = BgImg.getObj(o);
 
-	if (o.isDefault) return _g.path.bgimg_dir + (t ? t + '/' : '') + o.name;
+	if (o.isDefault) return _g.path.bgimg_dir + (t ? t + '/' : '') + o.filename;
 
 	if (t) return o['_' + t];
 
@@ -5383,7 +5401,7 @@ BgImg.getPath = function (o, t) {
 
 BgImg.save = function (o) {
 	o = BgImg.getObj(o);
-	_g.save(o.path, 'fleet.diablohu.com - ' + o.name);
+	_g.save(o.path, 'fleet.diablohu.com - ' + o.filename);
 };
 
 BgImg.readFile = function (e) {
@@ -5394,12 +5412,13 @@ BgImg.readFile = function (e) {
 			var reader = new FileReader();
 			reader.onload = (function (theFile) {
 				return function (r) {
-					BgImg.dataCustom[theFile.name] = {
+					var n = BgImg.getUniqueName(theFile.name);
+					BgImg.dataCustom[n] = {
 						'_path': r.target.result
 					};
 					localforage.setItem('bgcustomlist', BgImg.dataCustom, function (err, result) {
 						deferred.resolve(new BgImg({
-							'name': theFile.name,
+							'name': n,
 							'_path': r.target.result
 						}));
 					});
