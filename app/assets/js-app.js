@@ -4166,9 +4166,14 @@ _frame.app_main = {
 						_frame.dom.layout.addClass('ready')
 						$html.addClass('app-ready')
 						setTimeout(function(){
+							let i = 0;
+							while( _frame.app_main.functions_on_ready[i] ){
+								_frame.app_main.functions_on_ready[i++]()
+							}
+							/*
 							for(let i=0; i<_frame.app_main.functions_on_ready.length; i++){
 								_frame.app_main.functions_on_ready[i]()
-							}
+							}*/
 						}, 1500)
 					}
 				}, is_instant ? 300 : 1000)
@@ -5122,6 +5127,7 @@ _g.error = function( err ){
 			检查通过
 				pipe 程序目录
 					[name].updated
+			全部下载完成
 				删除原有数据包
 				重命名新数据包
 				如果以上过程发生错误
@@ -5145,6 +5151,7 @@ var _updater = {
 // 获取本地版本
 	_updater.get_local_version = function(){
 		_updater.local_versions = JSON.parse( localStorage['nwjs-data-version'] || '{}' )
+		//_g.log('本地版本: ' + _updater.local_versions )
 		return _updater.local_versions
 	}
 
@@ -5161,6 +5168,7 @@ var _updater = {
 				deferred.reject(new Error(response.statusCode))
 			}else{
 				_updater.remote_data = JSON.parse( body || '{}' ) || {}
+				//_g.log('服务器版本: ' + _updater.remote_data )
 				deferred.resolve( _updater.remote_data )
 			}
 		})
@@ -5230,17 +5238,35 @@ var _updater = {
 
 // 更新数据包流程
 	_updater.update = function(){
-		var promise_chain 	= Q.fcall(function(){})
+		var promise_chain 	= Q.fcall(function(){
+				_g.log('')
+				_g.log('========== 自动更新 - 开始 ==========')
+				_g.log('')
+			})
 			,dirRoot = node.path.dirname(process.execPath).split(node.path.sep)
 			,dirData = ''
 			,datadir_exists = false
+			,renamePair = []
+			,size_total = 0
+			,size_received = 0
+
 		dirRoot = (process.platform == 'darwin' || (dirRoot[dirRoot.length - 1] == 'nwjs' && node.path.basename( process.execPath ) == 'nw.exe') )
 					? process.cwd()
 					: node.path.dirname(process.execPath)
 		dirData = node.path.join( dirRoot, 'data' )
 
+		function err_handler(err, msg){
+			msg = msg || ''
+			if( err.errno == -4048 || err.message.indexOf( 'not permitted' ) > -1 ){
+				_g.log('    ' + msg + '权限不足')
+			}else{
+				_g.log(err)
+				_g.log('    ' + msg + '发生错误 [' +err.errno+ ']: ' + err.message)
+			}
+		}
+
 		// 开始异步函数链
-			promise_chain
+			promise_chain = promise_chain
 
 		// 检查数据包目录是否存在
 			.then(function(){
@@ -5289,169 +5315,197 @@ var _updater = {
 			})
 
 		// 其余流程
-			.then(_updater.get_local_version())
+			.then(_updater.get_local_version)
 			.then(_updater.get_remote)
 			.then(_updater.get_packages_updated)
 			.then(function(updated){
+				//_g.log(updated)
+
 				if( !updated.length ){
 					_g.log('所有数据包均为最新')
-					return false
+					return true
 				}
 
-				_g.log('自动更新过程开始 (' + updated.join(', ') + ')')
+				_g.log('更新开始: ' + updated.join(', '))
 				_updater.create_update_indicator()
-				var promise_chain_update = Q.fcall(function(){})
-					,count = 0
-					,permission = true
-					,size_total = 0
-					,size_received = 0
 
-				updated.forEach(function(package_name){
-					(function(package_name, count){
-						size_total+= _updater.remote_data.packages[package_name].bytes
+				let promise_chain_update = Q.fcall(function(){})
+					//,permission = true
+					,deferredUpdating = Q.defer()
 
-						promise_chain_update = promise_chain_update.then(function(){
-							var deferred = Q.defer()
-								,savefile = false
+				updated.forEach(function(package_name, index){
+					size_total+= _updater.remote_data.packages[package_name].bytes
 
-							var tempfile = node.path.join(
-										dirData,
-										package_name
-										+ node.path.extname(_updater.remote_data.packages[package_name].path)
-										+ '.updated'
-									)
-								,targetFile = node.path.join(
-										dirData,
-										package_name
-										+ node.path.extname(_updater.remote_data.packages[package_name].path)
-									)
+					promise_chain_update = promise_chain_update.then(function(){
+						let deferred = Q.defer()
+							,savefile = false
 
-							/*
-							tempfile = node.path.join(
-										node.path.normalize('C:\Program Files (x86)\\'),
-										'__' + package_name
-										+ node.path.extname(_updater.remote_data.packages[package_name].path)
-									)
-							*/
+						var tempfile = node.path.join(
+									dirData,
+									package_name
+									+ node.path.extname(_updater.remote_data.packages[package_name].path)
+									+ '.updated'
+								)
+							,targetFile = node.path.join(
+									dirData,
+									package_name
+									+ node.path.extname(_updater.remote_data.packages[package_name].path)
+								)
 
-							function err_handler(err, msg){
-								msg = msg || ''
-								if( err.errno == -4048 || err.message.indexOf( 'not permitted' ) > -1 ){
-									_g.log('    ' + msg + '权限不足')
-								}else{
-									_g.log(err)
-									_g.log('    ' + msg + '发生错误 [' +err.errno+ ']: ' + err.message)
-								}
+						/*
+						tempfile = node.path.join(
+									node.path.normalize('C:\Program Files (x86)\\'),
+									'__' + package_name
+									+ node.path.extname(_updater.remote_data.packages[package_name].path)
+								)
+						*/
+
+						function err_handler(err, msg){
+							msg = msg || ''
+							if( err.errno == -4048 || err.message.indexOf( 'not permitted' ) > -1 ){
+								_g.log('    ' + msg + '权限不足')
+							}else{
+								_g.log(err)
+								_g.log('    ' + msg + '发生错误 [' +err.errno+ ']: ' + err.message)
 							}
+						}
 
-							_g.log('')
-							_g.log('========== ' + count + '/' + updated.length + ' ==========')
-							_g.log('')
-							_g.log('    ' + package_name
-								+ ' | 本地版本: ' + _updater.local_versions[package_name]
-								+ ' | 服务器版本: ' + (_updater.remote_data.packages[package_name].version
-														? _updater.remote_data.packages[package_name].version
-														: _updater.remote_data.packages[package_name])
-							)
+						_g.log('')
+						_g.log('========= ' + (index+1) + '/' + updated.length + ' ==========')
+						_g.log('    ' + package_name
+							+ ' | 本地版本: ' + _updater.local_versions[package_name]
+							+ ' | 服务器版本: ' + (_updater.remote_data.packages[package_name].version
+													? _updater.remote_data.packages[package_name].version
+													: _updater.remote_data.packages[package_name])
+						)
 
-							node['request-progress'](
-							node.request({
-								'uri': 		node.url.format(
-												_updater.remote_root + '/'
-												+ _updater.remote_data.packages[package_name].path
-											),
-								'method': 	'GET'
-							}).on('error',function(err){
-								_g.log('    下载数据包出错')
-								node.fs.unlink(tempfile, function(err2){
-									deferred.reject(new Error(err))
-								})
-								//deferred.reject(new Error(err))
-							}).on('response', function(response){
-								if( response.statusCode == 200
-									&& parseInt(response.headers['content-length']) == _updater.remote_data.packages[package_name].bytes
-								)
-									savefile = true
-							})).on('error',function(err){
-								_g.log('    下载数据包出错')
-								node.fs.unlink(tempfile, function(err2){
-									deferred.reject(new Error(err))
-								})
-								//deferred.reject(new Error(err))
-							}).on('progress',function(state){
-								_updater.update_indicator.addClass('on')
-								_g.log('    ' + state.received + ' / ' + state.total + ' (' + state.percent + '%)'
-									+ ' | ' + Math.floor( (size_received + state.received) / size_total * 100 ) + '%'
-								)
-								_updater.update_indicator_bar.css('width', Math.floor( (size_received + state.received) / size_total * 100 ) + '%')
-							}).pipe(
-								node.fs.createWriteStream(tempfile)
-								.on('finish', function(){
-									if( savefile ){
-										size_received+= _updater.remote_data.packages[package_name].bytes
-										node.fs.unlink(targetFile, function(err){
-											if( err ){
-												err_handler(err, '删除原有数据包')
-												_g.log('    跳过')
-												//deferred.resolve()
-											}//else{
-												node.fs.rename(
-													tempfile,
-													targetFile,
-													function(err){
-														if( err ){
-															err_handler(err, '重命名新数据包')
-															_g.log('    跳过')
-														}else{
-															_g.log('    该数据包更新完成')
-														}
-														deferred.resolve()
-													}
-												)
-											//}
-										})
-									}else{
-										_g.log('    下载数据包出错')
-										node.fs.unlink(tempfile, function(err){
-											deferred.resolve()
-										})
-									}
-								}).on('error', function(err){
-									err_handler(err, '写入文件')
-									_g.log('    流程结束')
-									//deferred.resolve()
-									deferred.reject(new Error(err))
-								})
+						node['request-progress'](
+						node.request({
+							'uri': 		node.url.format(
+											_updater.remote_root + '/'
+											+ _updater.remote_data.packages[package_name].path
+										),
+							'method': 	'GET'
+						}).on('error',function(err){
+							_g.log('    下载数据包出错')
+							node.fs.unlink(tempfile, function(err2){
+								deferred.reject(new Error(err))
+							})
+							//deferred.reject(new Error(err))
+						}).on('response', function(response){
+							if( response.statusCode == 200
+								&& parseInt(response.headers['content-length']) == _updater.remote_data.packages[package_name].bytes
 							)
-							return deferred.promise
-						})
-					})(package_name, count)
-					count++
+								savefile = true
+						})).on('error',function(err){
+							_g.log('    下载数据包出错')
+							node.fs.unlink(tempfile, function(err2){
+								deferred.reject(new Error(err))
+							})
+							//deferred.reject(new Error(err))
+						}).on('progress',function(state){
+							_updater.update_indicator.addClass('on')
+							_g.log('    ' + state.received + ' / ' + state.total + ' (' + state.percent + '%)'
+								+ ' | ' + Math.floor( (size_received + state.received) / size_total * 100 ) + '%'
+							)
+							_updater.update_indicator_bar.css('width', Math.floor( (size_received + state.received) / size_total * 100 ) + '%')
+						}).pipe(
+							node.fs.createWriteStream(tempfile)
+							.on('finish', function(){
+								if( savefile ){
+									size_received+= _updater.remote_data.packages[package_name].bytes
+									renamePair.push([
+										package_name,
+										tempfile,
+										targetFile
+									])
+									_g.log('    ' +package_name+ ' | 下载完成')
+									deferred.resolve()
+								}else{
+									_g.log('    ' +package_name+ ' | 下载出现错误')
+									node.fs.unlink(tempfile, function(err){
+										deferred.resolve()
+									})
+								}
+							}).on('error', function(err){
+								err_handler(err, '写入文件')
+								_g.log('    流程结束')
+								//deferred.resolve()
+								deferred.reject(new Error(err))
+							})
+						)
+						return deferred.promise
+					})
 				})
 				promise_chain_update = promise_chain_update
+					.then(function(){
+						deferredUpdating.resolve()
+					})
 					.catch(function (err) {
-						_g.error(err)
-						_g.log('自动更新失败')
-						_updater.update_indicator.removeClass('on')
+						deferredUpdating.reject( err )
 					})
-					.done(function(){
-						_g.log('')
-						if( size_received >= size_total ){
-							_g.log('========== ' + updated.length + '/' + updated.length + ' ==========')
-							_g.log('')
-							_g.log('自动更新完毕')
-							_updater.update_indicator.addClass('done').data('tip', '更新完成<br>请重新启动程序')
-							_updater.update_indicator_bar.css('width', '')
-						}else{
-							_g.log('========== ' + updated.length + '/' + updated.length + ' ==========')
-							_g.log('')
-							_g.log('自动更新失败, 结束流程')
-							_updater.update_indicator.removeClass('on')
-						}
-					})
+				return deferredUpdating.promise
 			})
 		
+		// 全部下载完成		
+		promise_chain = promise_chain
+			.then(function(){
+				_g.log('')
+				_g.log('全部数据包下载完成')
+				let deferred = Q.defer()
+					,chain = Q.fcall(function(){})
+				renamePair.forEach(function(pair){
+					chain = chain.then(function(){
+						let deferred = Q.defer()
+						
+						node.fs.unlink(pair[2], function(err){
+							if( err ){
+								err_handler(err, '删除原有数据包')
+								_g.log('    ' +pair[0]+ ' | 删除原有数据包出错')
+								//deferred.resolve()
+							}//else{
+								node.fs.rename(
+									pair[1],
+									pair[2],
+									function(err){
+										if( err ){
+											err_handler(err, '重命名新数据包')
+											_g.log('    ' +pair[0]+ ' | 重命名新数据包出错')
+										}else{
+											_g.log('    ' +pair[0]+ ' | 更新完成')
+										}
+										deferred.resolve()
+									}
+								)
+							//}
+						})
+						
+						return deferred.promise
+					})
+				})
+				chain = chain.then(function(){
+					deferred.resolve()
+				})
+				.catch(function (err) {
+					deferred.reject(err)
+				})
+				return deferred.promise
+			})
+
 		// 错误处理
+			.then(function(){
+				_g.log('')
+				if( size_received >= size_total ){
+					//_g.log('')
+					_g.log('更新完成')
+					_updater.update_indicator.addClass('done').data('tip', '更新完成<br>请重新启动程序')
+					_updater.update_indicator_bar.css('width', '')
+				}/*else{
+					_g.log('')
+					_g.log('自动更新失败, 结束流程')
+					_updater.update_indicator.removeClass('on')
+				}*/
+			})
 			.catch(function (err) {
 				_g.log('自动更新失败')
 				if( err == '数据包目录不存在, 不进行自动更新' )
@@ -5459,10 +5513,13 @@ var _updater = {
 				else
 					_g.error(err)
 				if( _updater.update_indicator && _updater.update_indicator.length )
-					_updater.update_indicator.remove()
+					_updater.update_indicator.removeClass('on')
 			})
 			.done(function(){
-				_g.log('自动更新过程初始化完毕')
+				//_g.log('自动更新过程初始化完毕')
+				_g.log('')
+				_g.log('========== 自动更新 - 结束 ==========')
+				_g.log('')
 			})
 	}
 

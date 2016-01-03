@@ -223,9 +223,14 @@ _frame.app_main = {
 						_frame.dom.layout.addClass('ready')
 						$html.addClass('app-ready')
 						setTimeout(function(){
+							let i = 0;
+							while( _frame.app_main.functions_on_ready[i] ){
+								_frame.app_main.functions_on_ready[i++]()
+							}
+							/*
 							for(let i=0; i<_frame.app_main.functions_on_ready.length; i++){
 								_frame.app_main.functions_on_ready[i]()
-							}
+							}*/
 						}, 1500)
 					}
 				}, is_instant ? 300 : 1000)

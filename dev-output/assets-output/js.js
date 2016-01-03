@@ -3848,8 +3848,9 @@ _frame.app_main = {
 					_frame.dom.layout.addClass('ready');
 					$html.addClass('app-ready');
 					setTimeout(function () {
-						for (var _i5 = 0; _i5 < _frame.app_main.functions_on_ready.length; _i5++) {
-							_frame.app_main.functions_on_ready[_i5]();
+						var i = 0;
+						while (_frame.app_main.functions_on_ready[i]) {
+							_frame.app_main.functions_on_ready[i++]();
 						}
 					}, 1500);
 				}
@@ -4990,9 +4991,9 @@ _frame.app_main.page['calctp'] = {
 				    rA = 0,
 				    rS = 0;
 
-				for (var _i6 in d) {
-					var count = parseInt(d[_i6]) || 0;
-					switch (_i6) {
+				for (var _i5 in d) {
+					var count = parseInt(d[_i5]) || 0;
+					switch (_i5) {
 						case 'dd':
 							rS += 5 * count;
 							break;
@@ -5386,9 +5387,9 @@ BgImg.controlsViewingToggle = function () {
 
 BgImg.getDefaultImgs = function () {
 	var deferred = Q.defer();
-	for (var _i7 = _g.bgimg_count - 1; _i7 >= 0; _i7--) {
+	for (var _i6 = _g.bgimg_count - 1; _i6 >= 0; _i6--) {
 		BgImg.list.push(new BgImg({
-			'name': '*' + _i7 + '.jpg',
+			'name': '*' + _i6 + '.jpg',
 			'isDefault': !0
 		}));
 	}
@@ -5396,9 +5397,9 @@ BgImg.getDefaultImgs = function () {
 	BgImg.dataCustom = {};
 	localforage.getItem('bgcustomlist', function (err, value) {
 		BgImg.dataCustom = value || {};
-		for (var _i8 in BgImg.dataCustom) {
-			var o = BgImg.dataCustom[_i8];
-			o.name = _i8;
+		for (var _i7 in BgImg.dataCustom) {
+			var o = BgImg.dataCustom[_i7];
+			o.name = _i7;
 			BgImg.list.push(new BgImg(o));
 		}
 		deferred.resolve(BgImg.list);
@@ -5426,7 +5427,7 @@ BgImg.readFile = function (e) {
 	var deferred = Q.defer();
 
 	Q.fcall(_g.getScriptCanvas).then(function () {
-		for (var _i9 = 0, f = undefined; f = e.target.files[_i9]; _i9++) {
+		for (var _i8 = 0, f = undefined; f = e.target.files[_i8]; _i8++) {
 			var reader = new FileReader();
 			reader.onload = (function (theFile) {
 				return function (r) {
@@ -5999,11 +6000,11 @@ var InfosFleet = (function () {
 					this.is_showing = !0;
 					if (InfosFleetShipEquipment.cur) InfosFleetShipEquipment.cur.trigger('blur');
 					if (!is_firstShow) {
-						var _i10 = 0,
+						var _i9 = 0,
 						    _l2 = Lockr.get('hqLvDefault', _g.defaultHqLv);
-						while (_i10 < 4) {
-							this.fleets[_i10].summaryCalc(!0);
-							_i10++;
+						while (_i9 < 4) {
+							this.fleets[_i9].summaryCalc(!0);
+							_i9++;
 						}
 						if (!this._hqlv) this.doms['hqlvOption'].val(_l2);
 						this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(_l2));
@@ -6111,15 +6112,15 @@ var InfosFleet = (function () {
 				if (!InfosFleet.menuTheme) {
 					InfosFleet.menuThemeItems = $('<div/>');
 
-					var _loop = function _loop(_i11) {
-						$('<button class="theme-' + _i11 + '"/>').html(_i11).on('click', (function () {
-							InfosFleet.menuCur._theme = _i11;
+					var _loop = function _loop(_i10) {
+						$('<button class="theme-' + _i10 + '"/>').html(_i10).on('click', (function () {
+							InfosFleet.menuCur._theme = _i10;
 							this.el.attr('data-theme', this._theme);
 						}).bind(_this8)).appendTo(InfosFleet.menuThemeItems);
 					};
 
-					for (var _i11 = 1; _i11 < 11; _i11++) {
-						_loop(_i11);
+					for (var _i10 = 1; _i10 < 11; _i10++) {
+						_loop(_i10);
 					}
 					InfosFleet.menuTheme = new _menu({
 						'className': 'contextmenu-infos_fleet_themes',
@@ -6447,10 +6448,10 @@ var InfosFleet = (function () {
 				this.doms['hqlvOption'].val(Lockr.get('hqLvDefault', _g.defaultHqLv));
 			}
 			if (last != value) {
-				var _i12 = 0;
-				while (_i12 < 4) {
-					this.fleets[_i12].summaryCalc(!0);
-					_i12++;
+				var _i11 = 0;
+				while (_i11 < 4) {
+					this.fleets[_i11].summaryCalc(!0);
+					_i11++;
 				}
 				this.save();
 			}
@@ -6767,8 +6768,8 @@ var InfosFleetSubFleet = (function () {
 					}) || [];
 					equipments_by_slot.forEach(function (equipment) {
 						if (equipment) {
-							for (var _i13 in x) {
-								if (Formula.equipmentType[_i13] && Formula.equipmentType[_i13].push && Formula.equipmentType[_i13].indexOf(equipment.type) > -1) x[_i13] += equipment.stat.los;
+							for (var _i12 in x) {
+								if (Formula.equipmentType[_i12] && Formula.equipmentType[_i12].push && Formula.equipmentType[_i12].indexOf(equipment.type) > -1) x[_i12] += equipment.stat.los;
 							}
 						}
 					});
@@ -6841,9 +6842,9 @@ var InfosFleetShip = (function () {
 			}).bind(this)
 		}))).append(this.elInfosInfo = $('<span/>'))))).append($('<div class="equipments"/>').append((function () {
 			var els = $();
-			for (var _i14 = 0; _i14 < 4; _i14++) {
-				this.equipments[_i14] = new InfosFleetShipEquipment(this, _i14);
-				els = els.add(this.equipments[_i14].el);
+			for (var _i13 = 0; _i13 < 4; _i13++) {
+				this.equipments[_i13] = new InfosFleetShipEquipment(this, _i13);
+				els = els.add(this.equipments[_i13].el);
 			}
 
 			return els;
@@ -6961,10 +6962,10 @@ var InfosFleetShip = (function () {
 
 			if (this.data[1][0]) this.shipLv = this.data[1][0];
 
-			for (var _i15 = 0; _i15 < 4; _i15++) {
-				this.equipments[_i15].id = this.data[2][_i15];
-				this.equipments[_i15].star = this.data[3][_i15];
-				this.equipments[_i15].rank = this.data[4][_i15];
+			for (var _i14 = 0; _i14 < 4; _i14++) {
+				this.equipments[_i14].id = this.data[2][_i14];
+				this.equipments[_i14].star = this.data[3][_i14];
+				this.equipments[_i14].rank = this.data[4][_i14];
 			}
 
 			this.updateAttrs();
@@ -7111,12 +7112,12 @@ var InfosFleetShip = (function () {
 				this.elInfosTitle.html('<h4 data-content="' + ship['name'][_g.lang] + '">' + ship['name'][_g.lang] + '</h4>' + (suffix ? '<h5 data-content="' + suffix + '">' + suffix + '</h5>' : ''));
 				this.elInfosInfo.html(speed + ' ' + stype);
 
-				for (var _i16 = 0; _i16 < 4; _i16++) {
-					this.equipments[_i16].carry = ship.slot[_i16];
+				for (var _i15 = 0; _i15 < 4; _i15++) {
+					this.equipments[_i15].carry = ship.slot[_i15];
 					if (!this._updating) {
-						this.equipments[_i16].id = null;
-						this.equipments[_i16].star = null;
-						this.equipments[_i16].rank = null;
+						this.equipments[_i15].id = null;
+						this.equipments[_i15].star = null;
+						this.equipments[_i15].rank = null;
 					}
 				}
 			} else {
@@ -7238,14 +7239,14 @@ var InfosFleetShipEquipment = (function () {
 			if (!InfosFleet.menuRankSelect) {
 				InfosFleet.menuRankSelectItems = $('<div/>');
 
-				var _loop2 = function _loop2(_i17) {
-					$('<button class="rank-' + _i17 + '"/>').html(!_i17 ? '无' : '').on('click', function () {
-						InfosFleet.menuRankSelectCur.rank = _i17;
+				var _loop2 = function _loop2(_i16) {
+					$('<button class="rank-' + _i16 + '"/>').html(!_i16 ? '无' : '').on('click', function () {
+						InfosFleet.menuRankSelectCur.rank = _i16;
 					}).appendTo(InfosFleet.menuRankSelectItems);
 				};
 
-				for (var _i17 = 0; _i17 < 8; _i17++) {
-					_loop2(_i17);
+				for (var _i16 = 0; _i16 < 8; _i16++) {
+					_loop2(_i16);
 				}
 				InfosFleet.menuRankSelect = new _menu({
 					'className': 'contextmenu-infos_fleet_rank_select',
@@ -8616,7 +8617,7 @@ var TablelistFleets = (function (_Tablelist4) {
 						sorted[cur.theme].push(i);
 					});
 
-					for (var _i18 in sorted) {
+					for (var _i17 in sorted) {
 						k = 0;
 
 						while (k < _this15.flexgrid_empty_count) {
@@ -8624,7 +8625,7 @@ var TablelistFleets = (function (_Tablelist4) {
 							k++;
 						}
 
-						sorted[_i18].forEach((function (index) {
+						sorted[_i17].forEach((function (index) {
 							setTimeout((function (i) {
 								this.append_item(arr[i]);
 								count++;
@@ -8761,7 +8762,7 @@ var TablelistFleets = (function (_Tablelist4) {
 								if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
 							});
 						} else {
-							for (var _i19 = 0, f = undefined; f = e.target.files[_i19]; _i19++) {
+							for (var _i18 = 0, f = undefined; f = e.target.files[_i18]; _i18++) {
 								var reader = new FileReader();
 								reader.onload = (function (theFile) {
 									return function (r) {
