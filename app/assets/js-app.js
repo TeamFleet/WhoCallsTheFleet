@@ -4001,7 +4001,7 @@ canvas.downScale = function(img, scale){
 
 	var _db = {
 		'fleets': new node.nedb({
-				filename: 	node.path.join(node.gui.App.dataPath, 'NeDB/fleets.json')
+				filename: 	Lockr.get('fleets-builds-file', node.path.join(node.gui.App.dataPath, 'NeDB', 'fleets.json'))
 			})
 	}
 	_g.ship_type_order = []
@@ -4111,8 +4111,8 @@ canvas.downScale = function(img, scale){
 			console.log.apply(console, arguments)
 	}
 	
-	_g.save = function( url, n ){
-		_g.file_save_as(url, n)
+	_g.save = function( url, n, callback ){
+		_g.file_save_as(url, n, callback)
 	}
 
 
@@ -6767,21 +6767,24 @@ class
 	name
 		when isDefault === true, name leads as *
 		use .filename to get real filename / name
-	isEnable
+	filename
 	isDefault
 
+	GET			index
+	GET			els
+	GET			elThumbnail
+	GET			path
+	GET/SET		_path
+	GET			blur
+	GET/SET		_blur
+	GET			thumbnail
+	GET/SET		_thumbnail
+	GET/SET		visible
+
 	show()
-	hide()
-	toggle()
 	save()
-	add()
+	append()
 	delete()
-	get index()
-	get els()
-	get elThumbnail()
-	get path()
-	get blur()
-	get thumbnail()
 
 */
 
@@ -6792,14 +6795,14 @@ class BgImg{
 	}
 	
 	show(){
-		BgImg.change(this)
+		return BgImg.change(this)
 	}
 	
 	save(){
-		BgImg.save(this)
+		return BgImg.save(this)
 	}
 	
-	add(){
+	append(){
 		if( this.isDefault ){
 			if( BgImg.controlsEls.listDefault )
 				this.elThumbnail.appendTo( BgImg.controlsEls.listDefault )
@@ -6809,6 +6812,10 @@ class BgImg{
 		}
 		if( BgImg.cur && BgImg.cur.name === this.name )
 			this.elThumbnail.addClass('on')
+	}
+	
+	delete(){
+		
 	}
 	
 	get filename(){
@@ -6864,6 +6871,16 @@ class BgImg{
 		if( !this._thumbnail )
 			this._thumbnail = BgImg.getPath(this, 'thumbnail')
 		return this._thumbnail
+	}
+	
+	get visible(){
+		return this.elThumbnail.hasClass('is-visible')
+	}
+	set visible( v ){
+		if( v )
+			this.elThumbnail.addClass('is-visible')
+		else
+			this.elThumbnail.removeClass('is-visible')
 	}
 }
 
@@ -6986,39 +7003,42 @@ BgImg.list = [];
 		if( !BgImg.fileSelector ){
 			BgImg.fileSelector = $('<input type="file" class="none"/>')
 				.on('change', function(e){
-					let o
-					
-					Q.fcall(function(){
-						BgImg.controlsEls.body.addClass('is-loading')
-						BgImg.fileSelector.prop('disabled', true)
-						return BgImg.readFile(e)
-					})
-					.then(function(obj){
-						o = obj
-						BgImg.list.push(o)
-						return BgImg.generate(o, 'thumbnail')
-					})
-					.then(function(canvas){
-						return BgImg.set(o, 'thumbnail', canvas)
-					})
-					.then(function(){
-						return BgImg.generate(o, 'blured')
-					})
-					.then(function(canvas){
-						return BgImg.set(o, 'blured', canvas)
-					})
-					.then(function(){
-						o.add()
-						o.show()
-					})
-					.catch(function(err){
-						_g.error(err)
-					})
-					.done(function(){
-						BgImg.controlsEls.body.removeClass('is-loading')
-						BgImg.fileSelector.prop('disabled', false)
-						_g.log('BgImg.add() complete')
-					}.bind(this))
+					if( BgImg.fileSelector.val() ){
+						let o
+						
+						Q.fcall(function(){
+							BgImg.controlsEls.body.addClass('is-loading')
+							BgImg.fileSelector.prop('disabled', true)
+							return BgImg.readFile(e)
+						})
+						.then(function(obj){
+							o = obj
+							BgImg.list.push(o)
+							return BgImg.generate(o, 'thumbnail')
+						})
+						.then(function(canvas){
+							return BgImg.set(o, 'thumbnail', canvas)
+						})
+						.then(function(){
+							return BgImg.generate(o, 'blured')
+						})
+						.then(function(canvas){
+							return BgImg.set(o, 'blured', canvas)
+						})
+						.then(function(){
+							o.append()
+							o.show()
+						})
+						.catch(function(err){
+							_g.error(err)
+						})
+						.done(function(){
+							BgImg.controlsEls.body.removeClass('is-loading')
+							BgImg.fileSelector.prop('disabled', false)
+							BgImg.fileSelector.val('')
+							_g.log('BgImg.add() complete')
+						}.bind(this))
+					}
 				})
 		}
 		BgImg.fileSelector.trigger('click')
@@ -7147,7 +7167,7 @@ BgImg.list = [];
 					})
 				)
 			BgImg.list.forEach(function(o){
-				o.add()
+				o.append()
 			})
 		}
 		_frame.dom.layout.addClass('mod-bgcontrols')
@@ -8294,6 +8314,13 @@ class InfosFleet{
 											)
 											.add($('<hr/>'))
 										)
+									}
+									if( _g.isClient ){
+										menuitems.push($('<menuitem/>',{
+													'html':		'在浏览器中打开当前配置'
+												}).on('click', function(){
+													node.gui.Shell.openExternal( InfosFleet.menuCur.url );
+												}))
 									}
 									menuitems = menuitems.concat([
 										$('<menuitem/>',{
@@ -13181,10 +13208,8 @@ class TablelistFleets extends Tablelist{
 		}
 }
 TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
-	if( !TablelistFleets.menuOptions )
-		TablelistFleets.menuOptions = new _menu({
-			'className':	'menu-tablelistfleets-options',
-			'items': [
+	if( !TablelistFleets.menuOptions ){
+		let items = [
 				$('<menuitem class="mod-checkbox donot_hide option-in-tablelist option-groupbytheme"/>')
 					.append($('<input/>',{
 							'type':	'checkbox',
@@ -13240,7 +13265,41 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 							InfosFleet.cur.remove()
 					})
 			]
+				
+		if( _g.isNWjs ){
+			// Lockr.get('fleets-builds-file', node.path.join(node.gui.App.dataPath, 'NeDB', 'fleets.json'))
+			// Lockr.set('fleets-builds-file', node.path.join(node.gui.App.dataPath, 'NeDB', 'fleets.json'))
+			items = items.concat([
+				$('<hr class="option-in-tablelist"/>'),
+				
+				$('<div class="option-in-tablelist option-filelocation"/>')
+					.html('<span>置配置文件位置</span>')
+					.append(
+						TablelistFleets.filelocation_selector = $('<input type="file" class="none" webkitdirectory/>')
+							.on('change', function(e){
+								TablelistFleets.moveBuildsLocation(TablelistFleets.filelocation_selector.val())
+							})
+					)
+					.append(
+						$('<button type="button">还原</button>')
+							.on('click', function(){
+								TablelistFleets.moveBuildsLocation( node.path.join(node.gui.App.dataPath, 'NeDB') )
+							})
+					)
+					.append(
+						$('<button type="button">选择</button>')
+							.on('click', function(){
+								TablelistFleets.filelocation_selector.click()
+							})
+					)
+			])
+		}
+
+		TablelistFleets.menuOptions = new _menu({
+			'className':	'menu-tablelistfleets-options',
+			'items': items
 		})
+	}
 
 	TablelistFleets.menuOptions.curTablelist = $el_tablelist || null
 	
@@ -13253,6 +13312,78 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 
 TablelistFleets.support = {};
 TablelistFleets.support.buildfile = (_g.isNWjs || (window.File && window.FileReader && window.FileList && window.Blob && window.URL)) ? true : false;
+
+TablelistFleets.moveBuildsLocation = function(location){
+	if( !location )
+		return
+	
+	_frame.app_main.loading_start('tablelist_fleets_newlocation', false)
+	TablelistFleets.filelocation_selector.prop('disabled', true)
+
+	let n = 'fleets.json'
+		,j = 1
+		,exist = false
+		,oldPath = Lockr.get('fleets-builds-file', node.path.join(node.gui.App.dataPath, 'NeDB', 'fleets.json'))
+
+	try{
+		exist = node.fs.lstatSync( node.path.join( location, n ) ) ? true : false
+	}catch(e){
+		exist = false
+	}
+	while( exist ){
+		n = 'fleets-' + (j++) + '.json'
+		try{
+			exist = node.fs.lstatSync( node.path.join( location, n ) ) ? true : false
+		}catch(e){
+			exist = false
+		}
+	}
+
+	let path = node.path.join(location, n)
+	Lockr.set('fleets-builds-file', path)
+	_db.fleets = new node.nedb({
+			filename: 	path
+		})
+	
+	// copy file to new location
+	node.mkdirp.sync( location )
+	Q.fcall(function(){
+		let deferred = Q.defer()
+			,cbCalled = false
+			,rd = node.fs.createReadStream( oldPath )
+		rd.on("error", function(err) {
+			done(err);
+		});
+		let wr = node.fs.createWriteStream( path );
+			wr.on("error", function(err) {
+			done(err);
+		});
+		wr.on("close", function(ex) {
+			done();
+		});
+		rd.pipe(wr);
+		function done(err) {
+			if (!cbCalled) {
+				//callback(err, path_src, dest);
+				deferred.resolve()
+				cbCalled = true;
+			}
+		}
+		return deferred.promise
+	})
+	.then(function(){
+		let deferred = Q.defer()
+		_db.fleets.loadDatabase(function(){
+			deferred.resolve()
+		})
+		return deferred.promise
+	})
+	.done(function(){
+		_frame.app_main.loading_complete('tablelist_fleets_newlocation')
+		TablelistFleets.filelocation_selector.prop('disabled', false)
+		TablelistFleets.filelocation_selector.val('')
+	})
+}
 
 // Entities
 

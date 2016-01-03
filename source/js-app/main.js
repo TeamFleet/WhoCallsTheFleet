@@ -58,7 +58,7 @@
 
 	var _db = {
 		'fleets': new node.nedb({
-				filename: 	node.path.join(node.gui.App.dataPath, 'NeDB/fleets.json')
+				filename: 	Lockr.get('fleets-builds-file', node.path.join(node.gui.App.dataPath, 'NeDB', 'fleets.json'))
 			})
 	}
 	_g.ship_type_order = []
@@ -168,8 +168,8 @@
 			console.log.apply(console, arguments)
 	}
 	
-	_g.save = function( url, n ){
-		_g.file_save_as(url, n)
+	_g.save = function( url, n, callback ){
+		_g.file_save_as(url, n, callback)
 	}
 
 

@@ -613,6 +613,7 @@ body > .menus > .menu {
   -webkit-transform: translateY(-10px);
           transform: translateY(-10px);
   border: 0.05rem solid rgba(255, 255, 255, 0.3);
+  color: #f2f2f2;
 }
 body > .menus > .menu > .body {
   position: relative;
@@ -621,6 +622,8 @@ body > .menus > .menu > .body {
   max-height: 100%;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+  font-weight: lighter;
+  line-height: 40px;
   /*
 			&:before{
 				z-index:	100;
@@ -641,12 +644,9 @@ body > .menus > .menu > .body menuitem,
 body > .menus > .menu > .body .menuitem,
 body > .menus > .menu > .body .item {
   display: block;
-  line-height: 2rem;
   height: 2rem;
   padding: 0 1.5em 0 1.25em;
-  color: #f2f2f2;
   position: relative;
-  font-weight: lighter;
   -webkit-transition-property: color, background-color;
   transition-property: color, background-color;
 }
@@ -695,6 +695,7 @@ body > .menus > .menu > .body hr {
   border: 0 solid transparent;
   border-top: 0.05rem solid rgba(255, 255, 255, 0.2);
   margin: 8px 0;
+  clear: both;
 }
 body > .menus > .menu.mod-blur-backdrop {
   background: transparent;
@@ -7367,6 +7368,27 @@ body > .menus > .menu.menu-tablelistfleets-options > .body menuitem.option-aircr
   -webkit-transform: translateY(15%);
           transform: translateY(15%);
 }
+body > .menus > .menu.menu-tablelistfleets-options > .body .option-filelocation {
+  padding: 0 1em .5em 1em;
+}
+body > .menus > .menu.menu-tablelistfleets-options > .body .option-filelocation button {
+  float: right;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0 10px;
+  line-height: 30px;
+  margin: 5px 0 0 0;
+}
+body > .menus > .menu.menu-tablelistfleets-options > .body .option-filelocation button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+body > .menus > .menu.menu-tablelistfleets-options > .body .option-filelocation button:active {
+  background: rgba(255, 255, 255, 0.05);
+}
+body > .menus > .menu.menu-tablelistfleets-options > .body .option-filelocation button + button {
+  border-right-width: 0;
+}
 body > .menus > .menu.menu-tablelistfleets-options.is-tablelist > .body .option-in-tablelist {
   display: block;
 }
@@ -7419,6 +7441,7 @@ h6 + section.update_journal {
   position: relative;
   padding: 0;
   margin: 0;
+  float: left;
 }
 .menu.contextmenu-ship > .body menuitem.move:before {
   position: absolute;

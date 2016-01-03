@@ -336,6 +336,13 @@ class InfosFleet{
 											.add($('<hr/>'))
 										)
 									}
+									if( _g.isClient ){
+										menuitems.push($('<menuitem/>',{
+													'html':		'在浏览器中打开当前配置'
+												}).on('click', function(){
+													node.gui.Shell.openExternal( InfosFleet.menuCur.url );
+												}))
+									}
 									menuitems = menuitems.concat([
 										$('<menuitem/>',{
 												'html':		'导出配置代码'

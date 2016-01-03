@@ -26,21 +26,24 @@ class
 	name
 		when isDefault === true, name leads as *
 		use .filename to get real filename / name
-	isEnable
+	filename
 	isDefault
 
+	GET			index
+	GET			els
+	GET			elThumbnail
+	GET			path
+	GET/SET		_path
+	GET			blur
+	GET/SET		_blur
+	GET			thumbnail
+	GET/SET		_thumbnail
+	GET/SET		visible
+
 	show()
-	hide()
-	toggle()
 	save()
-	add()
+	append()
 	delete()
-	get index()
-	get els()
-	get elThumbnail()
-	get path()
-	get blur()
-	get thumbnail()
 
 */
 
@@ -51,14 +54,14 @@ class BgImg{
 	}
 	
 	show(){
-		BgImg.change(this)
+		return BgImg.change(this)
 	}
 	
 	save(){
-		BgImg.save(this)
+		return BgImg.save(this)
 	}
 	
-	add(){
+	append(){
 		if( this.isDefault ){
 			if( BgImg.controlsEls.listDefault )
 				this.elThumbnail.appendTo( BgImg.controlsEls.listDefault )
@@ -68,6 +71,10 @@ class BgImg{
 		}
 		if( BgImg.cur && BgImg.cur.name === this.name )
 			this.elThumbnail.addClass('on')
+	}
+	
+	delete(){
+		
 	}
 	
 	get filename(){
@@ -123,6 +130,16 @@ class BgImg{
 		if( !this._thumbnail )
 			this._thumbnail = BgImg.getPath(this, 'thumbnail')
 		return this._thumbnail
+	}
+	
+	get visible(){
+		return this.elThumbnail.hasClass('is-visible')
+	}
+	set visible( v ){
+		if( v )
+			this.elThumbnail.addClass('is-visible')
+		else
+			this.elThumbnail.removeClass('is-visible')
 	}
 }
 
@@ -245,39 +262,42 @@ BgImg.list = [];
 		if( !BgImg.fileSelector ){
 			BgImg.fileSelector = $('<input type="file" class="none"/>')
 				.on('change', function(e){
-					let o
-					
-					Q.fcall(function(){
-						BgImg.controlsEls.body.addClass('is-loading')
-						BgImg.fileSelector.prop('disabled', true)
-						return BgImg.readFile(e)
-					})
-					.then(function(obj){
-						o = obj
-						BgImg.list.push(o)
-						return BgImg.generate(o, 'thumbnail')
-					})
-					.then(function(canvas){
-						return BgImg.set(o, 'thumbnail', canvas)
-					})
-					.then(function(){
-						return BgImg.generate(o, 'blured')
-					})
-					.then(function(canvas){
-						return BgImg.set(o, 'blured', canvas)
-					})
-					.then(function(){
-						o.add()
-						o.show()
-					})
-					.catch(function(err){
-						_g.error(err)
-					})
-					.done(function(){
-						BgImg.controlsEls.body.removeClass('is-loading')
-						BgImg.fileSelector.prop('disabled', false)
-						_g.log('BgImg.add() complete')
-					}.bind(this))
+					if( BgImg.fileSelector.val() ){
+						let o
+						
+						Q.fcall(function(){
+							BgImg.controlsEls.body.addClass('is-loading')
+							BgImg.fileSelector.prop('disabled', true)
+							return BgImg.readFile(e)
+						})
+						.then(function(obj){
+							o = obj
+							BgImg.list.push(o)
+							return BgImg.generate(o, 'thumbnail')
+						})
+						.then(function(canvas){
+							return BgImg.set(o, 'thumbnail', canvas)
+						})
+						.then(function(){
+							return BgImg.generate(o, 'blured')
+						})
+						.then(function(canvas){
+							return BgImg.set(o, 'blured', canvas)
+						})
+						.then(function(){
+							o.append()
+							o.show()
+						})
+						.catch(function(err){
+							_g.error(err)
+						})
+						.done(function(){
+							BgImg.controlsEls.body.removeClass('is-loading')
+							BgImg.fileSelector.prop('disabled', false)
+							BgImg.fileSelector.val('')
+							_g.log('BgImg.add() complete')
+						}.bind(this))
+					}
 				})
 		}
 		BgImg.fileSelector.trigger('click')
@@ -406,7 +426,7 @@ BgImg.list = [];
 					})
 				)
 			BgImg.list.forEach(function(o){
-				o.add()
+				o.append()
 			})
 		}
 		_frame.dom.layout.addClass('mod-bgcontrols')
