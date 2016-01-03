@@ -1266,7 +1266,7 @@ main{
 	}
 }}
 .layout-bgcontrols(){
-	@width: 			220px;
+	@width: 			240px;
 	@controls_height: 	40px;
 	.bgcontrols{
 		position: 	absolute;
@@ -1384,6 +1384,7 @@ main{
 		
 		dl{
 			margin: 	0 0 20px 0;
+			overflow: 	hidden;
 			dt{
 				margin: 	0 10px 0 0;
 				padding: 	0;
@@ -1397,12 +1398,57 @@ main{
 				margin: 	10px 10px 0 0;
 				background: rgba(255,255,255,.1);
 				position: 	relative;
+				float: 		left;
 				s{
 					display: 		block;
 					padding-bottom: 100%;
 					height: 		0;
 					background: 	no-repeat 50% 38.2% / cover;
 					opacity: 		.25;
+				}
+				i{
+					display: 		block;
+					position: 		absolute;
+					top: 			4px;
+					left: 			4px;
+					z-index: 		5;
+					width: 			20px;
+					height: 		20px;
+					background: 	rgba(0,0,0,.75);
+					border: 		1px solid rgba(255,255,255,.65);
+					opacity: 		.5;
+					color: 			#fff;
+					font-style: 	normal;
+					&:before{
+						content: 	'';
+						position: 	absolute;
+						z-index: 	2;
+						width: 		20px;
+						line-height:20px;
+						top: 		0;
+						left: 		0;
+						text-align: center;
+						font-family:icons;
+					}
+					/*
+					&:after{
+						@size: 		45px;
+						display: 	block;
+						content: 	'';
+						position: 	absolute;
+						z-index: 	-1;
+						top: 		-1px;
+						left: 		-1px;
+						width: 		0;
+						height: 	0;
+						border-top: 	@size solid rgba(255,255,255,.5);
+						border-right: 	@size solid transparent;
+						pointer-events: none;
+					}
+					*/
+					&:hover{
+						background: 	rgb(0,0,0);
+					}
 				}
 				&:before, &:after{
 					content: 	'';
@@ -1428,6 +1474,9 @@ main{
 					s{
 						opacity: 	.5;
 					}
+					i{
+						opacity: 	1;
+					}
 				}
 				&.on{
 					s{
@@ -1438,6 +1487,16 @@ main{
 					}
 					&:after{
 						display: 	none;
+					}
+					i{
+						opacity: 	1;
+					}
+				}
+				&.is-visible{
+					i{
+						&:before{
+							content: 	@iconcode-checkbox-checked;
+						}
 					}
 				}
 				&.add{

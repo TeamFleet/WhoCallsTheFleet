@@ -103,12 +103,21 @@ class BgImg{
 	
 	get elThumbnail(){
 		if( !this._elThumbnail ){
+			let checkId = 'checkbox-' + _g.timeNow()
 			this._elThumbnail = $('<dd/>')
 				.on('click', function(){
 					BgImg.change(this)
 				}.bind(this))
 				.append(
 					$('<s/>').css('background-image','url(' + this.thumbnail + ')')
+				)
+				.append(
+					$('<i/>').on('click', function(e){
+						e.preventDefault()
+						e.stopImmediatePropagation()
+						e.stopPropagation()
+						this.visible = !this.visible
+					}.bind(this))
 				)
 		}
 		return this._elThumbnail
@@ -136,10 +145,26 @@ class BgImg{
 		return this.elThumbnail.hasClass('is-visible')
 	}
 	set visible( v ){
-		if( v )
-			this.elThumbnail.addClass('is-visible')
-		else
-			this.elThumbnail.removeClass('is-visible')
+		if( v ){
+			if( !this.visible ){
+				this.elThumbnail.addClass('is-visible')
+				BgImg.listVisible.push(this)
+				BgImg.namesHidden.forEach(function(n, i){
+					if( n === this.name )
+						BgImg.namesHidden.splice(i, 1)
+				}.bind(this))
+			}
+		}else{
+			if( this.visible ){
+				this.elThumbnail.removeClass('is-visible')
+				BgImg.listVisible.forEach(function(o, i){
+					if( o === this )
+						BgImg.listVisible.splice(i, 1)
+				}.bind(this))
+				BgImg.namesHidden.push(this.name)
+			}
+		}
+		Lockr.set('BgImgHidden', BgImg.namesHidden)
 	}
 }
 
@@ -152,6 +177,8 @@ BgImg.default = {
 	//isDefault:	true
 };
 BgImg.list = [];
+BgImg.listVisible = [];
+//BgImg.namesHidden = [];
 
 
 
@@ -175,15 +202,27 @@ BgImg.list = [];
 		let deferred = Q.defer()
 			,_new
 
+		BgImg.namesHidden = Lockr.get('BgImgHidden', [])
+
 		Q.fcall(BgImg.getDefaultImgs)
 		.then(function(){
-			BgImg.list.some(function(o){
-				if( o.name != Lockr.get('BgImgLast', '') )
+			BgImg.list.forEach(function(o){
+				if( BgImg.namesHidden.indexOf(o.name) > -1 ){
+					o.visible = false
+				}else{
+					o.visible = true
+				}
+			})
+			
+			console.log(BgImg.listVisible)
+
+			BgImg.listVisible.some(function(o){
+				if( !_new && o.name != Lockr.get('BgImgLast', '') )
 					_new = o
 				return o.name == Lockr.get('BgImgLast', '')
 			})
 
-			Lockr.set('BgImgLast', BgImg.list[0].name)
+			Lockr.set('BgImgLast', BgImg.listVisible[0].name)
 
 			BgImg.change( _new );
 			_frame.app_main.loaded('bgimgs')
@@ -223,9 +262,12 @@ BgImg.list = [];
 			return
 		
 		if( typeof o == 'undefined' ){
-			o = BgImg.list[ _g.randInt(BgImg.list.length - 1) ]
-			if( BgImg.cur && o.name === BgImg.cur.name )
+			o = BgImg.listVisible[ _g.randInt(BgImg.listVisible.length) ]
+			if( BgImg.cur && o.name === BgImg.cur.name ){
+				if( BgImg.listVisible.length == 1 )
+					return o
 				return BgImg.change()
+			}
 		}else{
 			o = BgImg.getObj(o)
 			if( BgImg.cur && o.name === BgImg.cur.name )

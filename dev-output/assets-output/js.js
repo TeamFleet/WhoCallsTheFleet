@@ -5103,9 +5103,15 @@ var BgImg = (function () {
 		key: 'elThumbnail',
 		get: function get() {
 			if (!this._elThumbnail) {
+				var checkId = 'checkbox-' + _g.timeNow();
 				this._elThumbnail = $('<dd/>').on('click', (function () {
 					BgImg.change(this);
-				}).bind(this)).append($('<s/>').css('background-image', 'url(' + this.thumbnail + ')'));
+				}).bind(this)).append($('<s/>').css('background-image', 'url(' + this.thumbnail + ')')).append($('<i/>').on('click', (function (e) {
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					e.stopPropagation();
+					this.visible = !this.visible;
+				}).bind(this)));
 			}
 			return this._elThumbnail;
 		}
@@ -5133,7 +5139,24 @@ var BgImg = (function () {
 			return this.elThumbnail.hasClass('is-visible');
 		},
 		set: function set(v) {
-			if (v) this.elThumbnail.addClass('is-visible');else this.elThumbnail.removeClass('is-visible');
+			if (v) {
+				if (!this.visible) {
+					this.elThumbnail.addClass('is-visible');
+					BgImg.listVisible.push(this);
+					BgImg.namesHidden.forEach((function (n, i) {
+						if (n === this.name) BgImg.namesHidden.splice(i, 1);
+					}).bind(this));
+				}
+			} else {
+				if (this.visible) {
+					this.elThumbnail.removeClass('is-visible');
+					BgImg.listVisible.forEach((function (o, i) {
+						if (o === this) BgImg.listVisible.splice(i, 1);
+					}).bind(this));
+					BgImg.namesHidden.push(this.name);
+				}
+			}
+			Lockr.set('BgImgHidden', BgImg.namesHidden);
 		}
 	}]);
 
@@ -5143,6 +5166,7 @@ var BgImg = (function () {
 BgImg.default = {
 	isEnable: !0 };
 BgImg.list = [];
+BgImg.listVisible = [];
 
 BgImg.init = function () {
 	if (BgImg.isInit) return BgImg.list;
@@ -5158,13 +5182,25 @@ BgImg.init = function () {
 	var deferred = Q.defer(),
 	    _new = undefined;
 
+	BgImg.namesHidden = Lockr.get('BgImgHidden', []);
+
 	Q.fcall(BgImg.getDefaultImgs).then(function () {
-		BgImg.list.some(function (o) {
-			if (o.name != Lockr.get('BgImgLast', '')) _new = o;
+		BgImg.list.forEach(function (o) {
+			if (BgImg.namesHidden.indexOf(o.name) > -1) {
+				o.visible = !1;
+			} else {
+				o.visible = !0;
+			}
+		});
+
+		console.log(BgImg.listVisible);
+
+		BgImg.listVisible.some(function (o) {
+			if (!_new && o.name != Lockr.get('BgImgLast', '')) _new = o;
 			return o.name == Lockr.get('BgImgLast', '');
 		});
 
-		Lockr.set('BgImgLast', BgImg.list[0].name);
+		Lockr.set('BgImgLast', BgImg.listVisible[0].name);
 
 		BgImg.change(_new);
 		_frame.app_main.loaded('bgimgs');
@@ -5202,8 +5238,11 @@ BgImg.change = function (o) {
 	if (!BgImg.list.length) return;
 
 	if (typeof o == 'undefined') {
-		o = BgImg.list[_g.randInt(BgImg.list.length - 1)];
-		if (BgImg.cur && o.name === BgImg.cur.name) return BgImg.change();
+		o = BgImg.listVisible[_g.randInt(BgImg.listVisible.length)];
+		if (BgImg.cur && o.name === BgImg.cur.name) {
+			if (BgImg.listVisible.length == 1) return o;
+			return BgImg.change();
+		}
 	} else {
 		o = BgImg.getObj(o);
 		if (BgImg.cur && o.name === BgImg.cur.name) return o;
