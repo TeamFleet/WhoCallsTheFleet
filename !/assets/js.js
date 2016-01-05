@@ -2488,6 +2488,25 @@ _g.getStatRange = function (range) {
 	return _g.statRange[parseInt(range)];
 };
 
+_g.getSize = function (bytes, target) {
+	target = target.toUpperCase();
+
+	if (target[target.length - 1] == 'B') target = target.substr(0, target.length - 1);
+
+	function _r(r) {
+		return Math.floor(r * 100) / 100;
+	}
+
+	bytes = bytes / 1024;
+	if (target == 'K') return _r(bytes) + 'KB';
+	bytes = bytes / 1024;
+	if (target == 'M') return _r(bytes) + 'MB';
+	bytes = bytes / 1024;
+	if (target == 'G') return _r(bytes) + 'GB';
+	bytes = bytes / 1024;
+	if (target == 'T') return _r(bytes) + 'TB';
+};
+
 var _l = {};
 
 String.prototype.printf = function () {
@@ -3848,8 +3867,9 @@ _frame.app_main = {
 					_frame.dom.layout.addClass('ready');
 					$html.addClass('app-ready');
 					setTimeout(function () {
-						for (var _i5 = 0; _i5 < _frame.app_main.functions_on_ready.length; _i5++) {
-							_frame.app_main.functions_on_ready[_i5]();
+						var i = 0;
+						while (_frame.app_main.functions_on_ready[i]) {
+							_frame.app_main.functions_on_ready[i++]();
 						}
 					}, 1500);
 				}
@@ -4296,6 +4316,7 @@ _frame.app_main = {
 _g.error = function (err) {
 	if (!_instanceof(err, Error)) err = new Error(err);
 
+	_g.badgeError(_instanceof(err, Error) ? err.message : err);
 	_g.log(err);
 };
 
@@ -4990,9 +5011,9 @@ _frame.app_main.page['calctp'] = {
 				    rA = 0,
 				    rS = 0;
 
-				for (var _i6 in d) {
-					var count = parseInt(d[_i6]) || 0;
-					switch (_i6) {
+				for (var _i5 in d) {
+					var count = parseInt(d[_i5]) || 0;
+					switch (_i5) {
 						case 'dd':
 							rS += 5 * count;
 							break;
@@ -5055,22 +5076,32 @@ var BgImg = (function () {
 	_createClass(BgImg, [{
 		key: 'show',
 		value: function show() {
-			BgImg.change(this);
+			return BgImg.change(this);
 		}
 	}, {
 		key: 'save',
 		value: function save() {
-			BgImg.save(this);
+			return BgImg.save(this);
 		}
 	}, {
-		key: 'add',
-		value: function add() {
+		key: 'append',
+		value: function append() {
 			if (this.isDefault) {
 				if (BgImg.controlsEls.listDefault) this.elThumbnail.appendTo(BgImg.controlsEls.listDefault);
 			} else {
 				if (BgImg.controlsEls.listCustomAdd) this.elThumbnail.insertBefore(BgImg.controlsEls.listCustomAdd);
 			}
 			if (BgImg.cur && BgImg.cur.name === this.name) this.elThumbnail.addClass('on');
+		}
+	}, {
+		key: 'delete',
+		value: function _delete() {
+			BgImg.delete(this);
+		}
+	}, {
+		key: 'filename',
+		get: function get() {
+			return this.isDefault ? this.name.substr(1) : this.name;
 		}
 	}, {
 		key: 'index',
@@ -5096,7 +5127,18 @@ var BgImg = (function () {
 			if (!this._elThumbnail) {
 				this._elThumbnail = $('<dd/>').on('click', (function () {
 					BgImg.change(this);
-				}).bind(this)).append($('<s/>').css('background-image', 'url(' + this.thumbnail + ')'));
+				}).bind(this)).append($('<s/>').css('background-image', 'url(' + this.thumbnail + ')')).append($('<i/>').on('click', (function (e) {
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					e.stopPropagation();
+					this.visible = !this.visible;
+				}).bind(this)));
+				if (!this.isDefault) this._elThumbnail.append($('<del/>').on('click', (function (e) {
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					e.stopPropagation();
+					this.delete();
+				}).bind(this)));
 			}
 			return this._elThumbnail;
 		}
@@ -5118,6 +5160,31 @@ var BgImg = (function () {
 			if (!this._thumbnail) this._thumbnail = BgImg.getPath(this, 'thumbnail');
 			return this._thumbnail;
 		}
+	}, {
+		key: 'visible',
+		get: function get() {
+			return this.elThumbnail.hasClass('is-visible');
+		},
+		set: function set(v) {
+			if (v) {
+				if (!this.visible) {
+					this.elThumbnail.addClass('is-visible');
+					BgImg.listVisible.push(this);
+					BgImg.namesHidden.forEach((function (n, i) {
+						if (n === this.name) BgImg.namesHidden.splice(i, 1);
+					}).bind(this));
+				}
+			} else {
+				if (this.visible) {
+					this.elThumbnail.removeClass('is-visible');
+					BgImg.listVisible.forEach((function (o, i) {
+						if (o === this) BgImg.listVisible.splice(i, 1);
+					}).bind(this));
+					BgImg.namesHidden.push(this.name);
+				}
+			}
+			Lockr.set('BgImgHidden', BgImg.namesHidden);
+		}
 	}]);
 
 	return BgImg;
@@ -5126,6 +5193,9 @@ var BgImg = (function () {
 BgImg.default = {
 	isEnable: !0 };
 BgImg.list = [];
+BgImg.listVisible = [];
+
+BgImg.countCustom = 0;
 
 BgImg.init = function () {
 	if (BgImg.isInit) return BgImg.list;
@@ -5139,17 +5209,29 @@ BgImg.init = function () {
 	});
 
 	var deferred = Q.defer(),
-	    _new = [];
+	    _new = undefined;
+
+	BgImg.namesHidden = Lockr.get('BgImgHidden', []);
 
 	Q.fcall(BgImg.getDefaultImgs).then(function () {
-		BgImg.list.some(function (o) {
-			if (o.name != Lockr.get('BgImgLast', '')) _new.push(o.name);
+		BgImg.list.forEach(function (o) {
+			if (BgImg.namesHidden.indexOf(o.name) > -1) {
+				o.visible = !1;
+			} else {
+				o.visible = !0;
+			}
+		});
+
+		BgImg.ensureVisible();
+
+		BgImg.listVisible.some(function (o) {
+			if (!_new && o.name != Lockr.get('BgImgLast', '')) _new = o;
 			return o.name == Lockr.get('BgImgLast', '');
 		});
 
-		Lockr.set('BgImgLast', BgImg.list[0].name);
+		Lockr.set('BgImgLast', BgImg.listVisible[0].name);
 
-		BgImg.change(_new[0]);
+		BgImg.change(_new);
 		_frame.app_main.loaded('bgimgs');
 
 		BgImg.isInit = !0;
@@ -5185,22 +5267,23 @@ BgImg.change = function (o) {
 	if (!BgImg.list.length) return;
 
 	if (typeof o == 'undefined') {
-		o = BgImg.list[_g.randInt(BgImg.list.length - 1)];
-		if (BgImg.cur && o.name === BgImg.cur.name) return BgImg.change();
+		BgImg.ensureVisible();
+		o = BgImg.listVisible[_g.randInt(BgImg.listVisible.length)];
+		if (BgImg.cur && o.name === BgImg.cur.name) {
+			if (BgImg.listVisible.length == 1) return o;
+			return BgImg.change();
+		}
 	} else {
 		o = BgImg.getObj(o);
 		if (BgImg.cur && o.name === BgImg.cur.name) return o;
 	}
 
-	var isFadeIn = !1;
-
 	if (BgImg.cur) {
 		BgImg.lastToHide = BgImg.cur;
-		isFadeIn = !0;
 		BgImg.cur.elThumbnail.removeClass('on');
 	}
 
-	o.els.addClass(isFadeIn ? 'fadein' : '');
+	o.els.addClass(BgImg.cur ? 'fadein' : '');
 	o.els.eq(0).appendTo(_frame.dom.bgimg);
 	o.els.eq(1).appendTo(_frame.dom.nav);
 	o.els.eq(2).appendTo(_frame.dom.main);
@@ -5221,31 +5304,73 @@ BgImg.changeAfter = function () {
 BgImg.upload = function () {
 	if (!BgImg.fileSelector) {
 		BgImg.fileSelector = $('<input type="file" class="none"/>').on('change', function (e) {
-			var o = undefined;
+			if (BgImg.fileSelector.val()) {
+				var _ret2 = (function () {
+					var _done = function _done() {
+						BgImg.controlsEls.body.removeClass('is-loading');
+						BgImg.fileSelector.prop('disabled', !1);
+						BgImg.fileSelector.val('');
+						_g.log('BgImg.add() complete');
+					};
 
-			Q.fcall(function () {
-				BgImg.controlsEls.body.addClass('is-loading');
-				BgImg.fileSelector.prop('disabled', !0);
-				return BgImg.readFile(e);
-			}).then(function (obj) {
-				o = obj;
-				return BgImg.generate(o, 'thumbnail');
-			}).then(function (canvas) {
-				return BgImg.set(o, 'thumbnail', canvas);
-			}).then(function () {
-				return BgImg.generate(o, 'blured');
-			}).then(function (canvas) {
-				return BgImg.set(o, 'blured', canvas);
-			}).then(function () {
-				o.add();
-				o.show();
-			}).catch(function (err) {
-				_g.error(err);
-			}).done((function () {
-				BgImg.controlsEls.body.removeClass('is-loading');
-				BgImg.fileSelector.prop('disabled', !1);
-				_g.log('BgImg.add() complete');
-			}).bind(this));
+					var o = undefined,
+					    mime = e.target.files[0].type;
+
+					if (!mime) {
+						_g.badgeError('文件格式未知');
+						_done();
+						return {
+							v: undefined
+						};
+					} else {
+						mime = mime.split('/');
+						if (mime[0].toLowerCase() != 'image') {
+							_g.badgeError('请选择图片文件');
+							_done();
+							return {
+								v: undefined
+							};
+						} else if (['bmp', 'jpg', 'jpeg', 'png', 'gif', 'tif', 'tiff', 'webp'].indexOf(mime[1].toLowerCase()) < 0) {
+							_g.badgeError('当前仅支持以下格式: BMP、JPG、PNG、GIF、TIFF');
+							_done();
+							return {
+								v: undefined
+							};
+						}
+					}
+
+					Q.fcall(function () {
+						BgImg.controlsEls.body.addClass('is-loading');
+						BgImg.fileSelector.prop('disabled', !0);
+						return BgImg.readFile(e);
+					}).then(function (obj) {
+						o = obj;
+						BgImg.list.push(o);
+						return BgImg.generate(o, 'thumbnail');
+					}).then(function (canvas) {
+						return BgImg.set(o, 'thumbnail', canvas);
+					}).then(function () {
+						return BgImg.generate(o, 'blured');
+					}).then(function (canvas) {
+						return BgImg.set(o, 'blured', canvas);
+					}).then(function () {
+						if (!BgImg.countCustom) {
+							BgImg.list.forEach(function (obj) {
+								if (obj.visible) obj.visible = !1;
+							});
+						}
+						o.append();
+						o.show();
+						o.visible = !0;
+						BgImg.countCustom++;
+					}).catch(function (err) {
+						_g.error(err, '自定义背景图');
+						if (o) o.delete();
+					}).done(_done);
+				})();
+
+				if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
+			}
 		});
 	}
 	BgImg.fileSelector.trigger('click');
@@ -5253,23 +5378,29 @@ BgImg.upload = function () {
 
 BgImg.generate = function (o, t) {
 	o = BgImg.getObj(o);
-	var deferred = Q.defer();
+	var deferred = Q.defer(),
+	    img = undefined;
+
+	function _error(e) {
+		deferred.reject('读取图片文件发生错误');
+	}
 
 	switch (t) {
 		case 'thumbnail':
-			var img = $('<img/>', {
+			img = $('<img/>', {
 				'src': o.path
 			}).on({
 				'load': function load() {
 					var cv = canvas.downScale(img[0], 150 / Math.min(img[0].width, img[0].height));
 					img.remove();
 					deferred.resolve(cv);
-				}
+				},
+				'error': _error
 			}).appendTo($body);
 			break;
 
 		case 'blured':
-			var img = $('<img/>', {
+			img = $('<img/>', {
 				'src': o.path
 			}).on({
 				'load': function load() {
@@ -5277,12 +5408,36 @@ BgImg.generate = function (o, t) {
 					canvas.blur.image(img[0], cv[0], 20 * Math.min(img[0].width, img[0].height) / 1080);
 					img.remove();
 					deferred.resolve(cv[0]);
-				}
+				},
+				'error': _error
 			}).appendTo($body);
 			break;
 	}
 
 	return deferred.promise;
+};
+
+BgImg.getUniqueName = function (n) {
+	var o = undefined,
+	    i = 1,
+	    n2 = n;
+	if (typeof n == 'number') n = '' + n;
+	while (o = BgImg.getObj(n2)) {
+		n2 = n.split('.');
+		var ext = n2.pop();
+		n2 = n2.join('.') + '-' + i++ + '.' + ext;
+	}
+	return n2;
+};
+
+BgImg.ensureVisible = function () {
+	if (!BgImg.listVisible.length) {
+		BgImg.list.forEach(function (o) {
+			if (BgImg.countCustom && !o.isDefault || !BgImg.countCustom && o.isDefault) {
+				o.visible = !0;
+			}
+		});
+	}
 };
 
 BgImg.controlsInit = function () {
@@ -5307,11 +5462,23 @@ BgImg.controlsShow = function () {
 		$('<div class="controls"/>').appendTo(BgImg.controlsEls.container).append(BgImg.controlsEls.btnViewingToggle = $('<button icon="eye"/>').on('click', BgImg.controlsViewingToggle)).append($('<button icon="floppy-disk"/>').on('click', function () {
 			BgImg.save();
 		})).append($('<button icon="arrow-set2-right"/>').on('click', BgImg.controlsHide));
-		$('<div class="list"/>').appendTo(BgImg.controlsEls.container).append(BgImg.controlsEls.listDefault = $('<dl/>', {
+		$('<div class="list"/>').appendTo(BgImg.controlsEls.container).append($('<dl/>', {
+			'class': 'notes',
+			'html': '勾选的图片将会出现在背景图随机队列中'
+		})).append(BgImg.controlsEls.listCustom = $('<dl/>', {
+			'html': '<dt>自定义</dt>'
+		}).prepend(function () {
+			if (BgImg.quota) return $('<small/>').append(BgImg.controlsEls.listCustomQuotaUsed = $('<span>' + _g.getSize(BgImg.quotaUsed, 'm') + '</span>')).append(' / <span>' + _g.getSize(BgImg.quota, 'm') + '</span>');
+		}).append(BgImg.controlsEls.listCustomAdd = $('<dd/>', {
+			'class': 'add',
+			'html': '<s></s>'
+		}).on('click', function () {
+			BgImg.upload();
+		}))).append(BgImg.controlsEls.listDefault = $('<dl/>', {
 			'html': '<dt></dt>'
 		}));
 		BgImg.list.forEach(function (o) {
-			o.add();
+			o.append();
 		});
 	}
 	_frame.dom.layout.addClass('mod-bgcontrols');
@@ -5340,11 +5507,14 @@ BgImg.controlsViewingToggle = function () {
 	BgImg.controlsEls.btnViewingToggle.toggleClass('on');
 };
 
+BgImg.quota = 10 * 1024 * 1024;
+BgImg.quotaUsed = 0;
+
 BgImg.getDefaultImgs = function () {
 	var deferred = Q.defer();
-	for (var _i7 = _g.bgimg_count - 1; _i7 >= 0; _i7--) {
+	for (var _i6 = _g.bgimg_count - 1; _i6 >= 0; _i6--) {
 		BgImg.list.push(new BgImg({
-			'name': _i7 + '.jpg',
+			'name': '*' + _i6 + '.jpg',
 			'isDefault': !0
 		}));
 	}
@@ -5352,22 +5522,28 @@ BgImg.getDefaultImgs = function () {
 	BgImg.dataCustom = {};
 	localforage.getItem('bgcustomlist', function (err, value) {
 		BgImg.dataCustom = value || {};
-		for (var _i8 in BgImg.dataCustom) {
-			var o = BgImg.dataCustom[_i8];
-			o.name = _i8;
+		for (var _i7 in BgImg.dataCustom) {
+			var o = BgImg.dataCustom[_i7];
+			o.name = _i7;
 			BgImg.list.push(new BgImg(o));
+			BgImg.countCustom++;
+			BgImg.quotaUsed += o.size;
 		}
+		BgImg.updateQuotaUsed();
 		deferred.resolve(BgImg.list);
 	});
 
-	deferred.resolve();
 	return deferred.promise;
+};
+
+BgImg.updateQuotaUsed = function () {
+	if (BgImg.controlsEls.listCustomQuotaUsed) BgImg.controlsEls.listCustomQuotaUsed.html(_g.getSize(BgImg.quotaUsed, 'm'));
 };
 
 BgImg.getPath = function (o, t) {
 	o = BgImg.getObj(o);
 
-	if (o.isDefault) return _g.path.bgimg_dir + (t ? t + '/' : '') + o.name;
+	if (o.isDefault) return _g.path.bgimg_dir + (t ? t + '/' : '') + o.filename;
 
 	if (t) return o['_' + t];
 
@@ -5376,24 +5552,35 @@ BgImg.getPath = function (o, t) {
 
 BgImg.save = function (o) {
 	o = BgImg.getObj(o);
-	_g.save(o.path, 'fleet.diablohu.com - ' + o.name);
+	_g.save(o.path, 'fleet.diablohu.com - ' + o.filename);
 };
 
 BgImg.readFile = function (e) {
 	var deferred = Q.defer();
 
 	Q.fcall(_g.getScriptCanvas).then(function () {
-		for (var _i9 = 0, f = undefined; f = e.target.files[_i9]; _i9++) {
+		for (var _i8 = 0, f = undefined; f = e.target.files[_i8]; _i8++) {
+			if (BgImg.quotaUsed + f.size > BgImg.quota) {
+				deferred.reject('已超过 ' + _g.getSize(BgImg.quota, 'm') + ' 上限');
+				break;
+				return;
+			}
+
 			var reader = new FileReader();
 			reader.onload = (function (theFile) {
 				return function (r) {
-					BgImg.dataCustom[theFile.name] = {
-						'_path': r.target.result
+					var n = BgImg.getUniqueName(theFile.name);
+					BgImg.quotaUsed += theFile.size;
+					BgImg.updateQuotaUsed();
+					BgImg.dataCustom[n] = {
+						'_path': r.target.result,
+						'size': theFile.size
 					};
 					localforage.setItem('bgcustomlist', BgImg.dataCustom, function (err, result) {
 						deferred.resolve(new BgImg({
-							'name': theFile.name,
-							'_path': r.target.result
+							'name': n,
+							'_path': r.target.result,
+							'size': theFile.size
 						}));
 					});
 				};
@@ -5415,6 +5602,39 @@ BgImg.set = function (o, t, canvas) {
 	BgImg.dataCustom[o.name]['_' + t] = base64;
 
 	localforage.setItem('bgcustomlist', BgImg.dataCustom, function (err, result) {
+		deferred.resolve();
+	});
+
+	return deferred.promise;
+};
+
+BgImg.delete = function (o) {
+	o = BgImg.getObj(o);
+
+	var deferred = Q.defer();
+
+	o.elThumbnail.remove();
+	o.els.remove();
+
+	BgImg.listVisible.forEach(function (obj, i) {
+		if (obj === o) BgImg.listVisible.splice(i, 1);
+	});
+	BgImg.namesHidden.forEach(function (n, i) {
+		if (n === o.name) BgImg.namesHidden.splice(i, 1);
+	});
+
+	Lockr.set('BgImgHidden', BgImg.namesHidden);
+
+	delete BgImg.dataCustom[o.name];
+
+	localforage.setItem('bgcustomlist', BgImg.dataCustom, function (err, result) {
+		BgImg.countCustom--;
+		BgImg.quotaUsed -= o.size;
+		BgImg.updateQuotaUsed();
+		BgImg.list.forEach(function (obj, i) {
+			if (obj === o) BgImg.list.splice(i, 1);
+		});
+		if (BgImg.cur === o) BgImg.change();
 		deferred.resolve();
 	});
 
@@ -5955,11 +6175,11 @@ var InfosFleet = (function () {
 					this.is_showing = !0;
 					if (InfosFleetShipEquipment.cur) InfosFleetShipEquipment.cur.trigger('blur');
 					if (!is_firstShow) {
-						var _i10 = 0,
+						var _i9 = 0,
 						    _l2 = Lockr.get('hqLvDefault', _g.defaultHqLv);
-						while (_i10 < 4) {
-							this.fleets[_i10].summaryCalc(!0);
-							_i10++;
+						while (_i9 < 4) {
+							this.fleets[_i9].summaryCalc(!0);
+							_i9++;
 						}
 						if (!this._hqlv) this.doms['hqlvOption'].val(_l2);
 						this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(_l2));
@@ -6067,15 +6287,15 @@ var InfosFleet = (function () {
 				if (!InfosFleet.menuTheme) {
 					InfosFleet.menuThemeItems = $('<div/>');
 
-					var _loop = function _loop(_i11) {
-						$('<button class="theme-' + _i11 + '"/>').html(_i11).on('click', (function () {
-							InfosFleet.menuCur._theme = _i11;
+					var _loop = function _loop(_i10) {
+						$('<button class="theme-' + _i10 + '"/>').html(_i10).on('click', (function () {
+							InfosFleet.menuCur._theme = _i10;
 							this.el.attr('data-theme', this._theme);
 						}).bind(_this7)).appendTo(InfosFleet.menuThemeItems);
 					};
 
-					for (var _i11 = 1; _i11 < 11; _i11++) {
-						_loop(_i11);
+					for (var _i10 = 1; _i10 < 11; _i10++) {
+						_loop(_i10);
 					}
 					InfosFleet.menuTheme = new _menu({
 						'className': 'contextmenu-infos_fleet_themes',
@@ -6102,6 +6322,13 @@ var InfosFleet = (function () {
 								return InfosFleet.menuCur.url;
 							}
 						}).el.addClass('item')).add($('<hr/>')));
+					}
+					if (_g.isClient) {
+						menuitems.push($('<menuitem/>', {
+							'html': '在浏览器中打开当前配置'
+						}).on('click', function () {
+							node.gui.Shell.openExternal(InfosFleet.menuCur.url);
+						}));
 					}
 					menuitems = menuitems.concat([$('<menuitem/>', {
 						'html': '导出配置代码'
@@ -6396,10 +6623,10 @@ var InfosFleet = (function () {
 				this.doms['hqlvOption'].val(Lockr.get('hqLvDefault', _g.defaultHqLv));
 			}
 			if (last != value) {
-				var _i12 = 0;
-				while (_i12 < 4) {
-					this.fleets[_i12].summaryCalc(!0);
-					_i12++;
+				var _i11 = 0;
+				while (_i11 < 4) {
+					this.fleets[_i11].summaryCalc(!0);
+					_i11++;
 				}
 				this.save();
 			}
@@ -6716,8 +6943,8 @@ var InfosFleetSubFleet = (function () {
 					}) || [];
 					equipments_by_slot.forEach(function (equipment) {
 						if (equipment) {
-							for (var _i13 in x) {
-								if (Formula.equipmentType[_i13] && Formula.equipmentType[_i13].push && Formula.equipmentType[_i13].indexOf(equipment.type) > -1) x[_i13] += equipment.stat.los;
+							for (var _i12 in x) {
+								if (Formula.equipmentType[_i12] && Formula.equipmentType[_i12].push && Formula.equipmentType[_i12].indexOf(equipment.type) > -1) x[_i12] += equipment.stat.los;
 							}
 						}
 					});
@@ -6790,9 +7017,9 @@ var InfosFleetShip = (function () {
 			}).bind(this)
 		}))).append(this.elInfosInfo = $('<span/>'))))).append($('<div class="equipments"/>').append((function () {
 			var els = $();
-			for (var _i14 = 0; _i14 < 4; _i14++) {
-				this.equipments[_i14] = new InfosFleetShipEquipment(this, _i14);
-				els = els.add(this.equipments[_i14].el);
+			for (var _i13 = 0; _i13 < 4; _i13++) {
+				this.equipments[_i13] = new InfosFleetShipEquipment(this, _i13);
+				els = els.add(this.equipments[_i13].el);
 			}
 
 			return els;
@@ -6910,10 +7137,10 @@ var InfosFleetShip = (function () {
 
 			if (this.data[1][0]) this.shipLv = this.data[1][0];
 
-			for (var _i15 = 0; _i15 < 4; _i15++) {
-				this.equipments[_i15].id = this.data[2][_i15];
-				this.equipments[_i15].star = this.data[3][_i15];
-				this.equipments[_i15].rank = this.data[4][_i15];
+			for (var _i14 = 0; _i14 < 4; _i14++) {
+				this.equipments[_i14].id = this.data[2][_i14];
+				this.equipments[_i14].star = this.data[3][_i14];
+				this.equipments[_i14].rank = this.data[4][_i14];
 			}
 
 			this.updateAttrs();
@@ -7060,12 +7287,12 @@ var InfosFleetShip = (function () {
 				this.elInfosTitle.html('<h4 data-content="' + ship['name'][_g.lang] + '">' + ship['name'][_g.lang] + '</h4>' + (suffix ? '<h5 data-content="' + suffix + '">' + suffix + '</h5>' : ''));
 				this.elInfosInfo.html(speed + ' ' + stype);
 
-				for (var _i16 = 0; _i16 < 4; _i16++) {
-					this.equipments[_i16].carry = ship.slot[_i16];
+				for (var _i15 = 0; _i15 < 4; _i15++) {
+					this.equipments[_i15].carry = ship.slot[_i15];
 					if (!this._updating) {
-						this.equipments[_i16].id = null;
-						this.equipments[_i16].star = null;
-						this.equipments[_i16].rank = null;
+						this.equipments[_i15].id = null;
+						this.equipments[_i15].star = null;
+						this.equipments[_i15].rank = null;
 					}
 				}
 			} else {
@@ -7187,14 +7414,14 @@ var InfosFleetShipEquipment = (function () {
 			if (!InfosFleet.menuRankSelect) {
 				InfosFleet.menuRankSelectItems = $('<div/>');
 
-				var _loop2 = function _loop2(_i17) {
-					$('<button class="rank-' + _i17 + '"/>').html(!_i17 ? '无' : '').on('click', function () {
-						InfosFleet.menuRankSelectCur.rank = _i17;
+				var _loop2 = function _loop2(_i16) {
+					$('<button class="rank-' + _i16 + '"/>').html(!_i16 ? '无' : '').on('click', function () {
+						InfosFleet.menuRankSelectCur.rank = _i16;
 					}).appendTo(InfosFleet.menuRankSelectItems);
 				};
 
-				for (var _i17 = 0; _i17 < 8; _i17++) {
-					_loop2(_i17);
+				for (var _i16 = 0; _i16 < 8; _i16++) {
+					_loop2(_i16);
 				}
 				InfosFleet.menuRankSelect = new _menu({
 					'className': 'contextmenu-infos_fleet_rank_select',
@@ -8565,7 +8792,7 @@ var TablelistFleets = (function (_Tablelist4) {
 						sorted[cur.theme].push(i);
 					});
 
-					for (var _i18 in sorted) {
+					for (var _i17 in sorted) {
 						k = 0;
 
 						while (k < _this14.flexgrid_empty_count) {
@@ -8573,7 +8800,7 @@ var TablelistFleets = (function (_Tablelist4) {
 							k++;
 						}
 
-						sorted[_i18].forEach((function (index) {
+						sorted[_i17].forEach((function (index) {
 							setTimeout((function (i) {
 								this.append_item(arr[i]);
 								count++;
@@ -8710,7 +8937,7 @@ var TablelistFleets = (function (_Tablelist4) {
 								if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
 							});
 						} else {
-							for (var _i19 = 0, f = undefined; f = e.target.files[_i19]; _i19++) {
+							for (var _i18 = 0, f = undefined; f = e.target.files[_i18]; _i18++) {
 								var reader = new FileReader();
 								reader.onload = (function (theFile) {
 									return function (r) {
@@ -8898,9 +9125,8 @@ var TablelistFleets = (function (_Tablelist4) {
 })(Tablelist);
 
 TablelistFleets.menuOptions_show = function ($el, $el_tablelist) {
-	if (!TablelistFleets.menuOptions) TablelistFleets.menuOptions = new _menu({
-		'className': 'menu-tablelistfleets-options',
-		'items': [$('<menuitem class="mod-checkbox donot_hide option-in-tablelist option-groupbytheme"/>').append($('<input/>', {
+	if (!TablelistFleets.menuOptions) {
+		var items = [$('<menuitem class="mod-checkbox donot_hide option-in-tablelist option-groupbytheme"/>').append($('<input/>', {
 			'type': 'checkbox',
 			'id': '_input_g' + _g.inputIndex
 		}).prop('checked', Lockr.get('fleetlist-option-groupbytheme')).on('change', function (e) {
@@ -8933,8 +9159,23 @@ TablelistFleets.menuOptions_show = function ($el, $el_tablelist) {
 			'html': '移除配置'
 		}).on('click', function () {
 			if (InfosFleet.cur) InfosFleet.cur.remove();
-		})]
-	});
+		})];
+
+		if (_g.isNWjs) {
+			items = items.concat([$('<hr class="option-in-tablelist"/>'), $('<div class="option-in-tablelist option-filelocation"/>').html('<span>置配置文件位置</span>').append(TablelistFleets.filelocation_selector = $('<input type="file" class="none" webkitdirectory/>').on('change', function (e) {
+				TablelistFleets.moveBuildsLocation(TablelistFleets.filelocation_selector.val());
+			})).append($('<button type="button">还原</button>').on('click', function () {
+				TablelistFleets.moveBuildsLocation(node.path.join(node.gui.App.dataPath, 'NeDB'));
+			})).append($('<button type="button">选择</button>').on('click', function () {
+				TablelistFleets.filelocation_selector.click();
+			}))]);
+		}
+
+		TablelistFleets.menuOptions = new _menu({
+			'className': 'menu-tablelistfleets-options',
+			'items': items
+		});
+	}
 
 	TablelistFleets.menuOptions.curTablelist = $el_tablelist || null;
 
@@ -8944,3 +9185,70 @@ TablelistFleets.menuOptions_show = function ($el, $el_tablelist) {
 
 TablelistFleets.support = {};
 TablelistFleets.support.buildfile = _g.isNWjs || window.File && window.FileReader && window.FileList && window.Blob && window.URL ? !0 : !1;
+
+TablelistFleets.moveBuildsLocation = function (location) {
+	if (!location) return;
+
+	_frame.app_main.loading_start('tablelist_fleets_newlocation', !1);
+	TablelistFleets.filelocation_selector.prop('disabled', !0);
+
+	var n = 'fleets.json',
+	    j = 1,
+	    exist = !1,
+	    oldPath = Lockr.get('fleets-builds-file', node.path.join(node.gui.App.dataPath, 'NeDB', 'fleets.json'));
+
+	try {
+		exist = node.fs.lstatSync(node.path.join(location, n)) ? !0 : !1;
+	} catch (e) {
+		exist = !1;
+	}
+	while (exist) {
+		n = 'fleets-' + j++ + '.json';
+		try {
+			exist = node.fs.lstatSync(node.path.join(location, n)) ? !0 : !1;
+		} catch (e) {
+			exist = !1;
+		}
+	}
+
+	var path = node.path.join(location, n);
+	Lockr.set('fleets-builds-file', path);
+	_db.fleets = new node.nedb({
+		filename: path
+	});
+
+	node.mkdirp.sync(location);
+	Q.fcall(function () {
+		var deferred = Q.defer(),
+		    cbCalled = !1,
+		    rd = node.fs.createReadStream(oldPath);
+		rd.on("error", function (err) {
+			done(err);
+		});
+		var wr = node.fs.createWriteStream(path);
+		wr.on("error", function (err) {
+			done(err);
+		});
+		wr.on("close", function (ex) {
+			done();
+		});
+		rd.pipe(wr);
+		function done(err) {
+			if (!cbCalled) {
+				deferred.resolve();
+				cbCalled = !0;
+			}
+		}
+		return deferred.promise;
+	}).then(function () {
+		var deferred = Q.defer();
+		_db.fleets.loadDatabase(function () {
+			deferred.resolve();
+		});
+		return deferred.promise;
+	}).done(function () {
+		_frame.app_main.loading_complete('tablelist_fleets_newlocation');
+		TablelistFleets.filelocation_selector.prop('disabled', !1);
+		TablelistFleets.filelocation_selector.val('');
+	});
+};
