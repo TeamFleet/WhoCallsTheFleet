@@ -398,7 +398,7 @@
 			margin-left: 0;
 		}
 		.loop(@n, @i: 0) when (@i =< @n) {
-			&>.shiptype[value="@{i}"]:not(:checked){
+			&:not(.mod-search)>.shiptype[value="@{i}"]:not(:checked){
 				&~.tablelist-container h4[data-header="@{i}"]{
 					label.checkbox{
 						z-index: 	-1;
@@ -411,7 +411,7 @@
 					display:	none !important;
 				}
 			}
-			&>.shiptype[value="@{i}"]:checked{
+			&:not(.mod-search)>.shiptype[value="@{i}"]:checked{
 				&~.tablelist-container h4[data-header="@{i}"]{
 					label.shiptype{
 						width: 		30px;

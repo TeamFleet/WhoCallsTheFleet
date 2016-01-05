@@ -3766,6 +3766,7 @@ table{
 */
 input[type="text"],
 input[type="number"],
+input[type="search"],
 select {
   background: rgba(0, 0, 0, 0.1);
   border: 0.05rem solid rgba(255, 255, 255, 0.15);
@@ -3773,8 +3774,8 @@ select {
   display: inline-block;
   width: auto;
   color: inherit;
-  -webkit-transition-property: border,background,color;
-  transition-property: border,background,color;
+  -webkit-transition-property: border,background,color,width;
+  transition-property: border,background,color,width;
   height: 1rem;
   line-height: 1rem;
   min-width: 6rem;
@@ -3782,15 +3783,18 @@ select {
 }
 input[type="text"]:not([disabled]):hover,
 input[type="number"]:not([disabled]):hover,
+input[type="search"]:not([disabled]):hover,
 select:not([disabled]):hover,
 input[type="text"]:not([readonly]):hover,
 input[type="number"]:not([readonly]):hover,
+input[type="search"]:not([readonly]):hover,
 select:not([readonly]):hover {
   background: rgba(0, 0, 0, 0.25);
   border-color: rgba(255, 255, 255, 0.3);
 }
 input[type="text"]:not([disabled]):focus,
 input[type="number"]:not([disabled]):focus,
+input[type="search"]:not([disabled]):focus,
 select:not([disabled]):focus {
   background: rgba(0, 0, 0, 0.25);
   border-color: rgba(255, 255, 255, 0.3);
@@ -3799,7 +3803,8 @@ button {
   color: inherit;
 }
 input[type="text"],
-input[type="number"] {
+input[type="number"],
+input[type="search"] {
   padding: 0rem 0.2rem;
 }
 input[type="checkbox"] {
@@ -5084,6 +5089,40 @@ body.mod-capture #tip {
 .tablelist > .options > div.filters > button {
   float: left;
 }
+.tablelist > .options > div.filters > p {
+  -webkit-transition-property: opacity;
+  transition-property: opacity;
+}
+.tablelist > .options > div.filters > .search {
+  float: left;
+  position: relative;
+  margin-right: 20px;
+}
+.tablelist > .options > div.filters > .search input {
+  min-width: 0;
+  width: 100px;
+  padding-left: 26px;
+  height: 1.9em;
+}
+.tablelist > .options > div.filters > .search input:focus {
+  width: 250px;
+}
+.tablelist > .options > div.filters > .search:before {
+  position: absolute;
+  font-family: icons;
+  content: "\eb2d";
+  font-size: 16px;
+  top: 50%;
+  line-height: 0;
+  left: 0;
+  width: 26px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+}
+.tablelist > .options > div.filters > .search.on + p {
+  opacity: 0;
+  z-index: -1;
+}
 .tablelist > .options > div.filters > .hide-premodel {
   float: left;
   padding-left: 25px;
@@ -6093,403 +6132,403 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships > [viewtype="card"] ~ .tablelist-container h4 label.shiptype {
   margin-left: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="0"]:not(:checked) ~ .tablelist-container h4[data-header="0"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="0"]:not(:checked) ~ .tablelist-container h4[data-header="0"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="0"]:not(:checked) ~ .tablelist-container h4[data-header="0"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="0"]:not(:checked) ~ .tablelist-container h4[data-header="0"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="0"]:not(:checked) ~ .tablelist-container dl[data-header="0"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="0"]:not(:checked) ~ .tablelist-container dl[data-header="0"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="0"]:checked ~ .tablelist-container h4[data-header="0"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="0"]:checked ~ .tablelist-container h4[data-header="0"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="0"]:checked ~ .tablelist-container h4[data-header="0"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="0"]:checked ~ .tablelist-container h4[data-header="0"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="0"]:checked ~ .tablelist-container h4[data-header="0"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="0"]:checked ~ .tablelist-container h4[data-header="0"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="1"]:not(:checked) ~ .tablelist-container h4[data-header="1"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="1"]:not(:checked) ~ .tablelist-container h4[data-header="1"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="1"]:not(:checked) ~ .tablelist-container h4[data-header="1"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="1"]:not(:checked) ~ .tablelist-container h4[data-header="1"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="1"]:not(:checked) ~ .tablelist-container dl[data-header="1"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="1"]:not(:checked) ~ .tablelist-container dl[data-header="1"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="1"]:checked ~ .tablelist-container h4[data-header="1"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="1"]:checked ~ .tablelist-container h4[data-header="1"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="1"]:checked ~ .tablelist-container h4[data-header="1"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="1"]:checked ~ .tablelist-container h4[data-header="1"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="1"]:checked ~ .tablelist-container h4[data-header="1"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="1"]:checked ~ .tablelist-container h4[data-header="1"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="2"]:not(:checked) ~ .tablelist-container h4[data-header="2"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="2"]:not(:checked) ~ .tablelist-container h4[data-header="2"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="2"]:not(:checked) ~ .tablelist-container h4[data-header="2"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="2"]:not(:checked) ~ .tablelist-container h4[data-header="2"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="2"]:not(:checked) ~ .tablelist-container dl[data-header="2"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="2"]:not(:checked) ~ .tablelist-container dl[data-header="2"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="2"]:checked ~ .tablelist-container h4[data-header="2"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="2"]:checked ~ .tablelist-container h4[data-header="2"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="2"]:checked ~ .tablelist-container h4[data-header="2"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="2"]:checked ~ .tablelist-container h4[data-header="2"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="2"]:checked ~ .tablelist-container h4[data-header="2"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="2"]:checked ~ .tablelist-container h4[data-header="2"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="3"]:not(:checked) ~ .tablelist-container h4[data-header="3"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="3"]:not(:checked) ~ .tablelist-container h4[data-header="3"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="3"]:not(:checked) ~ .tablelist-container h4[data-header="3"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="3"]:not(:checked) ~ .tablelist-container h4[data-header="3"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="3"]:not(:checked) ~ .tablelist-container dl[data-header="3"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="3"]:not(:checked) ~ .tablelist-container dl[data-header="3"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="3"]:checked ~ .tablelist-container h4[data-header="3"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="3"]:checked ~ .tablelist-container h4[data-header="3"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="3"]:checked ~ .tablelist-container h4[data-header="3"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="3"]:checked ~ .tablelist-container h4[data-header="3"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="3"]:checked ~ .tablelist-container h4[data-header="3"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="3"]:checked ~ .tablelist-container h4[data-header="3"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="4"]:not(:checked) ~ .tablelist-container h4[data-header="4"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="4"]:not(:checked) ~ .tablelist-container h4[data-header="4"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="4"]:not(:checked) ~ .tablelist-container h4[data-header="4"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="4"]:not(:checked) ~ .tablelist-container h4[data-header="4"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="4"]:not(:checked) ~ .tablelist-container dl[data-header="4"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="4"]:not(:checked) ~ .tablelist-container dl[data-header="4"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="4"]:checked ~ .tablelist-container h4[data-header="4"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="4"]:checked ~ .tablelist-container h4[data-header="4"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="4"]:checked ~ .tablelist-container h4[data-header="4"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="4"]:checked ~ .tablelist-container h4[data-header="4"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="4"]:checked ~ .tablelist-container h4[data-header="4"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="4"]:checked ~ .tablelist-container h4[data-header="4"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="5"]:not(:checked) ~ .tablelist-container h4[data-header="5"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="5"]:not(:checked) ~ .tablelist-container h4[data-header="5"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="5"]:not(:checked) ~ .tablelist-container h4[data-header="5"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="5"]:not(:checked) ~ .tablelist-container h4[data-header="5"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="5"]:not(:checked) ~ .tablelist-container dl[data-header="5"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="5"]:not(:checked) ~ .tablelist-container dl[data-header="5"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="5"]:checked ~ .tablelist-container h4[data-header="5"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="5"]:checked ~ .tablelist-container h4[data-header="5"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="5"]:checked ~ .tablelist-container h4[data-header="5"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="5"]:checked ~ .tablelist-container h4[data-header="5"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="5"]:checked ~ .tablelist-container h4[data-header="5"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="5"]:checked ~ .tablelist-container h4[data-header="5"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="6"]:not(:checked) ~ .tablelist-container h4[data-header="6"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="6"]:not(:checked) ~ .tablelist-container h4[data-header="6"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="6"]:not(:checked) ~ .tablelist-container h4[data-header="6"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="6"]:not(:checked) ~ .tablelist-container h4[data-header="6"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="6"]:not(:checked) ~ .tablelist-container dl[data-header="6"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="6"]:not(:checked) ~ .tablelist-container dl[data-header="6"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="6"]:checked ~ .tablelist-container h4[data-header="6"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="6"]:checked ~ .tablelist-container h4[data-header="6"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="6"]:checked ~ .tablelist-container h4[data-header="6"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="6"]:checked ~ .tablelist-container h4[data-header="6"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="6"]:checked ~ .tablelist-container h4[data-header="6"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="6"]:checked ~ .tablelist-container h4[data-header="6"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="7"]:not(:checked) ~ .tablelist-container h4[data-header="7"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="7"]:not(:checked) ~ .tablelist-container h4[data-header="7"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="7"]:not(:checked) ~ .tablelist-container h4[data-header="7"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="7"]:not(:checked) ~ .tablelist-container h4[data-header="7"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="7"]:not(:checked) ~ .tablelist-container dl[data-header="7"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="7"]:not(:checked) ~ .tablelist-container dl[data-header="7"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="7"]:checked ~ .tablelist-container h4[data-header="7"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="7"]:checked ~ .tablelist-container h4[data-header="7"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="7"]:checked ~ .tablelist-container h4[data-header="7"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="7"]:checked ~ .tablelist-container h4[data-header="7"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="7"]:checked ~ .tablelist-container h4[data-header="7"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="7"]:checked ~ .tablelist-container h4[data-header="7"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="8"]:not(:checked) ~ .tablelist-container h4[data-header="8"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="8"]:not(:checked) ~ .tablelist-container h4[data-header="8"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="8"]:not(:checked) ~ .tablelist-container h4[data-header="8"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="8"]:not(:checked) ~ .tablelist-container h4[data-header="8"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="8"]:not(:checked) ~ .tablelist-container dl[data-header="8"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="8"]:not(:checked) ~ .tablelist-container dl[data-header="8"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="8"]:checked ~ .tablelist-container h4[data-header="8"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="8"]:checked ~ .tablelist-container h4[data-header="8"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="8"]:checked ~ .tablelist-container h4[data-header="8"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="8"]:checked ~ .tablelist-container h4[data-header="8"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="8"]:checked ~ .tablelist-container h4[data-header="8"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="8"]:checked ~ .tablelist-container h4[data-header="8"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="9"]:not(:checked) ~ .tablelist-container h4[data-header="9"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="9"]:not(:checked) ~ .tablelist-container h4[data-header="9"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="9"]:not(:checked) ~ .tablelist-container h4[data-header="9"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="9"]:not(:checked) ~ .tablelist-container h4[data-header="9"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="9"]:not(:checked) ~ .tablelist-container dl[data-header="9"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="9"]:not(:checked) ~ .tablelist-container dl[data-header="9"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="9"]:checked ~ .tablelist-container h4[data-header="9"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="9"]:checked ~ .tablelist-container h4[data-header="9"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="9"]:checked ~ .tablelist-container h4[data-header="9"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="9"]:checked ~ .tablelist-container h4[data-header="9"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="9"]:checked ~ .tablelist-container h4[data-header="9"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="9"]:checked ~ .tablelist-container h4[data-header="9"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="10"]:not(:checked) ~ .tablelist-container h4[data-header="10"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="10"]:not(:checked) ~ .tablelist-container h4[data-header="10"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="10"]:not(:checked) ~ .tablelist-container h4[data-header="10"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="10"]:not(:checked) ~ .tablelist-container h4[data-header="10"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="10"]:not(:checked) ~ .tablelist-container dl[data-header="10"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="10"]:not(:checked) ~ .tablelist-container dl[data-header="10"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="10"]:checked ~ .tablelist-container h4[data-header="10"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="10"]:checked ~ .tablelist-container h4[data-header="10"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="10"]:checked ~ .tablelist-container h4[data-header="10"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="10"]:checked ~ .tablelist-container h4[data-header="10"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="10"]:checked ~ .tablelist-container h4[data-header="10"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="10"]:checked ~ .tablelist-container h4[data-header="10"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="11"]:not(:checked) ~ .tablelist-container h4[data-header="11"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="11"]:not(:checked) ~ .tablelist-container h4[data-header="11"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="11"]:not(:checked) ~ .tablelist-container h4[data-header="11"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="11"]:not(:checked) ~ .tablelist-container h4[data-header="11"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="11"]:not(:checked) ~ .tablelist-container dl[data-header="11"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="11"]:not(:checked) ~ .tablelist-container dl[data-header="11"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="11"]:checked ~ .tablelist-container h4[data-header="11"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="11"]:checked ~ .tablelist-container h4[data-header="11"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="11"]:checked ~ .tablelist-container h4[data-header="11"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="11"]:checked ~ .tablelist-container h4[data-header="11"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="11"]:checked ~ .tablelist-container h4[data-header="11"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="11"]:checked ~ .tablelist-container h4[data-header="11"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="12"]:not(:checked) ~ .tablelist-container h4[data-header="12"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="12"]:not(:checked) ~ .tablelist-container h4[data-header="12"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="12"]:not(:checked) ~ .tablelist-container h4[data-header="12"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="12"]:not(:checked) ~ .tablelist-container h4[data-header="12"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="12"]:not(:checked) ~ .tablelist-container dl[data-header="12"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="12"]:not(:checked) ~ .tablelist-container dl[data-header="12"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="12"]:checked ~ .tablelist-container h4[data-header="12"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="12"]:checked ~ .tablelist-container h4[data-header="12"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="12"]:checked ~ .tablelist-container h4[data-header="12"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="12"]:checked ~ .tablelist-container h4[data-header="12"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="12"]:checked ~ .tablelist-container h4[data-header="12"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="12"]:checked ~ .tablelist-container h4[data-header="12"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="13"]:not(:checked) ~ .tablelist-container h4[data-header="13"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="13"]:not(:checked) ~ .tablelist-container h4[data-header="13"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="13"]:not(:checked) ~ .tablelist-container h4[data-header="13"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="13"]:not(:checked) ~ .tablelist-container h4[data-header="13"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="13"]:not(:checked) ~ .tablelist-container dl[data-header="13"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="13"]:not(:checked) ~ .tablelist-container dl[data-header="13"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="13"]:checked ~ .tablelist-container h4[data-header="13"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="13"]:checked ~ .tablelist-container h4[data-header="13"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="13"]:checked ~ .tablelist-container h4[data-header="13"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="13"]:checked ~ .tablelist-container h4[data-header="13"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="13"]:checked ~ .tablelist-container h4[data-header="13"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="13"]:checked ~ .tablelist-container h4[data-header="13"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="14"]:not(:checked) ~ .tablelist-container h4[data-header="14"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="14"]:not(:checked) ~ .tablelist-container h4[data-header="14"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="14"]:not(:checked) ~ .tablelist-container h4[data-header="14"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="14"]:not(:checked) ~ .tablelist-container h4[data-header="14"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="14"]:not(:checked) ~ .tablelist-container dl[data-header="14"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="14"]:not(:checked) ~ .tablelist-container dl[data-header="14"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="14"]:checked ~ .tablelist-container h4[data-header="14"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="14"]:checked ~ .tablelist-container h4[data-header="14"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="14"]:checked ~ .tablelist-container h4[data-header="14"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="14"]:checked ~ .tablelist-container h4[data-header="14"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="14"]:checked ~ .tablelist-container h4[data-header="14"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="14"]:checked ~ .tablelist-container h4[data-header="14"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="15"]:not(:checked) ~ .tablelist-container h4[data-header="15"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="15"]:not(:checked) ~ .tablelist-container h4[data-header="15"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="15"]:not(:checked) ~ .tablelist-container h4[data-header="15"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="15"]:not(:checked) ~ .tablelist-container h4[data-header="15"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="15"]:not(:checked) ~ .tablelist-container dl[data-header="15"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="15"]:not(:checked) ~ .tablelist-container dl[data-header="15"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="15"]:checked ~ .tablelist-container h4[data-header="15"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="15"]:checked ~ .tablelist-container h4[data-header="15"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="15"]:checked ~ .tablelist-container h4[data-header="15"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="15"]:checked ~ .tablelist-container h4[data-header="15"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="15"]:checked ~ .tablelist-container h4[data-header="15"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="15"]:checked ~ .tablelist-container h4[data-header="15"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="16"]:not(:checked) ~ .tablelist-container h4[data-header="16"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="16"]:not(:checked) ~ .tablelist-container h4[data-header="16"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="16"]:not(:checked) ~ .tablelist-container h4[data-header="16"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="16"]:not(:checked) ~ .tablelist-container h4[data-header="16"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="16"]:not(:checked) ~ .tablelist-container dl[data-header="16"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="16"]:not(:checked) ~ .tablelist-container dl[data-header="16"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="16"]:checked ~ .tablelist-container h4[data-header="16"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="16"]:checked ~ .tablelist-container h4[data-header="16"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="16"]:checked ~ .tablelist-container h4[data-header="16"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="16"]:checked ~ .tablelist-container h4[data-header="16"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="16"]:checked ~ .tablelist-container h4[data-header="16"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="16"]:checked ~ .tablelist-container h4[data-header="16"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="17"]:not(:checked) ~ .tablelist-container h4[data-header="17"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="17"]:not(:checked) ~ .tablelist-container h4[data-header="17"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="17"]:not(:checked) ~ .tablelist-container h4[data-header="17"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="17"]:not(:checked) ~ .tablelist-container h4[data-header="17"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="17"]:not(:checked) ~ .tablelist-container dl[data-header="17"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="17"]:not(:checked) ~ .tablelist-container dl[data-header="17"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="17"]:checked ~ .tablelist-container h4[data-header="17"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="17"]:checked ~ .tablelist-container h4[data-header="17"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="17"]:checked ~ .tablelist-container h4[data-header="17"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="17"]:checked ~ .tablelist-container h4[data-header="17"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="17"]:checked ~ .tablelist-container h4[data-header="17"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="17"]:checked ~ .tablelist-container h4[data-header="17"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="18"]:not(:checked) ~ .tablelist-container h4[data-header="18"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="18"]:not(:checked) ~ .tablelist-container h4[data-header="18"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="18"]:not(:checked) ~ .tablelist-container h4[data-header="18"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="18"]:not(:checked) ~ .tablelist-container h4[data-header="18"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="18"]:not(:checked) ~ .tablelist-container dl[data-header="18"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="18"]:not(:checked) ~ .tablelist-container dl[data-header="18"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="18"]:checked ~ .tablelist-container h4[data-header="18"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="18"]:checked ~ .tablelist-container h4[data-header="18"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="18"]:checked ~ .tablelist-container h4[data-header="18"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="18"]:checked ~ .tablelist-container h4[data-header="18"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="18"]:checked ~ .tablelist-container h4[data-header="18"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="18"]:checked ~ .tablelist-container h4[data-header="18"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="19"]:not(:checked) ~ .tablelist-container h4[data-header="19"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="19"]:not(:checked) ~ .tablelist-container h4[data-header="19"] label.checkbox {
   z-index: -1;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="19"]:not(:checked) ~ .tablelist-container h4[data-header="19"] label.checkbox:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="19"]:not(:checked) ~ .tablelist-container h4[data-header="19"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="19"]:not(:checked) ~ .tablelist-container dl[data-header="19"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="19"]:not(:checked) ~ .tablelist-container dl[data-header="19"] {
   display: none !important;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="19"]:checked ~ .tablelist-container h4[data-header="19"] label.shiptype {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="19"]:checked ~ .tablelist-container h4[data-header="19"] label.shiptype {
   width: 30px;
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="19"]:checked ~ .tablelist-container h4[data-header="19"] label.shiptype:before {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="19"]:checked ~ .tablelist-container h4[data-header="19"] label.shiptype:before {
   -webkit-transform: rotate(90deg) translateX(-1px);
           transform: rotate(90deg) translateX(-1px);
 }
-#layout.mode-selection .tablelist.ships > .shiptype[value="19"]:checked ~ .tablelist-container h4[data-header="19"] label.checkbox {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="19"]:checked ~ .tablelist-container h4[data-header="19"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
@@ -9384,8 +9423,8 @@ body.mod-capture .infos-fleet .equipments {
   display: inline-block;
   width: auto;
   color: inherit;
-  -webkit-transition-property: border,background,color;
-  transition-property: border,background,color;
+  -webkit-transition-property: border,background,color,width;
+  transition-property: border,background,color,width;
   display: none;
   position: relative;
   text-align: center;

@@ -881,6 +881,7 @@ _frame.app_main = {
 				_g.error(err)
 			})
 			.done(function(){
+				_g.buildIndex();
 				_g.log('Global initialization DONE')
 			})
 

@@ -20,8 +20,8 @@ _frame.app_main.page['ships'] = {
 			constructor( $page ){
 				super( $page )
 				
-				//this.tablelist = $page.find('.tablelist')
-				//this.tablelistObj = this.tablelist.data('tablelist')
+				this.tablelist = $page.find('.tablelist')
+				this.tablelistObj = this.tablelist.data('tablelist')
 			
 				$page.on({
 					/*
@@ -36,6 +36,16 @@ _frame.app_main.page['ships'] = {
 					*/
 					'modeSelectionEnter': function(e, callback_select){
 						this.modeSelectionEnter(callback_select)
+					}.bind(this),
+					'pageShow': function(){
+						if( !this.tablelistObj )
+							this.tablelistObj = this.tablelist.data('tablelist')
+					}.bind(this),
+					'pageHide': function(){
+						if( this.tablelistObj ){
+							this.tablelistObj.search()
+							this.tablelistObj.dom.searchInput.val('')
+						}
 					}.bind(this)
 				})
 			}

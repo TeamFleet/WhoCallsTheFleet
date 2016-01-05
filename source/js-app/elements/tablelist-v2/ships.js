@@ -243,6 +243,27 @@ class TablelistShips extends Tablelist{
 						if( !this.dom.btn_compare_sort.hasClass('disabled') )
 							this.sort_table_restore()
 					}.bind(this))
+			// 搜索
+				this.dom.search = $('<p class="search"/>').prependTo(this.dom.filters)
+					.append( this.dom.searchInput = 
+						$('<input type="search" placeholder="搜索舰娘..."/>')
+							.on({
+								'input': function(e){
+									//if( e.target.value.length > 1 || !e.target.value.length ){
+										clearTimeout( this.searchDelay )
+										this.searchDelay = setTimeout(function(){
+											this.search( e.target.value )
+										}.bind(this), 100)
+									//}
+								}.bind(this),
+								'focus': function(){
+									this.dom.search.addClass('on')
+								}.bind(this),
+								'blur': function(){
+									this.dom.search.removeClass('on')
+								}.bind(this)
+							})
+					)
 			// 仅显示同种同名舰最终版本
 				this.dom.btn_hide_premodel = this.dom.filters.find('[name="hide-premodel"]')
 					.prop('checked', _config.get( 'shiplist-filter-hide-premodel' ) === 'false' ? null : true)
@@ -437,14 +458,19 @@ class TablelistShips extends Tablelist{
 		delete( this.last_item )
 	}
 	
-	search( query ){		
-		if( !this.dom.style )
-			this.dom.style = $('<style/>').appendTo( this.dom.container.addClass('mod-search') )
-
-		query = _g.search(query, 'ships')
-		if( !query.length ){
+	search( query ){
+		if( !query ){
 			this.dom.container.removeClass('mod-search')
 			this.dom.style.empty()
+			return query
+		}
+
+		if( !this.dom.style )
+			this.dom.style = $('<style/>').appendTo( this.dom.container )
+
+		query = _g.search(query, 'ships')
+
+		if( !query.length ){
 			return query
 		}
 		

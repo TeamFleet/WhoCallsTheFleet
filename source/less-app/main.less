@@ -1989,7 +1989,7 @@ table{
 		display:	inline-block;
 		width:		auto;
 		color: 		inherit;
-		.transition-property(~"border,background,color");
+		.transition-property(~"border,background,color,width");
 		&:not([disabled]),
 		&:not([readonly]){
 			&:hover{
@@ -2006,6 +2006,7 @@ table{
 	}
 	input[type="text"],
 	input[type="number"],
+	input[type="search"],
 	select{
 		.inputstyle();
 		.height(20);
@@ -2019,7 +2020,8 @@ table{
 	}
 
 	input[type="text"],
-	input[type="number"]{
+	input[type="number"],
+	input[type="search"]{
 		.padding(0, 4);
 	}
 

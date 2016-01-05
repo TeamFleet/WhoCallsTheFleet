@@ -4359,6 +4359,7 @@ _frame.app_main = {
 		}).catch(function (err) {
 			_g.error(err);
 		}).done(function () {
+			_g.buildIndex();
 			_g.log('Global initialization DONE');
 		});
 
@@ -4889,9 +4890,21 @@ _frame.app_main.page['ships'] = {
 
 				var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(_class2).call(this, $page));
 
+				_this5.tablelist = $page.find('.tablelist');
+				_this5.tablelistObj = _this5.tablelist.data('tablelist');
+
 				$page.on({
 					'modeSelectionEnter': (function (e, callback_select) {
 						this.modeSelectionEnter(callback_select);
+					}).bind(_this5),
+					'pageShow': (function () {
+						if (!this.tablelistObj) this.tablelistObj = this.tablelist.data('tablelist');
+					}).bind(_this5),
+					'pageHide': (function () {
+						if (this.tablelistObj) {
+							this.tablelistObj.search();
+							this.tablelistObj.dom.searchInput.val('');
+						}
 					}).bind(_this5)
 				});
 				return _this5;
@@ -8255,6 +8268,21 @@ var TablelistShips = (function (_Tablelist2) {
 				if (!this.dom.btn_compare_sort.hasClass('disabled')) this.sort_table_restore();
 			}).bind(this));
 
+			this.dom.search = $('<p class="search"/>').prependTo(this.dom.filters).append(this.dom.searchInput = $('<input type="search" placeholder="搜索舰娘..."/>').on({
+				'input': (function (e) {
+					clearTimeout(this.searchDelay);
+					this.searchDelay = setTimeout((function () {
+						this.search(e.target.value);
+					}).bind(this), 100);
+				}).bind(this),
+				'focus': (function () {
+					this.dom.search.addClass('on');
+				}).bind(this),
+				'blur': (function () {
+					this.dom.search.removeClass('on');
+				}).bind(this)
+			}));
+
 			this.dom.btn_hide_premodel = this.dom.filters.find('[name="hide-premodel"]').prop('checked', _config.get('shiplist-filter-hide-premodel') === 'false' ? null : !0).on('change', (function (e) {
 				_config.set('shiplist-filter-hide-premodel', this.dom.btn_hide_premodel.prop('checked'));
 				this.dom.filter_container.attr('filter-hide-premodel', this.dom.btn_hide_premodel.prop('checked'));
@@ -8398,12 +8426,17 @@ var TablelistShips = (function (_Tablelist2) {
 	}, {
 		key: 'search',
 		value: function search(query) {
-			if (!this.dom.style) this.dom.style = $('<style/>').appendTo(this.dom.container.addClass('mod-search'));
-
-			query = _g.search(query, 'ships');
-			if (!query.length) {
+			if (!query) {
 				this.dom.container.removeClass('mod-search');
 				this.dom.style.empty();
+				return query;
+			}
+
+			if (!this.dom.style) this.dom.style = $('<style/>').appendTo(this.dom.container);
+
+			query = _g.search(query, 'ships');
+
+			if (!query.length) {
 				return query;
 			}
 

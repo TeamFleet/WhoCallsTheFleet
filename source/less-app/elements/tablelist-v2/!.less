@@ -82,6 +82,41 @@
 				&>button{
 					float:		left;
 				}
+				&>p{
+					transition-property: opacity;
+				}
+				&>.search{
+					float: 		left;
+					position: 	relative;
+					margin-right: 20px;
+					input{
+						min-width: 	0;
+						width: 		100px;
+						padding-left:26px;
+						height: 	1.9em;
+						&:focus{
+							width: 	250px;
+						}
+					}
+					&:before{
+						position: 	absolute;
+						font-family:icons;
+						content: 	@iconcode-search;
+						font-size: 	16px;
+						top: 		50%;
+						line-height:0;
+						left: 		0;
+						width: 		28px;
+						text-align: center;
+						color: 		rgba(255,255,255,.5);
+					}
+					&.on{
+						& + p{
+							opacity: 0;
+							z-index: -1;
+						}
+					}
+				}
 				&>.hide-premodel{
 					float:		left;
 					padding-left:25px;
