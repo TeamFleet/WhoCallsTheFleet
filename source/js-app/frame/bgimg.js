@@ -314,7 +314,33 @@ BgImg.countCustom = 0;
 			BgImg.fileSelector = $('<input type="file" class="none"/>')
 				.on('change', function(e){
 					if( BgImg.fileSelector.val() ){
-						let o
+						let o,
+							mime = e.target.files[0].type
+						
+						function _done(){
+							BgImg.controlsEls.body.removeClass('is-loading')
+							BgImg.fileSelector.prop('disabled', false)
+							BgImg.fileSelector.val('')
+							_g.log('BgImg.add() complete')
+						}
+						
+						if( !mime ){
+							_g.badgeError('文件格式未知')
+							_done()
+							return
+						}else{
+							mime = mime.split('/')
+							console.log(mime)
+							if( mime[0].toLowerCase() != 'image' ){
+								_g.badgeError('请选择图片文件')
+								_done()
+								return
+							}else if( ['bmp','jpg','jpeg','png','gif','tif','tiff','webp'].indexOf(mime[1].toLowerCase()) < 0 ){
+								_g.badgeError('当前仅支持以下格式: BMP、JPG、PNG、GIF、TIFF')
+								_done()
+								return
+							}
+						}
 						
 						Q.fcall(function(){
 							BgImg.controlsEls.body.addClass('is-loading')
@@ -349,14 +375,10 @@ BgImg.countCustom = 0;
 							BgImg.countCustom++
 						})
 						.catch(function(err){
-							_g.error(err)
+							_g.error(err, '自定义背景图')
+							o.delete()
 						})
-						.done(function(){
-							BgImg.controlsEls.body.removeClass('is-loading')
-							BgImg.fileSelector.prop('disabled', false)
-							BgImg.fileSelector.val('')
-							_g.log('BgImg.add() complete')
-						}.bind(this))
+						.done(_done)
 					}
 				})
 		}
@@ -366,22 +388,28 @@ BgImg.countCustom = 0;
 	BgImg.generate = function(o, t){
 		o = BgImg.getObj(o)
 		let deferred = Q.defer()
+			,img
+		
+		function _error(e){
+			deferred.reject('读取图片文件发生错误')
+		}
 
 		switch( t ){
 			case 'thumbnail':
-				var img = $('<img/>',{
+				img = $('<img/>',{
 					'src': 	o.path
 				}).on({
 					'load': function(){
 						let cv = canvas.downScale(img[0], 150 / Math.min(img[0].width, img[0].height))
 						img.remove()
 						deferred.resolve( cv )
-					}
+					},
+					'error': _error
 				}).appendTo($body)
 				break;
 			
 			case 'blured':
-				var img = $('<img/>',{
+				img = $('<img/>',{
 					'src': 	o.path
 				}).on({
 					'load': function(){
@@ -394,7 +422,8 @@ BgImg.countCustom = 0;
 						);
 						img.remove()
 						deferred.resolve( cv[0] )
-					}
+					},
+					'error': _error
 				}).appendTo($body)
 				break;
 		}

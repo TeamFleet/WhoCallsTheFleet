@@ -905,6 +905,7 @@ _g.error = function(err){
 	if( !(err instanceof Error) )
 		err = new Error(err)
 
+	_g.badgeError( err instanceof Error ? err.message : err )
 	_g.log(err)
 };
 

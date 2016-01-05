@@ -2098,6 +2098,8 @@ body.mod-capture #layout {
           transform: translateX(-50%);
   -webkit-animation: fadeIn 0.3s ease-out;
           animation: fadeIn 0.3s ease-out;
+  -webkit-backdrop-filter: blur(7.5px);
+          backdrop-filter: blur(7.5px);
 }
 #layout[data-errorbadge]:after {
   content: attr(data-errorbadge);
