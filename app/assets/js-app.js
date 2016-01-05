@@ -12065,7 +12065,9 @@ class TablelistShips extends Tablelist{
 		]
 		this.header_checkbox = []
 		this.mode_selection_filters = $()
-		this.checkbox = []
+		//this.checkbox = []
+		this.rows = $()
+		this.rowsById = {}
 		//this.last_item = null
 		//this.compare_checkbox
 
@@ -12083,7 +12085,8 @@ class TablelistShips extends Tablelist{
 	}
 
 	compare_btn_show( is_checked ){
-		if( (!is_checked && this.compare_checkbox.filter(':checked').length)
+		//if( (!is_checked && this.compare_checkbox.filter(':checked').length)
+		if( (!is_checked && this.rows.filter('[compare="true"]').length)
 			|| is_checked
 		){
 			this.dom.msg_container.attr('data-msgs', 'comparestart')
@@ -12123,7 +12126,10 @@ class TablelistShips extends Tablelist{
 	}
 
 	compare_end(){
-		this.compare_checkbox.filter(':checked').prop('checked', false).trigger('change')
+		//this.compare_checkbox.filter(':checked').prop('checked', false).trigger('change')
+		this.rows.filter('[compare="true"]').each(function(i, el){
+			this.check(el, false)
+		}.bind(this))
 		this.dom.msg_container.removeAttr('data-msgs')
 		this.compare_off()
 	}
@@ -12164,9 +12170,10 @@ class TablelistShips extends Tablelist{
 					$('<menuitem/>').html('将该舰娘加入对比')
 						.on({
 							'click': function(e){
-								this.checkbox[TablelistShips.contextmenu._curid]
-									.prop('checked', !this.checkbox[TablelistShips.contextmenu._curid].prop('checked'))
-									.trigger('change')
+								//this.checkbox[TablelistShips.contextmenu._curid]
+								//	.prop('checked', !this.checkbox[TablelistShips.contextmenu._curid].prop('checked'))
+								//	.trigger('change')
+								this.check( this.rowsById[TablelistShips.contextmenu._curid] )
 							}.bind(this),
 							'show': function(e){
 								if( !TablelistShips.contextmenu._curid )
@@ -12177,7 +12184,8 @@ class TablelistShips extends Tablelist{
 								else
 									$(e.target).show()
 									
-								if( this.checkbox[TablelistShips.contextmenu._curid].prop('checked') )
+								//if( this.checkbox[TablelistShips.contextmenu._curid].prop('checked') )
+								if( this.rowsById[TablelistShips.contextmenu._curid].attr('compare') === 'true' )
 									$(e.target).html('取消对比')
 								else
 									$(e.target).html('将该舰娘加入对比')
@@ -12193,7 +12201,8 @@ class TablelistShips extends Tablelist{
 									$div.append($('<hr/>'))
 								let checkbox = null
 								try{
-									checkbox = this.checkbox[currentValue['id']]
+									//checkbox = this.checkbox[currentValue['id']]
+									checkbox = this.rowsById[currentValue['id']]
 								}catch(e){}
 								$div.append(
 									$('<div class="item"/>')
@@ -12225,16 +12234,18 @@ class TablelistShips extends Tablelist{
 												.append(
 													$('<menuitem/>')
 														.html(
-															checkbox && checkbox.prop('checked')
+															//checkbox && checkbox.prop('checked')
+															checkbox && checkbox.attr('compare') === 'true'
 																? '取消对比'
 																: '加入对比'
 														)
 														.on({
 															'click': function(e){
 																if( checkbox ){
-																	this.checkbox[currentValue['id']]
-																		.prop('checked', !checkbox.prop('checked'))
-																		.trigger('change')
+																	//this.checkbox[currentValue['id']]
+																	//	.prop('checked', !checkbox.prop('checked'))
+																	//	.trigger('change')
+																	this.check( checkbox )
 																}
 															}.bind(this)
 														})
@@ -12346,9 +12357,10 @@ class TablelistShips extends Tablelist{
 					}.bind(this))*/
 				.on('click', '[data-shipid]', function(e, forceInfos){
 						if( e.target.tagName.toLowerCase() == 'label' ){
-							this.checkbox[e.currentTarget.getAttribute('data-shipid')]
-								.prop('checked', !this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked'))
-								.trigger('change')
+							//this.checkbox[e.currentTarget.getAttribute('data-shipid')]
+							//	.prop('checked', !this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked'))
+							//	.trigger('change')
+							this.check( e.currentTarget )
 							e.stopPropagation()
 						}else if( e.target.tagName.toLowerCase() == 'em' ){
 							this.contextmenu_show($(e.target), e.currentTarget.getAttribute('data-shipid'))
@@ -12401,14 +12413,15 @@ class TablelistShips extends Tablelist{
 						//.prop('disabled', _g.data['ship_type_order'][header_index]['donotcompare'] ? true : false)
 						.on({
 							'change': function(){
-								checkbox.data('ships').filter(':visible').each(function(index, element){
-									$(element).data('checkbox').prop('checked', checkbox.prop('checked')).trigger('change', [true])
-								})
-							},
+								checkbox.data('ships').filter(':visible').each(function(index, el){
+									this.check( el, checkbox.prop('checked'), true )
+									//$(el).data('checkbox').prop('checked', checkbox.prop('checked')).trigger('change', [true])
+								}.bind(this))
+							}.bind(this),
 							'docheck': function(){
-								// ATTR: compare-checked
+								// ATTR: compare
 								var trs = checkbox.data('ships').filter(':visible')
-									,checked = trs.filter('[compare-checked=true]')
+									,checked = trs.filter('[compare="true"]')
 								if( !checked.length ){
 									checkbox.prop({
 										'checked': 			false,
@@ -12444,11 +12457,13 @@ class TablelistShips extends Tablelist{
 						'class':	'shiptype'
 					}).prependTo(tr)
 			}else if( tr.attr('data-shipid') ){
-				let donotcompare = tr.attr('data-donotcompare')
+				let ship_id = tr.attr('data-shipid')
+					//,donotcompare = tr.attr('data-donotcompare')
 					//,ship_data = _g.data.ships[ tr.attr('data-shipid') ]
-					,ship_id = tr.attr('data-shipid')
-					,checkbox = tr.find('input[type="checkbox"]')
+					//,checkbox = tr.find('input[type="checkbox"]')
 					,title_index = header_index
+				
+				tr.attr('titleindex', header_index)
 				
 				/*
 				tr.on('click', function(e, forceInfos){
@@ -12466,36 +12481,59 @@ class TablelistShips extends Tablelist{
 					})
 				*/
 
+				/*
 				checkbox.prop('disabled', donotcompare)
 					//.on('click change',function(e, not_trigger_check){
 					.on('change',function(e, not_trigger_check){
 						//e.stopImmediatePropagation()
 						//e.stopPropagation()
 						if( checkbox.prop('checked') )
-							tr.attr('compare-checked', true )
+							tr.attr('compare', true )
 						else
-							tr.removeAttr('compare-checked')
+							tr.removeAttr('compare')
 						this.compare_btn_show( checkbox.prop('checked') )
 						if( !not_trigger_check )
 							this.header_checkbox[title_index].trigger('docheck')
 					}.bind(this))
+				*/
 	
 				this.header_checkbox[title_index].data(
 						'ships',
 						this.header_checkbox[title_index].data('ships').add( tr )
 					)
 
-				tr.data('checkbox', checkbox)
+				//tr.data('checkbox', checkbox)
 			
-				this.checkbox[ship_id] = checkbox
+				this.rowsById[ship_id] = tr
+				//this.checkbox[ship_id] = checkbox
+				
+				this.rows = this.rows.add(tr)
 			}
 		}.bind(this))
 		
-		this.compare_checkbox = this.dom.tbody.find('input[type="checkbox"].compare')
+		//this.compare_checkbox = this.dom.tbody.find('input[type="checkbox"].compare')
 		this.mark_high()
 		this.thead_redraw()
 		_frame.app_main.loaded('tablelist_'+this._index, true)
 		delete( this.last_item )
+	}
+	
+	check( row, checked, not_trigger_check ){
+		if( row.length )
+			row = row[0]
+		
+		if( typeof checked == 'undefined' || checked === null )
+			checked = !(row.getAttribute('compare') == 'true')
+		
+		if( checked )
+			row.setAttribute('compare', 'true')
+		else
+			row.removeAttribute('compare')
+		
+		this.compare_btn_show( checked )
+
+		if( !not_trigger_check )
+			this.header_checkbox[parseInt(row.getAttribute('titleindex'))].trigger('docheck')
 	}
 	
 	search( query ){

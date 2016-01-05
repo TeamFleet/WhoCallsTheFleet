@@ -30,7 +30,11 @@
 						left:		0;
 						top: 		5px;
 					}
+					&:hover{
+						opacity: 	.9;
+					}
 				}
+				/*
 				label.checkbox:hover, input[type="checkbox"]:checked + label.checkbox{
 					opacity:	.9 !important;
 				}
@@ -43,6 +47,7 @@
 				input[type="checkbox"][disabled] + label.checkbox{
 					display: 	none;
 				}
+				*/
 				
 				img{
 					position:	absolute;
@@ -148,8 +153,20 @@
 			}
 			
 			&[data-donotcompare="true"]{
+				dt label.checkbox,
 				dt em{
 					display: 	none !important;
+				}
+			}
+			
+			&[compare="true"] dt label.checkbox{
+				opacity:	.9 !important;
+				&:before{
+					left: 		5px;
+					content: 	@iconcode-checkbox-checked;
+				}
+				&:after{
+					background:	hsla(199, 65%, 35%, .85);
 				}
 			}
 		} // p.row
@@ -252,7 +269,7 @@
 				dt em{
 					display: 	none !important;
 				}
-				&[compare-checked]{
+				&[compare="true"]{
 					dt{
 						img{
 							left:	0;
@@ -267,7 +284,7 @@
 						}
 					}
 				}
-				&:not([compare-checked]){
+				&:not([compare="true"]){
 					display: 	none;
 				}
 			}
@@ -335,7 +352,7 @@
 		[stat="carry"]{
 			display:	none !important;
 		}
-		& > [viewtype=compare] ~ .tablelist-container .tablelist-body dl[data-shipid][compare-checked] dt{
+		& > [viewtype=compare] ~ .tablelist-container .tablelist-body dl[data-shipid][compare="true"] dt{
 			img{
 				left: 	-50px;
 			}

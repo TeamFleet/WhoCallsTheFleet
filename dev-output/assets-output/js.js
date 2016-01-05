@@ -8121,7 +8121,9 @@ var TablelistShips = (function (_Tablelist2) {
 		_this10.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['夜战', 'nightpower'], ['对空', 'aa'], ['对潜', 'asw'], ['耐久', 'hp'], ['装甲', 'armor'], ['回避', 'evasion'], ['搭载', 'carry'], ['航速', 'speed'], ['射程', 'range'], ['索敌', 'los'], ['运', 'luck'], ['油耗', 'consum_fuel'], ['弹耗', 'consum_ammo'], ['多立绘', 'extra_illust']];
 		_this10.header_checkbox = [];
 		_this10.mode_selection_filters = $();
-		_this10.checkbox = [];
+
+		_this10.rows = $();
+		_this10.rowsById = {};
 
 		_frame.app_main.loading.push('tablelist_' + _this10._index);
 		_frame.app_main.is_loaded = !1;
@@ -8134,7 +8136,7 @@ var TablelistShips = (function (_Tablelist2) {
 	_createClass(TablelistShips, [{
 		key: 'compare_btn_show',
 		value: function compare_btn_show(is_checked) {
-			if (!is_checked && this.compare_checkbox.filter(':checked').length || is_checked) {
+			if (!is_checked && this.rows.filter('[compare="true"]').length || is_checked) {
 				this.dom.msg_container.attr('data-msgs', 'comparestart');
 			} else {
 				this.dom.msg_container.removeAttr('data-msgs');
@@ -8171,7 +8173,9 @@ var TablelistShips = (function (_Tablelist2) {
 	}, {
 		key: 'compare_end',
 		value: function compare_end() {
-			this.compare_checkbox.filter(':checked').prop('checked', !1).trigger('change');
+			this.rows.filter('[compare="true"]').each((function (i, el) {
+				this.check(el, !1);
+			}).bind(this));
 			this.dom.msg_container.removeAttr('data-msgs');
 			this.compare_off();
 		}
@@ -8201,14 +8205,14 @@ var TablelistShips = (function (_Tablelist2) {
 					}
 				}), $('<menuitem/>').html('将该舰娘加入对比').on({
 					'click': (function (e) {
-						this.checkbox[TablelistShips.contextmenu._curid].prop('checked', !this.checkbox[TablelistShips.contextmenu._curid].prop('checked')).trigger('change');
+						this.check(this.rowsById[TablelistShips.contextmenu._curid]);
 					}).bind(this),
 					'show': (function (e) {
 						if (!TablelistShips.contextmenu._curid) return !1;
 
 						if (_g.data.ship_types[_g['data']['ships'][TablelistShips.contextmenu._curid]['type']]['donotcompare']) $(e.target).hide();else $(e.target).show();
 
-						if (this.checkbox[TablelistShips.contextmenu._curid].prop('checked')) $(e.target).html('取消对比');else $(e.target).html('将该舰娘加入对比');
+						if (this.rowsById[TablelistShips.contextmenu._curid].attr('compare') === 'true') $(e.target).html('取消对比');else $(e.target).html('将该舰娘加入对比');
 					}).bind(this)
 				}), $('<div/>').on('show', (function (e) {
 					var $div = $(e.target).empty();
@@ -8218,7 +8222,7 @@ var TablelistShips = (function (_Tablelist2) {
 							if (!i) $div.append($('<hr/>'));
 							var checkbox = null;
 							try {
-								checkbox = this.checkbox[currentValue['id']];
+								checkbox = this.rowsById[currentValue['id']];
 							} catch (e) {}
 							$div.append($('<div class="item"/>').html('<span>' + _g['data']['ships'][currentValue['id']].getName(!0) + '</span>').append($('<div class="group"/>').append(function () {
 								var els = $();
@@ -8232,10 +8236,10 @@ var TablelistShips = (function (_Tablelist2) {
 								}
 
 								return els;
-							}).append($('<menuitem data-infos="[[SHIP::' + currentValue['id'] + ']]"/>').html('查看资料')).append($('<menuitem/>').html(checkbox && checkbox.prop('checked') ? '取消对比' : '加入对比').on({
+							}).append($('<menuitem data-infos="[[SHIP::' + currentValue['id'] + ']]"/>').html('查看资料')).append($('<menuitem/>').html(checkbox && checkbox.attr('compare') === 'true' ? '取消对比' : '加入对比').on({
 								'click': (function (e) {
 									if (checkbox) {
-										this.checkbox[currentValue['id']].prop('checked', !checkbox.prop('checked')).trigger('change');
+										this.check(checkbox);
 									}
 								}).bind(this)
 							}))));
@@ -8312,7 +8316,7 @@ var TablelistShips = (function (_Tablelist2) {
 				e.preventDefault();
 			}).bind(this)).on('click', '[data-shipid]', (function (e, forceInfos) {
 				if (e.target.tagName.toLowerCase() == 'label') {
-					this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked', !this.checkbox[e.currentTarget.getAttribute('data-shipid')].prop('checked')).trigger('change');
+					this.check(e.currentTarget);
 					e.stopPropagation();
 				} else if (e.target.tagName.toLowerCase() == 'em') {
 					this.contextmenu_show($(e.target), e.currentTarget.getAttribute('data-shipid'));
@@ -8356,14 +8360,14 @@ var TablelistShips = (function (_Tablelist2) {
 						header_index++;
 						_this11.last_item = tr;
 						var checkbox = tr.find('input[type="checkbox"]').on({
-							'change': function change() {
-								checkbox.data('ships').filter(':visible').each(function (index, element) {
-									$(element).data('checkbox').prop('checked', checkbox.prop('checked')).trigger('change', [!0]);
-								});
-							},
+							'change': (function () {
+								checkbox.data('ships').filter(':visible').each((function (index, el) {
+									this.check(el, checkbox.prop('checked'), !0);
+								}).bind(this));
+							}).bind(_this11),
 							'docheck': function docheck() {
 								var trs = checkbox.data('ships').filter(':visible'),
-								    checked = trs.filter('[compare-checked=true]');
+								    checked = trs.filter('[compare="true"]');
 								if (!checked.length) {
 									checkbox.prop({
 										'checked': !1,
@@ -8396,32 +8400,36 @@ var TablelistShips = (function (_Tablelist2) {
 						}).prependTo(tr);
 					})();
 				} else if (tr.attr('data-shipid')) {
-					(function () {
-						var donotcompare = tr.attr('data-donotcompare'),
-						    ship_id = tr.attr('data-shipid'),
-						    checkbox = tr.find('input[type="checkbox"]'),
-						    title_index = header_index;
+					var ship_id = tr.attr('data-shipid'),
+					    title_index = header_index;
 
-						checkbox.prop('disabled', donotcompare).on('change', (function (e, not_trigger_check) {
-							if (checkbox.prop('checked')) tr.attr('compare-checked', !0);else tr.removeAttr('compare-checked');
-							this.compare_btn_show(checkbox.prop('checked'));
-							if (!not_trigger_check) this.header_checkbox[title_index].trigger('docheck');
-						}).bind(_this11));
+					tr.attr('titleindex', header_index);
 
-						_this11.header_checkbox[title_index].data('ships', _this11.header_checkbox[title_index].data('ships').add(tr));
+					this.header_checkbox[title_index].data('ships', this.header_checkbox[title_index].data('ships').add(tr));
 
-						tr.data('checkbox', checkbox);
+					this.rowsById[ship_id] = tr;
 
-						_this11.checkbox[ship_id] = checkbox;
-					})();
+					this.rows = this.rows.add(tr);
 				}
 			}).bind(this));
 
-			this.compare_checkbox = this.dom.tbody.find('input[type="checkbox"].compare');
 			this.mark_high();
 			this.thead_redraw();
 			_frame.app_main.loaded('tablelist_' + this._index, !0);
 			delete this.last_item;
+		}
+	}, {
+		key: 'check',
+		value: function check(row, checked, not_trigger_check) {
+			if (row.length) row = row[0];
+
+			if (typeof checked == 'undefined' || checked === null) checked = !(row.getAttribute('compare') == 'true');
+
+			if (checked) row.setAttribute('compare', 'true');else row.removeAttribute('compare');
+
+			this.compare_btn_show(checked);
+
+			if (!not_trigger_check) this.header_checkbox[parseInt(row.getAttribute('titleindex'))].trigger('docheck');
 		}
 	}, {
 		key: 'search',

@@ -97,6 +97,18 @@
 						&:focus{
 							width: 	250px;
 						}
+						&::-webkit-input-placeholder{
+							color: 	rgba(255,255,255,.35);
+						}
+						&:-moz-placeholder{
+							color: 	rgba(255,255,255,.35);
+						}
+						&::-moz-placeholder{
+							color: 	rgba(255,255,255,.35);
+						}
+						&:-ms-input-placeholder{
+							color: 	rgba(255,255,255,.35);
+						}
 					}
 					&:before{
 						position: 	absolute;
@@ -106,9 +118,10 @@
 						top: 		50%;
 						line-height:0;
 						left: 		0;
-						width: 		28px;
+						width: 		30px;
 						text-align: center;
 						color: 		rgba(255,255,255,.5);
+						pointer-events: none;
 					}
 					&.on{
 						& + p{
@@ -596,7 +609,7 @@
 
 
 .tablelist:not(.mod-search) > [filter-hide-premodel="true"] ~ .tablelist-container{
-	.premodeled:not([compare-checked]){
+	.premodeled:not([compare="true"]){
 		display:	none !important;
 	}
 }
