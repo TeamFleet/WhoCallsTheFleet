@@ -77,6 +77,26 @@
 	_g.getStatRange = function( range ){
 		return _g.statRange[parseInt(range)]
 	};
+	
+	_g.getSize = function( bytes, target ){
+		target = target.toUpperCase()
+		
+		if( target[target.length-1] == 'B' )
+			target = target.substr(0, target.length-1)
+		
+		function _r(r){
+			return Math.floor( r * 100 ) / 100
+		}
+
+		bytes = bytes / 1024;
+		if( target == 'K' ) return _r(bytes) + 'KB';
+		bytes = bytes / 1024;
+		if( target == 'M' ) return _r(bytes) + 'MB';
+		bytes = bytes / 1024;
+		if( target == 'G' ) return _r(bytes) + 'GB';
+		bytes = bytes / 1024;
+		if( target == 'T' ) return _r(bytes) + 'TB';
+	};
 
 
 

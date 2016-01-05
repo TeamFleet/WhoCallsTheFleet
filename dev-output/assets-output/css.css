@@ -2088,7 +2088,7 @@ body.mod-capture #layout {
   left: 50%;
   padding: .65em 1em;
   color: #fff;
-  font-size: 14px;
+  font-size: 16px;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -3228,6 +3228,11 @@ main:after {
 .bgcontrols dl {
   margin: 0 0 20px 0;
   overflow: hidden;
+}
+.bgcontrols dl > small {
+  color: rgba(255, 255, 255, 0.5);
+  float: right;
+  margin: 4px 10px 0 0;
 }
 .bgcontrols dl dt {
   margin: 0 10px 0 0;

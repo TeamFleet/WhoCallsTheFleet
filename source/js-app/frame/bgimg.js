@@ -330,7 +330,6 @@ BgImg.countCustom = 0;
 							return
 						}else{
 							mime = mime.split('/')
-							console.log(mime)
 							if( mime[0].toLowerCase() != 'image' ){
 								_g.badgeError('请选择图片文件')
 								_done()
@@ -376,7 +375,8 @@ BgImg.countCustom = 0;
 						})
 						.catch(function(err){
 							_g.error(err, '自定义背景图')
-							o.delete()
+							if( o )
+								o.delete()
 						})
 						.done(_done)
 					}
@@ -516,7 +516,15 @@ BgImg.countCustom = 0;
 				)
 				.append( BgImg.controlsEls.listCustom =
 					$('<dl/>',{
-						'html':	'<dt>自定义</dt>'
+						'html':	`<dt>自定义</dt>`
+					})
+					.prepend(function(){
+						if( BgImg.quota )
+							return $('<small/>')
+								.append( BgImg.controlsEls.listCustomQuotaUsed =
+									$(`<span>${_g.getSize(BgImg.quotaUsed, 'm')}</span>`)
+								)
+								.append(` / <span>${_g.getSize(BgImg.quota, 'm')}</span>`)
 					})
 					.append( BgImg.controlsEls.listCustomAdd =
 						$('<dd/>',{

@@ -2488,6 +2488,25 @@ _g.getStatRange = function (range) {
 	return _g.statRange[parseInt(range)];
 };
 
+_g.getSize = function (bytes, target) {
+	target = target.toUpperCase();
+
+	if (target[target.length - 1] == 'B') target = target.substr(0, target.length - 1);
+
+	function _r(r) {
+		return Math.floor(r * 100) / 100;
+	}
+
+	bytes = bytes / 1024;
+	if (target == 'K') return _r(bytes) + 'KB';
+	bytes = bytes / 1024;
+	if (target == 'M') return _r(bytes) + 'MB';
+	bytes = bytes / 1024;
+	if (target == 'G') return _r(bytes) + 'GB';
+	bytes = bytes / 1024;
+	if (target == 'T') return _r(bytes) + 'TB';
+};
+
 var _l = {};
 
 String.prototype.printf = function () {
@@ -5305,7 +5324,6 @@ BgImg.upload = function () {
 						};
 					} else {
 						mime = mime.split('/');
-						console.log(mime);
 						if (mime[0].toLowerCase() != 'image') {
 							_g.badgeError('请选择图片文件');
 							_done();
@@ -5347,7 +5365,7 @@ BgImg.upload = function () {
 						BgImg.countCustom++;
 					}).catch(function (err) {
 						_g.error(err, '自定义背景图');
-						o.delete();
+						if (o) o.delete();
 					}).done(_done);
 				})();
 
@@ -5449,6 +5467,8 @@ BgImg.controlsShow = function () {
 			'html': '勾选的图片将会出现在背景图随机队列中'
 		})).append(BgImg.controlsEls.listCustom = $('<dl/>', {
 			'html': '<dt>自定义</dt>'
+		}).prepend(function () {
+			if (BgImg.quota) return $('<small/>').append(BgImg.controlsEls.listCustomQuotaUsed = $('<span>' + _g.getSize(BgImg.quotaUsed, 'm') + '</span>')).append(' / <span>' + _g.getSize(BgImg.quota, 'm') + '</span>');
 		}).append(BgImg.controlsEls.listCustomAdd = $('<dd/>', {
 			'class': 'add',
 			'html': '<s></s>'
@@ -5487,6 +5507,9 @@ BgImg.controlsViewingToggle = function () {
 	BgImg.controlsEls.btnViewingToggle.toggleClass('on');
 };
 
+BgImg.quota = 10 * 1024 * 1024;
+BgImg.quotaUsed = 0;
+
 BgImg.getDefaultImgs = function () {
 	var deferred = Q.defer();
 	for (var _i6 = _g.bgimg_count - 1; _i6 >= 0; _i6--) {
@@ -5504,11 +5527,17 @@ BgImg.getDefaultImgs = function () {
 			o.name = _i7;
 			BgImg.list.push(new BgImg(o));
 			BgImg.countCustom++;
+			BgImg.quotaUsed += o.size;
 		}
+		BgImg.updateQuotaUsed();
 		deferred.resolve(BgImg.list);
 	});
 
 	return deferred.promise;
+};
+
+BgImg.updateQuotaUsed = function () {
+	if (BgImg.controlsEls.listCustomQuotaUsed) BgImg.controlsEls.listCustomQuotaUsed.html(_g.getSize(BgImg.quotaUsed, 'm'));
 };
 
 BgImg.getPath = function (o, t) {
@@ -5531,17 +5560,27 @@ BgImg.readFile = function (e) {
 
 	Q.fcall(_g.getScriptCanvas).then(function () {
 		for (var _i8 = 0, f = undefined; f = e.target.files[_i8]; _i8++) {
+			if (BgImg.quotaUsed + f.size > BgImg.quota) {
+				deferred.reject('已超过 ' + _g.getSize(BgImg.quota, 'm') + ' 上限');
+				break;
+				return;
+			}
+
 			var reader = new FileReader();
 			reader.onload = (function (theFile) {
 				return function (r) {
 					var n = BgImg.getUniqueName(theFile.name);
+					BgImg.quotaUsed += theFile.size;
+					BgImg.updateQuotaUsed();
 					BgImg.dataCustom[n] = {
-						'_path': r.target.result
+						'_path': r.target.result,
+						'size': theFile.size
 					};
 					localforage.setItem('bgcustomlist', BgImg.dataCustom, function (err, result) {
 						deferred.resolve(new BgImg({
 							'name': n,
-							'_path': r.target.result
+							'_path': r.target.result,
+							'size': theFile.size
 						}));
 					});
 				};
@@ -5590,6 +5629,8 @@ BgImg.delete = function (o) {
 
 	localforage.setItem('bgcustomlist', BgImg.dataCustom, function (err, result) {
 		BgImg.countCustom--;
+		BgImg.quotaUsed -= o.size;
+		BgImg.updateQuotaUsed();
 		BgImg.list.forEach(function (obj, i) {
 			if (obj === o) BgImg.list.splice(i, 1);
 		});
