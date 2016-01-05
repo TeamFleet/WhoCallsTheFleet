@@ -1636,6 +1636,9 @@ html.ie6 * {
 [icon="checkbox-uncheck"]:before {
   content: "\e603" !important;
 }
+[icon="checkmark3"]:before {
+  content: "\ed6e" !important;
+}
 [icon="close"]:before {
   content: "\00d7" !important;
   font-family: 'Gothic' !important;
@@ -3106,20 +3109,19 @@ main:after {
   top: 0;
   right: 0;
   bottom: -2px;
-  width: 240px;
+  width: 250px;
   z-index: 6;
-  overflow: hidden;
+  color: rgba(255, 255, 255, 0.75);
 }
 .bgcontrols,
 .bgcontrols .bgimgs {
-  -webkit-animation: none 0.75s ease-out 0.75s;
-          animation: none 0.75s ease-out 0.75s;
+  -webkit-animation: none 0.3s ease-out 0.75s;
+          animation: none 0.3s ease-out 0.75s;
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
 }
 .bgcontrols:before,
 .bgcontrols > .wrapper,
-.bgcontrols > .wrapper:after,
 .bgcontrols .bgimgs,
 .bgcontrols .bgimg {
   position: absolute;
@@ -3138,18 +3140,28 @@ main:after {
   transition-property: background;
 }
 .bgcontrols > .wrapper {
-  border-left: 2px solid rgba(255, 255, 255, 0.35);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.35);
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   padding-bottom: 40px;
-  -webkit-transition-property: -webkit-transform;
-  transition-property: -webkit-transform;
-  transition-property: transform;
-  transition-property: transform, -webkit-transform;
+  -webkit-transition-property: background-color, border-color, -webkit-transform;
+  transition-property: background-color, border-color, -webkit-transform;
+  transition-property: transform, background-color, border-color;
+  transition-property: transform, background-color, border-color, -webkit-transform;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.85);
 }
 .bgcontrols > .wrapper:after {
   content: '';
   z-index: 2;
   background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: -1px;
+  left: -1px;
+}
+.bgcontrols.is-on > .wrapper {
+  box-shadow: 0 0 20px #000;
 }
 .bgcontrols .bgimgs {
   z-index: 1;
@@ -3206,7 +3218,7 @@ main:after {
   overflow: auto;
   z-index: 3;
   height: 100%;
-  padding: 20px 0 0 10px;
+  padding: 10px 0 0 10px;
   -webkit-transition-property: opacity;
   transition-property: opacity;
   -webkit-overflow-scrolling: touch;
@@ -3221,9 +3233,10 @@ main:after {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.5);
   line-height: 1.7;
+  min-height: 1em;
 }
 .bgcontrols dl dd {
-  display: inline-block;
+  display: block;
   width: calc(50% - 10px);
   margin: 10px 10px 0 0;
   background: rgba(255, 255, 255, 0.1);
@@ -3243,8 +3256,8 @@ main:after {
   top: 4px;
   left: 4px;
   z-index: 5;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   background: rgba(0, 0, 0, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.65);
   opacity: .5;
@@ -3271,15 +3284,42 @@ main:after {
   content: '';
   position: absolute;
   z-index: 2;
-  width: 20px;
-  line-height: 20px;
-  top: 0;
+  width: 100%;
+  line-height: 0;
+  top: 50%;
   left: 0;
   text-align: center;
   font-family: icons;
+  font-size: 16px;
 }
 .bgcontrols dl dd i:hover {
   background: #000000;
+  opacity: 1;
+}
+.bgcontrols dl dd del {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  z-index: 10;
+  background: rgba(223, 32, 32, 0.75);
+}
+.bgcontrols dl dd del:before {
+  content: "\00d7";
+  font-family: 'Gothic';
+  font-weight: lighter;
+  font-size: 25px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  line-height: 0;
+  width: 100%;
+  text-align: center;
+}
+.bgcontrols dl dd del:hover {
+  background: #df2020;
 }
 .bgcontrols dl dd:before,
 .bgcontrols dl dd:after {
@@ -3307,9 +3347,6 @@ main:after {
 .bgcontrols dl dd:hover s {
   opacity: .5;
 }
-.bgcontrols dl dd:hover i {
-  opacity: 1;
-}
 .bgcontrols dl dd.on s {
   opacity: 1;
 }
@@ -3323,7 +3360,7 @@ main:after {
   opacity: 1;
 }
 .bgcontrols dl dd.is-visible i:before {
-  content: "\e601";
+  content: "\ed6e";
 }
 .bgcontrols dl dd.add s {
   opacity: .25;
@@ -3352,6 +3389,16 @@ main:after {
 .bgcontrols dl dd.add:hover s {
   opacity: .35;
 }
+.bgcontrols .notes {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.15);
+  padding: .35em .5em;
+  margin-right: 10px;
+}
+.bgcontrols.mod-viewing > .wrapper {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.35);
+}
 .bgcontrols.mod-viewing .bgimgs {
   opacity: 0;
 }
@@ -3363,8 +3410,13 @@ main:after {
   .bgcontrols .bgimgs {
     display: none;
   }
-  .bgcontrols > .wrapper:after {
+  .bgcontrols > .wrapper {
+    border-color: rgba(255, 255, 255, 0.35);
     background: rgba(0, 0, 0, 0.75);
+  }
+  .bgcontrols > .wrapper:after {
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.15);
   }
 }
 #layout.mod-bgcontrols nav {

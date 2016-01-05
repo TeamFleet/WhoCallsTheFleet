@@ -25,6 +25,7 @@ BgImg.getDefaultImgs = function(){
 	
 	_list( _g.path.bgimg_custom_dir )
 		.forEach(function(name){
+			BgImg.countCustom++;
 			BgImg.list.push( new BgImg({
 				'name': 	name
 			}) )
@@ -158,6 +159,69 @@ BgImg.set = function(o, t, canvas){
 			deferred.resolve()
 		}
 	);
+
+	return deferred.promise
+};
+
+BgImg.delete = function(o){
+	o = BgImg.getObj(o)
+	
+	let deferred = Q.defer()
+
+	o.elThumbnail.remove();
+	o.els.remove();
+
+	BgImg.listVisible.forEach(function(obj, i){
+		if( obj === o )
+			BgImg.listVisible.splice(i, 1)
+	})
+	BgImg.namesHidden.forEach(function(n, i){
+		if( n === o.name )
+			BgImg.namesHidden.splice(i, 1)
+	})
+
+	Lockr.set('BgImgHidden', BgImg.namesHidden)
+
+	Q.fcall(function(){
+		let deferred = Q.defer()
+		node.fs.unlink(
+			node.path.join( _g.path.bgimg_custom_dir, o.name ),
+			function(err) {
+				deferred.resolve()
+			}
+		);
+		return deferred.promise
+	})
+	.then(function(){
+		let deferred = Q.defer()
+		node.fs.unlink(
+			node.path.join( _g.path.bgimg_custom_dir, 'blured', o.name ),
+			function(err) {
+				deferred.resolve()
+			}
+		);
+		return deferred.promise
+	})
+	.then(function(){
+		let deferred = Q.defer()
+		node.fs.unlink(
+			node.path.join( _g.path.bgimg_custom_dir, 'thumbnail', o.name ),
+			function(err) {
+				deferred.resolve()
+			}
+		);
+		return deferred.promise
+	})
+	.then(function(){
+		BgImg.countCustom--;
+		BgImg.list.forEach(function(obj, i){
+			if( obj === o )
+				BgImg.list.splice(i, 1)
+		})
+		if( BgImg.cur === o )
+			BgImg.change();
+		deferred.resolve()
+	})
 
 	return deferred.promise
 };

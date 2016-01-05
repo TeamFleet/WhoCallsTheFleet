@@ -181,9 +181,7 @@ debug.init = function(){
 				while( (searchRes = scrapePtrn.exec(data)) !== null ){
 					try{
 						if( searchRes && searchRes.length > 1 ){
-							//console.log( searchRes[1], searchRes[2] )
-							//$(`<dl><dt icon=${searchRes[1]}>${searchRes[1]}</dt><dd>${searchRes[2]}</dd></dl>`).appendTo(debug._icons)
-							$(`<dl><dt icon=${searchRes[1]}></dt><dd>${searchRes[1]}</dd></dl>`).appendTo(debug._icons)
+							$(`<dl><dt icon=${searchRes[1]}></dt><dd>@iconcode-${searchRes[1]}</dd></dl>`).appendTo(debug._icons)
 						}
 					}catch(e){}
 				}

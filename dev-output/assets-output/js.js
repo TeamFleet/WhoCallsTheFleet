@@ -5075,7 +5075,9 @@ var BgImg = (function () {
 		}
 	}, {
 		key: 'delete',
-		value: function _delete() {}
+		value: function _delete() {
+			BgImg.delete(this);
+		}
 	}, {
 		key: 'filename',
 		get: function get() {
@@ -5103,7 +5105,6 @@ var BgImg = (function () {
 		key: 'elThumbnail',
 		get: function get() {
 			if (!this._elThumbnail) {
-				var checkId = 'checkbox-' + _g.timeNow();
 				this._elThumbnail = $('<dd/>').on('click', (function () {
 					BgImg.change(this);
 				}).bind(this)).append($('<s/>').css('background-image', 'url(' + this.thumbnail + ')')).append($('<i/>').on('click', (function (e) {
@@ -5111,6 +5112,12 @@ var BgImg = (function () {
 					e.stopImmediatePropagation();
 					e.stopPropagation();
 					this.visible = !this.visible;
+				}).bind(this)));
+				if (!this.isDefault) this._elThumbnail.append($('<del/>').on('click', (function (e) {
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					e.stopPropagation();
+					this.delete();
 				}).bind(this)));
 			}
 			return this._elThumbnail;
@@ -5168,6 +5175,8 @@ BgImg.default = {
 BgImg.list = [];
 BgImg.listVisible = [];
 
+BgImg.countCustom = 0;
+
 BgImg.init = function () {
 	if (BgImg.isInit) return BgImg.list;
 
@@ -5193,7 +5202,7 @@ BgImg.init = function () {
 			}
 		});
 
-		console.log(BgImg.listVisible);
+		BgImg.ensureVisible();
 
 		BgImg.listVisible.some(function (o) {
 			if (!_new && o.name != Lockr.get('BgImgLast', '')) _new = o;
@@ -5238,6 +5247,7 @@ BgImg.change = function (o) {
 	if (!BgImg.list.length) return;
 
 	if (typeof o == 'undefined') {
+		BgImg.ensureVisible();
 		o = BgImg.listVisible[_g.randInt(BgImg.listVisible.length)];
 		if (BgImg.cur && o.name === BgImg.cur.name) {
 			if (BgImg.listVisible.length == 1) return o;
@@ -5248,15 +5258,12 @@ BgImg.change = function (o) {
 		if (BgImg.cur && o.name === BgImg.cur.name) return o;
 	}
 
-	var isFadeIn = !1;
-
 	if (BgImg.cur) {
 		BgImg.lastToHide = BgImg.cur;
-		isFadeIn = !0;
 		BgImg.cur.elThumbnail.removeClass('on');
 	}
 
-	o.els.addClass(isFadeIn ? 'fadein' : '');
+	o.els.addClass(BgImg.cur ? 'fadein' : '');
 	o.els.eq(0).appendTo(_frame.dom.bgimg);
 	o.els.eq(1).appendTo(_frame.dom.nav);
 	o.els.eq(2).appendTo(_frame.dom.main);
@@ -5298,8 +5305,15 @@ BgImg.upload = function () {
 					}).then(function (canvas) {
 						return BgImg.set(o, 'blured', canvas);
 					}).then(function () {
+						if (!BgImg.countCustom) {
+							BgImg.list.forEach(function (obj) {
+								if (obj.visible) obj.visible = !1;
+							});
+						}
 						o.append();
 						o.show();
+						o.visible = !0;
+						BgImg.countCustom++;
 					}).catch(function (err) {
 						_g.error(err);
 					}).done((function () {
@@ -5362,6 +5376,16 @@ BgImg.getUniqueName = function (n) {
 	return n2;
 };
 
+BgImg.ensureVisible = function () {
+	if (!BgImg.listVisible.length) {
+		BgImg.list.forEach(function (o) {
+			if (BgImg.countCustom && !o.isDefault || !BgImg.countCustom && o.isDefault) {
+				o.visible = !0;
+			}
+		});
+	}
+};
+
 BgImg.controlsInit = function () {
 	if (BgImg.controlsEls) return BgImg.controlsEls.container;
 
@@ -5384,7 +5408,10 @@ BgImg.controlsShow = function () {
 		$('<div class="controls"/>').appendTo(BgImg.controlsEls.container).append(BgImg.controlsEls.btnViewingToggle = $('<button icon="eye"/>').on('click', BgImg.controlsViewingToggle)).append($('<button icon="floppy-disk"/>').on('click', function () {
 			BgImg.save();
 		})).append($('<button icon="arrow-set2-right"/>').on('click', BgImg.controlsHide));
-		$('<div class="list"/>').appendTo(BgImg.controlsEls.container).append(BgImg.controlsEls.listCustom = $('<dl/>', {
+		$('<div class="list"/>').appendTo(BgImg.controlsEls.container).append($('<dl/>', {
+			'class': 'notes',
+			'html': '勾选的图片将会出现在背景图随机队列中'
+		})).append(BgImg.controlsEls.listCustom = $('<dl/>', {
 			'html': '<dt>自定义</dt>'
 		}).append(BgImg.controlsEls.listCustomAdd = $('<dd/>', {
 			'class': 'add',
@@ -5440,6 +5467,7 @@ BgImg.getDefaultImgs = function () {
 			var o = BgImg.dataCustom[_i7];
 			o.name = _i7;
 			BgImg.list.push(new BgImg(o));
+			BgImg.countCustom++;
 		}
 		deferred.resolve(BgImg.list);
 	});
@@ -5499,6 +5527,37 @@ BgImg.set = function (o, t, canvas) {
 	BgImg.dataCustom[o.name]['_' + t] = base64;
 
 	localforage.setItem('bgcustomlist', BgImg.dataCustom, function (err, result) {
+		deferred.resolve();
+	});
+
+	return deferred.promise;
+};
+
+BgImg.delete = function (o) {
+	o = BgImg.getObj(o);
+
+	var deferred = Q.defer();
+
+	o.elThumbnail.remove();
+	o.els.remove();
+
+	BgImg.listVisible.forEach(function (obj, i) {
+		if (obj === o) BgImg.listVisible.splice(i, 1);
+	});
+	BgImg.namesHidden.forEach(function (n, i) {
+		if (n === o.name) BgImg.namesHidden.splice(i, 1);
+	});
+
+	Lockr.set('BgImgHidden', BgImg.namesHidden);
+
+	delete BgImg.dataCustom[o.name];
+
+	localforage.setItem('bgcustomlist', BgImg.dataCustom, function (err, result) {
+		BgImg.countCustom--;
+		BgImg.list.forEach(function (obj, i) {
+			if (obj === o) BgImg.list.splice(i, 1);
+		});
+		if (BgImg.cur === o) BgImg.change();
 		deferred.resolve();
 	});
 

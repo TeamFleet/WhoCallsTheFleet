@@ -1266,7 +1266,7 @@ main{
 	}
 }}
 .layout-bgcontrols(){
-	@width: 			240px;
+	@width: 			250px;
 	@controls_height: 	40px;
 	.bgcontrols{
 		position: 	absolute;
@@ -1277,14 +1277,16 @@ main{
 		bottom: 	-2px;
 		width: 		@width;
 		z-index: 	6;
-		overflow: 	hidden;
+		//overflow: 	hidden;
+		color: 		rgba(255,255,255,.75);
 		
 		&, .bgimgs{
-			animation: 	none @transition_duration_main ease-out @transition_duration_main;
+			//animation: 	none @transition_duration_main ease-out @transition_duration_main;
+			animation: 	none .3s ease-out @transition_duration_main;
 			animation-fill-mode: forwards;
 		}
 		
-		&:before, &>.wrapper, &>.wrapper:after, .bgimgs, .bgimg{
+		&:before, &>.wrapper, .bgimgs, .bgimg{
 			position: 	absolute;
 			top: 		0;
 			left: 		0;
@@ -1301,11 +1303,13 @@ main{
 		}
 		
 		&>.wrapper{
-			border-left:2px solid rgba(255,255,255,.35);
-			border-bottom: 2px solid rgba(255,255,255,.35);
+			border-left: 	1px solid rgba(255,255,255,.5);
+			border-bottom: 	1px solid rgba(255,255,255,.5);
 			padding-bottom: @controls_height;
 			//transition: 	transform .5s;
-			transition-property: transform;
+			transition-property: transform, background-color, border-color;
+			overflow: 	hidden;
+			background: rgba(0,0,0,.85);
 			.window-noframe({
 				padding-right: 	2px;
 				padding-bottom: (@controls_height + 2px);
@@ -1318,7 +1322,16 @@ main{
 				content:	'';
 				z-index:	2;
 				background:	rgba(0, 0, 0, .5);
+				position: 	absolute;
+				top: 		0;
+				right: 		0;
+				bottom: 	-1px;
+				left: 		-1px;
 			}
+		}
+		
+		&.is-on > .wrapper{
+			box-shadow: 0 0 20px #000;
 		}
 
 		.bgimgs{
@@ -1376,7 +1389,7 @@ main{
 			overflow: 	auto;
 			z-index: 	3;
 			height: 	100%;
-			padding: 	20px 0 0 10px;
+			padding: 	10px 0 0 10px;
 			transition-property: opacity;
 			-webkit-overflow-scrolling: touch;
 			//transition-duration: .5s;
@@ -1391,9 +1404,10 @@ main{
 				border-bottom: 	1px solid rgba(255,255,255,.1);
 				color: 		rgba(255,255,255,.5);
 				line-height:1.7;
+				min-height: 1em;
 			}
 			dd{
-				display: 	inline-block;
+				display: 	block;
 				width: 		~"calc(50% - 10px)";
 				margin: 	10px 10px 0 0;
 				background: rgba(255,255,255,.1);
@@ -1412,8 +1426,8 @@ main{
 					top: 			4px;
 					left: 			4px;
 					z-index: 		5;
-					width: 			20px;
-					height: 		20px;
+					width: 			25px;
+					height: 		25px;
 					background: 	rgba(0,0,0,.75);
 					border: 		1px solid rgba(255,255,255,.65);
 					opacity: 		.5;
@@ -1423,12 +1437,13 @@ main{
 						content: 	'';
 						position: 	absolute;
 						z-index: 	2;
-						width: 		20px;
-						line-height:20px;
-						top: 		0;
+						width: 		100%;
+						line-height:0;
+						top: 		50%;
 						left: 		0;
 						text-align: center;
 						font-family:icons;
+						font-size: 	16px;
 					}
 					/*
 					&:after{
@@ -1447,7 +1462,33 @@ main{
 					}
 					*/
 					&:hover{
-						background: 	rgb(0,0,0);
+						background: rgb(0,0,0);
+						opacity: 	1;
+					}
+				}
+				del{
+					position: 	absolute;
+					top: 		-5px;
+					right: 		-5px;
+					width: 		20px;
+					height: 	20px;
+					border-radius: 50%;
+					z-index: 	10;
+					background:	hsla(0, 75%, 50%, .75);
+					&:before{
+						content: 	@iconcode-close;
+						font-family:'Gothic';
+						font-weight:lighter;
+						font-size: 	25px;
+						position: 	absolute;
+						top: 		50%;
+						left: 		0;
+						line-height:0;
+						width: 		100%;
+						text-align: center;
+					}
+					&:hover{
+						background:	hsla(0, 75%, 50%, 1);
 					}
 				}
 				&:before, &:after{
@@ -1474,9 +1515,9 @@ main{
 					s{
 						opacity: 	.5;
 					}
-					i{
-						opacity: 	1;
-					}
+					//i{
+					//	opacity: 	1;
+					//}
 				}
 				&.on{
 					s{
@@ -1495,7 +1536,7 @@ main{
 				&.is-visible{
 					i{
 						&:before{
-							content: 	@iconcode-checkbox-checked;
+							content: 	@iconcode-checkmark3;
 						}
 					}
 				}
@@ -1527,13 +1568,24 @@ main{
 						}
 					}
 				}
-			}
+			}			
+		}
+		
+		.notes{
+			border: 	1px solid rgba(255,255,255,.15);
+			background: rgba(255,255,255,.15);
+			padding: 	.35em .5em;
+			margin-right: 10px;
 		}
 
 		&.mod-viewing{
 			//&>.wrapper:after{
 			//	background: 	rgba(0,0,0,.85);
 			//}
+			&>.wrapper{
+				border-color: rgba(255,255,255,.15);
+				background: rgba(0,0,0,.35);
+			}
 			.bgimgs{
 				opacity: 	0;
 			}
@@ -1550,8 +1602,13 @@ main{
 			.bgimgs{
 				display: 	none;
 			}
-			&>.wrapper:after{
+			&>.wrapper{
+				border-color: rgba(255,255,255,.35);
 				background: rgba(0,0,0,.75);
+			}
+			&>.wrapper:after{
+				background: transparent;
+				border-color: rgba(255,255,255,.15);
 			}
 		}
 	}

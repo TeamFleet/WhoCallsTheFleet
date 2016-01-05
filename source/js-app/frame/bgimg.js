@@ -74,7 +74,7 @@ class BgImg{
 	}
 	
 	delete(){
-		
+		BgImg.delete(this)
 	}
 	
 	get filename(){
@@ -103,7 +103,7 @@ class BgImg{
 	
 	get elThumbnail(){
 		if( !this._elThumbnail ){
-			let checkId = 'checkbox-' + _g.timeNow()
+			//let checkId = 'checkbox-' + _g.timeNow()
 			this._elThumbnail = $('<dd/>')
 				.on('click', function(){
 					BgImg.change(this)
@@ -117,6 +117,15 @@ class BgImg{
 						e.stopImmediatePropagation()
 						e.stopPropagation()
 						this.visible = !this.visible
+					}.bind(this))
+				)
+			if( !this.isDefault )
+				this._elThumbnail.append(
+					$('<del/>').on('click', function(e){
+						e.preventDefault()
+						e.stopImmediatePropagation()
+						e.stopPropagation()
+						this.delete()
 					}.bind(this))
 				)
 		}
@@ -179,6 +188,7 @@ BgImg.default = {
 BgImg.list = [];
 BgImg.listVisible = [];
 //BgImg.namesHidden = [];
+BgImg.countCustom = 0;
 
 
 
@@ -214,7 +224,8 @@ BgImg.listVisible = [];
 				}
 			})
 			
-			console.log(BgImg.listVisible)
+			//console.log(BgImg.listVisible)
+			BgImg.ensureVisible();
 
 			BgImg.listVisible.some(function(o){
 				if( !_new && o.name != Lockr.get('BgImgLast', '') )
@@ -262,6 +273,7 @@ BgImg.listVisible = [];
 			return
 		
 		if( typeof o == 'undefined' ){
+			BgImg.ensureVisible();
 			o = BgImg.listVisible[ _g.randInt(BgImg.listVisible.length) ]
 			if( BgImg.cur && o.name === BgImg.cur.name ){
 				if( BgImg.listVisible.length == 1 )
@@ -274,15 +286,12 @@ BgImg.listVisible = [];
 				return o
 		}
 		
-		let isFadeIn = false
-		
 		if( BgImg.cur ){
 			BgImg.lastToHide = BgImg.cur
-			isFadeIn = true
 			BgImg.cur.elThumbnail.removeClass('on')
 		}
 		
-		o.els.addClass( isFadeIn ? 'fadein' : '' )
+		o.els.addClass( BgImg.cur ? 'fadein' : '' )
 		o.els.eq(0).appendTo( _frame.dom.bgimg )
 		o.els.eq(1).appendTo( _frame.dom.nav )
 		o.els.eq(2).appendTo( _frame.dom.main )
@@ -327,8 +336,17 @@ BgImg.listVisible = [];
 							return BgImg.set(o, 'blured', canvas)
 						})
 						.then(function(){
+							// 如果是上传第一张自定义图片，在随机背景图列表中取消所有内置图片
+							if( !BgImg.countCustom ){
+								BgImg.list.forEach(function(obj){
+									if( obj.visible )
+										obj.visible = false
+								})
+							}
 							o.append()
 							o.show()
+							o.visible = true
+							BgImg.countCustom++
 						})
 						.catch(function(err){
 							_g.error(err)
@@ -395,6 +413,18 @@ BgImg.listVisible = [];
 		}
 		return n2
 	};
+	
+	BgImg.ensureVisible = function(){
+		if( !BgImg.listVisible.length ){
+			BgImg.list.forEach(function(o){
+				if( (BgImg.countCustom && !o.isDefault)
+					|| (!BgImg.countCustom && o.isDefault)
+				){
+					o.visible = true
+				}
+			})
+		}
+	};
 
 
 
@@ -449,6 +479,12 @@ BgImg.listVisible = [];
 					$('<button icon="arrow-set2-right"/>').on('click', BgImg.controlsHide)
 				)
 			$('<div class="list"/>').appendTo( BgImg.controlsEls.container )
+				.append(
+					$('<dl/>',{
+						'class':	'notes',
+						'html':		'勾选的图片将会出现在背景图随机队列中'
+					})
+				)
 				.append( BgImg.controlsEls.listCustom =
 					$('<dl/>',{
 						'html':	'<dt>自定义</dt>'

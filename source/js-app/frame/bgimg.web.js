@@ -17,6 +17,7 @@ BgImg.getDefaultImgs = function(){
 				let o = BgImg.dataCustom[i]
 				o.name = i
 				BgImg.list.push( new BgImg(o) )
+				BgImg.countCustom++
 			}
 			deferred.resolve(BgImg.list)
 		}
@@ -96,6 +97,45 @@ BgImg.set = function(o, t, canvas){
 		'bgcustomlist',
 		BgImg.dataCustom,
 		function(err, result){
+			deferred.resolve()
+		}
+	);
+
+	return deferred.promise
+};
+
+BgImg.delete = function(o){
+	o = BgImg.getObj(o)
+	
+	let deferred = Q.defer()
+
+	o.elThumbnail.remove();
+	o.els.remove();
+
+	BgImg.listVisible.forEach(function(obj, i){
+		if( obj === o )
+			BgImg.listVisible.splice(i, 1)
+	})
+	BgImg.namesHidden.forEach(function(n, i){
+		if( n === o.name )
+			BgImg.namesHidden.splice(i, 1)
+	})
+
+	Lockr.set('BgImgHidden', BgImg.namesHidden)
+	
+	delete BgImg.dataCustom[o.name]
+
+	localforage.setItem(
+		'bgcustomlist',
+		BgImg.dataCustom,
+		function(err, result){
+			BgImg.countCustom--;
+			BgImg.list.forEach(function(obj, i){
+				if( obj === o )
+					BgImg.list.splice(i, 1)
+			})
+			if( BgImg.cur === o )
+				BgImg.change();
 			deferred.resolve()
 		}
 	);
