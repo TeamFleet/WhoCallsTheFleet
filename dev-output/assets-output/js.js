@@ -8426,13 +8426,13 @@ var TablelistShips = (function (_Tablelist2) {
 	}, {
 		key: 'search',
 		value: function search(query) {
+			if (!this.dom.style) this.dom.style = $('<style/>').appendTo(this.dom.container);
+
 			if (!query) {
 				this.dom.container.removeClass('mod-search');
 				this.dom.style.empty();
 				return query;
 			}
-
-			if (!this.dom.style) this.dom.style = $('<style/>').appendTo(this.dom.container);
 
 			query = _g.search(query, 'ships');
 
