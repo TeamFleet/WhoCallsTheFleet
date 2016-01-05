@@ -164,6 +164,70 @@
 	}
 
 
+
+// search index
+	_g.index = {
+		ships: {},
+		equipments: {}
+	};
+	_g.buildIndex = function(){
+		function _build( datalist, n ){
+			for(let i in datalist){
+				for(let j in datalist[i].name){
+					if( datalist[i].name[j] ){
+						if( j != 'suffix' ){
+							let _n = datalist[i].name[j].toLowerCase()
+							if( !_g.index[n][_n] )
+								_g.index[n][_n] = []
+							if( _g.index[n][_n].indexOf(datalist[i].id) < 0 )
+								_g.index[n][_n].push(datalist[i])
+						}
+					}
+				}
+			}
+		}
+		_build( _g.data.ships, 'ships' )
+		_build( _g.data.items, 'equipments' )
+	};
+	_g.search = function( q, t ){
+		t = _g.index[t]
+		let r = [], e = []
+		if( !t || !q )
+			return r
+		q = q.toLowerCase()
+		function _concat(a){
+			r = r.concat(
+				a.filter(function(v){
+					if( e.indexOf( t + v.id ) > -1 )
+						return false
+					e.push( t + v.id )
+					return true
+					//return (r.indexOf(v) < 0)
+				})
+				.sort(function(a,b){
+					//return (a._name || a.name[_g.lang]) - (b._name || b.name[_g.lang])
+					return (b.name.suffix||0) - (a.name.suffix||0)
+				})
+			)
+		}
+		if( t[q] )
+			_concat(t[q])
+		for( let i in t ){
+			if( q !== i && i.indexOf(q) > -1 ){
+				_concat(t[i])
+			}
+		}
+		return r
+	};
+	_g.searchTest = function( q, t ){
+		let r = []
+		q = _g.search( q, t )
+		for( let i in q ){
+			r.push(q[i]._name || q[i].name[_g.lang])
+		}
+		return r
+	};
+
 !function(root,factory){"undefined"!=typeof exports?"undefined"!=typeof module&&module.exports&&(exports=module.exports=factory(root,exports)):"function"==typeof define&&define.amd?define(["exports"],function(exports){root.Lockr=factory(root,exports)}):root.Lockr=factory(root,{})}(this,function(root,Lockr){"use strict";return Array.prototype.indexOf||(Array.prototype.indexOf=function(elt){var len=this.length>>>0,from=Number(arguments[1])||0;for(from=0>from?Math.ceil(from):Math.floor(from),0>from&&(from+=len);len>from;from++)if(from in this&&this[from]===elt)return from;return-1}),Lockr.prefix="",Lockr._getPrefixedKey=function(key,options){return options=options||{},options.noPrefix?key:this.prefix+key},Lockr.set=function(key,value,options){var query_key=this._getPrefixedKey(key,options);try{localStorage.setItem(query_key,JSON.stringify({data:value}))}catch(e){console&&console.warn("Lockr didn't successfully save the '{"+key+": "+value+"}' pair, because the localStorage is full.")}},Lockr.get=function(key,missing,options){var value,query_key=this._getPrefixedKey(key,options);try{value=JSON.parse(localStorage.getItem(query_key))}catch(e){try{value=localStorage[query_key]?JSON.parse('{"data":"'+localStorage.getItem(query_key)+'"}'):null}catch(e){console&&console.warn("Lockr could not load the item with key "+key)}}return null===value?missing:"undefined"!=typeof value.data?value.data:missing},Lockr.sadd=function(key,value,options){var json,query_key=this._getPrefixedKey(key,options),values=Lockr.smembers(key);if(values.indexOf(value)>-1)return null;try{values.push(value),json=JSON.stringify({data:values}),localStorage.setItem(query_key,json)}catch(e){console.log(e),console&&console.warn("Lockr didn't successfully add the "+value+" to "+key+" set, because the localStorage is full.")}},Lockr.smembers=function(key,options){var value,query_key=this._getPrefixedKey(key,options);try{value=JSON.parse(localStorage.getItem(query_key))}catch(e){value=null}return null===value?[]:value.data||[]},Lockr.sismember=function(key,value,options){this._getPrefixedKey(key,options);return Lockr.smembers(key).indexOf(value)>-1},Lockr.getAll=function(){var keys=Object.keys(localStorage);return keys.map(function(key){return Lockr.get(key)})},Lockr.srem=function(key,value,options){var json,index,query_key=this._getPrefixedKey(key,options),values=Lockr.smembers(key,value);index=values.indexOf(value),index>-1&&values.splice(index,1),json=JSON.stringify({data:values});try{localStorage.setItem(query_key,json)}catch(e){console&&console.warn("Lockr couldn't remove the "+value+" from the set "+key)}},Lockr.rm=function(key){localStorage.removeItem(key)},Lockr.flush=function(){localStorage.clear()},Lockr});
 //
 // SmoothScroll for websites v1.3.8 (Balazs Galambosi)
@@ -5092,9 +5156,10 @@ _frame.app_main = {
 
 		// 错误处理
 			.catch(function (err) {
-				_g.error(err)
+				_g.error(err, '初始化进程')
 			})
 			.done(function(){
+				_g.buildIndex();
 				_g.log('Global initialization DONE')
 			})
 
@@ -12400,6 +12465,30 @@ class TablelistShips extends Tablelist{
 		this.thead_redraw()
 		_frame.app_main.loaded('tablelist_'+this._index, true)
 		delete( this.last_item )
+	}
+	
+	search( query ){		
+		if( !this.dom.style )
+			this.dom.style = $('<style/>').appendTo( this.dom.container.addClass('mod-search') )
+
+		query = _g.search(query, 'ships')
+		if( !query.length ){
+			this.dom.container.removeClass('mod-search')
+			this.dom.style.empty()
+			return query
+		}
+		
+		this.dom.container.addClass('mod-search')
+		
+		let r = '.tablelist.ships .tablelist-body dl:not(:empty)'		
+		query.forEach(function(ship){
+			r+= `:not([data-shipid="${ship.id}"])`
+		})		
+		r+= `{display:none!important}`
+		
+		this.dom.style.html(r)
+
+		return query
 	}
 }
 

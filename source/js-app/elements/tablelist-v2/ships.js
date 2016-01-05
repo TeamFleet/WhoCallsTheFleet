@@ -436,4 +436,28 @@ class TablelistShips extends Tablelist{
 		_frame.app_main.loaded('tablelist_'+this._index, true)
 		delete( this.last_item )
 	}
+	
+	search( query ){		
+		if( !this.dom.style )
+			this.dom.style = $('<style/>').appendTo( this.dom.container.addClass('mod-search') )
+
+		query = _g.search(query, 'ships')
+		if( !query.length ){
+			this.dom.container.removeClass('mod-search')
+			this.dom.style.empty()
+			return query
+		}
+		
+		this.dom.container.addClass('mod-search')
+		
+		let r = '.tablelist.ships .tablelist-body dl:not(:empty)'		
+		query.forEach(function(ship){
+			r+= `:not([data-shipid="${ship.id}"])`
+		})		
+		r+= `{display:none!important}`
+		
+		this.dom.style.html(r)
+
+		return query
+	}
 }

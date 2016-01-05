@@ -5529,7 +5529,7 @@ body.mod-capture #tip {
 .tablelist-body h4 input[type="checkbox"]:indeterminate + label.checkbox:after {
   opacity: .45;
   left: 4px;
-  margin: -5px auto auto -20px;
+  margin: -6px auto auto -20px;
 }
 .tablelist-body h4 input[type="checkbox"]:indeterminate + label.checkbox:hover:before,
 .tablelist-body h4 input[type="checkbox"]:indeterminate + label.checkbox:hover:after {
@@ -5623,7 +5623,7 @@ body.mod-capture #tip {
   -webkit-transition-property: color, text-shadow;
   transition-property: color, text-shadow;
 }
-.tablelist > [filter-hide-premodel="true"] ~ .tablelist-container .premodeled:not([compare-checked]) {
+.tablelist:not(.mod-search) > [filter-hide-premodel="true"] ~ .tablelist-container .premodeled:not([compare-checked]) {
   display: none !important;
 }
 .tablelist > [viewtype="card"] ~ .tablelist-container {
@@ -5878,9 +5878,6 @@ body.mod-capture #tip {
   background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15) calc(100% - 1px), transparent calc(100% - 1px));
   background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15) calc(100% - 1px), transparent calc(100% - 1px));
 }
-.tablelist.ships .tablelist-body dl[data-shipid]:hover label.checkbox {
-  opacity: .9;
-}
 .tablelist.ships .tablelist-body dl[data-shipid]:hover dt em {
   color: rgba(255, 255, 255, 0.4);
 }
@@ -5935,6 +5932,9 @@ body.mod-capture #tip {
 .tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body dl[data-shipid] dt a {
   padding-left: 100px;
 }
+.tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body dl[data-shipid] dt a:active {
+  opacity: .5;
+}
 .tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body dl[data-shipid] dt img {
   top: 0;
   margin-left: -10px;
@@ -5952,12 +5952,9 @@ body.mod-capture #tip {
   color: #ffffff;
   -webkit-transform: rotate(15deg);
           transform: rotate(15deg);
-  top: 0;
+  top: -4px;
   left: 80px;
   z-index: 10;
-}
-.tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body dl[data-shipid]:active {
-  opacity: .5;
 }
 .tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid] label.checkbox {
   display: none;
@@ -6495,6 +6492,15 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships > .shiptype[value="19"]:checked ~ .tablelist-container h4[data-header="19"] label.checkbox {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
+}
+.tablelist.ships.mod-search .tablelist-body h4 {
+  display: none;
+}
+.tablelist.ships.mod-search .tablelist-body dl:empty {
+  -webkit-box-ordinal-group: 1000;
+  -webkit-order: 999;
+      -ms-flex-order: 999;
+          order: 999;
 }
 .tablelist-equipments .tablelist-body dl {
   height: auto;

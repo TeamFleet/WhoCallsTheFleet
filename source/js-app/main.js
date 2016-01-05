@@ -1129,9 +1129,10 @@ _frame.app_main = {
 
 		// 错误处理
 			.catch(function (err) {
-				_g.error(err)
+				_g.error(err, '初始化进程')
 			})
 			.done(function(){
+				_g.buildIndex();
 				_g.log('Global initialization DONE')
 			})
 

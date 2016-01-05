@@ -139,9 +139,9 @@
 				}
 			}
 			&:hover{
-				label.checkbox{
-					opacity:	.9;
-				}
+				//label.checkbox{
+				//	opacity:	.9;
+				//}
 				dt em{
 					color: 	rgba(255, 255, 255, .4);
 				}
@@ -209,6 +209,9 @@
 					padding-bottom:	0;
 					a{
 						padding-left: 100px;
+						&:active{
+							opacity: 	.5;
+						}
 					}
 					img{
 						top:	0;
@@ -229,14 +232,11 @@
 						font-size: 	22px;
 						color: 		hsl(@hue_theme_ship, 100%, 100%);
 						transform: 	rotate(15deg);
-						top: 		0;
+						top: 		-4px;
 						left: 		80px;
 						z-index: 	10;
 						//text-shadow:0 0 5px hsl(@hue_theme_ship, 100%, 15%);
 					}
-				}
-				&:active{
-					opacity: 	.5;
 				}
 			}
 		}
@@ -428,4 +428,15 @@
 		}
 		.loop(@count_ship_collections);
 	});
+	
+	
+	
+	&.mod-search{
+		.tablelist-body h4{
+			display: none;
+		}
+		.tablelist-body dl:empty{
+			order: 	999;
+		}
+	}
 }}
