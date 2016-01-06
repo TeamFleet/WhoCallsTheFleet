@@ -2598,8 +2598,6 @@ _g.search = function (q, t) {
 			if (e.indexOf(t + v.id) > -1) return !1;
 			e.push(t + v.id);
 			return !0;
-		}).sort(function (a, b) {
-			return (b.name.suffix || 0) - (a.name.suffix || 0);
 		}));
 	}
 	if (t[q]) _concat(t[q]);

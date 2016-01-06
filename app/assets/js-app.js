@@ -214,10 +214,12 @@
 					return true
 					//return (r.indexOf(v) < 0)
 				})
+				/*
 				.sort(function(a,b){
 					//return (a._name || a.name[_g.lang]) - (b._name || b.name[_g.lang])
 					return (b.name.suffix||0) - (a.name.suffix||0)
 				})
+				*/
 			)
 		}
 		if( t[q] )
