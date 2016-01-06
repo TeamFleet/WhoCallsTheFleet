@@ -173,15 +173,25 @@
 	_g.buildIndex = function(){
 		function _build( datalist, n ){
 			for(let i in datalist){
+				let ids = (n == 'ships')
+						? datalist[i].getSeriesData().map(function(o){
+									return o.id
+								})
+						: [datalist[i].id]
+				if( ids.push && ids.length == 0 )
+					ids = [datalist[i].id]
 				for(let j in datalist[i].name){
-					if( datalist[i].name[j] ){
-						if( j != 'suffix' ){
-							let _n = datalist[i].name[j].toLowerCase()
-							if( !_g.index[n][_n] )
-								_g.index[n][_n] = []
-							if( _g.index[n][_n].indexOf(datalist[i].id) < 0 )
-								_g.index[n][_n].push(datalist[i])
-						}
+					if( datalist[i].name[j] && j != 'suffix' ){
+						let _n = datalist[i].name[j].toLowerCase()
+						if( !_g.index[n][_n] )
+							_g.index[n][_n] = []
+						ids.forEach(function(thisId){
+							if( !_g.index[n][_n].some(function(thisObj){
+								return thisObj.id == thisId
+							}) ){
+								_g.index[n][_n].push( datalist[thisId] )
+							}
+						})
 					}
 				}
 			}
@@ -194,7 +204,7 @@
 		let r = [], e = []
 		if( !t || !q )
 			return r
-		q = q.toLowerCase()
+		q = q.trim().toLowerCase()
 		function _concat(a){
 			r = r.concat(
 				a.filter(function(v){
@@ -12311,7 +12321,8 @@ class TablelistShips extends Tablelist{
 									this.dom.search.addClass('on')
 								}.bind(this),
 								'blur': function(){
-									this.dom.search.removeClass('on')
+									if( !this.dom.container.hasClass('mod-search') )
+										this.dom.search.removeClass('on')
 								}.bind(this)
 							})
 					)
@@ -12542,6 +12553,7 @@ class TablelistShips extends Tablelist{
 
 		if( !query ){
 			this.dom.container.removeClass('mod-search')
+			this.dom.filter_container.attr('filter-hide-premodel', this.dom.btn_hide_premodel.prop('checked'))
 			this.dom.style.empty()
 			return query
 		}
@@ -12553,6 +12565,7 @@ class TablelistShips extends Tablelist{
 		}
 		
 		this.dom.container.addClass('mod-search')
+		this.dom.filter_container.attr('filter-hide-premodel', false)
 		
 		let r = '.tablelist.ships .tablelist-body dl:not(:empty)'		
 		query.forEach(function(ship){

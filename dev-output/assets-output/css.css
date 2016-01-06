@@ -5132,6 +5132,9 @@ body.mod-capture #tip {
   color: rgba(255, 255, 255, 0.5);
   pointer-events: none;
 }
+.tablelist > .options > div.filters > .search.on input {
+  width: 250px;
+}
 .tablelist > .options > div.filters > .search.on + p {
   opacity: 0;
   z-index: -1;
@@ -5675,7 +5678,7 @@ body.mod-capture #tip {
   -webkit-transition-property: color, text-shadow;
   transition-property: color, text-shadow;
 }
-.tablelist:not(.mod-search) > [filter-hide-premodel="true"] ~ .tablelist-container .premodeled:not([compare="true"]) {
+.tablelist > [filter-hide-premodel="true"] ~ .tablelist-container .premodeled:not([compare="true"]) {
   display: none !important;
 }
 .tablelist > [viewtype="card"] ~ .tablelist-container {

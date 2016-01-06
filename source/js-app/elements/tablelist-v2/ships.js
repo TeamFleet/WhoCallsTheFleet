@@ -271,7 +271,8 @@ class TablelistShips extends Tablelist{
 									this.dom.search.addClass('on')
 								}.bind(this),
 								'blur': function(){
-									this.dom.search.removeClass('on')
+									if( !this.dom.container.hasClass('mod-search') )
+										this.dom.search.removeClass('on')
 								}.bind(this)
 							})
 					)
@@ -502,6 +503,7 @@ class TablelistShips extends Tablelist{
 
 		if( !query ){
 			this.dom.container.removeClass('mod-search')
+			this.dom.filter_container.attr('filter-hide-premodel', this.dom.btn_hide_premodel.prop('checked'))
 			this.dom.style.empty()
 			return query
 		}
@@ -513,6 +515,7 @@ class TablelistShips extends Tablelist{
 		}
 		
 		this.dom.container.addClass('mod-search')
+		this.dom.filter_container.attr('filter-hide-premodel', false)
 		
 		let r = '.tablelist.ships .tablelist-body dl:not(:empty)'		
 		query.forEach(function(ship){

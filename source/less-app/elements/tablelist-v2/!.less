@@ -124,6 +124,9 @@
 						pointer-events: none;
 					}
 					&.on{
+						input{
+							width: 	250px;
+						}
 						& + p{
 							opacity: 0;
 							z-index: -1;
@@ -608,7 +611,7 @@
 
 
 
-.tablelist:not(.mod-search) > [filter-hide-premodel="true"] ~ .tablelist-container{
+.tablelist > [filter-hide-premodel="true"] ~ .tablelist-container{
 	.premodeled:not([compare="true"]){
 		display:	none !important;
 	}
