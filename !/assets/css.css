@@ -5107,6 +5107,18 @@ body.mod-capture #tip {
 .tablelist > .options > div.filters > .search input:focus {
   width: 250px;
 }
+.tablelist > .options > div.filters > .search input::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+.tablelist > .options > div.filters > .search input:-moz-placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+.tablelist > .options > div.filters > .search input::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+.tablelist > .options > div.filters > .search input:-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
 .tablelist > .options > div.filters > .search:before {
   position: absolute;
   font-family: icons;
@@ -5119,6 +5131,9 @@ body.mod-capture #tip {
   text-align: center;
   color: rgba(255, 255, 255, 0.5);
   pointer-events: none;
+}
+.tablelist > .options > div.filters > .search.on input {
+  width: 250px;
 }
 .tablelist > .options > div.filters > .search.on + p {
   opacity: 0;
@@ -5663,7 +5678,7 @@ body.mod-capture #tip {
   -webkit-transition-property: color, text-shadow;
   transition-property: color, text-shadow;
 }
-.tablelist:not(.mod-search) > [filter-hide-premodel="true"] ~ .tablelist-container .premodeled:not([compare-checked]) {
+.tablelist > [filter-hide-premodel="true"] ~ .tablelist-container .premodeled:not([compare="true"]) {
   display: none !important;
 }
 .tablelist > [viewtype="card"] ~ .tablelist-container {
@@ -5756,6 +5771,22 @@ body.mod-capture #tip {
 		}
 	}
 */
+.tablelist.ships .tablelist-body dl[data-shipid] dt {
+  /*
+				label.checkbox:hover, input[type="checkbox"]:checked + label.checkbox{
+					opacity:	.9 !important;
+				}
+				input[type="checkbox"]:checked + label.checkbox:before{
+					left: 		5px;
+				}
+				input[type="checkbox"]:checked + label.checkbox:after{
+					background:	hsla(199, 65%, 35%, .85);
+				}
+				input[type="checkbox"][disabled] + label.checkbox{
+					display: 	none;
+				}
+				*/
+}
 .tablelist.ships .tablelist-body dl[data-shipid] dt label.checkbox {
   position: absolute;
   z-index: 2;
@@ -5788,18 +5819,8 @@ body.mod-capture #tip {
   left: 0;
   top: 5px;
 }
-.tablelist.ships .tablelist-body dl[data-shipid] dt label.checkbox:hover,
-.tablelist.ships .tablelist-body dl[data-shipid] dt input[type="checkbox"]:checked + label.checkbox {
-  opacity: .9 !important;
-}
-.tablelist.ships .tablelist-body dl[data-shipid] dt input[type="checkbox"]:checked + label.checkbox:before {
-  left: 5px;
-}
-.tablelist.ships .tablelist-body dl[data-shipid] dt input[type="checkbox"]:checked + label.checkbox:after {
-  background: rgba(31, 111, 147, 0.85);
-}
-.tablelist.ships .tablelist-body dl[data-shipid] dt input[type="checkbox"][disabled] + label.checkbox {
-  display: none;
+.tablelist.ships .tablelist-body dl[data-shipid] dt label.checkbox:hover {
+  opacity: .9;
 }
 .tablelist.ships .tablelist-body dl[data-shipid] dt img {
   position: absolute;
@@ -5921,8 +5942,19 @@ body.mod-capture #tip {
 .tablelist.ships .tablelist-body dl[data-shipid]:hover dt em {
   color: rgba(255, 255, 255, 0.4);
 }
+.tablelist.ships .tablelist-body dl[data-shipid][data-donotcompare="true"] dt label.checkbox,
 .tablelist.ships .tablelist-body dl[data-shipid][data-donotcompare="true"] dt em {
   display: none !important;
+}
+.tablelist.ships .tablelist-body dl[data-shipid][compare="true"] dt label.checkbox {
+  opacity: .9 !important;
+}
+.tablelist.ships .tablelist-body dl[data-shipid][compare="true"] dt label.checkbox:before {
+  left: 5px;
+  content: "\e601";
+}
+.tablelist.ships .tablelist-body dl[data-shipid][compare="true"] dt label.checkbox:after {
+  background: rgba(31, 111, 147, 0.85);
 }
 @media all and (max-width: 720px) {
   .tablelist.ships > [viewtype="list"] ~ .tablelist-container .tablelist-body dl[data-shipid] dt label.checkbox {
@@ -6002,20 +6034,20 @@ body.mod-capture #tip {
 .tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid] dt em {
   display: none !important;
 }
-.tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid][compare-checked] dt img {
+.tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid][compare="true"] dt img {
   left: 0;
   -webkit-mask-image: -webkit-linear-gradient(left, #000 50px, #000 calc(100% - 60px), transparent calc(100% - 10px));
           mask-image: linear-gradient(to right, #000 50px, #000 calc(100% - 60px), transparent calc(100% - 10px));
 }
-.tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid][compare-checked] dt img.nomask {
+.tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid][compare="true"] dt img.nomask {
   -webkit-mask-image: -webkit-linear-gradient(left, #000 50px, #000);
           mask-image: linear-gradient(to right, #000 50px, #000);
 }
-.tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid][compare-checked] dt a {
+.tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid][compare="true"] dt a {
   left: 0;
   padding-left: 146px;
 }
-.tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid]:not([compare-checked]) {
+.tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid]:not([compare="true"]) {
   display: none;
 }
 @media all and (max-width: 1152px) {
@@ -6077,10 +6109,10 @@ body.mod-capture #tip {
   .tablelist.ships [stat="carry"] {
     display: none !important;
   }
-  .tablelist.ships > [viewtype=compare] ~ .tablelist-container .tablelist-body dl[data-shipid][compare-checked] dt img {
+  .tablelist.ships > [viewtype=compare] ~ .tablelist-container .tablelist-body dl[data-shipid][compare="true"] dt img {
     left: -50px;
   }
-  .tablelist.ships > [viewtype=compare] ~ .tablelist-container .tablelist-body dl[data-shipid][compare-checked] dt a {
+  .tablelist.ships > [viewtype=compare] ~ .tablelist-container .tablelist-body dl[data-shipid][compare="true"] dt a {
     padding-left: 90px;
   }
 }
