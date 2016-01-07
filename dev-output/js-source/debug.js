@@ -84,27 +84,16 @@ debug.init = function(){
 `))
 
 	// updater progress indicator
-		let updater, updaterBar;
-		function updaterInit(){
-			if( !updater ){
-				updater = $('<button class="update_progress" icon="stairs-up" data-tip="检测到新版本<br>更新中..."/>')
-												.prependTo( _frame.dom.globaloptions )
-				updaterBar = $('<s/>').appendTo( updater )
-			}
-		}
 		function updaterToggle(){
-			updaterInit()
-			updater.toggleClass('on')
+			if( !_updater.indicatorEl )
+				_updater.indicator()
+			_updater.indicatorEl.toggleClass('on')
 		}
 		function updaterSet(percentage){
-			updaterInit()
-			percentage = parseFloat(percentage) || 0
-			updater.addClass('on')
-			updaterBar.css('width', percentage + '%')
+			_updater.indicator( percentage / 100 )
 		}
 		function updaterToggle_Complete(){
-			updaterInit()
-			updater.addClass('on').toggleClass('done')
+			_updater.indicator( 1 )
 		}
 		debug.container
 			.append($('<h3/>',{
@@ -137,6 +126,11 @@ debug.init = function(){
 					'type':	'button',
 					'html':	'98%'
 				}).on('click', function(){updaterSet(98)}) )
+				.append( $('<button/>',{
+					'type':	'button',
+					'html':	'100%'
+				}).on('click', function(){updaterSet(100)}) )
+				/*
 				.append( $('<span/>',{
 					'class':'divider'
 				}) )
@@ -144,6 +138,7 @@ debug.init = function(){
 					'type':	'button',
 					'html':	'Toggle Complete'
 				}).on('click', updaterToggle_Complete) )
+				*/
 			)
 
 	// Icons

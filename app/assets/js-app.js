@@ -5326,12 +5326,27 @@ var _updater = {
 		})
 	}
 
-// 创建更新器提示
-	_updater.create_update_indicator = function(){
-		if( !_updater.update_indicator || !_updater.update_indicator.length ){
-			_updater.update_indicator = $('<button class="update_progress" icon="stairs-up" data-tip="检测到新版本<br>更新中..."/>')
+// 更新提示
+	_updater.indicator = function( progress ){
+		if( !_updater.indicatorEl ){
+			_updater.indicatorEl = $('<button class="update_progress" icon="stairs-up" data-tip="检测到新版本<br>更新中..."/>')
 											.prependTo( _frame.dom.globaloptions )
-			_updater.update_indicator_bar = $('<s/>').appendTo( _updater.update_indicator )
+											.append(
+												_updater.indicatorElBar = $('<s/>')
+											)
+		}
+		if( typeof progress == 'number' && progress >= 0 && progress < 1 ){
+			progress = Math.floor(progress * 100)
+			_updater.indicatorEl.addClass('on').attr('progress', progress)
+			_updater.indicatorElBar.css('width', progress + '%' )
+			node.win.setProgressBar(progress / 100)
+		}else if( progress ){
+			_updater.indicatorEl.addClass('on').attr('progress', 100).data('tip', '更新完成<br>请重新启动程序')
+			_updater.indicatorElBar.css('width', '')
+			node.win.setProgressBar(1)
+		}else{
+			_updater.indicatorEl.removeClass('on').removeAttr('progress')
+			node.win.setProgressBar(0)
 		}
 	}
 
@@ -5426,7 +5441,6 @@ var _updater = {
 				}
 
 				_g.log('更新开始: ' + updated.join(', '))
-				_updater.create_update_indicator()
 
 				let promise_chain_update = Q.fcall(function(){})
 					//,permission = true
@@ -5503,11 +5517,10 @@ var _updater = {
 							})
 							//deferred.reject(new Error(err))
 						}).on('progress',function(state){
-							_updater.update_indicator.addClass('on')
 							_g.log('    ' + state.received + ' / ' + state.total + ' (' + state.percent + '%)'
 								+ ' | ' + Math.floor( (size_received + state.received) / size_total * 100 ) + '%'
 							)
-							_updater.update_indicator_bar.css('width', Math.floor( (size_received + state.received) / size_total * 100 ) + '%')
+							_updater.indicator( (size_received + state.received) / size_total )
 						}).pipe(
 							node.fs.createWriteStream(tempfile)
 							.on('finish', function(){
@@ -5597,8 +5610,7 @@ var _updater = {
 				if( size_received >= size_total ){
 					//_g.log('')
 					_g.log('更新完成')
-					_updater.update_indicator.addClass('done').data('tip', '更新完成<br>请重新启动程序')
-					_updater.update_indicator_bar.css('width', '')
+					_updater.indicator(1)
 				}/*else{
 					_g.log('')
 					_g.log('自动更新失败, 结束流程')
@@ -5611,8 +5623,8 @@ var _updater = {
 					console.warn(err)
 				else
 					_g.error(err)
-				if( _updater.update_indicator && _updater.update_indicator.length )
-					_updater.update_indicator.removeClass('on')
+				if( _updater.indicatorEl )
+					_updater.indicator(false)
 			})
 			.done(function(){
 				//_g.log('自动更新过程初始化完毕')
