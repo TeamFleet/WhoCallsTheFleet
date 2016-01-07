@@ -3312,6 +3312,7 @@ main:after {
   border-radius: 50%;
   z-index: 10;
   background: rgba(223, 32, 32, 0.75);
+  text-decoration: none;
 }
 .bgcontrols dl dd del:before {
   content: "\00d7";

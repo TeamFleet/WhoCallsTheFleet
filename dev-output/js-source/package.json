@@ -9,6 +9,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "fs-extra": "^0.26.4",
     "html-minifier": "^1.0.0"
   }
 }

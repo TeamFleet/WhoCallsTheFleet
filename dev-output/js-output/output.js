@@ -3,6 +3,7 @@
 
 
 var minify = require("../dev-output/js-source/node_modules/html-minifier").minify;
+var fsExtra = require("../dev-output/js-source/node_modules/fs-extra")
 
 let dev_output_steps = []
 	,dev_output_tmpl
@@ -251,6 +252,8 @@ function dev_output_form(){
 					processing = true
 					dev_output_log('start')
 					
+					dev_output_steps = []
+					
 					// 处理模板
 						dev_output_tmpl = node.fs.readFileSync('dev-output/templates/base.html', 'utf-8')
 						let searchRes
@@ -294,7 +297,7 @@ function dev_output_form(){
 							collapseWhitespace:	true
 						})
 					
-					console.log(dev_output_tmpl)
+					//console.log(dev_output_tmpl)
 
 					//Q.all(dev_output_steps).done(function(values){
 					//	console.log(values)
@@ -360,6 +363,130 @@ function dev_output_form(){
 				}).on('click', function(){
 					dev_output_only_assets = true
 					el.form.submit()
+				})
+			)
+		).append(
+			el.form2 = $('<form/>').css({
+				'display':	'flex',
+				'flex-flow':'row nowrap',
+				'flex':		'0 0 40px',
+				'height':	'40px',
+				'line-height':'30px',
+				'font-size':'16px',
+				'padding':	'0 0 10px 0',
+				'border-bottom':'1px solid rgba(255, 255, 255, .35)',
+				'margin':	'0 0 10px 0'
+			}).on('submit', function(e){
+				e.preventDefault()
+				if( !processing ){
+					dev_output_el_log.empty()
+					processing = true
+					dev_output_log('start')
+					
+					let pathFrom = Lockr.get('debug_output_directory', dev_output_dir)
+						,pathTo = Lockr.get('debug_output_directory2', el.selector2.val() || '')
+						,files = [
+							'favicon.ico',
+							'favicon.png',
+							'ga.html',
+							'index.html',
+							'manifest.json',
+							'robots.txt',
+
+							'arsenal/',
+							'calctp/',
+							'donate/',
+							'entities/',
+							'equipments/',
+							'fleets/',
+							'ships/',
+							
+							'!/assets/',
+							'!/db/',
+							'!/pics/'
+						]
+						,chain = Q(function(){})
+					
+					files.forEach(function(f){
+						chain = chain.then(function(){
+							let deferred = Q.defer()
+							fsExtra.copy(
+								node.path.join( pathFrom, f ),
+								node.path.join( pathTo, f ),
+								{
+									clobber: true,
+									preserveTimestamps: true,
+									filter: function(thisFile){
+										if( f == '!/pics/' )
+											return node.path.extname(thisFile).toLowerCase() != '.webp'
+										return true
+									}
+								},
+								function(err){
+									if( err ){
+										deferred.reject(err)
+									}else{
+										dev_output_log('COPY: ' + f )
+										deferred.resolve()
+									}
+								}
+							)
+							return deferred.promise
+						})
+					})
+					
+					chain = chain.catch(function(err){
+						_g.log(err)
+					}).done(function(){
+						dev_output_log('end')
+						processing = false
+						dev_output_only_assets = false
+						return true
+					})
+				}
+				return
+			}).append(
+				$('<span/>',{
+					'html':		'Output Static'
+				}).css({
+					'flex':		'0 0 auto',
+					'margin-right':'10px'
+				})
+			).append(
+				el.selector2 = $('<input type="file" nwdirectory/>').css({
+					'display':	'none'
+				}).on('change', function(){
+					let val = el.selector2.val() || ''
+					el.input2.val( val )
+					Lockr.set('debug_output_directory2', val)
+					el.selector2.val('')
+				})
+			).append(
+				el.input2 = $('<input type="text"/>').css({
+					'display':	'block',
+					'flex':		'1 0 auto',
+					'height':	'30px',
+					'line-height':'inherit',
+					'font-size':'inherit',
+					'margin-right':'10px'
+				}).val( Lockr.get('debug_output_directory2') || '' )
+			).append(
+				$('<button/>',{
+					'type':		'button',
+					'html':		'Browse'
+				}).css({
+					'flex':		'0 0 auto',
+					'margin-right':'10px'
+				}).on('click', function(){
+					el.selector2.click()
+				})
+			).append(
+				$('<input/>',{
+					'type':		'submit',
+					'html':		'Export'
+				}).css({
+					'flex':		'0 0 auto',
+					'margin-right':'10px'
 				})
 			)
 		).append(
