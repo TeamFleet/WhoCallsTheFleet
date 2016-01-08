@@ -25,8 +25,13 @@
 	// Web App for Android/iOS
 		_g.isWebApp = (navigator.standalone || _g.uriSearch('utm_source') == 'web_app_manifest');
 	
+	// check for Windows Universal App
+		_g.isUWP = (typeof Windows !== 'undefined' &&
+				typeof Windows.UI !== 'undefined' &&
+				typeof Windows.UI.Notifications !== 'undefined')
+	
 	// check for client/app enviroment, eg. NW.js, Native Web App, Universal Windows App
-		_g.isClient = (_g.isNWjs || _g.isWebApp);
+		_g.isClient = (_g.isNWjs || _g.isWebApp || _g.isUWP);
 	
 	function eventName(event, name){
 		name = name ? ('.' + name) : ''

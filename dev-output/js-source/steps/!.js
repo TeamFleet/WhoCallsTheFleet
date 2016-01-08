@@ -252,7 +252,7 @@ function dev_output_form(){
 					processing = true
 					dev_output_log('start')
 					
-					dev_output_steps = []
+					//dev_output_steps = []
 					
 					// 处理模板
 						dev_output_tmpl = node.fs.readFileSync('dev-output/templates/base.html', 'utf-8')
@@ -303,16 +303,24 @@ function dev_output_form(){
 					//	console.log(values)
 					//	dev_output_log('end')
 					//})
+					/*
 					dev_output_steps.push(function(){
 						dev_output_log('end')
 						processing = false
 						dev_output_only_assets = false
 						return true
 					})
+					*/
 					var result = Q(dev_output_tmpl);
 					dev_output_steps.forEach(function (f) {
 						result = result.then(f);
 					});
+					result = result.done(function(){
+						dev_output_log('end')
+						processing = false
+						dev_output_only_assets = false
+						return true
+					})
 					return result;
 				}
 				return
@@ -440,7 +448,6 @@ function dev_output_form(){
 					}).done(function(){
 						dev_output_log('end')
 						processing = false
-						dev_output_only_assets = false
 						return true
 					})
 				}

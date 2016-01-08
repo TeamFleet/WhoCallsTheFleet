@@ -387,6 +387,7 @@ _frame.app_main = {
 							
 							if( _frame.app_main.loading_state[url] == 'fail' ){
 								console.log('retry')
+								url+= (url.substr(url.length - 1) == '/' ? '' : '/') + 'index.html'
 								_frame.app_main.loading_start( url, callback_success, callback_error, callback_successAfter, callback_beforeSend, callback_complete )
 							}
 						}

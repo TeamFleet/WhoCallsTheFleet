@@ -4,12 +4,23 @@ _frame.app_main.page['arsenal'].init = function( page ){
 		//page.children('#arsenal_headtab-1').prop('checked', true)
 
 	// Blinky Akashi - http://codepen.io/Diablohu/pen/RPjBgG
+		/*
 		let akashi = page.find('.akashi')
 		akashi.attr({
 				'animation':	Math.floor((Math.random() * 3) + 1)
 			})
-			.on(_g.event.animationiteration, function(){
+			.on(_g.event.animationiteration, function(e){
 				akashi.attr(
+					'animation',
+					Math.floor((Math.random() * 3) + 1)
+				)
+			})
+			*/
+		page.find('.akashi').attr({
+				'animation':	Math.floor((Math.random() * 3) + 1)
+			})
+			.on(_g.event.animationiteration, function(e){
+				e.target.setAttribute(
 					'animation',
 					Math.floor((Math.random() * 3) + 1)
 				)
