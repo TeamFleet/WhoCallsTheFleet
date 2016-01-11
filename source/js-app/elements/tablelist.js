@@ -310,7 +310,7 @@ class Tablelist{
 				let stat = cell.attr('stat')
 					,sortData = this.sort_data_by_stat[stat]
 				
-				console.log(stat, sortData)
+				//console.log(stat, sortData)
 					
 				if( !stat || !sortData )
 					return false

@@ -1773,6 +1773,26 @@ menuitem {
     opacity: 0;
   }
 }
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg);
+  }
+  100% {
+    -webkit-transform: rotateZ(360deg);
+            transform: rotateZ(360deg);
+  }
+}
+@keyframes spin {
+  from {
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg);
+  }
+  100% {
+    -webkit-transform: rotateZ(360deg);
+            transform: rotateZ(360deg);
+  }
+}
 @-webkit-keyframes logoLoading {
   0% {
     -webkit-transform: translateY(10px);
@@ -3114,6 +3134,7 @@ main:after {
   width: 250px;
   z-index: 6;
   color: rgba(255, 255, 255, 0.75);
+  /*&:before, */
 }
 .bgcontrols,
 .bgcontrols .bgimgs {
@@ -3122,7 +3143,6 @@ main:after {
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
 }
-.bgcontrols:before,
 .bgcontrols > .wrapper,
 .bgcontrols .bgimgs,
 .bgcontrols .bgimg {
@@ -3131,15 +3151,6 @@ main:after {
   left: 0;
   width: 100%;
   height: 100%;
-}
-.bgcontrols:before {
-  content: '';
-  z-index: 100;
-  pointer-events: none;
-  -webkit-transition: none 0.2s ease-out;
-  transition: none 0.2s ease-out;
-  -webkit-transition-property: background;
-  transition-property: background;
 }
 .bgcontrols > .wrapper {
   border-left: 1px solid rgba(255, 255, 255, 0.5);
@@ -3305,10 +3316,10 @@ main:after {
 }
 .bgcontrols dl dd del {
   position: absolute;
-  top: -5px;
-  right: -5px;
-  width: 20px;
-  height: 20px;
+  top: -6px;
+  right: -6px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   z-index: 10;
   background: rgba(223, 32, 32, 0.75);
@@ -3321,9 +3332,9 @@ main:after {
   font-size: 25px;
   position: absolute;
   top: 50%;
-  left: 0;
+  left: -50%;
   line-height: 0;
-  width: 100%;
+  width: 200%;
   text-align: center;
 }
 .bgcontrols dl dd del:hover {
@@ -3411,8 +3422,17 @@ main:after {
   opacity: 0;
 }
 .bgcontrols.is-loading:before {
-  pointer-events: all;
-  background-color: rgba(0, 0, 0, 0.65);
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+.bgcontrols.is-loading dl dd.add s {
+  -webkit-animation: spin 2s linear infinite;
+          animation: spin 2s linear infinite;
 }
 @media all and (max-width: 720px) {
   .bgcontrols .bgimgs {
@@ -6574,6 +6594,9 @@ body.mod-capture #tip {
   -webkit-order: 999;
       -ms-flex-order: 999;
           order: 999;
+}
+.tablelist.ships.mod-search .tablelist-body dl[data-donotcompare="true"] {
+  display: none;
 }
 .tablelist-equipments .tablelist-body dl {
   height: auto;

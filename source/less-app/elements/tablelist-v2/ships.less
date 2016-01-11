@@ -453,11 +453,16 @@
 		//	opacity: 0;
 		//	z-index: -1;
 		//}
-		.tablelist-body h4{
-			display: none;
-		}
-		.tablelist-body dl:empty{
-			order: 	999;
+		.tablelist-body{
+			h4{
+				display: none;
+			}
+			dl:empty{
+				order: 	999;
+			}
+			dl[data-donotcompare="true"]{
+				display: none;
+			}
 		}
 	}
 }}

@@ -7973,8 +7973,6 @@ var Tablelist = function () {
 			var stat = cell.attr('stat'),
 			    sortData = this.sort_data_by_stat[stat];
 
-			console.log(stat, sortData);
-
 			if (!stat || !sortData) return !1;
 
 			if (stat != this.lastSortedStat) {
