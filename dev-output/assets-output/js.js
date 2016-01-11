@@ -9290,7 +9290,7 @@ TablelistFleets.menuOptions_show = function ($el, $el_tablelist) {
 		})];
 
 		if (_g.isNWjs) {
-			items = items.concat([$('<hr class="option-in-tablelist"/>'), $('<div class="option-in-tablelist option-filelocation"/>').html('<span>置配置文件位置</span>').append(TablelistFleets.filelocation_selector = $('<input type="file" class="none" webkitdirectory/>').on('change', function (e) {
+			items = items.concat([$('<hr class="option-in-tablelist"/>'), $('<div class="option-in-tablelist option-filelocation"/>').html('<span>配置文件位置</span>').append(TablelistFleets.filelocation_selector = $('<input type="file" class="none" webkitdirectory/>').on('change', function (e) {
 				TablelistFleets.moveBuildsLocation(TablelistFleets.filelocation_selector.val());
 			})).append($('<button type="button">还原</button>').on('click', function () {
 				TablelistFleets.moveBuildsLocation(node.path.join(node.gui.App.dataPath, 'NeDB'));

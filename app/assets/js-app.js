@@ -13727,7 +13727,7 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 				$('<hr class="option-in-tablelist"/>'),
 				
 				$('<div class="option-in-tablelist option-filelocation"/>')
-					.html('<span>置配置文件位置</span>')
+					.html('<span>配置文件位置</span>')
 					.append(
 						TablelistFleets.filelocation_selector = $('<input type="file" class="none" webkitdirectory/>')
 							.on('change', function(e){
