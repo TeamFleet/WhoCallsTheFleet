@@ -357,6 +357,8 @@ var _updater = {
 		// 全部下载完成		
 		promise_chain = promise_chain
 			.then(function(){
+				if( !size_received )
+					return true
 				_g.log('')
 				_g.log('全部数据包下载完成')
 				let deferred = Q.defer()
@@ -401,9 +403,8 @@ var _updater = {
 
 		// 错误处理
 			.then(function(){
-				_g.log('')
-				if( size_received >= size_total ){
-					//_g.log('')
+				if( size_received && size_received >= size_total ){
+					_g.log('')
 					_g.log('更新完成')
 					_updater.indicator(1)
 				}/*else{
