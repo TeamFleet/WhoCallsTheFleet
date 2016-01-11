@@ -1,9 +1,9 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.10.0.0",
-			"path":		"data/2016-01-11/app.nwjs-data",
-			"bytes":	16310217
+			"version":	"0.10.0.1",
+			"path":		"data/2016-01-11_2/app.nwjs-data",
+			"bytes":	16310220
 		},
 		"app-db": {
 			"version":	"1.10.0.0",
@@ -17,7 +17,7 @@
 		}
 	},
 	"packages-beta": {},
-	"core":  null,
+	"core": null,
 	"homepage": "http://fleet.diablohu.com/",
 	"release-notes": "https://github.com/Diablohu/WhoCallsTheFleet/releases",
 	"forum": "http://bbs.ngacn.cc/read.php?tid=7959995"
