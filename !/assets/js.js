@@ -2438,7 +2438,9 @@ _g.isNWjs = typeof node != 'undefined' || typeof nw != 'undefined';
 
 _g.isWebApp = navigator.standalone || _g.uriSearch('utm_source') == 'web_app_manifest';
 
-_g.isClient = _g.isNWjs || _g.isWebApp;
+_g.isUWP = typeof Windows !== 'undefined' && typeof Windows.UI !== 'undefined' && typeof Windows.UI.Notifications !== 'undefined';
+
+_g.isClient = _g.isNWjs || _g.isWebApp || _g.isUWP;
 
 function eventName(event, name) {
 	name = name ? '.' + name : '';
@@ -4037,6 +4039,7 @@ _frame.app_main = {
 
 						if (_frame.app_main.loading_state[url] == 'fail') {
 							console.log('retry');
+							url += (url.substr(url.length - 1) == '/' ? '' : '/') + 'index.html';
 							_frame.app_main.loading_start(url, callback_success, callback_error, callback_successAfter, callback_beforeSend, callback_complete);
 						}
 					}
@@ -4966,11 +4969,10 @@ _frame.app_main.page['equipments'] = {
 
 _frame.app_main.page['arsenal'] = {};
 _frame.app_main.page['arsenal'].init = function (page) {
-	var akashi = page.find('.akashi');
-	akashi.attr({
+	page.find('.akashi').attr({
 		'animation': Math.floor(Math.random() * 3 + 1)
-	}).on(_g.event.animationiteration, function () {
-		akashi.attr('animation', Math.floor(Math.random() * 3 + 1));
+	}).on(_g.event.animationiteration, function (e) {
+		e.target.setAttribute('animation', Math.floor(Math.random() * 3 + 1));
 	});
 
 	this.elMain = page.children('.main');
@@ -7970,8 +7972,6 @@ var Tablelist = function () {
 
 			var stat = cell.attr('stat'),
 			    sortData = this.sort_data_by_stat[stat];
-
-			console.log(stat, sortData);
 
 			if (!stat || !sortData) return !1;
 
