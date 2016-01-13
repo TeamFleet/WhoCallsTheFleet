@@ -420,11 +420,14 @@ class TablelistFleets extends Tablelist{
 							'data-fleetid': data._id || 'PLACEHOLDER',
 							//'data-infos': 	'[[FLEET::'+JSON.stringify(data)+']]'
 							'data-infos': 	'[[FLEET::'+data._id+']]',
-							'data-theme':	data.theme
+							'data-theme':	data.theme,
+							'class': 		'link_fleet'
 						})
+						/*
 						.data({
 							'initdata': 	data
 						})
+						*/
 			
 			this.columns.forEach(function(column){
 				switch( column[1] ){
@@ -468,6 +471,9 @@ class TablelistFleets extends Tablelist{
 						break;
 				}
 			})
+			
+			if( isPrepend === true )
+				return tr
 	
 			if( isPrepend )
 				tr.prependTo( this.dom.tbody )
@@ -577,111 +583,7 @@ class TablelistFleets extends Tablelist{
 				})
 				this.dbfile_selector = $('<input type="file" class="none"/>')
 					.on('change', function(e){
-						_frame.app_main.loading_start('tablelist_fleets_import', false)
-						this.dbfile_selector.prop('disabled', true)
-						
-						let file = this.dbfile_selector.val()
-							,promise_chain 	= Q.fcall(function(){})
-						
-						promise_chain
-						
-						// 载入文件
-							.then(function(){
-								let deferred = Q.defer()
-								if( _g.isNWjs ){
-									// NW.js - 使用node.js方式读取文件内容
-									node.fs.readFile(file, 'utf8', function(err, data){
-										if( err )
-											deferred.reject('文件载入失败', new Error(err))
-										else
-											deferred.resolve(data)
-									})
-								}else{
-									// HTML5方式
-									// http://www.html5rocks.com/en/tutorials/file/dndfiles/
-									for(let i = 0, f; f = e.target.files[i]; i++){
-										let reader = new FileReader();
-										reader.onload = (function(theFile) {
-											return function(r) {
-												return deferred.resolve(r.target.result)
-											};
-										})(f);
-										reader.readAsText(f);
-									}
-								}
-								return deferred.promise
-							})
-
-						// 处理文件内容，以换行符为准创建Array
-							.then(function(data){
-								this.dbfile_selector.val('')
-
-								let array = []
-									,deferred = Q.defer()
-								data.split('\n').forEach(function(line){
-									if( line ){
-										try{
-											array.push(JSON.parse(line))
-										}catch(e){
-											deferred.reject('文件格式错误', e)
-										}
-										deferred.resolve(array)
-									}else{
-										deferred.reject('文件无内容')
-									}
-								})
-								return deferred.promise
-							}.bind(this))
-						
-						// 已处理JSON，导入
-							.then(function(array){
-								let the_promises = []
-									,complete = 0
-								
-								array.forEach(function(data){
-									let deferred = Q.defer()
-									the_promises.push(deferred.promise)
-									
-									_db.fleets.insert(data, function(err){
-										complete++
-										if(err && err.errorType == "uniqueViolated"){
-											//if( confirm('舰队 [' + (data['name']||'无标题') + '] 已经存在，是否更新？') ){
-												_db.fleets.update({
-													_id: data._id
-												}, data, {}, function(err, numReplaced){
-													deferred.resolve()
-													if( err )
-														_g.log(err)
-													else
-														_g.log(numReplaced)
-												})
-											//}else{
-											//	deferred.resolve()
-											//}
-										}else{
-											deferred.resolve()
-										}
-									})
-								})
-								
-								return Q.all(the_promises);
-							})
-							.then(function(){
-								this.refresh()
-								_g.badgeMsg('成功导入配置')
-							}.bind(this))
-						
-						// 错误处理
-							.catch(function(msg, err) {
-								_g.log(msg)
-								_g.error(err)
-								_g.badgeError(msg)
-							})
-							.done(function(){
-								_g.log('import complete')
-								_frame.app_main.loading_complete('tablelist_fleets_import')
-								this.dbfile_selector.prop('disabled', false)
-							}.bind(this))
+						return this.importBuilds(this.dbfile_selector)
 					}.bind(this))
 					.appendTo(this.dom.filters)
 			}
@@ -858,7 +760,136 @@ class TablelistFleets extends Tablelist{
 				this.dom.tbody.scrollTop(this.dom.tbody.attr('scrollbody') || 0)
 			}.bind(this))
 		}
+	
+	// 导入配置文件
+		importBuilds( $selector ){
+			$selector = $selector || this.dbfile_selector
+
+			_frame.app_main.loading_start('tablelist_fleets_import', false)
+			$selector.prop('disabled', true)
+			
+			let master_deferred = Q.defer()
+				,promise_chain 	= Q.fcall(function(){
+					/*
+					let deferred = Q.defer()
+					if( _g.isNWjs ){
+						// NW.js - 使用node.js方式读取文件内容
+						node.fs.readFile(file, 'utf8', function(err, data){
+							if( err )
+								deferred.reject('文件载入失败', new Error(err))
+							else
+								deferred.resolve(data)
+						})
+					}else{
+						// HTML5方式
+						// http://www.html5rocks.com/en/tutorials/file/dndfiles/
+						for(let i = 0, f; f = e.target.files[i]; i++){
+							let reader = new FileReader();
+							reader.onload = (function(theFile) {
+								return function(r) {
+									return deferred.resolve(r.target.result)
+								};
+							})(f);
+							reader.readAsText(f);
+						}
+					}
+					return deferred.promise
+					*/
+					let deferred = Q.defer()
+					for(let i = 0, f; f = $selector[0].files[i]; i++){
+						let reader = new FileReader();
+						reader.onload = (function(theFile) {
+							return function(r) {
+								return deferred.resolve(r.target.result)
+							};
+						})(f);
+						reader.readAsText(f);
+					}
+					return deferred.promise
+			})
+
+			promise_chain = promise_chain
+			// 处理文件内容，以换行符为准创建Array
+				.then(function(data){
+					$selector.val('')
+
+					let array = []
+						,deferred = Q.defer()
+					data.split('\n').forEach(function(line){
+						if( line ){
+							try{
+								array.push(JSON.parse(line))
+							}catch(e){
+								deferred.reject('文件格式错误', e)
+							}
+							deferred.resolve(array)
+						}else{
+							deferred.reject('文件无内容')
+						}
+					})
+					return deferred.promise
+				}.bind(this))
+			
+			// 已处理JSON，导入
+				.then(function(array){
+					let deferred = Q.defer()
+						,chain = Q()
+					array.forEach(function(data){
+						chain = chain.then(function(){
+							let deferred = Q.defer()
+							_db.fleets.insert(data, function(err){
+								if(err){
+									if( err.errorType == "uniqueViolated" ){
+										TablelistFleets.modalBuildConflictShow(data, deferred)
+									}else{
+										deferred.reject(err)
+									}
+								}else{
+									deferred.resolve()
+								}
+							})
+							return deferred.promise
+						})
+					})
+					chain = chain
+						.then(function(){
+							deferred.resolve()
+						})
+						.catch(function(err){
+							deferred.reject(err)
+						})
+						.done(function(){
+							_frame.modal.hide()
+						})
+					return deferred.promise
+				})
+			
+			promise_chain = promise_chain
+				.then(function(){
+					this.refresh()
+					_g.badgeMsg('成功导入配置')
+					master_deferred.resolve()
+				}.bind(this))
+			
+			// 错误处理
+				.catch(function(msg, err) {
+					_g.log(msg)
+					_g.error(err)
+					_g.badgeError(msg)
+					master_deferred.reject(msg, err)
+				})
+				.done(function(){
+					_frame.app_main.loading_complete('tablelist_fleets_import')
+					$selector.prop('disabled', false)
+				})
+			
+			return master_deferred.promise
+		}
 }
+
+TablelistFleets.support = {};
+TablelistFleets.support.buildfile = (_g.isNWjs || (window.File && window.FileReader && window.FileList && window.Blob && window.URL)) ? true : false;
+
 TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 	if( !TablelistFleets.menuOptions ){
 		let items = [
@@ -919,32 +950,7 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 			]
 				
 		if( _g.isNWjs ){
-			// Lockr.get('fleets-builds-file', node.path.join(node.gui.App.dataPath, 'NeDB', 'fleets.json'))
-			// Lockr.set('fleets-builds-file', node.path.join(node.gui.App.dataPath, 'NeDB', 'fleets.json'))
-			items = items.concat([
-				$('<hr class="option-in-tablelist"/>'),
-				
-				$('<div class="option-in-tablelist option-filelocation"/>')
-					.html('<span>配置文件位置</span>')
-					.append(
-						TablelistFleets.filelocation_selector = $('<input type="file" class="none" webkitdirectory/>')
-							.on('change', function(e){
-								TablelistFleets.moveBuildsLocation(TablelistFleets.filelocation_selector.val())
-							})
-					)
-					.append(
-						$('<button type="button">还原</button>')
-							.on('click', function(){
-								TablelistFleets.moveBuildsLocation( node.path.join(node.gui.App.dataPath, 'NeDB') )
-							})
-					)
-					.append(
-						$('<button type="button">选择</button>')
-							.on('click', function(){
-								TablelistFleets.filelocation_selector.click()
-							})
-					)
-			])
+			items = items.concat(TablelistFleets.menuOptionsItemsBuildsLocation())
 		}
 
 		TablelistFleets.menuOptions = new _menu({
@@ -962,77 +968,117 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
 	TablelistFleets.menuOptions.show($el)
 }
 
-TablelistFleets.support = {};
-TablelistFleets.support.buildfile = (_g.isNWjs || (window.File && window.FileReader && window.FileList && window.Blob && window.URL)) ? true : false;
-
-TablelistFleets.moveBuildsLocation = function(location){
-	if( !location )
-		return
+TablelistFleets.modalBuildConflictShow = function(data, deferred){
+	if( !data )
+		return 
 	
-	_frame.app_main.loading_start('tablelist_fleets_newlocation', false)
-	TablelistFleets.filelocation_selector.prop('disabled', true)
-
-	let n = 'fleets.json'
-		,j = 1
-		,exist = false
-		,oldPath = Lockr.get('fleets-builds-file', node.path.join(node.gui.App.dataPath, 'NeDB', 'fleets.json'))
-
-	try{
-		exist = node.fs.lstatSync( node.path.join( location, n ) ) ? true : false
-	}catch(e){
-		exist = false
-	}
-	while( exist ){
-		n = 'fleets-' + (j++) + '.json'
-		try{
-			exist = node.fs.lstatSync( node.path.join( location, n ) ) ? true : false
-		}catch(e){
-			exist = false
-		}
+	if( !TablelistFleets.modalBuildConflict ){
+		TablelistFleets.modalBuildConflict = $('<div/>')
+			.append( $('<h4>原配置</h4>') )
+			.append( TablelistFleets.modalBuildConflictOld = $('<dl class="link_fleet"/>') )
+			.append( $('<h4>新配置</h4>') )
+			.append( TablelistFleets.modalBuildConflictNew = $('<dl class="link_fleet"/>') )
+			.append(
+				$('<p class="actions"/>')
+					.append( TablelistFleets.modalBuildConflictButtonConfirm = $('<button/>',{
+							'class':	'button',
+							'html':		'覆盖'
+						}) )
+					.append( TablelistFleets.modalBuildConflictButtonCancel = $('<button/>',{
+							'class':	'button',
+							'html': 	'取消'
+						}) )
+			)
 	}
 
-	let path = node.path.join(location, n)
-	Lockr.set('fleets-builds-file', path)
-	_db.fleets = new node.nedb({
-			filename: 	path
-		})
-	
-	// copy file to new location
-	node.mkdirp.sync( location )
-	Q.fcall(function(){
-		let deferred = Q.defer()
-			,cbCalled = false
-			,rd = node.fs.createReadStream( oldPath )
-		rd.on("error", function(err) {
-			done(err);
-		});
-		let wr = node.fs.createWriteStream( path );
-			wr.on("error", function(err) {
-			done(err);
-		});
-		wr.on("close", function(ex) {
-			done();
-		});
-		rd.pipe(wr);
-		function done(err) {
-			if (!cbCalled) {
-				//callback(err, path_src, dest);
-				deferred.resolve()
-				cbCalled = true;
+	let dataOld
+		,htmlFleet = function(data){
+			let html = '<i>'
+				,ships = InfosFleet.decompress(data.data)[0] || []
+				,j = 0;
+			while( j < 6 ){
+				if( ships[j] && ships[j][0] )
+					html+='<img class="img'+(_huCss.csscheck_full('mask-image') ? '' : ' nomask')
+							+'" src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0'
+							+ (_huCss.csscheck_full('mask-image') ? '.webp' : '-mask-2.png')
+							+ '" contextmenu="disabled"'
+							+ '/>'
+				else
+					html+='<s class="img'+(_huCss.csscheck_full('mask-image') ? '' : ' nomask')+'"/>'
+				j++
 			}
+			html+='</i>'
+			html = `<dt>${html}<strong>${data['name']}</strong></dt>`
+				+ `<span>最后更新: ${ (new Date(data.time_modify)).format('%Y年%m月%d日 %G:%i:%s') }</span>`
+			return html
 		}
-		return deferred.promise
+
+	Q.fcall(function(){
+		let _deferred = Q.defer()
+		_db.fleets.find({
+			_id: data._id
+		}, function(err, docs){
+			if( err ){
+				if( deferred )
+					deferred.reject(err)
+				else
+					_g.log(err)
+			}else{
+				dataOld = docs[0]
+				_deferred.resolve()
+			}
+		})
+		return _deferred.promise
 	})
 	.then(function(){
-		let deferred = Q.defer()
-		_db.fleets.loadDatabase(function(){
-			deferred.resolve()
-		})
-		return deferred.promise
+		TablelistFleets.modalBuildConflictOld
+			.attr({
+				'data-theme':	dataOld.theme,
+				'class': 		'link_fleet'
+			}).html(htmlFleet(dataOld))
+
+		TablelistFleets.modalBuildConflictNew
+			.attr({
+				'data-theme':	data.theme,
+				'class': 		'link_fleet'
+			}).html(htmlFleet(data))
+
+		TablelistFleets.modalBuildConflictButtonConfirm
+			.off('click')
+			.on('click', function(){
+				_db.fleets.update({
+					_id: data._id
+				}, data, {}, function(err, numReplaced){
+					if( err ){
+						if( deferred )
+							deferred.reject(err)
+						else
+							_g.log(err)
+					}else
+						_g.log('build updated ' + numReplaced)
+					if( deferred )
+						deferred.resolve()
+				})
+			})
+
+		TablelistFleets.modalBuildConflictButtonCancel
+			.off('click')
+			.on('click', function(){
+				if( deferred )
+					deferred.resolve()
+			})
+
+		_frame.modal.show(
+			TablelistFleets.modalBuildConflict,
+			'配置冲突' + data._id,
+			{
+				'classname': 	'infos_fleet infos_fleet_import_conflict',
+				'detach':		true,
+				'onClose': 		function(){
+					if( deferred )
+						deferred.resolve()
+				}
+			}
+		)
 	})
-	.done(function(){
-		_frame.app_main.loading_complete('tablelist_fleets_newlocation')
-		TablelistFleets.filelocation_selector.prop('disabled', false)
-		TablelistFleets.filelocation_selector.val('')
-	})
-}
+};

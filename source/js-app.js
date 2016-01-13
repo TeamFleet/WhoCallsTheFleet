@@ -60,6 +60,7 @@
 // @koala-prepend "js-app/elements/tablelist-v2/ships.js"
 // @koala-prepend "js-app/elements/tablelist-v2/equipments.js"
 // @koala-prepend "js-app/elements/tablelist-v2/fleets.js"
+// @koala-prepend "js-app/elements/tablelist-v2/fleets.nwjs.js"
 // @koala-prepend "js-app/elements/tablelist-entities.js"
 // @koala-prepend "js-app/elements/tablelist-entities-full.js"
 // @koala-prepend "js-app/elements/tablelist-equipments-full.js"
