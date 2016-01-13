@@ -13771,11 +13771,11 @@ TablelistFleets.modalBuildConflictShow = function(data, deferred){
 				$('<p class="actions"/>')
 					.append( TablelistFleets.modalBuildConflictButtonConfirm = $('<button/>',{
 							'class':	'button',
-							'html':		'覆盖'
+							'html':		'替换'
 						}) )
 					.append( TablelistFleets.modalBuildConflictButtonCancel = $('<button/>',{
 							'class':	'button',
-							'html': 	'取消'
+							'html': 	'跳过'
 						}) )
 			)
 	}
@@ -13820,18 +13820,6 @@ TablelistFleets.modalBuildConflictShow = function(data, deferred){
 		return _deferred.promise
 	})
 	.then(function(){
-		TablelistFleets.modalBuildConflictOld
-			.attr({
-				'data-theme':	dataOld.theme,
-				'class': 		'link_fleet'
-			}).html(htmlFleet(dataOld))
-
-		TablelistFleets.modalBuildConflictNew
-			.attr({
-				'data-theme':	data.theme,
-				'class': 		'link_fleet'
-			}).html(htmlFleet(data))
-
 		TablelistFleets.modalBuildConflictButtonConfirm
 			.off('click')
 			.on('click', function(){
@@ -13843,32 +13831,57 @@ TablelistFleets.modalBuildConflictShow = function(data, deferred){
 							deferred.reject(err)
 						else
 							_g.log(err)
-					}else
+					}else{
 						_g.log('build updated ' + numReplaced)
+						if( _frame.infos.contentCache.fleet && _frame.infos.contentCache.fleet[data._id] ){
+							_frame.infos.contentCache.fleet[data._id].remove()
+							delete _frame.infos.contentCache.fleet[data._id]
+						}
+					}
 					if( deferred )
 						deferred.resolve()
 				})
 			})
 
-		TablelistFleets.modalBuildConflictButtonCancel
-			.off('click')
-			.on('click', function(){
-				if( deferred )
-					deferred.resolve()
-			})
+		if( data.time_modify > dataOld.time_modify ){
+			TablelistFleets.modalBuildConflictButtonConfirm.trigger('click')
+		}else if( data.time_modify < dataOld.time_modify ){
+			TablelistFleets.modalBuildConflictOld
+				.attr({
+					'data-theme':	dataOld.theme,
+					'class': 		'link_fleet'
+				}).html(htmlFleet(dataOld))
 
-		_frame.modal.show(
-			TablelistFleets.modalBuildConflict,
-			'配置冲突',
-			{
-				'classname': 	'infos_fleet infos_fleet_import_conflict',
-				'detach':		true,
-				'onClose': 		function(){
+			TablelistFleets.modalBuildConflictNew
+				.attr({
+					'data-theme':	data.theme,
+					'class': 		'link_fleet'
+				}).html(htmlFleet(data))
+
+			TablelistFleets.modalBuildConflictButtonCancel
+				.off('click')
+				.on('click', function(){
 					if( deferred )
 						deferred.resolve()
+				})
+
+			_frame.modal.show(
+				TablelistFleets.modalBuildConflict,
+				'配置冲突',
+				{
+					'classname': 	'infos_fleet infos_fleet_import_conflict',
+					'detach':		true,
+					'onClose': 		function(){
+						if( deferred )
+							deferred.resolve()
+					}
 				}
-			}
-		)
+			)
+		}else{
+			if( deferred )
+				deferred.resolve()
+		}
+
 	})
 };
 TablelistFleets.menuOptionsItemsBuildsLocation = function(){
