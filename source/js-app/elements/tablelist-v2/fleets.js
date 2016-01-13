@@ -762,7 +762,7 @@ class TablelistFleets extends Tablelist{
 		}
 	
 	// 导入配置文件
-		importBuilds( $selector ){
+		importBuilds( $selector, filename ){
 			$selector = $selector || this.dbfile_selector
 
 			_frame.app_main.loading_start('tablelist_fleets_import', false)
@@ -770,11 +770,10 @@ class TablelistFleets extends Tablelist{
 			
 			let master_deferred = Q.defer()
 				,promise_chain 	= Q.fcall(function(){
-					/*
 					let deferred = Q.defer()
-					if( _g.isNWjs ){
+					if( _g.isNWjs && filename ){
 						// NW.js - 使用node.js方式读取文件内容
-						node.fs.readFile(file, 'utf8', function(err, data){
+						node.fs.readFile( node.path.join($selector.val(), filename) , 'utf8', function(err, data){
 							if( err )
 								deferred.reject('文件载入失败', new Error(err))
 							else
@@ -783,7 +782,7 @@ class TablelistFleets extends Tablelist{
 					}else{
 						// HTML5方式
 						// http://www.html5rocks.com/en/tutorials/file/dndfiles/
-						for(let i = 0, f; f = e.target.files[i]; i++){
+						for(let i = 0, f; f = $selector[0].files[i]; i++){
 							let reader = new FileReader();
 							reader.onload = (function(theFile) {
 								return function(r) {
@@ -792,18 +791,6 @@ class TablelistFleets extends Tablelist{
 							})(f);
 							reader.readAsText(f);
 						}
-					}
-					return deferred.promise
-					*/
-					let deferred = Q.defer()
-					for(let i = 0, f; f = $selector[0].files[i]; i++){
-						let reader = new FileReader();
-						reader.onload = (function(theFile) {
-							return function(r) {
-								return deferred.resolve(r.target.result)
-							};
-						})(f);
-						reader.readAsText(f);
 					}
 					return deferred.promise
 			})
@@ -828,7 +815,7 @@ class TablelistFleets extends Tablelist{
 						}
 					})
 					return deferred.promise
-				}.bind(this))
+				})
 			
 			// 已处理JSON，导入
 				.then(function(array){
@@ -874,7 +861,7 @@ class TablelistFleets extends Tablelist{
 			// 错误处理
 				.catch(function(msg, err) {
 					_g.log(msg)
-					_g.error(err)
+					_g.error(err, '[舰队] 导入配置文件')
 					_g.badgeError(msg)
 					master_deferred.reject(msg, err)
 				})
@@ -1070,7 +1057,7 @@ TablelistFleets.modalBuildConflictShow = function(data, deferred){
 
 		_frame.modal.show(
 			TablelistFleets.modalBuildConflict,
-			'配置冲突' + data._id,
+			'配置冲突',
 			{
 				'classname': 	'infos_fleet infos_fleet_import_conflict',
 				'detach':		true,

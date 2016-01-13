@@ -9176,7 +9176,7 @@ var TablelistFleets = function (_Tablelist4) {
 		}
 	}, {
 		key: 'importBuilds',
-		value: function importBuilds($selector) {
+		value: function importBuilds($selector, filename) {
 			$selector = $selector || this.dbfile_selector;
 
 			_frame.app_main.loading_start('tablelist_fleets_import', !1);
@@ -9185,14 +9185,20 @@ var TablelistFleets = function (_Tablelist4) {
 			var master_deferred = Q.defer(),
 			    promise_chain = Q.fcall(function () {
 				var deferred = Q.defer();
-				for (var _i21 = 0, f = undefined; f = $selector[0].files[_i21]; _i21++) {
-					var reader = new FileReader();
-					reader.onload = function (theFile) {
-						return function (r) {
-							return deferred.resolve(r.target.result);
-						};
-					}(f);
-					reader.readAsText(f);
+				if (_g.isNWjs && filename) {
+					node.fs.readFile(node.path.join($selector.val(), filename), 'utf8', function (err, data) {
+						if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
+					});
+				} else {
+					for (var _i21 = 0, f = undefined; f = $selector[0].files[_i21]; _i21++) {
+						var reader = new FileReader();
+						reader.onload = function (theFile) {
+							return function (r) {
+								return deferred.resolve(r.target.result);
+							};
+						}(f);
+						reader.readAsText(f);
+					}
 				}
 				return deferred.promise;
 			});
@@ -9215,7 +9221,7 @@ var TablelistFleets = function (_Tablelist4) {
 					}
 				});
 				return deferred.promise;
-			}.bind(this)).then(function (array) {
+			}).then(function (array) {
 				var deferred = Q.defer(),
 				    chain = Q();
 				array.forEach(function (data) {
@@ -9251,7 +9257,7 @@ var TablelistFleets = function (_Tablelist4) {
 				master_deferred.resolve();
 			}.bind(this)).catch(function (msg, err) {
 				_g.log(msg);
-				_g.error(err);
+				_g.error(err, '[舰队] 导入配置文件');
 				_g.badgeError(msg);
 				master_deferred.reject(msg, err);
 			}).done(function () {
@@ -9388,7 +9394,7 @@ TablelistFleets.modalBuildConflictShow = function (data, deferred) {
 			if (deferred) deferred.resolve();
 		});
 
-		_frame.modal.show(TablelistFleets.modalBuildConflict, '配置冲突' + data._id, {
+		_frame.modal.show(TablelistFleets.modalBuildConflict, '配置冲突', {
 			'classname': 'infos_fleet infos_fleet_import_conflict',
 			'detach': !0,
 			'onClose': function onClose() {
