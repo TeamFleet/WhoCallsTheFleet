@@ -1946,6 +1946,8 @@ _frame.modal = {
 
 		content.appendTo(this.dom.content);
 
+		if (settings.onClose) _frame.modal.dom.container.on('close', settings.onClose);
+
 		if (title) {
 			this.dom.titlebar.html(title);
 			this.dom.container.addClass('hastitle');
@@ -2031,6 +2033,7 @@ _frame.modal.init = function () {
 					_frame.modal.dom.container.removeClass('show');
 
 					_frame.modal.showing = !1;
+					_frame.modal.dom.container.trigger('close').off('close');
 				}, 10);
 			}
 		}
@@ -8976,9 +8979,8 @@ var TablelistFleets = function (_Tablelist4) {
 				'data-fleetid': data._id || 'PLACEHOLDER',
 
 				'data-infos': '[[FLEET::' + data._id + ']]',
-				'data-theme': data.theme
-			}).data({
-				'initdata': data
+				'data-theme': data.theme,
+				'class': 'link_fleet'
 			});
 
 			this.columns.forEach(function (column) {
@@ -9000,6 +9002,8 @@ var TablelistFleets = function (_Tablelist4) {
 						break;
 				}
 			});
+
+			if (isPrepend === !0) return tr;
 
 			if (isPrepend) tr.prependTo(this.dom.tbody);else tr.insertBefore(this.flexgrid_ph);
 
@@ -9052,84 +9056,7 @@ var TablelistFleets = function (_Tablelist4) {
 					}.bind(this)) : null)]
 				});
 				this.dbfile_selector = $('<input type="file" class="none"/>').on('change', function (e) {
-					_frame.app_main.loading_start('tablelist_fleets_import', !1);
-					this.dbfile_selector.prop('disabled', !0);
-
-					var file = this.dbfile_selector.val(),
-					    promise_chain = Q.fcall(function () {});
-
-					promise_chain.then(function () {
-						var deferred = Q.defer();
-						if (_g.isNWjs) {
-							node.fs.readFile(file, 'utf8', function (err, data) {
-								if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
-							});
-						} else {
-							for (var _i21 = 0, f = undefined; f = e.target.files[_i21]; _i21++) {
-								var reader = new FileReader();
-								reader.onload = function (theFile) {
-									return function (r) {
-										return deferred.resolve(r.target.result);
-									};
-								}(f);
-								reader.readAsText(f);
-							}
-						}
-						return deferred.promise;
-					}).then(function (data) {
-						this.dbfile_selector.val('');
-
-						var array = [],
-						    deferred = Q.defer();
-						data.split('\n').forEach(function (line) {
-							if (line) {
-								try {
-									array.push(JSON.parse(line));
-								} catch (e) {
-									deferred.reject('文件格式错误', e);
-								}
-								deferred.resolve(array);
-							} else {
-								deferred.reject('文件无内容');
-							}
-						});
-						return deferred.promise;
-					}.bind(this)).then(function (array) {
-						var the_promises = [],
-						    complete = 0;
-
-						array.forEach(function (data) {
-							var deferred = Q.defer();
-							the_promises.push(deferred.promise);
-
-							_db.fleets.insert(data, function (err) {
-								complete++;
-								if (err && err.errorType == "uniqueViolated") {
-									_db.fleets.update({
-										_id: data._id
-									}, data, {}, function (err, numReplaced) {
-										deferred.resolve();
-										if (err) _g.log(err);else _g.log(numReplaced);
-									});
-								} else {
-										deferred.resolve();
-									}
-							});
-						});
-
-						return Q.all(the_promises);
-					}).then(function () {
-						this.refresh();
-						_g.badgeMsg('成功导入配置');
-					}.bind(this)).catch(function (msg, err) {
-						_g.log(msg);
-						_g.error(err);
-						_g.badgeError(msg);
-					}).done(function () {
-						_g.log('import complete');
-						_frame.app_main.loading_complete('tablelist_fleets_import');
-						this.dbfile_selector.prop('disabled', !1);
-					}.bind(this));
+					return this.importBuilds(this.dbfile_selector);
 				}.bind(this)).appendTo(this.dom.filters);
 			}
 
@@ -9247,10 +9174,106 @@ var TablelistFleets = function (_Tablelist4) {
 				this.dom.tbody.scrollTop(this.dom.tbody.attr('scrollbody') || 0);
 			}.bind(this));
 		}
+	}, {
+		key: 'importBuilds',
+		value: function importBuilds($selector, filename) {
+			$selector = $selector || this.dbfile_selector;
+
+			_frame.app_main.loading_start('tablelist_fleets_import', !1);
+			$selector.prop('disabled', !0);
+
+			var master_deferred = Q.defer(),
+			    promise_chain = Q.fcall(function () {
+				var deferred = Q.defer();
+				if (_g.isNWjs && filename) {
+					node.fs.readFile(node.path.join($selector.val(), filename), 'utf8', function (err, data) {
+						if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
+					});
+				} else {
+					for (var _i21 = 0, f = undefined; f = $selector[0].files[_i21]; _i21++) {
+						var reader = new FileReader();
+						reader.onload = function (theFile) {
+							return function (r) {
+								return deferred.resolve(r.target.result);
+							};
+						}(f);
+						reader.readAsText(f);
+					}
+				}
+				return deferred.promise;
+			});
+
+			promise_chain = promise_chain.then(function (data) {
+				$selector.val('');
+
+				var array = [],
+				    deferred = Q.defer();
+				data.split('\n').forEach(function (line) {
+					if (line) {
+						try {
+							array.push(JSON.parse(line));
+						} catch (e) {
+							deferred.reject('文件格式错误', e);
+						}
+						deferred.resolve(array);
+					} else {
+						deferred.reject('文件无内容');
+					}
+				});
+				return deferred.promise;
+			}).then(function (array) {
+				var deferred = Q.defer(),
+				    chain = Q();
+				array.forEach(function (data) {
+					chain = chain.then(function () {
+						var deferred = Q.defer();
+						_db.fleets.insert(data, function (err) {
+							if (err) {
+								if (err.errorType == "uniqueViolated") {
+									TablelistFleets.modalBuildConflictShow(data, deferred);
+								} else {
+									deferred.reject(err);
+								}
+							} else {
+								deferred.resolve();
+							}
+						});
+						return deferred.promise;
+					});
+				});
+				chain = chain.then(function () {
+					deferred.resolve();
+				}).catch(function (err) {
+					deferred.reject(err);
+				}).done(function () {
+					_frame.modal.hide();
+				});
+				return deferred.promise;
+			});
+
+			promise_chain = promise_chain.then(function () {
+				this.refresh();
+				_g.badgeMsg('成功导入配置');
+				master_deferred.resolve();
+			}.bind(this)).catch(function (msg, err) {
+				_g.log(msg);
+				_g.error(err, '[舰队] 导入配置文件');
+				_g.badgeError(msg);
+				master_deferred.reject(msg, err);
+			}).done(function () {
+				_frame.app_main.loading_complete('tablelist_fleets_import');
+				$selector.prop('disabled', !1);
+			});
+
+			return master_deferred.promise;
+		}
 	}]);
 
 	return TablelistFleets;
 }(Tablelist);
+
+TablelistFleets.support = {};
+TablelistFleets.support.buildfile = _g.isNWjs || window.File && window.FileReader && window.FileList && window.Blob && window.URL ? !0 : !1;
 
 TablelistFleets.menuOptions_show = function ($el, $el_tablelist) {
 	if (!TablelistFleets.menuOptions) {
@@ -9290,13 +9313,7 @@ TablelistFleets.menuOptions_show = function ($el, $el_tablelist) {
 		})];
 
 		if (_g.isNWjs) {
-			items = items.concat([$('<hr class="option-in-tablelist"/>'), $('<div class="option-in-tablelist option-filelocation"/>').html('<span>置配置文件位置</span>').append(TablelistFleets.filelocation_selector = $('<input type="file" class="none" webkitdirectory/>').on('change', function (e) {
-				TablelistFleets.moveBuildsLocation(TablelistFleets.filelocation_selector.val());
-			})).append($('<button type="button">还原</button>').on('click', function () {
-				TablelistFleets.moveBuildsLocation(node.path.join(node.gui.App.dataPath, 'NeDB'));
-			})).append($('<button type="button">选择</button>').on('click', function () {
-				TablelistFleets.filelocation_selector.click();
-			}))]);
+			items = items.concat(TablelistFleets.menuOptionsItemsBuildsLocation());
 		}
 
 		TablelistFleets.menuOptions = new _menu({
@@ -9311,72 +9328,90 @@ TablelistFleets.menuOptions_show = function ($el, $el_tablelist) {
 	TablelistFleets.menuOptions.show($el);
 };
 
-TablelistFleets.support = {};
-TablelistFleets.support.buildfile = _g.isNWjs || window.File && window.FileReader && window.FileList && window.Blob && window.URL ? !0 : !1;
+TablelistFleets.modalBuildConflictShow = function (data, deferred) {
+	if (!data) return;
 
-TablelistFleets.moveBuildsLocation = function (location) {
-	if (!location) return;
-
-	_frame.app_main.loading_start('tablelist_fleets_newlocation', !1);
-	TablelistFleets.filelocation_selector.prop('disabled', !0);
-
-	var n = 'fleets.json',
-	    j = 1,
-	    exist = !1,
-	    oldPath = Lockr.get('fleets-builds-file', node.path.join(node.gui.App.dataPath, 'NeDB', 'fleets.json'));
-
-	try {
-		exist = node.fs.lstatSync(node.path.join(location, n)) ? !0 : !1;
-	} catch (e) {
-		exist = !1;
+	if (!TablelistFleets.modalBuildConflict) {
+		TablelistFleets.modalBuildConflict = $('<div/>').append($('<h4>原配置</h4>')).append(TablelistFleets.modalBuildConflictOld = $('<dl class="link_fleet"/>')).append($('<h4>新配置</h4>')).append(TablelistFleets.modalBuildConflictNew = $('<dl class="link_fleet"/>')).append($('<p class="actions"/>').append(TablelistFleets.modalBuildConflictButtonConfirm = $('<button/>', {
+			'class': 'button',
+			'html': '替换'
+		})).append(TablelistFleets.modalBuildConflictButtonCancel = $('<button/>', {
+			'class': 'button',
+			'html': '跳过'
+		})));
 	}
-	while (exist) {
-		n = 'fleets-' + j++ + '.json';
-		try {
-			exist = node.fs.lstatSync(node.path.join(location, n)) ? !0 : !1;
-		} catch (e) {
-			exist = !1;
+
+	var dataOld = undefined,
+	    htmlFleet = function htmlFleet(data) {
+		var html = '<i>',
+		    ships = InfosFleet.decompress(data.data)[0] || [],
+		    j = 0;
+		while (j < 6) {
+			if (ships[j] && ships[j][0]) html += '<img class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '" src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0' + (_huCss.csscheck_full('mask-image') ? '.png' : '-mask-2.png') + '" contextmenu="disabled"' + '/>';else html += '<s class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '"/>';
+			j++;
 		}
-	}
+		html += '</i>';
+		html = '<dt>' + html + '<strong>' + data['name'] + '</strong></dt>' + ('<span>最后更新: ' + new Date(data.time_modify).format('%Y年%m月%d日 %G:%i:%s') + '</span>');
+		return html;
+	};
 
-	var path = node.path.join(location, n);
-	Lockr.set('fleets-builds-file', path);
-	_db.fleets = new node.nedb({
-		filename: path
-	});
-
-	node.mkdirp.sync(location);
 	Q.fcall(function () {
-		var deferred = Q.defer(),
-		    cbCalled = !1,
-		    rd = node.fs.createReadStream(oldPath);
-		rd.on("error", function (err) {
-			done(err);
-		});
-		var wr = node.fs.createWriteStream(path);
-		wr.on("error", function (err) {
-			done(err);
-		});
-		wr.on("close", function (ex) {
-			done();
-		});
-		rd.pipe(wr);
-		function done(err) {
-			if (!cbCalled) {
-				deferred.resolve();
-				cbCalled = !0;
+		var _deferred = Q.defer();
+		_db.fleets.find({
+			_id: data._id
+		}, function (err, docs) {
+			if (err) {
+				if (deferred) deferred.reject(err);else _g.log(err);
+			} else {
+				dataOld = docs[0];
+				_deferred.resolve();
 			}
-		}
-		return deferred.promise;
-	}).then(function () {
-		var deferred = Q.defer();
-		_db.fleets.loadDatabase(function () {
-			deferred.resolve();
 		});
-		return deferred.promise;
-	}).done(function () {
-		_frame.app_main.loading_complete('tablelist_fleets_newlocation');
-		TablelistFleets.filelocation_selector.prop('disabled', !1);
-		TablelistFleets.filelocation_selector.val('');
+		return _deferred.promise;
+	}).then(function () {
+		TablelistFleets.modalBuildConflictButtonConfirm.off('click').on('click', function () {
+			_db.fleets.update({
+				_id: data._id
+			}, data, {}, function (err, numReplaced) {
+				if (err) {
+					if (deferred) deferred.reject(err);else _g.log(err);
+				} else {
+					_g.log('build updated ' + numReplaced);
+					if (_frame.infos.contentCache.fleet && _frame.infos.contentCache.fleet[data._id]) {
+						_frame.infos.contentCache.fleet[data._id].remove();
+						delete _frame.infos.contentCache.fleet[data._id];
+					}
+				}
+				if (deferred) deferred.resolve();
+			});
+		});
+
+		if (data.time_modify > dataOld.time_modify) {
+			TablelistFleets.modalBuildConflictButtonConfirm.trigger('click');
+		} else if (data.time_modify < dataOld.time_modify) {
+			TablelistFleets.modalBuildConflictOld.attr({
+				'data-theme': dataOld.theme,
+				'class': 'link_fleet'
+			}).html(htmlFleet(dataOld));
+
+			TablelistFleets.modalBuildConflictNew.attr({
+				'data-theme': data.theme,
+				'class': 'link_fleet'
+			}).html(htmlFleet(data));
+
+			TablelistFleets.modalBuildConflictButtonCancel.off('click').on('click', function () {
+				if (deferred) deferred.resolve();
+			});
+
+			_frame.modal.show(TablelistFleets.modalBuildConflict, '配置冲突', {
+				'classname': 'infos_fleet infos_fleet_import_conflict',
+				'detach': !0,
+				'onClose': function onClose() {
+					if (deferred) deferred.resolve();
+				}
+			});
+		} else {
+			if (deferred) deferred.resolve();
+		}
 	});
 };
