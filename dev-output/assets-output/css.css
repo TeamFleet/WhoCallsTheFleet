@@ -697,13 +697,6 @@ body > .menus > .menu > .body hr {
   margin: 8px 0;
   clear: both;
 }
-body > .menus > .menu.mod-blur-backdrop {
-  background: transparent;
-}
-body > .menus > .menu.mod-blur-backdrop > .body {
-  background: rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.2);
-}
 body > .menus > .menu.mod-blur-shot {
   background: rgba(0, 0, 0, 0.5);
 }
@@ -719,9 +712,18 @@ body > .menus > .menu.on > .blured {
   -webkit-transform: translateY(0);
           transform: translateY(0);
 }
-body > .menus > .menu.on.mod-blur-backdrop {
-  -webkit-backdrop-filter: blur(7.5px);
-          backdrop-filter: blur(7.5px);
+@supports ((-webkit-backdrop-filter: blur(7.5px)) or (backdrop-filter: blur(7.5px))) {
+  body > .menus > .menu {
+    background: transparent;
+  }
+  body > .menus > .menu > .body {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  body > .menus > .menu.on {
+    -webkit-backdrop-filter: blur(7.5px);
+            backdrop-filter: blur(7.5px);
+  }
 }
 body > .menus > .menu.show {
   display: block;
@@ -873,9 +875,6 @@ body > .modal > s {
   -webkit-animation: fadein 0.3s ease-out;
   background: rgba(16, 16, 16, 0.25);
 }
-body > .modal.mod-blur-backdrop > div {
-  background: rgba(0, 0, 0, 0.3);
-}
 body > .modal.mod-blur-shot > s {
   background: transparent;
   box-shadow: inset 0 0 50px 25px #666666;
@@ -908,13 +907,18 @@ body > .modal.on ~ #layout {
   -moz-user-select: none;
   -ms-user-select: none;
 }
-body > .modal.on.mod-blur-backdrop {
-  -webkit-backdrop-filter: blur(7.5px);
-          backdrop-filter: blur(7.5px);
-}
 body > .modal.show {
   display: block !important;
   will-change: opacity;
+}
+@supports ((-webkit-backdrop-filter: blur(7.5px)) or (backdrop-filter: blur(7.5px))) {
+  body > .modal > div {
+    background: rgba(0, 0, 0, 0.3);
+  }
+  body > .modal.on {
+    -webkit-backdrop-filter: blur(7.5px);
+            backdrop-filter: blur(7.5px);
+  }
 }
 body > .modal.hastitle > div {
   padding-top: 1.7000000000000002rem !important;
@@ -990,24 +994,26 @@ body > .modal.hastitle > div > .close {
   background: no-repeat 50% 50% / cover;
   background-attachment: fixed;
 }
-#tip.mod-blur-backdrop {
-  background: transparent;
-}
-#tip.mod-blur-backdrop > .body {
-  background: rgba(0, 0, 0, 0.3);
-}
 #tip.mod-blur-shot {
   background: rgba(0, 0, 0, 0.5);
 }
 #tip.mod-blur-shot > .body {
   background: rgba(0, 0, 0, 0.4);
 }
+@supports ((-webkit-backdrop-filter: blur(7.5px)) or (backdrop-filter: blur(7.5px))) {
+  #tip {
+    background: transparent;
+  }
+  #tip > .body {
+    background: rgba(0, 0, 0, 0.3);
+  }
+  #tip.on {
+    -webkit-backdrop-filter: blur(7.5px);
+            backdrop-filter: blur(7.5px);
+  }
+}
 #tip.on {
   opacity: 1;
-}
-#tip.on.mod-blur-backdrop {
-  -webkit-backdrop-filter: blur(7.5px);
-          backdrop-filter: blur(7.5px);
 }
 #tip.show {
   display: block;

@@ -1034,6 +1034,12 @@ TablelistFleets.modalBuildConflictShow = function(data, deferred){
 						if( _frame.infos.contentCache.fleet && _frame.infos.contentCache.fleet[data._id] ){
 							_frame.infos.contentCache.fleet[data._id].remove()
 							delete _frame.infos.contentCache.fleet[data._id]
+							try{
+								delete _frame.app_main.loading_state[_g.state2URI({
+										'infos':	'fleet',
+										'id':		data._id
+									})]
+							}catch(e){}
 						}
 					}
 					if( deferred )

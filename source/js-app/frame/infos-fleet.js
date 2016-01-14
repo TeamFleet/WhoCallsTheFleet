@@ -316,7 +316,7 @@ class InfosFleet{
 													title: function(){
 														return InfosFleet.menuCur.data.name
 													},
-													summary: '分享自 是谁呼叫舰队 (http://fleet.diablohu.com)',
+													summary: '分享自 是谁呼叫舰队（ http://fleet.diablohu.com ）',
 													sites: [
 														'tsina',		// 微博
 														'tqq',			// 腾讯微博

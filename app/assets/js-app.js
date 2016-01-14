@@ -8658,7 +8658,7 @@ class InfosFleet{
 													title: function(){
 														return InfosFleet.menuCur.data.name
 													},
-													summary: '分享自 是谁呼叫舰队 (http://fleet.diablohu.com)',
+													summary: '分享自 是谁呼叫舰队（ http://fleet.diablohu.com ）',
 													sites: [
 														'tsina',		// 微博
 														'tqq',			// 腾讯微博
@@ -13836,6 +13836,12 @@ TablelistFleets.modalBuildConflictShow = function(data, deferred){
 						if( _frame.infos.contentCache.fleet && _frame.infos.contentCache.fleet[data._id] ){
 							_frame.infos.contentCache.fleet[data._id].remove()
 							delete _frame.infos.contentCache.fleet[data._id]
+							try{
+								delete _frame.app_main.loading_state[_g.state2URI({
+										'infos':	'fleet',
+										'id':		data._id
+									})]
+							}catch(e){}
 						}
 					}
 					if( deferred )
