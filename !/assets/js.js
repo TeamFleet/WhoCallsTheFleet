@@ -1757,9 +1757,7 @@ _menu.prototype.defaults = {
 
 	'target': null,
 
-	'className': null,
-
-	'showBlured': !0
+	'className': null
 };
 
 _menu.prototype.init = function () {
@@ -1803,9 +1801,7 @@ _menu.prototype.init = function () {
 	}
 	this.dom.body.find('input[type="checkbox"]+label').addClass('checkbox');
 
-	if (this.settings.showBlured && _huCss.csscheck_full('backdrop-filter')) {
-		this.dom.menu.addClass('mod-blur-backdrop');
-	} else if (this.settings.showBlured && typeof node != 'undefined') {
+	if (typeof node != 'undefined') {
 		this.dom.menu.addClass('mod-blur-shot');
 	}
 
@@ -1851,7 +1847,7 @@ _menu.prototype.show = function (targetEl, x, y) {
 		'left': left + menu_width > viewport_width ? viewport_width - menu_width : left
 	});
 
-	if (this.settings.showBlured && typeof node != 'undefined') {
+	if (typeof node != 'undefined') {
 		node.win.capturePage(this.capturePage_callback.bind(this), 'jpg', 'datauri');
 	} else {
 		this.dom.menu.addClass('on');
@@ -1962,9 +1958,7 @@ _frame.modal = {
 		});
 
 		if (settings.showBlured) {
-			if (_huCss.csscheck_full('backdrop-filter')) {
-				this.dom.container.addClass('mod-blur-backdrop');
-			} else if (!this.dom.blured && typeof node != 'undefined') {
+			if (!this.dom.blured && typeof node != 'undefined') {
 				node.win.capturePage(function (datauri) {
 					_frame.modal.dom.blured = $('<img/>').attr('src', datauri).appendTo(_frame.modal.dom.bg);
 				}, 'jpg', 'datauri');
@@ -2002,7 +1996,7 @@ _frame.modal = {
 				this.dom.blured.remove();
 				this.dom.blured = null;
 			}
-			this.dom.container.removeClass('mod-blur-backdrop mod-blur-shot');
+			this.dom.container.removeClass('mod-blur-shot');
 		}
 	},
 
@@ -2081,9 +2075,7 @@ _p.tip = {
 
 		this.dom_body = $('<div class="body"/>').appendTo(this.dom);
 
-		if (_huCss.csscheck_full('backdrop-filter')) {
-			this.dom.addClass('mod-blur-backdrop');
-		} else if (typeof node != 'undefined') {
+		if (typeof node != 'undefined') {
 			this.dom.addClass('mod-blur-shot');
 			this.dom_bluredbg = $('<div/>').appendTo($('<div class="bluredbg"/>').appendTo(this.dom));
 		}
@@ -6391,7 +6383,7 @@ var InfosFleet = function () {
 							title: function title() {
 								return InfosFleet.menuCur.data.name;
 							},
-							summary: '分享自 是谁呼叫舰队 (http://fleet.diablohu.com)',
+							summary: '分享自 是谁呼叫舰队（ http://fleet.diablohu.com ）',
 							sites: ['tsina', 'tqq', 'cqq', 'twitter', 'tieba'],
 							uid: 1552359,
 							modifyItem: function modifyItem(el) {
@@ -9380,6 +9372,12 @@ TablelistFleets.modalBuildConflictShow = function (data, deferred) {
 					if (_frame.infos.contentCache.fleet && _frame.infos.contentCache.fleet[data._id]) {
 						_frame.infos.contentCache.fleet[data._id].remove();
 						delete _frame.infos.contentCache.fleet[data._id];
+						try {
+							delete _frame.app_main.loading_state[_g.state2URI({
+								'infos': 'fleet',
+								'id': data._id
+							})];
+						} catch (e) {}
 					}
 				}
 				if (deferred) deferred.resolve();
