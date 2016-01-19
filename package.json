@@ -84,7 +84,7 @@
     ],
     "dataVersion": {
       "app": "0.10.1.0",
-      "app-db": "1.10.1.0",
+      "app-db": "1.10.1.1",
       "pics": "1.10.1.0"
     },
     "buildDir": "N:\\nwbuild\\build",
