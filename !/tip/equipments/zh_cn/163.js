@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",163,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/10.png)\"></s><strong>Ro.43水侦</strong><small>水上侦察机</small></h3><span>+1 火力</span><span>+1 对空</span><span>+2 对潜</span><span>+2 命中</span><span>+1 回避</span><span>+4 索敌</span>")
