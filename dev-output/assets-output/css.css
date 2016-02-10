@@ -12285,6 +12285,14 @@ body.mod-capture .infos-fleet .equipments {
     -webkit-transform: translateX(-400%);
             transform: translateX(-400%);
   }
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="11"]:checked ~ div {
+    -webkit-transform: translateX(-500%);
+            transform: translateX(-500%);
+  }
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="12"]:checked ~ div {
+    -webkit-transform: translateX(-500%);
+            transform: translateX(-500%);
+  }
 }
 @media all and (min-width: 721px) and (max-width: 1152px) and (min-aspect-ratio: 5/4), (min-width: 721px) and (max-width: 1152px) and (max-height: 800px) {
   .infos-ship {
