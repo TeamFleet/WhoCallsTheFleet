@@ -5103,6 +5103,9 @@ _frame.app_main.page['calctp'] = {
 						case 'ao':
 							rS += 14.75 * count;
 							break;
+						case 'bbv':
+							rS += 7 * count;
+							break;
 
 						case 'e75':
 							rS += 5 * count;
