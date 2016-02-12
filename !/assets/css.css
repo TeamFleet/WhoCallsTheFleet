@@ -439,28 +439,22 @@ sup{
 *:after {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
-  -webkit-transition: none 0 ease-out;
   transition: none 0 ease-out;
-  -webkit-transition-property: none;
   transition-property: none;
 }
 html {
   height: 100%;
   font-size: 20px;
-  -webkit-transform: translateZ(0);
-          transform: translateZ(0);
+  transform: translateZ(0);
 }
 html.ready * {
-  -webkit-transition-duration: 0.2s;
-          transition-duration: 0.2s;
+  transition-duration: 0.2s;
 }
 html.no-transition *,
 html.no-transition *:before,
 html.no-transition *:after {
-  -webkit-transition: none !important;
   transition: none !important;
-  -webkit-animation: none !important;
-          animation: none !important;
+  animation: none !important;
 }
 html,
 body {
@@ -599,10 +593,7 @@ body > .menus > .menu {
   font-size: 0.7000000000000001rem;
   opacity: 0;
   cursor: default;
-  -webkit-transition-property: opacity, -webkit-transform;
-  transition-property: opacity, -webkit-transform;
   transition-property: opacity, transform;
-  transition-property: opacity, transform, -webkit-transform;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -610,8 +601,7 @@ body > .menus > .menu {
   overflow: hidden;
   max-width: 100%;
   max-height: 100%;
-  -webkit-transform: translateY(-10px);
-          transform: translateY(-10px);
+  transform: translateY(-10px);
   border: 0.05rem solid rgba(255, 255, 255, 0.3);
   color: #f2f2f2;
 }
@@ -647,7 +637,6 @@ body > .menus > .menu > .body .item {
   height: 2rem;
   padding: 0 1.5em 0 1.25em;
   position: relative;
-  -webkit-transition-property: color, background-color;
   transition-property: color, background-color;
 }
 body > .menus > .menu > .body menuitem.mod-checkbox,
@@ -705,14 +694,12 @@ body > .menus > .menu.mod-blur-shot > .body {
 }
 body > .menus > .menu.on {
   opacity: 1;
-  -webkit-transform: translateY(0);
-          transform: translateY(0);
+  transform: translateY(0);
 }
 body > .menus > .menu.on > .blured {
-  -webkit-transform: translateY(0);
-          transform: translateY(0);
+  transform: translateY(0);
 }
-@supports ((-webkit-backdrop-filter: blur(7.5px)) or (backdrop-filter: blur(7.5px))) {
+@supports (backdrop-filter: blur(7.5px)) {
   body > .menus > .menu {
     background: transparent;
   }
@@ -721,8 +708,7 @@ body > .menus > .menu.on > .blured {
     border-color: rgba(255, 255, 255, 0.2);
   }
   body > .menus > .menu.on {
-    -webkit-backdrop-filter: blur(7.5px);
-            backdrop-filter: blur(7.5px);
+    backdrop-filter: blur(7.5px);
   }
 }
 body > .menus > .menu.show {
@@ -743,24 +729,17 @@ body > .menus > .menu > .blured {
   display: block;
   background: no-repeat 50% 50% / cover;
   background-attachment: fixed;
-  -webkit-transition-property: -webkit-transform;
-  transition-property: -webkit-transform;
   transition-property: transform;
-  transition-property: transform, -webkit-transform;
-  -webkit-transform: translateY(10px);
-          transform: translateY(10px);
+  transform: translateY(10px);
 }
 body > .modal {
   z-index: 200;
   position: fixed;
   width: 100%;
   height: 100%;
-  -webkit-transition-property: opacity, top, left;
   transition-property: opacity, top, left;
-  -webkit-transition-delay: 0s, 0.2s, 0.2s;
-          transition-delay: 0s, 0.2s, 0.2s;
-  -webkit-transition-duration: 0.2s, 0s, 0s;
-          transition-duration: 0.2s, 0s, 0s;
+  transition-delay: 0s, 0.2s, 0.2s;
+  transition-duration: 0.2s, 0s, 0s;
   top: 0;
   left: -1000%;
   opacity: 0;
@@ -845,6 +824,7 @@ body > .modal > div > .close {
 body > .modal > div {
   display: inline-block !important;
   max-width: 98% !important;
+  max-width: -webkit-calc(100% - 0.2rem) !important;
   max-width: calc(100% - 0.2rem) !important;
   max-height: 100% !important;
   vertical-align: middle !important;
@@ -894,12 +874,9 @@ body > .modal.on {
   opacity: 1;
   top: 0;
   left: 0;
-  -webkit-transition-property: opacity;
   transition-property: opacity;
-  -webkit-transition-delay: 0;
-          transition-delay: 0;
-  -webkit-transition-duration: 0.2s;
-          transition-duration: 0.2s;
+  transition-delay: 0;
+  transition-duration: 0.2s;
 }
 body > .modal.on ~ #layout {
   user-select: none;
@@ -911,13 +888,12 @@ body > .modal.show {
   display: block !important;
   will-change: opacity;
 }
-@supports ((-webkit-backdrop-filter: blur(7.5px)) or (backdrop-filter: blur(7.5px))) {
+@supports (backdrop-filter: blur(7.5px)) {
   body > .modal > div {
     background: rgba(0, 0, 0, 0.3);
   }
   body > .modal.on {
-    -webkit-backdrop-filter: blur(7.5px);
-            backdrop-filter: blur(7.5px);
+    backdrop-filter: blur(7.5px);
   }
 }
 body > .modal.hastitle > div {
@@ -944,7 +920,6 @@ body > .modal.hastitle > div > .close {
   font-size: 0.7000000000000001rem;
   opacity: 0;
   cursor: default !important;
-  -webkit-transition-property: opacity;
   transition-property: opacity;
   user-select: none;
   -webkit-user-select: none;
@@ -1000,7 +975,7 @@ body > .modal.hastitle > div > .close {
 #tip.mod-blur-shot > .body {
   background: rgba(0, 0, 0, 0.4);
 }
-@supports ((-webkit-backdrop-filter: blur(7.5px)) or (backdrop-filter: blur(7.5px))) {
+@supports (backdrop-filter: blur(7.5px)) {
   #tip {
     background: transparent;
   }
@@ -1008,8 +983,7 @@ body > .modal.hastitle > div > .close {
     background: rgba(0, 0, 0, 0.3);
   }
   #tip.on {
-    -webkit-backdrop-filter: blur(7.5px);
-            backdrop-filter: blur(7.5px);
+    backdrop-filter: blur(7.5px);
   }
 }
 #tip.on {
@@ -1033,6 +1007,7 @@ body > .modal.hastitle > div > .close {
 #tip[data-tip-indicator-pos=bottom]:before {
   border-top-color: #808080;
   left: 50%;
+  left: -webkit-calc(50% - 0.2rem);
   left: calc(50% - 0.2rem);
   bottom: -0.5rem;
 }
@@ -1042,18 +1017,21 @@ body > .modal.hastitle > div > .close {
 #tip[data-tip-indicator-pos=top]:before {
   border-bottom-color: #808080;
   left: 50%;
+  left: -webkit-calc(50% - 0.2rem);
   left: calc(50% - 0.2rem);
   top: -0.5rem;
 }
 #tip[data-tip-indicator-pos=left]:before {
   border-right-color: #808080;
   top: 50%;
+  top: -webkit-calc(50% - 0.2rem);
   top: calc(50% - 0.2rem);
   left: -0.5rem;
 }
 #tip[data-tip-indicator-pos=right]:before {
   border-left-color: #808080;
   top: 50%;
+  top: -webkit-calc(50% - 0.2rem);
   top: calc(50% - 0.2rem);
   right: -0.5rem;
 }
@@ -1161,28 +1139,18 @@ ul{
   padding: .25em .5em;
   margin-left: .5em;
   color: #fff;
-  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.25) 100%);
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.25) 100%);
-  -webkit-transition-property: background;
   transition-property: background;
 }
 .debugbtns button:hover {
   background-color: rgba(0, 0, 0, 0.75);
 }
 .flexgrid {
-  display: -webkit-box !important;
-  display: -webkit-flex !important;
-  display: -ms-flexbox !important;
   display: flex !important;
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .flexgrid > .unit {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 200px;
-      -ms-flex: 1 0 200px;
-          flex: 1 0 200px;
+  flex: 1 0 200px;
   text-align: left;
 }
 .flexgrid > .unit:empty {
@@ -1609,8 +1577,7 @@ html.ie6 * {
   font-style: normal;
 }
 .bgcontrols.mod-viewing > .wrapper {
-  -webkit-transform: translateY(calc(-100% + 40px));
-          transform: translateY(calc(-100% + 40px));
+  transform: translateY(calc(-100% + 40px));
 }
 [icon="arrow-up"]:before {
   content: "\e60b" !important;
@@ -1747,28 +1714,12 @@ menuitem {
   cursor: default;
   cursor: not-allowed;
 }
-@-webkit-keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
   100% {
     opacity: 1;
-  }
-}
-@-webkit-keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
   }
 }
 @keyframes fadeOut {
@@ -1779,164 +1730,68 @@ menuitem {
     opacity: 0;
   }
 }
-@-webkit-keyframes spin {
-  from {
-    -webkit-transform: rotateZ(0deg);
-            transform: rotateZ(0deg);
-  }
-  100% {
-    -webkit-transform: rotateZ(360deg);
-            transform: rotateZ(360deg);
-  }
-}
 @keyframes spin {
   from {
-    -webkit-transform: rotateZ(0deg);
-            transform: rotateZ(0deg);
+    transform: rotateZ(0deg);
   }
   100% {
-    -webkit-transform: rotateZ(360deg);
-            transform: rotateZ(360deg);
-  }
-}
-@-webkit-keyframes logoLoading {
-  0% {
-    -webkit-transform: translateY(10px);
-            transform: translateY(10px);
-  }
-  100% {
-    -webkit-transform: translateY(-10px);
-            transform: translateY(-10px);
+    transform: rotateZ(360deg);
   }
 }
 @keyframes logoLoading {
   0% {
-    -webkit-transform: translateY(10px);
-            transform: translateY(10px);
+    transform: translateY(10px);
   }
   100% {
-    -webkit-transform: translateY(-10px);
-            transform: translateY(-10px);
-  }
-}
-@-webkit-keyframes global-loading-horizontal {
-  0% {
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
-  }
-  100% {
-    -webkit-transform: translateX(900%);
-            transform: translateX(900%);
+    transform: translateY(-10px);
   }
 }
 @keyframes global-loading-horizontal {
   0% {
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
+    transform: translateX(0);
   }
   100% {
-    -webkit-transform: translateX(900%);
-            transform: translateX(900%);
-  }
-}
-@-webkit-keyframes global-loading-horizontal-mobile {
-  0% {
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
-  }
-  100% {
-    -webkit-transform: translateX(400%);
-            transform: translateX(400%);
+    transform: translateX(900%);
   }
 }
 @keyframes global-loading-horizontal-mobile {
   0% {
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
+    transform: translateX(0);
   }
   100% {
-    -webkit-transform: translateX(400%);
-            transform: translateX(400%);
-  }
-}
-@-webkit-keyframes sideInRight {
-  0% {
-    -webkit-transform: translateX(100%);
-            transform: translateX(100%);
-  }
-  100% {
-    -webkit-transform: none;
-            transform: none;
+    transform: translateX(400%);
   }
 }
 @keyframes sideInRight {
   0% {
-    -webkit-transform: translateX(100%);
-            transform: translateX(100%);
+    transform: translateX(100%);
   }
   100% {
-    -webkit-transform: none;
-            transform: none;
-  }
-}
-@-webkit-keyframes sideInRightReverse {
-  0% {
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
-  }
-  100% {
-    -webkit-transform: none;
-            transform: none;
+    transform: none;
   }
 }
 @keyframes sideInRightReverse {
   0% {
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
+    transform: translateX(-100%);
   }
   100% {
-    -webkit-transform: none;
-            transform: none;
-  }
-}
-@-webkit-keyframes sideOutRight {
-  0% {
-    -webkit-transform: none;
-            transform: none;
-  }
-  100% {
-    -webkit-transform: translateX(100%);
-            transform: translateX(100%);
+    transform: none;
   }
 }
 @keyframes sideOutRight {
   0% {
-    -webkit-transform: none;
-            transform: none;
+    transform: none;
   }
   100% {
-    -webkit-transform: translateX(100%);
-            transform: translateX(100%);
-  }
-}
-@-webkit-keyframes sideOutRightReverse {
-  0% {
-    -webkit-transform: none;
-            transform: none;
-  }
-  100% {
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
+    transform: translateX(100%);
   }
 }
 @keyframes sideOutRightReverse {
   0% {
-    -webkit-transform: none;
-            transform: none;
+    transform: none;
   }
   100% {
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
+    transform: translateX(-100%);
   }
 }
 ::-webkit-scrollbar {
@@ -1950,23 +1805,19 @@ menuitem {
   background: transparent;
 }
 ::-webkit-scrollbar-track {
-  background: -webkit-linear-gradient(left, transparent 3px, rgba(0, 0, 0, 0.225) 3px, rgba(0, 0, 0, 0.225) calc(100% - 3px), transparent calc(100% - 3px));
   background: linear-gradient(to right, transparent 3px, rgba(0, 0, 0, 0.225) 3px, rgba(0, 0, 0, 0.225) calc(100% - 3px), transparent calc(100% - 3px));
   border-radius: 32px;
   overflow: hidden;
 }
 ::-webkit-scrollbar-track:hover {
-  background: -webkit-linear-gradient(left, transparent 2px, rgba(0, 0, 0, 0.375) 2px, rgba(0, 0, 0, 0.375) calc(100% - 2px), transparent calc(100% - 2px));
   background: linear-gradient(to right, transparent 2px, rgba(0, 0, 0, 0.375) 2px, rgba(0, 0, 0, 0.375) calc(100% - 2px), transparent calc(100% - 2px));
 }
 ::-webkit-scrollbar-thumb {
-  background: -webkit-linear-gradient(left, transparent 2px, rgba(255, 255, 255, 0.425) 2px, rgba(255, 255, 255, 0.425) calc(100% - 2px), transparent calc(100% - 2px));
   background: linear-gradient(to right, transparent 2px, rgba(255, 255, 255, 0.425) 2px, rgba(255, 255, 255, 0.425) calc(100% - 2px), transparent calc(100% - 2px));
   border-radius: 32px;
   overflow: hidden;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: -webkit-linear-gradient(left, transparent 2px, rgba(255, 255, 255, 0.625) 2px, rgba(255, 255, 255, 0.625) calc(100% - 2px), transparent calc(100% - 2px));
   background: linear-gradient(to right, transparent 2px, rgba(255, 255, 255, 0.625) 2px, rgba(255, 255, 255, 0.625) calc(100% - 2px), transparent calc(100% - 2px));
 }
 html,
@@ -2025,7 +1876,7 @@ h6[data-content]:before {
   z-index: 1;
   text-shadow: 0 0 1px #000;
   mask-image: linear-gradient(to bottom, transparent, #000);
-  -webkit-mask-image: -webkit-linear-gradient(top, transparent, #000);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000);
   pointer-events: none;
 }
 h2 {
@@ -2063,7 +1914,6 @@ section.update_journal a,
   margin: 0.4px .15em;
   background: rgba(0, 0, 0, 0.25);
   border-radius: 3px;
-  -webkit-transition-property: color, background;
   transition-property: color, background;
   border-top: 1px solid rgba(0, 0, 0, 0.45);
   border-bottom: 1px solid rgba(255, 255, 255, 0.25);
@@ -2095,15 +1945,10 @@ fieldset {
 #layout {
   padding-top: 4rem;
   height: 100%;
-  -webkit-transition-property: padding, -webkit-filter !important;
-  transition-property: padding, -webkit-filter !important;
   transition-property: filter, padding !important;
-  transition-property: filter, padding, -webkit-filter !important;
-  -webkit-transition-duration: .75s;
-          transition-duration: .75s;
+  transition-duration: .75s;
 }
 body.mod-capture #layout {
-  -webkit-transition-property: none !important;
   transition-property: none !important;
 }
 #layout[data-errorbadge]:after,
@@ -2120,12 +1965,9 @@ body.mod-capture #layout {
   -moz-user-select: none;
   -ms-user-select: none;
   pointer-events: none;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
-  -webkit-animation: fadeIn 0.3s ease-out;
-          animation: fadeIn 0.3s ease-out;
-  -webkit-backdrop-filter: blur(7.5px);
-          backdrop-filter: blur(7.5px);
+  transform: translateX(-50%);
+  animation: fadeIn 0.3s ease-out;
+  backdrop-filter: blur(7.5px);
 }
 #layout[data-errorbadge]:after {
   content: attr(data-errorbadge);
@@ -2144,16 +1986,10 @@ body.mod-capture #layout {
   background: rgba(0, 0, 0, 0.85);
   bottom: 0;
   left: 0;
-  -webkit-animation: fadeIn 0.3s ease-out;
-          animation: fadeIn 0.3s ease-out;
-  -webkit-transition-property: -webkit-transform;
-  transition-property: -webkit-transform;
+  animation: fadeIn 0.3s ease-out;
   transition-property: transform;
-  transition-property: transform, -webkit-transform;
-  -webkit-transition-duration: .75s;
-          transition-duration: .75s;
-  -webkit-transform: translateY(100%);
-          transform: translateY(100%);
+  transition-duration: .75s;
+  transform: translateY(100%);
 }
 #layout > .g > .close {
   position: absolute;
@@ -2164,7 +2000,6 @@ body.mod-capture #layout {
   z-index: 50;
   color: #bbb;
   font-size: 30px;
-  -webkit-transition-property: color;
   transition-property: color;
 }
 #layout > .g > .close:before {
@@ -2186,8 +2021,7 @@ html.ready nav,
 html.ready main,
 html.ready nav > .bgimg,
 html.ready main > .bgimg {
-  -webkit-transition-duration: 0.75s;
-          transition-duration: 0.75s;
+  transition-duration: 0.75s;
 }
 nav {
   display: block;
@@ -2198,17 +2032,10 @@ nav {
   line-height: 80px;
   width: 100%;
   z-index: 5;
-  -webkit-transition-property: top, opacity, -webkit-transform;
-  transition-property: top, opacity, -webkit-transform;
   transition-property: top, opacity, transform;
-  transition-property: top, opacity, transform, -webkit-transform;
   background: rgba(0, 0, 0, 0.5);
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  -webkit-transform: translateY(-100%);
-          transform: translateY(-100%);
+  user-select: none;
+  transform: translateY(-100%);
   overflow: hidden;
 }
 nav:before,
@@ -2219,15 +2046,12 @@ nav:after {
 }
 nav:before {
   z-index: 5;
-  -webkit-transform: translateX(-100%);
-          transform: translateX(-100%);
+  transform: translateX(-100%);
   width: 10%;
   height: 4px;
   opacity: 0;
   background: rgba(255, 255, 255, 0.5);
-  -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
-  -webkit-transition-property: opacity;
   transition-property: opacity;
 }
 @media all and (max-width: 720px) {
@@ -2241,9 +2065,7 @@ nav:after {
   width: 100%;
   height: 1px;
   background: rgba(229, 229, 229, 0.25);
-  -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
-  -webkit-transition-property: height;
   transition-property: height;
 }
 nav > div {
@@ -2257,14 +2079,9 @@ nav > div {
   top: 0;
   left: 0;
   max-width: calc(100% - 80px - 10px);
-  -webkit-transition-property: top, opacity, -webkit-transform;
-  transition-property: top, opacity, -webkit-transform;
   transition-property: transform, top, opacity;
-  transition-property: transform, top, opacity, -webkit-transform;
-  -webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
-          transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
-  -webkit-transition-duration: .3s !important;
-          transition-duration: .3s !important;
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
+  transition-duration: .3s !important;
   /*
 		@media all and (min-width: 1920px ){
 			margin-left:	~"calc((100% - 1920px) / 2 + @{nav_height}px - 10px)";
@@ -2295,10 +2112,8 @@ nav > div .button {
   position: relative;
   top: 0;
   display: inline-block;
-  -webkit-transition-property: text-shadow, color, opacity, margin, font-size, background-color;
   transition-property: text-shadow, color, opacity, margin, font-size, background-color;
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
+  transition-duration: 0.3s;
   /*
 			.delays(@n, @i: 1) when (@i =< @n) {
 				&:nth-of-type(@{i}){
@@ -2376,8 +2191,7 @@ nav > div .button[mod-state]:after {
   position: absolute;
   top: 50%;
   left: 0;
-  -webkit-transform: translateY(-28px);
-          transform: translateY(-28px);
+  transform: translateY(-28px);
   line-height: 12px;
   padding: 0 3px;
   border-radius: 2px;
@@ -2424,8 +2238,7 @@ nav > div.selection-info {
   color: rgba(255, 255, 255, 0.5);
   display: block !important;
   padding-left: 20px;
-  -webkit-transition-timing-function: ease-out;
-          transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
 }
 nav > div.history ~ .selection-info {
   padding-left: 0;
@@ -2438,12 +2251,8 @@ nav > .bgimg {
   height: 100%;
   top: 0;
   left: 0;
-  -webkit-transition-property: -webkit-transform;
-  transition-property: -webkit-transform;
   transition-property: transform;
-  transition-property: transform, -webkit-transform;
-  -webkit-transform: translateY(100%);
-          transform: translateY(100%);
+  transform: translateY(100%);
 }
 nav > .bgimg:after {
   content: '';
@@ -2454,9 +2263,7 @@ nav > .bgimg:after {
   height: 100%;
   z-index: 1;
   background: rgba(0, 0, 0, 0.5);
-  -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
-  -webkit-transition-property: background-color;
   transition-property: background-color;
 }
 nav > section.options {
@@ -2471,10 +2278,8 @@ nav > section.options {
   display: block;
   -webkit-app-region: no-drag;
   padding: 0 5px;
-  -webkit-transition-property: opacity;
   transition-property: opacity;
-  -webkit-transition-duration: 0.75s;
-          transition-duration: 0.75s;
+  transition-duration: 0.75s;
   opacity: 1;
   overflow: hidden;
 }
@@ -2484,12 +2289,9 @@ nav > section.options > [icon] {
   display: inline-block;
   width: 40px;
   font-size: 22px;
-  -webkit-transition-property: color;
   transition-property: color;
-  -webkit-transition-duration: 0.75s;
-          transition-duration: 0.75s;
-  -webkit-animation: fadeIn 0.3s ease-out;
-          animation: fadeIn 0.3s ease-out;
+  transition-duration: 0.75s;
+  animation: fadeIn 0.3s ease-out;
   position: relative;
   margin-left: 4px;
 }
@@ -2512,12 +2314,8 @@ main {
   line-height: 1.5;
   color: #f2f2f2;
   top: 0;
-  -webkit-transition-property: top, -webkit-transform;
-  transition-property: top, -webkit-transform;
   transition-property: top, transform;
-  transition-property: top, transform, -webkit-transform;
-  -webkit-transform: translateY(100%);
-          transform: translateY(100%);
+  transform: translateY(100%);
 }
 main h1,
 main h2,
@@ -2536,12 +2334,8 @@ main > .bgimg {
   height: 100%;
   top: 0;
   left: 0;
-  -webkit-transition-property: -webkit-transform;
-  transition-property: -webkit-transform;
   transition-property: transform;
-  transition-property: transform, -webkit-transform;
-  -webkit-transform: translateY(-100%);
-          transform: translateY(-100%);
+  transform: translateY(-100%);
   /*
 		&:after{
 			content:	'';
@@ -2563,12 +2357,9 @@ main:after {
   right: 0;
   bottom: 0;
   left: 0;
-  -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
-  -webkit-transition-property: background-color;
   transition-property: background-color;
-  -webkit-transition-duration: 0.5s;
-          transition-duration: 0.5s;
+  transition-duration: 0.5s;
   background: rgba(0, 0, 0, 0.65);
 }
 .page-container {
@@ -2580,12 +2371,9 @@ main:after {
   top: 0;
   left: 0;
   z-index: 4;
-  -webkit-animation: fadeIn 0.3s ease-out;
-          animation: fadeIn 0.3s ease-out;
-  -webkit-transition-property: opacity, background-color;
+  animation: fadeIn 0.3s ease-out;
   transition-property: opacity, background-color;
-  -webkit-transition-duration: 0.4s;
-          transition-duration: 0.4s;
+  transition-duration: 0.4s;
   padding-top: 1rem;
   padding-bottom: 1rem;
   border-top: 0.05rem solid transparent;
@@ -2690,8 +2478,7 @@ main:after {
   opacity: 0;
   z-index: 3;
   overflow-x: hidden;
-  -webkit-animation-name: none;
-          animation-name: none;
+  animation-name: none;
   -webkit-overflow-scrolling: touch;
 }
 .page-container.infos > .wrapper {
@@ -2711,14 +2498,9 @@ main:after {
   height: 100%;
   opacity: 0;
   top: 0;
-  -webkit-transition-property: opacity, -webkit-transform;
-  transition-property: opacity, -webkit-transform;
   transition-property: opacity, transform;
-  transition-property: opacity, transform, -webkit-transform;
-  -webkit-transition-duration: 0.2s;
-          transition-duration: 0.2s;
-  -webkit-transition-timing-function: ease-in;
-          transition-timing-function: ease-in;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in;
 }
 .infosbody h1,
 .infosbody h2,
@@ -2890,8 +2672,7 @@ main:after {
   z-index: 10;
   top: 0;
   left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
+  transform: translateX(-50%);
   background: rgba(255, 64, 64, 0.5);
   font-size: 16px;
   padding: 0 1em;
@@ -2901,26 +2682,14 @@ main:after {
   line-height: 50px;
 }
 .infosbody .flexgrid.list-ship {
-  -webkit-flex-flow: row wrap;
-      -ms-flex-flow: row wrap;
-          flex-flow: row wrap;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-      -ms-flex-align: start;
-              -ms-grid-row-align: flex-start;
-          align-items: flex-start;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
   padding-bottom: 1rem;
   margin: -10px -10px 0 0;
 }
 .infosbody .flexgrid.list-ship > .unit {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 195px;
-      -ms-flex: 1 0 195px;
-          flex: 1 0 195px;
+  flex: 1 0 195px;
   position: relative;
   margin-right: 10px;
 }
@@ -2970,13 +2739,11 @@ main:after {
 }
 #layout > .logo:before {
   content: '';
-  -webkit-animation: logoLoading 1.2s ease-out infinite alternate;
-          animation: logoLoading 1.2s ease-out infinite alternate;
+  animation: logoLoading 1.2s ease-out infinite alternate;
   background: url(/!/assets/images/boat.png) no-repeat 50% 50%;
 }
 #layout.ready > .logo {
-  -webkit-animation: fadeOut 1s ease-out;
-          animation: fadeOut 1s ease-out;
+  animation: fadeOut 1s ease-out;
 }
 #layout.ready > .logo.ready-animated {
   display: none;
@@ -3024,19 +2791,16 @@ main:after {
   }
 }
 #layout.is-infos-on nav > div.history ~ div {
-  -webkit-transform: translateX(140px);
-          transform: translateX(140px);
+  transform: translateX(140px);
 }
 @media all and (max-width: 900px) {
   #layout.is-infos-on nav > div.history ~ div {
-    -webkit-transform: translateX(120px);
-            transform: translateX(120px);
+    transform: translateX(120px);
   }
 }
 @media all and (max-width: 800px) {
   #layout.is-infos-on nav > div.history ~ div {
-    -webkit-transform: translateX(110px);
-            transform: translateX(110px);
+    transform: translateX(110px);
   }
 }
 @media all and (max-width: 1152px) {
@@ -3074,8 +2838,7 @@ main:after {
 }
 #layout.is-infos-on .infosbody {
   opacity: 1;
-  -webkit-animation: fadeIn 0.2s ease-out;
-          animation: fadeIn 0.2s ease-out;
+  animation: fadeIn 0.2s ease-out;
 }
 #layout.is-infos-on .infosbody + .infosbody {
   opacity: 0;
@@ -3102,8 +2865,7 @@ main:after {
   background-attachment: fixed;
 }
 .bgimg.fadein {
-  -webkit-animation: fadeIn 0.3s ease-out;
-          animation: fadeIn 0.3s ease-out;
+  animation: fadeIn 0.3s ease-out;
 }
 #layout.ready {
   /*
@@ -3127,14 +2889,12 @@ main:after {
 #layout.ready main,
 #layout.ready nav > .bgimg,
 #layout.ready main > .bgimg {
-  -webkit-transform: none;
-          transform: none;
+  transform: none;
 }
 .bgcontrols {
   position: absolute;
   display: none;
-  -webkit-transform: translateX(100%);
-          transform: translateX(100%);
+  transform: translateX(100%);
   top: 0;
   right: 0;
   bottom: -2px;
@@ -3145,10 +2905,8 @@ main:after {
 }
 .bgcontrols,
 .bgcontrols .bgimgs {
-  -webkit-animation: none 0.3s ease-out 0.75s;
-          animation: none 0.3s ease-out 0.75s;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation: none 0.3s ease-out 0.75s;
+  animation-fill-mode: forwards;
 }
 .bgcontrols > .wrapper,
 .bgcontrols .bgimgs,
@@ -3163,10 +2921,7 @@ main:after {
   border-left: 1px solid rgba(255, 255, 255, 0.5);
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   padding-bottom: 40px;
-  -webkit-transition-property: background-color, border-color, -webkit-transform;
-  transition-property: background-color, border-color, -webkit-transform;
   transition-property: transform, background-color, border-color;
-  transition-property: transform, background-color, border-color, -webkit-transform;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.85);
 }
@@ -3185,7 +2940,6 @@ main:after {
 }
 .bgcontrols .bgimgs {
   z-index: 1;
-  -webkit-transition-property: opacity;
   transition-property: opacity;
 }
 .bgcontrols .controls {
@@ -3196,23 +2950,14 @@ main:after {
   right: 0;
   height: 40px;
   background: rgba(0, 0, 0, 0.5);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: row nowrap;
-      -ms-flex-flow: row nowrap;
-          flex-flow: row nowrap;
+  flex-flow: row nowrap;
 }
 .bgcontrols .controls button {
   display: block;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 1 40px;
-      -ms-flex: 1 1 40px;
-          flex: 1 1 40px;
+  flex: 1 1 40px;
   position: relative;
   color: rgba(255, 255, 255, 0.65);
-  -webkit-transition-property: color;
   transition-property: color;
 }
 .bgcontrols .controls button[icon]:before {
@@ -3239,7 +2984,6 @@ main:after {
   z-index: 3;
   height: 100%;
   padding: 10px 0 0 10px;
-  -webkit-transition-property: opacity;
   transition-property: opacity;
   -webkit-overflow-scrolling: touch;
 }
@@ -3438,8 +3182,7 @@ main:after {
   z-index: 100;
 }
 .bgcontrols.is-loading dl dd.add s {
-  -webkit-animation: spin 2s linear infinite;
-          animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
 }
 @media all and (max-width: 720px) {
   .bgcontrols .bgimgs {
@@ -3455,52 +3198,41 @@ main:after {
   }
 }
 #layout.mod-bgcontrols nav {
-  -webkit-transform: translateY(-100%);
-          transform: translateY(-100%);
+  transform: translateY(-100%);
   -webkit-app-region: no-drag !important;
 }
 #layout.mod-bgcontrols nav > .bgimg {
-  -webkit-transform: translateY(100%);
-          transform: translateY(100%);
+  transform: translateY(100%);
 }
 #layout.mod-bgcontrols main {
-  -webkit-transform: translateY(100%);
-          transform: translateY(100%);
+  transform: translateY(100%);
 }
 #layout.mod-bgcontrols main > .bgimg {
-  -webkit-transform: translateY(-100%);
-          transform: translateY(-100%);
+  transform: translateY(-100%);
 }
 #layout.mod-bgcontrols .bgcontrols {
   display: block;
-  -webkit-animation-name: sideInRight;
-          animation-name: sideInRight;
+  animation-name: sideInRight;
 }
 #layout.mod-bgcontrols .bgcontrols > .wrapper,
 #layout.mod-bgcontrols .bgcontrols .bgimgs {
-  -webkit-transition-duration: .5s;
-          transition-duration: .5s;
+  transition-duration: .5s;
 }
 #layout.mod-bgcontrols .bgcontrols .bgimgs {
-  -webkit-animation-name: sideInRightReverse;
-          animation-name: sideInRightReverse;
+  animation-name: sideInRightReverse;
 }
 #layout.mod-bgcontrols .bgcontrols.is-on .bgimgs {
-  -webkit-animation-name: none;
-          animation-name: none;
+  animation-name: none;
 }
 #layout.mod-bgcontrols .bgcontrols.is-hiding {
-  -webkit-animation-name: sideOutRight;
-          animation-name: sideOutRight;
+  animation-name: sideOutRight;
 }
 #layout.mod-bgcontrols .bgcontrols.is-hiding,
 #layout.mod-bgcontrols .bgcontrols.is-hiding .bgimgs {
-  -webkit-animation-delay: 0s;
-          animation-delay: 0s;
+  animation-delay: 0s;
 }
 #layout.mod-bgcontrols .bgcontrols.is-hiding .bgimgs {
-  -webkit-animation-name: sideOutRightReverse;
-          animation-name: sideOutRightReverse;
+  animation-name: sideOutRightReverse;
 }
 .mode-selection nav > div.history {
   z-index: 5;
@@ -3536,19 +3268,16 @@ main:after {
   }
 }
 .mode-selection nav > div.history ~ div {
-  -webkit-transform: translateX(140px);
-          transform: translateX(140px);
+  transform: translateX(140px);
 }
 @media all and (max-width: 900px) {
   .mode-selection nav > div.history ~ div {
-    -webkit-transform: translateX(120px);
-            transform: translateX(120px);
+    transform: translateX(120px);
   }
 }
 @media all and (max-width: 800px) {
   .mode-selection nav > div.history ~ div {
-    -webkit-transform: translateX(110px);
-            transform: translateX(110px);
+    transform: translateX(110px);
   }
 }
 @media all and (max-width: 1152px) {
@@ -3562,8 +3291,7 @@ main:after {
   }
 }
 .mode-selection > nav > div.pages {
-  -webkit-transform: translateY(-100%);
-          transform: translateY(-100%);
+  transform: translateY(-100%);
   opacity: 0;
 }
 .mode-selection > nav > div.selection-info {
@@ -3574,13 +3302,11 @@ main:after {
 }
 #layout.is-loading nav:before {
   opacity: 1;
-  -webkit-animation: global-loading-horizontal 1.5s linear infinite alternate;
-          animation: global-loading-horizontal 1.5s linear infinite alternate;
+  animation: global-loading-horizontal 1.5s linear infinite alternate;
 }
 @media all and (max-width: 720px) {
   #layout.is-loading nav:before {
-    -webkit-animation-name: global-loading-horizontal-mobile;
-            animation-name: global-loading-horizontal-mobile;
+    animation-name: global-loading-horizontal-mobile;
   }
 }
 #layout.is-loading nav:after {
@@ -3590,8 +3316,7 @@ main:after {
   padding-bottom: 51px;
 }
 #layout.mod-g > .g {
-  -webkit-transform: translateY(0);
-          transform: translateY(0);
+  transform: translateY(0);
 }
 #layout.mod-g.ready.only_bg > main {
   top: calc(100% + 51px);
@@ -3802,7 +3527,6 @@ select {
   display: inline-block;
   width: auto;
   color: inherit;
-  -webkit-transition-property: border,background,color,width;
   transition-property: border,background,color,width;
   height: 1rem;
   line-height: 1rem;
@@ -3836,9 +3560,7 @@ input[type="search"] {
   padding: 0rem 0.2rem;
 }
 input[type="checkbox"] {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  appearance: none;
   vertical-align: top;
   color: inherit;
   margin: 0;
@@ -3953,7 +3675,6 @@ input[type="checkbox"]:indeterminate + label.checkbox:after {
 	*/
 html #titlebar {
   background: rgba(0, 0, 0, 0.35);
-  -webkit-transition-property: background-color, height;
   transition-property: background-color, height;
   height: 1.7000000000000002rem;
 }
@@ -3992,10 +3713,8 @@ body.mod-capture #tip {
   z-index: 2;
   padding-right: 10rem;
   background: rgba(0, 0, 0, 0.85);
-  -webkit-transition-property: top;
   transition-property: top;
-  -webkit-transition-duration: 0.75s;
-          transition-duration: 0.75s;
+  transition-duration: 0.75s;
 }
 #layout.debug-hashbar > .debug_hashbar input[type="text"] {
   height: 1.7000000000000002rem;
@@ -4046,13 +3765,10 @@ body.mod-capture #tip {
     overflow-y: auto;
     background: rgba(0, 0, 0, 0.85);
     opacity: 1 !important;
-    -webkit-backdrop-filter: blur(7.5px);
-            backdrop-filter: blur(7.5px);
+    backdrop-filter: blur(7.5px);
     border-right: 1px solid rgba(255, 255, 255, 0.15);
-    -webkit-transform: translateX(-100%) !important;
-            transform: translateX(-100%) !important;
-    -webkit-transition-timing-function: ease-out;
-            transition-timing-function: ease-out;
+    transform: translateX(-100%) !important;
+    transition-timing-function: ease-out;
     -webkit-overflow-scrolling: touch;
   }
   nav > div.pages .button {
@@ -4071,8 +3787,7 @@ body.mod-capture #tip {
     position: relative;
     top: -0.5em;
     left: .5em;
-    -webkit-transform: none;
-            transform: none;
+    transform: none;
     vertical-align: super;
   }
   nav > div.pages .button:hover,
@@ -4098,7 +3813,6 @@ body.mod-capture #tip {
     font-size: 20px;
     margin-left: 2px;
     width: 46px;
-    -webkit-transition-property: none;
     transition-property: none;
   }
   nav > section.options > [icon]:hover {
@@ -4115,10 +3829,7 @@ body.mod-capture #tip {
     color: #fff;
     font-size: 18px;
     -webkit-app-region: no-drag;
-    -webkit-transition-property: -webkit-transform;
-    transition-property: -webkit-transform;
     transition-property: transform;
-    transition-property: transform, -webkit-transform;
   }
   nav > .title label {
     position: absolute;
@@ -4127,14 +3838,10 @@ body.mod-capture #tip {
     height: 100%;
     width: 40px;
     left: 14px;
-    -webkit-transition-property: -webkit-transform;
-    transition-property: -webkit-transform;
     transition-property: transform;
-    transition-property: transform, -webkit-transform;
   }
   nav > .title label i {
-    -webkit-transform: translateY(-1px);
-            transform: translateY(-1px);
+    transform: translateY(-1px);
     background: rgba(255, 255, 255, 0.75);
     width: 100%;
     height: 2px;
@@ -4143,17 +3850,12 @@ body.mod-capture #tip {
     top: 50%;
     right: 0;
     border-radius: 1px;
-    -webkit-transition-property: width,  -webkit-transform;
-    transition-property: width,  -webkit-transform;
     transition-property: transform, /*background,*/ width;
-    transition-property: transform,  width,  -webkit-transform;
   }
   nav > .title label i:before,
   nav > .title label i:after {
     content: "";
-    -webkit-transform-origin: 100% 50%;
-            transform-origin: 100% 50%;
-    -webkit-transition: none 0.2s ease-out;
+    transform-origin: 100% 50%;
     transition: none 0.2s ease-out;
     background: inherit;
     width: inherit;
@@ -4163,22 +3865,18 @@ body.mod-capture #tip {
     top: inherit;
     right: inherit;
     border-radius: inherit;
-    -webkit-transition-property: inherit;
     transition-property: inherit;
   }
   nav > .title label i:before {
-    -webkit-transform: translateY(-6px);
-            transform: translateY(-6px);
+    transform: translateY(-6px);
   }
   nav > .title label i:after {
-    -webkit-transform: translateY(4px);
-            transform: translateY(4px);
+    transform: translateY(4px);
   }
   nav > .title label:hover i {
     background: #fff;
   }
   nav > .title > span {
-    -webkit-transition-property: opacity;
     transition-property: opacity;
   }
   nav > .bgimg {
@@ -4189,8 +3887,7 @@ body.mod-capture #tip {
     font-size: 18px;
     margin-left: 0;
     padding-left: 0;
-    -webkit-transform: translateX(72px) !important;
-            transform: translateX(72px) !important;
+    transform: translateX(72px) !important;
   }
   nav ~ .nav-mask {
     /*
@@ -4256,8 +3953,7 @@ body.mod-capture #tip {
   }
   #layout.is-infos-on nav > div.history ~ .title label,
   #layout.mode-selection nav > div.history ~ .title label {
-    -webkit-transform: rotate(180deg);
-            transform: rotate(180deg);
+    transform: rotate(180deg);
   }
   #layout.is-infos-on nav > div.history ~ .title label i,
   #layout.mode-selection nav > div.history ~ .title label i {
@@ -4271,22 +3967,18 @@ body.mod-capture #tip {
   }
   #layout.is-infos-on nav > div.history ~ .title label i:before,
   #layout.mode-selection nav > div.history ~ .title label i:before {
-    -webkit-transform: translateY(-0.5px) rotate(45deg);
-            transform: translateY(-0.5px) rotate(45deg);
+    transform: translateY(-0.5px) rotate(45deg);
   }
   #layout.is-infos-on nav > div.history ~ .title label i:after,
   #layout.mode-selection nav > div.history ~ .title label i:after {
-    -webkit-transform: translateY(-1.5px) rotate(-45deg);
-            transform: translateY(-1.5px) rotate(-45deg);
+    transform: translateY(-1.5px) rotate(-45deg);
   }
   #view-mobile-menu:checked ~ nav > div.pages {
-    -webkit-transform: translateX(0) !important;
-            transform: translateX(0) !important;
+    transform: translateX(0) !important;
     box-shadow: 0 10px 20px 5px #000;
   }
   #view-mobile-menu:checked ~ nav > .title label {
-    -webkit-transform: rotate(180deg);
-            transform: rotate(180deg);
+    transform: rotate(180deg);
   }
   #view-mobile-menu:checked ~ nav > .title label i {
     background: #fff;
@@ -4296,12 +3988,10 @@ body.mod-capture #tip {
     width: 60%;
   }
   #view-mobile-menu:checked ~ nav > .title label i:before {
-    -webkit-transform: translateY(-0.5px) rotate(45deg);
-            transform: translateY(-0.5px) rotate(45deg);
+    transform: translateY(-0.5px) rotate(45deg);
   }
   #view-mobile-menu:checked ~ nav > .title label i:after {
-    -webkit-transform: translateY(-1.5px) rotate(-45deg);
-            transform: translateY(-1.5px) rotate(-45deg);
+    transform: translateY(-1.5px) rotate(-45deg);
   }
   #view-mobile-menu:checked ~ nav > .history,
   #view-mobile-menu:checked ~ nav > .selection-info {
@@ -4346,8 +4036,7 @@ body.mod-capture #tip {
   nav > div.selection-info {
     color: #fff;
     font-size: 16px;
-    -webkit-transform: translateX(60px) !important;
-            transform: translateX(60px) !important;
+    transform: translateX(60px) !important;
   }
   nav ~ .nav-mask:after {
     top: 48px;
@@ -4607,7 +4296,6 @@ body.mod-capture #tip {
   vertical-align: top;
   font-style: normal;
   text-shadow: 0 1px 0 #000;
-  -webkit-transition-property: color;
   transition-property: color;
   letter-spacing: -0.05em;
 }
@@ -4634,8 +4322,7 @@ body.mod-capture #tip {
 				background:	@color;
 				.clip-path(~"polygon(0% 35%, 60% 35%, 60% 0%, 100% 50%, 60% 100%, 60% 65%, 0% 65%)");
 			*/
-  -webkit-transform: scaleY(0.85);
-          transform: scaleY(0.85);
+  transform: scaleY(0.85);
 }
 .improvement > strong > b:before,
 .improvement > strong > b:after {
@@ -4686,7 +4373,6 @@ body.mod-capture #tip {
 }
 .improvement > font > a {
   display: inline-block;
-  -webkit-transition-property: color;
   transition-property: color;
 }
 .improvement > font > a:hover {
@@ -4766,7 +4452,6 @@ body.mod-capture #tip {
   padding-top: 2px;
   padding-left: 22px;
   width: auto;
-  -webkit-transition-property: color;
   transition-property: color;
   /*
 				position:	relative;
@@ -4831,7 +4516,6 @@ body.mod-capture #tip {
 }
 .improvement.improvement-details > font > b > a {
   display: inline-block;
-  -webkit-transition-property: color;
   transition-property: color;
 }
 .improvement.improvement-details > font > b > a:hover {
@@ -4856,7 +4540,6 @@ body.mod-capture #tip {
   display: inline-block;
   position: relative;
   overflow: hidden;
-  -webkit-transition-property: background-color, opacity;
   transition-property: background-color, opacity;
 }
 .link_entity,
@@ -4866,7 +4549,7 @@ body.mod-capture #tip {
   min-width: 150px;
   vertical-align: middle;
   mask-image: linear-gradient(to right, transparent 0, #000 8px, #000 100%);
-  -webkit-mask-image: -webkit-linear-gradient(left, transparent 0, #000 8px, #000 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 8px, #000 100%);
 }
 .link_entity.nomask,
 .link_ship.nomask {
@@ -4907,7 +4590,7 @@ body.mod-capture #tip {
 }
 .link_ship img {
   mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 60px), transparent calc(100% - 10px));
-  -webkit-mask-image: -webkit-linear-gradient(left, #000 0, #000 calc(100% - 60px), transparent calc(100% - 10px));
+  -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 60px), transparent calc(100% - 10px));
   pointer-events: none;
   position: absolute;
   left: -50px;
@@ -4921,8 +4604,7 @@ body.mod-capture #tip {
   display: block;
   font-size: 22px;
   color: #ffffff;
-  -webkit-transform: rotate(15deg);
-          transform: rotate(15deg);
+  transform: rotate(15deg);
   top: 0;
   left: 74px;
   z-index: 10;
@@ -4936,7 +4618,7 @@ body.mod-capture #tip {
   background: no-repeat 38.2% 38.2% / cover;
   margin: -15px -6px auto -10px;
   mask-image: linear-gradient(to right, #000 calc(100% - 50px), transparent 100%);
-  -webkit-mask-image: -webkit-linear-gradient(left, #000 calc(100% - 50px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 50px), transparent 100%);
 }
 .link_entity > i.nomask {
   mask: none;
@@ -4961,32 +4643,20 @@ body.mod-capture #tip {
   border: 3px solid transparent;
   border-right: 4px solid rgba(230, 230, 230, 0.8);
   border-left: 0;
-  -webkit-filter: drop-shadow(0 0 10px #e6e6e6);
-          filter: drop-shadow(0 0 10px #e6e6e6);
+  filter: drop-shadow(0 0 10px #e6e6e6);
   z-index: 7;
-  -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
-  -webkit-transition-property: top, height, border;
   transition-property: top, height, border;
 }
 .link_fleet dt {
-  display: -webkit-box !important;
-  display: -webkit-flex !important;
-  display: -ms-flexbox !important;
   display: flex !important;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   padding-left: 350px;
   padding-right: 30px;
   height: 100%;
 }
 .link_fleet dt > i > .img {
-  -webkit-box-flex: 0;
-  -webkit-flex: none;
-      -ms-flex: none;
-          flex: none;
+  flex: none;
   display: block;
   position: absolute;
   z-index: 6;
@@ -4995,10 +4665,8 @@ body.mod-capture #tip {
   width: 120px;
   height: 30px;
   pointer-events: none;
-  -webkit-mask: -webkit-linear-gradient(left, transparent 0, transparent 36px, #000 40px, #000 calc(100% - 30px), transparent calc(100% - 10px)) repeat-y 0 0;
-          mask: linear-gradient(to right, transparent 0, transparent 36px, #000 40px, #000 calc(100% - 30px), transparent calc(100% - 10px)) repeat-y 0 0;
-  -webkit-mask-size: 100% 100%;
-          mask-size: 100% 100%;
+  mask: linear-gradient(to right, transparent 0, transparent 36px, #000 40px, #000 calc(100% - 30px), transparent calc(100% - 10px)) repeat-y 0 0;
+  mask-size: 100% 100%;
 }
 .link_fleet dt > i > .img + .img {
   z-index: 5;
@@ -5021,14 +4689,12 @@ body.mod-capture #tip {
   left: 242px;
 }
 .link_fleet dt > i > img.nomask {
-  -webkit-mask: none;
-          mask: none;
+  mask: none;
 }
 .link_fleet dt > i > s {
   background: rgba(255, 255, 255, 0.15);
 }
 .link_fleet dt > i > s.nomask {
-  background: -webkit-linear-gradient(left, transparent 0, transparent 36px, rgba(255,255,255, .15) 40px, rgba(255,255,255, .15) calc(100% - 30px), transparent calc(100% - 10px));
   background: linear-gradient(to right, transparent 0, transparent 36px, rgba(255,255,255, .15) 40px, rgba(255,255,255, .15) calc(100% - 30px), transparent calc(100% - 10px));
 }
 .link_fleet dt > strong {
@@ -5045,7 +4711,6 @@ body.mod-capture #tip {
   color: rgba(255, 255, 255, 0.075);
   font-style: normal;
   font-weight: lighter;
-  -webkit-transition-property: color;
   transition-property: color;
 }
 .link_fleet dt > em:before {
@@ -5080,72 +4745,63 @@ body.mod-capture #tip {
 }
 .link_fleet[data-theme="2"]:before {
   border-right-color: rgba(255, 184, 168, 0.8);
-  -webkit-filter: drop-shadow(0 0 10px #ffb8a8);
-          filter: drop-shadow(0 0 10px #ffb8a8);
+  filter: drop-shadow(0 0 10px #ffb8a8);
 }
 .link_fleet[data-theme="2"]:hover {
   background: rgba(255, 184, 168, 0.15) !important;
 }
 .link_fleet[data-theme="3"]:before {
   border-right-color: rgba(255, 242, 168, 0.8);
-  -webkit-filter: drop-shadow(0 0 10px #fff2a8);
-          filter: drop-shadow(0 0 10px #fff2a8);
+  filter: drop-shadow(0 0 10px #fff2a8);
 }
 .link_fleet[data-theme="3"]:hover {
   background: rgba(255, 242, 168, 0.15) !important;
 }
 .link_fleet[data-theme="4"]:before {
   border-right-color: rgba(210, 255, 168, 0.8);
-  -webkit-filter: drop-shadow(0 0 10px #d2ffa8);
-          filter: drop-shadow(0 0 10px #d2ffa8);
+  filter: drop-shadow(0 0 10px #d2ffa8);
 }
 .link_fleet[data-theme="4"]:hover {
   background: rgba(210, 255, 168, 0.15) !important;
 }
 .link_fleet[data-theme="5"]:before {
   border-right-color: rgba(168, 255, 184, 0.8);
-  -webkit-filter: drop-shadow(0 0 10px #a8ffb8);
-          filter: drop-shadow(0 0 10px #a8ffb8);
+  filter: drop-shadow(0 0 10px #a8ffb8);
 }
 .link_fleet[data-theme="5"]:hover {
   background: rgba(168, 255, 184, 0.15) !important;
 }
 .link_fleet[data-theme="6"]:before {
   border-right-color: rgba(168, 255, 242, 0.8);
-  -webkit-filter: drop-shadow(0 0 10px #a8fff2);
-          filter: drop-shadow(0 0 10px #a8fff2);
+  filter: drop-shadow(0 0 10px #a8fff2);
 }
 .link_fleet[data-theme="6"]:hover {
   background: rgba(168, 255, 242, 0.15) !important;
 }
 .link_fleet[data-theme="7"]:before {
   border-right-color: rgba(168, 210, 255, 0.8);
-  -webkit-filter: drop-shadow(0 0 10px #a8d2ff);
-          filter: drop-shadow(0 0 10px #a8d2ff);
+  filter: drop-shadow(0 0 10px #a8d2ff);
 }
 .link_fleet[data-theme="7"]:hover {
   background: rgba(168, 210, 255, 0.15) !important;
 }
 .link_fleet[data-theme="8"]:before {
   border-right-color: rgba(184, 168, 255, 0.8);
-  -webkit-filter: drop-shadow(0 0 10px #b8a8ff);
-          filter: drop-shadow(0 0 10px #b8a8ff);
+  filter: drop-shadow(0 0 10px #b8a8ff);
 }
 .link_fleet[data-theme="8"]:hover {
   background: rgba(184, 168, 255, 0.15) !important;
 }
 .link_fleet[data-theme="9"]:before {
   border-right-color: rgba(242, 168, 255, 0.8);
-  -webkit-filter: drop-shadow(0 0 10px #f2a8ff);
-          filter: drop-shadow(0 0 10px #f2a8ff);
+  filter: drop-shadow(0 0 10px #f2a8ff);
 }
 .link_fleet[data-theme="9"]:hover {
   background: rgba(242, 168, 255, 0.15) !important;
 }
 .link_fleet[data-theme="10"]:before {
   border-right-color: rgba(255, 168, 210, 0.8);
-  -webkit-filter: drop-shadow(0 0 10px #ffa8d2);
-          filter: drop-shadow(0 0 10px #ffa8d2);
+  filter: drop-shadow(0 0 10px #ffa8d2);
 }
 .link_fleet[data-theme="10"]:hover {
   background: rgba(255, 168, 210, 0.15) !important;
@@ -5160,7 +4816,6 @@ body.mod-capture #tip {
   padding-left: 36px;
   position: relative;
   vertical-align: middle;
-  -webkit-transition-property: color;
   transition-property: color;
 }
 .link_equipment > i {
@@ -5192,9 +4847,7 @@ body.mod-capture #tip {
   font-weight: lighter;
   height: 100%;
   position: relative;
-  -webkit-transition-property: opacity, background-position;
   transition-property: opacity, background-position;
-  background: -webkit-linear-gradient(top, transparent, rgba(255, 255, 255, 0.35)) repeat-x 0 50px;
   background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.35)) repeat-x 0 50px;
 }
 .tab:before {
@@ -5204,11 +4857,8 @@ body.mod-capture #tip {
   left: 0;
   width: 100%;
   height: 0.30000000000000004rem;
-  -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
-  -webkit-transition-property: background-position;
   transition-property: background-position;
-  background: -webkit-linear-gradient(bottom, transparent, rgba(255, 255, 255, 0.175)) repeat-x 0 -6px;
   background: linear-gradient(to top, transparent, rgba(255, 255, 255, 0.175)) repeat-x 0 -6px;
 }
 .tab:hover {
@@ -5224,13 +4874,8 @@ body.mod-capture #tip {
   background-position: 0 0;
 }
 .tablelist {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: column nowrap;
-      -ms-flex-flow: column nowrap;
-          flex-flow: column nowrap;
+  flex-flow: column nowrap;
   height: 100%;
   overflow: hidden;
 }
@@ -5242,15 +4887,11 @@ body.mod-capture #tip {
   line-height: 50px;
   position: relative;
   max-height: auto;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 50px;
-      -ms-flex: 0 0 50px;
-          flex: 0 0 50px;
+  flex: 0 0 50px;
 }
 .tablelist > .options label,
 .tablelist > .options button {
   color: rgba(255, 255, 255, 0.75);
-  -webkit-transition-property: color, opacity, background-position;
   transition-property: color, opacity, background-position;
 }
 .tablelist > .options label:hover,
@@ -5275,10 +4916,8 @@ body.mod-capture #tip {
   height: 100%;
   padding-left: 80px;
   padding-right: 80px;
-  -webkit-transition-property: opacity;
   transition-property: opacity;
-  -webkit-transition-duration: .35s;
-          transition-duration: .35s;
+  transition-duration: .35s;
   z-index: 1;
   font-weight: lighter;
   font-size: 14px;
@@ -5308,8 +4947,7 @@ body.mod-capture #tip {
   }
 }
 .tablelist > .options > div.filters {
-  -webkit-transition-delay: .5s;
-          transition-delay: .5s;
+  transition-delay: .5s;
   z-index: 3;
 }
 .tablelist > .options > div.filters button[icon]:before {
@@ -5326,7 +4964,6 @@ body.mod-capture #tip {
   float: left;
 }
 .tablelist > .options > div.filters > p {
-  -webkit-transition-property: opacity;
   transition-property: opacity;
 }
 .tablelist > .options > div.filters > .search {
@@ -5423,8 +5060,7 @@ body.mod-capture #tip {
 }
 .tablelist > .options > div.filters > .viewtype input:checked + label {
   color: #fff;
-  -webkit-transition-duration: .5s !important;
-          transition-duration: .5s !important;
+  transition-duration: .5s !important;
 }
 .tablelist > .options > div.filters > .buttons_right {
   float: right;
@@ -5446,6 +5082,7 @@ body.mod-capture #tip {
 .tablelist > .options > div.filters > .tab > span {
   display: inline-block !important;
   max-width: 98% !important;
+  max-width: -webkit-calc(100% - 0.2rem) !important;
   max-width: calc(100% - 0.2rem) !important;
   max-height: 100% !important;
   vertical-align: middle !important;
@@ -5527,7 +5164,6 @@ body.mod-capture #tip {
   padding: 5px 10px 5px 30px;
   background: rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.25);
-  -webkit-transition-property: background, color;
   transition-property: background, color;
   border-radius: 5px 0 0 5px;
   overflow: hidden;
@@ -5569,8 +5205,7 @@ body.mod-capture #tip {
 .tablelist > .options > div.warning {
   z-index: 5;
   left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
+  transform: translateX(-50%);
   background: rgba(255, 64, 64, 0.5);
   font-size: 16px;
   padding: 0 1em;
@@ -5579,12 +5214,8 @@ body.mod-capture #tip {
 }
 .tablelist > .msgs {
   height: 0;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 auto;
-      -ms-flex: 0 0 auto;
-          flex: 0 0 auto;
+  flex: 0 0 auto;
   line-height: 40px;
-  -webkit-transition-property: height, border-top-width;
   transition-property: height, border-top-width;
   position: relative;
   overflow: hidden;
@@ -5593,7 +5224,6 @@ body.mod-capture #tip {
   color: #a3c8d9;
 }
 .tablelist > .msgs > div {
-  -webkit-transition-property: opacity;
   transition-property: opacity;
   opacity: 0;
   width: 100%;
@@ -5613,7 +5243,6 @@ body.mod-capture #tip {
   text-align: center;
   font-size: 30px;
   color: #63899c;
-  -webkit-transition-property: color;
   transition-property: color;
   font-family: Gothic;
   font-weight: lighter;
@@ -5623,7 +5252,6 @@ body.mod-capture #tip {
   color: #aec5d0;
 }
 .tablelist > .msgs > div.comparestart {
-  -webkit-transition-property: background;
   transition-property: background;
 }
 .tablelist > .msgs > div.comparestart:hover {
@@ -5649,28 +5277,17 @@ body.mod-capture #tip {
   height: 0;
 }
 .tablelist-container {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 1 100%;
-      -ms-flex: 0 1 100%;
-          flex: 0 1 100%;
+  flex: 0 1 100%;
   padding-top: 32px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: column nowrap;
-      -ms-flex-flow: column nowrap;
-          flex-flow: column nowrap;
+  flex-flow: column nowrap;
   position: relative;
   border: 0 solid transparent;
   overflow: hidden;
-  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.35) 1px, rgba(230, 230, 230, 0.25) 1px, rgba(230, 230, 230, 0.25) calc(100% - 1px), rgba(255, 255, 255, 0.35) calc(100% - 1px)) no-repeat 0 0;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35) 1px, rgba(230, 230, 230, 0.25) 1px, rgba(230, 230, 230, 0.25) calc(100% - 1px), rgba(255, 255, 255, 0.35) calc(100% - 1px)) no-repeat 0 0;
   background-size: 100% 31px;
-  -webkit-transition-property: background-size, padding-top;
   transition-property: background-size, padding-top;
-  -webkit-transition-duration: .5s;
-          transition-duration: .5s;
+  transition-duration: .5s;
 }
 .tablelist-header dl,
 .tablelist-body {
@@ -5706,13 +5323,8 @@ body.mod-capture #tip {
   }
 }
 .tablelist-container dl {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: row nowrap;
-      -ms-flex-flow: row nowrap;
-          flex-flow: row nowrap;
+  flex-flow: row nowrap;
   margin: 0;
 }
 .tablelist-container dl dt,
@@ -5724,25 +5336,16 @@ body.mod-capture #tip {
 .tablelist-container dl dt {
   height: 100%;
   width: 100%;
-  -webkit-box-flex: 7.5;
-  -webkit-flex: 7.5 0 155px;
-      -ms-flex: 7.5 0 155px;
-          flex: 7.5 0 155px;
+  flex: 7.5 0 155px;
 }
 .tablelist-container dl dd {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 36px;
-      -ms-flex: 1 0 36px;
-          flex: 1 0 36px;
+  flex: 1 0 36px;
   text-align: center;
 }
 .tablelist-header {
   position: absolute;
   top: 0;
-  -webkit-box-flex: 0;
-  -webkit-flex: none;
-      -ms-flex: none;
-          flex: none;
+  flex: none;
   line-height: 32px;
   font-size: 12px;
   border-right: 20px solid transparent;
@@ -5755,10 +5358,7 @@ body.mod-capture #tip {
 }
 .tablelist-body {
   overflow-y: scroll;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 1 100%;
-      -ms-flex: 1 1 100%;
-          flex: 1 1 100%;
+  flex: 1 1 100%;
   font-size: 14px;
   padding-bottom: 30px;
 }
@@ -5794,9 +5394,7 @@ body.mod-capture #tip {
 }
 .tablelist-body h4 label.checkbox:before,
 .tablelist-body h4 label.checkbox:after {
-  -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
-  -webkit-transition-property: opacity;
   transition-property: opacity;
 }
 .tablelist-body h4 label.checkbox:before {
@@ -5841,7 +5439,6 @@ body.mod-capture #tip {
 }
 .tablelist-body dl {
   line-height: 50px;
-  -webkit-transition-property: background,color;
   transition-property: background,color;
 }
 .tablelist-body dl:empty {
@@ -5854,7 +5451,6 @@ body.mod-capture #tip {
   display: block;
 }
 .tablelist-body dl dd {
-  -webkit-transition-property: inherit;
   transition-property: inherit;
   /*
 				&:hover:after{
@@ -5905,13 +5501,9 @@ body.mod-capture #tip {
   background-color: rgba(0, 0, 0, 0.2);
 }
 .tablelist-container.sortable .tablelist-header {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 .tablelist-container.sortable .tablelist-header [stat] {
-  -webkit-transition-property: color, text-shadow;
   transition-property: color, text-shadow;
 }
 .tablelist > [filter-hide-premodel="true"] ~ .tablelist-container .premodeled:not([compare="true"]) {
@@ -5927,16 +5519,9 @@ body.mod-capture #tip {
 .tablelist > [viewtype="card"] ~ .tablelist-container .tablelist-body {
   padding-right: 70px;
   background-size: 100% 9px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: row wrap;
-      -ms-flex-flow: row wrap;
-          flex-flow: row wrap;
-  -webkit-align-content: flex-start;
-      -ms-flex-line-pack: start;
-          align-content: flex-start;
+  flex-flow: row wrap;
+  align-content: flex-start;
 }
 @media all and (max-width: 1152px) {
   .tablelist > [viewtype="card"] ~ .tablelist-container .tablelist-body {
@@ -5969,10 +5554,7 @@ body.mod-capture #tip {
   margin-left: 5px;
 }
 .tablelist > [viewtype="card"] ~ .tablelist-container .tablelist-body dl {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 155px;
-      -ms-flex: 1 0 155px;
-          flex: 1 0 155px;
+  flex: 1 0 155px;
   margin-right: 10px;
   border-bottom: 0;
   display: block;
@@ -5984,14 +5566,12 @@ body.mod-capture #tip {
   display: none;
 }
 .tablelist > .options[viewtype="compare"] > div.filters {
-  -webkit-transition-delay: 0;
-          transition-delay: 0;
+  transition-delay: 0;
   opacity: 0;
   z-index: 1;
 }
 .tablelist > .options[viewtype="compare"] > div.exit_compare {
-  -webkit-transition-delay: .5s;
-          transition-delay: .5s;
+  transition-delay: .5s;
   opacity: 1;
   z-index: 3;
 }
@@ -6033,19 +5613,14 @@ body.mod-capture #tip {
   line-height: 49px;
   margin: 0;
   opacity: .175;
-  -webkit-transition-property: opacity;
   transition-property: opacity;
 }
 .tablelist.ships .tablelist-body dl[data-shipid] dt label.checkbox:before {
-  -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
-  -webkit-transition-property: left;
   transition-property: left;
 }
 .tablelist.ships .tablelist-body dl[data-shipid] dt label.checkbox:after {
-  -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
-  -webkit-transition-property: background;
   transition-property: background;
   content: '';
   position: absolute;
@@ -6065,15 +5640,12 @@ body.mod-capture #tip {
   width: 160px;
   height: 40px;
   z-index: 1;
-  -webkit-mask: -webkit-linear-gradient(left, transparent 0, transparent 50px, #000 50px, #000 calc(100% - 60px), transparent calc(100% - 10px)) no-repeat 0 0;
-          mask: linear-gradient(to right, transparent 0, transparent 50px, #000 50px, #000 calc(100% - 60px), transparent calc(100% - 10px)) no-repeat 0 0;
-  -webkit-mask-size: 100% 100%;
-          mask-size: 100% 100%;
+  mask: linear-gradient(to right, transparent 0, transparent 50px, #000 50px, #000 calc(100% - 60px), transparent calc(100% - 10px)) no-repeat 0 0;
+  mask-size: 100% 100%;
   pointer-events: none;
 }
 .tablelist.ships .tablelist-body dl[data-shipid] dt img.nomask {
-  -webkit-mask-image: -webkit-linear-gradient(left, transparent 0, transparent 50px, #000 50px, #000);
-          mask-image: linear-gradient(to right, transparent 0, transparent 50px, #000 50px, #000);
+  mask-image: linear-gradient(to right, transparent 0, transparent 50px, #000 50px, #000);
 }
 .tablelist.ships .tablelist-body dl[data-shipid] dt strong {
   position: relative;
@@ -6099,7 +5671,6 @@ body.mod-capture #tip {
   color: rgba(255, 255, 255, 0.075);
   font-style: normal;
   font-weight: lighter;
-  -webkit-transition-property: color;
   transition-property: color;
   z-index: 3;
 }
@@ -6140,6 +5711,7 @@ body.mod-capture #tip {
 .tablelist.ships .tablelist-body dl[data-shipid] dt a > strong {
   display: inline-block !important;
   max-width: 98% !important;
+  max-width: -webkit-calc(100% - 0.2rem) !important;
   max-width: calc(100% - 0.2rem) !important;
   max-height: 100% !important;
   vertical-align: middle !important;
@@ -6167,12 +5739,10 @@ body.mod-capture #tip {
   position: relative;
 }
 .tablelist.ships .tablelist-body dl[data-shipid] dd.sort-first {
-  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) calc(100% - 1px), transparent calc(100% - 1px));
   background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) calc(100% - 1px), transparent calc(100% - 1px));
   color: #000;
 }
 .tablelist.ships .tablelist-body dl[data-shipid] dd.sort-second {
-  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15) calc(100% - 1px), transparent calc(100% - 1px));
   background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15) calc(100% - 1px), transparent calc(100% - 1px));
 }
 .tablelist.ships .tablelist-body dl[data-shipid]:hover dt em {
@@ -6207,16 +5777,12 @@ body.mod-capture #tip {
 }
 @media all and (min-width: 1152px) {
   .tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body dl[data-shipid] {
-    -webkit-flex-basis: 175px;
-        -ms-flex-preferred-size: 175px;
-            flex-basis: 175px;
+    flex-basis: 175px;
   }
 }
 @media all and (min-width: 1680px) {
   .tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body dl[data-shipid] {
-    -webkit-flex-basis: 185px;
-        -ms-flex-preferred-size: 185px;
-            flex-basis: 185px;
+    flex-basis: 185px;
   }
 }
 .tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body dl[data-shipid]:not(:empty) {
@@ -6246,20 +5812,17 @@ body.mod-capture #tip {
 .tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body dl[data-shipid] dt img {
   top: 0;
   margin-left: -10px;
-  -webkit-mask-image: -webkit-linear-gradient(left, transparent 0, transparent 50px, #000 58px, #000 calc(100% - 60px), transparent calc(100% - 10px));
-          mask-image: linear-gradient(to right, transparent 0, transparent 50px, #000 58px, #000 calc(100% - 60px), transparent calc(100% - 10px));
+  mask-image: linear-gradient(to right, transparent 0, transparent 50px, #000 58px, #000 calc(100% - 60px), transparent calc(100% - 10px));
 }
 .tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body dl[data-shipid] dt img.nomask {
-  -webkit-mask-image: -webkit-linear-gradient(left, transparent 0, transparent 50px, #000 58px, #000);
-          mask-image: linear-gradient(to right, transparent 0, transparent 50px, #000 58px, #000);
+  mask-image: linear-gradient(to right, transparent 0, transparent 50px, #000 58px, #000);
 }
 .tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body dl[data-shipid] [icon]:before {
   position: absolute;
   display: block;
   font-size: 22px;
   color: #ffffff;
-  -webkit-transform: rotate(15deg);
-          transform: rotate(15deg);
+  transform: rotate(15deg);
   top: -4px;
   left: 80px;
   z-index: 10;
@@ -6272,12 +5835,10 @@ body.mod-capture #tip {
 }
 .tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid][compare="true"] dt img {
   left: 0;
-  -webkit-mask-image: -webkit-linear-gradient(left, #000 50px, #000 calc(100% - 60px), transparent calc(100% - 10px));
-          mask-image: linear-gradient(to right, #000 50px, #000 calc(100% - 60px), transparent calc(100% - 10px));
+  mask-image: linear-gradient(to right, #000 50px, #000 calc(100% - 60px), transparent calc(100% - 10px));
 }
 .tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid][compare="true"] dt img.nomask {
-  -webkit-mask-image: -webkit-linear-gradient(left, #000 50px, #000);
-          mask-image: linear-gradient(to right, #000 50px, #000);
+  mask-image: linear-gradient(to right, #000 50px, #000);
 }
 .tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid][compare="true"] dt a {
   left: 0;
@@ -6288,9 +5849,7 @@ body.mod-capture #tip {
 }
 @media all and (max-width: 1152px) {
   .tablelist.ships dl dd {
-    -webkit-flex-basis: 24px;
-        -ms-flex-preferred-size: 24px;
-            flex-basis: 24px;
+    flex-basis: 24px;
   }
   .tablelist.ships [stat="extra_illust"] {
     display: none !important;
@@ -6322,10 +5881,7 @@ body.mod-capture #tip {
 }
 @media all and (max-width: 600px) {
   .tablelist.ships dl dd {
-    -webkit-box-flex: .75;
-    -webkit-flex-grow: .75;
-        -ms-flex-positive: .75;
-            flex-grow: .75;
+    flex-grow: .75;
   }
   .tablelist.ships .tablelist-body dl dd {
     border-left: 1px solid rgba(255, 255, 255, 0.1);
@@ -6337,9 +5893,7 @@ body.mod-capture #tip {
 }
 @media all and (max-width: 540px) {
   .tablelist.ships dl dt {
-    -webkit-flex-basis: 105px;
-        -ms-flex-preferred-size: 105px;
-            flex-basis: 105px;
+    flex-basis: 105px;
   }
   .tablelist.ships [stat="asw"],
   .tablelist.ships [stat="carry"] {
@@ -6382,21 +5936,14 @@ body.mod-capture #tip {
   border: 8px solid transparent;
   border-right: 0;
   border-left-color: rgba(255, 255, 255, 0.45);
-  -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
-  -webkit-transition-property: border-left-color, -webkit-transform;
-  transition-property: border-left-color, -webkit-transform;
   transition-property: transform, border-left-color;
-  transition-property: transform, border-left-color, -webkit-transform;
 }
 #layout.mode-selection .tablelist.ships h4 label.shiptype:hover:before {
   border-left-color: rgba(255, 255, 255, 0.85);
 }
 #layout.mode-selection .tablelist.ships h4 label.checkbox {
-  -webkit-transition-property: -webkit-transform;
-  transition-property: -webkit-transform;
   transition-property: transform;
-  transition-property: transform, -webkit-transform;
 }
 #layout.mode-selection .tablelist.ships > [viewtype="card"] ~ .tablelist-container h4 label.shiptype {
   margin-left: 0;
@@ -6414,12 +5961,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="0"]:checked ~ .tablelist-container h4[data-header="0"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="0"]:checked ~ .tablelist-container h4[data-header="0"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="1"]:not(:checked) ~ .tablelist-container h4[data-header="1"] label.checkbox {
   z-index: -1;
@@ -6434,12 +5979,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="1"]:checked ~ .tablelist-container h4[data-header="1"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="1"]:checked ~ .tablelist-container h4[data-header="1"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="2"]:not(:checked) ~ .tablelist-container h4[data-header="2"] label.checkbox {
   z-index: -1;
@@ -6454,12 +5997,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="2"]:checked ~ .tablelist-container h4[data-header="2"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="2"]:checked ~ .tablelist-container h4[data-header="2"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="3"]:not(:checked) ~ .tablelist-container h4[data-header="3"] label.checkbox {
   z-index: -1;
@@ -6474,12 +6015,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="3"]:checked ~ .tablelist-container h4[data-header="3"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="3"]:checked ~ .tablelist-container h4[data-header="3"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="4"]:not(:checked) ~ .tablelist-container h4[data-header="4"] label.checkbox {
   z-index: -1;
@@ -6494,12 +6033,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="4"]:checked ~ .tablelist-container h4[data-header="4"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="4"]:checked ~ .tablelist-container h4[data-header="4"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="5"]:not(:checked) ~ .tablelist-container h4[data-header="5"] label.checkbox {
   z-index: -1;
@@ -6514,12 +6051,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="5"]:checked ~ .tablelist-container h4[data-header="5"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="5"]:checked ~ .tablelist-container h4[data-header="5"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="6"]:not(:checked) ~ .tablelist-container h4[data-header="6"] label.checkbox {
   z-index: -1;
@@ -6534,12 +6069,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="6"]:checked ~ .tablelist-container h4[data-header="6"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="6"]:checked ~ .tablelist-container h4[data-header="6"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="7"]:not(:checked) ~ .tablelist-container h4[data-header="7"] label.checkbox {
   z-index: -1;
@@ -6554,12 +6087,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="7"]:checked ~ .tablelist-container h4[data-header="7"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="7"]:checked ~ .tablelist-container h4[data-header="7"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="8"]:not(:checked) ~ .tablelist-container h4[data-header="8"] label.checkbox {
   z-index: -1;
@@ -6574,12 +6105,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="8"]:checked ~ .tablelist-container h4[data-header="8"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="8"]:checked ~ .tablelist-container h4[data-header="8"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="9"]:not(:checked) ~ .tablelist-container h4[data-header="9"] label.checkbox {
   z-index: -1;
@@ -6594,12 +6123,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="9"]:checked ~ .tablelist-container h4[data-header="9"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="9"]:checked ~ .tablelist-container h4[data-header="9"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="10"]:not(:checked) ~ .tablelist-container h4[data-header="10"] label.checkbox {
   z-index: -1;
@@ -6614,12 +6141,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="10"]:checked ~ .tablelist-container h4[data-header="10"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="10"]:checked ~ .tablelist-container h4[data-header="10"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="11"]:not(:checked) ~ .tablelist-container h4[data-header="11"] label.checkbox {
   z-index: -1;
@@ -6634,12 +6159,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="11"]:checked ~ .tablelist-container h4[data-header="11"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="11"]:checked ~ .tablelist-container h4[data-header="11"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="12"]:not(:checked) ~ .tablelist-container h4[data-header="12"] label.checkbox {
   z-index: -1;
@@ -6654,12 +6177,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="12"]:checked ~ .tablelist-container h4[data-header="12"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="12"]:checked ~ .tablelist-container h4[data-header="12"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="13"]:not(:checked) ~ .tablelist-container h4[data-header="13"] label.checkbox {
   z-index: -1;
@@ -6674,12 +6195,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="13"]:checked ~ .tablelist-container h4[data-header="13"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="13"]:checked ~ .tablelist-container h4[data-header="13"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="14"]:not(:checked) ~ .tablelist-container h4[data-header="14"] label.checkbox {
   z-index: -1;
@@ -6694,12 +6213,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="14"]:checked ~ .tablelist-container h4[data-header="14"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="14"]:checked ~ .tablelist-container h4[data-header="14"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="15"]:not(:checked) ~ .tablelist-container h4[data-header="15"] label.checkbox {
   z-index: -1;
@@ -6714,12 +6231,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="15"]:checked ~ .tablelist-container h4[data-header="15"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="15"]:checked ~ .tablelist-container h4[data-header="15"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="16"]:not(:checked) ~ .tablelist-container h4[data-header="16"] label.checkbox {
   z-index: -1;
@@ -6734,12 +6249,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="16"]:checked ~ .tablelist-container h4[data-header="16"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="16"]:checked ~ .tablelist-container h4[data-header="16"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="17"]:not(:checked) ~ .tablelist-container h4[data-header="17"] label.checkbox {
   z-index: -1;
@@ -6754,12 +6267,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="17"]:checked ~ .tablelist-container h4[data-header="17"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="17"]:checked ~ .tablelist-container h4[data-header="17"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="18"]:not(:checked) ~ .tablelist-container h4[data-header="18"] label.checkbox {
   z-index: -1;
@@ -6774,12 +6285,10 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="18"]:checked ~ .tablelist-container h4[data-header="18"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="18"]:checked ~ .tablelist-container h4[data-header="18"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="19"]:not(:checked) ~ .tablelist-container h4[data-header="19"] label.checkbox {
   z-index: -1;
@@ -6794,21 +6303,16 @@ body.mod-capture #tip {
   width: 30px;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="19"]:checked ~ .tablelist-container h4[data-header="19"] label.shiptype:before {
-  -webkit-transform: rotate(90deg) translateX(-1px);
-          transform: rotate(90deg) translateX(-1px);
+  transform: rotate(90deg) translateX(-1px);
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="19"]:checked ~ .tablelist-container h4[data-header="19"] label.checkbox {
-  -webkit-transform: translateX(30px);
-          transform: translateX(30px);
+  transform: translateX(30px);
 }
 .tablelist.ships.mod-search .tablelist-body h4 {
   display: none;
 }
 .tablelist.ships.mod-search .tablelist-body dl:empty {
-  -webkit-box-ordinal-group: 1000;
-  -webkit-order: 999;
-      -ms-flex-order: 999;
-          order: 999;
+  order: 999;
 }
 .tablelist.ships.mod-search .tablelist-body dl[data-donotcompare="true"] {
   display: none;
@@ -6821,14 +6325,8 @@ body.mod-capture #tip {
   line-height: 14px;
   padding-top: 5px;
   padding-bottom: 5px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
 }
 .tablelist-equipments .tablelist-body dl dt {
   font-weight: lighter;
@@ -6836,10 +6334,7 @@ body.mod-capture #tip {
 }
 .tablelist-equipments .tablelist-body dl dd {
   font-size: 12px;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
 }
 .tablelist-equipments > .msgs {
   background: rgba(22, 64, 42, 0.65);
@@ -7296,9 +6791,7 @@ body.mod-capture #tip {
 }
 @media all and (max-width: 640px) {
   .tablelist-equipments dl dd {
-    -webkit-flex-basis: 30px;
-        -ms-flex-preferred-size: 30px;
-            flex-basis: 30px;
+    flex-basis: 30px;
   }
   .tablelist-equipments [stat="improvable"] {
     display: none !important;
@@ -7306,19 +6799,11 @@ body.mod-capture #tip {
 }
 @media all and (max-width: 600px) {
   .tablelist-equipments > .options > div.filters {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-flex-flow: row nowrap;
-        -ms-flex-flow: row nowrap;
-            flex-flow: row nowrap;
+    flex-flow: row nowrap;
   }
   .tablelist-equipments > .options > div.filters > .tab {
-    -webkit-box-flex: 1;
-    -webkit-flex: 1 0 auto;
-        -ms-flex: 1 0 auto;
-            flex: 1 0 auto;
+    flex: 1 0 auto;
   }
   .tablelist-equipments > .options > div.filters > .tab > i {
     margin: 0 !important;
@@ -7329,21 +6814,14 @@ body.mod-capture #tip {
   .tablelist-equipments dl dt {
     padding-left: 10px !important;
     padding-right: .25em;
-    -webkit-flex-basis: 100px;
-        -ms-flex-preferred-size: 100px;
-            flex-basis: 100px;
+    flex-basis: 100px;
   }
   .tablelist-equipments .tablelist-header dl dd {
-    -webkit-flex-basis: 26px;
-        -ms-flex-preferred-size: 26px;
-            flex-basis: 26px;
-    -webkit-transform: rotate(-30deg);
-            transform: rotate(-30deg);
+    flex-basis: 26px;
+    transform: rotate(-30deg);
   }
   .tablelist-equipments .tablelist-body dl dd {
-    -webkit-flex-basis: 26px;
-        -ms-flex-preferred-size: 26px;
-            flex-basis: 26px;
+    flex-basis: 26px;
     border-left: 1px solid rgba(255, 255, 255, 0.1);
   }
 }
@@ -7401,9 +6879,7 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
   border: 0;
 }
 .tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body dl[data-fleetid] {
-  -webkit-flex-basis: 500px !important;
-      -ms-flex-preferred-size: 500px !important;
-          flex-basis: 500px !important;
+  flex-basis: 500px !important;
 }
 .tablelist.fleets > [viewtype="card"] ~ .tablelist-container .tablelist-body dl[data-fleetid].link_fleet {
   margin-top: 10px;
@@ -7444,8 +6920,7 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
   bottom: 20px;
   left: 0;
   color: rgba(255, 255, 255, 0.2);
-  -webkit-animation: fadeIn 0.3s ease-out;
-          animation: fadeIn 0.3s ease-out;
+  animation: fadeIn 0.3s ease-out;
   display: inline-block;
   text-align: center !important;
   vertical-align: middle !important;
@@ -7454,6 +6929,7 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
 .tablelist.fleets .tablelist-container > .nocontent > div {
   display: inline-block !important;
   max-width: 98% !important;
+  max-width: -webkit-calc(100% - 0.2rem) !important;
   max-width: calc(100% - 0.2rem) !important;
   max-height: 100% !important;
   vertical-align: middle !important;
@@ -7489,7 +6965,6 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
   background: rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  -webkit-transition-property: background-color, border-color, color;
   transition-property: background-color, border-color, color;
 }
 .tablelist.fleets .tablelist-container > .nocontent > div > button:hover {
@@ -7517,9 +6992,7 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
   padding-left: 80px;
   padding-right: 80px;
   display: block;
-  -webkit-flex-flow: none;
-      -ms-flex-flow: none;
-          flex-flow: none;
+  flex-flow: none;
   height: auto;
 }
 @media all and (max-width: 1152px) {
@@ -7576,7 +7049,6 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
   height: 25px;
   line-height: 25px;
   padding: 0 0 0 6px;
-  -webkit-transition-property: background-color, opacity;
   transition-property: background-color, opacity;
 }
 .tablelist.entities .tablelist-list > .unit.illustrator:hover {
@@ -7596,8 +7068,7 @@ body > .menus > .menu.menu-tablelistfleets-options > .body menuitem.option-aircr
   display: inline-block;
   margin-left: 5px;
   vertical-align: text-bottom;
-  -webkit-transform: translateY(15%);
-          transform: translateY(15%);
+  transform: translateY(15%);
 }
 body > .menus > .menu.menu-tablelistfleets-options > .body .option-filelocation {
   padding: 0 1em .5em 1em;
@@ -7756,29 +7227,15 @@ h6 + section.update_journal {
   }
 }
 .infos-equipment {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: column nowrap;
-      -ms-flex-flow: column nowrap;
-          flex-flow: column nowrap;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 .infos-equipment:after {
   content: '';
   display: block;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 1 20%;
-      -ms-flex: 0 1 20%;
-          flex: 0 1 20%;
+  flex: 0 1 20%;
 }
 .infos-equipment h1,
 .infos-equipment h2,
@@ -7807,14 +7264,10 @@ h6 + section.update_journal {
   color: #8fffc5 !important;
 }
 .infos-equipment .indicator.true:before {
-  background: -webkit-linear-gradient(top, #a8ffd2, #29ff90);
   background: linear-gradient(to bottom, #a8ffd2, #29ff90);
 }
 .infos-equipment > div {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 auto;
-      -ms-flex: 1 0 auto;
-          flex: 1 0 auto;
+  flex: 1 0 auto;
 }
 .infos-equipment > div + div {
   padding-top: 2.25rem;
@@ -7866,13 +7319,8 @@ h6 + section.update_journal {
   clear: both;
 }
 .infos-equipment > div.improvement-options {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: row wrap;
-      -ms-flex-flow: row wrap;
-          flex-flow: row wrap;
+  flex-flow: row wrap;
   margin-right: -1rem;
   /*
 			&>.unit{
@@ -7900,17 +7348,12 @@ h6 + section.update_journal {
 			*/
 }
 .infos-equipment > div.improvement-options h4 {
-  -webkit-box-flex: 0;
-  -webkit-flex: none;
-      -ms-flex: none;
-          flex: none;
+  flex: none;
   width: 100%;
   margin-bottom: -0.5rem;
 }
 .infos-equipment > div.improvement-options > .unit {
-  -webkit-flex-basis: 24rem;
-      -ms-flex-preferred-size: 24rem;
-          flex-basis: 24rem;
+  flex-basis: 24rem;
   margin-right: 1rem;
 }
 .infos-equipment > div.improvement-options .improvement-details {
@@ -7941,7 +7384,6 @@ h6 + section.update_journal {
   margin-top: -2px;
   padding-top: 2px;
   vertical-align: top;
-  -webkit-transition-property: color;
   transition-property: color;
   font-style: normal;
   margin-left: .5em;
@@ -8023,10 +7465,7 @@ h6 + section.update_journal {
 				*/
 }
 .infos-equipment > aside {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0;
-      -ms-flex: 0;
-          flex: 0;
+  flex: 0;
   position: absolute;
   width: 260px;
   height: 260px;
@@ -8035,18 +7474,14 @@ h6 + section.update_journal {
   overflow: hidden;
 }
 .infos-equipment > aside img {
-  -o-object-fit: scale-down;
-     object-fit: scale-down;
+  object-fit: scale-down;
   max-width: 100%;
   max-height: 100%;
 }
 @media all and (max-width: 1152px) {
   .infos-equipment > div.stats + .stats {
     width: 100%;
-    -webkit-box-flex: 1;
-    -webkit-flex-grow: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1;
+    flex-grow: 1;
   }
 }
 @media all and (max-width: 960px) {
@@ -8072,13 +7507,8 @@ h6 + section.update_journal {
   }
 }
 .infos-fleet {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: column nowrap;
-      -ms-flex-flow: column nowrap;
-          flex-flow: column nowrap;
+  flex-flow: column nowrap;
   margin-left: -80px;
   margin-right: -80px;
   width: calc(100% + 160px);
@@ -8139,10 +7569,7 @@ h6 + section.update_journal {
   content: '';
   display: block;
   width: 100%;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 auto;
-      -ms-flex: 1 0 auto;
-          flex: 1 0 auto;
+  flex: 1 0 auto;
   max-height: 20px;
 }
 .infos-fleet > header,
@@ -8192,7 +7619,7 @@ h6 + section.update_journal {
 .infos-fleet h5[data-content]:before {
   color: #ffffff;
   mask-image: linear-gradient(to top, transparent, #000);
-  -webkit-mask-image: -webkit-linear-gradient(bottom, transparent, #000);
+  -webkit-mask-image: linear-gradient(to top, transparent, #000);
 }
 .infos-fleet input[type="number"],
 .infos-fleet input[type="input"] {
@@ -8212,10 +7639,7 @@ h6 + section.update_journal {
 .infos-fleet > header {
   border-top: 10px solid transparent;
   padding-bottom: 0.30000000000000004rem;
-  -webkit-box-flex: 0.5;
-  -webkit-flex: 0.5 0 auto;
-      -ms-flex: 0.5 0 auto;
-          flex: 0.5 0 auto;
+  flex: 0.5 0 auto;
 }
 .infos-fleet > header h3 {
   font-size: 166.66666667%;
@@ -8227,13 +7651,9 @@ h6 + section.update_journal {
   border: 0.05rem solid transparent;
   min-width: 10rem;
   max-width: calc(100% - 120px);
-  -webkit-transition-property: padding, background-color, border-color;
   transition-property: padding, background-color, border-color;
   margin: 0;
-  -webkit-user-select: text;
-     -moz-user-select: text;
-      -ms-user-select: text;
-          user-select: text;
+  user-select: text;
 }
 .infos-fleet > header h3:not([data-content]) {
   color: #999999;
@@ -8247,9 +7667,7 @@ h6 + section.update_journal {
   color: #ffffff;
   margin-top: 0.25rem;
   padding-right: 0.5rem;
-  -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
-  -webkit-transition-property: padding;
   transition-property: padding;
 }
 html.is-gecko .infos-fleet > header h3[data-content]:before {
@@ -8279,7 +7697,6 @@ html.is-gecko .infos-fleet > header h3[data-content]:before {
   color: rgba(255, 255, 255, 0.75);
   font-size: inherit;
   background: rgba(255, 255, 255, 0.15);
-  -webkit-transition-property: background, color;
   transition-property: background, color;
   margin-left: 6px;
 }
@@ -8300,8 +7717,7 @@ body.mod-capture .infos-fleet > header:after {
   right: 0;
   height: 48px;
   line-height: 48px;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 body.mod-capture .infos-fleet > header:before {
   content: 'fleet.diablohu.com';
@@ -8317,10 +7733,7 @@ body.mod-capture .infos-fleet > header:after {
 }
 .infos-fleet > .fleets {
   z-index: 3;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 auto;
-      -ms-flex: 0 0 auto;
-          flex: 0 0 auto;
+  flex: 0 0 auto;
   overflow: visible;
 }
 .infos-fleet > .fleets .tabs {
@@ -8338,9 +7751,7 @@ body.mod-capture .infos-fleet > header:after {
   padding: 0rem 0.75rem;
   border: 0.05rem solid transparent;
   border-bottom-width: 0;
-  -webkit-transition-property: color, background-position, border-color;
   transition-property: color, background-position, border-color;
-  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.0875), rgba(255, 255, 255, 0.35)) repeat-x 0 30px;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.0875), rgba(255, 255, 255, 0.35)) repeat-x 0 30px;
 }
 .infos-fleet > .fleets .tabs label:hover {
@@ -8354,11 +7765,8 @@ body.mod-capture .infos-fleet > header:after {
   left: -0.05rem;
   right: -0.05rem;
   height: 0.30000000000000004rem;
-  -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
-  -webkit-transition-property: background-position;
   transition-property: background-position;
-  background: -webkit-linear-gradient(bottom, transparent, rgba(255, 255, 255, 0.175)) repeat-x 0 -6px;
   background: linear-gradient(to top, transparent, rgba(255, 255, 255, 0.175)) repeat-x 0 -6px;
 }
 .infos-fleet > .fleets .options {
@@ -8413,7 +7821,6 @@ body.mod-capture .infos-fleet > .fleets .options > .icon {
   color: rgba(255, 255, 255, 0.2625);
 }
 .infos-fleet > .fleets .options > button {
-  -webkit-transition-property: color;
   transition-property: color;
 }
 .infos-fleet > .fleets .options > button:hover {
@@ -8479,17 +7886,13 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   display: inline-block;
 }
 .infos-fleet > .ships {
-  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.35) 1px, rgba(230, 230, 230, 0.25) 1px, rgba(230, 230, 230, 0.25) calc(100% - 1px), rgba(255, 255, 255, 0.35) calc(100% - 1px)) no-repeat 0 0;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35) 1px, rgba(230, 230, 230, 0.25) 1px, rgba(230, 230, 230, 0.25) calc(100% - 1px), rgba(255, 255, 255, 0.35) calc(100% - 1px)) no-repeat 0 0;
   background-size: 100% 9px;
   padding-top: 0.45rem;
   position: relative;
   z-index: 2;
   width: 100%;
-  -webkit-box-flex: 5;
-  -webkit-flex: 5 1 526px;
-      -ms-flex: 5 1 526px;
-          flex: 5 1 526px;
+  flex: 5 1 526px;
   height: auto;
   overflow: hidden;
   border: 0 solid transparent;
@@ -8519,13 +7922,10 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   -webkit-overflow-scrolling: touch;
   margin: 0 auto;
   display: none;
-  -webkit-animation: fadeIn 0.3s ease-out;
-          animation: fadeIn 0.3s ease-out;
+  animation: fadeIn 0.3s ease-out;
   padding-left: 80px;
   padding-right: 80px;
-  -webkit-flex-flow: column nowrap;
-      -ms-flex-flow: column nowrap;
-          flex-flow: column nowrap;
+  flex-flow: column nowrap;
 }
 @media all and (max-width: 1152px) {
   .infos-fleet .fleetships {
@@ -8555,32 +7955,20 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   content: '';
   display: block;
   width: 100%;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 0;
-      -ms-flex: 1 0 0;
-          flex: 1 0 0;
+  flex: 1 0 0;
 }
 .infos-fleet .fleetships:after {
   content: '';
   display: block;
   width: 100%;
-  -webkit-box-flex: 2.5;
-  -webkit-flex: 2.5 0 0;
-      -ms-flex: 2.5 0 0;
-          flex: 2.5 0 0;
+  flex: 2.5 0 0;
 }
 .infos-fleet .fleetships > s {
   display: block;
-  -webkit-box-flex: 0.25;
-  -webkit-flex: 0.25 0 auto;
-      -ms-flex: 0.25 0 auto;
-          flex: 0.25 0 auto;
+  flex: 0.25 0 auto;
 }
 .infos-fleet .ship {
-  -webkit-box-flex: 0.5;
-  -webkit-flex: 0.5 0 70px;
-      -ms-flex: 0.5 0 70px;
-          flex: 0.5 0 70px;
+  flex: 0.5 0 70px;
   position: relative;
   left: 8px;
   right: 0;
@@ -8601,9 +7989,7 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   -moz-filter: drop-shadow(0 0 10px rgba(255,255,255,1));
   -ms-filter: drop-shadow(0 0 10px rgba(255,255,255,1));
   z-index: -1;
-  -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
-  -webkit-transition-property: border-color;
   transition-property: border-color;
 }
 .infos-fleet .ship:after {
@@ -8614,11 +8000,10 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   right: 0;
   bottom: 0;
   left: 0;
-  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.225)) repeat-x 0 0;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.225)) repeat-x 0 0;
   background-size: 100% 200%;
   mask-image: linear-gradient(to right, #000 50%, transparent);
-  -webkit-mask-image: -webkit-linear-gradient(left, #000 50%, transparent);
+  -webkit-mask-image: linear-gradient(to right, #000 50%, transparent);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 .infos-fleet .ship > dt,
@@ -8629,13 +8014,8 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   display: none;
 }
 .infos-fleet .ship > dt {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: row nowrap;
-      -ms-flex-flow: row nowrap;
-          flex-flow: row nowrap;
+  flex-flow: row nowrap;
   height: 100%;
   width: 30%;
   top: 0;
@@ -8645,10 +8025,7 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
 .infos-fleet .ship > dt > s {
   display: block;
   position: relative;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 1 150px;
-      -ms-flex: 1 1 150px;
-          flex: 1 1 150px;
+  flex: 1 1 150px;
   z-index: 1;
   text-decoration: none;
 }
@@ -8660,7 +8037,6 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   right: 0;
   bottom: 0;
   left: 0;
-  background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(255, 255, 255, 0.5) 25%, transparent) repeat-y 0 0;
 }
 .infos-fleet .ship > dt > s img {
@@ -8672,30 +8048,18 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   min-height: 100%;
   top: 0;
   left: 50%;
-  -webkit-transform: translateX(-27.5%);
-          transform: translateX(-27.5%);
+  transform: translateX(-27.5%);
   mask: linear-gradient(to right, transparent, #000 5%);
-  -webkit-mask: -webkit-linear-gradient(left, transparent, #000 5%);
+  -webkit-mask: linear-gradient(to right, transparent, #000 5%);
   pointer-events: none;
 }
 .infos-fleet .ship > dt > div {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: column nowrap;
-      -ms-flex-flow: column nowrap;
-          flex-flow: column nowrap;
+  flex-flow: column nowrap;
   position: relative;
-  -webkit-box-flex: 3;
-  -webkit-flex: 3 1 190px;
-      -ms-flex: 3 1 190px;
-          flex: 3 1 190px;
+  flex: 3 1 190px;
   z-index: 2;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
 }
 .infos-fleet .ship > dt > div > div {
   display: none;
@@ -8740,7 +8104,6 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   left: 0;
   height: 1px;
   z-index: 10;
-  background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.15) 25%, transparent);
   background: linear-gradient(to right, rgba(255, 255, 255, 0.15) 25%, transparent);
   display: block;
 }
@@ -8751,15 +8114,8 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   z-index: 2;
   height: calc(100% - 27px - 8px);
   text-align: center;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-              -ms-grid-row-align: center;
-          align-items: center;
+  justify-content: flex-end;
+  align-items: center;
   padding-right: 7px;
   /*
 			button{
@@ -8783,7 +8139,6 @@ body.mod-capture .infos-fleet .ship > .options {
 }
 .infos-fleet .ship > .options button {
   color: rgba(255, 255, 255, 0.2);
-  -webkit-transition-property: color, background-color;
   transition-property: color, background-color;
   font-size: 166.66666667%;
   width: 1.5em;
@@ -8925,7 +8280,7 @@ body.mod-capture .infos-fleet .ship > .options {
 }
 .infos-fleet .ship[data-shipid]:after {
   mask-image: linear-gradient(to right, #000, #000), linear-gradient(to right, #000, #000), linear-gradient(-60deg, transparent 50%, #000 50%), linear-gradient(to right, transparent, transparent);
-  -webkit-mask-image: -webkit-linear-gradient(left, #000, #000), -webkit-linear-gradient(left, #000, #000), -webkit-linear-gradient(150deg, transparent 50%, #000 50%), -webkit-linear-gradient(left, transparent, transparent);
+  -webkit-mask-image: linear-gradient(to right, #000, #000), linear-gradient(to right, #000, #000), linear-gradient(-60deg, transparent 50%, #000 50%), linear-gradient(to right, transparent, transparent);
   mask-position: 0 0, 0 100%, calc(30% - 15px) 100%, 100% 100%;
   -webkit-mask-position: 0 0, 0 100%, calc(30% - 15px) 100%, 100% 100%;
   mask-size: 100% calc(100% - 24px), calc(30% - 15px) 24px, 40px 24px, 70% 24px;
@@ -8936,7 +8291,7 @@ body.mod-capture .infos-fleet .ship > .options {
 .infos-fleet .ship[data-shipid] > dt > s {
   cursor: n-resize;
   mask: linear-gradient(to right, #000 70%, transparent);
-  -webkit-mask: -webkit-linear-gradient(left, #000 70%, transparent);
+  -webkit-mask: linear-gradient(to right, #000 70%, transparent);
 }
 .infos-fleet .ship[data-shipid] > dt > s:before {
   content: "\e615";
@@ -8947,8 +8302,7 @@ body.mod-capture .infos-fleet .ship > .options {
   line-height: 0;
   width: 35%;
   left: 0;
-  -webkit-transform: translateX(-40px);
-          transform: translateX(-40px);
+  transform: translateX(-40px);
   opacity: .75;
   font-size: 333.33333333%;
   z-index: 2;
@@ -8958,9 +8312,7 @@ body.mod-capture .infos-fleet .ship > .options {
   background: rgba(255, 255, 255, 0.15);
 }
 .infos-fleet .ship[data-shipid] > dt > div {
-  -webkit-align-content: center;
-      -ms-flex-line-pack: center;
-          align-content: center;
+  align-content: center;
 }
 .infos-fleet .ship[data-shipid] > dt > div > span {
   display: none;
@@ -8973,14 +8325,10 @@ body.mod-capture .infos-fleet .ship > .options {
   display: block;
 }
 .infos-fleet .ship[data-shipid] > .options {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
 }
 .infos-fleet .ship[data-shipid]:hover > dt > s:before {
-  -webkit-transform: translateX(-12px);
-          transform: translateX(-12px);
+  transform: translateX(-12px);
   text-shadow: 0 0 30px #000;
 }
 .infos-fleet .ship[data-shipid].moving {
@@ -9008,10 +8356,8 @@ body.mod-capture .infos-fleet .ship > .options {
   right: -15px;
   bottom: 0;
   left: 15px;
-  -webkit-transform: skew(-30deg);
-          transform: skew(-30deg);
-  -webkit-transform-origin: 0 0;
-          transform-origin: 0 0;
+  transform: skew(-30deg);
+  transform-origin: 0 0;
   background: rgba(0, 0, 0, 0.35);
 }
 .infos-fleet .ship.mod-nomask > .attributes:after {
@@ -9025,7 +8371,6 @@ body.mod-capture .infos-fleet .ship > .options {
   right: 0;
   bottom: 5px;
   left: -10px;
-  background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.35) 50%, transparent);
   background: linear-gradient(to right, rgba(0, 0, 0, 0.35) 50%, transparent);
   border-radius: 5px;
 }
@@ -9069,15 +8414,12 @@ body.mod-capture .infos-fleet .equipments {
   right: -15px;
   bottom: 0;
   left: 0;
-  -webkit-transform: skew(-30deg);
-          transform: skew(-30deg);
-  -webkit-transform-origin: 0 0;
-          transform-origin: 0 0;
+  transform: skew(-30deg);
+  transform-origin: 0 0;
   z-index: -1;
-  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.15) 20%, transparent);
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 20%, transparent);
   mask: linear-gradient(to left, transparent 15px, #000 75%);
-  -webkit-mask: -webkit-linear-gradient(right, transparent 15px, #000 75%);
+  -webkit-mask: linear-gradient(to left, transparent 15px, #000 75%);
 }
 .infos-fleet .attributes > span {
   display: inline-block;
@@ -9096,8 +8438,7 @@ body.mod-capture .infos-fleet .equipments {
   width: 18px;
   height: 18px;
   line-height: 0;
-  -webkit-transform: translateY(-9px);
-          transform: translateY(-9px);
+  transform: translateY(-9px);
   opacity: .65;
   display: inline-block;
 }
@@ -9144,8 +8485,7 @@ body.mod-capture .infos-fleet .equipments {
   margin: 0 0 0 -32px;
   top: auto;
   left: auto;
-  -webkit-transform: none;
-          transform: none;
+  transform: none;
   display: inline;
 }
 .infos-fleet .equipment {
@@ -9154,7 +8494,6 @@ body.mod-capture .infos-fleet .equipments {
   display: inline-block;
   background: rgba(0, 0, 0, 0.125) no-repeat 1px 50%;
   margin: 0 2px 0 0;
-  -webkit-transition-property: background-color;
   transition-property: background-color;
   position: relative;
 }
@@ -9190,9 +8529,6 @@ body.mod-capture .infos-fleet .equipments {
   display: none;
 }
 .infos-fleet .equipment[data-carry] > .equipment-add {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   z-index: 10;
 }
@@ -9200,9 +8536,6 @@ body.mod-capture .infos-fleet .equipments {
   display: none;
 }
 .infos-fleet .equipment[data-equipmentid] > .equipment-infos {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   z-index: 10;
 }
@@ -9211,9 +8544,6 @@ body.mod-capture .infos-fleet .equipments {
   z-index: 1;
 }
 .infos-fleet .equipment[data-equipmentid].is-hover > .equipment-options {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   z-index: 10;
 }
@@ -9248,16 +8578,14 @@ body.mod-capture .infos-fleet .equipments {
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank]:not([data-rank=""]) > .equipment-infos > .equipment-rank {
   opacity: 1;
-  -webkit-transform: translateY(calc(-50% - 8px));
-          transform: translateY(calc(-50% - 8px));
+  transform: translateY(calc(-50% - 8px));
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank]:not([data-rank=""]) > .equipment-infos > .equipment-rank:before {
   display: none;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank]:not([data-rank=""]) > .equipment-options .equipment-rankselect span {
   color: transparent;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank="1"] > .equipment-infos > .equipment-rank {
   background-position: 50% 0px;
@@ -9330,8 +8658,7 @@ body.mod-capture .infos-fleet .equipments {
   min-width: 24px;
   background: url(/!/assets/images/improve-max.svg) no-repeat 100% 50%;
   background-size: 24px 15px;
-  -webkit-transform: translateY(-95%);
-          transform: translateY(-95%);
+  transform: translateY(-95%);
 }
 .infos-fleet .equipment[data-star="10"] > .equipment-infos > .equipment-star:before {
   display: none;
@@ -9342,18 +8669,9 @@ body.mod-capture .infos-fleet .equipments {
   top: 0;
   bottom: 0;
   height: 100%;
-  -webkit-flex-flow: row nowrap;
-      -ms-flex-flow: row nowrap;
-          flex-flow: row nowrap;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-              -ms-grid-row-align: center;
-          align-items: center;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
 }
 .infos-fleet .equipment-add {
   opacity: .25;
@@ -9375,10 +8693,7 @@ body.mod-capture .infos-fleet .equipments {
   padding-right: 30px;
 }
 .infos-fleet .equipment-name {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 100%;
-      -ms-flex: 1 0 100%;
-          flex: 1 0 100%;
+  flex: 1 0 100%;
   line-height: 1.2em;
 }
 .infos-fleet .equipment-star,
@@ -9386,10 +8701,7 @@ body.mod-capture .infos-fleet .equipments {
 .infos-fleet .equipment-carry {
   position: absolute;
   right: 4px;
-  -webkit-box-flex: 0;
-  -webkit-flex: none;
-      -ms-flex: none;
-          flex: none;
+  flex: none;
   text-align: right;
   top: 50%;
   line-height: 0;
@@ -9405,8 +8717,7 @@ body.mod-capture .infos-fleet .equipments {
 }
 .infos-fleet .equipment-star,
 .infos-fleet .equipment-rank {
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 .infos-fleet .equipment-star:before,
 .infos-fleet .equipment-rank:before {
@@ -9418,8 +8729,7 @@ body.mod-capture .infos-fleet .equipments {
   display: none;
 }
 .infos-fleet .equipment-carry {
-  -webkit-transform: translateY(50%);
-          transform: translateY(50%);
+  transform: translateY(50%);
 }
 .infos-fleet .equipment-carry:before {
   content: "\00d7";
@@ -9441,10 +8751,7 @@ body.mod-capture .infos-fleet .equipments {
 }
 .infos-fleet .equipment-options .button {
   opacity: .45;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 20px;
-      -ms-flex: 1 0 20px;
-          flex: 1 0 20px;
+  flex: 1 0 20px;
   height: 100%;
   text-align: center;
   vertical-align: bottom;
@@ -9483,10 +8790,7 @@ body.mod-capture .infos-fleet .equipments {
 .infos-fleet .equipment-starinput,
 .infos-fleet .equipment-rankselect {
   height: 75%;
-  -webkit-box-flex: 2;
-  -webkit-flex: 2 0 40px;
-      -ms-flex: 2 0 40px;
-          flex: 2 0 40px;
+  flex: 2 0 40px;
   padding-left: 16px;
   margin-right: 10%;
 }
@@ -9497,7 +8801,6 @@ body.mod-capture .infos-fleet .equipments {
   display: inline-block;
   width: auto;
   color: inherit;
-  -webkit-transition-property: border,background,color,width;
   transition-property: border,background,color,width;
   display: none;
   position: relative;
@@ -9523,10 +8826,7 @@ body.mod-capture .infos-fleet .equipments {
   left: 40%;
 }
 .infos-fleet .summary {
-  -webkit-box-flex: 0.5;
-  -webkit-flex: 0.5 0 auto;
-      -ms-flex: 0.5 0 auto;
-          flex: 0.5 0 auto;
+  flex: 0.5 0 auto;
   min-height: 30px;
   margin-top: 5px;
   text-align: center;
@@ -9596,9 +8896,6 @@ body.mod-capture .infos-fleet .equipments {
   background-position: 0 0;
 }
 .infos-fleet > input[type="radio"][value="0"]:checked ~ .ships dl[data-fleet="0"] {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   z-index: 2;
 }
@@ -9612,9 +8909,6 @@ body.mod-capture .infos-fleet .equipments {
   background-position: 0 0;
 }
 .infos-fleet > input[type="radio"][value="1"]:checked ~ .ships dl[data-fleet="1"] {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   z-index: 2;
 }
@@ -9628,9 +8922,6 @@ body.mod-capture .infos-fleet .equipments {
   background-position: 0 0;
 }
 .infos-fleet > input[type="radio"][value="2"]:checked ~ .ships dl[data-fleet="2"] {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   z-index: 2;
 }
@@ -9644,9 +8935,6 @@ body.mod-capture .infos-fleet .equipments {
   background-position: 0 0;
 }
 .infos-fleet > input[type="radio"][value="3"]:checked ~ .ships dl[data-fleet="3"] {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   z-index: 2;
 }
@@ -9660,9 +8948,6 @@ body.mod-capture .infos-fleet .equipments {
   background-position: 0 0;
 }
 .infos-fleet > input[type="radio"][value="4"]:checked ~ .ships dl[data-fleet="4"] {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   z-index: 2;
 }
@@ -9675,6 +8960,7 @@ body.mod-capture .infos-fleet .equipments {
 .infos-fleet.loading > .loading-msg {
   display: inline-block !important;
   max-width: 98% !important;
+  max-width: -webkit-calc(100% - 0.2rem) !important;
   max-width: calc(100% - 0.2rem) !important;
   max-height: 100% !important;
   vertical-align: middle !important;
@@ -9712,9 +8998,6 @@ body.mod-capture .infos-fleet .equipments {
   display: none;
 }
 .infos-fleet.mod-preview .equipment[data-carry][data-equipmentid]:hover > .equipment-infos {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   z-index: 10;
 }
@@ -9726,7 +9009,6 @@ body.mod-capture .infos-fleet .equipments {
 }
 #layout[data-theme="2"] main:after {
   background-color: rgba(60, 56, 55, 0.75);
-  background-image: -webkit-linear-gradient(top, #fcad9c 4px, rgba(252, 153, 131, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #fcad9c 4px, rgba(252, 153, 131, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
@@ -9782,7 +9064,6 @@ body.mod-capture .infos-fleet .equipments {
 						}*/
 }
 #layout[data-theme="2"] .infos-fleet .ship > dt > s:after {
-  background: -webkit-linear-gradient(left, rgba(254, 235, 230, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(254, 235, 230, 0.5) 25%, transparent) repeat-y 0 0;
 }
 #layout[data-theme="2"] .infos-fleet .ship:hover {
@@ -9818,7 +9099,6 @@ body.mod-capture .infos-fleet .equipments {
 							*/
 }
 #layout[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
-  background: -webkit-linear-gradient(left, rgba(18, 9, 7, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(18, 9, 7, 0.4) 50%, transparent);
 }
 #layout[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
@@ -9829,7 +9109,6 @@ body.mod-capture .infos-fleet .equipments {
 }
 #layout[data-theme="3"] main:after {
   background-color: rgba(63, 61, 52, 0.75);
-  background-image: -webkit-linear-gradient(top, #fff099 4px, rgba(255, 236, 128, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #fff099 4px, rgba(255, 236, 128, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
@@ -9885,7 +9164,6 @@ body.mod-capture .infos-fleet .equipments {
 						}*/
 }
 #layout[data-theme="3"] .infos-fleet .ship > dt > s:after {
-  background: -webkit-linear-gradient(left, rgba(255, 251, 229, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(255, 251, 229, 0.5) 25%, transparent) repeat-y 0 0;
 }
 #layout[data-theme="3"] .infos-fleet .ship:hover {
@@ -9921,7 +9199,6 @@ body.mod-capture .infos-fleet .equipments {
 							*/
 }
 #layout[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
-  background: -webkit-linear-gradient(left, rgba(19, 17, 6, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(19, 17, 6, 0.4) 50%, transparent);
 }
 #layout[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
@@ -9932,7 +9209,6 @@ body.mod-capture .infos-fleet .equipments {
 }
 #layout[data-theme="4"] main:after {
   background-color: rgba(57, 57, 57, 0.75);
-  background-image: -webkit-linear-gradient(top, #cafa9e 4px, rgba(189, 249, 134, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #cafa9e 4px, rgba(189, 249, 134, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
@@ -9988,7 +9264,6 @@ body.mod-capture .infos-fleet .equipments {
 						}*/
 }
 #layout[data-theme="4"] .infos-fleet .ship > dt > s:after {
-  background: -webkit-linear-gradient(left, rgba(242, 254, 231, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(242, 254, 231, 0.5) 25%, transparent) repeat-y 0 0;
 }
 #layout[data-theme="4"] .infos-fleet .ship:hover {
@@ -10024,7 +9299,6 @@ body.mod-capture .infos-fleet .equipments {
 							*/
 }
 #layout[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
-  background: -webkit-linear-gradient(left, rgba(13, 18, 8, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(13, 18, 8, 0.4) 50%, transparent);
 }
 #layout[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
@@ -10035,7 +9309,6 @@ body.mod-capture .infos-fleet .equipments {
 }
 #layout[data-theme="5"] main:after {
   background-color: rgba(52, 63, 54, 0.75);
-  background-image: -webkit-linear-gradient(top, #99ffac 4px, rgba(128, 255, 151, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #99ffac 4px, rgba(128, 255, 151, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
@@ -10091,7 +9364,6 @@ body.mod-capture .infos-fleet .equipments {
 						}*/
 }
 #layout[data-theme="5"] .infos-fleet .ship > dt > s:after {
-  background: -webkit-linear-gradient(left, rgba(229, 255, 234, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(229, 255, 234, 0.5) 25%, transparent) repeat-y 0 0;
 }
 #layout[data-theme="5"] .infos-fleet .ship:hover {
@@ -10127,7 +9399,6 @@ body.mod-capture .infos-fleet .equipments {
 							*/
 }
 #layout[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
-  background: -webkit-linear-gradient(left, rgba(6, 19, 9, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(6, 19, 9, 0.4) 50%, transparent);
 }
 #layout[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
@@ -10138,7 +9409,6 @@ body.mod-capture .infos-fleet .equipments {
 }
 #layout[data-theme="6"] main:after {
   background-color: rgba(52, 63, 61, 0.75);
-  background-image: -webkit-linear-gradient(top, #99fff0 4px, rgba(128, 255, 236, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #99fff0 4px, rgba(128, 255, 236, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
@@ -10194,7 +9464,6 @@ body.mod-capture .infos-fleet .equipments {
 						}*/
 }
 #layout[data-theme="6"] .infos-fleet .ship > dt > s:after {
-  background: -webkit-linear-gradient(left, rgba(229, 255, 251, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(229, 255, 251, 0.5) 25%, transparent) repeat-y 0 0;
 }
 #layout[data-theme="6"] .infos-fleet .ship:hover {
@@ -10230,7 +9499,6 @@ body.mod-capture .infos-fleet .equipments {
 							*/
 }
 #layout[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
-  background: -webkit-linear-gradient(left, rgba(6, 19, 17, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(6, 19, 17, 0.4) 50%, transparent);
 }
 #layout[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
@@ -10241,7 +9509,6 @@ body.mod-capture .infos-fleet .equipments {
 }
 #layout[data-theme="7"] main:after {
   background-color: rgba(49, 57, 66, 0.75);
-  background-image: -webkit-linear-gradient(top, #99caff 4px, rgba(128, 189, 255, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #99caff 4px, rgba(128, 189, 255, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
@@ -10297,7 +9564,6 @@ body.mod-capture .infos-fleet .equipments {
 						}*/
 }
 #layout[data-theme="7"] .infos-fleet .ship > dt > s:after {
-  background: -webkit-linear-gradient(left, rgba(229, 242, 255, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(229, 242, 255, 0.5) 25%, transparent) repeat-y 0 0;
 }
 #layout[data-theme="7"] .infos-fleet .ship:hover {
@@ -10333,7 +9599,6 @@ body.mod-capture .infos-fleet .equipments {
 							*/
 }
 #layout[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
-  background: -webkit-linear-gradient(left, rgba(6, 13, 20, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(6, 13, 20, 0.4) 50%, transparent);
 }
 #layout[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
@@ -10344,7 +9609,6 @@ body.mod-capture .infos-fleet .equipments {
 }
 #layout[data-theme="8"] main:after {
   background-color: rgba(66, 63, 77, 0.75);
-  background-image: -webkit-linear-gradient(top, #c1b3ff 4px, rgba(172, 153, 255, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #c1b3ff 4px, rgba(172, 153, 255, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
@@ -10400,7 +9664,6 @@ body.mod-capture .infos-fleet .equipments {
 						}*/
 }
 #layout[data-theme="8"] .infos-fleet .ship > dt > s:after {
-  background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(255, 255, 255, 0.5) 25%, transparent) repeat-y 0 0;
 }
 #layout[data-theme="8"] .infos-fleet .ship:hover {
@@ -10436,7 +9699,6 @@ body.mod-capture .infos-fleet .equipments {
 							*/
 }
 #layout[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
-  background: -webkit-linear-gradient(left, rgba(17, 13, 38, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(17, 13, 38, 0.4) 50%, transparent);
 }
 #layout[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
@@ -10447,7 +9709,6 @@ body.mod-capture .infos-fleet .equipments {
 }
 #layout[data-theme="9"] main:after {
   background-color: rgba(61, 52, 63, 0.75);
-  background-image: -webkit-linear-gradient(top, #f099ff 4px, rgba(236, 128, 255, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #f099ff 4px, rgba(236, 128, 255, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
@@ -10503,7 +9764,6 @@ body.mod-capture .infos-fleet .equipments {
 						}*/
 }
 #layout[data-theme="9"] .infos-fleet .ship > dt > s:after {
-  background: -webkit-linear-gradient(left, rgba(251, 229, 255, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(251, 229, 255, 0.5) 25%, transparent) repeat-y 0 0;
 }
 #layout[data-theme="9"] .infos-fleet .ship:hover {
@@ -10539,7 +9799,6 @@ body.mod-capture .infos-fleet .equipments {
 							*/
 }
 #layout[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
-  background: -webkit-linear-gradient(left, rgba(17, 6, 19, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(17, 6, 19, 0.4) 50%, transparent);
 }
 #layout[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
@@ -10550,7 +9809,6 @@ body.mod-capture .infos-fleet .equipments {
 }
 #layout[data-theme="10"] main:after {
   background-color: rgba(77, 63, 70, 0.75);
-  background-image: -webkit-linear-gradient(top, #ffb3d7 4px, rgba(255, 153, 202, 0.2) 4px, transparent 25%);
   background-image: linear-gradient(to bottom, #ffb3d7 4px, rgba(255, 153, 202, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
@@ -10606,7 +9864,6 @@ body.mod-capture .infos-fleet .equipments {
 						}*/
 }
 #layout[data-theme="10"] .infos-fleet .ship > dt > s:after {
-  background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.5) 25%, transparent) repeat-y 0 0;
   background: linear-gradient(to right, rgba(255, 255, 255, 0.5) 25%, transparent) repeat-y 0 0;
 }
 #layout[data-theme="10"] .infos-fleet .ship:hover {
@@ -10642,7 +9899,6 @@ body.mod-capture .infos-fleet .equipments {
 							*/
 }
 #layout[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
-  background: -webkit-linear-gradient(left, rgba(38, 13, 25, 0.4) 50%, transparent);
   background: linear-gradient(to right, rgba(38, 13, 25, 0.4) 50%, transparent);
 }
 #layout[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
@@ -10717,17 +9973,11 @@ body.mod-capture .infos-fleet .equipments {
   font-size: 12px;
 }
 .menu.contextmenu-infos_fleet_themes > .body > div.sharebar {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
 }
 .menu.contextmenu-infos_fleet_themes > .body > div.sharebar .sharebar-share {
   display: inline-block;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 35px;
-      -ms-flex: 1 0 35px;
-          flex: 1 0 35px;
+  flex: 1 0 35px;
   height: 35px;
   position: relative;
   min-width: 35px;
@@ -10836,9 +10086,7 @@ body.mod-capture .infos-fleet .equipments {
     padding-right: 15px;
   }
   .infos-fleet .ship > dt > s {
-    -webkit-flex-basis: 110px;
-        -ms-flex-preferred-size: 110px;
-            flex-basis: 110px;
+    flex-basis: 110px;
   }
   .infos-fleet .ship > .options {
     width: auto;
@@ -10871,14 +10119,10 @@ body.mod-capture .infos-fleet .equipments {
 }
 @media all and (max-width: 960px) {
   .infos-fleet > .ships {
-    -webkit-flex-basis: 560px;
-        -ms-flex-preferred-size: 560px;
-            flex-basis: 560px;
+    flex-basis: 560px;
   }
   .infos-fleet .ship {
-    -webkit-flex-basis: 75px;
-        -ms-flex-preferred-size: 75px;
-            flex-basis: 75px;
+    flex-basis: 75px;
     height: auto;
     border-bottom: 5px solid transparent;
     left: 0;
@@ -10892,20 +10136,14 @@ body.mod-capture .infos-fleet .equipments {
     display: inline-block;
     width: 15%;
     height: 100%;
-    -webkit-box-flex: 0;
-    -webkit-flex: none;
-        -ms-flex: none;
-            flex: none;
+    flex: none;
     vertical-align: top;
     overflow: hidden;
   }
   .infos-fleet .ship > dt > div {
     display: inline-block;
     width: 85%;
-    -webkit-box-flex: 0;
-    -webkit-flex: none;
-        -ms-flex: none;
-            flex: none;
+    flex: none;
   }
   .infos-fleet .ship > dt > div > div {
     display: none;
@@ -10933,18 +10171,14 @@ body.mod-capture .infos-fleet .equipments {
     height: 34px;
   }
   .infos-fleet .ship > .options button.options:before {
-    -webkit-transform: rotate(90deg);
-            transform: rotate(90deg);
+    transform: rotate(90deg);
   }
   .infos-fleet .ship:not([data-shipid]) > dt > div {
     top: 50%;
-    -webkit-transform: translateY(-50%);
-            transform: translateY(-50%);
+    transform: translateY(-50%);
   }
   .infos-fleet .ship[data-shipid] {
-    -webkit-flex-basis: 95px;
-        -ms-flex-preferred-size: 95px;
-            flex-basis: 95px;
+    flex-basis: 95px;
     border-bottom-width: 25px;
   }
   .infos-fleet .ship[data-shipid] > dt:after {
@@ -10954,8 +10188,7 @@ body.mod-capture .infos-fleet .equipments {
     display: inline-block;
   }
   .infos-fleet .ship[data-shipid]:after {
-    -webkit-mask: none;
-            mask: none;
+    mask: none;
   }
   .infos-fleet .ship.mod-nomask > .attributes > .bg {
     display: none;
@@ -10986,10 +10219,8 @@ body.mod-capture .infos-fleet .equipments {
   }
   .infos-fleet .attributes:after {
     left: 10px;
-    -webkit-transform: skew(30deg);
-            transform: skew(30deg);
-    -webkit-transform-origin: 0 100%;
-            transform-origin: 0 100%;
+    transform: skew(30deg);
+    transform-origin: 0 100%;
     background: rgba(0, 0, 0, 0.2);
     border-left: 1px solid rgba(255, 255, 255, 0.25);
     border-bottom: 1px solid rgba(255, 255, 255, 0.25);
@@ -11014,28 +10245,18 @@ body.mod-capture .infos-fleet .equipments {
   }
   .infos-fleet .equipment-options {
     padding-left: 32px;
-    -webkit-box-pack: start;
-    -webkit-justify-content: flex-start;
-        -ms-flex-pack: start;
-            justify-content: flex-start;
-    -webkit-align-content: space-between;
-        -ms-flex-line-pack: justify;
-            align-content: space-between;
+    justify-content: flex-start;
+    align-content: space-between;
   }
   .infos-fleet .equipment-options:before {
     left: 36px;
   }
   .infos-fleet .equipment-options .button {
-    -webkit-flex-basis: 16px;
-        -ms-flex-preferred-size: 16px;
-            flex-basis: 16px;
+    flex-basis: 16px;
   }
   .infos-fleet .equipment-starinput,
   .infos-fleet .equipment-rankselect {
-    -webkit-box-flex: 0.5;
-    -webkit-flex: 0.5 0 35px;
-        -ms-flex: 0.5 0 35px;
-            flex: 0.5 0 35px;
+    flex: 0.5 0 35px;
     padding-left: 14px;
     margin-right: 4px;
   }
@@ -11051,10 +10272,7 @@ body.mod-capture .infos-fleet .equipments {
     display: none;
   }
   .infos-fleet header {
-    -webkit-box-flex: 0;
-    -webkit-flex-grow: 0;
-        -ms-flex-positive: 0;
-            flex-grow: 0;
+    flex-grow: 0;
   }
   .infos-fleet header h3 {
     max-width: 100%;
@@ -11076,9 +10294,7 @@ body.mod-capture .infos-fleet .equipments {
   }
   .infos-fleet .ship[data-shipid] {
     border-bottom-width: 10px;
-    -webkit-flex-basis: auto;
-        -ms-flex-preferred-size: auto;
-            flex-basis: auto;
+    flex-basis: auto;
   }
   .infos-fleet .ship[data-shipid]:before {
     height: 40px;
@@ -11103,13 +10319,11 @@ body.mod-capture .infos-fleet .equipments {
     top: 0;
     height: 40px;
     z-index: -1;
-    background: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.1) 20%, transparent);
     background: linear-gradient(to top, rgba(255, 255, 255, 0.1) 20%, transparent);
     border-bottom: rgba(255, 255, 255, 0.15) 1px solid;
   }
   .infos-fleet .ship[data-shipid]:hover > dt > s:before {
-    -webkit-transform: translateX(-10px);
-            transform: translateX(-10px);
+    transform: translateX(-10px);
   }
   .infos-fleet .equipments {
     width: auto;
@@ -11129,12 +10343,10 @@ body.mod-capture .infos-fleet .equipments {
     line-height: 22px;
   }
   .infos-fleet .attributes:after {
-    -webkit-transform: none;
-            transform: none;
+    transform: none;
     left: 0;
     right: 0;
-    -webkit-mask: none;
-            mask: none;
+    mask: none;
     border: 0;
     background: transparent;
   }
@@ -11169,13 +10381,8 @@ body.mod-capture .infos-fleet .equipments {
   }
 }
 .infos-ship {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: row wrap;
-      -ms-flex-flow: row wrap;
-          flex-flow: row wrap;
+  flex-flow: row wrap;
   padding-right: calc( 30% + 80px );
   min-height: 460px;
   /*
@@ -11533,16 +10740,10 @@ body.mod-capture .infos-fleet .equipments {
   content: '';
   display: block;
   width: 100%;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 100%;
-      -ms-flex: 1 0 100%;
-          flex: 1 0 100%;
+  flex: 1 0 100%;
 }
 .infos-ship > div {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 100%;
-      -ms-flex: 1 0 100%;
-          flex: 1 0 100%;
+  flex: 1 0 100%;
 }
 .infos-ship > div.title small {
   color: #8ddbff;
@@ -11552,9 +10753,7 @@ body.mod-capture .infos-fleet .equipments {
   color: #29373d;
 }
 .infos-ship > div.stats {
-  -webkit-flex-basis: 65%;
-      -ms-flex-preferred-size: 65%;
-          flex-basis: 65%;
+  flex-basis: 65%;
   padding-right: 3rem;
 }
 .infos-ship > div.stats > .title h1,
@@ -11581,7 +10780,6 @@ body.mod-capture .infos-fleet .equipments {
   font-style: italic;
 }
 .infos-ship > div.stats > .title > span label {
-  -webkit-transition-property: color;
   transition-property: color;
 }
 .infos-ship > div.stats > .title > span label + label {
@@ -11595,8 +10793,7 @@ body.mod-capture .infos-fleet .equipments {
 }
 .infos-ship > div.stats > .stat span > em {
   color: #2cace8;
-  -webkit-animation: fadeIn 0.3s ease-out;
-          animation: fadeIn 0.3s ease-out;
+  animation: fadeIn 0.3s ease-out;
 }
 .infos-ship > div.stats > .stat span > em.lvl99,
 .infos-ship > div.stats > .stat span > em.lvl150 {
@@ -11631,9 +10828,7 @@ body.mod-capture .infos-fleet .equipments {
   display: inline;
 }
 .infos-ship > div.equipments {
-  -webkit-flex-basis: 35%;
-      -ms-flex-preferred-size: 35%;
-          flex-basis: 35%;
+  flex-basis: 35%;
   position: relative;
 }
 .infos-ship > div.equipments > a {
@@ -11659,7 +10854,6 @@ body.mod-capture .infos-fleet .equipments {
   overflow: hidden;
   background-color: #182d31;
   border: 0.05rem solid #0874a6;
-  -webkit-transition-property: background-color, border-color;
   transition-property: background-color, border-color;
   z-index: 3;
 }
@@ -11680,7 +10874,6 @@ body.mod-capture .infos-fleet .equipments {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  -webkit-transition-property: background-color, color;
   transition-property: background-color, color;
 }
 .infos-ship > div.equipments > a > small sup {
@@ -11721,24 +10914,15 @@ body.mod-capture .infos-fleet .equipments {
   color: #4e7d93;
 }
 .infos-ship > div.equipments > .modernization {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   margin-top: 1.2000000000000002rem;
 }
 .infos-ship > div.equipments > .modernization h4 {
   margin: 0;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 auto;
-      -ms-flex: 0 0 auto;
-          flex: 0 0 auto;
+  flex: 0 0 auto;
 }
 .infos-ship > div.equipments > .modernization > .stats {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 auto;
-      -ms-flex: 1 0 auto;
-          flex: 1 0 auto;
+  flex: 1 0 auto;
   text-align: right;
 }
 .infos-ship > div.equipments > .modernization > .stats > span {
@@ -11779,34 +10963,20 @@ body.mod-capture .infos-fleet .equipments {
   overflow: hidden;
 }
 .infos-ship > div.remodels .flexgrid {
-  -webkit-flex-flow: row nowrap;
-      -ms-flex-flow: row nowrap;
-          flex-flow: row nowrap;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-      -ms-flex-align: start;
-              -ms-grid-row-align: flex-start;
-          align-items: flex-start;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
   margin-top: -1.5rem;
   margin-right: -0.1rem;
 }
 .infos-ship > div.remodels .flexgrid > .unit {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 1 auto;
-      -ms-flex: 0 1 auto;
-          flex: 0 1 auto;
+  flex: 0 1 auto;
   position: relative;
 }
 .infos-ship > div.remodels .flexgrid > a.unit {
   position: relative;
   z-index: 1;
-  -webkit-flex-basis: 160px;
-      -ms-flex-preferred-size: 160px;
-          flex-basis: 160px;
+  flex-basis: 160px;
   height: 3.5rem;
   padding-top: 1.5rem;
   margin-right: 0.1rem;
@@ -11839,12 +11009,11 @@ body.mod-capture .infos-fleet .equipments {
   width: 100%;
   overflow: hidden;
   opacity: 0.5;
-  -webkit-transition-property: opacity;
   transition-property: opacity;
   mask-repeat: no-repeat;
   -webkit-mask-repeat: no-repeat;
   mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 35px), transparent 100%);
-  -webkit-mask-image: -webkit-linear-gradient(left, #000 0, #000 calc(100% - 35px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 35px), transparent 100%);
   mask-position: 0 0;
   -webkit-mask-position: 0 0;
   mask-size: 100% 100%;
@@ -11863,8 +11032,7 @@ body.mod-capture .infos-fleet .equipments {
   right: 4px;
   font-size: 24px;
   color: rgba(229, 247, 255, 0.75);
-  -webkit-transform: rotate(15deg);
-          transform: rotate(15deg);
+  transform: rotate(15deg);
 }
 .infos-ship > div.remodels .flexgrid > a.unit:before,
 .infos-ship > div.remodels .flexgrid > a.unit:after {
@@ -11874,19 +11042,16 @@ body.mod-capture .infos-fleet .equipments {
   right: 0;
   bottom: 0;
   left: 0;
-  -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
 }
 .infos-ship > div.remodels .flexgrid > a.unit:before {
   z-index: 3;
   border: 0.1rem solid transparent;
-  -webkit-transition-property: border-color, box-shadow;
   transition-property: border-color, box-shadow;
 }
 .infos-ship > div.remodels .flexgrid > a.unit:after {
   z-index: 1;
   backgrond: transparent;
-  -webkit-transition-property: background-color;
   transition-property: background-color;
 }
 .infos-ship > div.remodels .flexgrid > a.unit.mod-blueprint strong:after,
@@ -11948,8 +11113,7 @@ body.mod-capture .infos-fleet .equipments {
 }
 .infos-ship > div.remodels .flexgrid > a.unit.on em {
   top: -2px;
-  -webkit-transform: none;
-          transform: none;
+  transform: none;
 }
 .infos-ship > div.remodels .flexgrid > .unit[icon="loop-alt3"] {
   position: relative;
@@ -11957,10 +11121,7 @@ body.mod-capture .infos-fleet .equipments {
   height: 70px;
   border-top: 30px solid transparent;
   width: 30px;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 30px;
-      -ms-flex: 0 0 30px;
-          flex: 0 0 30px;
+  flex: 0 0 30px;
 }
 .infos-ship > div.remodels .flexgrid > .unit[icon="loop-alt3"]:before {
   position: absolute;
@@ -11977,10 +11138,7 @@ body.mod-capture .infos-fleet .equipments {
 .infos-ship > span,
 .infos-ship > a {
   display: block;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0;
-      -ms-flex: 0;
-          flex: 0;
+  flex: 0;
   position: absolute;
   top: 0;
   right: calc( 30% + 80px );
@@ -11992,7 +11150,6 @@ body.mod-capture .infos-fleet .equipments {
   vertical-align: top;
   background: rgba(19, 108, 108, 0.325);
   border-radius: 0 5px 5px 0;
-  -webkit-transition-property: background-color;
   transition-property: background-color;
   z-index: 2;
 }
@@ -12018,10 +11175,7 @@ body.mod-capture .infos-fleet .equipments {
   background: rgba(27, 152, 152, 0.325);
 }
 .infos-ship > aside {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0;
-      -ms-flex: 0;
-          flex: 0;
+  flex: 0;
   position: absolute;
   width: calc(30% + 40px);
   height: 100%;
@@ -12029,23 +11183,10 @@ body.mod-capture .infos-fleet .equipments {
   right: -20px;
   text-align: center;
   overflow: hidden;
-  -webkit-mask-image: -webkit-linear-gradient(right, transparent, #000 20px, #000 calc(100% - 20px), transparent);
-          mask-image: linear-gradient(to left, transparent, #000 20px, #000 calc(100% - 20px), transparent);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: row nowrap;
-      -ms-flex-flow: row nowrap;
-          flex-flow: row nowrap;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: end;
-  -webkit-align-items: flex-end;
-      -ms-flex-align: end;
-          align-items: flex-end;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: flex-end;
   /*.loop(@n, @i: 2) when (@i =< @n) {
 				&>input[type="radio"][value="@{i}"]~div{
 					width:	percentage(@i);
@@ -12058,14 +11199,17 @@ body.mod-capture .infos-fleet .equipments {
 			.loop(10);
 			*/
 }
-.infos-ship > aside > label {
+.infos-ship > aside > label,
+.infos-ship > aside > button.arrow {
   position: relative;
   margin: 0;
-  width: 30px;
-  height: 30px;
+  width: 22px;
+  height: 22px;
   display: inline-block;
-  z-index: 2;
   margin-bottom: 24px;
+}
+.infos-ship > aside > label {
+  z-index: 2;
 }
 .infos-ship > aside > label:before {
   position: absolute;
@@ -12075,76 +11219,83 @@ body.mod-capture .infos-fleet .equipments {
   border-radius: 50%;
   background: #fff;
   background: rgba(255, 255, 255, 0.25);
-  -webkit-transform: scale(0.3333333333333333);
-          transform: scale(0.3333333333333333);
+  transform: scale(0.45454545454545453);
   left: 0;
   border: 0.1rem solid transparent;
-  -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
-  -webkit-transition-property: background-color, border-color, -webkit-transform;
-  transition-property: background-color, border-color, -webkit-transform;
   transition-property: background-color, transform, border-color;
-  transition-property: background-color, transform, border-color, -webkit-transform;
 }
 .infos-ship > aside > label:hover:before {
   background: rgba(255, 255, 255, 0.5);
 }
-.infos-ship > aside > div {
+.infos-ship > aside > button.arrow {
+  color: rgba(255, 255, 255, 0.35);
+  z-index: 5;
+}
+.infos-ship > aside > button.arrow:before {
+  width: 100%;
+  height: 0;
+  line-height: 0;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  text-align: center;
+  padding: 0;
+  font-size: 16px;
+}
+.infos-ship > aside > button.arrow.prev {
+  margin-right: 5.5px;
+}
+.infos-ship > aside > button.arrow.next {
+  margin-left: 5.5px;
+}
+.infos-ship > aside > button.arrow:hover {
+  color: #fff;
+}
+.infos-ship > aside > .wrapper {
   position: absolute;
   width: 100%;
   top: 0;
   bottom: -20px;
   left: 0;
-  -webkit-box-flex: 0;
-  -webkit-flex: none;
-      -ms-flex: none;
-          flex: none;
-  -webkit-transition-property: -webkit-transform;
-  transition-property: -webkit-transform;
-  transition-property: transform;
-  transition-property: transform, -webkit-transform;
+  flex: none;
   padding: 10px 0 75px 0;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-flow: row nowrap;
-      -ms-flex-flow: row nowrap;
-          flex-flow: row nowrap;
-  -webkit-scroll-snap-type: mandatory;
-      -ms-scroll-snap-type: mandatory;
-          scroll-snap-type: mandatory;
-  -webkit-scroll-snap-points-x: repeat(100%);
-      -ms-scroll-snap-points-x: repeat(100%);
-          scroll-snap-points-x: repeat(100%);
+  mask-image: linear-gradient(to left, transparent, #000 20px, #000 calc(100% - 20px), transparent);
 }
-.infos-ship > aside > div.is-panning {
-  -webkit-transition: none;
+.infos-ship > aside .body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition-property: transform;
+  display: flex;
+  flex-flow: row nowrap;
+  scroll-snap-type: mandatory;
+  scroll-snap-points-x: repeat(100%);
+}
+.infos-ship > aside .body.is-panning {
   transition: none;
 }
-.infos-ship > aside > div > span {
+.infos-ship > aside .body > span {
   position: relative;
   width: 100%;
   height: 100%;
   padding: 0 20px;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 100%;
-      -ms-flex: 0 0 100%;
-          flex: 0 0 100%;
+  flex: 0 0 100%;
   min-width: 0;
   display: inline-block;
   text-align: center !important;
   vertical-align: middle !important;
 }
-.infos-ship > aside > div > span > img {
+.infos-ship > aside .body > span > img {
   display: inline-block !important;
   max-width: 98% !important;
+  max-width: -webkit-calc(100% - 0.2rem) !important;
   max-width: calc(100% - 0.2rem) !important;
   max-height: 100% !important;
   vertical-align: middle !important;
   margin: 0 auto !important;
 }
-.infos-ship > aside > div > span:after {
+.infos-ship > aside .body > span:after {
   content: "";
   display: inline-block;
   vertical-align: middle;
@@ -12152,9 +11303,8 @@ body.mod-capture .infos-fleet .equipments {
   height: 100%;
   overflow: hidden;
 }
-.infos-ship > aside > div > span img {
-  -o-object-fit: scale-down;
-     object-fit: scale-down;
+.infos-ship > aside .body > span img {
+  object-fit: scale-down;
   max-width: 100%;
   max-height: 100%;
 }
@@ -12167,61 +11317,48 @@ body.mod-capture .infos-fleet .equipments {
 .infos-ship > aside > input[type="radio"]:checked + label:before {
   background-color: rgba(63, 192, 255, 0.25);
   border-color: rgba(63, 192, 255, 0.75);
-  -webkit-transform: scale(0.5333333333333333);
-          transform: scale(0.5333333333333333);
+  transform: scale(0.7272727272727273);
 }
-.infos-ship > aside.mod-scroll-snap > div {
+.infos-ship > aside.mod-scroll-snap .body {
   overflow: auto;
   overflow-style: none;
   -ms-overflow-style: none;
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="1"]:checked ~ div {
-  -webkit-transform: translateX(0%);
-          transform: translateX(0%);
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="1"]:checked ~ .wrapper .body {
+  transform: translateX(0%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="2"]:checked ~ div {
-  -webkit-transform: translateX(-100%);
-          transform: translateX(-100%);
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="2"]:checked ~ .wrapper .body {
+  transform: translateX(-100%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="3"]:checked ~ div {
-  -webkit-transform: translateX(-200%);
-          transform: translateX(-200%);
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="3"]:checked ~ .wrapper .body {
+  transform: translateX(-200%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="4"]:checked ~ div {
-  -webkit-transform: translateX(-300%);
-          transform: translateX(-300%);
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="4"]:checked ~ .wrapper .body {
+  transform: translateX(-300%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="5"]:checked ~ div {
-  -webkit-transform: translateX(-400%);
-          transform: translateX(-400%);
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="5"]:checked ~ .wrapper .body {
+  transform: translateX(-400%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="6"]:checked ~ div {
-  -webkit-transform: translateX(-500%);
-          transform: translateX(-500%);
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="6"]:checked ~ .wrapper .body {
+  transform: translateX(-500%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="7"]:checked ~ div {
-  -webkit-transform: translateX(-600%);
-          transform: translateX(-600%);
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="7"]:checked ~ .wrapper .body {
+  transform: translateX(-600%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="8"]:checked ~ div {
-  -webkit-transform: translateX(-700%);
-          transform: translateX(-700%);
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="8"]:checked ~ .wrapper .body {
+  transform: translateX(-700%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="9"]:checked ~ div {
-  -webkit-transform: translateX(-800%);
-          transform: translateX(-800%);
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="9"]:checked ~ .wrapper .body {
+  transform: translateX(-800%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="10"]:checked ~ div {
-  -webkit-transform: translateX(-900%);
-          transform: translateX(-900%);
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="10"]:checked ~ .wrapper .body {
+  transform: translateX(-900%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="11"]:checked ~ div {
-  -webkit-transform: translateX(-1000%);
-          transform: translateX(-1000%);
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="11"]:checked ~ .wrapper .body {
+  transform: translateX(-1000%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="12"]:checked ~ div {
-  -webkit-transform: translateX(-1100%);
-          transform: translateX(-1100%);
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="12"]:checked ~ .wrapper .body {
+  transform: translateX(-1100%);
 }
 @media all and (min-width: 1601px) and (min-aspect-ratio: 5/4) {
   .infos-ship {
@@ -12236,62 +11373,48 @@ body.mod-capture .infos-fleet .equipments {
   .infos-ship > aside {
     width: calc( 45% + 40px );
   }
-  .infos-ship > aside > input[type="radio"]:nth-child(4n+3) + label {
+  .infos-ship > aside > input[type="radio"]:nth-of-type(2n) + label {
     display: none;
   }
-  .infos-ship > aside > div > span {
+  .infos-ship > aside .body > span {
     width: 50%;
-    -webkit-flex-basis: 50%;
-        -ms-flex-preferred-size: 50%;
-            flex-basis: 50%;
+    flex-basis: 50%;
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="1"]:checked ~ div {
-    -webkit-transform: translateX(0%);
-            transform: translateX(0%);
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="1"]:checked ~ .wrapper .body {
+    transform: translateX(0%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="2"]:checked ~ div {
-    -webkit-transform: translateX(0%);
-            transform: translateX(0%);
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="2"]:checked ~ .wrapper .body {
+    transform: translateX(0%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="3"]:checked ~ div {
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="3"]:checked ~ .wrapper .body {
+    transform: translateX(-100%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="4"]:checked ~ div {
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="4"]:checked ~ .wrapper .body {
+    transform: translateX(-100%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="5"]:checked ~ div {
-    -webkit-transform: translateX(-200%);
-            transform: translateX(-200%);
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="5"]:checked ~ .wrapper .body {
+    transform: translateX(-200%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="6"]:checked ~ div {
-    -webkit-transform: translateX(-200%);
-            transform: translateX(-200%);
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="6"]:checked ~ .wrapper .body {
+    transform: translateX(-200%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="7"]:checked ~ div {
-    -webkit-transform: translateX(-300%);
-            transform: translateX(-300%);
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="7"]:checked ~ .wrapper .body {
+    transform: translateX(-300%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="8"]:checked ~ div {
-    -webkit-transform: translateX(-300%);
-            transform: translateX(-300%);
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="8"]:checked ~ .wrapper .body {
+    transform: translateX(-300%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="9"]:checked ~ div {
-    -webkit-transform: translateX(-400%);
-            transform: translateX(-400%);
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="9"]:checked ~ .wrapper .body {
+    transform: translateX(-400%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="10"]:checked ~ div {
-    -webkit-transform: translateX(-400%);
-            transform: translateX(-400%);
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="10"]:checked ~ .wrapper .body {
+    transform: translateX(-400%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="11"]:checked ~ div {
-    -webkit-transform: translateX(-500%);
-            transform: translateX(-500%);
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="11"]:checked ~ .wrapper .body {
+    transform: translateX(-500%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="12"]:checked ~ div {
-    -webkit-transform: translateX(-500%);
-            transform: translateX(-500%);
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="12"]:checked ~ .wrapper .body {
+    transform: translateX(-500%);
   }
 }
 @media all and (min-width: 721px) and (max-width: 1152px) and (min-aspect-ratio: 5/4), (min-width: 721px) and (max-width: 1152px) and (max-height: 800px) {
@@ -12299,15 +11422,11 @@ body.mod-capture .infos-fleet .equipments {
     padding-right: calc( 20% + 60px );
   }
   .infos-ship > div.stats {
-    -webkit-flex-basis: 55%;
-        -ms-flex-preferred-size: 55%;
-            flex-basis: 55%;
+    flex-basis: 55%;
     padding-right: 20px;
   }
   .infos-ship > div.equipments {
-    -webkit-flex-basis: 45%;
-        -ms-flex-preferred-size: 45%;
-            flex-basis: 45%;
+    flex-basis: 45%;
   }
   .infos-ship > .entity {
     right: 0;
@@ -12317,7 +11436,7 @@ body.mod-capture .infos-fleet .equipments {
   }
   .infos-ship > aside {
     width: calc(20% + 80px);
-    right: -30px;
+    right: -25px;
     border-top: 60px solid transparent;
   }
 }
@@ -12382,10 +11501,7 @@ body.mod-capture .infos-fleet .equipments {
 @media all and (min-width: 721px) and (min-height: 801px) and (max-aspect-ratio: 5/4), (max-width: 540px) {
   .infos-ship > div.stats,
   .infos-ship > div.equipments {
-    -webkit-box-flex: 0;
-    -webkit-flex: none;
-        -ms-flex: none;
-            flex: none;
+    flex: none;
   }
   .infos-ship > div.stats {
     padding-right: 0;
@@ -12422,15 +11538,11 @@ body.mod-capture .infos-fleet .equipments {
 }
 @media all and (min-width: 541px) and (max-width: 720px) {
   .infos-ship > div.stats {
-    -webkit-flex-basis: 55%;
-        -ms-flex-preferred-size: 55%;
-            flex-basis: 55%;
+    flex-basis: 55%;
     padding-right: 20px;
   }
   .infos-ship > div.equipments {
-    -webkit-flex-basis: 45%;
-        -ms-flex-preferred-size: 45%;
-            flex-basis: 45%;
+    flex-basis: 45%;
   }
 }
 @media all and (max-width: 720px) {
@@ -12439,62 +11551,35 @@ body.mod-capture .infos-fleet .equipments {
     min-height: 100%;
   }
   .infos-ship > div.title {
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 auto;
-        -ms-flex: 0 0 auto;
-            flex: 0 0 auto;
-    -webkit-box-ordinal-group: 2;
-    -webkit-order: 1;
-        -ms-flex-order: 1;
-            order: 1;
+    flex: 0 0 auto;
+    order: 1;
     margin-bottom: 25px;
   }
   .infos-ship > .entity {
-    -webkit-box-ordinal-group: 4;
-    -webkit-order: 3;
-        -ms-flex-order: 3;
-            order: 3;
+    order: 3;
     position: relative;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1 0 calc(50% - 1px);
-        -ms-flex: 1 0 calc(50% - 1px);
-            flex: 1 0 calc(50% - 1px);
+    flex: 1 0 calc(50% - 1px);
   }
   .infos-ship > .entity + .entity {
-    -webkit-box-ordinal-group: 3;
-    -webkit-order: 2;
-        -ms-flex-order: 2;
-            order: 2;
+    order: 2;
     right: 0;
     margin-right: 1px;
   }
   .infos-ship > div.stats {
-    -webkit-box-ordinal-group: 11;
-    -webkit-order: 10;
-        -ms-flex-order: 10;
-            order: 10;
+    order: 10;
   }
   .infos-ship > div.equipments {
-    -webkit-box-ordinal-group: 12;
-    -webkit-order: 11;
-        -ms-flex-order: 11;
-            order: 11;
+    order: 11;
   }
   .infos-ship > div.add_equip {
-    -webkit-box-ordinal-group: 13;
-    -webkit-order: 12;
-        -ms-flex-order: 12;
-            order: 12;
+    order: 12;
   }
   .infos-ship > div.add_equip > div > span {
     margin-top: -9px;
     margin-bottom: -9px;
   }
   .infos-ship > div.remodels {
-    -webkit-box-ordinal-group: 21;
-    -webkit-order: 20;
-        -ms-flex-order: 20;
-            order: 20;
+    order: 20;
   }
   .infos-ship > aside {
     width: 100%;
@@ -12504,16 +11589,10 @@ body.mod-capture .infos-fleet .equipments {
     border-top-width: 0;
     margin-top: 35px;
     min-height: 350px;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1 0 auto;
-        -ms-flex: 1 0 auto;
-            flex: 1 0 auto;
+    flex: 1 0 auto;
     height: 65%;
     max-height: 600px;
-    -webkit-box-ordinal-group: 31;
-    -webkit-order: 30;
-        -ms-flex-order: 30;
-            order: 30;
+    order: 30;
   }
 }
 body > .modal > div {
@@ -12526,7 +11605,6 @@ body > .modal > div > header {
   height: 40px;
   line-height: 40px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  background: -webkit-linear-gradient(top, transparent, rgba(255, 255, 255, 0.1));
   background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.1));
   padding: 0 .5em;
   font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
@@ -13079,8 +12157,7 @@ body > .modal.mod-blur-shot > div {
 }
 */
 body > .modal.infos_fleet.on > div {
-  -webkit-animation: scale-in 0.5s;
-          animation: scale-in 0.5s;
+  animation: scale-in 0.5s;
 }
 body > .modal.infos_fleet > div > section {
   text-align: center;
@@ -13114,7 +12191,6 @@ body > .modal.infos_fleet > div > section a {
   text-decoration: none;
   border-radius: 3px;
   cursor: default;
-  -webkit-transition-property: color, background;
   transition-property: color, background;
   border-top: 1px solid rgba(0, 0, 0, 0.45);
   border-bottom: 1px solid rgba(255, 255, 255, 0.35);
@@ -13134,7 +12210,6 @@ body > .modal.infos_fleet > div > section button.button {
   color: rgba(255, 255, 255, 0.75);
   font-size: 16px;
   background: rgba(255, 255, 255, 0.15);
-  -webkit-transition-property: background, color;
   transition-property: background, color;
   min-width: 40px;
   text-align: center;
@@ -13161,8 +12236,7 @@ body > .modal.infos_fleet > div > section p.aircraftimportmax label.checkbox:aft
   display: inline-block;
   margin-left: 5px;
   vertical-align: text-bottom;
-  -webkit-transform: translateY(12.5%);
-          transform: translateY(12.5%);
+  transform: translateY(12.5%);
 }
 body > .modal.infos_fleet.infos_fleet_import > div,
 body > .modal.infos_fleet.infos_fleet_export > div,
@@ -13194,28 +12268,14 @@ body > .modal.infos_fleet.infos_fleet_import_conflict section dl.link_fleet {
   overflow: visible;
   text-align: left;
 }
-@-webkit-keyframes scale-in {
-  0% {
-    opacity: 0;
-    -webkit-transform: scale(1.5);
-            transform: scale(1.5);
-  }
-  100% {
-    opacity: 1;
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-}
 @keyframes scale-in {
   0% {
     opacity: 0;
-    -webkit-transform: scale(1.5);
-            transform: scale(1.5);
+    transform: scale(1.5);
   }
   100% {
     opacity: 1;
-    -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
   }
 }
 body > .modal.update_journal > div {
@@ -13287,10 +12347,8 @@ body > .modal.update_journal > div > button.close {
   font-weight: lighter;
   font-size: 2.4000000000000004rem;
   width: auto;
-  -webkit-transition-property: color;
   transition-property: color;
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
+  transition-duration: 0.3s;
   left: 80px;
 }
 body > .modal.update_journal > div > button.close:hover {
@@ -13933,7 +12991,7 @@ body > .modal.update_journal.mod-blur-shot > div {
   z-index: 1;
   color: #e8dfc2;
   mask-image: linear-gradient(to top, transparent, #000);
-  -webkit-mask-image: -webkit-linear-gradient(bottom, transparent, #000);
+  -webkit-mask-image: linear-gradient(to top, transparent, #000);
   text-shadow: 0 0 1px #000;
 }
 #tip h3.itemstat > small,
@@ -14128,7 +13186,6 @@ body > .modal.update_journal.mod-blur-shot > div {
   line-height: 0.8rem;
   font-size: 0.65rem;
   border-radius: 50%;
-  background: -webkit-linear-gradient(top, #00994a, #006631);
   background: linear-gradient(to bottom, #00994a, #006631);
   color: #ccffe5;
   text-align: center;
@@ -14217,7 +13274,6 @@ body > .modal.update_journal.mod-blur-shot > div {
 .page-container[page="arsenal"] > .tabs {
   height: 2.95rem;
   padding-bottom: 0.45rem;
-  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.35) 1px, rgba(230, 230, 230, 0.25) 1px, rgba(230, 230, 230, 0.25) calc(100% - 1px), rgba(255, 255, 255, 0.35) calc(100% - 1px)) no-repeat 0 100%;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35) 1px, rgba(230, 230, 230, 0.25) 1px, rgba(230, 230, 230, 0.25) calc(100% - 1px), rgba(255, 255, 255, 0.35) calc(100% - 1px)) no-repeat 0 100%;
   background-size: 100% 9px;
 }
@@ -14235,10 +13291,8 @@ body > .modal.update_journal.mod-blur-shot > div {
 }
 .page-container[page="arsenal"] > .tabs .akashi span {
   display: block;
-  -webkit-transform: scale(0.649);
-          transform: scale(0.649);
-  -webkit-transform-origin: 0 0;
-          transform-origin: 0 0;
+  transform: scale(0.649);
+  transform-origin: 0 0;
   background: url(/!/assets/images/akashi.png) no-repeat 0 0;
   position: relative;
   width: 214px;
@@ -14253,20 +13307,16 @@ body > .modal.update_journal.mod-blur-shot > div {
   height: 34px;
   top: 19px;
   left: 22px;
-  -webkit-animation: none 3s steps(1) 3s infinite;
-          animation: none 3s steps(1) 3s infinite;
+  animation: none 3s steps(1) 3s infinite;
 }
 .page-container[page="arsenal"] > .tabs .akashi span[animation="1"]:before {
-  -webkit-animation-name: akashi-blink-1;
-          animation-name: akashi-blink-1;
+  animation-name: akashi-blink-1;
 }
 .page-container[page="arsenal"] > .tabs .akashi span[animation="2"]:before {
-  -webkit-animation-name: akashi-blink-2;
-          animation-name: akashi-blink-2;
+  animation-name: akashi-blink-2;
 }
 .page-container[page="arsenal"] > .tabs .akashi span[animation="3"]:before {
-  -webkit-animation-name: akashi-blink-3;
-          animation-name: akashi-blink-3;
+  animation-name: akashi-blink-3;
 }
 .page-container[page="arsenal"] > .main {
   height: calc(100% - 61px);
@@ -14276,8 +13326,7 @@ body > .modal.update_journal.mod-blur-shot > div {
 }
 .page-container[page="arsenal"] > .main > .body {
   display: none;
-  -webkit-animation: fadeIn 0.3s ease-out;
-          animation: fadeIn 0.3s ease-out;
+  animation: fadeIn 0.3s ease-out;
   padding-bottom: 20px;
 }
 .page-container[page="arsenal"] > .main > .body-weekday {
@@ -14399,7 +13448,6 @@ body > .modal.update_journal.mod-blur-shot > div {
 }
 .page-container[page="arsenal"] > .main > .body-weekday > .weekday > div > label {
   color: rgba(255, 255, 255, 0.65);
-  -webkit-transition-property: color, background-color;
   transition-property: color, background-color;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > .weekday > div > label:hover {
@@ -14414,7 +13462,6 @@ body > .modal.update_journal.mod-blur-shot > div {
   width: 100%;
   text-align: center;
   color: rgba(255, 255, 255, 0.45);
-  -webkit-transition-property: color;
   transition-property: color;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > .weekday > label:before,
@@ -14440,26 +13487,20 @@ body > .modal.update_journal.mod-blur-shot > div {
 }
 .page-container[page="arsenal"] > .main > .body-weekday > .content {
   display: none;
-  -webkit-animation: fadeIn 0.3s ease-out;
-          animation: fadeIn 0.3s ease-out;
+  animation: fadeIn 0.3s ease-out;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > .content > .flexgrid > .unit {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 490px;
-      -ms-flex: 1 0 490px;
-          flex: 1 0 490px;
+  flex: 1 0 490px;
   margin-right: 10px;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > .content > .flexgrid > .unit.improvement {
   height: 75px;
   padding-top: 10px;
   overflow: hidden;
-  -webkit-transition-property: height;
   transition-property: height;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > .content > .flexgrid > .unit.improvement > span {
   opacity: 0;
-  -webkit-transition-property: opacity;
   transition-property: opacity;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > #arsenal_weekday-showmeterials:checked ~ .weekday > label[for="arsenal_weekday-showmeterials"]:before {
@@ -14482,14 +13523,12 @@ body > .modal.update_journal.mod-blur-shot > div {
   height: 100px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 6px;
-  -webkit-transition-property: background, padding;
   transition-property: background, padding;
 }
 .page-container[page="arsenal"] > .main > .body-all > .improvement > font {
   margin-top: 0;
 }
 .page-container[page="arsenal"] > .main > .body-all > .improvement > span {
-  -webkit-transition-property: bottom;
   transition-property: bottom;
 }
 .page-container[page="arsenal"] > .main > .body-all > .improvement > span > span {
@@ -14750,8 +13789,7 @@ body > .modal.update_journal.mod-blur-shot > div {
   min-height: 100%;
   width: auto;
   height: auto;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 .page-container[page="about"] .infos section > span {
   display: block;
@@ -14764,7 +13802,6 @@ body > .modal.update_journal.mod-blur-shot > div {
 .page-container[page="about"] .infos section a {
   text-decoration: none;
   color: #ff4d4d;
-  -webkit-transition-property: color;
   transition-property: color;
 }
 .page-container[page="about"] .infos section a:hover {
@@ -14794,20 +13831,15 @@ body > .modal.update_journal.mod-blur-shot > div {
   font-size: 14px;
   font-family: Arial;
   color: #bea7a7;
-  -webkit-transition: none 0.2s ease-out;
   transition: none 0.2s ease-out;
-  -webkit-transition-property: -webkit-transform;
-  transition-property: -webkit-transform;
   transition-property: transform;
-  transition-property: transform, -webkit-transform;
 }
 .page-container[page="about"] input[type="checkbox"]:checked + section.update_journal {
   height: auto;
   overflow: visible;
 }
 .page-container[page="about"] input[type="checkbox"]:checked + section.update_journal:before {
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 .page-container[page="fleets"] {
   border-width: 0 !important;
@@ -14823,6 +13855,7 @@ body > .modal.update_journal.mod-blur-shot > div {
 .page-container[page="donate"] > .container > section {
   display: inline-block !important;
   max-width: 98% !important;
+  max-width: -webkit-calc(100% - 0.2rem) !important;
   max-width: calc(100% - 0.2rem) !important;
   max-height: 100% !important;
   vertical-align: middle !important;

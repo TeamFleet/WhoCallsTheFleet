@@ -109,6 +109,7 @@ if (!_huResized.ver || _huResized.ver < 2.1) {
 	_huResized.throttle = _huResized.throttle || 300;
 	_huResized.startSize = {};
 
+
 	_huResized.viewport = function () {
 		var e = window,
 		    a = 'inner';
@@ -435,6 +436,7 @@ _g.uriHash = function (name, val, value) {
 		}
 		_g.uriHashInited = !0;
 	}
+
 
 	if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) == 'object') {
 		for (var k in name) {
@@ -887,6 +889,7 @@ _g.init = function () {
 			_g.last.height = _height;
 		},
 
+
 		'basechange': function basechange() {
 			if (_g.isBaseChange) {
 				_g.isBaseChange = !1;
@@ -1225,6 +1228,7 @@ Object.defineProperty(Array.prototype, 'mergeFrom', {
 	}
 });
 
+
 Date.prototype.format = function (pattern, set) {
 	return _g.formatTime(this, pattern, set);
 };
@@ -1278,6 +1282,7 @@ _g.formatTime = function (time, pattern, set) {
 	return pattern.replace(/\%Y/g, time.getFullYear()).replace(/\%m/g, _zero(time.getMonth() + 1)).replace(/\%n/g, time.getMonth() + 1).replace(/\%d/g, _zero(time.getDate())).replace(/\%j/g, time.getDate()).replace(/\%G/g, _G).replace(/\%H/g, _H).replace(/\%i/g, _zero(time.getMinutes())).replace(/\%s/g, _zero(time.getSeconds())).replace(/\%l/g, _g.formatTime_weekdaymappding[time.getDay()]._(_g.formatTime_string));
 };
 
+
 Object.defineProperty(Object.prototype, '_size', {
 	enumerable: !1,
 
@@ -1289,6 +1294,7 @@ Object.defineProperty(Object.prototype, '_size', {
 		return size;
 	}
 });
+
 
 String.prototype.getText = function (table, locale) {
 	return _g.getText(this, table, locale, !0);
@@ -1330,6 +1336,7 @@ _g.hashCode = function (t) {
 
 	t = encodeURIComponent(t);
 
+
 	try {
 		return t.split("").reduce(function (a, b) {
 			a = (a << length) - a + b.charCodeAt(0);return a & a;
@@ -1362,6 +1369,7 @@ String.prototype.escape = function () {
 	return $('<div />').text(this).html();
 };
 
+
 var _tmpl = {
 	export: function _export(value, returnHTML) {
 		if (value.attr && returnHTML) return value.prop('outerHTML');
@@ -1370,6 +1378,7 @@ var _tmpl = {
 		if (!value.attr && !returnHTML) return $(value);
 	}
 };
+
 
 var _hotkey = {
 	allowed: !0,
@@ -1672,6 +1681,7 @@ _form.element = function (type, name, id, value, options) {
 	return element;
 };
 
+
 _frame.dom = {};
 _frame.main = {
 	'last': {}
@@ -1681,6 +1691,7 @@ _frame.global = {
 	key_registerd: [],
 
 	esc_funcs: [],
+
 
 	allowKeyNav: !0,
 	esc_register: function esc_register(func) {
@@ -1919,6 +1930,7 @@ _frame.menu = {
 	}
 };
 
+
 _frame.modal = {
 	dom: {},
 
@@ -1988,6 +2000,7 @@ _frame.modal = {
 		this.dom.container.removeClass('on');
 	},
 
+
 	reset: function reset() {
 		this.resetContent();
 
@@ -2047,6 +2060,7 @@ _frame.modal.init = function () {
 	this.is_init = !0;
 	return !0;
 };
+
 
 _p.tip = {
 	pos: 'bottom',
@@ -2123,6 +2137,7 @@ _p.tip = {
 			this.dom_body.html(cont);
 			_p.initDOM(this.dom_body);
 
+
 			this.curContent = hashcode;
 		}
 
@@ -2149,6 +2164,7 @@ _p.tip = {
 
 	content: function content(cont, el) {
 		el = el || this.el;
+
 
 		return cont;
 	},
@@ -2416,10 +2432,12 @@ $document.ready(function () {
 
 	_g.init();
 
+
 	for (var i in _g.func_last) {
 		_g.func_last[i]();
 	}
 });
+
 
 "use strict";
 
@@ -2671,11 +2689,13 @@ _frame.app_config = {
 	}
 };
 
+
 "use strict";
 
 if (typeof _g == 'undefined') var _g = {};
 
 _g.lang = _g.lang || 'zh_cn';
+
 
 var Formula = {
 	equipmentType: {
@@ -4228,6 +4248,7 @@ _frame.app_main = {
 			var dbchain = Q(),
 			    masterDeferred = Q.defer();
 
+
 			_g.dbs.forEach(function (db_name) {
 				dbchain = dbchain.then(function () {
 					var deferred = Q.defer();
@@ -4415,7 +4436,7 @@ var ShareBar = function () {
 				var $el = $(e.target),
 				    site = $el.attr('data-share-site');
 				$el.attr({
-					'href': 'http://www.jiathis.com/send/?webid=' + site + '&url=' + encodeURIComponent(this.getContent('url', location.href)) + '&title=' + encodeURIComponent(this.getContent('title', document.title)) + '&summary=' + encodeURIComponent(this.getContent('summary', $('meta[name="description"]').attr('content'))) + (this.settings.uid ? '&uid=' + this.settings.uid : '') + (this.settings.appkey[site] ? '&appkey=' + this.settings.appkey[site] : ''),
+					'href': 'http://s.jiathis.com/?webid=' + site + '&url=' + encodeURIComponent(this.getContent('url', location.href)) + '&title=' + encodeURIComponent(this.getContent('title', document.title)) + '&summary=' + encodeURIComponent(this.getContent('summary', $('meta[name="description"]').attr('content'))) + (this.settings.uid ? '&uid=' + this.settings.uid : '') + (this.settings.appkey[site] ? '&appkey=' + this.settings.appkey[site] : '') + '&shortUrl=true',
 					'target': '_blank'
 				});
 			}.bind(this));
@@ -4462,6 +4483,7 @@ var duoshuoQuery = {
 		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
 	}
 })();
+
 _tmpl.improvement = function (equipment, improvement_index, requirement_index, returnHTML) {
 	if (typeof equipment == 'undefined') return !1;
 
@@ -5123,6 +5145,7 @@ _frame.app_main.page['calctp'] = {
 	}
 };
 
+
 _frame.gg = function () {
 	$.ajax({
 		'url': 'http://fleet.diablohu.com/!/g/',
@@ -5715,6 +5738,7 @@ BgImg.delete = function (o) {
 	return deferred.promise;
 };
 
+
 _frame.infos = {
 	historyLength: -1,
 	historyCurrent: -1,
@@ -5998,10 +6022,11 @@ _frame.infos.__ship_init = function ($el) {
 	    deltaY = undefined,
 	    isPanning = !1,
 	    isScrollSnap = _huCss.csscheck_full('scroll-snap-type') && !bFirefox,
+	    scrollLock = !1,
+	    mouseWheelLock = !1,
 	    illustMain = $el.find('.illustrations'),
-	    illust = illustMain.children('div'),
+	    illust = illustMain.find('.body'),
 	    imgs = illust.children('span'),
-	    s = imgs.eq(0),
 	    n = 'e' + _g.timeNow(),
 	    labels = illustMain.children('label'),
 	    inputs = illustMain.children('input[type="radio"]').on('change', function (e, scrollTime) {
@@ -6010,11 +6035,15 @@ _frame.infos.__ship_init = function ($el) {
 			i--;
 			inputs.eq(i).prop('checked', !0);
 		}
-		if (isScrollSnap) {
+		if (isScrollSnap && !scrollLock) {
+			scrollLock = !0;
 			illust.off('scroll').animate({
 				scrollLeft: imgs.eq(i)[0].offsetLeft
 			}, typeof scrollTime == 'undefined' ? 200 : scrollTime, function () {
-				illust.on('scroll', scrollHandler);
+				setTimeout(function () {
+					scrollLock = !1;
+					illust.on('scroll', scrollHandler);
+				}, 50);
 			});
 		} else {}
 	}),
@@ -6026,7 +6055,8 @@ _frame.infos.__ship_init = function ($el) {
 		originalX = illust.scrollLeft();
 		illustWidth = illust.width();
 		inputCur = parseInt(inputs.filter(':checked').val()) - 1;
-		sCount = Math.floor(illustWidth / (s.outerWidth() * 0.95));
+
+		sCount = inputs.length / labels.filter(':visible').length;
 	}
 	function scrollHandler() {
 		if (originalX >= 0) {
@@ -6042,6 +6072,7 @@ _frame.infos.__ship_init = function ($el) {
 		    pDelta = (Math.floor(Math.abs(delta) / illustWidth) + (Math.abs(delta % illustWidth) > illustWidth / 2 ? 1 : 0)) * (x < originalX ? -1 : 1);
 
 		isPanning = !1;
+		console.log(inputCur, pDelta, sCount);
 		if (delta !== 0) {
 			var t = inputCur + pDelta * sCount;
 			if (t < 0) t = 0;
@@ -6050,6 +6081,7 @@ _frame.infos.__ship_init = function ($el) {
 			inputs.eq(t).prop('checked', !0);
 		}
 	}
+
 
 	function _resized() {
 		originalX = -1;
@@ -6093,12 +6125,14 @@ _frame.infos.__ship_init = function ($el) {
 				deltaX = 0;
 				deltaY = 0;
 				sCount = 0;
+
 				isActualPanning = !1;
 				$(document).off('touchmove.infosShipIllust touchend.infosShipIllust touchcancel.infosShipIllust');
 			};
 
 			var panX = function panX() {
 				isPanning = !1;
+
 				var half = inputCur <= 0 && deltaX > 0 || inputCur >= inputs.length - sCount && deltaX < 0;
 				illust.css('transform', 'translateX(' + (deltaX * (half ? 0.3333 : 1) + originalX) + 'px)');
 			};
@@ -6161,8 +6195,10 @@ _frame.infos.__ship_init = function ($el) {
 						startY = e.originalEvent.targetTouches[0].clientY;
 						startTime = _g.timeNow();
 						inputCur = parseInt(inputs.filter(':checked').val()) - 1;
-						sCount = Math.floor(illust.width() / (s.outerWidth() * 0.95));
+
+						sCount = inputs.length / labels.filter(':visible').length;
 						illustWidth = illust.width();
+
 
 						$(document).on({
 							'touchmove.infosShipIllust': bodyTouchMove,
@@ -6177,6 +6213,58 @@ _frame.infos.__ship_init = function ($el) {
 			});
 		})();
 	}
+
+	function illustShift(direction, jumpToAnotherEdge) {
+		if (!direction || scrollLock) return;
+
+		var t = -10;
+
+		inputCur = parseInt(inputs.filter(':checked').val()) - 1;
+		sCount = inputs.length / labels.filter(':visible').length;
+
+		if (direction == 1) {
+			t = inputCur + sCount;
+		} else if (direction == -1) {
+			t = inputCur - 1;
+		}
+
+		if (t < 0 && t > -10) {
+			if (jumpToAnotherEdge) t = inputs.length - sCount;else t = 0;
+		} else if (t + sCount > inputs.length) {
+			if (jumpToAnotherEdge) t = 0;else t = inputs.length - sCount;
+		}
+
+		inputCur = 0;
+		sCount = 0;
+
+		if (t >= 0) {
+			if (isScrollSnap) scrollStart();
+			inputs.eq(t).prop('checked', !0).trigger('change');
+		}
+	}
+
+	illustMain.on('mousewheel', function (e) {
+		if (mouseWheelLock || scrollLock || $el.get(0).scrollHeight > $el.get(0).clientHeight) return;
+
+		var direction = undefined;
+
+		if (isScrollSnap && e.originalEvent.deltaY) direction = e.originalEvent.deltaY < 0 ? -1 : 1;else if (e.originalEvent.wheelDelta) direction = e.originalEvent.wheelDelta > 0 ? -1 : 1;else if (e.originalEvent.deltaX) direction = e.originalEvent.deltaX < 0 ? -1 : 1;else if (e.originalEvent.deltaY) direction = e.originalEvent.deltaY < 0 ? -1 : 1;
+
+		if (direction) {
+			mouseWheelLock = !0;
+			illustShift(direction);
+			setTimeout(function () {
+				mouseWheelLock = !1;
+			}, 100);
+		}
+	});
+
+	$('<button class="arrow prev" icon="arrow-left"/>').on('click', function () {
+		illustShift(-1, !0);
+	}).insertBefore(inputs.eq(0));
+	$('<button class="arrow next" icon="arrow-right"/>').on('click', function () {
+		illustShift(1, !0);
+	}).insertAfter(labels.eq(labels.length - 1));
 };
 
 _frame.infos.__fleet = function (id, el, d) {
@@ -6272,6 +6360,7 @@ var InfosFleet = function () {
 			});
 
 			this.data = d;
+
 
 			var i = 0,
 			    defaultHqLv = Lockr.get('hqLvDefault', _g.defaultHqLv);
@@ -6909,6 +6998,7 @@ var InfosFleetSubFleet = function () {
 
 		this.elSummary = $('<span class="summary"/>').appendTo(this.el).append($('<span class="summary-item"/>').html('航速').append(this.elSummarySpeed = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('制空战力').append(this.elSummaryFighterPower = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('索敌能力').append(this.elSummaryLos = $('<strong/>').html('-'))).append($('<span class="summary-item summary-item-consummation"/>').html('总消耗').append(this.elSummaryConsummation = $('<strong/>').html('-')));
 
+
 		this.infosFleet = infosFleet;
 
 		this.updateEl();
@@ -7392,6 +7482,7 @@ var InfosFleetShip = function () {
 			} else {
 				this.elInputLevel.val('');
 			}
+
 
 			this.save();
 		}
@@ -8415,6 +8506,7 @@ var TablelistShips = function (_Tablelist2) {
 
 					this.rowsById[ship_id] = tr;
 
+
 					this.rows = this.rows.add(tr);
 				}
 			}.bind(this));
@@ -8902,6 +8994,7 @@ var TablelistFleets = function (_Tablelist4) {
 				return 0;
 			});
 
+
 			this.trIndex = 0;
 
 			if (typeof Lockr.get('fleetlist-option-groupbytheme') == 'undefined') Lockr.set('fleetlist-option-groupbytheme', !0);
@@ -8977,6 +9070,7 @@ var TablelistFleets = function (_Tablelist4) {
 				'data-theme': data.theme,
 				'class': 'link_fleet'
 			});
+
 
 			this.columns.forEach(function (column) {
 				switch (column[1]) {
@@ -9068,6 +9162,7 @@ var TablelistFleets = function (_Tablelist4) {
 		value: function action_new(dataDefault, options) {
 			dataDefault = dataDefault || {};
 			options = options || {};
+
 
 			if (dataDefault.data) {
 				dataDefault.data.forEach(function (fleet) {
