@@ -11183,7 +11183,6 @@ body.mod-capture .infos-fleet .equipments {
   right: -20px;
   text-align: center;
   overflow: hidden;
-  mask-image: linear-gradient(to left, transparent, #000 20px, #000 calc(100% - 20px), transparent);
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -11200,14 +11199,17 @@ body.mod-capture .infos-fleet .equipments {
 			.loop(10);
 			*/
 }
-.infos-ship > aside > label {
+.infos-ship > aside > label,
+.infos-ship > aside > button.arrow {
   position: relative;
   margin: 0;
-  width: 25px;
-  height: 25px;
+  width: 22px;
+  height: 22px;
   display: inline-block;
-  z-index: 2;
   margin-bottom: 24px;
+}
+.infos-ship > aside > label {
+  z-index: 2;
 }
 .infos-ship > aside > label:before {
   position: absolute;
@@ -11217,7 +11219,7 @@ body.mod-capture .infos-fleet .equipments {
   border-radius: 50%;
   background: #fff;
   background: rgba(255, 255, 255, 0.25);
-  transform: scale(0.4);
+  transform: scale(0.45454545454545453);
   left: 0;
   border: 0.1rem solid transparent;
   transition: none 0.2s ease-out;
@@ -11226,24 +11228,54 @@ body.mod-capture .infos-fleet .equipments {
 .infos-ship > aside > label:hover:before {
   background: rgba(255, 255, 255, 0.5);
 }
-.infos-ship > aside > div {
+.infos-ship > aside > button.arrow {
+  color: rgba(255, 255, 255, 0.35);
+  z-index: 5;
+}
+.infos-ship > aside > button.arrow:before {
+  width: 100%;
+  height: 0;
+  line-height: 0;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  text-align: center;
+  padding: 0;
+  font-size: 16px;
+}
+.infos-ship > aside > button.arrow.prev {
+  margin-right: 5.5px;
+}
+.infos-ship > aside > button.arrow.next {
+  margin-left: 5.5px;
+}
+.infos-ship > aside > button.arrow:hover {
+  color: #fff;
+}
+.infos-ship > aside > .wrapper {
   position: absolute;
   width: 100%;
   top: 0;
   bottom: -20px;
   left: 0;
   flex: none;
-  transition-property: transform;
   padding: 10px 0 75px 0;
+  mask-image: linear-gradient(to left, transparent, #000 20px, #000 calc(100% - 20px), transparent);
+}
+.infos-ship > aside .body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition-property: transform;
   display: flex;
   flex-flow: row nowrap;
   scroll-snap-type: mandatory;
   scroll-snap-points-x: repeat(100%);
 }
-.infos-ship > aside > div.is-panning {
+.infos-ship > aside .body.is-panning {
   transition: none;
 }
-.infos-ship > aside > div > span {
+.infos-ship > aside .body > span {
   position: relative;
   width: 100%;
   height: 100%;
@@ -11254,7 +11286,7 @@ body.mod-capture .infos-fleet .equipments {
   text-align: center !important;
   vertical-align: middle !important;
 }
-.infos-ship > aside > div > span > img {
+.infos-ship > aside .body > span > img {
   display: inline-block !important;
   max-width: 98% !important;
   max-width: -webkit-calc(100% - 0.2rem) !important;
@@ -11263,7 +11295,7 @@ body.mod-capture .infos-fleet .equipments {
   vertical-align: middle !important;
   margin: 0 auto !important;
 }
-.infos-ship > aside > div > span:after {
+.infos-ship > aside .body > span:after {
   content: "";
   display: inline-block;
   vertical-align: middle;
@@ -11271,7 +11303,7 @@ body.mod-capture .infos-fleet .equipments {
   height: 100%;
   overflow: hidden;
 }
-.infos-ship > aside > div > span img {
+.infos-ship > aside .body > span img {
   object-fit: scale-down;
   max-width: 100%;
   max-height: 100%;
@@ -11285,47 +11317,47 @@ body.mod-capture .infos-fleet .equipments {
 .infos-ship > aside > input[type="radio"]:checked + label:before {
   background-color: rgba(63, 192, 255, 0.25);
   border-color: rgba(63, 192, 255, 0.75);
-  transform: scale(0.64);
+  transform: scale(0.7272727272727273);
 }
-.infos-ship > aside.mod-scroll-snap > div {
+.infos-ship > aside.mod-scroll-snap .body {
   overflow: auto;
   overflow-style: none;
   -ms-overflow-style: none;
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="1"]:checked ~ div {
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="1"]:checked ~ .wrapper .body {
   transform: translateX(0%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="2"]:checked ~ div {
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="2"]:checked ~ .wrapper .body {
   transform: translateX(-100%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="3"]:checked ~ div {
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="3"]:checked ~ .wrapper .body {
   transform: translateX(-200%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="4"]:checked ~ div {
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="4"]:checked ~ .wrapper .body {
   transform: translateX(-300%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="5"]:checked ~ div {
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="5"]:checked ~ .wrapper .body {
   transform: translateX(-400%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="6"]:checked ~ div {
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="6"]:checked ~ .wrapper .body {
   transform: translateX(-500%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="7"]:checked ~ div {
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="7"]:checked ~ .wrapper .body {
   transform: translateX(-600%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="8"]:checked ~ div {
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="8"]:checked ~ .wrapper .body {
   transform: translateX(-700%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="9"]:checked ~ div {
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="9"]:checked ~ .wrapper .body {
   transform: translateX(-800%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="10"]:checked ~ div {
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="10"]:checked ~ .wrapper .body {
   transform: translateX(-900%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="11"]:checked ~ div {
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="11"]:checked ~ .wrapper .body {
   transform: translateX(-1000%);
 }
-.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="12"]:checked ~ div {
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="12"]:checked ~ .wrapper .body {
   transform: translateX(-1100%);
 }
 @media all and (min-width: 1601px) and (min-aspect-ratio: 5/4) {
@@ -11341,47 +11373,47 @@ body.mod-capture .infos-fleet .equipments {
   .infos-ship > aside {
     width: calc( 45% + 40px );
   }
-  .infos-ship > aside > input[type="radio"]:nth-child(4n+3) + label {
+  .infos-ship > aside > input[type="radio"]:nth-of-type(2n) + label {
     display: none;
   }
-  .infos-ship > aside > div > span {
+  .infos-ship > aside .body > span {
     width: 50%;
     flex-basis: 50%;
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="1"]:checked ~ div {
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="1"]:checked ~ .wrapper .body {
     transform: translateX(0%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="2"]:checked ~ div {
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="2"]:checked ~ .wrapper .body {
     transform: translateX(0%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="3"]:checked ~ div {
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="3"]:checked ~ .wrapper .body {
     transform: translateX(-100%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="4"]:checked ~ div {
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="4"]:checked ~ .wrapper .body {
     transform: translateX(-100%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="5"]:checked ~ div {
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="5"]:checked ~ .wrapper .body {
     transform: translateX(-200%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="6"]:checked ~ div {
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="6"]:checked ~ .wrapper .body {
     transform: translateX(-200%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="7"]:checked ~ div {
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="7"]:checked ~ .wrapper .body {
     transform: translateX(-300%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="8"]:checked ~ div {
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="8"]:checked ~ .wrapper .body {
     transform: translateX(-300%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="9"]:checked ~ div {
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="9"]:checked ~ .wrapper .body {
     transform: translateX(-400%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="10"]:checked ~ div {
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="10"]:checked ~ .wrapper .body {
     transform: translateX(-400%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="11"]:checked ~ div {
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="11"]:checked ~ .wrapper .body {
     transform: translateX(-500%);
   }
-  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="12"]:checked ~ div {
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="12"]:checked ~ .wrapper .body {
     transform: translateX(-500%);
   }
 }
@@ -11404,7 +11436,7 @@ body.mod-capture .infos-fleet .equipments {
   }
   .infos-ship > aside {
     width: calc(20% + 80px);
-    right: -30px;
+    right: -25px;
     border-top: 60px solid transparent;
   }
 }

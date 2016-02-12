@@ -13,10 +13,12 @@ _frame.infos.__ship_init = function( $el ){
             ,isScrollSnap = ( _huCss.csscheck_full('scroll-snap-type') && !bFirefox )
             //,isScrollSnap = _huCss.csscheck_full('scroll-snap-type')
             //,isMoving = 0
+            ,scrollLock = false
+            ,mouseWheelLock = false
             ,illustMain = $el.find('.illustrations')
-            ,illust = illustMain.children('div')
+            ,illust = illustMain.find('.body')
             ,imgs = illust.children('span')
-            ,s = imgs.eq(0)
+            //,s = imgs.eq(0)
             ,n = 'e'+_g.timeNow()
             ,labels = illustMain.children('label')
             ,inputs = illustMain.children('input[type="radio"]')
@@ -26,13 +28,17 @@ _frame.infos.__ship_init = function( $el ){
                                 i--
                                 inputs.eq(i).prop('checked', true)
                             }
-                            if( isScrollSnap ){
+                            if( isScrollSnap && !scrollLock ){
                                 //illust.scrollLeft( imgs.eq(i)[0].offsetLeft )
+                                scrollLock = true
                                 illust.off('scroll')
                                     .animate({
                                         scrollLeft:		imgs.eq(i)[0].offsetLeft
                                     }, typeof scrollTime == 'undefined' ? 200 : scrollTime, function(){
-                                        illust.on('scroll', scrollHandler)
+                                        setTimeout(function(){
+                                            scrollLock = false
+                                            illust.on('scroll', scrollHandler)
+                                        }, 50)
                                     })
                             }else{
                                 
@@ -65,6 +71,7 @@ _frame.infos.__ship_init = function( $el ){
                 //,pDelta = Math.abs(delta % illustWidth) > (illustWidth / 3) ? Math.ceil(delta / illustWidth) : Math.floor(delta / illustWidth)
             //console.log(delta, pDelta)
             isPanning = false
+            console.log( inputCur , pDelta , sCount )
             if( delta !== 0 ){
                 let t = inputCur + pDelta * sCount
                 if( t < 0 )
@@ -117,6 +124,7 @@ _frame.infos.__ship_init = function( $el ){
                 })
             }else{
                 let isActualPanning = false
+                    //,lastTick
                 function panEnd(){
                     illust.css('transform', '').removeClass('is-panning')
                     originalX = 0
@@ -125,13 +133,19 @@ _frame.infos.__ship_init = function( $el ){
                     deltaX = 0
                     deltaY = 0
                     sCount = 0
+                    //lastTick = 0
                     isActualPanning = false
                     $(document).off('touchmove.infosShipIllust touchend.infosShipIllust touchcancel.infosShipIllust')
                 }
                 function panX(){
                     isPanning = false
-                    let half = ((inputCur <= 0 && deltaX > 0) || (inputCur >= inputs.length - sCount && deltaX < 0))
-                    illust/*.addClass('is-panning')*/.css('transform', 'translateX('+(deltaX * (half ? 0.3333 : 1) + originalX)+'px)')
+                    //let now = Date.parse(new Date())
+                    //if( now - lastTick > 5 ){
+                        let half = ((inputCur <= 0 && deltaX > 0) || (inputCur >= inputs.length - sCount && deltaX < 0))
+                        illust/*.addClass('is-panning')*/.css('transform', 'translateX('+(deltaX * (half ? 0.3333 : 1) + originalX)+'px)')
+                        //console.log( deltaX * (half ? 0.3333 : 1) + originalX )
+                    //}
+                    //lastTick = now
                 }
                 function panHandler(){
                     //if( originalX >= 0 ){
@@ -198,6 +212,7 @@ _frame.infos.__ship_init = function( $el ){
                                 //sCount = Math.floor(illust.width() / (s.outerWidth() * 0.95))
                                 sCount = inputs.length / labels.filter(':visible').length
                                 illustWidth = illust.width()
+                                //lastTick = Date.parse(new Date())
                                 
                                 $(document).on({
                                     'touchmove.infosShipIllust': bodyTouchMove,
@@ -251,11 +266,11 @@ _frame.infos.__ship_init = function( $el ){
             }
     
     // prev/next for illustrations
-        function illustShift( direction ){
-            if( !direction )
+        function illustShift( direction, jumpToAnotherEdge ){
+            if( !direction || scrollLock )
                 return
 
-            let t = -1
+            let t = -10
 
             inputCur = parseInt(inputs.filter(':checked').val()) - 1
             sCount = inputs.length / labels.filter(':visible').length
@@ -266,27 +281,39 @@ _frame.infos.__ship_init = function( $el ){
                 t = inputCur - 1
             }
 
-            if( t < 0 )
-                t = 0
-            if( t + sCount > inputs.length )
-                t = inputs.length - sCount
-
-            if( t >= 0 )
-                inputs.eq(t).prop('checked', true).trigger('change')
+            if( t < 0 && t > -10 ){
+                if( jumpToAnotherEdge )
+                    t = inputs.length - sCount
+                else
+                    t = 0
+            }else if( t + sCount > inputs.length ){
+                if( jumpToAnotherEdge )
+                    t = 0
+                else
+                    t = inputs.length - sCount
+            }
 
             inputCur = 0
             sCount = 0
+
+            if( t >= 0 ){
+                //illust.off('scroll')
+                if( isScrollSnap )
+                    scrollStart()
+                inputs.eq(t).prop('checked', true).trigger('change')
+            }
         }
     
     // mousewheel support for illustrations
-        let mouseWheelLock = false
         illustMain.on('mousewheel', function(e){
-            if( mouseWheelLock || $el.get(0).scrollHeight > $el.get(0).clientHeight )
+            if( mouseWheelLock || scrollLock || $el.get(0).scrollHeight > $el.get(0).clientHeight )
                 return
 
             let direction
             
-            if( e.originalEvent.wheelDelta )
+            if( isScrollSnap && e.originalEvent.deltaY )
+                direction = e.originalEvent.deltaY < 0 ? -1 : 1
+            else if( e.originalEvent.wheelDelta )
                 direction = e.originalEvent.wheelDelta > 0 ? -1 : 1
             else if( e.originalEvent.deltaX )
                 direction = e.originalEvent.deltaX < 0 ? -1 : 1
@@ -301,4 +328,16 @@ _frame.infos.__ship_init = function( $el ){
                 }, 100)
             }
         })
+    
+    // prev/next button for illustrations
+        $('<button class="arrow prev" icon="arrow-left"/>')
+            .on('click', function(){
+                illustShift( -1, true )
+            })
+            .insertBefore( inputs.eq(0) )
+        $('<button class="arrow next" icon="arrow-right"/>')
+            .on('click', function(){
+                illustShift( 1, true )
+            })
+            .insertAfter( labels.eq(labels.length - 1) )
 };

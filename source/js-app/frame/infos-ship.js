@@ -273,7 +273,8 @@ _frame.infos.__ship = function( id ){
 	// 图鉴
 		// illustrations
 		var illusts = $('<aside class="illustrations"/>').appendTo(dom)
-			,illusts_container = $('<div/>').appendTo(illusts)
+			,illusts_wrapper = $('<div class="wrapper"/>').appendTo(illusts)
+			,illusts_container = $('<div class="body"/>').appendTo(illusts_wrapper)
 
 	// 改造信息
 		//var remodels = $('<div class="remodels"/>').html('<h4 data-content="改造">改造</h4>').appendTo(dom)
@@ -364,8 +365,8 @@ _frame.infos.__ship = function( id ){
 						let radioid = 'ship_' + d['id'] +'_illustrations_' + index
 						$('<input type="radio" name="ship_'+d['id']+'_illustrations" id="'+radioid+'" value="'+index+'"' + (index==1 ? ' checked' : '') + '/>')
 							.prop('checked', (index == 1))
-							.insertBefore(illusts_container)
-						$('<label for="'+radioid+'"/>').insertBefore(illusts_container)
+							.insertBefore(illusts_wrapper)
+						$('<label for="'+radioid+'"/>').insertBefore(illusts_wrapper)
 						$('<span/>')
 							.html('<img src="'+file+'" data-filename="'+ship_name+' - '+index+'.webp"/>')
 							//.css('background-image', 'url(' + file + ')')

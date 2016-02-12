@@ -6022,10 +6022,11 @@ _frame.infos.__ship_init = function ($el) {
 	    deltaY = undefined,
 	    isPanning = !1,
 	    isScrollSnap = _huCss.csscheck_full('scroll-snap-type') && !bFirefox,
+	    scrollLock = !1,
+	    mouseWheelLock = !1,
 	    illustMain = $el.find('.illustrations'),
-	    illust = illustMain.children('div'),
+	    illust = illustMain.find('.body'),
 	    imgs = illust.children('span'),
-	    s = imgs.eq(0),
 	    n = 'e' + _g.timeNow(),
 	    labels = illustMain.children('label'),
 	    inputs = illustMain.children('input[type="radio"]').on('change', function (e, scrollTime) {
@@ -6034,11 +6035,15 @@ _frame.infos.__ship_init = function ($el) {
 			i--;
 			inputs.eq(i).prop('checked', !0);
 		}
-		if (isScrollSnap) {
+		if (isScrollSnap && !scrollLock) {
+			scrollLock = !0;
 			illust.off('scroll').animate({
 				scrollLeft: imgs.eq(i)[0].offsetLeft
 			}, typeof scrollTime == 'undefined' ? 200 : scrollTime, function () {
-				illust.on('scroll', scrollHandler);
+				setTimeout(function () {
+					scrollLock = !1;
+					illust.on('scroll', scrollHandler);
+				}, 50);
 			});
 		} else {}
 	}),
@@ -6067,6 +6072,7 @@ _frame.infos.__ship_init = function ($el) {
 		    pDelta = (Math.floor(Math.abs(delta) / illustWidth) + (Math.abs(delta % illustWidth) > illustWidth / 2 ? 1 : 0)) * (x < originalX ? -1 : 1);
 
 		isPanning = !1;
+		console.log(inputCur, pDelta, sCount);
 		if (delta !== 0) {
 			var t = inputCur + pDelta * sCount;
 			if (t < 0) t = 0;
@@ -6119,12 +6125,14 @@ _frame.infos.__ship_init = function ($el) {
 				deltaX = 0;
 				deltaY = 0;
 				sCount = 0;
+
 				isActualPanning = !1;
 				$(document).off('touchmove.infosShipIllust touchend.infosShipIllust touchcancel.infosShipIllust');
 			};
 
 			var panX = function panX() {
 				isPanning = !1;
+
 				var half = inputCur <= 0 && deltaX > 0 || inputCur >= inputs.length - sCount && deltaX < 0;
 				illust.css('transform', 'translateX(' + (deltaX * (half ? 0.3333 : 1) + originalX) + 'px)');
 			};
@@ -6191,6 +6199,7 @@ _frame.infos.__ship_init = function ($el) {
 						sCount = inputs.length / labels.filter(':visible').length;
 						illustWidth = illust.width();
 
+
 						$(document).on({
 							'touchmove.infosShipIllust': bodyTouchMove,
 							'touchend.infosShipIllust': bodyTouchEnd,
@@ -6205,10 +6214,10 @@ _frame.infos.__ship_init = function ($el) {
 		})();
 	}
 
-	function illustShift(direction) {
-		if (!direction) return;
+	function illustShift(direction, jumpToAnotherEdge) {
+		if (!direction || scrollLock) return;
 
-		var t = -1;
+		var t = -10;
 
 		inputCur = parseInt(inputs.filter(':checked').val()) - 1;
 		sCount = inputs.length / labels.filter(':visible').length;
@@ -6219,22 +6228,27 @@ _frame.infos.__ship_init = function ($el) {
 			t = inputCur - 1;
 		}
 
-		if (t < 0) t = 0;
-		if (t + sCount > inputs.length) t = inputs.length - sCount;
-
-		if (t >= 0) inputs.eq(t).prop('checked', !0).trigger('change');
+		if (t < 0 && t > -10) {
+			if (jumpToAnotherEdge) t = inputs.length - sCount;else t = 0;
+		} else if (t + sCount > inputs.length) {
+			if (jumpToAnotherEdge) t = 0;else t = inputs.length - sCount;
+		}
 
 		inputCur = 0;
 		sCount = 0;
+
+		if (t >= 0) {
+			if (isScrollSnap) scrollStart();
+			inputs.eq(t).prop('checked', !0).trigger('change');
+		}
 	}
 
-	var mouseWheelLock = !1;
 	illustMain.on('mousewheel', function (e) {
-		if (mouseWheelLock || $el.get(0).scrollHeight > $el.get(0).clientHeight) return;
+		if (mouseWheelLock || scrollLock || $el.get(0).scrollHeight > $el.get(0).clientHeight) return;
 
 		var direction = undefined;
 
-		if (e.originalEvent.wheelDelta) direction = e.originalEvent.wheelDelta > 0 ? -1 : 1;else if (e.originalEvent.deltaX) direction = e.originalEvent.deltaX < 0 ? -1 : 1;else if (e.originalEvent.deltaY) direction = e.originalEvent.deltaY < 0 ? -1 : 1;
+		if (isScrollSnap && e.originalEvent.deltaY) direction = e.originalEvent.deltaY < 0 ? -1 : 1;else if (e.originalEvent.wheelDelta) direction = e.originalEvent.wheelDelta > 0 ? -1 : 1;else if (e.originalEvent.deltaX) direction = e.originalEvent.deltaX < 0 ? -1 : 1;else if (e.originalEvent.deltaY) direction = e.originalEvent.deltaY < 0 ? -1 : 1;
 
 		if (direction) {
 			mouseWheelLock = !0;
@@ -6244,6 +6258,13 @@ _frame.infos.__ship_init = function ($el) {
 			}, 100);
 		}
 	});
+
+	$('<button class="arrow prev" icon="arrow-left"/>').on('click', function () {
+		illustShift(-1, !0);
+	}).insertBefore(inputs.eq(0));
+	$('<button class="arrow next" icon="arrow-right"/>').on('click', function () {
+		illustShift(1, !0);
+	}).insertAfter(labels.eq(labels.length - 1));
 };
 
 _frame.infos.__fleet = function (id, el, d) {

@@ -1,5 +1,5 @@
 .layout-infos-ship(){
-    @illust-switch-point-size:  25;
+    @illust-switch-point-size:  22;
     
 	.infos-ship{
 		@size:	unit( @nav_height, px );
@@ -487,20 +487,21 @@
 			//overflow:	auto;
 			text-align:	center;
 			overflow:	hidden;
-			mask-image: ~"linear-gradient(to left, transparent, #000 20px, #000 calc(100% - 20px), transparent)";
 			display: 	flex;
 			flex-flow: 	row nowrap;
 			justify-content:center;
 			align-items: 	flex-end;
-			&>label{
+            &>label, &>button.arrow{
 				position:	relative;
 				margin:		0;
 				width: 		unit(@illust-switch-point-size, px);
 				height: 	unit(@illust-switch-point-size, px);
-				//top:		~"calc( 100% - 60px )";
 				display:	inline-block;
-				z-index:	2;
 				margin-bottom: 	24px;
+            }
+			&>label{
+				z-index:	2;
+				//top:		~"calc( 100% - 60px )";
 				&:before{
 					@scale:	(10 / @illust-switch-point-size);
 					position:	absolute;
@@ -520,7 +521,33 @@
 					background:	rgba(255, 255, 255, 50%);
 				}
 			}
-			&>div{
+            &>button.arrow{
+                color:      rgba(255, 255, 255, .35);
+                z-index:    5;
+                &:before{
+                    width:      100%;
+                    height:     0;
+                    line-height:0;
+                    position:   absolute;
+                    top:        50%;
+                    left:       0;
+                    text-align: center;
+                    padding:    0;
+                    font-size:  16px;
+                }
+                &.prev{
+                //    right:  50%;
+                    margin-right: unit( (@illust-switch-point-size / 4), px );
+                }
+                &.next{
+                //    left:   50%;
+                    margin-left: unit( (@illust-switch-point-size / 4), px );
+                }
+                &:hover{
+                    color:  #fff;
+                }
+            }
+			&>.wrapper{
 				position:	absolute;
 				width:		100%;
 				//height:		100%;
@@ -528,9 +555,15 @@
 				bottom: 	-20px;
 				left:		0;
 				flex: 		none;
+				padding: 	10px 0 75px 0;
+			    mask-image: ~"linear-gradient(to left, transparent, #000 20px, #000 calc(100% - 20px), transparent)";
+			}
+            .body{
+                position:   relative;
+                width:      100%;
+                height:     100%;
 				transition-property: transform;
 				//.transition-property(left);
-				padding: 	10px 0 75px 0;
 				display: 	flex;
 				flex-flow: 	row nowrap;
 				scroll-snap-type: mandatory;
@@ -554,7 +587,7 @@
 						max-height:	100%;
 					}
 				}
-			}
+            }
 			&>input[type="radio"]{
 				display: 	none;
 				&:checked+label{
@@ -567,6 +600,9 @@
 					transform:	~"scale(@{scale})";
 				}
 			}
+            //.mouseover({
+            //    background: rgba(0, 0, 0, .15);
+            //});
 			
 			/*.loop(@n, @i: 2) when (@i =< @n) {
 				&>input[type="radio"][value="@{i}"]~div{
@@ -580,7 +616,7 @@
 			.loop(10);
 			*/
 			&.mod-scroll-snap{
-				&>div{
+				.body{
 					overflow: 	auto;
 					overflow-style: none;
 					-ms-overflow-style: none;
@@ -589,7 +625,7 @@
 			&:not(.mod-scroll-snap){
 				&>input[type="radio"]{
 					.checked(@n, @i: 1) when (@i =< @n) {
-						&[value="@{i}"]:checked~div{
+						&[value="@{i}"]:checked ~ .wrapper .body{
 							//@left:		(0 - (@i - 1) * 100%);
 							//left:		@left;
 							transform: 	translateX((0 - (@i - 1) * 100%));
@@ -622,18 +658,18 @@
 			&>aside{
 				width:		~"calc( 45% + 40px )";
 				&>input[type="radio"]{
-					&:nth-child(4n+3)+label{
+					&:nth-of-type(2n)+label{
 						display:	none;
 					}
 				}
-				&>div>span{
+				.body>span{
 					width: 	50%;
 					flex-basis: 50%;
 				}
 				&:not(.mod-scroll-snap){
 					&>input[type="radio"]{
 						.loop2(@n, @i: 1) when (@i =< @n) {
-							&[value="@{i}"]:checked~div{
+							&[value="@{i}"]:checked ~ .wrapper .body{
 								@left:		(0 - floor( (@i - 1) / 2) * 100%);
 								transform: 	translateX(@left);
 							}
@@ -665,7 +701,7 @@
 			}
 			&>aside{
 				width:	~"calc(20% + 80px)";
-				right: 	-30px;
+				right: 	-25px;
 				border-top: 60px solid transparent;
 			}
 		}
