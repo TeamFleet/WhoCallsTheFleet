@@ -6049,14 +6049,24 @@ _frame.infos.__ship_init = function ($el) {
 	}),
 	    illustWidth = 0,
 	    inputCur = 0,
-	    sCount = 1;
+	    sCount = 1,
+	    extraCount = 0;
+
+	function count() {
+		inputCur = parseInt(inputs.filter(':checked').val()) - 1;
+		sCount = Math.ceil(inputs.length / labels.filter(':visible').length);
+		extraCount = illustMain.hasClass('is-singlelast') && sCount == 2 ? 1 : 0;
+	}
+	function countReset() {
+		inputCur = 0;
+		sCount = 0;
+		extraCount = 0;
+	}
 
 	function scrollStart() {
 		originalX = illust.scrollLeft();
 		illustWidth = illust.width();
-		inputCur = parseInt(inputs.filter(':checked').val()) - 1;
-
-		sCount = inputs.length / labels.filter(':visible').length;
+		count();
 	}
 	function scrollHandler() {
 		if (originalX >= 0) {
@@ -6072,11 +6082,11 @@ _frame.infos.__ship_init = function ($el) {
 		    pDelta = (Math.floor(Math.abs(delta) / illustWidth) + (Math.abs(delta % illustWidth) > illustWidth / 2 ? 1 : 0)) * (x < originalX ? -1 : 1);
 
 		isPanning = !1;
-		console.log(inputCur, pDelta, sCount);
+
 		if (delta !== 0) {
 			var t = inputCur + pDelta * sCount;
 			if (t < 0) t = 0;
-			if (t + sCount > inputs.length) t = inputs.length - sCount;
+			if (t + sCount > inputs.length + extraCount) t = inputs.length - sCount;
 
 			inputs.eq(t).prop('checked', !0);
 		}
@@ -6124,7 +6134,7 @@ _frame.infos.__ship_init = function ($el) {
 				startY = 0;
 				deltaX = 0;
 				deltaY = 0;
-				sCount = 0;
+				countReset();
 
 				isActualPanning = !1;
 				$(document).off('touchmove.infosShipIllust touchend.infosShipIllust touchcancel.infosShipIllust');
@@ -6177,7 +6187,7 @@ _frame.infos.__ship_init = function ($el) {
 							t = inputCur - 1;
 						}
 						if (t < 0) t = 0;
-						if (t + sCount > inputs.length) t = inputs.length - sCount;
+						if (t + sCount > inputs.length + extraCount) t = inputs.length - sCount;
 						inputs.eq(t).prop('checked', !0).trigger('change');
 					}
 					panEnd();
@@ -6194,9 +6204,7 @@ _frame.infos.__ship_init = function ($el) {
 						startX = e.originalEvent.targetTouches[0].clientX;
 						startY = e.originalEvent.targetTouches[0].clientY;
 						startTime = _g.timeNow();
-						inputCur = parseInt(inputs.filter(':checked').val()) - 1;
-
-						sCount = inputs.length / labels.filter(':visible').length;
+						count();
 						illustWidth = illust.width();
 
 
@@ -6219,8 +6227,7 @@ _frame.infos.__ship_init = function ($el) {
 
 		var t = -10;
 
-		inputCur = parseInt(inputs.filter(':checked').val()) - 1;
-		sCount = inputs.length / labels.filter(':visible').length;
+		count();
 
 		if (direction == 1) {
 			t = inputCur + sCount;
@@ -6230,12 +6237,11 @@ _frame.infos.__ship_init = function ($el) {
 
 		if (t < 0 && t > -10) {
 			if (jumpToAnotherEdge) t = inputs.length - sCount;else t = 0;
-		} else if (t + sCount > inputs.length) {
+		} else if (t + sCount > inputs.length + extraCount) {
 			if (jumpToAnotherEdge) t = 0;else t = inputs.length - sCount;
 		}
 
-		inputCur = 0;
-		sCount = 0;
+		countReset();
 
 		if (t >= 0) {
 			if (isScrollSnap) scrollStart();
