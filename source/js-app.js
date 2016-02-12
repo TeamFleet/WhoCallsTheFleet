@@ -26,6 +26,7 @@
 // @koala-prepend "js-app/updater.js"
 // @koala-prepend "js-app/sharebar.js"
 // @koala-prepend "js-app/duoshuo.js"
+// @koala-prepend "js-app/tinyurl.js"
 
 // @koala-prepend "js-app/templates/improvement.js"
 // @koala-prepend "js-app/templates/link_entity.js"

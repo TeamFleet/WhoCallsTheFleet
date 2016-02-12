@@ -5670,25 +5670,24 @@ class ShareBar{
 		}.bind(this))
 		
 		this.el.on('click.sharebar-share', 'a[data-share-site]', function(e, is_to_launch){
-			//if( !is_to_launch ){
-			//	e.preventDefault()
-				let $el = $(e.target)
-					,site = $el.attr('data-share-site')
-				$el.attr({
-					'href': 	'http://www.jiathis.com/send/?webid='
-								+ site
-								+ '&url='
-								+ encodeURIComponent(this.getContent( 'url', location.href ))
-								+ '&title='
-								+ encodeURIComponent(this.getContent( 'title', document.title ))
-								+ '&summary='
-								+ encodeURIComponent(this.getContent( 'summary', $('meta[name="description"]').attr('content') ))
-								
-								+ (this.settings.uid ? ('&uid=' + this.settings.uid) : '')
-								+ (this.settings.appkey[site] ? ('&appkey=' + this.settings.appkey[site]) : ''),
-					'target': 	'_blank'
-				})//.trigger('click', [true])
-			//}
+            let $el = $(e.target)
+                ,site = $el.attr('data-share-site')
+            $el.attr({
+                'href': 	'http://s.jiathis.com/?webid='
+                            + site
+                            + '&url='
+                            + encodeURIComponent(this.getContent( 'url', location.href ))
+                            + '&title='
+                            + encodeURIComponent(this.getContent( 'title', document.title ))
+                            + '&summary='
+                            + encodeURIComponent(this.getContent( 'summary', $('meta[name="description"]').attr('content') ))
+                            
+                            + (this.settings.uid ? ('&uid=' + this.settings.uid) : '')
+                            + (this.settings.appkey[site] ? ('&appkey=' + this.settings.appkey[site]) : '')
+                            
+                            + '&shortUrl=true',
+                'target': 	'_blank'
+            })
 		}.bind(this))
 		
 		return this.el
@@ -5712,7 +5711,7 @@ ShareBar.defaults = {
 	// modifyItem: function(el){},
 	
 	// JiaThis的用户ID
-	// uid: null
+	// uid: null,
 	
 	// 支持的网站 http://www.jiathis.com/help/html/support-media-website
 	sites: [
@@ -5748,6 +5747,33 @@ var duoshuoQuery = {
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
         }
     })();
+// use Q for promise
+// use jQuery for AJAX
+
+/*
+var tinyurl = {
+    create: function(url){
+        let deferred = Q.defer()
+        
+        $.ajax({
+            //'url':      'http://dwz.cn/create.php',
+            //'method':   'POST',
+            //'data': {
+            //    url: url
+            //},
+            'url':      `http://tinyurl.com/api-create.php?url=${url}`,
+            'method':   'GET',
+            'success': function(data){
+                data = JSON.parse(data)
+                _g.log(`[tinyurl] success: ${data.tinyurl}`, data)
+                deferred.resolve(data.tinyurl)
+            }
+        })
+        
+        return deferred.promise
+    }
+}
+*/
 _tmpl.improvement = function( equipment, improvement_index, requirement_index, returnHTML ){
 	if( typeof equipment == 'undefined' )
 		return false

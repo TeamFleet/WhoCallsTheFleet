@@ -109,6 +109,7 @@ if (!_huResized.ver || _huResized.ver < 2.1) {
 	_huResized.throttle = _huResized.throttle || 300;
 	_huResized.startSize = {};
 
+
 	_huResized.viewport = function () {
 		var e = window,
 		    a = 'inner';
@@ -435,6 +436,7 @@ _g.uriHash = function (name, val, value) {
 		}
 		_g.uriHashInited = !0;
 	}
+
 
 	if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) == 'object') {
 		for (var k in name) {
@@ -887,6 +889,7 @@ _g.init = function () {
 			_g.last.height = _height;
 		},
 
+
 		'basechange': function basechange() {
 			if (_g.isBaseChange) {
 				_g.isBaseChange = !1;
@@ -1225,6 +1228,7 @@ Object.defineProperty(Array.prototype, 'mergeFrom', {
 	}
 });
 
+
 Date.prototype.format = function (pattern, set) {
 	return _g.formatTime(this, pattern, set);
 };
@@ -1278,6 +1282,7 @@ _g.formatTime = function (time, pattern, set) {
 	return pattern.replace(/\%Y/g, time.getFullYear()).replace(/\%m/g, _zero(time.getMonth() + 1)).replace(/\%n/g, time.getMonth() + 1).replace(/\%d/g, _zero(time.getDate())).replace(/\%j/g, time.getDate()).replace(/\%G/g, _G).replace(/\%H/g, _H).replace(/\%i/g, _zero(time.getMinutes())).replace(/\%s/g, _zero(time.getSeconds())).replace(/\%l/g, _g.formatTime_weekdaymappding[time.getDay()]._(_g.formatTime_string));
 };
 
+
 Object.defineProperty(Object.prototype, '_size', {
 	enumerable: !1,
 
@@ -1289,6 +1294,7 @@ Object.defineProperty(Object.prototype, '_size', {
 		return size;
 	}
 });
+
 
 String.prototype.getText = function (table, locale) {
 	return _g.getText(this, table, locale, !0);
@@ -1330,6 +1336,7 @@ _g.hashCode = function (t) {
 
 	t = encodeURIComponent(t);
 
+
 	try {
 		return t.split("").reduce(function (a, b) {
 			a = (a << length) - a + b.charCodeAt(0);return a & a;
@@ -1362,6 +1369,7 @@ String.prototype.escape = function () {
 	return $('<div />').text(this).html();
 };
 
+
 var _tmpl = {
 	export: function _export(value, returnHTML) {
 		if (value.attr && returnHTML) return value.prop('outerHTML');
@@ -1370,6 +1378,7 @@ var _tmpl = {
 		if (!value.attr && !returnHTML) return $(value);
 	}
 };
+
 
 var _hotkey = {
 	allowed: !0,
@@ -1672,6 +1681,7 @@ _form.element = function (type, name, id, value, options) {
 	return element;
 };
 
+
 _frame.dom = {};
 _frame.main = {
 	'last': {}
@@ -1681,6 +1691,7 @@ _frame.global = {
 	key_registerd: [],
 
 	esc_funcs: [],
+
 
 	allowKeyNav: !0,
 	esc_register: function esc_register(func) {
@@ -1919,6 +1930,7 @@ _frame.menu = {
 	}
 };
 
+
 _frame.modal = {
 	dom: {},
 
@@ -1988,6 +2000,7 @@ _frame.modal = {
 		this.dom.container.removeClass('on');
 	},
 
+
 	reset: function reset() {
 		this.resetContent();
 
@@ -2047,6 +2060,7 @@ _frame.modal.init = function () {
 	this.is_init = !0;
 	return !0;
 };
+
 
 _p.tip = {
 	pos: 'bottom',
@@ -2123,6 +2137,7 @@ _p.tip = {
 			this.dom_body.html(cont);
 			_p.initDOM(this.dom_body);
 
+
 			this.curContent = hashcode;
 		}
 
@@ -2149,6 +2164,7 @@ _p.tip = {
 
 	content: function content(cont, el) {
 		el = el || this.el;
+
 
 		return cont;
 	},
@@ -2416,10 +2432,12 @@ $document.ready(function () {
 
 	_g.init();
 
+
 	for (var i in _g.func_last) {
 		_g.func_last[i]();
 	}
 });
+
 
 "use strict";
 
@@ -2671,11 +2689,13 @@ _frame.app_config = {
 	}
 };
 
+
 "use strict";
 
 if (typeof _g == 'undefined') var _g = {};
 
 _g.lang = _g.lang || 'zh_cn';
+
 
 var Formula = {
 	equipmentType: {
@@ -4228,6 +4248,7 @@ _frame.app_main = {
 			var dbchain = Q(),
 			    masterDeferred = Q.defer();
 
+
 			_g.dbs.forEach(function (db_name) {
 				dbchain = dbchain.then(function () {
 					var deferred = Q.defer();
@@ -4415,7 +4436,7 @@ var ShareBar = function () {
 				var $el = $(e.target),
 				    site = $el.attr('data-share-site');
 				$el.attr({
-					'href': 'http://www.jiathis.com/send/?webid=' + site + '&url=' + encodeURIComponent(this.getContent('url', location.href)) + '&title=' + encodeURIComponent(this.getContent('title', document.title)) + '&summary=' + encodeURIComponent(this.getContent('summary', $('meta[name="description"]').attr('content'))) + (this.settings.uid ? '&uid=' + this.settings.uid : '') + (this.settings.appkey[site] ? '&appkey=' + this.settings.appkey[site] : ''),
+					'href': 'http://s.jiathis.com/?webid=' + site + '&url=' + encodeURIComponent(this.getContent('url', location.href)) + '&title=' + encodeURIComponent(this.getContent('title', document.title)) + '&summary=' + encodeURIComponent(this.getContent('summary', $('meta[name="description"]').attr('content'))) + (this.settings.uid ? '&uid=' + this.settings.uid : '') + (this.settings.appkey[site] ? '&appkey=' + this.settings.appkey[site] : '') + '&shortUrl=true',
 					'target': '_blank'
 				});
 			}.bind(this));
@@ -4462,6 +4483,7 @@ var duoshuoQuery = {
 		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
 	}
 })();
+
 _tmpl.improvement = function (equipment, improvement_index, requirement_index, returnHTML) {
 	if (typeof equipment == 'undefined') return !1;
 
@@ -5123,6 +5145,7 @@ _frame.app_main.page['calctp'] = {
 	}
 };
 
+
 _frame.gg = function () {
 	$.ajax({
 		'url': 'http://fleet.diablohu.com/!/g/',
@@ -5715,6 +5738,7 @@ BgImg.delete = function (o) {
 	return deferred.promise;
 };
 
+
 _frame.infos = {
 	historyLength: -1,
 	historyCurrent: -1,
@@ -6051,6 +6075,7 @@ _frame.infos.__ship_init = function ($el) {
 		}
 	}
 
+
 	function _resized() {
 		originalX = -1;
 		inputs.filter(':checked').trigger('change', 0);
@@ -6272,6 +6297,7 @@ var InfosFleet = function () {
 			});
 
 			this.data = d;
+
 
 			var i = 0,
 			    defaultHqLv = Lockr.get('hqLvDefault', _g.defaultHqLv);
@@ -6909,6 +6935,7 @@ var InfosFleetSubFleet = function () {
 
 		this.elSummary = $('<span class="summary"/>').appendTo(this.el).append($('<span class="summary-item"/>').html('航速').append(this.elSummarySpeed = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('制空战力').append(this.elSummaryFighterPower = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('索敌能力').append(this.elSummaryLos = $('<strong/>').html('-'))).append($('<span class="summary-item summary-item-consummation"/>').html('总消耗').append(this.elSummaryConsummation = $('<strong/>').html('-')));
 
+
 		this.infosFleet = infosFleet;
 
 		this.updateEl();
@@ -7392,6 +7419,7 @@ var InfosFleetShip = function () {
 			} else {
 				this.elInputLevel.val('');
 			}
+
 
 			this.save();
 		}
@@ -8415,6 +8443,7 @@ var TablelistShips = function (_Tablelist2) {
 
 					this.rowsById[ship_id] = tr;
 
+
 					this.rows = this.rows.add(tr);
 				}
 			}.bind(this));
@@ -8902,6 +8931,7 @@ var TablelistFleets = function (_Tablelist4) {
 				return 0;
 			});
 
+
 			this.trIndex = 0;
 
 			if (typeof Lockr.get('fleetlist-option-groupbytheme') == 'undefined') Lockr.set('fleetlist-option-groupbytheme', !0);
@@ -8977,6 +9007,7 @@ var TablelistFleets = function (_Tablelist4) {
 				'data-theme': data.theme,
 				'class': 'link_fleet'
 			});
+
 
 			this.columns.forEach(function (column) {
 				switch (column[1]) {
@@ -9068,6 +9099,7 @@ var TablelistFleets = function (_Tablelist4) {
 		value: function action_new(dataDefault, options) {
 			dataDefault = dataDefault || {};
 			options = options || {};
+
 
 			if (dataDefault.data) {
 				dataDefault.data.forEach(function (fleet) {
