@@ -356,28 +356,42 @@ _frame.infos.__ship = function( id ){
 			})
 			
 			let index = 0
-			function check_append( file ){
+                
+                //,lastContainer
+			function check_append( file, positionInPair ){
 				//file = file.replace(/\\/g, '/')
 				try{
 					let stat = node.fs.lstatSync(file)
 					if( stat && stat.isFile() ){
 						index++
 						let radioid = 'ship_' + d['id'] +'_illustrations_' + index
+                            //,isSingle = ( !lastContainer && positionInPair == 1 )
 						$('<input type="radio" name="ship_'+d['id']+'_illustrations" id="'+radioid+'" value="'+index+'"' + (index==1 ? ' checked' : '') + '/>')
 							.prop('checked', (index == 1))
 							.insertBefore(illusts_wrapper)
 						$('<label for="'+radioid+'"/>').insertBefore(illusts_wrapper)
-						$('<span/>')
+						//lastContainer =
+                        $('<span/>')
 							.html('<img src="'+file+'" data-filename="'+ship_name+' - '+index+'.webp"/>')
 							//.css('background-image', 'url(' + file + ')')
 							.appendTo(illusts_container)
-					}
-				}catch(e){}
+                            //.addClass( isSingle ? 'mod-single' : '' )
+					}else{
+                        //if( lastContainer )
+                        //    lastContainer.addClass('mod-single')
+                    }
+				}catch(e){
+                    //if( lastContainer )
+                    //    lastContainer.addClass('mod-single')
+                }
 			}
 			illustrations.forEach(function(currentValue){
-				check_append( node.path.normalize(_g.path.pics.ships) + currentValue + '/8.webp' )
-				check_append( node.path.normalize(_g.path.pics.ships) + currentValue + '/9.webp' )
+                //lastContainer = false
+				check_append( node.path.normalize(_g.path.pics.ships) + currentValue + '/8.webp', 0 )
+				check_append( node.path.normalize(_g.path.pics.ships) + currentValue + '/9.webp', 1 )
 			})
+            if( index % 2 )
+                illusts.addClass('is-singlelast')
 			/*
 			_db.ship_series.find({'id': d['series']}, function(err,docs){
 				console.log(docs, d.getSeriesData())

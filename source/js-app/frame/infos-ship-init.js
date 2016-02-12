@@ -47,13 +47,23 @@ _frame.infos.__ship_init = function( $el ){
             ,illustWidth = 0
             ,inputCur = 0
             ,sCount = 1
+            ,extraCount = 0
+        
+        function count(){
+            inputCur = parseInt(inputs.filter(':checked').val()) - 1
+            sCount = Math.ceil(inputs.length / labels.filter(':visible').length)
+            extraCount = illustMain.hasClass('is-singlelast') && sCount == 2 ? 1 : 0
+        }
+        function countReset(){
+            inputCur = 0
+            sCount = 0
+            extraCount = 0
+        }
         
         function scrollStart(){
             originalX = illust.scrollLeft()
             illustWidth = illust.width()
-            inputCur = parseInt(inputs.filter(':checked').val()) - 1
-            //sCount = Math.floor(illustWidth / (s.outerWidth() * 0.95))
-            sCount = inputs.length / labels.filter(':visible').length
+            count()
         }
         function scrollHandler(){
             if( originalX >= 0 ){
@@ -71,12 +81,12 @@ _frame.infos.__ship_init = function( $el ){
                 //,pDelta = Math.abs(delta % illustWidth) > (illustWidth / 3) ? Math.ceil(delta / illustWidth) : Math.floor(delta / illustWidth)
             //console.log(delta, pDelta)
             isPanning = false
-            console.log( inputCur , pDelta , sCount )
+            //console.log( inputCur , pDelta , sCount )
             if( delta !== 0 ){
                 let t = inputCur + pDelta * sCount
                 if( t < 0 )
                     t = 0
-                if( t + sCount > inputs.length )
+                if( t + sCount > inputs.length + extraCount )
                     t = inputs.length - sCount
                 //inputs.eq(t).prop('checked', true).trigger('change')
                 inputs.eq(t).prop('checked', true)
@@ -132,7 +142,7 @@ _frame.infos.__ship_init = function( $el ){
                     startY = 0
                     deltaX = 0
                     deltaY = 0
-                    sCount = 0
+                    countReset()
                     //lastTick = 0
                     isActualPanning = false
                     $(document).off('touchmove.infosShipIllust touchend.infosShipIllust touchcancel.infosShipIllust')
@@ -191,7 +201,7 @@ _frame.infos.__ship_init = function( $el ){
                             }
                             if( t < 0 )
                                 t = 0
-                            if( t + sCount > inputs.length )
+                            if( t + sCount > inputs.length + extraCount )
                                 t = inputs.length - sCount
                             inputs.eq(t).prop('checked', true).trigger('change')
                         }
@@ -208,9 +218,7 @@ _frame.infos.__ship_init = function( $el ){
                                 startX = e.originalEvent.targetTouches[0].clientX
                                 startY = e.originalEvent.targetTouches[0].clientY
                                 startTime = _g.timeNow()
-                                inputCur = parseInt(inputs.filter(':checked').val()) - 1
-                                //sCount = Math.floor(illust.width() / (s.outerWidth() * 0.95))
-                                sCount = inputs.length / labels.filter(':visible').length
+                                count()
                                 illustWidth = illust.width()
                                 //lastTick = Date.parse(new Date())
                                 
@@ -272,8 +280,7 @@ _frame.infos.__ship_init = function( $el ){
 
             let t = -10
 
-            inputCur = parseInt(inputs.filter(':checked').val()) - 1
-            sCount = inputs.length / labels.filter(':visible').length
+            count()
             
             if( direction == 1 ){
                 t = inputCur + sCount
@@ -286,15 +293,14 @@ _frame.infos.__ship_init = function( $el ){
                     t = inputs.length - sCount
                 else
                     t = 0
-            }else if( t + sCount > inputs.length ){
+            }else if( t + sCount > inputs.length + extraCount ){
                 if( jumpToAnotherEdge )
                     t = 0
                 else
                     t = inputs.length - sCount
             }
 
-            inputCur = 0
-            sCount = 0
+            countReset()
 
             if( t >= 0 ){
                 //illust.off('scroll')
@@ -340,4 +346,5 @@ _frame.infos.__ship_init = function( $el ){
                 illustShift( 1, true )
             })
             .insertAfter( labels.eq(labels.length - 1) )
+    
 };

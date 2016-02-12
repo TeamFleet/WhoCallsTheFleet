@@ -10976,28 +10976,42 @@ _frame.infos.__ship = function( id ){
 			})
 			
 			let index = 0
-			function check_append( file ){
+                
+                //,lastContainer
+			function check_append( file, positionInPair ){
 				//file = file.replace(/\\/g, '/')
 				try{
 					let stat = node.fs.lstatSync(file)
 					if( stat && stat.isFile() ){
 						index++
 						let radioid = 'ship_' + d['id'] +'_illustrations_' + index
+                            //,isSingle = ( !lastContainer && positionInPair == 1 )
 						$('<input type="radio" name="ship_'+d['id']+'_illustrations" id="'+radioid+'" value="'+index+'"' + (index==1 ? ' checked' : '') + '/>')
 							.prop('checked', (index == 1))
 							.insertBefore(illusts_wrapper)
 						$('<label for="'+radioid+'"/>').insertBefore(illusts_wrapper)
-						$('<span/>')
+						//lastContainer =
+                        $('<span/>')
 							.html('<img src="'+file+'" data-filename="'+ship_name+' - '+index+'.webp"/>')
 							//.css('background-image', 'url(' + file + ')')
 							.appendTo(illusts_container)
-					}
-				}catch(e){}
+                            //.addClass( isSingle ? 'mod-single' : '' )
+					}else{
+                        //if( lastContainer )
+                        //    lastContainer.addClass('mod-single')
+                    }
+				}catch(e){
+                    //if( lastContainer )
+                    //    lastContainer.addClass('mod-single')
+                }
 			}
 			illustrations.forEach(function(currentValue){
-				check_append( node.path.normalize(_g.path.pics.ships) + currentValue + '/8.webp' )
-				check_append( node.path.normalize(_g.path.pics.ships) + currentValue + '/9.webp' )
+                //lastContainer = false
+				check_append( node.path.normalize(_g.path.pics.ships) + currentValue + '/8.webp', 0 )
+				check_append( node.path.normalize(_g.path.pics.ships) + currentValue + '/9.webp', 1 )
 			})
+            if( index % 2 )
+                illusts.addClass('is-singlelast')
 			/*
 			_db.ship_series.find({'id': d['series']}, function(err,docs){
 				console.log(docs, d.getSeriesData())
@@ -11137,13 +11151,23 @@ _frame.infos.__ship_init = function( $el ){
             ,illustWidth = 0
             ,inputCur = 0
             ,sCount = 1
+            ,extraCount = 0
+        
+        function count(){
+            inputCur = parseInt(inputs.filter(':checked').val()) - 1
+            sCount = Math.ceil(inputs.length / labels.filter(':visible').length)
+            extraCount = illustMain.hasClass('is-singlelast') && sCount == 2 ? 1 : 0
+        }
+        function countReset(){
+            inputCur = 0
+            sCount = 0
+            extraCount = 0
+        }
         
         function scrollStart(){
             originalX = illust.scrollLeft()
             illustWidth = illust.width()
-            inputCur = parseInt(inputs.filter(':checked').val()) - 1
-            //sCount = Math.floor(illustWidth / (s.outerWidth() * 0.95))
-            sCount = inputs.length / labels.filter(':visible').length
+            count()
         }
         function scrollHandler(){
             if( originalX >= 0 ){
@@ -11161,12 +11185,12 @@ _frame.infos.__ship_init = function( $el ){
                 //,pDelta = Math.abs(delta % illustWidth) > (illustWidth / 3) ? Math.ceil(delta / illustWidth) : Math.floor(delta / illustWidth)
             //console.log(delta, pDelta)
             isPanning = false
-            console.log( inputCur , pDelta , sCount )
+            //console.log( inputCur , pDelta , sCount )
             if( delta !== 0 ){
                 let t = inputCur + pDelta * sCount
                 if( t < 0 )
                     t = 0
-                if( t + sCount > inputs.length )
+                if( t + sCount > inputs.length + extraCount )
                     t = inputs.length - sCount
                 //inputs.eq(t).prop('checked', true).trigger('change')
                 inputs.eq(t).prop('checked', true)
@@ -11222,7 +11246,7 @@ _frame.infos.__ship_init = function( $el ){
                     startY = 0
                     deltaX = 0
                     deltaY = 0
-                    sCount = 0
+                    countReset()
                     //lastTick = 0
                     isActualPanning = false
                     $(document).off('touchmove.infosShipIllust touchend.infosShipIllust touchcancel.infosShipIllust')
@@ -11281,7 +11305,7 @@ _frame.infos.__ship_init = function( $el ){
                             }
                             if( t < 0 )
                                 t = 0
-                            if( t + sCount > inputs.length )
+                            if( t + sCount > inputs.length + extraCount )
                                 t = inputs.length - sCount
                             inputs.eq(t).prop('checked', true).trigger('change')
                         }
@@ -11298,9 +11322,7 @@ _frame.infos.__ship_init = function( $el ){
                                 startX = e.originalEvent.targetTouches[0].clientX
                                 startY = e.originalEvent.targetTouches[0].clientY
                                 startTime = _g.timeNow()
-                                inputCur = parseInt(inputs.filter(':checked').val()) - 1
-                                //sCount = Math.floor(illust.width() / (s.outerWidth() * 0.95))
-                                sCount = inputs.length / labels.filter(':visible').length
+                                count()
                                 illustWidth = illust.width()
                                 //lastTick = Date.parse(new Date())
                                 
@@ -11362,8 +11384,7 @@ _frame.infos.__ship_init = function( $el ){
 
             let t = -10
 
-            inputCur = parseInt(inputs.filter(':checked').val()) - 1
-            sCount = inputs.length / labels.filter(':visible').length
+            count()
             
             if( direction == 1 ){
                 t = inputCur + sCount
@@ -11376,15 +11397,14 @@ _frame.infos.__ship_init = function( $el ){
                     t = inputs.length - sCount
                 else
                     t = 0
-            }else if( t + sCount > inputs.length ){
+            }else if( t + sCount > inputs.length + extraCount ){
                 if( jumpToAnotherEdge )
                     t = 0
                 else
                     t = inputs.length - sCount
             }
 
-            inputCur = 0
-            sCount = 0
+            countReset()
 
             if( t >= 0 ){
                 //illust.off('scroll')
@@ -11430,6 +11450,7 @@ _frame.infos.__ship_init = function( $el ){
                 illustShift( 1, true )
             })
             .insertAfter( labels.eq(labels.length - 1) )
+    
 };
 _frame.app_main.is_mode_selection = function(){
 	return $html.hasClass('mode-selection') || _frame.dom.layout.hasClass('mode-selection')
