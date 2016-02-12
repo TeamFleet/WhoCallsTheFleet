@@ -2,23 +2,29 @@
 
 # WhoCallsTheFleet / 是谁呼叫舰队
 
-这是一款针对网页游戏《舰队COLLECTION》（艦隊これくしょん～艦これ～）的本地离线程序，供玩家离线查询舰娘、装备、改修工厂等数据资料，也可模拟打造舰队配置。
+一款针对网页游戏《舰队COLLECTION》的App，同时提供Web App和适用于Windows桌面及Mac OS X系统的离线程序。供玩家查询舰娘、装备、改修工厂等数据资料，也可模拟打造舰队配置。
 
-本工具基于NW.js开发 (http://nwjs.io/ | https://github.com/nwjs/nw.js )。本REPO为源代码，需要NW.js来启动。
+## 获取
 
-## 下载
+**访问Web App**
 
-**下载最新版本**
+[点击访问 fleet.diablohu.com](http://fleet.diablohu.com/)
 
-[GitHub](https://github.com/Diablohu/WhoCallsTheFleet/releases) | [百度网盘](http://pan.baidu.com/s/1kT09CWJ#path=%252FWhoCallsTheFleet) | [OneDrive](http://1drv.ms/1LuUlMq)
+Web App针对手机与平板设备进行了优化适配，可用移动平台浏览器访问后选择将该Web App固定到主屏幕上，以便日后使用。
 
-**支持自动更新**
+**获取客户端版本**
 
-现在可通过开启程序自动更新至最新版本 (需要至少v0.5.2)
+[百度网盘](http://pan.baidu.com/s/1kT09CWJ#path=%252FWhoCallsTheFleet) | [OneDrive](http://1drv.ms/1LuUlMq)
 
-**支持操作系统**
+* 支持的操作系统：Windows 7/8/8.1/10 (32位/64位)，Mac OS X (32位/64位)
+* 不提供Linux平台的可执行版本，如有相关需求，可访问[GitHub REPO](https://github.com/Diablohu/WhoCallsTheFleet)获取源代码进行使用
+* 客户端版本支持自动更新
 
-下载版本支持以下操作系统：Windows 7/8/8.1/10 (32位/64位)，Mac OS X (32位/64位)
+**开源代码**
+
+本应用在MIT许可协议下开源，源代码托管于GitHub（[REPO](https://github.com/Diablohu/WhoCallsTheFleet)）。
+
+基于[NW.js](http://nwjs.io/)开发，需要该运行库才可直接从源代码运行。
 
 ## 功能介绍
 
@@ -52,6 +58,34 @@
 
 ![功能截图](http://fleet.diablohu.com/assets/screenshots/feature-arsenal-1.png)
 ![功能截图](http://fleet.diablohu.com/assets/screenshots/feature-arsenal-2.png)
+
+## 常见问题解答（FAQ）
+
+**舰队配置保存到哪里了？**
+
+对于Web App，配置保存在浏览器的本地存储空间内。
+
+对于客户端则保存在用户数据目录。客户端版本可通过舰队页面右上角的设置选择配置文件存储位置。
+
+无论何种版本，都提供了导入、导出单独配置和全部配置文件的功能。
+
+**背景图可以下载到本地吗？**
+
+可以！通过App右上角的“图片”按钮可以进入相应设置。
+
+**我想使用自己的图片当背景，这可以吗？**
+
+也可以！通过App右上角的“图片”按钮可以进入相应设置。
+
+**为什么客户端版本自动更新速度很慢，而且时常更新失败？**
+
+目前使用*GitHub Pages*提供的免费空间服务，由于其免费性和国内的连接速度问题，我无法保证提供最佳的更新下载体验。如果更新失败，请关闭程序再打开重试，或选择下载最新版本。
+
+**我的客户端版本无法打开了！**
+
+尝试清空用户目录下的`WhoCallsTheFleet`目录中除`NeDB`目录外的所有文件和目录。
+
+对于Windows系统，这个文件夹在`C:\Users\[你的用户名]\AppData\Local\WhoCallsTheFleet`
 
 ## 基础框架
 
