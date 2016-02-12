@@ -1,4 +1,6 @@
 .layout-infos-ship(){
+    @illust-switch-point-size:  25;
+    
 	.infos-ship{
 		@size:	unit( @nav_height, px );
 		
@@ -493,14 +495,14 @@
 			&>label{
 				position:	relative;
 				margin:		0;
-				width: 		30px;
-				height: 	30px;
+				width: 		unit(@illust-switch-point-size, px);
+				height: 	unit(@illust-switch-point-size, px);
 				//top:		~"calc( 100% - 60px )";
 				display:	inline-block;
 				z-index:	2;
 				margin-bottom: 	24px;
 				&:before{
-					@scale:	(10 / 30);
+					@scale:	(10 / @illust-switch-point-size);
 					position:	absolute;
 					content:	'';
 					width:		100%;
@@ -559,7 +561,7 @@
 					cursor: 	default;
 				}
 				&:checked+label:before{
-					@scale:	(16 / 30);
+					@scale:	(16 / @illust-switch-point-size);
 					background-color:	fade(#3fc0ff, 25%);
 					border-color:	fade(#3fc0ff, 75%);
 					transform:	~"scale(@{scale})";

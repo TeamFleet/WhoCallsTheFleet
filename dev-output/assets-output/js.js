@@ -6050,7 +6050,8 @@ _frame.infos.__ship_init = function ($el) {
 		originalX = illust.scrollLeft();
 		illustWidth = illust.width();
 		inputCur = parseInt(inputs.filter(':checked').val()) - 1;
-		sCount = Math.floor(illustWidth / (s.outerWidth() * 0.95));
+
+		sCount = inputs.length / labels.filter(':visible').length;
 	}
 	function scrollHandler() {
 		if (originalX >= 0) {
@@ -6186,7 +6187,8 @@ _frame.infos.__ship_init = function ($el) {
 						startY = e.originalEvent.targetTouches[0].clientY;
 						startTime = _g.timeNow();
 						inputCur = parseInt(inputs.filter(':checked').val()) - 1;
-						sCount = Math.floor(illust.width() / (s.outerWidth() * 0.95));
+
+						sCount = inputs.length / labels.filter(':visible').length;
 						illustWidth = illust.width();
 
 						$(document).on({
@@ -6202,6 +6204,46 @@ _frame.infos.__ship_init = function ($el) {
 			});
 		})();
 	}
+
+	function illustShift(direction) {
+		if (!direction) return;
+
+		var t = -1;
+
+		inputCur = parseInt(inputs.filter(':checked').val()) - 1;
+		sCount = inputs.length / labels.filter(':visible').length;
+
+		if (direction == 1) {
+			t = inputCur + sCount;
+		} else if (direction == -1) {
+			t = inputCur - 1;
+		}
+
+		if (t < 0) t = 0;
+		if (t + sCount > inputs.length) t = inputs.length - sCount;
+
+		if (t >= 0) inputs.eq(t).prop('checked', !0).trigger('change');
+
+		inputCur = 0;
+		sCount = 0;
+	}
+
+	var mouseWheelLock = !1;
+	illustMain.on('mousewheel', function (e) {
+		if (mouseWheelLock || $el.get(0).scrollHeight > $el.get(0).clientHeight) return;
+
+		var direction = undefined;
+
+		if (e.originalEvent.wheelDelta) direction = e.originalEvent.wheelDelta > 0 ? -1 : 1;else if (e.originalEvent.deltaX) direction = e.originalEvent.deltaX < 0 ? -1 : 1;else if (e.originalEvent.deltaY) direction = e.originalEvent.deltaY < 0 ? -1 : 1;
+
+		if (direction) {
+			mouseWheelLock = !0;
+			illustShift(direction);
+			setTimeout(function () {
+				mouseWheelLock = !1;
+			}, 100);
+		}
+	});
 };
 
 _frame.infos.__fleet = function (id, el, d) {

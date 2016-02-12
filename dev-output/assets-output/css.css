@@ -11203,8 +11203,8 @@ body.mod-capture .infos-fleet .equipments {
 .infos-ship > aside > label {
   position: relative;
   margin: 0;
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   display: inline-block;
   z-index: 2;
   margin-bottom: 24px;
@@ -11217,7 +11217,7 @@ body.mod-capture .infos-fleet .equipments {
   border-radius: 50%;
   background: #fff;
   background: rgba(255, 255, 255, 0.25);
-  transform: scale(0.3333333333333333);
+  transform: scale(0.4);
   left: 0;
   border: 0.1rem solid transparent;
   transition: none 0.2s ease-out;
@@ -11285,7 +11285,7 @@ body.mod-capture .infos-fleet .equipments {
 .infos-ship > aside > input[type="radio"]:checked + label:before {
   background-color: rgba(63, 192, 255, 0.25);
   border-color: rgba(63, 192, 255, 0.75);
-  transform: scale(0.5333333333333333);
+  transform: scale(0.64);
 }
 .infos-ship > aside.mod-scroll-snap > div {
   overflow: auto;
