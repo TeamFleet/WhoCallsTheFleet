@@ -206,7 +206,11 @@ debug.init = function(){
 					while( (searchRes = scrapePtrn.exec(content)) !== null ){
 						try{
 							result = result.replace( searchRes[0], '`' + _tmpl['textlink_'+searchRes[1].toLowerCase()](searchRes[2], null, false).text() + '`' )
-						}catch(e){}
+						}catch(e){
+                            try{
+                                result = result.replace( searchRes[0], '`' + _tmpl['link_'+searchRes[1].toLowerCase()](searchRes[2], null, false).text() + '`' )
+                            }catch(e){}
+                        }
 					}
 					debug._releasenotesresult.html(result)
 				})
@@ -220,19 +224,27 @@ debug.init = function(){
 						,scrapePtrn = /\[\[([^\:]+)\:([0-9]+)(\:TEXT)?\]\]/gi
 						,result = markdown.toHTML( content )
 					while( (searchRes = scrapePtrn.exec(content)) !== null ){
+                        var t = searchRes[1].toLowerCase()
+                        switch(t){
+                            case 'ship':		t = 'ships';		break;
+                            case 'equipment':	t = 'equipments';	break;
+                            case 'entity':		t = 'entities';		break;
+                        }
 						try{
-							var t = searchRes[1].toLowerCase()
-							switch(t){
-								case 'ship':		t = 'ships';		break;
-								case 'equipment':	t = 'equipments';	break;
-								case 'entity':		t = 'entities';		break;
-							}
 							result = result.replace( searchRes[0],
 								'[url=http://fleet.diablohu.com/'+t+'/'+searchRes[2]+']'
 								+ _tmpl['textlink_'+searchRes[1].toLowerCase()](searchRes[2], null, false).text()
 								+ '[/url]'
 							)
-						}catch(e){}
+						}catch(e){
+                            try{
+                                result = result.replace( searchRes[0],
+                                    '[url=http://fleet.diablohu.com/'+t+'/'+searchRes[2]+']'
+                                    + _tmpl['link_'+searchRes[1].toLowerCase()](searchRes[2], null, false).text()
+                                    + '[/url]'
+                                )
+                            }catch(e){}
+                        }
 					}
 					content = result
 					searchRes = null
