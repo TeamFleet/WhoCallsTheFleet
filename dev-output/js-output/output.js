@@ -1381,16 +1381,25 @@ dev_output_filters.page_home = function(html, updates){
 
 	let searchRes
 		,scrapePtrn = /\{\{[ ]*content::WhatsNew[ ]*\}\}/gi
+        ,updateIndex = 0
 		
-		,section = $('<section class="update_journal" data-version-'+updates[0]['type']+'="'+updates[0]['version']+'"/>')
+		,section = $('<section class="update_journal" data-version-'+updates[updateIndex]['type']+'="'+updates[updateIndex]['version']+'"/>')
 						.html('<h3>'
 								+ '新内容'
-								+ '<small>'+(updates[0]['date'] ? updates[0]['date'] : 'WIP')+'</small>'
+								+ '<small>'+(updates[updateIndex]['date'] ? updates[updateIndex]['date'] : 'WIP')+'</small>'
 								+ '</h3>'
 							)
 		try{
 			$(_frame.app_main.page['about'].journal_parse(updates[0]['journal'])).appendTo( section )
 		}catch(e){}
+    
+    while( section.text().length < 200 ){
+        updateIndex++
+        let _update = updates[updateIndex]
+        section
+            .append( $(`<h3>新内容<small>${_update['date'] ? _update['date'] : 'WIP'}</small></h3>`) )
+            .append( _frame.app_main.page['about'].journal_parse(_update['journal']) )
+    }
 
 	while( (searchRes = scrapePtrn.exec(html)) !== null ){
 		try{
