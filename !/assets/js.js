@@ -5126,7 +5126,11 @@ _frame.app_main.page['calctp'] = {
 							rS += 14.75 * count;
 							break;
 						case 'bbv':
+						case 'ssv':
 							rS += 7 * count;
+							break;
+						case 'ct':
+							rS += 6 * count;
 							break;
 
 						case 'e75':
@@ -5137,9 +5141,12 @@ _frame.app_main.page['calctp'] = {
 							break;
 					}
 				}
+
+				rS = Math.floor(rS);
 				rA = rS * 0.7;
+
+				resultS.html(rS);
 				resultA.html(Math.floor(rA));
-				resultS.html(Math.floor(rS));
 			});
 		});
 	}
@@ -9075,8 +9082,9 @@ var TablelistFleets = function (_Tablelist4) {
 				'data-infos': '[[FLEET::' + data._id + ']]',
 				'data-theme': data.theme,
 				'class': 'link_fleet'
+			}).data({
+				'initdata': data
 			});
-
 
 			this.columns.forEach(function (column) {
 				switch (column[1]) {
