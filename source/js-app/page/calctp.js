@@ -36,8 +36,13 @@ _frame.app_main.page['calctp'] = {
 							rS+= 14.75 * count;
 							break;
 						case 'bbv':
+						case 'ssv':
 							rS+= 7 * count;
 							break;
+						case 'ct':
+							rS+= 6 * count;
+							break;
+                            
 						// canister
 						case 'e75':
 							rS+= 5 * count;
@@ -47,9 +52,12 @@ _frame.app_main.page['calctp'] = {
 							break;
 					}
 				}
+
+				rS = Math.floor(rS)
 				rA = rS * 0.7
+
+				resultS.html( rS )
 				resultA.html(Math.floor(rA))
-				resultS.html(Math.floor(rS))
 				
 				/* old
 				for(let i in d){
