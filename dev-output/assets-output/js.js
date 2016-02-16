@@ -9082,8 +9082,9 @@ var TablelistFleets = function (_Tablelist4) {
 				'data-infos': '[[FLEET::' + data._id + ']]',
 				'data-theme': data.theme,
 				'class': 'link_fleet'
+			}).data({
+				'initdata': data
 			});
-
 
 			this.columns.forEach(function (column) {
 				switch (column[1]) {

@@ -423,11 +423,9 @@ class TablelistFleets extends Tablelist{
 							'data-theme':	data.theme,
 							'class': 		'link_fleet'
 						})
-						/*
 						.data({
 							'initdata': 	data
 						})
-						*/
 			
 			this.columns.forEach(function(column){
 				switch( column[1] ){
