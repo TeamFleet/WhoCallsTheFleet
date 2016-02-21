@@ -6,12 +6,15 @@ _frame.infos.__ship = function( id ){
 	_g.log(d)
 
 	function _val( val, show_zero ){
-		if( !show_zero && (val == 0 || val == '0') )
+        if( typeof val != 'number' )
+            val = parseInt(val)
+        if( isNaN(val) || val < 0 )
+            return '<small class="zero">?</small>'
+		if( !show_zero && val == 0 )
 			return '<small class="zero">-</small>'
-		if( val == -1 || val == '-1' )
-			return '<small class="zero">?</small>'
 		return val
 	}
+
 	function _add_stat( name, title, tar ){
 		let val99, valMax
 
@@ -36,13 +39,13 @@ _frame.infos.__ship = function( id ){
 				val99 = _g.getStatRange( d['stat']['range'] )
 				break;
 			case 'luck':
-				val99 = d['stat']['luck'] + '<sup>' + d['stat']['luck_max'] + '</sup>'
-				valMax = (d['stat']['luck'] + 3) + '<sup>' + d['stat']['luck_max'] + '</sup>'
+				val99 = d['stat']['luck'] + '<sup>' + _val(d['stat']['luck_max']) + '</sup>'
+				valMax = (d['stat']['luck'] + 3) + '<sup>' + _val(d['stat']['luck_max']) + '</sup>'
 				break;
 			case 'fuel':
 			case 'ammo':
-				val99 = d.getAttribute(name, 99)
-				valMax = d.getAttribute(name, _g.shipMaxLv)
+				val99 = _val( d.getAttribute(name, 99) )
+				valMax = _val( d.getAttribute(name, _g.shipMaxLv) )
 				break;
 			default:
 				val99 = _val( d.getAttribute(name, 99) )
@@ -323,7 +326,7 @@ _frame.infos.__ship = function( id ){
 							'data-tip': 	tip,
 							'data-infos-nohistory': true,
 							'html':			'<i><img src="' + _g.path.pics.ships + '/' + currentValue['id']+'/0.webp"/></i>'
-											+ (remodel_lvl ? '<strong>' + remodel_lvl + '</strong>' : '')
+											+ (remodel_lvl ? '<strong>' + _val(remodel_lvl) + '</strong>' : '')
 											+ (has_extra_illust ? '<em icon="hanger"></em>' : '')
 						})
 				)
