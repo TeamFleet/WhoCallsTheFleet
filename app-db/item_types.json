@@ -4,6 +4,7 @@
 {"name":{"ja_jp":"大型電探/レーダー(II)","zh_cn":"超大型电探/雷达"},"icon":11,"equipable_on_type":[6,7,8,20],"id":47,"_id":"324r6pQR5y1JSCP4","main_attribute":"hit"}
 {"name":{"ja_jp":"小型電探/レーダー","zh_cn":"小型电探/雷达"},"icon":11,"equipable_on_type":[1,2,3,4,5,6,7,8,9,10,11,12,15,16,17,19,20,21,23,24,28,29],"id":24,"_id":"4WDo2pMdGC5UySnE","main_attribute":"hit"}
 {"name":{"ja_jp":"超大口径主炮","zh_cn":"超大口径主炮"},"icon":3,"equipable_on_type":[20],"id":6,"_id":"54y1bejJM5IQzDz4","main_attribute":"fire"}
+{"name":{"ja_jp":"水上戦闘機","zh_cn":"水上战斗机"},"icon":10,"equipable_on_type":[5,8,12,14,17,24,29],"main_attribute":"aa","id":51,"_id":"6mnL6zlfTmLWOcds"}
 {"name":{"ja_jp":"艦上偵察機","zh_cn":"舰载侦察机"},"icon":9,"equipable_on_type":[9,10,11],"id":21,"_id":"8dDOVL8ZhWg15aeO","main_attribute":"los"}
 {"name":{"ja_jp":"水上艦要員","zh_cn":"水上舰要员"},"icon":32,"equipable_on_type":[1,2,3,4,5,6,7,8,12,17,19,20,21,23,24,28],"id":37,"_id":"E5f0tBThLWVkBvR3","main_attribute":"evasion"}
 {"name":{"ja_jp":"水上爆撃機","zh_cn":"水上轰炸机"},"icon":10,"equipable_on_type":[5,8,12,14,24,29],"id":17,"_id":"E7sK86IWf2vwLmIL","main_attribute":"bomb"}
