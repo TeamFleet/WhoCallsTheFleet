@@ -6789,6 +6789,13 @@ body.mod-capture #tip {
 .tablelist-equipments > [name="types"][class]:not(.type50) ~ .tablelist-container .tablelist-body h4[data-type="50"] {
   opacity: .35;
 }
+.tablelist-equipments > [name="types"][class]:not(.type51) ~ .tablelist-container .tablelist-body > [data-equipmenttype="51"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type51) ~ .tablelist-container .tablelist-body h4[data-type="51"] {
+  opacity: .35;
+}
 @media all and (max-width: 640px) {
   .tablelist-equipments dl dd {
     flex-basis: 30px;
@@ -9999,6 +10006,9 @@ body.mod-capture .infos-fleet .equipments {
 }
 .menu.contextmenu-infos_fleet_themes > .body > div.sharebar.item {
   margin-top: -5px;
+}
+.menu.contextmenu-infos_fleet_rank_select > .body > div {
+  line-height: 32px !important;
 }
 .menu.contextmenu-infos_fleet_rank_select > .body > div button {
   width: 32px;
