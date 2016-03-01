@@ -1,7 +1,7 @@
 {
   "name": "WhoCallsTheFleet",
   "main": "app/main.html",
-  "version": "0.11.4",
+  "version": "0.11.5",
   "description": "An offline guidebook for KanColle. Based on NW.JS",
   "repository": {
     "type": "git",
@@ -83,8 +83,8 @@
       "package.json"
     ],
     "dataVersion": {
-      "app": "0.11.4.0",
-      "app-db": "1.11.4.1",
+      "app": "0.11.5.0",
+      "app-db": "1.11.5.0",
       "pics": "1.11.4.0"
     },
     "buildDir": "N:\\nwbuild\\build",
