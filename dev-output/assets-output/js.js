@@ -2732,7 +2732,8 @@ var Formula = {
 		LargeFlyingBoat: 45,
 		SearchlightLarge: 46,
 		SuparRadar: 47,
-		CarrierRecon2: 50 },
+		CarrierRecon2: 50,
+		SeaplaneFighter: 51 },
 
 	shipType: {
 		Carriers: [9, 10, 11],
@@ -2917,15 +2918,15 @@ Formula.equipmentType.SecondaryGuns = [Formula.equipmentType.SecondaryGun, Formu
 
 Formula.equipmentType.Torpedos = [Formula.equipmentType.Torpedo, Formula.equipmentType.SubmarineTorpedo];
 
-Formula.equipmentType.Seaplanes = [Formula.equipmentType.ReconSeaplane, Formula.equipmentType.ReconSeaplaneNight, Formula.equipmentType.SeaplaneBomber];
+Formula.equipmentType.Seaplanes = [Formula.equipmentType.ReconSeaplane, Formula.equipmentType.ReconSeaplaneNight, Formula.equipmentType.SeaplaneBomber, Formula.equipmentType.SeaplaneFighter];
 
-Formula.equipmentType.Fighters = [Formula.equipmentType.SeaplaneBomber, Formula.equipmentType.CarrierFighter, Formula.equipmentType.TorpedoBomber, Formula.equipmentType.DiveBomber];
+Formula.equipmentType.Fighters = [Formula.equipmentType.SeaplaneBomber, Formula.equipmentType.CarrierFighter, Formula.equipmentType.TorpedoBomber, Formula.equipmentType.DiveBomber, Formula.equipmentType.SeaplaneFighter];
 
 Formula.equipmentType.Recons = [Formula.equipmentType.ReconSeaplane, Formula.equipmentType.ReconSeaplaneNight, Formula.equipmentType.CarrierRecon, Formula.equipmentType.CarrierRecon2, Formula.equipmentType.LargeFlyingBoat];
 
 Formula.equipmentType.SeaplaneRecons = [Formula.equipmentType.ReconSeaplane, Formula.equipmentType.ReconSeaplaneNight, Formula.equipmentType.LargeFlyingBoat];
 
-Formula.equipmentType.SeaplaneBombers = [Formula.equipmentType.SeaplaneBomber];
+Formula.equipmentType.SeaplaneBombers = [Formula.equipmentType.SeaplaneBomber, Formula.equipmentType.SeaplaneFighter];
 
 Formula.equipmentType.CarrierRecons = [Formula.equipmentType.CarrierRecon, Formula.equipmentType.CarrierRecon2];
 
