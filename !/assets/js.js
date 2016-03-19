@@ -3545,7 +3545,7 @@ var Ship = function (_ItemBase3) {
 				return Math.floor(base + (max - base) * lvl / 99);
 			};
 
-			var value = undefined;
+			var value = void 0;
 
 			switch (attr) {
 				case 'hp':
@@ -3662,13 +3662,13 @@ _g.kancolle_calc = {
 		if ((typeof data === 'undefined' ? 'undefined' : _typeof(data)) != 'object') return;
 		version = parseInt(data.version) || this.version;
 
-		var result = undefined,
+		var result = void 0,
 		    i = 0,
 		    j = 0,
 		    k = 0,
-		    data_fleet = undefined,
-		    data_ship = undefined,
-		    data_item = undefined,
+		    data_fleet = void 0,
+		    data_ship = void 0,
+		    data_item = void 0,
 		    max_fleets = 4,
 		    max_ships_per_fleet = 6,
 		    max_equipments_per_ship = 5;
@@ -3725,7 +3725,7 @@ _g.kancolle_calc = {
 		if (!data.length || !data.push) return;
 		version = parseInt(version) || this.version;
 
-		var result = undefined;
+		var result = void 0;
 
 		switch (version) {
 			case 3:
@@ -3817,7 +3817,7 @@ Nedb.prototype.updateById = function (_id, docReplace, callback) {
 Nedb.prototype._updateById = function () {
 	if (!this._updateByIdQueue || this._updateByIdQueue.running) return !1;
 
-	var _id = undefined;
+	var _id = void 0;
 	for (var _i7 in this._updateByIdQueue) {
 		if (this._updateByIdQueue[_i7]) {
 			_id = _i7;
@@ -4769,7 +4769,7 @@ var Page = function () {
 	_createClass(Page, [{
 		key: 'modeSelectionEnter',
 		value: function modeSelectionEnter(callback_select, callback_enter) {
-			var _callback_select = undefined;
+			var _callback_select = void 0;
 
 			callback_select = callback_select || function () {};
 			_callback_select = function () {
@@ -4812,7 +4812,7 @@ Page.hide = function (page) {
 
 Page.show = function (page) {
 	page = page || _frame.app_main.cur_page;
-	var p = undefined;
+	var p = void 0;
 
 	if (typeof page == 'string') {
 		if (_frame.app_main.page_dom[page]) _frame.app_main.page_dom[page].appendTo(_frame.dom.main).removeClass('off').trigger('pageShow');
@@ -4847,7 +4847,7 @@ Page.resetScroll = function (page) {
 
 Page.init = function (page) {
 	page = page || _frame.app_main.cur_page;
-	var p = undefined;
+	var p = void 0;
 
 	if (typeof page == 'string') {
 		p = page;
@@ -5314,7 +5314,7 @@ BgImg.init = function () {
 	});
 
 	var deferred = Q.defer(),
-	    _new = undefined;
+	    _new = void 0;
 
 	BgImg.namesHidden = Lockr.get('BgImgHidden', []);
 
@@ -5349,7 +5349,7 @@ BgImg.init = function () {
 
 BgImg.getObj = function (o) {
 	if (typeof o == 'string') {
-		var r = undefined;
+		var r = void 0;
 		BgImg.list.some(function (obj) {
 			if (obj.name === o) r = obj;
 			return obj.name === o;
@@ -5418,14 +5418,14 @@ BgImg.upload = function () {
 						_g.log('BgImg.add() complete');
 					};
 
-					var o = undefined,
+					var o = void 0,
 					    mime = e.target.files[0].type;
 
 					if (!mime) {
 						_g.badgeError('文件格式未知');
 						_done();
 						return {
-							v: undefined
+							v: void 0
 						};
 					} else {
 						mime = mime.split('/');
@@ -5433,13 +5433,13 @@ BgImg.upload = function () {
 							_g.badgeError('请选择图片文件');
 							_done();
 							return {
-								v: undefined
+								v: void 0
 							};
 						} else if (['bmp', 'jpg', 'jpeg', 'png', 'gif', 'tif', 'tiff', 'webp'].indexOf(mime[1].toLowerCase()) < 0) {
 							_g.badgeError('当前仅支持以下格式: BMP、JPG、PNG、GIF、TIFF');
 							_done();
 							return {
-								v: undefined
+								v: void 0
 							};
 						}
 					}
@@ -5484,7 +5484,7 @@ BgImg.upload = function () {
 BgImg.generate = function (o, t) {
 	o = BgImg.getObj(o);
 	var deferred = Q.defer(),
-	    img = undefined;
+	    img = void 0;
 
 	function _error(e) {
 		deferred.reject('读取图片文件发生错误');
@@ -5523,7 +5523,7 @@ BgImg.generate = function (o, t) {
 };
 
 BgImg.getUniqueName = function (n) {
-	var o = undefined,
+	var o = void 0,
 	    i = 1,
 	    n2 = n;
 	if (typeof n == 'number') n = '' + n;
@@ -5664,7 +5664,7 @@ BgImg.readFile = function (e) {
 	var deferred = Q.defer();
 
 	Q.fcall(_g.getScriptCanvas).then(function () {
-		for (var _i11 = 0, f = undefined; f = e.target.files[_i11]; _i11++) {
+		for (var _i11 = 0, f = void 0; f = e.target.files[_i11]; _i11++) {
 			if (BgImg.quotaUsed + f.size > BgImg.quota) {
 				deferred.reject('已超过 ' + _g.getSize(BgImg.quota, 'm') + ' 上限');
 				break;
@@ -6021,13 +6021,13 @@ _frame.infos = {
 };
 
 _frame.infos.__ship_init = function ($el) {
-	var x = undefined,
+	var x = void 0,
 	    originalX = -1,
-	    startX = undefined,
-	    startY = undefined,
-	    startTime = undefined,
-	    deltaX = undefined,
-	    deltaY = undefined,
+	    startX = void 0,
+	    startY = void 0,
+	    startTime = void 0,
+	    deltaX = void 0,
+	    deltaY = void 0,
 	    isPanning = !1,
 	    isScrollSnap = _huCss.csscheck_full('scroll-snap-type') && !bFirefox,
 	    scrollLock = !1,
@@ -6188,7 +6188,7 @@ _frame.infos.__ship_init = function ($el) {
 			var bodyTouchEnd = function bodyTouchEnd(e) {
 				requestAnimationFrame(function () {
 					if (deltaX && (Math.abs(deltaX) > illustWidth / 3 || _g.timeNow() - startTime < 300)) {
-						var t = undefined;
+						var t = void 0;
 						if (deltaX < 0 && inputCur < inputs.length - 1) {
 							t = inputCur + sCount;
 						} else if (deltaX > 0 && inputCur > 0) {
@@ -6260,7 +6260,7 @@ _frame.infos.__ship_init = function ($el) {
 	illustMain.on('mousewheel', function (e) {
 		if (mouseWheelLock || scrollLock || $el.get(0).scrollHeight > $el.get(0).clientHeight) return;
 
-		var direction = undefined;
+		var direction = void 0;
 
 		if (isScrollSnap && e.originalEvent.deltaY) direction = e.originalEvent.deltaY < 0 ? -1 : 1;else if (e.originalEvent.wheelDelta) direction = e.originalEvent.wheelDelta > 0 ? -1 : 1;else if (e.originalEvent.deltaX) direction = e.originalEvent.deltaX < 0 ? -1 : 1;else if (e.originalEvent.deltaY) direction = e.originalEvent.deltaY < 0 ? -1 : 1;
 
@@ -6886,7 +6886,7 @@ InfosFleet.modalExportText_show = function (data) {
 InfosFleet.modalRemove_show = function (id, is_list) {
 	if (typeof id == 'undefined') return;
 
-	var infosFleet = undefined;
+	var infosFleet = void 0;
 	if (_instanceof(id, InfosFleet)) {
 		infosFleet = id;
 		id = infosFleet.data._id;
@@ -7897,9 +7897,9 @@ var Tablelist = function () {
 		value: function append_option(type, name, label, value, suffix, options) {
 			options = options || {};
 			function gen_input() {
-				var input = undefined,
-				    option_empty = undefined,
-				    o_el = undefined,
+				var input = void 0,
+				    option_empty = void 0,
+				    o_el = void 0,
 				    id = Tablelist.genId();
 
 				switch (type) {
@@ -8116,7 +8116,7 @@ var Tablelist = function () {
 		value: function sort_table_restore() {
 			if (!this.sortedRow) return !0;
 
-			var parent = undefined,
+			var parent = void 0,
 			    arr = [];
 			this.sortedRow.each(function (index, element) {
 				var $this = $(element),
@@ -8616,8 +8616,8 @@ var TablelistEquipments = function (_Tablelist3) {
 
 			if (TablelistEquipments.shipId && $.inArray(_g.data.ships[TablelistEquipments.shipId].type, [9, 10, 11]) > -1) {
 				var k = 0,
-				    _el2 = undefined,
-				    t = undefined;
+				    _el2 = void 0,
+				    t = void 0;
 
 				while (this.dom.types[k++].attr('data-equipmentcollection') != 3 || $.inArray(parseInt(this.dom.types[k].attr('data-type')) || null, TablelistEquipments.types) <= -1) {
 					_el2 = this.dom.types[k + 1];
@@ -8635,8 +8635,8 @@ var TablelistEquipments = function (_Tablelist3) {
 
 			if (TablelistEquipments.types.length) {
 				var k = 0,
-				    _el3 = undefined,
-				    t = undefined;
+				    _el3 = void 0,
+				    t = void 0;
 
 				while ($.inArray(parseInt(this.dom.types[k++].attr('data-type')) || null, TablelistEquipments.types) <= -1) {
 					_el3 = this.dom.types[k];
@@ -9295,7 +9295,7 @@ var TablelistFleets = function (_Tablelist4) {
 						if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
 					});
 				} else {
-					for (var _i21 = 0, f = undefined; f = $selector[0].files[_i21]; _i21++) {
+					for (var _i21 = 0, f = void 0; f = $selector[0].files[_i21]; _i21++) {
 						var reader = new FileReader();
 						reader.onload = function (theFile) {
 							return function (r) {
@@ -9446,7 +9446,7 @@ TablelistFleets.modalBuildConflictShow = function (data, deferred) {
 		})));
 	}
 
-	var dataOld = undefined,
+	var dataOld = void 0,
 	    htmlFleet = function htmlFleet(data) {
 		var html = '<i>',
 		    ships = InfosFleet.decompress(data.data)[0] || [],
