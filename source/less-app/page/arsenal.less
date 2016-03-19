@@ -280,18 +280,21 @@
 
 .page-container[page="arsenal"]>.main>.body-all{
 	&>.improvement{
-		height:		100px;
+		min-height:		100px;
 		border-bottom:	1px solid rgba(255, 255, 255, .1);
-		padding-top:	6px;
-		.transition-property(~"background, padding");
+		//padding-top:	6px;
+		padding-top:	2px;
+        padding-bottom: 4px;
+		.transition-property(~"background");
 		&>font{
 			margin-top:	0;
 		}
 		&>span{
-			.transition-property(bottom);
+			//.transition-property(bottom);
 			&>span{
 				padding-top:	1px;
 				padding-bottom:	1px;
+                bottom:         6px !important;
 			}
 		}
 		@media all and (max-width: @screen-width-t1-breaking-point ){
@@ -308,10 +311,10 @@
 		}
 		&:hover{
 			background:		rgba(0, 0, 0, .2);
-			padding-top:	2px;
-			&>span{
-				bottom:		10px;
-			}
+			//padding-top:	2px;
+			//&>span{
+				//bottom:		10px;
+			//}
 		}
 		&:last-of-type{
 			border-bottom:	0;
