@@ -8,7 +8,7 @@
 
 **访问Web App**
 
-[点击访问 fleet.diablohu.com](http://fleet.diablohu.com/)
+[点击访问 fleet.moe](http://fleet.moe/)
 
 Web App针对手机与平板设备进行了优化适配，可用移动平台浏览器访问后选择将该Web App固定到主屏幕上，以便日后使用。
 
