@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",165,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/10.png)\"></s><strong>二式水战改</strong><small>水上战斗机</small></h3><span>+3 对空</span><span>+1 对潜</span><span>+1 命中</span><span>+2 回避</span><span>+1 索敌</span>")
+KCTip.loaded("equipments",165,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/10.png)\"></s><strong>二式水战改</strong><small>水上战斗机</small></h3><span>+3 对空</span><span>+1 对潜</span><span>+1 命中</span><span>+2 回避</span><span>+1 索敌</span>")

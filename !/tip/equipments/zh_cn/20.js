@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",20,"zh_cn","<h3><s style=\"background-image: url(http://fleet.diablohu.com/!/assets/images/itemicon/6.png)\"></s><strong>零式舰战21型</strong><small>舰载战斗机</small></h3><span>+5 对空</span>")
+KCTip.loaded("equipments",20,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/6.png)\"></s><strong>零式舰战21型</strong><small>舰载战斗机</small></h3><span>+5 对空</span>")
