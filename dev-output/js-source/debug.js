@@ -232,14 +232,14 @@ debug.init = function(){
                         }
 						try{
 							result = result.replace( searchRes[0],
-								'[url=http://fleet.diablohu.com/'+t+'/'+searchRes[2]+']'
+								'[url=http://fleet.moe/'+t+'/'+searchRes[2]+']'
 								+ _tmpl['textlink_'+searchRes[1].toLowerCase()](searchRes[2], null, false).text()
 								+ '[/url]'
 							)
 						}catch(e){
                             try{
                                 result = result.replace( searchRes[0],
-                                    '[url=http://fleet.diablohu.com/'+t+'/'+searchRes[2]+']'
+                                    '[url=http://fleet.moe/'+t+'/'+searchRes[2]+']'
                                     + _tmpl['link_'+searchRes[1].toLowerCase()](searchRes[2], null, false).text()
                                     + '[/url]'
                                 )

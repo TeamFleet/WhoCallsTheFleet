@@ -53,7 +53,7 @@ BgImg.getPath = function(o, t){
 
 BgImg.save = function(o){
 	o = BgImg.getObj(o)
-	_g.save( o.path, 'fleet.diablohu.com - ' + o.filename )
+	_g.save( o.path, 'fleet.moe - ' + o.filename )
 };
 
 BgImg.readFile = function( e ){

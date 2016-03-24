@@ -57,7 +57,7 @@ dev_output_steps.push(function(){
 				}
 
 				output = 'KCTip.loaded("ships",'+d.id+',"'+l+'","'
-							+ '<img src=\\"http://fleet.diablohu.com/!/pics/ships/'+d.id+'/2.jpg\\" width=\\"218\\" height=\\"300\\"/>'
+							+ '<img src=\\"http://fleet.moe/!/pics/ships/'+d.id+'/2.jpg\\" width=\\"218\\" height=\\"300\\"/>'
 							+ '<h3>' + d.getNameNoSuffix(l) + '<small>' + d.getSuffix(l) + '</small></h3>'
 							+ '<h4>'
 								+ ( d['class'] ? _g['data']['ship_classes'][d['class']]['name_zh'] + '级' : '' )
@@ -127,7 +127,7 @@ dev_output_steps.push(function(){
 					}
 				}
 			
-				var item_icon = 'http://fleet.diablohu.com/!/assets/images/itemicon/'
+				var item_icon = 'http://fleet.moe/!/assets/images/itemicon/'
 									+ d.getIconId()
 									+ '.png'
 					,item_name = d.getName(l)

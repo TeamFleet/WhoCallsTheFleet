@@ -1723,7 +1723,7 @@ var _ga = {
 			return true
 		/*
 		ga('send', 'pageview', {
-				'location':	'http://fleet.diablohu.com/ga.html',
+				'location':	'http://fleet.moe/ga.html',
 				'page': 	'/' + path,
 				'title': 	title || _frame.app_main.title
 			});
@@ -1732,7 +1732,7 @@ var _ga = {
 		title = _frame.app_main.title
 
 		_frame.dom.hiddenIframe[0].contentWindow.location.replace(node.url.format(
-						'http://fleet.diablohu.com/ga.html' + path
+						'http://fleet.moe/ga.html' + path
 						+ ( title
 							? ('&title=' + encodeURIComponent(title))
 							: ''
@@ -5218,7 +5218,7 @@ _g.error = function( err, context ){
 	获取本地版本
 		JSON.parse( _config.get['nwjs-data-version'] )
 	获取远端版本
-		http://fleet.diablohu.com/versions.json
+		http://fleet.moe/versions.json
 		packages[name].version
 	对比各数据包版本
 	如果没有更新
@@ -5227,7 +5227,7 @@ _g.error = function( err, context ){
 		创建更新器提示
 		按顺序
 			获取文件
-				http://fleet.diablohu.com/ + packages[name].path
+				http://fleet.moe/ + packages[name].path
 				更新器提示的更新进度
 			检查文件大小和MD5
 				packages[name].bytes
@@ -5251,8 +5251,8 @@ _g.error = function( err, context ){
 
 var _updater = {
 	'local_versions':{},
-	'remote_root':	'http://fleet.diablohu.com',
-	'remote_url': 	'http://fleet.diablohu.com/versions.json',
+	'remote_root':	'http://fleet.moe',
+	'remote_url': 	'http://fleet.moe/versions.json',
 	'remote_data': 	{}
 }
 
@@ -6941,7 +6941,7 @@ _frame.app_main.page['calctp'] = {
 
 _frame.gg = function(){
 	$.ajax({
-		'url':		'http://fleet.diablohu.com/!/g/',
+		'url':		'http://fleet.moe/!/g/',
 		'method':	'get',
 		'dataType':	'html',
 		'success':	function(data){
@@ -8697,7 +8697,7 @@ class InfosFleet{
 													title: function(){
 														return InfosFleet.menuCur.data.name
 													},
-													summary: '分享自 是谁呼叫舰队（ http://fleet.diablohu.com ）',
+													summary: '分享自 是谁呼叫舰队（ http://fleet.moe ）',
 													sites: [
 														'tsina',		// 微博
 														'tqq',			// 腾讯微博
@@ -9006,7 +9006,7 @@ class InfosFleet{
 				delete d.time_modify
 				delete d.rating
 				delete d.user
-				return 'http://fleet.diablohu.com/fleets/build/?i=' + _id + '&d=' + LZString.compressToEncodedURIComponent( JSON.stringify( d ) )
+				return 'http://fleet.moe/fleets/build/?i=' + _id + '&d=' + LZString.compressToEncodedURIComponent( JSON.stringify( d ) )
 			}
 		}
 	
@@ -9229,7 +9229,7 @@ InfosFleet.modalExportText_show = function(data){
 	})
 	
 	text+= (text ? '\n\n' : '')
-		+ '* 创建自 是谁呼叫舰队 (fleet.diablohu.com)'
+		+ '* 创建自 是谁呼叫舰队 (fleet.moe)'
 
 	_frame.modal.show(
 		InfosFleet.modalExport(text),

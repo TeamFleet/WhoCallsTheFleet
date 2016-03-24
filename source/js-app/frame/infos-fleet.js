@@ -316,7 +316,7 @@ class InfosFleet{
 													title: function(){
 														return InfosFleet.menuCur.data.name
 													},
-													summary: '分享自 是谁呼叫舰队（ http://fleet.diablohu.com ）',
+													summary: '分享自 是谁呼叫舰队（ http://fleet.moe ）',
 													sites: [
 														'tsina',		// 微博
 														'tqq',			// 腾讯微博
@@ -625,7 +625,7 @@ class InfosFleet{
 				delete d.time_modify
 				delete d.rating
 				delete d.user
-				return 'http://fleet.diablohu.com/fleets/build/?i=' + _id + '&d=' + LZString.compressToEncodedURIComponent( JSON.stringify( d ) )
+				return 'http://fleet.moe/fleets/build/?i=' + _id + '&d=' + LZString.compressToEncodedURIComponent( JSON.stringify( d ) )
 			}
 		}
 	
@@ -848,7 +848,7 @@ InfosFleet.modalExportText_show = function(data){
 	})
 	
 	text+= (text ? '\n\n' : '')
-		+ '* 创建自 是谁呼叫舰队 (fleet.diablohu.com)'
+		+ '* 创建自 是谁呼叫舰队 (fleet.moe)'
 
 	_frame.modal.show(
 		InfosFleet.modalExport(text),

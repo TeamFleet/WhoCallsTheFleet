@@ -7740,7 +7740,7 @@ body.mod-capture .infos-fleet > header:after {
   transform: translateY(-50%);
 }
 body.mod-capture .infos-fleet > header:before {
-  content: 'fleet.diablohu.com';
+  content: 'fleet.moe';
   padding: 0 52px 0 0;
   mix-blend-mode: overlay;
   font-size: 16px;

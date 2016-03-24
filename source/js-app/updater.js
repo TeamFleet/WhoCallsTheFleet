@@ -4,7 +4,7 @@
 	获取本地版本
 		JSON.parse( _config.get['nwjs-data-version'] )
 	获取远端版本
-		http://fleet.diablohu.com/versions.json
+		http://fleet.moe/versions.json
 		packages[name].version
 	对比各数据包版本
 	如果没有更新
@@ -13,7 +13,7 @@
 		创建更新器提示
 		按顺序
 			获取文件
-				http://fleet.diablohu.com/ + packages[name].path
+				http://fleet.moe/ + packages[name].path
 				更新器提示的更新进度
 			检查文件大小和MD5
 				packages[name].bytes
@@ -37,8 +37,8 @@
 
 var _updater = {
 	'local_versions':{},
-	'remote_root':	'http://fleet.diablohu.com',
-	'remote_url': 	'http://fleet.diablohu.com/versions.json',
+	'remote_root':	'http://fleet.moe',
+	'remote_url': 	'http://fleet.moe/versions.json',
 	'remote_data': 	{}
 }
 

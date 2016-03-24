@@ -4,6 +4,7 @@
 
 var minify = require("../dev-output/js-source/node_modules/html-minifier").minify;
 var fsExtra = require("../dev-output/js-source/node_modules/fs-extra")
+let glob = require("glob");
 
 let dev_output_steps = []
 	,dev_output_tmpl
@@ -486,6 +487,221 @@ function dev_output_form(){
 					'margin-right':'10px'
 				}).on('click', function(){
 					el.selector2.click()
+				})
+			).append(
+				$('<input/>',{
+					'type':		'submit',
+					'html':		'Export'
+				}).css({
+					'flex':		'0 0 auto',
+					'margin-right':'10px'
+				})
+			)
+		).append(
+			el.form2 = $('<form/>').css({
+				'display':	'flex',
+				'flex-flow':'row nowrap',
+				'flex':		'0 0 40px',
+				'height':	'40px',
+				'line-height':'30px',
+				'font-size':'16px',
+				'padding':	'0 0 10px 0',
+				'border-bottom':'1px solid rgba(255, 255, 255, .35)',
+				'margin':	'0 0 10px 0'
+			}).on('submit', function(e){
+				e.preventDefault()
+				if( !processing ){
+					dev_output_el_log.empty()
+					processing = true
+					dev_output_log('start')
+					
+					let pathFrom = Lockr.get('debug_output_directory', dev_output_dir)
+						,pathTo = Lockr.get('debug_output_redirect', el.directoryRedirect.val() || '')
+						,files = [
+							'favicon.ico',
+							'favicon.png',
+							'manifest.json',
+							'robots.txt',
+                            
+                            /*
+							'arsenal/',
+							'calctp/',
+							'donate/',
+							'entities/',
+							'equipments/',
+							'fleets/',
+							'ships/',
+                            */
+							
+							'!/assets/',
+							'!/db/',
+							'!/pics/'
+						]
+                        ,htmlFiles = []
+						,chain = Q(function(){})
+					
+					files.forEach(function(f){
+						chain = chain.then(function(){
+							let deferred = Q.defer()
+							fsExtra.copy(
+								node.path.join( pathFrom, f ),
+								node.path.join( pathTo, f ),
+								{
+									clobber: true,
+									preserveTimestamps: true,
+									filter: function(thisFile){
+                                        //console.log(thisFile, thisFile2)
+										if( f == '!/pics/' ){
+                                            return false;
+                                            if( node.path.extname(thisFile).toLowerCase() == '.webp' )
+                                                return false
+                                                
+                                            try {
+                                                fs.accessSync(thisFile, fs.F_OK);
+                                                return false
+                                            } catch (e) {
+                                                return true
+                                            }
+                                            
+											return node.path.extname(thisFile).toLowerCase() != '.webp'
+                                        }
+										return true
+									}
+								},
+								function(err){
+									if( err ){
+										deferred.reject(err)
+									}else{
+										dev_output_log('COPY: ' + f )
+										deferred.resolve()
+									}
+								}
+							)
+							return deferred.promise
+						})
+					})
+                    
+                    chain = chain.then(function(){
+                        let deferred = Q.defer()
+                            ,chain2 = Q(function(){})
+                            ,tmplDirection = node.fs.readFileSync('dev-output/templates/redirect.html', 'utf-8')
+                            
+                        glob(node.path.join( pathFrom, "**/*.html" ), {}, function (er, files) {
+                            //console.log(files)
+                            htmlFiles = files
+                    
+                            console.log( pathTo )
+                            htmlFiles.forEach(function(f){
+                                chain2 = chain2.then(function(){
+                                    let deferred2 = Q.defer()
+			                        
+                                    let filename = f.substr( f.indexOf(pathFrom) + pathFrom.length + 2 )
+                                    let output = tmplDirection
+                                    let htmlpage = node.fs.readFileSync(f, 'utf-8')
+                                    let searchRes = null
+                                    let scrapePtrn = /\{\{[ ]*title[ ]*\}\}/gi
+                                    
+                                    let title = /\<title\>([^\<]+)\<\/title\>/gi.exec(htmlpage)
+                                    
+                                    let outputPath = node.path.join( pathTo, filename )
+                                    let outputDir = node.path.dirname( outputPath )
+                                    
+                                    while( (searchRes = scrapePtrn.exec(output)) !== null ){
+                                        try{
+                                            if( title && title.length > 1 ){
+                                                output = output.replace( searchRes[0], title[1] )
+                                            }else{
+                                                output = output.replace( searchRes[0], '是谁呼叫舰队' )
+                                            }
+                                        }catch(e){}
+                                    }
+			
+                                    searchRes = null
+                                    scrapePtrn = /\{\{[ ]*url[ ]*\}\}/gi
+                                    while( (searchRes = scrapePtrn.exec(output)) !== null ){
+                                        try{
+                                            output = output.replace( searchRes[0], filename.replace(/\/index\.html$/gi, '') )
+                                        }catch(e){}
+                                    }
+			
+                                    node.mkdirp.sync( outputDir )
+                                    
+                                    output = minify(output, {
+                                        removeComments:		true,
+                                        collapseWhitespace:	true
+                                    })
+			
+                                    node.fs.writeFile(
+                                        outputPath,
+                                        output,
+                                        function(err){
+                                            if( err ){
+                                                deferred2.reject(new Error(err))
+                                            }else{
+                                                dev_output_log('生成文件: ' + filename)
+                                                deferred2.resolve()
+                                            }
+                                        }
+                                    )
+
+                                    //deferred2.resolve()
+                                    return deferred2.promise
+                                })
+                            })
+                            
+                            chain2 = chain2.catch(function(err){
+                                deferred.reject(err)
+                            }).done(function(){
+                                deferred.resolve()
+                            })
+
+                        })
+                        return deferred.promise
+                    })
+                    
+                    chain = chain.catch(function(err){
+						_g.log(err)
+					}).done(function(){
+						dev_output_log('end')
+						processing = false
+						return true
+					})
+				}
+				return
+			}).append(
+				$('<span/>',{
+					'html':		'Output Redirect'
+				}).css({
+					'flex':		'0 0 auto',
+					'margin-right':'10px'
+				})
+			).append(
+				el.directoryRedirect = $('<input type="file" nwdirectory/>').css({
+					'display':	'none'
+				}).on('change', function(){
+					let val = el.directoryRedirect.val() || ''
+					el.input2.val( val )
+					Lockr.set('debug_output_redirect', val)
+					el.directoryRedirect.val('')
+				})
+			).append(
+				el.input2 = $('<input type="text"/>').css({
+					'display':	'block',
+					'flex':		'1 0 auto',
+					'height':	'30px',
+					'line-height':'inherit',
+					'font-size':'inherit',
+					'margin-right':'10px'
+				}).val( Lockr.get('debug_output_redirect') || '' )
+			).append(
+				$('<button/>',{
+					'type':		'button',
+					'html':		'Browse'
+				}).css({
+					'flex':		'0 0 auto',
+					'margin-right':'10px'
+				}).on('click', function(){
+					el.directoryRedirect.click()
 				})
 			).append(
 				$('<input/>',{

@@ -2,7 +2,7 @@
 
 _frame.gg = function(){
 	$.ajax({
-		'url':		'http://fleet.diablohu.com/!/g/',
+		'url':		'http://fleet.moe/!/g/',
 		'method':	'get',
 		'dataType':	'html',
 		'success':	function(data){

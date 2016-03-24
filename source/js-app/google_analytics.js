@@ -71,7 +71,7 @@ var _ga = {
 			return true
 		/*
 		ga('send', 'pageview', {
-				'location':	'http://fleet.diablohu.com/ga.html',
+				'location':	'http://fleet.moe/ga.html',
 				'page': 	'/' + path,
 				'title': 	title || _frame.app_main.title
 			});
@@ -80,7 +80,7 @@ var _ga = {
 		title = _frame.app_main.title
 
 		_frame.dom.hiddenIframe[0].contentWindow.location.replace(node.url.format(
-						'http://fleet.diablohu.com/ga.html' + path
+						'http://fleet.moe/ga.html' + path
 						+ ( title
 							? ('&title=' + encodeURIComponent(title))
 							: ''

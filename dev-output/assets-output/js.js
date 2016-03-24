@@ -5156,7 +5156,7 @@ _frame.app_main.page['calctp'] = {
 
 _frame.gg = function () {
 	$.ajax({
-		'url': 'http://fleet.diablohu.com/!/g/',
+		'url': 'http://fleet.moe/!/g/',
 		'method': 'get',
 		'dataType': 'html',
 		'success': function success(data) {
@@ -5657,7 +5657,7 @@ BgImg.getPath = function (o, t) {
 
 BgImg.save = function (o) {
 	o = BgImg.getObj(o);
-	_g.save(o.path, 'fleet.diablohu.com - ' + o.filename);
+	_g.save(o.path, 'fleet.moe - ' + o.filename);
 };
 
 BgImg.readFile = function (e) {
@@ -6489,7 +6489,7 @@ var InfosFleet = function () {
 							title: function title() {
 								return InfosFleet.menuCur.data.name;
 							},
-							summary: '分享自 是谁呼叫舰队（ http://fleet.diablohu.com ）',
+							summary: '分享自 是谁呼叫舰队（ http://fleet.moe ）',
 							sites: ['tsina', 'tqq', 'cqq', 'twitter', 'tieba'],
 							uid: 1552359,
 							modifyItem: function modifyItem(el) {
@@ -6819,7 +6819,7 @@ var InfosFleet = function () {
 				delete d.time_modify;
 				delete d.rating;
 				delete d.user;
-				return 'http://fleet.diablohu.com/fleets/build/?i=' + _id + '&d=' + LZString.compressToEncodedURIComponent(JSON.stringify(d));
+				return 'http://fleet.moe/fleets/build/?i=' + _id + '&d=' + LZString.compressToEncodedURIComponent(JSON.stringify(d));
 			}
 		}
 	}]);
@@ -6876,7 +6876,7 @@ InfosFleet.modalExportText_show = function (data) {
 		});
 	});
 
-	text += (text ? '\n\n' : '') + '* 创建自 是谁呼叫舰队 (fleet.diablohu.com)';
+	text += (text ? '\n\n' : '') + '* 创建自 是谁呼叫舰队 (fleet.moe)';
 
 	_frame.modal.show(InfosFleet.modalExport(text), '导出配置文本', {
 		'classname': 'infos_fleet infos_fleet_export mod-text',
