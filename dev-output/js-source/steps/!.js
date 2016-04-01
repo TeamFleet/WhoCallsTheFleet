@@ -620,7 +620,10 @@ function dev_output_form(){
                                     scrapePtrn = /\{\{[ ]*url[ ]*\}\}/gi
                                     while( (searchRes = scrapePtrn.exec(output)) !== null ){
                                         try{
-                                            output = output.replace( searchRes[0], filename.replace(/\/index\.html$/gi, '') )
+                                            output = output.replace(
+												searchRes[0],
+												filename.replace(/\/index\.html$/gi, '').replace(/index\.html$/gi, '') + '?utm_source=olddomain'
+											)
                                         }catch(e){}
                                     }
 			
