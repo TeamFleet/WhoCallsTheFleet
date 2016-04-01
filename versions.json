@@ -6,12 +6,12 @@
 			"bytes":	16316209
 		},
 		"app-db": {
-			"version":	"0.12.1.0",
+			"version":	"1.12.1.0",
 			"path":		"data/2016-04-01/app-db.nwjs-data",
 			"bytes":	914364
 		},
 		"pics": {
-			"version":	"0.12.1.0",
+			"version":	"1.12.1.0",
 			"path":		"data/2016-04-01/pics.nwjs-data",
 			"bytes":	50070426
 		}
