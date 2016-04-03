@@ -88,15 +88,15 @@
       "pics": "1.12.1.0"
     },
     "buildDir": "N:\\nwbuild\\build",
-    "winIco": "L:\\Projects\\Apps-nw.js\\WhoCallsTheFleet\\source\\appicon.ico",
+    "winIco": "./source/appicon.ico",
     "enableLauncher": true,
     "dataRelative": [
       "app",
       "app-db",
       "pics"
     ],
-    "launcherSplash": "L:\\Projects\\Apps-nw.js\\WhoCallsTheFleet\\source\\launcher.webp",
-    "macIcns": "L:\\Projects\\Apps-nw.js\\WhoCallsTheFleet\\source\\appicon.icns"
+    "launcherSplash": "./source/launcher.webp",
+    "macIcns": "./source/appicon.icns"
   },
   "dependencies": {
     "adm-zip": "^0.4.7",
