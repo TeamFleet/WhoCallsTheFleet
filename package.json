@@ -30,7 +30,7 @@
     "width": 1280,
     "height": 720,
     "toolbar": false,
-    "icon": "app\\assets\\images\\appicon.png",
+    "icon": "./app/assets/images/appicon.png",
     "position": "center",
     "min_width": 640,
     "min_height": 480,
