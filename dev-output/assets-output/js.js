@@ -9291,7 +9291,9 @@ var TablelistFleets = function (_Tablelist4) {
 			    promise_chain = Q.fcall(function () {
 				var deferred = Q.defer();
 				if (_g.isNWjs && filename) {
-					node.fs.readFile(node.path.join($selector.val(), filename), 'utf8', function (err, data) {
+					var val = $selector.val();
+					if (val.indexOf(';') > -1) val = node.path.dirname(val.split(';')[0]);
+					node.fs.readFile(node.path.join(val, filename), 'utf8', function (err, data) {
 						if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
 					});
 				} else {

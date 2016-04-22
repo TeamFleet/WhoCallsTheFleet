@@ -771,7 +771,10 @@ class TablelistFleets extends Tablelist{
 					let deferred = Q.defer()
 					if( _g.isNWjs && filename ){
 						// NW.js - 使用node.js方式读取文件内容
-						node.fs.readFile( node.path.join($selector.val(), filename) , 'utf8', function(err, data){
+						let val = $selector.val()
+						if( val.indexOf(';') > -1 )
+							val = node.path.dirname( val.split(';')[0] )
+						node.fs.readFile( node.path.join(val, filename) , 'utf8', function(err, data){
 							if( err )
 								deferred.reject('文件载入失败', new Error(err))
 							else
