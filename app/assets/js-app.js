@@ -14058,7 +14058,7 @@ TablelistFleets.menuOptionsItemsBuildsLocation = function(){
 			.append(
 				TablelistFleets.filelocation_selector = $('<input type="file" class="none" webkitdirectory/>')
 					.on('change', function(e){
-						TablelistFleets.migrateBuilds(TablelistFleets.filelocation_selector.val())
+						TablelistFleets.migrateBuilds( TablelistFleets.filelocation_selector.val() )
 					})
 			)
 			.append(
@@ -14079,6 +14079,9 @@ TablelistFleets.menuOptionsItemsBuildsLocation = function(){
 TablelistFleets.migrateBuilds = function(location){
 	if( !location )
 		return
+	
+	if( location.indexOf(';') > -1 )
+		location = node.path.dirname( location.split(';')[0] )
 
 	let n = 'fleets.json'
 		,exist = false
