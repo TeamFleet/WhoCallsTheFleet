@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",173,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/15.png)\"></s><strong>Bofors 40mm四连装机关炮</strong><small>对空机枪 (集中配备)</small></h3><span>+1 火力</span><span>+10 对空</span><span>+1 命中</span><span>+1 装甲</span><span>+2 回避</span>")
