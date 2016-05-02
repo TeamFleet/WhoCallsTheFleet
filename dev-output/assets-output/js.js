@@ -8668,6 +8668,7 @@ var TablelistShips = function (_Tablelist2) {
 
 				chain = chain.then(function () {
 					tr = $(tr);
+					tr.attr('trindex', index);
 					var deferred = Q.defer();
 					var ship_id = tr.attr('data-shipid');
 					var header_index = tr.attr('data-header');

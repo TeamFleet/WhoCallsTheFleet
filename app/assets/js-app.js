@@ -12883,6 +12883,7 @@ class TablelistShips extends Tablelist{
 			chain = chain.then( () => {
 				//console.log(index)
 				tr = $(tr)
+				tr.attr('trindex', index)
 				let deferred = Q.defer()
 				let ship_id = tr.attr('data-shipid')
 				let header_index = tr.attr('data-header')
