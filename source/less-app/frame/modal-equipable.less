@@ -1,0 +1,49 @@
+body > .modal.modal-equipable{
+    &>div{
+        height:     auto;
+        width:      50%;
+        min-width:  @screen-width-t5-breaking-point;
+        @media all and (max-width: @mobileview-breaking-point ){
+            min-width:  0;
+            width:      ~"calc(100% - 40px)";
+        }
+    }
+    
+    section{
+        max-height: ~"calc(100vh - 100px)";
+        p{
+            font-size: 		16px;
+            //color: 			@color_accent;
+            margin-bottom: 	.5em;
+        }
+        div ~ p{
+            margin-top: 1em;
+        }
+        
+        .flexgrid.equipable-types{
+            .flex-flow(row wrap);
+            .justify-content(flex-start);
+            .align-items(flex-start);
+            margin: 	-1px -1px 0 0;
+            &>.unit{
+                flex: 	        1 0 125px;
+                position:	    relative;
+                margin-right:   1px;
+                margin-top:     1px;
+            }
+            &>.unit:not(:empty){
+                line-height:2em;
+                background: #000;
+                font-size:  13px;
+				font-weight:normal;
+                color:		rgba(255, 255, 255, .25);
+                background:	rgba(128, 128, 128, .5);
+                text-align:	center;
+                &.on{
+                    color:		hsl(100, 100%, 83%);
+                    background:	hsla(100, 100%, 35%, .5);
+                }
+            }
+        }
+    }
+}

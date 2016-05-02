@@ -27,14 +27,14 @@
 
 		// 名称 & 类型 & 开发改修
             let upgradable = d['upgrade_to'] && d['upgrade_to'].push && d['upgrade_to'].length ? true : false
-			$('<div class="title"/>')
+			let title = $('<div class="title right-gutter"/>')
 				.html(
 					'<h2 data-content="' + d.getName() + '">' + d.getName() + '</h2>'
 					+ '<small>'
 						+ '<span data-tip="图鉴编号">No.' + d['id'] + '</span>'
 						+ ( d['type']
 							? ( d.getType()
-								+ TablelistEquipments.gen_helper_equipable_on( d['type'] )
+								//+ `<em class="helper" data-tip="[[EQUIPABLE::${d['type']}]]">?</em>`
 							): '' )
 					+ '</small>'
 					+ '<small>'
@@ -51,12 +51,32 @@
 						)
 					+ '</small>'
 				).appendTo(dom)
+		
+		// 可装备于
+			/*
+			$('<div class="equipable"/>')
+				.append(
+					$('<button/>', {
+						'type': 	'button',
+						'class': 	'button-equipable'
+						'html': 	'查询可装备舰娘',
+						'data-equipment-type': d['type']
+					}).on('click', showEquipable)
+				)
+				.appendTo( title )
+				*/
+			$('<button/>', {
+				'type': 	'button',
+				'class': 	'button-equipable',
+				'html': 	'可装备于...',
+				'data-equipment-type': d['type']
+			}).appendTo( title.find('small').eq(0) )
 
 		// 属性
 			var stats = $('<div class="stats"/>')
 							.html('<h4 data-content="属性">属性</h4>')
 							.appendTo(dom)
-				,stat_container = $('<div class="stat"/>').appendTo(stats)
+				,stat_container = $('<div class="stat right-gutter"/>').appendTo(stats)
 
 			_stat('fire', '火力')
 			_stat('torpedo', '雷装')
@@ -68,6 +88,9 @@
 			_stat('evasion', '回避')
 			_stat('los', '索敌')
 			_stat('range', '射程')
+			
+			if( !stat_container.html() )
+				stat_container.html('<div class="no-content">无...</div>')
 
 		// 开发 & 改修
 		/*
@@ -141,7 +164,7 @@
 					)
 				})
 			}else{
-				equipped_container.addClass('no').html('暂无初始配置该装备的舰娘...')
+				equipped_container.addClass('no no-content').html('暂无初始配置该装备的舰娘...')
 			}
 
 		// 图鉴

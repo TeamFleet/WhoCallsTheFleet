@@ -1,5 +1,7 @@
 if( typeof _p.tip != 'undefined' ){
 
+
+// [[EQUIPMENT::123]]
 _p.tip.filters.push( function(cont){
 	var exp = /^\[\[EQUIPMENT\:\:([0-9]+)\]\]$/.exec(cont)
 	if( exp && exp.length > 1 )
@@ -68,4 +70,57 @@ _p.tip.content_equipment = function( d ){
 		+ _stat('los', '索敌')
 		+ _stat('range', '射程')
 
-}}
+}
+
+
+
+// [[EQUIPABLE::123]]
+_p.tip.filters.push( function(cont){
+	var exp = /^\[\[EQUIPABLE\:\:([0-9]+)\]\]$/.exec(cont)
+	if( exp && exp.length > 1 )
+		return _p.tip.content_equipable( _g.data.item_types[ parseInt(exp[1]) ] )
+} )
+
+_p.tip.content_equipable_results = {}
+_p.tip.content_equipable = function( d ){
+	if( !_p.tip.content_equipable_results[d.id] ){
+		let html = `<h4 class="item_equipable_on">可装备于以下舰种</h4>`
+			,equipable_extra_ship = d.equipable_extra_ship || []
+		
+		html+= `<p>`	
+		if( d.equipable_on_type.length ){
+			let types = []
+			_g.ship_type_order_full.forEach( function(ship_type){
+				if( d.equipable_on_type.indexOf( ship_type ) > -1 )
+					types.push( ship_type )
+			} )
+			html+= types.map(function(ship_type){
+					let shipType = _g.data.ship_types[ship_type]
+					return '<span>' + (shipType.full_zh || shipType.full_game) + `(${shipType.code})` + '</span>'
+				}).join(' / ')
+		}else{
+			html+= '无...'
+		}
+		html+= `</p>`	
+		
+		if( equipable_extra_ship.length ){
+			html+= `<h4 class="item_equipable_on">也可装备于以下舰娘</h4>`
+			html+= d.equipable_extra_ship.map(function(shipId){
+					let ship = _g.data.ships[shipId]
+						,shipType = ship.getType()
+					return `<span><a href="?infos=ship&id=${shipId}" data-shipid="${shipId}" data-infos="[[SHIP::${shipId}]]" data-tip="[[SHIP::${shipId}]]">`
+							+ (shipType ? `[${shipType}] ` : '' )
+							+ ship.getName(_g.joint)
+							+ `</a></span>`
+				}).join(' / ')
+		}
+		
+		_p.tip.content_equipable_results[d.id] = html
+	}
+	
+	return _p.tip.content_equipable_results[d.id]
+}
+
+
+
+}

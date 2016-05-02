@@ -154,6 +154,7 @@
 // main
 	_g.pageChangeBefore = function(){
 		_frame.dom.mobilemenu.prop('checked', false)
+		_frame.modal.hide()
 	}
 	_g.title = function(t){
 		if( !t ){

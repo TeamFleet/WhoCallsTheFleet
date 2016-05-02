@@ -154,6 +154,7 @@
 // main
 	_g.pageChangeBefore = function(){
 		_frame.dom.mobilemenu.prop('checked', false)
+		_frame.modal.hide()
 	}
 	_g.title = function(t){
 		if( !t ){
@@ -4110,6 +4111,7 @@ canvas.downScale = function(img, scale){
 			})
 	}
 	_g.ship_type_order = []
+	_g.ship_type_order_full = []
 	_g.ship_type_order_map = {}
 
 
@@ -4218,6 +4220,17 @@ canvas.downScale = function(img, scale){
 	
 	_g.save = function( url, n, callback ){
 		_g.file_save_as(url, n, callback)
+	}
+
+	_g.getLink = function( t, id ){
+		switch( t ){
+				case 'ships':		t = 'ship';		break;
+		}
+		return `?infos=${t}&id=${id}`
+	}
+	
+	_g.getImg = function( t, id, img ){
+		return `${node.path.normalize(_g.path.pics[t])}/${id}/${img}.webp`
 	}
 
 
@@ -4780,6 +4793,7 @@ _frame.app_main = {
 												_g.ship_type_order.push(
 													doc['types'].length > 1 ? doc['types'] : doc['types'][0]
 												)
+												_g.ship_type_order_full = _g.ship_type_order_full.concat( doc['types'] )
 												//_g.data['ship_type_order'][doc['id']] = doc
 												_g.data['ship_type_order'][i] = doc
 											})
@@ -6241,11 +6255,11 @@ _tmpl.link_ship = function( ship, tagName, returnHTML, mode, extraIllust ){
 
 	return _tmpl.export(
 			`<${tagName}`
-				+ (tagName == 'a' ? ` href="?infos=ship&id=${shipId}"` : '')
+				+ (tagName == 'a' ? ` href="${_g.getLink('ships', shipId)}"` : '')
 				+ ` class="link_ship" data-shipid="${shipId}" data-infos="[[SHIP::${shipId}]]"`
 				+ (hasExtraIllust ? ` icon="hanger"` : '')
 			+ `>`
-				+ `<img src="${node.path.normalize(_g.path.pics.ships)}/${shipId}/0.webp"/>`
+				+ `<img src="${_g.getImg('ships', shipId, 0)}"/>`
 				+ `<span>${content}</span>`
 			+ `</${tagName}>`,
 		/*
@@ -8248,14 +8262,14 @@ _frame.infos.__entity = function( id ){
 
 		// 名称 & 类型 & 开发改修
             let upgradable = d['upgrade_to'] && d['upgrade_to'].push && d['upgrade_to'].length ? true : false
-			$('<div class="title"/>')
+			let title = $('<div class="title right-gutter"/>')
 				.html(
 					'<h2 data-content="' + d.getName() + '">' + d.getName() + '</h2>'
 					+ '<small>'
 						+ '<span data-tip="图鉴编号">No.' + d['id'] + '</span>'
 						+ ( d['type']
 							? ( d.getType()
-								+ TablelistEquipments.gen_helper_equipable_on( d['type'] )
+								//+ `<em class="helper" data-tip="[[EQUIPABLE::${d['type']}]]">?</em>`
 							): '' )
 					+ '</small>'
 					+ '<small>'
@@ -8272,12 +8286,32 @@ _frame.infos.__entity = function( id ){
 						)
 					+ '</small>'
 				).appendTo(dom)
+		
+		// 可装备于
+			/*
+			$('<div class="equipable"/>')
+				.append(
+					$('<button/>', {
+						'type': 	'button',
+						'class': 	'button-equipable'
+						'html': 	'查询可装备舰娘',
+						'data-equipment-type': d['type']
+					}).on('click', showEquipable)
+				)
+				.appendTo( title )
+				*/
+			$('<button/>', {
+				'type': 	'button',
+				'class': 	'button-equipable',
+				'html': 	'可装备于...',
+				'data-equipment-type': d['type']
+			}).appendTo( title.find('small').eq(0) )
 
 		// 属性
 			var stats = $('<div class="stats"/>')
 							.html('<h4 data-content="属性">属性</h4>')
 							.appendTo(dom)
-				,stat_container = $('<div class="stat"/>').appendTo(stats)
+				,stat_container = $('<div class="stat right-gutter"/>').appendTo(stats)
 
 			_stat('fire', '火力')
 			_stat('torpedo', '雷装')
@@ -8289,6 +8323,9 @@ _frame.infos.__entity = function( id ){
 			_stat('evasion', '回避')
 			_stat('los', '索敌')
 			_stat('range', '射程')
+			
+			if( !stat_container.html() )
+				stat_container.html('<div class="no-content">无...</div>')
 
 		// 开发 & 改修
 		/*
@@ -8362,7 +8399,7 @@ _frame.infos.__entity = function( id ){
 					)
 				})
 			}else{
-				equipped_container.addClass('no').html('暂无初始配置该装备的舰娘...')
+				equipped_container.addClass('no no-content').html('暂无初始配置该装备的舰娘...')
 			}
 
 		// 图鉴
@@ -8379,6 +8416,14 @@ _frame.infos.__entity = function( id ){
 		return dom
 	}
 
+
+_frame.infos.__equipment_init = function( $el ){  
+    function showEquipable( e ){
+        return modal.equipable.show( e.currentTarget.getAttribute('data-equipment-type') )
+    }
+    
+    $el.on('click.equipable', 'button[data-equipment-type]', showEquipable)
+};
 // 舰队配置
 	_frame.infos.__fleet = function( id, el, d ){
 		return (new InfosFleet(id, el, d)).el
@@ -11488,6 +11533,8 @@ _frame.app_main.mode_selection_off = function(){
 
 if( typeof _p.tip != 'undefined' ){
 
+
+// [[EQUIPMENT::123]]
 _p.tip.filters.push( function(cont){
 	var exp = /^\[\[EQUIPMENT\:\:([0-9]+)\]\]$/.exec(cont)
 	if( exp && exp.length > 1 )
@@ -11556,7 +11603,60 @@ _p.tip.content_equipment = function( d ){
 		+ _stat('los', '索敌')
 		+ _stat('range', '射程')
 
-}}
+}
+
+
+
+// [[EQUIPABLE::123]]
+_p.tip.filters.push( function(cont){
+	var exp = /^\[\[EQUIPABLE\:\:([0-9]+)\]\]$/.exec(cont)
+	if( exp && exp.length > 1 )
+		return _p.tip.content_equipable( _g.data.item_types[ parseInt(exp[1]) ] )
+} )
+
+_p.tip.content_equipable_results = {}
+_p.tip.content_equipable = function( d ){
+	if( !_p.tip.content_equipable_results[d.id] ){
+		let html = `<h4 class="item_equipable_on">可装备于以下舰种</h4>`
+			,equipable_extra_ship = d.equipable_extra_ship || []
+		
+		html+= `<p>`	
+		if( d.equipable_on_type.length ){
+			let types = []
+			_g.ship_type_order_full.forEach( function(ship_type){
+				if( d.equipable_on_type.indexOf( ship_type ) > -1 )
+					types.push( ship_type )
+			} )
+			html+= types.map(function(ship_type){
+					let shipType = _g.data.ship_types[ship_type]
+					return '<span>' + (shipType.full_zh || shipType.full_game) + `(${shipType.code})` + '</span>'
+				}).join(' / ')
+		}else{
+			html+= '无...'
+		}
+		html+= `</p>`	
+		
+		if( equipable_extra_ship.length ){
+			html+= `<h4 class="item_equipable_on">也可装备于以下舰娘</h4>`
+			html+= d.equipable_extra_ship.map(function(shipId){
+					let ship = _g.data.ships[shipId]
+						,shipType = ship.getType()
+					return `<span><a href="?infos=ship&id=${shipId}" data-shipid="${shipId}" data-infos="[[SHIP::${shipId}]]" data-tip="[[SHIP::${shipId}]]">`
+							+ (shipType ? `[${shipType}] ` : '' )
+							+ ship.getName(_g.joint)
+							+ `</a></span>`
+				}).join(' / ')
+		}
+		
+		_p.tip.content_equipable_results[d.id] = html
+	}
+	
+	return _p.tip.content_equipable_results[d.id]
+}
+
+
+
+}
 
 if( typeof _p.tip != 'undefined' ){
 
@@ -11584,6 +11684,70 @@ _p.tip.content_ship = function( d ){
 
 }}
 
+var modal = {}
+modal.equipable = {
+    'frames': {},
+    'frame': function( typeId ){
+        if( !typeId )
+            return false
+
+        if( !this.frames[typeId] ){
+            let container = $('<div/>')
+            
+            let equipType = _g.data.item_types[typeId]
+                ,onType = equipType.equipable_on_type || []
+                ,extraShip = equipType.equipable_extra_ship || []
+                ,types = []
+                    
+            _g.ship_type_order_full.forEach( function(ship_type){
+                if( onType.indexOf( ship_type ) > -1 )
+                    types.push( ship_type )
+            } )
+            
+            _p.el.flexgrid.create().appendTo( container ).addClass('equipable-types').prepend( $(
+                /*
+                types.map(function(ship_type){
+                    let shipType = _g.data.ship_types[ship_type]
+                    return '<span>' + (shipType.full_zh || shipType.full_game) + ` (${shipType.code})` + '</span>'
+                }).join('')
+                */
+                _g.ship_type_order_full.map( function(shipTypeId){
+                    let shipType = _g.data.ship_types[shipTypeId]
+                    if( shipType.hide || shipType.donotcompare )
+                        return ''
+                    return '<span class="unit' + ( onType.indexOf( shipTypeId ) > -1 ? ' on' : '' ) + '">'
+                        + (shipType.full_zh || shipType.full_game) + ` (${shipType.code})`
+                        + '</span>'
+                } ).join('')
+            ) ).appendTo( container )
+			
+            if( extraShip.length ){
+                container.append('<p>以及以下舰娘...</p>')
+                let containerExtraShip = _p.el.flexgrid.create().appendTo( container ).addClass('list-ship equipable-extra-ships')
+                extraShip.forEach(function(shipId){
+                    containerExtraShip.appendDOM(
+                        _tmpl.link_ship(shipId).addClass('unit')
+                    )
+                })
+            }
+            
+            this.frames[typeId] = container
+        }
+        
+        return this.frames[typeId]
+    },
+    'show': function( typeId ){
+        return _frame.modal.show(
+            this.frame( typeId ),
+            //'可装备于...',
+            `${_g.data.item_types[typeId].name.zh_cn} 可装备于...`,
+            {
+                'classname': 	'modal-equipable',
+                'detach':		true
+            }
+        )
+    }
+}
 /*
  */
 _p.el.tablelist = {

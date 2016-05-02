@@ -2559,6 +2559,7 @@ _g.badgeError = function (cont) {
 
 _g.pageChangeBefore = function () {
 	_frame.dom.mobilemenu.prop('checked', !1);
+	_frame.modal.hide();
 };
 _g.title = function (t) {
 	if (!t) {
@@ -3765,7 +3766,7 @@ _g.kancolle_calc = {
 	}
 };
 
-_g.db_version = '1.9.0.0';
+_g.db_version = '1.13.0.0';
 
 _g.bgimg_count = 0;
 
@@ -3920,6 +3921,17 @@ _g.getScriptCanvas = function () {
 		deferred.resolve();
 	});
 	return deferred.promise;
+};
+
+_g.getLink = function (t, id) {
+	return _g.state2URI({
+		'infos': t,
+		'id': id
+	});
+};
+
+_g.getImg = function (t, id, img) {
+	return _g.path.pics[t] + '/' + id + '/' + img + '.png';
 };
 
 _frame.app_main = {
@@ -4404,6 +4416,8 @@ _g.error = function (err) {
 
 var debugmode = !1;
 
+_g.ship_type_order_full = [6, 7, 18, 20, 8, 10, 11, 9, 4, 23, 5, 2, 28, 3, 1, 19, 13, 14, 17, 12, 24, 15, 21, 16, 29, 25, 26, 27];
+
 var ShareBar = function () {
 	function ShareBar(options) {
 		_classCallCheck(this, ShareBar);
@@ -4714,7 +4728,7 @@ _tmpl.link_ship = function (ship, tagName, returnHTML, mode, extraIllust) {
 		})();
 	}
 
-	return _tmpl.export('<' + tagName + (tagName == 'a' ? ' href="?infos=ship&id=' + shipId + '"' : '') + (' class="link_ship" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]"') + (hasExtraIllust ? ' icon="hanger"' : '') + '>' + ('<img src="' + node.path.normalize(_g.path.pics.ships) + '/' + shipId + '/0.webp"/>') + ('<span>' + content + '</span>') + ('</' + tagName + '>'), returnHTML);
+	return _tmpl.export('<' + tagName + (tagName == 'a' ? ' href="' + _g.getLink('ships', shipId) + '"' : '') + (' class="link_ship" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]"') + (hasExtraIllust ? ' icon="hanger"' : '') + '>' + ('<img src="' + _g.getImg('ships', shipId, 0) + '"/>') + ('<span>' + content + '</span>') + ('</' + tagName + '>'), returnHTML);
 };
 
 _tmpl.textlink_entity = function (entity, tagName, returnHTML) {
@@ -6018,6 +6032,14 @@ _frame.infos = {
 		this.is_init = !0;
 		return !0;
 	}
+};
+
+_frame.infos.__equipment_init = function ($el) {
+	function showEquipable(e) {
+		return modal.equipable.show(e.currentTarget.getAttribute('data-equipment-type'));
+	}
+
+	$el.on('click.equipable', 'button[data-equipment-type]', showEquipable);
 };
 
 _frame.infos.__ship_init = function ($el) {
@@ -7803,7 +7825,6 @@ _frame.app_main.mode_selection_off = function () {
 };
 
 if (typeof _p.tip != 'undefined') {
-
 	_p.tip.filters.push(function (cont) {
 		var exp = /^\[\[EQUIPMENT\:\:([0-9]+)\]\]$/.exec(cont);
 		if (exp && exp.length > 1) return _p.tip.content_equipment(_g.data.items[parseInt(exp[1])]);
@@ -7831,6 +7852,49 @@ if (typeof _p.tip != 'undefined') {
 
 		return '<h3 class="itemstat">' + '<s class="equiptypeicon mod-' + d.getIconId() + '"></s>' + '<strong data-content="' + item_name + '">' + item_name + '</strong>' + '<small>' + _g.data.item_types[d['type']]['name']['zh_cn'] + '</small>' + '</h3>' + _stat('fire', '火力') + _stat('torpedo', '雷装') + _stat('aa', '对空') + _stat('asw', '对潜') + _stat('bomb', '爆装') + _stat('hit', '命中') + _stat('armor', '装甲') + _stat('evasion', '回避') + _stat('los', '索敌') + _stat('range', '射程');
 	};
+
+	_p.tip.filters.push(function (cont) {
+		var exp = /^\[\[EQUIPABLE\:\:([0-9]+)\]\]$/.exec(cont);
+		if (exp && exp.length > 1) return _p.tip.content_equipable(_g.data.item_types[parseInt(exp[1])]);
+	});
+
+	_p.tip.content_equipable_results = {};
+	_p.tip.content_equipable = function (d) {
+		if (!_p.tip.content_equipable_results[d.id]) {
+			var html = '<h4 class="item_equipable_on">可装备于以下舰种</h4>',
+			    equipable_extra_ship = d.equipable_extra_ship || [];
+
+			html += '<p>';
+			if (d.equipable_on_type.length) {
+				(function () {
+					var types = [];
+					_g.ship_type_order_full.forEach(function (ship_type) {
+						if (d.equipable_on_type.indexOf(ship_type) > -1) types.push(ship_type);
+					});
+					html += types.map(function (ship_type) {
+						var shipType = _g.data.ship_types[ship_type];
+						return '<span>' + (shipType.full_zh || shipType.full_game) + ('(' + shipType.code + ')') + '</span>';
+					}).join(' / ');
+				})();
+			} else {
+				html += '无...';
+			}
+			html += '</p>';
+
+			if (equipable_extra_ship.length) {
+				html += '<h4 class="item_equipable_on">也可装备于以下舰娘</h4>';
+				html += d.equipable_extra_ship.map(function (shipId) {
+					var ship = _g.data.ships[shipId],
+					    shipType = ship.getType();
+					return '<span><a href="?infos=ship&id=' + shipId + '" data-shipid="' + shipId + '" data-infos="[[SHIP::' + shipId + ']]" data-tip="[[SHIP::' + shipId + ']]">' + (shipType ? '[' + shipType + '] ' : '') + ship.getName(_g.joint) + '</a></span>';
+				}).join(' / ');
+			}
+
+			_p.tip.content_equipable_results[d.id] = html;
+		}
+
+		return _p.tip.content_equipable_results[d.id];
+	};
 }
 
 if (typeof _p.tip != 'undefined') {
@@ -7847,6 +7911,57 @@ if (typeof _p.tip != 'undefined') {
 		return html;
 	};
 }
+
+var modal = {};
+modal.equipable = {
+	'frames': {},
+	'frame': function frame(typeId) {
+		var _this9 = this;
+
+		if (!typeId) return !1;
+
+		if (!this.frames[typeId]) {
+			(function () {
+				var container = $('<div/>');
+
+				var equipType = _g.data.item_types[typeId],
+				    onType = equipType.equipable_on_type || [],
+				    extraShip = equipType.equipable_extra_ship || [],
+				    types = [];
+
+				_g.ship_type_order_full.forEach(function (ship_type) {
+					if (onType.indexOf(ship_type) > -1) types.push(ship_type);
+				});
+
+				_p.el.flexgrid.create().appendTo(container).addClass('equipable-types').prepend($(_g.ship_type_order_full.map(function (shipTypeId) {
+					var shipType = _g.data.ship_types[shipTypeId];
+					if (shipType.hide || shipType.donotcompare) return '';
+					return '<span class="unit' + (onType.indexOf(shipTypeId) > -1 ? ' on' : '') + '">' + (shipType.full_zh || shipType.full_game) + (' (' + shipType.code + ')') + '</span>';
+				}).join(''))).appendTo(container);
+
+				if (extraShip.length) {
+					(function () {
+						container.append('<p>以及以下舰娘...</p>');
+						var containerExtraShip = _p.el.flexgrid.create().appendTo(container).addClass('list-ship equipable-extra-ships');
+						extraShip.forEach(function (shipId) {
+							containerExtraShip.appendDOM(_tmpl.link_ship(shipId).addClass('unit'));
+						});
+					})();
+				}
+
+				_this9.frames[typeId] = container;
+			})();
+		}
+
+		return this.frames[typeId];
+	},
+	'show': function show(typeId) {
+		return _frame.modal.show(this.frame(typeId), _g.data.item_types[typeId].name.zh_cn + ' 可装备于...', {
+			'classname': 'modal-equipable',
+			'detach': !0
+		});
+	}
+};
 
 _p.el.tablelist = {
 	init_el: function init_el(el) {
@@ -8197,17 +8312,17 @@ var TablelistEntities = function (_Tablelist) {
 	function TablelistEntities(container, options) {
 		_classCallCheck(this, TablelistEntities);
 
-		var _this9 = _possibleConstructorReturn(this, Object.getPrototypeOf(TablelistEntities).call(this, container, options));
+		var _this10 = _possibleConstructorReturn(this, Object.getPrototypeOf(TablelistEntities).call(this, container, options));
 
-		_frame.app_main.loading.push('tablelist_' + _this9._index);
+		_frame.app_main.loading.push('tablelist_' + _this10._index);
 		_frame.app_main.is_loaded = !1;
 
 		if (container.children('.tablelist-list').length) {
-			_this9.init_parse();
-		} else if (_this9.init_new) {
-			_this9.init_new(options);
+			_this10.init_parse();
+		} else if (_this10.init_new) {
+			_this10.init_new(options);
 		}
-		return _this9;
+		return _this10;
 	}
 
 	_createClass(TablelistEntities, [{
@@ -8227,21 +8342,21 @@ var TablelistShips = function (_Tablelist2) {
 	function TablelistShips(container, options) {
 		_classCallCheck(this, TablelistShips);
 
-		var _this10 = _possibleConstructorReturn(this, Object.getPrototypeOf(TablelistShips).call(this, container, options));
+		var _this11 = _possibleConstructorReturn(this, Object.getPrototypeOf(TablelistShips).call(this, container, options));
 
-		_this10.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['夜战', 'nightpower'], ['对空', 'aa'], ['对潜', 'asw'], ['耐久', 'hp'], ['装甲', 'armor'], ['回避', 'evasion'], ['搭载', 'carry'], ['航速', 'speed'], ['射程', 'range'], ['索敌', 'los'], ['运', 'luck'], ['油耗', 'consum_fuel'], ['弹耗', 'consum_ammo'], ['多立绘', 'extra_illust']];
-		_this10.header_checkbox = [];
-		_this10.mode_selection_filters = $();
+		_this11.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['夜战', 'nightpower'], ['对空', 'aa'], ['对潜', 'asw'], ['耐久', 'hp'], ['装甲', 'armor'], ['回避', 'evasion'], ['搭载', 'carry'], ['航速', 'speed'], ['射程', 'range'], ['索敌', 'los'], ['运', 'luck'], ['油耗', 'consum_fuel'], ['弹耗', 'consum_ammo'], ['多立绘', 'extra_illust']];
+		_this11.header_checkbox = [];
+		_this11.mode_selection_filters = $();
 
-		_this10.rows = $();
-		_this10.rowsById = {};
+		_this11.rows = $();
+		_this11.rowsById = {};
 
-		_frame.app_main.loading.push('tablelist_' + _this10._index);
+		_frame.app_main.loading.push('tablelist_' + _this11._index);
 		_frame.app_main.is_loaded = !1;
 
 		if (container.children('.tablelist-container').length) {
-			_this10.init_parse();
-		}return _this10;
+			_this11.init_parse();
+		}return _this11;
 	}
 
 	_createClass(TablelistShips, [{
@@ -8462,20 +8577,20 @@ var TablelistShips = function (_Tablelist2) {
 			var header_index = -1;
 
 			this.dom.tbody.children('h4, dl').each(function (index, tr) {
-				var _this11 = this;
+				var _this12 = this;
 
 				tr = $(tr);
 				tr.attr('trindex', index);
 				if (tr[0].tagName == 'H4') {
 					(function () {
 						header_index++;
-						_this11.last_item = tr;
+						_this12.last_item = tr;
 						var checkbox = tr.find('input[type="checkbox"]').on({
 							'change': function () {
 								checkbox.data('ships').filter(':visible').each(function (index, el) {
 									this.check(el, checkbox.prop('checked'), !0);
 								}.bind(this));
-							}.bind(_this11),
+							}.bind(_this12),
 							'docheck': function docheck() {
 								var trs = checkbox.data('ships').filter(':visible'),
 								    checked = trs.filter('[compare="true"]');
@@ -8497,14 +8612,14 @@ var TablelistShips = function (_Tablelist2) {
 								}
 							}
 						}).data('ships', $());
-						_this11.header_checkbox[header_index] = checkbox;
+						_this12.header_checkbox[header_index] = checkbox;
 
-						_this11.mode_selection_filters.add($('<input/>', {
+						_this12.mode_selection_filters.add($('<input/>', {
 							'value': header_index,
 							'type': 'checkbox',
 							'class': 'shiptype',
 							'id': 'shiptype-' + header_index
-						}).prop('checked', !header_index).prependTo(_this11.dom.container));
+						}).prop('checked', !header_index).prependTo(_this12.dom.container));
 						$('<label/>', {
 							'for': 'shiptype-' + header_index,
 							'class': 'shiptype'
@@ -8585,16 +8700,16 @@ var TablelistEquipments = function (_Tablelist3) {
 	function TablelistEquipments(container, options) {
 		_classCallCheck(this, TablelistEquipments);
 
-		var _this12 = _possibleConstructorReturn(this, Object.getPrototypeOf(TablelistEquipments).call(this, container, options));
+		var _this13 = _possibleConstructorReturn(this, Object.getPrototypeOf(TablelistEquipments).call(this, container, options));
 
-		_this12.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['对空', 'aa'], ['对潜', 'asw'], ['爆装', 'bomb'], ['命中', 'hit'], ['装甲', 'armor'], ['回避', 'evasion'], ['索敌', 'los'], ['射程', 'range'], ['可改修', 'improvable']];
+		_this13.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['对空', 'aa'], ['对潜', 'asw'], ['爆装', 'bomb'], ['命中', 'hit'], ['装甲', 'armor'], ['回避', 'evasion'], ['索敌', 'los'], ['射程', 'range'], ['可改修', 'improvable']];
 
-		_frame.app_main.loading.push('tablelist_' + _this12._index);
+		_frame.app_main.loading.push('tablelist_' + _this13._index);
 		_frame.app_main.is_loaded = !1;
 
 		if (container.children('.tablelist-container').length) {
-			_this12.init_parse();
-		}return _this12;
+			_this13.init_parse();
+		}return _this13;
 	}
 
 	_createClass(TablelistEquipments, [{
@@ -8744,28 +8859,28 @@ var TablelistFleets = function (_Tablelist4) {
 	function TablelistFleets(container, options) {
 		_classCallCheck(this, TablelistFleets);
 
-		var _this13 = _possibleConstructorReturn(this, Object.getPrototypeOf(TablelistFleets).call(this, container, options));
+		var _this14 = _possibleConstructorReturn(this, Object.getPrototypeOf(TablelistFleets).call(this, container, options));
 
-		_this13.columns = ['  ', ['创建者', 'user'], ['修改时间', 'time_modify'], ['评价', 'rating'], ['', 'options']];
+		_this14.columns = ['  ', ['创建者', 'user'], ['修改时间', 'time_modify'], ['评价', 'rating'], ['', 'options']];
 
-		_this13.kancolle_calc = {
+		_this14.kancolle_calc = {
 			'_ApplicationId': 'l1aps8iaIfcq2ZzhOHJWNUU2XrNySIzRahodijXW',
 			'_ClientVersion': 'js1.2.19',
 			'_InstallationId': '62522018-ec82-b434-f5a5-08c3ab61d932',
 			'_JavaScriptKey': 'xOrFpWEQZFxUDK2fN1DwbKoj3zTKAEkgJHzwTuZ4'
 		};
 
-		_frame.app_main.loading.push('tablelist_' + _this13._index);
+		_frame.app_main.loading.push('tablelist_' + _this14._index);
 		_frame.app_main.is_loaded = !1;
 
-		_this13.dom.filter_container = $('<div class="options" viewtype="card"/>').appendTo(_this13.dom.container);
-		_this13.dom.filters = $('<div class="filters"/>').appendTo(_this13.dom.filter_container);
+		_this14.dom.filter_container = $('<div class="options" viewtype="card"/>').appendTo(_this14.dom.container);
+		_this14.dom.filters = $('<div class="filters"/>').appendTo(_this14.dom.filter_container);
 
-		_this13.dom.btn_new = $('<button class="new" icon="import"/>').html('新建/导入').on('click', function (e, target) {
+		_this14.dom.btn_new = $('<button class="new" icon="import"/>').html('新建/导入').on('click', function (e, target) {
 			this.btn_new(target);
-		}.bind(_this13)).appendTo(_this13.dom.filters);
+		}.bind(_this14)).appendTo(_this14.dom.filters);
 		if (TablelistFleets.support.buildfile) {
-			_this13.dom.btn_exportFile = $('<button class="export" icon="floppy-disk"/>').html('导出配置文件').on('click', function () {
+			_this14.dom.btn_exportFile = $('<button class="export" icon="floppy-disk"/>').html('导出配置文件').on('click', function () {
 				_db.fleets.persistence.compactDatafile();
 				if (_g.isNWjs) {
 					_g.save(_db.fleets.filename, 'fleets.json');
@@ -8787,11 +8902,11 @@ var TablelistFleets = function (_Tablelist4) {
 						});
 					})();
 				}
-			}).appendTo(_this13.dom.filters);
+			}).appendTo(_this14.dom.filters);
 		}
 
-		_this13.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(_this13.dom.filters);
-		_this13.dom.setting_hqlv = $('<label/>', {
+		_this14.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(_this14.dom.filters);
+		_this14.dom.setting_hqlv = $('<label/>', {
 			'class': 'setting setting-hqlv',
 			'html': '默认司令部等级',
 			'data-tip': '如果舰队配置没有设置司令部等级，<br/>则会使用该默认数值<br/>司令部等级会影响索敌能力的计算'
@@ -8801,45 +8916,45 @@ var TablelistFleets = function (_Tablelist4) {
 					e.stopImmediatePropagation();
 					e.stopPropagation();
 				}
-			}.bind(_this13)
-		}).append(_this13.dom.setting_hqlv_input = $('<input/>', {
+			}.bind(_this14)
+		}).append(_this14.dom.setting_hqlv_input = $('<input/>', {
 			'type': 'number',
 			'min': 0,
 			'max': _g.shipMaxLv
 		}).val(Lockr.get('hqLvDefault', _g.defaultHqLv)).on({
 			'input': function () {
 				_g.updateDefaultHqLv(this.dom.setting_hqlv_input.val());
-			}.bind(_this13),
+			}.bind(_this14),
 			'focus.tipshow': function () {
 				this.dom.setting_hqlv_input.trigger('tipshow');
-			}.bind(_this13),
+			}.bind(_this14),
 			'blur.tiphide': function () {
 				this.dom.setting_hqlv_input.trigger('tiphide');
-			}.bind(_this13),
+			}.bind(_this14),
 			'click': function click(e) {
 				e.stopImmediatePropagation();
 				e.stopPropagation();
 			}
-		})).appendTo(_this13.dom.buttons_right);
+		})).appendTo(_this14.dom.buttons_right);
 		$body.on('update_defaultHqLv.update_fleets_hqlv_input', function (e, val) {
 			this.dom.setting_hqlv_input.val(val);
-		}.bind(_this13));
-		_this13.dom.btn_settings = $('<button icon="cog"/>').on('click', function () {
+		}.bind(_this14));
+		_this14.dom.btn_settings = $('<button icon="cog"/>').on('click', function () {
 			this.btn_settings();
-		}.bind(_this13)).appendTo(_this13.dom.buttons_right);
+		}.bind(_this14)).appendTo(_this14.dom.buttons_right);
 
-		_this13.dom.table = $('<div class="tablelist-container"/>').appendTo(_this13.dom.container);
-		_this13.dom.thead = $('<dl/>').appendTo($('<div class="tablelist-header"/>').appendTo(_this13.dom.table));
-		_this13.dom.tbody = $('<div class="tablelist-body" scrollbody/>').appendTo(_this13.dom.table).on('contextmenu.contextmenu_fleet', '[data-fleetid]', function (e) {
+		_this14.dom.table = $('<div class="tablelist-container"/>').appendTo(_this14.dom.container);
+		_this14.dom.thead = $('<dl/>').appendTo($('<div class="tablelist-header"/>').appendTo(_this14.dom.table));
+		_this14.dom.tbody = $('<div class="tablelist-body" scrollbody/>').appendTo(_this14.dom.table).on('contextmenu.contextmenu_fleet', '[data-fleetid]', function (e) {
 			this.contextmenu_show($(e.currentTarget), null, e);
 			e.preventDefault();
-		}.bind(_this13)).on('click.contextmenu_fleet', '[data-fleetid]>dt>em', function (e) {
+		}.bind(_this14)).on('click.contextmenu_fleet', '[data-fleetid]>dt>em', function (e) {
 			this.contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget));
 			e.stopImmediatePropagation();
 			e.stopPropagation();
-		}.bind(_this13));
+		}.bind(_this14));
 
-		_this13.columns.forEach(function (v, i) {
+		_this14.columns.forEach(function (v, i) {
 			if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) == 'object') {
 				$('<dd/>', {
 					'stat': v[1],
@@ -8848,18 +8963,18 @@ var TablelistFleets = function (_Tablelist4) {
 			} else {
 				$('<dt/>').html(v[0]).appendTo(this.dom.thead);
 			}
-		}.bind(_this13));
+		}.bind(_this14));
 
 		$('<div class="nocontent container"/>').append($($('<div/>').append($('<span>').html('暂无舰队配置')).append($('<button>').html('新建/导入').on('click', function (e) {
 			this.dom.btn_new.trigger('click', [e]);
-		}.bind(_this13))))).appendTo(_this13.dom.table);
+		}.bind(_this14))))).appendTo(_this14.dom.table);
 
-		_this13.dom.container.on('focus.number_input_select', 'input[type="number"]', function (e) {
+		_this14.dom.container.on('focus.number_input_select', 'input[type="number"]', function (e) {
 			e.currentTarget.select();
 		});
 
-		_this13.genlist();
-		return _this13;
+		_this14.genlist();
+		return _this14;
 	}
 
 	_createClass(TablelistFleets, [{
@@ -8999,7 +9114,7 @@ var TablelistFleets = function (_Tablelist4) {
 	}, {
 		key: 'append_all_items',
 		value: function append_all_items(arr) {
-			var _this14 = this;
+			var _this15 = this;
 
 			arr = arr || [];
 			arr.sort(function (a, b) {
@@ -9028,8 +9143,8 @@ var TablelistFleets = function (_Tablelist4) {
 					for (var _i20 in sorted) {
 						k = 0;
 
-						while (k < _this14.flexgrid_empty_count) {
-							if (!k) _this14.flexgrid_ph = $('<dl data-fleetid trindex="99999"/>').appendTo(_this14.dom.tbody);else $('<dl data-fleetid trindex="99999"/>').appendTo(_this14.dom.tbody);
+						while (k < _this15.flexgrid_empty_count) {
+							if (!k) _this15.flexgrid_ph = $('<dl data-fleetid trindex="99999"/>').appendTo(_this15.dom.tbody);else $('<dl data-fleetid trindex="99999"/>').appendTo(_this15.dom.tbody);
 							k++;
 						}
 
@@ -9039,13 +9154,13 @@ var TablelistFleets = function (_Tablelist4) {
 								count++;
 								if (count >= arr.length - 1) deferred.resolve();
 							}.bind(this)(index), 0);
-						}.bind(_this14));
+						}.bind(_this15));
 
 						$('<h4/>', {
-							'trindex': ++_this14.trIndex,
+							'trindex': ++_this15.trIndex,
 							'html': '&nbsp;'
-						}).appendTo(_this14.dom.tbody);
-						_this14.trIndex++;
+						}).appendTo(_this15.dom.tbody);
+						_this15.trIndex++;
 					}
 				})();
 			} else {

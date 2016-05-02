@@ -56,11 +56,11 @@ _tmpl.link_ship = function( ship, tagName, returnHTML, mode, extraIllust ){
 
 	return _tmpl.export(
 			`<${tagName}`
-				+ (tagName == 'a' ? ` href="?infos=ship&id=${shipId}"` : '')
+				+ (tagName == 'a' ? ` href="${_g.getLink('ships', shipId)}"` : '')
 				+ ` class="link_ship" data-shipid="${shipId}" data-infos="[[SHIP::${shipId}]]"`
 				+ (hasExtraIllust ? ` icon="hanger"` : '')
 			+ `>`
-				+ `<img src="${node.path.normalize(_g.path.pics.ships)}/${shipId}/0.webp"/>`
+				+ `<img src="${_g.getImg('ships', shipId, 0)}"/>`
 				+ `<span>${content}</span>`
 			+ `</${tagName}>`,
 		/*

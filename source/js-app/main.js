@@ -62,6 +62,7 @@
 			})
 	}
 	_g.ship_type_order = []
+	_g.ship_type_order_full = []
 	_g.ship_type_order_map = {}
 
 
@@ -170,6 +171,17 @@
 	
 	_g.save = function( url, n, callback ){
 		_g.file_save_as(url, n, callback)
+	}
+
+	_g.getLink = function( t, id ){
+		switch( t ){
+				case 'ships':		t = 'ship';		break;
+		}
+		return `?infos=${t}&id=${id}`
+	}
+	
+	_g.getImg = function( t, id, img ){
+		return `${node.path.normalize(_g.path.pics[t])}/${id}/${img}.webp`
 	}
 
 
@@ -732,6 +744,7 @@ _frame.app_main = {
 												_g.ship_type_order.push(
 													doc['types'].length > 1 ? doc['types'] : doc['types'][0]
 												)
+												_g.ship_type_order_full = _g.ship_type_order_full.concat( doc['types'] )
 												//_g.data['ship_type_order'][doc['id']] = doc
 												_g.data['ship_type_order'][i] = doc
 											})

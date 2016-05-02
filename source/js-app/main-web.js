@@ -1,5 +1,5 @@
 // Global Variables
-	_g.db_version = '1.9.0.0';
+	_g.db_version = '1.13.0.0';
 
 	_g.bgimg_count = 0;
 
@@ -194,6 +194,17 @@
 		});
 		return deferred.promise
 	};
+
+	_g.getLink = function( t, id ){
+		return _g.state2URI({
+			'infos':t,
+			'id': 	id
+		})
+	}
+	
+	_g.getImg = function( t, id, img ){
+		return `${_g.path.pics[t]}/${id}/${img}.png`
+	}
 
 
 

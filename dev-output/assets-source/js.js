@@ -53,6 +53,7 @@
 
 // @koala-prepend "../../source/js-app/main-web.js"
 // @koala-prepend "../../source/js-app/main-web-page.js"
+// @koala-prepend "../../source/js-app/main-web-other.js"
 
 // @koala-prepend "../../source/js-app/sharebar.js"
 // @koala-prepend "../../source/js-app/duoshuo.js"
@@ -77,11 +78,15 @@
 // @koala-prepend "../../source/js-app/frame/bgimg.js"
 // @koala-prepend "../../source/js-app/frame/bgimg.web.js"
 // @koala-prepend "../../source/js-app/frame/infos.web.js"
+// @koala-prepend "../../source/js-app/frame/infos-equipment-init.js"
 // @koala-prepend "../../source/js-app/frame/infos-ship-init.js"
 // @koala-prepend "../../source/js-app/frame/infos-fleet.js"
 // @koala-prepend "../../source/js-app/frame/mode-selection.js"
 // @koala-prepend "../../source/js-app/frame/tip-equipment.js"
 // @koala-prepend "../../source/js-app/frame/tip-ship.js"
+
+// @koala-prepend "../../source/js-app/frame/modal/_base.js"
+// @koala-prepend "../../source/js-app/frame/modal/equipable.js"
 
 // @koala-prepend "../../source/js-app/elements/tablelist.js"
 // @koala-prepend "../../source/js-app/elements/tablelist-entities.js"

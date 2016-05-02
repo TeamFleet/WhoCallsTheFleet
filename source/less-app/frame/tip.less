@@ -141,12 +141,16 @@
 		display:	block;
 		font-family:@font_famliy_Hei;
 		padding:	0;
+		.margin-top(2);
 		.line-height(14);
 		.padding-bottom(8);
 		.margin-bottom(10);
 		.border-bottom(1, dashed, mix(@color1, @color2, 75%) );
-		&~span{
+		& ~ span, & ~ p span{
 			display:	inline-block;
+		}
+		& ~ h4{
+			margin-top: 1em;
 		}
 	}
 }

@@ -43,6 +43,27 @@
 			}
 		}
 	}
+	
+	.right-gutter{
+		.padding-right(290);
+	}
+
+	.button-equipable{
+		color: 		@color_accent;
+		border: 	1px solid @color_accent;
+		//font-size: 	14px;
+		//line-height:18px;
+		padding: 	0 .3em;
+		border-radius: 3px;
+		transition-property: color, background-color, border-color;
+		&:hover{
+			color:			hsl(149, 20%, 20%);
+			background: 	@color_accent;
+		}
+		&:active{
+			background: 	hsla(149, 80%, 75%, .75);
+		}
+	}
 
 	&>div{
 		.flex(1 0 auto);
@@ -51,15 +72,23 @@
 			.padding-top(45);
 		}
 		&.title{
+			/*
 			&,
 			& + .stats{
 				.padding-right(290);
 			}
+			*/
 			small{
 				color:		@color_accent;
 				span{
 					background:	hsla(149, 80%, 75%, .75);
 					color:		hsl(149, 20%, 20%);
+				}
+				.button-equipable{
+					margin-left:.65em;
+					top: 		-.1em;
+					position: 	relative;
+					font-size:	smaller;
 				}
 			}
 		}
@@ -171,12 +200,12 @@
 						small{
 							padding:	.25em;
 						}
-						&:hover{
+						//&:hover{
 							//color:		@color_accent;
-						}
-						&:active{
+						//}
+						//&:active{
 							//color:		@color_accent2;
-						}
+						//}
 					}
 					&>i{
 						display:		inline-block;
@@ -246,7 +275,7 @@
 				//margin-top:	-.35em;
 			//}
 		}
-		&.equipped{
+		//&.equipped{
 			//flex-basis:	50%;
 			//min-height:	40%;
 			//.flexgrid{
@@ -275,7 +304,23 @@
 				}
 				*/
 			//}
-		}
+		//}
+		//.equipable{
+			/*
+			p{
+				font-size: 		16px;
+				color: 			@color_accent;
+				margin-bottom: 	.25em;
+			}
+			div ~ p{
+				margin-top: .5em;
+			}
+			div > span{
+				display: inline-block;
+				margin-right: 2em;
+			}
+			*/
+		//}
 	}
 	&>aside{
 		.flex(0);
@@ -303,6 +348,13 @@
 		}
 	}
 	@media all and (max-width: 960px){
+		.right-gutter{
+			.padding-right(230);
+		}
+		&>div.equipable .right-gutter{
+			padding-right: 0;
+		}
+		/*
 		&>div{
 			&.title{
 				&,
@@ -311,6 +363,7 @@
 				}
 			}
 		}
+		*/
 		&>aside{
 			width:		200px;
 			height:		200px;
@@ -321,7 +374,8 @@
 		&>div.title{
 			padding-right: (@illustsize + 30);
 		}
-		&>div.title+.stats{
+		&>div.title+.stats,
+		&>div.equipable .right-gutter{
 			padding-right: 0;
 		}
 		&>aside{
