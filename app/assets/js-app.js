@@ -12560,7 +12560,7 @@ class TablelistShips extends Tablelist{
 			return false
 	
 		if( !TablelistShips.contextmenu ){
-			let createMenu = () => {
+			let createMenu = function(){
 				let items = [
 						$('<menuitem/>').html('选择')
 							.on({
@@ -12701,7 +12701,7 @@ class TablelistShips extends Tablelist{
 				}
 				
 				return TablelistShips.contextmenu
-			}
+			}.bind(this)
 			if( !this.is_init ){
 				TablelistShips.contextmenu = new _menu({
 					'className': 'contextmenu-ship',
@@ -12880,7 +12880,7 @@ class TablelistShips extends Tablelist{
 			,trs = this.dom.tbody.children('h4, dl')
 
 		trs.each( function(index, tr){
-			chain = chain.then( () => {
+			chain = chain.then( function(){
 				//console.log(index)
 				tr = $(tr)
 				tr.attr('trindex', index)
@@ -12940,13 +12940,11 @@ class TablelistShips extends Tablelist{
 					this.rowsById[ship_id] = tr
 					this.rows = this.rows.add(tr)
 				}
-				setTimeout( deferred.resolve , 0 )
-				this.initProgressMax = 0
-				this.initProgressCur = 0
 				this.dom.container.trigger('initprogress', [(index+1), trs.length])
+				setTimeout( deferred.resolve , 0 )
 				//deferred.resolve()
 				return deferred.promise
-			} )
+			}.bind(this) )
 		}.bind(this) )
 		
 		//this.compare_checkbox = this.dom.tbody.find('input[type="checkbox"].compare')

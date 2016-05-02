@@ -8448,7 +8448,7 @@ var TablelistShips = function (_Tablelist2) {
 
 			if (!TablelistShips.contextmenu) {
 				(function () {
-					var createMenu = function createMenu() {
+					var createMenu = function () {
 						var items = [$('<menuitem/>').html('选择').on({
 							'click': function click(e) {
 								if (_frame.app_main.is_mode_selection()) _frame.app_main.mode_selection_callback(TablelistShips.contextmenu._curid);
@@ -8463,14 +8463,14 @@ var TablelistShips = function (_Tablelist2) {
 						}), $('<menuitem/>').html('将该舰娘加入对比').on({
 							'click': function (e) {
 								this.check(this.rowsById[TablelistShips.contextmenu._curid]);
-							}.bind(_this12),
+							}.bind(this),
 							'show': function (e) {
 								if (!TablelistShips.contextmenu._curid) return !1;
 
 								if (_g.data.ship_types[_g['data']['ships'][TablelistShips.contextmenu._curid]['type']]['donotcompare']) $(e.target).hide();else $(e.target).show();
 
 								if (this.rowsById[TablelistShips.contextmenu._curid].attr('compare') === 'true') $(e.target).html('取消对比');else $(e.target).html('将该舰娘加入对比');
-							}.bind(_this12)
+							}.bind(this)
 						}), $('<div/>').on('show', function (e) {
 							var $div = $(e.target).empty();
 							if (TablelistShips.contextmenu._curid) {
@@ -8502,7 +8502,7 @@ var TablelistShips = function (_Tablelist2) {
 									}))));
 								}, this);
 							}
-						}.bind(_this12))];
+						}.bind(this))];
 
 						if (TablelistShips.contextmenu) {
 							if (TablelistShips.contextmenu.showing) {
@@ -8527,7 +8527,7 @@ var TablelistShips = function (_Tablelist2) {
 						}
 
 						return TablelistShips.contextmenu;
-					};
+					}.bind(_this12);
 					if (!_this12.is_init) {
 						TablelistShips.contextmenu = new _menu({
 							'className': 'contextmenu-ship',
@@ -8664,15 +8664,15 @@ var TablelistShips = function (_Tablelist2) {
 			    trs = this.dom.tbody.children('h4, dl');
 
 			trs.each(function (index, tr) {
-				var _this13 = this;
-
 				chain = chain.then(function () {
+					var _this13 = this;
+
 					tr = $(tr);
 					tr.attr('trindex', index);
 					var deferred = Q.defer();
 					var ship_id = tr.attr('data-shipid');
 					var header_index = tr.attr('data-header');
-					if (!_this13.rowsByHeader[header_index]) _this13.rowsByHeader[header_index] = $();
+					if (!this.rowsByHeader[header_index]) this.rowsByHeader[header_index] = $();
 					if (tr[0].tagName == 'H4') {
 						(function () {
 							var checkbox = tr.find('input[type="checkbox"]').on({
@@ -8717,17 +8717,15 @@ var TablelistShips = function (_Tablelist2) {
 							tr.attr('inited', !0);
 						})();
 					} else if (ship_id) {
-						_this13.rowsByHeader[header_index] = _this13.rowsByHeader[header_index].add(tr);
-						_this13.rowsById[ship_id] = tr;
-						_this13.rows = _this13.rows.add(tr);
+						this.rowsByHeader[header_index] = this.rowsByHeader[header_index].add(tr);
+						this.rowsById[ship_id] = tr;
+						this.rows = this.rows.add(tr);
 					}
+					this.dom.container.trigger('initprogress', [index + 1, trs.length]);
 					setTimeout(deferred.resolve, 0);
-					_this13.initProgressMax = 0;
-					_this13.initProgressCur = 0;
-					_this13.dom.container.trigger('initprogress', [index + 1, trs.length]);
 
 					return deferred.promise;
-				});
+				}.bind(this));
 			}.bind(this));
 
 			chain = chain.then(function () {
