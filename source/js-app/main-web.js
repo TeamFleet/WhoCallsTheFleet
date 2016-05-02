@@ -297,7 +297,7 @@ _frame.app_main = {
 		pushState: function( stateObj, title, url ){
 			history.pushState( stateObj, title, url )
 			
-			console.log(stateObj)
+			//console.log(stateObj)
 
 			//if( !stateObj['infos'] )
 			//	_frame.infos.hide()

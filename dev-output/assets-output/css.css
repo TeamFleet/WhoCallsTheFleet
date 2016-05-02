@@ -5965,6 +5965,24 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships h4 label.checkbox {
   transition-property: transform;
 }
+#layout.mode-selection .tablelist.ships h4:not([inited]) label.shiptype {
+  cursor: default !important;
+}
+#layout.mode-selection .tablelist.ships h4:not([inited]) label.checkbox:before {
+  opacity: 0;
+}
+#layout.mode-selection .tablelist.ships h4:not([inited]) label.checkbox:after {
+  content: "处理中……";
+  font-size: smaller;
+  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
+  display: inline-block;
+  padding-left: .5em;
+  opacity: .65;
+  font-weight: lighter;
+}
+#layout.mode-selection .tablelist.ships h4:not([inited]) ~ dl {
+  display: none !important;
+}
 #layout.mode-selection .tablelist.ships > [viewtype="card"] ~ .tablelist-container h4 label.shiptype {
   margin-left: 0;
 }
@@ -12300,13 +12318,13 @@ body > .modal.modal-equipable section .flexgrid.equipable-types > .unit:not(:emp
   background: #000;
   font-size: 13px;
   font-weight: normal;
-  color: rgba(255, 255, 255, 0.25);
-  background: rgba(128, 128, 128, 0.5);
+  color: rgba(255, 255, 255, 0.35);
+  background: rgba(128, 128, 128, 0.35);
   text-align: center;
 }
 body > .modal.modal-equipable section .flexgrid.equipable-types > .unit:not(:empty).on {
-  color: #c5ffa8;
-  background: rgba(59, 179, 0, 0.5);
+  color: #a8ffd2;
+  background: rgba(0, 179, 86, 0.5);
 }
 body > .modal.infos_fleet.on > div {
   animation: scale-in 0.5s;

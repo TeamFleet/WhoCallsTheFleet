@@ -248,52 +248,53 @@
 
 !function(root,factory){"undefined"!=typeof exports?"undefined"!=typeof module&&module.exports&&(exports=module.exports=factory(root,exports)):"function"==typeof define&&define.amd?define(["exports"],function(exports){root.Lockr=factory(root,exports)}):root.Lockr=factory(root,{})}(this,function(root,Lockr){"use strict";return Array.prototype.indexOf||(Array.prototype.indexOf=function(elt){var len=this.length>>>0,from=Number(arguments[1])||0;for(from=0>from?Math.ceil(from):Math.floor(from),0>from&&(from+=len);len>from;from++)if(from in this&&this[from]===elt)return from;return-1}),Lockr.prefix="",Lockr._getPrefixedKey=function(key,options){return options=options||{},options.noPrefix?key:this.prefix+key},Lockr.set=function(key,value,options){var query_key=this._getPrefixedKey(key,options);try{localStorage.setItem(query_key,JSON.stringify({data:value}))}catch(e){console&&console.warn("Lockr didn't successfully save the '{"+key+": "+value+"}' pair, because the localStorage is full.")}},Lockr.get=function(key,missing,options){var value,query_key=this._getPrefixedKey(key,options);try{value=JSON.parse(localStorage.getItem(query_key))}catch(e){try{value=localStorage[query_key]?JSON.parse('{"data":"'+localStorage.getItem(query_key)+'"}'):null}catch(e){console&&console.warn("Lockr could not load the item with key "+key)}}return null===value?missing:"undefined"!=typeof value.data?value.data:missing},Lockr.sadd=function(key,value,options){var json,query_key=this._getPrefixedKey(key,options),values=Lockr.smembers(key);if(values.indexOf(value)>-1)return null;try{values.push(value),json=JSON.stringify({data:values}),localStorage.setItem(query_key,json)}catch(e){console.log(e),console&&console.warn("Lockr didn't successfully add the "+value+" to "+key+" set, because the localStorage is full.")}},Lockr.smembers=function(key,options){var value,query_key=this._getPrefixedKey(key,options);try{value=JSON.parse(localStorage.getItem(query_key))}catch(e){value=null}return null===value?[]:value.data||[]},Lockr.sismember=function(key,value,options){this._getPrefixedKey(key,options);return Lockr.smembers(key).indexOf(value)>-1},Lockr.getAll=function(){var keys=Object.keys(localStorage);return keys.map(function(key){return Lockr.get(key)})},Lockr.srem=function(key,value,options){var json,index,query_key=this._getPrefixedKey(key,options),values=Lockr.smembers(key,value);index=values.indexOf(value),index>-1&&values.splice(index,1),json=JSON.stringify({data:values});try{localStorage.setItem(query_key,json)}catch(e){console&&console.warn("Lockr couldn't remove the "+value+" from the set "+key)}},Lockr.rm=function(key){localStorage.removeItem(key)},Lockr.flush=function(){localStorage.clear()},Lockr});
 //
-// SmoothScroll for websites v1.3.8 (Balazs Galambosi)
+// SmoothScroll for websites v1.4.4 (Balazs Galambosi)
+// http://www.smoothscroll.net/
+//
 // Licensed under the terms of the MIT license.
 //
 // You may use it in your theme if you credit me. 
 // It is also free to use on any individual website.
 //
 // Exception:
-// The only restriction would be not to publish any  
+// The only restriction is to not publish any  
 // extension for browsers or native application
 // without getting a written permission first.
 //
- 
+
 (function () {
   
 // Scroll Variables (tweakable)
 var defaultOptions = {
- 
+
     // Scrolling Core
     frameRate        : 150, // [Hz]
-    animationTime    : 200, // [px]
-    //stepSize         : 120, // [px]
+    animationTime    : 400, // [ms]
     stepSize         : 100, // [px]
- 
+
     // Pulse (less tweakable)
     // ratio of "tail" to "acceleration"
     pulseAlgorithm   : true,
     pulseScale       : 4,
     pulseNormalize   : 1,
- 
+
     // Acceleration
-    accelerationDelta : 20,  // 20
-    accelerationMax   : 1,   // 1
- 
+    accelerationDelta : 50,  // 50
+    accelerationMax   : 3,   // 3
+
     // Keyboard Settings
     keyboardSupport   : true,  // option
-    arrowScroll       : 50,     // [px]
- 
+    arrowScroll       : 50,    // [px]
+
     // Other
-    touchpadSupport   : true,
+    touchpadSupport   : false, // ignore touchpad by default
     fixedBackground   : true, 
     excluded          : ''    
 };
- 
+
 var options = defaultOptions;
- 
- 
+
+
 // Other Variables
 var isExcluded = false;
 var isFrame = false;
@@ -302,24 +303,18 @@ var initDone  = false;
 var root = document.documentElement;
 var activeElement;
 var observer;
+var refreshSize;
 var deltaBuffer = [];
 var isMac = /^Mac/.test(navigator.platform);
- 
+
 var key = { left: 37, up: 38, right: 39, down: 40, spacebar: 32, 
             pageup: 33, pagedown: 34, end: 35, home: 36 };
- 
- 
-/***********************************************
- * SETTINGS
- ***********************************************/
- 
-var options = defaultOptions;
- 
- 
+var arrowKeys = { 37: 1, 38: 1, 39: 1, 40: 1 };
+
 /***********************************************
  * INITIALIZE
  ***********************************************/
- 
+
 /**
  * Tests if smooth scrolling is allowed. Shuts down everything if not.
  */
@@ -328,16 +323,16 @@ function initTest() {
         addEvent('keydown', keydown);
     }
 }
- 
+
 /**
  * Sets up scrolls array, determines if frames are involved.
  */
 function init() {
   
     if (initDone || !document.body) return;
- 
+
     initDone = true;
- 
+
     var body = document.body;
     var html = document.documentElement;
     var windowHeight = window.innerHeight; 
@@ -348,13 +343,18 @@ function init() {
     activeElement = body;
     
     initTest();
- 
+
     // Checks if this script is running in a frame
     if (top != self) {
         isFrame = true;
     }
- 
+
     /**
+     * Please duplicate this radar for a Safari fix! 
+     * rdar://22376037
+     * https://openradar.appspot.com/radar?id=4965070979203072
+     * 
+     * Only applies to Safari now, Chrome fixed it in v45:
      * This fixes a bug where the areas left and right to 
      * the content does not trigger the onmousewheel event
      * on some pages. e.g.: html, body { height: 100% }
@@ -362,7 +362,7 @@ function init() {
     else if (scrollHeight > windowHeight &&
             (body.offsetHeight <= windowHeight || 
              html.offsetHeight <= windowHeight)) {
- 
+
         var fullPageElem = document.createElement('div');
         fullPageElem.style.cssText = 'position:absolute; z-index:-10000; ' +
                                      'top:0; left:0; right:0; height:' + 
@@ -371,7 +371,7 @@ function init() {
         
         // DOM changed (throttled) to fix height
         var pendingRefresh;
-        var refresh = function () {
+        refreshSize = function () {
             if (pendingRefresh) return; // could also be: clearTimeout(pendingRefresh);
             pendingRefresh = setTimeout(function () {
                 if (isExcluded) return; // could be running after cleanup
@@ -381,8 +381,10 @@ function init() {
             }, 500); // act rarely to stay fast
         };
   
-        setTimeout(refresh, 10);
- 
+        setTimeout(refreshSize, 10);
+
+        addEvent('resize', refreshSize);
+
         // TODO: attributeFilter?
         var config = {
             attributes: true, 
@@ -390,24 +392,24 @@ function init() {
             characterData: false 
             // subtree: true
         };
- 
-        observer = new MutationObserver(refresh);
+
+        observer = new MutationObserver(refreshSize);
         observer.observe(body, config);
- 
+
         if (root.offsetHeight <= windowHeight) {
             var clearfix = document.createElement('div');   
             clearfix.style.clear = 'both';
             body.appendChild(clearfix);
         }
     }
- 
+
     // disable fixed background
     if (!options.fixedBackground && !isExcluded) {
         body.style.backgroundAttachment = 'scroll';
         html.style.backgroundAttachment = 'scroll';
     }
 }
- 
+
 /**
  * Removes event listeners and other traces left on the page.
  */
@@ -416,9 +418,11 @@ function cleanup() {
     removeEvent(wheelEvent, wheel);
     removeEvent('mousedown', mousedown);
     removeEvent('keydown', keydown);
+    removeEvent('resize', refreshSize);
+    removeEvent('load', init);
 }
- 
- 
+
+
 /************************************************
  * SCROLLING 
  ************************************************/
@@ -426,14 +430,14 @@ function cleanup() {
 var que = [];
 var pending = false;
 var lastScroll = Date.now();
- 
+
 /**
  * Pushes scroll actions to the scrolling queue.
  */
 function scrollArray(elem, left, top) {
     
     directionCheck(left, top);
- 
+
     if (options.accelerationMax != 1) {
         var now = Date.now();
         var elapsed = now - lastScroll;
@@ -461,7 +465,7 @@ function scrollArray(elem, left, top) {
     if (pending) {
         return;
     }  
- 
+
     var scrollWindow = (elem === document.body);
     
     var step = function (time) {
@@ -501,7 +505,7 @@ function scrollArray(elem, left, top) {
                 que.splice(i, 1); i--;
             }           
         }
- 
+
         // scroll left and top
         if (scrollWindow) {
             window.scrollBy(scrollX, scrollY);
@@ -527,25 +531,25 @@ function scrollArray(elem, left, top) {
     requestFrame(step, elem, 0);
     pending = true;
 }
- 
- 
+
+
 /***********************************************
  * EVENTS
  ***********************************************/
- 
+
 /**
  * Mouse wheel handler.
  * @param {Object} event
  */
 function wheel(event) {
- 
+
     if (!initDone) {
         init();
     }
     
     var target = event.target;
     var overflowing = overflowingAncestor(target);
- 
+
     // use default if there's no overflowing
     // element or default action is prevented   
     // or it's a zooming event with CTRL 
@@ -556,10 +560,11 @@ function wheel(event) {
     // leave embedded content alone (flash & pdf)
     if (isNodeName(activeElement, 'embed') || 
        (isNodeName(target, 'embed') && /\.pdf/i.test(target.src)) ||
-       isNodeName(activeElement, 'object')) {
+        isNodeName(activeElement, 'object') ||
+        target.shadowRoot) {
         return true;
     }
- 
+
     var deltaX = -event.wheelDeltaX || event.deltaX || 0;
     var deltaY = -event.wheelDeltaY || event.deltaY || 0;
     
@@ -576,7 +581,7 @@ function wheel(event) {
     if (!deltaX && !deltaY) {
         deltaY = -event.wheelDelta || 0;
     }
- 
+
     // line based scrolling (Firefox mostly)
     if (event.deltaMode === 1) {
         deltaX *= 40;
@@ -587,7 +592,7 @@ function wheel(event) {
     if (!options.touchpadSupport && isTouchpad(deltaY)) {
         return true;
     }
- 
+
     // scale by step size
     // delta is 120 most of the time
     // synaptics seems to send 1 sometimes
@@ -602,53 +607,59 @@ function wheel(event) {
     event.preventDefault();
     scheduleClearCache();
 }
- 
+
 /**
  * Keydown event handler.
  * @param {Object} event
  */
 function keydown(event) {
- 
+
     var target   = event.target;
     var modifier = event.ctrlKey || event.altKey || event.metaKey || 
                   (event.shiftKey && event.keyCode !== key.spacebar);
     
     // our own tracked active element could've been removed from the DOM
-    if (!document.contains(activeElement)) {
+    if (!document.body.contains(activeElement)) {
         activeElement = document.activeElement;
     }
- 
+
     // do nothing if user is editing text
     // or using a modifier key (except shift)
     // or in a dropdown
     // or inside interactive elements
     var inputNodeNames = /^(textarea|select|embed|object)$/i;
     var buttonTypes = /^(button|submit|radio|checkbox|file|color|image)$/i;
-    if ( inputNodeNames.test(target.nodeName) ||
+    if ( event.defaultPrevented ||
+         inputNodeNames.test(target.nodeName) ||
          isNodeName(target, 'input') && !buttonTypes.test(target.type) ||
          isNodeName(activeElement, 'video') ||
          isInsideYoutubeVideo(event) ||
          target.isContentEditable || 
-         event.defaultPrevented   ||
          modifier ) {
       return true;
     }
-    
-    // spacebar should trigger button press
+
+    // [spacebar] should trigger button press, leave it alone
     if ((isNodeName(target, 'button') ||
          isNodeName(target, 'input') && buttonTypes.test(target.type)) &&
         event.keyCode === key.spacebar) {
+      return true;
+    }
+
+    // [arrwow keys] on radio buttons should be left alone
+    if (isNodeName(target, 'input') && target.type == 'radio' &&
+        arrowKeys[event.keyCode])  {
       return true;
     }
     
     var shift, x = 0, y = 0;
     var elem = overflowingAncestor(activeElement);
     var clientHeight = elem.clientHeight;
- 
+
     if (elem == document.body) {
         clientHeight = window.innerHeight;
     }
- 
+
     switch (event.keyCode) {
         case key.up:
             y = -options.arrowScroll;
@@ -682,54 +693,54 @@ function keydown(event) {
         default:
             return true; // a key we don't care about
     }
- 
+
     scrollArray(elem, x, y);
     event.preventDefault();
     scheduleClearCache();
 }
- 
+
 /**
  * Mousedown event only for updating activeElement
  */
 function mousedown(event) {
     activeElement = event.target;
 }
- 
- 
+
+
 /***********************************************
  * OVERFLOW
  ***********************************************/
- 
+
 var uniqueID = (function () {
     var i = 0;
     return function (el) {
         return el.uniqueID || (el.uniqueID = i++);
     };
 })();
- 
+
 var cache = {}; // cleared out after a scrolling session
 var clearCacheTimer;
- 
+
 //setInterval(function () { cache = {}; }, 10 * 1000);
- 
+
 function scheduleClearCache() {
     clearTimeout(clearCacheTimer);
     clearCacheTimer = setInterval(function () { cache = {}; }, 1*1000);
 }
- 
+
 function setCache(elems, overflowing) {
     for (var i = elems.length; i--;)
         cache[uniqueID(elems[i])] = overflowing;
     return overflowing;
 }
- 
+
 //  (body)                (root)
 //         | hidden | visible | scroll |  auto  |
 // hidden  |   no   |    no   |   YES  |   YES  |
 // visible |   no   |   YES   |   YES  |   YES  |
 // scroll  |   no   |   YES   |   YES  |   YES  |
 // auto    |   no   |   YES   |   YES  |   YES  |
- 
+
 function overflowingAncestor(el) {
     var elems = [];
     var body = document.body;
@@ -752,40 +763,40 @@ function overflowingAncestor(el) {
         }
     } while (el = el.parentElement);
 }
- 
+
 function isContentOverflowing(el) {
     return (el.clientHeight + 10 < el.scrollHeight);
 }
- 
+
 // typically for <body> and <html>
 function overflowNotHidden(el) {
     var overflow = getComputedStyle(el, '').getPropertyValue('overflow-y');
     return (overflow !== 'hidden');
 }
- 
+
 // for all other elements
 function overflowAutoOrScroll(el) {
     var overflow = getComputedStyle(el, '').getPropertyValue('overflow-y');
     return (overflow === 'scroll' || overflow === 'auto');
 }
- 
- 
+
+
 /***********************************************
  * HELPERS
  ***********************************************/
- 
+
 function addEvent(type, fn) {
     window.addEventListener(type, fn, false);
 }
- 
+
 function removeEvent(type, fn) {
     window.removeEventListener(type, fn, false);  
 }
- 
+
 function isNodeName(el, tag) {
     return (el.nodeName||'').toLowerCase() === tag.toLowerCase();
 }
- 
+
 function directionCheck(x, y) {
     x = (x > 0) ? 1 : -1;
     y = (y > 0) ? 1 : -1;
@@ -796,19 +807,19 @@ function directionCheck(x, y) {
         lastScroll = 0;
     }
 }
- 
+
 var deltaBufferTimer;
- 
+
 if (window.localStorage && localStorage.SS_deltaBuffer) {
     deltaBuffer = localStorage.SS_deltaBuffer.split(',');
 }
- 
+
 function isTouchpad(deltaY) {
     if (!deltaY) return;
     if (!deltaBuffer.length) {
         deltaBuffer = [deltaY, deltaY, deltaY];
     }
-    deltaY = Math.abs(deltaY)
+    deltaY = Math.abs(deltaY);
     deltaBuffer.push(deltaY);
     deltaBuffer.shift();
     clearTimeout(deltaBufferTimer);
@@ -819,17 +830,17 @@ function isTouchpad(deltaY) {
     }, 1000);
     return !allDeltasDivisableBy(120) && !allDeltasDivisableBy(100);
 } 
- 
+
 function isDivisible(n, divisor) {
     return (Math.floor(n / divisor) == n / divisor);
 }
- 
+
 function allDeltasDivisableBy(divisor) {
     return (isDivisible(deltaBuffer[0], divisor) &&
             isDivisible(deltaBuffer[1], divisor) &&
             isDivisible(deltaBuffer[2], divisor));
 }
- 
+
 function isInsideYoutubeVideo(event) {
     var elem = event.target;
     var isControl = false;
@@ -842,7 +853,7 @@ function isInsideYoutubeVideo(event) {
     }
     return isControl;
 }
- 
+
 var requestFrame = (function () {
       return (window.requestAnimationFrame       || 
               window.webkitRequestAnimationFrame || 
@@ -851,11 +862,11 @@ var requestFrame = (function () {
                  window.setTimeout(callback, delay || (1000/60));
              });
 })();
- 
+
 var MutationObserver = (window.MutationObserver || 
                         window.WebKitMutationObserver ||
                         window.MozMutationObserver);  
- 
+
 var getScrollRoot = (function() {
   var SCROLL_ROOT;
   return function() {
@@ -865,19 +876,19 @@ var getScrollRoot = (function() {
       document.body.appendChild(dummy);
       var bodyScrollTop  = document.body.scrollTop;
       var docElScrollTop = document.documentElement.scrollTop;
-      window.scrollBy(0, 1);
+      window.scrollBy(0, 3);
       if (document.body.scrollTop != bodyScrollTop)
         (SCROLL_ROOT = document.body);
       else 
         (SCROLL_ROOT = document.documentElement);
-      window.scrollBy(0, -1);
+      window.scrollBy(0, -3);
       document.body.removeChild(dummy);
     }
     return SCROLL_ROOT;
   };
 })();
- 
- 
+
+
 /***********************************************
  * PULSE (by Michael Herf)
  ***********************************************/
@@ -904,30 +915,68 @@ function pulse_(x) {
     }
     return val * options.pulseNormalize;
 }
- 
+
 function pulse(x) {
     if (x >= 1) return 1;
     if (x <= 0) return 0;
- 
+
     if (options.pulseNormalize == 1) {
         options.pulseNormalize /= pulse_(1);
     }
     return pulse_(x);
 }
- 
+
+
+/***********************************************
+ * FIRST RUN
+ ***********************************************/
+
+var userAgent = window.navigator.userAgent;
+var isEdge    = /Edge/.test(userAgent); // thank you MS
+var isChrome  = /chrome/i.test(userAgent) && !isEdge; 
+var isSafari  = /safari/i.test(userAgent) && !isEdge; 
+var isMobile  = /mobile/i.test(userAgent);
+var isIEWin7  = /Windows NT 6.1/i.test(userAgent) && /rv:11/i.test(userAgent);
+var isEnabledForBrowser = (isChrome || isSafari || isIEWin7) && !isMobile;
+
 var wheelEvent;
 if ('onwheel' in document.createElement('div'))
     wheelEvent = 'wheel';
 else if ('onmousewheel' in document.createElement('div'))
     wheelEvent = 'mousewheel';
- 
-if (wheelEvent) {
+
+if (wheelEvent && isEnabledForBrowser) {
     addEvent(wheelEvent, wheel);
     addEvent('mousedown', mousedown);
     addEvent('load', init);
 }
- 
+
+
+/***********************************************
+ * PUBLIC INTERFACE
+ ***********************************************/
+
+function SmoothScroll(optionsToSet) {
+    for (var key in optionsToSet)
+        if (defaultOptions.hasOwnProperty(key)) 
+            options[key] = optionsToSet[key];
+}
+SmoothScroll.destroy = cleanup;
+
+if (window.SmoothScrollOptions) // async API
+    SmoothScroll(window.SmoothScrollOptions);
+
+if (typeof define === 'function' && define.amd)
+    define(function() {
+        return SmoothScroll;
+    });
+else if ('object' == typeof exports)
+    module.exports = SmoothScroll;
+else
+    window.SmoothScroll = SmoothScroll;
+
 })();
+
 // Copyright (c) 2013 Pieroxy <pieroxy@pieroxy.net>
 // This work is free. You can redistribute it and/or modify it
 // under the terms of the WTFPL, Version 2
@@ -12421,6 +12470,7 @@ class TablelistShips extends Tablelist{
 		//this.checkbox = []
 		this.rows = $()
 		this.rowsById = {}
+		this.rowsByHeader = {}
 		//this.last_item = null
 		//this.compare_checkbox
 
@@ -12429,6 +12479,19 @@ class TablelistShips extends Tablelist{
 			_frame.app_main.is_loaded = false
 	
 			//_g.log( 'shiplist init', _frame.app_main.loading )
+		
+		this.initProgressMax = 0
+		this.initProgressCur = 0
+
+		this.dom.container.on({
+			//'initdone': function(){
+			//	_g.log('tablelist-ships init done')
+			//},
+			'initprogress': function(e, cur, max){
+				this.initProgressCur = cur || this.initProgressCur
+				this.initProgressMax = max || this.initProgressMax
+			}
+		})
 		
 		if( container.children('.tablelist-container').length ){
 			this.init_parse()
@@ -12496,128 +12559,184 @@ class TablelistShips extends Tablelist{
 		if( this.dom.filter_container.attr('viewtype') == 'compare' || $el.attr('data-donotcompare') == 'true' )
 			return false
 	
-		if( !TablelistShips.contextmenu )
-			TablelistShips.contextmenu = new _menu({
-				'className': 'contextmenu-ship',
-				'items': [
-					$('<menuitem/>').html('选择')
-						.on({
-							'click': function(e){
-								if( _frame.app_main.is_mode_selection() )
-									_frame.app_main.mode_selection_callback(TablelistShips.contextmenu._curid)
-							},
-							'show': function(){
-								if( _frame.app_main.is_mode_selection() )
-									$(this).show()
-								else
-									$(this).hide()
-							}
-						}),
-					$('<menuitem/>').html('查看资料')
-						.on({
-							'click': function(e){
-								TablelistShips.contextmenu._curel.trigger('click', [true])
-							}
-						}),
-	
-					$('<menuitem/>').html('将该舰娘加入对比')
-						.on({
-							'click': function(e){
-								//this.checkbox[TablelistShips.contextmenu._curid]
-								//	.prop('checked', !this.checkbox[TablelistShips.contextmenu._curid].prop('checked'))
-								//	.trigger('change')
-								this.check( this.rowsById[TablelistShips.contextmenu._curid] )
-							}.bind(this),
-							'show': function(e){
-								if( !TablelistShips.contextmenu._curid )
-									return false
-								
-								if( _g.data.ship_types[_g['data']['ships'][TablelistShips.contextmenu._curid]['type']]['donotcompare'] )
-									$(e.target).hide()
-								else
-									$(e.target).show()
+		if( !TablelistShips.contextmenu ){
+			let createMenu = () => {
+				let items = [
+						$('<menuitem/>').html('选择')
+							.on({
+								'click': function(e){
+									if( _frame.app_main.is_mode_selection() )
+										_frame.app_main.mode_selection_callback(TablelistShips.contextmenu._curid)
+								},
+								'show': function(){
+									if( _frame.app_main.is_mode_selection() )
+										$(this).show()
+									else
+										$(this).hide()
+								}
+							}),
+						$('<menuitem/>').html('查看资料')
+							.on({
+								'click': function(e){
+									TablelistShips.contextmenu._curel.trigger('click', [true])
+								}
+							}),
+		
+						$('<menuitem/>').html('将该舰娘加入对比')
+							.on({
+								'click': function(e){
+									//this.checkbox[TablelistShips.contextmenu._curid]
+									//	.prop('checked', !this.checkbox[TablelistShips.contextmenu._curid].prop('checked'))
+									//	.trigger('change')
+									this.check( this.rowsById[TablelistShips.contextmenu._curid] )
+								}.bind(this),
+								'show': function(e){
+									if( !TablelistShips.contextmenu._curid )
+										return false
 									
-								//if( this.checkbox[TablelistShips.contextmenu._curid].prop('checked') )
-								if( this.rowsById[TablelistShips.contextmenu._curid].attr('compare') === 'true' )
-									$(e.target).html('取消对比')
-								else
-									$(e.target).html('将该舰娘加入对比')
-							}.bind(this)
-						}),
-					
-					$('<div/>').on('show', function(e){
-						var $div = $(e.target).empty()
-						if( TablelistShips.contextmenu._curid ){
-							var series = _g['data']['ships'][TablelistShips.contextmenu._curid].getSeriesData() || []
-							series.forEach(function(currentValue, i){
-								if( !i )
-									$div.append($('<hr/>'))
-								let checkbox = null
-								try{
-									//checkbox = this.checkbox[currentValue['id']]
-									checkbox = this.rowsById[currentValue['id']]
-								}catch(e){}
-								$div.append(
-									$('<div class="item"/>')
-										.html('<span>' + _g['data']['ships'][currentValue['id']].getName(true) + '</span>')
-										.append(
-											$('<div class="group"/>')
-												.append(function(){
-													var els = $()
-													
-													if( _frame.app_main.is_mode_selection() ){
-														els = els.add(
-															$('<menuitem/>')
-																.html('选择')
-																.on({
-																	'click': function(){
-																		if( _frame.app_main.is_mode_selection() )
-																			_frame.app_main.mode_selection_callback(currentValue['id'])
+									if( _g.data.ship_types[_g['data']['ships'][TablelistShips.contextmenu._curid]['type']]['donotcompare'] )
+										$(e.target).hide()
+									else
+										$(e.target).show()
+										
+									//if( this.checkbox[TablelistShips.contextmenu._curid].prop('checked') )
+									if( this.rowsById[TablelistShips.contextmenu._curid].attr('compare') === 'true' )
+										$(e.target).html('取消对比')
+									else
+										$(e.target).html('将该舰娘加入对比')
+								}.bind(this)
+							}),
+						
+						$('<div/>').on('show', function(e){
+							var $div = $(e.target).empty()
+							if( TablelistShips.contextmenu._curid ){
+								var series = _g['data']['ships'][TablelistShips.contextmenu._curid].getSeriesData() || []
+								series.forEach(function(currentValue, i){
+									if( !i )
+										$div.append($('<hr/>'))
+									let checkbox = null
+									try{
+										//checkbox = this.checkbox[currentValue['id']]
+										checkbox = this.rowsById[currentValue['id']]
+									}catch(e){}
+									$div.append(
+										$('<div class="item"/>')
+											.html('<span>' + _g['data']['ships'][currentValue['id']].getName(true) + '</span>')
+											.append(
+												$('<div class="group"/>')
+													.append(function(){
+														var els = $()
+														
+														if( _frame.app_main.is_mode_selection() ){
+															els = els.add(
+																$('<menuitem/>')
+																	.html('选择')
+																	.on({
+																		'click': function(){
+																			if( _frame.app_main.is_mode_selection() )
+																				_frame.app_main.mode_selection_callback(currentValue['id'])
+																		}
+																	})
+															)
+														}
+														
+														return els
+													})
+													.append(
+														$('<menuitem data-infos="[[SHIP::'+currentValue['id']+']]"/>')
+															.html('查看资料')
+													)
+													.append(
+														$('<menuitem/>')
+															.html(
+																//checkbox && checkbox.prop('checked')
+																checkbox && checkbox.attr('compare') === 'true'
+																	? '取消对比'
+																	: '加入对比'
+															)
+															.on({
+																'click': function(e){
+																	if( checkbox ){
+																		//this.checkbox[currentValue['id']]
+																		//	.prop('checked', !checkbox.prop('checked'))
+																		//	.trigger('change')
+																		this.check( checkbox )
 																	}
-																})
-														)
-													}
-													
-													return els
-												})
-												.append(
-													$('<menuitem data-infos="[[SHIP::'+currentValue['id']+']]"/>')
-														.html('查看资料')
-												)
-												.append(
-													$('<menuitem/>')
-														.html(
-															//checkbox && checkbox.prop('checked')
-															checkbox && checkbox.attr('compare') === 'true'
-																? '取消对比'
-																: '加入对比'
-														)
-														.on({
-															'click': function(e){
-																if( checkbox ){
-																	//this.checkbox[currentValue['id']]
-																	//	.prop('checked', !checkbox.prop('checked'))
-																	//	.trigger('change')
-																	this.check( checkbox )
-																}
-															}.bind(this)
-														})
-												)
-										)
+																}.bind(this)
+															})
+													)
+											)
+									)
+								}, this)
+							}
+						}.bind(this))
+					]
+				
+				if( TablelistShips.contextmenu ){
+					if( TablelistShips.contextmenu.showing ){
+						TablelistShips.contextmenu.hide(function(){
+							TablelistShips.contextmenu.dom.body.empty()
+							items.forEach(function(item){
+								item.appendTo( TablelistShips.contextmenu.dom.body )
+							})
+							if( TablelistShips.contextmenu._is_rightclick )
+								TablelistShips.contextmenu.show(
+									TablelistShips.contextmenu._is_rightclick.x,
+									TablelistShips.contextmenu._is_rightclick.y
 								)
-							}, this)
+							else
+								TablelistShips.contextmenu.show( TablelistShips.contextmenu._curel )
+						})
+					}else{
+						TablelistShips.contextmenu.dom.body.empty()
+						items.forEach(function(item){
+							item.appendTo( TablelistShips.contextmenu.dom.body )
+						})
+					}
+				}else{
+					TablelistShips.contextmenu = new _menu({
+						'className': 'contextmenu-ship',
+						'items': items
+					})
+				}
+				
+				return TablelistShips.contextmenu
+			}
+			if( !this.is_init ){
+				TablelistShips.contextmenu = new _menu({
+					'className': 'contextmenu-ship',
+					'items': [$('<menuitem/>').html('数据处理中，请稍候……　　')]
+				})
+				this.dom.container.on({
+					'initprogress': function(e, cur, max){
+						if( TablelistShips.contextmenu.showing ){
+							TablelistShips.contextmenu.dom.body.empty().append(
+								$('<menuitem/>').html(`数据处理中，请稍候 (${((cur / max) * 100).toFixed(1)}%)`)
+							)
 						}
-					}.bind(this))
-				]
-			})
+					},
+					'initdone': function(){
+						createMenu()
+					}
+				})
+			}else{
+				createMenu()
+			}
+		}
 	
 		TablelistShips.contextmenu._curid = shipId || $el.data('shipid')
 		TablelistShips.contextmenu._curel = $el
 
-		if( is_rightclick )
+		if( is_rightclick ){
+			TablelistShips.contextmenu._is_rightclick = {
+				'x': is_rightclick.clientX,
+				'y': is_rightclick.clientY
+			}
 			TablelistShips.contextmenu.show(is_rightclick.clientX, is_rightclick.clientY)
-		else
+		}else{
+			TablelistShips.contextmenu._is_rightclick = false
 			TablelistShips.contextmenu.show($el)
+		}
 	}
 	
 	
@@ -12663,8 +12782,8 @@ class TablelistShips extends Tablelist{
 								'focus': function(){
 									this.dom.search.addClass('on')
 								}.bind(this),
-								'blur': function(){
-									if( !this.dom.container.hasClass('mod-search') )
+								'blur': function( e, force ){
+									if( force || !this.dom.container.hasClass('mod-search') )
 										this.dom.search.removeClass('on')
 								}.bind(this)
 							})
@@ -12728,6 +12847,7 @@ class TablelistShips extends Tablelist{
 							if( !e.currentTarget.getAttribute('data-donotcompare') )
 								_frame.app_main.mode_selection_callback(e.currentTarget.getAttribute('data-shipid'))
 						}
+						this.dom.searchInput.trigger('blur', [true])
 					}.bind(this))
 	
 		// 生成底部内容框架
@@ -12755,121 +12875,96 @@ class TablelistShips extends Tablelist{
 	}
 	
 	parse_all_items(){
-		let header_index = -1
+		let deferred = Q.defer()
+			,chain = Q.fcall(function(){})
+			,trs = this.dom.tbody.children('h4, dl')
 
-		this.dom.tbody.children('h4, dl').each(function(index, tr){
-			tr = $(tr)
-			tr.attr('trindex', index)
-			if( tr[0].tagName == 'H4' ){
-				header_index++
-				this.last_item = tr
-				let checkbox = tr.find('input[type="checkbox"]')
-						//.prop('disabled', _g.data['ship_type_order'][header_index]['donotcompare'] ? true : false)
-						.on({
-							'change': function(){
-								checkbox.data('ships').filter(':visible').each(function(index, el){
-									this.check( el, checkbox.prop('checked'), true )
-									//$(el).data('checkbox').prop('checked', checkbox.prop('checked')).trigger('change', [true])
-								}.bind(this))
-							}.bind(this),
-							'docheck': function(){
-								// ATTR: compare
-								var trs = checkbox.data('ships').filter(':visible')
-									,checked = trs.filter('[compare="true"]')
-								if( !checked.length ){
-									checkbox.prop({
-										'checked': 			false,
-										'indeterminate': 	false
-									})
-								}else if( checked.length < trs.length ){
-									checkbox.prop({
-										'checked': 			false,
-										'indeterminate': 	true
-									})
-								}else{
-									checkbox.prop({
-										'checked': 			true,
-										'indeterminate': 	false
-									})
-								}
-							}
-						})
-						.data('ships', $())
-				this.header_checkbox[header_index] = checkbox
-				
-				// 舰种显示/隐藏相关元素
-					this.mode_selection_filters.add(
-						$('<input/>',{
-							'value': 	header_index,
-							'type':		'checkbox',
-							'class':	'shiptype',
-							'id':		'shiptype-'+header_index
-						}).prop('checked', !header_index).prependTo(this.dom.container)
-					)
-					$('<label/>',{
-						'for':		'shiptype-'+header_index,
-						'class':	'shiptype'
-					}).prependTo(tr)
-			}else if( tr.attr('data-shipid') ){
+		trs.each( function(index, tr){
+			chain = chain.then( () => {
+				//console.log(index)
+				tr = $(tr)
+				let deferred = Q.defer()
 				let ship_id = tr.attr('data-shipid')
-					//,donotcompare = tr.attr('data-donotcompare')
-					//,ship_data = _g.data.ships[ tr.attr('data-shipid') ]
-					//,checkbox = tr.find('input[type="checkbox"]')
-					,title_index = header_index
-				
-				tr.attr('titleindex', header_index)
-				
-				/*
-				tr.on('click', function(e, forceInfos){
-						if( !forceInfos
-							&& e.target.tagName.toLowerCase() != 'em'
-							&& e.target.tagName.toLowerCase() != 'label'
-							&& _frame.app_main.is_mode_selection()
-						){
-							e.preventDefault()
-							e.stopImmediatePropagation()
-							e.stopPropagation()
-							if(!donotcompare)
-								_frame.app_main.mode_selection_callback(ship_id)
-						}
-					})
-				*/
-
-				/*
-				checkbox.prop('disabled', donotcompare)
-					//.on('click change',function(e, not_trigger_check){
-					.on('change',function(e, not_trigger_check){
-						//e.stopImmediatePropagation()
-						//e.stopPropagation()
-						if( checkbox.prop('checked') )
-							tr.attr('compare', true )
-						else
-							tr.removeAttr('compare')
-						this.compare_btn_show( checkbox.prop('checked') )
-						if( !not_trigger_check )
-							this.header_checkbox[title_index].trigger('docheck')
-					}.bind(this))
-				*/
-	
-				this.header_checkbox[title_index].data(
-						'ships',
-						this.header_checkbox[title_index].data('ships').add( tr )
-					)
-
-				//tr.data('checkbox', checkbox)
-			
-				this.rowsById[ship_id] = tr
-				//this.checkbox[ship_id] = checkbox
-				
-				this.rows = this.rows.add(tr)
-			}
-		}.bind(this))
+				let header_index = tr.attr('data-header')
+				if( !this.rowsByHeader[header_index] )
+					this.rowsByHeader[header_index] = $()
+				if( tr[0].tagName == 'H4' ){
+					let checkbox = tr.find('input[type="checkbox"]')
+							.on({
+								'change': function(){
+									this.rowsByHeader[header_index].filter(':visible').each(function(i, el){
+										this.check( el, checkbox.prop('checked'), true )
+									}.bind(this))
+								}.bind(this),
+								'docheck': function(){
+									// ATTR: compare
+									var trs = this.rowsByHeader[header_index].filter(':visible')
+										,checked = trs.filter('[compare="true"]')
+									if( !checked.length ){
+										checkbox.prop({
+											'checked': 			false,
+											'indeterminate': 	false
+										})
+									}else if( checked.length < trs.length ){
+										checkbox.prop({
+											'checked': 			false,
+											'indeterminate': 	true
+										})
+									}else{
+										checkbox.prop({
+											'checked': 			true,
+											'indeterminate': 	false
+										})
+									}
+								}.bind(this)
+							})
+					this.header_checkbox[header_index] = checkbox
+					
+					// 舰种显示/隐藏相关元素
+						this.mode_selection_filters.add(
+							$('<input/>',{
+								'value': 	header_index,
+								'type':		'checkbox',
+								'class':	'shiptype',
+								'id':		'shiptype-'+header_index
+							}).prop('checked', !header_index).prependTo(this.dom.container)
+						)
+						$('<label/>',{
+							'for':		'shiptype-'+header_index,
+							'class':	'shiptype'
+						}).prependTo(tr)
+						tr.attr('inited', true)
+				}else if( ship_id ){
+					this.rowsByHeader[header_index] = this.rowsByHeader[header_index].add( tr )
+					this.rowsById[ship_id] = tr
+					this.rows = this.rows.add(tr)
+				}
+				setTimeout( deferred.resolve , 0 )
+				this.initProgressMax = 0
+				this.initProgressCur = 0
+				this.dom.container.trigger('initprogress', [(index+1), trs.length])
+				//deferred.resolve()
+				return deferred.promise
+			} )
+		}.bind(this) )
 		
 		//this.compare_checkbox = this.dom.tbody.find('input[type="checkbox"].compare')
-		this.mark_high()
-		this.thead_redraw()
+		
+		chain = chain.then( function(){
+			this.mark_high()
+			this.thead_redraw()
+			this.is_init = true
+			this.dom.container.trigger('initdone')
+			deferred.resolve()
+		}.bind(this) )
+		
+		.catch(function(err){
+			_g.log(err)
+		})
+
 		_frame.app_main.loaded('tablelist_'+this._index, true)
-		delete( this.last_item )
+		
+		return deferred.promise
 	}
 	
 	check( row, checked, not_trigger_check ){
@@ -12887,7 +12982,7 @@ class TablelistShips extends Tablelist{
 		this.compare_btn_show( checked )
 
 		if( !not_trigger_check )
-			this.header_checkbox[parseInt(row.getAttribute('titleindex'))].trigger('docheck')
+			this.header_checkbox[parseInt(row.getAttribute('data-header'))].trigger('docheck')
 	}
 	
 	search( query ){

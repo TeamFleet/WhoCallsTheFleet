@@ -410,6 +410,26 @@
 			label.checkbox{
 				transition-property: transform;
 			}
+			&:not([inited]){
+				label.shiptype{
+					cursor: 	default !important;
+				}
+				label.checkbox:before{
+					opacity: 	0;
+				}
+				label.checkbox:after{
+					content: 	"处理中……";
+					font-size: 	smaller;
+					font-family:@font_famliy_Hei;
+					display: 	inline-block;
+					padding-left:.5em;
+					opacity: 	.65;
+					font-weight:lighter;
+				}
+				& ~ dl{
+					display: 	none !important;
+				}
+			}
 		}
 		& > [viewtype="card"] ~ .tablelist-container h4 label.shiptype{
 			margin-left: 0;
