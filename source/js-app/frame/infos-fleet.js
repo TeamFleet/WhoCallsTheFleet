@@ -1048,11 +1048,12 @@ class InfosFleetSubFleet{
 				/*
 				.append(
 					$('<span class="summary-item"/>')
-						.html('索敌能力')
+						.html('运输TP')
 						.append(
-							this.elSummaryLOS = $('<strong/>')
+							this.elSummaryTP = $('<strong/>').html('-')
 						)
-				)*/
+				)
+				*/
 		
 		this.infosFleet = infosFleet
 
@@ -1096,6 +1097,7 @@ class InfosFleetSubFleet{
 						,fleetSpeet = 'fast'
 						,consumFuel = 0
 						,consumAmmo = 0
+						//,tp = 0
 					
 					this.ships.forEach(function(shipdata){
 						if( shipdata.data[0] ){
@@ -1131,6 +1133,9 @@ class InfosFleetSubFleet{
 							// 总消耗
 								consumFuel+= ship.getAttribute('fuel', shipdata.shipLv) || 0
 								consumAmmo+= ship.getAttribute('ammo', shipdata.shipLv) || 0
+							
+							// TP
+								//tp+= shipdata.calculate('TP')
 						}
 					})
 					
@@ -1160,6 +1165,8 @@ class InfosFleetSubFleet{
 							? '<span class="fuel">' + consumFuel + '</span><span class="ammo">' + consumAmmo + '</span>'
 							: '-'
 					)
+					
+					//this.elSummaryTP.html( tp > 1 ? Math.floor(tp) : '-' )
 				}
 
 				let los = this.summaryCalcLos()
@@ -1539,7 +1546,8 @@ class InfosFleetShip{
 						break;
 				}
 			}
-			return '-'
+			return Formula.calculate( type, this.shipId, this.data[2], this.data[3], this.data[4] ) || '-'
+			//return '-'
 		}
 
 	// 更新元数据

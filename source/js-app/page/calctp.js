@@ -11,49 +11,31 @@ _frame.app_main.page['calctp'] = {
 				e.preventDefault()
 
 				let d = form.serializeObject()
+					,data = {
+						ship: {},
+						equipment: {}
+					}
 					,rA = 0
 					,rS = 0
 
 				for(let i in d){
 					let count = parseInt(d[i]) || 0;
 					switch(i){
-						case 'dd':
-							rS+= 5 * count;
-							break;
-						case 'cl':
-							rS+= 2 * count;
-							break;
-						case 'cav':
-							rS+= 4 * count;
-							break;
-						case 'av':
-							rS+= 9.5 * count;
-							break;
-						case 'lha':
-							rS+= 12.25 * count;
-							break;
-						case 'ao':
-							rS+= 14.75 * count;
-							break;
-						case 'bbv':
-						case 'ssv':
-							rS+= 7 * count;
-							break;
-						case 'ct':
-							rS+= 6 * count;
-							break;
-                            
 						// canister
 						case 'e75':
-							rS+= 5 * count;
+							data.equipment[75] = count
 							break;
 						case 'e68':
-							rS+= 8 * count;
+							data.equipment[68] = count
+							break;
+						
+						default:
+							data.ship[i] = count
 							break;
 					}
 				}
-
-				rS = Math.floor(rS)
+				
+				rS = Math.floor( Formula.calc.TP(data) )
 				rA = rS * 0.7
 
 				resultS.html( rS )

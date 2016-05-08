@@ -2921,6 +2921,9 @@ var Formula = {
 			case 'losPower':
 				return Formula.calcByShip.losPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, options);
 				break;
+			default:
+				return Formula.calcByShip[type](ship, equipments_by_slot, star_by_slot, rank_by_slot, options);
+				break;
 		}
 
 		return '-';
@@ -3229,6 +3232,77 @@ Formula.calc.losPower = function (data) {
 	return calc(x);
 };
 
+Formula.calc.TP = function (data) {
+	data = data || {};
+	var result = 0,
+	    ship = data.ship || {},
+	    equipment = data.equipment || {};
+
+	for (var _i4 in ship) {
+		var count = parseInt(ship[_i4]) || 0,
+		    multiper = 0;
+		switch (_i4) {
+			case 1:
+			case '1':
+			case 19:
+			case '19':
+			case 'dd':
+				multiper = 5;break;
+			case 2:
+			case '2':
+			case 'cl':
+				multiper = 2;break;
+			case 5:
+			case '5':
+			case 'cav':
+				multiper = 4;break;
+			case 12:
+			case '12':
+			case 24:
+			case '24':
+			case 'av':
+				multiper = 9.5;break;
+			case 15:
+			case '15':
+			case 'lha':
+				multiper = 12.25;break;
+			case 29:
+			case '29':
+			case 'ao':
+				multiper = 14.75;break;
+			case 8:
+			case '8':
+			case 'bbv':
+			case 14:
+			case '14':
+			case 'ssv':
+				multiper = 7;break;
+			case 21:
+			case '21':
+			case 'ct':
+				multiper = 6;break;
+		}
+		result += multiper * count;
+	}
+
+	for (var _i5 in equipment) {
+		var count = parseInt(equipment[_i5]) || 0,
+		    multiper = 0;
+		switch (_i5) {
+			case 68:
+			case '68':
+				multiper = 8;break;
+
+			case 75:
+			case '75':
+				multiper = 5;break;
+		}
+		result += multiper * count;
+	}
+
+	return result;
+};
+
 Formula.calcByShip.shellingPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, options) {
 	options = options || {};
 
@@ -3319,6 +3393,7 @@ Formula.calcByShip.fighterPower_v2 = function (ship, equipments_by_slot, star_by
 			    _rankInternal = rankInternal[_rank],
 			    _typeValue = 0;
 			if (equipments_by_slot[index].type == Formula.equipmentType.CarrierFighter) _typeValue = typeValue.CarrierFighter[_rank];
+			if (equipments_by_slot[index].type == Formula.equipmentType.SeaplaneFighter) _typeValue = typeValue.CarrierFighter[_rank];
 			if (equipments_by_slot[index].type == Formula.equipmentType.SeaplaneBomber) _typeValue = typeValue.SeaplaneBomber[_rank];
 			results[0] += Math.floor(base + Math.sqrt(_rankInternal[0] / 10) + _typeValue);
 			results[1] += Math.floor(base + Math.sqrt(_rankInternal[1] / 10) + _typeValue);
@@ -3351,13 +3426,29 @@ Formula.calcByShip.losPower = function (ship, equipments_by_slot, star_by_slot, 
 
 	equipments_by_slot.forEach(function (equipment) {
 		if (equipment) {
-			for (var _i4 in x) {
-				if (Formula.equipmentType[_i4] && Formula.equipmentType[_i4].push && Formula.equipmentType[_i4].indexOf(equipment.type) > -1) x[_i4] += equipment.stat.los;
+			for (var _i6 in x) {
+				if (Formula.equipmentType[_i6] && Formula.equipmentType[_i6].push && Formula.equipmentType[_i6].indexOf(equipment.type) > -1) x[_i6] += equipment.stat.los;
 			}
 		}
 	});
 
 	return Formula.calc.losPower(x);
+};
+
+Formula.calcByShip.TP = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, options) {
+	var data = {
+		ship: {},
+		equipment: {}
+	};
+	data.ship[ship.type] = 1;
+	equipments_by_slot.forEach(function (equipment) {
+		if (equipment) {
+			if (!data.equipment[equipment.id]) data.equipment[equipment.id] = 0;
+			data.equipment[equipment.id]++;
+		}
+	});
+	console.log(data);
+	return Formula.calc.TP(data);
 };
 
 var ItemBase = function () {
@@ -3507,8 +3598,8 @@ var Ship = function (_ItemBase3) {
 				return '/' + i + '/' + p + '.png';
 			};
 
-			for (var _i5 = 0; _i5 < series.length; _i5++) {
-				if (series[_i5].id == this.id) {
+			for (var _i7 = 0; _i7 < series.length; _i7++) {
+				if (series[_i7].id == this.id) {
 					switch (picId) {
 						case 0:
 						case 1:
@@ -3520,8 +3611,8 @@ var Ship = function (_ItemBase3) {
 							return getURI(this.id, picId);
 							break;
 						default:
-							if (series[_i5].illust_delete) {
-								return getURI(series[_i5 - 1].id, picId);
+							if (series[_i7].illust_delete) {
+								return getURI(series[_i7 - 1].id, picId);
 							} else {
 								return getURI(this.id, picId);
 							}
@@ -3641,8 +3732,8 @@ var Ship = function (_ItemBase3) {
 		key: '_pics',
 		get: function get() {
 			var arr = [];
-			for (var _i6 = 0; _i6 < 15; _i6++) {
-				arr.push(this.getPic(_i6));
+			for (var _i8 = 0; _i8 < 15; _i8++) {
+				arr.push(this.getPic(_i8));
 			}
 			return arr;
 		}
@@ -3838,9 +3929,9 @@ Nedb.prototype._updateById = function () {
 	if (!this._updateByIdQueue || this._updateByIdQueue.running) return !1;
 
 	var _id = void 0;
-	for (var _i7 in this._updateByIdQueue) {
-		if (this._updateByIdQueue[_i7]) {
-			_id = _i7;
+	for (var _i9 in this._updateByIdQueue) {
+		if (this._updateByIdQueue[_i9]) {
+			_id = _i9;
 			break;
 		}
 	}
@@ -5133,48 +5224,30 @@ _frame.app_main.page['calctp'] = {
 				e.preventDefault();
 
 				var d = form.serializeObject(),
+				    data = {
+					ship: {},
+					equipment: {}
+				},
 				    rA = 0,
 				    rS = 0;
 
-				for (var _i8 in d) {
-					var count = parseInt(d[_i8]) || 0;
-					switch (_i8) {
-						case 'dd':
-							rS += 5 * count;
-							break;
-						case 'cl':
-							rS += 2 * count;
-							break;
-						case 'cav':
-							rS += 4 * count;
-							break;
-						case 'av':
-							rS += 9.5 * count;
-							break;
-						case 'lha':
-							rS += 12.25 * count;
-							break;
-						case 'ao':
-							rS += 14.75 * count;
-							break;
-						case 'bbv':
-						case 'ssv':
-							rS += 7 * count;
-							break;
-						case 'ct':
-							rS += 6 * count;
-							break;
-
+				for (var _i10 in d) {
+					var count = parseInt(d[_i10]) || 0;
+					switch (_i10) {
 						case 'e75':
-							rS += 5 * count;
+							data.equipment[75] = count;
 							break;
 						case 'e68':
-							rS += 8 * count;
+							data.equipment[68] = count;
+							break;
+
+						default:
+							data.ship[_i10] = count;
 							break;
 					}
 				}
 
-				rS = Math.floor(rS);
+				rS = Math.floor(Formula.calc.TP(data));
 				rA = rS * 0.7;
 
 				resultS.html(rS);
@@ -5648,9 +5721,9 @@ BgImg.quotaUsed = 0;
 
 BgImg.getDefaultImgs = function () {
 	var deferred = Q.defer();
-	for (var _i9 = _g.bgimg_count - 1; _i9 >= 0; _i9--) {
+	for (var _i11 = _g.bgimg_count - 1; _i11 >= 0; _i11--) {
 		BgImg.list.push(new BgImg({
-			'name': '*' + _i9 + '.jpg',
+			'name': '*' + _i11 + '.jpg',
 			'isDefault': !0
 		}));
 	}
@@ -5658,9 +5731,9 @@ BgImg.getDefaultImgs = function () {
 	BgImg.dataCustom = {};
 	localforage.getItem('bgcustomlist', function (err, value) {
 		BgImg.dataCustom = value || {};
-		for (var _i10 in BgImg.dataCustom) {
-			var o = BgImg.dataCustom[_i10];
-			o.name = _i10;
+		for (var _i12 in BgImg.dataCustom) {
+			var o = BgImg.dataCustom[_i12];
+			o.name = _i12;
 			BgImg.list.push(new BgImg(o));
 			BgImg.countCustom++;
 			BgImg.quotaUsed += o.size;
@@ -5695,7 +5768,7 @@ BgImg.readFile = function (e) {
 	var deferred = Q.defer();
 
 	Q.fcall(_g.getScriptCanvas).then(function () {
-		for (var _i11 = 0, f = void 0; f = e.target.files[_i11]; _i11++) {
+		for (var _i13 = 0, f = void 0; f = e.target.files[_i13]; _i13++) {
 			if (BgImg.quotaUsed + f.size > BgImg.quota) {
 				deferred.reject('已超过 ' + _g.getSize(BgImg.quota, 'm') + ' 上限');
 				break;
@@ -6390,11 +6463,11 @@ var InfosFleet = function () {
 					this.is_showing = !0;
 					if (InfosFleetShipEquipment.cur) InfosFleetShipEquipment.cur.trigger('blur');
 					if (!is_firstShow) {
-						var _i12 = 0,
+						var _i14 = 0,
 						    _l2 = Lockr.get('hqLvDefault', _g.defaultHqLv);
-						while (_i12 < 4) {
-							this.fleets[_i12].summaryCalc(!0);
-							_i12++;
+						while (_i14 < 4) {
+							this.fleets[_i14].summaryCalc(!0);
+							_i14++;
 						}
 						if (!this._hqlv) this.doms['hqlvOption'].val(_l2);
 						this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(_l2));
@@ -6503,15 +6576,15 @@ var InfosFleet = function () {
 				if (!InfosFleet.menuTheme) {
 					InfosFleet.menuThemeItems = $('<div/>');
 
-					var _loop = function _loop(_i13) {
-						$('<button class="theme-' + _i13 + '"/>').html(_i13).on('click', function () {
-							InfosFleet.menuCur._theme = _i13;
+					var _loop = function _loop(_i15) {
+						$('<button class="theme-' + _i15 + '"/>').html(_i15).on('click', function () {
+							InfosFleet.menuCur._theme = _i15;
 							this.el.attr('data-theme', this._theme);
 						}.bind(_this7)).appendTo(InfosFleet.menuThemeItems);
 					};
 
-					for (var _i13 = 1; _i13 < 11; _i13++) {
-						_loop(_i13);
+					for (var _i15 = 1; _i15 < 11; _i15++) {
+						_loop(_i15);
 					}
 					InfosFleet.menuTheme = new _menu({
 						'className': 'contextmenu-infos_fleet_themes',
@@ -6839,10 +6912,10 @@ var InfosFleet = function () {
 				this.doms['hqlvOption'].val(Lockr.get('hqLvDefault', _g.defaultHqLv));
 			}
 			if (last != value) {
-				var _i14 = 0;
-				while (_i14 < 4) {
-					this.fleets[_i14].summaryCalc(!0);
-					_i14++;
+				var _i16 = 0;
+				while (_i16 < 4) {
+					this.fleets[_i16].summaryCalc(!0);
+					_i16++;
 				}
 				this.save();
 			}
@@ -7089,6 +7162,7 @@ var InfosFleetSubFleet = function () {
 						    consumFuel = 0,
 						    consumAmmo = 0;
 
+
 						_this8.ships.forEach(function (shipdata) {
 							if (shipdata.data[0]) {
 								var ship = _g.data.ships[shipdata.data[0]];
@@ -7160,8 +7234,8 @@ var InfosFleetSubFleet = function () {
 					}) || [];
 					equipments_by_slot.forEach(function (equipment) {
 						if (equipment) {
-							for (var _i15 in x) {
-								if (Formula.equipmentType[_i15] && Formula.equipmentType[_i15].push && Formula.equipmentType[_i15].indexOf(equipment.type) > -1) x[_i15] += equipment.stat.los;
+							for (var _i17 in x) {
+								if (Formula.equipmentType[_i17] && Formula.equipmentType[_i17].push && Formula.equipmentType[_i17].indexOf(equipment.type) > -1) x[_i17] += equipment.stat.los;
 							}
 						}
 					});
@@ -7234,9 +7308,9 @@ var InfosFleetShip = function () {
 			}.bind(this)
 		}))).append(this.elInfosInfo = $('<span/>'))))).append($('<div class="equipments"/>').append(function () {
 			var els = $();
-			for (var _i16 = 0; _i16 < 4; _i16++) {
-				this.equipments[_i16] = new InfosFleetShipEquipment(this, _i16);
-				els = els.add(this.equipments[_i16].el);
+			for (var _i18 = 0; _i18 < 4; _i18++) {
+				this.equipments[_i18] = new InfosFleetShipEquipment(this, _i18);
+				els = els.add(this.equipments[_i18].el);
 			}
 
 			return els;
@@ -7336,7 +7410,7 @@ var InfosFleetShip = function () {
 						break;
 				}
 			}
-			return '-';
+			return Formula.calculate(type, this.shipId, this.data[2], this.data[3], this.data[4]) || '-';
 		}
 	}, {
 		key: 'updateEl',
@@ -7354,10 +7428,10 @@ var InfosFleetShip = function () {
 
 			if (this.data[1][0]) this.shipLv = this.data[1][0];
 
-			for (var _i17 = 0; _i17 < 4; _i17++) {
-				this.equipments[_i17].id = this.data[2][_i17];
-				this.equipments[_i17].star = this.data[3][_i17];
-				this.equipments[_i17].rank = this.data[4][_i17];
+			for (var _i19 = 0; _i19 < 4; _i19++) {
+				this.equipments[_i19].id = this.data[2][_i19];
+				this.equipments[_i19].star = this.data[3][_i19];
+				this.equipments[_i19].rank = this.data[4][_i19];
 			}
 
 			this.updateAttrs();
@@ -7504,12 +7578,12 @@ var InfosFleetShip = function () {
 				this.elInfosTitle.html('<h4 data-content="' + ship['name'][_g.lang] + '">' + ship['name'][_g.lang] + '</h4>' + (suffix ? '<h5 data-content="' + suffix + '">' + suffix + '</h5>' : ''));
 				this.elInfosInfo.html(speed + ' ' + stype);
 
-				for (var _i18 = 0; _i18 < 4; _i18++) {
-					this.equipments[_i18].carry = ship.slot[_i18];
+				for (var _i20 = 0; _i20 < 4; _i20++) {
+					this.equipments[_i20].carry = ship.slot[_i20];
 					if (!this._updating) {
-						this.equipments[_i18].id = null;
-						this.equipments[_i18].star = null;
-						this.equipments[_i18].rank = null;
+						this.equipments[_i20].id = null;
+						this.equipments[_i20].star = null;
+						this.equipments[_i20].rank = null;
 					}
 				}
 			} else {
@@ -7632,14 +7706,14 @@ var InfosFleetShipEquipment = function () {
 			if (!InfosFleet.menuRankSelect) {
 				InfosFleet.menuRankSelectItems = $('<div/>');
 
-				var _loop2 = function _loop2(_i19) {
-					$('<button class="rank-' + _i19 + '"/>').html(!_i19 ? '无' : '').on('click', function () {
-						InfosFleet.menuRankSelectCur.rank = _i19;
+				var _loop2 = function _loop2(_i21) {
+					$('<button class="rank-' + _i21 + '"/>').html(!_i21 ? '无' : '').on('click', function () {
+						InfosFleet.menuRankSelectCur.rank = _i21;
 					}).appendTo(InfosFleet.menuRankSelectItems);
 				};
 
-				for (var _i19 = 0; _i19 < 8; _i19++) {
-					_loop2(_i19);
+				for (var _i21 = 0; _i21 < 8; _i21++) {
+					_loop2(_i21);
 				}
 				InfosFleet.menuRankSelect = new _menu({
 					'className': 'contextmenu-infos_fleet_rank_select',
@@ -9237,7 +9311,7 @@ var TablelistFleets = function (_Tablelist4) {
 						sorted[cur.theme].push(i);
 					});
 
-					for (var _i20 in sorted) {
+					for (var _i22 in sorted) {
 						k = 0;
 
 						while (k < _this16.flexgrid_empty_count) {
@@ -9245,7 +9319,7 @@ var TablelistFleets = function (_Tablelist4) {
 							k++;
 						}
 
-						sorted[_i20].forEach(function (index) {
+						sorted[_i22].forEach(function (index) {
 							setTimeout(function (i) {
 								this.append_item(arr[i]);
 								count++;
@@ -9509,7 +9583,7 @@ var TablelistFleets = function (_Tablelist4) {
 						if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
 					});
 				} else {
-					for (var _i21 = 0, f = void 0; f = $selector[0].files[_i21]; _i21++) {
+					for (var _i23 = 0, f = void 0; f = $selector[0].files[_i23]; _i23++) {
 						var reader = new FileReader();
 						reader.onload = function (theFile) {
 							return function (r) {

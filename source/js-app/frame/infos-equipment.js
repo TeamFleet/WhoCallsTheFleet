@@ -6,6 +6,13 @@
 
 		function _stat(stat, title){
 			if( d['stat'][stat] ){
+				if( d.type == 54 ){
+					// 局地战斗机
+					switch( stat ){
+						case 'hit': 	title = '对爆';	break;
+						case 'evasion': title = '迎击';	break;
+					}
+				}					
 				var html = '<small class="stat-'+stat+'">' + title + '</small>'
 				switch(stat){
 					case 'range':

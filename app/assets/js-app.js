@@ -2072,6 +2072,9 @@ let Formula = {
 			case 'losPower':
 				return Formula.calcByShip.losPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, options)
 				break;
+			default:
+				return Formula.calcByShip[type](ship, equipments_by_slot, star_by_slot, rank_by_slot, options)
+				break;
 		}
 		
 		return '-'
@@ -2490,6 +2493,87 @@ Formula.losPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot
 		//var result = calc(x);
 		//var score = result.y_estimate.toFixed(1) + ' ± ' + result.y_std_error.toFixed(1);
 	}
+	
+	Formula.calc.TP = function( data ){
+		/* data
+		 * {
+		 * 		ship: {
+		 * 			dd
+		 * 			cl
+		 * 			cav
+		 * 			bbv
+		 * 			ssv
+		 * 			av
+		 * 			lha
+		 * 			ao
+		 * 			ct
+		 * 		},
+		 * 		equipment: {
+		 * 			68	// landing craft
+		 * 			75  // canister
+		 * 		}
+		 * }
+		 */
+		data = data || {}
+		var result = 0
+			,ship = data.ship || {}
+			,equipment = data.equipment || {}
+
+		for(let i in ship){
+			let count = parseInt(ship[i]) || 0
+				,multiper = 0
+			switch(i){
+				case 1:
+				case '1':
+				case 19:
+				case '19':
+				case 'dd':		multiper = 5;		break;
+				case 2:
+				case '2':
+				case 'cl':		multiper = 2;		break;
+				case 5:
+				case '5':
+				case 'cav':		multiper = 4;		break;
+				case 12:
+				case '12':
+				case 24:
+				case '24':
+				case 'av':		multiper = 9.5;		break;
+				case 15:
+				case '15':
+				case 'lha':		multiper = 12.25;	break;
+				case 29:
+				case '29':
+				case 'ao':		multiper = 14.75;	break;
+				case 8:
+				case '8':
+				case 'bbv':
+				case 14:
+				case '14':
+				case 'ssv':		multiper = 7;		break;
+				case 21:
+				case '21':
+				case 'ct':		multiper = 6;		break;
+			}
+			result+= multiper * count
+		}
+
+		for(let i in equipment){
+			let count = parseInt(equipment[i]) || 0
+				,multiper = 0
+			switch(i){
+				// landing craft
+				case 68:
+				case '68':		multiper = 8;	break;
+				// canister
+				case 75:
+				case '75':		multiper = 5;	break;
+			}
+			result+= multiper * count
+		}
+		
+		return result
+	}
 
 
 
@@ -2638,6 +2722,8 @@ Formula.losPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot
 					,_typeValue = 0
 				if( equipments_by_slot[index].type == Formula.equipmentType.CarrierFighter )
 					_typeValue = typeValue.CarrierFighter[_rank]
+				if( equipments_by_slot[index].type == Formula.equipmentType.SeaplaneFighter )
+					_typeValue = typeValue.CarrierFighter[_rank]
 				if( equipments_by_slot[index].type == Formula.equipmentType.SeaplaneBomber )
 					_typeValue = typeValue.SeaplaneBomber[_rank]
 				results[0]+= Math.floor(base + Math.sqrt( _rankInternal[0] / 10 ) + _typeValue)
@@ -2685,6 +2771,23 @@ Formula.losPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot
 		})
 		
 		return Formula.calc.losPower(x);
+	}
+	
+	Formula.calcByShip.TP = function(ship, equipments_by_slot, star_by_slot, rank_by_slot, options){
+		var data = {
+			ship: {},
+			equipment: {}
+		}
+		data.ship[ship.type] = 1
+		equipments_by_slot.forEach(function(equipment){
+			if( equipment ){
+				if( !data.equipment[equipment.id] )
+					data.equipment[equipment.id] = 0
+				data.equipment[equipment.id]++
+			}
+		})
+		console.log(data)
+		return Formula.calc.TP(data)
 	}
 class ItemBase {
 	constructor() {
@@ -6912,49 +7015,31 @@ _frame.app_main.page['calctp'] = {
 				e.preventDefault()
 
 				let d = form.serializeObject()
+					,data = {
+						ship: {},
+						equipment: {}
+					}
 					,rA = 0
 					,rS = 0
 
 				for(let i in d){
 					let count = parseInt(d[i]) || 0;
 					switch(i){
-						case 'dd':
-							rS+= 5 * count;
-							break;
-						case 'cl':
-							rS+= 2 * count;
-							break;
-						case 'cav':
-							rS+= 4 * count;
-							break;
-						case 'av':
-							rS+= 9.5 * count;
-							break;
-						case 'lha':
-							rS+= 12.25 * count;
-							break;
-						case 'ao':
-							rS+= 14.75 * count;
-							break;
-						case 'bbv':
-						case 'ssv':
-							rS+= 7 * count;
-							break;
-						case 'ct':
-							rS+= 6 * count;
-							break;
-                            
 						// canister
 						case 'e75':
-							rS+= 5 * count;
+							data.equipment[75] = count
 							break;
 						case 'e68':
-							rS+= 8 * count;
+							data.equipment[68] = count
+							break;
+						
+						default:
+							data.ship[i] = count
 							break;
 					}
 				}
-
-				rS = Math.floor(rS)
+				
+				rS = Math.floor( Formula.calc.TP(data) )
 				rA = rS * 0.7
 
 				resultS.html( rS )
@@ -8290,6 +8375,13 @@ _frame.infos.__entity = function( id ){
 
 		function _stat(stat, title){
 			if( d['stat'][stat] ){
+				if( d.type == 54 ){
+					// 局地战斗机
+					switch( stat ){
+						case 'hit': 	title = '对爆';	break;
+						case 'evasion': title = '迎击';	break;
+					}
+				}					
 				var html = '<small class="stat-'+stat+'">' + title + '</small>'
 				switch(stat){
 					case 'range':
@@ -9523,11 +9615,12 @@ class InfosFleetSubFleet{
 				/*
 				.append(
 					$('<span class="summary-item"/>')
-						.html('索敌能力')
+						.html('运输TP')
 						.append(
-							this.elSummaryLOS = $('<strong/>')
+							this.elSummaryTP = $('<strong/>').html('-')
 						)
-				)*/
+				)
+				*/
 		
 		this.infosFleet = infosFleet
 
@@ -9571,6 +9664,7 @@ class InfosFleetSubFleet{
 						,fleetSpeet = 'fast'
 						,consumFuel = 0
 						,consumAmmo = 0
+						//,tp = 0
 					
 					this.ships.forEach(function(shipdata){
 						if( shipdata.data[0] ){
@@ -9606,6 +9700,9 @@ class InfosFleetSubFleet{
 							// 总消耗
 								consumFuel+= ship.getAttribute('fuel', shipdata.shipLv) || 0
 								consumAmmo+= ship.getAttribute('ammo', shipdata.shipLv) || 0
+							
+							// TP
+								//tp+= shipdata.calculate('TP')
 						}
 					})
 					
@@ -9635,6 +9732,8 @@ class InfosFleetSubFleet{
 							? '<span class="fuel">' + consumFuel + '</span><span class="ammo">' + consumAmmo + '</span>'
 							: '-'
 					)
+					
+					//this.elSummaryTP.html( tp > 1 ? Math.floor(tp) : '-' )
 				}
 
 				let los = this.summaryCalcLos()
@@ -10014,7 +10113,8 @@ class InfosFleetShip{
 						break;
 				}
 			}
-			return '-'
+			return Formula.calculate( type, this.shipId, this.data[2], this.data[3], this.data[4] ) || '-'
+			//return '-'
 		}
 
 	// 更新元数据
