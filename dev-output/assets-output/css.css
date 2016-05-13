@@ -2571,7 +2571,8 @@ main:after {
 .infosbody .stat-speed:before {
   background-position: 0 -144px;
 }
-.infosbody .stat-range:before {
+.infosbody .stat-range:before,
+.infosbody .stat-distance:before {
   background-position: 0 -162px;
 }
 .infosbody .stat-los:before {

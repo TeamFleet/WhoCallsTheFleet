@@ -19,6 +19,9 @@
 					case 'range':
 						html+= '<em>' + _g.getStatRange( d['stat'][stat] ) + '</em>';
 						break;
+					case 'distance':
+						html+= '<em>' + d['stat'][stat] + '</em>';
+						break;
 					default:
 						var val = parseInt( d['stat'][stat] )
 						html+= '<em'+ (val < 0 ? ' class="negative"' : '') +'>' + ( val > 0 ? '+' : '') + val + '</em>'
