@@ -2753,7 +2753,9 @@ var Formula = {
 		SearchlightLarge: 46,
 		SuparRadar: 47,
 		CarrierRecon2: 50,
-		SeaplaneFighter: 51 },
+		SeaplaneFighter: 51,
+		LandBasedAttacker: 53,
+		Interceptor: 54 },
 
 	shipType: {
 		Carriers: [9, 10, 11],
@@ -2955,6 +2957,8 @@ Formula.equipmentType.CarrierRecons = [Formula.equipmentType.CarrierRecon, Formu
 
 Formula.equipmentType.CarrierBased = [Formula.equipmentType.CarrierFighter, Formula.equipmentType.TorpedoBomber, Formula.equipmentType.DiveBomber, Formula.equipmentType.CarrierRecon, Formula.equipmentType.CarrierRecon2];
 
+Formula.equipmentType.LandBased = [Formula.equipmentType.LandBasedAttacker, Formula.equipmentType.Interceptor];
+
 Formula.equipmentType.TorpedoBombers = [Formula.equipmentType.TorpedoBomber];
 
 Formula.equipmentType.DiveBombers = [Formula.equipmentType.DiveBomber];
@@ -2964,7 +2968,7 @@ Formula.equipmentType.Autogyros = [Formula.equipmentType.Autogyro];
 Formula.equipmentType.AntiSubPatrols = [Formula.equipmentType.AntiSubPatrol];
 
 Formula.equipmentType.Aircrafts = [];
-[].concat(Formula.equipmentType.Seaplanes).concat(Formula.equipmentType.Recons).concat(Formula.equipmentType.CarrierBased).concat(Formula.equipmentType.Autogyros).concat(Formula.equipmentType.AntiSubPatrols).forEach(function (v) {
+[].concat(Formula.equipmentType.Seaplanes).concat(Formula.equipmentType.Recons).concat(Formula.equipmentType.CarrierBased).concat(Formula.equipmentType.Autogyros).concat(Formula.equipmentType.AntiSubPatrols).concat(Formula.equipmentType.LandBased).forEach(function (v) {
 	if (Formula.equipmentType.Aircrafts.indexOf(v) < 0) Formula.equipmentType.Aircrafts.push(v);
 });
 

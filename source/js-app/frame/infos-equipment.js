@@ -1,6 +1,7 @@
 // 装备信息
 	_frame.infos.__equipment = function( id ){
 		var d = _g.data.items[ id ]
+			,isAircraft = $.inArray(_g.data.items[id].type, _g.data.item_type_collections[3].types) > -1
 
 		_g.log(d)
 
@@ -50,7 +51,7 @@
 						+ '</small>'
                         + `<small class="indicator ${d['improvable'] ? 'true' : 'false'}">${d['improvable'] ? '可改修' : '不可改修'}</small>`
                         + `<small class="indicator ${upgradable ? 'true' : 'false'}">${upgradable ? '可升级' : '不可升级'}</small>`
-						+ ($.inArray(_g.data.items[id].type, _g.data.item_type_collections[3].types) > -1
+						+ (isAircraft
 							? '<small class="indicator '+(d['rankupgradable'] ? 'true' : 'false')+'">'
 									+ ( d['rankupgradable'] ? '可提升熟练度' : '无熟练度' )
 								+ '</small>'
@@ -95,6 +96,8 @@
 			_stat('evasion', '回避')
 			_stat('los', '索敌')
 			_stat('range', '射程')
+			if( isAircraft )
+				_stat('distance', '航程')
 			
 			if( !stat_container.html() )
 				stat_container.html('<div class="no-content">无...</div>')

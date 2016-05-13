@@ -1838,7 +1838,9 @@ let Formula = {
 			SearchlightLarge:	46,		// 大型探照灯
 			SuparRadar:			47,		// 超大型雷达
 			CarrierRecon2:		50,		// 舰侦II / 舰载侦察机II
-			SeaplaneFighter:	51		// 水战 / 水上战斗机
+			SeaplaneFighter:	51,		// 水战 / 水上战斗机
+			LandBasedAttacker:	53,		// 陆攻 / 陆上攻击机
+			Interceptor:		54		// 局战 / 局地战斗机
 		},
 	
 	// 舰种
@@ -2157,6 +2159,11 @@ Formula.equipmentType.CarrierBased = [
 		Formula.equipmentType.CarrierRecon2
 	];
 
+Formula.equipmentType.LandBased = [
+		Formula.equipmentType.LandBasedAttacker,
+		Formula.equipmentType.Interceptor
+	];
+
 Formula.equipmentType.TorpedoBombers = [
 		Formula.equipmentType.TorpedoBomber
 	];
@@ -2179,6 +2186,7 @@ Formula.equipmentType.Aircrafts = [];
 		.concat(Formula.equipmentType.CarrierBased)
 		.concat(Formula.equipmentType.Autogyros)
 		.concat(Formula.equipmentType.AntiSubPatrols)
+		.concat(Formula.equipmentType.LandBased)
 		.forEach(function(v){
 			if( Formula.equipmentType.Aircrafts.indexOf(v) < 0 )
 				Formula.equipmentType.Aircrafts.push(v)
@@ -8370,6 +8378,7 @@ _frame.infos.__entity = function( id ){
 // 装备信息
 	_frame.infos.__equipment = function( id ){
 		var d = _g.data.items[ id ]
+			,isAircraft = $.inArray(_g.data.items[id].type, _g.data.item_type_collections[3].types) > -1
 
 		_g.log(d)
 
@@ -8419,7 +8428,7 @@ _frame.infos.__entity = function( id ){
 						+ '</small>'
                         + `<small class="indicator ${d['improvable'] ? 'true' : 'false'}">${d['improvable'] ? '可改修' : '不可改修'}</small>`
                         + `<small class="indicator ${upgradable ? 'true' : 'false'}">${upgradable ? '可升级' : '不可升级'}</small>`
-						+ ($.inArray(_g.data.items[id].type, _g.data.item_type_collections[3].types) > -1
+						+ (isAircraft
 							? '<small class="indicator '+(d['rankupgradable'] ? 'true' : 'false')+'">'
 									+ ( d['rankupgradable'] ? '可提升熟练度' : '无熟练度' )
 								+ '</small>'
@@ -8464,6 +8473,8 @@ _frame.infos.__entity = function( id ){
 			_stat('evasion', '回避')
 			_stat('los', '索敌')
 			_stat('range', '射程')
+			if( isAircraft )
+				_stat('distance', '航程')
 			
 			if( !stat_container.html() )
 				stat_container.html('<div class="no-content">无...</div>')

@@ -6361,6 +6361,9 @@ body.mod-capture #tip {
 .tablelist.ships.mod-search .tablelist-body dl[data-donotcompare="true"] {
   display: none;
 }
+.tablelist-equipments [stat="distance"] {
+  display: none !important;
+}
 .tablelist-equipments .tablelist-body dl {
   height: auto;
 }
@@ -6860,6 +6863,15 @@ body.mod-capture #tip {
 }
 .tablelist-equipments > [name="types"][class]:not(.type54) ~ .tablelist-container .tablelist-body h4[data-type="54"] {
   opacity: .35;
+}
+.tablelist-equipments > [value="3"]:checked ~ .tablelist-container [stat="range"] {
+  display: none !important;
+}
+.tablelist-equipments > [value="3"]:checked ~ .tablelist-container .tablelist-header [stat="distance"] {
+  display: inline-block !important;
+}
+.tablelist-equipments > [value="3"]:checked ~ .tablelist-container .tablelist-body [stat="distance"] {
+  display: flex !important;
 }
 @media all and (max-width: 640px) {
   .tablelist-equipments dl dd {
