@@ -430,6 +430,26 @@ class InfosFleet{
 					i++
 				}
 			
+			// 基地航空队
+				this.fleet_airfileds = new InfosFleetSubAirfield(this, [])
+
+				$('<input/>',{
+						'type': 	'radio',
+						'name': 	'fleet_' + d._id + '_tab',
+						'id': 		'fleet_' + d._id + '_tab_airfileds',
+						'value': 	4
+					}).prop('checked', false).prependTo( this.el )
+		
+				$('<label/>',{
+						'for': 		'fleet_' + d._id + '_tab_airfileds',
+						'data-fleet':4,
+						'html': 	'基地'
+					}).appendTo( this.doms['tabs'] )
+
+				this.fleet_airfileds.el
+					.attr('data-fleet', 4)
+					.appendTo( this.doms['ships'] )
+			
 			// 预览模式
 				if( !this.data._id ){
 					this.el.addClass('mod-preview')
@@ -488,7 +508,11 @@ class InfosFleet{
 			if( d['data'] && d['data'].push ){
 				d['data'].forEach(function(currentValue, i){
 					//_g.log(currentValue)
-					this.fleets[i].updateEl(currentValue)
+					if( i == 4 ){
+						this.fleet_airfileds.updateEl(currentValue)
+					}else{
+						this.fleets[i].updateEl(currentValue)
+					}
 				}, this)
 			}
 		
@@ -639,6 +663,7 @@ class InfosFleet{
 				this.fleets.forEach(function(currentValue, i){
 					this.data.data[i] = currentValue.data
 				}, this)
+				this.data.data[4] = this.fleet_airfileds.data
 				InfosFleet.clean(this.data.data)
 				
 				// 更新时间
@@ -2246,4 +2271,335 @@ class InfosFleetShipEquipment{
 				this.infosFleetShip.save()
 			}
 		}
+}
+
+
+
+
+
+
+
+
+// 类：基地航空队
+class InfosFleetSubAirfield{
+	constructor(infosFleet, d){
+		d = d || []
+		this.data = d
+
+		this.el = $('<dl class="fleetships fleetairfileds"/>')
+		
+		this.fields = []
+
+		// 3个机场
+			let i = 0
+			while( i < 3 ){
+				this.fields[i] = new InfosFleetAirfield(infosFleet, this, i)
+				this.fields[i].getEl().appendTo( this.el )
+				i++
+			}
+		
+		this.infosFleet = infosFleet
+
+		this.updateEl()
+	}
+
+
+	// 更新元数据
+	
+	// 根据元数据更新页面元素
+		updateEl(d){
+			this.data = d || this.data
+			if( d )
+				d.forEach(function(currentValue, i){
+					this.fields[i].updateEl(currentValue)
+				}, this)
+		}
+	
+	// 获取当前状态的元数据
+		getData(){
+			return this.data
+		}
+	
+	// 保存
+		save(){
+			// 如果该子舰队下没有任何数据，则存储数据时不传输该子舰队数据
+			let allEmpty = true
+			this.data = this.data || []
+			
+			this.fields.forEach(function(currentValue,i){
+				this.data[i] = currentValue.data
+				
+				if( currentValue.data[0] )
+					allEmpty = false
+			}, this)
+			
+			if( allEmpty )
+				this.data = null
+			
+			if( this.infosFleet )
+				this.infosFleet.save()
+		}
+}
+
+
+
+
+
+
+
+// 类：基地航空队机场
+class InfosFleetAirfield{
+	constructor(infosFleet, InfosFleetSubAirfield, index, d){
+		/**
+		 * [
+		 * 		[装备ID, 熟练度],
+		 * 		[装备ID, 熟练度],
+		 * 		[装备ID, 熟练度],
+		 * 		[装备ID, 熟练度]
+		 * ]
+		 */
+		
+		// 数据正在更新中，禁止触发任何存储操作
+		//this._updating = false
+
+		if( this.el )
+			return this.el
+
+		d = d || [[], [], [], []]
+		this.data = d
+		this.infosFleet = infosFleet
+		this.infosFleetSubAirfield = InfosFleetSubAirfield
+		this.aircrafts = []
+		this.index = index
+		
+		this.el = $('<dd class="airfield"/>')
+			// 装备
+			.append(function(){
+				let els = $()
+				for( let i=0; i<4; i++ ){
+					this.aircrafts[i] = new InfosFleetShipEquipment(this, i)
+					els = els.add(this.aircrafts[i].el)
+				}
+				return els
+			}.bind(this))
+		
+		this.els = this.el
+
+		//this.updateEl()
+	}
+	
+	// 返回页面元素
+		getEl(){
+			return this.els
+		}
+
+	// 更新元数据
+	
+	// 根据元数据更新页面元素
+		updateEl(d){
+			this._updating = true
+			
+			this.data = d || this.data
+		
+			if( typeof this.data[0] == 'string' )
+				this.data[0] = parseInt(this.data[0])
+			if( !this.data[2] )
+				this.data[2] = []
+			if( !this.data[3] )
+				this.data[3] = []
+			if( !this.data[4] )
+				this.data[4] = []
+			
+			if( this.data[0] )
+				this.shipId = this.data[0]
+			
+			if( this.data[1][0] )
+				this.shipLv = this.data[1][0]
+			
+			for( let i=0; i<4; i++ ){
+				this.equipments[i].id = this.data[2][i]
+				this.equipments[i].star = this.data[3][i]
+				this.equipments[i].rank = this.data[4][i]
+			}
+			
+			this.updateAttrs()
+			
+			this._updating = false
+		}
+	
+	// 获取当前状态的元数据
+		getData(){
+			return this.data
+		}
+	
+	// 移动
+		swap(target, save){
+			if( typeof target == 'number' )
+				target = this.infosFleetSubFleet.ships[target]
+
+			if( this.index > target.index ){
+				this.el.insertBefore(target.el)
+			}else{
+				this.el.insertAfter(target.after)
+			}
+			this.after.insertAfter(this.el)
+			
+			let newIndex_dragging = target.index
+				,newIndex_enter = this.index
+			
+			console.log(newIndex_dragging, newIndex_enter)
+			
+			this.index = newIndex_dragging
+			target.index = newIndex_enter
+			this.infosFleetSubFleet.ships[newIndex_dragging] = this
+			this.infosFleetSubFleet.ships[newIndex_enter] = target
+			
+			if( save )
+				this.save()
+		}
+		moveUp(){
+			if( this.index <= 0 )
+				return
+			
+			this.swap( this.index - 1, true )
+		}
+		moveDown(){
+			if( this.index >= 5 )
+				return
+			
+			this.swap( this.index + 1, true )
+		}
+	
+	
+	
+	// 舰娘ID
+		get shipId(){
+			return this.data[0]
+		}
+		set shipId( value ){
+			if( value != this.data[0] ){
+				this.data[0] = value
+				this.shipLv = null
+			}
+			
+			if( value ){
+				let ship = _g.data.ships[value]
+					,suffix = ship.getSuffix()
+					,speed = ship._speed
+					,stype = ship._type
+				
+				stype = stype.replace(speed, '')
+					
+				this.el.attr('data-shipId', value)
+				//this.el.removeClass('noship')
+				this.elAvatar.html('<img src="' + ship.getPic(10) + '"/>')
+				this.elInfosTitle.html('<h4 data-content="'+ship['name'][_g.lang]+'">' +ship['name'][_g.lang]+'</h4>'
+										+ ( suffix
+											? '<h5 data-content="'+suffix+'">' +suffix+'</h5>'
+											: ''
+										)
+									)
+				this.elInfosInfo.html( speed + ' ' + stype )
+				
+				// 装备栏数据
+					for( let i=0; i<4; i++ ){
+						this.equipments[i].carry = ship.slot[i]
+						if( !this._updating ){
+							this.equipments[i].id = null
+							this.equipments[i].star = null
+							this.equipments[i].rank = null
+						}
+					}
+			}else{
+				this.el.removeAttr('data-shipId')
+				//this.el.addClass('noship')
+				this.elAvatar.html('')
+				this.data[2] = []
+				this.data[3] = []
+				this.data[4] = []
+				// [null, [null, -1], [], [], []]
+			}
+			
+			this.save()
+		}
+	
+	// 舰娘等级
+		get shipLv(){
+			return this.data[1][0]
+		}
+		set shipLv( value ){
+			this.data[1][0] = value || null
+			if( value && value > 0 ){
+				this.elInputLevel.val( value )
+			}else{
+				this.elInputLevel.val('')
+			}
+			//this.el.attr('data-shipLv', value)
+			
+			this.save()
+		}
+	
+	// 舰娘运
+	
+	// 保存
+		save(){
+			if( this._updating )
+				return false
+
+			/*
+			// 计算属性
+				if( !this._updateTimeout ){
+					this._updateTimeout = setTimeout(function(){
+						this.updateAttrs()
+						this.infosFleetSubFleet.summaryCalc()
+						this._updateTimeout = null
+					}.bind(this), 10)
+				}
+
+			if( !this._saveTimeout ){
+				this._saveTimeout = setTimeout(function(){
+					if( this.infosFleetSubFleet )
+						this.infosFleetSubFleet.save()
+					
+					this._saveTimeout = null
+				}.bind(this), 1000)
+			}
+			*/
+			if( !this._updateTimeout ){
+				this._updateTimeout = setTimeout(function(){
+					this.updateAttrs()
+					if( this.infosFleetSubFleet ){
+						this.infosFleetSubFleet.summaryCalc()
+						this.infosFleetSubFleet.save()
+					}
+					this._updateTimeout = null
+				}.bind(this), 50)
+			}
+		}
+}
+InfosFleetAirfield.dragStart = function(InfosFleetAirfield){
+	if( InfosFleetAirfield.dragging || !InfosFleetAirfield )
+		return false
+
+	InfosFleetAirfield.dragging = InfosFleetAirfield
+	InfosFleetAirfield.el.addClass('moving')
+	
+	if( !InfosFleetAirfield.isInit ){
+		$body.on({
+			'pointerup.InfosFleetAirfield_dragend pointercancel.InfosFleetAirfield_dragend': function(){
+				if( InfosFleetAirfield.dragging ){
+					InfosFleetAirfield.dragging.el.removeClass('moving')
+					InfosFleetAirfield.dragging.save()
+					InfosFleetAirfield.dragging = null
+				}
+			}
+		})
+		InfosFleetAirfield.isInit = true
+	}
+}
+InfosFleetAirfield.dragEnter = function(infosFleetAirfield_enter){
+	if( !InfosFleetAirfield.dragging || !infosFleetAirfield_enter || InfosFleetAirfield.dragging == infosFleetAirfield_enter )
+		return false
+	
+	InfosFleetAirfield.dragging.swap(infosFleetAirfield_enter)
 }

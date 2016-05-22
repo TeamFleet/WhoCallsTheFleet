@@ -9090,6 +9090,19 @@ body.mod-capture .infos-fleet .equipments {
   display: flex;
   z-index: 2;
 }
+.infos-fleet > input[type="radio"][value="5"]:checked ~ .fleets .tabs label[data-fleet="5"] {
+  color: #fff;
+  background-position: 0 0;
+  border-color: rgba(255, 255, 255, 0.175);
+  cursor: default;
+}
+.infos-fleet > input[type="radio"][value="5"]:checked ~ .fleets .tabs label[data-fleet="5"]:after {
+  background-position: 0 0;
+}
+.infos-fleet > input[type="radio"][value="5"]:checked ~ .ships dl[data-fleet="5"] {
+  display: flex;
+  z-index: 2;
+}
 .infos-fleet.loading {
   display: inline-block;
   text-align: center !important;
