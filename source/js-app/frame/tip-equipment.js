@@ -60,7 +60,7 @@ _p.tip.content_equipment = function( d ){
 	*/
 
 	let item_name = d.getName()
-		,isAircraft = $.inArray(d.type, _g.data.item_type_collections[3].types) > -1
+		,isAircraft = $.inArray(d.type, Formula.equipmentType.Aircrafts) > -1
 
 	return '<h3 class="itemstat">'
 			+ '<s class="equiptypeicon mod-'+d.getIconId()+'"></s>'

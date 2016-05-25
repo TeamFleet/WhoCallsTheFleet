@@ -2719,8 +2719,8 @@ _g.lang = _g.lang || 'zh_cn';
 
 var Formula = {
 	data: {
-		'ships': undefined.dataShips,
-		'equipments': undefined.dataEquipments
+		'ships': {},
+		'equipments': {}
 	},
 
 	equipmentType: {
@@ -3965,7 +3965,10 @@ _g.path = {
 
 _g.dbs = ['ships', 'ship_types', 'ship_series', 'ship_namesuffix', 'items', 'item_types'];
 
-_g.data = {};
+_g.data = {
+	'ships': {},
+	'items': {}
+};
 
 var _db = {
 	'fleets': new Nedb({
@@ -8295,7 +8298,7 @@ if (typeof _p.tip != 'undefined') {
 		}
 
 		var item_name = d.getName(),
-		    isAircraft = $.inArray(d.type, _g.data.item_type_collections[3].types) > -1;
+		    isAircraft = $.inArray(d.type, Formula.equipmentType.Aircrafts) > -1;
 
 		return '<h3 class="itemstat">' + '<s class="equiptypeicon mod-' + d.getIconId() + '"></s>' + '<strong data-content="' + item_name + '">' + item_name + '</strong>' + '<small>' + _g.data.item_types[d['type']]['name']['zh_cn'] + '</small>' + '</h3>' + _stat('fire', '火力') + _stat('torpedo', '雷装') + _stat('aa', '对空') + _stat('asw', '对潜') + _stat('bomb', '爆装') + _stat('hit', '命中') + _stat('armor', '装甲') + _stat('evasion', '回避') + _stat('los', '索敌') + _stat('range', '射程') + (isAircraft ? _stat('distance', '航程') : '');
 	};

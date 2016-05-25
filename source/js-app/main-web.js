@@ -28,7 +28,10 @@
 		'item_types'
 	];
 
-	_g.data = {}
+	_g.data = {
+		'ships': {},
+		'items': {}
+	}
 
 	var _db = {
 		'fleets': new Nedb({
