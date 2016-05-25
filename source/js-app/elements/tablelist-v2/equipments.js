@@ -49,6 +49,7 @@ class TablelistEquipments extends Tablelist{
 		
 		// 航母：直接进入飞行器页
 		if( TablelistEquipments.shipId
+			&& _g.data.ships[TablelistEquipments.shipId]
 			&& $.inArray(_g.data.ships[TablelistEquipments.shipId].type, [9, 10, 11] ) > -1
 		){
 			let k = 0

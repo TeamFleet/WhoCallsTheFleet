@@ -603,20 +603,37 @@ class TablelistFleets extends Tablelist{
 			//_frame.infos.show('[[FLEET::__NEW__]]')
 			
 			if( dataDefault.data ){
+				let i = 0;
 				dataDefault.data.forEach(function(fleet){if( fleet && fleet.push ){
-					fleet.forEach(function(ship){if( ship && ship.push ){
-						ship[2].forEach(function(equipmentId, index){
-							if( equipmentId && $.inArray(_g.data.items[equipmentId].type, Formula.equipmentType.Aircrafts) > -1 ){
-								if( _g.data.items[equipmentId].rankupgradable ){
-									if( options.aircraftmax )
-										ship[4][index] = 7
-									else
-										ship[4][index] = ship[3][index] || null
+					if( i < 4 ){
+						fleet.forEach(function(ship){if( ship && ship.push ){
+							ship[2].forEach(function(equipmentId, index){
+								if( equipmentId && $.inArray(_g.data.items[equipmentId].type, Formula.equipmentType.Aircrafts) > -1 ){
+									if( _g.data.items[equipmentId].rankupgradable ){
+										if( options.aircraftmax )
+											ship[4][index] = 7
+										else
+											ship[4][index] = ship[3][index] || null
+									}
+									ship[3][index] = null
 								}
-								ship[3][index] = null
-							}
-						})
-					}})
+							})
+						}})
+					}else{
+						fleet.forEach(function(field){if( field && field.push ){
+							field.forEach(function(aircraft, index){
+								if( aircraft
+									&& aircraft[0]
+									&& $.inArray(_g.data.items[aircraft[0]].type, Formula.equipmentType.Aircrafts) > -1
+									&& _g.data.items[aircraft[0]].rankupgradable
+									&& options.aircraftmax
+								){
+									aircraft[1] = 7
+								}
+							})
+						}})
+					}
+					i++;
 				}})
 				InfosFleet.clean(dataDefault.data)
 			}

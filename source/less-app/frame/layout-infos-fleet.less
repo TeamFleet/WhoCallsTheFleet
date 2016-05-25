@@ -422,6 +422,14 @@
 			flex: 		0.25 0 auto;
 		}
 	}
+	
+	.fleetships.fleetairfileds{
+		flex-flow: 	row nowrap;
+		align-items:center;
+		&:before, &:after{
+			flex-grow: 0.5;
+		}
+	}
 
 	.ship{
 		// - -- -------
@@ -906,6 +914,36 @@
 			}
 		}
 	} // dd.ship
+	
+	.airfield{
+		flex: 		1 0 200px;
+		position:	relative;
+		margin: 	0 20px;
+		height: 	65%;
+		min-height: 320px;
+		max-height: 400px;
+		display: 	flex;
+		flex-flow: 	row nowrap;
+		padding: 	40px 0 50px 0;
+		h4, .airfield-summary{
+			flex: 		none;
+			position: 	absolute;
+			left: 		0;
+		}
+		h4{
+			top: 		0;
+			font-size: 	percentage(24 / @infos-fleet-base-font-size);
+			line-height:1.2em;
+		}
+		.airfield-summary{
+			bottom: 	0;
+			width: 		100%;
+			.summary{
+				flex: 	none;
+				display:block;
+			}
+		}
+	} // dd.airfield
 
 	.equipments, .attributes{
 		left: 	30%;
@@ -1428,6 +1466,29 @@
 				background-position: 	0 unit(13 * -18, px);
 			}
 		}
+	
+	.aircrafts{
+		@gutter: 	4px;
+		position: 	relative;
+		background: rgba(255, 255, 255, .1);
+		border: 	1px solid fade(#fff, 10%);
+		margin: 	0 0 10px 0;
+		flex: 		1 1 100%;
+		height: 	100%;
+		padding: 	(@gutter / 2) @gutter;
+		display: 	flex;
+		flex-flow: 	column nowrap;
+		.equipment{
+			width: 		100%;
+			//height: 	~"calc(25% - @{gutter})";
+			//margin: 	@gutter 0 0 0;
+			vertical-align: top;
+			border-radius: 0 !important;
+			height: 	auto;
+			flex: 		1 1 25%;
+			margin: 	(@gutter / 2) auto;
+		}
+	}
 
 	&>input[type="radio"]{
 		display:	none;

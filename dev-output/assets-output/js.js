@@ -3791,6 +3791,10 @@ Ship.lvlMax = 155;
 _g.kancolle_calc = {
 	version: 3,
 
+	max_fleets: 4,
+	max_ships_per_fleet: 6,
+	max_equipments_per_ship: 5,
+
 	decode: function decode(data, version) {
 		if (!data) return;
 		if (typeof data == 'string') data = JSON.parse(data);
@@ -3848,6 +3852,28 @@ _g.kancolle_calc = {
 					}
 					i++;
 				}
+
+				var data_airfields = data['fField'];
+				if (data_airfields) {
+					result[4] = [];
+					j = 0;
+					while (j < 3) {
+						result[4][j] = [];
+						var data_field = data_airfields['f' + (j + 1)] || {};
+						k = 0;
+						while (k < 4) {
+							result[4][j][k] = [];
+							var data_aircraft = data_field['i' + (k + 1)];
+							if (data_aircraft) {
+								result[4][j][k][0] = data_aircraft.id;
+								result[4][j][k][1] = data_aircraft.rp;
+							}
+							k++;
+						}
+						j++;
+					}
+				}
+
 				break;
 		}
 
@@ -3860,7 +3886,8 @@ _g.kancolle_calc = {
 		if (!data.length || !data.push) return;
 		version = parseInt(version) || this.version;
 
-		var result = void 0;
+		var result = void 0,
+		    max_fleets = this.max_fleets;
 
 		switch (version) {
 			case 3:
@@ -3869,28 +3896,45 @@ _g.kancolle_calc = {
 				};
 				data.forEach(function (data_fleet, i) {
 					if (data_fleet) {
-						result['f' + (i + 1)] = {};
-						data_fleet.forEach(function (data_ship, j) {
-							if (data_ship && data_ship[0]) {
-								result['f' + (i + 1)]['s' + (j + 1)] = {
-									'id': parseInt(data_ship[0]),
-									'lv': parseInt(data_ship[1][0]) || null,
-									'luck': parseInt(data_ship[1][1]) || -1,
-									'items': {
-										'ix': {}
-									}
-								};
-								data_ship[2].forEach(function (id_item, k) {
-									if (id_item) {
-										result['f' + (i + 1)]['s' + (j + 1)].items['i' + (k + 1)] = {
-											'id': parseInt(id_item)
-										};
-										if (data_ship[3]) result['f' + (i + 1)]['s' + (j + 1)].items['i' + (k + 1)].rf = parseInt(data_ship[3][k]) || 0;
-										if (data_ship[4]) result['f' + (i + 1)]['s' + (j + 1)].items['i' + (k + 1)].rp = parseInt(data_ship[4][k]) || 0;
-									}
-								});
-							}
-						});
+						if (i < max_fleets) {
+							result['f' + (i + 1)] = {};
+							data_fleet.forEach(function (data_ship, j) {
+								if (data_ship && data_ship[0]) {
+									result['f' + (i + 1)]['s' + (j + 1)] = {
+										'id': parseInt(data_ship[0]),
+										'lv': parseInt(data_ship[1][0]) || null,
+										'luck': parseInt(data_ship[1][1]) || -1,
+										'items': {
+											'ix': {}
+										}
+									};
+									data_ship[2].forEach(function (id_item, k) {
+										if (id_item) {
+											result['f' + (i + 1)]['s' + (j + 1)].items['i' + (k + 1)] = {
+												'id': parseInt(id_item)
+											};
+											if (data_ship[3]) result['f' + (i + 1)]['s' + (j + 1)].items['i' + (k + 1)].rf = parseInt(data_ship[3][k]) || 0;
+											if (data_ship[4]) result['f' + (i + 1)]['s' + (j + 1)].items['i' + (k + 1)].rp = parseInt(data_ship[4][k]) || 0;
+										}
+									});
+								}
+							});
+						} else if (i == 4) {
+							result['fField'] = {};
+							data_fleet.forEach(function (data_field, j) {
+								if (data_field) {
+									result['fField']['f' + (j + 1)] = {};
+									data_field.forEach(function (data_aircraft, k) {
+										if (data_aircraft && data_aircraft[0]) {
+											result['fField']['f' + (j + 1)]['i' + (k + 1)] = {
+												'id': data_aircraft[0],
+												'rp': data_aircraft[1]
+											};
+										}
+									});
+								}
+							});
+						}
 					}
 				});
 				break;
@@ -7693,11 +7737,12 @@ InfosFleetShip.dragEnter = function (infosFleetShip_enter) {
 };
 
 var InfosFleetShipEquipment = function () {
-	function InfosFleetShipEquipment(infosFleetShip, index) {
+	function InfosFleetShipEquipment(infosParent, index, carry, equipmentTypes) {
 		_classCallCheck(this, InfosFleetShipEquipment);
 
 		this.index = index || 0;
-		this.infosFleetShip = infosFleetShip;
+		this.isParentAirfield = _instanceof(infosParent, InfosFleetAirfield);
+		this.infosParent = infosParent;
 
 		if (this.el) return this.el;
 
@@ -7778,6 +7823,10 @@ var InfosFleetShipEquipment = function () {
 		}.bind(this))).append($('<span class="button remove"/>').on('click', function () {
 			this.id = null;
 		}.bind(this))));
+
+		if (carry) this.carry = carry;
+
+		if (equipmentTypes) this.equipmentTypes = equipmentTypes;
 	}
 
 	_createClass(InfosFleetShipEquipment, [{
@@ -7797,11 +7846,11 @@ var InfosFleetShipEquipment = function () {
 					this.star = 0;
 					this.rank = Lockr.get('fleetlist-option-aircraftdefaultmax') && id && _g.data.items[id].rankupgradable && $.inArray(_g.data.items[id].type, Formula.equipmentType.Aircrafts) > -1 ? 7 : 0;
 
-					if (this.infosFleetShip.infosFleet) _frame.infos.dom.main.attr('data-theme', this.infosFleetShip.infosFleet.data['theme']);
+					if (this.infosParent.infosFleet) _frame.infos.dom.main.attr('data-theme', this.infosParent.infosFleet.data['theme']);
 				}.bind(this),
 				callback_modeSelection_enter: function () {
-					TablelistEquipments.types = _g.data.ships[this.infosFleetShip.shipId].getEquipmentTypes();
-					TablelistEquipments.shipId = this.infosFleetShip.shipId;
+					TablelistEquipments.types = this.equipmentTypes || _g.data.ships[this.infosParent.shipId].getEquipmentTypes();
+					TablelistEquipments.shipId = this.infosParent.shipId;
 					_frame.app_main.page['equipments'].object.tablelistObj.apply_types();
 				}.bind(this)
 			});
@@ -7815,14 +7864,14 @@ var InfosFleetShipEquipment = function () {
 		key: 'save',
 		value: function save() {
 			if (this._updating) return !1;
-			if (this.infosFleetShip) {
-				this.infosFleetShip.save();
+			if (this.infosParent) {
+				this.infosParent.save();
 			}
 		}
 	}, {
 		key: 'id',
 		get: function get() {
-			return this.infosFleetShip.data[2][this.index];
+			return this.isParentAirfield ? this.infosParent.data[this.index][0] : this.infosParent.data[2][this.index];
 		},
 		set: function set(value) {
 			value = parseInt(value) || null;
@@ -7830,10 +7879,10 @@ var InfosFleetShipEquipment = function () {
 			_p.tip.hide();
 			this.el.removeData(['tip', 'tip-filtered']);
 
-			if (value != this.infosFleetShip.data[2][this.index]) this.star = 0;
+			if (!this.isParentAirfield && value != this.infosParent.data[2][this.index]) this.star = 0;
 
 			if (value && !isNaN(value)) {
-				this.infosFleetShip.data[2][this.index] = value;
+				if (this.isParentAirfield) this.infosParent.data[this.index][0] = value;else this.infosParent.data[2][this.index] = value;
 				this.improvable = _g.data.items[value].improvable || !1;
 				this.el.attr({
 					'data-equipmentid': value,
@@ -7847,50 +7896,55 @@ var InfosFleetShipEquipment = function () {
 					if (_g.data.items[value].rankupgradable) this.el.addClass('is-rankupgradable');
 				} else this.el.removeClass('is-aircraft is-rankupgradable');
 			} else {
-				this.infosFleetShip.data[2][this.index] = null;
+				if (this.isParentAirfield) this.infosParent.data[this.index][0] = null;else this.infosParent.data[2][this.index] = null;
 				this.improvable = !1;
 				this.el.removeAttr('data-equipmentId').removeAttr('data-tip').removeAttr('data-star').removeAttr('data-rank').removeAttr('touch-action').css('background-image', '').removeClass('is-aircraft is-rankupgradable');
 				this.elName.html('');
 			}
 
-			this.infosFleetShip.infosFleetSubFleet.summaryCalc();
+			if (this.isParentAirfield) this.infosParent.summaryCalc();else this.infosParent.infosFleetSubFleet.summaryCalc();
+
 			this.save();
 		}
 	}, {
 		key: 'star',
 		get: function get() {
-			return this.infosFleetShip.data[3][this.index];
+			return this.isParentAirfield ? 0 : this.infosParent.data[3][this.index];
 		},
 		set: function set(value) {
-			if (this._improvable) {
-				value = parseInt(value) || null;
+			if (!this.isParentAirfield) {
+				if (this._improvable) {
+					value = parseInt(value) || null;
 
-				if (value > 10) value = 10;
+					if (value > 10) value = 10;
 
-				if (value < 0) value = 0;
+					if (value < 0) value = 0;
 
-				if (value) {
-					this.infosFleetShip.data[3][this.index] = value;
-					this.elInputStar.val(value);
-					this.elStar.html(value);
-					this.el.attr('data-star', value);
+					if (value) {
+						this.infosParent.data[3][this.index] = value;
+						this.elInputStar.val(value);
+						this.elStar.html(value);
+						this.el.attr('data-star', value);
+					} else {
+						this.infosParent.data[3][this.index] = null;
+						this.elInputStar.val('');
+						this.elStar.html(0);
+						this.el.attr('data-star', '');
+					}
 				} else {
-					this.infosFleetShip.data[3][this.index] = null;
-					this.elInputStar.val('');
-					this.elStar.html(0);
-					this.el.attr('data-star', '');
+					this.infosParent.data[3][this.index] = null;
+					this.el.removeAttr('data-star');
 				}
-			} else {
-				this.infosFleetShip.data[3][this.index] = null;
-				this.el.removeAttr('data-star');
+
+				this.infosParent.infosFleetSubFleet.summaryCalc();
+
+				this.save();
 			}
-			this.infosFleetShip.infosFleetSubFleet.summaryCalc();
-			this.save();
 		}
 	}, {
 		key: 'rank',
 		get: function get() {
-			return this.infosFleetShip.data[4][this.index];
+			return this.isParentAirfield ? this.infosParent.data[this.index][1] : this.infosParent.data[4][this.index];
 		},
 		set: function set(value) {
 			if (this.id && $.inArray(_g.data.items[this.id].type, Formula.equipmentType.Aircrafts) > -1) {
@@ -7901,17 +7955,19 @@ var InfosFleetShipEquipment = function () {
 				if (value < 0) value = 0;
 
 				if (value) {
-					this.infosFleetShip.data[4][this.index] = value;
+					if (this.isParentAirfield) this.infosParent.data[this.index][1] = value;else this.infosParent.data[4][this.index] = value;
 					this.el.attr('data-rank', value);
 				} else {
-					this.infosFleetShip.data[4][this.index] = null;
+					if (this.isParentAirfield) this.infosParent.data[this.index][1] = null;else this.infosParent.data[4][this.index] = null;
 					this.el.attr('data-rank', '');
 				}
 			} else {
-				this.infosFleetShip.data[4][this.index] = null;
+				if (this.isParentAirfield) this.infosParent.data[this.index][1] = null;else this.infosParent.data[4][this.index] = null;
 				this.el.removeAttr('data-rank');
 			}
-			this.infosFleetShip.infosFleetSubFleet.summaryCalc();
+
+			if (this.isParentAirfield) this.infosParent.summaryCalc();else this.infosParent.infosFleetSubFleet.summaryCalc();
+
 			this.save();
 		}
 	}, {
@@ -7983,16 +8039,12 @@ var InfosFleetSubAirfield = function () {
 	}, {
 		key: 'save',
 		value: function save() {
-			var allEmpty = !0;
 			this.data = this.data || [];
 
-			this.fields.forEach(function (currentValue, i) {
-				this.data[i] = currentValue.data;
-
-				if (currentValue.data[0]) allEmpty = !1;
+			this.fields.forEach(function (field, i) {
+				this.data[i] = field.data;
 			}, this);
 
-			if (allEmpty) this.data = null;
 
 			if (this.infosFleet) this.infosFleet.save();
 		}
@@ -8002,7 +8054,7 @@ var InfosFleetSubAirfield = function () {
 }();
 
 var InfosFleetAirfield = function () {
-	function InfosFleetAirfield(infosFleet, InfosFleetSubAirfield, index, d) {
+	function InfosFleetAirfield(infosFleet, infosParent, index, d) {
 		_classCallCheck(this, InfosFleetAirfield);
 
 		if (this.el) return this.el;
@@ -8010,18 +8062,25 @@ var InfosFleetAirfield = function () {
 		d = d || [[], [], [], []];
 		this.data = d;
 		this.infosFleet = infosFleet;
-		this.infosFleetSubAirfield = InfosFleetSubAirfield;
+		this.infosParent = infosParent;
 		this.aircrafts = [];
 		this.index = index;
 
-		this.el = $('<dd class="airfield"/>').append(function () {
+		var no = ['一', '二', '三'];
+
+		this.el = $('<dd class="airfield"/>').append($('<h4/>', {
+			'html': '第' + no[index] + '航空队',
+			'data-content': '第' + no[index] + '航空队'
+		})).append($('<div class="aircrafts"/>').append(function () {
 			var els = $();
 			for (var _i22 = 0; _i22 < 4; _i22++) {
-				this.aircrafts[_i22] = new InfosFleetShipEquipment(this, _i22);
+				this.aircrafts[_i22] = new InfosFleetShipEquipment(this, _i22, 12, Formula.equipmentType.Aircrafts);
 				els = els.add(this.aircrafts[_i22].el);
 			}
 			return els;
-		}.bind(this));
+		}.bind(this)));
+
+		this.elSummary = $('<span class="summary"/>').appendTo($('<div class="airfield-summary"/>').appendTo(this.el)).append($('<span class="summary-item"/>').html('航程').append(this.elSummaryRange = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('制空战力').append(this.elSummaryFighterPower = $('<strong/>').html('-')));
 
 		this.els = this.el;
 	}
@@ -8038,22 +8097,12 @@ var InfosFleetAirfield = function () {
 
 			this.data = d || this.data;
 
-			if (typeof this.data[0] == 'string') this.data[0] = parseInt(this.data[0]);
-			if (!this.data[2]) this.data[2] = [];
-			if (!this.data[3]) this.data[3] = [];
-			if (!this.data[4]) this.data[4] = [];
-
-			if (this.data[0]) this.shipId = this.data[0];
-
-			if (this.data[1][0]) this.shipLv = this.data[1][0];
-
 			for (var _i23 = 0; _i23 < 4; _i23++) {
-				this.equipments[_i23].id = this.data[2][_i23];
-				this.equipments[_i23].star = this.data[3][_i23];
-				this.equipments[_i23].rank = this.data[4][_i23];
+				if (!this.data[_i23]) this.data[_i23] = [];else {
+					if (this.data[_i23][0]) this.aircrafts[_i23].id = this.data[_i23][0];
+					if (this.data[_i23][1]) this.aircrafts[_i23].rank = this.data[_i23][1];
+				}
 			}
-
-			this.updateAttrs();
 
 			this._updating = !1;
 		}
@@ -8062,6 +8111,9 @@ var InfosFleetAirfield = function () {
 		value: function getData() {
 			return this.data;
 		}
+	}, {
+		key: 'summaryCalc',
+		value: function summaryCalc() {}
 	}, {
 		key: 'swap',
 		value: function swap(target, save) {
@@ -8107,74 +8159,13 @@ var InfosFleetAirfield = function () {
 
 			if (!this._updateTimeout) {
 				this._updateTimeout = setTimeout(function () {
-					this.updateAttrs();
-					if (this.infosFleetSubFleet) {
-						this.infosFleetSubFleet.summaryCalc();
-						this.infosFleetSubFleet.save();
+
+					if (this.infosParent) {
+						this.infosParent.save();
 					}
 					this._updateTimeout = null;
 				}.bind(this), 50);
 			}
-		}
-	}, {
-		key: 'shipId',
-		get: function get() {
-			return this.data[0];
-		},
-		set: function set(value) {
-			if (value != this.data[0]) {
-				this.data[0] = value;
-				this.shipLv = null;
-			}
-
-			if (value) {
-				var ship = _g.data.ships[value],
-				    suffix = ship.getSuffix(),
-				    speed = ship._speed,
-				    stype = ship._type;
-
-				stype = stype.replace(speed, '');
-
-				this.el.attr('data-shipId', value);
-
-				this.elAvatar.html('<img src="' + ship.getPic(10) + '"/>');
-				this.elInfosTitle.html('<h4 data-content="' + ship['name'][_g.lang] + '">' + ship['name'][_g.lang] + '</h4>' + (suffix ? '<h5 data-content="' + suffix + '">' + suffix + '</h5>' : ''));
-				this.elInfosInfo.html(speed + ' ' + stype);
-
-				for (var _i24 = 0; _i24 < 4; _i24++) {
-					this.equipments[_i24].carry = ship.slot[_i24];
-					if (!this._updating) {
-						this.equipments[_i24].id = null;
-						this.equipments[_i24].star = null;
-						this.equipments[_i24].rank = null;
-					}
-				}
-			} else {
-				this.el.removeAttr('data-shipId');
-
-				this.elAvatar.html('');
-				this.data[2] = [];
-				this.data[3] = [];
-				this.data[4] = [];
-			}
-
-			this.save();
-		}
-	}, {
-		key: 'shipLv',
-		get: function get() {
-			return this.data[1][0];
-		},
-		set: function set(value) {
-			this.data[1][0] = value || null;
-			if (value && value > 0) {
-				this.elInputLevel.val(value);
-			} else {
-				this.elInputLevel.val('');
-			}
-
-
-			this.save();
 		}
 	}]);
 
@@ -8235,18 +8226,25 @@ if (typeof _p.tip != 'undefined') {
 
 		function _stat(stat, title) {
 			if (d['stat'][stat]) {
+				if (d.type == 54) {
+					switch (stat) {
+						case 'hit':
+							title = '对爆';break;
+						case 'evasion':
+							title = '迎击';break;
+					}
+				}
 				switch (stat) {
 					case 'range':
 						return '<span>射程: ' + _g.getStatRange(d['stat'][stat]) + '</span>';
-						break;
+
 					default:
 						var val = parseInt(d['stat'][stat]);
 						return '<span>' + (val > 0 ? '+' : '') + val + ' ' + title + '</span>';
-						break;
 				}
 			} else {
-				return '';
-			}
+					return '';
+				}
 		}
 
 		var item_name = d.getName();
@@ -9210,7 +9208,7 @@ var TablelistEquipments = function (_Tablelist3) {
 
 			TablelistEquipments.shipIdLast = TablelistEquipments.shipId;
 
-			if (TablelistEquipments.shipId && $.inArray(_g.data.ships[TablelistEquipments.shipId].type, [9, 10, 11]) > -1) {
+			if (TablelistEquipments.shipId && _g.data.ships[TablelistEquipments.shipId] && $.inArray(_g.data.ships[TablelistEquipments.shipId].type, [9, 10, 11]) > -1) {
 				var k = 0,
 				    _el2 = void 0,
 				    t = void 0;
@@ -9621,7 +9619,7 @@ var TablelistFleets = function (_Tablelist4) {
 						sorted[cur.theme].push(i);
 					});
 
-					for (var _i25 in sorted) {
+					for (var _i24 in sorted) {
 						k = 0;
 
 						while (k < _this16.flexgrid_empty_count) {
@@ -9629,7 +9627,7 @@ var TablelistFleets = function (_Tablelist4) {
 							k++;
 						}
 
-						sorted[_i25].forEach(function (index) {
+						sorted[_i24].forEach(function (index) {
 							setTimeout(function (i) {
 								this.append_item(arr[i]);
 								count++;
@@ -9776,23 +9774,39 @@ var TablelistFleets = function (_Tablelist4) {
 
 
 			if (dataDefault.data) {
-				dataDefault.data.forEach(function (fleet) {
-					if (fleet && fleet.push) {
-						fleet.forEach(function (ship) {
-							if (ship && ship.push) {
-								ship[2].forEach(function (equipmentId, index) {
-									if (equipmentId && $.inArray(_g.data.items[equipmentId].type, Formula.equipmentType.Aircrafts) > -1) {
-										if (_g.data.items[equipmentId].rankupgradable) {
-											if (options.aircraftmax) ship[4][index] = 7;else ship[4][index] = ship[3][index] || null;
-										}
-										ship[3][index] = null;
+				(function () {
+					var i = 0;
+					dataDefault.data.forEach(function (fleet) {
+						if (fleet && fleet.push) {
+							if (i < 4) {
+								fleet.forEach(function (ship) {
+									if (ship && ship.push) {
+										ship[2].forEach(function (equipmentId, index) {
+											if (equipmentId && $.inArray(_g.data.items[equipmentId].type, Formula.equipmentType.Aircrafts) > -1) {
+												if (_g.data.items[equipmentId].rankupgradable) {
+													if (options.aircraftmax) ship[4][index] = 7;else ship[4][index] = ship[3][index] || null;
+												}
+												ship[3][index] = null;
+											}
+										});
+									}
+								});
+							} else {
+								fleet.forEach(function (field) {
+									if (field && field.push) {
+										field.forEach(function (aircraft, index) {
+											if (aircraft && aircraft[0] && $.inArray(_g.data.items[aircraft[0]].type, Formula.equipmentType.Aircrafts) > -1 && _g.data.items[aircraft[0]].rankupgradable && options.aircraftmax) {
+												aircraft[1] = 7;
+											}
+										});
 									}
 								});
 							}
-						});
-					}
-				});
-				InfosFleet.clean(dataDefault.data);
+							i++;
+						}
+					});
+					InfosFleet.clean(dataDefault.data);
+				})();
 			}
 
 			_db.fleets.insert(this.new_data(dataDefault, options), function (err, newDoc) {
@@ -9893,7 +9907,7 @@ var TablelistFleets = function (_Tablelist4) {
 						if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
 					});
 				} else {
-					for (var _i26 = 0, f = void 0; f = $selector[0].files[_i26]; _i26++) {
+					for (var _i25 = 0, f = void 0; f = $selector[0].files[_i25]; _i25++) {
 						var reader = new FileReader();
 						reader.onload = function (theFile) {
 							return function (r) {

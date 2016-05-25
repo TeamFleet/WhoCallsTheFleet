@@ -12,14 +12,21 @@ _p.tip.content_equipment = function( d ){
 
 	function _stat(stat, title){
 		if( d['stat'][stat] ){
+			if( d.type == 54 ){
+				// 局地战斗机
+				switch( stat ){
+					case 'hit': 	title = '对爆';	break;
+					case 'evasion': title = '迎击';	break;
+				}
+			}
 			switch(stat){
 				case 'range':
 					return '<span>射程: ' + _g.getStatRange( d['stat'][stat] ) + '</span>';
-					break;
+					//break;
 				default:
 					var val = parseInt( d['stat'][stat] )
 					return '<span>' + ( val > 0 ? '+' : '') + val + ' ' + title + '</span>'
-					break;
+					//break;
 			}
 		}else{
 			return ''

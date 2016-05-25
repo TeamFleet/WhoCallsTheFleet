@@ -1898,7 +1898,7 @@ InfosFleetShip.dragEnter = function(infosFleetShip_enter){
 
 // 类：装备
 class InfosFleetShipEquipment{
-	constructor(infosFleetShip, index){
+	constructor(infosParent, index, carry, equipmentTypes){
 		// 数据结构
 		/* [
 				STRING 舰娘ID,
@@ -1921,10 +1921,11 @@ class InfosFleetShipEquipment{
 		// ["145",[96,-1],[122,29,29],[]]
 		// ["403",[83,-1],[127,58],[0,0]]
 
-		// 直接对 infosFleetShip.data 相关数据进行读写 
-		
+		// 直接对 infosParent.data 相关数据进行读写 
+
 		this.index = index || 0
-		this.infosFleetShip = infosFleetShip
+		this.isParentAirfield = infosParent instanceof InfosFleetAirfield
+		this.infosParent = infosParent
 		
 		// 数据正在更新中，禁止触发任何存储操作
 		//this._updating = false
@@ -2081,6 +2082,12 @@ class InfosFleetShipEquipment{
 								}.bind(this))
 							)
 					)
+		
+		if( carry )
+			this.carry = carry
+		
+		if( equipmentTypes )
+			this.equipmentTypes = equipmentTypes
 	}
 	
 	// 返回页面元素
@@ -2104,12 +2111,12 @@ class InfosFleetShipEquipment{
 								) ? 7 : 0
 					//TablelistEquipments.types = []
 					//TablelistEquipments.shipId = null
-					if( this.infosFleetShip.infosFleet )
-						_frame.infos.dom.main.attr('data-theme', this.infosFleetShip.infosFleet.data['theme'])
+					if( this.infosParent.infosFleet )
+						_frame.infos.dom.main.attr('data-theme', this.infosParent.infosFleet.data['theme'])
 				}.bind(this),
 				callback_modeSelection_enter: function(){
-					TablelistEquipments.types = _g.data.ships[this.infosFleetShip.shipId].getEquipmentTypes()
-					TablelistEquipments.shipId = this.infosFleetShip.shipId
+					TablelistEquipments.types = this.equipmentTypes || _g.data.ships[this.infosParent.shipId].getEquipmentTypes()
+					TablelistEquipments.shipId = this.infosParent.shipId
 					_frame.app_main.page['equipments'].object.tablelistObj.apply_types()
 				}.bind(this)
 			})
@@ -2124,7 +2131,9 @@ class InfosFleetShipEquipment{
 	
 	// 装备ID
 		get id(){
-			return this.infosFleetShip.data[2][this.index]
+			return this.isParentAirfield
+					? this.infosParent.data[this.index][0]
+					: this.infosParent.data[2][this.index]
 		}
 		set id( value ){
 			value = parseInt(value) || null
@@ -2132,11 +2141,14 @@ class InfosFleetShipEquipment{
 			_p.tip.hide()
 			this.el.removeData(['tip', 'tip-filtered'])
 			
-			if( value != this.infosFleetShip.data[2][this.index] )
+			if( !this.isParentAirfield && value != this.infosParent.data[2][this.index] )
 				this.star = 0
 
 			if( value && !isNaN(value) ){
-				this.infosFleetShip.data[2][this.index] = value
+				if( this.isParentAirfield )
+					this.infosParent.data[this.index][0] = value
+				else
+					this.infosParent.data[2][this.index] = value
 				this.improvable = _g.data.items[value].improvable || false
 				this.el.attr({
 							'data-equipmentid': value,
@@ -2154,7 +2166,10 @@ class InfosFleetShipEquipment{
 					}else
 						this.el.removeClass('is-aircraft is-rankupgradable')
 			}else{
-				this.infosFleetShip.data[2][this.index] = null
+				if( this.isParentAirfield )
+					this.infosParent.data[this.index][0] = null
+				else
+					this.infosParent.data[2][this.index] = null
 				this.improvable = false
 				this.el.removeAttr('data-equipmentId')
 						.removeAttr('data-tip')
@@ -2166,47 +2181,57 @@ class InfosFleetShipEquipment{
 				this.elName.html('')
 			}
 			
-			this.infosFleetShip.infosFleetSubFleet.summaryCalc()
+			if( this.isParentAirfield )
+				this.infosParent.summaryCalc()
+			else
+				this.infosParent.infosFleetSubFleet.summaryCalc()
+				
 			this.save()
 		}
 	
 	// 改修星级
 		get star(){
-			return this.infosFleetShip.data[3][this.index]
+			return this.isParentAirfield ? 0 : this.infosParent.data[3][this.index]
 		}
 		set star( value ){
-			if( this._improvable ){
-				value = parseInt(value) || null
-				
-				if( value > 10 )
-					value = 10
-				
-				if( value < 0 )
-					value = 0
-				
-				if( value ){
-					this.infosFleetShip.data[3][this.index] = value
-					this.elInputStar.val( value )
-					this.elStar.html(value)
-					this.el.attr('data-star', value)
+			if( !this.isParentAirfield ){
+				if( this._improvable ){
+					value = parseInt(value) || null
+					
+					if( value > 10 )
+						value = 10
+					
+					if( value < 0 )
+						value = 0
+					
+					if( value ){
+						this.infosParent.data[3][this.index] = value
+						this.elInputStar.val( value )
+						this.elStar.html(value)
+						this.el.attr('data-star', value)
+					}else{
+						this.infosParent.data[3][this.index] = null
+						this.elInputStar.val('')
+						this.elStar.html(0)
+						this.el.attr('data-star', '')
+					}
+					
 				}else{
-					this.infosFleetShip.data[3][this.index] = null
-					this.elInputStar.val('')
-					this.elStar.html(0)
-					this.el.attr('data-star', '')
+					this.infosParent.data[3][this.index] = null
+					this.el.removeAttr('data-star')
 				}
 				
-			}else{
-				this.infosFleetShip.data[3][this.index] = null
-				this.el.removeAttr('data-star')
+				this.infosParent.infosFleetSubFleet.summaryCalc()
+					
+				this.save()
 			}
-			this.infosFleetShip.infosFleetSubFleet.summaryCalc()
-			this.save()
 		}
 	
 	// 熟练度
 		get rank(){
-			return this.infosFleetShip.data[4][this.index]
+			return this.isParentAirfield
+					? this.infosParent.data[this.index][1]
+					: this.infosParent.data[4][this.index]
 		}
 		set rank( value ){
 			if( this.id && $.inArray(_g.data.items[this.id].type, Formula.equipmentType.Aircrafts) > -1 ){
@@ -2219,18 +2244,32 @@ class InfosFleetShipEquipment{
 					value = 0
 				
 				if( value ){
-					this.infosFleetShip.data[4][this.index] = value
+					if( this.isParentAirfield )
+						this.infosParent.data[this.index][1] = value
+					else
+						this.infosParent.data[4][this.index] = value
 					this.el.attr('data-rank', value)
 				}else{
-					this.infosFleetShip.data[4][this.index] = null
+					if( this.isParentAirfield )
+						this.infosParent.data[this.index][1] = null
+					else
+						this.infosParent.data[4][this.index] = null
 					this.el.attr('data-rank', '')
 				}
 				
 			}else{
-				this.infosFleetShip.data[4][this.index] = null
+				if( this.isParentAirfield )
+					this.infosParent.data[this.index][1] = null
+				else
+					this.infosParent.data[4][this.index] = null
 				this.el.removeAttr('data-rank')
 			}
-			this.infosFleetShip.infosFleetSubFleet.summaryCalc()
+			
+			if( this.isParentAirfield )
+				this.infosParent.summaryCalc()
+			else
+				this.infosParent.infosFleetSubFleet.summaryCalc()
+
 			this.save()
 		}
 	
@@ -2265,10 +2304,10 @@ class InfosFleetShipEquipment{
 		save(){
 			if( this._updating )
 				return false
-			if( this.infosFleetShip ){
-				//this.infosFleetShip.data[2][this.index] = this.id
-				//this.infosFleetShip.data[3][this.index] = this.star
-				this.infosFleetShip.save()
+			if( this.infosParent ){
+				//this.infosParent.data[2][this.index] = this.id
+				//this.infosParent.data[3][this.index] = this.star
+				this.infosParent.save()
 			}
 		}
 }
@@ -2323,18 +2362,21 @@ class InfosFleetSubAirfield{
 	// 保存
 		save(){
 			// 如果该子舰队下没有任何数据，则存储数据时不传输该子舰队数据
-			let allEmpty = true
+			//let allEmpty = true
 			this.data = this.data || []
 			
-			this.fields.forEach(function(currentValue,i){
-				this.data[i] = currentValue.data
-				
-				if( currentValue.data[0] )
-					allEmpty = false
+			this.fields.forEach(function(field,i){
+				this.data[i] = field.data
+				//field.data.forEach(function(d, j){
+				//	console.log( d )
+				//	if( d[0] )
+				//		allEmpty = false
+				//})
 			}, this)
+			//console.log( field.data, allEmpty )
 			
-			if( allEmpty )
-				this.data = null
+			//if( allEmpty )
+			//	this.data = null
 			
 			if( this.infosFleet )
 				this.infosFleet.save()
@@ -2349,7 +2391,7 @@ class InfosFleetSubAirfield{
 
 // 类：基地航空队机场
 class InfosFleetAirfield{
-	constructor(infosFleet, InfosFleetSubAirfield, index, d){
+	constructor(infosFleet, infosParent, index, d){
 		/**
 		 * [
 		 * 		[装备ID, 熟练度],
@@ -2368,20 +2410,63 @@ class InfosFleetAirfield{
 		d = d || [[], [], [], []]
 		this.data = d
 		this.infosFleet = infosFleet
-		this.infosFleetSubAirfield = InfosFleetSubAirfield
+		this.infosParent = infosParent
 		this.aircrafts = []
 		this.index = index
 		
+		let no = [
+			'一',
+			'二',
+			'三'
+		]
+		
 		this.el = $('<dd class="airfield"/>')
-			// 装备
-			.append(function(){
-				let els = $()
-				for( let i=0; i<4; i++ ){
-					this.aircrafts[i] = new InfosFleetShipEquipment(this, i)
-					els = els.add(this.aircrafts[i].el)
-				}
-				return els
-			}.bind(this))
+			.append(
+				$('<h4/>',{
+					'html': 		`第${no[index]}航空队`,
+					'data-content': `第${no[index]}航空队`
+				})
+			)
+			.append(
+				$('<div class="aircrafts"/>')
+					.append(
+						function(){
+							let els = $()
+							for( let i=0; i<4; i++ ){
+								this.aircrafts[i] = new InfosFleetShipEquipment(
+									this,
+									i,
+									// carry slot
+									12,
+									// equipment types
+									Formula.equipmentType.Aircrafts
+								)
+								els = els.add(this.aircrafts[i].el)
+							}
+							return els
+						}.bind(this)
+					)
+			)
+
+		this.elSummary = $('<span class="summary"/>')
+			//.html('<h4 data-content="舰队数据">舰队数据</h4>')
+			.appendTo(
+				$('<div class="airfield-summary"/>').appendTo(this.el)
+			)
+			.append(
+				$('<span class="summary-item"/>')
+					.html('航程')
+					.append(
+						this.elSummaryRange = $('<strong/>').html('-')
+					)
+			)
+			.append(
+				$('<span class="summary-item"/>')
+					.html('制空战力')
+					.append(
+						this.elSummaryFighterPower = $('<strong/>').html('-')
+					)
+			)
 		
 		this.els = this.el
 
@@ -2400,29 +2485,17 @@ class InfosFleetAirfield{
 			this._updating = true
 			
 			this.data = d || this.data
-		
-			if( typeof this.data[0] == 'string' )
-				this.data[0] = parseInt(this.data[0])
-			if( !this.data[2] )
-				this.data[2] = []
-			if( !this.data[3] )
-				this.data[3] = []
-			if( !this.data[4] )
-				this.data[4] = []
 			
-			if( this.data[0] )
-				this.shipId = this.data[0]
-			
-			if( this.data[1][0] )
-				this.shipLv = this.data[1][0]
-			
-			for( let i=0; i<4; i++ ){
-				this.equipments[i].id = this.data[2][i]
-				this.equipments[i].star = this.data[3][i]
-				this.equipments[i].rank = this.data[4][i]
+			for( let i = 0; i<4; i++ ){
+				if( !this.data[i] )
+					this.data[i] = []
+				else{
+					if( this.data[i][0] )
+						this.aircrafts[i].id = this.data[i][0]
+					if( this.data[i][1] )
+						this.aircrafts[i].rank = this.data[i][1]
+				}
 			}
-			
-			this.updateAttrs()
 			
 			this._updating = false
 		}
@@ -2430,6 +2503,11 @@ class InfosFleetAirfield{
 	// 获取当前状态的元数据
 		getData(){
 			return this.data
+		}
+	
+	// 更新属性总览
+		summaryCalc(){
+			
 		}
 	
 	// 移动
@@ -2470,107 +2548,16 @@ class InfosFleetAirfield{
 			this.swap( this.index + 1, true )
 		}
 	
-	
-	
-	// 舰娘ID
-		get shipId(){
-			return this.data[0]
-		}
-		set shipId( value ){
-			if( value != this.data[0] ){
-				this.data[0] = value
-				this.shipLv = null
-			}
-			
-			if( value ){
-				let ship = _g.data.ships[value]
-					,suffix = ship.getSuffix()
-					,speed = ship._speed
-					,stype = ship._type
-				
-				stype = stype.replace(speed, '')
-					
-				this.el.attr('data-shipId', value)
-				//this.el.removeClass('noship')
-				this.elAvatar.html('<img src="' + ship.getPic(10) + '"/>')
-				this.elInfosTitle.html('<h4 data-content="'+ship['name'][_g.lang]+'">' +ship['name'][_g.lang]+'</h4>'
-										+ ( suffix
-											? '<h5 data-content="'+suffix+'">' +suffix+'</h5>'
-											: ''
-										)
-									)
-				this.elInfosInfo.html( speed + ' ' + stype )
-				
-				// 装备栏数据
-					for( let i=0; i<4; i++ ){
-						this.equipments[i].carry = ship.slot[i]
-						if( !this._updating ){
-							this.equipments[i].id = null
-							this.equipments[i].star = null
-							this.equipments[i].rank = null
-						}
-					}
-			}else{
-				this.el.removeAttr('data-shipId')
-				//this.el.addClass('noship')
-				this.elAvatar.html('')
-				this.data[2] = []
-				this.data[3] = []
-				this.data[4] = []
-				// [null, [null, -1], [], [], []]
-			}
-			
-			this.save()
-		}
-	
-	// 舰娘等级
-		get shipLv(){
-			return this.data[1][0]
-		}
-		set shipLv( value ){
-			this.data[1][0] = value || null
-			if( value && value > 0 ){
-				this.elInputLevel.val( value )
-			}else{
-				this.elInputLevel.val('')
-			}
-			//this.el.attr('data-shipLv', value)
-			
-			this.save()
-		}
-	
-	// 舰娘运
-	
 	// 保存
 		save(){
 			if( this._updating )
 				return false
 
-			/*
-			// 计算属性
-				if( !this._updateTimeout ){
-					this._updateTimeout = setTimeout(function(){
-						this.updateAttrs()
-						this.infosFleetSubFleet.summaryCalc()
-						this._updateTimeout = null
-					}.bind(this), 10)
-				}
-
-			if( !this._saveTimeout ){
-				this._saveTimeout = setTimeout(function(){
-					if( this.infosFleetSubFleet )
-						this.infosFleetSubFleet.save()
-					
-					this._saveTimeout = null
-				}.bind(this), 1000)
-			}
-			*/
 			if( !this._updateTimeout ){
 				this._updateTimeout = setTimeout(function(){
-					this.updateAttrs()
-					if( this.infosFleetSubFleet ){
-						this.infosFleetSubFleet.summaryCalc()
-						this.infosFleetSubFleet.save()
+			
+					if( this.infosParent ){
+						this.infosParent.save()
 					}
 					this._updateTimeout = null
 				}.bind(this), 50)

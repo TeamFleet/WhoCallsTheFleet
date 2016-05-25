@@ -13,7 +13,7 @@
 						case 'hit': 	title = '对爆';	break;
 						case 'evasion': title = '迎击';	break;
 					}
-				}					
+				}
 				var html = '<small class="stat-'+stat+'">' + title + '</small>'
 				switch(stat){
 					case 'range':
