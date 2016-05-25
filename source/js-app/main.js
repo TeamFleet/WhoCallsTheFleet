@@ -14,7 +14,7 @@
 
 
 
-// Global Variables
+// Global Variables	
 	_g.event = {
 		'animationend':			'webkitAnimationEnd',
 		'animationiteration':	'webkitAnimationIteration',
@@ -64,6 +64,9 @@
 	_g.ship_type_order = []
 	_g.ship_type_order_full = []
 	_g.ship_type_order_map = {}
+
+	Formula.data.ships = _g.data.ships;
+	Formula.data.equipments = _g.data.items;
 
 
 

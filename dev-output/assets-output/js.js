@@ -2718,6 +2718,11 @@ _g.lang = _g.lang || 'zh_cn';
 
 
 var Formula = {
+	data: {
+		'ships': undefined.dataShips,
+		'equipments': undefined.dataEquipments
+	},
+
 	equipmentType: {
 		SmallCaliber: 1,
 		SmallCaliberHigh: 2,
@@ -2768,7 +2773,7 @@ var Formula = {
 	calculate: function calculate(type, ship, equipments_by_slot, star_by_slot, rank_by_slot, options) {
 		if (!type || !ship) return 0;
 
-		if (!_instanceof(ship, Ship)) ship = _g.data.ships[ship];
+		if (!_instanceof(ship, Ship)) ship = Formula.data.ships[ship];
 
 		var result = 0,
 		    count = {
@@ -2809,7 +2814,7 @@ var Formula = {
 		equipments_by_slot = equipments_by_slot.map(function (equipment) {
 			if (!equipment) return null;
 			if (_instanceof(equipment, Equipment)) return equipment;
-			return _g.data.items[equipment];
+			return Formula.data.equipments[equipment];
 		}) || [];
 		star_by_slot = star_by_slot || [];
 		rank_by_slot = rank_by_slot || [];
@@ -3307,6 +3312,45 @@ Formula.calc.TP = function (data) {
 	return result;
 };
 
+Formula.calc.fighterPower = function (equipment, carry, rank) {
+	if (!equipment) return [0, 0];
+
+	equipment = _instanceof(equipment, Equipment) ? equipment : Formula.data.equipments[equipment];
+	carry = carry || 0;
+	rank = rank || 0;
+
+	var rankInternal = [],
+	    typeValue = {},
+	    results = [0, 0];
+
+	rankInternal[0] = [0, 9];
+	rankInternal[1] = [10, 24];
+	rankInternal[2] = [25, 39];
+	rankInternal[3] = [40, 54];
+	rankInternal[4] = [55, 69];
+	rankInternal[5] = [70, 84];
+	rankInternal[6] = [85, 99];
+	rankInternal[7] = [100, 120];
+
+	typeValue.CarrierFighter = [0, 0, 2, 5, 9, 14, 14, 22];
+
+	typeValue.SeaplaneBomber = [0, 0, 1, 1, 1, 3, 3, 6];
+
+	if ($.inArray(equipment.type, Formula.equipmentType.Fighters) > -1 && carry) {
+		var statAA = equipment.stat.aa || 0 + (equipment.type == Formula.equipmentType.Interceptor ? equipment.stat.evasion * 1.5 : 0),
+		    base = Math.sqrt(carry) * statAA,
+		    _rankInternal = rankInternal[rank],
+		    _typeValue = 0;
+
+		if (equipment.type == Formula.equipmentType.CarrierFighter) _typeValue = typeValue.CarrierFighter[rank];else if (equipment.type == Formula.equipmentType.Interceptor) _typeValue = typeValue.CarrierFighter[rank];else if (equipment.type == Formula.equipmentType.SeaplaneFighter) _typeValue = typeValue.CarrierFighter[rank];else if (equipment.type == Formula.equipmentType.SeaplaneBomber) _typeValue = typeValue.SeaplaneBomber[rank];
+
+		results[0] += Math.floor(base + Math.sqrt(_rankInternal[0] / 10) + _typeValue);
+		results[1] += Math.floor(base + Math.sqrt(_rankInternal[1] / 10) + _typeValue);
+	}
+
+	return results;
+};
+
 Formula.calcByShip.shellingPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, options) {
 	options = options || {};
 
@@ -3372,36 +3416,12 @@ Formula.calcByShip.shellingPower = function (ship, equipments_by_slot, star_by_s
 };
 
 Formula.calcByShip.fighterPower_v2 = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
-
-	var rankInternal = [],
-	    typeValue = {},
-	    results = [0, 0];
-
-	rankInternal[0] = [0, 9];
-	rankInternal[1] = [10, 24];
-	rankInternal[2] = [25, 39];
-	rankInternal[3] = [40, 54];
-	rankInternal[4] = [55, 69];
-	rankInternal[5] = [70, 84];
-	rankInternal[6] = [85, 99];
-	rankInternal[7] = [100, 120];
-
-	typeValue.CarrierFighter = [0, 0, 2, 5, 9, 14, 14, 22];
-
-	typeValue.SeaplaneBomber = [0, 0, 1, 1, 1, 3, 3, 6];
+	var results = [0, 0];
 
 	ship.slot.map(function (carry, index) {
-		if (equipments_by_slot[index] && $.inArray(equipments_by_slot[index].type, Formula.equipmentType.Fighters) > -1 && carry) {
-			var base = Math.sqrt(carry) * (equipments_by_slot[index].stat.aa || 0),
-			    _rank = rank_by_slot[index] || 0,
-			    _rankInternal = rankInternal[_rank],
-			    _typeValue = 0;
-			if (equipments_by_slot[index].type == Formula.equipmentType.CarrierFighter) _typeValue = typeValue.CarrierFighter[_rank];
-			if (equipments_by_slot[index].type == Formula.equipmentType.SeaplaneFighter) _typeValue = typeValue.CarrierFighter[_rank];
-			if (equipments_by_slot[index].type == Formula.equipmentType.SeaplaneBomber) _typeValue = typeValue.SeaplaneBomber[_rank];
-			results[0] += Math.floor(base + Math.sqrt(_rankInternal[0] / 10) + _typeValue);
-			results[1] += Math.floor(base + Math.sqrt(_rankInternal[1] / 10) + _typeValue);
-		}
+		var r = Formula.calc.fighterPower(equipments_by_slot[index], carry, rank_by_slot[index] || 0);
+		results[0] += r[0];
+		results[1] += r[1];
 	});
 	return results;
 };
@@ -3908,6 +3928,9 @@ var _db = {
 		filename: 'fleets'
 	})
 };
+
+Formula.data.ships = _g.data.ships;
+Formula.data.equipments = _g.data.items;
 
 Nedb.prototype.updateById = function (_id, docReplace, callback) {
 	if (!this._updateByIdQueue) {

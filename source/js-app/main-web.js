@@ -36,6 +36,9 @@
 			})
 	}
 
+	Formula.data.ships = _g.data.ships;
+	Formula.data.equipments = _g.data.items;
+
 
 
 
