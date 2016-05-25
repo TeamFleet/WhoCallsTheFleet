@@ -8106,6 +8106,15 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   display: block;
   flex: 0.25 0 auto;
 }
+.infos-fleet .fleetships.fleetairfileds {
+  flex-flow: row nowrap;
+  align-items: center;
+}
+.infos-fleet .fleetships.fleetairfileds:before,
+.infos-fleet .fleetships.fleetairfileds:after {
+  flex-grow: 0.5;
+  flex-shrink: 5;
+}
 .infos-fleet .ship {
   flex: 0.5 0 70px;
   position: relative;
@@ -8522,6 +8531,37 @@ body.mod-capture .infos-fleet .ship > .options {
 					0 1px 0 @color;
 	*/
   text-shadow: -2px 0 1px #333, 2px 0 1px #333, 0 -2px 1px #333, 0 2px 1px #333, 0 0 2px #333;
+}
+.infos-fleet .airfield {
+  flex: 1 1 200px;
+  position: relative;
+  margin: 0 2.5%;
+  height: 65%;
+  min-height: 320px;
+  max-height: 400px;
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 40px 0 50px 0;
+}
+.infos-fleet .airfield h4,
+.infos-fleet .airfield .airfield-summary {
+  flex: none;
+  position: absolute;
+  left: 0;
+}
+.infos-fleet .airfield h4 {
+  top: 0;
+  font-size: 200%;
+  line-height: 1.2em;
+}
+.infos-fleet .airfield .airfield-summary {
+  bottom: 0;
+  width: 100%;
+  height: 4em;
+}
+.infos-fleet .airfield .airfield-summary .summary {
+  flex: none;
+  display: block;
 }
 .infos-fleet .equipments,
 .infos-fleet .attributes {
@@ -9022,6 +9062,30 @@ body.mod-capture .infos-fleet .equipments {
 .infos-fleet .summary-item-consummation .ammo:before {
   background-position: 0 -234px;
 }
+.infos-fleet .aircrafts {
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 0 0 10px 0;
+  flex: 1 1 100%;
+  height: 100%;
+  padding: 2px 4px;
+  display: flex;
+  flex-flow: column nowrap;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.infos-fleet .aircrafts .equipment {
+  width: 100%;
+  vertical-align: top;
+  border-radius: 0 !important;
+  height: auto;
+  flex: 1 1 25%;
+  margin: 2px auto;
+}
+.infos-fleet .aircrafts .equipment-name {
+  font-size: 14px;
+  line-height: 1.2em;
+}
 .infos-fleet > input[type="radio"] {
   display: none;
 }
@@ -9087,6 +9151,19 @@ body.mod-capture .infos-fleet .equipments {
   background-position: 0 0;
 }
 .infos-fleet > input[type="radio"][value="4"]:checked ~ .ships dl[data-fleet="4"] {
+  display: flex;
+  z-index: 2;
+}
+.infos-fleet > input[type="radio"][value="5"]:checked ~ .fleets .tabs label[data-fleet="5"] {
+  color: #fff;
+  background-position: 0 0;
+  border-color: rgba(255, 255, 255, 0.175);
+  cursor: default;
+}
+.infos-fleet > input[type="radio"][value="5"]:checked ~ .fleets .tabs label[data-fleet="5"]:after {
+  background-position: 0 0;
+}
+.infos-fleet > input[type="radio"][value="5"]:checked ~ .ships dl[data-fleet="5"] {
   display: flex;
   z-index: 2;
 }
