@@ -8113,6 +8113,7 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
 .infos-fleet .fleetships.fleetairfileds:before,
 .infos-fleet .fleetships.fleetairfileds:after {
   flex-grow: 0.5;
+  flex-shrink: 5;
 }
 .infos-fleet .ship {
   flex: 0.5 0 70px;
@@ -8532,9 +8533,9 @@ body.mod-capture .infos-fleet .ship > .options {
   text-shadow: -2px 0 1px #333, 2px 0 1px #333, 0 -2px 1px #333, 0 2px 1px #333, 0 0 2px #333;
 }
 .infos-fleet .airfield {
-  flex: 1 0 200px;
+  flex: 1 1 200px;
   position: relative;
-  margin: 0 20px;
+  margin: 0 2.5%;
   height: 65%;
   min-height: 320px;
   max-height: 400px;
@@ -8556,6 +8557,7 @@ body.mod-capture .infos-fleet .ship > .options {
 .infos-fleet .airfield .airfield-summary {
   bottom: 0;
   width: 100%;
+  height: 4em;
 }
 .infos-fleet .airfield .airfield-summary .summary {
   flex: none;
@@ -9070,6 +9072,7 @@ body.mod-capture .infos-fleet .equipments {
   padding: 2px 4px;
   display: flex;
   flex-flow: column nowrap;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 .infos-fleet .aircrafts .equipment {
   width: 100%;
@@ -9078,6 +9081,10 @@ body.mod-capture .infos-fleet .equipments {
   height: auto;
   flex: 1 1 25%;
   margin: 2px auto;
+}
+.infos-fleet .aircrafts .equipment-name {
+  font-size: 14px;
+  line-height: 1.2em;
 }
 .infos-fleet > input[type="radio"] {
   display: none;

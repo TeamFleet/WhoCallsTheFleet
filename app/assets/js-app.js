@@ -2130,7 +2130,9 @@ Formula.equipmentType.Fighters = [
 		Formula.equipmentType.CarrierFighter,
 		Formula.equipmentType.TorpedoBomber,
 		Formula.equipmentType.DiveBomber,
-		Formula.equipmentType.SeaplaneFighter/*,
+		Formula.equipmentType.SeaplaneFighter,
+		Formula.equipmentType.LandBasedAttacker,
+		Formula.equipmentType.Interceptor/*,
 		Formula.equipmentType.CarrierRecon*/
 	];
 
@@ -2635,7 +2637,7 @@ Formula.losPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot
 			3,
 			6
 		]
-	
+		
 		if( $.inArray( equipment.type, Formula.equipmentType.Fighters ) > -1
 			&& carry
 		){
@@ -11112,7 +11114,7 @@ class InfosFleetAirfield{
 				$('<span class="summary-item"/>')
 					.html('航程')
 					.append(
-						this.elSummaryRange = $('<strong/>').html('-')
+						this.elSummaryDistance = $('<strong/>').html('-')
 					)
 			)
 			.append(
@@ -11162,7 +11164,59 @@ class InfosFleetAirfield{
 	
 	// 更新属性总览
 		summaryCalc(){
+			if( this.summaryCalculating || !this.data || !this.data.push )
+				return false
 			
+			this.summaryCalculating = setTimeout(function(){			
+				let fighterPower = [0, 0]
+					,distance = [0, 0]
+				
+				this.data.forEach(function( d ){
+					if( d[0] ){
+						let e = _g.data.items[d[0]]
+							,fp = Formula.calc.fighterPower( e, 12, d[1] )
+							,_distance = e.stat.distance || 0
+							
+						fighterPower[0]+= fp[0]
+						fighterPower[1]+= fp[1]
+						
+						distance[0] = distance[0] <= 0 ? _distance : Math.min( distance[0], _distance )
+						distance[1] = Math.max( distance[1], _distance )
+					}
+				}, this)
+
+				if( Math.max( fighterPower[0], fighterPower[1] ) > 0 ){
+					let val1 = Math.floor(fighterPower[0])
+						,val2 = Math.floor(fighterPower[1])
+					this.elSummaryFighterPower.html(
+						val1 == val2
+							? val1
+							: val1 + '~' + val2
+					)
+					this.elSummaryFighterPower.removeClass('empty')
+				}else{
+					this.elSummaryFighterPower.html( '-' )
+					this.elSummaryFighterPower.addClass('empty')
+				}
+
+				if( Math.max( distance[0], distance[1] ) > 0 ){
+					let val1 = Math.floor(distance[0])
+						,val2 = Math.floor(distance[1])
+					this.elSummaryDistance.html(
+						val1 == val2
+							? val1
+							: val1 + '~' + val2
+					)
+					this.elSummaryDistance.removeClass('empty')
+				}else{
+					this.elSummaryDistance.html( '-' )
+					this.elSummaryDistance.addClass('empty')
+				}
+				
+				this.summaryCalculating = null
+			}.bind(this), 10)
+			
+			return true
 		}
 	
 	// 移动
@@ -12135,6 +12189,8 @@ _p.tip.content_equipment = function( d ){
 				case 'range':
 					return '<span>射程: ' + _g.getStatRange( d['stat'][stat] ) + '</span>';
 					//break;
+				case 'distance':
+					return '<span>' + title + ': ' + d['stat'][stat] + '</span>';
 				default:
 					var val = parseInt( d['stat'][stat] )
 					return '<span>' + ( val > 0 ? '+' : '') + val + ' ' + title + '</span>'
@@ -12170,6 +12226,7 @@ _p.tip.content_equipment = function( d ){
 	*/
 
 	let item_name = d.getName()
+		,isAircraft = $.inArray(d.type, _g.data.item_type_collections[3].types) > -1
 
 	return '<h3 class="itemstat">'
 			+ '<s class="equiptypeicon mod-'+d.getIconId()+'"></s>'
@@ -12188,6 +12245,7 @@ _p.tip.content_equipment = function( d ){
 		+ _stat('evasion', '回避')
 		+ _stat('los', '索敌')
 		+ _stat('range', '射程')
+		+ ( isAircraft ? _stat('distance', '航程') : '' )
 
 }
 

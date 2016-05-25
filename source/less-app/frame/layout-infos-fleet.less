@@ -428,6 +428,7 @@
 		align-items:center;
 		&:before, &:after{
 			flex-grow: 0.5;
+			flex-shrink:5;
 		}
 	}
 
@@ -916,9 +917,9 @@
 	} // dd.ship
 	
 	.airfield{
-		flex: 		1 0 200px;
+		flex: 		1 1 200px;
 		position:	relative;
-		margin: 	0 20px;
+		margin: 	0 2.5%;
 		height: 	65%;
 		min-height: 320px;
 		max-height: 400px;
@@ -938,6 +939,7 @@
 		.airfield-summary{
 			bottom: 	0;
 			width: 		100%;
+			height: 	4em;
 			.summary{
 				flex: 	none;
 				display:block;
@@ -1478,6 +1480,7 @@
 		padding: 	(@gutter / 2) @gutter;
 		display: 	flex;
 		flex-flow: 	column nowrap;
+		box-shadow: 0 0 10px fade(#000, 10%);
 		.equipment{
 			width: 		100%;
 			//height: 	~"calc(25% - @{gutter})";
@@ -1487,6 +1490,10 @@
 			height: 	auto;
 			flex: 		1 1 25%;
 			margin: 	(@gutter / 2) auto;
+		}
+		.equipment-name{
+			font-size: 	14px;
+			line-height:1.2em;
 		}
 	}
 

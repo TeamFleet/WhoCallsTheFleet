@@ -23,6 +23,8 @@ _p.tip.content_equipment = function( d ){
 				case 'range':
 					return '<span>射程: ' + _g.getStatRange( d['stat'][stat] ) + '</span>';
 					//break;
+				case 'distance':
+					return '<span>' + title + ': ' + d['stat'][stat] + '</span>';
 				default:
 					var val = parseInt( d['stat'][stat] )
 					return '<span>' + ( val > 0 ? '+' : '') + val + ' ' + title + '</span>'
@@ -58,6 +60,7 @@ _p.tip.content_equipment = function( d ){
 	*/
 
 	let item_name = d.getName()
+		,isAircraft = $.inArray(d.type, _g.data.item_type_collections[3].types) > -1
 
 	return '<h3 class="itemstat">'
 			+ '<s class="equiptypeicon mod-'+d.getIconId()+'"></s>'
@@ -76,6 +79,7 @@ _p.tip.content_equipment = function( d ){
 		+ _stat('evasion', '回避')
 		+ _stat('los', '索敌')
 		+ _stat('range', '射程')
+		+ ( isAircraft ? _stat('distance', '航程') : '' )
 
 }
 

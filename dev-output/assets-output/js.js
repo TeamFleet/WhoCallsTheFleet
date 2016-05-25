@@ -2950,7 +2950,7 @@ Formula.equipmentType.Torpedos = [Formula.equipmentType.Torpedo, Formula.equipme
 
 Formula.equipmentType.Seaplanes = [Formula.equipmentType.ReconSeaplane, Formula.equipmentType.ReconSeaplaneNight, Formula.equipmentType.SeaplaneBomber, Formula.equipmentType.SeaplaneFighter];
 
-Formula.equipmentType.Fighters = [Formula.equipmentType.SeaplaneBomber, Formula.equipmentType.CarrierFighter, Formula.equipmentType.TorpedoBomber, Formula.equipmentType.DiveBomber, Formula.equipmentType.SeaplaneFighter];
+Formula.equipmentType.Fighters = [Formula.equipmentType.SeaplaneBomber, Formula.equipmentType.CarrierFighter, Formula.equipmentType.TorpedoBomber, Formula.equipmentType.DiveBomber, Formula.equipmentType.SeaplaneFighter, Formula.equipmentType.LandBasedAttacker, Formula.equipmentType.Interceptor];
 
 Formula.equipmentType.Recons = [Formula.equipmentType.ReconSeaplane, Formula.equipmentType.ReconSeaplaneNight, Formula.equipmentType.CarrierRecon, Formula.equipmentType.CarrierRecon2, Formula.equipmentType.LargeFlyingBoat];
 
@@ -8080,7 +8080,7 @@ var InfosFleetAirfield = function () {
 			return els;
 		}.bind(this)));
 
-		this.elSummary = $('<span class="summary"/>').appendTo($('<div class="airfield-summary"/>').appendTo(this.el)).append($('<span class="summary-item"/>').html('航程').append(this.elSummaryRange = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('制空战力').append(this.elSummaryFighterPower = $('<strong/>').html('-')));
+		this.elSummary = $('<span class="summary"/>').appendTo($('<div class="airfield-summary"/>').appendTo(this.el)).append($('<span class="summary-item"/>').html('航程').append(this.elSummaryDistance = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('制空战力').append(this.elSummaryFighterPower = $('<strong/>').html('-')));
 
 		this.els = this.el;
 	}
@@ -8113,7 +8113,52 @@ var InfosFleetAirfield = function () {
 		}
 	}, {
 		key: 'summaryCalc',
-		value: function summaryCalc() {}
+		value: function summaryCalc() {
+			if (this.summaryCalculating || !this.data || !this.data.push) return !1;
+
+			this.summaryCalculating = setTimeout(function () {
+				var fighterPower = [0, 0],
+				    distance = [0, 0];
+
+				this.data.forEach(function (d) {
+					if (d[0]) {
+						var e = _g.data.items[d[0]],
+						    fp = Formula.calc.fighterPower(e, 12, d[1]),
+						    _distance = e.stat.distance || 0;
+
+						fighterPower[0] += fp[0];
+						fighterPower[1] += fp[1];
+
+						distance[0] = distance[0] <= 0 ? _distance : Math.min(distance[0], _distance);
+						distance[1] = Math.max(distance[1], _distance);
+					}
+				}, this);
+
+				if (Math.max(fighterPower[0], fighterPower[1]) > 0) {
+					var val1 = Math.floor(fighterPower[0]),
+					    val2 = Math.floor(fighterPower[1]);
+					this.elSummaryFighterPower.html(val1 == val2 ? val1 : val1 + '~' + val2);
+					this.elSummaryFighterPower.removeClass('empty');
+				} else {
+					this.elSummaryFighterPower.html('-');
+					this.elSummaryFighterPower.addClass('empty');
+				}
+
+				if (Math.max(distance[0], distance[1]) > 0) {
+					var val1 = Math.floor(distance[0]),
+					    val2 = Math.floor(distance[1]);
+					this.elSummaryDistance.html(val1 == val2 ? val1 : val1 + '~' + val2);
+					this.elSummaryDistance.removeClass('empty');
+				} else {
+					this.elSummaryDistance.html('-');
+					this.elSummaryDistance.addClass('empty');
+				}
+
+				this.summaryCalculating = null;
+			}.bind(this), 10);
+
+			return !0;
+		}
 	}, {
 		key: 'swap',
 		value: function swap(target, save) {
@@ -8238,6 +8283,8 @@ if (typeof _p.tip != 'undefined') {
 					case 'range':
 						return '<span>射程: ' + _g.getStatRange(d['stat'][stat]) + '</span>';
 
+					case 'distance':
+						return '<span>' + title + ': ' + d['stat'][stat] + '</span>';
 					default:
 						var val = parseInt(d['stat'][stat]);
 						return '<span>' + (val > 0 ? '+' : '') + val + ' ' + title + '</span>';
@@ -8247,9 +8294,10 @@ if (typeof _p.tip != 'undefined') {
 				}
 		}
 
-		var item_name = d.getName();
+		var item_name = d.getName(),
+		    isAircraft = $.inArray(d.type, _g.data.item_type_collections[3].types) > -1;
 
-		return '<h3 class="itemstat">' + '<s class="equiptypeicon mod-' + d.getIconId() + '"></s>' + '<strong data-content="' + item_name + '">' + item_name + '</strong>' + '<small>' + _g.data.item_types[d['type']]['name']['zh_cn'] + '</small>' + '</h3>' + _stat('fire', '火力') + _stat('torpedo', '雷装') + _stat('aa', '对空') + _stat('asw', '对潜') + _stat('bomb', '爆装') + _stat('hit', '命中') + _stat('armor', '装甲') + _stat('evasion', '回避') + _stat('los', '索敌') + _stat('range', '射程');
+		return '<h3 class="itemstat">' + '<s class="equiptypeicon mod-' + d.getIconId() + '"></s>' + '<strong data-content="' + item_name + '">' + item_name + '</strong>' + '<small>' + _g.data.item_types[d['type']]['name']['zh_cn'] + '</small>' + '</h3>' + _stat('fire', '火力') + _stat('torpedo', '雷装') + _stat('aa', '对空') + _stat('asw', '对潜') + _stat('bomb', '爆装') + _stat('hit', '命中') + _stat('armor', '装甲') + _stat('evasion', '回避') + _stat('los', '索敌') + _stat('range', '射程') + (isAircraft ? _stat('distance', '航程') : '');
 	};
 
 	_p.tip.filters.push(function (cont) {
