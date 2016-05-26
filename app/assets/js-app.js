@@ -11096,7 +11096,7 @@ class InfosFleetAirfield{
 									// carry slot
 									12,
 									// equipment types
-									Formula.equipmentType.Aircrafts
+									InfosFleetAirfield.equipmentTypes
 								)
 								els = els.add(this.aircrafts[i].el)
 							}
@@ -11299,6 +11299,13 @@ InfosFleetAirfield.dragEnter = function(infosFleetAirfield_enter){
 	
 	InfosFleetAirfield.dragging.swap(infosFleetAirfield_enter)
 }
+//Formula.equipmentType.Aircrafts
+InfosFleetAirfield.equipmentTypes = $.unique(
+	Formula.equipmentType.LandBased
+		.concat(Formula.equipmentType.Seaplanes)
+		.concat(Formula.equipmentType.CarrierBased)
+		.concat(Formula.equipmentType.Recons)
+)
 // 舰队配置 - OUTPUT
 	_frame.infos.__fleet__OUTPUT = function( id ){
 		return $('<div class="infos-fleet loading"/>')
