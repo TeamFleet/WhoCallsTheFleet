@@ -3337,7 +3337,7 @@ Formula.calc.fighterPower = function (equipment, carry, rank) {
 	typeValue.SeaplaneBomber = [0, 0, 1, 1, 1, 3, 3, 6];
 
 	if ($.inArray(equipment.type, Formula.equipmentType.Fighters) > -1 && carry) {
-		var statAA = equipment.stat.aa || 0 + (equipment.type == Formula.equipmentType.Interceptor ? equipment.stat.evasion * 1.5 : 0),
+		var statAA = (equipment.stat.aa || 0) + (equipment.type == Formula.equipmentType.Interceptor ? equipment.stat.evasion * 1.5 : 0),
 		    base = Math.sqrt(carry) * statAA,
 		    _rankInternal = rankInternal[rank],
 		    _typeValue = 0;
@@ -8077,7 +8077,7 @@ var InfosFleetAirfield = function () {
 		})).append($('<div class="aircrafts"/>').append(function () {
 			var els = $();
 			for (var _i22 = 0; _i22 < 4; _i22++) {
-				this.aircrafts[_i22] = new InfosFleetShipEquipment(this, _i22, 12, Formula.equipmentType.Aircrafts);
+				this.aircrafts[_i22] = new InfosFleetShipEquipment(this, _i22, 12, InfosFleetAirfield.equipmentTypes);
 				els = els.add(this.aircrafts[_i22].el);
 			}
 			return els;
@@ -8244,6 +8244,8 @@ InfosFleetAirfield.dragEnter = function (infosFleetAirfield_enter) {
 
 	InfosFleetAirfield.dragging.swap(infosFleetAirfield_enter);
 };
+
+InfosFleetAirfield.equipmentTypes = $.unique(Formula.equipmentType.LandBased.concat(Formula.equipmentType.Seaplanes).concat(Formula.equipmentType.CarrierBased).concat(Formula.equipmentType.Recons));
 _frame.app_main.is_mode_selection = function () {
 	return $html.hasClass('mode-selection') || _frame.dom.layout.hasClass('mode-selection');
 };

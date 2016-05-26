@@ -8535,7 +8535,7 @@ body.mod-capture .infos-fleet .ship > .options {
 .infos-fleet .airfield {
   flex: 1 1 200px;
   position: relative;
-  margin: 0 2.5%;
+  margin: 0 2.5% 2em 2.5%;
   height: 65%;
   min-height: 320px;
   max-height: 400px;
