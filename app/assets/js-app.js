@@ -2642,7 +2642,7 @@ Formula.losPower = function(ship, equipments_by_slot, star_by_slot, rank_by_slot
 			&& carry
 		){
 			// Math.floor(Math.sqrt(carry) * (equipment.stat.aa || 0) + Math.sqrt( rankInternal / 10 ) + typeValue)
-			let statAA = equipment.stat.aa || 0 + ( equipment.type == Formula.equipmentType.Interceptor ? equipment.stat.evasion * 1.5 : 0 )
+			let statAA = (equipment.stat.aa || 0) + ( equipment.type == Formula.equipmentType.Interceptor ? equipment.stat.evasion * 1.5 : 0 )
 				,base = Math.sqrt(carry) * statAA
 				,_rankInternal = rankInternal[rank]
 				,_typeValue = 0

@@ -3337,7 +3337,7 @@ Formula.calc.fighterPower = function (equipment, carry, rank) {
 	typeValue.SeaplaneBomber = [0, 0, 1, 1, 1, 3, 3, 6];
 
 	if ($.inArray(equipment.type, Formula.equipmentType.Fighters) > -1 && carry) {
-		var statAA = equipment.stat.aa || 0 + (equipment.type == Formula.equipmentType.Interceptor ? equipment.stat.evasion * 1.5 : 0),
+		var statAA = (equipment.stat.aa || 0) + (equipment.type == Formula.equipmentType.Interceptor ? equipment.stat.evasion * 1.5 : 0),
 		    base = Math.sqrt(carry) * statAA,
 		    _rankInternal = rankInternal[rank],
 		    _typeValue = 0;
