@@ -6723,8 +6723,6 @@ var InfosFleet = function () {
 			this.doms['ships'] = $('<div class="ships"/>').appendTo(this.el);
 
 			while (i < 4) {
-				this.fleets[i] = new InfosFleetSubFleet(this, [], i);
-
 				$('<input/>', {
 					'type': 'radio',
 					'name': 'fleet_' + d._id + '_tab',
@@ -6732,18 +6730,16 @@ var InfosFleet = function () {
 					'value': i
 				}).prop('checked', i == 0).prependTo(this.el);
 
-				$('<label/>', {
+				this.fleets[i] = new InfosFleetSubFleet(this, [], i, $('<label/>', {
 					'for': 'fleet_' + d._id + '_tab_' + i,
 					'data-fleet': i,
 					'html': '#' + (i + 1)
-				}).appendTo(this.doms['tabs']);
+				}).appendTo(this.doms['tabs']));
 
 				this.fleets[i].el.attr('data-fleet', i).appendTo(this.doms['ships']);
 
 				i++;
 			}
-
-			this.fleet_airfileds = new InfosFleetSubAirfield(this, []);
 
 			$('<input/>', {
 				'type': 'radio',
@@ -6752,11 +6748,11 @@ var InfosFleet = function () {
 				'value': 4
 			}).prop('checked', !1).prependTo(this.el);
 
-			$('<label/>', {
+			this.fleet_airfileds = new InfosFleetSubAirfield(this, [], $('<label/>', {
 				'for': 'fleet_' + d._id + '_tab_airfileds',
 				'data-fleet': 4,
 				'html': '基地'
-			}).appendTo(this.doms['tabs']);
+			}).appendTo(this.doms['tabs']));
 
 			this.fleet_airfileds.el.attr('data-fleet', 4).appendTo(this.doms['ships']);
 
@@ -7200,13 +7196,14 @@ InfosFleet.decompressMetaData = function (code) {
 };
 
 var InfosFleetSubFleet = function () {
-	function InfosFleetSubFleet(infosFleet, d, index) {
+	function InfosFleetSubFleet(infosFleet, d, index, label) {
 		_classCallCheck(this, InfosFleetSubFleet);
 
 		d = d || [];
 		this.data = d;
 
 		this.el = $('<dl class="fleetships"/>');
+		this.label = label;
 
 		this.ships = [];
 
@@ -7223,8 +7220,6 @@ var InfosFleetSubFleet = function () {
 
 		this.infosFleet = infosFleet;
 
-		this.updateEl();
-
 		$body.on('update_defaultHqLv.fleet' + infosFleet.data._id + '-' + (index + 1), function () {
 			if (this.infosFleet.is_showing) this.summaryCalc(!0);
 		}.bind(this));
@@ -7234,9 +7229,17 @@ var InfosFleetSubFleet = function () {
 		key: 'updateEl',
 		value: function updateEl(d) {
 			this.data = d || this.data;
-			if (d) d.forEach(function (currentValue, i) {
-				this.ships[i].updateEl(currentValue);
+			var count = 0;
+			if (d) d.forEach(function (sd, i) {
+				this.ships[i].updateEl(sd);
+				if (sd && sd.push && sd[0]) count++;
 			}, this);
+
+			if (count) {
+				this.label.addClass('highlight');
+			} else {
+				this.label.removeClass('highlight');
+			}
 		}
 	}, {
 		key: 'getData',
@@ -7348,16 +7351,22 @@ var InfosFleetSubFleet = function () {
 	}, {
 		key: 'save',
 		value: function save() {
-			var allEmpty = !0;
+			var count = 0;
 			this.data = this.data || [];
 
-			this.ships.forEach(function (currentValue, i) {
-				this.data[i] = currentValue.data;
-
-				if (currentValue.data[0]) allEmpty = !1;
+			this.ships.forEach(function (d, i) {
+				this.data[i] = d.data;
+				if (d.data && d.data[0]) count++;
 			}, this);
 
-			if (allEmpty) this.data = null;
+			console.log(this.count);
+
+			if (count) {
+				this.label.addClass('highlight');
+			} else {
+				this.data = null;
+				this.label.removeClass('highlight');
+			}
 
 			if (this.infosFleet) this.infosFleet.save();
 		}
@@ -8004,11 +8013,12 @@ var InfosFleetShipEquipment = function () {
 }();
 
 var InfosFleetSubAirfield = function () {
-	function InfosFleetSubAirfield(infosFleet, d) {
+	function InfosFleetSubAirfield(infosFleet, d, label) {
 		_classCallCheck(this, InfosFleetSubAirfield);
 
 		d = d || [];
 		this.data = d;
+		this.label = label;
 
 		this.el = $('<dl class="fleetships fleetairfileds"/>');
 
@@ -8022,17 +8032,26 @@ var InfosFleetSubAirfield = function () {
 		}
 
 		this.infosFleet = infosFleet;
-
-		this.updateEl();
 	}
 
 	_createClass(InfosFleetSubAirfield, [{
 		key: 'updateEl',
 		value: function updateEl(d) {
 			this.data = d || this.data;
-			if (d) d.forEach(function (currentValue, i) {
-				this.fields[i].updateEl(currentValue);
+			var count = 0;
+
+			if (d) d.forEach(function (fd, i) {
+				this.fields[i].updateEl(fd);
+				if (fd && fd.push) fd.forEach(function (a) {
+					if (a && a.push && a[0]) count++;
+				});
 			}, this);
+
+			if (count) {
+				this.label.addClass('highlight');
+			} else {
+				this.label.removeClass('highlight');
+			}
 		}
 	}, {
 		key: 'getData',
@@ -8043,10 +8062,21 @@ var InfosFleetSubAirfield = function () {
 		key: 'save',
 		value: function save() {
 			this.data = this.data || [];
+			var count = 0;
 
 			this.fields.forEach(function (field, i) {
 				this.data[i] = field.data;
+				if (field.data && field.data.push) field.data.forEach(function (a) {
+					if (a && a.push && a[0]) count++;
+				});
 			}, this);
+
+
+			if (count) {
+				this.label.addClass('highlight');
+			} else {
+				this.label.removeClass('highlight');
+			}
 
 
 			if (this.infosFleet) this.infosFleet.save();
