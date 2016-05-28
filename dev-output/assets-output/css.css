@@ -7887,24 +7887,45 @@ body.mod-capture .infos-fleet > header:after {
   font-weight: lighter;
   line-height: 1.5rem;
   height: 1.5rem;
-  padding: 0rem 0.75rem;
+  padding: 0 .5em;
   border: 0.05rem solid transparent;
   border-bottom-width: 0;
   transition-property: color, background-position, border-color;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.0875), rgba(255, 255, 255, 0.35)) repeat-x 0 30px;
 }
-.infos-fleet > .fleets .tabs label:hover {
-  color: rgba(255, 255, 255, 0.75);
+.infos-fleet > .fleets .tabs label.highlight {
+  color: #fff;
 }
+.infos-fleet > .fleets .tabs label.highlight:hover {
+  color: #fff;
+}
+.infos-fleet > .fleets .tabs label:hover {
+  color: rgba(255, 255, 255, 0.65);
+}
+.infos-fleet > .fleets .tabs label:hover:before {
+  opacity: 1;
+}
+.infos-fleet > .fleets .tabs label:before,
 .infos-fleet > .fleets .tabs label:after {
   content: '';
   position: absolute;
   display: block;
+  transition: none 0.2s ease-out;
+}
+.infos-fleet > .fleets .tabs label:before {
+  top: 2px;
+  right: 2px;
+  bottom: 2px;
+  left: 2px;
+  opacity: 0;
+  transition-property: opacity;
+  background: rgba(255, 255, 255, 0.15);
+}
+.infos-fleet > .fleets .tabs label:after {
   bottom: -0.35000000000000003rem;
   left: -0.05rem;
   right: -0.05rem;
   height: 0.30000000000000004rem;
-  transition: none 0.2s ease-out;
   transition-property: background-position;
   background: linear-gradient(to top, transparent, rgba(255, 255, 255, 0.175)) repeat-x 0 -6px;
 }
@@ -7918,7 +7939,7 @@ body.mod-capture .infos-fleet > header:after {
 }
 .infos-fleet > .fleets .options > .option {
   display: inline-block;
-  margin-left: 1.25em;
+  margin-left: 1.15em;
   position: relative;
   line-height: 1.5rem;
 }
@@ -7926,7 +7947,7 @@ body.mod-capture .infos-fleet > header:after {
   margin-right: 0;
 }
 .infos-fleet > .fleets .options > .option.mod-dropdown {
-  padding-right: 16px;
+  padding-right: 14px;
 }
 .infos-fleet > .fleets .options > .option.mod-dropdown:after {
   content: '';
@@ -7947,7 +7968,7 @@ body.mod-capture .infos-fleet > header:after {
   position: relative;
   text-align: center;
   vertical-align: top;
-  margin-left: 1.25em;
+  margin-left: .65em;
 }
 .infos-fleet > .fleets .options > .icon[icon]:before {
   font-size: 16px;
@@ -9090,10 +9111,13 @@ body.mod-capture .infos-fleet .equipments {
   display: none;
 }
 .infos-fleet > input[type="radio"][value="0"]:checked ~ .fleets .tabs label[data-fleet="0"] {
-  color: #fff;
+  color: #fff !important;
   background-position: 0 0;
   border-color: rgba(255, 255, 255, 0.175);
   cursor: default;
+}
+.infos-fleet > input[type="radio"][value="0"]:checked ~ .fleets .tabs label[data-fleet="0"]:before {
+  display: none;
 }
 .infos-fleet > input[type="radio"][value="0"]:checked ~ .fleets .tabs label[data-fleet="0"]:after {
   background-position: 0 0;
@@ -9103,10 +9127,13 @@ body.mod-capture .infos-fleet .equipments {
   z-index: 2;
 }
 .infos-fleet > input[type="radio"][value="1"]:checked ~ .fleets .tabs label[data-fleet="1"] {
-  color: #fff;
+  color: #fff !important;
   background-position: 0 0;
   border-color: rgba(255, 255, 255, 0.175);
   cursor: default;
+}
+.infos-fleet > input[type="radio"][value="1"]:checked ~ .fleets .tabs label[data-fleet="1"]:before {
+  display: none;
 }
 .infos-fleet > input[type="radio"][value="1"]:checked ~ .fleets .tabs label[data-fleet="1"]:after {
   background-position: 0 0;
@@ -9116,10 +9143,13 @@ body.mod-capture .infos-fleet .equipments {
   z-index: 2;
 }
 .infos-fleet > input[type="radio"][value="2"]:checked ~ .fleets .tabs label[data-fleet="2"] {
-  color: #fff;
+  color: #fff !important;
   background-position: 0 0;
   border-color: rgba(255, 255, 255, 0.175);
   cursor: default;
+}
+.infos-fleet > input[type="radio"][value="2"]:checked ~ .fleets .tabs label[data-fleet="2"]:before {
+  display: none;
 }
 .infos-fleet > input[type="radio"][value="2"]:checked ~ .fleets .tabs label[data-fleet="2"]:after {
   background-position: 0 0;
@@ -9129,10 +9159,13 @@ body.mod-capture .infos-fleet .equipments {
   z-index: 2;
 }
 .infos-fleet > input[type="radio"][value="3"]:checked ~ .fleets .tabs label[data-fleet="3"] {
-  color: #fff;
+  color: #fff !important;
   background-position: 0 0;
   border-color: rgba(255, 255, 255, 0.175);
   cursor: default;
+}
+.infos-fleet > input[type="radio"][value="3"]:checked ~ .fleets .tabs label[data-fleet="3"]:before {
+  display: none;
 }
 .infos-fleet > input[type="radio"][value="3"]:checked ~ .fleets .tabs label[data-fleet="3"]:after {
   background-position: 0 0;
@@ -9142,10 +9175,13 @@ body.mod-capture .infos-fleet .equipments {
   z-index: 2;
 }
 .infos-fleet > input[type="radio"][value="4"]:checked ~ .fleets .tabs label[data-fleet="4"] {
-  color: #fff;
+  color: #fff !important;
   background-position: 0 0;
   border-color: rgba(255, 255, 255, 0.175);
   cursor: default;
+}
+.infos-fleet > input[type="radio"][value="4"]:checked ~ .fleets .tabs label[data-fleet="4"]:before {
+  display: none;
 }
 .infos-fleet > input[type="radio"][value="4"]:checked ~ .fleets .tabs label[data-fleet="4"]:after {
   background-position: 0 0;
@@ -9155,10 +9191,13 @@ body.mod-capture .infos-fleet .equipments {
   z-index: 2;
 }
 .infos-fleet > input[type="radio"][value="5"]:checked ~ .fleets .tabs label[data-fleet="5"] {
-  color: #fff;
+  color: #fff !important;
   background-position: 0 0;
   border-color: rgba(255, 255, 255, 0.175);
   cursor: default;
+}
+.infos-fleet > input[type="radio"][value="5"]:checked ~ .fleets .tabs label[data-fleet="5"]:before {
+  display: none;
 }
 .infos-fleet > input[type="radio"][value="5"]:checked ~ .fleets .tabs label[data-fleet="5"]:after {
   background-position: 0 0;
@@ -9252,6 +9291,12 @@ body.mod-capture .infos-fleet .equipments {
 }
 #layout[data-theme="2"] .infos-fleet > header h3[data-content]:before {
   color: #fff3f0;
+}
+#layout[data-theme="2"] .infos-fleet > .fleets .tabs label.highlight {
+  color: #fdc2b4;
+}
+#layout[data-theme="2"] .infos-fleet > .fleets .tabs label.highlight:hover {
+  color: #fdc2b4;
 }
 #layout[data-theme="2"] .infos-fleet .fleetships {
   color: rgba(254, 235, 230, 0.75);
@@ -9353,6 +9398,12 @@ body.mod-capture .infos-fleet .equipments {
 #layout[data-theme="3"] .infos-fleet > header h3[data-content]:before {
   color: #fffdf0;
 }
+#layout[data-theme="3"] .infos-fleet > .fleets .tabs label.highlight {
+  color: #fff4b3;
+}
+#layout[data-theme="3"] .infos-fleet > .fleets .tabs label.highlight:hover {
+  color: #fff4b3;
+}
 #layout[data-theme="3"] .infos-fleet .fleetships {
   color: rgba(255, 251, 229, 0.75);
 }
@@ -9452,6 +9503,12 @@ body.mod-capture .infos-fleet .equipments {
 }
 #layout[data-theme="4"] .infos-fleet > header h3[data-content]:before {
   color: #f7fef0;
+}
+#layout[data-theme="4"] .infos-fleet > .fleets .tabs label.highlight {
+  color: #d8fbb6;
+}
+#layout[data-theme="4"] .infos-fleet > .fleets .tabs label.highlight:hover {
+  color: #d8fbb6;
 }
 #layout[data-theme="4"] .infos-fleet .fleetships {
   color: rgba(242, 254, 231, 0.75);
@@ -9553,6 +9610,12 @@ body.mod-capture .infos-fleet .equipments {
 #layout[data-theme="5"] .infos-fleet > header h3[data-content]:before {
   color: #f0fff3;
 }
+#layout[data-theme="5"] .infos-fleet > .fleets .tabs label.highlight {
+  color: #b3ffc1;
+}
+#layout[data-theme="5"] .infos-fleet > .fleets .tabs label.highlight:hover {
+  color: #b3ffc1;
+}
 #layout[data-theme="5"] .infos-fleet .fleetships {
   color: rgba(229, 255, 234, 0.75);
 }
@@ -9652,6 +9715,12 @@ body.mod-capture .infos-fleet .equipments {
 }
 #layout[data-theme="6"] .infos-fleet > header h3[data-content]:before {
   color: #f0fffd;
+}
+#layout[data-theme="6"] .infos-fleet > .fleets .tabs label.highlight {
+  color: #b3fff4;
+}
+#layout[data-theme="6"] .infos-fleet > .fleets .tabs label.highlight:hover {
+  color: #b3fff4;
 }
 #layout[data-theme="6"] .infos-fleet .fleetships {
   color: rgba(229, 255, 251, 0.75);
@@ -9753,6 +9822,12 @@ body.mod-capture .infos-fleet .equipments {
 #layout[data-theme="7"] .infos-fleet > header h3[data-content]:before {
   color: #f0f7ff;
 }
+#layout[data-theme="7"] .infos-fleet > .fleets .tabs label.highlight {
+  color: #b3d7ff;
+}
+#layout[data-theme="7"] .infos-fleet > .fleets .tabs label.highlight:hover {
+  color: #b3d7ff;
+}
 #layout[data-theme="7"] .infos-fleet .fleetships {
   color: rgba(229, 242, 255, 0.75);
 }
@@ -9852,6 +9927,12 @@ body.mod-capture .infos-fleet .equipments {
 }
 #layout[data-theme="8"] .infos-fleet > header h3[data-content]:before {
   color: #ffffff;
+}
+#layout[data-theme="8"] .infos-fleet > .fleets .tabs label.highlight {
+  color: #d5ccff;
+}
+#layout[data-theme="8"] .infos-fleet > .fleets .tabs label.highlight:hover {
+  color: #d5ccff;
 }
 #layout[data-theme="8"] .infos-fleet .fleetships {
   color: rgba(255, 255, 255, 0.75);
@@ -9953,6 +10034,12 @@ body.mod-capture .infos-fleet .equipments {
 #layout[data-theme="9"] .infos-fleet > header h3[data-content]:before {
   color: #fdf0ff;
 }
+#layout[data-theme="9"] .infos-fleet > .fleets .tabs label.highlight {
+  color: #f4b3ff;
+}
+#layout[data-theme="9"] .infos-fleet > .fleets .tabs label.highlight:hover {
+  color: #f4b3ff;
+}
 #layout[data-theme="9"] .infos-fleet .fleetships {
   color: rgba(251, 229, 255, 0.75);
 }
@@ -10053,6 +10140,12 @@ body.mod-capture .infos-fleet .equipments {
 #layout[data-theme="10"] .infos-fleet > header h3[data-content]:before {
   color: #ffffff;
 }
+#layout[data-theme="10"] .infos-fleet > .fleets .tabs label.highlight {
+  color: #ffcce5;
+}
+#layout[data-theme="10"] .infos-fleet > .fleets .tabs label.highlight:hover {
+  color: #ffcce5;
+}
 #layout[data-theme="10"] .infos-fleet .fleetships {
   color: rgba(255, 255, 255, 0.75);
 }
@@ -10141,6 +10234,7 @@ body.mod-capture .infos-fleet .equipments {
   color: rgba(255, 255, 255, 0.65);
   font-style: italic;
   position: relative;
+  vertical-align: top;
 }
 .menu.contextmenu-infos_fleet_themes > .body > div button:before {
   content: '';

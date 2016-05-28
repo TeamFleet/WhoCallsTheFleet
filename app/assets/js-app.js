@@ -9065,20 +9065,23 @@ class InfosFleet{
 	
 			// 4个分舰队
 				while(i < 4){
-					this.fleets[i] = new InfosFleetSubFleet(this, [], i)
-
 					$('<input/>',{
 							'type': 	'radio',
 							'name': 	'fleet_' + d._id + '_tab',
 							'id': 		'fleet_' + d._id + '_tab_' + i,
 							'value': 	i
 						}).prop('checked', (i == 0)).prependTo( this.el )
-			
-					$('<label/>',{
-							'for': 		'fleet_' + d._id + '_tab_' + i,
-							'data-fleet':i,
-							'html': 	'#' + (i+1)
-						}).appendTo( this.doms['tabs'] )
+
+					this.fleets[i] = new InfosFleetSubFleet(
+						this,
+						[],
+						i,
+						$('<label/>',{
+								'for': 		'fleet_' + d._id + '_tab_' + i,
+								'data-fleet':i,
+								'html': 	'#' + (i+1)
+							}).appendTo( this.doms['tabs'] )
+					)
 
 					this.fleets[i].el
 						.attr('data-fleet', i)
@@ -9088,20 +9091,22 @@ class InfosFleet{
 				}
 			
 			// 基地航空队
-				this.fleet_airfileds = new InfosFleetSubAirfield(this, [])
-
 				$('<input/>',{
 						'type': 	'radio',
 						'name': 	'fleet_' + d._id + '_tab',
 						'id': 		'fleet_' + d._id + '_tab_airfileds',
 						'value': 	4
 					}).prop('checked', false).prependTo( this.el )
-		
-				$('<label/>',{
-						'for': 		'fleet_' + d._id + '_tab_airfileds',
-						'data-fleet':4,
-						'html': 	'基地'
-					}).appendTo( this.doms['tabs'] )
+					
+				this.fleet_airfileds = new InfosFleetSubAirfield(
+					this,
+					[],
+					$('<label/>',{
+							'for': 		'fleet_' + d._id + '_tab_airfileds',
+							'data-fleet':4,
+							'html': 	'基地'
+						}).appendTo( this.doms['tabs'] )
+				)
 
 				this.fleet_airfileds.el
 					.attr('data-fleet', 4)
@@ -9678,11 +9683,12 @@ InfosFleet.decompressMetaData = function(code){
 
 // 类：子舰队
 class InfosFleetSubFleet{
-	constructor(infosFleet, d, index){
+	constructor(infosFleet, d, index, label){
 		d = d || []
 		this.data = d
 
 		this.el = $('<dl class="fleetships"/>')
+		this.label = label
 		
 		this.ships = []
 
@@ -9739,7 +9745,7 @@ class InfosFleetSubFleet{
 		
 		this.infosFleet = infosFleet
 
-		this.updateEl()
+		//this.updateEl()
 		
 		// 事件: 默认司令部等级更新
 			$body.on('update_defaultHqLv.fleet'+infosFleet.data._id+'-'+(index+1), function(){
@@ -9755,10 +9761,19 @@ class InfosFleetSubFleet{
 	// 根据元数据更新页面元素
 		updateEl(d){
 			this.data = d || this.data
+			let count = 0
 			if( d )
-				d.forEach(function(currentValue, i){
-					this.ships[i].updateEl(currentValue)
+				d.forEach(function(sd, i){
+					this.ships[i].updateEl(sd)
+					if( sd && sd.push && sd[0] )
+						count++
 				}, this)
+			
+			if( count ){
+				this.label.addClass('highlight')
+			}else{
+				this.label.removeClass('highlight')
+			}
 		}
 	
 	// 获取当前状态的元数据
@@ -9928,18 +9943,23 @@ class InfosFleetSubFleet{
 	// 保存
 		save(){
 			// 如果该子舰队下没有任何数据，则存储数据时不传输该子舰队数据
-			let allEmpty = true
+			let count = 0
 			this.data = this.data || []
 			
-			this.ships.forEach(function(currentValue,i){
-				this.data[i] = currentValue.data
-				
-				if( currentValue.data[0] )
-					allEmpty = false
+			this.ships.forEach(function(d,i){
+				this.data[i] = d.data
+				if( d.data && d.data[0] )
+					count++
 			}, this)
 			
-			if( allEmpty )
+			console.log( this.count )
+			
+			if( count ){
+				this.label.addClass('highlight')
+			}else{
 				this.data = null
+				this.label.removeClass('highlight')
+			}
 			
 			if( this.infosFleet )
 				this.infosFleet.save()
@@ -10978,9 +10998,10 @@ class InfosFleetShipEquipment{
 
 // 类：基地航空队
 class InfosFleetSubAirfield{
-	constructor(infosFleet, d){
+	constructor(infosFleet, d, label){
 		d = d || []
 		this.data = d
+		this.label = label
 
 		this.el = $('<dl class="fleetships fleetairfileds"/>')
 		
@@ -10996,7 +11017,7 @@ class InfosFleetSubAirfield{
 		
 		this.infosFleet = infosFleet
 
-		this.updateEl()
+		//this.updateEl()
 	}
 
 
@@ -11005,10 +11026,23 @@ class InfosFleetSubAirfield{
 	// 根据元数据更新页面元素
 		updateEl(d){
 			this.data = d || this.data
+			let count = 0
+				
 			if( d )
-				d.forEach(function(currentValue, i){
-					this.fields[i].updateEl(currentValue)
+				d.forEach(function(fd, i){
+					this.fields[i].updateEl(fd)
+					if( fd && fd.push )
+						fd.forEach(function(a){
+							if( a && a.push && a[0] )
+								count++
+						})
 				}, this)
+			
+			if( count ){
+				this.label.addClass('highlight')
+			}else{
+				this.label.removeClass('highlight')
+			}
 		}
 	
 	// 获取当前状态的元数据
@@ -11021,9 +11055,15 @@ class InfosFleetSubAirfield{
 			// 如果该子舰队下没有任何数据，则存储数据时不传输该子舰队数据
 			//let allEmpty = true
 			this.data = this.data || []
+			let count = 0
 			
 			this.fields.forEach(function(field,i){
 				this.data[i] = field.data
+				if( field.data && field.data.push )
+					field.data.forEach(function(a){
+						if( a && a.push && a[0] )
+							count++
+					})
 				//field.data.forEach(function(d, j){
 				//	console.log( d )
 				//	if( d[0] )
@@ -11032,6 +11072,11 @@ class InfosFleetSubAirfield{
 			}, this)
 			//console.log( field.data, allEmpty )
 			
+			if( count ){
+				this.label.addClass('highlight')
+			}else{
+				this.label.removeClass('highlight')
+			}
 			//if( allEmpty )
 			//	this.data = null
 			

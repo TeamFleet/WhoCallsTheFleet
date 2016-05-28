@@ -207,23 +207,44 @@
 				font-weight:lighter;
 				.line-height(@tab_height);
 				.height(@tab_height);
-				.padding(0, 15);
+				padding: 	0 .5em;
 				.border(1, solid, transparent);
 				border-bottom-width:	0;
 				.transition-property(~"color, background-position, border-color");
 				background:	linear-gradient(to bottom, rgba(255, 255, 255, .0875), rgba(255, 255, 255, .35)) repeat-x 0 unit(@tab_height, px);
-				&:hover{
-					color:	rgba(255, 255, 255, 0.75);
+				&.highlight{
+					color:	#fff;
+					&:hover{
+						color:	#fff;
+					}
 				}
-				&:after{
+				&:hover{
+					color:	rgba(255, 255, 255, 0.65);
+					&:before{
+						opacity: 1;
+					}
+				}
+				&:before, &:after{
 					content:	'';
 					position:	absolute;
 					display:	block;
+					.enable-transition();
+				}
+				&:before{
+					@gutter: 	2px;
+					top: 		@gutter;
+					right: 		@gutter;
+					bottom: 	@gutter;
+					left: 		@gutter;
+					opacity: 	0;
+					.transition-property(~"opacity");
+					background: fade(#fff, 15%);
+				}
+				&:after{
 					.bottom(-7);
 					.left(-1);
 					.right(-1);
 					.height(6);
-					.enable-transition();
 					.transition-property(~"background-position");
 					background:	linear-gradient(to top, transparent, rgba(255, 255, 255, .175)) repeat-x 0 -6px;
 				}
@@ -238,14 +259,14 @@
 			font-size: 	percentage(13 / @infos-fleet-base-font-size);
 			&>.option{
 				display:	inline-block;
-				margin-left:1.25em;
+				margin-left:1.15em;
 				position: 	relative;
 				.line-height(@tab_height);
 				&:last-child{
 					margin-right:	0;
 				}
 				&.mod-dropdown{
-					padding-right: 	16px;
+					padding-right: 	14px;
 					&:after{
 						content: 	'';
 						display: 	block;
@@ -267,7 +288,7 @@
 				position: 	relative;
 				text-align: center;
 				vertical-align: top;
-				margin-left:1.25em;
+				margin-left:.65em;
 				&[icon]:before{
 					font-size: 	16px;
 				}
@@ -1503,10 +1524,13 @@
 			//&:nth-child(@{n}):checked~.tabview-content:nth-child(@{n}){
 			&[value="@{i}"]:checked{
 				&~.fleets .tabs label[data-fleet="@{i}"]{
-					color:		#fff;
+					color:		#fff !important;
 					background-position:	0 0;
 					border-color:	rgba(255, 255, 255, .175);
 					cursor: 	default;
+					&:before{
+						display: none;
+					}
 					&:after{
 						background-position:	0 0;
 					}
@@ -1666,6 +1690,13 @@
 						}
 					}
 				} // &>header
+				& > .fleets .tabs label.highlight{
+					.convertColor(hsl(@hue, 100%, 85%));
+					color: 	@color;
+					&:hover{
+						color: 	@color;
+					}
+				}
 				//&>.ships{
 				//} // &>.ships
 				.fleetships{
@@ -1829,6 +1860,7 @@
 		color: 		rgba(255, 255, 255, .65);
 		font-style: italic;
 		position: 	relative;
+		vertical-align: top;
 		&:before{
 			content: 	'';
 			background: transparent;
