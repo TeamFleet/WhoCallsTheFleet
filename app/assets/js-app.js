@@ -3409,17 +3409,17 @@ _g.kancolle_calc = {
 					i++
 				}
 				
-				let data_airfields = data['fField']
+				var data_airfields = data['fField']
 				if( data_airfields ){
 					result[4] = []
 					j=0
 					while( j < 3 ){
 						result[4][j] = []
-						let data_field = data_airfields['f' + (j+1)] || {}
+						var data_field = data_airfields['f' + (j+1)] || {}
 						k = 0;
 						while( k < 4 ){
 							result[4][j][k] = []
-							let data_aircraft = data_field['i' + (k+1)]
+							var data_aircraft = data_field['i' + (k+1)]
 							if( data_aircraft ){
 								result[4][j][k][0] = data_aircraft.id
 								result[4][j][k][1] = data_aircraft.rp
