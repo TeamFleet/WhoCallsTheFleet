@@ -1744,14 +1744,21 @@ dev_output_steps.push(function(){
 
 				function _stat(stat, title){
 					if( d['stat'][stat] ){
+						if( d.type == 54 ){
+							// 局地战斗机
+							switch( stat ){
+								case 'hit': 	title = '对爆';	break;
+								case 'evasion': title = '迎击';	break;
+							}
+						}
 						switch(stat){
 							case 'range':
 								return '<span>射程: ' + _g.getStatRange( d['stat'][stat] ) + '</span>';
-								break;
+							case 'distance':
+								return '<span>' + title + ': ' + d['stat'][stat] + '</span>';
 							default:
 								var val = parseInt( d['stat'][stat] )
 								return '<span>' + ( val > 0 ? '+' : '') + val + ' ' + title + '</span>'
-								break;
 						}
 					}else{
 						return ''
@@ -1762,6 +1769,7 @@ dev_output_steps.push(function(){
 									+ d.getIconId()
 									+ '.png'
 					,item_name = d.getName(l)
+					,isAircraft = $.inArray(d.type, Formula.equipmentType.Aircrafts) > -1
 				output = 'KCTip.loaded("equipments",'+d.id+',"'+l+'","'
 							+ '<h3>'
 								+ '<s style=\\"background-image: url(' + item_icon + ')\\"></s>'
@@ -1780,6 +1788,7 @@ dev_output_steps.push(function(){
 							+ _stat('evasion', '回避')
 							+ _stat('los', '索敌')
 							+ _stat('range', '射程')
+							+ ( isAircraft ? _stat('distance', '航程') : '' )
 						+ '")'
 
 				node.fs.writeFile(
