@@ -444,7 +444,7 @@
 		}
 	}
 	
-	.fleetships.fleetairfileds{
+	.fleetships.fleetairfields{
 		flex-flow: 	row nowrap;
 		align-items:center;
 		&:before, &:after{
@@ -2379,6 +2379,47 @@
 		width: 		~"calc(50% - 2px)";
 		border-radius: 0 !important;
         background-color:   rgba(0,0,0,.175);
+	}
+	
+	.fleetships.fleetairfields{
+		flex-flow: 	column nowrap;
+		&:before{
+			flex-shrink: 	0;
+			flex-basis: 	2.5vh;
+		}
+		&:after{
+			display: 		none;
+		}
+	}
+	
+	.airfield{
+		height: 	auto;
+		width: 		100%;
+		flex: 		1 0 auto;
+		flex-flow: 	column nowrap;
+		padding: 	0;
+		min-height: 0;
+		max-height: none;
+		h4, .airfield-summary{
+			position: 	relative;
+			flex: 		0 0 auto;
+		}
+		.airfield-summary{
+			margin-top: -.5em;
+		}
+	}
+	
+	.aircrafts{
+		flex-flow: 	row wrap;
+		flex: 		1 0 auto;
+		padding: 	2px;
+		.equipment{
+			margin: 	2px;
+			//flex: 		1 0 200px;
+			height: 	40px;
+			flex: 		none;
+			width: 		~"calc(50% - 4px)";
+		}
 	}
 }}
 
