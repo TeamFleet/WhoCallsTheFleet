@@ -11714,6 +11714,30 @@ body.mod-capture .infos-fleet .equipments {
 .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="12"]:checked ~ .wrapper .body {
   transform: translateX(-1100%);
 }
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="13"]:checked ~ .wrapper .body {
+  transform: translateX(-1200%);
+}
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="14"]:checked ~ .wrapper .body {
+  transform: translateX(-1300%);
+}
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="15"]:checked ~ .wrapper .body {
+  transform: translateX(-1400%);
+}
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="16"]:checked ~ .wrapper .body {
+  transform: translateX(-1500%);
+}
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="17"]:checked ~ .wrapper .body {
+  transform: translateX(-1600%);
+}
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="18"]:checked ~ .wrapper .body {
+  transform: translateX(-1700%);
+}
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="19"]:checked ~ .wrapper .body {
+  transform: translateX(-1800%);
+}
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="20"]:checked ~ .wrapper .body {
+  transform: translateX(-1900%);
+}
 @media all and (min-width: 1601px) and (min-aspect-ratio: 5/4) {
   .infos-ship {
     padding-right: calc( 45% + 80px );
