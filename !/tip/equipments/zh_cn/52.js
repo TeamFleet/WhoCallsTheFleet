@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",52,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/8.png)\"></s><strong>流星改</strong><small>舰载鱼雷机</small></h3><span>+13 雷装</span><span>+3 对潜</span><span>+2 索敌</span>")
+KCTip.loaded("equipments",52,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/8.png)\"></s><strong>流星改</strong><small>舰载鱼雷机</small></h3><span>+13 雷装</span><span>+3 对潜</span><span>+2 索敌</span><span>航程: 6</span>")

@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",118,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/10.png)\"></s><strong>紫云</strong><small>水上侦察机</small></h3><span>+2 对潜</span><span>+1 爆装</span><span>+1 命中</span><span>+8 索敌</span>")
+KCTip.loaded("equipments",118,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/10.png)\"></s><strong>紫云</strong><small>水上侦察机</small></h3><span>+2 对潜</span><span>+1 爆装</span><span>+1 命中</span><span>+8 索敌</span><span>航程: 4</span>")

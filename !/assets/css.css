@@ -8127,12 +8127,12 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
   display: block;
   flex: 0.25 0 auto;
 }
-.infos-fleet .fleetships.fleetairfileds {
+.infos-fleet .fleetships.fleetairfields {
   flex-flow: row nowrap;
   align-items: center;
 }
-.infos-fleet .fleetships.fleetairfileds:before,
-.infos-fleet .fleetships.fleetairfileds:after {
+.infos-fleet .fleetships.fleetairfields:before,
+.infos-fleet .fleetships.fleetairfields:after {
   flex-grow: 0.5;
   flex-shrink: 5;
 }
@@ -10671,6 +10671,44 @@ body.mod-capture .infos-fleet .equipments {
     border-radius: 0 !important;
     background-color: rgba(0, 0, 0, 0.175);
   }
+  .infos-fleet .fleetships.fleetairfields {
+    flex-flow: column nowrap;
+  }
+  .infos-fleet .fleetships.fleetairfields:before {
+    flex-shrink: 0;
+    flex-basis: 2.5vh;
+  }
+  .infos-fleet .fleetships.fleetairfields:after {
+    display: none;
+  }
+  .infos-fleet .airfield {
+    height: auto;
+    width: 100%;
+    flex: 1 0 auto;
+    flex-flow: column nowrap;
+    padding: 0;
+    min-height: 0;
+    max-height: none;
+  }
+  .infos-fleet .airfield h4,
+  .infos-fleet .airfield .airfield-summary {
+    position: relative;
+    flex: 0 0 auto;
+  }
+  .infos-fleet .airfield .airfield-summary {
+    margin-top: -0.5em;
+  }
+  .infos-fleet .aircrafts {
+    flex-flow: row wrap;
+    flex: 1 0 auto;
+    padding: 2px;
+  }
+  .infos-fleet .aircrafts .equipment {
+    margin: 2px;
+    height: 40px;
+    flex: none;
+    width: calc(50% - 4px);
+  }
 }
 @media all and (max-width: 540px) {
   .infos-fleet > .fleets .tabs label {
@@ -11675,6 +11713,30 @@ body.mod-capture .infos-fleet .equipments {
 }
 .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="12"]:checked ~ .wrapper .body {
   transform: translateX(-1100%);
+}
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="13"]:checked ~ .wrapper .body {
+  transform: translateX(-1200%);
+}
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="14"]:checked ~ .wrapper .body {
+  transform: translateX(-1300%);
+}
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="15"]:checked ~ .wrapper .body {
+  transform: translateX(-1400%);
+}
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="16"]:checked ~ .wrapper .body {
+  transform: translateX(-1500%);
+}
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="17"]:checked ~ .wrapper .body {
+  transform: translateX(-1600%);
+}
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="18"]:checked ~ .wrapper .body {
+  transform: translateX(-1700%);
+}
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="19"]:checked ~ .wrapper .body {
+  transform: translateX(-1800%);
+}
+.infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="20"]:checked ~ .wrapper .body {
+  transform: translateX(-1900%);
 }
 @media all and (min-width: 1601px) and (min-aspect-ratio: 5/4) {
   .infos-ship {

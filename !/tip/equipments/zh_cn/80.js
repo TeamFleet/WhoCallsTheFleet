@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",80,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/10.png)\"></s><strong>瑞云12型</strong><small>水上轰炸机</small></h3><span>+3 对空</span><span>+5 对潜</span><span>+7 爆装</span><span>+1 命中</span><span>+6 索敌</span>")
+KCTip.loaded("equipments",80,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/10.png)\"></s><strong>瑞云12型</strong><small>水上轰炸机</small></h3><span>+3 对空</span><span>+5 对潜</span><span>+7 爆装</span><span>+1 命中</span><span>+6 索敌</span><span>航程: 5</span>")

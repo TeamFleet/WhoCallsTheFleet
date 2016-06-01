@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",99,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/7.png)\"></s><strong>九九式舰爆<small>(江草队)</small></strong><small>舰载轰炸机</small></h3><span>+5 对潜</span><span>+10 爆装</span><span>+4 命中</span><span>+3 索敌</span>")
+KCTip.loaded("equipments",99,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/7.png)\"></s><strong>九九式舰爆<small>(江草队)</small></strong><small>舰载轰炸机</small></h3><span>+5 对潜</span><span>+10 爆装</span><span>+4 命中</span><span>+3 索敌</span><span>航程: 4</span>")

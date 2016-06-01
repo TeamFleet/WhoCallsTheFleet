@@ -8020,7 +8020,7 @@ var InfosFleetSubAirfield = function () {
 		this.data = d;
 		this.label = label;
 
-		this.el = $('<dl class="fleetships fleetairfileds"/>');
+		this.el = $('<dl class="fleetships fleetairfields"/>');
 
 		this.fields = [];
 

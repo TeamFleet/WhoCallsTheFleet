@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",175,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/38.png)\"></s><strong>雷电</strong><small>局地战斗机</small></h3><span>+6 对空</span><span>+5 命中</span><span>+2 回避</span>")
+KCTip.loaded("equipments",175,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/38.png)\"></s><strong>雷电</strong><small>局地战斗机</small></h3><span>+6 对空</span><span>+5 对爆</span><span>+2 迎击</span><span>航程: 2</span>")
