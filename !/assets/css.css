@@ -11794,6 +11794,30 @@ body.mod-capture .infos-fleet .equipments {
   .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="12"]:checked ~ .wrapper .body {
     transform: translateX(-500%);
   }
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="13"]:checked ~ .wrapper .body {
+    transform: translateX(-600%);
+  }
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="14"]:checked ~ .wrapper .body {
+    transform: translateX(-600%);
+  }
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="15"]:checked ~ .wrapper .body {
+    transform: translateX(-700%);
+  }
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="16"]:checked ~ .wrapper .body {
+    transform: translateX(-700%);
+  }
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="17"]:checked ~ .wrapper .body {
+    transform: translateX(-800%);
+  }
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="18"]:checked ~ .wrapper .body {
+    transform: translateX(-800%);
+  }
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="19"]:checked ~ .wrapper .body {
+    transform: translateX(-900%);
+  }
+  .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="20"]:checked ~ .wrapper .body {
+    transform: translateX(-900%);
+  }
   .infos-ship > aside.is-singlelast .body > span:last-child {
     width: 100%;
     flex-basis: 100%;
