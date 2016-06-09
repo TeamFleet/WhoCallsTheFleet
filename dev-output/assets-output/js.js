@@ -6349,7 +6349,7 @@ _frame.infos.__ship_init = function ($el) {
 			};
 
 			var bodyTouchMove = function bodyTouchMove(e) {
-				if ((startX || startY) && e.originalEvent.targetTouches.length == 1) {
+				if (!isPanning && (startX || startY) && e.originalEvent.targetTouches.length == 1) {
 					deltaX = e.originalEvent.targetTouches[0].clientX - startX;
 					if (isActualPanning) {
 						panHandler();
