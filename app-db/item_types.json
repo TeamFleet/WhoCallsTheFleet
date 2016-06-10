@@ -7,7 +7,7 @@
 {"name":{"ja_jp":"水上戦闘機","zh_cn":"水上战斗机"},"icon":10,"equipable_on_type":[5,8,12,14,17,24,29],"main_attribute":"aa","id":51,"_id":"6mnL6zlfTmLWOcds","equipable_extra_ship":[136,148,275,276,358,361,446,447]}
 {"name":{"ja_jp":"艦上偵察機","zh_cn":"舰载侦察机"},"icon":9,"equipable_on_type":[9,10,11],"id":21,"_id":"8dDOVL8ZhWg15aeO","main_attribute":"los"}
 {"name":{"ja_jp":"水上艦要員","zh_cn":"水上舰要员"},"icon":32,"equipable_on_type":[1,2,3,4,5,6,7,8,12,17,19,21,23,24,28],"id":37,"_id":"E5f0tBThLWVkBvR3","main_attribute":"evasion"}
-{"name":{"ja_jp":"水上爆撃機","zh_cn":"水上轰炸机"},"icon":10,"equipable_on_type":[5,8,12,14,24,29],"id":17,"_id":"E7sK86IWf2vwLmIL","main_attribute":"bomb","equipable_extra_ship":[358,446,447]}
+{"name":{"ja_jp":"水上爆撃機","zh_cn":"水上轰炸机"},"icon":10,"equipable_on_type":[5,8,12,14,24,29],"id":17,"_id":"E7sK86IWf2vwLmIL","main_attribute":"bomb","equipable_extra_ship":[358,361,446,447]}
 {"name":{"ja_jp":"大口径主砲","zh_cn":"大口径主炮"},"icon":3,"equipable_on_type":[6,7,8],"id":5,"_id":"EWSPttMCB2jMKWtZ","main_attribute":"fire"}
 {"name":{"ja_jp":"大型ソナー","zh_cn":"大型声纳"},"icon":18,"equipable_on_type":[4,5,6,7,8,9,10,11,12,23,24],"id":28,"_id":"FEqmsrEqEW1JMZi6","main_attribute":"asw"}
 {"name":{"ja_jp":"対潜哨戒機","zh_cn":"对潜哨戒机"},"icon":22,"equipable_on_type":[9,15],"id":23,"_id":"GTYXE2LVjZjFx5QL","main_attribute":"asw"}
