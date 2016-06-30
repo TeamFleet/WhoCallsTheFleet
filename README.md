@@ -2,7 +2,7 @@
 
 # WhoCallsTheFleet / 是谁呼叫舰队
 
-一款针对网页游戏《舰队COLLECTION》的App，同时提供Web App和适用于Windows桌面及Mac OS X系统的离线程序。供玩家查询舰娘、装备、改修工厂等数据资料，也可模拟打造舰队配置。
+一款针对网页游戏《舰队COLLECTION》的App，同时提供Web App和适用于Windows桌面及macOS系统的离线程序。供玩家查询舰娘、装备、改修工厂等数据资料，也可模拟打造舰队配置。
 
 ## 获取
 
@@ -16,7 +16,7 @@ Web App针对手机与平板设备进行了优化适配，可用移动平台浏�
 
 [百度网盘](http://pan.baidu.com/s/1kT09CWJ#path=%252FWhoCallsTheFleet) | [OneDrive](http://1drv.ms/1LuUlMq)
 
-* 支持的操作系统：Windows 7/8/8.1/10 (32位/64位)，Mac OS X (32位/64位)
+* 支持的操作系统：Windows 7/8/8.1/10 (32位/64位)，macOS (32位/64位)
 * 不提供Linux平台的可执行版本，如有相关需求，可访问[GitHub REPO](https://github.com/Diablohu/WhoCallsTheFleet)获取源代码进行使用
 * 客户端版本支持自动更新
 
