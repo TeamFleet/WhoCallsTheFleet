@@ -53,3 +53,4 @@ Temporary Items
 /dev-output/js-source/node_modules
 /source/libs/node_modules
 /app/assets/images/homebg-custom
+/bower_components
