@@ -5884,13 +5884,12 @@ var _updater = {
 					_g.log('更新完成')
 					console.log( '[自动更新] 完成' )
 					_updater.indicator(1)
-				}else{
+				}else if( _updater.indicatorEl ){
 					_g.log('')
 					_g.log('自动更新失败, 结束流程')
 					console.log( '[自动更新] 失败' )
 					//_updater.update_indicator.removeClass('on')
-					if( _updater.indicatorEl )
-						_updater.indicator(false)
+					_updater.indicator(false)
 					_g.badgeError('自动更新失败，请访问 fleet.moe 手动下载最新版本')
 				}
 			})
