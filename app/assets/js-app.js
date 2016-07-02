@@ -5699,6 +5699,7 @@ var _updater = {
 					return true
 				}
 
+				console.log('[自动更新] 开始')
 				_g.log('更新开始: ' + updated.join(', '))
 
 				let promise_chain_update = Q.fcall(function(){})
@@ -5711,6 +5712,7 @@ var _updater = {
 					promise_chain_update = promise_chain_update.then(function(){
 						let deferred = Q.defer()
 							,savefile = false
+							,filesize = _updater.remote_data.packages[package_name].bytes
 
 						var tempfile = node.path.join(
 									dirData,
@@ -5766,7 +5768,7 @@ var _updater = {
 							//deferred.reject(new Error(err))
 						}).on('response', function(response){
 							if( response.statusCode == 200
-								&& parseInt(response.headers['content-length']) == _updater.remote_data.packages[package_name].bytes
+								&& parseInt(response.headers['content-length']) == filesize
 							)
 								savefile = true
 						})).on('error',function(err){
@@ -5783,17 +5785,27 @@ var _updater = {
 						}).pipe(
 							node.fs.createWriteStream(tempfile)
 							.on('finish', function(){
+								let complete = false
 								if( savefile ){
-									size_received+= _updater.remote_data.packages[package_name].bytes
+									let stat = node.fs.statSync(tempfile)
+									//console.log(
+									//	`    ${package_name} | received: ${stat.size} , target: ${filesize}`
+									//)
+									if( stat.size == filesize )
+										complete = true
+								}
+
+								if( complete ){
+									size_received+= filesize
 									renamePair.push([
 										package_name,
 										tempfile,
 										targetFile
 									])
-									_g.log('    ' +package_name+ ' | 下载完成')
+									_g.log('[自动更新] ' +package_name+ ' | 下载完成')
 									deferred.resolve()
 								}else{
-									_g.log('    ' +package_name+ ' | 下载出现错误')
+									_g.error('[自动更新] ' +package_name+ ' | 下载出现错误')
 									node.fs.unlink(tempfile, function(err){
 										deferred.resolve()
 									})
@@ -5870,19 +5882,26 @@ var _updater = {
 				if( size_received && size_received >= size_total ){
 					_g.log('')
 					_g.log('更新完成')
+					console.log( '[自动更新] 完成' )
 					_updater.indicator(1)
-				}/*else{
+				}else{
 					_g.log('')
 					_g.log('自动更新失败, 结束流程')
-					_updater.update_indicator.removeClass('on')
-				}*/
+					console.log( '[自动更新] 失败' )
+					//_updater.update_indicator.removeClass('on')
+					if( _updater.indicatorEl )
+						_updater.indicator(false)
+					_g.badgeError('自动更新失败，请访问 fleet.moe 手动下载最新版本')
+				}
 			})
 			.catch(function (err) {
 				_g.log('自动更新失败')
 				if( err == '数据包目录不存在, 不进行自动更新' )
 					console.warn(err)
-				else
+				else{
 					_g.error(err)
+					_g.badgeError('自动更新失败，请访问 fleet.moe 手动下载最新版本')
+				}
 				if( _updater.indicatorEl )
 					_updater.indicator(false)
 			})
