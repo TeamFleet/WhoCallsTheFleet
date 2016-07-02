@@ -1,9 +1,9 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.14.4.0",
-			"path":		"data/2016-07-03/app.nwjs-data",
-			"bytes":	16330693
+			"version":	"0.14.4.1",
+			"path":		"data/2016-07-03_2/app.nwjs-data",
+			"bytes":	16330687
 		},
 		"app-db": {
 			"version":	"1.14.4.0",
