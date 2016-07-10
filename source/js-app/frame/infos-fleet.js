@@ -2063,28 +2063,29 @@ class InfosFleetShipEquipment{
 							)
 							.append(
 								this.elSelectRank = $('<div/>',{
-									'class':	'equipment-rankselect'
-								}).append(
-									$('<span>无</span>').on('click', function(){
-										if( !InfosFleet.menuRankSelect ){
-											InfosFleet.menuRankSelectItems = $('<div/>')
-											for(let i=0; i<8; i++){
-												$('<button class="rank-' + i + '"/>')
-													.html( !i ? '无' : '' )
-													.on('click', function(){
-														InfosFleet.menuRankSelectCur.rank = i
-													})
-													.appendTo(InfosFleet.menuRankSelectItems)
-											}
-											InfosFleet.menuRankSelect = new _menu({
-												'className': 'contextmenu-infos_fleet_rank_select',
-												'items': [InfosFleet.menuRankSelectItems]
-											})
+									'class':	'equipment-rankselect',
+									'html': 	'<span>...</span>'
+								}).on('click', function(){
+									if( !this.el.hasClass('is-rankupgradable') )
+										return
+									if( !InfosFleet.menuRankSelect ){
+										InfosFleet.menuRankSelectItems = $('<div/>')
+										for(let i=0; i<8; i++){
+											$('<button class="rank-' + i + '"/>')
+												.html( !i ? '...' : '' )
+												.on('click', function(){
+													InfosFleet.menuRankSelectCur.rank = i
+												})
+												.appendTo(InfosFleet.menuRankSelectItems)
 										}
-										InfosFleet.menuRankSelectCur = this
-										InfosFleet.menuRankSelect.show(this.elSelectRank/*, 0 - this.elSelectRank.width(), 0 - this.elSelectRank.height() - 5*/)
-									}.bind(this))
-								)
+										InfosFleet.menuRankSelect = new _menu({
+											'className': 'contextmenu-infos_fleet_rank_select',
+											'items': [InfosFleet.menuRankSelectItems]
+										})
+									}
+									InfosFleet.menuRankSelectCur = this
+									InfosFleet.menuRankSelect.show(this.elSelectRank/*, 0 - this.elSelectRank.width(), 0 - this.elSelectRank.height() - 5*/)
+								}.bind(this))
 							)
 							.append(
 								//this.elButtonInspect = $('<button class="inspect"/>').html('资料').on('click', function(){

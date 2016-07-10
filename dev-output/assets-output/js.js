@@ -6715,13 +6715,15 @@ var InfosFleetShipEquipment = function () {
 				}.bind(this), 10);
 			}.bind(this)
 		})).append(this.elSelectRank = $('<div/>', {
-			'class': 'equipment-rankselect'
-		}).append($('<span>无</span>').on('click', function () {
+			'class': 'equipment-rankselect',
+			'html': '<span>...</span>'
+		}).on('click', function () {
+			if (!this.el.hasClass('is-rankupgradable')) return;
 			if (!InfosFleet.menuRankSelect) {
 				InfosFleet.menuRankSelectItems = $('<div/>');
 
 				var _loop2 = function _loop2(_i16) {
-					$('<button class="rank-' + _i16 + '"/>').html(!_i16 ? '无' : '').on('click', function () {
+					$('<button class="rank-' + _i16 + '"/>').html(!_i16 ? '...' : '').on('click', function () {
 						InfosFleet.menuRankSelectCur.rank = _i16;
 					}).appendTo(InfosFleet.menuRankSelectItems);
 				};
@@ -6736,7 +6738,7 @@ var InfosFleetShipEquipment = function () {
 			}
 			InfosFleet.menuRankSelectCur = this;
 			InfosFleet.menuRankSelect.show(this.elSelectRank);
-		}.bind(this)))).append(this.elButtonInspect = $('<span class="button inspect" icon="search"/>').on('click', function () {
+		}.bind(this))).append(this.elButtonInspect = $('<span class="button inspect" icon="search"/>').on('click', function () {
 			if (this.id) _frame.infos.show('[[EQUIPMENT::' + this.id + ']]');
 		}.bind(this))).append($('<span class="button change" icon="loop"/>').on('click', function () {
 			this.selectEquipmentStart();
