@@ -1,21 +1,14 @@
-// @koala-prepend "js-app/!.js"
-
 // @koala-prepend "libs/node_modules/lockr/lockr.min.js"
 // @koala-prepend "js-app/lib/SmoothScroll.js"
 // @koala-prepend "libs/node_modules/lz-string/libs/lz-string.js"
 // @koala-prepend "libs/node_modules/sprintf-js/src/sprintf.js"
 // @koala-prepend "libs/node_modules/pepjs/dist/pep.min.js"
 // @koala-prepend "libs/node_modules/localforage/dist/localforage.nopromises.min.js"
+// @koala-prepend "libs/node_modules/kckit/src/kckit.js"
 
+// @koala-prepend "js-app/!.js"
 // @koala-prepend "js-app/google_analytics.js"
-
-// @koala-prepend "KanColle-JS-Kit/js/!.js"
-// @koala-prepend "KanColle-JS-Kit/js/formula.js"
-// @koala-prepend "KanColle-JS-Kit/js/class-item/!.js"
-// @koala-prepend "KanColle-JS-Kit/js/class-item/entity.js"
-// @koala-prepend "KanColle-JS-Kit/js/class-item/equipment.js"
-// @koala-prepend "KanColle-JS-Kit/js/class-item/ship.js"
-// @koala-prepend "KanColle-JS-Kit/js/parser/kancolle-calc.js"
+// @koala-prepend "js-app/kancolle-calc.js"
 
 // @koala-prepend "js-app/canvas/!.js"
 // @koala-prepend "js-app/canvas/blur.js"

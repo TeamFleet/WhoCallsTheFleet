@@ -2035,7 +2035,9 @@ class InfosFleetShipEquipment{
 								this.elInputStar = $('<input/>',{
 									'class':		'equipment-starinput',
 									'type':			'number',
-									'placeholder':	0
+									'placeholder':	0,
+									'min': 			0,
+									'max': 			10
 								}).on({
 									'input': function(){
 											let value = this.elInputStar.val()
@@ -2061,27 +2063,28 @@ class InfosFleetShipEquipment{
 							)
 							.append(
 								this.elSelectRank = $('<div/>',{
-									'class':	'equipment-rankselect',
-									'html': 	'<span>无</span>'
-								}).on('click', function(){
-									if( !InfosFleet.menuRankSelect ){
-										InfosFleet.menuRankSelectItems = $('<div/>')
-										for(let i=0; i<8; i++){
-											$('<button class="rank-' + i + '"/>')
-												.html( !i ? '无' : '' )
-												.on('click', function(){
-													InfosFleet.menuRankSelectCur.rank = i
-												})
-												.appendTo(InfosFleet.menuRankSelectItems)
+									'class':	'equipment-rankselect'
+								}).append(
+									$('<span>无</span>').on('click', function(){
+										if( !InfosFleet.menuRankSelect ){
+											InfosFleet.menuRankSelectItems = $('<div/>')
+											for(let i=0; i<8; i++){
+												$('<button class="rank-' + i + '"/>')
+													.html( !i ? '无' : '' )
+													.on('click', function(){
+														InfosFleet.menuRankSelectCur.rank = i
+													})
+													.appendTo(InfosFleet.menuRankSelectItems)
+											}
+											InfosFleet.menuRankSelect = new _menu({
+												'className': 'contextmenu-infos_fleet_rank_select',
+												'items': [InfosFleet.menuRankSelectItems]
+											})
 										}
-										InfosFleet.menuRankSelect = new _menu({
-											'className': 'contextmenu-infos_fleet_rank_select',
-											'items': [InfosFleet.menuRankSelectItems]
-										})
-									}
-									InfosFleet.menuRankSelectCur = this
-									InfosFleet.menuRankSelect.show(this.elSelectRank/*, 0 - this.elSelectRank.width(), 0 - this.elSelectRank.height() - 5*/)
-								}.bind(this))				
+										InfosFleet.menuRankSelectCur = this
+										InfosFleet.menuRankSelect.show(this.elSelectRank/*, 0 - this.elSelectRank.width(), 0 - this.elSelectRank.height() - 5*/)
+									}.bind(this))
+								)
 							)
 							.append(
 								//this.elButtonInspect = $('<button class="inspect"/>').html('资料').on('click', function(){
@@ -2214,37 +2217,44 @@ class InfosFleetShipEquipment{
 			return this.isParentAirfield ? 0 : this.infosParent.data[3][this.index]
 		}
 		set star( value ){
-			if( !this.isParentAirfield ){
-				if( this._improvable ){
-					value = parseInt(value) || null
-					
-					if( value > 10 )
-						value = 10
-					
-					if( value < 0 )
-						value = 0
-					
-					if( value ){
-						this.infosParent.data[3][this.index] = value
-						this.elInputStar.val( value )
-						this.elStar.html(value)
-						this.el.attr('data-star', value)
-					}else{
-						this.infosParent.data[3][this.index] = null
-						this.elInputStar.val('')
-						this.elStar.html(0)
-						this.el.attr('data-star', '')
-					}
-					
+			let update = function( value ){
+				if( this.isParentAirfield )
+					this.infosParent.data[this.index][2] = value
+				else
+					this.infosParent.data[3][this.index] = value
+			}.bind(this)
+			if( this._improvable ){
+				value = parseInt(value) || null
+				
+				if( value > 10 )
+					value = 10
+				
+				if( value < 0 )
+					value = 0
+				
+				if( value ){
+					update(value)
+					this.elInputStar.val( value )
+					this.elStar.html(value)
+					this.el.attr('data-star', value)
 				}else{
-					this.infosParent.data[3][this.index] = null
-					this.el.removeAttr('data-star')
+					update(null)
+					this.elInputStar.val('')
+					this.elStar.html(0)
+					this.el.attr('data-star', '')
 				}
 				
-				this.infosParent.infosFleetSubFleet.summaryCalc()
-					
-				this.save()
+			}else{
+				update(null)
+				this.el.removeAttr('data-star')
 			}
+			
+			if( this.isParentAirfield )
+				this.infosParent.summaryCalc()
+			else
+				this.infosParent.infosFleetSubFleet.summaryCalc()
+				
+			this.save()
 		}
 	
 	// 熟练度
@@ -2254,6 +2264,12 @@ class InfosFleetShipEquipment{
 					: this.infosParent.data[4][this.index]
 		}
 		set rank( value ){
+			let update = function( value ){
+				if( this.isParentAirfield )
+					this.infosParent.data[this.index][1] = value
+				else
+					this.infosParent.data[4][this.index] = value
+			}.bind(this)
 			if( this.id && $.inArray(_g.data.items[this.id].type, Formula.equipmentType.Aircrafts) > -1 ){
 				value = parseInt(value) || null
 				
@@ -2264,24 +2280,15 @@ class InfosFleetShipEquipment{
 					value = 0
 				
 				if( value ){
-					if( this.isParentAirfield )
-						this.infosParent.data[this.index][1] = value
-					else
-						this.infosParent.data[4][this.index] = value
+					update(value)
 					this.el.attr('data-rank', value)
 				}else{
-					if( this.isParentAirfield )
-						this.infosParent.data[this.index][1] = null
-					else
-						this.infosParent.data[4][this.index] = null
+					update(null)
 					this.el.attr('data-rank', '')
 				}
 				
 			}else{
-				if( this.isParentAirfield )
-					this.infosParent.data[this.index][1] = null
-				else
-					this.infosParent.data[4][this.index] = null
+				update(null)
 				this.el.removeAttr('data-rank')
 			}
 			
@@ -2439,10 +2446,10 @@ class InfosFleetAirfield{
 	constructor(infosFleet, infosParent, index, d){
 		/**
 		 * [
-		 * 		[装备ID, 熟练度],
-		 * 		[装备ID, 熟练度],
-		 * 		[装备ID, 熟练度],
-		 * 		[装备ID, 熟练度]
+		 * 		[装备ID, 熟练度, 改修星级],
+		 * 		[装备ID, 熟练度, 改修星级],
+		 * 		[装备ID, 熟练度, 改修星级],
+		 * 		[装备ID, 熟练度, 改修星级]
 		 * ]
 		 */
 		
@@ -2481,10 +2488,8 @@ class InfosFleetAirfield{
 								this.aircrafts[i] = new InfosFleetShipEquipment(
 									this,
 									i,
-									// carry slot
-									12,
-									// equipment types
-									InfosFleetAirfield.equipmentTypes
+									12, // carry slot
+									InfosFleetAirfield.equipmentTypes // equipment types
 								)
 								els = els.add(this.aircrafts[i].el)
 							}
@@ -2539,6 +2544,8 @@ class InfosFleetAirfield{
 						this.aircrafts[i].id = this.data[i][0]
 					if( this.data[i][1] )
 						this.aircrafts[i].rank = this.data[i][1]
+					if( this.data[i][2] )
+						this.aircrafts[i].star = this.data[i][2]
 				}
 			}
 			
@@ -2562,7 +2569,7 @@ class InfosFleetAirfield{
 				this.data.forEach(function( d ){
 					if( d[0] ){
 						let e = _g.data.items[d[0]]
-							,fp = Formula.calc.fighterPower( e, 12, d[1] )
+							,fp = Formula.calc.fighterPower( e, 12, d[1], d[2] )
 							,_distance = e.stat.distance || 0
 							
 						fighterPower[0]+= fp[0]

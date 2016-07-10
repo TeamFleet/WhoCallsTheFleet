@@ -17,6 +17,7 @@
 			'items': 	'/!/pics/items/'
 		}
 	}
+	KC.path.pics = _g.path.pics
 	
 	_g.dbs = [
 		'ships',
@@ -32,15 +33,13 @@
 		'ships': {},
 		'items': {}
 	}
+	KC.db = _g.data
 
 	var _db = {
 		'fleets': new Nedb({
 				filename: 	'fleets'
 			})
 	}
-
-	Formula.data.ships = _g.data.ships;
-	Formula.data.equipments = _g.data.items;
 
 
 

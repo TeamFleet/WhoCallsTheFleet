@@ -38,18 +38,10 @@
 
 
 // @koala-prepend "../../source/js-app/!.js"
-
 // @koala-prepend "../../source/js-app/google_analytics-web.js"
+// @koala-prepend "../../source/js-app/kancolle-calc.js"
 
 // @koala-prepend "../../source/nw.js-base-framework/source/js-base/node-webkit/configuration.js"
-
-// @koala-prepend "../../source/KanColle-JS-Kit/js/!.js"
-// @koala-prepend "../../source/KanColle-JS-Kit/js/formula.js"
-// @koala-prepend "../../source/KanColle-JS-Kit/js/class-item/!.js"
-// @koala-prepend "../../source/KanColle-JS-Kit/js/class-item/entity.js"
-// @koala-prepend "../../source/KanColle-JS-Kit/js/class-item/equipment.js"
-// @koala-prepend "../../source/KanColle-JS-Kit/js/class-item/ship.js"
-// @koala-prepend "../../source/KanColle-JS-Kit/js/parser/kancolle-calc.js"
 
 // @koala-prepend "../../source/js-app/main-web.js"
 // @koala-prepend "../../source/js-app/main-web-page.js"

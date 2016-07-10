@@ -9,12 +9,17 @@
 "use strict";
 
 // Global Variables
+	const Ship = KC.Ship
+		,Equipment = KC.Equipment
+		,Entity = KC.Entity
+		,Formula = KC.formula
+
 	_g.animate_duration_delay = 320;
 	_g.inputIndex = 0;
-	_g.lang = 'zh_cn';
-	_g.joint = '・';
+	_g.lang = KC.lang;
+	_g.joint = KC.joint;
 	_g.defaultHqLv = 90;
-	_g.shipMaxLv = 155; // Ship.lvlMax
+	_g.shipMaxLv = Ship.lvlMax
 	
 	// check wheather connect online
 		//_g.isOnline = false
@@ -57,31 +62,11 @@
 		}
 	};
 
-	_g.statSpeed = {
-		5: 	'低速',
-		10: '高速'
-	};
-	_g.statRange = {
-		1: 	'短',
-		2: 	'中',
-		3: 	'长',
-		4: 	'超长'
-	};
-	_g.textRank = {
-		1:	'|',
-		2:	'||',
-		3:	'|||',
-		4:	'\\',
-		5:	'\\\\',
-		6:	'\\\\\\',
-		7:	'》'
-	};
-	_g.getStatSpeed = function( speed ){
-		return _g.statSpeed[parseInt(speed)]
-	};
-	_g.getStatRange = function( range ){
-		return _g.statRange[parseInt(range)]
-	};
+	_g.statSpeed = KC.statSpeed;
+	_g.statRange = KC.statRange;
+	_g.textRank = KC.textRank;
+	_g.getStatSpeed = KC.getStatSpeed;
+	_g.getStatRange = KC.getStatRange;
 	
 	_g.getSize = function( bytes, target ){
 		target = target.toUpperCase()

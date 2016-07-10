@@ -31,6 +31,7 @@
 			'items': 	node.path.join(_g.root, '/pics/items/')
 		}
 	}
+	KC.path.pics = _g.path.pics
 
 	_g.pathMakeObj = function(obj){
 		for( var i in obj ){
@@ -55,6 +56,7 @@
 		'ship_type_order': {},
 		'ship_classes': {}
 	}
+	KC.db = _g.data
 
 	var _db = {
 		'fleets': new node.nedb({
@@ -64,9 +66,6 @@
 	_g.ship_type_order = []
 	_g.ship_type_order_full = []
 	_g.ship_type_order_map = {}
-
-	Formula.data.ships = _g.data.ships;
-	Formula.data.equipments = _g.data.items;
 
 
 

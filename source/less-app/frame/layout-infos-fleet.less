@@ -940,7 +940,7 @@
 	.airfield{
 		flex: 		1 1 200px;
 		position:	relative;
-		margin: 	0 2.5% 2em 2.5%;
+		margin: 	0 2.5%;
 		height: 	65%;
 		min-height: 320px;
 		max-height: 400px;
@@ -965,6 +965,9 @@
 				flex: 	none;
 				display:block;
 			}
+		}
+		@media all and (min-height: @screen-width-t7-breaking-point ){
+			margin-bottom: 	2em;
 		}
 	} // dd.airfield
 
@@ -1187,47 +1190,66 @@
 			}
 			&.is-rankupgradable{
 				&>.equipment-infos{
-					&>.equipment-star{
-						display: 	none;
-					}
+					padding-right: 	38px;
+					//&>.equipment-star{
+					//	display: 	none;
+					//}
 					&>.equipment-rank{
 						display: 	block;
-						background: ~"url(@{folder_images}/Aircraft_Proficiency.png) no-repeat 50% 224px / cover";
+						background: ~"url(@{folder_images}/Aircraft_Proficiency.png) no-repeat 50% -100% / cover";
 					}
 				}
 				&>.equipment-options{
 					.equipment-starinput{
-						display: 	none;
+						border-top-right-radius: 0;
+						border-bottom-right-radius: 0;
 					}
 					.equipment-rankselect{
-						display: 	block;
+						.inputstyle();
+						border-top-left-radius: 0;
+						border-bottom-left-radius: 0;
+						border-left: 	0;
+						z-index: 		1;
 						span{
-							background: ~"url(@{folder_images}/Aircraft_Proficiency.png) no-repeat 50% 224px / cover";
+							@height: 	24px;
+							@width: 	(@height * 0.75);
+							width: 		@width;
+							height: 	@height;
+							line-height:@height;
+							background: ~"url(@{folder_images}/Aircraft_Proficiency.png) no-repeat 50% -100% / cover";
+							text-align: center;
+							display: 	inline-block;
+							transform: 	translateY(-50%);
+							position: 	relative;
+							top: 		50%;
 						}
 					}
 				}
 				&[data-rank]:not([data-rank=""]){
 					&>.equipment-infos>.equipment-rank{
 						opacity: 	1;
-						transform: 	translateY( ~"calc(-50% - 8px)");
+						//transform: 	translateY( ~"calc(-50% - 8px)");
+						transform: 	translateY(-50%);
 						&:before{
 							display: 	none;
 						}
 					}
 					&>.equipment-options .equipment-rankselect span{
 						color: 		transparent;
-						transform: 	translateY(-50%);
+						//transform: 	translateY(-50%);
 					}
 				}
 				.loop(@n, @i: 1) when (@i =< @n) {
 					&[data-rank="@{i}"]{
 						&>.equipment-infos>.equipment-rank{
 							//background-position-y: unit( ((@i - 1) * -16px ), px );
-							background-position: 50% unit( ((@i - 1) * -16px ), px );
+							//background-position: 50% unit( ((@i - 1) * -16px ), px );
+							background-position: 50% percentage((@i - 1) / 6);
 						}
 						&>.equipment-options .equipment-rankselect span{
 							//background-position-y: unit( ((@i - 1) * -32px ), px );
-							background-position: 50% unit( ((@i - 1) * -32px ), px );
+							//background-position: 50% unit( ((@i - 1) * -32px ), px );
+							background-position: 50% percentage((@i - 1) / 6);
 						}
 					}
 					.loop(@n, (@i + 1))
@@ -1312,7 +1334,6 @@
 			}
 			.equipment-star, .equipment-rank, .equipment-carry{
 				position: 	absolute;
-				right: 		4px;
 				flex: 		none;
 				text-align: right;
 				top: 		50%;
@@ -1320,42 +1341,48 @@
 				height: 	45%;
 				//font-size: 	13px;
 				opacity: 	.25;
+			}
+			.equipment-star, .equipment-carry{
+				right: 		4px;
 				&:before{
-					padding-right: 	2px;
 					vertical-align: top;
 					//font-size: 	15px;
+				}
+			}
+			.equipment-star{
+				transform: 	translateY(-50%);
+				&:before{
+					padding-right: 	2px;
+					//content: 	'★';
+					content:	'\2605';
 					font-size: 	percentage(15 / @infos-fleet-base-font-size);
 				}
 			}
-			.equipment-star, .equipment-rank{
-				transform: 	translateY(-50%);
-				&:before{
-					//content: 	'★';
-					content:	'\2605';
-				}
-			}
 			.equipment-rank{
-				width: 		12px;
-				height: 	16px;
+				@height: 	16px;
+				width: 		(@height * 0.75);
+				height: 	@height;
 				display: 	none;
+				right: 		28px;
 			}
 			.equipment-carry{
 				transform: 	translateY(50%);
 				&:before{
+					padding-right: 	1px;
 					content: 	@iconcode-multiplication;
 					//font-size: 	18px;
-					font-size: 	percentage(18 / @infos-fleet-base-font-size);
+					font-size: 	percentage(14 / @infos-fleet-base-font-size);
 				}
 			}
 		.equipment-options{
-			padding-left: 	40px;
+			padding-left: 	36px;
 			padding-right: 	4px;
 			&:before{
 				//content: 	'★';
 				content:	'\2605';
 				position: 	absolute;
 				top: 		50%;
-				left: 		~"calc(10% + 30px)";
+				left: 		~"calc(10% + 24px)";
 				font-size: 	percentage(15 / @infos-fleet-base-font-size);
 				line-height:0;
 				opacity: 	.5;
@@ -1403,27 +1430,23 @@
 				}
 			}
 		}
-			.equipment-starinput, .equipment-rankselect{
+			.equipment-starinput{
 				height: 	75%;
-				flex: 		2 0 40px;
-				padding-left:16px;
-				margin-right:10%;
+				flex: 		2 0 32px;
+				padding-left:14px;
+				//margin-right:0;
 			}
 			.equipment-rankselect{
-				.inputstyle();
-				display: 	none;
+				height: 	75%;
+				flex: 		1 0 20px;
+				//margin-left: -1px;
+				margin-right:2%;
 				position: 	relative;
 				text-align: center;
+				overflow: 	hidden;
+				z-index: 	-1;
 				span{
-					height: 	32px;
-					width: 		24px;
-					text-align: center;
-					display: 	inline-block;
-					line-height:0;
-					position: 	absolute;
-					top: 		50%;
-					left: 		40%;
-					//transform: 	translateY(-50%);
+					display: 	none;
 				}
 			}
 
@@ -2012,32 +2035,42 @@
 	} // dd.ship
 	.equipment{
 		background-position: 2px 50%;
-		margin-right: 	2p;
+		margin-right: 	2px;
 	} // .equipment
 		.equipment-infos{
 			padding-left: 	38px;
 			padding-right: 	32px;
 		}
+		.equipment[data-equipmentid].is-rankupgradable > .equipment-infos{
+			padding-right: 	50px;
+		}
 			.equipment-name{
 				font-size: 	percentage(13 / @infos-fleet-base-font-size);
 			}
-			.equipment-star, .equipment-rank, .equipment-carry{
+			.equipment-star{
 				right: 		6px;
 				&:before{
 					padding-right: 	3px;
 				}
 			}
+			.equipment-rank{
+				right: 		34px;
+				@height: 	20px;
+				width: 		(@height * 0.75);
+				height: 	@height;
+			}
+			.equipment-carry{
+				right: 		6px;
+				&:before{
+					padding-right: 	2px;
+				}
+			}
 		.equipment-options{
 			padding-left: 	42px;
 			&:before{
-				left: 		~"calc(10% + 32px)";
+				left: 		~"calc(10% + 28px)";
 			}
 		}
-			.equipment-rankselect{
-				span{
-					left: 		45%;
-				}
-			}
 }}
 
 
@@ -2076,18 +2109,26 @@
 			padding-left: 	32px;
 			padding-right: 	28px;
 		}
+		.equipment[data-equipmentid].is-rankupgradable > .equipment-infos{
+			padding-right: 	42px;
+		}
 			//.equipment-name{
 			//	font-size: 	100%;
 			//}
 			.equipment-carry,
-			.equipment-rank,
 			.equipment-star{
 				right: 	2px;
+			}
+			.equipment-rank{
+				right: 		30px;
+				@height: 	16px;
+				width: 		(@height * 0.75);
+				height: 	@height;
 			}
 		.equipment-options{
 			padding-left: 	32px;
 			&:before{
-				left: 		~"calc(10% + 22px)";
+				left: 		~"calc(10% + 20px)";
 			}
 		}
 }}
@@ -2235,38 +2276,45 @@
 			padding-left: 	30px;
 			padding-right: 	28px;
 		}
+			.equipment[data-equipmentid].is-rankupgradable > .equipment-infos{
+				padding-right: 	42px;
+			}
 			.equipment-name{
 				line-height:1.15em;
 				//font-size: 	percentage(12 / @infos-fleet-base-font-size);
 			}
 			.equipment-carry,
-			.equipment-rank,
 			.equipment-star{
 				&:before{
 					padding-right: 1px;
 				}
 			}
 			.equipment-rank{
-				top: 	55%;
+				right: 		30px;
+				@height: 	16px;
+				width: 		(@height * 0.75);
+				height: 	@height;
 			}
 		.equipment-options{
-			padding-left: 	32px;
+			padding-left: 	30px;
 			justify-content: flex-start;
 			align-content: 	space-between;
 			&:before{
-				left: 		36px;
+				left: 		32px;
 			}
 			.button{
 				flex-basis:	16px;
 			}
 		}
-			.equipment-starinput, .equipment-rankselect{
-				flex:		0.5 0 35px;
-				padding-left:14px;
-				margin-right:4px;
+			.equipment-starinput{
+				flex:		0.5 0 28px;
+				padding-left:  12px;
+				padding-right: 0;
+				//margin-right:4px;
 			}
-			.equipment-rankselect span{
-				left: 		40%;
+			.equipment-rankselect{
+				flex:		0.5 0 18px;
+				margin-right:2px;
 			}
 	
 	.summary{
