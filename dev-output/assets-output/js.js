@@ -1223,7 +1223,7 @@ Object.defineProperty(Array.prototype, 'mergeFrom', {
 	enumerable: !1,
 
 	value: function value(arr2) {
-		Array.prototype.push.apply(this, _instanceof(arr2, Array) ? arr2 : [arr2]);
+		Array.prototype.push.apply(this, _instanceof(arr2, Array) || arr2.push ? arr2 : [arr2]);
 		return this;
 	}
 });
@@ -3608,8 +3608,8 @@ _tmpl.improvement = function (equipment, improvement_index, requirement_index, r
 	});
 	if (req_ships.length) {
 		var names = [];
-		req_ships.forEach(function (currentValue) {
-			names.push('<a' + ' href="?infos=ship&id=' + currentValue + '"' + ' data-infos="[[SHIP::' + currentValue + ']]"' + ' data-tip="[[SHIP::' + currentValue + ']]"' + '>' + _g.data.ships[currentValue].getName() + '</a>');
+		req_ships.forEach(function (id) {
+			names.push('<a' + ' href="?infos=ship&id=' + id + '"' + ' data-infos="[[SHIP::' + id + ']]"' + ' data-tip="[[SHIP::' + id + ']]"' + '>' + _g.data.ships[id].getName() + '</a>');
 		});
 		requirement = '<font>' + names.join(' / ') + '</font>';
 	} else {

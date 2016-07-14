@@ -6315,7 +6315,7 @@ _tmpl.improvement = function( equipment, improvement_index, requirement_index, r
 	requirement_index = requirement_index || [0]
 	returnHTML = returnHTML || false
 
-	var improvement = equipment['improvement'][improvement_index]
+	let improvement = equipment['improvement'][improvement_index]
 		,upgrade_to = improvement['upgrade']
 						? _g.data.items[improvement['upgrade'][0]]
 						: false
@@ -6323,21 +6323,21 @@ _tmpl.improvement = function( equipment, improvement_index, requirement_index, r
 		,requirement = ''
 
 	requirement_index.forEach(function(currentValue){
-		var req = improvement['req'][currentValue]
+		let req = improvement['req'][currentValue]
 		if( req[1] )
 			req_ships.mergeFrom(req[1])
-			//req_ships = req_ships.concat(req[1])
+		
 	})
 	if( req_ships.length ){
 		var names = []
-		req_ships.forEach(function(currentValue){
+		req_ships.forEach(function(id){
 			names.push(
 				'<a'
-				+ ' href="?infos=ship&id='+currentValue+'"'
-				+ ' data-infos="[[SHIP::'+currentValue+']]"'
-				+ ' data-tip="[[SHIP::'+currentValue+']]"'
+				+ ' href="?infos=ship&id='+id+'"'
+				+ ' data-infos="[[SHIP::'+id+']]"'
+				+ ' data-tip="[[SHIP::'+id+']]"'
 				+ '>'
-				+ _g.data.ships[currentValue].getName()
+				+ _g.data.ships[id].getName()
 				+ '</a>'
 			)
 		})
