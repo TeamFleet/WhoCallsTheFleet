@@ -38,7 +38,7 @@ _tmpl.improvement = function( equipment, improvement_index, requirement_index, r
 		})
 		requirement = '<font>'+names.join(' / ')+'</font>'
 	}else{
-		requirement = '<font class="no">无秘书舰要求</font>'
+		requirement = `<font class="no">${ (improvement.resource[0][0] >= 0) ? '无秘书舰' : '未知' }要求</font>`
 	}
 
 	return _tmpl.export(
@@ -75,7 +75,7 @@ _tmpl.improvement_detail = function( equipment, returnHTML ){
 		let upgrade_to = improvement['upgrade']
 							? _g.data.items[improvement['upgrade'][0]]
 							: false
-			,requirements = this.improvement__reqdetails(improvement.req)
+			,requirements = this.improvement__reqdetails(improvement.req , (improvement.resource[0][0] >= 0))
 
 		html+= '<span class="improvement improvement-details">'
 					+ _tmpl.improvement__title(equipment, upgrade_to, improvement['upgrade'][1])
@@ -114,7 +114,7 @@ _tmpl.improvement_inEquipmentInfos = function( equipment, returnHTML ){
 		let upgrade_to = improvement['upgrade']
 							? _g.data.items[improvement['upgrade'][0]]
 							: false
-			,requirements = this.improvement__reqdetails(improvement.req)
+			,requirements = this.improvement__reqdetails(improvement.req , (improvement.resource[0][0] >= 0))
 
 		html+= '<span class="unit improvement improvement-details">'
 					+ '<b>'
@@ -258,7 +258,7 @@ _tmpl.improvement__resource = function(improvement, upgradable){
 				+ '</span>'
 
 }
-_tmpl.improvement__reqdetails = function(reqdata){
+_tmpl.improvement__reqdetails = function( reqdata , dataready ){
 	if( !reqdata || !reqdata.push || !reqdata.length )
 		return ''
 
@@ -297,7 +297,7 @@ _tmpl.improvement__reqdetails = function(reqdata){
 			})
 			requirements+= names.join(' / ')
 		}else{
-			requirements+= '<b>无秘书舰要求</b>'
+			requirements+= `<b>${ dataready ? '无秘书舰' : '未知' }要求</b>`
 		}
 
 		requirements+= '</b>'

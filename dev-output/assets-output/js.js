@@ -3613,7 +3613,7 @@ _tmpl.improvement = function (equipment, improvement_index, requirement_index, r
 		});
 		requirement = '<font>' + names.join(' / ') + '</font>';
 	} else {
-		requirement = '<font class="no">无秘书舰要求</font>';
+		requirement = '<font class="no">' + (improvement.resource[0][0] >= 0 ? '无秘书舰' : '未知') + '要求</font>';
 	}
 
 	return _tmpl.export('<span class="improvement">' + _tmpl.improvement__title(equipment, upgrade_to, improvement['upgrade'][1]) + requirement + _tmpl.improvement__resource(improvement, upgrade_to ? !0 : !1) + '</span>', returnHTML);
@@ -3629,7 +3629,7 @@ _tmpl.improvement_detail = function (equipment, returnHTML) {
 
 	data.forEach(function (improvement) {
 		var upgrade_to = improvement['upgrade'] ? _g.data.items[improvement['upgrade'][0]] : !1,
-		    requirements = this.improvement__reqdetails(improvement.req);
+		    requirements = this.improvement__reqdetails(improvement.req, improvement.resource[0][0] >= 0);
 
 		html += '<span class="improvement improvement-details">' + _tmpl.improvement__title(equipment, upgrade_to, improvement['upgrade'][1]) + requirements + _tmpl.improvement__resource(improvement, upgrade_to ? !0 : !1) + '</span>';
 	}, this);
@@ -3647,7 +3647,7 @@ _tmpl.improvement_inEquipmentInfos = function (equipment, returnHTML) {
 
 	data.forEach(function (improvement) {
 		var upgrade_to = improvement['upgrade'] ? _g.data.items[improvement['upgrade'][0]] : !1,
-		    requirements = this.improvement__reqdetails(improvement.req);
+		    requirements = this.improvement__reqdetails(improvement.req, improvement.resource[0][0] >= 0);
 
 		html += '<span class="unit improvement improvement-details">' + '<b>' + (upgrade_to ? '<span class="indicator true">可升级为</span>' + '<a class="equiptypeicon mod-left mod-' + upgrade_to.getIconId() + '"' + ' href="?infos=equipment&id=' + upgrade_to['id'] + '"' + ' data-infos="[[EQUIPMENT::' + upgrade_to['id'] + ']]"' + ' data-tip="[[EQUIPMENT::' + upgrade_to['id'] + ']]"' + '>' + upgrade_to.getName(!0) + '</a>' + (improvement['upgrade'][1] ? '<i>+' + improvement['upgrade'][1] + '</i>' : '') : '<span class="indicator false">不可升级</span>') + '</b>' + requirements + _tmpl.improvement__resource(improvement, upgrade_to ? !0 : !1) + '</span>';
 	}, this);
@@ -3684,7 +3684,7 @@ _tmpl.improvement__resource = function (improvement, upgradable) {
 
 	return '<span>' + resource['all'] + resource['1'] + resource['2'] + resource['3'] + '</span>';
 };
-_tmpl.improvement__reqdetails = function (reqdata) {
+_tmpl.improvement__reqdetails = function (reqdata, dataready) {
 	if (!reqdata || !reqdata.push || !reqdata.length) return '';
 
 	var requirements = '<font>';
@@ -3721,7 +3721,7 @@ _tmpl.improvement__reqdetails = function (reqdata) {
 			});
 			requirements += names.join(' / ');
 		} else {
-			requirements += '<b>无秘书舰要求</b>';
+			requirements += '<b>' + (dataready ? '无秘书舰' : '未知') + '要求</b>';
 		}
 
 		requirements += '</b>';
