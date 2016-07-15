@@ -8556,7 +8556,7 @@ body.mod-capture .infos-fleet .ship > .options {
 .infos-fleet .airfield {
   flex: 1 1 200px;
   position: relative;
-  margin: 0 2.5% 2em 2.5%;
+  margin: 0 2.5%;
   height: 65%;
   min-height: 320px;
   max-height: 400px;
@@ -8583,6 +8583,11 @@ body.mod-capture .infos-fleet .ship > .options {
 .infos-fleet .airfield .airfield-summary .summary {
   flex: none;
   display: block;
+}
+@media all and (min-height: 540px) {
+  .infos-fleet .airfield {
+    margin-bottom: 2em;
+  }
 }
 .infos-fleet .equipments,
 .infos-fleet .attributes {
@@ -8760,80 +8765,107 @@ body.mod-capture .infos-fleet .equipments {
 .infos-fleet .equipment[data-equipmentid].is-aircraft[data-carry="0"] .equipment-carry {
   color: inherit;
 }
-.infos-fleet .equipment[data-equipmentid].is-rankupgradable > .equipment-infos > .equipment-star {
-  display: none;
+.infos-fleet .equipment[data-equipmentid].is-rankupgradable > .equipment-infos {
+  padding-right: 38px;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable > .equipment-infos > .equipment-rank {
   display: block;
-  background: url(/!/assets/images/Aircraft_Proficiency.png) no-repeat 50% 224px / cover;
+  background: url(/!/assets/images/Aircraft_Proficiency.png) no-repeat 50% -100% / cover;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable > .equipment-options .equipment-starinput {
-  display: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable > .equipment-options .equipment-rankselect {
-  display: block;
+  background: rgba(0, 0, 0, 0.1);
+  border: 0.05rem solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.2rem;
+  display: inline-block;
+  width: auto;
+  color: inherit;
+  transition-property: border,background,color,width;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: 0;
+  z-index: 1;
+}
+.infos-fleet .equipment[data-equipmentid].is-rankupgradable > .equipment-options .equipment-rankselect:not([disabled]):hover,
+.infos-fleet .equipment[data-equipmentid].is-rankupgradable > .equipment-options .equipment-rankselect:not([readonly]):hover {
+  background: rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.infos-fleet .equipment[data-equipmentid].is-rankupgradable > .equipment-options .equipment-rankselect:not([disabled]):focus {
+  background: rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable > .equipment-options .equipment-rankselect span {
-  background: url(/!/assets/images/Aircraft_Proficiency.png) no-repeat 50% 224px / cover;
+  width: 18px;
+  height: 24px;
+  line-height: 24px;
+  background: url(/!/assets/images/Aircraft_Proficiency.png) no-repeat 50% -100% / cover;
+  text-align: center;
+  display: inline-block;
+  transform: translateY(-50%);
+  position: relative;
+  top: 50%;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank]:not([data-rank=""]) > .equipment-infos > .equipment-rank {
   opacity: 1;
-  transform: translateY(calc(-50% - 8px));
+  transform: translateY(-50%);
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank]:not([data-rank=""]) > .equipment-infos > .equipment-rank:before {
   display: none;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank]:not([data-rank=""]) > .equipment-options .equipment-rankselect span {
   color: transparent;
-  transform: translateY(-50%);
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank="1"] > .equipment-infos > .equipment-rank {
-  background-position: 50% 0px;
+  background-position: 50% 0%;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank="1"] > .equipment-options .equipment-rankselect span {
-  background-position: 50% 0px;
+  background-position: 50% 0%;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank="2"] > .equipment-infos > .equipment-rank {
-  background-position: 50% -16px;
+  background-position: 50% 16.66666667%;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank="2"] > .equipment-options .equipment-rankselect span {
-  background-position: 50% -32px;
+  background-position: 50% 16.66666667%;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank="3"] > .equipment-infos > .equipment-rank {
-  background-position: 50% -32px;
+  background-position: 50% 33.33333333%;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank="3"] > .equipment-options .equipment-rankselect span {
-  background-position: 50% -64px;
+  background-position: 50% 33.33333333%;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank="4"] > .equipment-infos > .equipment-rank {
-  background-position: 50% -48px;
+  background-position: 50% 50%;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank="4"] > .equipment-options .equipment-rankselect span {
-  background-position: 50% -96px;
+  background-position: 50% 50%;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank="5"] > .equipment-infos > .equipment-rank {
-  background-position: 50% -64px;
+  background-position: 50% 66.66666667%;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank="5"] > .equipment-options .equipment-rankselect span {
-  background-position: 50% -128px;
+  background-position: 50% 66.66666667%;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank="6"] > .equipment-infos > .equipment-rank {
-  background-position: 50% -80px;
+  background-position: 50% 83.33333333%;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank="6"] > .equipment-options .equipment-rankselect span {
-  background-position: 50% -160px;
+  background-position: 50% 83.33333333%;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank="7"] > .equipment-infos > .equipment-rank {
-  background-position: 50% -96px;
+  background-position: 50% 100%;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank="7"] > .equipment-options .equipment-rankselect span {
-  background-position: 50% -192px;
+  background-position: 50% 100%;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank="8"] > .equipment-infos > .equipment-rank {
-  background-position: 50% -112px;
+  background-position: 50% 116.66666667%;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable[data-rank="8"] > .equipment-options .equipment-rankselect span {
-  background-position: 50% -224px;
+  background-position: 50% 116.66666667%;
 }
 .infos-fleet .equipment[data-star] > .equipment-options:before,
 .infos-fleet .equipment[data-star] > .equipment-options .equipment-starinput {
@@ -8900,7 +8932,6 @@ body.mod-capture .infos-fleet .equipments {
 .infos-fleet .equipment-rank,
 .infos-fleet .equipment-carry {
   position: absolute;
-  right: 4px;
   flex: none;
   text-align: right;
   top: 50%;
@@ -8908,42 +8939,45 @@ body.mod-capture .infos-fleet .equipments {
   height: 45%;
   opacity: .25;
 }
-.infos-fleet .equipment-star:before,
-.infos-fleet .equipment-rank:before,
-.infos-fleet .equipment-carry:before {
-  padding-right: 2px;
-  vertical-align: top;
-  font-size: 125%;
-}
 .infos-fleet .equipment-star,
-.infos-fleet .equipment-rank {
+.infos-fleet .equipment-carry {
+  right: 4px;
+}
+.infos-fleet .equipment-star:before,
+.infos-fleet .equipment-carry:before {
+  vertical-align: top;
+}
+.infos-fleet .equipment-star {
   transform: translateY(-50%);
 }
-.infos-fleet .equipment-star:before,
-.infos-fleet .equipment-rank:before {
+.infos-fleet .equipment-star:before {
+  padding-right: 2px;
   content: '\2605';
+  font-size: 125%;
 }
 .infos-fleet .equipment-rank {
   width: 12px;
   height: 16px;
   display: none;
+  right: 28px;
 }
 .infos-fleet .equipment-carry {
   transform: translateY(50%);
 }
 .infos-fleet .equipment-carry:before {
+  padding-right: 1px;
   content: "\00d7";
-  font-size: 150%;
+  font-size: 116.66666667%;
 }
 .infos-fleet .equipment-options {
-  padding-left: 40px;
+  padding-left: 36px;
   padding-right: 4px;
 }
 .infos-fleet .equipment-options:before {
   content: '\2605';
   position: absolute;
   top: 50%;
-  left: calc(10% + 30px);
+  left: calc(10% + 24px);
   font-size: 125%;
   line-height: 0;
   opacity: .5;
@@ -8987,43 +9021,22 @@ body.mod-capture .infos-fleet .equipments {
   content: "\00d7";
   margin-top: -1px;
 }
-.infos-fleet .equipment-starinput,
+.infos-fleet .equipment-starinput {
+  height: 75%;
+  flex: 2 0 32px;
+  padding-left: 14px;
+}
 .infos-fleet .equipment-rankselect {
   height: 75%;
-  flex: 2 0 40px;
-  padding-left: 16px;
-  margin-right: 10%;
-}
-.infos-fleet .equipment-rankselect {
-  background: rgba(0, 0, 0, 0.1);
-  border: 0.05rem solid rgba(255, 255, 255, 0.15);
-  border-radius: 0.2rem;
-  display: inline-block;
-  width: auto;
-  color: inherit;
-  transition-property: border,background,color,width;
-  display: none;
+  flex: 1 0 20px;
+  margin-right: 2%;
   position: relative;
   text-align: center;
-}
-.infos-fleet .equipment-rankselect:not([disabled]):hover,
-.infos-fleet .equipment-rankselect:not([readonly]):hover {
-  background: rgba(0, 0, 0, 0.25);
-  border-color: rgba(255, 255, 255, 0.3);
-}
-.infos-fleet .equipment-rankselect:not([disabled]):focus {
-  background: rgba(0, 0, 0, 0.25);
-  border-color: rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+  z-index: -1;
 }
 .infos-fleet .equipment-rankselect span {
-  height: 32px;
-  width: 24px;
-  text-align: center;
-  display: inline-block;
-  line-height: 0;
-  position: absolute;
-  top: 50%;
-  left: 40%;
+  display: none;
 }
 .infos-fleet .summary {
   flex: 0.5 0 auto;
@@ -10364,33 +10377,40 @@ body.mod-capture .infos-fleet .equipments {
   }
   .infos-fleet .equipment {
     background-position: 2px 50%;
-    margin-right: 2p;
+    margin-right: 2px;
   }
   .infos-fleet .equipment-infos {
     padding-left: 38px;
     padding-right: 32px;
   }
+  .infos-fleet .equipment[data-equipmentid].is-rankupgradable > .equipment-infos {
+    padding-right: 50px;
+  }
   .infos-fleet .equipment-name {
     font-size: 108.33333333%;
   }
-  .infos-fleet .equipment-star,
-  .infos-fleet .equipment-rank,
+  .infos-fleet .equipment-star {
+    right: 6px;
+  }
+  .infos-fleet .equipment-star:before {
+    padding-right: 3px;
+  }
+  .infos-fleet .equipment-rank {
+    right: 34px;
+    width: 15px;
+    height: 20px;
+  }
   .infos-fleet .equipment-carry {
     right: 6px;
   }
-  .infos-fleet .equipment-star:before,
-  .infos-fleet .equipment-rank:before,
   .infos-fleet .equipment-carry:before {
-    padding-right: 3px;
+    padding-right: 2px;
   }
   .infos-fleet .equipment-options {
     padding-left: 42px;
   }
   .infos-fleet .equipment-options:before {
-    left: calc(10% + 32px);
-  }
-  .infos-fleet .equipment-rankselect span {
-    left: 45%;
+    left: calc(10% + 28px);
   }
 }
 @media all and (max-width: 1152px) and (min-width: 961px) {
@@ -10418,16 +10438,23 @@ body.mod-capture .infos-fleet .equipments {
     padding-left: 32px;
     padding-right: 28px;
   }
+  .infos-fleet .equipment[data-equipmentid].is-rankupgradable > .equipment-infos {
+    padding-right: 42px;
+  }
   .infos-fleet .equipment-carry,
-  .infos-fleet .equipment-rank,
   .infos-fleet .equipment-star {
     right: 2px;
+  }
+  .infos-fleet .equipment-rank {
+    right: 30px;
+    width: 12px;
+    height: 16px;
   }
   .infos-fleet .equipment-options {
     padding-left: 32px;
   }
   .infos-fleet .equipment-options:before {
-    left: calc(10% + 22px);
+    left: calc(10% + 20px);
   }
 }
 @media all and (max-width: 960px) {
@@ -10545,36 +10572,40 @@ body.mod-capture .infos-fleet .equipments {
     padding-left: 30px;
     padding-right: 28px;
   }
+  .infos-fleet .equipment[data-equipmentid].is-rankupgradable > .equipment-infos {
+    padding-right: 42px;
+  }
   .infos-fleet .equipment-name {
     line-height: 1.15em;
   }
   .infos-fleet .equipment-carry:before,
-  .infos-fleet .equipment-rank:before,
   .infos-fleet .equipment-star:before {
     padding-right: 1px;
   }
   .infos-fleet .equipment-rank {
-    top: 55%;
+    right: 30px;
+    width: 12px;
+    height: 16px;
   }
   .infos-fleet .equipment-options {
-    padding-left: 32px;
+    padding-left: 30px;
     justify-content: flex-start;
     align-content: space-between;
   }
   .infos-fleet .equipment-options:before {
-    left: 36px;
+    left: 32px;
   }
   .infos-fleet .equipment-options .button {
     flex-basis: 16px;
   }
-  .infos-fleet .equipment-starinput,
-  .infos-fleet .equipment-rankselect {
-    flex: 0.5 0 35px;
-    padding-left: 14px;
-    margin-right: 4px;
+  .infos-fleet .equipment-starinput {
+    flex: 0.5 0 28px;
+    padding-left: 12px;
+    padding-right: 0;
   }
-  .infos-fleet .equipment-rankselect span {
-    left: 40%;
+  .infos-fleet .equipment-rankselect {
+    flex: 0.5 0 18px;
+    margin-right: 2px;
   }
   .infos-fleet .summary {
     margin-bottom: 20px;
