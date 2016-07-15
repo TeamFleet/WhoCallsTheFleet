@@ -2457,9 +2457,6 @@ $document.ready(function () {
 	}
 });
 
-
-"use strict";
-
 var Ship = KC.Ship,
     Equipment = KC.Equipment,
     Entity = KC.Entity,

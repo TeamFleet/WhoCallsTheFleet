@@ -6,8 +6,6 @@
 /* global LZString */
 /* global Nedb */
 
-"use strict";
-
 // Global Variables
 	const Ship = KC.Ship
 		,Equipment = KC.Equipment
