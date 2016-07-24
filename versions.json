@@ -1,14 +1,14 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.15.0.0",
-			"path":		"data/2016-07-16/app.nwjs-data",
-			"bytes":	16334095
+			"version":	"0.15.1.0",
+			"path":		"data/2016-07-25/app.nwjs-data",
+			"bytes":	16333791
 		},
 		"app-db": {
-			"version":	"1.15.0.5",
-			"path":		"data/2016-07-21/app-db.nwjs-data",
-			"bytes":	943969
+			"version":	"1.15.1.0",
+			"path":		"data/2016-07-25/app-db.nwjs-data",
+			"bytes":	943942
 		},
 		"pics": {
 			"version":	"1.15.0.0",
