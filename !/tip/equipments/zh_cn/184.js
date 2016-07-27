@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",184,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/6.png)\"></s><strong>Re.2001 OR改</strong><small>舰载战斗机</small></h3><span>+3 火力</span><span>+6 对空</span><span>+2 回避</span><span>航程: 4</span>")
