@@ -155,6 +155,18 @@
 					.appendTo(dom)
 			}
 
+		// 可用于其他装备改修
+			if( d['upgrade_for'] && d['upgrade_for'].push && d['upgrade_for'].length ){
+				var upgrade_for = $('<div class="upgrade-for"/>')
+								.html('<h4 data-content="可用于改修其他装备">可用于改修其他装备</h4>')
+								.appendTo(dom)
+					,upgrade_for1 = $('<div class="stat upgrade"/>')
+						.appendTo(upgrade_for)
+				d['upgrade_for'].forEach(function(currentValue){
+					_tmpl.link_equipment(currentValue).appendTo( upgrade_for1 )
+				})
+			}
+
 		// 升级来源
 			if( d['upgrade_from'] && d['upgrade_from'].push && d['upgrade_from'].length ){
 				var upgrade_from = $('<div class="upgrade-from"/>')
