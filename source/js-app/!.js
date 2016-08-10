@@ -160,6 +160,8 @@
 		equipments: {}
 	};
 	_g.buildIndex = function(){
+		let shipnamesuffix = {}
+
 		function _build( datalist, n ){
 			for(let i in datalist){
 				let ids = (n == 'ships')
@@ -170,23 +172,43 @@
 				if( ids.push && ids.length == 0 )
 					ids = [datalist[i].id]
 				for(let j in datalist[i].name){
-					if( datalist[i].name[j] && j != 'suffix' ){
-						let _n = datalist[i].name[j].toLowerCase()
-						if( !_g.index[n][_n] )
-							_g.index[n][_n] = []
-						ids.forEach(function(thisId){
-							if( !_g.index[n][_n].some(function(thisObj){
-								return thisObj.id == thisId
-							}) ){
-								_g.index[n][_n].push( datalist[thisId] )
-							}
-						})
+					if( datalist[i].name[j] ){
+						let name = datalist[i].name[j]
+						if( j != 'suffix' ){
+							let _n = name.toLowerCase()
+							if( !_g.index[n][_n] )
+								_g.index[n][_n] = []
+							ids.forEach(function(thisId){
+								if( !_g.index[n][_n].some(function(thisObj){
+									return thisObj.id == thisId
+								}) ){
+									_g.index[n][_n].push( datalist[thisId] )
+								}
+							})
+						}else if( n == 'ships' ){
+							if( !shipnamesuffix[ name ] )
+								shipnamesuffix[ name ] = []
+							shipnamesuffix[ name ].push( datalist[i] )
+						}
 					}
 				}
 			}
 		}
 		_build( _g.data.ships, 'ships' )
 		_build( _g.data.items, 'equipments' )
+
+		// 舰名后缀
+		for( let i in _g.data.ship_namesuffix ){
+			let suffix = _g.data.ship_namesuffix[i]
+			let keys = [
+				'ja_jp',
+				'ja_romaji',
+				'zh_cn'
+			]
+			keys.forEach( function(key){
+				_g.index.ships[ suffix[key] ] = shipnamesuffix[ suffix.id ]
+			} )
+		}
 	};
 	_g.search = function( q, t ){
 		t = _g.index[t]
