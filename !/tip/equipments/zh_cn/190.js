@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",190,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/3.png)\"></s><strong>38.1cm Mk.I 连装炮</strong><small>大口径主炮</small></h3><span>+18 火力</span><span>+1 对空</span><span>+1 命中</span><span>射程: 长</span>")

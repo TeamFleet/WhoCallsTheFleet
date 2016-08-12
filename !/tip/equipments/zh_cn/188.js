@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",188,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/8.png)\"></s><strong>Re.2001 G改</strong><small>舰载鱼雷机</small></h3><span>+3 火力</span><span>+4 雷装</span><span>+4 对空</span><span>+2 回避</span><span>航程: 3</span>")
