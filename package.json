@@ -75,7 +75,6 @@
     "platforms": [
       "win32",
       "win64",
-      "osx32",
       "osx64"
     ],
     "filesRelative": [
