@@ -1,14 +1,16 @@
 "use strict";
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || !1; descriptor.configurable = !0; if ("value" in descriptor) descriptor.writable = !0; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: !1, writable: !0, configurable: !0 } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _instanceof(left, right) { if (right != null && typeof Symbol !== "undefined" && right[Symbol.hasInstance]) { return right[Symbol.hasInstance](left); } else { return left instanceof right; } }
 
 var $window = $(window),
     $document = $(document),
@@ -1221,7 +1223,7 @@ Object.defineProperty(Array.prototype, 'mergeFrom', {
 	enumerable: !1,
 
 	value: function value(arr2) {
-		Array.prototype.push.apply(this, arr2 instanceof Array || arr2.push ? arr2 : [arr2]);
+		Array.prototype.push.apply(this, _instanceof(arr2, Array) || arr2.push ? arr2 : [arr2]);
 		return this;
 	}
 });
@@ -1322,9 +1324,8 @@ _g.getText = function (text, table, locale, isString) {
 
 	if (typeof text != 'string' && isString) {
 		_t = '';
-		for (i = 0; i < text.length; i++) {
-			_t += text[i];
-		}text = _t;
+		for (i = 0; i < text.length; i++) _t += text[i];
+		text = _t;
 	}
 
 	return _r(text);
@@ -1438,9 +1439,7 @@ _hotkey.bind = function (keyCode, modifier, func, options) {
 };
 
 _hotkey._run = function (arr) {
-	for (var i in arr) {
-		arr[i]();
-	}
+	for (var i in arr) arr[i]();
 };
 
 _hotkey.init = function () {
@@ -1862,7 +1861,7 @@ _menu.prototype.hideTrue = function () {
 		'left': ''
 	}).detach();
 
-	if (this.dom.blured instanceof jQuery) {
+	if (_instanceof(this.dom.blured, jQuery)) {
 		this.dom.blured.remove();
 		delete this.dom.blured;
 	}
@@ -1885,7 +1884,7 @@ _menu.prototype.position = function (targetEl, x, y) {
 		'left': ''
 	});
 
-	if (targetEl && targetEl instanceof jQuery) {
+	if (targetEl && _instanceof(targetEl, jQuery)) {
 		var offset = targetEl.offset();
 		top = offset.top + targetEl.height() - $body.scrollTop() + (y || 0);
 		left = offset.left - $body.scrollLeft() + (x || 0);
@@ -1908,7 +1907,7 @@ _menu.prototype.position = function (targetEl, x, y) {
 };
 
 _menu.prototype.appendItem = function (item) {
-	if (item instanceof jQuery) return item.appendTo(this.dom.body);
+	if (_instanceof(item, jQuery)) return item.appendTo(this.dom.body);
 };
 
 _menu.prototype.capturePage_callback = function (datauri) {
@@ -3515,9 +3514,9 @@ _frame.app_main = {
 };
 
 _g.error = function (err) {
-	if (!(err instanceof Error)) err = new Error(err);
+	if (!_instanceof(err, Error)) err = new Error(err);
 
-	_g.badgeError(err instanceof Error ? err.message : err);
+	_g.badgeError(_instanceof(err, Error) ? err.message : err);
 	_g.log(err);
 };
 
@@ -4236,8 +4235,13 @@ _frame.app_main.page['calctp'] = {
 						case 'e75':
 							data.equipment[75] = count;
 							break;
+
 						case 'e68':
 							data.equipment[68] = count;
+							break;
+
+						case 'e166':
+							data.equipment[166] = count;
 							break;
 
 						default:
@@ -4767,7 +4771,7 @@ BgImg.readFile = function (e) {
 	var deferred = Q.defer();
 
 	Q.fcall(_g.getScriptCanvas).then(function () {
-		for (var _i9 = 0, f; f = e.target.files[_i9]; _i9++) {
+		for (var _i9 = 0, f = void 0; f = e.target.files[_i9]; _i9++) {
 			if (BgImg.quotaUsed + f.size > BgImg.quota) {
 				deferred.reject('已超过 ' + _g.getSize(BgImg.quota, 'm') + ' 上限');
 				break;
@@ -6016,7 +6020,7 @@ InfosFleet.modalRemove_show = function (id, is_list) {
 	if (typeof id == 'undefined') return;
 
 	var infosFleet = void 0;
-	if (id instanceof InfosFleet) {
+	if (_instanceof(id, InfosFleet)) {
 		infosFleet = id;
 		id = infosFleet.data._id;
 	}
@@ -6044,7 +6048,7 @@ InfosFleet.modalRemove_show = function (id, is_list) {
 					_frame.app_main.loading_complete('remove_fleet_' + _id);
 					_frame.modal.hide();
 					_g.badgeMsg('已删除配置');
-					if (is_list && is_list instanceof TablelistFleets) {
+					if (is_list && _instanceof(is_list, TablelistFleets)) {
 						is_list.refresh();
 					} else {
 						_frame.dom.navs.fleets.click();
@@ -6253,7 +6257,7 @@ var InfosFleetSubFleet = function () {
 				if (shipdata && shipdata.shipId) {
 					var equipments_by_slot = shipdata.data[2].map(function (equipment) {
 						if (!equipment) return null;
-						if (equipment instanceof Equipment) return equipment;
+						if (_instanceof(equipment, Equipment)) return equipment;
 						return _g.data.items[equipment];
 					}) || [];
 					equipments_by_slot.forEach(function (equipment) {
@@ -6596,7 +6600,7 @@ var InfosFleetShip = function () {
 
 			if (value) {
 				var ship = _g.data.ships[value],
-				    _suffix = ship.getSuffix(),
+				    suffix = ship.getSuffix(),
 				    speed = ship._speed,
 				    stype = ship._type;
 
@@ -6605,7 +6609,7 @@ var InfosFleetShip = function () {
 				this.el.attr('data-shipId', value);
 
 				this.elAvatar.html('<img src="' + ship.getPic(10) + '"/>');
-				this.elInfosTitle.html('<h4 data-content="' + ship['name'][_g.lang] + '">' + ship['name'][_g.lang] + '</h4>' + (_suffix ? '<h5 data-content="' + _suffix + '">' + _suffix + '</h5>' : ''));
+				this.elInfosTitle.html('<h4 data-content="' + ship['name'][_g.lang] + '">' + ship['name'][_g.lang] + '</h4>' + (suffix ? '<h5 data-content="' + suffix + '">' + suffix + '</h5>' : ''));
 				this.elInfosInfo.html(speed + ' ' + stype);
 
 				for (var _i16 = 0; _i16 < 4; _i16++) {
@@ -6678,7 +6682,7 @@ var InfosFleetShipEquipment = function () {
 		_classCallCheck(this, InfosFleetShipEquipment);
 
 		this.index = index || 0;
-		this.isParentAirfield = infosParent instanceof InfosFleetAirfield;
+		this.isParentAirfield = _instanceof(infosParent, InfosFleetAirfield);
 		this.infosParent = infosParent;
 
 		if (this.el) return this.el;
@@ -6835,6 +6839,8 @@ var InfosFleetShipEquipment = function () {
 					this.el.addClass('is-aircraft');
 					if (_g.data.items[value].rankupgradable) this.el.addClass('is-rankupgradable');
 				} else this.el.removeClass('is-aircraft is-rankupgradable');
+
+				if (Formula.equipmentType.Recons.indexOf(_g.data.items[value].type) > -1) this.carry = 4;else this.carry = 18;
 			} else {
 				if (this.isParentAirfield) this.infosParent.data[this.index][0] = null;else this.infosParent.data[2][this.index] = null;
 				this.improvable = !1;
@@ -6853,7 +6859,7 @@ var InfosFleetShipEquipment = function () {
 		},
 		set: function set(value) {
 			var update = function (value) {
-				if (this.isParentAirfield) this.infosParent.data[this.index][2] = value;else this.infosParent.data[3][this.index] = value;
+				if (this.isParentAirfield) this.infosParent.data[this.index][2] = 0;else this.infosParent.data[3][this.index] = value;
 			}.bind(this);
 			if (this._improvable) {
 				value = parseInt(value) || null;
@@ -6929,7 +6935,7 @@ var InfosFleetShipEquipment = function () {
 	}, {
 		key: 'improvable',
 		set: function set(value) {
-			if (!value) {
+			if (this.isParentAirfield || !value) {
 				this.el.removeAttr('data-star');
 				this.elInputStar.prop('disabled', !0).attr('placeholder', '--');
 				this._improvable = !1;
@@ -7039,7 +7045,7 @@ var InfosFleetAirfield = function () {
 		})).append($('<div class="aircrafts"/>').append(function () {
 			var els = $();
 			for (var _i18 = 0; _i18 < 4; _i18++) {
-				this.aircrafts[_i18] = new InfosFleetShipEquipment(this, _i18, 12, InfosFleetAirfield.equipmentTypes);
+				this.aircrafts[_i18] = new InfosFleetShipEquipment(this, _i18, 18, InfosFleetAirfield.equipmentTypes);
 				els = els.add(this.aircrafts[_i18].el);
 			}
 			return els;
@@ -7066,7 +7072,8 @@ var InfosFleetAirfield = function () {
 				if (!this.data[_i19]) this.data[_i19] = [];else {
 					if (this.data[_i19][0]) this.aircrafts[_i19].id = this.data[_i19][0];
 					if (this.data[_i19][1]) this.aircrafts[_i19].rank = this.data[_i19][1];
-					if (this.data[_i19][2]) this.aircrafts[_i19].star = this.data[_i19][2];
+
+					if (this.data[_i19][2]) this.aircrafts[_i19].star = 0;
 				}
 			}
 
@@ -7084,19 +7091,27 @@ var InfosFleetAirfield = function () {
 
 			this.summaryCalculating = setTimeout(function () {
 				var fighterPower = [0, 0],
-				    distance = [0, 0];
+				    distance = {
+					min: 0,
+					max: 0,
+					recon: 0
+				};
 
 				this.data.forEach(function (d) {
 					if (d[0]) {
 						var e = _g.data.items[d[0]],
-						    fp = Formula.calc.fighterPower(e, 12, d[1], d[2]),
+						    fp = Formula.calc.fighterPower(e, 18, d[1], d[2]),
 						    _distance = e.stat.distance || 0;
 
 						fighterPower[0] += fp[0];
 						fighterPower[1] += fp[1];
 
-						distance[0] = distance[0] <= 0 ? _distance : Math.min(distance[0], _distance);
-						distance[1] = Math.max(distance[1], _distance);
+						if (Formula.equipmentType.Recons.indexOf(e.type) > -1) {
+							distance.recon = Math.max(distance.recon, _distance);
+						} else {
+							distance.min = distance.min <= 0 ? _distance : Math.min(distance.min, _distance);
+							distance.max = Math.max(distance.max, _distance);
+						}
 					}
 				}, this);
 
@@ -7110,10 +7125,10 @@ var InfosFleetAirfield = function () {
 					this.elSummaryFighterPower.addClass('empty');
 				}
 
-				if (Math.max(distance[0], distance[1]) > 0) {
-					var _val2 = Math.floor(distance[0]),
-					    _val3 = Math.floor(distance[1]);
-					this.elSummaryDistance.html(_val2 == _val3 ? _val2 : _val2 + '~' + _val3);
+				if (distance.min + distance.recon > 0) {
+					var val = distance.min;
+					if (distance.recon) val += ' + ' + Math.round(Math.min(3, Math.max(0, Math.sqrt(distance.recon - distance.min))));
+					this.elSummaryDistance.html(val);
 					this.elSummaryDistance.removeClass('empty');
 				} else {
 					this.elSummaryDistance.html('-');
@@ -8244,21 +8259,21 @@ var TablelistEquipments = function (_Tablelist3) {
 			}
 
 			if (TablelistEquipments.types.length) {
-				var _k = 0,
+				var k = 0,
 				    _el3 = void 0,
-				    _t2 = void 0;
+				    t = void 0;
 
-				while ($.inArray(parseInt(this.dom.types[_k++].attr('data-type')) || null, TablelistEquipments.types) <= -1) {
-					_el3 = this.dom.types[_k];
+				while ($.inArray(parseInt(this.dom.types[k++].attr('data-type')) || null, TablelistEquipments.types) <= -1) {
+					_el3 = this.dom.types[k];
 				}
 
 				_el3 = _el3 || this.dom.types[0];
 
 				this.dom.type_radios[parseInt(_el3.attr('data-equipmentcollection')) || 1].prop('checked', !0).trigger('change');
 
-				_t2 = _el3[0].offsetTop;
-				if (_t2) _t2 -= 32;
-				this.dom.tbody.scrollTop(_t2 || 0);
+				t = _el3[0].offsetTop;
+				if (t) t -= 32;
+				this.dom.tbody.scrollTop(t || 0);
 			}
 		}
 	}, {
@@ -8923,7 +8938,7 @@ var TablelistFleets = function (_Tablelist4) {
 						if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
 					});
 				} else {
-					for (var _i21 = 0, f; f = $selector[0].files[_i21]; _i21++) {
+					for (var _i21 = 0, f = void 0; f = $selector[0].files[_i21]; _i21++) {
 						var reader = new FileReader();
 						reader.onload = function (theFile) {
 							return function (r) {
