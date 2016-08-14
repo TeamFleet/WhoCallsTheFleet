@@ -25,8 +25,15 @@ _frame.app_main.page['calctp'] = {
 						case 'e75':
 							data.equipment[75] = count
 							break;
+						
+						// daihatsu
 						case 'e68':
 							data.equipment[68] = count
+							break;
+						
+						// daihatsu (force)
+						case 'e166':
+							data.equipment[166] = count
 							break;
 						
 						default:

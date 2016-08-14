@@ -2205,9 +2205,14 @@ class InfosFleetShipEquipment{
 				this.elName.html('')
 			}
 			
-			if( this.isParentAirfield )
+			if( this.isParentAirfield ){
+				// 基地航空队 - 如果选择为侦察机，搭载修改为4
+				if( $.inArray(_g.data.items[value].type, Formula.equipmentType.Recons) > -1 )
+					this.carry = 4
+				else
+					this.carry = 18
 				this.infosParent.summaryCalc()
-			else
+			}else
 				this.infosParent.infosFleetSubFleet.summaryCalc()
 				
 			this.save()
@@ -2220,7 +2225,8 @@ class InfosFleetShipEquipment{
 		set star( value ){
 			let update = function( value ){
 				if( this.isParentAirfield )
-					this.infosParent.data[this.index][2] = value
+					//this.infosParent.data[this.index][2] = value
+					this.infosParent.data[this.index][2] = 0
 				else
 					this.infosParent.data[3][this.index] = value
 			}.bind(this)
@@ -2315,7 +2321,7 @@ class InfosFleetShipEquipment{
 	
 	// 是否可改修
 		set improvable(value){
-			if( !value ){
+			if( this.isParentAirfield || !value ){
 				this.el.removeAttr('data-star')
 				this.elInputStar.prop('disabled', true)
 								.attr('placeholder', '--')
@@ -2489,7 +2495,7 @@ class InfosFleetAirfield{
 								this.aircrafts[i] = new InfosFleetShipEquipment(
 									this,
 									i,
-									12, // carry slot
+									18, // carry slot
 									InfosFleetAirfield.equipmentTypes // equipment types
 								)
 								els = els.add(this.aircrafts[i].el)
@@ -2545,8 +2551,10 @@ class InfosFleetAirfield{
 						this.aircrafts[i].id = this.data[i][0]
 					if( this.data[i][1] )
 						this.aircrafts[i].rank = this.data[i][1]
+					//if( this.data[i][2] )
+					//	this.aircrafts[i].star = this.data[i][2]
 					if( this.data[i][2] )
-						this.aircrafts[i].star = this.data[i][2]
+						this.aircrafts[i].star = 0
 				}
 			}
 			
@@ -2570,7 +2578,7 @@ class InfosFleetAirfield{
 				this.data.forEach(function( d ){
 					if( d[0] ){
 						let e = _g.data.items[d[0]]
-							,fp = Formula.calc.fighterPower( e, 12, d[1], d[2] )
+							,fp = Formula.calc.fighterPower( e, 18, d[1], d[2] )
 							,_distance = e.stat.distance || 0
 							
 						fighterPower[0]+= fp[0]
