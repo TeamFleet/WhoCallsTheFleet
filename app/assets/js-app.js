@@ -11169,14 +11169,17 @@ class InfosFleetShipEquipment{
 					}else
 						this.el.removeClass('is-aircraft is-rankupgradable')
 				// 基地航空队 - 如果选择为侦察机，搭载修改为4
-				if( Formula.equipmentType.Recons.indexOf( _g.data.items[value].type ) > -1 )
-					this.carry = 4
-				else
-					this.carry = 18
+				if( this.isParentAirfield ){
+					if( Formula.equipmentType.Recons.indexOf( _g.data.items[value].type ) > -1 )
+						this.carry = 4
+					else
+						this.carry = 18
+				}
 			}else{
-				if( this.isParentAirfield )
+				if( this.isParentAirfield ){
 					this.infosParent.data[this.index][0] = null
-				else
+					this.carry = 18
+				}else
 					this.infosParent.data[2][this.index] = null
 				this.improvable = false
 				this.el.removeAttr('data-equipmentId')

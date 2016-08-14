@@ -6840,9 +6840,14 @@ var InfosFleetShipEquipment = function () {
 					if (_g.data.items[value].rankupgradable) this.el.addClass('is-rankupgradable');
 				} else this.el.removeClass('is-aircraft is-rankupgradable');
 
-				if (Formula.equipmentType.Recons.indexOf(_g.data.items[value].type) > -1) this.carry = 4;else this.carry = 18;
+				if (this.isParentAirfield) {
+					if (Formula.equipmentType.Recons.indexOf(_g.data.items[value].type) > -1) this.carry = 4;else this.carry = 18;
+				}
 			} else {
-				if (this.isParentAirfield) this.infosParent.data[this.index][0] = null;else this.infosParent.data[2][this.index] = null;
+				if (this.isParentAirfield) {
+					this.infosParent.data[this.index][0] = null;
+					this.carry = 18;
+				} else this.infosParent.data[2][this.index] = null;
 				this.improvable = !1;
 				this.el.removeAttr('data-equipmentId').removeAttr('data-tip').removeAttr('data-star').removeAttr('data-rank').removeAttr('touch-action').css('background-image', '').removeClass('is-aircraft is-rankupgradable');
 				this.elName.html('');
