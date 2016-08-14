@@ -11168,6 +11168,11 @@ class InfosFleetShipEquipment{
 							this.el.addClass('is-rankupgradable')
 					}else
 						this.el.removeClass('is-aircraft is-rankupgradable')
+				// 基地航空队 - 如果选择为侦察机，搭载修改为4
+				if( Formula.equipmentType.Recons.indexOf( _g.data.items[value].type ) > -1 )
+					this.carry = 4
+				else
+					this.carry = 18
 			}else{
 				if( this.isParentAirfield )
 					this.infosParent.data[this.index][0] = null
@@ -11184,14 +11189,9 @@ class InfosFleetShipEquipment{
 				this.elName.html('')
 			}
 			
-			if( this.isParentAirfield ){
-				// 基地航空队 - 如果选择为侦察机，搭载修改为4
-				if( $.inArray(_g.data.items[value].type, Formula.equipmentType.Recons) > -1 )
-					this.carry = 4
-				else
-					this.carry = 18
+			if( this.isParentAirfield )
 				this.infosParent.summaryCalc()
-			}else
+			else
 				this.infosParent.infosFleetSubFleet.summaryCalc()
 				
 			this.save()
@@ -11552,7 +11552,11 @@ class InfosFleetAirfield{
 			
 			this.summaryCalculating = setTimeout(function(){			
 				let fighterPower = [0, 0]
-					,distance = [0, 0]
+					,distance = {
+						min: 0,
+						max: 0,
+						recon: 0
+					}
 				
 				this.data.forEach(function( d ){
 					if( d[0] ){
@@ -11563,8 +11567,12 @@ class InfosFleetAirfield{
 						fighterPower[0]+= fp[0]
 						fighterPower[1]+= fp[1]
 						
-						distance[0] = distance[0] <= 0 ? _distance : Math.min( distance[0], _distance )
-						distance[1] = Math.max( distance[1], _distance )
+						if( Formula.equipmentType.Recons.indexOf( e.type ) > -1 ){
+							distance.recon = Math.max( distance.recon, _distance )
+						}else{
+							distance.min = distance.min <= 0 ? _distance : Math.min( distance.min, _distance )
+							distance.max = Math.max( distance.max, _distance )
+						}
 					}
 				}, this)
 
@@ -11582,14 +11590,20 @@ class InfosFleetAirfield{
 					this.elSummaryFighterPower.addClass('empty')
 				}
 
-				if( Math.max( distance[0], distance[1] ) > 0 ){
-					let val1 = Math.floor(distance[0])
-						,val2 = Math.floor(distance[1])
-					this.elSummaryDistance.html(
-						val1 == val2
-							? val1
-							: val1 + '~' + val2
-					)
+				// 航程计算
+				if( distance.min + distance.recon > 0 ){
+					let val = distance.min
+					if( distance.recon )
+						val+= ` + ${
+							Math.round(Math.min(
+								3,
+								Math.max(
+									0,
+									Math.sqrt( distance.recon - distance.min )
+								)
+							))
+							}`
+					this.elSummaryDistance.html(val)
 					this.elSummaryDistance.removeClass('empty')
 				}else{
 					this.elSummaryDistance.html( '-' )
