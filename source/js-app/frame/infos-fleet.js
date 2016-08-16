@@ -789,7 +789,9 @@ class InfosFleet{
 				node.win.resizeTo( 1280, 720 )
 			
 			// 选择文件
-				InfosFleet.fileDialog_export.trigger('click', [windowWidth, windowHeight])
+				setTimeout(function(){
+					InfosFleet.fileDialog_export.trigger('click', [windowWidth, windowHeight])
+				}, 200)
 		}
 	
 	// 删除配置
