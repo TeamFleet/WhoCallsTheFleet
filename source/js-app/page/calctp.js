@@ -23,22 +23,30 @@ _frame.app_main.page['calctp'] = {
 					switch(i){
 						// canister
 						case 'e75':
-							data.equipment[75] = count
-							break;
+							data.equipment[75] = count; break;
 						
 						// daihatsu
 						case 'e68':
-							data.equipment[68] = count
-							break;
+							data.equipment[68] = count; break;
+						
+						// 戦闘糧食
+						case 'e145':
+							data.equipment[145] = count; break;
+						
+						// 秋刀魚の缶詰
+						case 'e150':
+							data.equipment[150] = count; break;
 						
 						// daihatsu (force)
 						case 'e166':
-							data.equipment[166] = count
-							break;
+							data.equipment[166] = count; break;
+						
+						// 特二式内火艇
+						case 'e167':
+							data.equipment[167] = count; break;
 						
 						default:
-							data.ship[i] = count
-							break;
+							data.ship[i] = count; break;
 					}
 				}
 				

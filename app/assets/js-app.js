@@ -2790,33 +2790,44 @@ if (typeof define === 'function' && define.amd) {
                 case '1':
                 case 19:
                 case '19':
-                case 'dd':		multiper = 5;		break;
+                case 'dd':
+                    multiper = 5; break;
                 case 2:
                 case '2':
-                case 'cl':		multiper = 2;		break;
+                case 'cl':
+                    multiper = 2; break;
                 case 5:
                 case '5':
-                case 'cav':		multiper = 4;		break;
+                case 'cav':
+                    multiper = 4; break;
                 case 12:
                 case '12':
                 case 24:
                 case '24':
-                case 'av':		multiper = 9.5;		break;
+                case 'av':
+                    //multiper = 9.5; break;
+                    multiper = 9; break;
                 case 15:
                 case '15':
-                case 'lha':		multiper = 12.25;	break;
+                case 'lha':
+                    //multiper = 12.25; break;
+                    multiper = 12; break;
                 case 29:
                 case '29':
-                case 'ao':		multiper = 14.75;	break;
+                case 'ao':
+                    //multiper = 14.75; break;
+                    multiper = 15; break;
                 case 8:
                 case '8':
                 case 'bbv':
                 case 14:
                 case '14':
-                case 'ssv':		multiper = 7;		break;
+                case 'ssv':
+                    multiper = 7; break;
                 case 21:
                 case '21':
-                case 'ct':		multiper = 6;		break;
+                case 'ct':
+                    multiper = 6; break;
             }
             result+= multiper * count
         }
@@ -2825,15 +2836,30 @@ if (typeof define === 'function' && define.amd) {
             let count = parseInt(equipment[i]) || 0
                 ,multiper = 0
             switch(i){
-                // landing craft
-                case 68:
-                case '68':		multiper = 8;	break;
-                // canister
+                // ドラム缶(輸送用)
                 case 75:
-                case '75':		multiper = 5;	break;
-                // landing craft (force)
+                case '75':
+                    multiper = 5; break;
+                // 大発動艇
+                case 68:
+                case '68':
+                    multiper = 8; break;
+                // 大発動艇(八九式中戦車＆陸戦隊)
                 case 166:
-                case '166':		multiper = 10.5;	break;
+                case '166':
+                    multiper = 13; break;
+                // 特二式内火艇
+                case 167:
+                case '167':
+                    multiper = 7; break;
+                // 戦闘糧食
+                case 145:
+                case '145':
+                    multiper = 4; break;
+                // 戦闘糧食
+                case 150:
+                case '150':
+                    multiper = 1; break;
             }
             result+= multiper * count
         }
@@ -7540,22 +7566,30 @@ _frame.app_main.page['calctp'] = {
 					switch(i){
 						// canister
 						case 'e75':
-							data.equipment[75] = count
-							break;
+							data.equipment[75] = count; break;
 						
 						// daihatsu
 						case 'e68':
-							data.equipment[68] = count
-							break;
+							data.equipment[68] = count; break;
+						
+						// 戦闘糧食
+						case 'e145':
+							data.equipment[145] = count; break;
+						
+						// 秋刀魚の缶詰
+						case 'e150':
+							data.equipment[150] = count; break;
 						
 						// daihatsu (force)
 						case 'e166':
-							data.equipment[166] = count
-							break;
+							data.equipment[166] = count; break;
+						
+						// 特二式内火艇
+						case 'e167':
+							data.equipment[167] = count; break;
 						
 						default:
-							data.ship[i] = count
-							break;
+							data.ship[i] = count; break;
 					}
 				}
 				

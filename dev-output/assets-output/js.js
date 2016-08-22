@@ -4346,20 +4346,25 @@ _frame.app_main.page['calctp'] = {
 					var count = parseInt(d[_i6]) || 0;
 					switch (_i6) {
 						case 'e75':
-							data.equipment[75] = count;
-							break;
+							data.equipment[75] = count;break;
 
 						case 'e68':
-							data.equipment[68] = count;
-							break;
+							data.equipment[68] = count;break;
+
+						case 'e145':
+							data.equipment[145] = count;break;
+
+						case 'e150':
+							data.equipment[150] = count;break;
 
 						case 'e166':
-							data.equipment[166] = count;
-							break;
+							data.equipment[166] = count;break;
+
+						case 'e167':
+							data.equipment[167] = count;break;
 
 						default:
-							data.ship[_i6] = count;
-							break;
+							data.ship[_i6] = count;break;
 					}
 				}
 
