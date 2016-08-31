@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",191,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/15.png)\"></s><strong>QF 2镑8连装砰砰炮</strong><small>对空机枪</small></h3><span>+1 火力</span><span>+10 对空</span>")
+KCTip.loaded("equipments",191,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/15.png)\"></s><strong>QF 2镑8连装砰砰炮</strong><small>对空机枪 (集中配备)</small></h3><span>+1 火力</span><span>+10 对空</span>")
