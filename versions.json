@@ -11,9 +11,9 @@
 			"bytes":	963520
 		},
 		"pics": {
-			"version":	"1.17.0.0",
+			"version":	"1.17.0.1",
 			"path":		"data/2016-09-25/pics.nwjs-data",
-			"bytes":	54927360
+			"bytes":	54924935
 		}
 	},
 	"packages-beta": {},
