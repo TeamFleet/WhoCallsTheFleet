@@ -130,6 +130,32 @@
 			//	flex-grow:	0;
 			//}
 		}
+		&.dismantle{
+			& > span{
+				background:		~"url(@{folder_images}/stats.png) no-repeat 0 0";
+				min-width: 		50px;
+				padding-left: 	22px;
+				vertical-align: top;
+				line-height: 	18px;
+				display: 		inline-block;
+				&.fuel{
+					background-position:	0 unit((12 * -18), px);
+					color:		@color_fuel;
+				}
+				&.ammo{
+					background-position:	0 unit((13 * -18), px);
+					color:		@color_ammo;
+				}
+				&.steel{
+					background-position:	0 unit((16 * -18), px);
+					color:		@color_steel;
+				}
+				&.bauxite{
+					background-position:	0 unit((17 * -18), px);
+					color:		@color_bauxite;
+				}
+			}
+		}
 		&.improvement-options{
 			.flexbox();
 			.flex-flow(row wrap);
@@ -369,20 +395,66 @@
 			height:		200px;
 		}
 	}
-	@media all and ( max-width: 720px ){
+	@media all and ( max-width: @mobileview-breaking-point ){
 		@illustsize: 	150px;
 		&>div.title{
-			padding-right: (@illustsize + 30);
+			//padding-right: (@illustsize + 30);
+			padding-right: 	0;
+			order: 			-2;
+		}
+		.right-gutter{
+			padding-right: 	0;
 		}
 		&>div.title+.stats,
 		&>div.equipable .right-gutter{
 			padding-right: 0;
 		}
-		&>aside{
-			width:		@illustsize;
-			height:		@illustsize;
+		//&>aside{
+		//	width:		@illustsize;
+		//	height:		@illustsize;
+		//}
+		& > div.improvement-options > .unit{
+			flex-basis: 100%;
+		}
+		.improvement.improvement-details>font>b{
+			height: 	auto;
+		}
+		& > aside{
+			width: 		100%;
+			height: 	auto;
+			text-align: center;
+			order: 		-1;
+			position: 	static;
+			flex: 		auto 1 0;
+			.margin-top(45);
 		}
 	}
+	/*
+	@media all and ( max-width: @mobileview-breaking-point ){
+		& > div.title{
+			padding-right: 	0;
+			order: 			-2;
+		}
+		.right-gutter{
+			padding-right: 	0;
+		}
+		& > div.improvement-options > .unit{
+			flex-basis: 100%;
+		}
+		.improvement.improvement-details>font>b{
+			height: 	auto;
+		}
+		& > aside{
+			width: 		100%;
+			height: 	auto;
+			text-align: center;
+			order: 		-1;
+			position: 	static;
+			flex: 		auto 1 0;
+			.margin-top(45);
+		}
+	}
+	*/
 }}
 
 .layout-infos-equipment();

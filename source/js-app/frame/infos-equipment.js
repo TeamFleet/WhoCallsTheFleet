@@ -142,6 +142,14 @@
 				}
 		*/
 
+		// 废弃获得资源
+			var dismantle = $('<div class="dismantle"/>')
+							.html('<h4 data-content="废弃获得资源">废弃获得资源</h4>')
+							.appendTo(dom)
+			_g.resourcesTable.forEach(function(v, i){
+				$(`<span class="${v}">${d.dismantle[i] || 0}</span>`).appendTo(dismantle)
+			})
+
 		// 改修选项
 			if( d['improvement'] && d['improvement'].push && d['improvement'].length ){
 				//var improvements = $('<div class="stats improvement-options"/>')

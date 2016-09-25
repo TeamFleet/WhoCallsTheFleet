@@ -717,7 +717,7 @@
 				border-top: 60px solid transparent;
 			}
 		}
-		@media all and ( min-width: 721px ) and ( max-width: @screen-width-t1-breaking-point ) and ( max-height: 700px ) and (min-aspect-ratio: @aspect_ratio){
+		@media all and ( min-width: (@mobileview-breaking-point + 1) ) and ( max-width: @screen-width-t1-breaking-point ) and ( max-height: 700px ) and (min-aspect-ratio: @aspect_ratio){
 			&:after{
 				display: 	none;
 			}
@@ -736,8 +736,8 @@
 				}
 			}
 		}
-		@media all and (max-width: 720px)
-		,( min-width: 721px ) and (min-height: 801px) and (max-aspect-ratio: @aspect_ratio){
+		@media all and (max-width: @mobileview-breaking-point)
+		,( min-width: (@mobileview-breaking-point + 1) ) and (min-height: 801px) and (max-aspect-ratio: @aspect_ratio){
 			&:after{
 				display: 	none;
 			}
@@ -775,13 +775,13 @@
 				border-top: 60px solid transparent;
 			}
 		}
-		@media all and ( min-width: 721px ) and (min-height: 801px) and (max-aspect-ratio: @aspect_ratio){
+		@media all and ( min-width: (@mobileview-breaking-point + 1) ) and (min-height: 801px) and (max-aspect-ratio: @aspect_ratio){
 			padding-right: 	45%;
 			&>aside{
 				width: 	45%;
 			}
 		}
-		@media all and ( min-width: 721px ) and (min-height: 801px) and (max-aspect-ratio: @aspect_ratio)
+		@media all and ( min-width: (@mobileview-breaking-point + 1) ) and (min-height: 801px) and (max-aspect-ratio: @aspect_ratio)
 		,(max-width: 540px){
 			&>div.stats,
 			&>div.equipments{
@@ -800,7 +800,7 @@
 				}
 			}
 		}
-		@media all and ( min-width: 721px ) and (min-height: 801px) and (max-aspect-ratio: @aspect_ratio)
+		@media all and ( min-width: (@mobileview-breaking-point + 1) ) and (min-height: 801px) and (max-aspect-ratio: @aspect_ratio)
 		,(min-width: 461px) and (max-width: 540px){
 			&>div.stats{
 				&>.stat{
@@ -832,7 +832,7 @@
 				}
 			}
 		}
-		@media all and (min-width: 541px) and (max-width: 720px){
+		@media all and (min-width: 541px) and (max-width: @mobileview-breaking-point){
 			&>div.stats{
 				flex-basis: 55%;
 				padding-right: 20px;
@@ -841,7 +841,7 @@
 				flex-basis: 45%;
 			}
 		}
-		@media all and (max-width: 720px){
+		@media all and (max-width: @mobileview-breaking-point){
 			padding-right: 	0;
 			//flex-flow: 		column nowrap;
 			min-height: 	100%;
@@ -878,6 +878,7 @@
 			}
 			&>div.remodels{
 				order: 	20;
+				margin-bottom: 25px;
 			}
 			&>aside{
 				width: 		100%;
@@ -890,9 +891,19 @@
 				flex: 		1 0 auto;
 				height: 	65%;
 				max-height: 600px;
-				order: 		30;
+				//order: 		30;
+				order: 		1;
+				margin-top: 0;
 			}
 		}
+		/*
+		@media all and ( max-width: @mobileview-breaking-point ){
+			&>aside{
+				order: 		1;
+				margin-top: 0;
+			}
+		}
+		*/
 	/*
 		@media all and (min-height: 801px) and (max-aspect-ratio: @aspect_ratio){
 			padding:	0 !important;

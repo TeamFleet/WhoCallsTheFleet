@@ -18,6 +18,7 @@
 	_g.joint = KC.joint;
 	_g.defaultHqLv = 90;
 	_g.shipMaxLv = Ship.lvlMax
+	_g.resourcesTable = ['fuel', 'ammo', 'steel', 'bauxite']
 	
 	// check wheather connect online
 		//_g.isOnline = false
