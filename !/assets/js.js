@@ -2468,6 +2468,7 @@ _g.lang = KC.lang;
 _g.joint = KC.joint;
 _g.defaultHqLv = 90;
 _g.shipMaxLv = Ship.lvlMax;
+_g.resourcesTable = ['fuel', 'ammo', 'steel', 'bauxite'];
 
 _g.isNWjs = typeof node != 'undefined' || typeof nw != 'undefined';
 

@@ -6897,16 +6897,16 @@ body.mod-capture #tip {
     display: none !important;
   }
   .tablelist-equipments dl dt {
-    padding-left: 10px !important;
+    padding-left: 0 !important;
     padding-right: .25em;
-    flex-basis: 100px;
+    flex-basis: 90px;
   }
   .tablelist-equipments .tablelist-header dl dd {
-    flex-basis: 26px;
+    flex-basis: 24px;
     transform: rotate(-30deg);
   }
   .tablelist-equipments .tablelist-body dl dd {
-    flex-basis: 26px;
+    flex-basis: 24px;
     border-left: 1px solid rgba(255, 255, 255, 0.1);
   }
 }
@@ -7316,6 +7316,32 @@ h6 + section.update_journal {
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: flex-start;
+  /*
+	@media all and ( max-width: @mobileview-breaking-point ){
+		& > div.title{
+			padding-right: 	0;
+			order: 			-2;
+		}
+		.right-gutter{
+			padding-right: 	0;
+		}
+		& > div.improvement-options > .unit{
+			flex-basis: 100%;
+		}
+		.improvement.improvement-details>font>b{
+			height: 	auto;
+		}
+		& > aside{
+			width: 		100%;
+			height: 	auto;
+			text-align: center;
+			order: 		-1;
+			position: 	static;
+			flex: 		auto 1 0;
+			.margin-top(45);
+		}
+	}
+	*/
 }
 .infos-equipment:after {
   content: '';
@@ -7463,6 +7489,30 @@ h6 + section.update_journal {
 .infos-equipment > div.stats > .stat.upgrade > button {
   float: left;
   clear: both;
+}
+.infos-equipment > div.dismantle > span {
+  background: url(/!/assets/images/stats.png) no-repeat 0 0;
+  min-width: 50px;
+  padding-left: 22px;
+  vertical-align: top;
+  line-height: 18px;
+  display: inline-block;
+}
+.infos-equipment > div.dismantle > span.fuel {
+  background-position: 0 -216px;
+  color: #7ebd75;
+}
+.infos-equipment > div.dismantle > span.ammo {
+  background-position: 0 -234px;
+  color: #ccbf8e;
+}
+.infos-equipment > div.dismantle > span.steel {
+  background-position: 0 -288px;
+  color: #e3e3e3;
+}
+.infos-equipment > div.dismantle > span.bauxite {
+  background-position: 0 -306px;
+  color: #f2bb91;
 }
 .infos-equipment > div.improvement-options {
   display: flex;
@@ -7634,15 +7684,30 @@ h6 + section.update_journal {
 }
 @media all and (max-width: 720px) {
   .infos-equipment > div.title {
-    padding-right: 180px;
+    padding-right: 0;
+    order: -2;
+  }
+  .infos-equipment .right-gutter {
+    padding-right: 0;
   }
   .infos-equipment > div.title + .stats,
   .infos-equipment > div.equipable .right-gutter {
     padding-right: 0;
   }
+  .infos-equipment > div.improvement-options > .unit {
+    flex-basis: 100%;
+  }
+  .infos-equipment .improvement.improvement-details > font > b {
+    height: auto;
+  }
   .infos-equipment > aside {
-    width: 150px;
-    height: 150px;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    order: -1;
+    position: static;
+    flex: auto 1 0;
+    margin-top: 2.25rem;
   }
 }
 .infos-fleet {
@@ -10742,9 +10807,13 @@ body.mod-capture .infos-fleet .equipments {
   }
 }
 @media all and (max-width: 540px) {
+  .infos-fleet > .fleets {
+    border-left-width: 0;
+    border-right-width: 0;
+  }
   .infos-fleet > .fleets .tabs label {
-    padding-left: 6px;
-    padding-right: 6px;
+    padding-left: 3px;
+    padding-right: 3px;
   }
   .infos-fleet > .fleets .options {
     font-size: 100%;
@@ -10767,6 +10836,14 @@ body.mod-capture .infos-fleet .equipments {
   flex-flow: row wrap;
   padding-right: calc( 30% + 80px );
   min-height: 460px;
+  /*
+		@media all and ( max-width: @mobileview-breaking-point ){
+			&>aside{
+				order: 		1;
+				margin-top: 0;
+			}
+		}
+		*/
   /*
 		@media all and (min-height: 801px) and (max-aspect-ratio: @aspect_ratio){
 			padding:	0 !important;
@@ -12018,6 +12095,7 @@ body.mod-capture .infos-fleet .equipments {
   }
   .infos-ship > div.remodels {
     order: 20;
+    margin-bottom: 25px;
   }
   .infos-ship > aside {
     width: 100%;
@@ -12030,7 +12108,8 @@ body.mod-capture .infos-fleet .equipments {
     flex: 1 0 auto;
     height: 65%;
     max-height: 600px;
-    order: 30;
+    order: 1;
+    margin-top: 0;
   }
 }
 body > .modal > div {
