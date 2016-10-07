@@ -1571,8 +1571,8 @@ html.ie6 * {
 }
 @font-face {
   font-family: 'icons';
-  src: url(/!/assets/fonts/icons.eot?6mpac9);
-  src: url(/!/assets/fonts/icons.eot?6mpac9#iefix) format('embedded-opentype'), url(/!/assets/fonts/icons.ttf?6mpac9) format('truetype'), url(/!/assets/fonts/icons.woff?6mpac9) format('woff'), url(/!/assets/fonts/icons.svg?6mpac9#icons) format('svg');
+  src: url(/!/assets/fonts/icons.eot?20161007);
+  src: url(/!/assets/fonts/icons.eot?20161007#iefix) format('embedded-opentype'), url(/!/assets/fonts/icons.ttf?20161007) format('truetype'), url(/!/assets/fonts/icons.woff?20161007) format('woff'), url(/!/assets/fonts/icons.svg?20161007#icons) format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -1694,6 +1694,9 @@ html.ie6 * {
 }
 [icon="weibo"]:before {
   content: "\e608" !important;
+}
+[icon="zoomin"]:before {
+  content: "\e903" !important;
 }
 [icon="tieba"]:before,
 [icon="贴吧"]:before {
@@ -3667,6 +3670,13 @@ html #titlebar {
   background: rgba(0, 0, 0, 0.35);
   transition-property: background-color, height;
   height: 1.7000000000000002rem;
+}
+html #titlebar .scale:before {
+  vertical-align: bottom;
+}
+html #titlebar .scale:after {
+  content: '%';
+  padding-left: .15em;
 }
 html.app-ready #titlebar {
   background: transparent !important;
