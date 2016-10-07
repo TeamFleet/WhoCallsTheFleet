@@ -735,11 +735,12 @@ class InfosFleet{
 			if( !InfosFleet.fileDialog_export ){
 				InfosFleet.fileDialog_export = $('<input type="file" accept=".png" nwsaveas/>')
 					.on({
-						'click': function(e, windowWidth, windowHeight){
+						'click': function(e, windowWidth, windowHeight, isMaxmize){
 							InfosFleet.fileDialog_export.data({
 									'windowWidth':	windowWidth,
-									'windowHeight': windowHeight
-								})
+									'windowHeight': windowHeight,
+									'isMaxmize':	isMaxmize
+								});
 							InfosFleet.fileDialog_export_showing = true
 						},
 						'change': function(){
@@ -763,10 +764,14 @@ class InfosFleet{
 									InfosFleet.fileDialog_export.data('windowWidth'),
 									InfosFleet.fileDialog_export.data('windowHeight')
 								)
+								if( InfosFleet.fileDialog_export.data('isMaxmize') )
+									node.win.maximize()
 								InfosFleet.fileDialog_export.data({
 										'windowWidth':	null,
-										'windowHeight': null
+										'windowHeight': null,
+										'isMaxmize':	null
 									})
+								_g.zoom(Scale.cur);
 								_menu.hideAll()
 							}
 						}
@@ -781,16 +786,20 @@ class InfosFleet{
 				})
 			}
 			// 存储当前窗口尺寸
+				_g.zoom(1);
 				let windowWidth = $window.width()
 					,windowHeight = $window.height()
+					,isMaxmize = $html.hasClass('window-maxmize')
 			
 			// 改变样式
+				if( isMaxmize )
+					node.win.unmaximize()
 				$body.addClass('mod-capture')
 				node.win.resizeTo( 1280, 720 )
 			
 			// 选择文件
 				setTimeout(function(){
-					InfosFleet.fileDialog_export.trigger('click', [windowWidth, windowHeight])
+					InfosFleet.fileDialog_export.trigger('click', [windowWidth, windowHeight, isMaxmize])
 				}, 200)
 		}
 	

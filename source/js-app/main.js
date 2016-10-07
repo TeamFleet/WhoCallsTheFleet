@@ -628,6 +628,19 @@ _frame.app_main = {
 				)
 		*/
 
+		// 在右上角工具条中加入缩放功能
+			let titlebar_btns = $('#titlebar > .buttons');
+			if( titlebar_btns && titlebar_btns.length ){
+				let o = $('<button/>',{
+					'class':	'scale',
+					'icon':		'zoomin',
+					'html': 	Scale.get()
+				}).on('click', function(){
+					Scale.menuToggle(o)
+				}).prependTo( titlebar_btns )
+				Scale.doms.push( o )
+			}
+
 		// 创建主导航
 			if( this.nav && this.nav.length ){
 				_frame.dom.navs = {}
@@ -1107,32 +1120,32 @@ _frame.app_main = {
 						}
 					}
 					hackHistory(window.history);
-					
-					let title_buttons = $('#titlebar > .buttons')
-					
-					// 在标题栏添加hashbar开关
-						title_buttons.prepend( $('<button/>',{
-							'class':	'console',
-							'html':		'Toggle Hashbar'
-						}).on('click', function(){
-							_frame.dom.layout.toggleClass('debug-hashbar')
-						}) )
-					
-					// 在标题栏添加Web输出入口
-						$.getScript('../dev-output/js-output/output.js', function(){
-							title_buttons.prepend( $('<button/>',{
+
+					if( titlebar_btns && titlebar_btns.length ){					
+						// 在标题栏添加hashbar开关
+							titlebar_btns.prepend( $('<button/>',{
 								'class':	'console',
-								'html':		'Output to Web'
+								'html':		'Toggle Hashbar'
 							}).on('click', function(){
-								_frame.modal.show(
-									dev_output_form(),
-									'Output to Web',
-									{
-										'detach':	true
-									}
-								)
+								_frame.dom.layout.toggleClass('debug-hashbar')
 							}) )
-						})
+						
+						// 在标题栏添加Web输出入口
+							$.getScript('../dev-output/js-output/output.js', function(){
+								titlebar_btns.prepend( $('<button/>',{
+									'class':	'console',
+									'html':		'Output to Web'
+								}).on('click', function(){
+									_frame.modal.show(
+										dev_output_form(),
+										'Output to Web',
+										{
+											'detach':	true
+										}
+									)
+								}) )
+							})
+					}
 				}
 				return true
 			})
@@ -1154,4 +1167,155 @@ _frame.app_main = {
 		// 标记已进行过初始化函数
 			this.is_init = true
 	}
-}
+};
+
+
+
+
+
+
+
+
+
+// 缩放相关
+let Scale = {
+	cur: 	1,
+	doms:	[],
+	preset: [
+		0.75,
+		1,
+		1.25,
+		1.5,
+		2
+	],
+
+	get: function( value ){
+		return (value || this.cur) * 100;
+	},
+
+	set: function( value ){
+		if( value < 0.5 )
+			value = 0.5
+		_g.zoom(value);
+		this.cur = value;
+		this.update();
+		localforage.setItem( 'scale', value )
+	},
+
+	update: function(){
+		let value = this.get();
+		this.doms.forEach(function($el){
+			$el.html( value ).val( value );
+		});
+	},
+
+	getPresetIndex: function( value ){
+		value = value || this.cur;
+		let index = 0;
+		this.preset.some(function(v, i){
+			index = i;
+			return value <= v
+		})
+		return index
+	},
+
+	menuShow: function( $el ){
+		if( !this.menu ){
+			let setScale = function(value, e){
+				if( e ){
+					e.stopImmediatePropagation();
+					e.stopPropagation();
+				}
+				Scale.set( value );
+				setTimeout(function(){
+					Scale.menu.position( $el );
+				}, 100)
+
+				if( value <= Scale.preset[0] )
+					decrease.attr('disabled', true)
+				else
+					decrease.removeAttr('disabled')
+
+				if( value >= Scale.preset[Scale.preset.length-1] )
+					increase.attr('disabled', true)
+				else
+					increase.removeAttr('disabled')
+			}
+
+			let menuitems = []
+			let input = $('<input/>',{
+				'type':	'number'
+			}).val(this.get(this.cur)).on({
+				'change': function(){
+					setScale(input.val() / 100)
+				},
+				'click': function(e){
+					e.stopImmediatePropagation();
+					e.stopPropagation();
+				}
+			});
+			this.doms.push(input);
+
+			let decrease = $('<menuitem/>',{
+							'class':'decrease',
+							'html':	'-'
+						}).on('click', function(e){
+							let index = Scale.getPresetIndex();
+							index = Math.max( index, 1 );
+							setScale( Scale.preset[index - 1], e );
+						})
+			let increase = $('<menuitem/>',{
+							'class':'increase',
+							'html':	'+'
+						}).on('click', function(e){
+							let index = Scale.getPresetIndex();
+							if( Scale.cur == Scale.preset[index] )
+								index++;
+							index = Math.min( index, Scale.preset.length - 1 );
+							setScale( Scale.preset[index], e );
+						})
+
+			menuitems.push($('<div class="item">窗口缩放</div>')
+				.add(
+					$('<div class="scale"/>')
+						.append(decrease)
+						.append(input)
+						.append(
+							$('<span>%</span>')
+						)
+						.append(increase)
+				)
+			);
+
+			this.preset.forEach(function(value){
+				menuitems.push(
+					$('<menuitem/>',{
+						'html':		Scale.get(value) + '%'
+					}).on('click', function(e){
+						setScale(value, e)
+					})
+				)
+			});
+
+			this.menu = new _menu({
+				'className': 'contextmenu-scale',
+				'items': menuitems
+			})
+		}
+		this.menu.show( $el )
+	},
+
+	menuToggle: function( $el ){
+		if( this.menu && this.menu.showing )
+			this.menu.hide()
+		else
+			this.menuShow( $el )
+	}
+};
+localforage.getItem(
+	'scale',
+	function(err, value){
+		if( value )
+			Scale.set(value);
+	}
+);

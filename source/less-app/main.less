@@ -2189,6 +2189,15 @@ table{
 			background:	rgba(0,0,0,.35);
 			.transition-property(~"background-color, height");
 			.height(34);
+			.scale{
+				&:before{
+					vertical-align: bottom;
+				}
+				&:after{
+					content: 	'%';
+					padding-left: .15em;
+				}
+			}
 		}
 		&.app-ready #titlebar{
 			background:	transparent !important;

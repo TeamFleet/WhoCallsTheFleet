@@ -2,7 +2,7 @@
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
@@ -3744,7 +3744,7 @@ _tmpl.improvement = function (equipment, improvement_index, requirement_index, r
 		});
 		requirement = '<font>' + names.join(' / ') + '</font>';
 	} else {
-		requirement = '<font class="no">' + (improvement.resource[0][0] >= 0 ? '无秘书舰' : '未知') + '要求</font>';
+		requirement = '<font class="no">' + (improvement.resource[0][0] >= 0 ? '无秘书舰' : '未知') + '\u8981\u6C42</font>';
 	}
 
 	return _tmpl.export('<span class="improvement">' + _tmpl.improvement__title(equipment, upgrade_to, improvement['upgrade'][1]) + requirement + _tmpl.improvement__resource(improvement, upgrade_to ? !0 : !1) + '</span>', returnHTML);
@@ -3852,7 +3852,7 @@ _tmpl.improvement__reqdetails = function (reqdata, dataready) {
 			});
 			requirements += names.join(' / ');
 		} else {
-			requirements += '<b>' + (dataready ? '无秘书舰' : '未知') + '要求</b>';
+			requirements += '<b>' + (dataready ? '无秘书舰' : '未知') + '\u8981\u6C42</b>';
 		}
 
 		requirements += '</b>';
@@ -4797,7 +4797,7 @@ BgImg.controlsShow = function () {
 			'class': 'notes',
 			'html': '勾选的图片将会出现在背景图随机队列中'
 		})).append(BgImg.controlsEls.listCustom = $('<dl/>', {
-			'html': '<dt>自定义</dt>'
+			'html': '<dt>\u81EA\u5B9A\u4E49</dt>'
 		}).prepend(function () {
 			if (BgImg.quota) return $('<small/>').append(BgImg.controlsEls.listCustomQuotaUsed = $('<span>' + _g.getSize(BgImg.quotaUsed, 'm') + '</span>')).append(' / <span>' + _g.getSize(BgImg.quota, 'm') + '</span>');
 		}).append(BgImg.controlsEls.listCustomAdd = $('<dd/>', {
@@ -4892,7 +4892,7 @@ BgImg.readFile = function (e) {
 	Q.fcall(_g.getScriptCanvas).then(function () {
 		for (var _i9 = 0, f = void 0; f = e.target.files[_i9]; _i9++) {
 			if (BgImg.quotaUsed + f.size > BgImg.quota) {
-				deferred.reject('已超过 ' + _g.getSize(BgImg.quota, 'm') + ' 上限');
+				deferred.reject('\u5DF2\u8D85\u8FC7 ' + _g.getSize(BgImg.quota, 'm') + ' \u4E0A\u9650');
 				break;
 				return;
 			}
@@ -5950,10 +5950,11 @@ var InfosFleet = function () {
 		value: function exportPic() {
 			if (!InfosFleet.fileDialog_export) {
 				InfosFleet.fileDialog_export = $('<input type="file" accept=".png" nwsaveas/>').on({
-					'click': function click(e, windowWidth, windowHeight) {
+					'click': function click(e, windowWidth, windowHeight, isMaxmize) {
 						InfosFleet.fileDialog_export.data({
 							'windowWidth': windowWidth,
-							'windowHeight': windowHeight
+							'windowHeight': windowHeight,
+							'isMaxmize': isMaxmize
 						});
 						InfosFleet.fileDialog_export_showing = !0;
 					},
@@ -5975,10 +5976,13 @@ var InfosFleet = function () {
 						if (!InfosFleet.fileDialog_export.val() && $body.hasClass('mod-capture')) {
 							$body.removeClass('mod-capture');
 							node.win.resizeTo(InfosFleet.fileDialog_export.data('windowWidth'), InfosFleet.fileDialog_export.data('windowHeight'));
+							if (InfosFleet.fileDialog_export.data('isMaxmize')) node.win.maximize();
 							InfosFleet.fileDialog_export.data({
 								'windowWidth': null,
-								'windowHeight': null
+								'windowHeight': null,
+								'isMaxmize': null
 							});
+							_g.zoom(Scale.cur);
 							_menu.hideAll();
 						}
 					}
@@ -5991,14 +5995,17 @@ var InfosFleet = function () {
 				});
 			}
 
+			_g.zoom(1);
 			var windowWidth = $window.width(),
-			    windowHeight = $window.height();
+			    windowHeight = $window.height(),
+			    isMaxmize = $html.hasClass('window-maxmize');
 
+			if (isMaxmize) node.win.unmaximize();
 			$body.addClass('mod-capture');
 			node.win.resizeTo(1280, 720);
 
 			setTimeout(function () {
-				InfosFleet.fileDialog_export.trigger('click', [windowWidth, windowHeight]);
+				InfosFleet.fileDialog_export.trigger('click', [windowWidth, windowHeight, isMaxmize]);
 			}, 200);
 		}
 	}, {
@@ -7166,8 +7173,8 @@ var InfosFleetAirfield = function () {
 		var no = ['一', '二', '三'];
 
 		this.el = $('<dd class="airfield"/>').append($('<h4/>', {
-			'html': '第' + no[index] + '航空队',
-			'data-content': '第' + no[index] + '航空队'
+			'html': '\u7B2C' + no[index] + '\u822A\u7A7A\u961F',
+			'data-content': '\u7B2C' + no[index] + '\u822A\u7A7A\u961F'
 		})).append($('<div class="aircrafts"/>').append(function () {
 			var els = $();
 			for (var _i18 = 0; _i18 < 4; _i18++) {
@@ -7417,7 +7424,7 @@ if (typeof _p.tip != 'undefined') {
 	_p.tip.content_equipable_results = {};
 	_p.tip.content_equipable = function (d) {
 		if (!_p.tip.content_equipable_results[d.id]) {
-			var html = '<h4 class="item_equipable_on">可装备于以下舰种</h4>',
+			var html = '<h4 class="item_equipable_on">\u53EF\u88C5\u5907\u4E8E\u4EE5\u4E0B\u8230\u79CD</h4>',
 			    equipable_extra_ship = d.equipable_extra_ship || [];
 
 			html += '<p>';
@@ -7438,7 +7445,7 @@ if (typeof _p.tip != 'undefined') {
 			html += '</p>';
 
 			if (equipable_extra_ship.length) {
-				html += '<h4 class="item_equipable_on">也可装备于以下舰娘</h4>';
+				html += '<h4 class="item_equipable_on">\u4E5F\u53EF\u88C5\u5907\u4E8E\u4EE5\u4E0B\u8230\u5A18</h4>';
 				html += d.equipable_extra_ship.map(function (shipId) {
 					var ship = _g.data.ships[shipId],
 					    shipType = ship.getType();
@@ -7512,7 +7519,7 @@ modal.equipable = {
 		return this.frames[typeId];
 	},
 	'show': function show(typeId) {
-		return _frame.modal.show(this.frame(typeId), _g.data.item_types[typeId].name.zh_cn + ' 可装备于...', {
+		return _frame.modal.show(this.frame(typeId), _g.data.item_types[typeId].name.zh_cn + ' \u53EF\u88C5\u5907\u4E8E...', {
 			'classname': 'modal-equipable',
 			'detach': !0
 		});
@@ -8075,7 +8082,7 @@ var TablelistShips = function (_Tablelist2) {
 						_this9.dom.container.on({
 							'initprogress': function initprogress(e, cur, max) {
 								if (TablelistShips.contextmenu.showing) {
-									TablelistShips.contextmenu.dom.body.empty().append($('<menuitem/>').html('数据处理中，请稍候 (' + (cur / max * 100).toFixed(1) + '%)'));
+									TablelistShips.contextmenu.dom.body.empty().append($('<menuitem/>').html('\u6570\u636E\u5904\u7406\u4E2D\uFF0C\u8BF7\u7A0D\u5019 (' + (cur / max * 100).toFixed(1) + '%)'));
 								}
 							},
 							'initdone': function initdone() {
@@ -9225,7 +9232,7 @@ TablelistFleets.modalBuildConflictShow = function (data, deferred) {
 			j++;
 		}
 		html += '</i>';
-		html = '<dt>' + html + '<strong>' + data['name'] + '</strong></dt>' + ('<span>最后更新: ' + new Date(data.time_modify).format('%Y年%m月%d日 %G:%i:%s') + '</span>');
+		html = '<dt>' + html + '<strong>' + data['name'] + '</strong></dt>' + ('<span>\u6700\u540E\u66F4\u65B0: ' + new Date(data.time_modify).format('%Y年%m月%d日 %G:%i:%s') + '</span>');
 		return html;
 	};
 

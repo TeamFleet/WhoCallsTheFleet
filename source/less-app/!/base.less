@@ -1,3 +1,61 @@
 a, button{
 	cursor: 		default;
 }
+
+body > .menus > .menu.contextmenu-scale{
+	& > .body{
+		.width(150);
+		.scale{
+			display: 	flex;
+			flex-flow: 	row nowrap;
+			.border-top(1, solid, rgba(255,255,255,.2));
+			.border-bottom(1, solid, rgba(255,255,255,.2));
+			position: 	relative;
+			menuitem, input{
+				border: 	0;
+				text-align: center;
+				padding: 0;
+			}
+			span, menuitem{
+				display: inline-block;
+			}
+			menuitem, span{
+				flex: 	0 0 2rem;
+			}
+			input{
+				min-width: 	0;
+				flex: 		1 1 2.5em;
+				height: 	2rem;
+				border-radius: 0;
+				background: none transparent;
+				padding-right: 1rem;
+				&:hover{
+					background: rgba(0, 0, 0, .25);
+				}
+				&:focus{
+					background: rgba(0, 0, 0, .75);
+				}
+				&::-webkit-inner-spin-button{
+					position: 	absolute;
+					//top: 		-1000%;
+					//left: 		-1000%;
+					z-index: 	-100;
+					visibility: hidden;
+				}
+			}
+			span{
+				text-align: center;
+				width: 		1.5rem;
+				margin-left:-1.5rem;
+				position: 	absolute;
+				pointer-events:none;
+			}
+			.decrease{
+				.border-right(1, solid, rgba(255,255,255,.2));
+			}
+			.increase{
+				.border-left(1, solid, rgba(255,255,255,.2));
+			}
+		}
+	}
+}
