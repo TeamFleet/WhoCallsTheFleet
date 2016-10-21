@@ -5991,7 +5991,7 @@ var InfosFleet = function () {
 					if (InfosFleet.fileDialog_export_showing) setTimeout(function () {
 						InfosFleet.fileDialog_export.trigger('resetCaptureMode');
 						InfosFleet.fileDialog_export_showing = !1;
-					}, 100);
+					}, 1000);
 				});
 			}
 
