@@ -10094,7 +10094,7 @@ class InfosFleet{
 						setTimeout(function(){
 							InfosFleet.fileDialog_export.trigger('resetCaptureMode')
 							InfosFleet.fileDialog_export_showing = false
-						}, 100)
+						}, 1000)
 				})
 			}
 			// 存储当前窗口尺寸
