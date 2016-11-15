@@ -1,16 +1,14 @@
 "use strict";
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || !1; descriptor.configurable = !0; if ("value" in descriptor) descriptor.writable = !0; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: !1, writable: !0, configurable: !0 } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _instanceof(left, right) { if (right != null && typeof Symbol !== "undefined" && right[Symbol.hasInstance]) { return right[Symbol.hasInstance](left); } else { return left instanceof right; } }
 
 var $window = $(window),
     $document = $(document),
@@ -1223,7 +1221,7 @@ Object.defineProperty(Array.prototype, 'mergeFrom', {
 	enumerable: !1,
 
 	value: function value(arr2) {
-		Array.prototype.push.apply(this, _instanceof(arr2, Array) || arr2.push ? arr2 : [arr2]);
+		Array.prototype.push.apply(this, arr2 instanceof Array || arr2.push ? arr2 : [arr2]);
 		return this;
 	}
 });
@@ -1324,8 +1322,9 @@ _g.getText = function (text, table, locale, isString) {
 
 	if (typeof text != 'string' && isString) {
 		_t = '';
-		for (i = 0; i < text.length; i++) _t += text[i];
-		text = _t;
+		for (i = 0; i < text.length; i++) {
+			_t += text[i];
+		}text = _t;
 	}
 
 	return _r(text);
@@ -1439,7 +1438,9 @@ _hotkey.bind = function (keyCode, modifier, func, options) {
 };
 
 _hotkey._run = function (arr) {
-	for (var i in arr) arr[i]();
+	for (var i in arr) {
+		arr[i]();
+	}
 };
 
 _hotkey.init = function () {
@@ -1861,7 +1862,7 @@ _menu.prototype.hideTrue = function () {
 		'left': ''
 	}).detach();
 
-	if (_instanceof(this.dom.blured, jQuery)) {
+	if (this.dom.blured instanceof jQuery) {
 		this.dom.blured.remove();
 		delete this.dom.blured;
 	}
@@ -1884,7 +1885,7 @@ _menu.prototype.position = function (targetEl, x, y) {
 		'left': ''
 	});
 
-	if (targetEl && _instanceof(targetEl, jQuery)) {
+	if (targetEl && targetEl instanceof jQuery) {
 		var offset = targetEl.offset();
 		top = offset.top + targetEl.height() - $body.scrollTop() + (y || 0);
 		left = offset.left - $body.scrollLeft() + (x || 0);
@@ -1907,7 +1908,7 @@ _menu.prototype.position = function (targetEl, x, y) {
 };
 
 _menu.prototype.appendItem = function (item) {
-	if (_instanceof(item, jQuery)) return item.appendTo(this.dom.body);
+	if (item instanceof jQuery) return item.appendTo(this.dom.body);
 };
 
 _menu.prototype.capturePage_callback = function (datauri) {
@@ -3628,9 +3629,9 @@ _frame.app_main = {
 };
 
 _g.error = function (err) {
-	if (!_instanceof(err, Error)) err = new Error(err);
+	if (!(err instanceof Error)) err = new Error(err);
 
-	_g.badgeError(_instanceof(err, Error) ? err.message : err);
+	_g.badgeError(err instanceof Error ? err.message : err);
 	_g.log(err);
 };
 
@@ -4124,7 +4125,7 @@ _frame.app_main.page['fleets'] = {
 			function _class($page) {
 				_classCallCheck(this, _class);
 
-				var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this, $page));
+				var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, $page));
 
 				$page.on({
 					'pageShow': function pageShow() {
@@ -4151,7 +4152,7 @@ _frame.app_main.page['ships'] = {
 			function _class2($page) {
 				_classCallCheck(this, _class2);
 
-				var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(_class2).call(this, $page));
+				var _this2 = _possibleConstructorReturn(this, (_class2.__proto__ || Object.getPrototypeOf(_class2)).call(this, $page));
 
 				_this2.tablelist = $page.find('.tablelist');
 				_this2.tablelistObj = _this2.tablelist.data('tablelist');
@@ -4186,7 +4187,7 @@ _frame.app_main.page['equipments'] = {
 			function _class3($page) {
 				_classCallCheck(this, _class3);
 
-				var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(_class3).call(this, $page));
+				var _this3 = _possibleConstructorReturn(this, (_class3.__proto__ || Object.getPrototypeOf(_class3)).call(this, $page));
 
 				_this3.tablelist = $page.find('.tablelist');
 				_this3.tablelistObj = _this3.tablelist.data('tablelist');
@@ -4890,7 +4891,7 @@ BgImg.readFile = function (e) {
 	var deferred = Q.defer();
 
 	Q.fcall(_g.getScriptCanvas).then(function () {
-		for (var _i9 = 0, f = void 0; f = e.target.files[_i9]; _i9++) {
+		for (var _i9 = 0, f; f = e.target.files[_i9]; _i9++) {
 			if (BgImg.quotaUsed + f.size > BgImg.quota) {
 				deferred.reject('\u5DF2\u8D85\u8FC7 ' + _g.getSize(BgImg.quota, 'm') + ' \u4E0A\u9650');
 				break;
@@ -6148,7 +6149,7 @@ InfosFleet.modalRemove_show = function (id, is_list) {
 	if (typeof id == 'undefined') return;
 
 	var infosFleet = void 0;
-	if (_instanceof(id, InfosFleet)) {
+	if (id instanceof InfosFleet) {
 		infosFleet = id;
 		id = infosFleet.data._id;
 	}
@@ -6176,7 +6177,7 @@ InfosFleet.modalRemove_show = function (id, is_list) {
 					_frame.app_main.loading_complete('remove_fleet_' + _id);
 					_frame.modal.hide();
 					_g.badgeMsg('已删除配置');
-					if (is_list && _instanceof(is_list, TablelistFleets)) {
+					if (is_list && is_list instanceof TablelistFleets) {
 						is_list.refresh();
 					} else {
 						_frame.dom.navs.fleets.click();
@@ -6385,7 +6386,7 @@ var InfosFleetSubFleet = function () {
 				if (shipdata && shipdata.shipId) {
 					var equipments_by_slot = shipdata.data[2].map(function (equipment) {
 						if (!equipment) return null;
-						if (_instanceof(equipment, Equipment)) return equipment;
+						if (equipment instanceof Equipment) return equipment;
 						return _g.data.items[equipment];
 					}) || [];
 					equipments_by_slot.forEach(function (equipment) {
@@ -6728,7 +6729,7 @@ var InfosFleetShip = function () {
 
 			if (value) {
 				var ship = _g.data.ships[value],
-				    suffix = ship.getSuffix(),
+				    _suffix = ship.getSuffix(),
 				    speed = ship._speed,
 				    stype = ship._type;
 
@@ -6737,7 +6738,7 @@ var InfosFleetShip = function () {
 				this.el.attr('data-shipId', value);
 
 				this.elAvatar.html('<img src="' + ship.getPic(10) + '"/>');
-				this.elInfosTitle.html('<h4 data-content="' + ship['name'][_g.lang] + '">' + ship['name'][_g.lang] + '</h4>' + (suffix ? '<h5 data-content="' + suffix + '">' + suffix + '</h5>' : ''));
+				this.elInfosTitle.html('<h4 data-content="' + ship['name'][_g.lang] + '">' + ship['name'][_g.lang] + '</h4>' + (_suffix ? '<h5 data-content="' + _suffix + '">' + _suffix + '</h5>' : ''));
 				this.elInfosInfo.html(speed + ' ' + stype);
 
 				for (var _i16 = 0; _i16 < 4; _i16++) {
@@ -6810,7 +6811,7 @@ var InfosFleetShipEquipment = function () {
 		_classCallCheck(this, InfosFleetShipEquipment);
 
 		this.index = index || 0;
-		this.isParentAirfield = _instanceof(infosParent, InfosFleetAirfield);
+		this.isParentAirfield = infosParent instanceof InfosFleetAirfield;
 		this.infosParent = infosParent;
 
 		if (this.el) return this.el;
@@ -7875,7 +7876,7 @@ var TablelistEntities = function (_Tablelist) {
 	function TablelistEntities(container, options) {
 		_classCallCheck(this, TablelistEntities);
 
-		var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(TablelistEntities).call(this, container, options));
+		var _this7 = _possibleConstructorReturn(this, (TablelistEntities.__proto__ || Object.getPrototypeOf(TablelistEntities)).call(this, container, options));
 
 		_frame.app_main.loading.push('tablelist_' + _this7._index);
 		_frame.app_main.is_loaded = !1;
@@ -7905,7 +7906,7 @@ var TablelistShips = function (_Tablelist2) {
 	function TablelistShips(container, options) {
 		_classCallCheck(this, TablelistShips);
 
-		var _this8 = _possibleConstructorReturn(this, Object.getPrototypeOf(TablelistShips).call(this, container, options));
+		var _this8 = _possibleConstructorReturn(this, (TablelistShips.__proto__ || Object.getPrototypeOf(TablelistShips)).call(this, container, options));
 
 		_this8.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['夜战', 'nightpower'], ['对空', 'aa'], ['对潜', 'asw'], ['耐久', 'hp'], ['装甲', 'armor'], ['回避', 'evasion'], ['搭载', 'carry'], ['航速', 'speed'], ['射程', 'range'], ['索敌', 'los'], ['运', 'luck'], ['油耗', 'consum_fuel'], ['弹耗', 'consum_ammo'], ['多立绘', 'extra_illust']];
 		_this8.header_checkbox = [];
@@ -8343,7 +8344,7 @@ var TablelistEquipments = function (_Tablelist3) {
 	function TablelistEquipments(container, options) {
 		_classCallCheck(this, TablelistEquipments);
 
-		var _this11 = _possibleConstructorReturn(this, Object.getPrototypeOf(TablelistEquipments).call(this, container, options));
+		var _this11 = _possibleConstructorReturn(this, (TablelistEquipments.__proto__ || Object.getPrototypeOf(TablelistEquipments)).call(this, container, options));
 
 		_this11.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['对空', 'aa'], ['对潜', 'asw'], ['爆装', 'bomb'], ['命中', 'hit'], ['装甲', 'armor'], ['回避', 'evasion'], ['索敌', 'los'], ['射程', 'range'], ['可改修', 'improvable']];
 
@@ -8392,21 +8393,21 @@ var TablelistEquipments = function (_Tablelist3) {
 			}
 
 			if (TablelistEquipments.types.length) {
-				var k = 0,
+				var _k = 0,
 				    _el3 = void 0,
-				    t = void 0;
+				    _t2 = void 0;
 
-				while ($.inArray(parseInt(this.dom.types[k++].attr('data-type')) || null, TablelistEquipments.types) <= -1) {
-					_el3 = this.dom.types[k];
+				while ($.inArray(parseInt(this.dom.types[_k++].attr('data-type')) || null, TablelistEquipments.types) <= -1) {
+					_el3 = this.dom.types[_k];
 				}
 
 				_el3 = _el3 || this.dom.types[0];
 
 				this.dom.type_radios[parseInt(_el3.attr('data-equipmentcollection')) || 1].prop('checked', !0).trigger('change');
 
-				t = _el3[0].offsetTop;
-				if (t) t -= 32;
-				this.dom.tbody.scrollTop(t || 0);
+				_t2 = _el3[0].offsetTop;
+				if (_t2) _t2 -= 32;
+				this.dom.tbody.scrollTop(_t2 || 0);
 			}
 		}
 	}, {
@@ -8502,7 +8503,7 @@ var TablelistFleets = function (_Tablelist4) {
 	function TablelistFleets(container, options) {
 		_classCallCheck(this, TablelistFleets);
 
-		var _this12 = _possibleConstructorReturn(this, Object.getPrototypeOf(TablelistFleets).call(this, container, options));
+		var _this12 = _possibleConstructorReturn(this, (TablelistFleets.__proto__ || Object.getPrototypeOf(TablelistFleets)).call(this, container, options));
 
 		_this12.columns = ['  ', ['创建者', 'user'], ['修改时间', 'time_modify'], ['评价', 'rating'], ['', 'options']];
 
@@ -9071,7 +9072,7 @@ var TablelistFleets = function (_Tablelist4) {
 						if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
 					});
 				} else {
-					for (var _i21 = 0, f = void 0; f = $selector[0].files[_i21]; _i21++) {
+					for (var _i21 = 0, f; f = $selector[0].files[_i21]; _i21++) {
 						var reader = new FileReader();
 						reader.onload = function (theFile) {
 							return function (r) {
