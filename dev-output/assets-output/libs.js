@@ -292,22 +292,8 @@
         }
 
     // <script>
-    } else if (typeof window !== "undefined" || typeof self !== "undefined") {
-        // Prefer window over self for add-on scripts. Use self for
-        // non-windowed contexts.
-        var global = typeof window !== "undefined" ? window : self;
-
-        // Get the `window` object, save the previous Q global
-        // and initialize Q as a global.
-        var previousQ = global.Q;
-        global.Q = definition();
-
-        // Add a noConflict function so Q can be removed from the
-        // global namespace.
-        global.Q.noConflict = function () {
-            global.Q = previousQ;
-            return this;
-        };
+    } else if (typeof self !== "undefined") {
+        self.Q = definition();
 
     } else {
         throw new Error("This environment was not anticipated by Q. Please file a bug.");
@@ -2271,10 +2257,6 @@ Promise.prototype.nodeify = function (nodeback) {
     } else {
         return this;
     }
-};
-
-Q.noConflict = function() {
-    throw new Error("Q.noConflict only works when Q is used as a global");
 };
 
 // All code before this point will be filtered from stack traces.

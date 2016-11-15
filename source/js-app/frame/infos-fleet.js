@@ -2399,9 +2399,11 @@ class InfosFleetSubAirfield{
 				.html(`
 					<ul class="tip-content">
 						<h4 data-content="小贴士">小贴士</h4>
-						${tips.map((tip)=>{
-							return `<li>${tip}</li>`
-						}).join('')}
+						${
+							tips.map(function(tip){
+								return `<li>${tip}</li>`
+							}).join('')
+						}
 					</ul>
 				`)
 				.appendTo(this.el)
@@ -2670,7 +2672,7 @@ class InfosFleetAirfield{
 
 				fighterPowerAA = Formula.calcByField.fighterPowerAA(dataFighterPowerAA)
 
-				let renderMinMax = (data, dom) => {
+				let renderMinMax = function(data, dom){
 					if( Math.max( data[0], data[1] ) > 0 ){
 						let val1 = Math.floor(data[0])
 							,val2 = Math.floor(data[1])

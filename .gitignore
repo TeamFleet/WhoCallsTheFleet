@@ -54,3 +54,4 @@ Temporary Items
 /source/libs/node_modules
 /app/assets/images/homebg-custom
 /bower_components
+/_build/node_modules
