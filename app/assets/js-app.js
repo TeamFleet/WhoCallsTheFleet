@@ -2468,7 +2468,7 @@ var d={x:c.clientX,y:c.clientY};b.push(d);var e=function(a,b){var c=a.indexOf(b)
         return formula.starMultiper[equipmentType] ? (formula.starMultiper[equipmentType][type] || 0) : 0
     };
     // 飞行器熟练度对制空战力的加成
-    formula.getFighterPowerRankMultiper = ( equipment, rank ) => {
+    formula.getFighterPowerRankMultiper = ( equipment, rank, options ) => {
         equipment = _equipment(equipment)
 
         let rankInternal = []
@@ -3159,19 +3159,15 @@ var d={x:c.clientX,y:c.clientY};b.push(d);var e=function(a,b){var c=a.indexOf(b)
     
         let results = [0, 0]
         
-        if( _equipmentType.Fighters.indexOf( equipment.type ) > -1
-            && carry
-        ){
-            // Math.floor(Math.sqrt(carry) * (equipment.stat.aa || 0) + Math.sqrt( rankInternal / 10 ) + typeValue)
-            /*if( star )
-                console.log( equipment._name, '★+' + star, star * formula.getStarMultiper( equipment.type, 'fighter' ) )
-            */
+        if( carry ){
             let statAA = (equipment.stat.aa || 0)
                             + ( equipment.type == _equipmentType.Interceptor ? equipment.stat.evasion : 0 )
                             + ( equipment.type == _equipmentType.Interceptor ? equipment.stat.hit * 2 : 0 )
                             + (star * formula.getStarMultiper( equipment.type, 'fighter' ))
                 ,base = statAA * Math.sqrt(carry)
-                ,rankBonus = formula.getFighterPowerRankMultiper( equipment, rank )
+                ,rankBonus = formula.getFighterPowerRankMultiper( equipment, rank, {
+                    isAA: true
+                } )
 
             results[0]+= Math.floor(base + rankBonus.min)
             results[1]+= Math.floor(base + rankBonus.max)
@@ -12274,8 +12270,8 @@ class InfosFleetAirfield{
 
 						dataFighterPowerAA.push({
 							equipment: e,
-							star: d[1],
-							rank: d[2],
+							rank: d[1],
+							star: d[2],
 							carry: carry
 						})
 					}

@@ -2661,8 +2661,8 @@ class InfosFleetAirfield{
 
 						dataFighterPowerAA.push({
 							equipment: e,
-							star: d[1],
-							rank: d[2],
+							rank: d[1],
+							star: d[2],
 							carry: carry
 						})
 					}
