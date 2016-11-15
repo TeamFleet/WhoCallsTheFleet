@@ -8751,20 +8751,56 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
       -ms-flex: 0.25 0 auto;
           flex: 0.25 0 auto;
 }
-.infos-fleet .fleetships.fleetairfields {
+.infos-fleet .fleetships.fleetairfields > dl {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -ms-flex-flow: row nowrap;
       flex-flow: row nowrap;
+  position: relative;
+}
+.infos-fleet .fleetships.fleetairfields > dl:before,
+.infos-fleet .fleetships.fleetairfields > dl:after {
+  content: '';
+  display: block;
+  -webkit-box-flex: 0.5;
+      -ms-flex: 0.5 5 0;
+          flex: 0.5 5 0;
+}
+.infos-fleet .fleetships.fleetairfields .airfields {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  height: 65%;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 320px;
+          flex: 1 0 320px;
 }
-.infos-fleet .fleetships.fleetairfields:before,
+.infos-fleet .fleetships.fleetairfields .tips {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+}
+.infos-fleet .fleetships.fleetairfields .tip-content {
+  -webkit-box-flex: 3;
+      -ms-flex: 3 1 600px;
+          flex: 3 1 600px;
+  padding: 0;
+  margin-bottom: 0;
+}
+.infos-fleet .fleetships.fleetairfields .tip-content li {
+  margin-left: 2em;
+}
+.infos-fleet .fleetships.fleetairfields .gap {
+  -webkit-box-flex: 0.25;
+      -ms-flex: 0.25 0 auto;
+          flex: 0.25 0 auto;
+  margin: 0;
+}
 .infos-fleet .fleetships.fleetairfields:after {
-  -webkit-box-flex: 0.5;
-      -ms-flex-positive: 0.5;
-          flex-grow: 0.5;
-  -ms-flex-negative: 5;
-      flex-shrink: 5;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 .infos-fleet .ship {
   -webkit-box-flex: 0.5;
@@ -9222,7 +9258,7 @@ body.mod-capture .infos-fleet .ship > .options {
           flex: 1 1 200px;
   position: relative;
   margin: 0 2.5%;
-  height: 65%;
+  height: 100%;
   min-height: 320px;
   max-height: 400px;
   display: -webkit-box;
@@ -11489,16 +11525,47 @@ body.mod-capture .infos-fleet .equipments {
     background-color: rgba(0, 0, 0, 0.175);
   }
   .infos-fleet .fleetships.fleetairfields {
-    -ms-flex-flow: column nowrap;
-        flex-flow: column nowrap;
+    -webkit-box-flex: 0;
+        -ms-flex: none;
+            flex: none;
   }
   .infos-fleet .fleetships.fleetairfields:before {
+    display: none;
+  }
+  .infos-fleet .fleetships.fleetairfields > dl {
+    -ms-flex-flow: column nowrap;
+        flex-flow: column nowrap;
+    margin-top: 0;
+    -webkit-box-flex: 0;
+        -ms-flex: none;
+            flex: none;
+  }
+  .infos-fleet .fleetships.fleetairfields > dl:before {
     -ms-flex-negative: 0;
         flex-shrink: 0;
     -ms-flex-preferred-size: 2.5vh;
         flex-basis: 2.5vh;
   }
-  .infos-fleet .fleetships.fleetairfields:after {
+  .infos-fleet .fleetships.fleetairfields > dl:after {
+    display: none;
+  }
+  .infos-fleet .fleetships.fleetairfields .airfields {
+    height: auto;
+    -ms-flex-preferred-size: auto;
+        flex-basis: auto;
+  }
+  .infos-fleet .fleetships.fleetairfields .tips {
+    margin-bottom: 2.5vh;
+  }
+  .infos-fleet .fleetships.fleetairfields .tips:before {
+    display: none;
+  }
+  .infos-fleet .fleetships.fleetairfields .tip-content {
+    -webkit-box-flex: 0;
+        -ms-flex: none;
+            flex: none;
+  }
+  .infos-fleet .fleetships.fleetairfields .gap {
     display: none;
   }
   .infos-fleet .airfield {

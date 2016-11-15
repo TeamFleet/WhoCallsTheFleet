@@ -7093,15 +7093,22 @@ var InfosFleetSubAirfield = function () {
 		this.label = label;
 
 		this.el = $('<dl class="fleetships fleetairfields"/>');
+		this.container = $('<dl class="airfields"/>').appendTo(this.el);
 
 		this.fields = [];
 
 		var i = 0;
 		while (i < 3) {
 			this.fields[i] = new InfosFleetAirfield(infosFleet, this, i);
-			this.fields[i].getEl().appendTo(this.el);
+			this.fields[i].getEl().appendTo(this.container);
 			i++;
 		}
+
+		$('<dl class="gap"/>').appendTo(this.el);
+		var tips = ['“航程”决定了该航空队在出击时所能抵达的最远作战点，数值由航程属性最小的中队决定，侦察机也可以提高这一数值。', '“制空战力”表示该航空队执行出击任务时的制空能力，“防空战力”则表示防空任务能力。', '局地战斗机的“迎击”属性也可以提高制空战力。装备列表中局战的“回避”列数值即为“迎击”属性。', '除了局地战斗机的“迎击”和“对爆”属性外，在航空队种配置侦察机也可以有效提高防空战力。'];
+		$('<dl class="tips"/>').html('\n\t\t\t\t\t<ul class="tip-content">\n\t\t\t\t\t\t<h4 data-content="\u5C0F\u8D34\u58EB">\u5C0F\u8D34\u58EB</h4>\n\t\t\t\t\t\t' + tips.map(function (tip) {
+			return '<li>' + tip + '</li>';
+		}).join('') + '\n\t\t\t\t\t</ul>\n\t\t\t\t').appendTo(this.el);
 
 		this.infosFleet = infosFleet;
 	}
@@ -7171,6 +7178,7 @@ var InfosFleetAirfield = function () {
 		this.aircrafts = [];
 		this.index = index;
 
+
 		var no = ['一', '二', '三'];
 
 		this.el = $('<dd class="airfield"/>').append($('<h4/>', {
@@ -7185,7 +7193,7 @@ var InfosFleetAirfield = function () {
 			return els;
 		}.bind(this)));
 
-		this.elSummary = $('<span class="summary"/>').appendTo($('<div class="airfield-summary"/>').appendTo(this.el)).append($('<span class="summary-item"/>').html('航程').append(this.elSummaryDistance = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('制空战力').append(this.elSummaryFighterPower = $('<strong/>').html('-')));
+		this.elSummary = $('<span class="summary"/>').appendTo($('<div class="airfield-summary"/>').appendTo(this.el)).append($('<span class="summary-item"/>').html('航程').append(this.elSummaryDistance = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('制空战力').append(this.elSummaryFighterPower = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('防空战力').append(this.elSummaryFighterPowerAA = $('<strong/>').html('-')));
 
 		this.els = this.el;
 	}
@@ -7219,6 +7227,11 @@ var InfosFleetAirfield = function () {
 			return this.data;
 		}
 	}, {
+		key: 'getCarry',
+		value: function getCarry(equipment) {
+			if (Formula.equipmentType.Recons.indexOf(equipment.type) > -1) return 4;else return 18;
+		}
+	}, {
 		key: 'summaryCalc',
 		value: function summaryCalc() {
 			if (this.summaryCalculating || !this.data || !this.data.push) return !1;
@@ -7229,12 +7242,15 @@ var InfosFleetAirfield = function () {
 					min: 0,
 					max: 0,
 					recon: 0
-				};
+				},
+				    fighterPowerAA = [0, 0],
+				    dataFighterPowerAA = [];
 
 				this.data.forEach(function (d) {
 					if (d[0]) {
 						var e = _g.data.items[d[0]],
-						    fp = Formula.calc.fighterPower(e, 18, d[1], d[2]),
+						    carry = this.getCarry(e),
+						    fp = Formula.calc.fighterPower(e, carry, d[1], d[2]),
 						    _distance = e.stat.distance || 0;
 
 						fighterPower[0] += fp[0];
@@ -7246,27 +7262,39 @@ var InfosFleetAirfield = function () {
 							distance.min = distance.min <= 0 ? _distance : Math.min(distance.min, _distance);
 							distance.max = Math.max(distance.max, _distance);
 						}
+
+						dataFighterPowerAA.push({
+							equipment: e,
+							star: d[1],
+							rank: d[2],
+							carry: carry
+						});
 					}
 				}, this);
 
-				if (Math.max(fighterPower[0], fighterPower[1]) > 0) {
-					var val1 = Math.floor(fighterPower[0]),
-					    val2 = Math.floor(fighterPower[1]);
-					this.elSummaryFighterPower.html(val1 == val2 ? val1 : val1 + '~' + val2);
-					this.elSummaryFighterPower.removeClass('empty');
-				} else {
-					this.elSummaryFighterPower.html('-');
-					this.elSummaryFighterPower.addClass('empty');
-				}
+				fighterPowerAA = Formula.calcByField.fighterPowerAA(dataFighterPowerAA);
+
+				var renderMinMax = function renderMinMax(data, dom) {
+					if (Math.max(data[0], data[1]) > 0) {
+						var val1 = Math.floor(data[0]),
+						    val2 = Math.floor(data[1]);
+						dom.removeClass('empty').html(val1 == val2 ? val1 : val1 + '~' + val2);
+					} else {
+						dom.addClass('empty').html('-');
+					}
+				};
+
+				renderMinMax(fighterPower, this.elSummaryFighterPower);
+				renderMinMax(fighterPowerAA, this.elSummaryFighterPowerAA);
 
 				if (distance.min + distance.recon > 0) {
 					var val = distance.min;
-					if (distance.recon) val += ' + ' + Math.round(Math.min(3, Math.max(0, Math.sqrt(distance.recon - distance.min))));
-					this.elSummaryDistance.html(val);
-					this.elSummaryDistance.removeClass('empty');
+					if (distance.recon) {
+						val += Math.round(Math.min(3, Math.max(0, Math.sqrt(distance.recon - distance.min))));
+					}
+					this.elSummaryDistance.removeClass('empty').html(val);
 				} else {
-					this.elSummaryDistance.html('-');
-					this.elSummaryDistance.addClass('empty');
+					this.elSummaryDistance.addClass('empty').html('-');
 				}
 
 				this.summaryCalculating = null;

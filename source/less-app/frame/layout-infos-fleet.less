@@ -445,11 +445,38 @@
 	}
 	
 	.fleetships.fleetairfields{
-		flex-flow: 	row nowrap;
-		align-items:center;
-		&:before, &:after{
-			flex-grow: 0.5;
-			flex-shrink:5;
+		& > dl{
+			display: 	flex;
+			flex-flow: 	row nowrap;
+			position: 	relative;
+			&:before, &:after{
+				content: 	'';
+				display: 	block;
+				flex: 		0.5 5 0;
+			}
+		}
+		.airfields{
+			align-items:center;
+			height: 	65%;
+			flex: 		1 0 320px;
+		}
+		.tips{
+			flex: 		0 0 auto;
+		}
+		.tip-content{
+			flex: 		3 1 600px;
+			padding: 	0;
+			margin-bottom: 	0;
+			li{
+				margin-left: 	2em;
+			}
+		}
+		.gap{
+			flex: 		0.25 0 auto;
+			margin: 	0;
+		}
+		&:after{
+			flex-grow: 	1;
 		}
 	}
 
@@ -941,7 +968,7 @@
 		flex: 		1 1 200px;
 		position:	relative;
 		margin: 	0 2.5%;
-		height: 	65%;
+		height: 	100%;
 		min-height: 320px;
 		max-height: 400px;
 		display: 	flex;
@@ -2430,13 +2457,37 @@
 	}
 	
 	.fleetships.fleetairfields{
-		flex-flow: 	column nowrap;
+		flex: 		none;
 		&:before{
-			flex-shrink: 	0;
-			flex-basis: 	2.5vh;
+			display: 	none;
 		}
-		&:after{
-			display: 		none;
+		& > dl{
+			flex-flow: 	column nowrap;
+			margin-top: 0;
+			flex: 		none;
+			&:before{
+				flex-shrink: 	0;
+				flex-basis: 	2.5vh;
+			}
+			&:after{
+				display: 		none;
+			}
+		}
+		.airfields{
+			height: 	auto;
+			flex-basis: auto;
+		}
+		.tips{
+			margin-bottom: 	2.5vh;
+			&:before{
+				display: 	none;
+			}
+		}
+		.tip-content{
+			flex: 		none;
+		}
+		.gap{
+			display: 	none;
 		}
 	}
 	

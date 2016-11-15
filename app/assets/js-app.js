@@ -11988,6 +11988,7 @@ class InfosFleetSubAirfield{
 		this.label = label
 
 		this.el = $('<dl class="fleetships fleetairfields"/>')
+		this.container = $('<dl class="airfields"/>').appendTo( this.el )
 		
 		this.fields = []
 
@@ -11995,10 +11996,29 @@ class InfosFleetSubAirfield{
 			let i = 0
 			while( i < 3 ){
 				this.fields[i] = new InfosFleetAirfield(infosFleet, this, i)
-				this.fields[i].getEl().appendTo( this.el )
+				this.fields[i].getEl().appendTo( this.container )
 				i++
 			}
 		
+		// tips
+			$('<dl class="gap"/>').appendTo(this.el)
+			let tips = [
+				'“航程”决定了该航空队在出击时所能抵达的最远作战点，数值由航程属性最小的中队决定，侦察机也可以提高这一数值。',
+				'“制空战力”表示该航空队执行出击任务时的制空能力，“防空战力”则表示防空任务能力。',
+				'局地战斗机的“迎击”属性也可以提高制空战力。装备列表中局战的“回避”列数值即为“迎击”属性。',
+				'除了局地战斗机的“迎击”和“对爆”属性外，在航空队种配置侦察机也可以有效提高防空战力。'
+			]
+			$('<dl class="tips"/>')
+				.html(`
+					<ul class="tip-content">
+						<h4 data-content="小贴士">小贴士</h4>
+						${tips.map((tip)=>{
+							return `<li>${tip}</li>`
+						}).join('')}
+					</ul>
+				`)
+				.appendTo(this.el)
+
 		this.infosFleet = infosFleet
 
 		//this.updateEl()
@@ -12099,6 +12119,7 @@ class InfosFleetAirfield{
 		this.infosParent = infosParent
 		this.aircrafts = []
 		this.index = index
+		//this.isSortie = true
 		
 		let no = [
 			'一',
@@ -12113,6 +12134,17 @@ class InfosFleetAirfield{
 					'data-content': `第${no[index]}航空队`
 				})
 			)
+			/*
+			.append(
+				$('<label class="switch-mission"/>')
+					.append(
+						$('<input/>',{
+							type: 	'checkbox',
+							checked:true
+						})
+					)
+			)
+			*/
 			.append(
 				$('<div class="aircrafts"/>')
 					.append(
@@ -12149,6 +12181,13 @@ class InfosFleetAirfield{
 					.html('制空战力')
 					.append(
 						this.elSummaryFighterPower = $('<strong/>').html('-')
+					)
+			)
+			.append(
+				$('<span class="summary-item"/>')
+					.html('防空战力')
+					.append(
+						this.elSummaryFighterPowerAA = $('<strong/>').html('-')
 					)
 			)
 		
@@ -12193,6 +12232,14 @@ class InfosFleetAirfield{
 			return this.data
 		}
 	
+	// 获取搭载量
+		getCarry( equipment ){
+			if( Formula.equipmentType.Recons.indexOf( equipment.type ) > -1 )
+				return 4
+			else
+				return 18
+		}
+	
 	// 更新属性总览
 		summaryCalc(){
 			if( this.summaryCalculating || !this.data || !this.data.push )
@@ -12205,11 +12252,14 @@ class InfosFleetAirfield{
 						max: 0,
 						recon: 0
 					}
+					,fighterPowerAA = [0, 0]
+					,dataFighterPowerAA = []
 				
 				this.data.forEach(function( d ){
 					if( d[0] ){
 						let e = _g.data.items[d[0]]
-							,fp = Formula.calc.fighterPower( e, 18, d[1], d[2] )
+							,carry = this.getCarry(e)
+							,fp = Formula.calc.fighterPower( e, carry, d[1], d[2] )
 							,_distance = e.stat.distance || 0
 							
 						fighterPower[0]+= fp[0]
@@ -12221,27 +12271,40 @@ class InfosFleetAirfield{
 							distance.min = distance.min <= 0 ? _distance : Math.min( distance.min, _distance )
 							distance.max = Math.max( distance.max, _distance )
 						}
+
+						dataFighterPowerAA.push({
+							equipment: e,
+							star: d[1],
+							rank: d[2],
+							carry: carry
+						})
 					}
 				}, this)
 
-				if( Math.max( fighterPower[0], fighterPower[1] ) > 0 ){
-					let val1 = Math.floor(fighterPower[0])
-						,val2 = Math.floor(fighterPower[1])
-					this.elSummaryFighterPower.html(
-						val1 == val2
-							? val1
-							: val1 + '~' + val2
-					)
-					this.elSummaryFighterPower.removeClass('empty')
-				}else{
-					this.elSummaryFighterPower.html( '-' )
-					this.elSummaryFighterPower.addClass('empty')
+				fighterPowerAA = Formula.calcByField.fighterPowerAA(dataFighterPowerAA)
+
+				let renderMinMax = (data, dom) => {
+					if( Math.max( data[0], data[1] ) > 0 ){
+						let val1 = Math.floor(data[0])
+							,val2 = Math.floor(data[1])
+						dom.removeClass('empty').html(
+							val1 == val2
+								? val1
+								: val1 + '~' + val2
+						)
+					}else{
+						dom.addClass('empty').html( '-' )
+					}
 				}
+
+				renderMinMax(fighterPower, this.elSummaryFighterPower)
+				renderMinMax(fighterPowerAA, this.elSummaryFighterPowerAA)
 
 				// 航程计算
 				if( distance.min + distance.recon > 0 ){
 					let val = distance.min
-					if( distance.recon )
+					if( distance.recon ){
+						/*
 						val+= ` + ${
 							Math.round(Math.min(
 								3,
@@ -12251,11 +12314,18 @@ class InfosFleetAirfield{
 								)
 							))
 							}`
-					this.elSummaryDistance.html(val)
-					this.elSummaryDistance.removeClass('empty')
+						*/
+						val+= Math.round(Math.min(
+								3,
+								Math.max(
+									0,
+									Math.sqrt( distance.recon - distance.min )
+								)
+							))
+					}
+					this.elSummaryDistance.removeClass('empty').html(val)
 				}else{
-					this.elSummaryDistance.html( '-' )
-					this.elSummaryDistance.addClass('empty')
+					this.elSummaryDistance.addClass('empty').html( '-' )
 				}
 				
 				this.summaryCalculating = null
