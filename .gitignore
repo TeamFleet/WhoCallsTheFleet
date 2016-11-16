@@ -4,6 +4,7 @@ _.cmd
 koala*.*
 /!design
 !design
+node_modules/
 
 # Windows image file caches
 Thumbs.db
@@ -49,9 +50,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 /errorlog.txt
-/node_modules
-/dev-output/js-source/node_modules
-/source/libs/node_modules
 /app/assets/images/homebg-custom
 /bower_components
-/_build/node_modules

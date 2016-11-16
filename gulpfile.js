@@ -1,33 +1,41 @@
 "use strict";
 
-var root = '../';
-var rootSource = '../source';
-var rootOutput = '../dev-output';
+global.rootRequire = function(name) {
+	try{
+    	return require(name);
+	}catch(e){
+    	return require('./_/node_modules/' + name);
+	}
+}
+
+const root = './';
+const rootSource = './source';
+const rootOutput = './dev-output';
+
+const fs = rootRequire('fs');
+const path = rootRequire('path');
 
 // Include gulp
-var gulp = require('gulp'); 
-
-var fs = require('fs');
-var path = require('path');
+const gulp = rootRequire('gulp'); 
 
 // Include Plugins
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var less = require('gulp-less');
-//var minifyCSS = require('gulp-minify-css');
-var nano = require('gulp-cssnano');
-var postcss = require('gulp-postcss');
-var autoprefixer = require('autoprefixer');
-var LessPluginCleanCSS = require('less-plugin-clean-css');
-var cleanCSSPlugin = new LessPluginCleanCSS({advanced: true});
-var babel = require('gulp-babel');
-var rename = require('gulp-rename');
-var notify = require("gulp-notify");
-var watchLess = require('gulp-watch-less2');
+const concat = rootRequire('gulp-concat');
+const uglify = rootRequire('gulp-uglify');
+const less = rootRequire('gulp-less');
+//const minifyCSS = rootRequire('gulp-minify-css');
+const nano = rootRequire('gulp-cssnano');
+const postcss = rootRequire('gulp-postcss');
+const autoprefixer = rootRequire('autoprefixer');
+const LessPluginCleanCSS = rootRequire('less-plugin-clean-css');
+const cleanCSSPlugin = new LessPluginCleanCSS({advanced: true});
+const babel = rootRequire('gulp-babel');
+const rename = rootRequire('gulp-rename');
+const notify = rootRequire("gulp-notify");
+const watchLess = rootRequire('gulp-watch-less2');
 
 function parseKoalaJS(){
-	var filename = Array.prototype.pop.call(arguments);
-	var dir = Array.prototype.join.call(arguments, '/');
+	let filename = Array.prototype.pop.call(arguments);
+	let dir = Array.prototype.join.call(arguments, '/');
 	return fs.readFileSync( path.join( dir, filename ), 'utf-8')
 				.replace(/\r?\n|\r/g, '')
 				.split('// @koala-prepend ')
@@ -66,7 +74,6 @@ gulp.task('WhoCallsTheFleet-js-base', function(){
 gulp.task('WhoCallsTheFleet-js-app', function(){
 	return gulp.src(parseKoalaJS( rootSource, 'js-app.js' ))
 		.pipe(concat('js-app.js'))
-		/*
 		.pipe(babel({
 			'highlightCode':	false,
 			'comments':			false,
@@ -80,7 +87,6 @@ gulp.task('WhoCallsTheFleet-js-app', function(){
 					"transform-minify-booleans"
 				]
 		}))
-		*/
 		//.pipe(uglify())
 		.pipe(gulp.dest( path.join( root, 'app', 'assets' ) ));
 });
