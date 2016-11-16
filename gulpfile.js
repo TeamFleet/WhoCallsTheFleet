@@ -49,7 +49,7 @@ function parseKoalaJS(){
 };
 
 
-gulp.task('WhoCallsTheFleet-js-base', function(){
+gulp.task('js-base', function(){
 	return gulp.src(parseKoalaJS( rootSource, 'js-base.js' ))
 		.pipe(concat('js-base.js'))
 		.pipe(uglify())
@@ -71,7 +71,7 @@ gulp.task('WhoCallsTheFleet-js-base', function(){
 		.pipe(gulp.dest( path.join( root, 'app', 'assets' ) ));
 });
 
-gulp.task('WhoCallsTheFleet-js-app', function(){
+gulp.task('js-app', function(){
 	return gulp.src(parseKoalaJS( rootSource, 'js-app.js' ))
 		.pipe(concat('js-app.js'))
 		.pipe(babel({
@@ -80,8 +80,7 @@ gulp.task('WhoCallsTheFleet-js-app', function(){
 			'compact':			false,
 			'ast':				false,
 			"presets": 			[
-					"es2015",
-					"stage-0"
+					rootRequire('babel-preset-latest')
 				],
 			"plugins":			[
 					"transform-minify-booleans"
@@ -91,14 +90,14 @@ gulp.task('WhoCallsTheFleet-js-app', function(){
 		.pipe(gulp.dest( path.join( root, 'app', 'assets' ) ));
 });
 
-gulp.task('WhoCallsTheFleet-js-output', function(){
+gulp.task('js-output', function(){
 	return gulp.src(parseKoalaJS( rootOutput, 'js-source', 'output.js' ))
 		.pipe(concat('output.js'))
 		//.pipe(uglify())
 		.pipe(gulp.dest( path.join( rootOutput, 'js-output' ) ));
 });
 
-gulp.task('WhoCallsTheFleet-Web-js', function(){
+gulp.task('Web-js', function(){
 	return gulp.src(parseKoalaJS( rootOutput, 'assets-source', 'js.js' ))
 		.pipe(concat('js.js'))
 		.pipe(babel({
@@ -107,8 +106,8 @@ gulp.task('WhoCallsTheFleet-Web-js', function(){
 			'compact':			false,
 			'ast':				false,
 			"presets": 			[
-					"es2015",
-					"stage-0"
+					rootRequire('babel-preset-latest')//,
+					//"stage-0"
 				],
 			"plugins":			[
 					"transform-minify-booleans"
@@ -120,7 +119,7 @@ gulp.task('WhoCallsTheFleet-Web-js', function(){
 		.pipe(gulp.dest( path.join( rootOutput, 'assets-output' ) ));
 });
 
-gulp.task('WhoCallsTheFleet-Web-js-libs', function(){
+gulp.task('Web-js-libs', function(){
 	return gulp.src(parseKoalaJS( rootOutput, 'assets-source', 'libs.js' ))
 		.pipe(concat('libs.js'))
 		.pipe(gulp.dest( path.join( rootOutput, 'assets-output' ) ))
@@ -129,7 +128,7 @@ gulp.task('WhoCallsTheFleet-Web-js-libs', function(){
 		.pipe(gulp.dest( path.join( rootOutput, 'assets-output' ) ));
 });
 
-gulp.task('WhoCallsTheFleet-Web-js-lib-canvas', function(){
+gulp.task('Web-js-lib-canvas', function(){
 	return gulp.src(parseKoalaJS( rootOutput, 'assets-source', 'lib.canvas.js' ))
 		.pipe(concat('lib.canvas.js'))
 		.pipe(gulp.dest( path.join( rootOutput, 'assets-output' ) ))
@@ -138,7 +137,7 @@ gulp.task('WhoCallsTheFleet-Web-js-lib-canvas', function(){
 		.pipe(gulp.dest( path.join( rootOutput, 'assets-output' ) ));
 });
 
-gulp.task('WhoCallsTheFleet-css-app', function(){
+gulp.task('css-app', function(){
     let f = path.join( rootSource, 'css-app.less' );
 	return gulp.src(f)
         .pipe(watchLess(f, {verbose: true}, function(){
@@ -168,7 +167,7 @@ gulp.task('WhoCallsTheFleet-css-app', function(){
     */
 });
 
-gulp.task('WhoCallsTheFleet-css-base', function(){
+gulp.task('css-base', function(){
     let f = path.join( rootSource, 'css-base.less' );
 	return gulp.src(f)
         .pipe(watchLess(f, {verbose: true}, function(){
@@ -187,7 +186,7 @@ gulp.task('WhoCallsTheFleet-css-base', function(){
     */
 });
 
-gulp.task('WhoCallsTheFleet-Web-css', function(){
+gulp.task('Web-css', function(){
     let f = path.join( rootOutput, 'assets-source', 'css.less' );
 	return gulp.src(f)
         .pipe(watchLess(f, {verbose: true}, function(){
@@ -267,50 +266,50 @@ function lessCompile( file, outputPath, options ){
     }
 }
 
-gulp.task('WhoCallsTheFleet-watch', function(){
+gulp.task('watch', function(){
 	gulp.watch(
 			path.join( rootSource, 'js-app', '**/*.js' ),
-			['WhoCallsTheFleet-js-app', 'WhoCallsTheFleet-Web-js']
+			['js-app', 'Web-js']
 		);
 	gulp.watch(
 			path.join( rootSource, 'KanColle-JS-Kit', '**/*.js' ),
-			['WhoCallsTheFleet-js-app', 'WhoCallsTheFleet-Web-js']
+			['js-app', 'Web-js']
 		);
 	gulp.watch(
 			path.join( rootSource, 'nw.js-base-framework', '**/*.js' ),
-			['WhoCallsTheFleet-js-base', 'WhoCallsTheFleet-js-app', 'WhoCallsTheFleet-Web-js']
+			['js-base', 'js-app', 'Web-js']
 		);
 	gulp.watch(
 			path.join( rootSource, 'libs', '**/*.js' ),
-			['WhoCallsTheFleet-js-app', 'WhoCallsTheFleet-Web-js-libs']
+			['js-app', 'Web-js-libs']
 		);
 	gulp.watch(
 			path.join( rootSource, 'js-app', 'canvas', '**/*.js' ),
-			['WhoCallsTheFleet-Web-js-lib-canvas']
+			['Web-js-lib-canvas']
 		);
 	//gulp.watch(
 	//		path.join( rootSource, '**/*.js' ),
-	//		['WhoCallsTheFleet-js-base', 'WhoCallsTheFleet-js-app', 'WhoCallsTheFleet-Web-js', 'WhoCallsTheFleet-Web-js-libs']
+	//		['js-base', 'js-app', 'Web-js', 'Web-js-libs']
 	//	);
 	gulp.watch(
 			path.join( rootOutput, 'js-source', '**/*.js' ),
-			['WhoCallsTheFleet-js-output']
+			['js-output']
 		);
 	//gulp.watch(
 	//		path.join( rootSource, '**/*.less' ),
-	//		['WhoCallsTheFleet-css-app', 'WhoCallsTheFleet-css-base', 'WhoCallsTheFleet-Web-css']
+	//		['css-app', 'css-base', 'Web-css']
 	//	);
 });
 
 gulp.task('default',[
-	'WhoCallsTheFleet-js-base',
-	'WhoCallsTheFleet-js-app',
-	'WhoCallsTheFleet-js-output',
-	'WhoCallsTheFleet-Web-js',
-	'WhoCallsTheFleet-Web-js-libs',
-	'WhoCallsTheFleet-Web-js-lib-canvas',
-	'WhoCallsTheFleet-css-base',
-	'WhoCallsTheFleet-css-app',
-	'WhoCallsTheFleet-Web-css',
-	'WhoCallsTheFleet-watch'
+	'js-base',
+	'js-app',
+	'js-output',
+	'Web-js',
+	'Web-js-libs',
+	'Web-js-lib-canvas',
+	'css-base',
+	'css-app',
+	'Web-css',
+	'watch'
 ]);

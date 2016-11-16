@@ -25,6 +25,7 @@
     "babel-core": "^6.0.12",
     "babel-plugin-transform-es3-member-expression-literals": "^6.1.18",
     "babel-plugin-transform-minify-booleans": "^6.1.18",
+    "babel-preset-latest": "^6.16.0",
     "babel-preset-stage-0": "^6.1.18",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.0.0",

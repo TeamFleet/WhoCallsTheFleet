@@ -8972,91 +8972,85 @@ TablelistShips.prototype.append_item = function (ship_data, header_index) {
 	return tr;
 };
 
-TablelistShips.prototype.append_all_items = function () {
-	function _do(i, j) {
-		var _this15 = this;
+TablelistShips.prototype.create_title_checkbox = function (checkbox_id, index) {
+	return $('<input type="checkbox" id="' + checkbox_id + '"/>').prop('disabled', _g.data['ship_type_order'][index]['donotcompare'] ? !0 : !1).data('ships', $()).on({
+		'change': function change() {
+			checkbox.data('ships').filter(':visible').each(function (_index, element) {
+				$(element).data('checkbox').prop('checked', checkbox.prop('checked')).trigger('change', [!0]);
+			});
+		},
+		'docheck': function docheck() {
+			var trs = checkbox.data('ships').filter(':visible'),
+			    checked = trs.filter('[compare-checked=true]');
+			if (!checked.length) {
+				checkbox.prop({
+					'checked': !1,
+					'indeterminate': !1
+				});
+			} else if (checked.length < trs.length) {
+				checkbox.prop({
+					'checked': !1,
+					'indeterminate': !0
+				});
+			} else {
+				checkbox.prop({
+					'checked': !0,
+					'indeterminate': !1
+				});
+			}
+		}
+	});
+};
 
+TablelistShips.prototype.append_all_items = function () {
+	var _do = function _do(i, j) {
 		if (_g.data.ship_id_by_type[i]) {
 			if (!j) {
-				var k;
+				var data_shiptype = void 0,
+				    _checkbox = void 0;
 
-				var _index;
+				if (_typeof(_g.ship_type_order[i]) == 'object') {
+					data_shiptype = _g.data.ship_types[_g.ship_type_order[i][0]];
+				} else {
+					data_shiptype = _g.data.ship_types[_g.ship_type_order[i]];
+				}
 
-				(function () {
-					var data_shiptype = void 0,
-					    checkbox = void 0;
+				var checkbox_id = Tablelist.genId();
 
-					if (_typeof(_g.ship_type_order[i]) == 'object') {
-						data_shiptype = _g.data.ship_types[_g.ship_type_order[i][0]];
-					} else {
-						data_shiptype = _g.data.ship_types[_g.ship_type_order[i]];
-					}
+				undefined.last_item = $('<tr class="typetitle" data-trindex="' + undefined.trIndex + '">' + '<th colspan="' + (undefined.columns.length + 1) + '">' + '<label class="checkbox" for="' + checkbox_id + '">' + _g.data['ship_type_order'][i]['name']['zh_cn'] + (_g.data['ship_type_order'][i]['name']['zh_cn'] == data_shiptype['full_zh'] ? '<small>[' + data_shiptype['code'] + ']</small>' : '') + '</label></th></tr>').appendTo(undefined.dom.tbody);
+				undefined.trIndex++;
 
-					var checkbox_id = Tablelist.genId();
+				var k = 0;
+				while (k < undefined.flexgrid_empty_count) {
+					var _index = undefined.trIndex + _g.data.ship_id_by_type[i].length + k;
+					$('<tr class="empty" data-trindex="' + _index + '" data-shipid/>').appendTo(undefined.dom.tbody);
+					k++;
+				}
 
-					_this15.last_item = $('<tr class="typetitle" data-trindex="' + _this15.trIndex + '">' + '<th colspan="' + (_this15.columns.length + 1) + '">' + '<label class="checkbox" for="' + checkbox_id + '">' + _g.data['ship_type_order'][i]['name']['zh_cn'] + (_g.data['ship_type_order'][i]['name']['zh_cn'] == data_shiptype['full_zh'] ? '<small>[' + data_shiptype['code'] + ']</small>' : '') + '</label></th></tr>').appendTo(_this15.dom.tbody);
-					_this15.trIndex++;
+				_checkbox = undefined.create_title_checkbox(checkbox_id, i);
 
-					k = 0;
-
-					while (k < _this15.flexgrid_empty_count) {
-						_index = _this15.trIndex + _g.data.ship_id_by_type[i].length + k;
-
-						$('<tr class="empty" data-trindex="' + _index + '" data-shipid/>').appendTo(_this15.dom.tbody);
-						k++;
-					}
-
-					checkbox = $('<input type="checkbox" id="' + checkbox_id + '"/>').prop('disabled', _g.data['ship_type_order'][i]['donotcompare'] ? !0 : !1).on({
-						'change': function change() {
-							checkbox.data('ships').filter(':visible').each(function (index, element) {
-								$(element).data('checkbox').prop('checked', checkbox.prop('checked')).trigger('change', [!0]);
-							});
-						},
-						'docheck': function docheck() {
-							var trs = checkbox.data('ships').filter(':visible'),
-							    checked = trs.filter('[compare-checked=true]');
-							if (!checked.length) {
-								checkbox.prop({
-									'checked': !1,
-									'indeterminate': !1
-								});
-							} else if (checked.length < trs.length) {
-								checkbox.prop({
-									'checked': !1,
-									'indeterminate': !0
-								});
-							} else {
-								checkbox.prop({
-									'checked': !0,
-									'indeterminate': !1
-								});
-							}
-						}
-					}).data('ships', $()).prependTo(_this15.last_item.find('th'));
-
-					_this15.header_checkbox[i] = checkbox;
-				})();
+				undefined.header_checkbox[i] = _checkbox;
 			}
 
-			this.append_item(_g.data.ships[_g.data.ship_id_by_type[i][j]], i);
+			undefined.append_item(_g.data.ships[_g.data.ship_id_by_type[i][j]], i);
 
 			setTimeout(function () {
 				if (j >= _g.data.ship_id_by_type[i].length - 1) {
-					this.trIndex += this.flexgrid_empty_count;
+					undefined.trIndex += undefined.flexgrid_empty_count;
 					_do(i + 1, 0);
 				} else {
 					_do(i, j + 1);
 				}
-			}.bind(this), 0);
+			}, 0);
 		} else {
-			this.mark_high();
-			this.thead_redraw();
-			_frame.app_main.loaded('tablelist_' + this._index, !0);
+			undefined.mark_high();
+			undefined.thead_redraw();
+			_frame.app_main.loaded('tablelist_' + undefined._index, !0);
 
-			delete this.last_item;
+			delete undefined.last_item;
 		}
-	}
-	_do = _do.bind(this);
+	};
+
 	_do(0, 0);
 };
 

@@ -196,8 +196,49 @@ TablelistShips.prototype.append_item = function( ship_data, header_index ){
 	return tr
 }
 
-TablelistShips.prototype.append_all_items = function(){
-	function _do( i, j ){
+TablelistShips.prototype.create_title_checkbox = (
+	checkbox_id,
+	index
+) => {
+	return $('<input type="checkbox" id="' + checkbox_id + '"/>')
+			//.prop('disabled', _g.data['ship_type_order'][i+1]['donotcompare'] ? true : false)
+			.prop('disabled', _g.data['ship_type_order'][index]['donotcompare'] ? true : false)
+			.data('ships', $())
+			.on({
+				'change': () => {
+					checkbox.data('ships').filter(':visible').each((_index, element) => {
+						$(element).data('checkbox').prop(
+							'checked',
+							checkbox.prop('checked')
+						).trigger('change', [true])
+					})
+				},
+				'docheck': () => {
+					// ATTR: compare-checked
+					let trs = checkbox.data('ships').filter(':visible')
+						,checked = trs.filter('[compare-checked=true]')
+					if( !checked.length ){
+						checkbox.prop({
+							'checked': 			false,
+							'indeterminate': 	false
+						})
+					}else if( checked.length < trs.length ){
+						checkbox.prop({
+							'checked': 			false,
+							'indeterminate': 	true
+						})
+					}else{
+						checkbox.prop({
+							'checked': 			true,
+							'indeterminate': 	false
+						})
+					}
+				}
+			})
+};
+
+TablelistShips.prototype.append_all_items = () => {
+	let _do = ( i, j ) => {
 		if( _g.data.ship_id_by_type[i] ){
 			if( !j ){
 				let data_shiptype
@@ -236,39 +277,7 @@ TablelistShips.prototype.append_all_items = function(){
 						k++
 					}
 
-				checkbox = $('<input type="checkbox" id="' + checkbox_id + '"/>')
-						//.prop('disabled', _g.data['ship_type_order'][i+1]['donotcompare'] ? true : false)
-						.prop('disabled', _g.data['ship_type_order'][i]['donotcompare'] ? true : false)
-						.on({
-							'change': function(){
-								checkbox.data('ships').filter(':visible').each(function(index, element){
-									$(element).data('checkbox').prop('checked', checkbox.prop('checked')).trigger('change', [true])
-								})
-							},
-							'docheck': function(){
-								// ATTR: compare-checked
-								var trs = checkbox.data('ships').filter(':visible')
-									,checked = trs.filter('[compare-checked=true]')
-								if( !checked.length ){
-									checkbox.prop({
-										'checked': 			false,
-										'indeterminate': 	false
-									})
-								}else if( checked.length < trs.length ){
-									checkbox.prop({
-										'checked': 			false,
-										'indeterminate': 	true
-									})
-								}else{
-									checkbox.prop({
-										'checked': 			true,
-										'indeterminate': 	false
-									})
-								}
-							}
-						})
-						.data('ships', $())
-						.prependTo( this.last_item.find('th') )
+				checkbox = this.create_title_checkbox( checkbox_id , i );
 
 				this.header_checkbox[i] = checkbox
 
@@ -277,14 +286,14 @@ TablelistShips.prototype.append_all_items = function(){
 
 			this.append_item( _g.data.ships[ _g.data.ship_id_by_type[i][j] ], i )
 
-			setTimeout(function(){
+			setTimeout(() => {
 				if( j >= _g.data.ship_id_by_type[i].length - 1 ){
 					this.trIndex+= this.flexgrid_empty_count
 					_do( i+1, 0 )
 				}else{
 					_do( i, j+1 )
 				}
-			}.bind(this), 0)
+			}, 0)
 		}else{
 			this.mark_high()
 			this.thead_redraw()
@@ -294,7 +303,7 @@ TablelistShips.prototype.append_all_items = function(){
 			//_g.log( this.last_item )
 		}
 	}
-	_do = _do.bind(this)
+	//_do = _do.bind(this)
 	_do( 0, 0 )
 }
 	
