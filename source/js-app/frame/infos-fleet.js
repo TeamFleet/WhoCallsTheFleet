@@ -856,22 +856,50 @@ InfosFleet.modalExportText_show = function(data){
 	if( !data )
 		return false
 	
+	//console.log( InfosFleet.decompress(data.data) )
+	
 	let text = ''
+		,fields = []
 		,fleets = InfosFleet.decompress(data.data).filter(function(value){
-						return (value && value.length)
-					}) || []
+					_g.log(value);
+					if( value && value.length ){
+						return value.some( arr => {
+							// 如果第一级array第一个数据为number或string，认为是舰娘ID，判定value为舰队
+							_g.log('* ', arr)
+							if( arr && arr.length ){
+								if( arr.some(item => {
+									_g.log('  * ', item)
+									switch( typeof item ){
+										case 'number':
+										case 'string':
+											return true;
+									}
+								}) )
+									return true;
+								arr.some(item => {
+									_g.log('  * ', item)
+									if( item && item.length && item[0] ){
+										fields.push(arr)
+										return true;
+									}
+								})
+							}
+							return false;
+						} )
+					}
+					return false;
+				}) || []
 	
 	text+= data.name || ''
 	
 	fleets.forEach(function(fleet, i){
-		//console.log(fleet)
 		text+= (text ? '\n' : '')
 			+ ( fleets.length > 1 ? '\n第 ' + (i+1) + ' 舰队' : '')
 		fleet.filter(function(value){
 			return (value && value[0] && value.length > 0)
 		}).forEach(function(ship, j){
 			text+= '\n'
-				+ '(' + (i ? (i+1) + '-' : '') + (j+1) + ')'
+				+ '(' + (i ? (i+1) + '-' : '') + (j+1) + ') '
 				+ _g.data.ships[ship[0]]._name
 				+ ( ship[1] && ship[1][0] ? ' Lv.' + ship[1][0] : '' )
 			let equipments = ship[2] || []
@@ -885,6 +913,20 @@ InfosFleet.modalExportText_show = function(data){
 					+ (stars[k] ? '★'+stars[k] : '')
 					+ (ranks[k] ? '['+_g.textRank[ranks[k]]+']' : '')
 			})
+		})
+	})
+	
+	_g.log(fields);
+	fields.forEach((field, i) => {
+		text+= (text ? '\n' : '')
+			+ ( field.length > 1 ? '\n第 ' + (i+1) + ' 航空队' : '')
+		field.filter( squard => {
+			return (squard && squard.length && squard[0])
+		}).forEach((squard, j) => {
+			text+= '\n'
+				+ '(' + (j+1) + ') '
+				+ _g.data.items[squard[0]]._name
+				+ (squard[1] ? ' ['+_g.textRank[squard[1]]+']' : '')
 		})
 	})
 	
