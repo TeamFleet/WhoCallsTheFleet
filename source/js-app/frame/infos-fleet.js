@@ -819,12 +819,20 @@ InfosFleet.modalExport = function(curval){
 			.append(
 				$('<p class="note-codeusage"/>').html('* 该配置代码可用于<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
 			)
+			/*
 			.append(
 				$('<button class="button"/>').html('复制到剪切板')
 					.on('click', function(){
 						node.clipboard.set(InfosFleet.elModalExportTextarea.val(), 'text');
 					})
 			)
+			*/
+		let btn = $('<button class="button">复制到剪切板</button>').appendTo(InfosFleet.elModalExport)
+		new Clipboard(btn[0], {
+			text: function() {
+				return InfosFleet.elModalExportTextarea.val();
+			}
+		});
 	}
 	InfosFleet.elModalExportTextarea.val(curval || '')
 	

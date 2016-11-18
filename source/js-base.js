@@ -41,6 +41,7 @@
 // @koala-prepend "../_/node_modules/sprintf-js/src/sprintf.js"
 // @koala-prepend "../_/node_modules/pepjs/dist/pep.min.js"
 // @koala-prepend "../_/node_modules/localforage/dist/localforage.nopromises.min.js"
-// @koala-prepend "../_/node_modules/kckit/dist/kckit.js"
+// @koala-prepend "../_/node_modules/kckit/dist/kckit.min.js"
+// @koala-prepend "../_/node_modules/clipboard/dist/clipboard.min.js"
 
 // @koala-prepend "nw.js-base-framework/source/js-base/!last.js"

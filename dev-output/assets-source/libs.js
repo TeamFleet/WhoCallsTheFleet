@@ -10,3 +10,4 @@
 // @koala-prepend "../../_/node_modules/localforage/dist/localforage.nopromises.min.js"
 
 // @koala-prepend "../../_/node_modules/kckit/dist/kckit.min.js"
+// @koala-prepend "../../_/node_modules/clipboard/dist/clipboard.min.js"
