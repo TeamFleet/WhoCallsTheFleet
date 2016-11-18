@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",199,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/7.png)\"></s><strong>SB2U</strong><small>舰载轰炸机</small></h3><span>航程: 4</span>")

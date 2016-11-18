@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",197,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/6.png)\"></s><strong>F4F-3</strong><small>舰载战斗机</small></h3><span>+1 火力</span><span>+4 对空</span><span>+2 回避</span><span>航程: 4</span>")
