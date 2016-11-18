@@ -6093,9 +6093,14 @@ InfosFleet.modalExport = function (curval) {
 	if (!InfosFleet.elModalExport) {
 		InfosFleet.elModalExport = $('<div/>').append(InfosFleet.elModalExportTextarea = $('<textarea/>', {
 			'readonly': !0
-		})).append($('<p class="note-codeusage"/>').html('* 该配置代码可用于<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')).append($('<button class="button"/>').html('复制到剪切板').on('click', function () {
-			node.clipboard.set(InfosFleet.elModalExportTextarea.val(), 'text');
-		}));
+		})).append($('<p class="note-codeusage"/>').html('* 该配置代码可用于<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>'));
+
+		var btn = $('<button class="button">复制到剪切板</button>').appendTo(InfosFleet.elModalExport);
+		new Clipboard(btn[0], {
+			text: function text() {
+				return InfosFleet.elModalExportTextarea.val();
+			}
+		});
 	}
 	InfosFleet.elModalExportTextarea.val(curval || '');
 
@@ -6115,8 +6120,33 @@ InfosFleet.modalExportText_show = function (data) {
 	if (!data) return !1;
 
 	var text = '',
+	    fields = [],
 	    fleets = InfosFleet.decompress(data.data).filter(function (value) {
-		return value && value.length;
+		_g.log(value);
+		if (value && value.length) {
+			return value.some(function (arr) {
+				_g.log('* ', arr);
+				if (arr && arr.length) {
+					if (arr.some(function (item) {
+						_g.log('  * ', item);
+						switch (typeof item === 'undefined' ? 'undefined' : _typeof(item)) {
+							case 'number':
+							case 'string':
+								return !0;
+						}
+					})) return !0;
+					arr.some(function (item) {
+						_g.log('  * ', item);
+						if (item && item.length && item[0]) {
+							fields.push(arr);
+							return !0;
+						}
+					});
+				}
+				return !1;
+			});
+		}
+		return !1;
 	}) || [];
 
 	text += data.name || '';
@@ -6126,7 +6156,7 @@ InfosFleet.modalExportText_show = function (data) {
 		fleet.filter(function (value) {
 			return value && value[0] && value.length > 0;
 		}).forEach(function (ship, j) {
-			text += '\n' + '(' + (i ? i + 1 + '-' : '') + (j + 1) + ')' + _g.data.ships[ship[0]]._name + (ship[1] && ship[1][0] ? ' Lv.' + ship[1][0] : '');
+			text += '\n' + '(' + (i ? i + 1 + '-' : '') + (j + 1) + ') ' + _g.data.ships[ship[0]]._name + (ship[1] && ship[1][0] ? ' Lv.' + ship[1][0] : '');
 			var equipments = ship[2] || [],
 			    stars = ship[3] || [],
 			    ranks = ship[4] || [];
@@ -6135,6 +6165,16 @@ InfosFleet.modalExportText_show = function (data) {
 			}).forEach(function (equipment, k) {
 				text += (!k ? ' | ' : ', ') + _g.data.items[equipment]._name + (stars[k] ? '★' + stars[k] : '') + (ranks[k] ? '[' + _g.textRank[ranks[k]] + ']' : '');
 			});
+		});
+	});
+
+	_g.log(fields);
+	fields.forEach(function (field, i) {
+		text += (text ? '\n' : '') + (field.length > 1 ? '\n第 ' + (i + 1) + ' 航空队' : '');
+		field.filter(function (squard) {
+			return squard && squard.length && squard[0];
+		}).forEach(function (squard, j) {
+			text += '\n' + '(' + (j + 1) + ') ' + _g.data.items[squard[0]]._name + (squard[1] ? ' [' + _g.textRank[squard[1]] + ']' : '');
 		});
 	});
 
