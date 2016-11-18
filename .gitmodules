@@ -1,6 +1,3 @@
-[submodule "source/KanColle-JS-Kit"]
-	path = source/KanColle-JS-Kit
-	url = https://github.com/Diablohu/KanColle-JS-Kit.git
 [submodule "source/nw.js-base-framework"]
 	path = source/nw.js-base-framework
 	url = https://github.com/Diablohu/nw.js-base-framework.git
