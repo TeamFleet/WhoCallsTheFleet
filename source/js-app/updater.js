@@ -46,7 +46,7 @@ var _updater = {
 // 获取本地版本
 	_updater.get_local_version = function(){
 		var localVersions = localStorage['nwjs-data-version']
-		_updater.local_versions = JSON.parse( localStorage['nwjs-data-version'] || '{}' )
+		_updater.local_versions = JSON.parse( localVersions || '{}' )
 		if( localVersions ){
 			_g.log('本地版本: ' + _updater.local_versions )
 			_updater.updatable = true
