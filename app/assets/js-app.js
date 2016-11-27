@@ -6316,7 +6316,7 @@ _frame.infos.__ship = function (id) {
 	}
 
 	if (d['additional_night_shelling']) {
-		$('<div class="add_equip add_other"/>').html('<div>\n\t\t\t\t\t<h4 data-content="\u989D\u5916\u80FD\u529B">\u989D\u5916\u80FD\u529B</h4>\n\t\t\t\t\t<span>\u591C\u6218\u70AE\u51FB</span>\n\t\t\t\t</div>').appendTo(dom);
+		$('<div class="add_equip add_other"/>').html('<div>\n                    <h4 data-content="\u989D\u5916\u80FD\u529B">\u989D\u5916\u80FD\u529B</h4>\n                    <span>\u591C\u6218\u70AE\u51FB</span>\n                </div>').appendTo(dom);
 	}
 
 	var cvId = d.getRel('cv'),

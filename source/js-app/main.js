@@ -27,8 +27,8 @@
         'bgimg_dir':node.path.join(_g.root, '/bgimgs/'),
         'bgimg_custom_dir':node.path.join(_g.root, '/app/assets/images/homebg-custom/'),
         'pics': {
-            'ships': 	node.path.join(_g.root, '/pics/ships/'),
-            'items': 	node.path.join(_g.root, '/pics/items/')
+            'ships': 	    node.path.join(_g.root, '/pics/ships/'),
+            'items': 	    node.path.join(_g.root, '/pics/items/')
         }
     }
     KC.path.pics = _g.path.pics
