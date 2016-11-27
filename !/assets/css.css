@@ -1945,6 +1945,9 @@ section.update_journal a.link_ship {
 fieldset {
   margin: 1.5em 0;
 }
+.hide {
+  display: none !important;
+}
 #layout {
   padding-top: 4rem;
   height: 100%;
