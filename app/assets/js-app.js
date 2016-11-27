@@ -2129,12 +2129,17 @@ var _updater = {
 	'local_versions': {},
 	'remote_root': 'http://fleet.moe',
 	'remote_url': 'http://fleet.moe/versions.json',
-	'remote_data': {}
+	'remote_data': {},
+	updatable: !1
 };
 
 _updater.get_local_version = function () {
-	_updater.local_versions = JSON.parse(localStorage['nwjs-data-version'] || '{}');
-
+	var localVersions = localStorage['nwjs-data-version'];
+	_updater.local_versions = JSON.parse(localVersions || '{}');
+	if (localVersions) {
+		_g.log('本地版本: ' + _updater.local_versions);
+		_updater.updatable = !0;
+	}
 	return _updater.local_versions;
 };
 
@@ -2150,7 +2155,7 @@ _updater.get_remote = function () {
 			deferred.reject(new Error(response.statusCode));
 		} else {
 			_updater.remote_data = JSON.parse(body || '{}') || {};
-
+			_g.log('服务器版本: ' + _updater.remote_data);
 			deferred.resolve(_updater.remote_data);
 		}
 	});
@@ -2158,6 +2163,8 @@ _updater.get_remote = function () {
 };
 
 _updater.get_packages_updated = function () {
+	if (!_updater.updatable || !_updater.remote_data.packages) return [];
+
 	function compareVersion(a, b) {
 		var i;
 		var len;
@@ -2183,11 +2190,9 @@ _updater.get_packages_updated = function () {
 	};
 	var updated = [];
 
-	for (var i in _updater.local_versions) {
-		if (_updater.remote_data.packages && _updater.remote_data.packages[i]) {
-			var remote_version = _updater.remote_data.packages[i].version ? _updater.remote_data.packages[i].version : _updater.remote_data.packages[i];
-			if (compareVersion(remote_version, _updater.local_versions[i]) > 0) updated.push(i);
-		}
+	for (var i in _updater.remote_data.packages) {
+		var remote_version = _updater.remote_data.packages[i].version ? _updater.remote_data.packages[i].version : _updater.remote_data.packages[i];
+		if (!_updater.local_versions[i]) updated.push(i);else if (compareVersion(remote_version, _updater.local_versions[i]) > 0) updated.push(i);
 	}
 
 	return updated.sort(function (a, b) {
@@ -2369,7 +2374,7 @@ _updater.update = function () {
 	});
 
 	promise_chain = promise_chain.then(function () {
-		if (!size_received) return !0;
+		if (size_total > size_received) return !0;
 		_g.log('');
 		_g.log('全部数据包下载完成');
 		var deferred = Q.defer(),
@@ -5012,8 +5017,7 @@ var InfosFleetSubFleet = function () {
 			i++;
 		}
 
-		this.elSummary = $('<span class="summary"/>').appendTo(this.el).append($('<span class="summary-item"/>').html('航速').append(this.elSummarySpeed = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('制空战力').append(this.elSummaryFighterPower = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('索敌能力').append(this.elSummaryLos = $('<strong/>').html('-'))).append($('<span class="summary-item summary-item-consummation"/>').html('总消耗').append(this.elSummaryConsummation = $('<strong/>').html('-')));
-
+		this.elSummary = $('<span class="summary"/>').appendTo(this.el).append($('<span class="summary-item"/>').html('航速').append(this.elSummarySpeed = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('制空战力').append(this.elSummaryFighterPower = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('索敌能力').append(this.elSummaryLos = $('<strong/>').html('-'))).append($('<span class="summary-item summary-item-consummation"/>').html('总消耗').append(this.elSummaryConsummation = $('<strong/>').html('-'))).append(this.elSummaryTPcontainer = $('<span class="summary-item hide"/>').html('运输TP').append(this.elSummaryTP = $('<strong/>').html('-')));
 
 		this.infosFleet = infosFleet;
 
@@ -5056,8 +5060,8 @@ var InfosFleetSubFleet = function () {
 						var fighterPower = [0, 0],
 						    fleetSpeet = 'fast',
 						    consumFuel = 0,
-						    consumAmmo = 0;
-
+						    consumAmmo = 0,
+						    tp = 0;
 
 						_this6.ships.forEach(function (shipdata) {
 							if (shipdata.data[0]) {
@@ -5071,6 +5075,8 @@ var InfosFleetSubFleet = function () {
 
 								consumFuel += ship.getAttribute('fuel', shipdata.shipLv) || 0;
 								consumAmmo += ship.getAttribute('ammo', shipdata.shipLv) || 0;
+
+								tp += shipdata.calculate('TP');
 							}
 						});
 
@@ -5087,6 +5093,15 @@ var InfosFleetSubFleet = function () {
 						}
 
 						_this6.elSummaryConsummation.html(consumFuel || consumAmmo ? '<span class="fuel">' + consumFuel + '</span><span class="ammo">' + consumAmmo + '</span>' : '-');
+
+						if (tp > 40) {
+							var rS = Math.floor(tp),
+							    rA = Math.floor(rS * 0.7);
+							_this6.elSummaryTPcontainer.removeClass('hide');
+							_this6.elSummaryTP.html('A=' + rA + ' / S=' + rS);
+						} else {
+							_this6.elSummaryTPcontainer.addClass('hide');
+						}
 					})();
 				}
 
@@ -5306,13 +5321,19 @@ var InfosFleetShip = function () {
 							'hqLv': this.infosFleet.data.hq_lv,
 							'shipLv': this.shipLv
 						});
-						break;
 					default:
 						return Formula[type](this.shipId, this.data[2], this.data[3], this.data[4]);
-						break;
 				}
 			}
-			return Formula.calculate(type, this.shipId, this.data[2], this.data[3], this.data[4]) || '-';
+			if (Formula.calculate[type]) {
+				return Formula.calculate(type, this.shipId, this.data[2], this.data[3], this.data[4]) || '-';
+			}
+			if (Formula.calcByShip[type]) {
+				return Formula.calcByShip[type](_g.data.ships[this.shipId], this.data[2].map(function (id) {
+					return _g.data.items[id];
+				})) || 0;
+			}
+			return '-';
 		}
 	}, {
 		key: 'updateEl',
@@ -5845,9 +5866,9 @@ var InfosFleetSubAirfield = function () {
 
 		$('<dl class="gap"/>').appendTo(this.el);
 		var tips = ['“航程”决定了该航空队在出击时所能抵达的最远作战点，数值由航程属性最小的中队决定，侦察机也可以提高这一数值。', '“制空战力”表示该航空队执行出击任务时的制空能力，“防空战力”则表示防空任务能力。', '局地战斗机的“迎击”属性也可以提高制空战力。装备列表中局战的“回避”列数值即为“迎击”属性。', '除了局地战斗机的“迎击”和“对爆”属性外，在航空队种配置侦察机也可以有效提高防空战力。'];
-		$('<dl class="tips"/>').html('\n\t\t\t\t\t<ul class="tip-content">\n\t\t\t\t\t\t<h4 data-content="\u5C0F\u8D34\u58EB">\u5C0F\u8D34\u58EB</h4>\n\t\t\t\t\t\t' + tips.map(function (tip) {
+		$('<dl class="tips"/>').html('\n                    <ul class="tip-content">\n                        <h4 data-content="\u5C0F\u8D34\u58EB">\u5C0F\u8D34\u58EB</h4>\n                        ' + tips.map(function (tip) {
 			return '<li>' + tip + '</li>';
-		}).join('') + '\n\t\t\t\t\t</ul>\n\t\t\t\t').appendTo(this.el);
+		}).join('') + '\n                    </ul>\n                ').appendTo(this.el);
 
 		this.infosFleet = infosFleet;
 	}

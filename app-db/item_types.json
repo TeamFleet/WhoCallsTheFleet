@@ -1,5 +1,5 @@
-{"name":{"ja_jp":"ソナー","zh_cn":"声纳"},"icon":18,"equipable_on_type":[1,2,3,13,14,19,21,28,29],"id":27,"_id":"0H4eV908UV8MSspG","main_attribute":"asw","equipable_extra_ship":[450]}
-{"name":{"ja_jp":"上陸用舟艇","zh_cn":"登陆艇"},"icon":20,"equipable_on_type":[12,15],"id":38,"_id":"0mzoj3jBxJLxImCw","main_attribute":"fire","equipable_extra_ship":[147,199,200,352,418,434,435,450,464,468,469,470,487]}
+{"name":{"ja_jp":"ソナー","zh_cn":"声纳"},"icon":18,"equipable_on_type":[1,2,3,13,14,19,21,28,29],"id":27,"_id":"0H4eV908UV8MSspG","main_attribute":"asw","equipable_extra_ship":[372,450,491]}
+{"name":{"ja_jp":"上陸用舟艇","zh_cn":"登陆艇"},"icon":20,"equipable_on_type":[15],"id":38,"_id":"0mzoj3jBxJLxImCw","main_attribute":"fire","equipable_extra_ship":[102,103,104,105,106,107,147,199,200,348,352,372,418,434,435,450,451,464,468,469,470,487]}
 {"name":{"ja_jp":"大型水上飛艇","zh_cn":"大型水上飞艇"},"icon":33,"equipable_on_type":[24],"id":45,"_id":"2kyVSaJDRhLIRF1B","main_attribute":"los"}
 {"name":{"ja_jp":"大型電探/レーダー(II)","zh_cn":"超大型电探/雷达"},"icon":11,"equipable_on_type":[6,7,8],"id":47,"_id":"324r6pQR5y1JSCP4","main_attribute":"hit"}
 {"name":{"ja_jp":"小型電探/レーダー","zh_cn":"小型电探/雷达"},"icon":11,"equipable_on_type":[1,2,3,4,5,6,7,8,9,10,11,12,15,16,17,19,21,23,24,28,29],"id":24,"_id":"4WDo2pMdGC5UySnE","main_attribute":"hit"}
@@ -24,23 +24,23 @@
 {"name":{"ja_jp":"小口径高角主砲＋高射装置","zh_cn":"小口径高角主炮 + 高射装置"},"icon":16,"equipable_on_type":[1,2,3,12,15,16,17,19,21,24,28,29],"id":3,"_id":"R6WfkXVxzAtKJ34p","main_attribute":"fire"}
 {"name":{"ja_jp":"補給物資","zh_cn":"补给物资"},"equipable_on_type":[29],"id":49,"_id":"RRgrfnZxikUAvorb","icon":35}
 {"name":{"ja_jp":"追加装甲(中型)","zh_cn":"增设装甲板 (中型)"},"icon":23,"equipable_on_type":[4,5,9,12,16,17,21,23,24],"id":33,"_id":"U43AUs91eNKJuhCB","main_attribute":"armor","equipable_extra_ship":[147]}
-{"name":{"ja_jp":"大型探照灯","zh_cn":"大型探照灯"},"icon":24,"equipable_on_type":[6,7,8],"id":46,"_id":"UQE5VA4awY2flU2S","main_attribute":"los"}
-{"name":{"ja_jp":"特殊潜航艇","zh_cn":"微型潜艇"},"icon":5,"equipable_on_type":[3,12,13,14],"id":14,"_id":"Vd6oqdfwuueQAZhI","main_attribute":"torpedo","equipable_extra_ship":[200]}
+{"name":{"ja_jp":"大型探照灯","zh_cn":"大型探照灯"},"icon":24,"equipable_on_type":[6,7,8],"id":46,"_id":"UQE5VA4awY2flU2S","main_attribute":"los","equipable_extra_ship":[372,491]}
+{"name":{"ja_jp":"特殊潜航艇","zh_cn":"微型潜艇"},"icon":5,"equipable_on_type":[3,13,14],"id":14,"_id":"Vd6oqdfwuueQAZhI","main_attribute":"torpedo","equipable_extra_ship":[102,103,104,105,106,107,200,348,451]}
 {"name":{"ja_jp":"艦上偵察機（II）","zh_cn":"舰载侦察机 (II)"},"icon":9,"equipable_on_type":[11],"main_attribute":"los","id":50,"_id":"ZFeHssYjwsg74XDV"}
 {"name":{"ja_jp":"対地装備","zh_cn":"对地装备"},"icon":31,"equipable_on_type":[1,2,5,8,12,13,14,15,17,19,28],"id":44,"_id":"a1FwAWGsHxInwuCE","main_attribute":"fire","equipable_extra_ship":[450]}
-{"name":{"ja_jp":"爆雷","zh_cn":"爆雷"},"icon":17,"equipable_on_type":[1,2,3,12,19,21,24,28],"id":26,"_id":"apzGqS7PQaoeqq5q","main_attribute":"asw"}
+{"name":{"ja_jp":"爆雷","zh_cn":"爆雷"},"icon":17,"equipable_on_type":[1,2,3,19,21,24,28],"id":26,"_id":"apzGqS7PQaoeqq5q","main_attribute":"asw","equipable_extra_ship":[102,103,104,105,106,107,348,451]}
 {"name":{"ja_jp":"高角副炮","zh_cn":"高角副炮"},"icon":16,"equipable_on_type":[2,3,4,5,6,7,8,9,10,11,12,15,16,17,21,23,24,28],"id":8,"_id":"aqq0fyA9h97YuFrB","main_attribute":"fire"}
 {"name":{"ja_jp":"小口径主砲","zh_cn":"小口径主炮"},"icon":1,"equipable_on_type":[1,2,3,12,15,16,17,19,21,24,28,29],"id":1,"_id":"bgLFzURF7FAaZw7q","main_attribute":"fire"}
 {"name":{"ja_jp":"照明弾","zh_cn":"照明弹"},"icon":27,"equipable_on_type":[1,2,3,4,5,6,7,8,12,16,17,19,23,24,28],"id":40,"_id":"gNvf0mx3qKQtg0Aw","main_attribute":"los"}
 {"name":{"ja_jp":"応急修理要員","zh_cn":"损害管制要员"},"icon":14,"equipable_on_type":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,19,21,23,24,28,29],"id":35,"_id":"glEmGrJIdN3jnNsE","main_attribute":"evasion"}
-{"name":{"ja_jp":"オートジャイロ","zh_cn":"旋翼机"},"icon":21,"equipable_on_type":[5,8,9,15,16,17,29],"id":22,"_id":"grGXaf1exLThGrxs","main_attribute":"asw"}
+{"name":{"ja_jp":"オートジャイロ","zh_cn":"旋翼机"},"icon":21,"equipable_on_type":[5,8,9,15,16,17,29],"id":22,"_id":"grGXaf1exLThGrxs","main_attribute":"asw","equipable_extra_ship":[372,491]}
 {"name":{"ja_jp":"局地戦闘機","zh_cn":"局地战斗机"},"icon":38,"main_attribute":"aa","equipable_on_type":[],"id":54,"_id":"gtWX47dsSBwbYdTb"}
 {"name":{"ja_jp":"対艦強化弾","zh_cn":"对舰强化弹"},"icon":13,"equipable_on_type":[6,7,8],"id":11,"_id":"hfCnPeUwzio7aMUt","main_attribute":"fire"}
 {"name":{"ja_jp":"大型電探/レーダー","zh_cn":"大型电探/雷达"},"icon":11,"equipable_on_type":[2,3,4,5,6,7,8,9,10,11,12,21,23,24,28,29],"id":25,"_id":"j7Lzw9kUu2rls8H7","main_attribute":"hit","equipable_extra_ship":[470]}
 {"name":{"ja_jp":"追加装甲(大型)","zh_cn":"增设装甲板 (大型)"},"equipable_on_type":[6,7,8,10,11],"id":34,"_id":"jWhfMp8xKDqPSOC1","icon":23,"main_attribute":"armor"}
 {"name":{"ja_jp":"魚雷","zh_cn":"鱼雷"},"icon":5,"equipable_on_type":[1,2,3,4,5,13,14,19,21,23,28],"id":12,"_id":"lgU15HAvgBFS5N2c","main_attribute":"torpedo","equipable_extra_ship":[178]}
 {"name":{"ja_jp":"対空機銃(集中配備)","zh_cn":"对空机枪 (集中配备)"},"icon":15,"equipable_on_type":[1,2,3,4,5,6,7,8,9,10,11,12,15,16,17,19,21,23,24,28,29],"id":30,"_id":"mxQ2yUVapXKZEEV3","main_attribute":"aa"}
-{"name":{"ja_jp":"特型内火艇","zh_cn":"特型内火艇"},"icon":36,"main_attribute":"fire","equipable_on_type":[12,13,14,15],"id":52,"_id":"nSZsHd7b1r3Ij0zb","equipable_extra_ship":[147,199,200,352,418,450,464,468,470,487]}
+{"name":{"ja_jp":"特型内火艇","zh_cn":"特型内火艇"},"icon":36,"main_attribute":"fire","equipable_on_type":[13,14,15],"id":52,"_id":"nSZsHd7b1r3Ij0zb","equipable_extra_ship":[102,103,104,105,106,107,147,199,200,348,352,372,418,450,451,464,468,470,487]}
 {"name":{"ja_jp":"艦上爆撃機","zh_cn":"舰载轰炸机"},"icon":7,"equipable_on_type":[9,10,11],"id":20,"_id":"o8PXg1kvaL1qp5Sr","main_attribute":"bomb"}
 {"name":{"ja_jp":"副砲","zh_cn":"副炮"},"icon":4,"equipable_on_type":[2,3,4,5,6,7,8,9,10,11,12,15,16,17,21,23,24,28],"id":7,"_id":"qKYIiyt2MyvG8zjg","main_attribute":"fire"}
 {"name":{"ja_jp":"陸上攻撃機","zh_cn":"陆上攻击机"},"icon":37,"main_attribute":"bomb","equipable_on_type":[],"id":53,"_id":"qVdIswBXZ8Z5xFNK"}

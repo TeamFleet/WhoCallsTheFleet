@@ -6313,8 +6313,7 @@ var InfosFleetSubFleet = function () {
 			i++;
 		}
 
-		this.elSummary = $('<span class="summary"/>').appendTo(this.el).append($('<span class="summary-item"/>').html('航速').append(this.elSummarySpeed = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('制空战力').append(this.elSummaryFighterPower = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('索敌能力').append(this.elSummaryLos = $('<strong/>').html('-'))).append($('<span class="summary-item summary-item-consummation"/>').html('总消耗').append(this.elSummaryConsummation = $('<strong/>').html('-')));
-
+		this.elSummary = $('<span class="summary"/>').appendTo(this.el).append($('<span class="summary-item"/>').html('航速').append(this.elSummarySpeed = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('制空战力').append(this.elSummaryFighterPower = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('索敌能力').append(this.elSummaryLos = $('<strong/>').html('-'))).append($('<span class="summary-item summary-item-consummation"/>').html('总消耗').append(this.elSummaryConsummation = $('<strong/>').html('-'))).append(this.elSummaryTPcontainer = $('<span class="summary-item hide"/>').html('运输TP').append(this.elSummaryTP = $('<strong/>').html('-')));
 
 		this.infosFleet = infosFleet;
 
@@ -6357,8 +6356,8 @@ var InfosFleetSubFleet = function () {
 						var fighterPower = [0, 0],
 						    fleetSpeet = 'fast',
 						    consumFuel = 0,
-						    consumAmmo = 0;
-
+						    consumAmmo = 0,
+						    tp = 0;
 
 						_this5.ships.forEach(function (shipdata) {
 							if (shipdata.data[0]) {
@@ -6372,6 +6371,8 @@ var InfosFleetSubFleet = function () {
 
 								consumFuel += ship.getAttribute('fuel', shipdata.shipLv) || 0;
 								consumAmmo += ship.getAttribute('ammo', shipdata.shipLv) || 0;
+
+								tp += shipdata.calculate('TP');
 							}
 						});
 
@@ -6388,6 +6389,15 @@ var InfosFleetSubFleet = function () {
 						}
 
 						_this5.elSummaryConsummation.html(consumFuel || consumAmmo ? '<span class="fuel">' + consumFuel + '</span><span class="ammo">' + consumAmmo + '</span>' : '-');
+
+						if (tp > 40) {
+							var rS = Math.floor(tp),
+							    rA = Math.floor(rS * 0.7);
+							_this5.elSummaryTPcontainer.removeClass('hide');
+							_this5.elSummaryTP.html('A=' + rA + ' / S=' + rS);
+						} else {
+							_this5.elSummaryTPcontainer.addClass('hide');
+						}
 					})();
 				}
 
@@ -6607,13 +6617,19 @@ var InfosFleetShip = function () {
 							'hqLv': this.infosFleet.data.hq_lv,
 							'shipLv': this.shipLv
 						});
-						break;
 					default:
 						return Formula[type](this.shipId, this.data[2], this.data[3], this.data[4]);
-						break;
 				}
 			}
-			return Formula.calculate(type, this.shipId, this.data[2], this.data[3], this.data[4]) || '-';
+			if (Formula.calculate[type]) {
+				return Formula.calculate(type, this.shipId, this.data[2], this.data[3], this.data[4]) || '-';
+			}
+			if (Formula.calcByShip[type]) {
+				return Formula.calcByShip[type](_g.data.ships[this.shipId], this.data[2].map(function (id) {
+					return _g.data.items[id];
+				})) || 0;
+			}
+			return '-';
 		}
 	}, {
 		key: 'updateEl',
@@ -7146,9 +7162,9 @@ var InfosFleetSubAirfield = function () {
 
 		$('<dl class="gap"/>').appendTo(this.el);
 		var tips = ['“航程”决定了该航空队在出击时所能抵达的最远作战点，数值由航程属性最小的中队决定，侦察机也可以提高这一数值。', '“制空战力”表示该航空队执行出击任务时的制空能力，“防空战力”则表示防空任务能力。', '局地战斗机的“迎击”属性也可以提高制空战力。装备列表中局战的“回避”列数值即为“迎击”属性。', '除了局地战斗机的“迎击”和“对爆”属性外，在航空队种配置侦察机也可以有效提高防空战力。'];
-		$('<dl class="tips"/>').html('\n\t\t\t\t\t<ul class="tip-content">\n\t\t\t\t\t\t<h4 data-content="\u5C0F\u8D34\u58EB">\u5C0F\u8D34\u58EB</h4>\n\t\t\t\t\t\t' + tips.map(function (tip) {
+		$('<dl class="tips"/>').html('\n                    <ul class="tip-content">\n                        <h4 data-content="\u5C0F\u8D34\u58EB">\u5C0F\u8D34\u58EB</h4>\n                        ' + tips.map(function (tip) {
 			return '<li>' + tip + '</li>';
-		}).join('') + '\n\t\t\t\t\t</ul>\n\t\t\t\t').appendTo(this.el);
+		}).join('') + '\n                    </ul>\n                ').appendTo(this.el);
 
 		this.infosFleet = infosFleet;
 	}
