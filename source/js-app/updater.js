@@ -39,13 +39,18 @@ var _updater = {
 	'local_versions':{},
 	'remote_root':	'http://fleet.moe',
 	'remote_url': 	'http://fleet.moe/versions.json',
-	'remote_data': 	{}
+	'remote_data': 	{},
+	updatable: 		false
 }
 
 // 获取本地版本
 	_updater.get_local_version = function(){
+		var localVersions = localStorage['nwjs-data-version']
 		_updater.local_versions = JSON.parse( localStorage['nwjs-data-version'] || '{}' )
-		//_g.log('本地版本: ' + _updater.local_versions )
+		if( localVersions ){
+			_g.log('本地版本: ' + _updater.local_versions )
+			_updater.updatable = true
+		}
 		return _updater.local_versions
 	}
 
@@ -62,7 +67,7 @@ var _updater = {
 				deferred.reject(new Error(response.statusCode))
 			}else{
 				_updater.remote_data = JSON.parse( body || '{}' ) || {}
-				//_g.log('服务器版本: ' + _updater.remote_data )
+				_g.log('服务器版本: ' + _updater.remote_data )
 				deferred.resolve( _updater.remote_data )
 			}
 		})
@@ -71,6 +76,8 @@ var _updater = {
 
 // 对比各数据包版本，检查哪些数据包需要更新
 	_updater.get_packages_updated = function(){
+		if( !_updater.updatable || !_updater.remote_data.packages )
+			return [];
 		// compare version
 			// 对比版本号 a 相对于 b
 			// a > b => 1
@@ -101,14 +108,14 @@ var _updater = {
 			};
 		var updated = []
 
-		for( var i in _updater.local_versions ){
-			if( _updater.remote_data.packages && _updater.remote_data.packages[i] ){
-				var remote_version = _updater.remote_data.packages[i].version
-										? _updater.remote_data.packages[i].version
-										: _updater.remote_data.packages[i]
-				if( compareVersion( remote_version , _updater.local_versions[i] ) > 0 )
-					updated.push(i)
-			}
+		for( var i in _updater.remote_data.packages ){
+			var remote_version = _updater.remote_data.packages[i].version
+									? _updater.remote_data.packages[i].version
+									: _updater.remote_data.packages[i]
+			if( !_updater.local_versions[i] )
+				updated.push(i)
+			else if( compareVersion( remote_version , _updater.local_versions[i] ) > 0 )
+				updated.push(i)
 		}
 
 
@@ -369,7 +376,7 @@ var _updater = {
 		// 全部下载完成		
 		promise_chain = promise_chain
 			.then(function(){
-				if( !size_received )
+				if( size_total > size_received )
 					return true
 				_g.log('')
 				_g.log('全部数据包下载完成')
