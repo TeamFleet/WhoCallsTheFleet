@@ -1182,7 +1182,7 @@ _g.event = {
 _g.path = {
 	'db': node.path.join(_g.root, '/app-db/'),
 	'page': node.path.join(_g.root, '/app/page/'),
-	'bgimg_dir': node.path.join(_g.root, '/app/assets/images/homebg/'),
+	'bgimg_dir': node.path.join(_g.root, '/bgimgs/'),
 	'bgimg_custom_dir': node.path.join(_g.root, '/app/assets/images/homebg-custom/'),
 	'pics': {
 		'ships': node.path.join(_g.root, '/pics/ships/'),
@@ -1190,6 +1190,11 @@ _g.path = {
 	}
 };
 KC.path.pics = _g.path.pics;
+try {
+	node.fs.accessSync(_g.path.bgimg_dir, node.fs.F_OK);
+} catch (e) {
+	_g.path.bgimg_dir = node.path.join(_g.root, '/app/assets/images/homebg/');
+}
 
 _g.pathMakeObj = function (obj) {
 	for (var i in obj) {
@@ -2128,7 +2133,7 @@ _g.error = function (err, context) {
 var _updater = {
 	'local_versions': {},
 	'remote_root': 'http://fleet.moe',
-	'remote_url': 'http://fleet.moe/versions.json',
+	'remote_path': '/versions.json',
 	'remote_data': {},
 	updatable: !1
 };
@@ -2137,7 +2142,7 @@ _updater.get_local_version = function () {
 	var localVersions = localStorage['nwjs-data-version'];
 	_updater.local_versions = JSON.parse(localVersions || '{}');
 	if (localVersions) {
-		_g.log('本地版本: ' + _updater.local_versions);
+		_g.log('本地版本: ', _updater.local_versions);
 		_updater.updatable = !0;
 	}
 	return _updater.local_versions;
@@ -2146,7 +2151,7 @@ _updater.get_local_version = function () {
 _updater.get_remote = function () {
 	var deferred = Q.defer();
 	node.request({
-		'uri': _updater.remote_url,
+		'uri': _updater.remote_root + _updater.remote_path,
 		'method': 'GET'
 	}, function (err, response, body) {
 		if (err) {
@@ -2155,7 +2160,7 @@ _updater.get_remote = function () {
 			deferred.reject(new Error(response.statusCode));
 		} else {
 			_updater.remote_data = JSON.parse(body || '{}') || {};
-			_g.log('服务器版本: ' + _updater.remote_data);
+			_g.log('服务器版本: ', _updater.remote_data);
 			deferred.resolve(_updater.remote_data);
 		}
 	});
