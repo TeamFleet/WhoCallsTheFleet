@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",200,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/40.png)\"></s><strong>橘花改</strong><small>喷气式战斗轰炸机</small></h3><span>+12 对空</span><span>+11 爆装</span><span>+1 回避</span><span>射程: 长</span><span>航程: 2</span>")

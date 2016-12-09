@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",199,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/7.png)\"></s><strong>SB2U</strong><small>舰载轰炸机</small></h3><span>航程: 4</span>")
+KCTip.loaded("equipments",199,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/39.png)\"></s><strong>喷气式景云改</strong><small>喷气式战斗轰炸机</small></h3><span>+6 对空</span><span>+15 爆装</span><span>+1 命中</span><span>+3 索敌</span><span>射程: 长</span><span>航程: 3</span>")
