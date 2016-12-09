@@ -4,6 +4,7 @@
 {"name":{"ja_jp":"大型電探/レーダー(II)","zh_cn":"超大型电探/雷达"},"icon":11,"equipable_on_type":[6,7,8],"id":47,"_id":"324r6pQR5y1JSCP4","main_attribute":"hit"}
 {"name":{"ja_jp":"小型電探/レーダー","zh_cn":"小型电探/雷达"},"icon":11,"equipable_on_type":[1,2,3,4,5,6,7,8,9,10,11,12,15,16,17,19,21,23,24,28,29],"id":24,"_id":"4WDo2pMdGC5UySnE","main_attribute":"hit"}
 {"name":{"ja_jp":"超大口径主炮","zh_cn":"超大口径主炮"},"icon":3,"equipable_on_type":[],"id":6,"_id":"54y1bejJM5IQzDz4","main_attribute":"fire","equipable_extra_ship":[131,136,143,148,275,276]}
+{"name":{"ja_jp":"噴式戦闘爆撃機","zh_cn":"喷气式战斗轰炸机"},"icon":40,"equipable_on_type":[11],"main_attribute":"aa","id":56,"_id":"5Ok1FCTkoVLzLID9"}
 {"name":{"ja_jp":"水上戦闘機","zh_cn":"水上战斗机"},"icon":10,"equipable_on_type":[5,8,12,14,17,24,29],"main_attribute":"aa","id":51,"_id":"6mnL6zlfTmLWOcds","equipable_extra_ship":[136,148,275,276,358,361,446,447]}
 {"name":{"ja_jp":"艦上偵察機","zh_cn":"舰载侦察机"},"icon":9,"equipable_on_type":[9,10,11],"id":21,"_id":"8dDOVL8ZhWg15aeO","main_attribute":"los"}
 {"name":{"ja_jp":"水上艦要員","zh_cn":"水上舰要员"},"icon":32,"equipable_on_type":[1,2,3,4,5,6,7,8,12,17,19,21,23,24,28],"id":37,"_id":"E5f0tBThLWVkBvR3","main_attribute":"evasion"}
@@ -18,6 +19,7 @@
 {"name":{"ja_jp":"水上偵察機","zh_cn":"水上侦察机"},"icon":10,"equipable_on_type":[2,4,5,6,7,8,12,14,17,21,23,24,28,29],"id":15,"_id":"JJlaXyMYaqprli89","main_attribute":"los"}
 {"name":{"ja_jp":"対空機銃","zh_cn":"对空机枪"},"icon":15,"equipable_on_type":[1,2,3,4,5,6,7,8,9,10,11,12,15,16,17,19,21,23,24,28,29],"id":29,"_id":"KitoBZheDePnSsti","main_attribute":"aa"}
 {"name":{"ja_jp":"戦闘糧食","zh_cn":"军粮"},"equipable_on_type":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,19,21,23,24,28,29],"id":48,"_id":"Lexw7aWNOpw4Z2uS","icon":34}
+{"name":{"ja_jp":"噴式戦闘爆撃機","zh_cn":"喷气式战斗轰炸机"},"icon":39,"equipable_on_type":[11],"main_attribute":"bomb","id":55,"_id":"LlCQhm8FEzLSBqhK"}
 {"name":{"ja_jp":"艦上攻撃機","zh_cn":"舰载鱼雷机"},"icon":8,"equipable_on_type":[9,10,11],"id":19,"_id":"MO26fa2foUJSkgtJ","main_attribute":"torpedo","equipable_extra_ship":[352]}
 {"name":{"ja_jp":"中口径主砲","zh_cn":"中口径主炮"},"icon":2,"equipable_on_type":[2,3,4,5,6,8,21,23,28],"id":4,"_id":"NW98LmCNgea0iggm","main_attribute":"fire"}
 {"name":{"ja_jp":"簡易輸送部材","zh_cn":"简易运输罐"},"icon":25,"equipable_on_type":[1,2,5,12,15,19,24,28,29],"id":41,"_id":"PVgL1rXjfrATc6Ka","main_attribute":"fire"}

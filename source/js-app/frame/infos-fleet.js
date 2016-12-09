@@ -2132,6 +2132,15 @@ class InfosFleetShipEquipment{
                                                 if( !this.el.is(':focus') )
                                                     this.el.removeClass('is-hover')
                                             }.bind(this), 10)
+                                        }.bind(this),
+                                    'pointerenter': function(e){
+                                            if( e.originalEvent.pointerType != 'touch' ){
+                                                InfosFleetShipEquipment.cur = this.el.addClass('is-hover')
+                                                        //.focus()
+                                            }
+                                        }.bind(this),
+                                    'mouseenter': function(e){
+                                            InfosFleetShipEquipment.cur = this.el.addClass('is-hover')
                                         }.bind(this)
                                 })			
                             )

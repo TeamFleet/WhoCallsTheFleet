@@ -27,8 +27,9 @@
         'bgimg_dir':node.path.join(_g.root, '/bgimgs/'),
         'bgimg_custom_dir':node.path.join(_g.root, '/app/assets/images/homebg-custom/'),
         'pics': {
-            'ships': 	    node.path.join(_g.root, '/pics/ships/'),
-            'items': 	    node.path.join(_g.root, '/pics/items/')
+            ships: 	    node.path.join(_g.root, '/pics-ships/'),
+            shipsExtra: node.path.join(_g.root, '/pics-ships-extra/'),
+            items: 	    node.path.join(_g.root, '/pics/items/')
         }
     }
     KC.path.pics = _g.path.pics
@@ -59,7 +60,9 @@
         'ship_id_by_type': [], 			// refer to _g.ship_type_order
         'ship_types': {},
         'ship_type_order': {},
-        'ship_classes': {}
+        'ship_classes': {},
+
+        consumables: {}
     }
     KC.db = _g.data
 
@@ -881,6 +884,9 @@ _frame.app_main = {
                                                         break;
                                                     case 'entities':
                                                         _g.data[db_name][doc['id']] = new Entity(doc)
+                                                        break;
+                                                    case 'consumables':
+                                                        _g.data[db_name][doc['id']] = new Consumable(doc)
                                                         break;
                                                     default:
                                                         _g.data[db_name][doc['id']] = doc

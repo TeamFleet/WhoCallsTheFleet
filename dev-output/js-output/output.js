@@ -7,551 +7,537 @@ var fsExtra = require("../dev-output/js-source/node_modules/fs-extra")
 let glob = require("glob");
 
 let dev_output_steps = []
-	,dev_output_tmpl
-	,dev_output_dir
-	,dev_output_el_log
-	,dev_output_only_assets = false
-	,dev_output_log = function(msg){
-		dev_output_el_log.prepend($('<div/>',{
-			'html':	msg
-		}))
-		_g.log(msg)
-	}
-	,dev_output_filters = {}
+    ,dev_output_tmpl
+    ,dev_output_dir
+    ,dev_output_el_log
+    ,dev_output_only_assets = false
+    ,dev_output_log = function(msg){
+        dev_output_el_log.prepend($('<div/>',{
+            'html':	msg
+        }))
+        _g.log(msg)
+    }
+    ,dev_output_filters = {}
 
 function dev_output_gen_title(){
-	if( arguments && arguments.length && arguments[0] )
-		return Array.prototype.join.call(arguments, ' - ') + ' - 是谁呼叫舰队'
-	return '是谁呼叫舰队'
+    if( arguments && arguments.length && arguments[0] )
+        return Array.prototype.join.call(arguments, ' - ') + ' - 是谁呼叫舰队'
+    return '是谁呼叫舰队'
 }
 
 function dev_output_filter(output, pagetype, name){
-	pagetype = pagetype || ''
-	/*
-	if( pagetype == 'javascript' ){
-		output = babel.transform(output, {
-			'highlightCode':	false,
-			'comments':			false,
-			'compact':			true,
-			'ast':				false
-		})
-		output = output.code
-	}
-	*/
+    pagetype = pagetype || ''
+    /*
+    if( pagetype == 'javascript' ){
+        output = babel.transform(output, {
+            'highlightCode':	false,
+            'comments':			false,
+            'compact':			true,
+            'ast':				false
+        })
+        output = output.code
+    }
+    */
 
-	let searchRes
-		,scrapePtrn = /\.\.\/\.\.\/app\//gi
-		while( (searchRes = scrapePtrn.exec(output)) !== null ){
-			try{
-				console.log(searchRes[0])
-				output = output.replace( searchRes[0], '/!/assets/' )
-			}catch(e){}
-		}
+    let replacePair = [
+        [
+            /\.\.\/\.\.\/app\//gi,
+            '/!/assets/'
+        ],
+        [
+            /\.\.\/app\/assets\//gi,
+            '/!/assets/'
+        ],
+        [
+            new RegExp('file\:///' + node.path.join(_g.root, 'app').replace(/\\/g, '/').replace(/\./g, '\\.'), 'gi'),
+            '/!'
+        ],
+        // [
+        //     /\.\.\/pics\//gi,
+        //     '/!/pics/'
+        // ],
+        [
+            new RegExp(_g.path.pics.ships.replace(/\\/g, '/').replace(/\./g, '\\.'), 'gi'),
+            '/!/pics-ships/'
+        ],
+        [
+            new RegExp(_g.path.pics.ships.replace(/\\/g, '\\\\').replace(/\./g, '\\.'), 'gi'),
+            '/!/pics-ships/'
+        ],
+        [
+            new RegExp(_g.path.pics.shipsExtra.replace(/\\/g, '/').replace(/\./g, '\\.'), 'gi'),
+            '/!/pics-ships-extra/'
+        ],
+        [
+            new RegExp(_g.path.pics.shipsExtra.replace(/\\/g, '\\\\').replace(/\./g, '\\.'), 'gi'),
+            '/!/pics-ships-extra/'
+        ],
+        [
+            new RegExp(_g.path.pics.items.replace(/\\/g, '/').replace(/\./g, '\\.'), 'gi'),
+            '/!/pics/items/'
+        ],
+        [
+            new RegExp(_g.path.pics.items.replace(/\\/g, '\\\\').replace(/\./g, '\\.'), 'gi'),
+            '/!/pics/items/'
+        ],
+        [
+            /\.\.\/pics\/ships\//gi,
+            '/!/pics-ships/'
+        ],
+        [
+            /\.\.\/pics\//gi,
+            '/!/pics/'
+        ],
+        [
+            /\'assets\//gi,
+            '\'/!/assets/'
+        ],
+        [
+            /\"assets\//gi,
+            '"/!/assets/'
+        ],
+        [
+            /\(assets\//gi,
+            '(/!/assets/'
+        ]
+    ]
 
-	searchRes = null
-	scrapePtrn = /\.\.\/app\/assets\//gi
-		while( (searchRes = scrapePtrn.exec(output)) !== null ){
-			try{
-				output = output.replace( searchRes[0], '/!/assets/' )
-			}catch(e){}
-		}
+    let searchRes, scrapePtrn
+    replacePair.forEach(pair => {
+        searchRes = null
+        scrapePtrn = pair[0]
+        while( (searchRes = scrapePtrn.exec(output)) !== null ){
+            try{
+                console.log(searchRes[0])
+                output = output.replace( searchRes[0], pair[1] )
+            }catch(e){}
+        }
+    })
 
-	searchRes = null
-	scrapePtrn = new RegExp('file\:///' + node.path.join(_g.root, 'app').replace(/\\/g, '/').replace(/\./g, '\\.'), 'gi')
-		while( (searchRes = scrapePtrn.exec(output)) !== null ){
-			try{
-				output = output.replace( searchRes[0], '/!' )
-			}catch(e){}
-		}
+    if( pagetype == 'page' || pagetype == 'infos' ){
+        searchRes = null
+        scrapePtrn = /0\.webp\"/gi
+            while( (searchRes = scrapePtrn.exec(output)) !== null ){
+                try{
+                    let mask = '-mask-1'
+                        ,c = ' class="nomask"'
+                    if( pagetype == 'page' && name == 'ships' )
+                        mask = '-mask-1'
+                    else if( pagetype == 'infos' && name == 'ship' ){
+                        mask = ''
+                        c = ''
+                    }
+                    output = output.replace( searchRes[0], '0' + mask + '.png"' + c + '' )
+                }catch(e){}
+            }
+    }
 
-	searchRes = null
-	scrapePtrn = /\.\.\/pics\//gi
-		while( (searchRes = scrapePtrn.exec(output)) !== null ){
-			try{
-				output = output.replace( searchRes[0], '/!/pics/' )
-			}catch(e){}
-		}
+    searchRes = null
+    scrapePtrn = /\.webp/gi
+        while( (searchRes = scrapePtrn.exec(output)) !== null ){
+            try{
+                output = output.replace( searchRes[0], '.png' )
+            }catch(e){}
+        }
 
-	searchRes = null
-	scrapePtrn = new RegExp(_g.path.pics.ships.replace(/\\/g, '/').replace(/\./g, '\\.'), 'gi')
-		while( (searchRes = scrapePtrn.exec(output)) !== null ){
-			try{
-				output = output.replace( searchRes[0], '/!/pics/ships/' )
-			}catch(e){}
-		}
+    searchRes = null
+    scrapePtrn = /\?infos=([a-z]+)\&amp;id=([^\&^"^']+)/gi
+        while( (searchRes = scrapePtrn.exec(output)) !== null ){
+            try{
+                var t = ''
+                switch( searchRes[1] ){
+                    case 'ship': 		t = 'ships'; 		break;
+                    case 'equipment': 	t = 'equipments'; 	break;
+                    case 'entity':	 	t = 'entities'; 	break;
+                    default:
+                        t = searchRes[1]
+                        break;
+                }
+                output = output.replace( searchRes[0], '/' + t + '/' + searchRes[2] + '/' )
+            }catch(e){}
+        }
 
-	searchRes = null
-	scrapePtrn = new RegExp(_g.path.pics.ships.replace(/\\/g, '\\\\').replace(/\./g, '\\.'), 'gi')
-		while( (searchRes = scrapePtrn.exec(output)) !== null ){
-			try{
-				output = output.replace( searchRes[0], '/!/pics/ships/' )
-			}catch(e){}
-		}
+    //if( ['.js', '.css', '.jpg'].indexOf(pagetype) < 0 ){
+    if( pagetype.substr(0,1) !== '.' ){
+        /*
+        searchRes = null
+        scrapePtrn = /^\s*[\r\n]/gm
+            while( (searchRes = scrapePtrn.exec(output)) !== null ){
+                try{
+                    output = output.replace( searchRes[0], '' )
+                }catch(e){}
+            }
+    
+        searchRes = null
+        scrapePtrn = /\r?\n|\r/g
+            while( (searchRes = scrapePtrn.exec(output)) !== null ){
+                try{
+                    output = output.replace( searchRes[0], '' )
+                }catch(e){}
+            }
+        */
+        output = minify(output, {
+            removeComments:		true,
+            collapseWhitespace:	true
+        })
+    }
+    
+    switch(pagetype){
+        case 'page':
+            output = '<div class="page-container"'
+                        + (name
+                            ? ' page="' +name+ '"'
+                            : ''
+                        )
+                    + '>'
+                    + output
+                    + '</div>'
+            break;
+        case 'info':
+        case 'infos':
+            output = '<div class="page-container infos"'
+                        + (name
+                            ? ' data-infostype="' +name+ '"'
+                            : ''
+                        )
+                    + '>'
+                    + '<div class="wrapper">'
+                    + output
+                    + '</div>'
+                    + '</div>'
+            break;
+    }
 
-	searchRes = null
-	scrapePtrn = new RegExp(_g.path.pics.items.replace(/\\/g, '/').replace(/\./g, '\\.'), 'gi')
-		while( (searchRes = scrapePtrn.exec(output)) !== null ){
-			try{
-				output = output.replace( searchRes[0], '/!/pics/items/' )
-			}catch(e){}
-		}
-
-	searchRes = null
-	scrapePtrn = new RegExp(_g.path.pics.items.replace(/\\/g, '\\\\').replace(/\./g, '\\.'), 'gi')
-		while( (searchRes = scrapePtrn.exec(output)) !== null ){
-			try{
-				output = output.replace( searchRes[0], '/!/pics/items/' )
-			}catch(e){}
-		}
-
-	searchRes = null
-	scrapePtrn = /\'assets\//gi
-		while( (searchRes = scrapePtrn.exec(output)) !== null ){
-			try{
-				output = output.replace( searchRes[0], '\'/!/assets/' )
-			}catch(e){}
-		}
-
-	searchRes = null
-	scrapePtrn = /\"assets\//gi
-		while( (searchRes = scrapePtrn.exec(output)) !== null ){
-			try{
-				output = output.replace( searchRes[0], '"/!/assets/' )
-			}catch(e){}
-		}
-
-	searchRes = null
-	scrapePtrn = /\(assets\//gi
-		while( (searchRes = scrapePtrn.exec(output)) !== null ){
-			try{
-				output = output.replace( searchRes[0], '(/!/assets/' )
-			}catch(e){}
-		}
-
-	if( pagetype == 'page' || pagetype == 'infos' ){
-		searchRes = null
-		scrapePtrn = /0\.webp\"/gi
-			while( (searchRes = scrapePtrn.exec(output)) !== null ){
-				try{
-					let mask = '-mask-1'
-						,c = ' class="nomask"'
-					if( pagetype == 'page' && name == 'ships' )
-						mask = '-mask-1'
-					else if( pagetype == 'infos' && name == 'ship' ){
-						mask = ''
-						c = ''
-					}
-					output = output.replace( searchRes[0], '0' + mask + '.png"' + c + '' )
-				}catch(e){}
-			}
-	}
-
-	searchRes = null
-	scrapePtrn = /\.webp/gi
-		while( (searchRes = scrapePtrn.exec(output)) !== null ){
-			try{
-				output = output.replace( searchRes[0], '.png' )
-			}catch(e){}
-		}
-
-	searchRes = null
-	scrapePtrn = /\?infos=([a-z]+)\&amp;id=([^\&^"^']+)/gi
-		while( (searchRes = scrapePtrn.exec(output)) !== null ){
-			try{
-				var t = ''
-				switch( searchRes[1] ){
-					case 'ship': 		t = 'ships'; 		break;
-					case 'equipment': 	t = 'equipments'; 	break;
-					case 'entity':	 	t = 'entities'; 	break;
-					default:
-						t = searchRes[1]
-						break;
-				}
-				output = output.replace( searchRes[0], '/' + t + '/' + searchRes[2] + '/' )
-			}catch(e){}
-		}
-
-	//if( ['.js', '.css', '.jpg'].indexOf(pagetype) < 0 ){
-	if( pagetype.substr(0,1) !== '.' ){
-		/*
-		searchRes = null
-		scrapePtrn = /^\s*[\r\n]/gm
-			while( (searchRes = scrapePtrn.exec(output)) !== null ){
-				try{
-					output = output.replace( searchRes[0], '' )
-				}catch(e){}
-			}
-	
-		searchRes = null
-		scrapePtrn = /\r?\n|\r/g
-			while( (searchRes = scrapePtrn.exec(output)) !== null ){
-				try{
-					output = output.replace( searchRes[0], '' )
-				}catch(e){}
-			}
-		*/
-		output = minify(output, {
-			removeComments:		true,
-			collapseWhitespace:	true
-		})
-	}
-	
-	switch(pagetype){
-		case 'page':
-			output = '<div class="page-container"'
-						+ (name
-							? ' page="' +name+ '"'
-							: ''
-						)
-					+ '>'
-					+ output
-					+ '</div>'
-			break;
-		case 'info':
-		case 'infos':
-			output = '<div class="page-container infos"'
-						+ (name
-							? ' data-infostype="' +name+ '"'
-							: ''
-						)
-					+ '>'
-					+ '<div class="wrapper">'
-					+ output
-					+ '</div>'
-					+ '</div>'
-			break;
-	}
-
-	return output
+    return output
 }
 
 function dev_output_form(){
-	let el = {}
-		,processing = false
+    let el = {}
+        ,processing = false
 
-	el.container = $('<div/>').css({
-			'position':	'relative',
-			'width':	'100%',
-			'height':	'100%',
-			'display':	'flex',
-			'flex-flow':'column nowrap'
-		}).append(
-			el.form = $('<form/>').css({
-				'display':	'flex',
-				'flex-flow':'row nowrap',
-				'flex':		'0 0 40px',
-				'height':	'40px',
-				'line-height':'30px',
-				'font-size':'16px',
-				'padding':	'0 0 10px 0',
-				'border-bottom':'1px solid rgba(255, 255, 255, .35)',
-				'margin':	'0 0 10px 0'
-			}).on('submit', function(e){
-				e.preventDefault()
-				if( !processing ){
-					dev_output_el_log.empty()
-					processing = true
-					dev_output_log('start')
-					
-					//dev_output_steps = []
-					
-					// 处理模板
-						dev_output_tmpl = node.fs.readFileSync('dev-output/templates/base.html', 'utf-8')
-						let searchRes
-							,scrapePtrn = /\{\{[ ]*navContent[ ]*\}\}/gi
-							,elNav = $('<div/>')
-							,navobj = [].concat(_frame.app_main.nav)
-							,navlinks = $('<div class="pages"/>').appendTo( elNav )
-							,globaloptions = $('<section class="options"/>').appendTo( elNav )
-							,btnDonates = $('<a class="donate" icon="heart4" href="/donate/"/>').appendTo( globaloptions )
+    el.container = $('<div/>').css({
+            'position':	'relative',
+            'width':	'100%',
+            'height':	'100%',
+            'display':	'flex',
+            'flex-flow':'column nowrap'
+        }).append(
+            el.form = $('<form/>').css({
+                'display':	'flex',
+                'flex-flow':'row nowrap',
+                'flex':		'0 0 40px',
+                'height':	'40px',
+                'line-height':'30px',
+                'font-size':'16px',
+                'padding':	'0 0 10px 0',
+                'border-bottom':'1px solid rgba(255, 255, 255, .35)',
+                'margin':	'0 0 10px 0'
+            }).on('submit', function(e){
+                e.preventDefault()
+                if( !processing ){
+                    dev_output_el_log.empty()
+                    processing = true
+                    dev_output_log('start')
+                    
+                    //dev_output_steps = []
+                    
+                    // 处理模板
+                        dev_output_tmpl = node.fs.readFileSync('dev-output/templates/base.html', 'utf-8')
+                        let searchRes
+                            ,scrapePtrn = /\{\{[ ]*navContent[ ]*\}\}/gi
+                            ,elNav = $('<div/>')
+                            ,navobj = [].concat(_frame.app_main.nav)
+                            ,navlinks = $('<div class="pages"/>').appendTo( elNav )
+                            ,globaloptions = $('<section class="options"/>').appendTo( elNav )
+                            ,btnDonates = $('<a class="donate" icon="heart4" href="/donate/"/>').appendTo( globaloptions )
 
-						// 首页
-							$('<h1 class="button home"/>').html('<a href="/">是谁呼叫舰队</a>').appendTo( navlinks )
+                        // 首页
+                            $('<h1 class="button home"/>').html('<a href="/">是谁呼叫舰队</a>').appendTo( navlinks )
 
-						navobj.forEach(function(o, i){
-							if( o.title != '关于' )
-								(function(page){
-										let $el = $('<a class="button" href="/'+page+'/"/>')
-										if( o.state )
-											$el.attr('mod-state', o.state)
-										return $el
-									})(o.page).html(o.title).appendTo( navlinks )
-						})
-						
-						$('<span class="title"/>')
-							.append(
-								$('<label for="view-mobile-menu"/>').html('<i></i>')
-							)
-							.append(
-								$('<span/>')
-							)
-							.appendTo( elNav )
-					
-						while( (searchRes = scrapePtrn.exec(dev_output_tmpl)) !== null ){
-							try{
-								dev_output_tmpl = dev_output_tmpl.replace( searchRes[0], elNav.html() )
-							}catch(e){}
-						}
+                        navobj.forEach(function(o, i){
+                            if( o.title != '关于' )
+                                (function(page){
+                                        let $el = $('<a class="button" href="/'+page+'/"/>')
+                                        if( o.state )
+                                            $el.attr('mod-state', o.state)
+                                        return $el
+                                    })(o.page).html(o.title).appendTo( navlinks )
+                        })
+                        
+                        $('<span class="title"/>')
+                            .append(
+                                $('<label for="view-mobile-menu"/>').html('<i></i>')
+                            )
+                            .append(
+                                $('<span/>')
+                            )
+                            .appendTo( elNav )
+                    
+                        while( (searchRes = scrapePtrn.exec(dev_output_tmpl)) !== null ){
+                            try{
+                                dev_output_tmpl = dev_output_tmpl.replace( searchRes[0], elNav.html() )
+                            }catch(e){}
+                        }
 
-						dev_output_tmpl = minify(dev_output_tmpl, {
-							removeComments:		true,
-							collapseWhitespace:	true
-						})
-					
-					//console.log(dev_output_tmpl)
+                        dev_output_tmpl = minify(dev_output_tmpl, {
+                            removeComments:		true,
+                            collapseWhitespace:	true
+                        })
+                    
+                    //console.log(dev_output_tmpl)
 
-					//Q.all(dev_output_steps).done(function(values){
-					//	console.log(values)
-					//	dev_output_log('end')
-					//})
-					/*
-					dev_output_steps.push(function(){
-						dev_output_log('end')
-						processing = false
-						dev_output_only_assets = false
-						return true
-					})
-					*/
-					var result = Q(dev_output_tmpl);
-					dev_output_steps.forEach(function (f) {
-						result = result.then(f);
-					});
-					result = result.done(function(){
-						dev_output_log('end')
-						processing = false
-						dev_output_only_assets = false
-						return true
-					})
-					return result;
-				}
-				return
-			}).append(
-				el.selector = $('<input type="file" nwdirectory/>').css({
-					'display':	'none'
-				}).on('change', function(){
-					let val = el.selector.val() || ''
-					el.input.val( val )
-					Lockr.set('debug_output_directory', val)
-					dev_output_dir = val
-					el.selector.val('')
-				})
-			).append(
-				el.input = $('<input type="text"/>').css({
-					'display':	'block',
-					'flex':		'1 0 auto',
-					'height':	'30px',
-					'line-height':'inherit',
-					'font-size':'inherit',
-					'margin-right':'10px'
-				}).val( Lockr.get('debug_output_directory') || '' )
-			).append(
-				$('<button/>',{
-					'type':		'button',
-					'html':		'Browse'
-				}).css({
-					'flex':		'0 0 auto',
-					'margin-right':'10px'
-				}).on('click', function(){
-					el.selector.click()
-				})
-			).append(
-				$('<input/>',{
-					'type':		'submit',
-					'html':		'Export'
-				}).css({
-					'flex':		'0 0 auto',
-					'margin-right':'10px'
-				})
-			).append(
-				$('<button/>',{
-					'type':		'button',
-					'html':		'Export (Only Assets)'
-				}).css({
-					'flex':		'0 0 auto',
-					'margin-right':'10px'
-				}).on('click', function(){
-					dev_output_only_assets = true
-					el.form.submit()
-				})
-			)
-		).append(
-			el.form2 = $('<form/>').css({
-				'display':	'flex',
-				'flex-flow':'row nowrap',
-				'flex':		'0 0 40px',
-				'height':	'40px',
-				'line-height':'30px',
-				'font-size':'16px',
-				'padding':	'0 0 10px 0',
-				'border-bottom':'1px solid rgba(255, 255, 255, .35)',
-				'margin':	'0 0 10px 0'
-			}).on('submit', function(e){
-				e.preventDefault()
-				if( !processing ){
-					dev_output_el_log.empty()
-					processing = true
-					dev_output_log('start')
-					
-					let pathFrom = Lockr.get('debug_output_directory', dev_output_dir)
-						,pathTo = Lockr.get('debug_output_directory2', el.selector2.val() || '')
-						,files = [
-							'favicon.ico',
-							'favicon.png',
-							'ga.html',
-							'index.html',
-							'manifest.json',
-							'robots.txt',
+                    //Q.all(dev_output_steps).done(function(values){
+                    //	console.log(values)
+                    //	dev_output_log('end')
+                    //})
+                    /*
+                    dev_output_steps.push(function(){
+                        dev_output_log('end')
+                        processing = false
+                        dev_output_only_assets = false
+                        return true
+                    })
+                    */
+                    var result = Q(dev_output_tmpl);
+                    dev_output_steps.forEach(function (f) {
+                        result = result.then(f);
+                    });
+                    result = result.done(function(){
+                        dev_output_log('end')
+                        processing = false
+                        dev_output_only_assets = false
+                        return true
+                    })
+                    return result;
+                }
+                return
+            }).append(
+                el.selector = $('<input type="file" nwdirectory/>').css({
+                    'display':	'none'
+                }).on('change', function(){
+                    let val = el.selector.val() || ''
+                    el.input.val( val )
+                    Lockr.set('debug_output_directory', val)
+                    dev_output_dir = val
+                    el.selector.val('')
+                })
+            ).append(
+                el.input = $('<input type="text"/>').css({
+                    'display':	'block',
+                    'flex':		'1 0 auto',
+                    'height':	'30px',
+                    'line-height':'inherit',
+                    'font-size':'inherit',
+                    'margin-right':'10px'
+                }).val( Lockr.get('debug_output_directory') || '' )
+            ).append(
+                $('<button/>',{
+                    'type':		'button',
+                    'html':		'Browse'
+                }).css({
+                    'flex':		'0 0 auto',
+                    'margin-right':'10px'
+                }).on('click', function(){
+                    el.selector.click()
+                })
+            ).append(
+                $('<input/>',{
+                    'type':		'submit',
+                    'html':		'Export'
+                }).css({
+                    'flex':		'0 0 auto',
+                    'margin-right':'10px'
+                })
+            ).append(
+                $('<button/>',{
+                    'type':		'button',
+                    'html':		'Export (Only Assets)'
+                }).css({
+                    'flex':		'0 0 auto',
+                    'margin-right':'10px'
+                }).on('click', function(){
+                    dev_output_only_assets = true
+                    el.form.submit()
+                })
+            )
+        ).append(
+            el.form2 = $('<form/>').css({
+                'display':	'flex',
+                'flex-flow':'row nowrap',
+                'flex':		'0 0 40px',
+                'height':	'40px',
+                'line-height':'30px',
+                'font-size':'16px',
+                'padding':	'0 0 10px 0',
+                'border-bottom':'1px solid rgba(255, 255, 255, .35)',
+                'margin':	'0 0 10px 0'
+            }).on('submit', function(e){
+                e.preventDefault()
+                if( !processing ){
+                    dev_output_el_log.empty()
+                    processing = true
+                    dev_output_log('start')
+                    
+                    let pathFrom = Lockr.get('debug_output_directory', dev_output_dir)
+                        ,pathTo = Lockr.get('debug_output_directory2', el.selector2.val() || '')
+                        ,files = [
+                            'favicon.ico',
+                            'favicon.png',
+                            'ga.html',
+                            'index.html',
+                            'manifest.json',
+                            'robots.txt',
 
-							'arsenal/',
-							'calctp/',
-							'donate/',
-							'entities/',
-							'equipments/',
-							'fleets/',
-							'ships/',
-							
-							'!/assets/',
-							'!/db/',
-							'!/pics/'
-						]
-						,chain = Q(function(){})
-					
-					files.forEach(function(f){
-						chain = chain.then(function(){
-							let deferred = Q.defer()
-							fsExtra.copy(
-								node.path.join( pathFrom, f ),
-								node.path.join( pathTo, f ),
-								{
-									clobber: true,
-									preserveTimestamps: true,
-									filter: function(thisFile){
-										if( f == '!/pics/' )
-											return node.path.extname(thisFile).toLowerCase() != '.webp'
-										return true
-									}
-								},
-								function(err){
-									if( err ){
-										deferred.reject(err)
-									}else{
-										dev_output_log('COPY: ' + f )
-										deferred.resolve()
-									}
-								}
-							)
-							return deferred.promise
-						})
-					})
-					
-					chain = chain.catch(function(err){
-						_g.log(err)
-					}).done(function(){
-						dev_output_log('end')
-						processing = false
-						return true
-					})
-				}
-				return
-			}).append(
-				$('<span/>',{
-					'html':		'Output Static'
-				}).css({
-					'flex':		'0 0 auto',
-					'margin-right':'10px'
-				})
-			).append(
-				el.selector2 = $('<input type="file" nwdirectory/>').css({
-					'display':	'none'
-				}).on('change', function(){
-					let val = el.selector2.val() || ''
-					el.input2.val( val )
-					Lockr.set('debug_output_directory2', val)
-					el.selector2.val('')
-				})
-			).append(
-				el.input2 = $('<input type="text"/>').css({
-					'display':	'block',
-					'flex':		'1 0 auto',
-					'height':	'30px',
-					'line-height':'inherit',
-					'font-size':'inherit',
-					'margin-right':'10px'
-				}).val( Lockr.get('debug_output_directory2') || '' )
-			).append(
-				$('<button/>',{
-					'type':		'button',
-					'html':		'Browse'
-				}).css({
-					'flex':		'0 0 auto',
-					'margin-right':'10px'
-				}).on('click', function(){
-					el.selector2.click()
-				})
-			).append(
-				$('<input/>',{
-					'type':		'submit',
-					'html':		'Export'
-				}).css({
-					'flex':		'0 0 auto',
-					'margin-right':'10px'
-				})
-			)
-		).append(
-			el.form2 = $('<form/>').css({
-				'display':	'flex',
-				'flex-flow':'row nowrap',
-				'flex':		'0 0 40px',
-				'height':	'40px',
-				'line-height':'30px',
-				'font-size':'16px',
-				'padding':	'0 0 10px 0',
-				'border-bottom':'1px solid rgba(255, 255, 255, .35)',
-				'margin':	'0 0 10px 0'
-			}).on('submit', function(e){
-				e.preventDefault()
-				if( !processing ){
-					dev_output_el_log.empty()
-					processing = true
-					dev_output_log('start')
-					
-					let pathFrom = Lockr.get('debug_output_directory', dev_output_dir)
-						,pathTo = Lockr.get('debug_output_redirect', el.directoryRedirect.val() || '')
-						,files = [
-							'favicon.ico',
-							'favicon.png',
-							'manifest.json',
-							'robots.txt',
+                            'arsenal/',
+                            'calctp/',
+                            'donate/',
+                            'entities/',
+                            'equipments/',
+                            'fleets/',
+                            'ships/',
+                            
+                            '!/assets/',
+                            '!/db/',
+                            '!/pics/'
+                        ]
+                        ,chain = Q(function(){})
+                    
+                    files.forEach(function(f){
+                        chain = chain.then(function(){
+                            let deferred = Q.defer()
+                            fsExtra.copy(
+                                node.path.join( pathFrom, f ),
+                                node.path.join( pathTo, f ),
+                                {
+                                    clobber: true,
+                                    preserveTimestamps: true,
+                                    filter: function(thisFile){
+                                        if( f == '!/pics/' )
+                                            return node.path.extname(thisFile).toLowerCase() != '.webp'
+                                        return true
+                                    }
+                                },
+                                function(err){
+                                    if( err ){
+                                        deferred.reject(err)
+                                    }else{
+                                        dev_output_log('COPY: ' + f )
+                                        deferred.resolve()
+                                    }
+                                }
+                            )
+                            return deferred.promise
+                        })
+                    })
+                    
+                    chain = chain.catch(function(err){
+                        _g.log(err)
+                    }).done(function(){
+                        dev_output_log('end')
+                        processing = false
+                        return true
+                    })
+                }
+                return
+            }).append(
+                $('<span/>',{
+                    'html':		'Output Static'
+                }).css({
+                    'flex':		'0 0 auto',
+                    'margin-right':'10px'
+                })
+            ).append(
+                el.selector2 = $('<input type="file" nwdirectory/>').css({
+                    'display':	'none'
+                }).on('change', function(){
+                    let val = el.selector2.val() || ''
+                    el.input2.val( val )
+                    Lockr.set('debug_output_directory2', val)
+                    el.selector2.val('')
+                })
+            ).append(
+                el.input2 = $('<input type="text"/>').css({
+                    'display':	'block',
+                    'flex':		'1 0 auto',
+                    'height':	'30px',
+                    'line-height':'inherit',
+                    'font-size':'inherit',
+                    'margin-right':'10px'
+                }).val( Lockr.get('debug_output_directory2') || '' )
+            ).append(
+                $('<button/>',{
+                    'type':		'button',
+                    'html':		'Browse'
+                }).css({
+                    'flex':		'0 0 auto',
+                    'margin-right':'10px'
+                }).on('click', function(){
+                    el.selector2.click()
+                })
+            ).append(
+                $('<input/>',{
+                    'type':		'submit',
+                    'html':		'Export'
+                }).css({
+                    'flex':		'0 0 auto',
+                    'margin-right':'10px'
+                })
+            )
+        ).append(
+            el.form2 = $('<form/>').css({
+                'display':	'flex',
+                'flex-flow':'row nowrap',
+                'flex':		'0 0 40px',
+                'height':	'40px',
+                'line-height':'30px',
+                'font-size':'16px',
+                'padding':	'0 0 10px 0',
+                'border-bottom':'1px solid rgba(255, 255, 255, .35)',
+                'margin':	'0 0 10px 0'
+            }).on('submit', function(e){
+                e.preventDefault()
+                if( !processing ){
+                    dev_output_el_log.empty()
+                    processing = true
+                    dev_output_log('start')
+                    
+                    let pathFrom = Lockr.get('debug_output_directory', dev_output_dir)
+                        ,pathTo = Lockr.get('debug_output_redirect', el.directoryRedirect.val() || '')
+                        ,files = [
+                            'favicon.ico',
+                            'favicon.png',
+                            'manifest.json',
+                            'robots.txt',
                             
                             /*
-							'arsenal/',
-							'calctp/',
-							'donate/',
-							'entities/',
-							'equipments/',
-							'fleets/',
-							'ships/',
+                            'arsenal/',
+                            'calctp/',
+                            'donate/',
+                            'entities/',
+                            'equipments/',
+                            'fleets/',
+                            'ships/',
                             */
-							
-							'!/assets/',
-							'!/db/',
-							'!/pics/'
-						]
+                            
+                            '!/assets/',
+                            '!/db/',
+                            '!/pics/'
+                        ]
                         ,htmlFiles = []
-						,chain = Q(function(){})
-					
-					files.forEach(function(f){
-						chain = chain.then(function(){
-							let deferred = Q.defer()
-							fsExtra.copy(
-								node.path.join( pathFrom, f ),
-								node.path.join( pathTo, f ),
-								{
-									clobber: true,
-									preserveTimestamps: true,
-									filter: function(thisFile){
+                        ,chain = Q(function(){})
+                    
+                    files.forEach(function(f){
+                        chain = chain.then(function(){
+                            let deferred = Q.defer()
+                            fsExtra.copy(
+                                node.path.join( pathFrom, f ),
+                                node.path.join( pathTo, f ),
+                                {
+                                    clobber: true,
+                                    preserveTimestamps: true,
+                                    filter: function(thisFile){
                                         //console.log(thisFile, thisFile2)
-										if( f == '!/pics/' ){
+                                        if( f == '!/pics/' ){
                                             return false;
                                             if( node.path.extname(thisFile).toLowerCase() == '.webp' )
                                                 return false
@@ -563,23 +549,23 @@ function dev_output_form(){
                                                 return true
                                             }
                                             
-											return node.path.extname(thisFile).toLowerCase() != '.webp'
+                                            return node.path.extname(thisFile).toLowerCase() != '.webp'
                                         }
-										return true
-									}
-								},
-								function(err){
-									if( err ){
-										deferred.reject(err)
-									}else{
-										dev_output_log('COPY: ' + f )
-										deferred.resolve()
-									}
-								}
-							)
-							return deferred.promise
-						})
-					})
+                                        return true
+                                    }
+                                },
+                                function(err){
+                                    if( err ){
+                                        deferred.reject(err)
+                                    }else{
+                                        dev_output_log('COPY: ' + f )
+                                        deferred.resolve()
+                                    }
+                                }
+                            )
+                            return deferred.promise
+                        })
+                    })
                     
                     chain = chain.then(function(){
                         let deferred = Q.defer()
@@ -594,7 +580,7 @@ function dev_output_form(){
                             htmlFiles.forEach(function(f){
                                 chain2 = chain2.then(function(){
                                     let deferred2 = Q.defer()
-			                        
+                                    
                                     let filename = f.substr( f.indexOf(pathFrom) + pathFrom.length + 2 )
                                     let output = tmplDirection
                                     let htmlpage = node.fs.readFileSync(f, 'utf-8')
@@ -615,25 +601,25 @@ function dev_output_form(){
                                             }
                                         }catch(e){}
                                     }
-			
+            
                                     searchRes = null
                                     scrapePtrn = /\{\{[ ]*url[ ]*\}\}/gi
                                     while( (searchRes = scrapePtrn.exec(output)) !== null ){
                                         try{
                                             output = output.replace(
-												searchRes[0],
-												filename.replace(/\/index\.html$/gi, '').replace(/index\.html$/gi, '') + '?utm_source=olddomain'
-											)
+                                                searchRes[0],
+                                                filename.replace(/\/index\.html$/gi, '').replace(/index\.html$/gi, '') + '?utm_source=olddomain'
+                                            )
                                         }catch(e){}
                                     }
-			
+            
                                     node.mkdirp.sync( outputDir )
                                     
                                     output = minify(output, {
                                         removeComments:		true,
                                         collapseWhitespace:	true
                                     })
-			
+            
                                     node.fs.writeFile(
                                         outputPath,
                                         output,
@@ -663,82 +649,82 @@ function dev_output_form(){
                     })
                     
                     chain = chain.catch(function(err){
-						_g.log(err)
-					}).done(function(){
-						dev_output_log('end')
-						processing = false
-						return true
-					})
-				}
-				return
-			}).append(
-				$('<span/>',{
-					'html':		'Output Redirect'
-				}).css({
-					'flex':		'0 0 auto',
-					'margin-right':'10px'
-				})
-			).append(
-				el.directoryRedirect = $('<input type="file" nwdirectory/>').css({
-					'display':	'none'
-				}).on('change', function(){
-					let val = el.directoryRedirect.val() || ''
-					el.input2.val( val )
-					Lockr.set('debug_output_redirect', val)
-					el.directoryRedirect.val('')
-				})
-			).append(
-				el.input2 = $('<input type="text"/>').css({
-					'display':	'block',
-					'flex':		'1 0 auto',
-					'height':	'30px',
-					'line-height':'inherit',
-					'font-size':'inherit',
-					'margin-right':'10px'
-				}).val( Lockr.get('debug_output_redirect') || '' )
-			).append(
-				$('<button/>',{
-					'type':		'button',
-					'html':		'Browse'
-				}).css({
-					'flex':		'0 0 auto',
-					'margin-right':'10px'
-				}).on('click', function(){
-					el.directoryRedirect.click()
-				})
-			).append(
-				$('<input/>',{
-					'type':		'submit',
-					'html':		'Export'
-				}).css({
-					'flex':		'0 0 auto',
-					'margin-right':'10px'
-				})
-			)
-		).append(
-			dev_output_el_log = $('<div/>').css({
-				'flex':		'1 0 auto',
-				'line-height':'1.5em',
-				'font-size':'13px',
-				'overflow-y':'auto'
-			})
-		)
-	
-	dev_output_dir = el.input.val()
-	
-	return el.container
+                        _g.log(err)
+                    }).done(function(){
+                        dev_output_log('end')
+                        processing = false
+                        return true
+                    })
+                }
+                return
+            }).append(
+                $('<span/>',{
+                    'html':		'Output Redirect'
+                }).css({
+                    'flex':		'0 0 auto',
+                    'margin-right':'10px'
+                })
+            ).append(
+                el.directoryRedirect = $('<input type="file" nwdirectory/>').css({
+                    'display':	'none'
+                }).on('change', function(){
+                    let val = el.directoryRedirect.val() || ''
+                    el.input2.val( val )
+                    Lockr.set('debug_output_redirect', val)
+                    el.directoryRedirect.val('')
+                })
+            ).append(
+                el.input2 = $('<input type="text"/>').css({
+                    'display':	'block',
+                    'flex':		'1 0 auto',
+                    'height':	'30px',
+                    'line-height':'inherit',
+                    'font-size':'inherit',
+                    'margin-right':'10px'
+                }).val( Lockr.get('debug_output_redirect') || '' )
+            ).append(
+                $('<button/>',{
+                    'type':		'button',
+                    'html':		'Browse'
+                }).css({
+                    'flex':		'0 0 auto',
+                    'margin-right':'10px'
+                }).on('click', function(){
+                    el.directoryRedirect.click()
+                })
+            ).append(
+                $('<input/>',{
+                    'type':		'submit',
+                    'html':		'Export'
+                }).css({
+                    'flex':		'0 0 auto',
+                    'margin-right':'10px'
+                })
+            )
+        ).append(
+            dev_output_el_log = $('<div/>').css({
+                'flex':		'1 0 auto',
+                'line-height':'1.5em',
+                'font-size':'13px',
+                'overflow-y':'auto'
+            })
+        )
+    
+    dev_output_dir = el.input.val()
+    
+    return el.container
 }
 /*
 
 Template
 dev_output_tmpl
-	let searchRes
-		,scrapePtrn = /\{\{[ ]*navContent[ ]*\}\}/gi
-	while( (searchRes = scrapePtrn.exec(dev_output_tmpl)) !== null ){
-		try{
-			dev_output_tmpl = dev_output_tmpl.replace( searchRes[0], CONTENT )
-		}catch(e){}
-	}
+    let searchRes
+        ,scrapePtrn = /\{\{[ ]*navContent[ ]*\}\}/gi
+    while( (searchRes = scrapePtrn.exec(dev_output_tmpl)) !== null ){
+        try{
+            dev_output_tmpl = dev_output_tmpl.replace( searchRes[0], CONTENT )
+        }catch(e){}
+    }
 
 Directory
 dev_output_dir
@@ -750,121 +736,121 @@ dev_output_log(msg)
 
 
 dev_output_steps.push(function(){
-	if( dev_output_only_assets )
-		return
-		
-	let masterDeferred = Q.defer()
+    if( dev_output_only_assets )
+        return
+        
+    let masterDeferred = Q.defer()
 
-	// /ships/index.html
-		,masterChain = Q.fcall(function(){
-			dev_output_log('开始处理: SHIPS')
+    // /ships/index.html
+        ,masterChain = Q.fcall(function(){
+            dev_output_log('开始处理: SHIPS')
 
-			let deferred = Q.defer()
-				,searchRes
-				,scrapePtrn = /\{\{[ ]*mainContent[ ]*\}\}/gi
-				,output = dev_output_tmpl
-				,outputPath = node.path.normalize( dev_output_dir + '/ships/index.html' )
+            let deferred = Q.defer()
+                ,searchRes
+                ,scrapePtrn = /\{\{[ ]*mainContent[ ]*\}\}/gi
+                ,output = dev_output_tmpl
+                ,outputPath = node.path.normalize( dev_output_dir + '/ships/index.html' )
 
-			while( (searchRes = scrapePtrn.exec(output)) !== null ){
-				try{
-					output = output.replace( searchRes[0],
-						dev_output_filter( node.fs.readFileSync(_g.path.page + 'ships.html', 'utf8'), 'page', 'ships' )
-					)
-				}catch(e){}
-			}
-			
-			searchRes = null
-			scrapePtrn = /\{\{[ ]*title[ ]*\}\}/gi
-			while( (searchRes = scrapePtrn.exec(output)) !== null ){
-				try{
-					output = output.replace( searchRes[0], dev_output_gen_title('舰娘') )
-				}catch(e){}
-			}
-			
-			//output = dev_output_filter(output)
-		
-			console.log( outputPath )
-			
-			node.fs.writeFile(
-				outputPath,
-				output,
-				function(err){
-					if( err ){
-						deferred.reject(new Error(err))
-					}else{
-						dev_output_log('生成文件: ' + outputPath)
-						deferred.resolve()
-					}
-				}
-			)
+            while( (searchRes = scrapePtrn.exec(output)) !== null ){
+                try{
+                    output = output.replace( searchRes[0],
+                        dev_output_filter( node.fs.readFileSync(_g.path.page + 'ships.html', 'utf8'), 'page', 'ships' )
+                    )
+                }catch(e){}
+            }
+            
+            searchRes = null
+            scrapePtrn = /\{\{[ ]*title[ ]*\}\}/gi
+            while( (searchRes = scrapePtrn.exec(output)) !== null ){
+                try{
+                    output = output.replace( searchRes[0], dev_output_gen_title('舰娘') )
+                }catch(e){}
+            }
+            
+            //output = dev_output_filter(output)
+        
+            console.log( outputPath )
+            
+            node.fs.writeFile(
+                outputPath,
+                output,
+                function(err){
+                    if( err ){
+                        deferred.reject(new Error(err))
+                    }else{
+                        dev_output_log('生成文件: ' + outputPath)
+                        deferred.resolve()
+                    }
+                }
+            )
 
-			return deferred.promise
-		})
-	
-	
-	for(let i in _g.data.ships){
-		masterChain = masterChain.then(function(){
-			let deferred = Q.defer()
-				,searchRes
-				,scrapePtrn = /\{\{[ ]*mainContent[ ]*\}\}/gi
-				,output = dev_output_tmpl
-				,outputDir = node.path.normalize( dev_output_dir + '/ships/' +i )
-				,outputPath = node.path.normalize( outputDir+ '/index.html' )
-			
-			if (!node.fs.existsSync(outputDir)){
-				node.fs.mkdirSync(outputDir);
-			}
+            return deferred.promise
+        })
+    
+    
+    for(let i in _g.data.ships){
+        masterChain = masterChain.then(function(){
+            let deferred = Q.defer()
+                ,searchRes
+                ,scrapePtrn = /\{\{[ ]*mainContent[ ]*\}\}/gi
+                ,output = dev_output_tmpl
+                ,outputDir = node.path.normalize( dev_output_dir + '/ships/' +i )
+                ,outputPath = node.path.normalize( outputDir+ '/index.html' )
+            
+            if (!node.fs.existsSync(outputDir)){
+                node.fs.mkdirSync(outputDir);
+            }
 
-			while( (searchRes = scrapePtrn.exec(output)) !== null ){
-				try{
-					output = output.replace( searchRes[0],
-						dev_output_filter(
-							_frame.infos.getContent('ship', i)[0].outerHTML,
-							'infos',
-							'ship'
-						)
-					)
-				}catch(e){}
-			}
-			
-			searchRes = null
-			scrapePtrn = /\{\{[ ]*title[ ]*\}\}/gi
-			while( (searchRes = scrapePtrn.exec(output)) !== null ){
-				try{
-					output = output.replace( searchRes[0], dev_output_gen_title(_g.data.ships[i].getName(true) + ' - 舰娘') )
-				}catch(e){}
-			}
-			
-			//output = dev_output_filter(output)
-		
-			console.log( outputPath )
-			
-			node.fs.writeFile(
-				outputPath,
-				output,
-				function(err){
-					if( err ){
-						deferred.reject(new Error(err))
-					}else{
-						dev_output_log('生成文件: ' + outputPath)
-						deferred.resolve()
-					}
-				}
-			)
+            while( (searchRes = scrapePtrn.exec(output)) !== null ){
+                try{
+                    output = output.replace( searchRes[0],
+                        dev_output_filter(
+                            _frame.infos.getContent('ship', i)[0].outerHTML,
+                            'infos',
+                            'ship'
+                        )
+                    )
+                }catch(e){}
+            }
+            
+            searchRes = null
+            scrapePtrn = /\{\{[ ]*title[ ]*\}\}/gi
+            while( (searchRes = scrapePtrn.exec(output)) !== null ){
+                try{
+                    output = output.replace( searchRes[0], dev_output_gen_title(_g.data.ships[i].getName(true) + ' - 舰娘') )
+                }catch(e){}
+            }
+            
+            //output = dev_output_filter(output)
+        
+            console.log( outputPath )
+            
+            node.fs.writeFile(
+                outputPath,
+                output,
+                function(err){
+                    if( err ){
+                        deferred.reject(new Error(err))
+                    }else{
+                        dev_output_log('生成文件: ' + outputPath)
+                        deferred.resolve()
+                    }
+                }
+            )
 
-			return deferred.promise
-		})
-	}
-	
-	
-	masterChain = masterChain.catch(function(e){
-			console.log(e)
-			dev_output_log('发生错误')
-		}).done(function(){
-			masterDeferred.resolve()
-		})
+            return deferred.promise
+        })
+    }
+    
+    
+    masterChain = masterChain.catch(function(e){
+            console.log(e)
+            dev_output_log('发生错误')
+        }).done(function(){
+            masterDeferred.resolve()
+        })
 
-	return masterDeferred.promise
+    return masterDeferred.promise
 })
 /*
 
@@ -1822,13 +1808,13 @@ dev_output_steps.push(function(){
 
 Template
 dev_output_tmpl
-	let searchRes
-		,scrapePtrn = /\{\{[ ]*navContent[ ]*\}\}/gi
-	while( (searchRes = scrapePtrn.exec(dev_output_tmpl)) !== null ){
-		try{
-			dev_output_tmpl = dev_output_tmpl.replace( searchRes[0], CONTENT )
-		}catch(e){}
-	}
+    let searchRes
+        ,scrapePtrn = /\{\{[ ]*navContent[ ]*\}\}/gi
+    while( (searchRes = scrapePtrn.exec(dev_output_tmpl)) !== null ){
+        try{
+            dev_output_tmpl = dev_output_tmpl.replace( searchRes[0], CONTENT )
+        }catch(e){}
+    }
 
 Directory
 dev_output_dir
@@ -1840,354 +1826,354 @@ dev_output_log(msg)
 
 
 dev_output_steps.push(function(){
-	function copyFile(source, target, cb, t) {
-		Q.fcall(function(){
-			let deferred = Q.defer()
-			node.fs.readFile(source, 'utf8', function(err, data){
-				if( err ){
-					deferred.reject(new Error(err))
-				}else{
-					deferred.resolve(data)
-				}
-			})
-			return deferred.promise
-		})
-		.then(function(data){
-			let deferred = Q.defer()
-			//data = dev_output_filter(data)
-			data = dev_output_filter(data, t)
-			data = data.replace(/_g\.bgimg_count[\t ]*=[\t ]*0/g, '_g.bgimg_count='+ bgimg_count)
-			node.fs.writeFile(
-				target,
-				data,
-				function(err){
-					if( err ){
-						deferred.reject(new Error(err))
-					}else{
-						deferred.resolve()
-					}
-				}
-			)
-			return deferred.promise
-		})
-		.done(cb)
-	}
-	function copyFile2(source, target, cb) {
-		var cbCalled = false;
-		
-		var rd = node.fs.createReadStream(source);
-		rd.on("error", done);
-		
-		var wr = node.fs.createWriteStream(target);
-		wr.on("error", done);
-		wr.on("close", function(ex) {
-			done();
-		});
-		rd.pipe(wr);
-		
-		function done(err) {
-			if (!cbCalled) {
-			cb(err);
-			cbCalled = true;
-			}
-		}
-	}
-	function copyFile_compress(source, target, cb, donotcompress) {
-		Q.fcall(function(){
-			let deferred = Q.defer()
-			node.fs.readFile(source, 'utf8', function(err, data){
-				if( err ){
-					deferred.reject(new Error(err))
-				}else{
-					deferred.resolve(data)
-				}
-			})
-			return deferred.promise
-		})
-		.then(function(data){
-			let deferred = Q.defer()
-			node.fs.writeFile(
-				target,
-				donotcompress ? data : LZString.compressToBase64(data),
-				function(err){
-					if( err ){
-						deferred.reject(new Error(err))
-					}else{
-						deferred.resolve()
-					}
-				}
-			)
-			return deferred.promise
-		})
-		.done(cb)
-	}
+    function copyFile(source, target, cb, t) {
+        Q.fcall(function(){
+            let deferred = Q.defer()
+            node.fs.readFile(source, 'utf8', function(err, data){
+                if( err ){
+                    deferred.reject(new Error(err))
+                }else{
+                    deferred.resolve(data)
+                }
+            })
+            return deferred.promise
+        })
+        .then(function(data){
+            let deferred = Q.defer()
+            //data = dev_output_filter(data)
+            data = dev_output_filter(data, t)
+            data = data.replace(/_g\.bgimg_count[\t ]*=[\t ]*0/g, '_g.bgimg_count='+ bgimg_count)
+            node.fs.writeFile(
+                target,
+                data,
+                function(err){
+                    if( err ){
+                        deferred.reject(new Error(err))
+                    }else{
+                        deferred.resolve()
+                    }
+                }
+            )
+            return deferred.promise
+        })
+        .done(cb)
+    }
+    function copyFile2(source, target, cb) {
+        var cbCalled = false;
+        
+        var rd = node.fs.createReadStream(source);
+        rd.on("error", done);
+        
+        var wr = node.fs.createWriteStream(target);
+        wr.on("error", done);
+        wr.on("close", function(ex) {
+            done();
+        });
+        rd.pipe(wr);
+        
+        function done(err) {
+            if (!cbCalled) {
+            cb(err);
+            cbCalled = true;
+            }
+        }
+    }
+    function copyFile_compress(source, target, cb, donotcompress) {
+        Q.fcall(function(){
+            let deferred = Q.defer()
+            node.fs.readFile(source, 'utf8', function(err, data){
+                if( err ){
+                    deferred.reject(new Error(err))
+                }else{
+                    deferred.resolve(data)
+                }
+            })
+            return deferred.promise
+        })
+        .then(function(data){
+            let deferred = Q.defer()
+            node.fs.writeFile(
+                target,
+                donotcompress ? data : LZString.compressToBase64(data),
+                function(err){
+                    if( err ){
+                        deferred.reject(new Error(err))
+                    }else{
+                        deferred.resolve()
+                    }
+                }
+            )
+            return deferred.promise
+        })
+        .done(cb)
+    }
 
-	let masterDeferred = Q.defer()
-		,bgimg_count = 0
+    let masterDeferred = Q.defer()
+        ,bgimg_count = 0
 
-		Q.fcall(function(){
-			dev_output_log('开始处理: BG IMAGES')
-			
-			let deferred = Q.defer()
-				,files = []
-			
-			/*
-			node.fs.readdir(node.path.join( _g.path.bgimg_dir, 'blured'), function(err, files){
-				if( err ){
-					deferred.reject(new Error(err))
-				}else{
-					bgimg_count = files.length
-					deferred.resolve(files)
-				}
-			})
-			*/
-			node.fs.readdirSync( _g.path.bgimg_dir )
-				.filter(function(file){
-					return !node.fs.lstatSync( node.path.join( _g.path.bgimg_dir , file) ).isDirectory()
-				})
-				.map(function(v) { 
-					return {
-						name: v,
-						time: node.fs.statSync( node.path.join( _g.path.bgimg_dir , v) ).mtime.getTime()
-					}; 
-				})
-				.sort(function(a, b) { return a.time - b.time; })
-				.map(function(v) { return v.name; })
-				.forEach(function(name){
-					files.push( name )
-				})
-			bgimg_count = files.length
-			deferred.resolve(files)
-			return deferred.promise
-		})
-		.then(function(files){
-			let deferred = Q.defer()
-				,result = Q(files)
+        Q.fcall(function(){
+            dev_output_log('开始处理: BG IMAGES')
+            
+            let deferred = Q.defer()
+                ,files = []
+            
+            /*
+            node.fs.readdir(node.path.join( _g.path.bgimg_dir, 'blured'), function(err, files){
+                if( err ){
+                    deferred.reject(new Error(err))
+                }else{
+                    bgimg_count = files.length
+                    deferred.resolve(files)
+                }
+            })
+            */
+            node.fs.readdirSync( _g.path.bgimg_dir )
+                .filter(function(file){
+                    return !node.fs.lstatSync( node.path.join( _g.path.bgimg_dir , file) ).isDirectory()
+                })
+                .map(function(v) { 
+                    return {
+                        name: v,
+                        time: node.fs.statSync( node.path.join( _g.path.bgimg_dir , v) ).mtime.getTime()
+                    }; 
+                })
+                .sort(function(a, b) { return a.time - b.time; })
+                .map(function(v) { return v.name; })
+                .forEach(function(name){
+                    files.push( name )
+                })
+            bgimg_count = files.length
+            deferred.resolve(files)
+            return deferred.promise
+        })
+        .then(function(files){
+            let deferred = Q.defer()
+                ,result = Q(files)
 
-			files.forEach(function (file, index) {
-				console.log(file)
-				result = result.then(function(){
-					let _deferred = Q.defer()
-						,filePath1 = node.path.join( _g.path.bgimg_dir, file )
-						,filePath2 = node.path.join( _g.path.bgimg_dir, 'blured', file )
-						,filePath3 = node.path.join( _g.path.bgimg_dir, 'thumbnail', file )
-						,outputPath1 = node.path.join( dev_output_dir, '!', 'assets', 'images', 'homebg', index + '.jpg' )
-						,outputPath2 = node.path.join( dev_output_dir, '!', 'assets', 'images', 'homebg', 'blured', index + '.jpg' )
-						,outputPath3 = node.path.join( dev_output_dir, '!', 'assets', 'images', 'homebg', 'thumbnail', index + '.jpg' )
-					
-					Q.fcall(function(){})
-					.then(function(){
-						let __deferred = Q.defer()
-						copyFile2(
-							filePath1,
-							outputPath1,
-							function(err){
-								if( err ){
-									__deferred.reject(new Error(err))
-								}else{
-									dev_output_log('生成文件: ' + outputPath1)
-									__deferred.resolve()
-								}
-							}
-						)
-						return __deferred.promise
-					})
-					.then(function(){
-						let __deferred = Q.defer()
-						copyFile2(
-							filePath2,
-							outputPath2,
-							function(err){
-								if( err ){
-									__deferred.reject(new Error(err))
-								}else{
-									dev_output_log('生成文件: ' + outputPath2)
-									__deferred.resolve()
-								}
-							}
-						)
-						return __deferred.promise
-					})
-					.then(function(){
-						let __deferred = Q.defer()
-						copyFile2(
-							filePath3,
-							outputPath3,
-							function(err){
-								if( err ){
-									__deferred.reject(new Error(err))
-								}else{
-									dev_output_log('生成文件: ' + outputPath3)
-									__deferred.resolve()
-									_deferred.resolve()
-								}
-							}
-						)
-						return __deferred.promise
-					})
+            files.forEach(function (file, index) {
+                console.log(file)
+                result = result.then(function(){
+                    let _deferred = Q.defer()
+                        ,filePath1 = node.path.join( _g.path.bgimg_dir, file )
+                        ,filePath2 = node.path.join( _g.path.bgimg_dir, 'blured', file )
+                        ,filePath3 = node.path.join( _g.path.bgimg_dir, 'thumbnail', file )
+                        ,outputPath1 = node.path.join( dev_output_dir, '!', 'assets', 'images', 'homebg', index + '.jpg' )
+                        ,outputPath2 = node.path.join( dev_output_dir, '!', 'assets', 'images', 'homebg', 'blured', index + '.jpg' )
+                        ,outputPath3 = node.path.join( dev_output_dir, '!', 'assets', 'images', 'homebg', 'thumbnail', index + '.jpg' )
+                    
+                    Q.fcall(function(){})
+                    .then(function(){
+                        let __deferred = Q.defer()
+                        copyFile2(
+                            filePath1,
+                            outputPath1,
+                            function(err){
+                                if( err ){
+                                    __deferred.reject(new Error(err))
+                                }else{
+                                    dev_output_log('生成文件: ' + outputPath1)
+                                    __deferred.resolve()
+                                }
+                            }
+                        )
+                        return __deferred.promise
+                    })
+                    .then(function(){
+                        let __deferred = Q.defer()
+                        copyFile2(
+                            filePath2,
+                            outputPath2,
+                            function(err){
+                                if( err ){
+                                    __deferred.reject(new Error(err))
+                                }else{
+                                    dev_output_log('生成文件: ' + outputPath2)
+                                    __deferred.resolve()
+                                }
+                            }
+                        )
+                        return __deferred.promise
+                    })
+                    .then(function(){
+                        let __deferred = Q.defer()
+                        copyFile2(
+                            filePath3,
+                            outputPath3,
+                            function(err){
+                                if( err ){
+                                    __deferred.reject(new Error(err))
+                                }else{
+                                    dev_output_log('生成文件: ' + outputPath3)
+                                    __deferred.resolve()
+                                    _deferred.resolve()
+                                }
+                            }
+                        )
+                        return __deferred.promise
+                    })
 
-					return _deferred.promise
-				});
-			});
-			
-			result = result.done(function(){
-				deferred.resolve()
-			})
-			
-			return deferred.promise
-		})
-		
-		
-		
-		
-		.then(function(){
-			dev_output_log('开始处理: CSS & JS')
-			
-			let deferred = Q.defer()
+                    return _deferred.promise
+                });
+            });
+            
+            result = result.done(function(){
+                deferred.resolve()
+            })
+            
+            return deferred.promise
+        })
+        
+        
+        
+        
+        .then(function(){
+            dev_output_log('开始处理: CSS & JS')
+            
+            let deferred = Q.defer()
 
-			node.fs.readdir(node.path.join( _g.root, 'dev-output', 'assets-output'), function(err, files){
-				if( err ){
-					deferred.reject(new Error(err))
-				}else{
-					deferred.resolve(files)
-				}
-			})
-			
-			return deferred.promise
-		})
-		.then(function(files){
-			let deferred = Q.defer()
-				,result = Q(files)
+            node.fs.readdir(node.path.join( _g.root, 'dev-output', 'assets-output'), function(err, files){
+                if( err ){
+                    deferred.reject(new Error(err))
+                }else{
+                    deferred.resolve(files)
+                }
+            })
+            
+            return deferred.promise
+        })
+        .then(function(files){
+            let deferred = Q.defer()
+                ,result = Q(files)
 
-			files.forEach(function (file) {
-				result = result.then(function(){
-					let _deferred = Q.defer()
-						,outputPath = node.path.join( dev_output_dir, '!', 'assets', file )
-					copyFile(
-						node.path.join( _g.root, 'dev-output', 'assets-output', file ),
-						outputPath,
-						function(err){
-							if( err ){
-								_deferred.reject(new Error(err))
-							}else{
-								dev_output_log('生成文件: ' + outputPath)
-								_deferred.resolve()
-							}
-						},
-						node.path.extname(file)
-					)
-					return _deferred.promise
-				});
-			});
-			
-			result = result.done(function(){
-				deferred.resolve()
-			})
-			
-			return deferred.promise
-		})
-		.then(function(){
-			let deferred = Q.defer()
-				,fontfiles = [
-					'icons.eot',
-					'icons.svg',
-					'icons.ttf',
-					'icons.woff'
-				]
-				,chain = Q()
-			
-			fontfiles.forEach(function(filename){
-				chain = chain.then(function(){
-					let outputPath = node.path.join( dev_output_dir, '!', 'assets', 'fonts', filename )
-						,_deferred = Q.defer()
-					copyFile2(
-						//node.path.join( _g.root, 'app', 'assets', 'fonts', filename ),
-						node.path.join( _g.root, '!design', 'iconfont', 'fonts', filename ),
-						outputPath,
-						function(err){
-							if( err ){
-								_deferred.reject(new Error(err))
-							}else{
-								dev_output_log('生成文件: ' + outputPath)
-								_deferred.resolve()
-							}
-						}
-					)
-				})
-			})
-			
-			chain = chain.catch(function(){
-				deferred.resolve()
-			}).done(function(){
-				deferred.resolve()
-			})
-			
-			return deferred.promise
-		})
-		
-		
-		
-		
-		.then(function(){
-			dev_output_log('开始处理: DB JSONs')
-			
-			let deferred = Q.defer()
+            files.forEach(function (file) {
+                result = result.then(function(){
+                    let _deferred = Q.defer()
+                        ,outputPath = node.path.join( dev_output_dir, '!', 'assets', file )
+                    copyFile(
+                        node.path.join( _g.root, 'dev-output', 'assets-output', file ),
+                        outputPath,
+                        function(err){
+                            if( err ){
+                                _deferred.reject(new Error(err))
+                            }else{
+                                dev_output_log('生成文件: ' + outputPath)
+                                _deferred.resolve()
+                            }
+                        },
+                        node.path.extname(file)
+                    )
+                    return _deferred.promise
+                });
+            });
+            
+            result = result.done(function(){
+                deferred.resolve()
+            })
+            
+            return deferred.promise
+        })
+        .then(function(){
+            let deferred = Q.defer()
+                ,fontfiles = [
+                    'icons.eot',
+                    'icons.svg',
+                    'icons.ttf',
+                    'icons.woff'
+                ]
+                ,chain = Q()
+            
+            fontfiles.forEach(function(filename){
+                chain = chain.then(function(){
+                    let outputPath = node.path.join( dev_output_dir, '!', 'assets', 'fonts', filename )
+                        ,_deferred = Q.defer()
+                    copyFile2(
+                        //node.path.join( _g.root, 'app', 'assets', 'fonts', filename ),
+                        node.path.join( _g.root, '!design', 'iconfont', 'fonts', filename ),
+                        outputPath,
+                        function(err){
+                            if( err ){
+                                _deferred.reject(new Error(err))
+                            }else{
+                                dev_output_log('生成文件: ' + outputPath)
+                                _deferred.resolve()
+                            }
+                        }
+                    )
+                })
+            })
+            
+            chain = chain.catch(function(){
+                deferred.resolve()
+            }).done(function(){
+                deferred.resolve()
+            })
+            
+            return deferred.promise
+        })
+        
+        
+        
+        
+        .then(function(){
+            dev_output_log('开始处理: DB JSONs')
+            
+            let deferred = Q.defer()
 
-			node.fs.readdir(node.path.normalize( _g.path.db ), function(err, files){
-				if( err ){
-					deferred.reject(new Error(err))
-				}else{
-					deferred.resolve(files)
-				}
-			})
-			
-			return deferred.promise
-		})
-		.then(function(files){
-			let deferred = Q.defer()
-				,result = Q(files)
+            node.fs.readdir(node.path.normalize( _g.path.db ), function(err, files){
+                if( err ){
+                    deferred.reject(new Error(err))
+                }else{
+                    deferred.resolve(files)
+                }
+            })
+            
+            return deferred.promise
+        })
+        .then(function(files){
+            let deferred = Q.defer()
+                ,result = Q(files)
 
-			files.forEach(function (file) {
-				result = result.then(function(){
-					let _deferred = Q.defer()
-						,outputPath = node.path.join( dev_output_dir, '!', 'db', file )
-						
-					copyFile_compress(
-						node.path.join( _g.path.db, file ),
-						outputPath,
-						function(err){
-							if( err ){
-								_deferred.reject(new Error(err))
-							}else{
-								dev_output_log('生成文件 (已压缩): ' + outputPath)
-								_deferred.resolve()
-							}
-						},
-						file == 'entities.json' ? true : null
-					)
-					
-					return _deferred.promise
-				});
-			});
-			
-			result = result.done(function(){
-				deferred.resolve()
-			})
-			
-			return deferred.promise
-		})
-		
-		
-		
-		
-		.catch(function(e){
-			console.log(e)
-			dev_output_log('发生错误')
-		}).done(function(){
-			masterDeferred.resolve()
-		})
+            files.forEach(function (file) {
+                result = result.then(function(){
+                    let _deferred = Q.defer()
+                        ,outputPath = node.path.join( dev_output_dir, '!', 'db', file )
+                        
+                    copyFile_compress(
+                        node.path.join( _g.path.db, file ),
+                        outputPath,
+                        function(err){
+                            if( err ){
+                                _deferred.reject(new Error(err))
+                            }else{
+                                dev_output_log('生成文件 (已压缩): ' + outputPath)
+                                _deferred.resolve()
+                            }
+                        },
+                        file == 'entities.json' ? true : null
+                    )
+                    
+                    return _deferred.promise
+                });
+            });
+            
+            result = result.done(function(){
+                deferred.resolve()
+            })
+            
+            return deferred.promise
+        })
+        
+        
+        
+        
+        .catch(function(e){
+            console.log(e)
+            dev_output_log('发生错误')
+        }).done(function(){
+            masterDeferred.resolve()
+        })
 
-	return masterDeferred.promise
+    return masterDeferred.promise
 })
 "use strict";
 

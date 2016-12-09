@@ -2461,6 +2461,7 @@ $document.ready(function () {
 var Ship = KC.Ship,
     Equipment = KC.Equipment,
     Entity = KC.Entity,
+    Consumable = KC.Consumable,
     Formula = KC.formula;
 
 _g.animate_duration_delay = 320;
@@ -2998,8 +2999,9 @@ _g.path = {
 	'db': '/!/db/',
 	'bgimg_dir': '/!/assets/images/homebg/',
 	'pics': {
-		'ships': '/!/pics/ships/',
-		'items': '/!/pics/items/'
+		ships: '/!/pics-ships/',
+		shipsExtra: '/!/pics-ships-extra/',
+		items: '/!/pics/items/'
 	}
 };
 KC.path.pics = _g.path.pics;
@@ -3811,7 +3813,22 @@ _tmpl.improvement__resource = function (improvement, upgradable) {
 			case 3:
 				title = '升级';break;
 		}
-		resource[i] = '<span>' + '<em>' + title + '</em>' + (i == 3 && !upgradable ? '<i class="no">-</i>' : '<i class="dev_mat">' + getValue(improvement['resource'][i][0]) + '<i>(' + getValue(improvement['resource'][i][1]) + ')</i>' + '</i>' + '<i class="imp_mat">' + getValue(improvement['resource'][i][2]) + '<i>(' + getValue(improvement['resource'][i][3]) + ')</i>' + '</i>' + (improvement['resource'][i][4] ? '<a class="equiptypeicon mod-left mod-' + _g.data.items[improvement['resource'][i][4]].getIconId() + '"' + ' href="?infos=equipment&id=' + improvement['resource'][i][4] + '"' + ' data-infos="[[EQUIPMENT::' + improvement['resource'][i][4] + ']]"' + ' data-tip="[[EQUIPMENT::' + improvement['resource'][i][4] + ']]"' + '>' + _g.data.items[improvement['resource'][i][4]].getName(!0) + '<i>x' + getValue(improvement['resource'][i][5]) + '</i>' + '</a>' : '')) + '</span>';
+		var requiredItem = improvement['resource'][i][4] || '';
+
+		if (requiredItem) {
+			if (isNaN(requiredItem)) {
+				var match = /^consumable_([0-9]+)/.exec(requiredItem);
+				if (match && match.length > 1) {
+					var name = _g.data.consumables[match[1]]._name;
+					var quantity = getValue(improvement['resource'][i][5]);
+					requiredItem = '<i>' + name + '<i>x' + quantity + '</i></i>';
+				}
+			} else {
+				requiredItem = '<a class="equiptypeicon mod-left mod-' + _g.data.items[improvement['resource'][i][4]].getIconId() + '"' + ' href="?infos=equipment&id=' + improvement['resource'][i][4] + '"' + ' data-infos="[[EQUIPMENT::' + improvement['resource'][i][4] + ']]"' + ' data-tip="[[EQUIPMENT::' + improvement['resource'][i][4] + ']]"' + '>' + _g.data.items[improvement['resource'][i][4]].getName(!0) + '<i>x' + getValue(improvement['resource'][i][5]) + '</i>' + '</a>';
+			}
+		}
+
+		resource[i] = '<span>' + '<em>' + title + '</em>' + (i == 3 && !upgradable ? '<i class="no">-</i>' : '<i class="dev_mat">' + getValue(improvement['resource'][i][0]) + '<i>(' + getValue(improvement['resource'][i][1]) + ')</i>' + '</i>' + '<i class="imp_mat">' + getValue(improvement['resource'][i][2]) + '<i>(' + getValue(improvement['resource'][i][3]) + ')</i>' + '</i>' + requiredItem) + '</span>';
 	}
 
 	return '<span>' + resource['all'] + resource['1'] + resource['2'] + resource['3'] + '</span>';
@@ -6920,6 +6937,14 @@ var InfosFleetShipEquipment = function () {
 				setTimeout(function () {
 					if (!this.el.is(':focus')) this.el.removeClass('is-hover');
 				}.bind(this), 10);
+			}.bind(this),
+			'pointerenter': function (e) {
+				if (e.originalEvent.pointerType != 'touch') {
+					InfosFleetShipEquipment.cur = this.el.addClass('is-hover');
+				}
+			}.bind(this),
+			'mouseenter': function (e) {
+				InfosFleetShipEquipment.cur = this.el.addClass('is-hover');
 			}.bind(this)
 		})).append(this.elSelectRank = $('<div/>', {
 			'class': 'equipment-rankselect',

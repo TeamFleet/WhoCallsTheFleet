@@ -69,6 +69,7 @@ _frame.infos.__ship = function( id ){
                     .attr('data-infos-title', d._name + ' - 舰娘')
         ,ship_name = d.getName(_g.joint) || '舰娘'
         ,illustrations = []
+        ,illustrationsExtra = []
         ,has_no = d['no'] && parseInt(d['no']) < 500 ? true : false
 
     // 名称 & 舰种 & 舰级
@@ -343,7 +344,7 @@ _frame.infos.__ship = function( id ){
                                 illustrations.push( data_prev['id'] )
                                 if( data_prev.illust_extra && data_prev.illust_extra.length && data_prev.illust_extra[0] ){
                                     data_prev.illust_extra.forEach(function(cur){
-                                        illustrations.push( 'extra_' + cur )
+                                        illustrationsExtra.push( cur )
                                     })
                                 }
                             }
@@ -351,7 +352,7 @@ _frame.infos.__ship = function( id ){
                             illustrations.push( currentValue['id'] )
                             if( currentValue.illust_extra && currentValue.illust_extra.length && currentValue.illust_extra[0] ){
                                 currentValue.illust_extra.forEach(function(cur){
-                                    illustrations.push( 'extra_' + cur )
+                                    illustrationsExtra.push( cur )
                                 })
                             }
                         }
@@ -392,6 +393,11 @@ _frame.infos.__ship = function( id ){
                 //lastContainer = false
                 check_append( node.path.normalize(_g.path.pics.ships) + currentValue + '/8.webp', 0 )
                 check_append( node.path.normalize(_g.path.pics.ships) + currentValue + '/9.webp', 1 )
+            })
+            illustrationsExtra.forEach(function(currentValue){
+                //lastContainer = false
+                check_append( node.path.normalize(_g.path.pics.shipsExtra) + currentValue + '/8.webp', 0 )
+                check_append( node.path.normalize(_g.path.pics.shipsExtra) + currentValue + '/9.webp', 1 )
             })
             if( index % 2 )
                 illusts.addClass('is-singlelast')

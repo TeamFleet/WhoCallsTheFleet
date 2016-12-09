@@ -156,6 +156,7 @@
 			}
 			&>i{
 				background:		~"url(@{folder_images}/stats.png) no-repeat 0 0";
+				background-position: 0 -200%;
 				&.fuel{
 					background-position:	0 unit((12 * -18), px);
 					color:		@color_fuel;
@@ -259,6 +260,9 @@
 					}
 					&:active{
 						color:		@color_accent2;
+					}
+					&:not[href]{
+						pointer-events: none;
 					}
 				}
 				&>b{
