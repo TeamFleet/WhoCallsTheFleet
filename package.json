@@ -96,7 +96,11 @@
     "dataRelative": [
       "app",
       "app-db",
-      "pics"
+      "bgimgs",
+      "pics",
+      "pics-enemies",
+      "pics-ships",
+      "pics-ships-extra"
     ],
     "launcherSplash": "./source/launcher.webp",
     "macIcns": "./source/appicon.icns"

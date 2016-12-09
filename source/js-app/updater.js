@@ -35,6 +35,15 @@
             更新器提示的提示状态
 */
 
+/*
+ * 测试流程
+ * 
+ * debugmode = true
+ * _updater.remote_path = '/versions-beta.json'
+ * _updater.update()
+ * 
+ */
+
 var _updater = {
     'local_versions':{},
     'remote_root':	'http://fleet.moe',

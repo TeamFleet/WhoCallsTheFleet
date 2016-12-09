@@ -2028,6 +2028,7 @@ class InfosFleetShipEquipment{
             return this.el
         
         //this.el = $('<div class="equipment" touch-action="none" tabindex="0"/>')
+        this.elBlurTimeout
         this.el = $('<div class="equipment" tabindex="0"/>')
                     .on({
                         /*
@@ -2062,8 +2063,11 @@ class InfosFleetShipEquipment{
                                 InfosFleetShipEquipment.cur = this.el.addClass('is-hover')
                             }.bind(this),
                         'blur': function(){
-                                this.el.removeClass('is-hover')
-                                InfosFleetShipEquipment.cur = null
+                                this.elBlurTimeout = setTimeout(()=>{
+                                    this.el.removeClass('is-hover')
+                                    InfosFleetShipEquipment.cur = null
+                                    // console.log('parent blur')
+                                }, 10)
                             }.bind(this),
                         'pointerenter': function(e){
                                 if( e.originalEvent.pointerType != 'touch' ){
@@ -2124,8 +2128,9 @@ class InfosFleetShipEquipment{
                                                 this.star = value
                                         }.bind(this),
                                     'focus': function(){
+                                            clearTimeout(this.elBlurTimeout)
                                             this.el.addClass('is-hover')
-                                            console.log('focus')
+                                            //console.log('focus')
                                         }.bind(this),
                                     'blur': function(){
                                             setTimeout(function(){
@@ -2133,14 +2138,26 @@ class InfosFleetShipEquipment{
                                                     this.el.removeClass('is-hover')
                                             }.bind(this), 10)
                                         }.bind(this),
+                                    'pointerdown': function(e){
+                                            console.log('pointerdown')
+                                            if( e.originalEvent.pointerType == 'touch' ){
+                                                InfosFleetShipEquipment.cur = this.el.addClass('is-hover')
+                                                clearTimeout(this.elBlurTimeout)
+                                                setTimeout(()=>{
+                                                    this.elInputStar.trigger('focus')
+                                                }, 10)
+                                            }
+                                        }.bind(this),
                                     'pointerenter': function(e){
                                             if( e.originalEvent.pointerType != 'touch' ){
                                                 InfosFleetShipEquipment.cur = this.el.addClass('is-hover')
+                                                clearTimeout(this.elBlurTimeout)
                                                         //.focus()
                                             }
                                         }.bind(this),
                                     'mouseenter': function(e){
                                             InfosFleetShipEquipment.cur = this.el.addClass('is-hover')
+                                            clearTimeout(this.elBlurTimeout)
                                         }.bind(this)
                                 })			
                             )
