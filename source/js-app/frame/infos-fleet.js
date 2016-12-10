@@ -1857,7 +1857,7 @@ class InfosFleetShip{
                     
                 this.el.attr('data-shipId', value)
                 //this.el.removeClass('noship')
-                this.elAvatar.html('<img src="' + ship.getPic(10) + '"/>')
+                this.elAvatar.html('<img src="' + ship.getPic(10, _g.imgExt) + '"/>')
                 this.elInfosTitle.html('<h4 data-content="'+ship['name'][_g.lang]+'">' +ship['name'][_g.lang]+'</h4>'
                                         + ( suffix
                                             ? '<h5 data-content="'+suffix+'">' +suffix+'</h5>'

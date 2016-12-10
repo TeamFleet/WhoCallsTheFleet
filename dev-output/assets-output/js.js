@@ -2529,6 +2529,19 @@ _g.getSize = function (bytes, target) {
 
 var _l = {};
 
+var Support = {};
+Support._webp = function () {
+	var elem = document.createElement('canvas');
+
+	if (!!(elem.getContext && elem.getContext('2d'))) {
+		return elem.toDataURL('image/webp').indexOf('data:image/webp') == 0;
+	} else {
+		return !1;
+	}
+};
+Support['webp'] = _g.isClient ? !0 : Support._webp();
+_g.imgExt = Support['webp'] ? 'web' + 'p' : 'png';
+
 String.prototype.printf = function () {
 	if (typeof vsprintf != 'undefined') return vsprintf(this, Array.prototype.slice.call(arguments));
 	return this;
@@ -6810,7 +6823,7 @@ var InfosFleetShip = function () {
 
 				this.el.attr('data-shipId', value);
 
-				this.elAvatar.html('<img src="' + ship.getPic(10) + '"/>');
+				this.elAvatar.html('<img src="' + ship.getPic(10, _g.imgExt) + '"/>');
 				this.elInfosTitle.html('<h4 data-content="' + ship['name'][_g.lang] + '">' + ship['name'][_g.lang] + '</h4>' + (_suffix ? '<h5 data-content="' + _suffix + '">' + _suffix + '</h5>' : ''));
 				this.elInfosInfo.html(speed + ' ' + stype);
 
@@ -8981,7 +8994,7 @@ var TablelistFleets = function (_Tablelist4) {
 						    ships = data['data'][0] || [],
 						    j = 0;
 						while (j < 6) {
-							if (ships[j] && ships[j][0]) html += '<img class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '" src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0' + (_huCss.csscheck_full('mask-image') ? '.webp' : '-mask-2.png') + '" contextmenu="disabled"' + '/>';else html += '<s class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '"/>';
+							if (ships[j] && ships[j][0]) html += '<img class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '" src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0' + TablelistFleets.avatarImgSuffix + '" contextmenu="disabled"' + '/>';else html += '<s class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '"/>';
 							j++;
 						}
 						html += '</i>';
@@ -9285,6 +9298,8 @@ var TablelistFleets = function (_Tablelist4) {
 TablelistFleets.support = {};
 TablelistFleets.support.buildfile = _g.isNWjs || window.File && window.FileReader && window.FileList && window.Blob && window.URL ? !0 : !1;
 
+TablelistFleets.avatarImgSuffix = _huCss.csscheck_full('mask-image') ? '.' + _g.imgExt : '-mask-2.png';
+
 TablelistFleets.menuOptions_show = function ($el, $el_tablelist) {
 	if (!TablelistFleets.menuOptions) {
 		var items = [$('<menuitem class="mod-checkbox donot_hide option-in-tablelist option-groupbytheme"/>').append($('<input/>', {
@@ -9357,7 +9372,7 @@ TablelistFleets.modalBuildConflictShow = function (data, deferred) {
 		    ships = InfosFleet.decompress(data.data)[0] || [],
 		    j = 0;
 		while (j < 6) {
-			if (ships[j] && ships[j][0]) html += '<img class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '" src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0' + (_huCss.csscheck_full('mask-image') ? '.webp' : '-mask-2.png') + '" contextmenu="disabled"' + '/>';else html += '<s class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '"/>';
+			if (ships[j] && ships[j][0]) html += '<img class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '" src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0' + TablelistFleets.avatarImgSuffix + '" contextmenu="disabled"' + '/>';else html += '<s class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '"/>';
 			j++;
 		}
 		html += '</i>';

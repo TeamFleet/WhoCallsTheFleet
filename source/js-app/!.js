@@ -94,6 +94,24 @@
     var _l = {};
 
 
+// check for webp support
+    var Support = {}
+    Support._webp = function() {
+        var elem = document.createElement('canvas');
+
+        if (!!(elem.getContext && elem.getContext('2d'))) {
+            // was able or not to get WebP representation
+            return elem.toDataURL('image/webp').indexOf('data:image/webp') == 0;
+        }
+        else {
+            // very old browser like IE 8, canvas not supported
+            return false;
+        }
+    }
+    Support['webp'] = _g.isClient ? true : Support._webp();
+    _g.imgExt = Support['webp'] ? 'web'+'p' : 'png';
+
+
 
 // String
     String.prototype.printf = function() {
