@@ -89,6 +89,10 @@ function dev_output_filter(output, pagetype, name){
             '/!/pics/'
         ],
         [
+            /\.\.\/pics-/gi,
+            '/!/pics-'
+        ],
+        [
             /\'assets\//gi,
             '\'/!/assets/'
         ],

@@ -82,8 +82,8 @@
       "package.json"
     ],
     "dataVersion": {
-      "app": "0.18.7.0",
-      "app-db": "1.18.7.0",
+      "app": "0.18.7.1",
+      "app-db": "2016.12.12",
       "bgimgs": "1.18.6.0",
       "pics": "1.18.6.0",
       "pics-enemies": "1.18.6.0",

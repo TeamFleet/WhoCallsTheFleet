@@ -3206,16 +3206,9 @@ _frame.app_main.page['about'].init = function (page) {
     var i = 0;
 
     function addUpdateJournal(updateData) {
-        var id = 'update_journal_' + i++,
-            checkbox = $('<input type="checkbox" id="' + id + '"/>').prop('checked', i < 3 ? !0 : !1).appendTo(page),
-            section = $('<section class="update_journal" data-version-' + updateData['type'] + '="' + updateData['version'] + '"/>').append($('<label for="' + id + '"/>').html(_frame.app_main.page['about'].journaltitle(updateData))).appendTo(page);
-        try {
-            $(_frame.app_main.page['about'].journal_parse(updateData['journal'])).appendTo(section);
-        } catch (e) {
-            _g.error(e);
-            checkbox.remove();
-            section.remove();
-        }
+        var journal = new Journal(updateData);
+        journal.genSection(i < 3).appendTo(page);
+        i++;
     }
 
     var promise_chain = Q.fcall(function () {});
@@ -3240,6 +3233,71 @@ _frame.app_main.page['about'].init = function (page) {
         return deferred.promise;
     });
 };
+
+var Journal = function () {
+    function Journal(data) {
+        _classCallCheck(this, Journal);
+
+        this.data = data;
+    }
+
+    _createClass(Journal, [{
+        key: 'genTitle',
+        value: function genTitle() {
+            var tagName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'h3';
+
+            return $('<' + tagName + '>' + (this.data.hotfix ? '[hotfix] ' : '') + (this.data.type == 'app' ? '' : (this.data.type == 'app-db' ? 'DB' : this.data.type).toUpperCase()) + (this.data.type == 'app' ? this.data.version : '') + '<small>' + (this.data.date ? this.data.date : 'WIP') + '</small>' + ('</' + tagName + '>'));
+        }
+    }, {
+        key: 'genContent',
+        value: function genContent() {
+            var raw = this.data.journal,
+                searchRes = void 0,
+                scrapePtrn = /\[\[([^\:]+)\:([0-9]+)\]\]/gi,
+                resultHTML = markdown.toHTML(raw);
+
+            while ((searchRes = scrapePtrn.exec(raw)) !== null) {
+                try {
+                    resultHTML = resultHTML.replace(searchRes[0], _tmpl['link_' + searchRes[1].toLowerCase()](searchRes[2], null, !0));
+                } catch (e) {}
+            }
+
+            searchRes = null;
+            scrapePtrn = /\[\[([^\:]+)\:([0-9]+)\:TEXT\]\]/gi;
+            while ((searchRes = scrapePtrn.exec(raw)) !== null) {
+                try {
+                    resultHTML = resultHTML.replace(searchRes[0], _tmpl['textlink_' + searchRes[1].toLowerCase()](searchRes[2], null, !0));
+                } catch (e) {}
+            }
+
+            this.content = $(resultHTML);
+
+            return this.content;
+        }
+    }, {
+        key: 'genSection',
+        value: function genSection(defaultShow) {
+            var _this5 = this;
+
+            var id = 'update_journal_' + this.data._id,
+                checkbox = $('<input type="checkbox" id="' + id + '"/>').prop('checked', defaultShow ? !0 : !1).on('change', function (e) {
+                if (e.target.checked) _this5.show();
+            });
+            this.section = $('<section class="update_journal" data-version-' + this.data.type + '="' + this.data.version + '"/>').append($('<label for="' + id + '"/>').append(this.genTitle()));
+
+            if (defaultShow) this.show();
+
+            return this.section.add(checkbox.insertBefore(this.section));
+        }
+    }, {
+        key: 'show',
+        value: function show() {
+            if (!this.content) this.genContent().appendTo(this.section);
+        }
+    }]);
+
+    return Journal;
+}();
 
 _frame.app_main.page['calctp'] = {
     'init': function init(page) {
@@ -4438,7 +4496,7 @@ var InfosFleet = function () {
                 }
                 return els;
             })).append(this.doms['themeOption'] = $('<button class="option option-theme mod-dropdown"/>').html('主题').on('click', function () {
-                var _this5 = this;
+                var _this6 = this;
 
                 if (!InfosFleet.menuTheme) {
                     InfosFleet.menuThemeItems = $('<div/>');
@@ -4447,7 +4505,7 @@ var InfosFleet = function () {
                         $('<button class="theme-' + _i3 + '"/>').html(_i3).on('click', function () {
                             InfosFleet.menuCur._theme = _i3;
                             this.el.attr('data-theme', this._theme);
-                        }.bind(_this5)).appendTo(InfosFleet.menuThemeItems);
+                        }.bind(_this6)).appendTo(InfosFleet.menuThemeItems);
                     };
 
                     for (var _i3 = 1; _i3 < 11; _i3++) {
@@ -5093,7 +5151,7 @@ var InfosFleetSubFleet = function () {
             if (this.summaryCalculating) return !1;
 
             this.summaryCalculating = setTimeout(function () {
-                var _this6 = this;
+                var _this7 = this;
 
                 if (!is_onlyHqLvChange) {
                     (function () {
@@ -5103,7 +5161,7 @@ var InfosFleetSubFleet = function () {
                             consumAmmo = 0,
                             tp = 0;
 
-                        _this6.ships.forEach(function (shipdata) {
+                        _this7.ships.forEach(function (shipdata) {
                             if (shipdata.data[0]) {
                                 var ship = _g.data.ships[shipdata.data[0]];
 
@@ -5120,27 +5178,27 @@ var InfosFleetSubFleet = function () {
                             }
                         });
 
-                        _this6.elSummarySpeed.html(fleetSpeet == 'fast' ? '高速' : '低速');
+                        _this7.elSummarySpeed.html(fleetSpeet == 'fast' ? '高速' : '低速');
 
                         if (Math.max(fighterPower[0], fighterPower[1]) > 0) {
                             var val1 = Math.floor(fighterPower[0]),
                                 val2 = Math.floor(fighterPower[1]);
-                            _this6.elSummaryFighterPower.html(val1 == val2 ? val1 : val1 + '~' + val2);
-                            _this6.elSummaryFighterPower.removeClass('empty');
+                            _this7.elSummaryFighterPower.html(val1 == val2 ? val1 : val1 + '~' + val2);
+                            _this7.elSummaryFighterPower.removeClass('empty');
                         } else {
-                            _this6.elSummaryFighterPower.html('-');
-                            _this6.elSummaryFighterPower.addClass('empty');
+                            _this7.elSummaryFighterPower.html('-');
+                            _this7.elSummaryFighterPower.addClass('empty');
                         }
 
-                        _this6.elSummaryConsummation.html(consumFuel || consumAmmo ? '<span class="fuel">' + consumFuel + '</span><span class="ammo">' + consumAmmo + '</span>' : '-');
+                        _this7.elSummaryConsummation.html(consumFuel || consumAmmo ? '<span class="fuel">' + consumFuel + '</span><span class="ammo">' + consumAmmo + '</span>' : '-');
 
                         if (tp > 40) {
                             var rS = Math.floor(tp),
                                 rA = Math.floor(rS * 0.7);
-                            _this6.elSummaryTPcontainer.removeClass('hide');
-                            _this6.elSummaryTP.html('A=' + rA + ' / S=' + rS);
+                            _this7.elSummaryTPcontainer.removeClass('hide');
+                            _this7.elSummaryTP.html('A=' + rA + ' / S=' + rS);
                         } else {
-                            _this6.elSummaryTPcontainer.addClass('hide');
+                            _this7.elSummaryTPcontainer.addClass('hide');
                         }
                     })();
                 }
@@ -5622,10 +5680,10 @@ var InfosFleetShipEquipment = function () {
                 InfosFleetShipEquipment.cur = this.el.addClass('is-hover');
             }.bind(this),
             'blur': function () {
-                var _this7 = this;
+                var _this8 = this;
 
                 this.elBlurTimeout = setTimeout(function () {
-                    _this7.el.removeClass('is-hover');
+                    _this8.el.removeClass('is-hover');
                     InfosFleetShipEquipment.cur = null;
                 }, 10);
             }.bind(this),
@@ -5671,14 +5729,14 @@ var InfosFleetShipEquipment = function () {
                 }.bind(this), 10);
             }.bind(this),
             'pointerdown': function (e) {
-                var _this8 = this;
+                var _this9 = this;
 
                 console.log('pointerdown');
                 if (e.originalEvent.pointerType == 'touch') {
                     InfosFleetShipEquipment.cur = this.el.addClass('is-hover');
                     clearTimeout(this.elBlurTimeout);
                     setTimeout(function () {
-                        _this8.elInputStar.trigger('focus');
+                        _this9.elInputStar.trigger('focus');
                     }, 10);
                 }
             }.bind(this),
@@ -6872,7 +6930,7 @@ var modal = {};
 modal.equipable = {
     'frames': {},
     'frame': function frame(typeId) {
-        var _this9 = this;
+        var _this10 = this;
 
         if (!typeId) return !1;
 
@@ -6905,7 +6963,7 @@ modal.equipable = {
                     })();
                 }
 
-                _this9.frames[typeId] = container;
+                _this10.frames[typeId] = container;
             })();
         }
 
@@ -7268,23 +7326,23 @@ var TablelistShips = function (_Tablelist) {
     function TablelistShips(container, options) {
         _classCallCheck(this, TablelistShips);
 
-        var _this10 = _possibleConstructorReturn(this, (TablelistShips.__proto__ || Object.getPrototypeOf(TablelistShips)).call(this, container, options));
+        var _this11 = _possibleConstructorReturn(this, (TablelistShips.__proto__ || Object.getPrototypeOf(TablelistShips)).call(this, container, options));
 
-        _this10.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['夜战', 'nightpower'], ['对空', 'aa'], ['对潜', 'asw'], ['耐久', 'hp'], ['装甲', 'armor'], ['回避', 'evasion'], ['搭载', 'carry'], ['航速', 'speed'], ['射程', 'range'], ['索敌', 'los'], ['运', 'luck'], ['油耗', 'consum_fuel'], ['弹耗', 'consum_ammo'], ['多立绘', 'extra_illust']];
-        _this10.header_checkbox = [];
-        _this10.mode_selection_filters = $();
+        _this11.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['夜战', 'nightpower'], ['对空', 'aa'], ['对潜', 'asw'], ['耐久', 'hp'], ['装甲', 'armor'], ['回避', 'evasion'], ['搭载', 'carry'], ['航速', 'speed'], ['射程', 'range'], ['索敌', 'los'], ['运', 'luck'], ['油耗', 'consum_fuel'], ['弹耗', 'consum_ammo'], ['多立绘', 'extra_illust']];
+        _this11.header_checkbox = [];
+        _this11.mode_selection_filters = $();
 
-        _this10.rows = $();
-        _this10.rowsById = {};
-        _this10.rowsByHeader = {};
+        _this11.rows = $();
+        _this11.rowsById = {};
+        _this11.rowsByHeader = {};
 
-        _frame.app_main.loading.push('tablelist_' + _this10._index);
+        _frame.app_main.loading.push('tablelist_' + _this11._index);
         _frame.app_main.is_loaded = !1;
 
-        _this10.initProgressMax = 0;
-        _this10.initProgressCur = 0;
+        _this11.initProgressMax = 0;
+        _this11.initProgressCur = 0;
 
-        _this10.dom.container.on({
+        _this11.dom.container.on({
             'initprogress': function initprogress(e, cur, max) {
                 this.initProgressCur = cur || this.initProgressCur;
                 this.initProgressMax = max || this.initProgressMax;
@@ -7292,8 +7350,8 @@ var TablelistShips = function (_Tablelist) {
         });
 
         if (container.children('.tablelist-container').length) {
-            _this10.init_parse();
-        }return _this10;
+            _this11.init_parse();
+        }return _this11;
     }
 
     _createClass(TablelistShips, [{
@@ -7351,7 +7409,7 @@ var TablelistShips = function (_Tablelist) {
     }, {
         key: 'contextmenu_show',
         value: function contextmenu_show($el, shipId, is_rightclick) {
-            var _this11 = this;
+            var _this12 = this;
 
             if (this.dom.filter_container.attr('viewtype') == 'compare' || $el.attr('data-donotcompare') == 'true') return !1;
 
@@ -7436,13 +7494,13 @@ var TablelistShips = function (_Tablelist) {
                         }
 
                         return TablelistShips.contextmenu;
-                    }.bind(_this11);
-                    if (!_this11.is_init) {
+                    }.bind(_this12);
+                    if (!_this12.is_init) {
                         TablelistShips.contextmenu = new _menu({
                             'className': 'contextmenu-ship',
                             'items': [$('<menuitem/>').html('数据处理中，请稍候……　　')]
                         });
-                        _this11.dom.container.on({
+                        _this12.dom.container.on({
                             'initprogress': function initprogress(e, cur, max) {
                                 if (TablelistShips.contextmenu.showing) {
                                     TablelistShips.contextmenu.dom.body.empty().append($('<menuitem/>').html('\u6570\u636E\u5904\u7406\u4E2D\uFF0C\u8BF7\u7A0D\u5019 (' + (cur / max * 100).toFixed(1) + '%)'));
@@ -7574,7 +7632,7 @@ var TablelistShips = function (_Tablelist) {
 
             trs.each(function (index, tr) {
                 chain = chain.then(function () {
-                    var _this12 = this;
+                    var _this13 = this;
 
                     tr = $(tr);
                     tr.attr('trindex', index);
@@ -7589,7 +7647,7 @@ var TablelistShips = function (_Tablelist) {
                                     this.rowsByHeader[header_index].filter(':visible').each(function (i, el) {
                                         this.check(el, checkbox.prop('checked'), !0);
                                     }.bind(this));
-                                }.bind(_this12),
+                                }.bind(_this13),
                                 'docheck': function () {
                                     var trs = this.rowsByHeader[header_index].filter(':visible'),
                                         checked = trs.filter('[compare="true"]');
@@ -7609,16 +7667,16 @@ var TablelistShips = function (_Tablelist) {
                                             'indeterminate': !1
                                         });
                                     }
-                                }.bind(_this12)
+                                }.bind(_this13)
                             });
-                            _this12.header_checkbox[header_index] = checkbox;
+                            _this13.header_checkbox[header_index] = checkbox;
 
-                            _this12.mode_selection_filters.add($('<input/>', {
+                            _this13.mode_selection_filters.add($('<input/>', {
                                 'value': header_index,
                                 'type': 'checkbox',
                                 'class': 'shiptype',
                                 'id': 'shiptype-' + header_index
-                            }).prop('checked', !header_index).prependTo(_this12.dom.container));
+                            }).prop('checked', !header_index).prependTo(_this13.dom.container));
                             $('<label/>', {
                                 'for': 'shiptype-' + header_index,
                                 'class': 'shiptype'
@@ -7706,16 +7764,16 @@ var TablelistEquipments = function (_Tablelist2) {
     function TablelistEquipments(container, options) {
         _classCallCheck(this, TablelistEquipments);
 
-        var _this13 = _possibleConstructorReturn(this, (TablelistEquipments.__proto__ || Object.getPrototypeOf(TablelistEquipments)).call(this, container, options));
+        var _this14 = _possibleConstructorReturn(this, (TablelistEquipments.__proto__ || Object.getPrototypeOf(TablelistEquipments)).call(this, container, options));
 
-        _this13.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['对空', 'aa'], ['对潜', 'asw'], ['爆装', 'bomb'], ['命中', 'hit'], ['装甲', 'armor'], ['回避', 'evasion'], ['索敌', 'los'], ['射程', 'range'], ['可改修', 'improvable']];
+        _this14.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['对空', 'aa'], ['对潜', 'asw'], ['爆装', 'bomb'], ['命中', 'hit'], ['装甲', 'armor'], ['回避', 'evasion'], ['索敌', 'los'], ['射程', 'range'], ['可改修', 'improvable']];
 
-        _frame.app_main.loading.push('tablelist_' + _this13._index);
+        _frame.app_main.loading.push('tablelist_' + _this14._index);
         _frame.app_main.is_loaded = !1;
 
         if (container.children('.tablelist-container').length) {
-            _this13.init_parse();
-        }return _this13;
+            _this14.init_parse();
+        }return _this14;
     }
 
     _createClass(TablelistEquipments, [{
@@ -7865,28 +7923,28 @@ var TablelistFleets = function (_Tablelist3) {
     function TablelistFleets(container, options) {
         _classCallCheck(this, TablelistFleets);
 
-        var _this14 = _possibleConstructorReturn(this, (TablelistFleets.__proto__ || Object.getPrototypeOf(TablelistFleets)).call(this, container, options));
+        var _this15 = _possibleConstructorReturn(this, (TablelistFleets.__proto__ || Object.getPrototypeOf(TablelistFleets)).call(this, container, options));
 
-        _this14.columns = ['  ', ['创建者', 'user'], ['修改时间', 'time_modify'], ['评价', 'rating'], ['', 'options']];
+        _this15.columns = ['  ', ['创建者', 'user'], ['修改时间', 'time_modify'], ['评价', 'rating'], ['', 'options']];
 
-        _this14.kancolle_calc = {
+        _this15.kancolle_calc = {
             '_ApplicationId': 'l1aps8iaIfcq2ZzhOHJWNUU2XrNySIzRahodijXW',
             '_ClientVersion': 'js1.2.19',
             '_InstallationId': '62522018-ec82-b434-f5a5-08c3ab61d932',
             '_JavaScriptKey': 'xOrFpWEQZFxUDK2fN1DwbKoj3zTKAEkgJHzwTuZ4'
         };
 
-        _frame.app_main.loading.push('tablelist_' + _this14._index);
+        _frame.app_main.loading.push('tablelist_' + _this15._index);
         _frame.app_main.is_loaded = !1;
 
-        _this14.dom.filter_container = $('<div class="options" viewtype="card"/>').appendTo(_this14.dom.container);
-        _this14.dom.filters = $('<div class="filters"/>').appendTo(_this14.dom.filter_container);
+        _this15.dom.filter_container = $('<div class="options" viewtype="card"/>').appendTo(_this15.dom.container);
+        _this15.dom.filters = $('<div class="filters"/>').appendTo(_this15.dom.filter_container);
 
-        _this14.dom.btn_new = $('<button class="new" icon="import"/>').html('新建/导入').on('click', function (e, target) {
+        _this15.dom.btn_new = $('<button class="new" icon="import"/>').html('新建/导入').on('click', function (e, target) {
             this.btn_new(target);
-        }.bind(_this14)).appendTo(_this14.dom.filters);
+        }.bind(_this15)).appendTo(_this15.dom.filters);
         if (TablelistFleets.support.buildfile) {
-            _this14.dom.btn_exportFile = $('<button class="export" icon="floppy-disk"/>').html('导出配置文件').on('click', function () {
+            _this15.dom.btn_exportFile = $('<button class="export" icon="floppy-disk"/>').html('导出配置文件').on('click', function () {
                 _db.fleets.persistence.compactDatafile();
                 if (_g.isNWjs) {
                     _g.save(_db.fleets.filename, 'fleets.json');
@@ -7908,11 +7966,11 @@ var TablelistFleets = function (_Tablelist3) {
                         });
                     })();
                 }
-            }).appendTo(_this14.dom.filters);
+            }).appendTo(_this15.dom.filters);
         }
 
-        _this14.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(_this14.dom.filters);
-        _this14.dom.setting_hqlv = $('<label/>', {
+        _this15.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(_this15.dom.filters);
+        _this15.dom.setting_hqlv = $('<label/>', {
             'class': 'setting setting-hqlv',
             'html': '默认司令部等级',
             'data-tip': '如果舰队配置没有设置司令部等级，<br/>则会使用该默认数值<br/>司令部等级会影响索敌能力的计算'
@@ -7922,45 +7980,45 @@ var TablelistFleets = function (_Tablelist3) {
                     e.stopImmediatePropagation();
                     e.stopPropagation();
                 }
-            }.bind(_this14)
-        }).append(_this14.dom.setting_hqlv_input = $('<input/>', {
+            }.bind(_this15)
+        }).append(_this15.dom.setting_hqlv_input = $('<input/>', {
             'type': 'number',
             'min': 0,
             'max': _g.shipMaxLv
         }).val(Lockr.get('hqLvDefault', _g.defaultHqLv)).on({
             'input': function () {
                 _g.updateDefaultHqLv(this.dom.setting_hqlv_input.val());
-            }.bind(_this14),
+            }.bind(_this15),
             'focus.tipshow': function () {
                 this.dom.setting_hqlv_input.trigger('tipshow');
-            }.bind(_this14),
+            }.bind(_this15),
             'blur.tiphide': function () {
                 this.dom.setting_hqlv_input.trigger('tiphide');
-            }.bind(_this14),
+            }.bind(_this15),
             'click': function click(e) {
                 e.stopImmediatePropagation();
                 e.stopPropagation();
             }
-        })).appendTo(_this14.dom.buttons_right);
+        })).appendTo(_this15.dom.buttons_right);
         $body.on('update_defaultHqLv.update_fleets_hqlv_input', function (e, val) {
             this.dom.setting_hqlv_input.val(val);
-        }.bind(_this14));
-        _this14.dom.btn_settings = $('<button icon="cog"/>').on('click', function () {
+        }.bind(_this15));
+        _this15.dom.btn_settings = $('<button icon="cog"/>').on('click', function () {
             this.btn_settings();
-        }.bind(_this14)).appendTo(_this14.dom.buttons_right);
+        }.bind(_this15)).appendTo(_this15.dom.buttons_right);
 
-        _this14.dom.table = $('<div class="tablelist-container"/>').appendTo(_this14.dom.container);
-        _this14.dom.thead = $('<dl/>').appendTo($('<div class="tablelist-header"/>').appendTo(_this14.dom.table));
-        _this14.dom.tbody = $('<div class="tablelist-body" scrollbody/>').appendTo(_this14.dom.table).on('contextmenu.contextmenu_fleet', '[data-fleetid]', function (e) {
+        _this15.dom.table = $('<div class="tablelist-container"/>').appendTo(_this15.dom.container);
+        _this15.dom.thead = $('<dl/>').appendTo($('<div class="tablelist-header"/>').appendTo(_this15.dom.table));
+        _this15.dom.tbody = $('<div class="tablelist-body" scrollbody/>').appendTo(_this15.dom.table).on('contextmenu.contextmenu_fleet', '[data-fleetid]', function (e) {
             this.contextmenu_show($(e.currentTarget), null, e);
             e.preventDefault();
-        }.bind(_this14)).on('click.contextmenu_fleet', '[data-fleetid]>dt>em', function (e) {
+        }.bind(_this15)).on('click.contextmenu_fleet', '[data-fleetid]>dt>em', function (e) {
             this.contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget));
             e.stopImmediatePropagation();
             e.stopPropagation();
-        }.bind(_this14));
+        }.bind(_this15));
 
-        _this14.columns.forEach(function (v, i) {
+        _this15.columns.forEach(function (v, i) {
             if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) == 'object') {
                 $('<dd/>', {
                     'stat': v[1],
@@ -7969,18 +8027,18 @@ var TablelistFleets = function (_Tablelist3) {
             } else {
                 $('<dt/>').html(v[0]).appendTo(this.dom.thead);
             }
-        }.bind(_this14));
+        }.bind(_this15));
 
         $('<div class="nocontent container"/>').append($($('<div/>').append($('<span>').html('暂无舰队配置')).append($('<button>').html('新建/导入').on('click', function (e) {
             this.dom.btn_new.trigger('click', [e]);
-        }.bind(_this14))))).appendTo(_this14.dom.table);
+        }.bind(_this15))))).appendTo(_this15.dom.table);
 
-        _this14.dom.container.on('focus.number_input_select', 'input[type="number"]', function (e) {
+        _this15.dom.container.on('focus.number_input_select', 'input[type="number"]', function (e) {
             e.currentTarget.select();
         });
 
-        _this14.genlist();
-        return _this14;
+        _this15.genlist();
+        return _this15;
     }
 
     _createClass(TablelistFleets, [{
@@ -8120,7 +8178,7 @@ var TablelistFleets = function (_Tablelist3) {
     }, {
         key: 'append_all_items',
         value: function append_all_items(arr) {
-            var _this15 = this;
+            var _this16 = this;
 
             arr = arr || [];
             arr.sort(function (a, b) {
@@ -8149,8 +8207,8 @@ var TablelistFleets = function (_Tablelist3) {
                     for (var _i11 in sorted) {
                         k = 0;
 
-                        while (k < _this15.flexgrid_empty_count) {
-                            if (!k) _this15.flexgrid_ph = $('<dl data-fleetid trindex="99999"/>').appendTo(_this15.dom.tbody);else $('<dl data-fleetid trindex="99999"/>').appendTo(_this15.dom.tbody);
+                        while (k < _this16.flexgrid_empty_count) {
+                            if (!k) _this16.flexgrid_ph = $('<dl data-fleetid trindex="99999"/>').appendTo(_this16.dom.tbody);else $('<dl data-fleetid trindex="99999"/>').appendTo(_this16.dom.tbody);
                             k++;
                         }
 
@@ -8160,13 +8218,13 @@ var TablelistFleets = function (_Tablelist3) {
                                 count++;
                                 if (count >= arr.length - 1) deferred.resolve();
                             }.bind(this)(index), 0);
-                        }.bind(_this15));
+                        }.bind(_this16));
 
                         $('<h4/>', {
-                            'trindex': ++_this15.trIndex,
+                            'trindex': ++_this16.trIndex,
                             'html': '&nbsp;'
-                        }).appendTo(_this15.dom.tbody);
-                        _this15.trIndex++;
+                        }).appendTo(_this16.dom.tbody);
+                        _this16.trIndex++;
                     }
                 })();
             } else {
@@ -8812,17 +8870,17 @@ var TablelistEntities = function (_Tablelist4) {
     function TablelistEntities(container, options) {
         _classCallCheck(this, TablelistEntities);
 
-        var _this16 = _possibleConstructorReturn(this, (TablelistEntities.__proto__ || Object.getPrototypeOf(TablelistEntities)).call(this, container, options));
+        var _this17 = _possibleConstructorReturn(this, (TablelistEntities.__proto__ || Object.getPrototypeOf(TablelistEntities)).call(this, container, options));
 
-        _frame.app_main.loading.push('tablelist_' + _this16._index);
+        _frame.app_main.loading.push('tablelist_' + _this17._index);
         _frame.app_main.is_loaded = !1;
 
         if (container.children('.tablelist-list').length) {
-            _this16.init_parse();
-        } else if (_this16.init_new) {
-            _this16.init_new(options);
+            _this17.init_parse();
+        } else if (_this17.init_new) {
+            _this17.init_new(options);
         }
-        return _this16;
+        return _this17;
     }
 
     _createClass(TablelistEntities, [{
