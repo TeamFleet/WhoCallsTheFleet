@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",204,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/23.png)\"></s><strong>舰本新设计 增设装甲板<small>(大型舰)</small></strong><small>增设装甲板 (大型)</small></h3><span>+10 装甲</span><span>-2 回避</span>")
