@@ -9206,6 +9206,9 @@ body.mod-capture .infos-fleet .equipment-extra {
   position: absolute;
   padding: 0;
   font-size: 80%;
+  width: 100%;
+  text-align: center;
+  left: 0;
 }
 .infos-fleet .equipment-extra .equipment-infos {
   padding-left: 0;
