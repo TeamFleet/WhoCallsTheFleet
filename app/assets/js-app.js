@@ -5548,6 +5548,8 @@ var InfosFleetShip = function () {
     }, {
         key: 'swap',
         value: function swap(target, save, callback) {
+            if (InfosFleetShip.dragIsSwapping) return !1;
+
             InfosFleetShip.dragIsSwapping = !0;
 
             if (typeof target == 'number') target = this.infosFleetSubFleet.ships[target];
@@ -5575,7 +5577,7 @@ var InfosFleetShip = function () {
                 if (callback) callback();
                 setTimeout(function () {
                     InfosFleetShip.dragIsSwapping = !1;
-                }, 100);
+                }, 10);
             }, 10);
         }
     }, {

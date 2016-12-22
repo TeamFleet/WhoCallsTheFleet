@@ -1837,6 +1837,9 @@ class InfosFleetShip{
     
     // 移动
         swap(target, save, callback){
+            if( InfosFleetShip.dragIsSwapping )
+                return false;
+
             InfosFleetShip.dragIsSwapping = true
 
             if( typeof target == 'number' )
@@ -1867,7 +1870,7 @@ class InfosFleetShip{
                     callback()
                 setTimeout(()=>{
                     InfosFleetShip.dragIsSwapping = false
-                }, 100)
+                }, 10)
             }, 10)
         }
         moveUp(){
