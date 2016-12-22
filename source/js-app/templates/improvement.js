@@ -157,6 +157,7 @@ _tmpl.improvement_inEquipmentInfos = function (equipment, returnHTML) {
 
 
 _tmpl.improvement__title = function (equipment, upgrade_to, upgrade_to_star) {
+    let name = (_name) => _name.replace(/舰本/g, '')
     return '<strong>'
         //+ '<a style="background-image:url(../app/assets/images/itemicon/'
         //	+ equipment.getIconId()
@@ -167,7 +168,7 @@ _tmpl.improvement__title = function (equipment, upgrade_to, upgrade_to_star) {
         + ' href="?infos=equipment&id=' + equipment['id'] + '"'
         + ' data-infos="[[EQUIPMENT::' + equipment['id'] + ']]"'
         + ' data-tip="[[EQUIPMENT::' + equipment['id'] + ']]"'
-        + '>' + equipment.getName(true) + '</a>'
+        + '>' + name(equipment.getName(true)) + '</a>'
         + (upgrade_to
             ? '<b></b>'
             //+ '<a style="background-image:url(../app/assets/images/itemicon/'
@@ -179,7 +180,7 @@ _tmpl.improvement__title = function (equipment, upgrade_to, upgrade_to_star) {
             + ' href="?infos=equipment&id=' + upgrade_to['id'] + '"'
             + ' data-infos="[[EQUIPMENT::' + upgrade_to['id'] + ']]"'
             + ' data-tip="[[EQUIPMENT::' + upgrade_to['id'] + ']]"'
-            + '>' + upgrade_to.getName(true) + '</a>'
+            + '>' + name(upgrade_to.getName(true)) + '</a>'
             + (upgrade_to_star
                 ? '<i>+' + upgrade_to_star + '</i>'
                 : ''

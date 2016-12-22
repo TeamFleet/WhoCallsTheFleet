@@ -1421,6 +1421,26 @@ class InfosFleetShip{
         this.infosFleetSubFleet = infosFleetSubFleet		
         this.equipments = []
         this.index = index
+
+        for( let i=0; i<4; i++ ){
+            this.equipments[i] = new InfosFleetShipEquipment(this, i)
+        }
+        this.equipments[4] = new InfosFleetShipEquipment(
+            this,
+            4,      // equipment index
+            0,      // carry
+            // equipment types
+            $.unique(
+                Formula.equipmentType.AAGuns
+                    .concat([
+                        33,     // 增设装甲板 (中型)
+                        34,     // 增设装甲板 (大型)
+                        35,     // 损害管制要员
+                        48,     // 军粮
+                        49      // 补给物资
+                    ])
+            )
+        )
         
         this.el = $('<dd class="ship"/>')
             // 头像 & 名称
@@ -1478,11 +1498,13 @@ class InfosFleetShip{
                 $('<div class="equipments"/>').append(function(){
                     let els = $()
                     for( let i=0; i<4; i++ ){
-                        this.equipments[i] = new InfosFleetShipEquipment(this, i)
                         els = els.add(this.equipments[i].el)
                     }
                     //this.elAttrbutes = $('<div class="equipment"/>')
                     //els = els.add(this.elAttrbutes)
+                    // this.equipments.forEach(equipment => {
+                    //     els = els.add(equipment.el)
+                    // })
                     return els
                 }.bind(this))
             )
@@ -1524,6 +1546,9 @@ class InfosFleetShip{
             // 选项/操作
             .append(
                 $('<div class="options"/>')
+                    // .append(
+                    //     this.elBtnExtraEquip = this.equipments[4].el
+                    // )
                     .append(
                         this.elBtnOptions = $('<button class="options"/>').on('click', function(e){
                                 this.showMenu()
@@ -1548,6 +1573,10 @@ class InfosFleetShip{
                             }.bind(this))
                     )*/
             )
+            // 额外装备栏位
+            .append(
+                this.equipments[4].el.addClass('equipment-extra')
+            )
         
         this.after = $('<s/>')
         
@@ -1565,7 +1594,11 @@ class InfosFleetShip{
                         //'mouseenter': function(e){
                         'pointerenter': function(){
                             InfosFleetShip.dragEnter(this)
-                        }.bind(this)
+                        }.bind(this),
+                        
+                        'touchmove': (e) => {
+                            InfosFleetShip.dragTouchmove(e)
+                        }
                 })
             this.elAvatar.on({
                     //'mousedown': function(e){
@@ -1692,11 +1725,16 @@ class InfosFleetShip{
             if( this.data[1][0] )
                 this.shipLv = this.data[1][0]
             
-            for( let i=0; i<4; i++ ){
-                this.equipments[i].id = this.data[2][i]
-                this.equipments[i].star = this.data[3][i]
-                this.equipments[i].rank = this.data[4][i]
-            }
+            this.equipments.forEach((equipment,i) => {
+                equipment.id = this.data[2][i]
+                equipment.star = this.data[3][i]
+                equipment.rank = this.data[4][i]
+            })
+            // for( let i=0; i<4; i++ ){
+            //     this.equipments[i].id = this.data[2][i]
+            //     this.equipments[i].star = this.data[3][i]
+            //     this.equipments[i].rank = this.data[4][i]
+            // }
             
             this.updateAttrs()
             
@@ -1798,7 +1836,9 @@ class InfosFleetShip{
         }
     
     // 移动
-        swap(target, save){
+        swap(target, save, callback){
+            InfosFleetShip.dragIsSwapping = true
+
             if( typeof target == 'number' )
                 target = this.infosFleetSubFleet.ships[target]
 
@@ -1821,6 +1861,14 @@ class InfosFleetShip{
             
             if( save )
                 this.save()
+
+            setTimeout(()=>{
+                if( callback )
+                    callback()
+                setTimeout(()=>{
+                    InfosFleetShip.dragIsSwapping = false
+                }, 100)
+            }, 10)
         }
         moveUp(){
             if( this.index <= 0 )
@@ -1867,14 +1915,22 @@ class InfosFleetShip{
                 this.elInfosInfo.html( speed + ' ' + stype )
                 
                 // 装备栏数据
-                    for( let i=0; i<4; i++ ){
-                        this.equipments[i].carry = ship.slot[i]
+                    this.equipments.forEach((equipment,i)=>{
+                        equipment.carry = i < 4 ? ship.slot[i] : 0
                         if( !this._updating ){
-                            this.equipments[i].id = null
-                            this.equipments[i].star = null
-                            this.equipments[i].rank = null
+                            equipment.id = null
+                            equipment.star = null
+                            equipment.rank = null
                         }
-                    }
+                    })
+                    // for( let i=0; i<4; i++ ){
+                    //     this.equipments[i].carry = ship.slot[i]
+                    //     if( !this._updating ){
+                    //         this.equipments[i].id = null
+                    //         this.equipments[i].star = null
+                    //         this.equipments[i].rank = null
+                    //     }
+                    // }
             }else{
                 this.el.removeAttr('data-shipId')
                 //this.el.addClass('noship')
@@ -1983,6 +2039,65 @@ InfosFleetShip.dragEnter = function(infosFleetShip_enter){
     
     InfosFleetShip.dragging.swap(infosFleetShip_enter)
 }
+InfosFleetShip.dragTouchGetPosition = () => {
+    InfosFleetShip.draggingTouchPosition = []
+
+    if( !InfosFleetShip.dragging )
+        return false
+
+    InfosFleetShip.draggingTouchPosition = InfosFleetShip.dragging.infosFleetSubFleet.ships.map(ship=>{
+        let offset = ship.el.offset()
+        return {
+            top: offset.top + 10,
+            bottom: offset.top + ship.el.height() - 10,
+            target: ship
+        }
+    })
+
+    return InfosFleetShip.draggingTouchPosition
+}
+InfosFleetShip.dragTouchmove = (e) => {
+    if( !InfosFleetShip.dragging || InfosFleetShip.dragIsSwapping )
+        return false
+    
+    let touchlist = e.originalEvent.touches || e.originalEvent.changedTouches
+
+    if( !touchlist || !touchlist.length || touchlist.length > 1 )
+        return false
+
+    if( !InfosFleetShip.draggingTouch ){
+        InfosFleetShip.dragTouchGetPosition()
+        InfosFleetShip.draggingTouch = true
+    }
+
+    let touchY = touchlist[0].clientY || touchlist[0].pageY || -1
+    InfosFleetShip.draggingTouchPosition.some(position => {
+        if( InfosFleetShip.dragging == position.target )
+            return false
+
+        let isIn = false
+
+        if( touchY >= position.top && touchY <= position.bottom ){
+            isIn = position.target
+        }
+        // console.log(touchY, position.bottom, position.top, isIn)
+
+        if( isIn ){
+            InfosFleetShip.dragging.swap(
+                isIn,
+                false,
+                InfosFleetShip.dragTouchGetPosition
+            )
+            // console.log(InfosFleetShip.dragging, isIn)
+        }
+
+        return isIn
+    })
+
+    // console.log(
+    //     touchlist[0]
+    // )
+}
 
 
 
@@ -2029,7 +2144,7 @@ class InfosFleetShipEquipment{
         
         //this.el = $('<div class="equipment" touch-action="none" tabindex="0"/>')
         this.elBlurTimeout
-        this.el = $('<div class="equipment" tabindex="0"/>')
+        this.el = $(`<div class="equipment equipment-${this.index}" tabindex="0"/>`)
                     .on({
                         /*
                         'pointerenter': function(e){
@@ -2239,7 +2354,19 @@ class InfosFleetShipEquipment{
                         _frame.infos.dom.main.attr('data-theme', this.infosParent.infosFleet.data['theme'])
                 }.bind(this),
                 callback_modeSelection_enter: function(){
-                    TablelistEquipments.types = this.equipmentTypes || _g.data.ships[this.infosParent.shipId].getEquipmentTypes()
+                    let types = _g.data.ships[this.infosParent.shipId].getEquipmentTypes()
+                    if( this.equipmentTypes && this.equipmentTypes.length ){
+                        let _types = []
+                        this.equipmentTypes.forEach( v => {
+                            if( types.indexOf(v) > -1 )
+                                _types.push(v)
+                        })
+                        types = _types
+                        TablelistEquipments.isExtraSlot = true
+                    }else{
+                        TablelistEquipments.isExtraSlot = false
+                    }
+                    TablelistEquipments.types = types
                     TablelistEquipments.shipId = this.infosParent.shipId
                     _frame.app_main.page['equipments'].object.tablelistObj.apply_types()
                 }.bind(this)

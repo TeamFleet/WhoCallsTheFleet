@@ -48,15 +48,21 @@ class TablelistEquipments extends Tablelist{
 		TablelistEquipments.shipIdLast = TablelistEquipments.shipId
 		
 		// 航母：直接进入飞行器页
-		if( TablelistEquipments.shipId
+		if( !TablelistEquipments.isExtraSlot
+			&& TablelistEquipments.shipId
 			&& _g.data.ships[TablelistEquipments.shipId]
 			&& $.inArray(_g.data.ships[TablelistEquipments.shipId].type, [9, 10, 11] ) > -1
 		){
 			let k = 0
 				,el, t
-	
-			while( this.dom.types[k++].attr('data-equipmentcollection') != 3
-				|| $.inArray((parseInt(this.dom.types[k].attr('data-type')) || null), TablelistEquipments.types) <= -1 ){
+
+			while( this.dom.types[k++]
+				&& this.dom.types[k]
+				&& (
+					this.dom.types[k].attr('data-equipmentcollection') != 3
+					|| $.inArray((parseInt(this.dom.types[k].attr('data-type')) || null), TablelistEquipments.types) <= -1
+				)
+			){
 				el = this.dom.types[k+1]
 			}
 			

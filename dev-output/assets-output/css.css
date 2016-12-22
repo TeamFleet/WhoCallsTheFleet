@@ -8315,6 +8315,9 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
 .infos-fleet .ship > div {
   display: none;
 }
+.infos-fleet .ship > div.equipment-extra {
+  display: block;
+}
 .infos-fleet .ship > dt {
   display: flex;
   flex-flow: row nowrap;
@@ -9173,6 +9176,77 @@ body.mod-capture .infos-fleet .equipments {
 }
 .infos-fleet .equipment-rankselect span {
   display: none;
+}
+.infos-fleet .equipment-extra {
+  right: 3.5em;
+  bottom: 0;
+  height: 24px;
+  width: 30px;
+  font-size: 12px;
+  border-radius: 0 0 5px 5px !important;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-left: 1px solid rgba(255, 255, 255, 0.075);
+  border-right: 1px solid rgba(255, 255, 255, 0.075);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.175);
+}
+body.mod-capture .infos-fleet .equipment-extra {
+  right: 4px;
+}
+.infos-fleet .equipment-extra .equipment-add {
+  color: transparent;
+}
+.infos-fleet .equipment-extra .equipment-add:before {
+  color: rgba(255, 255, 255, 0.75);
+  position: absolute;
+  padding: 0;
+}
+.infos-fleet .equipment-extra .equipment-infos {
+  padding-left: 0;
+}
+.infos-fleet .equipment-extra .equipment-name {
+  display: none;
+}
+.infos-fleet .equipment-extra .equipment-star {
+  transform: none;
+}
+.infos-fleet .equipment-extra .equipment-carry {
+  display: none;
+}
+.infos-fleet .equipment-extra[data-equipmentid] {
+  width: 60px;
+}
+body.mod-capture .infos-fleet .equipment-extra:not([data-equipmentid]) {
+  display: none;
+}
+.infos-fleet .equipment-extra[data-star="10"] > .equipment-infos > .equipment-star {
+  transform: translateY(-55%);
+}
+.infos-fleet .equipment-extra[data-equipmentid].is-hover {
+  background-position: 200% 50%;
+  width: 100px;
+}
+.infos-fleet .equipment-extra[data-equipmentid].is-hover .equipment-options {
+  padding: 0 2px 0 4px;
+}
+.infos-fleet .equipment-extra[data-equipmentid].is-hover .equipment-options:before {
+  left: 6px;
+}
+.infos-fleet .equipment-extra[data-equipmentid].is-hover .equipment-options .equipment-starinput {
+  flex-grow: 0;
+  flex-basis: 35px;
+  margin-right: 4px;
+}
+.infos-fleet .equipment-extra[data-equipmentid].is-hover .equipment-options .equipment-rankselect {
+  display: none;
+}
+.infos-fleet .equipment-extra[data-equipmentid].is-hover .equipment-options .button.inspect {
+  display: none;
+}
+.infos-fleet .equipment-extra[data-equipmentid].is-hover .equipment-options .button[icon] {
+  font-size: 100%;
+}
+.infos-fleet .equipment-extra[data-equipmentid].is-hover .equipment-options .button.remove {
+  display: 150%;
 }
 .infos-fleet .summary {
   flex: 0.5 0 auto;
@@ -10592,6 +10666,9 @@ body.mod-capture .infos-fleet .equipments {
   .infos-fleet .equipment-options:before {
     left: calc(10% + 20px);
   }
+  .infos-fleet .equipment-extra {
+    right: 25px;
+  }
 }
 @media all and (max-width: 960px) {
   .infos-fleet > .ships {
@@ -10743,6 +10820,10 @@ body.mod-capture .infos-fleet .equipments {
     flex: 0.5 0 18px;
     margin-right: 2px;
   }
+  .infos-fleet .equipment-extra {
+    right: 1px;
+    bottom: -24px;
+  }
   .infos-fleet .summary {
     margin-bottom: 20px;
   }
@@ -10837,6 +10918,17 @@ body.mod-capture .infos-fleet .equipments {
     width: calc(50% - 2px);
     border-radius: 0 !important;
     background-color: rgba(0, 0, 0, 0.175);
+  }
+  .infos-fleet .equipment-extra {
+    height: 30px;
+    bottom: auto;
+    right: 42px;
+    top: 3px;
+    border-radius: 5px !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+  }
+  .infos-fleet .equipment-extra:not([data-equipmentid]) {
+    width: 30px;
   }
   .infos-fleet .fleetships.fleetairfields {
     flex: none;

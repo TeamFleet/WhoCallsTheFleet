@@ -109,7 +109,7 @@ _g.kancolle_calc = {
 	
 	max_fleets: 4,
 	max_ships_per_fleet: 6,
-	max_equipments_per_ship: 5,
+	max_equipments_per_ship: 4,
 
 	decode: function(data, version){
 		if( !data )
@@ -129,7 +129,6 @@ _g.kancolle_calc = {
 			,data_item
 			,max_fleets = 4
 			,max_ships_per_fleet = 6
-			,max_equipments_per_ship = 5
 		
 		switch(version){
 			case 3:
@@ -158,7 +157,7 @@ _g.kancolle_calc = {
 								if( data_ship.items ){
 									k=0
 									//while( data_item = data_ship.items['i' + (k+1)] ){
-									while( k < max_equipments_per_ship ){
+									while( k < _g.kancolle_calc.max_equipments_per_ship ){
 										data_item = data_ship.items['i' + (k+1)]
 										if( data_item && data_item.id ){
 											result[i][j][2][k] = data_item.id
@@ -230,7 +229,7 @@ _g.kancolle_calc = {
 								if( data_ship.items ){
 									k=0
 									//while( data_item = data_ship.items['i' + (k+1)] ){
-									while( k < max_equipments_per_ship ){
+									while( k < _g.kancolle_calc.max_equipments_per_ship ){
 										data_item = data_ship.items['i' + (k+1)]
 										if( data_item && data_item.id ){
 											result[i][j][2][k] = data_item.id
@@ -242,6 +241,11 @@ _g.kancolle_calc = {
 											result[i][j][4][k] = null
 										}
 										k++
+									}
+									if( data_ship.items.ix && data_ship.items.ix.id ){
+										result[i][j][2][5] = data_ship.items.ix.id
+										result[i][j][3][5] = data_ship.items.ix.rf || null
+										result[i][j][4][5] = data_ship.items.ix.mas || null
 									}
 								}
 							}else{
@@ -355,10 +359,10 @@ _g.kancolle_calc = {
 				data.forEach(function(data_fleet, i){
 					if( data_fleet ){
 						if( i < max_fleets ){
-							result['f' + (i+1)] = {}
+							let _fleet = result['f' + (i+1)] = {}
 							data_fleet.forEach(function(data_ship, j){
 								if( data_ship && data_ship[0] ){
-									result['f' + (i+1)]['s' + (j+1)] = {
+									let _ship = _fleet['s' + (j+1)] = {
 										'id':	parseInt(data_ship[0]),
 										'lv':	parseInt(data_ship[1][0]) || null,
 										'luck':	parseInt(data_ship[1][1]) || -1,
@@ -366,17 +370,36 @@ _g.kancolle_calc = {
 											'ix': {}
 										}
 									}
+									// let k = 0
+									// while( k++ < _g.kancolle_calc.max_equipments_per_ship + 1 ){
+									// 	let _item = _ship.items[`i${k}`] = {}
+									// 	if( data_ship[2] && data_ship[2][k] )
+									// 		_item.id = parseInt(data_ship[2][k])
+									// 	if( data_ship[3] )
+									// 		_item.rf = parseInt(data_ship[3][k])
+									// 	if( data_ship[4] )
+									// 		_item.mas = parseInt(data_ship[4][k])
+									// }
+									// if( data_ship[2] && data_ship[2][4] ){
+									// 	let _item = _ship.items.ix = {
+									// 		id: 	parseInt(data_ship[2][4])
+									// 	}
+									// 	if( data_ship[3] )
+									// 		_item.rf = parseInt(data_ship[3][4]) || 0
+									// 	if( data_ship[4] )
+									// 		_item.mas = parseInt(data_ship[4][4]) || 0
+									// }
 									data_ship[2].forEach(function(id_item, k){
 										if( id_item ){
-											result['f' + (i+1)]['s' + (j+1)].items['i' + (k+1)] = {
+											let prop = k == 4 ? 'ix' : ['i' + (k+1)]
+											_ship.items[prop] = {
 												'id':	parseInt(id_item)
 											}
+											let _item = _ship.items[prop]
 											if( data_ship[3] )
-												result['f' + (i+1)]['s' + (j+1)].items['i' + (k+1)].rf
-													= parseInt(data_ship[3][k]) || 0
+												_item.rf = parseInt(data_ship[3][k]) || 0
 											if( data_ship[4] )
-												result['f' + (i+1)]['s' + (j+1)].items['i' + (k+1)].mas
-													= parseInt(data_ship[4][k]) || 0
+												_item.mas = parseInt(data_ship[4][k]) || 0
 										}
 									})
 								}
