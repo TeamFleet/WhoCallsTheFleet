@@ -2191,6 +2191,32 @@ class InfosFleetShipEquipment{
                                 if( e.originalEvent.pointerType != 'touch' ){
                                     InfosFleetShipEquipment.cur = this.el.addClass('is-hover')
                                             //.focus()
+                                    if( this.index >= 4 ){
+                                        let tip = this.el.attr('data-tip')
+                                        this.el.attr('data-tip', '')
+                                        if( tip ){
+                                            setTimeout(()=>{
+                                                this.el.attr('data-tip', tip)
+                                                setTimeout(()=>{
+                                                    if( !this.el.data('tip-filtered_') ){
+                                                        _p.tip.filters.forEach(function(filter){
+                                                            tip = filter(tip) || tip
+                                                        })
+                                                        this.el.data({
+                                                            'tip-filtered_': 	tip
+                                                        })
+                                                    }
+                                                    console.log(this.el.attr('data-tip'))
+                                                    console.log(this.el.data('tip-filtered_'))
+                                                    _p.tip.show(
+                                                        this.el.data('tip-filtered_'),
+                                                        this.el,
+                                                        this.el.data('tip-position')
+                                                    )
+                                                }, 100)
+                                            }, 10)
+                                        }
+                                    }
                                 }
                             }.bind(this),
                         'pointerleave': function(e){
@@ -2393,7 +2419,7 @@ class InfosFleetShipEquipment{
             value = parseInt(value) || null
             //this.star = 0
             _p.tip.hide()
-            this.el.removeData(['tip', 'tip-filtered'])
+            this.el.removeData(['tip', 'tip-filtered', 'tip-filtered_'])
             
             if( !this.isParentAirfield && value != this.infosParent.data[2][this.index] )
                 this.star = 0
