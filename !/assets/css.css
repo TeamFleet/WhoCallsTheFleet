@@ -7883,6 +7883,41 @@ h6 + section.update_journal {
 .infos-fleet button {
   font-size: inherit;
 }
+.infos-fleet .title-editable {
+  padding: 5px 10px 5px 0;
+  display: inline-block;
+  border-radius: 3px;
+  border: 0.05rem solid transparent;
+  transition-property: background-color, border-color;
+  user-select: text;
+}
+.infos-fleet .title-editable:not([data-content]) {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+.infos-fleet .title-editable[data-content]:before {
+  margin-top: 0.25rem;
+  padding-right: 0.5rem;
+  transition: none 0.2s ease-out;
+  transition-property: none;
+  width: 100%;
+  word-wrap: inherit;
+  overflow: inherit;
+  white-space: inherit;
+  text-overflow: inherit;
+}
+html.is-gecko .infos-fleet .title-editable[data-content]:before {
+  z-index: -1;
+}
+.infos-fleet .title-editable:focus,
+.infos-fleet .title-editable:not([data-content]),
+.infos-fleet .title-editable[data-content]:focus:before {
+  padding-left: 0.5rem;
+}
+.infos-fleet .title-editable:focus {
+  background: rgba(0, 0, 0, 0.175);
+  border-color: rgba(255, 255, 255, 0.225);
+}
 .infos-fleet > header {
   border-top: 10px solid transparent;
   padding-bottom: 0.30000000000000004rem;
@@ -7892,42 +7927,18 @@ h6 + section.update_journal {
   font-size: 166.66666667%;
   line-height: 110%;
   min-height: calc(1.1em + 10px);
-  padding: 5px 10px 5px 0;
-  display: inline-block;
-  border-radius: 3px;
-  border: 0.05rem solid transparent;
   min-width: 10rem;
   max-width: calc(100% - 120px);
-  transition-property: padding, background-color, border-color;
   margin: 0;
-  user-select: text;
 }
 .infos-fleet > header h3:not([data-content]) {
   color: #999999;
-  background: rgba(0, 0, 0, 0.1);
-  border-color: rgba(255, 255, 255, 0.15);
 }
 .infos-fleet > header h3[data-content] {
   color: #c2bda3;
 }
 .infos-fleet > header h3[data-content]:before {
   color: #ffffff;
-  margin-top: 0.25rem;
-  padding-right: 0.5rem;
-  transition: none 0.2s ease-out;
-  transition-property: padding;
-}
-html.is-gecko .infos-fleet > header h3[data-content]:before {
-  z-index: -1;
-}
-.infos-fleet > header h3:focus,
-.infos-fleet > header h3:not([data-content]),
-.infos-fleet > header h3[data-content]:focus:before {
-  padding-left: 0.5rem;
-}
-.infos-fleet > header h3:focus {
-  background: rgba(0, 0, 0, 0.175);
-  border-color: rgba(255, 255, 255, 0.225);
 }
 .infos-fleet > header .preview {
   position: absolute;
@@ -8701,7 +8712,7 @@ body.mod-capture .infos-fleet .ship[data-shipid] > .equipment-extra:not([data-eq
   max-height: 400px;
   display: flex;
   flex-flow: row nowrap;
-  padding: 40px 0 50px 0;
+  padding: 45px 0 50px 0;
 }
 .infos-fleet .airfield h4,
 .infos-fleet .airfield .airfield-summary {
@@ -8712,7 +8723,12 @@ body.mod-capture .infos-fleet .ship[data-shipid] > .equipment-extra:not([data-eq
 .infos-fleet .airfield h4 {
   top: 0;
   font-size: 200%;
-  line-height: 1.2em;
+  line-height: 1.1em;
+  min-width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .infos-fleet .airfield .airfield-summary {
   bottom: 0;
@@ -9467,6 +9483,9 @@ body.mod-capture .infos-fleet .equipment-extra {
   letter-spacing: .25em;
   color: rgba(255, 255, 255, 0.2);
 }
+.infos-fleet.mod-preview .title-editable {
+  pointer-events: none;
+}
 .infos-fleet.mod-preview > .fleets .options > .option-theme {
   display: none;
 }
@@ -9516,13 +9535,13 @@ body.mod-capture .infos-fleet .equipment-extra {
 #layout[data-theme="2"] .infos-fleet h5[data-content]:before {
   color: #f9f6f6;
 }
-#layout[data-theme="2"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="2"] .infos-fleet .title-editable:not([data-content]) {
   color: #b8867a;
 }
-#layout[data-theme="2"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="2"] .infos-fleet .title-editable[data-content] {
   color: #fb846a;
 }
-#layout[data-theme="2"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="2"] .infos-fleet .title-editable[data-content]:before {
   color: #fff3f0;
 }
 #layout[data-theme="2"] .infos-fleet > .fleets .tabs label.highlight {
@@ -9622,13 +9641,13 @@ body.mod-capture .infos-fleet .equipment-extra {
 #layout[data-theme="3"] .infos-fleet h5[data-content]:before {
   color: #f9f9f6;
 }
-#layout[data-theme="3"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="3"] .infos-fleet .title-editable:not([data-content]) {
   color: #bdb275;
 }
-#layout[data-theme="3"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="3"] .infos-fleet .title-editable[data-content] {
   color: #ffe866;
 }
-#layout[data-theme="3"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="3"] .infos-fleet .title-editable[data-content]:before {
   color: #fffdf0;
 }
 #layout[data-theme="3"] .infos-fleet > .fleets .tabs label.highlight {
@@ -9728,13 +9747,13 @@ body.mod-capture .infos-fleet .equipment-extra {
 #layout[data-theme="4"] .infos-fleet h5[data-content]:before {
   color: #f7f8f6;
 }
-#layout[data-theme="4"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="4"] .infos-fleet .title-editable:not([data-content]) {
   color: #98b380;
 }
-#layout[data-theme="4"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="4"] .infos-fleet .title-editable[data-content] {
   color: #b0f76e;
 }
-#layout[data-theme="4"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="4"] .infos-fleet .title-editable[data-content]:before {
   color: #f7fef0;
 }
 #layout[data-theme="4"] .infos-fleet > .fleets .tabs label.highlight {
@@ -9834,13 +9853,13 @@ body.mod-capture .infos-fleet .equipment-extra {
 #layout[data-theme="5"] .infos-fleet h5[data-content]:before {
   color: #f6f9f6;
 }
-#layout[data-theme="5"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="5"] .infos-fleet .title-editable:not([data-content]) {
   color: #75bd82;
 }
-#layout[data-theme="5"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="5"] .infos-fleet .title-editable[data-content] {
   color: #66ff82;
 }
-#layout[data-theme="5"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="5"] .infos-fleet .title-editable[data-content]:before {
   color: #f0fff3;
 }
 #layout[data-theme="5"] .infos-fleet > .fleets .tabs label.highlight {
@@ -9940,13 +9959,13 @@ body.mod-capture .infos-fleet .equipment-extra {
 #layout[data-theme="6"] .infos-fleet h5[data-content]:before {
   color: #f6f9f9;
 }
-#layout[data-theme="6"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="6"] .infos-fleet .title-editable:not([data-content]) {
   color: #75bdb2;
 }
-#layout[data-theme="6"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="6"] .infos-fleet .title-editable[data-content] {
   color: #66ffe8;
 }
-#layout[data-theme="6"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="6"] .infos-fleet .title-editable[data-content]:before {
   color: #f0fffd;
 }
 #layout[data-theme="6"] .infos-fleet > .fleets .tabs label.highlight {
@@ -10046,13 +10065,13 @@ body.mod-capture .infos-fleet .equipment-extra {
 #layout[data-theme="7"] .infos-fleet h5[data-content]:before {
   color: #f5f7fa;
 }
-#layout[data-theme="7"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="7"] .infos-fleet .title-editable:not([data-content]) {
   color: #7098c2;
 }
-#layout[data-theme="7"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="7"] .infos-fleet .title-editable[data-content] {
   color: #66b0ff;
 }
-#layout[data-theme="7"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="7"] .infos-fleet .title-editable[data-content]:before {
   color: #f0f7ff;
 }
 #layout[data-theme="7"] .infos-fleet > .fleets .tabs label.highlight {
@@ -10152,13 +10171,13 @@ body.mod-capture .infos-fleet .equipment-extra {
 #layout[data-theme="8"] .infos-fleet h5[data-content]:before {
   color: #ffffff;
 }
-#layout[data-theme="8"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="8"] .infos-fleet .title-editable:not([data-content]) {
   color: #9287c5;
 }
-#layout[data-theme="8"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="8"] .infos-fleet .title-editable[data-content] {
   color: #9780ff;
 }
-#layout[data-theme="8"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="8"] .infos-fleet .title-editable[data-content]:before {
   color: #ffffff;
 }
 #layout[data-theme="8"] .infos-fleet > .fleets .tabs label.highlight {
@@ -10258,13 +10277,13 @@ body.mod-capture .infos-fleet .equipment-extra {
 #layout[data-theme="9"] .infos-fleet h5[data-content]:before {
   color: #f9f6f9;
 }
-#layout[data-theme="9"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="9"] .infos-fleet .title-editable:not([data-content]) {
   color: #b275bd;
 }
-#layout[data-theme="9"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="9"] .infos-fleet .title-editable[data-content] {
   color: #e866ff;
 }
-#layout[data-theme="9"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="9"] .infos-fleet .title-editable[data-content]:before {
   color: #fdf0ff;
 }
 #layout[data-theme="9"] .infos-fleet > .fleets .tabs label.highlight {
@@ -10364,13 +10383,13 @@ body.mod-capture .infos-fleet .equipment-extra {
 #layout[data-theme="10"] .infos-fleet h5[data-content]:before {
   color: #ffffff;
 }
-#layout[data-theme="10"] .infos-fleet > header h3:not([data-content]) {
+#layout[data-theme="10"] .infos-fleet .title-editable:not([data-content]) {
   color: #c587a5;
 }
-#layout[data-theme="10"] .infos-fleet > header h3[data-content] {
+#layout[data-theme="10"] .infos-fleet .title-editable[data-content] {
   color: #ff80bd;
 }
-#layout[data-theme="10"] .infos-fleet > header h3[data-content]:before {
+#layout[data-theme="10"] .infos-fleet .title-editable[data-content]:before {
   color: #ffffff;
 }
 #layout[data-theme="10"] .infos-fleet > .fleets .tabs label.highlight {
