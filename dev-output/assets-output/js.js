@@ -7208,16 +7208,20 @@ var InfosFleetShipEquipment = function () {
 				callback_modeSelection_enter: function () {
 					var _this12 = this;
 
-					var types = _g.data.ships[this.infosParent.shipId].getEquipmentTypes();
+					var types = this.infosParent.shipId ? _g.data.ships[this.infosParent.shipId].getEquipmentTypes() : [];
 					if (this.equipmentTypes && this.equipmentTypes.length) {
-						(function () {
-							var _types = [];
-							_this12.equipmentTypes.forEach(function (v) {
-								if (types.indexOf(v) > -1) _types.push(v);
-							});
-							types = _types;
-							TablelistEquipments.isExtraSlot = !0;
-						})();
+						if (types.length) {
+							(function () {
+								var _types = [];
+								_this12.equipmentTypes.forEach(function (v) {
+									if (types.indexOf(v) > -1) _types.push(v);
+								});
+								types = _types;
+								TablelistEquipments.isExtraSlot = !0;
+							})();
+						} else {
+							types = this.equipmentTypes;
+						}
 					} else {
 						TablelistEquipments.isExtraSlot = !1;
 					}

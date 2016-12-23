@@ -2383,15 +2383,21 @@ class InfosFleetShipEquipment{
                         _frame.infos.dom.main.attr('data-theme', this.infosParent.infosFleet.data['theme'])
                 }.bind(this),
                 callback_modeSelection_enter: function(){
-                    let types = _g.data.ships[this.infosParent.shipId].getEquipmentTypes()
+                    let types = this.infosParent.shipId
+                                ? _g.data.ships[this.infosParent.shipId].getEquipmentTypes()
+                                : []
                     if( this.equipmentTypes && this.equipmentTypes.length ){
-                        let _types = []
-                        this.equipmentTypes.forEach( v => {
-                            if( types.indexOf(v) > -1 )
-                                _types.push(v)
-                        })
-                        types = _types
-                        TablelistEquipments.isExtraSlot = true
+                        if( types.length ){
+                            let _types = []
+                            this.equipmentTypes.forEach( v => {
+                                if( types.indexOf(v) > -1 )
+                                    _types.push(v)
+                            })
+                            types = _types
+                            TablelistEquipments.isExtraSlot = true
+                        }else{
+                            types = this.equipmentTypes
+                        }
                     }else{
                         TablelistEquipments.isExtraSlot = false
                     }
