@@ -20,6 +20,25 @@
         'animationiteration':	'webkitAnimationIteration',
         'transitionend':		'transitionend'
     };
+    const rootscheck = [
+        node.path.dirname(process.execPath),
+        process.cwd(),
+        node.path.join(node.gui.App.dataPath, '/Extracted Data/')
+    ]
+    rootscheck.some(dir => {
+        let hasMain = true
+        try {
+            node.fs.accessSync(
+                node.path.join(dir, 'app', 'main.html'),
+                node.fs.F_OK
+            );
+        } catch (e) {
+            hasMain = false
+        }
+        if( hasMain )
+            _g.root = dir
+        return hasMain
+    })
     
     _g.path = {
         'db': 		node.path.join(_g.root, '/app-db/'),
