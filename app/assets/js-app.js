@@ -1211,17 +1211,6 @@ _g.event = {
     'animationiteration': 'webkitAnimationIteration',
     'transitionend': 'transitionend'
 };
-var rootscheck = [node.path.dirname(process.execPath), process.cwd(), node.path.join(node.gui.App.dataPath, '/Extracted Data/')];
-rootscheck.some(function (dir) {
-    var hasMain = !0;
-    try {
-        node.fs.accessSync(node.path.join(dir, 'app', 'main.html'), node.fs.F_OK);
-    } catch (e) {
-        hasMain = !1;
-    }
-    if (hasMain) _g.root = dir;
-    return hasMain;
-});
 
 _g.path = {
     'db': node.path.join(_g.root, '/app-db/'),
