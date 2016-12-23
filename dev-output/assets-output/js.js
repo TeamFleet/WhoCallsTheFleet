@@ -2781,38 +2781,47 @@ _g.kancolle_calc = {
 
 				while (i < max_fleets) {
 					data_fleet = data['f' + (i + 1)];
-					result[i] = [];
+					var _fleet = result[i] = [];
 					if (data_fleet) {
 						j = 0;
 
 						while (j < max_ships_per_fleet) {
 							data_ship = data_fleet['s' + (j + 1)];
 							if (data_ship && data_ship.id) {
-								result[i][j] = [data_ship.id, [data_ship.lv || null, data_ship.luck || -1], [], [], []];
+								var ship = _g.data.ships[data_ship.id],
+								    _ship = _fleet[j] = [data_ship.id, [data_ship.lv || null, data_ship.luck || -1], [], [], []];
 								if (data_ship.items) {
 									k = 0;
+									var extraslot = data_ship.items.ix;
 
 									while (k < _g.kancolle_calc.max_equipments_per_ship) {
 										data_item = data_ship.items['i' + (k + 1)];
 										if (data_item && data_item.id) {
-											result[i][j][2][k] = data_item.id;
-											result[i][j][3][k] = data_item.rf || null;
-											result[i][j][4][k] = data_item.mas || null;
+											if (k + 1 > ship.slot.length) {
+												extraslot = data_item;
+												_ship[2][k] = null;
+												_ship[3][k] = null;
+												_ship[4][k] = null;
+											} else {
+												_ship[2][k] = data_item.id;
+												_ship[3][k] = data_item.rf || null;
+												_ship[4][k] = data_item.mas || null;
+											}
 										} else {
-											result[i][j][2][k] = null;
-											result[i][j][3][k] = null;
-											result[i][j][4][k] = null;
-										}
+												_ship[2][k] = null;
+												_ship[3][k] = null;
+												_ship[4][k] = null;
+											}
 										k++;
 									}
-									if (data_ship.items.ix && data_ship.items.ix.id) {
-										result[i][j][2][5] = data_ship.items.ix.id;
-										result[i][j][3][5] = data_ship.items.ix.rf || null;
-										result[i][j][4][5] = data_ship.items.ix.mas || null;
+									if (extraslot && extraslot.id) {
+										_ship[2][4] = extraslot.id;
+										_ship[3][4] = extraslot.rf || null;
+										_ship[4][4] = extraslot.mas || null;
 									}
 								}
 							} else {
-								result[i][j] = null;
+								_fleet[j] = null;
 							}
 							j++;
 						}
@@ -2855,7 +2864,8 @@ _g.kancolle_calc = {
 		version = parseInt(version) || this.version;
 
 		var result = void 0,
-		    max_fleets = this.max_fleets;
+		    max_fleets = this.max_fleets,
+		    empty = void 0;
 
 		switch (version) {
 			case 3:
@@ -2920,18 +2930,16 @@ _g.kancolle_calc = {
 								data_fleet.forEach(function (data_ship, j) {
 									if (data_ship && data_ship[0]) {
 										(function () {
-											var _ship = _fleet['s' + (j + 1)] = {
+											var ship = _g.data.ships[parseInt(data_ship[0])],
+											    _ship = _fleet['s' + (j + 1)] = {
 												'id': parseInt(data_ship[0]),
-												'lv': parseInt(data_ship[1][0]) || null,
+												'lv': parseInt(data_ship[1][0]) || empty,
 												'luck': parseInt(data_ship[1][1]) || -1,
-												'items': {
-													'ix': {}
-												}
+												'items': {}
 											};
-
 											data_ship[2].forEach(function (id_item, k) {
 												if (id_item) {
-													var prop = k == 4 ? 'ix' : ['i' + (k + 1)];
+													var prop = k == 4 ? ship.slot.length < 4 ? ['i' + (ship.slot.length + 1)] : 'ix' : ['i' + (k + 1)];
 													_ship.items[prop] = {
 														'id': parseInt(id_item)
 													};
