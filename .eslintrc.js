@@ -19,6 +19,7 @@ module.exports = {
         //"semi": [2, "always", { "omitLastInOneLineBlock": true}],
         "semi": 0,
         "no-case-declarations": 2,
+        "no-console": 0,
         "no-fallthrough": 0,
         "no-empty": 0,
         "no-empty-pattern": 2,
@@ -40,7 +41,9 @@ module.exports = {
             "error",
             4,
             {
-                "SwitchCase": 1
+                "SwitchCase": 1,
+                "VariableDeclarator": { "var": 2, "let": 2, "const": 3 },
+                "MemberExpression": 1
             }
         ]
     }

@@ -86,6 +86,42 @@
 		font-size: 	inherit;
 	}
 
+	.title-editable{
+		padding: 	5px 10px 5px 0;
+		display:	inline-block;
+		border-radius:3px;
+		.border(1, solid, transparent);
+		.transition-property(~"background-color, border-color");
+		user-select:text;
+		&:not([data-content]){
+			background:		rgba(0, 0, 0, .1);
+			border-color:	rgba(255, 255, 255, .15);
+		}
+		&[data-content]{
+			&:before{
+				.margin-top(5);
+				.padding-right(10);
+				.enable-transition();
+				.transition-property(none);
+				width: 			100%;
+				word-wrap: 		inherit;
+				overflow: 		inherit;
+				white-space: 	inherit;
+				text-overflow: 	inherit;
+				.is-gecko({
+					z-index: 	-1;
+				});
+			}
+		}
+		&:focus, &:not([data-content]), &[data-content]:focus:before{
+			.padding-left(10);
+		}
+		&:focus{
+			background:		rgba(0, 0, 0, .175);
+			border-color:	rgba(255, 255, 255, .225);
+		}
+	}
+
 	&>header{
 		//.padding-top(10);
 		border-top: 10px solid transparent;
@@ -97,19 +133,11 @@
 			font-size: 	percentage(20 / @infos-fleet-base-font-size);
 			line-height:percentage(@height / 20);
 			min-height: ~"calc(1.1em + 10px)";
-			padding: 	5px 10px 5px 0;
-			display:	inline-block;
-			border-radius:3px;
-			.border(1, solid, transparent);
 			.min-width(200);
 			max-width:	~"calc(100% - 120px)";
-			.transition-property(~"padding, background-color, border-color");
 			margin:		0;
-			user-select:text;
 			&:not([data-content]){
 				color:			hsl(50, 0%, 60%);
-				background:		rgba(0, 0, 0, .1);
-				border-color:	rgba(255, 255, 255, .15);
 			}
 			&[data-content]{
 				//color:		hsl(50, 100%, 100%);
@@ -118,21 +146,7 @@
 				&:before{
 					//color: 		hsl(50, 20%, 70%);
 					color:		hsl(50, 100%, 100%);
-					.margin-top(5);
-					.padding-right(10);
-					.enable-transition();
-					.transition-property(padding);
-					.is-gecko({
-						z-index: 	-1;
-					});
 				}
-			}
-			&:focus, &:not([data-content]), &[data-content]:focus:before{
-				.padding-left(10);
-			}
-			&:focus{
-				background:		rgba(0, 0, 0, .175);
-				border-color:	rgba(255, 255, 255, .225);
 			}
 		}
 		.preview{
@@ -981,7 +995,7 @@
 		max-height: 400px;
 		display: 	flex;
 		flex-flow: 	row nowrap;
-		padding: 	40px 0 50px 0;
+		padding: 	45px 0 50px 0;
 		h4, .airfield-summary{
 			flex: 		none;
 			position: 	absolute;
@@ -990,7 +1004,12 @@
 		h4{
 			top: 		0;
 			font-size: 	percentage(24 / @infos-fleet-base-font-size);
-			line-height:1.2em;
+			line-height:1.1em;
+			min-width:  100%;
+			max-width:  100%;
+			overflow: 	hidden;
+			white-space:nowrap;
+			text-overflow: ellipsis;
 		}
 		.airfield-summary{
 			bottom: 	0;
@@ -1703,6 +1722,9 @@
 	
 	
 	&.mod-preview{
+		.title-editable{
+			pointer-events: none;
+		}
 		&>.fleets{
 			.options{
 				&>.option-theme{
@@ -1807,28 +1829,48 @@
 						}
 					}
 				}
-				&>header{
-					h3{
-						&:not([data-content]){
-							.convertColor(hsl(@hue, 35%, 60%));
+				.title-editable{
+					&:not([data-content]){
+						.convertColor(hsl(@hue, 35%, 60%));
+						color:		@color;
+					}
+					&[data-content]{
+						//.convertColor(hsl(@hue, 100%, 97%));
+						//color:		@color;
+						.convertColor(hsl(@hue, 100%, 70%));
+						color: 		@color;
+						//.convertColor(hsla(@hue, 100%, 57%, .5));
+						//text-shadow:0 0 unit(5 / 30, em) @color;
+						&:before{
+							//.convertColor(hsl(@hue, 100%, 70%));
+							//color: 		@color;
+							.convertColor(hsl(@hue, 100%, 97%));
 							color:		@color;
 						}
-						&[data-content]{
-							//.convertColor(hsl(@hue, 100%, 97%));
-							//color:		@color;
-							.convertColor(hsl(@hue, 100%, 70%));
-							color: 		@color;
-							//.convertColor(hsla(@hue, 100%, 57%, .5));
-							//text-shadow:0 0 unit(5 / 30, em) @color;
-							&:before{
-								//.convertColor(hsl(@hue, 100%, 70%));
-								//color: 		@color;
-								.convertColor(hsl(@hue, 100%, 97%));
-								color:		@color;
-							}
-						}
 					}
-				} // &>header
+				}
+				// &>header{
+				// 	h3{
+				// 		&:not([data-content]){
+				// 			.convertColor(hsl(@hue, 35%, 60%));
+				// 			color:		@color;
+				// 		}
+				// 		&[data-content]{
+				// 			//.convertColor(hsl(@hue, 100%, 97%));
+				// 			//color:		@color;
+				// 			.convertColor(hsl(@hue, 100%, 70%));
+				// 			color: 		@color;
+				// 			//.convertColor(hsla(@hue, 100%, 57%, .5));
+				// 			//text-shadow:0 0 unit(5 / 30, em) @color;
+				// 			&:before{
+				// 				//.convertColor(hsl(@hue, 100%, 70%));
+				// 				//color: 		@color;
+				// 				.convertColor(hsl(@hue, 100%, 97%));
+				// 				color:		@color;
+				// 			}
+				// 		}
+				// 	}
+				// } // &>header
 				& > .fleets .tabs label.highlight{
 					.convertColor(hsl(@hue, 100%, 85%));
 					color: 	@color;
