@@ -1,14 +1,14 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.18.10.0",
-			"path":		"data/2016-12-24/app.nwjs-data",
-			"bytes":	4017674
+			"version":	"0.18.11.0",
+			"path":		"data/2016-12-29/app.nwjs-data",
+			"bytes":	4017686
 		},
 		"app-db": {
-			"version":	"2016.12.24",
-			"path":		"data/2016-12-24/app-db.nwjs-data",
-			"bytes":	1026621
+			"version":	"2016.12.29",
+			"path":		"data/2016-12-29/app-db.nwjs-data",
+			"bytes":	1026838
 		},
 		"bgimgs": {
 			"version":	"1.18.6.0",
@@ -16,9 +16,9 @@
 			"bytes":	12494509
 		},
 		"pics": {
-			"version":	"2016.12.23",
-			"path":		"data/2016-12-23/pics.nwjs-data",
-			"bytes":	3458185
+			"version":	"2016.12.29",
+			"path":		"data/2016-12-29/pics.nwjs-data",
+			"bytes":	3472714
 		},
 		"pics-enemies": {
 			"version":	"1.18.6.0",
