@@ -8265,6 +8265,9 @@ body.mod-capture .infos-fleet > .fleets .options > .option-hqlv {
 .infos-fleet .fleetships.fleetairfields .tips {
   flex: 0 0 auto;
 }
+body.mod-capture .infos-fleet .fleetships.fleetairfields .tips {
+  display: none;
+}
 .infos-fleet .fleetships.fleetairfields .tip-content {
   flex: 3 1 600px;
   padding: 0;
