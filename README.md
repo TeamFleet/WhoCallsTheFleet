@@ -85,7 +85,8 @@ Web App针对手机与平板设备进行了优化适配，可用移动平台浏�
 
 尝试清空用户目录下的`WhoCallsTheFleet`目录中除`NeDB`目录外的所有文件和目录。
 
-对于Windows系统，这个文件夹在`C:\Users\[你的用户名]\AppData\Local\WhoCallsTheFleet`
+* Windows: `C:\Users\[你的用户名]\AppData\Local\WhoCallsTheFleet`
+* macOS: `/Users/[你的用户名]/Library/Application Support/WhoCallsTheFleet`
 
 ## 基础框架
 
