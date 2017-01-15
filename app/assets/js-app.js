@@ -5330,8 +5330,6 @@ var InfosFleetSubFleet = function () {
                 if (d.data && d.data[0]) count++;
             }, this);
 
-            console.log(this.count);
-
             if (count) {
                 this.label.addClass('highlight');
             } else {
@@ -8556,7 +8554,7 @@ var TablelistFleets = function (_Tablelist3) {
                                     this.action_new({
                                         'data': val
                                     }, {
-                                        'aircraftmax': TablelistFleets.modalImportCheckAircraftMax.prop('checked') || Lockr.get('fleetlist-option-aircraftimportmax')
+                                        'aircraftmax': TablelistFleets.modalImportCheckAircraftMax.prop('checked')
                                     });
                                     _frame.modal.hide();
                                     TablelistFleets.modalImportTextarea.val('');
@@ -8604,9 +8602,8 @@ var TablelistFleets = function (_Tablelist3) {
                                         ship[2].forEach(function (equipmentId, index) {
                                             if (equipmentId && $.inArray(_g.data.items[equipmentId].type, Formula.equipmentType.Aircrafts) > -1) {
                                                 if (_g.data.items[equipmentId].rankupgradable) {
-                                                    if (options.aircraftmax) ship[4][index] = 7;else ship[4][index] = ship[3][index] || null;
+                                                    if (options.aircraftmax) ship[4][index] = 7;
                                                 }
-                                                ship[3][index] = null;
                                             }
                                         });
                                     }

@@ -1400,8 +1400,6 @@ class InfosFleetSubFleet {
                 count++
         }, this)
 
-        console.log(this.count)
-
         if (count) {
             this.label.addClass('highlight')
         } else {

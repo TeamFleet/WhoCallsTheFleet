@@ -534,7 +534,8 @@ class TablelistFleets extends Tablelist{
                                                                 this.action_new({
                                                                     'data': 	val
                                                                 },{
-                                                                    'aircraftmax': TablelistFleets.modalImportCheckAircraftMax.prop('checked') || Lockr.get( 'fleetlist-option-aircraftimportmax' )
+                                                                    // 'aircraftmax': TablelistFleets.modalImportCheckAircraftMax.prop('checked') || Lockr.get( 'fleetlist-option-aircraftimportmax' )
+                                                                    'aircraftmax': TablelistFleets.modalImportCheckAircraftMax.prop('checked')
                                                                 })
                                                                 _frame.modal.hide()
                                                                 TablelistFleets.modalImportTextarea.val('')
@@ -612,10 +613,10 @@ class TablelistFleets extends Tablelist{
                                     if( _g.data.items[equipmentId].rankupgradable ){
                                         if( options.aircraftmax )
                                             ship[4][index] = 7
-                                        else
-                                            ship[4][index] = ship[3][index] || null
+                                        // else
+                                            // ship[4][index] = ship[3][index] || null
                                     }
-                                    ship[3][index] = null
+                                    // ship[3][index] = null
                                 }
                             })
                         }})
