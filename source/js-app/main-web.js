@@ -1,5 +1,5 @@
 // Global Variables
-    _g.db_version = '1.13.0.0';
+    _g.db_version = '20170116';
 
     _g.bgimg_count = 0;
 
@@ -23,6 +23,7 @@
     _g.dbs = [
         'ships',
         'ship_types',
+        'ship_classes',
         'ship_series',
         'ship_namesuffix',
         

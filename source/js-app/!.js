@@ -67,6 +67,13 @@
     _g.textRank = KC.textRank;
     _g.getStatSpeed = KC.getStatSpeed;
     _g.getStatRange = KC.getStatRange;
+    _g.getStatSpeedNumber = function(speed){
+        for(let i in _g.statSpeed){
+            if( _g.statSpeed[i] == speed )
+                return i
+        }
+        return -1
+    };
     
     _g.getSize = function( bytes, target ){
         target = target.toUpperCase()

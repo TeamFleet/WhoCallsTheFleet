@@ -1478,7 +1478,10 @@ class InfosFleetShip {
                         48,     // 军粮
                         49      // 补给物资
                     ])
-            )
+            ),
+            [
+                33 // 改良型艦本式タービン / 改良型舰船涡轮机
+            ]
         )
 
         this.el = $('<dd class="ship"/>')
@@ -1526,9 +1529,8 @@ class InfosFleetShip {
                             })
                             )
                         )
-                        .append(
-                        this.elInfosInfo = $('<span/>')
-                        )
+                        .append(this.elInfosSpeed = $('<span/>'))
+                        .append(this.elInfosType = $('<span/>'))
                     )
                 )
             )
@@ -1613,9 +1615,7 @@ class InfosFleetShip {
                 )*/
             )
             // 额外装备栏位
-            .append(
-            this.equipments[4].el.addClass('equipment-extra')
-            )
+            .append(this.equipments[4].el.addClass('equipment-extra'))
 
         this.after = $('<s/>')
 
@@ -1689,7 +1689,19 @@ class InfosFleetShip {
 
     // 计算并显示属性
     updateAttrs() {
-        this.elAttrShelling.html(this.calculate('shellingDamage'))
+        let speed = this.calculate('speed')
+        let number = _g.getStatSpeedNumber(speed)
+        this.elInfosSpeed.html(speed)
+        if (_g.data.ships[this.shipId].stat.speed !== number)
+            this.elInfosSpeed.attr('data-speed', number)
+        else
+            this.elInfosSpeed.removeAttr('data-speed')
+
+        let damage = this.calculate('shellingDamage')
+        this.elAttrShelling.html(
+            (damage !== '-' ? this.calculate('fireRange') + ' | ' : '')
+            + damage
+        )
         this.elAttrTorpedo.html(this.calculate('torpedoDamage'))
 
         let hitSum = this.calculate('addHit')
@@ -1758,24 +1770,25 @@ class InfosFleetShip {
         if (!this.data[4])
             this.data[4] = []
 
-        if (this.data[0])
+        if (this.data[0]) {
             this.shipId = this.data[0]
 
-        if (this.data[1][0])
-            this.shipLv = this.data[1][0]
+            if (this.data[1][0])
+                this.shipLv = this.data[1][0]
 
-        this.equipments.forEach((equipment, i) => {
-            equipment.id = this.data[2][i]
-            equipment.star = this.data[3][i]
-            equipment.rank = this.data[4][i]
-        })
-        // for( let i=0; i<4; i++ ){
-        //     this.equipments[i].id = this.data[2][i]
-        //     this.equipments[i].star = this.data[3][i]
-        //     this.equipments[i].rank = this.data[4][i]
-        // }
+            this.equipments.forEach((equipment, i) => {
+                equipment.id = this.data[2][i]
+                equipment.star = this.data[3][i]
+                equipment.rank = this.data[4][i]
+            })
+            // for( let i=0; i<4; i++ ){
+            //     this.equipments[i].id = this.data[2][i]
+            //     this.equipments[i].star = this.data[3][i]
+            //     this.equipments[i].rank = this.data[4][i]
+            // }
 
-        this.updateAttrs()
+            this.updateAttrs()
+        }
 
         this._updating = false
     }
@@ -1954,7 +1967,8 @@ class InfosFleetShip {
                     : ''
                 )
             )
-            this.elInfosInfo.html(speed + ' ' + stype)
+            this.elInfosSpeed.html(speed)
+            this.elInfosType.html(stype)
 
             // 装备栏数据
             this.equipments.forEach((equipment, i) => {
@@ -2149,7 +2163,7 @@ InfosFleetShip.dragTouchmove = (e) => {
 
 // 类：装备
 class InfosFleetShipEquipment {
-    constructor(infosParent, index, carry, equipmentTypes) {
+    constructor(infosParent, index, carry, equipmentTypes, extraEquipments) {
         // 数据结构
         /* [
                 STRING 舰娘ID,
@@ -2245,8 +2259,8 @@ class InfosFleetShipEquipment {
                                                 'tip-filtered_': tip
                                             })
                                         }
-                                        console.log(this.el.attr('data-tip'))
-                                        console.log(this.el.data('tip-filtered_'))
+                                        // console.log(this.el.attr('data-tip'))
+                                        // console.log(this.el.data('tip-filtered_'))
                                         _p.tip.show(
                                             this.el.data('tip-filtered_'),
                                             this.el,
@@ -2395,6 +2409,8 @@ class InfosFleetShipEquipment {
 
         if (equipmentTypes)
             this.equipmentTypes = equipmentTypes
+
+        this.extraEquipments = extraEquipments || []
     }
 
     // 返回页面元素
@@ -2442,6 +2458,7 @@ class InfosFleetShipEquipment {
                 }
                 TablelistEquipments.types = types
                 TablelistEquipments.shipId = this.infosParent.shipId
+                TablelistEquipments.extraEquipments = this.extraEquipments
                 _frame.app_main.page['equipments'].object.tablelistObj.apply_types()
             }.bind(this)
         })

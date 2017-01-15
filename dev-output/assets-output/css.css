@@ -8412,6 +8412,16 @@ body.mod-capture .infos-fleet .fleetships.fleetairfields .tips {
 .infos-fleet .ship > dt > div > .info span {
   font-weight: lighter;
 }
+.infos-fleet .ship > dt > div > .info span + span {
+  padding-left: .5em;
+}
+.infos-fleet .ship > dt > div > .info [data-speed="15"] {
+  color: #d6f4ff;
+  margin-right: -0.3em;
+}
+.infos-fleet .ship > dt > div > .info [data-speed="20"] {
+  color: #abeeff;
+}
 .infos-fleet .ship > dt:after {
   content: '';
   position: absolute;
