@@ -11,9 +11,9 @@
   "dependencies": {
     "animate.css": "^3.4.0",
     "clipboard": "^1.5.15",
-    "jquery": "^2.2.0",
+    "jquery": "^3.1.1",
     "kckit": "^0.4.0",
-    "kctip": "^0.4.1",
+    "kctip": "^0.5.0",
     "localforage": "^1.3.1",
     "lockr": "^0.8.3",
     "lz-string": "^1.4.4",
@@ -34,10 +34,10 @@
     "gulp-cssnano": "^2.0.0",
     "gulp-less": "^3.0.3",
     "gulp-minify-css": "^1.2.1",
-    "gulp-notify": "^2.2.0",
+    "gulp-notify": "^3.0.0",
     "gulp-postcss": "^6.0.1",
     "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^1.4.2",
+    "gulp-uglify": "^2.0.1",
     "gulp-watch-less2": "^2.0.4",
     "less-plugin-clean-css": "^1.5.1"
   }
