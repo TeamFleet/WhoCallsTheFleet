@@ -5459,6 +5459,8 @@ var InfosFleetShip = function () {
     }, {
         key: 'updateAttrs',
         value: function updateAttrs() {
+            if (!this.shipId) return;
+
             var speed = this.calculate('speed');
             var number = _g.getStatSpeedNumber(speed);
             this.elInfosSpeed.html(speed);

@@ -1687,6 +1687,8 @@ class InfosFleetShip {
 
     // 计算并显示属性
     updateAttrs() {
+        if( !this.shipId ) return
+
         let speed = this.calculate('speed')
         let number = _g.getStatSpeedNumber(speed)
         this.elInfosSpeed.html(speed)
