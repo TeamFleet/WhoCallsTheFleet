@@ -2,12 +2,12 @@
 	"packages": {
 		"app": {
 			"version":	"0.19.2.0",
-			"path":		"data/2017.02.04/app.nwjs-data",
+			"path":		"data/2017-02-04/app.nwjs-data",
 			"bytes":	4018802
 		},
 		"app-db": {
 			"version":	"2017.02.04",
-			"path":		"data/2017.02.04/app-db.nwjs-data",
+			"path":		"data/2017-02-04/app-db.nwjs-data",
 			"bytes":	1028394
 		},
 		"bgimgs": {
@@ -17,7 +17,7 @@
 		},
 		"pics": {
 			"version":	"2017.02.04",
-			"path":		"data/2017.02.04/pics.nwjs-data",
+			"path":		"data/2017-02-04/pics.nwjs-data",
 			"bytes":	3489414
 		},
 		"pics-enemies": {
