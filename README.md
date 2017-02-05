@@ -14,7 +14,7 @@ Web App针对手机与平板设备进行了优化适配，可用移动平台浏�
 
 **获取客户端版本**
 
-[百度网盘](http://pan.baidu.com/s/1kT09CWJ#path=%252FWhoCallsTheFleet) | [OneDrive](https://1drv.ms/f/s!AhBtzFNzki1FiuFy4H2RkZcl1uiiWQ)
+[百度网盘](http://pan.baidu.com/s/1kT09CWJ#path=%252FWhoCallsTheFleet) | [OneDrive](https://1drv.ms/f/s!AhBtzFNzki1FiuFy3QD_6v2a-2DomQ)
 
 * 支持的操作系统：Windows 7/8/8.1/10 (32位/64位)，macOS (32位/64位)
 * 不提供Linux平台的可执行版本，如有相关需求，可访问[GitHub REPO](https://github.com/Diablohu/WhoCallsTheFleet)获取源代码进行使用
