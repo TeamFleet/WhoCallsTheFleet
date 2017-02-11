@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",208,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/10.png)\"></s><strong>晴岚<small>(六三一空)</small></strong><small>水上轰炸机</small></h3><span>+3 对潜</span><span>+12 爆装</span><span>+2 命中</span><span>+6 索敌</span><span>航程: 4</span>")

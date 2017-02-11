@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",210,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/42.png)\"></s><strong>潜艇搭载电探 & 水防式望远镜</strong><small>潜艇装备</small></h3><span>+1 火力</span><span>+1 对空</span><span>+2 命中</span><span>+8 回避</span><span>+4 索敌</span>")
