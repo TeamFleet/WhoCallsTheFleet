@@ -16,7 +16,7 @@
 {"id":18,"code":"BB","code_game":"戦","full":"Fast Battleship (Torpedo)","full_game":"高速戦艦 (雷装)","full_zh":"高速战列舰 (雷装)","_id":"OjTTOwKy8NOi0hn7","hide":true}
 {"code":"SS","code_game":"潜","full":"The Fleet of Fog Battle-Submarine","full_game":"霧の艦隊攻撃型潜水艦","full_zh":"海雾舰队攻击型潜艇","id":27,"_id":"Pdeen1MBrbDLor8A","donotcompare":"on"}
 {"id":17,"code":"AS","code_game":"潜母艦","full":"Submarine Tender","full_game":"潜水母艦","full_zh":"潜艇补给舰","_id":"Ux0mZqyBxLsy5ZNH","equipable":[1,2,3,7,8,9,15,16,22,24,29,30,31,32,33,35,37,40,43,44,48,51]}
-{"id":13,"code":"SS","code_game":"潜","full":"Submarine","full_game":"潜水艦","full_zh":"潜艇","_id":"VQCtCVBTtEZ7vIiA","equipable":[12,13,14,27,32,35,44,48,52]}
+{"id":13,"code":"SS","code_game":"潜","full":"Submarine","full_game":"潜水艦","full_zh":"潜艇","_id":"VQCtCVBTtEZ7vIiA","equipable":[12,13,14,27,32,35,44,48,52,58]}
 {"id":3,"code":"CLT","code_game":"雷巡","full":"Torpedo Cruiser","full_game":"重雷装巡洋艦","full_zh":"重雷装巡洋舰","_id":"Y9ZS4xMtWS793wNU","equipable":[1,2,3,4,7,8,9,12,14,24,25,26,27,29,30,31,32,35,37,40,43,48]}
 {"id":4,"code":"CA","code_game":"重巡","full":"Heavy Cruiser","full_game":"重巡洋艦","full_zh":"重巡洋舰","_id":"ZhdM4QnIYs0Gvd0t","equipable":[4,7,8,9,10,12,15,16,24,25,28,29,30,31,32,33,35,37,39,40,43,48]}
 {"id":10,"code":"CV","code_game":"航","full":"Standard Aircraft Carrier","full_game":"正規空母","full_zh":"正规航母","_id":"b2SlTxvAl9CT9aKP","equipable":[7,8,9,18,19,20,21,24,25,28,29,30,31,32,34,35,36,43,48]}
@@ -25,5 +25,5 @@
 {"id":12,"code":"AV","code_game":"水母","full":"Seaplane Tender","full_game":"水上機母艦","full_zh":"水上机母舰","_id":"hueWkxygGjumqX5P","equipable":[1,2,3,7,8,9,15,16,17,24,25,28,29,30,31,32,33,35,37,39,40,41,43,44,48,51]}
 {"id":21,"code":"CT","code_game":"練巡","full":"Training Cruiser","full_game":"練習巡洋艦","full_zh":"练习巡洋舰","_id":"hyfrRxElAHO25mWV","equipable":[1,2,3,4,7,8,9,12,15,16,24,25,26,27,29,30,31,32,33,35,37,43,48]}
 {"code":"AO","code_game":"給油","full":"Fleet Oilers","full_game":"給油艦","full_zh":"舰队油船","id":29,"_id":"o1zrTPUU0sav6oGQ","equipable":[1,2,3,15,16,17,22,24,25,27,29,30,31,32,35,36,41,48,49,51]}
-{"id":14,"code":"SSV","code_game":"潜母","full":"Submarine Aircraft Carrier","full_game":"潜水空母","full_zh":"航母潜艇","_id":"pSHDSBklGnkhK4ih","equipable":[12,13,14,15,16,17,27,32,35,44,48,51,52]}
+{"id":14,"code":"SSV","code_game":"潜母","full":"Submarine Aircraft Carrier","full_game":"潜水空母","full_zh":"航母潜艇","_id":"pSHDSBklGnkhK4ih","equipable":[12,13,14,15,16,17,27,32,35,44,48,51,52,58]}
 {"code":"CA","code_game":"重巡","full":"Anti-Air Heavy Cruiser","full_game":"防空巡洋艦","full_zh":"防空巡洋舰","id":23,"_id":"ymhRPe8aNS7rkWsG","equipable":[4,7,8,9,10,12,15,16,24,25,28,29,30,31,32,33,35,37,39,40,43,48]}
