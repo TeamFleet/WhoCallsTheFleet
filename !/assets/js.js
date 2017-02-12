@@ -4481,6 +4481,12 @@ _frame.app_main.page['calctp'] = {
                         case 'e167':
                             data.equipment[167] = count;break;
 
+                        case 'e26':
+                            data.equipment[26] = count;break;
+
+                        case 'e62':
+                            data.equipment[62] = count;break;
+
                         default:
                             data.ship[_i7] = count;break;
                     }
