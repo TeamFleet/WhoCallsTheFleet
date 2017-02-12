@@ -82,12 +82,12 @@
       "package.json"
     ],
     "dataVersion": {
-      "app": "0.19.3.0",
-      "app-db": "2017.02.12",
+      "app": "0.19.4.0",
+      "app-db": "2017.02.13",
       "bgimgs": "1.18.6.0",
       "pics": "2017.02.12",
       "pics-enemies": "2017.02.12",
-      "pics-ships": "2017.02.12",
+      "pics-ships": "2017.02.13",
       "pics-ships-extra": "2017.02.12"
     },
     "buildDir": "N:\\nwbuild\\build",
