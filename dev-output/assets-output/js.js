@@ -6528,6 +6528,7 @@ var InfosFleetSubFleet = function () {
                                 consumAmmo += ship.getAttribute('ammo', shipdata.shipLv) || 0;
 
                                 tp += shipdata.calculate('TP');
+                                tp += ship.tp || 0;
                             }
                         });
 

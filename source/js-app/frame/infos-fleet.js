@@ -1274,6 +1274,7 @@ class InfosFleetSubFleet {
 
                         // TP
                         tp += shipdata.calculate('TP')
+                        tp += ship.tp || 0
                     }
                 })
 
