@@ -1,4 +1,4 @@
-{"id":5,"code":"CAV","code_game":"航巡","full":"Aviation Cruiser","full_game":"航空巡洋艦","full_zh":"航空巡洋舰","_id":"0Hxc4oDbKj3MNwZd","equipable":[4,7,8,9,10,12,15,16,17,22,24,25,28,29,30,31,32,33,35,36,37,39,40,41,43,44,48,51]}
+{"id":5,"code":"CAV","code_game":"航巡","full":"Aviation Cruiser","full_game":"航空巡洋艦","full_zh":"航空巡洋舰","_id":"0Hxc4oDbKj3MNwZd","equipable":[4,7,8,9,10,12,15,16,17,22,24,25,28,29,30,31,32,33,35,36,37,39,40,41,43,44,48,51,57]}
 {"code":"AP","code_game":"補給","full":"Transport Ship","full_game":"輸送艦","full_zh":"运输船","id":22,"_id":"1IMEE4iMGfYgwFUy","hide":true}
 {"code":"BB","code_game":"戦","full":"The Fleet of Fog Battleship","full_game":"霧の艦隊大戦艦","full_zh":"海雾舰队大战舰","id":26,"_id":"3Wt9OCeDzykPY9D3","donotcompare":"on"}
 {"id":11,"code":"CV","code_game":"装母","full":"Armored Aircraft Carrier","full_game":"装甲空母","full_zh":"装甲航母","_id":"3gP0xyZODzyOmYAD","equipable":[7,8,9,18,19,20,21,24,25,28,29,30,31,32,34,35,36,43,48,50,57]}
@@ -11,7 +11,7 @@
 {"code":"CA","code_game":"重巡","full":"The Fleet of Fog Heavy Cruiser","full_game":"霧の艦隊重巡洋艦","full_zh":"海雾舰队重巡洋舰","id":25,"_id":"DgRcE2Ez9sClji86","donotcompare":"on"}
 {"code":"AV","code_game":"水母","full":"Seaplane Tender (Large)","full_game":"飞行艇母舰","full_zh":"飞行艇母舰","id":24,"_id":"Eb002iRVxWDaoxfJ","equipable":[1,2,3,7,8,9,15,16,17,24,25,26,28,29,30,31,32,33,35,37,39,40,41,43,45,48,51,57]}
 {"id":20,"code":"BB","code_game":"戦","full":"Super Dreadnaught","full_game":"大型戦艦","full_zh":"大型战列舰","_id":"J1AG7IarlOTILvDU","equipable":[4],"hide":true}
-{"id":8,"code":"BBV","code_game":"航戦","full":"Aviation Battleship","full_game":"航空戦艦","full_zh":"航空战列舰","_id":"MAzFpCIU30SDC0sz","equipable":[4,5,7,8,9,10,11,15,16,17,22,24,25,28,29,30,31,32,34,35,36,37,39,40,43,44,46,47,48,51]}
+{"id":8,"code":"BBV","code_game":"航戦","full":"Aviation Battleship","full_game":"航空戦艦","full_zh":"航空战列舰","_id":"MAzFpCIU30SDC0sz","equipable":[4,5,7,8,9,10,11,15,16,17,22,24,25,28,29,30,31,32,34,35,36,37,39,40,43,44,46,47,48,51,57]}
 {"id":1,"code":"DD","code_game":"駆逐","full":"Destroyer","full_game":"駆逐艦","full_zh":"驱逐舰","_id":"NkAIZy0T53JXtl5i","equipable":[1,2,3,12,24,26,27,29,30,31,32,35,37,39,40,41,44,48]}
 {"id":18,"code":"BB","code_game":"戦","full":"Fast Battleship (Torpedo)","full_game":"高速戦艦 (雷装)","full_zh":"高速战列舰 (雷装)","_id":"OjTTOwKy8NOi0hn7","hide":true}
 {"code":"SS","code_game":"潜","full":"The Fleet of Fog Battle-Submarine","full_game":"霧の艦隊攻撃型潜水艦","full_zh":"海雾舰队攻击型潜艇","id":27,"_id":"Pdeen1MBrbDLor8A","donotcompare":"on"}
