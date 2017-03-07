@@ -2492,7 +2492,13 @@ class InfosFleetShipEquipment {
                 this.infosParent.data[this.index][0] = value
             else
                 this.infosParent.data[2][this.index] = value
-            this.improvable = _g.data.items[value].improvable || false
+
+            // 装备是否可改修
+            if (InfosFleetShipEquipment.improvableExtra.indexOf(value) > -1)
+                this.improvable = true
+            else
+                this.improvable = _g.data.items[value].improvable || false
+
             this.el.attr({
                 'data-equipmentid': value,
                 'data-tip': '[[EQUIPMENT::' + value + ']]',
@@ -2667,6 +2673,9 @@ class InfosFleetShipEquipment {
         }
     }
 }
+InfosFleetShipEquipment.improvableExtra = [
+    110
+]
 
 
 

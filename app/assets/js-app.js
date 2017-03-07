@@ -6038,7 +6038,9 @@ var InfosFleetShipEquipment = function () {
 
             if (value && !isNaN(value)) {
                 if (this.isParentAirfield) this.infosParent.data[this.index][0] = value;else this.infosParent.data[2][this.index] = value;
-                this.improvable = _g.data.items[value].improvable || !1;
+
+                if (InfosFleetShipEquipment.improvableExtra.indexOf(value) > -1) this.improvable = !0;else this.improvable = _g.data.items[value].improvable || !1;
+
                 this.el.attr({
                     'data-equipmentid': value,
                     'data-tip': '[[EQUIPMENT::' + value + ']]',
@@ -6165,6 +6167,8 @@ var InfosFleetShipEquipment = function () {
 
     return InfosFleetShipEquipment;
 }();
+
+InfosFleetShipEquipment.improvableExtra = [110];
 
 var InfosFleetSubAirfield = function () {
     function InfosFleetSubAirfield(infosFleet, d, label) {
