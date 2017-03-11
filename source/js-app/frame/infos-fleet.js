@@ -1316,16 +1316,17 @@ class InfosFleetSubFleet {
             }
 
             let los = this.summaryCalcLos()
-            if (los.y_estimate && los.y_std_error) {
-                //_g.log(los)
-                let losMin = (los.y_estimate - los.y_std_error).toFixed(1)
-                    , losMax = (los.y_estimate + los.y_std_error).toFixed(1)
-                if (losMin < 0)
-                    losMin = 0
-                if (losMax < 0)
-                    losMax = 0
-                this.elSummaryLos.html(losMin == losMax ? losMin : losMin + '~' + losMax)
-            }
+            this.elSummaryLos.html( los ? los.toFixed(2) : '-' )
+            // if (los.y_estimate && los.y_std_error) {
+            //     //_g.log(los)
+            //     let losMin = (los.y_estimate - los.y_std_error).toFixed(1)
+            //         , losMax = (los.y_estimate + los.y_std_error).toFixed(1)
+            //     if (losMin < 0)
+            //         losMin = 0
+            //     if (losMax < 0)
+            //         losMax = 0
+            //     this.elSummaryLos.html(losMin == losMax ? losMin : losMin + '~' + losMax)
+            // }
 
             this.summaryCalculating = null
         }.bind(this), 10)
@@ -1337,53 +1338,55 @@ class InfosFleetSubFleet {
         if (hq_lv < 0)
             hq_lv = Lockr.get('hqLvDefault', _g.defaultHqLv)
 
-        var x = {
-            'DiveBombers': 0,
-            'TorpedoBombers': 0,
-            'CarrierRecons': 0,
-            'SeaplaneRecons': 0,
-            'SeaplaneBombers': 0,
-            'SmallRadars': 0,
-            'LargeRadars': 0,
-            'Searchlights': 0,
-            'statLos': 0,
-            'hqLv': hq_lv
-        };
+        return Formula.calcByFleet.los33(this.data, hq_lv)
 
-        this.ships.forEach(function (shipdata) {
-            if (shipdata && shipdata.shipId) {
-                // ship, equipments_by_slot, star_by_slot, rank_by_slot, options
-                // shipdata.shipId, shipdata.data[2], shipdata.data[3], shipdata.data[4]
-                let equipments_by_slot = shipdata.data[2].map(function (equipment) {
-                    if (!equipment)
-                        return null
-                    if (equipment instanceof Equipment)
-                        return equipment
-                    return _g.data.items[equipment]
-                }) || []
-                equipments_by_slot.forEach(function (equipment) {
-                    if (equipment) {
-                        //console.log(equipment)
-                        for (let i in x) {
-                            if (Formula.equipmentType[i]
-                                && Formula.equipmentType[i].push
-                                && Formula.equipmentType[i].indexOf(equipment.type) > -1
-                            )
-                                x[i] += equipment.stat.los
-                        }
-                    }
-                })
-                let shipLv = shipdata.shipLv || 1
-                    , shipLos = _g.data.ships[shipdata.shipId].getAttribute('los', shipLv) || 1
-                if (shipLv < 0)
-                    shipLv = 1
-                if (shipLos < 0)
-                    shipLos = 1
-                x.statLos += Math.sqrt(shipLos)
-            }
-        })
+        // var x = {
+        //     'DiveBombers': 0,
+        //     'TorpedoBombers': 0,
+        //     'CarrierRecons': 0,
+        //     'SeaplaneRecons': 0,
+        //     'SeaplaneBombers': 0,
+        //     'SmallRadars': 0,
+        //     'LargeRadars': 0,
+        //     'Searchlights': 0,
+        //     'statLos': 0,
+        //     'hqLv': hq_lv
+        // };
 
-        return Formula.calc.losPower(x);
+        // this.ships.forEach(function (shipdata) {
+        //     if (shipdata && shipdata.shipId) {
+        //         // ship, equipments_by_slot, star_by_slot, rank_by_slot, options
+        //         // shipdata.shipId, shipdata.data[2], shipdata.data[3], shipdata.data[4]
+        //         let equipments_by_slot = shipdata.data[2].map(function (equipment) {
+        //             if (!equipment)
+        //                 return null
+        //             if (equipment instanceof Equipment)
+        //                 return equipment
+        //             return _g.data.items[equipment]
+        //         }) || []
+        //         equipments_by_slot.forEach(function (equipment) {
+        //             if (equipment) {
+        //                 //console.log(equipment)
+        //                 for (let i in x) {
+        //                     if (Formula.equipmentType[i]
+        //                         && Formula.equipmentType[i].push
+        //                         && Formula.equipmentType[i].indexOf(equipment.type) > -1
+        //                     )
+        //                         x[i] += equipment.stat.los
+        //                 }
+        //             }
+        //         })
+        //         let shipLv = shipdata.shipLv || 1
+        //             , shipLos = _g.data.ships[shipdata.shipId].getAttribute('los', shipLv) || 1
+        //         if (shipLv < 0)
+        //             shipLv = 1
+        //         if (shipLos < 0)
+        //             shipLos = 1
+        //         x.statLos += Math.sqrt(shipLos)
+        //     }
+        // })
+
+        // return Formula.calc.losPower(x);
     }
 
 
@@ -1492,9 +1495,7 @@ class InfosFleetShip {
                 )
                 .append(
                 this.elInfos = $('<div/>').html('<span>' + (this.infosFleet.data._id ? '选择舰娘' : '无舰娘') + '...</span>')
-                    .append(
-                    this.elInfosTitle = $('<div class="title"/>')
-                    )
+                    .append( this.elInfosTitle = $('<div class="title"/>') )
                     .append(
                     $('<div class="info"/>')
                         .append(
@@ -1512,9 +1513,10 @@ class InfosFleetShip {
                                         this.shipLv = null
 
                                     value = parseInt(value)
-                                    if (value < 0) {
-                                        value = 0
-                                        this.elInputLevel.val(0)
+                                    let min = parseInt(this.elInputLevel.attr('min'))
+                                    if (value < min) {
+                                        value = min
+                                        this.elInputLevel.val(min)
                                     } else if (value > _g.shipMaxLv) {
                                         value = _g.shipMaxLv
                                         this.elInputLevel.val(_g.shipMaxLv)
@@ -1968,6 +1970,7 @@ class InfosFleetShip {
                     : ''
                 )
             )
+            this.elInputLevel.attr('min', ship._minLv)
             this.elInfosSpeed.html(speed)
             this.elInfosType.html(stype)
 
@@ -1990,6 +1993,7 @@ class InfosFleetShip {
             // }
         } else {
             this.el.removeAttr('data-shipId')
+            this.elInputLevel.attr('min', 0)
             //this.el.addClass('noship')
             this.elAvatar.html('')
             this.data[2] = []
