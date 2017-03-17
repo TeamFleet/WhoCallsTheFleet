@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",216,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/43.png)\"></s><strong>二式水战改<small>(熟练)</small></strong><small>水上战斗机</small></h3><span>+5 对空</span><span>+1 对潜</span><span>+1 命中</span><span>+2 回避</span><span>+1 索敌</span><span>航程: 4</span>")
