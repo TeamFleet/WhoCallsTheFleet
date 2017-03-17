@@ -49,7 +49,7 @@ class TablelistEquipments extends Tablelist{
 		
 		// 航母：直接进入飞行器页
 		if( TablelistEquipments.shipId
-			&& $.inArray(_g.data.ships[TablelistEquipments.shipId].type, [9, 10, 11] ) > -1
+			&& [9, 10, 11].indexOf( _g.data.ships[TablelistEquipments.shipId].type ) > -1
 		){
 			let k = 0
 				,el
@@ -157,10 +157,10 @@ class TablelistEquipments extends Tablelist{
 							e.stopImmediatePropagation()
 							e.stopPropagation()
 							
-							if( $.inArray(etype, TablelistEquipments.types) > -1 )
+							if( TablelistEquipments.types.indexOf(etype) > -1 )
 								_frame.app_main.mode_selection_callback(eid)
 							
-							//if( $.inArray(equipment_data.type, TablelistEquipments.types) > -1 )
+							//if( TablelistEquipments.types.indexOf(equipment_data.type) > -1 )
 							//	_frame.app_main.mode_selection_callback(equipment_data['id'])
 						}
 					})

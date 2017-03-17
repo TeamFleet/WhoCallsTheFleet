@@ -1506,7 +1506,7 @@ class InfosFleetShip {
                                 'min': 0,
                                 'max': _g.shipMaxLv
                             }).on({
-                                'change': function (e) {
+                                checkValue: () => {
                                     let value = this.elInputLevel.val()
 
                                     if ((typeof value == 'undefined' || value === '') && this.data[1][0])
@@ -1523,10 +1523,20 @@ class InfosFleetShip {
                                     }
                                     if (!isNaN(value) && this.data[1][0] != value)
                                         this.shipLv = value
-                                }.bind(this),
-                                'input': function () {
-                                    this.elInputLevel.trigger('change')
-                                }.bind(this)
+                                },
+
+                                keydown: (e) => {
+                                    if ( e.keyCode == 38 || e.keyCode == 40 )
+                                        this.elInputLevel.trigger('checkValue')
+                                },
+                                
+                                // blur: () => {
+                                //     this.elInputLevel.trigger('checkValue')
+                                // },
+
+                                change: () => {
+                                    this.elInputLevel.trigger('checkValue')
+                                }
                             })
                             )
                         )

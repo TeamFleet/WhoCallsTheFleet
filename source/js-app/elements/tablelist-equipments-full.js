@@ -15,7 +15,7 @@ TablelistEquipments.prototype.append_item = function( equipment_data, collection
 						e.stopImmediatePropagation()
 						e.stopPropagation()
 						
-						if( $.inArray(equipment_data.type, TablelistEquipments.types) > -1 )
+						if( TablelistEquipments.types.indexOf(equipment_data.type) > -1 )
 							_frame.app_main.mode_selection_callback(equipment_data['id'])
 					}
 				})
