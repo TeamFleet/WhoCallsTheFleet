@@ -1316,7 +1316,7 @@ class InfosFleetSubFleet {
             }
 
             let los = this.summaryCalcLos()
-            this.elSummaryLos.html( los ? los.toFixed(2) : '-' )
+            this.elSummaryLos.html(los ? los.toFixed(2) : '-')
             // if (los.y_estimate && los.y_std_error) {
             //     //_g.log(los)
             //     let losMin = (los.y_estimate - los.y_std_error).toFixed(1)
@@ -1495,7 +1495,7 @@ class InfosFleetShip {
                 )
                 .append(
                 this.elInfos = $('<div/>').html('<span>' + (this.infosFleet.data._id ? '选择舰娘' : '无舰娘') + '...</span>')
-                    .append( this.elInfosTitle = $('<div class="title"/>') )
+                    .append(this.elInfosTitle = $('<div class="title"/>'))
                     .append(
                     $('<div class="info"/>')
                         .append(
@@ -1526,10 +1526,10 @@ class InfosFleetShip {
                                 },
 
                                 keydown: (e) => {
-                                    if ( e.keyCode == 38 || e.keyCode == 40 )
+                                    if (e.keyCode == 38 || e.keyCode == 40)
                                         this.elInputLevel.trigger('checkValue')
                                 },
-                                
+
                                 // blur: () => {
                                 //     this.elInputLevel.trigger('checkValue')
                                 // },
@@ -1700,7 +1700,7 @@ class InfosFleetShip {
 
     // 计算并显示属性
     updateAttrs() {
-        if( !this.shipId ) return
+        if (!this.shipId) return
 
         let speed = this.calculate('speed')
         let number = _g.getStatSpeedNumber(speed)
@@ -2453,9 +2453,16 @@ class InfosFleetShipEquipment {
                     _frame.infos.dom.main.attr('data-theme', this.infosParent.infosFleet.data['theme'])
             }.bind(this),
             callback_modeSelection_enter: function () {
-                let types = this.infosParent.shipId
-                    ? _g.data.ships[this.infosParent.shipId].getEquipmentTypes()
+                const shipId = this.infosParent.shipId
+                const ship = shipId && _g.data.ships[shipId]
+                const shipClass = shipId && _g.data.ship_classes[ship.class]
+                const shipClassExtraSlotExtra = shipId && shipClass.extraSlotExtra
+
+                let types = shipId
+                    ? ship.getEquipmentTypes()
                     : []
+                let isExtraSlot = false
+
                 if (this.equipmentTypes && this.equipmentTypes.length) {
                     if (types.length) {
                         let _types = []
@@ -2464,16 +2471,19 @@ class InfosFleetShipEquipment {
                                 _types.push(v)
                         })
                         types = _types
-                        TablelistEquipments.isExtraSlot = true
+                        isExtraSlot = true
                     } else {
                         types = this.equipmentTypes
                     }
-                } else {
-                    TablelistEquipments.isExtraSlot = false
                 }
+
+                TablelistEquipments.isExtraSlot = isExtraSlot
                 TablelistEquipments.types = types
                 TablelistEquipments.shipId = this.infosParent.shipId
-                TablelistEquipments.extraEquipments = this.extraEquipments
+                TablelistEquipments.extraEquipments = this.extraEquipments ? this.extraEquipments.concat() : []
+                if (isExtraSlot && shipClassExtraSlotExtra && shipClassExtraSlotExtra.length)
+                    TablelistEquipments.extraEquipments = TablelistEquipments.extraEquipments.concat(shipClassExtraSlotExtra)
+                // console.log(TablelistEquipments.extraEquipments)
                 _frame.app_main.page['equipments'].object.tablelistObj.apply_types()
             }.bind(this)
         })
@@ -2562,13 +2572,14 @@ class InfosFleetShipEquipment {
 
     // 改修星级
     get star() {
-        return this.isParentAirfield ? 0 : this.infosParent.data[3][this.index]
+        // return this.isParentAirfield ? 0 : this.infosParent.data[3][this.index]
+        return this.infosParent.data[3][this.index]
     }
     set star(value) {
         let update = function (value) {
             if (this.isParentAirfield)
-                //this.infosParent.data[this.index][2] = value
-                this.infosParent.data[this.index][2] = 0
+                this.infosParent.data[this.index][2] = value
+            // this.infosParent.data[this.index][2] = 0
             else
                 this.infosParent.data[3][this.index] = value
         }.bind(this)
@@ -2663,7 +2674,8 @@ class InfosFleetShipEquipment {
 
     // 是否可改修
     set improvable(value) {
-        if (this.isParentAirfield || !value) {
+        // if (this.isParentAirfield || !value) {
+        if (!value) {
             this.el.removeAttr('data-star')
             this.elInputStar.prop('disabled', true)
                 .attr('placeholder', '--')
@@ -2959,10 +2971,10 @@ class InfosFleetAirfield {
                     this.aircrafts[i].id = this.data[i][0]
                 if (this.data[i][1])
                     this.aircrafts[i].rank = this.data[i][1]
-                //if( this.data[i][2] )
-                //	this.aircrafts[i].star = this.data[i][2]
                 if (this.data[i][2])
-                    this.aircrafts[i].star = 0
+                    this.aircrafts[i].star = this.data[i][2]
+                // if (this.data[i][2])
+                //     this.aircrafts[i].star = 0
             }
         }
 

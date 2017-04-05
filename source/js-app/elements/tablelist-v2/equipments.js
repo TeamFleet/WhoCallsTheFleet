@@ -40,13 +40,16 @@ class TablelistEquipments extends Tablelist{
                 this.apply_types_check()
         }
 
+        // 清除上次选择的额外可选装备
+        this.dom.tbody.children('.extra').removeClass('extra').removeAttr('style')
+
         // 额外可选择装备
         if( TablelistEquipments.extraEquipments ){
             TablelistEquipments.extraEquipments.forEach(id => {
                 this.dom.tbody.children('[data-equipmentid="'+id+'"]').css({
                     display: 'flex',
                     opacity: 1
-                })
+                }).addClass('extra')
             })
         }
     }

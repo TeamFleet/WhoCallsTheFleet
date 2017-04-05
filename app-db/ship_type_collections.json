@@ -5,5 +5,5 @@
 {"name":{"zh_cn":"航空巡洋舰"},"types":[5],"id":4,"_id":"hBXvzm3V9OHR9oBw"}
 {"name":{"zh_cn":"潜艇"},"types":[13,14],"id":8,"_id":"lmYeXVnlEzZu5qD9"}
 {"name":{"zh_cn":"战列舰 & 航空战列舰"},"types":[6,7,8,18,20],"id":1,"_id":"nLHC1gpWE191Z9G6"}
-{"name":{"zh_cn":"航空母舰"},"types":[9,10,11],"id":2,"_id":"phOle1KVBEgM6hll"}
+{"name":{"zh_cn":"航空母舰"},"types":[9,10,11,30],"id":2,"_id":"phOle1KVBEgM6hll"}
 {"name":{"zh_cn":"其他"},"types":[12,15,16,17,21,22,24],"id":9,"_id":"uu7FBM5R6rIZHxvT"}

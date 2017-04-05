@@ -11,7 +11,7 @@
 {"id":3,"name_game":"大和","name_zh":"大和","ship_type_id":20,"_id":"7Dzqr0FFx8i6z5Tn","speed_rule":"low-1"}
 {"name_game":"巡潜乙","name_zh":"巡潜乙","ship_type_id":13,"id":60,"_id":"7o2yPGimgHf6uV7g","speed_rule":"low-3"}
 {"id":4,"name_game":"扶桑","name_zh":"扶桑","ship_type_id":6,"_id":"8Sh8jh40V9c1dwKp","speed_rule":"low-2"}
-{"id":5,"name_game":"明石","name_zh":"明石","ship_type_id":16,"_id":"8xQPYsq6jHfdAjBa","speed_rule":"low-3"}
+{"id":5,"name_game":"明石","name_zh":"明石","ship_type_id":16,"_id":"8xQPYsq6jHfdAjBa","speed_rule":"low-3","extraSlotExtra":[66,220]}
 {"name_game":"夕雲","name_zh":"夕云","ship_type_id":1,"id":22,"_id":"AcZKZJTEy3ySYL7p","speed_rule":"high-3"}
 {"name_game":"Maestrale","name_zh":"西北风","ship_type_id":1,"id":78,"_id":"AtJsZGIYiyfK2m47","speed_rule":"high-3"}
 {"name_game":"三式潜航輸送艇","name_zh":"三式潜航运输艇","ship_type_id":13,"id":64,"_id":"BS1phNGWHoLWnP2X","speed_rule":"low-3"}
@@ -51,7 +51,7 @@
 {"name_game":"UボートIXC","name_zh":"UIX C","ship_type_id":13,"id":62,"_id":"dUnjH1tY6sJU8n8f","speed_rule":"low-3"}
 {"name_game":"綾波","name_zh":"绫波","ship_type_id":1,"id":16,"_id":"evm4ogjAEbdtDCSs","speed_rule":"high-3"}
 {"name_game":"鳳翔","name_zh":"凤翔","ship_type_id":9,"id":33,"_id":"fc4I0XDHvViLR6T8","speed_rule":"low-2"}
-{"name_game":"阿賀野","name_zh":"阿贺野","ship_type_id":2,"id":52,"_id":"hJAm96B6jC0wWmvP","speed_rule":"high-2"}
+{"name_game":"阿賀野","name_zh":"阿贺野","ship_type_id":2,"id":52,"_id":"hJAm96B6jC0wWmvP","speed_rule":"high-2","extraSlotExtra":[66,220]}
 {"name_game":"特種船丙","name_zh":"特种船丙","ship_type_id":15,"id":56,"_id":"hcWdqljjY0waaU64","speed_rule":"low-3"}
 {"id":10,"name_game":"長門","name_zh":"长门","ship_type_id":6,"_id":"hfYDUbSqjpp3bZTz","speed_rule":"low-2"}
 {"name_game":"秋月","name_zh":"秋月","ship_type_id":19,"id":23,"_id":"hsLQJLbzOtNBTD5b","speed_rule":"high-3"}
@@ -73,16 +73,18 @@
 {"name_game":"朝潮","name_zh":"朝潮","ship_type_id":1,"id":20,"_id":"ssTgmPb3uPu3CxBy","speed_rule":"high-3"}
 {"name_game":"球磨","name_zh":"球磨","ship_type_id":2,"id":48,"_id":"t84eJdJn5UOoVByp","speed_rule":"high-3"}
 {"name_game":"加賀","name_zh":"加贺","ship_type_id":10,"id":27,"_id":"tj5fsdvqsUpt5yUq","speed_rule":"high-4"}
-{"name_game":"香取","name_zh":"香取","ship_type_id":21,"id":55,"_id":"u2OtssehEtbGtBOz","speed_rule":"low-2"}
+{"name_game":"香取","name_zh":"香取","ship_type_id":21,"id":55,"_id":"u2OtssehEtbGtBOz","speed_rule":"low-2","extraSlotExtra":[66,220]}
 {"name_game":"改風早","name_zh":"改风早","ship_type_id":29,"id":76,"_id":"uBFfKbVS5UnIqTnt","speed_rule":"low-3"}
 {"name_game":"最上","name_zh":"最上","ship_type_id":4,"id":43,"_id":"uecETOoA1Bao9clc","speed_rule":"high-1"}
+{"name_game":"最上","name_zh":"最上","ship_type_id":30,"id":89,"_id":"ulnyuOvwz9UdVNIC","extraSlotExtra":[66,220]}
 {"name_game":"暁","name_zh":"晓","ship_type_id":1,"id":17,"_id":"vM1dk7HQDkw12RHP","speed_rule":"high-3"}
 {"name_game":"龍鳳","name_zh":"龙凤","ship_type_id":9,"id":35,"_id":"vaAJbqOdJc4zC0cX","speed_rule":"low-2"}
-{"id":13,"name_game":"大鯨","name_zh":"大鲸","ship_type_id":17,"_id":"wIQmLK3nowZHC6W9","speed_rule":"low-2"}
+{"id":13,"name_game":"大鯨","name_zh":"大鲸","ship_type_id":17,"_id":"wIQmLK3nowZHC6W9","speed_rule":"low-2","extraSlotExtra":[66,220]}
 {"name_game":"巡潜甲型改二","name_zh":"巡潜甲型改二","ship_type_id":14,"id":88,"_id":"wSSuUroh6oRBa3zc"}
 {"name_game":"翔鶴","name_zh":"翔鹤","ship_type_id":10,"id":30,"_id":"wc6e0apWiuxMjzUa","speed_rule":"high-1"}
 {"name_game":"長良","name_zh":"长良","ship_type_id":2,"id":49,"_id":"wxZ0fgIHk6PXIfFP","speed_rule":"high-3"}
 {"id":14,"name_game":"Bismarck","name_zh":"俾斯麦","ship_type_id":18,"_id":"x7qm99OMLRKbJfnx","speed_rule":"high-3"}
+{"name_game":"改最上","name_zh":"改最上","ship_type_id":5,"id":90,"_id":"yEuYyegyCYUN5hJ1","extraSlotExtra":[66,220]}
 {"name_game":"青葉","name_zh":"青叶","ship_type_id":4,"id":40,"_id":"yMEDlHbJYXS6xZkJ","speed_rule":"high-3"}
 {"name_game":"大和","name_zh":"大和","ship_type_id":6,"id":83,"_id":"zRY8kHSuCn1UjaFe","speed_rule":"low-1"}
 {"name_game":"巡潜3","name_zh":"巡潜3","ship_type_id":14,"id":65,"_id":"zy8EKKJjAoxtIRtj","speed_rule":"low-3"}
