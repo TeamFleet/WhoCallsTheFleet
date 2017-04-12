@@ -64,7 +64,7 @@ class TablelistEquipments extends Tablelist{
         if( !TablelistEquipments.isExtraSlot
             && TablelistEquipments.shipId
             && _g.data.ships[TablelistEquipments.shipId]
-            && $.inArray(_g.data.ships[TablelistEquipments.shipId].type, [9, 10, 11] ) > -1
+            && $.inArray(_g.data.ships[TablelistEquipments.shipId].type, [9, 10, 11, 30] ) > -1
         ){
             let k = 0
                 ,el, t

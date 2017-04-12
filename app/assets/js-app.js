@@ -7956,7 +7956,7 @@ var TablelistEquipments = function (_Tablelist2) {
 
             TablelistEquipments.shipIdLast = TablelistEquipments.shipId;
 
-            if (!TablelistEquipments.isExtraSlot && TablelistEquipments.shipId && _g.data.ships[TablelistEquipments.shipId] && $.inArray(_g.data.ships[TablelistEquipments.shipId].type, [9, 10, 11]) > -1) {
+            if (!TablelistEquipments.isExtraSlot && TablelistEquipments.shipId && _g.data.ships[TablelistEquipments.shipId] && $.inArray(_g.data.ships[TablelistEquipments.shipId].type, [9, 10, 11, 30]) > -1) {
                 var k = 0,
                     el = void 0,
                     t = void 0;
