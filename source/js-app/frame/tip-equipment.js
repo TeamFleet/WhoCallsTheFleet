@@ -12,7 +12,7 @@ _p.tip.content_equipment = function( d ){
 
 	function _stat(stat, title){
 		if( d['stat'][stat] ){
-			if( d.type == 54 ){
+			if( Formula.equipmentType.Interceptors.indexOf(d.type) > -1 ){
 				// 局地战斗机
 				switch( stat ){
 					case 'hit': 	title = '对爆';	break;

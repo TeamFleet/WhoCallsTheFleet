@@ -343,7 +343,7 @@ dev_output_steps.push(function(){
                                 _deferred.resolve()
                             }
                         },
-                        file == 'entities.json' ? true : null
+                        file == 'entities.nedb' ? true : null
                     )
                     
                     return _deferred.promise

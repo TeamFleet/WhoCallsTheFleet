@@ -1232,7 +1232,7 @@ class InfosFleetSubFleet {
                 let fighterPower = [0, 0]
                     //,fighterPower = 0
                     //,los = {}
-                    , fleetSpeet = 'fast'
+                    , fleetSpeet = 1000
                     , consumFuel = 0
                     , consumAmmo = 0
                     , tp = 0
@@ -1242,8 +1242,9 @@ class InfosFleetSubFleet {
                         let ship = _g.data.ships[shipdata.data[0]]
 
                         // 航速
-                        if (ship.stat.speed < 10)
-                            fleetSpeet = 'slow'
+                        // if (ship.stat.speed < 10)
+                        //     fleetSpeet = 'slow'
+                        fleetSpeet = Math.min(fleetSpeet, shipdata.stat.speed || ship.stat.speed)
 
                         // 制空战力
                         //fighterPower+= shipdata.calculate('fighterPower')
@@ -1278,7 +1279,8 @@ class InfosFleetSubFleet {
                     }
                 })
 
-                this.elSummarySpeed.html(fleetSpeet == 'fast' ? '高速' : '低速')
+                // this.elSummarySpeed.html(fleetSpeet == 'fast' ? '高速' : '低速')
+                this.elSummarySpeed.html(_g.getStatSpeed(fleetSpeet))
 
                 //this.elSummaryFighterPower.html( fighterPower > 0 ? Math.floor(fighterPower) : '-' )
                 //if( fighterPower > 0 )
@@ -1462,6 +1464,7 @@ class InfosFleetShip {
         this.infosFleetSubFleet = infosFleetSubFleet
         this.equipments = []
         this.index = index
+        this.stat = {}
 
         for (let i = 0; i < 4; i++) {
             this.equipments[i] = new InfosFleetShipEquipment(this, i)
@@ -1703,10 +1706,10 @@ class InfosFleetShip {
         if (!this.shipId) return
 
         let speed = this.calculate('speed')
-        let number = _g.getStatSpeedNumber(speed)
+        this.stat.speed = _g.getStatSpeedNumber(speed)
         this.elInfosSpeed.html(speed)
-        if (_g.data.ships[this.shipId].stat.speed !== number)
-            this.elInfosSpeed.attr('data-speed', number)
+        if (_g.data.ships[this.shipId].stat.speed !== this.stat.speed)
+            this.elInfosSpeed.attr('data-speed', this.stat.speed)
         else
             this.elInfosSpeed.removeAttr('data-speed')
 
@@ -1961,6 +1964,7 @@ class InfosFleetShip {
         if (value != this.data[0]) {
             this.data[0] = value
             this.shipLv = null
+            delete this.stat.speed
         }
 
         if (value) {
@@ -2456,7 +2460,7 @@ class InfosFleetShipEquipment {
                 const shipId = this.infosParent.shipId
                 const ship = shipId && _g.data.ships[shipId]
                 const shipClass = shipId && _g.data.ship_classes[ship.class]
-                const shipClassExtraSlotExtra = shipId && shipClass.extraSlotExtra
+                const shipClassExtraSlotExtra = shipId && shipClass && shipClass.extraSlotExtra
 
                 let types = shipId
                     ? ship.getEquipmentTypes()

@@ -4219,7 +4219,7 @@ _frame.infos.__equipment = function (id) {
 
     function _stat(stat, title) {
         if (d['stat'][stat]) {
-            if (d.type == 54) {
+            if (Formula.equipmentType.Interceptors.indexOf(d.type) > -1) {
                 switch (stat) {
                     case 'hit':
                         title = '对爆';break;
@@ -5196,7 +5196,7 @@ var InfosFleetSubFleet = function () {
             this.summaryCalculating = setTimeout(function () {
                 if (!is_onlyHqLvChange) {
                     var fighterPower = [0, 0],
-                        fleetSpeet = 'fast',
+                        fleetSpeet = 1000,
                         consumFuel = 0,
                         consumAmmo = 0,
                         tp = 0;
@@ -5205,7 +5205,7 @@ var InfosFleetSubFleet = function () {
                         if (shipdata.data[0]) {
                             var ship = _g.data.ships[shipdata.data[0]];
 
-                            if (ship.stat.speed < 10) fleetSpeet = 'slow';
+                            fleetSpeet = Math.min(fleetSpeet, shipdata.stat.speed || ship.stat.speed);
 
                             shipdata.calculate('fighterPower_v2').forEach(function (val, i) {
                                 fighterPower[i] += val > 0 ? val : 0;
@@ -5219,7 +5219,7 @@ var InfosFleetSubFleet = function () {
                         }
                     });
 
-                    this.elSummarySpeed.html(fleetSpeet == 'fast' ? '高速' : '低速');
+                    this.elSummarySpeed.html(_g.getStatSpeed(fleetSpeet));
 
                     if (Math.max(fighterPower[0], fighterPower[1]) > 0) {
                         var val1 = Math.floor(fighterPower[0]),
@@ -5297,6 +5297,7 @@ var InfosFleetShip = function () {
         this.infosFleetSubFleet = infosFleetSubFleet;
         this.equipments = [];
         this.index = index;
+        this.stat = {};
 
         for (var _i4 = 0; _i4 < 4; _i4++) {
             this.equipments[_i4] = new InfosFleetShipEquipment(this, _i4);
@@ -5409,9 +5410,9 @@ var InfosFleetShip = function () {
             if (!this.shipId) return;
 
             var speed = this.calculate('speed');
-            var number = _g.getStatSpeedNumber(speed);
+            this.stat.speed = _g.getStatSpeedNumber(speed);
             this.elInfosSpeed.html(speed);
-            if (_g.data.ships[this.shipId].stat.speed !== number) this.elInfosSpeed.attr('data-speed', number);else this.elInfosSpeed.removeAttr('data-speed');
+            if (_g.data.ships[this.shipId].stat.speed !== this.stat.speed) this.elInfosSpeed.attr('data-speed', this.stat.speed);else this.elInfosSpeed.removeAttr('data-speed');
 
             var damage = this.calculate('shellingDamage');
             this.elAttrShelling.html((damage !== '-' ? this.calculate('fireRange') + ' | ' : '') + damage);
@@ -5623,6 +5624,7 @@ var InfosFleetShip = function () {
             if (value != this.data[0]) {
                 this.data[0] = value;
                 this.shipLv = null;
+                delete this.stat.speed;
             }
 
             if (value) {
@@ -5925,7 +5927,7 @@ var InfosFleetShipEquipment = function () {
                     var shipId = this.infosParent.shipId;
                     var ship = shipId && _g.data.ships[shipId];
                     var shipClass = shipId && _g.data.ship_classes[ship.class];
-                    var shipClassExtraSlotExtra = shipId && shipClass.extraSlotExtra;
+                    var shipClassExtraSlotExtra = shipId && shipClass && shipClass.extraSlotExtra;
 
                     var types = shipId ? ship.getEquipmentTypes() : [];
                     var isExtraSlot = !1;
@@ -7004,7 +7006,7 @@ if (typeof _p.tip != 'undefined') {
 
         function _stat(stat, title) {
             if (d['stat'][stat]) {
-                if (d.type == 54) {
+                if (Formula.equipmentType.Interceptors.indexOf(d.type) > -1) {
                     switch (stat) {
                         case 'hit':
                             title = '对爆';break;

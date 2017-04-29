@@ -1,5 +1,5 @@
 // Global Variables
-    _g.db_version = '20170406';
+    _g.db_version = '20170430';
 
     _g.bgimg_count = 0;
 
@@ -728,7 +728,7 @@ _frame.app_main = {
                         let deferred = Q.defer()
                         
                         $.ajax({
-                            'url':		'/!/db/' + db_name + '.json?v=' + _g.db_version,
+                            'url':		'/!/db/' + db_name + '.nedb?v=' + _g.db_version,
                             'dataType':	'text',
                             'success': function(data){
                                 data = LZString.decompressFromBase64(data)
