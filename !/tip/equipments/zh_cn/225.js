@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",225,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/44.png)\"></s><strong>一式战 隼II型<small>(64战队)</small></strong><small>陆军战斗机</small></h3><span>+1 火力</span><span>+11 对空</span><span>+1 命中</span><span>+5 回避</span><span>+1 索敌</span><span>航程: 7</span>")

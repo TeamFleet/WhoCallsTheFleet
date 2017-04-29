@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",177,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/38.png)\"></s><strong>三式战 飞燕<small>(飞行第244战队)</small></strong><small>局地战斗机</small></h3><span>+9 对空</span><span>+3 对爆</span><span>+4 迎击</span><span>航程: 4</span>")
+KCTip.loaded("equipments",177,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/44.png)\"></s><strong>三式战 飞燕<small>(飞行第244战队)</small></strong><small>陆军战斗机</small></h3><span>+9 对空</span><span>+3 命中</span><span>+4 回避</span><span>航程: 4</span>")

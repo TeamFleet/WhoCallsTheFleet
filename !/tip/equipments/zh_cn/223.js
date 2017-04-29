@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",223,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/44.png)\"></s><strong>一式战 隼III型甲<small>(54战队)</small></strong><small>陆军战斗机</small></h3><span>+2 火力</span><span>+8 对空</span><span>+1 命中</span><span>+3 回避</span><span>+1 索敌</span><span>航程: 7</span>")
