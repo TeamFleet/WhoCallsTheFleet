@@ -1,6 +1,17 @@
 // 舰队配置
 _frame.infos.__fleet = function (id, el, d) {
-    return (new InfosFleet(id, el, d)).el
+    const instance = new InfosFleet(id, el, d)
+
+    let $el = instance.el.on({
+        'show': () => {
+            InfosFleet.cur = instance
+        },
+        'hide': () => {
+            InfosFleet.cur = null
+        }
+    })
+
+    return $el
 }
 
 
@@ -2461,9 +2472,10 @@ class InfosFleetShipEquipment {
                 const ship = shipId && _g.data.ships[shipId]
                 const shipClass = shipId && _g.data.ship_classes[ship.class]
                 const shipClassExtraSlotExtra = shipId && shipClass && shipClass.extraSlotExtra
+                const shipCanEquip = shipId ? ship.getEquipmentTypes() : []
 
                 let types = shipId
-                    ? ship.getEquipmentTypes()
+                    ? shipCanEquip
                     : []
                 let isExtraSlot = false
 
@@ -2485,6 +2497,10 @@ class InfosFleetShipEquipment {
                 TablelistEquipments.types = types
                 TablelistEquipments.shipId = this.infosParent.shipId
                 TablelistEquipments.extraEquipments = this.extraEquipments ? this.extraEquipments.concat() : []
+                TablelistEquipments.extraEquipments = TablelistEquipments.extraEquipments.filter(eid => {
+                    console.log(TablelistEquipments.types, _g.data.items[eid].type)
+                    return shipCanEquip.indexOf(_g.data.items[eid].type) > -1
+                })
                 if (isExtraSlot && shipClassExtraSlotExtra && shipClassExtraSlotExtra.length)
                     TablelistEquipments.extraEquipments = TablelistEquipments.extraEquipments.concat(shipClassExtraSlotExtra)
                 // console.log(TablelistEquipments.extraEquipments)

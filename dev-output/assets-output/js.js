@@ -5619,7 +5619,18 @@ _frame.infos.__ship_init = function ($el) {
 };
 
 _frame.infos.__fleet = function (id, el, d) {
-    return new InfosFleet(id, el, d).el;
+    var instance = new InfosFleet(id, el, d);
+
+    var $el = instance.el.on({
+        'show': function show() {
+            InfosFleet.cur = instance;
+        },
+        'hide': function hide() {
+            InfosFleet.cur = null;
+        }
+    });
+
+    return $el;
 };
 
 var InfosFleetEditableTitle = function InfosFleetEditableTitle(settings) {
@@ -7218,8 +7229,9 @@ var InfosFleetShipEquipment = function () {
                     var ship = shipId && _g.data.ships[shipId];
                     var shipClass = shipId && _g.data.ship_classes[ship.class];
                     var shipClassExtraSlotExtra = shipId && shipClass && shipClass.extraSlotExtra;
+                    var shipCanEquip = shipId ? ship.getEquipmentTypes() : [];
 
-                    var types = shipId ? ship.getEquipmentTypes() : [];
+                    var types = shipId ? shipCanEquip : [];
                     var isExtraSlot = !1;
 
                     if (this.equipmentTypes && this.equipmentTypes.length) {
@@ -7239,6 +7251,10 @@ var InfosFleetShipEquipment = function () {
                     TablelistEquipments.types = types;
                     TablelistEquipments.shipId = this.infosParent.shipId;
                     TablelistEquipments.extraEquipments = this.extraEquipments ? this.extraEquipments.concat() : [];
+                    TablelistEquipments.extraEquipments = TablelistEquipments.extraEquipments.filter(function (eid) {
+                        console.log(TablelistEquipments.types, _g.data.items[eid].type);
+                        return shipCanEquip.indexOf(_g.data.items[eid].type) > -1;
+                    });
                     if (isExtraSlot && shipClassExtraSlotExtra && shipClassExtraSlotExtra.length) TablelistEquipments.extraEquipments = TablelistEquipments.extraEquipments.concat(shipClassExtraSlotExtra);
 
                     _frame.app_main.page['equipments'].object.tablelistObj.apply_types();
@@ -9565,6 +9581,7 @@ TablelistFleets.menuOptions_show = function ($el, $el_tablelist) {
             'class': 'option-in-infos',
             'html': '移除配置'
         }).on('click', function () {
+            console.log(InfosFleet.cur);
             if (InfosFleet.cur) InfosFleet.cur.remove();
         })];
 

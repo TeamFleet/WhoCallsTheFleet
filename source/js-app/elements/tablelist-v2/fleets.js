@@ -952,6 +952,7 @@ TablelistFleets.menuOptions_show = function( $el, $el_tablelist ){
                         'class':	'option-in-infos',
                         'html':		'移除配置'
                     }).on('click', function(){
+                        console.log(InfosFleet.cur)
                         if( InfosFleet.cur )
                             InfosFleet.cur.remove()
                     })
