@@ -6490,6 +6490,15 @@ var InfosFleetSubFleet = function () {
             return this.data;
         }
     }, {
+        key: 'getShipCount',
+        value: function getShipCount() {
+            var count = 0;
+            if (this.data) this.data.forEach(function (dataShip) {
+                if (dataShip && dataShip.push && dataShip[0]) count++;
+            });
+            return count;
+        }
+    }, {
         key: 'summaryCalc',
         value: function summaryCalc(is_onlyHqLvChange) {
             if (this.summaryCalculating) return !1;
@@ -6544,7 +6553,7 @@ var InfosFleetSubFleet = function () {
                     }
                 }
 
-                var los = this.summaryCalcLos();
+                var los = this.getShipCount() ? this.summaryCalcLos() : null;
                 this.elSummaryLos.html(los ? los.toFixed(2) : '-');
 
 

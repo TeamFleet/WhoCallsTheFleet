@@ -1233,6 +1233,16 @@ class InfosFleetSubFleet {
         return this.data
     }
 
+    getShipCount() {
+        let count = 0
+        if (this.data)
+            this.data.forEach(dataShip => {
+                if (dataShip && dataShip.push && dataShip[0])
+                    count++
+            })
+        return count
+    }
+
     // 遍历该子舰队下全部装备，计算相关舰队数据
     summaryCalc(is_onlyHqLvChange) {
         if (this.summaryCalculating)
@@ -1328,7 +1338,7 @@ class InfosFleetSubFleet {
                 }
             }
 
-            let los = this.summaryCalcLos()
+            let los = this.getShipCount() ? this.summaryCalcLos() : null
             this.elSummaryLos.html(los ? los.toFixed(2) : '-')
             // if (los.y_estimate && los.y_std_error) {
             //     //_g.log(los)
