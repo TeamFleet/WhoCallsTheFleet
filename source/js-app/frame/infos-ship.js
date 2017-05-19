@@ -83,9 +83,9 @@ _frame.infos.__ship = function( id ){
                             : '-'
                         )
                     + '</span>'
-                    + ( d['class'] ? _g['data']['ship_classes'][d['class']]['name_zh'] + '级' : '' )
+                    + ( d['class'] ? _g['data']['ship_classes'][d['class']].name.zh_cn + '级' : '' )
                     + ( d['class_no'] ? '<em>' + d['class_no'] + '</em>号舰' : '' )
-                    + ( d['type'] ? ' / ' + _g['data']['ship_types'][d['type']]['full_zh'] : '' )
+                    + ( d['type'] ? ' / ' + _g['data']['ship_types'][d['type']].name.zh_cn : '' )
                 + '</small>'
             ).appendTo(dom)
 
@@ -295,7 +295,7 @@ _frame.infos.__ship = function( id ){
                                 + '</strong>'
                                 + (
                                     remodel_ship_data['type'] ?
-                                        '<small>' + _g['data']['ship_types'][remodel_ship_data['type']]['full_zh'] + '</small>'
+                                        '<small>' + _g['data']['ship_types'][remodel_ship_data['type']].name.zh_cn + '</small>'
                                         : ''
                                 )
                             + '</h3>'
@@ -416,7 +416,7 @@ _frame.infos.__ship = function( id ){
                                             + '</strong>'
                                             + (
                                                 remodel_ship_data['type'] ?
-                                                    '<small>' + _g['data']['ship_types'][remodel_ship_data['type']]['full_zh'] + '</span>'
+                                                    '<small>' + _g['data']['ship_types'][remodel_ship_data['type']].name.zh_cn + '</span>'
                                                     : ''
                                             )
                                         + '</h3>'

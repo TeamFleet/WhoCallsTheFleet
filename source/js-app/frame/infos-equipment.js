@@ -7,7 +7,7 @@
 
 		function _stat(stat, title){
 			if( d['stat'][stat] ){
-				if( Formula.equipmentType.Interceptors.indexOf(d.type) > -1 ){
+				if( Formula.equipmentType.isInterceptor(d) ){
 					// 局地战斗机
 					switch( stat ){
 						case 'hit': 	title = '对爆';	break;

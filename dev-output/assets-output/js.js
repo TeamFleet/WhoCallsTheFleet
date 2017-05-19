@@ -7836,7 +7836,7 @@ if (typeof _p.tip != 'undefined') {
                 });
                 html += types.map(function (ship_type) {
                     var shipType = _g.data.ship_types[ship_type];
-                    return '<span>' + (shipType.full_zh || shipType.full_game) + ('(' + shipType.code + ')') + '</span>';
+                    return '<span>' + (shipType.name.zh_cn || shipType.name.ja_jp) + ('(' + shipType.code + ')') + '</span>';
                 }).join(' / ');
             } else {
                 html += '无...';
@@ -7868,7 +7868,7 @@ if (typeof _p.tip != 'undefined') {
 
     _p.tip.content_ship = function (d) {
         var ship_name = d.getName(_g.joint),
-            html = '<h3 class="shipinfo">' + '<img src="' + _g.path.pics.ships + '/' + d['id'] + '/0.webp" width="160" height="40"/>' + '<strong data-content="' + ship_name + '">' + ship_name + '</strong>' + (d['type'] ? '<small>' + _g['data']['ship_types'][d['type']]['full_zh'] + '</span>' : '') + '</h3>';
+            html = '<h3 class="shipinfo">' + '<img src="' + _g.path.pics.ships + '/' + d['id'] + '/0.webp" width="160" height="40"/>' + '<strong data-content="' + ship_name + '">' + ship_name + '</strong>' + (d['type'] ? '<small>' + _g['data']['ship_types'][d['type']].name.zh_cn + '</span>' : '') + '</h3>';
 
         return html;
     };
@@ -7895,7 +7895,7 @@ modal.equipable = {
             _p.el.flexgrid.create().appendTo(container).addClass('equipable-types').prepend($(_g.ship_type_order_full.map(function (shipTypeId) {
                 var shipType = _g.data.ship_types[shipTypeId];
                 if (shipType.hide || shipType.donotcompare) return '';
-                return '<span class="unit' + (onType.indexOf(shipTypeId) > -1 ? ' on' : '') + '">' + (shipType.full_zh || shipType.full_game) + (' (' + shipType.code + ')') + '</span>';
+                return '<span class="unit' + (onType.indexOf(shipTypeId) > -1 ? ' on' : '') + '">' + (shipType.name.zh_cn || shipType.name.ja_jp) + (' (' + shipType.code + ')') + '</span>';
             }).join(''))).appendTo(container);
 
             if (extraShip.length) {
@@ -8890,7 +8890,7 @@ TablelistEquipments.gen_helper_equipable_on = function (type_id) {
     var equipable_on = '';
     _g.data.item_types[type_id]['equipable_on_type'].forEach(function (currentValue, i) {
         var item_type_id = _g.data.item_types[type_id]['equipable_on_type'][i];
-        equipable_on += '<span>' + _g['data']['ship_types'][item_type_id]['full_zh'] + (i < _g.data.item_types[type_id]['equipable_on_type'].length - 1 ? ',&nbsp;' : '') + '</span>';
+        equipable_on += '<span>' + _g['data']['ship_types'][item_type_id].name.zh_cn + (i < _g.data.item_types[type_id]['equipable_on_type'].length - 1 ? ',&nbsp;' : '') + '</span>';
     });
     return '<em class="helper" data-tip="<h4 class=item_equipable_on>可装备于</h4>' + equipable_on + '">?</em>';
 };

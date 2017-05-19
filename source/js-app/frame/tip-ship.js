@@ -15,7 +15,7 @@ _p.tip.content_ship = function( d ){
 				+ '</strong>'
 				+ (
 					d['type'] ?
-						'<small>' + _g['data']['ship_types'][d['type']]['full_zh'] + '</span>'
+						'<small>' + _g['data']['ship_types'][d['type']].name.zh_cn + '</span>'
 						: ''
 				)
 			+ '</h3>'

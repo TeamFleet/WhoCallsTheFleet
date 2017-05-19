@@ -107,7 +107,7 @@ _p.tip.content_equipable = function( d ){
 			} )
 			html+= types.map(function(ship_type){
 					let shipType = _g.data.ship_types[ship_type]
-					return '<span>' + (shipType.full_zh || shipType.full_game) + `(${shipType.code})` + '</span>'
+					return '<span>' + (shipType.name.zh_cn || shipType.name.ja_jp) + `(${shipType.code})` + '</span>'
 				}).join(' / ')
 		}else{
 			html+= '无...'

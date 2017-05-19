@@ -4219,7 +4219,7 @@ _frame.infos.__equipment = function (id) {
 
     function _stat(stat, title) {
         if (d['stat'][stat]) {
-            if (Formula.equipmentType.Interceptors.indexOf(d.type) > -1) {
+            if (Formula.equipmentType.isInterceptor(d)) {
                 switch (stat) {
                     case 'hit':
                         title = '对爆';break;
@@ -6533,7 +6533,7 @@ _frame.infos.__ship = function (id) {
         illustrationsExtra = [],
         has_no = d['no'] && parseInt(d['no']) < 500 ? !0 : !1;
 
-    $('<div class="title"/>').html('<h2 data-content="' + ship_name + '">' + ship_name + '</h2>' + '<small>' + '<span data-tip="' + (has_no ? '图鉴编号' : '无图鉴编号') + '">No.' + (has_no ? d['no'] : '-') + '</span>' + (d['class'] ? _g['data']['ship_classes'][d['class']]['name_zh'] + '级' : '') + (d['class_no'] ? '<em>' + d['class_no'] + '</em>号舰' : '') + (d['type'] ? ' / ' + _g['data']['ship_types'][d['type']]['full_zh'] : '') + '</small>').appendTo(dom);
+    $('<div class="title"/>').html('<h2 data-content="' + ship_name + '">' + ship_name + '</h2>' + '<small>' + '<span data-tip="' + (has_no ? '图鉴编号' : '无图鉴编号') + '">No.' + (has_no ? d['no'] : '-') + '</span>' + (d['class'] ? _g['data']['ship_classes'][d['class']].name.zh_cn + '级' : '') + (d['class_no'] ? '<em>' + d['class_no'] + '</em>号舰' : '') + (d['type'] ? ' / ' + _g['data']['ship_types'][d['type']].name.zh_cn : '') + '</small>').appendTo(dom);
 
     var lvlRadio99_id = id + '_stat_lv_99',
         lvlRadio150_id = id + '_stat_lv_150',
@@ -6680,7 +6680,7 @@ _frame.infos.__ship = function (id) {
         seriesData.forEach(function (currentValue, i) {
             var remodel_ship_data = _g.data.ships[currentValue['id']],
                 remodel_ship_name = remodel_ship_data.getName(_g.joint),
-                tip = '<h3 class="shipinfo">' + '<strong data-content="' + remodel_ship_name + '">' + remodel_ship_name + '</strong>' + (remodel_ship_data['type'] ? '<small>' + _g['data']['ship_types'][remodel_ship_data['type']]['full_zh'] + '</small>' : '') + '</h3>',
+                tip = '<h3 class="shipinfo">' + '<strong data-content="' + remodel_ship_name + '">' + remodel_ship_name + '</strong>' + (remodel_ship_data['type'] ? '<small>' + _g['data']['ship_types'][remodel_ship_data['type']].name.zh_cn + '</small>' : '') + '</h3>',
                 data_prev = i ? seriesData[i - 1] : null,
                 remodel_lvl = data_prev ? data_prev['next_lvl'] : null,
                 remodel_blueprint = data_prev ? data_prev['next_blueprint'] : null,
@@ -7079,7 +7079,7 @@ if (typeof _p.tip != 'undefined') {
                 });
                 html += types.map(function (ship_type) {
                     var shipType = _g.data.ship_types[ship_type];
-                    return '<span>' + (shipType.full_zh || shipType.full_game) + ('(' + shipType.code + ')') + '</span>';
+                    return '<span>' + (shipType.name.zh_cn || shipType.name.ja_jp) + ('(' + shipType.code + ')') + '</span>';
                 }).join(' / ');
             } else {
                 html += '无...';
@@ -7111,7 +7111,7 @@ if (typeof _p.tip != 'undefined') {
 
     _p.tip.content_ship = function (d) {
         var ship_name = d.getName(_g.joint),
-            html = '<h3 class="shipinfo">' + '<img src="' + _g.path.pics.ships + '/' + d['id'] + '/0.webp" width="160" height="40"/>' + '<strong data-content="' + ship_name + '">' + ship_name + '</strong>' + (d['type'] ? '<small>' + _g['data']['ship_types'][d['type']]['full_zh'] + '</span>' : '') + '</h3>';
+            html = '<h3 class="shipinfo">' + '<img src="' + _g.path.pics.ships + '/' + d['id'] + '/0.webp" width="160" height="40"/>' + '<strong data-content="' + ship_name + '">' + ship_name + '</strong>' + (d['type'] ? '<small>' + _g['data']['ship_types'][d['type']].name.zh_cn + '</span>' : '') + '</h3>';
 
         return html;
     };
@@ -7138,7 +7138,7 @@ modal.equipable = {
             _p.el.flexgrid.create().appendTo(container).addClass('equipable-types').prepend($(_g.ship_type_order_full.map(function (shipTypeId) {
                 var shipType = _g.data.ship_types[shipTypeId];
                 if (shipType.hide || shipType.donotcompare) return '';
-                return '<span class="unit' + (onType.indexOf(shipTypeId) > -1 ? ' on' : '') + '">' + (shipType.full_zh || shipType.full_game) + (' (' + shipType.code + ')') + '</span>';
+                return '<span class="unit' + (onType.indexOf(shipTypeId) > -1 ? ' on' : '') + '">' + (shipType.name.zh_cn || shipType.name.ja_jp) + (' (' + shipType.code + ')') + '</span>';
             }).join(''))).appendTo(container);
 
             if (extraShip.length) {
@@ -8103,7 +8103,7 @@ TablelistEquipments.gen_helper_equipable_on = function (type_id) {
     var equipable_on = '';
     _g.data.item_types[type_id]['equipable_on_type'].forEach(function (currentValue, i) {
         var item_type_id = _g.data.item_types[type_id]['equipable_on_type'][i];
-        equipable_on += '<span>' + _g['data']['ship_types'][item_type_id]['full_zh'] + (i < _g.data.item_types[type_id]['equipable_on_type'].length - 1 ? ',&nbsp;' : '') + '</span>';
+        equipable_on += '<span>' + _g['data']['ship_types'][item_type_id].name.zh_cn + (i < _g.data.item_types[type_id]['equipable_on_type'].length - 1 ? ',&nbsp;' : '') + '</span>';
     });
     return '<em class="helper" data-tip="<h4 class=item_equipable_on>可装备于</h4>' + equipable_on + '">?</em>';
 };
@@ -9401,7 +9401,7 @@ TablelistShips.prototype.append_all_items = function () {
 
                 var checkbox_id = Tablelist.genId();
 
-                undefined.last_item = $('<tr class="typetitle" data-trindex="' + undefined.trIndex + '">' + '<th colspan="' + (undefined.columns.length + 1) + '">' + '<label class="checkbox" for="' + checkbox_id + '">' + _g.data['ship_type_order'][i]['name']['zh_cn'] + (_g.data['ship_type_order'][i]['name']['zh_cn'] == data_shiptype['full_zh'] ? '<small>[' + data_shiptype['code'] + ']</small>' : '') + '</label></th></tr>').appendTo(undefined.dom.tbody);
+                undefined.last_item = $('<tr class="typetitle" data-trindex="' + undefined.trIndex + '">' + '<th colspan="' + (undefined.columns.length + 1) + '">' + '<label class="checkbox" for="' + checkbox_id + '">' + _g.data['ship_type_order'][i]['name']['zh_cn'] + (_g.data['ship_type_order'][i]['name']['zh_cn'] == data_shiptype.name.zh_cn ? '<small>[' + data_shiptype['code'] + ']</small>' : '') + '</label></th></tr>').appendTo(undefined.dom.tbody);
                 undefined.trIndex++;
 
                 var k = 0;

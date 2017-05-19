@@ -21,7 +21,7 @@ modal.equipable = {
                 /*
                 types.map(function(ship_type){
                     let shipType = _g.data.ship_types[ship_type]
-                    return '<span>' + (shipType.full_zh || shipType.full_game) + ` (${shipType.code})` + '</span>'
+                    return '<span>' + (shipType.name.zh_cn || shipType.name.ja_jp) + ` (${shipType.code})` + '</span>'
                 }).join('')
                 */
                 _g.ship_type_order_full.map( function(shipTypeId){
@@ -29,7 +29,7 @@ modal.equipable = {
                     if( shipType.hide || shipType.donotcompare )
                         return ''
                     return '<span class="unit' + ( onType.indexOf( shipTypeId ) > -1 ? ' on' : '' ) + '">'
-                        + (shipType.full_zh || shipType.full_game) + ` (${shipType.code})`
+                        + (shipType.name.zh_cn || shipType.name.ja_jp) + ` (${shipType.code})`
                         + '</span>'
                 } ).join('')
             ) ).appendTo( container )

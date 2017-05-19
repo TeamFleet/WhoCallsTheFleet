@@ -181,7 +181,7 @@ TablelistEquipments.gen_helper_equipable_on = function( type_id ){
 	_g.data.item_types[type_id]['equipable_on_type'].forEach(function(currentValue, i){
 		var item_type_id = _g.data.item_types[type_id]['equipable_on_type'][i]
 		equipable_on+= '<span>'
-							+ _g['data']['ship_types'][item_type_id]['full_zh']
+							+ _g['data']['ship_types'][item_type_id].name.zh_cn
 							+ ( i < _g.data.item_types[type_id]['equipable_on_type'].length-1 ? ',&nbsp;' : '' )
 						+ '</span>'
 	})
