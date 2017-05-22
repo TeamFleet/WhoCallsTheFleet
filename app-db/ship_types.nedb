@@ -12,7 +12,7 @@
 {"code":"AV","code_game":"水母","id":24,"_id":"Eb002iRVxWDaoxfJ","equipable":[1,2,3,7,8,9,15,16,17,24,25,26,28,29,30,31,32,33,35,37,39,40,41,43,45,48,51,57],"name":{"en_us":"Seaplane Tender (Large)","ja_jp":"飞行艇母舰","zh_cn":"飞行艇母舰"}}
 {"code":"CVL","code_game":"特設空母","id":32,"_id":"HFOm1RCObaA9GzBj","equipable":[7,8,9,18,20,24,29,30,31,32,33,35,36,48],"name":{"en_us":"特设航空母舰","ja_jp":"特設航空母艦","zh_cn":"特设航空母舰"}}
 {"id":20,"code":"BB","code_game":"戦","_id":"J1AG7IarlOTILvDU","equipable":[4],"hide":true,"name":{"en_us":"Super Dreadnaught","ja_jp":"大型戦艦","zh_cn":"大型战列舰"}}
-{"code":"ES","code_game":"海防","id":31,"_id":"J7C7qxMVOBS3DSx5","equipable":[1,2,3,24,26,27,29,30,31,35,37,44,48],"name":{"en_us":"Escort Ship","ja_jp":"海防艦","zh_cn":"海防舰"}}
+{"code":"DE","code_game":"海防","id":31,"_id":"J7C7qxMVOBS3DSx5","equipable":[1,2,3,24,26,27,29,30,31,35,37,44,48],"name":{"en_us":"Escort Ship","ja_jp":"海防艦","zh_cn":"海防舰"}}
 {"id":8,"code":"BBV","code_game":"航戦","_id":"MAzFpCIU30SDC0sz","equipable":[4,5,7,8,9,10,11,15,16,17,22,24,25,28,29,30,31,32,34,35,36,37,39,40,43,44,46,47,48,51,57],"name":{"en_us":"Aviation Battleship","ja_jp":"航空戦艦","zh_cn":"航空战列舰"}}
 {"id":1,"code":"DD","code_game":"駆逐","_id":"NkAIZy0T53JXtl5i","equipable":[1,2,3,12,24,26,27,29,30,31,32,35,37,39,40,41,44,48],"name":{"en_us":"Destroyer","ja_jp":"駆逐艦","zh_cn":"驱逐舰"}}
 {"id":18,"code":"BB","code_game":"戦","_id":"OjTTOwKy8NOi0hn7","hide":true,"name":{"en_us":"Battlecruiser (Torpedo)","ja_jp":"巡洋戦艦 (雷装)","zh_cn":"战列巡洋舰 (雷装)"}}
