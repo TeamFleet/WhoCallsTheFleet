@@ -78,9 +78,9 @@ _tmpl.improvement_detail = function (equipment, returnHTML) {
             , requirements = this.improvement__reqdetails(improvement.req, (improvement.resource[0][0] >= 0))
 
         html += '<span class="improvement improvement-details">'
+            + _tmpl.improvement__resource(improvement, upgrade_to ? true : false)
             + _tmpl.improvement__title(equipment, upgrade_to, improvement['upgrade'][1])
             + requirements
-            + _tmpl.improvement__resource(improvement, upgrade_to ? true : false)
             + '</span>'
     }, this)
 
@@ -214,30 +214,43 @@ _tmpl.improvement__resource = function (improvement, upgradable) {
             case 2: title = '★+6 ~ MAX'; break;
             case 3: title = '升级'; break;
         }
-        let requiredItem = improvement['resource'][i][4] || ''
+        let requiredItems = improvement['resource'][i][4] || []
 
-        if (requiredItem) {
-            if (isNaN(requiredItem)) {
-                // 非数字时
-                let match = /^consumable_([0-9]+)/.exec(requiredItem)
-                if (match && match.length > 1) {
-                    let name = _g.data.consumables[match[1]]._name
-                    let quantity = getValue(improvement['resource'][i][5])
-                    requiredItem = `<i>${name}<i>x${quantity}</i></i>`
+        if (!Array.isArray(improvement['resource'][i][4]))
+            requiredItems = [[improvement['resource'][i][4], improvement['resource'][i][5] || 0]]
+
+        requiredItems = requiredItems.filter(item => item[1])
+
+        if (requiredItems.length) {
+            requiredItems = '<span class="items">' + requiredItems.map(requiredItem => {
+                const itemId = requiredItem[0]
+                const count = requiredItem[1]
+                let result = ''
+                if (isNaN(itemId)) {
+                    // 非数字时
+                    let match = /^consumable_([0-9]+)/.exec(itemId)
+                    if (match && match.length > 1) {
+                        let name = _g.data.consumables[match[1]]._name
+                        let quantity = getValue(count)
+                        result = `<i class="consumable">${name}<i>x${quantity}</i></i>`
+                    }
+                } else {
+                    // 数字时，确定为装备
+                    result = '<a class="equiptypeicon mod-left mod-'
+                        + _g.data.items[itemId].getIconId()
+                        + '"'
+                        + ' href="?infos=equipment&id=' + itemId + '"'
+                        + ' data-infos="[[EQUIPMENT::' + itemId + ']]"'
+                        + ' data-tip="[[EQUIPMENT::' + itemId + ']]"'
+                        + '>'
+                        + _g.data.items[itemId].getName(true)
+                        + '<i>x' + getValue(count) + '</i>'
+                        + '</a>'
                 }
-            } else {
-                // 数字时，确定为装备
-                requiredItem = '<a class="equiptypeicon mod-left mod-'
-                    + _g.data.items[improvement['resource'][i][4]].getIconId()
-                    + '"'
-                    + ' href="?infos=equipment&id=' + improvement['resource'][i][4] + '"'
-                    + ' data-infos="[[EQUIPMENT::' + improvement['resource'][i][4] + ']]"'
-                    + ' data-tip="[[EQUIPMENT::' + improvement['resource'][i][4] + ']]"'
-                    + '>'
-                    + _g.data.items[improvement['resource'][i][4]].getName(true)
-                    + '<i>x' + getValue(improvement['resource'][i][5]) + '</i>'
-                    + '</a>'
-            }
+                return '<span class="item">' + result + '</span>'
+            }).join('') + '</span>'
+        } else {
+            requiredItems = ''
         }
 
         resource[i] = '<span>'
@@ -253,7 +266,7 @@ _tmpl.improvement__resource = function (improvement, upgradable) {
                     + getValue(improvement['resource'][i][2])
                     + '<i>(' + getValue(improvement['resource'][i][3]) + ')</i>'
                     + '</i>'
-                    + requiredItem
+                    + requiredItems
                 )
             )
             + '</span>'

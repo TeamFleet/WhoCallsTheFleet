@@ -4418,12 +4418,14 @@ body.mod-capture #tip {
 .improvement > span {
   padding-left: 36px;
   font-size: 14px;
-  line-height: 26px;
   z-index: 2;
 }
 .improvement > font {
   margin-top: -4px;
   margin-bottom: 4px;
+  line-height: 16px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 .improvement > font.no {
   color: rgba(255, 255, 255, 0.35);
@@ -4440,6 +4442,7 @@ body.mod-capture #tip {
 }
 .improvement > span {
   font-weight: lighter;
+  line-height: 26px;
 }
 .improvement > span em,
 .improvement > span a,
@@ -4454,6 +4457,7 @@ body.mod-capture #tip {
 .improvement > span > span > em {
   color: rgba(255, 255, 255, 0.35);
   width: 80px;
+  vertical-align: top;
 }
 @media all and (max-width: 600px) {
   .improvement > span > span > em {
@@ -4461,18 +4465,24 @@ body.mod-capture #tip {
   }
 }
 .improvement > span > span > i,
-.improvement > span > span > a {
+.improvement > span > span > a,
+.improvement > span > span .consumable,
+.improvement > span > span a.equiptypeicon {
   min-width: 75px;
   padding-left: 20px;
   vertical-align: top;
 }
 .improvement > span > span > i > i,
-.improvement > span > span > a > i {
+.improvement > span > span > a > i,
+.improvement > span > span .consumable > i,
+.improvement > span > span a.equiptypeicon > i {
   color: #7bcb52;
   padding-left: .25em;
 }
 .improvement > span > span > i.no,
-.improvement > span > span > a.no {
+.improvement > span > span > a.no,
+.improvement > span > span .consumable.no,
+.improvement > span > span a.equiptypeicon.no {
   color: rgba(255, 255, 255, 0.35);
   background: none;
   padding-left: 6px;
@@ -4503,7 +4513,13 @@ body.mod-capture #tip {
 .improvement > span > span > i.imp_mat {
   background-position: 0 -342px;
 }
-.improvement > span > span > a.equiptypeicon {
+.improvement > span > span > .items {
+  display: inline-block;
+}
+.improvement > span > span > .items .item {
+  display: block;
+}
+.improvement > span > span > .items a.equiptypeicon {
   background-size: 22px;
   margin-top: -2px;
   margin-left: -2px;
@@ -4512,28 +4528,36 @@ body.mod-capture #tip {
   width: auto;
   transition-property: color;
   /*
-				position:	relative;
-				&:before{
-					content:	'';
-					position:	absolute;
-					top:		-1px;
-					left:		-1px;
-					width:		20px;
-					height:		20px;
-					background:	rgba(0, 0, 0, .35);
-					z-index:	-1;
-					border-radius:	50%;
-				}
-				*/
+					position:	relative;
+					&:before{
+						content:	'';
+						position:	absolute;
+						top:		-1px;
+						left:		-1px;
+						width:		20px;
+						height:		20px;
+						background:	rgba(0, 0, 0, .35);
+						z-index:	-1;
+						border-radius:	50%;
+					}
+					*/
 }
-.improvement > span > span > a.equiptypeicon:hover {
+.improvement > span > span > .items a.equiptypeicon:hover {
   color: #aaff80;
 }
-.improvement > span > span > a.equiptypeicon:active {
+.improvement > span > span > .items a.equiptypeicon:active {
   color: #7bcb52;
 }
 .improvement.improvement-details {
   display: block;
+  overflow: hidden;
+}
+.improvement.improvement-details > span {
+  display: block;
+  position: relative;
+  float: right;
+  width: 50%;
+  margin: 6px 0;
 }
 .improvement.improvement-details > font {
   margin-top: 6px;
@@ -4588,12 +4612,6 @@ body.mod-capture #tip {
 .improvement.improvement-details > font > b > b {
   font-weight: normal;
   color: rgba(255, 255, 255, 0.35);
-}
-.improvement.improvement-details > span {
-  position: absolute;
-  left: 50%;
-  width: 50%;
-  bottom: 6px;
 }
 .link_entity,
 .link_ship,
@@ -6966,6 +6984,7 @@ body.mod-capture #tip {
   .tablelist-equipments dl dd {
     flex-basis: 30px;
   }
+  .tablelist-equipments [stat="craftable"],
   .tablelist-equipments [stat="improvable"] {
     display: none !important;
   }
@@ -7272,11 +7291,6 @@ body > .menus > .menu.menu-tablelistfleets-options.is-tablelist > .body .option-
 }
 body > .menus > .menu.menu-tablelistfleets-options.is-tablelist > .body .option-in-infos {
   display: none;
-}
-@media all and (max-width: 720px) {
-  body > .menus > .menu.menu-fleets-new > .body menuitem.import_file {
-    display: none;
-  }
 }
 html.ios body > .menus > .menu.menu-fleets-new > .body menuitem.import_file {
   display: none;
@@ -14387,7 +14401,6 @@ body > .modal.update_journal.mod-blur-shot > div {
 .page-container[page="arsenal"] > .main > .body-all > .improvement > span > span {
   padding-top: 1px;
   padding-bottom: 1px;
-  bottom: 6px !important;
 }
 @media all and (max-width: 1152px) {
   .page-container[page="arsenal"] > .main > .body-all > .improvement {

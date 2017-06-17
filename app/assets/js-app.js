@@ -2600,7 +2600,7 @@ _tmpl.improvement_detail = function (equipment, returnHTML) {
         var upgrade_to = improvement['upgrade'] ? _g.data.items[improvement['upgrade'][0]] : !1,
             requirements = this.improvement__reqdetails(improvement.req, improvement.resource[0][0] >= 0);
 
-        html += '<span class="improvement improvement-details">' + _tmpl.improvement__title(equipment, upgrade_to, improvement['upgrade'][1]) + requirements + _tmpl.improvement__resource(improvement, upgrade_to ? !0 : !1) + '</span>';
+        html += '<span class="improvement improvement-details">' + _tmpl.improvement__resource(improvement, upgrade_to ? !0 : !1) + _tmpl.improvement__title(equipment, upgrade_to, improvement['upgrade'][1]) + requirements + '</span>';
     }, this);
 
     return _tmpl.export(html, returnHTML);
@@ -2651,22 +2651,36 @@ _tmpl.improvement__resource = function (improvement, upgradable) {
             case 3:
                 title = '升级';break;
         }
-        var requiredItem = improvement['resource'][i][4] || '';
+        var requiredItems = improvement['resource'][i][4] || [];
 
-        if (requiredItem) {
-            if (isNaN(requiredItem)) {
-                var match = /^consumable_([0-9]+)/.exec(requiredItem);
-                if (match && match.length > 1) {
-                    var name = _g.data.consumables[match[1]]._name;
-                    var quantity = getValue(improvement['resource'][i][5]);
-                    requiredItem = '<i>' + name + '<i>x' + quantity + '</i></i>';
+        if (!Array.isArray(improvement['resource'][i][4])) requiredItems = [[improvement['resource'][i][4], improvement['resource'][i][5] || 0]];
+
+        requiredItems = requiredItems.filter(function (item) {
+            return item[1];
+        });
+
+        if (requiredItems.length) {
+            requiredItems = '<span class="items">' + requiredItems.map(function (requiredItem) {
+                var itemId = requiredItem[0];
+                var count = requiredItem[1];
+                var result = '';
+                if (isNaN(itemId)) {
+                    var match = /^consumable_([0-9]+)/.exec(itemId);
+                    if (match && match.length > 1) {
+                        var name = _g.data.consumables[match[1]]._name;
+                        var quantity = getValue(count);
+                        result = '<i class="consumable">' + name + '<i>x' + quantity + '</i></i>';
+                    }
+                } else {
+                    result = '<a class="equiptypeicon mod-left mod-' + _g.data.items[itemId].getIconId() + '"' + ' href="?infos=equipment&id=' + itemId + '"' + ' data-infos="[[EQUIPMENT::' + itemId + ']]"' + ' data-tip="[[EQUIPMENT::' + itemId + ']]"' + '>' + _g.data.items[itemId].getName(!0) + '<i>x' + getValue(count) + '</i>' + '</a>';
                 }
-            } else {
-                requiredItem = '<a class="equiptypeicon mod-left mod-' + _g.data.items[improvement['resource'][i][4]].getIconId() + '"' + ' href="?infos=equipment&id=' + improvement['resource'][i][4] + '"' + ' data-infos="[[EQUIPMENT::' + improvement['resource'][i][4] + ']]"' + ' data-tip="[[EQUIPMENT::' + improvement['resource'][i][4] + ']]"' + '>' + _g.data.items[improvement['resource'][i][4]].getName(!0) + '<i>x' + getValue(improvement['resource'][i][5]) + '</i>' + '</a>';
-            }
+                return '<span class="item">' + result + '</span>';
+            }).join('') + '</span>';
+        } else {
+            requiredItems = '';
         }
 
-        resource[i] = '<span>' + '<em>' + title + '</em>' + (i == 3 && !upgradable ? '<i class="no">-</i>' : '<i class="dev_mat">' + getValue(improvement['resource'][i][0]) + '<i>(' + getValue(improvement['resource'][i][1]) + ')</i>' + '</i>' + '<i class="imp_mat">' + getValue(improvement['resource'][i][2]) + '<i>(' + getValue(improvement['resource'][i][3]) + ')</i>' + '</i>' + requiredItem) + '</span>';
+        resource[i] = '<span>' + '<em>' + title + '</em>' + (i == 3 && !upgradable ? '<i class="no">-</i>' : '<i class="dev_mat">' + getValue(improvement['resource'][i][0]) + '<i>(' + getValue(improvement['resource'][i][1]) + ')</i>' + '</i>' + '<i class="imp_mat">' + getValue(improvement['resource'][i][2]) + '<i>(' + getValue(improvement['resource'][i][3]) + ')</i>' + '</i>' + requiredItems) + '</span>';
     }
 
     return '<span>' + resource['all'] + resource['1'] + resource['2'] + resource['3'] + '</span>';

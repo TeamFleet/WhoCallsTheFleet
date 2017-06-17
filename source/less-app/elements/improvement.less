@@ -102,13 +102,15 @@
 	&>font, &>span{
 		padding-left:	36px;
 		font-size:		14px;
-		line-height:	26px;
 		z-index:		2;
 	}
 
 	&>font{
 		margin-top:		-4px;
 		margin-bottom:	4px;
+		line-height:	16px;
+		padding-top: 	5px;
+		padding-bottom: 5px;
 		&.no{
 			color:		@color_disabled;
 		}
@@ -126,6 +128,7 @@
 
 	&>span{
 		font-weight:	lighter;
+		line-height:	26px;
 		em, a, i{
 			font-style:	normal;
 			display:	inline-block;
@@ -136,11 +139,12 @@
 			&>em{
 				color:		@color_disabled;
 				width:		80px;
+				vertical-align: top;
 				@media all and ( max-width: 600px ){
 					display: 	block;
 				}
 			}
-			&>i, &>a{
+			&>i, &>a, .consumable, a.equiptypeicon{
 				min-width:		75px;
 				padding-left:	20px;
 				vertical-align: top;
@@ -180,34 +184,40 @@
 					background-position:	0 unit((19 * -18), px);
 				}
 			}
-			&>a.equiptypeicon{
-				//background-position:	-2px 50%;
-				background-size:		22px;
-				margin-top: 	-2px;
-				margin-left: 	-2px;
-				padding-top: 	2px;
-				padding-left: 	22px;
-				width:		auto;
-				transition-property: color;
-				/*
-				position:	relative;
-				&:before{
-					content:	'';
-					position:	absolute;
-					top:		-1px;
-					left:		-1px;
-					width:		20px;
-					height:		20px;
-					background:	rgba(0, 0, 0, .35);
-					z-index:	-1;
-					border-radius:	50%;
+			&>.items{
+				display: 	inline-block;
+				.item{
+					display:block;
 				}
-				*/
-				&:hover{
-					color:		@color_accent;
-				}
-				&:active{
-					color:		@color_accent2;
+				a.equiptypeicon{
+					//background-position:	-2px 50%;
+					background-size:		22px;
+					margin-top: 	-2px;
+					margin-left: 	-2px;
+					padding-top: 	2px;
+					padding-left: 	22px;
+					width:		auto;
+					transition-property: color;
+					/*
+					position:	relative;
+					&:before{
+						content:	'';
+						position:	absolute;
+						top:		-1px;
+						left:		-1px;
+						width:		20px;
+						height:		20px;
+						background:	rgba(0, 0, 0, .35);
+						z-index:	-1;
+						border-radius:	50%;
+					}
+					*/
+					&:hover{
+						color:		@color_accent;
+					}
+					&:active{
+						color:		@color_accent2;
+					}
 				}
 			}
 		}
@@ -217,6 +227,16 @@
 
 	&.improvement-details{
 		display:	block;
+		overflow: 	hidden;
+		&>span{
+			display: 	block;
+			position:	relative;
+			float: 		right;
+			// left:		50%;
+			width:		50%;
+			margin: 	6px 0;
+			// bottom:		6px;
+		}
 		&>font{
 			margin-top:	6px;
 			&>b{
@@ -270,12 +290,6 @@
 					color:		@color_disabled;
 				}
 			}
-		}
-		&>span{
-			position:	absolute;
-			left:		50%;
-			width:		50%;
-			bottom:		6px;
 		}
 	}
 }
