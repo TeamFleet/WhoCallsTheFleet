@@ -297,16 +297,21 @@
                 // bottom:         6px !important;
 			}
 		}
-		@media all and (max-width: @screen-width-t1-breaking-point ){
+		@media all and (max-width: (@screen-width-t1-breaking-point + 100) ){
 			height:		auto;
 			padding-top:10px !important;
 			padding-bottom:	15px;
+			display: 	flex;
+			flex-flow: 	column wrap;
 			&>span{
-				position:	relative;
+				float: 		none;
+				// position:	relative;
 				width:		100%;
-				left:		auto;
-				bottom:		auto !important;
-				margin-top:	10px;
+				// left:		auto;
+				// bottom:		auto !important;
+				// margin-top:	10px;
+				order: 		10;
+				margin-bottom: 0;
 			}
 		}
 		&:hover{

@@ -14402,18 +14402,19 @@ body > .modal.update_journal.mod-blur-shot > div {
   padding-top: 1px;
   padding-bottom: 1px;
 }
-@media all and (max-width: 1152px) {
+@media all and (max-width: 1252px) {
   .page-container[page="arsenal"] > .main > .body-all > .improvement {
     height: auto;
     padding-top: 10px !important;
     padding-bottom: 15px;
+    display: flex;
+    flex-flow: column wrap;
   }
   .page-container[page="arsenal"] > .main > .body-all > .improvement > span {
-    position: relative;
+    float: none;
     width: 100%;
-    left: auto;
-    bottom: auto !important;
-    margin-top: 10px;
+    order: 10;
+    margin-bottom: 0;
   }
 }
 .page-container[page="arsenal"] > .main > .body-all > .improvement:hover {
