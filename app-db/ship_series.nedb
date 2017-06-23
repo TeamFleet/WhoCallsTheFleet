@@ -6,7 +6,7 @@
 {"ships":[{"id":40,"next_lvl":20,"illust_extra":""},{"id":240,"next_lvl":"","illust_delete":"on","illust_extra":""}],"id":29,"_id":"12BMnQK6yQMokyGq"}
 {"ships":[{"id":123,"next_lvl":25,"illust_extra":[""]},{"id":295,"next_lvl":55,"illust_delete":"on","illust_extra":[""]},{"id":142,"next_lvl":"","illust_extra":[88]}],"id":97,"_id":"19MJOpZdd1LNIyEX"}
 {"ships":[{"id":9182,"next_lvl":"","illust_extra":[""]}],"id":158,"_id":"1CHxDfa7ptvbgiNL"}
-{"ships":[{"id":87,"next_lvl":10,"illust_extra":[""]},{"id":88,"next_lvl":"","illust_extra":[""]}],"id":147,"_id":"1jXttFpWFRVUQRdF"}
+{"ships":[{"id":87,"next_lvl":10,"illust_extra":[""]},{"id":88,"next_lvl":"","illust_extra":[197]}],"id":147,"_id":"1jXttFpWFRVUQRdF"}
 {"ships":[{"id":20,"next_lvl":20,"illust_extra":[""]},{"id":228,"next_lvl":"","illust_delete":"on","illust_extra":[""]}],"id":50,"_id":"22LQyMiDCGv8oOi0"}
 {"ships":[{"id":332,"next_lvl":50,"illust_extra":[""],"next_blueprint":"on"},{"id":430,"next_lvl":"","illust_extra":[""]}],"id":152,"_id":"23GfljQIjObczCUr"}
 {"ships":[{"id":59,"next_lvl":25,"illust_extra":[""]},{"id":262,"next_lvl":65,"illust_delete":"on","illust_extra":[""]},{"id":416,"next_lvl":"","illust_extra":[""]}],"id":94,"_id":"2C0Lh16h8Xt2xMh2"}
@@ -30,7 +30,7 @@
 {"ships":[{"id":456,"next_lvl":35,"illust_extra":[""]},{"id":362,"next_lvl":"","illust_delete":"on","illust_extra":[""]}],"id":176,"_id":"6gkl5X4vj3hOCDyI"}
 {"ships":[{"id":14,"next_lvl":20,"illust_extra":""},{"id":208,"next_lvl":"","illust_delete":"on","illust_extra":""}],"id":18,"_id":"7VgmLmtLZnGnr8OM"}
 {"ships":[{"id":83,"next_lvl":30,"illust_extra":[138]},{"id":277,"next_lvl":"","illust_delete":"on","illust_extra":[""]}],"id":130,"_id":"7Wf91jFn8ouxwgem"}
-{"ships":[{"id":77,"next_lvl":10,"illust_extra":[""]},{"id":82,"next_lvl":"","illust_extra":[""]}],"id":146,"_id":"7kC0eehZynFRjjiX"}
+{"ships":[{"id":77,"next_lvl":10,"illust_extra":[""]},{"id":82,"next_lvl":"","illust_extra":[196]}],"id":146,"_id":"7kC0eehZynFRjjiX"}
 {"ships":[{"id":451,"next_lvl":40,"illust_extra":[43,85,87,101,106,124,141,171,188]},{"id":348,"next_lvl":"","illust_delete":"on","illust_extra":[""]}],"id":161,"_id":"7uVoU3DZpDCvWbD4"}
 {"ships":[{"id":175,"next_lvl":30,"illust_extra":[128]},{"id":311,"next_lvl":70,"illust_delete":"on","illust_extra":[""]},{"id":180,"next_lvl":"","illust_extra":[128]}],"id":69,"_id":"84yhWxObv0niXuWv"}
 {"ships":[{"id":32,"next_lvl":20,"illust_extra":""},{"id":203,"next_lvl":"","illust_delete":"on","illust_extra":""}],"id":15,"_id":"8MMB2mUzvmRahrKh"}
@@ -191,7 +191,7 @@
 {"ships":[{"id":79,"next_lvl":25,"illust_extra":[190]},{"id":211,"next_lvl":80,"illust_delete":"on","illust_extra":[""]},{"id":151,"next_lvl":"","illust_extra":[121,190]}],"id":141,"_id":"yOz2nRACUR3JOvhR"}
 {"ships":[{"id":110,"next_lvl":30,"illust_extra":[""]},{"id":288,"next_lvl":80,"illust_delete":"on","illust_extra":[""],"next_blueprint":"on","next_catapult":"on"},{"id":461,"next_lvl":88,"illust_extra":[""],"next_loop":"on"},{"id":466,"next_lvl":"","illust_extra":[""]}],"id":134,"_id":"yXO6zjyqnUE00Y5b"}
 {"ships":[{"id":449,"next_lvl":40,"illust_extra":[156]},{"id":361,"next_lvl":"","illust_delete":"on","illust_extra":[""]}],"id":177,"_id":"yhH3SwZkRKkj6NvY"}
-{"ships":[{"id":23,"next_lvl":20,"illust_extra":[134]},{"id":220,"next_lvl":"","illust_delete":"on","illust_extra":[""]}],"id":80,"_id":"yjEWd26UzKJEHwLh"}
+{"ships":[{"id":23,"next_lvl":20,"illust_extra":[134]},{"id":220,"next_lvl":77,"illust_delete":"on","illust_extra":[""],"next_blueprint":"on"},{"id":488,"next_lvl":"","illust_extra":[134]}],"id":80,"_id":"yjEWd26UzKJEHwLh"}
 {"ships":[{"id":518,"next_lvl":40,"illust_extra":[""]},{"id":377,"next_lvl":"","illust_delete":"on","illust_extra":[""]}],"id":194,"_id":"yqqcEm2tsZ3FoBrP"}
 {"ships":[{"id":444,"next_lvl":45,"illust_extra":[""]},{"id":365,"next_lvl":"","illust_delete":"on","illust_extra":[""]}],"id":180,"_id":"zHYFRj6wn2kQLdeT"}
 {"ships":[{"id":122,"next_lvl":20,"illust_extra":[""]},{"id":294,"next_lvl":"","illust_delete":"on","illust_extra":[""]}],"id":58,"_id":"zJ1mNKMmQSZ8Ctcu"}
