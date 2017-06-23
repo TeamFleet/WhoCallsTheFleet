@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",234,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/4.png)\"></s><strong>15.5cm三连装副炮改</strong><small>副炮</small></h3><span>+7 火力</span><span>+4 对空</span><span>+3 命中</span><span>+1 回避</span><span>射程: 中</span>")
