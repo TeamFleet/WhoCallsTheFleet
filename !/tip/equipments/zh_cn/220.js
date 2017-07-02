@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",220,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/16.png)\"></s><strong>8cm高角炮改+增设机枪</strong><small>高角副炮 (对空强化)</small></h3><span>+1 火力</span><span>+7 对空</span><span>+2 命中</span><span>+1 回避</span><span>射程: 短</span>")
+KCTip.loaded("equipments",220,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/16.png)\"></s><strong>8cm高角炮改+增设机枪</strong><small>高角副炮</small></h3><span>+1 火力</span><span>+7 对空</span><span>+2 命中</span><span>+1 回避</span><span>射程: 短</span>")

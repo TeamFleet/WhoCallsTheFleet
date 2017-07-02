@@ -7250,8 +7250,8 @@ var InfosFleetShipEquipment = function () {
                 callback_modeSelection_enter: function () {
                     var shipId = this.infosParent.shipId;
                     var ship = shipId && _g.data.ships[shipId];
-                    var shipClass = shipId && _g.data.ship_classes[ship.class];
-                    var shipClassExtraSlotExtra = shipId && shipClass && shipClass.extraSlotExtra;
+
+                    var shipExtraSlotExtra = ship.additional_exslot_item_ids;
                     var shipCanEquip = shipId ? ship.getEquipmentTypes() : [];
 
                     var types = shipId ? shipCanEquip : [];
@@ -7278,7 +7278,7 @@ var InfosFleetShipEquipment = function () {
                         console.log(TablelistEquipments.types, _g.data.items[eid].type);
                         return shipCanEquip.indexOf(_g.data.items[eid].type) > -1;
                     });
-                    if (isExtraSlot && shipClassExtraSlotExtra && shipClassExtraSlotExtra.length) TablelistEquipments.extraEquipments = TablelistEquipments.extraEquipments.concat(shipClassExtraSlotExtra);
+                    if (isExtraSlot && Array.isArray(shipExtraSlotExtra)) TablelistEquipments.extraEquipments = TablelistEquipments.extraEquipments.concat(shipExtraSlotExtra);
 
                     _frame.app_main.page['equipments'].object.tablelistObj.apply_types();
                 }.bind(this)
