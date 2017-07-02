@@ -13,7 +13,7 @@
 {"id":3,"ship_type_id":20,"_id":"7Dzqr0FFx8i6z5Tn","speed_rule":"low-1","name":{"en_us":"","ja_jp":"大和","zh_cn":"大和"}}
 {"ship_type_id":13,"id":60,"_id":"7o2yPGimgHf6uV7g","speed_rule":"low-3","name":{"en_us":"Junsen Type B","ja_jp":"巡潜乙","zh_cn":"巡潜乙"}}
 {"id":4,"ship_type_id":6,"_id":"8Sh8jh40V9c1dwKp","speed_rule":"low-2","name":{"en_us":"Fusou","ja_jp":"扶桑","zh_cn":"扶桑"}}
-{"id":5,"ship_type_id":16,"_id":"8xQPYsq6jHfdAjBa","speed_rule":"low-3","extraSlotExtra":[66,220],"name":{"en_us":"Akashi","ja_jp":"明石","zh_cn":"明石"}}
+{"id":5,"ship_type_id":16,"_id":"8xQPYsq6jHfdAjBa","speed_rule":"low-3","name":{"en_us":"Akashi","ja_jp":"明石","zh_cn":"明石"}}
 {"ship_type_id":1,"id":22,"_id":"AcZKZJTEy3ySYL7p","speed_rule":"high-3","name":{"en_us":"Yuugumo","ja_jp":"夕雲","zh_cn":"夕云"}}
 {"ship_type_id":1,"id":78,"_id":"AtJsZGIYiyfK2m47","speed_rule":"high-3","name":{"en_us":"Maestrale","ja_jp":"Maestrale","zh_cn":"西北风"},"navy":"rm"}
 {"ship_type_id":13,"id":64,"_id":"BS1phNGWHoLWnP2X","speed_rule":"low-3","name":{"en_us":"Type 3 Submergence Transport Vehicle","ja_jp":"三式潜航輸送艇","zh_cn":"三式潜航运输艇"}}
@@ -58,7 +58,7 @@
 {"ship_type_id":1,"id":16,"_id":"evm4ogjAEbdtDCSs","speed_rule":"high-3","name":{"en_us":"Ayanami","ja_jp":"綾波","zh_cn":"绫波"}}
 {"ship_type_id":9,"id":33,"_id":"fc4I0XDHvViLR6T8","speed_rule":"low-2","name":{"en_us":"Houshou","ja_jp":"鳳翔","zh_cn":"凤翔"}}
 {"ship_type_id":32,"id":96,"_id":"ffyU0DgRZRHGjaiW","name":{"en_us":"Taiyou","ja_jp":"大鷹","zh_cn":"大鹰"}}
-{"ship_type_id":2,"id":52,"_id":"hJAm96B6jC0wWmvP","speed_rule":"high-2","extraSlotExtra":[66,220],"name":{"en_us":"Agano","ja_jp":"阿賀野","zh_cn":"阿贺野"}}
+{"ship_type_id":2,"id":52,"_id":"hJAm96B6jC0wWmvP","speed_rule":"high-2","name":{"en_us":"Agano","ja_jp":"阿賀野","zh_cn":"阿贺野"}}
 {"ship_type_id":15,"id":56,"_id":"hcWdqljjY0waaU64","speed_rule":"low-3","name":{"en_us":"Hei","ja_jp":"特種船丙","zh_cn":"特种船丙"}}
 {"id":10,"ship_type_id":6,"_id":"hfYDUbSqjpp3bZTz","speed_rule":"low-2","name":{"en_us":"Nagato","ja_jp":"長門","zh_cn":"长门"}}
 {"ship_type_id":19,"id":23,"_id":"hsLQJLbzOtNBTD5b","speed_rule":"high-3","name":{"en_us":"Akizuki","ja_jp":"秋月","zh_cn":"秋月"}}
@@ -82,18 +82,18 @@
 {"ship_type_id":1,"id":20,"_id":"ssTgmPb3uPu3CxBy","speed_rule":"high-3","name":{"en_us":"Asashio","ja_jp":"朝潮","zh_cn":"朝潮"}}
 {"ship_type_id":2,"id":48,"_id":"t84eJdJn5UOoVByp","speed_rule":"high-3","name":{"en_us":"Kuma","ja_jp":"球磨","zh_cn":"球磨"}}
 {"ship_type_id":10,"id":27,"_id":"tj5fsdvqsUpt5yUq","speed_rule":"high-4","name":{"en_us":"Kaga","ja_jp":"加賀","zh_cn":"加贺"}}
-{"ship_type_id":21,"id":55,"_id":"u2OtssehEtbGtBOz","speed_rule":"low-2","extraSlotExtra":[66,220],"name":{"en_us":"Katori","ja_jp":"香取","zh_cn":"香取"}}
+{"ship_type_id":21,"id":55,"_id":"u2OtssehEtbGtBOz","speed_rule":"low-2","name":{"en_us":"Katori","ja_jp":"香取","zh_cn":"香取"}}
 {"ship_type_id":29,"id":76,"_id":"uBFfKbVS5UnIqTnt","speed_rule":"low-3","name":{"en_us":"Revised Kazahaya","ja_jp":"改風早","zh_cn":"改风早"}}
 {"ship_type_id":4,"id":43,"_id":"uecETOoA1Bao9clc","speed_rule":"high-1","name":{"en_us":"Mogami","ja_jp":"最上","zh_cn":"最上"}}
-{"ship_type_id":30,"id":89,"_id":"ulnyuOvwz9UdVNIC","extraSlotExtra":[66,220],"name":{"en_us":"Mogami","ja_jp":"最上","zh_cn":"最上"}}
+{"ship_type_id":30,"id":89,"_id":"ulnyuOvwz9UdVNIC","name":{"en_us":"Mogami","ja_jp":"最上","zh_cn":"最上"}}
 {"ship_type_id":1,"id":17,"_id":"vM1dk7HQDkw12RHP","speed_rule":"high-3","name":{"en_us":"Akatsuki","ja_jp":"暁","zh_cn":"晓"}}
 {"ship_type_id":9,"id":35,"_id":"vaAJbqOdJc4zC0cX","speed_rule":"low-2","name":{"en_us":"Ryuuhou","ja_jp":"龍鳳","zh_cn":"龙凤"}}
-{"id":13,"ship_type_id":17,"_id":"wIQmLK3nowZHC6W9","speed_rule":"low-2","extraSlotExtra":[66,220],"name":{"en_us":"Taigei","ja_jp":"大鯨","zh_cn":"大鲸"}}
+{"id":13,"ship_type_id":17,"_id":"wIQmLK3nowZHC6W9","speed_rule":"low-2","name":{"en_us":"Taigei","ja_jp":"大鯨","zh_cn":"大鲸"}}
 {"ship_type_id":14,"id":88,"_id":"wSSuUroh6oRBa3zc","speed_rule":"low-3","name":{"en_us":"Junsen Type A Kai Ni","ja_jp":"巡潜甲型改二","zh_cn":"巡潜甲型改二"}}
 {"ship_type_id":10,"id":30,"_id":"wc6e0apWiuxMjzUa","speed_rule":"high-1","name":{"en_us":"Shoukaku","ja_jp":"翔鶴","zh_cn":"翔鹤"}}
 {"ship_type_id":2,"id":49,"_id":"wxZ0fgIHk6PXIfFP","speed_rule":"high-3","name":{"en_us":"Nagara","ja_jp":"長良","zh_cn":"长良"}}
 {"id":14,"ship_type_id":18,"_id":"x7qm99OMLRKbJfnx","speed_rule":"high-3","name":{"en_us":"","ja_jp":"Bismarck","zh_cn":"俾斯麦"}}
-{"ship_type_id":5,"id":90,"_id":"yEuYyegyCYUN5hJ1","extraSlotExtra":[66,220],"name":{"en_us":"Revised Mogami","ja_jp":"改最上","zh_cn":"改最上"},"speed_rule":"high-1"}
+{"ship_type_id":5,"id":90,"_id":"yEuYyegyCYUN5hJ1","name":{"en_us":"Revised Mogami","ja_jp":"改最上","zh_cn":"改最上"},"speed_rule":"high-1"}
 {"ship_type_id":4,"id":40,"_id":"yMEDlHbJYXS6xZkJ","speed_rule":"high-3","name":{"en_us":"Aoba","ja_jp":"青葉","zh_cn":"青叶"}}
 {"ship_type_id":6,"id":83,"_id":"zRY8kHSuCn1UjaFe","speed_rule":"low-1","name":{"en_us":"Yamato","ja_jp":"大和","zh_cn":"大和"}}
 {"ship_type_id":14,"id":65,"_id":"zy8EKKJjAoxtIRtj","speed_rule":"low-3","name":{"en_us":"Junsen 3","ja_jp":"巡潜3","zh_cn":"巡潜3"}}

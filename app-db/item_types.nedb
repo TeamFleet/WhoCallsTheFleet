@@ -50,7 +50,7 @@
 {"name":{"ja_jp":"副砲","zh_cn":"副炮"},"icon":4,"equipable_on_type":[2,3,4,5,6,7,8,9,10,11,12,15,16,17,21,23,24,28,30,32],"id":7,"_id":"qKYIiyt2MyvG8zjg","main_attribute":"fire"}
 {"name":{"ja_jp":"陸上攻撃機","zh_cn":"陆上攻击机"},"icon":37,"main_attribute":"bomb","equipable_on_type":[],"id":53,"_id":"qVdIswBXZ8Z5xFNK"}
 {"name":{"ja_jp":"高射装置","zh_cn":"高射装置"},"icon":30,"equipable_on_type":[1,2,3,4,5,6,7,8,9,10,11,12,15,16,17,19,21,23,24,28,29,30,31,32],"id":31,"_id":"qYe6VNsOhp9s8UGY","main_attribute":"aa"}
-{"name":{"ja_jp":"航空要員","zh_cn":"航空要员"},"icon":29,"equipable_on_type":[5,8,9,10,11,29,30,32],"id":36,"_id":"qzJc2OzIe06V0nnh","main_attribute":"fire","equipable_extra_ship":[372,450,491,496]}
+{"name":{"ja_jp":"航空要員","zh_cn":"航空要员"},"icon":29,"equipable_on_type":[5,8,9,10,11,29,30,32],"id":36,"_id":"qzJc2OzIe06V0nnh","main_attribute":"fire","equipable_extra_ship":[372,450,488,491,496]}
 {"name":{"ja_jp":"水上偵察機(夜偵)","zh_cn":"水上侦察机 (夜间)"},"icon":10,"equipable_on_type":[2,4,5,6,7,8,12,14,17,21,23,24,28,29],"id":16,"_id":"tecb24NpBuaHto9F","main_attribute":"los"}
 {"name":{"ja_jp":"機関部強化","zh_cn":"引擎强化"},"icon":19,"equipable_on_type":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,19,21,23,24,28,29,30,32],"id":32,"_id":"usN4wrqsuc98XkYD","main_attribute":"evasion"}
 {"name":{"ja_jp":"艦隊司令部施設","zh_cn":"司令部设施"},"icon":28,"equipable_on_type":[2,3,4,5,6,7,8,9,10,11,12,15,17,21,23,24,28,30],"id":43,"_id":"v7CGaXrnA8Cu5oA2","main_attribute":"hit","equipable_extra_ship":[464]}

@@ -2480,8 +2480,9 @@ class InfosFleetShipEquipment {
             callback_modeSelection_enter: function () {
                 const shipId = this.infosParent.shipId
                 const ship = shipId && _g.data.ships[shipId]
-                const shipClass = shipId && _g.data.ship_classes[ship.class]
-                const shipClassExtraSlotExtra = shipId && shipClass && shipClass.extraSlotExtra
+                // const shipClass = shipId && _g.data.ship_classes[ship.class]
+                // const shipClassExtraSlotExtra = shipId && shipClass && shipClass.extraSlotExtra
+                const shipExtraSlotExtra = ship.additional_exslot_item_ids
                 const shipCanEquip = shipId ? ship.getEquipmentTypes() : []
 
                 let types = shipId
@@ -2511,8 +2512,8 @@ class InfosFleetShipEquipment {
                     console.log(TablelistEquipments.types, _g.data.items[eid].type)
                     return shipCanEquip.indexOf(_g.data.items[eid].type) > -1
                 })
-                if (isExtraSlot && shipClassExtraSlotExtra && shipClassExtraSlotExtra.length)
-                    TablelistEquipments.extraEquipments = TablelistEquipments.extraEquipments.concat(shipClassExtraSlotExtra)
+                if (isExtraSlot && Array.isArray(shipExtraSlotExtra))
+                    TablelistEquipments.extraEquipments = TablelistEquipments.extraEquipments.concat(shipExtraSlotExtra)
                 // console.log(TablelistEquipments.extraEquipments)
                 _frame.app_main.page['equipments'].object.tablelistObj.apply_types()
             }.bind(this)
