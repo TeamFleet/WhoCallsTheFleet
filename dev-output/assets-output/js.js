@@ -7251,7 +7251,7 @@ var InfosFleetShipEquipment = function () {
                     var shipId = this.infosParent.shipId;
                     var ship = shipId && _g.data.ships[shipId];
 
-                    var shipExtraSlotExtra = ship.additional_exslot_item_ids;
+                    var shipExtraSlotExtra = shipId && ship.additional_exslot_item_ids;
                     var shipCanEquip = shipId ? ship.getEquipmentTypes() : [];
 
                     var types = shipId ? shipCanEquip : [];
