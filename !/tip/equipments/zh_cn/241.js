@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",241,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/34.png)\"></s><strong>战斗粮食<small>(特别饭团)</small></strong><small>军粮</small></h3>")
