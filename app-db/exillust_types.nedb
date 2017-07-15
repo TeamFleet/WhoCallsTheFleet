@@ -1,0 +1,6 @@
+{"name":{"zh_cn":"梅雨","ja_jp":"梅雨","en_us":"Rainy Season"},"time":{"zh_cn":"6月初","en_us":"Early June","ja_jp":"6月上旬"},"id":6,"sort":6,"_id":"10gvzkKBaCcHiMci"}
+{"name":{"zh_cn":"情人节","ja_jp":"バレンタイン","en_us":"Valentines"},"time":{"zh_cn":"2月中","ja_jp":"2月中旬","en_us":"Mid-February"},"id":3,"sort":3,"_id":"4iLWgFmJ5SBDtcgG"}
+{"name":{"zh_cn":"周年庆","ja_jp":"周年記念","en_us":"Anniversary"},"time":{"zh_cn":"4月底","ja_jp":"4月下旬","en_us":"Late April"},"id":5,"sort":5,"_id":"FFm1GR7jpxi6IGqj"}
+{"name":{"zh_cn":"雏祭","ja_jp":"雛祭り","en_us":"Hinamatsuri"},"time":{"zh_cn":"2月底","en_us":"Late February","ja_jp":"2月下旬"},"id":4,"sort":4,"_id":"bb0s4wd7K9MerdG9"}
+{"name":{"zh_cn":"新年","ja_jp":"晴れ着","en_us":"New Year"},"id":1,"sort":1,"_id":"h4W4t1pX1cHTCHVM","time":{"ja_jp":"1月初旬","zh_cn":"1月初","en_us":"Early January"}}
+{"name":{"zh_cn":"节分","ja_jp":"節分","en_us":"Setsubun"},"id":2,"sort":2,"_id":"nHBvEj55KP4Z2zFt","time":{"ja_jp":"1月中旬","zh_cn":"1月中","en_us":"Mid-January"}}
