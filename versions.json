@@ -1,14 +1,14 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.21.4.0",
-			"path":		"data/2017-07-15/app.nwjs-data",
-			"bytes":	4031998
+			"version":	"0.21.5.0",
+			"path":		"data/2017-07-29/app.nwjs-data",
+			"bytes":	4032229
 		},
 		"app-db": {
-			"version":	"2017.07.15",
-			"path":		"data/2017-07-15/app-db.nwjs-data",
-			"bytes":	1148770
+			"version":	"2017.07.29",
+			"path":		"data/2017-07-29/app-db.nwjs-data",
+			"bytes":	1155151
 		},
 		"bgimgs": {
 			"version":	"1.18.6.0",
@@ -16,9 +16,9 @@
 			"bytes":	12494509
 		},
 		"pics": {
-			"version":	"2017.07.15",
-			"path":		"data/2017-07-15/pics.nwjs-data",
-			"bytes":	4136779
+			"version":	"2017.07.29",
+			"path":		"data/2017-07-29/pics.nwjs-data",
+			"bytes":	4242643
 		},
 		"pics-enemies": {
 			"version":	"2017.04.06",
@@ -37,7 +37,7 @@
 		}
 	},
 	"packages-beta": {},
-	"core":  null,
+	"core": null,
 	"homepage": "http://fleet.moe/",
 	"release-notes": "https://github.com/Diablohu/WhoCallsTheFleet/releases",
 	"forum": "http://bbs.ngacn.cc/read.php?tid=7959995"
