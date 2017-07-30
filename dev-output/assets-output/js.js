@@ -6626,7 +6626,21 @@ var InfosFleetShip = function () {
         for (var _i14 = 0; _i14 < 4; _i14++) {
             this.equipments[_i14] = new InfosFleetShipEquipment(this, _i14);
         }
-        this.equipments[4] = new InfosFleetShipEquipment(this, 4, 0, $.unique(Formula.equipmentType.AAGuns.concat([33, 34, 35, 48, 49])), [33]);
+
+        if (!Array.isArray(InfosFleetShipEquipment.exslotTypes)) {
+            InfosFleetShipEquipment.exslotTypes = [];
+            for (var id in _g.data.item_types) {
+                if (_g.data.item_types[id].equipable_exslot) InfosFleetShipEquipment.exslotTypes.push(parseInt(id));
+            }
+        }
+
+        if (!Array.isArray(InfosFleetShipEquipment.exslotEquipments)) {
+            InfosFleetShipEquipment.exslotEquipments = [];
+            for (var _id2 in _g.data.items) {
+                if (_g.data.items[_id2].equipable_exslot) InfosFleetShipEquipment.exslotEquipments.push(parseInt(_id2));
+            }
+        }
+        this.equipments[4] = new InfosFleetShipEquipment(this, 4, 0, InfosFleetShipEquipment.exslotTypes, InfosFleetShipEquipment.exslotEquipments);
 
         this.el = $('<dd class="ship"/>').append($('<dt/>').append(this.elAvatar = $('<s touch-action="none"/>')).append(this.elInfos = $('<div/>').html('<span>' + (this.infosFleet.data._id ? '选择舰娘' : '无舰娘') + '...</span>').append(this.elInfosTitle = $('<div class="title"/>')).append($('<div class="info"/>').append($('<label/>').html('Lv.').append(this.elInputLevel = $('<input/>', {
             'type': 'number',

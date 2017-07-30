@@ -1490,24 +1490,42 @@ class InfosFleetShip {
         for (let i = 0; i < 4; i++) {
             this.equipments[i] = new InfosFleetShipEquipment(this, i)
         }
+        // 可放入补强增设栏位的装备类型
+        if (!Array.isArray(InfosFleetShipEquipment.exslotTypes)) {
+            InfosFleetShipEquipment.exslotTypes = []
+            for (let id in _g.data.item_types) {
+                if (_g.data.item_types[id].equipable_exslot)
+                    InfosFleetShipEquipment.exslotTypes.push(parseInt(id))
+            }
+        }
+        // 可放入补强增设栏位的独立装备
+        if (!Array.isArray(InfosFleetShipEquipment.exslotEquipments)) {
+            InfosFleetShipEquipment.exslotEquipments = []
+            for (let id in _g.data.items) {
+                if (_g.data.items[id].equipable_exslot)
+                    InfosFleetShipEquipment.exslotEquipments.push(parseInt(id))
+            }
+        }
         this.equipments[4] = new InfosFleetShipEquipment(
             this,
             4,      // equipment index
             0,      // carry
             // equipment types
-            $.unique(
-                Formula.equipmentType.AAGuns
-                    .concat([
-                        33,     // 增设装甲板 (中型)
-                        34,     // 增设装甲板 (大型)
-                        35,     // 损害管制要员
-                        48,     // 军粮
-                        49      // 补给物资
-                    ])
-            ),
-            [
-                33 // 改良型艦本式タービン / 改良型舰船涡轮机
-            ]
+            // $.unique(
+            //     Formula.equipmentType.AAGuns
+            //         .concat([
+            //             33,     // 增设装甲板 (中型)
+            //             34,     // 增设装甲板 (大型)
+            //             35,     // 损害管制要员
+            //             48,     // 军粮
+            //             49      // 补给物资
+            //         ])
+            // ),
+            InfosFleetShipEquipment.exslotTypes,
+            // [
+            //     33 // 改良型艦本式タービン / 改良型舰船涡轮机
+            // ]
+            InfosFleetShipEquipment.exslotEquipments
         )
 
         this.el = $('<dd class="ship"/>')
