@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",249,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/6.png)\"></s><strong>管鼻鹱</strong><small>舰载战斗机</small></h3>")

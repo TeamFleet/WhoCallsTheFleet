@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",253,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/6.png)\"></s><strong>海喷火 Mk.IX<small>(熟练)</small></strong><small>舰载战斗机</small></h3>")

@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",252,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/6.png)\"></s><strong>海喷火 LF.Mk.III</strong><small>舰载战斗机</small></h3>")

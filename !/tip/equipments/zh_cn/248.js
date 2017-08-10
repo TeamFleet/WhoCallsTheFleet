@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",248,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/7.png)\"></s><strong>贼鸥</strong><small>舰载轰炸机</small></h3><span>+2 对空</span><span>+2 对潜</span><span>+4 爆装</span><span>+2 回避</span><span>航程: 4</span>")
