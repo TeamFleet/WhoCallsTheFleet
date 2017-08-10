@@ -76,6 +76,7 @@
 {"ship_type_id":4,"id":41,"_id":"oK507q250RthzO2L","speed_rule":"high-3","name":{"en_us":"Myoukou","ja_jp":"妙高","zh_cn":"妙高"}}
 {"ship_type_id":5,"id":45,"_id":"oXJHqtZn9yVOGvyV","speed_rule":"high-1","name":{"en_us":"Mogami","ja_jp":"最上","zh_cn":"最上"}}
 {"name":{"ja_jp":"神威","zh_cn":"神威","en_us":"Kamoi"},"ship_type_id":12,"id":99,"_id":"pvSa5NQ6kpvkNQrG"}
+{"name":{"ja_jp":"Richelieu","zh_cn":"黎塞留","en_us":"Richelieu"},"ship_type_id":7,"id":100,"_id":"qYySAovCnmgN7j7v","navy":"mn"}
 {"ship_type_id":2,"id":50,"_id":"rTcwRUa6ruzaEqeS","speed_rule":"high-3","name":{"en_us":"Sendai","ja_jp":"川内","zh_cn":"川内"}}
 {"ship_type_id":9,"id":38,"_id":"s4IsfZ3yRCMr7V5U","speed_rule":"high-3","name":{"en_us":"Chitose","ja_jp":"千歳","zh_cn":"千岁"}}
 {"ship_type_id":14,"id":67,"_id":"sqbMptvXyvskgG6W","speed_rule":"low-3","name":{"en_us":"Junsen Type B Kai Ni","ja_jp":"巡潜乙（改二）","zh_cn":"巡潜乙（改二）"}}
