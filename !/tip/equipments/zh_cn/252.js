@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",252,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/6.png)\"></s><strong>海喷火 LF.Mk.III</strong><small>舰载战斗机</small></h3>")
+KCTip.loaded("equipments",252,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/6.png)\"></s><strong>海喷火 Mk.III 改</strong><small>舰载战斗机</small></h3><span>+1 火力</span><span>+9 对空</span><span>+1 命中</span><span>+1 装甲</span><span>+2 回避</span><span>航程: 4</span>")

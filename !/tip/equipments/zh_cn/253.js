@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",253,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/6.png)\"></s><strong>海喷火 Mk.IX<small>(熟练)</small></strong><small>舰载战斗机</small></h3>")
+KCTip.loaded("equipments",253,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/44.png)\"></s><strong>喷火 Mk.IX<small>(熟练)</small></strong><small>陆军战斗机</small></h3><span>+1 火力</span><span>+10 对空</span><span>+2 命中</span><span>+4 回避</span>")
