@@ -132,6 +132,24 @@
 						display: 	none;
 					}
 				}
+				.flag-navy{
+					&[data-navy="ijn"],
+					&[data-navy="0"]{
+						display: 	none;
+					}
+					@width:     20px;
+					@height:    20px;
+					position:   absolute;
+					width:      @width;
+					height:     @height;
+					top:        50%;
+					left:       -22px;
+					margin-top: (0 - @height / 2 - 12);
+					z-index:    -1;
+					// background-color: red;
+					transform:  rotate(10deg);
+					filter:     drop-shadow(-1px 1px 1px fade(#000, 75%));
+				}
 			} // &>strong
 			dd{
 				position:	relative;
@@ -246,10 +264,10 @@
 					&:before{
 						position: 	absolute;
 						display: 	block;
-						font-size: 	22px;
+						font-size: 	20px;
 						color: 		hsl(@hue_theme_ship, 100%, 100%);
 						transform: 	rotate(15deg);
-						top: 		-4px;
+						top: 		-2px;
 						left: 		80px;
 						z-index: 	10;
 						//text-shadow:0 0 5px hsl(@hue_theme_ship, 100%, 15%);

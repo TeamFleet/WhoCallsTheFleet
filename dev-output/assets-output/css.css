@@ -5833,6 +5833,21 @@ body.mod-capture #tip {
 .tablelist.ships .tablelist-body dl[data-shipid] dt [icon]:before {
   display: none;
 }
+.tablelist.ships .tablelist-body dl[data-shipid] dt .flag-navy {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: -22px;
+  margin-top: -22px;
+  z-index: -1;
+  transform: rotate(10deg);
+  filter: drop-shadow(-1px 1px 1px rgba(0, 0, 0, 0.75));
+}
+.tablelist.ships .tablelist-body dl[data-shipid] dt .flag-navy[data-navy="ijn"],
+.tablelist.ships .tablelist-body dl[data-shipid] dt .flag-navy[data-navy="0"] {
+  display: none;
+}
 .tablelist.ships .tablelist-body dl[data-shipid] dd {
   position: relative;
 }
@@ -5918,10 +5933,10 @@ body.mod-capture #tip {
 .tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body dl[data-shipid] [icon]:before {
   position: absolute;
   display: block;
-  font-size: 22px;
+  font-size: 20px;
   color: #ffffff;
   transform: rotate(15deg);
-  top: -4px;
+  top: -2px;
   left: 80px;
   z-index: 10;
 }
@@ -11874,6 +11889,14 @@ body.mod-capture .infos-fleet .equipment-extra {
 .infos-ship > div.remodels .flexgrid > a.unit.on em {
   top: -2px;
   transform: none;
+}
+.infos-ship > div.remodels .flexgrid > a.unit .flag-navy {
+  position: absolute;
+  top: 32px;
+  right: 10px;
+  z-index: 50;
+  transform: rotate(10deg);
+  filter: drop-shadow(-1px 1px 1px rgba(0, 0, 0, 0.75));
 }
 .infos-ship > div.remodels .flexgrid > .unit[icon="loop-alt3"] {
   position: relative;

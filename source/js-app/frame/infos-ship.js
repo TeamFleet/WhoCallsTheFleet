@@ -304,6 +304,18 @@ _frame.infos.__ship = function( id ){
                     ,remodel_blueprint = data_prev ? (data_prev['next_blueprint']) : null
                     ,remodel_catapult = data_prev ? (data_prev['next_catapult']) : null
                     ,has_extra_illust = currentValue.illust_extra && currentValue.illust_extra.length && currentValue.illust_extra[0] ? true : false
+                    ,flag = ''
+
+                const getNavy = () => {
+                    if (remodel_ship_data.navy) return remodel_ship_data.navy
+                    return remodel_ship_data.class
+                        ? (_g.data.ship_classes[remodel_ship_data.class].navy || 'ijn')
+                        : 'ijn'
+                }
+                const navy = getNavy()
+                if (navy && navy !== 'ijn') {
+                    flag += '<span class="flag-navy" data-navy="' + navy + '"></span>'
+                }
                 
                 if( remodel_blueprint || remodel_catapult ){
                     if( remodel_blueprint )
@@ -329,6 +341,7 @@ _frame.infos.__ship = function( id ){
                             'html':			'<i><img src="' + _g.path.pics.ships + '/' + currentValue['id']+'/0.webp"/></i>'
                                             + (remodel_lvl ? '<strong>' + _val(remodel_lvl) + '</strong>' : '')
                                             + (has_extra_illust ? '<em icon="hanger"></em>' : '')
+                                            + flag
                         })
                 )
                 

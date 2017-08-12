@@ -6713,7 +6713,17 @@ _frame.infos.__ship = function (id) {
                 remodel_lvl = data_prev ? data_prev['next_lvl'] : null,
                 remodel_blueprint = data_prev ? data_prev['next_blueprint'] : null,
                 remodel_catapult = data_prev ? data_prev['next_catapult'] : null,
-                has_extra_illust = currentValue.illust_extra && currentValue.illust_extra.length && currentValue.illust_extra[0] ? !0 : !1;
+                has_extra_illust = currentValue.illust_extra && currentValue.illust_extra.length && currentValue.illust_extra[0] ? !0 : !1,
+                flag = '';
+
+            var getNavy = function getNavy() {
+                if (remodel_ship_data.navy) return remodel_ship_data.navy;
+                return remodel_ship_data.class ? _g.data.ship_classes[remodel_ship_data.class].navy || 'ijn' : 'ijn';
+            };
+            var navy = getNavy();
+            if (navy && navy !== 'ijn') {
+                flag += '<span class="flag-navy" data-navy="' + navy + '"></span>';
+            }
 
             if (remodel_blueprint || remodel_catapult) {
                 if (remodel_blueprint) tip += '<span class="requirement is-blueprint">需要：改装设计图</span>';
@@ -6729,7 +6739,7 @@ _frame.infos.__ship = function (id) {
                 'data-infos': '[[SHIP::' + currentValue['id'] + ']]',
                 'data-tip': tip,
                 'data-infos-nohistory': !0,
-                'html': '<i><img src="' + _g.path.pics.ships + '/' + currentValue['id'] + '/0.webp"/></i>' + (remodel_lvl ? '<strong>' + _val(remodel_lvl) + '</strong>' : '') + (has_extra_illust ? '<em icon="hanger"></em>' : '')
+                'html': '<i><img src="' + _g.path.pics.ships + '/' + currentValue['id'] + '/0.webp"/></i>' + (remodel_lvl ? '<strong>' + _val(remodel_lvl) + '</strong>' : '') + (has_extra_illust ? '<em icon="hanger"></em>' : '') + flag
             }));
 
             if (currentValue.next_loop) remodels_container.appendDOM($('<span class="unit" icon="loop-alt3" data-tip="可在两个改造版本间切换"/>').html('&nbsp;'));
