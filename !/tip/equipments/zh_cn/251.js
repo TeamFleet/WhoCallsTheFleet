@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",251,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/6.png)\"></s><strong>喷火 Mk.V</strong><small>舰载战斗机</small></h3><span>+1 火力</span><span>+9 对空</span><span>+3 命中</span><span>+2 回避</span><span>航程: 5</span>")
+KCTip.loaded("equipments",251,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/44.png)\"></s><strong>喷火 Mk.V</strong><small>陆军战斗机</small></h3><span>+1 火力</span><span>+9 对空</span><span>+3 命中</span><span>+2 回避</span><span>航程: 5</span>")
