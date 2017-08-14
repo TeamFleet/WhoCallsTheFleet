@@ -4322,6 +4322,81 @@ body.mod-capture #tip {
 	}
 }
 */
+.flag-navy {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  background: url(/!/assets/images/flags-navy.png) no-repeat 50% 20px / cover;
+  /* 1.25 dpr */
+  /* 1.5 dpr */
+  /* 2.0 dpr */
+  /* 3.0 dpr */
+}
+.flag-navy[data-navy="ijn"] {
+  background-position: 50% 0%;
+}
+.flag-navy[data-navy="km"] {
+  background-position: 50% 16.66666667%;
+}
+.flag-navy[data-navy="rm"] {
+  background-position: 50% 33.33333333%;
+}
+.flag-navy[data-navy="mn"] {
+  background-position: 50% 50%;
+}
+.flag-navy[data-navy="rn"] {
+  background-position: 50% 66.66666667%;
+}
+.flag-navy[data-navy="usn"] {
+  background-position: 50% 83.33333333%;
+}
+.flag-navy[data-navy="vmf"] {
+  background-position: 50% 100%;
+}
+.flag-navy[data-navy="0"] {
+  background-position: 50% 0%;
+}
+.flag-navy[data-navy="1"] {
+  background-position: 50% 16.66666667%;
+}
+.flag-navy[data-navy="2"] {
+  background-position: 50% 33.33333333%;
+}
+.flag-navy[data-navy="3"] {
+  background-position: 50% 50%;
+}
+.flag-navy[data-navy="4"] {
+  background-position: 50% 66.66666667%;
+}
+.flag-navy[data-navy="5"] {
+  background-position: 50% 83.33333333%;
+}
+.flag-navy[data-navy="6"] {
+  background-position: 50% 100%;
+}
+.flag-navy[data-navy="7"] {
+  background-position: 50% 116.66666667%;
+}
+@media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  .flag-navy {
+    background-image: url(/!/assets/images/flags-navy@1.25.png);
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+  .flag-navy {
+    background-image: url(/!/assets/images/flags-navy@1.5.png);
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .flag-navy {
+    background-image: url(/!/assets/images/flags-navy@2.png);
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 3), (min-resolution: 288dpi) {
+  .flag-navy {
+    background-image: url(/!/assets/images/flags-navy@3.png);
+  }
+}
 .improvement {
   display: inline-block;
   position: relative;
