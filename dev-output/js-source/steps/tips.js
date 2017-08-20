@@ -60,9 +60,9 @@ dev_output_steps.push(function(){
 							+ '<img src=\\"http://fleet.moe/!/pics-ships/'+d.id+'/2.jpg\\" width=\\"218\\" height=\\"300\\"/>'
 							+ '<h3>' + d.getNameNoSuffix(l) + '<small>' + d.getSuffix(l) + '</small></h3>'
 							+ '<h4>'
-								+ ( d['class'] ? _g['data']['ship_classes'][d['class']]['name_zh'] + '级' : '' )
+								+ ( d['class'] ? _g['data']['ship_classes'][d['class']].name[l] + '级' : '' )
 								+ ( d['class_no'] ? '<i>' + d['class_no'] + '</i>号舰' : '' )
-								+ ( d['type'] ? '<b>/</b>' + _g['data']['ship_types'][d['type']]['full_zh'] : '' )
+								+ ( d['type'] ? '<b>/</b>' + _g['data']['ship_types'][d['type']].name[l] : '' )
 							+ '</h4>'
 							+ '<dl>'
 								+ '<dt>耐久</dt><dd>'+ attr('hp') +'</dd>'
