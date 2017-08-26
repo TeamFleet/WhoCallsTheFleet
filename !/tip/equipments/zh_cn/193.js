@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",193,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/20.png)\"></s><strong>特大发登陆艇</strong><small>登陆艇</small></h3>")
+KCTip.loaded("equipments",193,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/20.png)\"></s><strong>特大发动艇</strong><small>登陆艇</small></h3>")
