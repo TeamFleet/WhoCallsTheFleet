@@ -4283,7 +4283,9 @@ _frame.infos.__equipment = function (id) {
     _stat('evasion', '回避');
     _stat('los', '索敌');
     _stat('range', '射程');
-    if (isAircraft) _stat('distance', '航程');
+    if (isAircraft) {
+        _stat('distance', '航程');
+    }
 
     if (!stat_container.html()) stat_container.html('<div class="no-content">无...</div>');
 

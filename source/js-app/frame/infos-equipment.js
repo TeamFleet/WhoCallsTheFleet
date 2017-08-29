@@ -99,8 +99,10 @@
 			_stat('evasion', '回避')
 			_stat('los', '索敌')
 			_stat('range', '射程')
-			if( isAircraft )
+			if( isAircraft ) {
 				_stat('distance', '航程')
+				// _stat('cost', '基地航空队配置消耗')
+			}
 			
 			if( !stat_container.html() )
 				stat_container.html('<div class="no-content">无...</div>')

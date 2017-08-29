@@ -57,3 +57,4 @@
 {"name":{"ja_jp":"潜水艦魚雷","zh_cn":"潜艇专用鱼雷"},"icon":5,"equipable_on_type":[13,14],"id":13,"_id":"xh7oFqzOevtXFXNa","main_attribute":"torpedo"}
 {"name":{"ja_jp":"艦艇修理施設","zh_cn":"舰艇修理设施"},"icon":26,"equipable_on_type":[16],"id":42,"_id":"y3plEM8XUG8KOJwS","main_attribute":"fire"}
 {"name":{"ja_jp":"探照灯","zh_cn":"探照灯"},"icon":24,"equipable_on_type":[1,2,4,5,6,7,8,12,19,23,24,28],"id":39,"_id":"y7CZFKgrmlvEbbx4","main_attribute":"los","equipable_extra_ship":[343,356,500]}
+{"name":{"ja_jp":"艦上戦闘機(夜間)","zh_cn":"舰载战斗机（夜间）","en_us":"Carrier-based Fighter Aircraft (Night)"},"icon":45,"equipable_on_type":[9,10,11,15,30,32],"main_attribute":"aa","id":60,"_id":"yDym0zPcHXJ9smvs"}
