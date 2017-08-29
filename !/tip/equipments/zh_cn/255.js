@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",255,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/45.png)\"></s><strong>F6F-5N</strong><small>舰载战斗机（夜间）</small></h3><span>+10 对空</span><span>+5 对潜</span><span>+3 命中</span><span>+3 回避</span><span>+3 索敌</span><span>航程: 5</span>")
