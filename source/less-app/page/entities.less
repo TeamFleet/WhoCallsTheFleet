@@ -1,0 +1,22 @@
+#layout[data-theme="entities"],
+#layout[data-theme="entity"]{
+	main:after{
+		background:	hsla(180, 20%, 18%, .70);
+		@media all and (max-width: @mobileview-breaking-point ){
+			background-color:	hsla(180, 20%, 18%, .95);
+		}
+	}
+	nav{
+		background: hsl(180, 65%, 20%);
+	}
+}
+
+.page-container[page="entities"]{
+	border-bottom-width: 0;
+}
+
+/*.page-container[page="entities"],
+.page-container.infos[data-infostype="entity"]{
+	background:	hsla(180, 20%, 18%, .70);
+}
+*/

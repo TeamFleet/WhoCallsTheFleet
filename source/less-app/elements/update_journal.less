@@ -1,0 +1,22 @@
+section.update_journal{
+	ul>strong, p>strong{
+		font-size:	larger;
+		font-weight:lighter;
+	}
+	&+h2, &+h3, &+h4, &+h5, &+h6{
+		margin-top:	2em;
+	}
+	&+section.update_journal{
+		&>h2, &>h3, &>h4, &>h5, &>h6{
+			margin-top:	2em;
+		}
+	}
+	a{
+		&:extend(a.link all);
+	}
+}
+h2,h3,h4,h5,h6{
+	&+section.update_journal{
+		margin-top:	1em;
+	}
+}

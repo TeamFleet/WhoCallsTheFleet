@@ -1,0 +1,24 @@
+.layout-mode-selection(){&.mode-selection{
+	.layout-nav-btns-history-on();
+	
+	&>nav>div.pages{
+		.layout-mode-selection-nav-pages();
+		opacity: 	0;
+	}
+	
+	&>nav>div.selection-info{
+		opacity: 	1;
+	}
+	
+	&>nav>.title>span{
+		opacity: 	0;
+	}
+}}
+
+
+
+.mod-selection( @rules ){
+	#layout.mode-selection &{
+		@rules();
+	}
+}

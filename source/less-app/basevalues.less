@@ -1,0 +1,53 @@
+
+@count_equipment_icons: 	45;
+@count_ship_collections: 	19;
+
+@max_equipment_collection: 	8;
+@max_equipment_type: 		59;
+@max_ship_illustrations: 	20;
+
+@nav_height:		80;
+@nav_height_px: 	unit(@nav_height, px);
+@scrollbar_width:	10;
+@thead_height:		32;
+@infos_mask_tail:	75;
+
+@color_fuel:		hsl(113, 35%, 60%);
+@color_ammo:		hsl(47, 38%, 68%);
+@color_steel:		hsl(0, 0%, 89%);
+@color_bauxite:		hsl(26, 79%, 76%);
+
+@left-nav-pages-history-on: 	140px;
+
+@hue_theme_ship: 	199;
+@hue_theme_tool: 	49;
+
+@file_equiptypeicon:    ~"@{folder_images}/equiptypeicon.png?20170829";
+
+@iconfont_revision: 20161007;
+
+
+
+
+
+
+
+
+
+
+
+.mod-capture( @rules ){
+	body.mod-capture &{
+		@rules();
+	}
+}
+.mod-app( @rules ){
+	html.app &{
+		@rules();
+	}
+}
+.mouseover( @rules ){
+	body.hover &:hover{
+		@rules();
+	}
+}

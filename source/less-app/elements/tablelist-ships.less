@@ -1,0 +1,375 @@
+// DEFAULT viewtype: list
+	.tablelist-ships-table-viewtype-list(){
+		&.ships{
+			tbody{
+				tr[data-shipid]{
+					th{
+						.min-width(160);
+						//.padding-left(96);
+						position:	relative;
+						/*
+						input[type="checkbox"].compare{
+							position:	absolute;
+							z-index:	2;
+							.left(-20);
+							top:		0;
+							width:		0;
+							height:		100%;
+							.line-height(49);
+							margin:		0;
+							opacity:	.175;
+							.transition-property(opacity);
+							&:hover, &:checked{
+								opacity:	.9 !important;
+							}
+							&:before{
+								.enable-transition();
+								.transition-property(left);
+							}
+							&:after{
+								.enable-transition();
+								//.transition-property(width);
+								.transition-property(background);
+								content:	'';
+								position:	absolute;
+								z-index:	-1;
+								.width(26);
+								height:		~"calc(100% - 10px)";
+								left:		0;
+								.top(5);
+							}
+							&:checked:before{
+								.left(5);
+							}
+							&:checked:after{
+								background:	hsla(199, 65%, 35%, .85);
+								//background:	linear-gradient(to right, hsla(199, 50%, 18%, .65) 30px, transparent)
+							}
+							&[disabled]{
+								opacity:	0 !important;
+								z-index:	-100;
+							}
+						}
+						*/
+						label.checkbox{
+							position:	absolute;
+							z-index:	2;
+							left: 		-20px;
+							top:		0;
+							width:		0;
+							height:		100%;
+							line-height:49px;
+							margin:		0;
+							opacity:	.175;
+							transition-property: opacity;
+							cursor: 	pointer;
+							&:before{
+								.enable-transition();
+								transition-property: left;
+							}
+							&:after{
+								.enable-transition();
+								transition-property: background;
+								content:	'';
+								position:	absolute;
+								z-index:	-1;
+								width: 		26px;
+								height:		~"calc(100% - 10px)";
+								left:		0;
+								top: 		5px;
+							}
+						}
+						label.checkbox:hover, input[type="checkbox"]:checked + label.checkbox{
+							opacity:	.9 !important;
+						}
+						input[type="checkbox"]:checked + label.checkbox:before{
+							left: 		5px;
+						}
+						input[type="checkbox"]:checked + label.checkbox:after{
+							background:	hsla(199, 65%, 35%, .85);
+						}
+						input[type="checkbox"][disabled] + label.checkbox{
+							display: 	none;
+						}
+						
+						img{
+							position:	absolute;
+							top: 		5px;
+							//.left(5);
+							left: 		-45px;
+							width: 		160px;
+							height: 	40px;
+							z-index:	1;
+							.mask-repeat(no-repeat);
+							.mask-image(~"linear-gradient(to right, transparent 0, transparent 50px, #000 50px, #000 calc(100% - 60px), transparent calc(100% - 10px))");
+							.mask-position(0 0);
+							.mask-size(100% 100%);
+							pointer-events: none;
+							&.nomask{
+								.mask-image(~"linear-gradient(to right, transparent 0, transparent 50px, #000 50px, #000)");
+							}
+						}
+						strong{
+							position:	relative;
+							z-index:	2;
+							line-height:1.5em;
+							small{
+								font-weight:normal;
+								opacity:	.75;
+								.font-size(12);
+								display:	block;
+								line-height:1.5em;
+								.margin-top(-3);
+								padding:	0 0 0 .25em;
+							}
+						}
+						&>em{
+							display: 	none;
+							position: 	absolute;
+							right: 		0;
+							top: 		0;
+							width: 		30px;
+							height: 	100%;
+							color: 		rgba(255, 255, 255, .075);
+							font-style: normal;
+							font-weight:lighter;
+							.transition-property(color);
+							z-index: 	3;
+							&:before{
+								content: 	@iconcode-more;
+								font-family:icons;
+								position: 	absolute;
+								display: 	block;
+								width: 		100%;
+								height: 	0;
+								top: 		50%;
+								left: 		0;
+								text-align: center;
+								line-height:0;
+								font-size: 	24px;
+							}
+							&:hover{
+								color: 		rgba(255, 255, 255, .8) !important;
+							}
+							@media all and (min-width: @screen-width-t1-breaking-point ){
+								display: 	block;
+							}
+						}
+						a{
+							position: 	absolute;
+							top: 		0;
+							left: 		-10px;
+							right: 		0;
+							//width: 		100%;
+							height: 	100%;
+							.container(strong);
+							text-align: 	left !important;
+							padding-left: 	106px;
+							overflow: 	hidden;
+							strong{
+								text-align: 	inherit !important;
+							}
+							img{
+								left: 	-35px;
+							}
+						}
+						[icon]{
+							&:before{
+								display: 	none;
+							}
+						}
+					}
+					td{
+						position:	relative;
+						sup{
+							opacity:	.75;
+							.font-size(11);
+							line-height:1em;
+							padding:	0 0 0 .25em;
+							vertical-align: super;
+							position:	absolute;
+							top: 		auto;
+						}
+						&.sort-first{
+							background-image:	linear-gradient(to bottom, rgba(255,255,255,.5), rgba(255,255,255,.5) ~"calc(100% - 1px)", transparent ~"calc(100% - 1px)");
+							color:				#000;
+						}
+						&.sort-second{
+							background-image:	linear-gradient(to bottom, rgba(255,255,255,.15), rgba(255,255,255,.15) ~"calc(100% - 1px)", transparent ~"calc(100% - 1px)");
+						}
+						/*
+						&.stat-speed,
+						&.stat-range{
+							text-align:	center;
+						}*/
+						&[data-stat="luck"]{
+							.padding-right(16);
+						}
+					}
+					&:hover{
+						/*
+						input[type="checkbox"].compare{
+							opacity:	.9;
+						}
+						*/
+						label.checkbox{
+							opacity:	.9;
+						}
+						th em{
+							color: 	rgba(255, 255, 255, .4);
+						}
+					}
+					
+					&[data-donotcompare="true"]{
+						&>th em{
+							display: 	none !important;
+						}
+					}
+				} // tr[data-shipid]
+			}
+		}
+	}
+
+
+
+// viewtype: card
+	.tablelist-ships-table-viewtype-card(){
+		&.ships{
+			tbody{
+				.margin-right(-10);
+				tr.typetitle{
+					width: 		~"calc(100% - 5px)";
+				}
+				tr[data-shipid]{
+					border-bottom:	0;
+					.margin-left(30);
+					.margin-top(10);
+					.margin-right(5);
+					.height(40);
+					.flex-basis(155px);
+					//background-size:	0 100%;
+					//background-color:	transparent !important;
+					//background-repeat:	no-repeat;
+					//background-image:	linear-gradient(to right, transparent 10px, rgba(0, 0, 0, .35) ~"calc(100% - 30px)", transparent);
+					.transition-property(~"background, color, opacity");
+					/*
+					input[type="checkbox"].compare{
+						position:	absolute;
+						.left(-25);
+						.line-height(40);
+						&:after{
+							top:	0;
+							height:	100%;
+						}
+					}
+					*/
+					label.checkbox{
+						position:	absolute;
+						left: 		-25px;
+						line-height:40px;
+						&:after{
+							height:		100%;
+							top: 		0;
+						}
+					}
+						
+					th, td{
+						display:	block;
+					}
+					th{
+						.height(40);
+						padding-top:	0;
+						padding-bottom:	0;
+						.flexbox();
+						.align-items(center);
+						img{
+							top:	0;
+							.margin-left(-10);
+							.mask-image(~"linear-gradient(to right, transparent 0, transparent 50px, #000 58px, #000 calc(100% - 60px), transparent calc(100% - 10px))");
+							&.nomask{
+								.mask-image(~"linear-gradient(to right, transparent 0, transparent 50px, #000 58px, #000)");
+							}
+						}
+					}
+					td[data-stat]{
+						display:	none;
+					}
+					[icon]{
+						&:before{
+							position: 	absolute;
+							display: 	block;
+							font-size: 	22px;
+							color: 		hsl(@hue_theme_ship, 100%, 100%);
+							transform: 	rotate(15deg);
+							top: 		0;
+							left: 		86px;
+							z-index: 	10;
+							//text-shadow:0 0 5px hsl(@hue_theme_ship, 100%, 15%);
+						}
+					}
+					&:empty{
+						margin-top:	0;
+					}
+					@media all and (min-width: @screen-width-t1-breaking-point ){
+						.flex-basis(175px);
+					}
+					@media all and (min-width: 1680px ){
+						.flex-basis(185px);
+					}
+				}
+			}
+			&.hashover{
+				//tbody tr[data-shipid]:hover{
+					//background-size:	100% 100%;
+					//background:	rgba(0, 0, 0, .35);
+				//}
+				tbody tr[data-shipid]:active{
+					opacity:	.5;
+				}
+			}
+		}
+	}
+
+
+
+// viewtype: compare
+	.tablelist-ships-table-viewtype-compare(){
+		&.ships{
+			tbody{
+				tr[data-shipid]{
+					//display:	none;
+					/*
+					input[type="checkbox"].compare{
+						display:	none;
+					}
+					*/
+					label.checkbox{
+						display: 	none;
+					}
+					&[compare-checked]{
+						//display:	table-row !important;
+						th{
+							//.padding-left(146);
+							img{
+								left:	0;
+								.mask-image(~"linear-gradient(to right, #000 50px, #000 calc(100% - 60px), transparent calc(100% - 10px))");
+								&.nomask{
+									.mask-image(~"linear-gradient(to right, #000 50px, #000)");
+								}
+							}
+							a{
+								left: 	0;
+								padding-left: 	146px;
+							}
+						}
+					}
+					th em{
+						display: 	none !important;
+					}
+					&:not([compare-checked]){
+						display: 	none;
+					}
+				}
+			}
+		}
+	}

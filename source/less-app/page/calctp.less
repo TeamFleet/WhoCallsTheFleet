@@ -1,0 +1,74 @@
+#layout[data-theme="calctp"]{
+	main:after{
+		background:	hsla(@hue_theme_tool, 20%, 18%, .70);
+		@media all and (max-width: @mobileview-breaking-point ){
+			background-color:	hsla(@hue_theme_tool, 20%, 18%, .95);
+		}
+	}
+	nav{
+		background: hsl(@hue_theme_tool, 65%, 20%);
+	}
+}
+
+.page-container[page="calctp"]{
+	font-size: 	14px;
+	h1, h2, h3, h4, h5, h6{
+		//color:	hsl(0, 100%, 73%);
+		//color:		hsl(0, 100%, 76%);
+		color:		hsl(@hue_theme_tool, 100%, 85%);
+		text-shadow:0 0 unit(5 / 30, em) hsl(@hue_theme_tool, 100%, 65%);
+		&[data-content]{
+			color:		hsl(@hue_theme_tool, 100%, 92.5%);
+			text-shadow:0 0 unit(5 / 30, em) hsl(@hue_theme_tool, 100%, 75%);
+		}
+		&[data-content]:before{
+			color: 		hsl(@hue_theme_tool, 100%, 75%);
+		}
+	}
+}
+
+.page-container[page="calctp"] form.tpcalculator{
+	margin-top: 1.5em;
+	overflow: 	hidden;
+	fieldset{
+		display: 	block;
+		vertical-align: top;
+		margin-top: 0;
+		border-color: 	rgba(255,255,255,.15);
+		background: 	rgba(0,0,0,.2);
+		
+		legend{
+			color: 	hsl(@hue_theme_tool, 100%, 85%);
+		}
+		
+		p{
+			display: 	inline-block;
+			width: 		50%;
+			min-width: 	200px;
+			float: 		left;
+			span{
+				display: 	inline-block;
+				width: 		130px;
+				padding: 	0 10px 0 0;
+				text-align: right;
+			}
+			input{
+				width: 		60px;
+				min-width: 	0;
+			}
+		}
+		
+		@media all and (min-width: 641px ){
+			width: 		~"calc(50% - 10px)";
+			&.count_ships{
+				float: 	left;
+				margin-right: 20px;
+			}
+			&.result{
+				clear: 	both;
+				width: 	100%;
+				padding-left: 1em;
+			}
+		}
+	}
+}

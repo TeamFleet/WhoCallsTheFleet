@@ -1,0 +1,254 @@
+.tablelist-fleets(){.tablelist.fleets{
+	
+	& > .options{
+		.setting-hqlv{
+			display: 	inline-block;
+			position: 	relative;
+			padding: 	0 15px 0 0;
+			line-height:30px;
+			input[type="number"]{
+				padding: 	0;
+				text-align: center;
+				min-width: 	0;
+				width: 		2.5em;
+				line-height:normal;
+				vertical-align: middle;
+				height: 	24px;
+				margin-left:4px;
+				//font-size: 	inherit;
+				-moz-appearance:textfield;
+				&::-webkit-inner-spin-button{
+					position: 	absolute;
+					z-index: 	-100;
+					visibility: hidden;
+				}
+			}
+			&:after{
+				@height: 	22px;
+				position: 	absolute;
+				content: 	'';
+				top: 		50%;
+				right: 		0;
+				height: 	@height;
+				margin-top: (0 - @height / 2);
+				width: 		1px;
+				background: rgba(255, 255, 255, .15);
+				//border: 	0;
+				//border-left:1px solid rgba(0, 0, 0, .1);
+				//border-right:1px solid rgba(255, 255, 255, .15);
+			}
+		}
+		&>div.filters{
+			button.export{
+				@media all and (max-width: @mobileview-breaking-point){
+					display: 	none;
+				}
+				.ios({
+					display: 	none;
+				});
+			}
+		}
+	}
+	
+	// Default/List view HERE
+	
+	& > [viewtype="card"] ~ .tablelist-container{
+		.tablelist-body{
+			h4{
+				height: 	17.5px;
+				margin-bottom: 7.5px;
+				margin-left: -10px;
+				width: 		~"calc(100% + 10px)";
+				//margin: 	0 auto 7.5px -20px;
+				//width: 		~"calc(100% + 30px)";
+				&:last-child{
+					margin-bottom: 	0;
+					border: 		0;
+				}
+			}
+			dl[data-fleetid]{
+				flex-basis: 500px !important;
+			}
+			dl[data-fleetid].link_fleet{
+				margin-top: 10px;
+				height: 	40px;
+			}
+		}
+		@media all and (max-width: @screen-width-t4-breaking-point ){
+			.tablelist-body{
+				display: 	block;
+				h4{
+					margin-bottom: 	15px;
+				}
+				dl[data-fleetid].link_fleet{
+					dt{
+						padding-right: 0;
+					}
+				}
+			}
+		}
+		@media all and (max-width: @screen-width-t7-breaking-point ){
+			.tablelist-body{
+				dl[data-fleetid].link_fleet{
+					height: 	auto;
+					min-height: 40px;
+					dt{
+						display: 	block;
+						padding: 	38px 1em 4px 1em;
+						line-height:18px;
+						&>strong{
+							line-height:inherit;
+						}
+					}
+					&:hover:before{
+						height: 	100%;
+					}
+				}
+			}
+		}
+	}
+	
+	.tablelist-container > .nocontent{
+		position:	absolute;
+		top:		0;
+		right:		0;
+		bottom: 	20px;
+		left:		0;
+		color:		rgba(255,255,255,.2);
+		.animate(fadeIn);
+		.container(div);
+		display:	none;
+		&>div{
+			&>span{
+				font-size: 	60px;
+				line-height:70px;
+				letter-spacing:	.15em;
+				display:	block;
+				font-weight:lighter;
+				@media all and (max-width: @mobileview-breaking-point){
+					font-size: 	10vw;
+					line-height:(7 / 6);
+				}
+			}
+			&>button{
+				height: 	40px;
+				font-size: 	16px;
+				color:		rgba(255,255,255, .5);
+				letter-spacing:	.1em;
+				padding:	0 5em;
+				background:	rgba(0,0,0, .25);
+				border-radius:	5px;
+				border: 	1px solid rgba(255,255,255, .2);
+				transition-property: background-color, border-color, color;
+				&:hover{
+					background:	rgba(0,0,0, .6);
+					color:		rgba(255,255,255, .85);
+				}
+				&:active{
+					background:	rgba(0,0,0, .325);
+					color:		rgba(255,255,255, .75);
+				}
+				@media all and (max-width: @mobileview-breaking-point){
+					padding: 	0;
+					width: 		50vw;
+					max-width: 	300px;
+				}
+			}
+			&>span + button{
+				margin-top: 	14px;
+			}
+		}
+	} // &>.nocontent
+
+	&.nocontent .tablelist-container>.nocontent{
+		display:	block !important;
+	}
+
+}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body > .menus > .menu.menu-tablelistfleets-options{
+	&>.body{
+		.option-in-tablelist{
+			display: 	none;
+		}
+		menuitem.option-aircraftdefaultmax{
+			label{
+				//position: 		relative;
+				//padding-right: 	(21 + 24px * 0.65 + 4);
+				&:after{
+					content: 	'';
+					//position: 	absolute;
+					//display: 	block;
+					width: 		(24px * 0.65);
+					height: 	(32px * 0.65);
+					background: ~"url(@{folder_images}/Aircraft_Proficiency.png) no-repeat 50% 100% / cover";
+					//right: 		21px;
+					//top: 		50%;
+					//margin-top: (-16px * 0.65 + 1);
+					display: 	inline-block;
+					margin-left:5px;
+					vertical-align: text-bottom;
+					transform: 	translateY(15%);
+				}
+			}
+		}
+		.option-filelocation{
+			padding: 	0 1em .5em 1em;
+			button{
+				float: 		right;
+				border: 	1px solid rgba(255, 255, 255, .25);
+				background: rgba(255, 255, 255, .15);
+				padding: 	0 10px;
+				line-height:30px;
+				margin: 	5px 0 0 0;
+				&:hover{
+					background: 	rgba(255, 255, 255, .25);
+					color: 			rgb(255, 255, 255);
+				}
+				&:active{
+					background: 	rgba(255, 255, 255, .05);
+				}
+				&+button{
+					border-right-width: 0;
+				}
+			}
+		}
+	}
+	&.is-tablelist>.body{
+		.option-in-tablelist{
+			display: 	block;
+			&.inline{
+				display: 	inline;
+			}
+		}
+		.option-in-infos{
+			display: 	none;
+		}
+	}
+}
+body > .menus > .menu.menu-fleets-new > .body{
+	menuitem.import_file{
+		// @media all and (max-width: @mobileview-breaking-point){
+		// 	display: 	none;
+		// }
+		.ios({
+			display: 	none;
+		});
+	}
+}

@@ -1,0 +1,45 @@
+{
+  "name": "whocallsthefleet-modules",
+  "version": "1.0.0",
+  "description": "",
+  "main": "entry.js",
+  "scripts": {
+    "start": "nw ../",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "animate.css": "^3.5.2",
+    "clipboard": "^1.6.1",
+    "jquery": "3.2.1",
+    "kckit": "^0.8.0",
+    "kctip": "^0.5.0",
+    "localforage": "^1.5.0",
+    "lockr": "^0.8.4",
+    "lz-string": "^1.4.4",
+    "nedb": "^1.8.0",
+    "pepjs": "^0.4.2",
+    "sprintf-js": "^1.0.3"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.7.7",
+    "babel-core": "^6.24.1",
+    "babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
+    "babel-plugin-transform-minify-booleans": "^6.8.0",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-less": "^3.3.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-notify": "^3.0.0",
+    "gulp-postcss": "^6.4.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.1.2",
+    "gulp-watch-less2": "^2.0.4",
+    "less-plugin-clean-css": "^1.5.1"
+  }
+}

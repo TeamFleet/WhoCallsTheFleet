@@ -1,0 +1,3 @@
+[submodule "source/nw.js-base-framework"]
+	path = source/nw.js-base-framework
+	url = https://github.com/Diablohu/nw.js-base-framework.git

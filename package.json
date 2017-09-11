@@ -1,63 +1,119 @@
 {
-    "name": "whocallsthefleet",
-    "productName": "electron",
-    "version": "1.0.0",
-    "description": "Who Calls the Fleet (http://fleet.moe)",
-    "main": "src/index.js",
-    "scripts": {
-        "start": "electron-forge start",
-        "package": "electron-forge package",
-        "make": "electron-forge make",
-        "publish": "electron-forge publish",
-        "lint": "eslint src --color"
-    },
-    "keywords": [],
-    "author": {
-        "name": "Diablohu",
-        "email": "diablohudream@gmail.com",
-        "url": "http://diablohu.com"
-    },
-    "license": "MIT",
-    "config": {
-        "forge": {
-            "make_targets": {
-                "win32": [
-                    "squirrel"
-                ],
-                "darwin": [
-                    "zip"
-                ],
-                "linux": [
-                    "deb",
-                    "rpm"
-                ]
-            },
-            "electronPackagerConfig": {
-                "packageManager": "yarn"
-            },
-            "electronWinstallerConfig": {
-                "name": "electron"
-            },
-            "electronInstallerDebian": {},
-            "electronInstallerRedhat": {},
-            "github_repository": {
-                "owner": "",
-                "name": ""
-            },
-            "windowsStoreConfig": {
-                "packageName": "",
-                "name": "electron"
-            }
-        }
-    },
-    "dependencies": {
-        "electron-compile": "^6.4.1"
-    },
-    "devDependencies": {
-        "babel-plugin-transform-async-to-generator": "^6.24.1",
-        "babel-preset-env": "^1.6.0",
-        "babel-preset-react": "^6.24.1",
-        "electron-forge": "^4.0.2",
-        "electron-prebuilt-compile": "1.7.7"
+  "name": "WhoCallsTheFleet",
+  "main": "app/main.html",
+  "version": "0.22.4",
+  "description": "An offline guidebook for KanColle. Based on NW.JS",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Diablohu/WhoCallsTheFleet"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/Diablohu/WhoCallsTheFleet"
     }
+  ],
+  "author": {
+    "name": "Diablohu",
+    "email": "diablohudream@gmail.com"
+  },
+  "readmeFilename": "README.md",
+  "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.github.com/cthackers/adm-zip/master/MIT-LICENSE.txt"
+    }
+  ],
+  "debug": true,
+  "window": {
+    "width": 1280,
+    "height": 720,
+    "toolbar": false,
+    "icon": "./app/assets/images/appicon.png",
+    "position": "center",
+    "min_width": 640,
+    "min_height": 480,
+    "as_desktop": false,
+    "resizable": true,
+    "always-on-top": false,
+    "fullscreen": false,
+    "show_in_taskbar": true,
+    "frame": false,
+    "show": false,
+    "kiosk": false,
+    "transparent": false
+  },
+  "platformOverrides": {
+    "win": {
+      "debug": false,
+      "window": {
+        "frame": false
+      }
+    },
+    "win32": {
+      "debug": false,
+      "window": {
+        "frame": false
+      }
+    },
+    "osx": {
+      "debug": false,
+      "window": {
+        "frame": true
+      }
+    },
+    "linux": {
+      "debug": false,
+      "window": {
+        "frame": true
+      }
+    }
+  },
+  "nw-packager": {
+    "version": "0.12.2",
+    "platforms": [
+      "win32",
+      "win64",
+      "osx64"
+    ],
+    "filesRelative": [
+      "node_modules",
+      "package.json"
+    ],
+    "dataVersion": {
+      "app": "0.22.4.0",
+      "app-db": "2017.08.30",
+      "bgimgs": "1.18.6.0",
+      "pics": "2017.08.30",
+      "pics-enemies": "2017.08.12",
+      "pics-ships": "2017.08.12",
+      "pics-ships-extra": "2017.08.12"
+    },
+    "buildDir": "N:\\nwbuild\\build",
+    "winIco": "./source/appicon.ico",
+    "enableLauncher": true,
+    "dataRelative": [
+      "app",
+      "app-db",
+      "bgimgs",
+      "pics",
+      "pics-enemies",
+      "pics-ships",
+      "pics-ships-extra"
+    ],
+    "launcherSplash": "./source/launcher.webp",
+    "macIcns": "./source/appicon.icns"
+  },
+  "dependencies": {
+    "adm-zip": "0.4.7",
+    "jsonfile": "2.2.1",
+    "markdown": "0.5.0",
+    "mkdirp": "0.5.1",
+    "nedb": "1.1.1",
+    "q": "1.4.1",
+    "request": "2.58.0",
+    "request-progress": "0.3.1",
+    "semver": "4.3.6"
+  }
 }

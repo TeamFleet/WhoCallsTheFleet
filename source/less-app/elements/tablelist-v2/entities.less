@@ -1,0 +1,49 @@
+.tablelist.entities{
+	.main-sizing-padding();
+	
+	display: 	block;
+	flex-flow: 	none;
+	height: 	auto;
+	//overflow-y: scroll;
+	//-webkit-overflow-scrolling: touch;
+	
+	.typetitle{
+		height: 	50px;
+		font-weight:bold;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		margin: 	0 auto 0 -20px;
+		width: 		~"calc(100% + 40px)";
+		padding: 	18px 0 0 20px;
+		font-family:@font_famliy_Song;
+		text-shadow:0 1px 0 #000;
+		font-size: 	18px;
+		small{
+			padding-left:	.5em;
+			font-size:		75%;
+			opacity:		.75;
+		}
+	}
+	
+	.tablelist-list{
+		margin-right: 	-10px;
+		padding-bottom: 30px;
+		&>.unit{
+			margin-right: 	10px;
+			&:not(:empty){
+				margin-top: 10px;
+			}
+			&.illustrator{
+				height: 	25px;
+				line-height:25px;
+				padding: 	0 0 0 6px;
+				transition-property: background-color, opacity;
+				&:hover{
+					background-color: 	rgba(0,0,0,.2);
+				}
+				&:active{
+					opacity:	.5;
+				}
+			}
+		}
+	}
+}

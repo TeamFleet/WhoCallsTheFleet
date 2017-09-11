@@ -1,0 +1,99 @@
+#layout[data-theme="ships"],
+#layout[data-theme="ship"]{
+	main:after{
+		background:	hsla(@hue_theme_ship, 20%, 18%, .70);
+		@media all and (max-width: @mobileview-breaking-point ){
+			background-color:	hsla(@hue_theme_ship, 20%, 18%, .95);
+		}
+	}
+	nav{
+		background: hsl(@hue_theme_ship, 65%, 20%);
+	}
+}
+
+/*
+.page-container[page="ships"],
+.page-container.infos[data-infostype="ship"]{
+	//background:	hsla(199, 30%, 18%, .65);
+	background:	hsla(199, 20%, 18%, .70);
+}
+*/
+
+.page-container[page="ships"]{
+	border-width:	0 !important;
+	.window-maxmize({
+		.border-right-width(0) !important;
+	});
+
+	.tablelist-container.sortable{
+		.tablelist-header{
+			[stat]{
+				&:hover, &.sorting{
+					color:		hsl(200, 100%, 85%);
+					text-shadow:0 0 2px hsl(200, 100%, 50%),
+								0 0 1px hsl(200, 100%, 15%);
+				}
+				&.sorting{
+					@indicator_size:	6px;
+					@indicator_color:	hsl(200, 100%, 65%);
+					&:before{
+						position:	absolute;
+						z-index:	-1;
+						top:		0;
+						left:		50%;
+						width:		0;
+						height:		0;
+						content:	'';
+						margin-left:(0 - @indicator_size);
+						border:		@indicator_size solid transparent;
+					}
+					&.desc:before{
+						border-top-color:@indicator_color
+					}
+					&.asc:before{
+						border-bottom-color:@indicator_color;
+						border-top-width:	0;
+					}
+				}
+			}
+		}
+	}
+	/*
+	table.sortable{
+		thead{
+			td{
+				&:hover, &.sorting{
+					color:		hsl(200, 100%, 85%);
+					text-shadow:0 0 2px hsl(200, 100%, 50%),
+								0 0 1px hsl(200, 100%, 15%);
+				}
+				&.sorting{
+					@indicator_size:	6px;
+					@indicator_color:	hsl(200, 100%, 65%);
+					&>.th-inner-wrapper>span>span{
+						position:	relative;
+						&:before{
+							position:	absolute;
+							z-index:	-1;
+							top:		0;
+							left:		50%;
+							width:		0;
+							height:		0;
+							content:	'';
+							margin-left:(0 - @indicator_size);
+							border:		@indicator_size solid transparent;
+						}
+					}
+					&.desc>.th-inner-wrapper>span>span:before{
+						border-top-color:@indicator_color
+					}
+					&.asc>.th-inner-wrapper>span>span:before{
+						border-bottom-color:@indicator_color;
+						border-top-width:	0;
+					}
+				}
+			}
+		}
+	}
+	*/
+}
