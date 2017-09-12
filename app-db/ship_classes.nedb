@@ -14,6 +14,7 @@
 {"ship_type_id":13,"id":60,"_id":"7o2yPGimgHf6uV7g","speed_rule":"low-3","name":{"en_us":"Junsen Type B","ja_jp":"巡潜乙","zh_cn":"巡潜乙"}}
 {"id":4,"ship_type_id":6,"_id":"8Sh8jh40V9c1dwKp","speed_rule":"low-2","name":{"en_us":"Fusou","ja_jp":"扶桑","zh_cn":"扶桑"}}
 {"id":5,"ship_type_id":16,"_id":"8xQPYsq6jHfdAjBa","speed_rule":"low-3","name":{"en_us":"Akashi","ja_jp":"明石","zh_cn":"明石"}}
+{"name":{"ja_jp":"Lexington","zh_cn":"列克星敦","en_us":"Lexington"},"ship_type_id":11,"id":105,"_id":"9B4Fg2wROIO0QVaS","speed_rule":"high-3","navy":"usn"}
 {"ship_type_id":1,"id":22,"_id":"AcZKZJTEy3ySYL7p","speed_rule":"high-3","name":{"en_us":"Yuugumo","ja_jp":"夕雲","zh_cn":"夕云"}}
 {"ship_type_id":1,"id":78,"_id":"AtJsZGIYiyfK2m47","speed_rule":"high-3","name":{"en_us":"Maestrale","ja_jp":"Maestrale","zh_cn":"西北风"},"navy":"rm"}
 {"ship_type_id":13,"id":64,"_id":"BS1phNGWHoLWnP2X","speed_rule":"low-3","name":{"en_us":"Type 3 Submergence Transport Vehicle","ja_jp":"三式潜航輸送艇","zh_cn":"三式潜航运输艇"}}
