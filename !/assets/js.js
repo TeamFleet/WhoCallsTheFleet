@@ -3019,7 +3019,7 @@ _frame.app_config = {
     }
 };
 
-_g.db_version = '20170829';
+_g.db_version = '20170913';
 
 _g.bgimg_count=26;
 

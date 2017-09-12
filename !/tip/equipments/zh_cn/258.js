@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",258,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/29.png)\"></s><strong>夜间作战航空要员</strong><small>航空要员</small></h3><span>+1 火力</span><span>+1 装甲</span><span>射程: 中</span>")

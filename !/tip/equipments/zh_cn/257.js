@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",257,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/46.png)\"></s><strong>TBM-3D</strong><small>舰载鱼雷机（夜间）</small></h3><span>+2 火力</span><span>+9 雷装</span><span>+1 对空</span><span>+8 对潜</span><span>+2 命中</span><span>+4 索敌</span>")
