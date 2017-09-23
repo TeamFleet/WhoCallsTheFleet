@@ -91,7 +91,7 @@ class TablelistFleets extends Tablelist{
                                         this.dom.setting_hqlv_input = $('<input/>',{
                                                 'type':		'number',
                                                 'min':		0,
-                                                'max':		_g.shipMaxLv
+                                                'max':		_g.hqMaxLv
                                             })
                                             .val(Lockr.get('hqLvDefault', _g.defaultHqLv))
                                             .on({
@@ -103,6 +103,10 @@ class TablelistFleets extends Tablelist{
                                                 }.bind(this),
                                                 'blur.tiphide': function(){
                                                     this.dom.setting_hqlv_input.trigger('tiphide')
+                                                    if (this.dom.setting_hqlv_input.val() > _g.hqMaxLv){
+                                                        this.dom.setting_hqlv_input.val(_g.hqMaxLv)
+                                                        this.dom.setting_hqlv_input.trigger('input')
+                                                    }
                                                 }.bind(this),
                                                 'click': function(e){
                                                     e.stopImmediatePropagation()

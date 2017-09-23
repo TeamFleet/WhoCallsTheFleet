@@ -2470,6 +2470,7 @@ _g.lang = KC.lang;
 _g.joint = KC.joint;
 _g.defaultHqLv = 90;
 _g.shipMaxLv = Ship.lvlMax;
+_g.hqMaxLv = KC.maxHqLv;
 _g.resourcesTable = ['fuel', 'ammo', 'steel', 'bauxite'];
 
 _g.isNWjs = typeof node != 'undefined' || typeof nw != 'undefined';
@@ -5832,7 +5833,7 @@ var InfosFleet = function () {
             }).append(this.doms['hqlvOption'] = $('<input/>', {
                 'type': 'number',
                 'min': 0,
-                'max': _g.shipMaxLv,
+                'max': _g.hqMaxLv,
                 'placeholder': defaultHqLv
             }).val(this._hqlv || defaultHqLv).on({
                 'input': function () {
@@ -5843,6 +5844,10 @@ var InfosFleet = function () {
                 }.bind(this),
                 'blur.tiphide': function () {
                     this.doms['hqlvOption'].trigger('tiphide');
+                    if (this.doms['hqlvOption'].val() > _g.hqMaxLv) {
+                        this.doms['hqlvOption'].val(_g.hqMaxLv);
+                        this.doms['hqlvOption'].trigger('input');
+                    }
                 }.bind(this),
                 'click': function click(e) {
                     e.stopImmediatePropagation();
@@ -8992,7 +8997,7 @@ var TablelistFleets = function (_Tablelist4) {
         }).append(_this19.dom.setting_hqlv_input = $('<input/>', {
             'type': 'number',
             'min': 0,
-            'max': _g.shipMaxLv
+            'max': _g.hqMaxLv
         }).val(Lockr.get('hqLvDefault', _g.defaultHqLv)).on({
             'input': function () {
                 _g.updateDefaultHqLv(this.dom.setting_hqlv_input.val());
@@ -9002,6 +9007,10 @@ var TablelistFleets = function (_Tablelist4) {
             }.bind(_this19),
             'blur.tiphide': function () {
                 this.dom.setting_hqlv_input.trigger('tiphide');
+                if (this.dom.setting_hqlv_input.val() > _g.hqMaxLv) {
+                    this.dom.setting_hqlv_input.val(_g.hqMaxLv);
+                    this.dom.setting_hqlv_input.trigger('input');
+                }
             }.bind(_this19),
             'click': function click(e) {
                 e.stopImmediatePropagation();

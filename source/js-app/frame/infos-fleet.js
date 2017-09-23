@@ -292,7 +292,7 @@ class InfosFleet {
                     this.doms['hqlvOption'] = $('<input/>', {
                         'type': 'number',
                         'min': 0,
-                        'max': _g.shipMaxLv,
+                        'max': _g.hqMaxLv,
                         'placeholder': defaultHqLv
                     })
                         .val(this._hqlv || defaultHqLv)
@@ -305,6 +305,10 @@ class InfosFleet {
                             }.bind(this),
                             'blur.tiphide': function () {
                                 this.doms['hqlvOption'].trigger('tiphide')
+                                if (this.doms['hqlvOption'].val() > _g.hqMaxLv){
+                                    this.doms['hqlvOption'].val(_g.hqMaxLv)
+                                    this.doms['hqlvOption'].trigger('input')
+                                }
                             }.bind(this),
                             'click': function (e) {
                                 e.stopImmediatePropagation()
