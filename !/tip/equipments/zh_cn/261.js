@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",261,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/18.png)\"></s><strong>Type144/147 ASDIC</strong><small>声纳</small></h3><span>+13 对潜</span><span>+3 命中</span><span>+1 回避</span>")
