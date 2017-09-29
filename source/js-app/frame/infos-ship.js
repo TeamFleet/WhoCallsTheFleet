@@ -20,12 +20,19 @@ _frame.infos.__ship = function( id ){
 
         switch( name ){
             case 'hp':
-                val99 = _val( d.getAttribute('hp', 99) )
-                valMax = _val( d.getAttribute('hp', _g.shipMaxLv) )
+                val99 = _val( d.getAttribute('hp', 99) ) + '<sup>+' + (d.getStatExtraMax('hp', 99) || 0) + '</sup>'
+                valMax = _val( d.getAttribute('hp', _g.shipMaxLv) ) + '<sup>+' + (d.getStatExtraMax('hp', 100) || 0) + '</sup>'
                 break;
             case 'asw':
-                val99 = _val( d.getAttribute('asw', 99), /^(5|8|9|12|24)$/.test(d['type']) )
-                valMax = _val( d.getAttribute('asw', _g.shipMaxLv), /^(5|8|9|12|24)$/.test(d['type']) )
+                val99 = d.getAttribute('asw', 99)
+                if(val99 || /^(5|8|9|12|24|30)$/.test(d['type'])){
+                    var sup = '<sup>+' + (d.getStatExtraMax('asw') || 0) + '</sup>'
+                    val99 = _val( d.getAttribute('asw', 99), true ) + sup
+                    valMax = _val( d.getAttribute('asw', _g.shipMaxLv), true ) + sup
+                }else{
+                    val99 = _val( 0, false )
+                    valMax = _val( 0, false )
+                }
                 break;
             case 'evasion':
             case 'los':
