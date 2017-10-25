@@ -66,9 +66,16 @@
     }
     KC.db = _g.data
 
+    var defaultFleetFilePath = node.path.join(node.gui.App.dataPath, '../../NeDB', 'fleets.json')
+    if (!fs.existsSync(defaultFleetFilePath)) {
+        defaultFleetFilePath = node.path.join(node.gui.App.dataPath, '../NeDB', 'fleets.json')
+    }
+    if (!fs.existsSync(defaultFleetFilePath)) {
+        defaultFleetFilePath = node.path.join(node.gui.App.dataPath, 'NeDB', 'fleets.json')
+    }
     var _db = {
         'fleets': new node.nedb({
-                filename: 	Lockr.get('fleets-builds-file', node.path.join(node.gui.App.dataPath, 'NeDB', 'fleets.json'))
+                filename: 	Lockr.get('fleets-builds-file', defaultFleetFilePath)
             })
     }
     _g.ship_type_order = []
@@ -957,8 +964,10 @@ _frame.app_main = {
         // 如果从启动器载入，检查数据是否有更新
             .then(function(){
                 _g.log('数据更新检查: START')
-                if( global.launcherOptions && global.launcherOptions["dataUpdated"] )
-                    return global.launcherOptions["dataUpdated"]
+                // if( global && global.launcherOptions && global.launcherOptions["dataUpdated"] )
+                //     return global.launcherOptions["dataUpdated"]
+                if( launcherOptions && launcherOptions["dataUpdated"] )
+                    return launcherOptions["dataUpdated"]
                 return {}
             })
             .then(function(dataUpdated){

@@ -38,7 +38,6 @@
 // @koala-prepend "nw.js-base-framework/source/js-base/elements/input.js"
 
 // @koala-prepend "../_/node_modules/lockr/lockr.min.js"
-// @koala-prepend "js-app/lib/SmoothScroll.js"
 // @koala-prepend "../_/node_modules/lz-string/libs/lz-string.js"
 // @koala-prepend "../_/node_modules/sprintf-js/src/sprintf.js"
 // @koala-prepend "../_/node_modules/pepjs/dist/pep.min.js"

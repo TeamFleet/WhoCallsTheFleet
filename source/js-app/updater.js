@@ -77,6 +77,7 @@ var _updater = {
             }else{
                 _updater.remote_data = JSON.parse( body || '{}' ) || {}
                 _g.log('服务器版本: ', _updater.remote_data )
+                // alert(JSON.stringify(_updater.remote_data))
                 // 检查主程序版本
                 if (node.semver.lt(process.versions.nw, _updater.remote_data.core || '0.1.0')) {
                     _g.badgeError('!! 主程序已更新，请访问 fleet.moe 手动下载最新版本 !!', true)

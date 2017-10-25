@@ -1840,7 +1840,10 @@ _menu.prototype.show = function (targetEl, x, y) {
     this.position(targetEl, x, y);
 
     if (typeof node != 'undefined') {
-        node.win.capturePage(this.capturePage_callback.bind(this), 'jpg', 'datauri');
+        node.win.capturePage(this.capturePage_callback.bind(this), {
+            format: 'jpg',
+            datatype: 'datauri'
+        });
     } else {
         this.dom.menu.addClass('on');
     }
@@ -1993,7 +1996,10 @@ _frame.modal = {
             if (!this.dom.blured && typeof node != 'undefined') {
                 node.win.capturePage(function (datauri) {
                     _frame.modal.dom.blured = $('<img/>').attr('src', datauri).appendTo(_frame.modal.dom.bg);
-                }, 'jpg', 'datauri');
+                }, {
+                    format: 'jpg',
+                    datatype: 'datauri'
+                });
                 this.dom.container.addClass('mod-blur-shot');
             }
         }
@@ -2136,7 +2142,10 @@ _p.tip = {
             if (this.dom_bluredbg && typeof node != 'undefined') {
                 node.win.capturePage(function (datauri) {
                     _p.tip.dom_bluredbg.css('background-image', 'url(' + datauri + ')');
-                }, 'jpg', 'datauri');
+                }, {
+                    format: 'jpg',
+                    datatype: 'datauri'
+                });
             }
             this.dom.addClass('show');
         }
