@@ -27,7 +27,7 @@
   ],
   "debug": true,
   "nw-packager": {
-    "version": "0.12.2",
+    "version": "0.26.0",
     "platforms": [
       "win32",
       "win64",
