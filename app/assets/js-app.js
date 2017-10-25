@@ -125,10 +125,10 @@ _g.badgeMsg = function (cont) {
         delete _g.timeout_badgeMsg_hiding;
     }, 3000);
 };
-_g.badgeError = function (cont) {
+_g.badgeError = function (cont, persist) {
     _frame.dom.layout.attr('data-errorbadge', cont);
     clearTimeout(this.timeout_badgeError_hiding);
-    this.timeout_badgeError_hiding = setTimeout(function () {
+    if (!persist) this.timeout_badgeError_hiding = setTimeout(function () {
         _frame.dom.layout.removeAttr('data-errorbadge');
         delete _g.timeout_badgeError_hiding;
     }, 3000);
@@ -2195,6 +2195,11 @@ _updater.get_remote = function () {
         } else {
             _updater.remote_data = JSON.parse(body || '{}') || {};
             _g.log('服务器版本: ', _updater.remote_data);
+
+            if (node.semver.lt(process.versions.nw, _updater.remote_data.core || '0.1.0')) {
+                _g.badgeError('!! 主程序已更新，请访问 fleet.moe 手动下载最新版本 !!', !0);
+                deferred.reject();
+            }
             deferred.resolve(_updater.remote_data);
         }
     });

@@ -151,13 +151,14 @@
             delete _g.timeout_badgeMsg_hiding
         }, 3000)
     };
-    _g.badgeError = function( cont ){
+    _g.badgeError = function( cont, persist ){
         _frame.dom.layout.attr('data-errorbadge', cont)
         clearTimeout( this.timeout_badgeError_hiding )
-        this.timeout_badgeError_hiding = setTimeout(function(){
-            _frame.dom.layout.removeAttr('data-errorbadge')
-            delete _g.timeout_badgeError_hiding
-        }, 3000)
+        if (!persist)
+            this.timeout_badgeError_hiding = setTimeout(function(){
+                _frame.dom.layout.removeAttr('data-errorbadge')
+                delete _g.timeout_badgeError_hiding
+            }, 3000)
     };
 
 
