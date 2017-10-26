@@ -1273,6 +1273,7 @@ if (!savedFleetFilePath) {
     if (!fs.existsSync(defaultFleetFilePath)) {
         defaultFleetFilePath = node.path.join(node.gui.App.dataPath, 'NeDB', 'fleets.json');
     }
+    savedFleetFilePath = defaultFleetFilePath;
 }
 var _db = {
     'fleets': new node.nedb({

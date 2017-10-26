@@ -77,6 +77,7 @@
         if (!fs.existsSync(defaultFleetFilePath)) {
             defaultFleetFilePath = node.path.join(node.gui.App.dataPath, 'NeDB', 'fleets.json')
         }
+        savedFleetFilePath = defaultFleetFilePath
     }
     var _db = {
         'fleets': new node.nedb({
@@ -709,6 +710,16 @@ _frame.app_main = {
 
         // 获取背景图列表，生成背景图
             .then(BgImg.init)
+
+        // 测试 savedFleetFilePath
+            // .then(function() {
+                // var stat = fs.lstatSync(path.resolve(`N:\\OneDrive\\艦これ - 大建.txt`))
+                // var stat = fs.readFileSync(path.resolve(`N:\\OneDrive\\艦これ - 大建.txt`), 'utf-8')
+                // console.log(stat)
+                // var stat = fs.lstatSync(path.resolve(`N:\\nwbuild\\build\\WhoCallsTheFleet (debug, 0.12.2)\\win64\\errorlog.txt`))
+                // var stat = fs.readFileSync(path.resolve(`N:\\nwbuild\\build\\WhoCallsTheFleet (debug, 0.12.2)\\win64\\errorlog.txt`), 'utf-8')
+                // return true
+            // })
 
         // 读取db
             .then(function(){
