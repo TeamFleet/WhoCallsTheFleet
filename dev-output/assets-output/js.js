@@ -4122,6 +4122,7 @@ Page.hide = function (page) {
 };
 
 Page.show = function (page) {
+
     page = page || _frame.app_main.cur_page;
     var p = void 0;
 
@@ -9469,6 +9470,7 @@ var TablelistFleets = function (_Tablelist4) {
     }, {
         key: 'genlist',
         value: function genlist(callback) {
+
             Q.fcall(function () {}).then(function () {
                 return this.loaddata();
             }.bind(this)).then(function (arr) {

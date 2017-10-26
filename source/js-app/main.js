@@ -66,16 +66,19 @@
     }
     KC.db = _g.data
 
-    var defaultFleetFilePath = node.path.join(node.gui.App.dataPath, '../../NeDB', 'fleets.json')
-    if (!fs.existsSync(defaultFleetFilePath)) {
-        defaultFleetFilePath = node.path.join(node.gui.App.dataPath, '../NeDB', 'fleets.json')
-    }
-    if (!fs.existsSync(defaultFleetFilePath)) {
-        defaultFleetFilePath = node.path.join(node.gui.App.dataPath, 'NeDB', 'fleets.json')
+    var savedFleetFilePath = Lockr.get('fleets-builds-file')
+    if (!savedFleetFilePath) {
+        var defaultFleetFilePath = node.path.join(node.gui.App.dataPath, '../../NeDB', 'fleets.json')
+        if (!fs.existsSync(defaultFleetFilePath)) {
+            defaultFleetFilePath = node.path.join(node.gui.App.dataPath, '../NeDB', 'fleets.json')
+        }
+        if (!fs.existsSync(defaultFleetFilePath)) {
+            defaultFleetFilePath = node.path.join(node.gui.App.dataPath, 'NeDB', 'fleets.json')
+        }
     }
     var _db = {
         'fleets': new node.nedb({
-                filename: 	Lockr.get('fleets-builds-file', defaultFleetFilePath)
+                filename: 	savedFleetFilePath
             })
     }
     _g.ship_type_order = []

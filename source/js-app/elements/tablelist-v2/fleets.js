@@ -729,6 +729,9 @@ class TablelistFleets extends Tablelist{
     
     // 生成列表
         genlist(callback){
+            // console.log(`========== Fleet list generating ==========`)
+            // const t0 = performance.now()
+
             Q.fcall(function(){})
     
                 //promise_chain
@@ -768,6 +771,8 @@ class TablelistFleets extends Tablelist{
                     if( callback )
                         callback()
                     _g.log('Fleets list DONE')
+                    // const t1 = performance.now()
+                    // console.log(`========== Fleet list generated took ${t1 - t0}ms ==========`)
                 })
         }
     

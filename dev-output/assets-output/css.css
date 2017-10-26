@@ -4831,7 +4831,7 @@ body.mod-capture #tip {
   width: 120px;
   height: 30px;
   pointer-events: none;
-  mask: linear-gradient(to right, transparent 0, transparent 36px, #000 40px, #000 calc(100% - 30px), transparent calc(100% - 10px)) repeat-y 0 0;
+  mask: linear-gradient(to right, transparent 36px, #000 40px, #000 calc(100% - 30px), transparent calc(100% - 10px));
   mask-size: 100% 100%;
 }
 .link_fleet dt > i > .img + .img {
@@ -8780,14 +8780,8 @@ body.mod-capture .infos-fleet .ship > .options {
 			}*/
 }
 .infos-fleet .ship[data-shipid]:after {
-  mask-image: linear-gradient(to right, #000, #000), linear-gradient(to right, #000, #000), linear-gradient(-60deg, transparent 50%, #000 50%), linear-gradient(to right, transparent, transparent);
-  -webkit-mask-image: linear-gradient(to right, #000, #000), linear-gradient(to right, #000, #000), linear-gradient(-60deg, transparent 50%, #000 50%), linear-gradient(to right, transparent, transparent);
-  mask-position: 0 0, 0 100%, calc(30% - 15px) 100%, 100% 100%;
-  -webkit-mask-position: 0 0, 0 100%, calc(30% - 15px) 100%, 100% 100%;
-  mask-size: 100% calc(100% - 24px), calc(30% - 15px) 24px, 40px 24px, 70% 24px;
-  -webkit-mask-size: 100% calc(100% - 24px), calc(30% - 15px) 24px, 40px 24px, 70% 24px;
-  mask-repeat: no-repeat;
-  -webkit-mask-repeat: no-repeat;
+  mask: none;
+  clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 24px), 30% calc(100% - 24px), calc(30% - 15px) 100%, 0% 100%);
 }
 .infos-fleet .ship[data-shipid] > dt > s {
   cursor: n-resize;
@@ -8846,29 +8840,6 @@ body.mod-capture .infos-fleet .ship[data-shipid] > .equipment-extra:not([data-eq
 }
 .infos-fleet .ship[data-shipid].moving .equipments {
   z-index: -1;
-}
-.infos-fleet .ship.mod-nomask > .attributes > .bg {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: -15px;
-  z-index: -1;
-  overflow: hidden;
-}
-.infos-fleet .ship.mod-nomask > .attributes > .bg:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: -15px;
-  bottom: 0;
-  left: 15px;
-  transform: skew(-30deg);
-  transform-origin: 0 0;
-  background: rgba(0, 0, 0, 0.35);
-}
-.infos-fleet .ship.mod-nomask > .attributes:after {
-  display: none;
 }
 .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
   content: "";
@@ -8959,15 +8930,14 @@ body.mod-capture .infos-fleet .equipments {
   content: "";
   position: absolute;
   top: 0;
-  right: -15px;
+  right: 0;
   bottom: 0;
-  left: 0;
-  transform: skew(-30deg);
-  transform-origin: 0 0;
+  left: -15px;
   z-index: -1;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 20%, transparent);
   mask: linear-gradient(to left, transparent 15px, #000 75%);
   -webkit-mask: linear-gradient(to left, transparent 15px, #000 75%);
+  clip-path: polygon(15px 0%, 100% 0%, 100% 100%, 0% 100%);
 }
 .infos-fleet .attributes > span {
   display: inline-block;
@@ -12576,6 +12546,22 @@ body > .modal.hastitle > div {
 body > .modal.mod-blur-backdrop > div,
 body > .modal.mod-blur-shot > div {
   background: rgba(0, 0, 0, 0.5);
+}
+body > .modal.modal-nwjs-core-updated > div {
+  width: auto;
+  height: auto;
+}
+body > .modal.modal-nwjs-core-updated > div > section {
+  padding: 1rem;
+}
+body > .modal.modal-nwjs-core-updated > div h3 {
+  margin-bottom: .75em;
+}
+body > .modal.modal-nwjs-core-updated > div li {
+  margin-top: .4em;
+}
+body > .modal.modal-nwjs-core-updated > div p {
+  margin-top: 1em;
 }
 /*
 .modal.infos{
