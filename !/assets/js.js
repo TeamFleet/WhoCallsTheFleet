@@ -1840,7 +1840,10 @@ _menu.prototype.show = function (targetEl, x, y) {
     this.position(targetEl, x, y);
 
     if (typeof node != 'undefined') {
-        node.win.capturePage(this.capturePage_callback.bind(this), 'jpg', 'datauri');
+        node.win.capturePage(this.capturePage_callback.bind(this), {
+            format: 'jpg',
+            datatype: 'datauri'
+        });
     } else {
         this.dom.menu.addClass('on');
     }
@@ -1993,7 +1996,10 @@ _frame.modal = {
             if (!this.dom.blured && typeof node != 'undefined') {
                 node.win.capturePage(function (datauri) {
                     _frame.modal.dom.blured = $('<img/>').attr('src', datauri).appendTo(_frame.modal.dom.bg);
-                }, 'jpg', 'datauri');
+                }, {
+                    format: 'jpg',
+                    datatype: 'datauri'
+                });
                 this.dom.container.addClass('mod-blur-shot');
             }
         }
@@ -2136,7 +2142,10 @@ _p.tip = {
             if (this.dom_bluredbg && typeof node != 'undefined') {
                 node.win.capturePage(function (datauri) {
                     _p.tip.dom_bluredbg.css('background-image', 'url(' + datauri + ')');
-                }, 'jpg', 'datauri');
+                }, {
+                    format: 'jpg',
+                    datatype: 'datauri'
+                });
             }
             this.dom.addClass('show');
         }
@@ -2463,6 +2472,8 @@ var Ship = KC.Ship,
     Entity = KC.Entity,
     Consumable = KC.Consumable,
     Formula = KC.formula;
+
+if (!root) var root = self;
 
 _g.animate_duration_delay = 320;
 _g.inputIndex = 0;
@@ -2988,12 +2999,16 @@ var _config = {
     get: function get(key) {
         if (!localStorage) return !1;
 
-        var value = localStorage[_config.getFullKeyname(key)];
+        key = _config.getFullKeyname(key);
+
+        var value = Lockr.get(key);
+
 
         if (value === 'true') return !0;
 
         if (value === 'undefined') {
-            delete localStorage[_config.getFullKeyname(key)];
+            Lockr.rm(key);
+
             return null;
         }
 
@@ -3003,10 +3018,12 @@ var _config = {
     set: function set(key, value) {
         if (!localStorage) return !1;
 
-        if (value === null && localStorage[_config.getFullKeyname(key)]) {
-            delete localStorage[_config.getFullKeyname(key)];
+        key = _config.getFullKeyname(key);
+
+        if (value === null && Lockr.get(key)) {
+            Lockr.rm(key);
         } else {
-            localStorage[_config.getFullKeyname(key)] = value;
+            Lockr.set(key, value);
         }
     }
 };
@@ -3020,7 +3037,7 @@ _frame.app_config = {
     }
 };
 
-_g.db_version = '20171026';
+_g.db_version = '20171027';
 
 _g.bgimg_count=26;
 
@@ -4113,6 +4130,7 @@ Page.hide = function (page) {
 };
 
 Page.show = function (page) {
+
     page = page || _frame.app_main.cur_page;
     var p = void 0;
 
@@ -9460,6 +9478,7 @@ var TablelistFleets = function (_Tablelist4) {
     }, {
         key: 'genlist',
         value: function genlist(callback) {
+
             Q.fcall(function () {}).then(function () {
                 return this.loaddata();
             }.bind(this)).then(function (arr) {
