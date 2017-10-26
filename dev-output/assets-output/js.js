@@ -2473,7 +2473,7 @@ var Ship = KC.Ship,
     Consumable = KC.Consumable,
     Formula = KC.formula;
 
-if (!root) root = self;
+if (!root) var root = self;
 
 _g.animate_duration_delay = 320;
 _g.inputIndex = 0;
@@ -2999,12 +2999,16 @@ var _config = {
     get: function get(key) {
         if (!localStorage) return !1;
 
-        var value = localStorage[_config.getFullKeyname(key)];
+        key = _config.getFullKeyname(key);
+
+        var value = Lockr.get(key);
+
 
         if (value === 'true') return !0;
 
         if (value === 'undefined') {
-            delete localStorage[_config.getFullKeyname(key)];
+            Lockr.rm(key);
+
             return null;
         }
 
@@ -3014,10 +3018,12 @@ var _config = {
     set: function set(key, value) {
         if (!localStorage) return !1;
 
-        if (value === null && localStorage[_config.getFullKeyname(key)]) {
-            delete localStorage[_config.getFullKeyname(key)];
+        key = _config.getFullKeyname(key);
+
+        if (value === null && Lockr.get(key)) {
+            Lockr.rm(key);
         } else {
-            localStorage[_config.getFullKeyname(key)] = value;
+            Lockr.set(key, value);
         }
     }
 };

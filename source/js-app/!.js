@@ -13,7 +13,7 @@
         ,Consumable = KC.Consumable
         ,Formula = KC.formula
     
-    if (!root) root = self
+    if (!root) var root = self
 
     _g.animate_duration_delay = 320;
     _g.inputIndex = 0;

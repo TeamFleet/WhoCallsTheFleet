@@ -68,6 +68,7 @@
     }
     KC.db = _g.data
 
+    // var nodeFsCheckExist = typeof node.fs.accessSync === 'function' ? node.fs.accessSync : node.fs.existsSync
     var savedFleetFilePath = Lockr.get('fleets-builds-file')
     if (!savedFleetFilePath) {
         var defaultFleetFilePath = node.path.join(node.gui.App.dataPath, '../../NeDB', 'fleets.json')

@@ -41,7 +41,10 @@
         "app": false,
         "angular": false,
         "node": false,
-        "Lockr": false
+        "Lockr": false,
+        "$html": true,
+        "_config": true,
+        "launcherOptions": true
     },
     "settings": {
         "import/ignore": [
