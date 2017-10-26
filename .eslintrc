@@ -40,7 +40,8 @@
         "_db": false,
         "app": false,
         "angular": false,
-        "node": false
+        "node": false,
+        "Lockr": false
     },
     "settings": {
         "import/ignore": [

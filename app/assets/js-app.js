@@ -16,6 +16,8 @@ var Ship = KC.Ship,
     Consumable = KC.Consumable,
     Formula = KC.formula;
 
+if (!root) root = self;
+
 _g.animate_duration_delay = 320;
 _g.inputIndex = 0;
 _g.lang = KC.lang;
@@ -1201,7 +1203,9 @@ canvas.downScale = function (img, scale) {
 node.require('fs');
 node.require('nedb');
 node.require('mkdirp');
-node.require('request');
+try {
+    node.require('request');
+} catch (e) {}
 node.require('request-progress');
 node.require('semver');
 node.require('url');
@@ -2300,15 +2304,15 @@ _updater.update = function () {
         }
     }
 
-    var lastNwjsVer = Lockr.get('nwjs-ver', '0.12.2');
-    if (node.semver.lt(lastNwjsVer, '0.26.0')) {
-        _frame.modal.show($('<div>\n                <h3>!! \u8230\u961F\u6A21\u62DF\u7684\u4EE5\u4E0B\u9009\u9879\u9700\u8981\u91CD\u65B0\u914D\u7F6E !!</h3>\n                <list>\n                    <li>\u5982\u679C\u8BBE\u7F6E\u4E86\u914D\u7F6E\u6587\u4EF6\u5B58\u50A8\u4F4D\u7F6E\uFF0C\u9700\u8981\u91CD\u65B0\u9009\u62E9</li>\n                    <li>\u9ED8\u8BA4\u53F8\u4EE4\u90E8\u7B49\u7EA7</li>\n                    <li>\u5BFC\u5165\u914D\u7F6E/\u914D\u88C5\u65F6\u9ED8\u8BA4\u98DE\u884C\u5668\u719F\u7EC3\u5EA6\u662F\u5426\u4E3A\u6EE1</li>\n                </list>\n                <p>\u4E3A\u60A8\u5E26\u6765\u7684\u4E0D\u4FBF\u656C\u8BF7\u8C05\u89E3</p>\n            </div>'), '主程序已更新', {
-            classname: 'modal-nwjs-core-updated'
-        });
-    }
-    try {
+    if (process.versions && process.versions.nw) {
+        var lastNwjsVer = Lockr.get('nwjs-ver', '0.12.2');
+        if (node.semver.lt(lastNwjsVer, '0.26.0')) {
+            _frame.modal.show($('<div>\n                    <h3>!! \u8230\u961F\u6A21\u62DF\u7684\u4EE5\u4E0B\u9009\u9879\u9700\u8981\u91CD\u65B0\u914D\u7F6E !!</h3>\n                    <list>\n                        <li>\u5982\u679C\u8BBE\u7F6E\u4E86\u914D\u7F6E\u6587\u4EF6\u5B58\u50A8\u4F4D\u7F6E\uFF0C\u9700\u8981\u91CD\u65B0\u9009\u62E9</li>\n                        <li>\u9ED8\u8BA4\u53F8\u4EE4\u90E8\u7B49\u7EA7</li>\n                        <li>\u5BFC\u5165\u914D\u7F6E/\u914D\u88C5\u65F6\u9ED8\u8BA4\u98DE\u884C\u5668\u719F\u7EC3\u5EA6\u662F\u5426\u4E3A\u6EE1</li>\n                    </list>\n                    <p>\u4E3A\u60A8\u5E26\u6765\u7684\u4E0D\u4FBF\u656C\u8BF7\u8C05\u89E3</p>\n                </div>'), '主程序已更新', {
+                classname: 'modal-nwjs-core-updated'
+            });
+        }
         Lockr.set('nwjs-ver', process.versions.nw);
-    } catch (e) {}
+    }
 
     promise_chain = promise_chain.then(function () {
         var deferred = Q.defer();

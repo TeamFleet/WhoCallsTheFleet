@@ -2473,6 +2473,8 @@ var Ship = KC.Ship,
     Consumable = KC.Consumable,
     Formula = KC.formula;
 
+if (!root) root = self;
+
 _g.animate_duration_delay = 320;
 _g.inputIndex = 0;
 _g.lang = KC.lang;
@@ -3029,7 +3031,7 @@ _frame.app_config = {
     }
 };
 
-_g.db_version = '20171026';
+_g.db_version = '20171027';
 
 _g.bgimg_count = 0;
 

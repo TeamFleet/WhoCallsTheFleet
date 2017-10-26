@@ -1,5 +1,7 @@
 "use strict";
 
+const dev = true
+
 const rootRequire = function (name) {
     try {
         return require(name);
@@ -53,21 +55,22 @@ gulp.task('js-base', function () {
     return gulp.src(parseKoalaJS(rootSource, 'js-base.js'))
         .pipe(concat('js-base.js'))
         .pipe(uglify())
-        /*
-        .pipe(babel({
-            'highlightCode':	false,
-            'comments':			false,
-            'compact':			false,
-            'ast':				false,
-            "presets": 			[
-                    "es2015",
-                    "stage-0"
-                ],
-            "plugins":			[
-                    "transform-minify-booleans"
-                ]
-        }))
-        */
+        // .pipe(babel({
+        //     'highlightCode': false,
+        //     'comments': false,
+        //     'compact': false,
+        //     'ast': false,
+        //     "presets": [
+        //         rootRequire('babel-preset-es2015'),
+        //         rootRequire('babel-preset-stage-0'),
+        //         // "es2015",
+        //         // "stage-0"
+        //     ],
+        //     "plugins": [
+        //         require("babel-plugin-transform-minify-booleans")
+        //         // "transform-minify-booleans"
+        //     ]
+        // }))
         .pipe(gulp.dest(path.join(root, 'app', 'assets')));
 });
 
@@ -80,6 +83,7 @@ gulp.task('js-app', function () {
             'compact': false,
             'ast': false,
             "presets": [
+                rootRequire('babel-preset-es2015'),
                 rootRequire('babel-preset-latest')
             ],
             "plugins": [

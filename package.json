@@ -27,7 +27,7 @@
   ],
   "debug": true,
   "nw-packager": {
-    "version": "0.26.0",
+    "version": "0.12.2",
     "platforms": [
       "win32",
       "win64",
@@ -39,7 +39,7 @@
     ],
     "dataVersion": {
       "app": "0.24.0.0",
-      "app-db": "2017.10.26",
+      "app-db": "2017.10.27",
       "bgimgs": "1.18.6.0",
       "pics": "2017.10.26",
       "pics-enemies": "2017.08.12",
@@ -110,7 +110,7 @@
     "mkdirp": "0.5.1",
     "nedb": "1.8.0",
     "q": "1.5.1",
-    "request": "2.83.0",
+    "request": "2.58.0",
     "request-progress": "3.0.0",
     "semver": "5.4.1"
   }

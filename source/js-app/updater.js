@@ -195,27 +195,27 @@ _updater.update = function () {
     }
 
     // 检查上次运行时的主程序版本
-    const lastNwjsVer = Lockr.get('nwjs-ver', '0.12.2')
-    if (node.semver.lt(lastNwjsVer, '0.26.0')) {
-        _frame.modal.show(
-            $(`<div>
-                <h3>!! 舰队模拟的以下选项需要重新配置 !!</h3>
-                <list>
-                    <li>如果设置了配置文件存储位置，需要重新选择</li>
-                    <li>默认司令部等级</li>
-                    <li>导入配置/配装时默认飞行器熟练度是否为满</li>
-                </list>
-                <p>为您带来的不便敬请谅解</p>
-            </div>`),
-            '主程序已更新',
-            {
-                classname: 'modal-nwjs-core-updated'
-            }
-        )
-    }
-    try {
+    if (process.versions && process.versions.nw) {
+        const lastNwjsVer = Lockr.get('nwjs-ver', '0.12.2')
+        if (node.semver.lt(lastNwjsVer, '0.26.0')) {
+            _frame.modal.show(
+                $(`<div>
+                    <h3>!! 舰队模拟的以下选项需要重新配置 !!</h3>
+                    <list>
+                        <li>如果设置了配置文件存储位置，需要重新选择</li>
+                        <li>默认司令部等级</li>
+                        <li>导入配置/配装时默认飞行器熟练度是否为满</li>
+                    </list>
+                    <p>为您带来的不便敬请谅解</p>
+                </div>`),
+                '主程序已更新',
+                {
+                    classname: 'modal-nwjs-core-updated'
+                }
+            )
+        }
         Lockr.set('nwjs-ver', process.versions.nw)
-    } catch (e) { }
+    }
 
     // 开始异步函数链
     promise_chain = promise_chain

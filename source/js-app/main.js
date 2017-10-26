@@ -2,7 +2,9 @@
     node.require('fs')
     node.require('nedb')
     node.require('mkdirp')
-    node.require('request')
+    try{
+        node.require('request')
+    } catch(e) {}
     node.require('request-progress')
     node.require('semver')
     node.require('url')
