@@ -27,7 +27,7 @@
   ],
   "debug": true,
   "nw-packager": {
-    "version": "0.26.0",
+    "version": "latest",
     "platforms": [
       "win32",
       "win64",
@@ -45,6 +45,11 @@
       "pics-enemies": "2017.08.12",
       "pics-ships": "2017.10.26",
       "pics-ships-extra": "2017.10.26"
+    },
+    "versions": {
+      "win32": "0.26.1",
+      "win64": "0.26.1",
+      "osx64": "0.21.6"
     },
     "buildDir": "N:\\nwbuild\\build",
     "winIco": "./source/appicon.ico",

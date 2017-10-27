@@ -5,6 +5,7 @@
   "main": "entry.js",
   "scripts": {
     "start": "nw ../",
+    "package": "node ./packaging",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
