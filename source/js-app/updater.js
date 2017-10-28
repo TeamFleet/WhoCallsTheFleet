@@ -54,11 +54,17 @@ var _updater = {
 
 // 获取本地版本
 _updater.get_local_version = function () {
-    var localVersions = localStorage['nwjs-data-version']
-    if (!localVersions && launcherOptions && launcherOptions['nw-packager'] && launcherOptions['nw-packager'].dataVersion)
+    if (typeof Lockr.get('__localVersions') === 'object') {
+        _updater.local_versions = Lockr.get('__localVersions')
+    } else if (_updater.localVersionsFilePath && fs.existsSync(_updater.localVersionsFilePath)) {
+        _updater.local_versions = JSON.parse(
+            fs.readFileSync(_updater.localVersionsFilePath, 'utf-8')
+        )
+    } else if (localStorage['nwjs-data-version']) {
+        _updater.local_versions = JSON.parse(localStorage['nwjs-data-version'] || '{}')
+    } else if (launcherOptions && launcherOptions['nw-packager'] && launcherOptions['nw-packager'].dataVersion)
         _updater.local_versions = launcherOptions['nw-packager'].dataVersion
-    else
-        _updater.local_versions = JSON.parse(localVersions || '{}')
+
     if (_updater.local_versions) {
         _g.log('本地版本: ', _updater.local_versions)
         _updater.updatable = true
@@ -85,6 +91,10 @@ _updater.get_remote = function () {
             if (node.semver.lt(process.versions.nw, _updater.remote_data.core || '0.1.0')) {
                 _g.badgeError('!! 主程序已更新，请访问 fleet.moe 手动下载最新版本 !!', true)
                 deferred.reject()
+            }
+            _updater.remote_versions = {}
+            for (const name in _updater.remote_data.packages) {
+                _updater.remote_versions[name] = _updater.remote_data.packages[name].version
             }
             deferred.resolve(_updater.remote_data)
         }
@@ -220,6 +230,9 @@ _updater.update = function () {
         Lockr.set('nwjs-ver', process.versions.nw)
     }
 
+    // 确定本地版本信息文件路径
+    _updater.localVersionsFilePath = node.path.resolve(node.gui.App.dataPath, '.localversions.json')
+
     // 开始异步函数链
     promise_chain = promise_chain
 
@@ -274,7 +287,9 @@ _updater.update = function () {
         .then(_updater.get_remote)
         .then(_updater.get_packages_updated)
         .then(function (updated) {
-            //_g.log(updated)
+            // 复制本地版本列表
+            const newVersions = Object.assign({}, _updater.local_versions)
+            // console.log(updated, newVersions, _updater.remote_versions)
 
             if (!updated.length) {
                 _g.log('所有数据包均为最新')
@@ -395,6 +410,7 @@ _updater.update = function () {
                                         targetFile
                                     ])
                                     _g.log('[自动更新] ' + package_name + ' | 下载完成')
+                                    newVersions[package_name] = _updater.remote_versions[package_name]
                                     deferred.resolve()
                                 } else {
                                     _g.error('[自动更新] ' + package_name + ' | 下载出现错误')
@@ -414,6 +430,13 @@ _updater.update = function () {
             })
             promise_chain_update = promise_chain_update
                 .then(function () {
+                    // 将新的版本信息写入本地文件
+                    Lockr.set('__localVersions', newVersions)
+                    fs.writeFileSync(
+                        _updater.localVersionsFilePath,
+                        JSON.stringify(newVersions),
+                        'utf-8'
+                    )
                     deferredUpdating.resolve()
                 })
                 .catch(function (err) {
