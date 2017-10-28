@@ -2190,8 +2190,8 @@ var _updater = {
 
 _updater.get_local_version = function () {
     var localVersions = localStorage['nwjs-data-version'];
-    _updater.local_versions = JSON.parse(localVersions || '{}');
-    if (localVersions) {
+    if (!localVersions && launcherOptions && launcherOptions['nw-packager'] && launcherOptions['nw-packager'].dataVersion) _updater.local_versions = launcherOptions['nw-packager'].dataVersion;else _updater.local_versions = JSON.parse(localVersions || '{}');
+    if (_updater.local_versions) {
         _g.log('本地版本: ', _updater.local_versions);
         _updater.updatable = !0;
     }
@@ -2405,8 +2405,12 @@ _updater.update = function () {
                         deferred.reject(new Error(err));
                     });
                 }).on('progress', function (state) {
-                    _g.log('    ' + state.received + ' / ' + state.total + ' (' + state.percent + '%)' + ' | ' + Math.floor((size_received + state.received) / size_total * 100) + '%');
-                    _updater.indicator((size_received + state.received) / size_total);
+                    var received = typeof state.received !== 'undefined' ? state.received : state.size.transferred;
+                    var total = typeof state.total !== 'undefined' ? state.total : state.size.total;
+                    var percent = typeof state.percent === 'number' && state.percent > 1 ? state.percent : Math.round(state.percent * 10000) / 100;
+
+                    _g.log('    ' + received + ' / ' + total + ' (' + percent + '%)' + ' | ' + Math.floor((size_received + received) / size_total * 100) + '%');
+                    _updater.indicator((size_received + received) / size_total);
                 }).pipe(node.fs.createWriteStream(tempfile).on('finish', function () {
                     var complete = !1;
                     if (savefile) {
