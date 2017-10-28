@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",240,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/11.png)\"></s><strong>22号对水上电探改四<small>(后期调整型)</small></strong><small>小型电探/雷达</small></h3><span>+1 火力</span><span>+2 对潜</span><span>+9 命中</span><span>+7 索敌</span>")
