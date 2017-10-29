@@ -3037,6 +3037,10 @@ _frame.app_config = {
     }
 };
 
+if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && location.hostname.split('.')[0] !== '192' && !(location.hostname.indexOf('fleet.moe') > -1 || location.hostname.indexOf('fleet.test') > -1)) {
+    location.replace('http://fleet.moe' + location.pathname);
+}
+
 _g.db_version = '20171029';
 
 _g.bgimg_count = 0;
