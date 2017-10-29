@@ -3,7 +3,12 @@
         location.hostname !== 'localhost' &&
         location.hostname !== '127.0.0.1' &&
         location.hostname.split('.')[0] !== '192' &&
-        !(location.hostname.indexOf('fleet.moe') > -1 || location.hostname.indexOf('fleet.test') > -1)
+        !(
+            location.hostname.indexOf('fleet.moe') > -1 ||
+            location.hostname.indexOf('fleet.test') > -1 ||
+            location.hostname.indexOf('diablohu.com') > -1 ||
+            location.hostname.indexOf('diablohu.test') > -1
+        )
     ) {
         location.replace(
             'http://fleet.moe' + location.pathname
