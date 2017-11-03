@@ -185,6 +185,18 @@
 
 
 
+// input[type="number"] onmousewheel
+    setTimeout(function() {
+        $body.on('mousewheel', 'input[type="number"]', function(evt) {
+            const el = evt.target
+            // if (el === document.activeElement) {
+            //     console.log(evt.target)
+            // }
+        })
+    }, 0)
+
+
+
 // search index
     _g.index = {
         ships: {},

@@ -2608,6 +2608,12 @@ _g.title = function (t) {
     return t;
 };
 
+setTimeout(function () {
+    $body.on('mousewheel', 'input[type="number"]', function (evt) {
+        var el = evt.target;
+    });
+}, 0);
+
 _g.index = {
     ships: {},
     equipments: {}
