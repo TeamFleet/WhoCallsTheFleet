@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="-350 -300 900 600"
+   width="900"
+   height="600"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="Naval ensign of the Empire of Japan.svg">
+  <metadata
+     id="metadata26">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs24" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="819"
+     inkscape:window-height="735"
+     id="namedview22"
+     showgrid="false"
+     inkscape:zoom="0.26088066"
+     inkscape:cx="516.21562"
+     inkscape:cy="309.29371"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <rect
+     fill="#FFF"
+     x="-350"
+     y="-300"
+     width="900"
+     height="600"
+     id="rect4" />
+  <g
+     fill="#be0026"
+     id="g6"
+     style="fill:#b0313f;fill-opacity:1">
+    <g
+       id="o"
+       style="fill:#b0313f;fill-opacity:1">
+      <g
+         id="r"
+         style="fill:#b0313f;fill-opacity:1">
+        <g
+           id="q"
+           style="fill:#b0313f;fill-opacity:1">
+          <polygon
+             id="p"
+             points="0 0 620.6354488 61.12725632 620.6354488 -61.12725632"
+             style="fill:#b0313f;fill-opacity:1" />
+          <use
+             xlink:href="#p"
+             transform="rotate(180)"
+             id="use12"
+             style="fill:#b0313f;fill-opacity:1" />
+        </g>
+        <use
+           xlink:href="#q"
+           transform="rotate(90)"
+           id="use14"
+           style="fill:#b0313f;fill-opacity:1" />
+      </g>
+      <use
+         xlink:href="#r"
+         transform="rotate(45)"
+         id="use16"
+         style="fill:#b0313f;fill-opacity:1" />
+    </g>
+    <use
+       xlink:href="#o"
+       transform="rotate(22.5)"
+       id="use18"
+       style="fill:#b0313f;fill-opacity:1" />
+    <circle
+       r="150"
+       id="circle20"
+       style="fill:#b0313f;fill-opacity:1" />
+  </g>
+</svg>

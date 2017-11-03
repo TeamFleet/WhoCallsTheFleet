@@ -2608,6 +2608,12 @@ _g.title = function (t) {
     return t;
 };
 
+setTimeout(function () {
+    $body.on('mousewheel', 'input[type="number"]', function (evt) {
+        var el = evt.target;
+    });
+}, 0);
+
 _g.index = {
     ships: {},
     equipments: {}
@@ -3041,7 +3047,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
     location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20171029';
+_g.db_version = '20171104';
 
 _g.bgimg_count=26;
 
@@ -5693,7 +5699,8 @@ var InfosFleetEditableTitle = function InfosFleetEditableTitle(settings) {
             if (typeof content == 'undefined') {
                 content = $el.text();
             }
-            if (content != $el.html()) $el.html(content);
+            console.log(content, $el.text());
+            if (content != $el.text()) $el.text(content);
             options.onUpdate(content);
             if (content) {
                 $el.attr('data-content', content);

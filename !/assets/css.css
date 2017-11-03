@@ -4335,10 +4335,10 @@ body.mod-capture #tip {
 }
 */
 .flag-navy {
-  width: 20px;
+  width: 21px;
   height: 20px;
   display: inline-block;
-  background: url(/!/assets/images/flags-navy.png) no-repeat 50% 20px / cover;
+  background: url(/!/assets/images/navy-flags/shadow.png) no-repeat 50% 20px / cover;
   /* 1.25 dpr */
   /* 1.5 dpr */
   /* 2.0 dpr */
@@ -4391,22 +4391,22 @@ body.mod-capture #tip {
 }
 @media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
   .flag-navy {
-    background-image: url(/!/assets/images/flags-navy@1.25.png);
+    background-image: url(/!/assets/images/navy-flags/shadow@1.25.png);
   }
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
   .flag-navy {
-    background-image: url(/!/assets/images/flags-navy@1.5.png);
+    background-image: url(/!/assets/images/navy-flags/shadow@1.5.png);
   }
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .flag-navy {
-    background-image: url(/!/assets/images/flags-navy@2.png);
+    background-image: url(/!/assets/images/navy-flags/shadow@2.png);
   }
 }
 @media (-webkit-min-device-pixel-ratio: 3), (min-resolution: 288dpi) {
   .flag-navy {
-    background-image: url(/!/assets/images/flags-navy@3.png);
+    background-image: url(/!/assets/images/navy-flags/shadow@3.png);
   }
 }
 .improvement {
@@ -5922,14 +5922,13 @@ body.mod-capture #tip {
 }
 .tablelist.ships .tablelist-body dl[data-shipid] dt .flag-navy {
   position: absolute;
-  width: 20px;
+  width: 21px;
   height: 20px;
   top: 50%;
   left: -22px;
-  margin-top: -22px;
+  margin-top: -23px;
   z-index: -1;
   transform: rotate(10deg);
-  filter: drop-shadow(-1px 1px 1px rgba(0, 0, 0, 0.75));
 }
 .tablelist.ships .tablelist-body dl[data-shipid] dt .flag-navy[data-navy="ijn"],
 .tablelist.ships .tablelist-body dl[data-shipid] dt .flag-navy[data-navy="0"] {

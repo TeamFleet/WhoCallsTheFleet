@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   width="1330" height="700" viewBox="0 0 18525 9750">
+  <metadata><rdf:RDF><cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+  </cc:Work></rdf:RDF></metadata>
+  <rect style="fill:#f6c909" height="9750" width="18525"/>
+<g id="Fringelines" fill="none" stroke="#D5b905" stroke-width="60">
+<g transform="translate(60,0)"><g id="Lines6"><path id="Lines" d="M90,0V9750M270,0V9750M450,0V9750M630,0V9750M810,0V9750M990,0V9750M1170,0V9750M1350,0V9750"/>
+<use xlink:href="#Lines" x="1440"/>
+<use xlink:href="#Lines" x="2880"/>
+<use xlink:href="#Lines" x="4320"/>
+<use xlink:href="#Lines" x="5760"/>
+<use xlink:href="#Lines" x="7200"/></g>
+<use xlink:href="#Lines6" x="8640"/>
+<path d="M17370,0V9750M17550,0V9750M17730,0V9750M17910,0V9750M18090,0V9750"/></g>
+<path id="Hlines" d="M18000,365H18525M18000,545H18525M18000,725H18525M18000,905H18525M18000,1085H18525M18000,1265H18525M18000,1445H18525M18000,1625H18525"/>
+<use xlink:href="#Hlines" y="1440"/>
+<use xlink:href="#Hlines" y="2880"/>
+<use xlink:href="#Hlines" y="4320"/>
+<use xlink:href="#Hlines" y="5760"/>
+<use xlink:href="#Hlines" y="7200"/>
+<path d="M18000,9005H18525M18000,9185H18525M18000,9365H18525M18236.445,263.5132L18525,0M18236.445,9486.4868L18525,9750"/></g>
+  <rect id="red background" style="fill:#b22234" y="263.5132" height="9222.9736" width="18236.445"/>
+  <g style="fill:#ffffff" transform="translate(0,263.5132)scale(0.984423,0.945946)">
+    <rect y="750" height="750" width="18525"/>
+    <rect y="2250" height="750" width="18525"/>
+    <rect y="3750" height="750" width="18525"/>
+    <rect y="5250" height="750" width="18525"/>
+    <rect y="6750" height="750" width="18525"/>
+    <rect y="8250" height="750" width="18525"/>
+  </g>
+  <rect id="blue field" style="fill:#3c3b6e" y="263.5132" height="4966.2165" width="7300.2207"/>
+<g transform="translate(-80,213.5132)">
+  <g id="star_rows_1_and_2">
+    <g id="star_row_2">
+      <g id="first_star_in_second_row"
+         style="fill:#ffffff"
+         transform="matrix(300.3,0,0,300.3,1235,1050)">
+        <g id="cone">
+          <polygon id="triangle"
+             transform="matrix(0.951057,0.309017,-0.309017,0.951057,0,-1)"
+             points="0,0 0,1 0.5,1 0,0 "/>
+          <use xlink:href="#triangle" transform="scale(-1,1)"/>
+        </g>
+        <use xlink:href="#cone" transform="rotate(72)"/>
+        <use xlink:href="#cone" transform="rotate(-72)"/>
+        <use xlink:href="#cone" transform="rotate(144)"/>
+        <use xlink:href="#cone" transform="rotate(-144)"/>
+      </g>
+      <use xlink:href="#first_star_in_second_row"
+         x="1235"
+         id="second star in second row"/>
+      <use xlink:href="#first_star_in_second_row"
+         x="2470"
+         id="third star in second row"/>
+      <use xlink:href="#first_star_in_second_row"
+         x="3705"
+         id="fourth star in second row"/>
+      <use xlink:href="#first_star_in_second_row"
+         x="4940"
+         id="fifth star in second row"/>
+    </g>
+    <g id="star_row_1">
+      <use xlink:href="#star_row_2"
+         y="-500" x="617.5"
+         id="five of six stars in top row"/>
+      <use xlink:href="#first_star_in_second_row"
+         y="-500" x="-617.5"
+         id="first star in top row"/>
+    </g>
+  </g>
+  <use xlink:href="#star_rows_1_and_2"
+     y="1000" id="star rows 3 and 4"/>
+  <use xlink:href="#star_rows_1_and_2"
+     y="2000" id="star rows 5 and 6"/>
+  <use xlink:href="#star_rows_1_and_2"
+     y="3000" id="star rows 7 and 8"/>
+  <use xlink:href="#star_row_1"
+     y="4000" id="star row 9"/>
+</g>
+</svg>
