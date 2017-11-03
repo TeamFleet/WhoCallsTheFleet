@@ -47,8 +47,9 @@ class InfosFleetEditableTitle {
                     if (typeof content == 'undefined') {
                         content = $el.text()
                     }
-                    if (content != $el.html())
-                        $el.html(content)
+                    console.log(content, $el.text())
+                    if (content != $el.text())
+                        $el.text(content)
                     options.onUpdate(content)
                     if (content) {
                         $el.attr('data-content', content)
@@ -305,7 +306,7 @@ class InfosFleet {
                             }.bind(this),
                             'blur.tiphide': function () {
                                 this.doms['hqlvOption'].trigger('tiphide')
-                                if (this.doms['hqlvOption'].val() > _g.hqMaxLv){
+                                if (this.doms['hqlvOption'].val() > _g.hqMaxLv) {
                                     this.doms['hqlvOption'].val(_g.hqMaxLv)
                                     this.doms['hqlvOption'].trigger('input')
                                 }

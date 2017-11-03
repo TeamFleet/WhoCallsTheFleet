@@ -4436,7 +4436,8 @@ var InfosFleetEditableTitle = function InfosFleetEditableTitle(settings) {
             if (typeof content == 'undefined') {
                 content = $el.text();
             }
-            if (content != $el.html()) $el.html(content);
+            console.log(content, $el.text());
+            if (content != $el.text()) $el.text(content);
             options.onUpdate(content);
             if (content) {
                 $el.attr('data-content', content);
