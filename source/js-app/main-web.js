@@ -17,7 +17,7 @@
 
 
 // Global Variables
-    _g.db_version = '20171104';
+    _g.db_version = '20171111';
 
     _g.bgimg_count = 0;
 

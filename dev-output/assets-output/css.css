@@ -10932,6 +10932,7 @@ body.mod-capture .infos-fleet .equipment-extra {
   }
   .infos-fleet .ship[data-shipid]:after {
     mask: none;
+    clip-path: none;
   }
   .infos-fleet .ship.mod-nomask > .attributes > .bg {
     display: none;
@@ -10967,6 +10968,7 @@ body.mod-capture .infos-fleet .equipment-extra {
     background: rgba(0, 0, 0, 0.2);
     border-left: 1px solid rgba(255, 255, 255, 0.25);
     border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    clip-path: none;
   }
   .infos-fleet .equipment {
     background-position: -3px 50%;
