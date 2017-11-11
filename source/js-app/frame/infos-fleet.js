@@ -1185,6 +1185,7 @@ class InfosFleetSubFleet {
             $('<span class="btn-add-ship"/>')
                 .on('click', () => {
                     this.createShip(this.ships.length)
+                    this.ships[this.ships.length - 1].el.trigger('click')
                 })
             )
             .append(

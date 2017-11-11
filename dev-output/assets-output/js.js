@@ -6525,6 +6525,7 @@ var InfosFleetSubFleet = function () {
 
         this.elSummary = $('<span class="summary"/>').appendTo(this.el).append($('<span class="btn-add-ship"/>').on('click', function () {
             _this7.createShip(_this7.ships.length);
+            _this7.ships[_this7.ships.length - 1].el.trigger('click');
         })).append($('<span class="summary-item"/>').html('航速').append(this.elSummarySpeed = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('制空战力').append(this.elSummaryFighterPower = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('索敌能力').append(this.elSummaryLos = $('<strong/>').html('-'))).append($('<span class="summary-item summary-item-consummation"/>').html('总消耗').append(this.elSummaryConsummation = $('<strong/>').html('-'))).append(this.elSummaryTPcontainer = $('<span class="summary-item hide"/>').html('运输TP').append(this.elSummaryTP = $('<strong/>').html('-')));
 
         $body.on('update_defaultHqLv.fleet' + infosFleet.data._id + '-' + (index + 1), function () {

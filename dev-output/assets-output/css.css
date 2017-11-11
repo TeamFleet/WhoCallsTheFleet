@@ -9476,15 +9476,51 @@ body.mod-capture .infos-fleet .equipment-extra {
   margin-right: -1.5em;
   margin-bottom: 10px;
   position: relative;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 .infos-fleet .summary .btn-add-ship {
   position: absolute;
   display: block;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.1);
-  width: 25px;
+  background: rgba(255, 255, 255, 0.225);
+  width: 35px;
   height: 25px;
   top: 5px;
+  box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.35);
+  opacity: .5;
+  margin-left: -1.6rem;
+}
+.infos-fleet .summary .btn-add-ship:before {
+  content: "";
+  position: absolute;
+  left: -0.4rem;
+  height: 100%;
+  width: 0;
+  border: 0.15000000000000002rem solid transparent;
+  border-right: 0.2rem solid rgba(255, 255, 255, 0.75);
+  border-left: 0;
+  filter: drop-shadow(0 0 10px rgba(255,255,255,1));
+  -webkit-filter: drop-shadow(0 0 10px rgba(255,255,255,1));
+  -moz-filter: drop-shadow(0 0 10px rgba(255,255,255,1));
+  -ms-filter: drop-shadow(0 0 10px rgba(255,255,255,1));
+  z-index: -1;
+  transition: none 0.2s ease-out;
+  transition-property: border-color;
+  left: -0.45rem;
+}
+.infos-fleet .summary .btn-add-ship:after {
+  content: "\ed5a";
+  font-family: icons;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  line-height: 0;
+  width: 100%;
+  text-align: center;
+}
+.infos-fleet .summary .btn-add-ship:hover {
+  opacity: 1;
 }
 body.mod-capture .infos-fleet .summary .btn-add-ship {
   display: none;
@@ -9758,12 +9794,9 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 #layout[data-theme="2"] .infos-fleet .fleetships {
   color: rgba(254, 235, 230, 0.75);
 }
-#layout[data-theme="2"] .infos-fleet .ship:before {
-  border-right-color: rgba(255, 243, 240, 0.8);
-  filter: drop-shadow(0 0 10px	rgba(255, 243, 240, 0.8));
-  -webkit-filter: drop-shadow(0 0 10px	rgba(255, 243, 240, 0.8));
-  -moz-filter: drop-shadow(0 0 10px	rgba(255, 243, 240, 0.8));
-  -ms-filter: drop-shadow(0 0 10px	rgba(255, 243, 240, 0.8));
+#layout[data-theme="2"] .infos-fleet .ship:hover:before,
+#layout[data-theme="2"] .infos-fleet .summary .btn-add-ship:hover:before {
+  border-right-color: rgba(252, 173, 156, 0.95);
 }
 #layout[data-theme="2"] .infos-fleet .ship > dt {
   /*
@@ -9797,9 +9830,6 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 							}
 						}
 						*/
-}
-#layout[data-theme="2"] .infos-fleet .ship:hover:before {
-  border-right-color: rgba(252, 173, 156, 0.95);
 }
 #layout[data-theme="2"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(225, 216, 214, 0.75);
@@ -9864,12 +9894,9 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 #layout[data-theme="3"] .infos-fleet .fleetships {
   color: rgba(255, 251, 229, 0.75);
 }
-#layout[data-theme="3"] .infos-fleet .ship:before {
-  border-right-color: rgba(255, 253, 240, 0.8);
-  filter: drop-shadow(0 0 10px	rgba(255, 253, 240, 0.8));
-  -webkit-filter: drop-shadow(0 0 10px	rgba(255, 253, 240, 0.8));
-  -moz-filter: drop-shadow(0 0 10px	rgba(255, 253, 240, 0.8));
-  -ms-filter: drop-shadow(0 0 10px	rgba(255, 253, 240, 0.8));
+#layout[data-theme="3"] .infos-fleet .ship:hover:before,
+#layout[data-theme="3"] .infos-fleet .summary .btn-add-ship:hover:before {
+  border-right-color: rgba(255, 240, 153, 0.95);
 }
 #layout[data-theme="3"] .infos-fleet .ship > dt {
   /*
@@ -9903,9 +9930,6 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 							}
 						}
 						*/
-}
-#layout[data-theme="3"] .infos-fleet .ship:hover:before {
-  border-right-color: rgba(255, 240, 153, 0.95);
 }
 #layout[data-theme="3"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(226, 224, 212, 0.75);
@@ -9970,12 +9994,9 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 #layout[data-theme="4"] .infos-fleet .fleetships {
   color: rgba(242, 254, 231, 0.75);
 }
-#layout[data-theme="4"] .infos-fleet .ship:before {
-  border-right-color: rgba(247, 254, 240, 0.8);
-  filter: drop-shadow(0 0 10px	rgba(247, 254, 240, 0.8));
-  -webkit-filter: drop-shadow(0 0 10px	rgba(247, 254, 240, 0.8));
-  -moz-filter: drop-shadow(0 0 10px	rgba(247, 254, 240, 0.8));
-  -ms-filter: drop-shadow(0 0 10px	rgba(247, 254, 240, 0.8));
+#layout[data-theme="4"] .infos-fleet .ship:hover:before,
+#layout[data-theme="4"] .infos-fleet .summary .btn-add-ship:hover:before {
+  border-right-color: rgba(202, 250, 158, 0.95);
 }
 #layout[data-theme="4"] .infos-fleet .ship > dt {
   /*
@@ -10009,9 +10030,6 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 							}
 						}
 						*/
-}
-#layout[data-theme="4"] .infos-fleet .ship:hover:before {
-  border-right-color: rgba(202, 250, 158, 0.95);
 }
 #layout[data-theme="4"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(219, 223, 216, 0.75);
@@ -10076,12 +10094,9 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 #layout[data-theme="5"] .infos-fleet .fleetships {
   color: rgba(229, 255, 234, 0.75);
 }
-#layout[data-theme="5"] .infos-fleet .ship:before {
-  border-right-color: rgba(240, 255, 243, 0.8);
-  filter: drop-shadow(0 0 10px	rgba(240, 255, 243, 0.8));
-  -webkit-filter: drop-shadow(0 0 10px	rgba(240, 255, 243, 0.8));
-  -moz-filter: drop-shadow(0 0 10px	rgba(240, 255, 243, 0.8));
-  -ms-filter: drop-shadow(0 0 10px	rgba(240, 255, 243, 0.8));
+#layout[data-theme="5"] .infos-fleet .ship:hover:before,
+#layout[data-theme="5"] .infos-fleet .summary .btn-add-ship:hover:before {
+  border-right-color: rgba(153, 255, 172, 0.95);
 }
 #layout[data-theme="5"] .infos-fleet .ship > dt {
   /*
@@ -10115,9 +10130,6 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 							}
 						}
 						*/
-}
-#layout[data-theme="5"] .infos-fleet .ship:hover:before {
-  border-right-color: rgba(153, 255, 172, 0.95);
 }
 #layout[data-theme="5"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(212, 226, 215, 0.75);
@@ -10182,12 +10194,9 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 #layout[data-theme="6"] .infos-fleet .fleetships {
   color: rgba(229, 255, 251, 0.75);
 }
-#layout[data-theme="6"] .infos-fleet .ship:before {
-  border-right-color: rgba(240, 255, 253, 0.8);
-  filter: drop-shadow(0 0 10px	rgba(240, 255, 253, 0.8));
-  -webkit-filter: drop-shadow(0 0 10px	rgba(240, 255, 253, 0.8));
-  -moz-filter: drop-shadow(0 0 10px	rgba(240, 255, 253, 0.8));
-  -ms-filter: drop-shadow(0 0 10px	rgba(240, 255, 253, 0.8));
+#layout[data-theme="6"] .infos-fleet .ship:hover:before,
+#layout[data-theme="6"] .infos-fleet .summary .btn-add-ship:hover:before {
+  border-right-color: rgba(153, 255, 240, 0.95);
 }
 #layout[data-theme="6"] .infos-fleet .ship > dt {
   /*
@@ -10221,9 +10230,6 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 							}
 						}
 						*/
-}
-#layout[data-theme="6"] .infos-fleet .ship:hover:before {
-  border-right-color: rgba(153, 255, 240, 0.95);
 }
 #layout[data-theme="6"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(212, 226, 224, 0.75);
@@ -10288,12 +10294,9 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 #layout[data-theme="7"] .infos-fleet .fleetships {
   color: rgba(229, 242, 255, 0.75);
 }
-#layout[data-theme="7"] .infos-fleet .ship:before {
-  border-right-color: rgba(240, 247, 255, 0.8);
-  filter: drop-shadow(0 0 10px	rgba(240, 247, 255, 0.8));
-  -webkit-filter: drop-shadow(0 0 10px	rgba(240, 247, 255, 0.8));
-  -moz-filter: drop-shadow(0 0 10px	rgba(240, 247, 255, 0.8));
-  -ms-filter: drop-shadow(0 0 10px	rgba(240, 247, 255, 0.8));
+#layout[data-theme="7"] .infos-fleet .ship:hover:before,
+#layout[data-theme="7"] .infos-fleet .summary .btn-add-ship:hover:before {
+  border-right-color: rgba(153, 202, 255, 0.95);
 }
 #layout[data-theme="7"] .infos-fleet .ship > dt {
   /*
@@ -10327,9 +10330,6 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 							}
 						}
 						*/
-}
-#layout[data-theme="7"] .infos-fleet .ship:hover:before {
-  border-right-color: rgba(153, 202, 255, 0.95);
 }
 #layout[data-theme="7"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(210, 219, 228, 0.75);
@@ -10394,12 +10394,9 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 #layout[data-theme="8"] .infos-fleet .fleetships {
   color: rgba(255, 255, 255, 0.75);
 }
-#layout[data-theme="8"] .infos-fleet .ship:before {
-  border-right-color: rgba(255, 255, 255, 0.8);
-  filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
-  -webkit-filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
-  -moz-filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
-  -ms-filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
+#layout[data-theme="8"] .infos-fleet .ship:hover:before,
+#layout[data-theme="8"] .infos-fleet .summary .btn-add-ship:hover:before {
+  border-right-color: rgba(193, 179, 255, 0.95);
 }
 #layout[data-theme="8"] .infos-fleet .ship > dt {
   /*
@@ -10433,9 +10430,6 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 							}
 						}
 						*/
-}
-#layout[data-theme="8"] .infos-fleet .ship:hover:before {
-  border-right-color: rgba(193, 179, 255, 0.95);
 }
 #layout[data-theme="8"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(229, 227, 237, 0.75);
@@ -10500,12 +10494,9 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 #layout[data-theme="9"] .infos-fleet .fleetships {
   color: rgba(251, 229, 255, 0.75);
 }
-#layout[data-theme="9"] .infos-fleet .ship:before {
-  border-right-color: rgba(253, 240, 255, 0.8);
-  filter: drop-shadow(0 0 10px	rgba(253, 240, 255, 0.8));
-  -webkit-filter: drop-shadow(0 0 10px	rgba(253, 240, 255, 0.8));
-  -moz-filter: drop-shadow(0 0 10px	rgba(253, 240, 255, 0.8));
-  -ms-filter: drop-shadow(0 0 10px	rgba(253, 240, 255, 0.8));
+#layout[data-theme="9"] .infos-fleet .ship:hover:before,
+#layout[data-theme="9"] .infos-fleet .summary .btn-add-ship:hover:before {
+  border-right-color: rgba(240, 153, 255, 0.95);
 }
 #layout[data-theme="9"] .infos-fleet .ship > dt {
   /*
@@ -10539,9 +10530,6 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 							}
 						}
 						*/
-}
-#layout[data-theme="9"] .infos-fleet .ship:hover:before {
-  border-right-color: rgba(240, 153, 255, 0.95);
 }
 #layout[data-theme="9"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(224, 212, 226, 0.75);
@@ -10606,12 +10594,9 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 #layout[data-theme="10"] .infos-fleet .fleetships {
   color: rgba(255, 255, 255, 0.75);
 }
-#layout[data-theme="10"] .infos-fleet .ship:before {
-  border-right-color: rgba(255, 255, 255, 0.8);
-  filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
-  -webkit-filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
-  -moz-filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
-  -ms-filter: drop-shadow(0 0 10px	rgba(255, 255, 255, 0.8));
+#layout[data-theme="10"] .infos-fleet .ship:hover:before,
+#layout[data-theme="10"] .infos-fleet .summary .btn-add-ship:hover:before {
+  border-right-color: rgba(255, 179, 215, 0.95);
 }
 #layout[data-theme="10"] .infos-fleet .ship > dt {
   /*
@@ -10645,9 +10630,6 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 							}
 						}
 						*/
-}
-#layout[data-theme="10"] .infos-fleet .ship:hover:before {
-  border-right-color: rgba(255, 179, 215, 0.95);
 }
 #layout[data-theme="10"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
   color: rgba(237, 227, 232, 0.75);
@@ -11067,6 +11049,12 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   }
   .infos-fleet .summary {
     margin-bottom: 20px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 30px;
+  }
+  .infos-fleet .summary .btn-add-ship {
+    margin-left: 0;
   }
 }
 @media all and (max-width: 720px) {
@@ -11240,6 +11228,10 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
     height: 40px;
     flex: none;
     width: calc(50% - 4px);
+  }
+  .infos-fleet .summary .btn-add-ship:before {
+    left: -7px;
+    border-right-width: 3px;
   }
 }
 @media all and (max-width: 540px) {
