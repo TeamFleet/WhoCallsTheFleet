@@ -3001,6 +3001,23 @@ _g.kancolle_calc = {
         return result;
     }
 };
+_g.events = [{
+    code: 'leyteA',
+    title: {
+        ja_jp: '捷号決戦！邀撃、レイテ沖海戦(前篇)',
+        zh_cn: '捷号决战！迎击莱特湾海战（前篇）'
+    },
+
+    start: 1510328726083,
+    end: 1512658800000 }];
+
+_g.getCurrentEvent = function (now) {
+    if (now instanceof Date) now = now.valueOf;else if (typeof now === 'string') now = parseInt(now);else if (!now) now = new Date().valueOf();
+
+    return _g.events.filter(function (event) {
+        return now >= event.start && now < event.end;
+    });
+};
 var _config = {
     getFullKeyname: function getFullKeyname(key) {
         return 'config_' + key;
@@ -6443,7 +6460,7 @@ InfosFleet.modalRemove_show = function (id, is_list) {
                     _frame.app_main.loading_complete('remove_fleet_' + _id);
                     _frame.modal.hide();
                     _g.badgeMsg('已删除配置');
-                    if (is_list && is_list instanceof TablelistFleets) {
+                    if ((typeof is_list === 'undefined' ? 'undefined' : _typeof(is_list)) === 'object' && is_list.refresh) {
                         is_list.refresh();
                     } else {
                         _frame.dom.navs.fleets.click();
@@ -9448,8 +9465,24 @@ var TablelistFleets = function (_Tablelist4) {
                     items.push($('<hr/>'));
                     items.push($('<small class="subtitle">期间限定</small>'));
                     items.push($('<div class="title">' + event.title[_g.lang] + '</div>'));
-                    items.push($('<menuitem class="shipavatar"/>').html('<small class="sup">新建配置</small>第一游击部队 第三部队（西村队）').on('click', function () {}.bind(this)));
-                    items.push($('<menuitem class="shipavatar"/>').html('<small class="sup">新建配置</small>第二游击部队（志摩队）').on('click', function () {}.bind(this)));
+                    items.push($('<menuitem class="shipavatar"/>').html('<small class="sup">新建配置</small>第一游击部队 第三部队（西村队）').on('click', function () {
+                        var data = { "version": 4, "f1": { "s1": { "id": 411, "luck": -1, "items": {} }, "s2": { "id": 412, "luck": -1, "items": {} }, "s3": { "id": 73, "luck": -1, "items": {} }, "s4": { "id": 489, "luck": -1, "items": {} }, "s5": { "id": 327, "luck": -1, "items": {} }, "s6": { "id": 328, "luck": -1, "items": {} }, "s7": { "id": 145, "luck": -1, "items": {} } }, "f2": {}, "f3": {}, "f4": {}, "fField": {} };
+                        this.action_new({
+                            name: '第一游击部队 第三部队（西村队）',
+                            data: _g.kancolle_calc.decode(data)
+                        }, {
+                            'aircraftmax': Lockr.get('fleetlist-option-aircraftimportmax')
+                        });
+                    }.bind(this)));
+                    items.push($('<menuitem class="shipavatar"/>').html('<small class="sup">新建配置</small>第二游击部队（志摩队）').on('click', function () {
+                        var data = { "version": 4, "f1": { "s1": { "id": 192, "luck": -1, "items": {} }, "s2": { "id": 193, "luck": -1, "items": {} }, "s3": { "id": 200, "luck": -1, "items": {} }, "s4": { "id": 231, "luck": -1, "items": {} }, "s5": { "id": 407, "luck": -1, "items": {} }, "s6": { "id": 226, "luck": -1, "items": {} }, "s7": { "id": 470, "luck": -1, "items": {} } }, "f2": {}, "f3": {}, "f4": {}, "fField": {} };
+                        this.action_new({
+                            name: '第二游击部队（志摩队）',
+                            data: _g.kancolle_calc.decode(data)
+                        }, {
+                            'aircraftmax': Lockr.get('fleetlist-option-aircraftimportmax')
+                        });
+                    }.bind(this)));
                 }
                 this.menu_new = new _menu({
                     'target': this.dom.btn_new,
@@ -9529,9 +9562,8 @@ var TablelistFleets = function (_Tablelist4) {
     }, {
         key: 'contextmenu_show',
         value: function contextmenu_show($tr, $em, is_rightclick) {
-            if (!TablelistFleets.contextmenu) TablelistFleets.contextmenu = new _menu({
-                'className': 'contextmenu-fleet',
-                'items': [$('<menuitem/>').html('详情').on({
+            if (!TablelistFleets.contextmenu) {
+                var items = [$('<menuitem/>').html('详情').on({
                     'click': function click(e) {
                         TablelistFleets.contextmenu.curel.trigger('click', [!0]);
                     }
@@ -9550,11 +9582,21 @@ var TablelistFleets = function (_Tablelist4) {
                             InfosFleet.modalRemove_show(id, TablelistFleets.contextmenu.curobject);
                         }
                     }
-                })]
-            });
+                }), $('<menuitem class="remove-all-same-theme"/>').html('<span class="theme-block"></span>移除所有该主题颜色的配置').on({
+                    'click': function click(e) {
+                        TablelistFleets.modalRemoveAllSameTheme_show(TablelistFleets.contextmenu.curobject);
+                    }
+                })];
+                TablelistFleets.contextmenu = new _menu({
+                    'className': 'contextmenu-fleet',
+                    items: items
+                });
+            }
 
             TablelistFleets.contextmenu.curobject = this;
             TablelistFleets.contextmenu.curel = $tr;
+
+            TablelistFleets.contextmenu.dom.menu.attr('data-theme', $tr.data('theme'));
 
             if (is_rightclick) TablelistFleets.contextmenu.show(is_rightclick.clientX, is_rightclick.clientY);else TablelistFleets.contextmenu.show($em || $tr);
         }
@@ -9840,5 +9882,51 @@ TablelistFleets.modalBuildConflictShow = function (data, deferred) {
         } else {
             if (deferred) deferred.resolve();
         }
+    });
+};
+
+TablelistFleets.modalRemoveAllSameTheme_show = function (list) {
+
+    var run = function run() {
+        var theme = TablelistFleets.contextmenu.curel.data('theme');
+        var loadingId = 'remove_fleet_same_theme_' + theme;
+        _g.log('Removing all fleet in theme ' + theme + '...');
+        _frame.app_main.loading_start(loadingId, !1);
+        _db.fleets.remove({
+            theme: parseInt(theme)
+        }, {
+            multi: !0
+        }, function (err, numRemoved) {
+            _frame.app_main.loading_complete(loadingId);
+            _frame.modal.hide();
+            _g.badgeMsg('已删除配置');
+            if ((typeof list === 'undefined' ? 'undefined' : _typeof(list)) === 'object' && list.refresh) {
+                list.refresh();
+            }
+        });
+    };
+
+    if (!TablelistFleets.elModalRemoveAllSameTheme) {
+        TablelistFleets.elModalRemoveAllSameTheme = $('<form/>').append($('<p/>').html('是否删除所有该主题颜色的舰队配置？')).append($('<p class="actions"/>').append($('<button/>', {
+            'type': 'submit',
+            'class': 'button',
+            'html': '是'
+        })).append($('<button/>', {
+            'type': 'button',
+            'class': 'button',
+            'html': '否'
+        }).on('click', function () {
+            _frame.modal.hide();
+        }))).on('submit', function (e) {
+            e.preventDefault();
+            run();
+
+            return !1;
+        });
+    }
+
+    _frame.modal.show(TablelistFleets.elModalRemoveAllSameTheme, '删除配置', {
+        'classname': 'infos_fleet infos_fleet_remove',
+        'detach': !0
     });
 };

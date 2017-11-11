@@ -7529,6 +7529,47 @@ h5 + section.update_journal,
 h6 + section.update_journal {
   margin-top: 1em;
 }
+.menu.contextmenu-fleet > .body .remove-all-same-theme {
+  border-left: 33px solid transparent;
+}
+.menu.contextmenu-fleet > .body .remove-all-same-theme .theme-block {
+  display: block;
+  position: absolute;
+  float: left;
+  top: 50%;
+  height: 25px;
+  width: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  margin-top: -12.5px;
+  margin-left: -33px;
+}
+.menu.contextmenu-fleet[data-theme="2"] > .body .theme-block {
+  background: rgba(255, 109, 77, 0.35);
+}
+.menu.contextmenu-fleet[data-theme="3"] > .body .theme-block {
+  background: rgba(255, 228, 77, 0.35);
+}
+.menu.contextmenu-fleet[data-theme="4"] > .body .theme-block {
+  background: rgba(163, 255, 77, 0.35);
+}
+.menu.contextmenu-fleet[data-theme="5"] > .body .theme-block {
+  background: rgba(77, 255, 109, 0.35);
+}
+.menu.contextmenu-fleet[data-theme="6"] > .body .theme-block {
+  background: rgba(77, 255, 228, 0.35);
+}
+.menu.contextmenu-fleet[data-theme="7"] > .body .theme-block {
+  background: rgba(77, 163, 255, 0.35);
+}
+.menu.contextmenu-fleet[data-theme="8"] > .body .theme-block {
+  background: rgba(109, 77, 255, 0.35);
+}
+.menu.contextmenu-fleet[data-theme="9"] > .body .theme-block {
+  background: rgba(228, 77, 255, 0.35);
+}
+.menu.contextmenu-fleet[data-theme="10"] > .body .theme-block {
+  background: rgba(255, 77, 163, 0.35);
+}
 .menu.contextmenu-ship > .body menuitem.move {
   display: inline-block;
   width: 50%;

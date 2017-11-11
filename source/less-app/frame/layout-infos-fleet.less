@@ -2125,35 +2125,16 @@
 			position: 	absolute;
 		}
 		&:hover:before{
-			background: rgba(255, 255, 255, .15);
+			background: @fleet-theme-1;
 		}
-		&.theme-2{
-			background: hsla(11,100%,65%, .35);
-		}
-		&.theme-3{
-			background: hsla(51,100%,65%, .35);
-		}
-		&.theme-4{
-			background: hsla(91,100%,65%, .35);
-		}
-		&.theme-5{
-			background: hsla(131,100%,65%, .35);
-		}
-		&.theme-6{
-			background: hsla(171,100%,65%, .35);
-		}
-		&.theme-7{
-			background: hsla(211,100%,65%, .35);
-		}
-		&.theme-8{
-			background: hsla(251,100%,65%, .35);
-		}
-		&.theme-9{
-			background: hsla(291,100%,65%, .35);
-		}
-		&.theme-10{
-			background: hsla(331,100%,65%, .35);
-		}
+        .loop-themes(@n, @i: 2) when (@i =< @n) {
+            &.theme-@{i}{
+                @value:     ~"fleet-theme-@{i}";
+                background: @@value;
+            }
+            .loop-themes(@n, (@i + 1));
+        }
+        .loop-themes(10);
 	}
 	small{
 		color: 	hsl(0, 0%, 60%);

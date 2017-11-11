@@ -1085,7 +1085,7 @@ InfosFleet.modalRemove_show = function (id, is_list) {
                         _frame.app_main.loading_complete('remove_fleet_' + _id)
                         _frame.modal.hide()
                         _g.badgeMsg('已删除配置')
-                        if (is_list && is_list instanceof TablelistFleets) {
+                        if (typeof is_list === 'object' && is_list.refresh) {
                             is_list.refresh()
                         } else {
                             _frame.dom.navs.fleets.click()

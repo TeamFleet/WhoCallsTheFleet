@@ -40,6 +40,7 @@
 // @koala-prepend "../../source/js-app/!.js"
 // @koala-prepend "../../source/js-app/google_analytics-web.js"
 // @koala-prepend "../../source/js-app/kancolle-calc.js"
+// @koala-prepend "../../source/js-app/events.js"
 
 // @koala-prepend "../../source/nw.js-base-framework/source/js-base/node-webkit/configuration.js"
 

@@ -1,0 +1,26 @@
+.menu.contextmenu-fleet>.body{
+    .remove-all-same-theme{
+        @size:      25px;
+        border-left:    (@size + 8) solid transparent;
+        .theme-block{
+            display:    block;
+            position:   absolute;
+            float:      left;
+            top:        50%;
+            height:     @size;
+            width:      @size;
+            border:     1px solid fade(#fff, 25%);
+            margin-top: (0 - @size / 2);
+            margin-left:(0 - @size - 8);
+        }
+    }
+}
+
+.loop-contextmenu-fleet-themes(@n, @i: 2) when (@i =< @n) {
+    .menu.contextmenu-fleet[data-theme=~'"@{i}"'] > .body .theme-block{
+        @value:     ~"fleet-theme-@{i}";
+        background: @@value;
+    }
+    .loop-contextmenu-fleet-themes(@n, (@i + 1));
+}
+.loop-contextmenu-fleet-themes(10);

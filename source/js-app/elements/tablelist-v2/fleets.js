@@ -602,14 +602,28 @@ class TablelistFleets extends Tablelist{
                         $('<menuitem class="shipavatar"/>')
                             .html('<small class="sup">新建配置</small>第一游击部队 第三部队（西村队）')
                             .on('click', function(){
-                                // this.action_new()
+                                const data = {"version":4,"f1":{"s1":{"id":411,"luck":-1,"items":{}},"s2":{"id":412,"luck":-1,"items":{}},"s3":{"id":73,"luck":-1,"items":{}},"s4":{"id":489,"luck":-1,"items":{}},"s5":{"id":327,"luck":-1,"items":{}},"s6":{"id":328,"luck":-1,"items":{}},"s7":{"id":145,"luck":-1,"items":{}}},"f2":{},"f3":{},"f4":{},"fField":{}}
+                                this.action_new({
+                                    name: '第一游击部队 第三部队（西村队）',
+                                    data: _g.kancolle_calc.decode(data)
+                                },{
+                                    // 'aircraftmax': TablelistFleets.modalImportCheckAircraftMax.prop('checked') || Lockr.get( 'fleetlist-option-aircraftimportmax' )
+                                    'aircraftmax': Lockr.get( 'fleetlist-option-aircraftimportmax' )
+                                })
                             }.bind(this))
                     )
                     items.push(
                         $('<menuitem class="shipavatar"/>')
                             .html('<small class="sup">新建配置</small>第二游击部队（志摩队）')
                             .on('click', function(){
-                                // this.action_new()
+                                const data = {"version":4,"f1":{"s1":{"id":192,"luck":-1,"items":{}},"s2":{"id":193,"luck":-1,"items":{}},"s3":{"id":200,"luck":-1,"items":{}},"s4":{"id":231,"luck":-1,"items":{}},"s5":{"id":407,"luck":-1,"items":{}},"s6":{"id":226,"luck":-1,"items":{}},"s7":{"id":470,"luck":-1,"items":{}}},"f2":{},"f3":{},"f4":{},"fField":{}}
+                                this.action_new({
+                                    name: '第二游击部队（志摩队）',
+                                    data: _g.kancolle_calc.decode(data)
+                                },{
+                                    // 'aircraftmax': TablelistFleets.modalImportCheckAircraftMax.prop('checked') || Lockr.get( 'fleetlist-option-aircraftimportmax' )
+                                    'aircraftmax': Lockr.get( 'fleetlist-option-aircraftimportmax' )
+                                })
                             }.bind(this))
                     )
                 }
@@ -702,57 +716,69 @@ class TablelistFleets extends Tablelist{
 
     // 菜单
         contextmenu_show($tr, $em, is_rightclick){		
-            if( !TablelistFleets.contextmenu )
+            if( !TablelistFleets.contextmenu ) {
+                const items = [
+                    $('<menuitem/>').html('详情')
+                        .on({
+                            'click': function(e){
+                                TablelistFleets.contextmenu.curel.trigger('click', [true])
+                            }
+                        }),
+                        
+                    $('<menuitem/>').html('导出配置代码')
+                        .on({
+                            'click': function(e){
+                                InfosFleet.modalExport_show(TablelistFleets.contextmenu.curel.data('initdata'))
+                            }
+                        }),
+                        
+                    $('<menuitem/>').html('导出配置文本')
+                        .on({
+                            'click': function(e){
+                                InfosFleet.modalExportText_show(TablelistFleets.contextmenu.curel.data('initdata'))
+                            }
+                        }),
+                        
+                    $('<menuitem/>').html('移除')
+                        .on({
+                            'click': function(e){
+                                let id = TablelistFleets.contextmenu.curel.attr('data-fleetid')
+                                if( id ){
+                                    InfosFleet.modalRemove_show(id, TablelistFleets.contextmenu.curobject)
+                                }
+                                /*
+                                _db.fleets.remove({
+                                    _id: id
+                                }, { multi: true }, function (err, numRemoved) {
+                                    _g.log('Fleet ' + id + ' removed.')
+                                    _db.fleets.count({}, function(err, count){
+                                        if( !count )
+                                            TablelistFleets.contextmenu.curobject.dom.container.addClass('nocontent')
+                                    })
+                                });
+                                TablelistFleets.contextmenu.curel.remove()
+                                */
+                            }
+                        }),
+                    
+                    $('<menuitem class="remove-all-same-theme"/>')
+                        .html('<span class="theme-block"></span>移除所有该主题颜色的配置')
+                        .on({
+                            'click': function(e){
+                                TablelistFleets.modalRemoveAllSameTheme_show(TablelistFleets.contextmenu.curobject)
+                            }
+                        })
+                ]
                 TablelistFleets.contextmenu = new _menu({
                     'className': 'contextmenu-fleet',
-                    'items': [
-                        $('<menuitem/>').html('详情')
-                            .on({
-                                'click': function(e){
-                                    TablelistFleets.contextmenu.curel.trigger('click', [true])
-                                }
-                            }),
-                            
-                        $('<menuitem/>').html('导出配置代码')
-                            .on({
-                                'click': function(e){
-                                    InfosFleet.modalExport_show(TablelistFleets.contextmenu.curel.data('initdata'))
-                                }
-                            }),
-                            
-                        $('<menuitem/>').html('导出配置文本')
-                            .on({
-                                'click': function(e){
-                                    InfosFleet.modalExportText_show(TablelistFleets.contextmenu.curel.data('initdata'))
-                                }
-                            }),
-                            
-                        $('<menuitem/>').html('移除')
-                            .on({
-                                'click': function(e){
-                                    let id = TablelistFleets.contextmenu.curel.attr('data-fleetid')
-                                    if( id ){
-                                        InfosFleet.modalRemove_show(id, TablelistFleets.contextmenu.curobject)
-                                    }
-                                    /*
-                                    _db.fleets.remove({
-                                        _id: id
-                                    }, { multi: true }, function (err, numRemoved) {
-                                        _g.log('Fleet ' + id + ' removed.')
-                                        _db.fleets.count({}, function(err, count){
-                                            if( !count )
-                                                TablelistFleets.contextmenu.curobject.dom.container.addClass('nocontent')
-                                        })
-                                    });
-                                    TablelistFleets.contextmenu.curel.remove()
-                                    */
-                                }
-                            })
-                    ]
+                    items
                 })
+            }
 
             TablelistFleets.contextmenu.curobject = this
             TablelistFleets.contextmenu.curel = $tr
+
+            TablelistFleets.contextmenu.dom.menu.attr('data-theme', $tr.data('theme'))
 
             if( is_rightclick )
                 TablelistFleets.contextmenu.show(is_rightclick.clientX, is_rightclick.clientY)
@@ -1153,3 +1179,80 @@ TablelistFleets.modalBuildConflictShow = function(data, deferred){
 
     })
 };
+
+TablelistFleets.modalRemoveAllSameTheme_show = (list) => {
+    // return false
+
+    const run = () => {
+        const theme = TablelistFleets.contextmenu.curel.data('theme')
+        const loadingId = 'remove_fleet_same_theme_' + theme
+        _g.log(`Removing all fleet in theme ${theme}...`)
+        _frame.app_main.loading_start(loadingId, false)
+        _db.fleets.remove({
+            theme: parseInt(theme)
+        }, {
+            multi: true
+        }, function(err, numRemoved) {
+            _frame.app_main.loading_complete(loadingId)
+            _frame.modal.hide()
+            _g.badgeMsg('已删除配置')
+            if (typeof list === 'object' && list.refresh) {
+                list.refresh()
+            }
+        })
+    }
+
+    if (!TablelistFleets.elModalRemoveAllSameTheme) {
+        TablelistFleets.elModalRemoveAllSameTheme = $('<form/>')
+            .append($('<p/>').html('是否删除所有该主题颜色的舰队配置？'))
+            .append(
+            $('<p class="actions"/>')
+                .append(
+                $('<button/>', {
+                    'type': 'submit',
+                    'class': 'button',
+                    'html': '是'
+                })
+                )
+                .append(
+                $('<button/>', {
+                    'type': 'button',
+                    'class': 'button',
+                    'html': '否'
+                }).on('click', function () {
+                    _frame.modal.hide()
+                })
+                )
+            ).on('submit', function (e) {
+                e.preventDefault()
+                run()
+                // let _id = TablelistFleets.elModalRemoveId.val()
+                // if (_id) {
+                //     _frame.app_main.loading_start('remove_fleet_' + _id, false)
+                //     _db.fleets.remove({
+                //         _id: _id
+                //     }, { multi: true }, function (err, numRemoved) {
+                //         _g.log('Fleet ' + _id + ' removed.')
+                //         _frame.app_main.loading_complete('remove_fleet_' + _id)
+                //         _frame.modal.hide()
+                //         _g.badgeMsg('已删除配置')
+                //         if (typeof is_list === 'object' && is_list.refresh) {
+                //             is_list.refresh()
+                //         } else {
+                //             _frame.dom.navs.fleets.click()
+                //         }
+                //     });
+                // }
+                return false
+            })
+    }
+
+    _frame.modal.show(
+        TablelistFleets.elModalRemoveAllSameTheme,
+        '删除配置',
+        {
+            'classname': 'infos_fleet infos_fleet_remove',
+            'detach': true
+        }
+    )
+}
