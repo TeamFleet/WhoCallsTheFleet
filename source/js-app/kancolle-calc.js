@@ -120,6 +120,8 @@ _g.kancolle_calc = {
             return
         version = parseInt(data.version) || this.version
 
+        console.log(11111111111111, data)
+
         let result
             , i = 0
             , j = 0
@@ -141,7 +143,7 @@ _g.kancolle_calc = {
                     if (data_fleet) {
                         j = 0
                         //while( data_ship = data_fleet['s' + (j+1)] ){
-                        while (j < max_ships_per_fleet) {
+                        while (j < Math.max(max_ships_per_fleet, data_fleet._size)) {
                             data_ship = data_fleet['s' + (j + 1)]
                             if (data_ship && data_ship.id) {
                                 result[i][j] = [
@@ -213,7 +215,7 @@ _g.kancolle_calc = {
                     if (data_fleet) {
                         j = 0
                         //while( data_ship = data_fleet['s' + (j+1)] ){
-                        while (j < max_ships_per_fleet) {
+                        while (j < Math.max(max_ships_per_fleet, data_fleet._size)) {
                             data_ship = data_fleet['s' + (j + 1)]
                             if (data_ship && data_ship.id) {
                                 let ship = _g.data.ships[data_ship.id],

@@ -266,6 +266,8 @@ _g.kancolle_calc = {
         if ((typeof data === 'undefined' ? 'undefined' : _typeof(data)) != 'object') return;
         version = parseInt(data.version) || this.version;
 
+        console.log(11111111111111, data);
+
         var result = void 0,
             i = 0,
             j = 0,
@@ -287,7 +289,7 @@ _g.kancolle_calc = {
                     if (data_fleet) {
                         j = 0;
 
-                        while (j < max_ships_per_fleet) {
+                        while (j < Math.max(max_ships_per_fleet, data_fleet._size)) {
                             data_ship = data_fleet['s' + (j + 1)];
                             if (data_ship && data_ship.id) {
                                 result[i][j] = [data_ship.id, [data_ship.lv || null, data_ship.luck || -1], [], [], []];
@@ -350,7 +352,7 @@ _g.kancolle_calc = {
                     if (data_fleet) {
                         j = 0;
 
-                        while (j < max_ships_per_fleet) {
+                        while (j < Math.max(max_ships_per_fleet, data_fleet._size)) {
                             data_ship = data_fleet['s' + (j + 1)];
                             if (data_ship && data_ship.id) {
                                 var ship = _g.data.ships[data_ship.id],
@@ -4732,9 +4734,10 @@ var InfosFleet = function () {
             }.bind(this)))).appendTo(this.el);
 
             this.doms['ships'] = $('<div class="ships"/>').appendTo(this.el);
+            this.subfleetinputs = [];
 
             while (i < 4) {
-                $('<input/>', {
+                this.subfleetinputs[i] = $('<input/>', {
                     'type': 'radio',
                     'name': 'fleet_' + d._id + '_tab',
                     'id': 'fleet_' + d._id + '_tab_' + i,
@@ -4783,6 +4786,20 @@ var InfosFleet = function () {
             this.update(d);
 
             this._theme = this._theme;
+
+            if (Array.isArray(d.data)) {
+                d.data.some(function (data, index) {
+                    if (Array.isArray(data) && data.some(function (ship) {
+                        return Array.isArray(ship) && ship[0];
+                    })) {
+                        if (_this5.subfleetinputs[index]) {
+                            _this5.subfleetinputs[index].prop('checked', !0).trigger('change');
+                        }
+                        return !0;
+                    }
+                    return !1;
+                });
+            }
 
             $body.on('update_defaultHqLv.fleet' + this.data._id, function (e, val) {
                 if (this.is_showing) {
@@ -8634,10 +8651,11 @@ var TablelistFleets = function (_Tablelist3) {
             this.columns.forEach(function (column) {
                 switch (column[1]) {
                     case ' ':
-                        var html = '<i>',
-                            ships = data['data'][0] || [],
-                            j = 0;
-                        while (j < 6) {
+                        var ships = data['data'][0] || [],
+                            j = 0,
+                            count = Math.min(8, Math.max(6, ships.length)),
+                            html = '<i data-count="' + count + '">';
+                        while (j < count) {
                             if (ships[j] && ships[j][0]) html += '<img class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '" src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0' + TablelistFleets.avatarImgSuffix + '" contextmenu="disabled"' + '/>';else html += '<s class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '"/>';
                             j++;
                         }

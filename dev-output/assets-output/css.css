@@ -4895,6 +4895,64 @@ body.mod-capture #tip {
 .link_fleet dt > i > s.nomask {
   background: linear-gradient(to right, transparent 0, transparent 36px, rgba(255,255,255, .15) 40px, rgba(255,255,255, .15) calc(100% - 30px), transparent calc(100% - 10px));
 }
+.link_fleet dt > i[data-count="7"] > .img {
+  z-index: 7;
+}
+.link_fleet dt > i[data-count="7"] > .img + .img {
+  z-index: 6;
+  left: 13px;
+}
+.link_fleet dt > i[data-count="7"] > .img + .img + .img {
+  z-index: 5;
+  left: 59px;
+}
+.link_fleet dt > i[data-count="7"] > .img + .img + .img + .img {
+  z-index: 4;
+  left: 105px;
+}
+.link_fleet dt > i[data-count="7"] > .img + .img + .img + .img + .img {
+  z-index: 3;
+  left: 151px;
+}
+.link_fleet dt > i[data-count="7"] > .img + .img + .img + .img + .img + .img {
+  z-index: 2;
+  left: 197px;
+}
+.link_fleet dt > i[data-count="7"] > .img + .img + .img + .img + .img + .img + .img {
+  z-index: 1;
+  left: 243px;
+}
+.link_fleet dt > i[data-count="8"] > .img {
+  z-index: 8;
+}
+.link_fleet dt > i[data-count="8"] > .img + .img {
+  z-index: 7;
+  left: 6px;
+}
+.link_fleet dt > i[data-count="8"] > .img + .img + .img {
+  z-index: 6;
+  left: 45px;
+}
+.link_fleet dt > i[data-count="8"] > .img + .img + .img + .img {
+  z-index: 5;
+  left: 84px;
+}
+.link_fleet dt > i[data-count="8"] > .img + .img + .img + .img + .img {
+  z-index: 4;
+  left: 123px;
+}
+.link_fleet dt > i[data-count="8"] > .img + .img + .img + .img + .img + .img {
+  z-index: 3;
+  left: 162px;
+}
+.link_fleet dt > i[data-count="8"] > .img + .img + .img + .img + .img + .img + .img {
+  z-index: 2;
+  left: 201px;
+}
+.link_fleet dt > i[data-count="8"] > .img + .img + .img + .img + .img + .img + .img + .img {
+  z-index: 1;
+  left: 240px;
+}
 .link_fleet dt > strong {
   font-weight: lighter;
   line-height: 16px;

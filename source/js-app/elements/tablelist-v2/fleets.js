@@ -434,10 +434,11 @@ class TablelistFleets extends Tablelist{
             this.columns.forEach(function(column){
                 switch( column[1] ){
                     case ' ':
-                        var html = '<i>'
-                            ,ships = data['data'][0] || []
-                            ,j = 0;
-                        while( j < 6 ){
+                        var ships = data['data'][0] || []
+                            ,j = 0
+                            ,count = Math.min(8, Math.max(6, ships.length))
+                            ,html = `<i data-count="${count}">`
+                        while( j < count ){
                             if( ships[j] && ships[j][0] )
                                 html+='<img class="img'+(_huCss.csscheck_full('mask-image') ? '' : ' nomask')
                                         +'" src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0'

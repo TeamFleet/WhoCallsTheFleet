@@ -460,10 +460,11 @@ class InfosFleet {
             .appendTo(this.el)
 
         this.doms['ships'] = $('<div class="ships"/>').appendTo(this.el)
+        this.subfleetinputs = []
 
         // 4个分舰队
         while (i < 4) {
-            $('<input/>', {
+            this.subfleetinputs[i] = $('<input/>', {
                 'type': 'radio',
                 'name': 'fleet_' + d._id + '_tab',
                 'id': 'fleet_' + d._id + '_tab_' + i,
@@ -530,6 +531,22 @@ class InfosFleet {
         this.update(d)
 
         this._theme = this._theme
+
+        // 自动进入有数据的子舰队
+        if (Array.isArray(d.data)) {
+            d.data.some((data, index) => {
+                if (Array.isArray(data) && data.some(ship => (
+                    Array.isArray(ship) && ship[0]
+                ))) {
+                    if (this.subfleetinputs[index]) {
+                        this.subfleetinputs[index].prop('checked', true).trigger('change')
+                    }
+                    return true
+                }
+                return false
+            })
+        }
+        // this.subfleetinputs[i]
 
         // 事件: 默认司令部等级更新
         $body.on('update_defaultHqLv.fleet' + this.data._id, function (e, val) {
