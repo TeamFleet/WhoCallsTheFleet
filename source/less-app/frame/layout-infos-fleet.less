@@ -43,6 +43,9 @@
 		width: 		100%;
 		flex: 		1 0 auto;
 		max-height: 20px;
+		.mod-capture({
+			max-height: 10px;
+		});
 	}
 
 	&>header, &>.fleets{
@@ -1626,9 +1629,24 @@
 		font-weight: 	lighter;
 		margin-right: 	-1.5em;
 		margin-bottom: 	10px;
+		position: 		relative;
 		//h3, h4, h5{
 		//	display: 	inline-block;
 		//}
+
+		.btn-add-ship{
+			position: 	absolute;
+			display:    block;
+			border: 	1px solid rgba(255, 255, 255, .1);
+			background:	rgba(255, 255, 255, .1);
+			width: 		25px;
+			height: 	25px;
+			top: 		5px;
+			// left: 		0;
+			.mod-capture({
+				display:none;
+			});
+		}
 	}
 		.summary-item{
 			margin-right: 	1.5em;

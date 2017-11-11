@@ -47,7 +47,7 @@ class InfosFleetEditableTitle {
                     if (typeof content == 'undefined') {
                         content = $el.text()
                     }
-                    console.log(content, $el.text())
+                    // console.log(content, $el.text())
                     if (content != $el.text())
                         $el.text(content)
                     options.onUpdate(content)
@@ -721,6 +721,20 @@ class InfosFleet {
         if (this.is_init) {
             this.data.data = []
             this.fleets.forEach(function (currentValue, i) {
+                if (Array.isArray(currentValue.data) && currentValue.data.length > InfosFleet.minSubFleetShipsCount) {
+                    // 从第7船开始，清除空位
+                    const dataShips = [...currentValue.data]
+                    let index = InfosFleet.minSubFleetShipsCount
+                    while (index < dataShips.length) {
+                        if (Array.isArray(dataShips[index]) && !!dataShips[index][0]) {
+                            // 存在选择
+                            index++
+                        } else {
+                            dataShips.splice(index, 1)
+                        }
+                    }
+                    currentValue.data = dataShips
+                }
                 this.data.data[i] = currentValue.data
             }, this)
             this.data.data[4] = this.fleet_airfileds.data
@@ -863,6 +877,7 @@ class InfosFleet {
         InfosFleet.modalRemove_show(this)
     }
 }
+InfosFleet.minSubFleetShipsCount = 6
 InfosFleet.modalExport = function (curval) {
     if (!InfosFleet.elModalExport) {
         InfosFleet.elModalExport = $('<div/>')
@@ -1145,6 +1160,7 @@ class InfosFleetSubFleet {
     constructor(infosFleet, d, index, label) {
         d = d || []
         this.data = d
+        this.infosFleet = infosFleet
 
         this.el = $('<dl class="fleetships"/>')
         this.label = label
@@ -1153,10 +1169,11 @@ class InfosFleetSubFleet {
 
         // 6个舰娘
         let i = 0
-        while (i < 6) {
-            this.ships[i] = new InfosFleetShip(infosFleet, this, i)
-            this.ships[i].getEl().appendTo(this.el)
+        while (i < InfosFleet.minSubFleetShipsCount) {
+            // this.ships[i] = new InfosFleetShip(infosFleet, this, i)
+            // this.ships[i].getEl().appendTo(this.el)
             //$('<s/>').appendTo( this.el )
+            this.createShip(i)
             i++
         }
 
@@ -1165,10 +1182,15 @@ class InfosFleetSubFleet {
             //.html('<h4 data-content="舰队数据">舰队数据</h4>')
             .appendTo(this.el)
             .append(
+            $('<span class="btn-add-ship"/>')
+                .on('click', () => {
+                    this.createShip(this.ships.length)
+                })
+            )
+            .append(
             $('<span class="summary-item"/>')
                 .html('航速')
-                .append(
-                this.elSummarySpeed = $('<strong/>').html('-')
+                .append(this.elSummarySpeed = $('<strong/>').html('-')
                 )
             )
             .append(
@@ -1200,7 +1222,6 @@ class InfosFleetSubFleet {
                 )
             )
 
-        this.infosFleet = infosFleet
 
         //this.updateEl()
 
@@ -1212,19 +1233,36 @@ class InfosFleetSubFleet {
         }.bind(this))
     }
 
+    createShip(index) {
+        if (this.ships[index]) return this.ships[index]
+        this.ships[index] = new InfosFleetShip(this.infosFleet, this, index)
+        /*if (index > 0 && typeof this.ships[index - 1] === 'object') {
+            return this.ships[index].getEl().insertAfter(this.ships[index - 1].getEl())
+        } else */if (this.elSummary) {
+            return this.ships[index].getEl().insertBefore(this.elSummary)
+        } else {
+            return this.ships[index].getEl().appendTo(this.el)
+        }
+    }
+
 
     // 更新元数据
 
     // 根据元数据更新页面元素
     updateEl(d) {
         this.data = d || this.data
+        // console.log(this.data)
         let count = 0
-        if (d)
+        if (d) {
             d.forEach(function (sd, i) {
+                if (!this.ships[i]) {
+                    this.createShip(i)
+                }
                 this.ships[i].updateEl(sd)
                 if (sd && sd.push && sd[0])
                     count++
             }, this)
+        }
 
         if (count) {
             this.label.addClass('highlight')
@@ -1882,7 +1920,7 @@ class InfosFleetShip {
                             InfosFleetShip.menuCurObj.moveDown()
                         },
                         'show': function () {
-                            if (InfosFleetShip.menuCurObj.index < 5)
+                            if (InfosFleetShip.menuCurObj.index < InfosFleetShip.menuCurObj.infosFleetSubFleet.ships.length - 1)
                                 InfosFleetShip.menuItems[1].removeClass('disabled')
                             else
                                 InfosFleetShip.menuItems[1].addClass('disabled')
@@ -1992,7 +2030,7 @@ class InfosFleetShip {
         this.swap(this.index - 1, true)
     }
     moveDown() {
-        if (this.index >= 5)
+        if (this.index >= this.infosFleetSubFleet.ships.length - 1)
             return
 
         this.swap(this.index + 1, true)
@@ -2058,6 +2096,10 @@ class InfosFleetShip {
             this.data[3] = []
             this.data[4] = []
             // [null, [null, -1], [], [], []]
+
+            if (this.index >= InfosFleet.minSubFleetShipsCount) {
+                this.getEl().remove()
+            }
         }
 
         this.save()

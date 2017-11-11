@@ -632,16 +632,22 @@ body > .menus > .menu > .body {
 }
 body > .menus > .menu > .body menuitem,
 body > .menus > .menu > .body .menuitem,
-body > .menus > .menu > .body .item {
+body > .menus > .menu > .body .item,
+body > .menus > .menu > .body .title,
+body > .menus > .menu > .body .subtitle {
   display: block;
-  height: 2rem;
-  padding: 0 1.5em 0 1.25em;
+  min-height: 2rem;
+  padding: 0;
+  padding-left: 0.9rem;
+  padding-right: 1.1rem;
   position: relative;
   transition-property: color, background-color;
 }
 body > .menus > .menu > .body menuitem.mod-checkbox,
 body > .menus > .menu > .body .menuitem.mod-checkbox,
-body > .menus > .menu > .body .item.mod-checkbox {
+body > .menus > .menu > .body .item.mod-checkbox,
+body > .menus > .menu > .body .title.mod-checkbox,
+body > .menus > .menu > .body .subtitle.mod-checkbox {
   padding: 0;
   /*
 					input[type=checkbox]{
@@ -654,15 +660,30 @@ body > .menus > .menu > .body .item.mod-checkbox {
 }
 body > .menus > .menu > .body menuitem.mod-checkbox label,
 body > .menus > .menu > .body .menuitem.mod-checkbox label,
-body > .menus > .menu > .body .item.mod-checkbox label {
+body > .menus > .menu > .body .item.mod-checkbox label,
+body > .menus > .menu > .body .title.mod-checkbox label,
+body > .menus > .menu > .body .subtitle.mod-checkbox label {
   display: block;
   padding-left: 40px;
   padding-right: 1.5em;
 }
 body > .menus > .menu > .body menuitem.mod-checkbox label.checkbox:before,
 body > .menus > .menu > .body .menuitem.mod-checkbox label.checkbox:before,
-body > .menus > .menu > .body .item.mod-checkbox label.checkbox:before {
+body > .menus > .menu > .body .item.mod-checkbox label.checkbox:before,
+body > .menus > .menu > .body .title.mod-checkbox label.checkbox:before,
+body > .menus > .menu > .body .subtitle.mod-checkbox label.checkbox:before {
   margin-left: 12px;
+}
+body > .menus > .menu > .body menuitem .sup,
+body > .menus > .menu > .body .menuitem .sup,
+body > .menus > .menu > .body .item .sup,
+body > .menus > .menu > .body .title .sup,
+body > .menus > .menu > .body .subtitle .sup {
+  display: block;
+  line-height: 1em;
+  font-size: 0.6000000000000001rem;
+  padding-top: 0.5rem;
+  margin-bottom: -0.5rem;
 }
 body > .menus > .menu > .body menuitem:hover,
 body > .menus > .menu > .body .menuitem:hover {
@@ -685,6 +706,17 @@ body > .menus > .menu > .body hr {
   border-top: 0.05rem solid rgba(255, 255, 255, 0.2);
   margin: 8px 0;
   clear: both;
+}
+body > .menus > .menu > .body .title {
+  font-weight: 600;
+  font-size: 1.2em;
+}
+body > .menus > .menu > .body .subtitle {
+  margin-top: -0.25rem;
+  margin-bottom: -0.5rem;
+}
+body > .menus > .menu > .body .subtitle + .title {
+  margin-top: -1rem;
 }
 body > .menus > .menu.mod-blur-shot {
   background: rgba(0, 0, 0, 0.5);
@@ -7993,6 +8025,9 @@ h6 + section.update_journal {
   flex: 1 0 auto;
   max-height: 20px;
 }
+body.mod-capture .infos-fleet:before {
+  max-height: 10px;
+}
 .infos-fleet > header,
 .infos-fleet > .fleets {
   display: block;
@@ -9440,6 +9475,19 @@ body.mod-capture .infos-fleet .equipment-extra {
   font-weight: lighter;
   margin-right: -1.5em;
   margin-bottom: 10px;
+  position: relative;
+}
+.infos-fleet .summary .btn-add-ship {
+  position: absolute;
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.1);
+  width: 25px;
+  height: 25px;
+  top: 5px;
+}
+body.mod-capture .infos-fleet .summary .btn-add-ship {
+  display: none;
 }
 .infos-fleet .summary-item {
   margin-right: 1.5em;

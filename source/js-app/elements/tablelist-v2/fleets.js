@@ -488,101 +488,134 @@ class TablelistFleets extends Tablelist{
     // [按钮操作] 新建/导入配置
         btn_new(target){
             if( !this.menu_new ){
+                const items = [
+                    $('<div class="menu-fleets-new"/>')
+                        .append(
+                            $('<menuitem/>').html('新建配置')
+                                .on('click', function(){
+                                    this.action_new()
+                                }.bind(this))
+                        )
+                        .append(
+                            $('<menuitem/>').html('导入配置代码')
+                                .on('click', function(){
+                                    if( !TablelistFleets.modalImport ){
+                                        TablelistFleets.modalImport = $('<div/>')
+                                            .append(
+                                                TablelistFleets.modalImportTextarea = $('<textarea/>',{
+                                                    'placeholder': '输入配置代码...'
+                                                })
+                                            )
+                                            .append(
+                                                $('<p/>').html('* 配置代码兼容<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
+                                            )
+                                            .append(
+                                                $('<p class="aircraftimportmax"/>')
+                                                    .append(
+                                                        TablelistFleets.modalImportCheckAircraftMax = $('<input/>',{
+                                                            'type':	'checkbox',
+                                                            'id':	'_input_g' + _g.inputIndex
+                                                        }).prop('checked', Lockr.get( 'fleetlist-option-aircraftimportmax' ))
+                                                    )
+                                                    .append($('<label/>',{
+                                                            'class':'checkbox',
+                                                            'for':	'_input_g' + (_g.inputIndex++),
+                                                            'html':	'飞行器熟练度自动提升至'
+                                                        }) )
+                                            )
+                                            .append(
+                                                TablelistFleets.modalImportBtn = $('<button class="button"/>').html('导入')
+                                                    .on('click', function(){
+                                                        let val = TablelistFleets.modalImportTextarea.val()
+                                                        //console.log(val)
+                                                        if( val ){
+                                                            val = JSON.parse(val)
+                                                            if( !val.length || !val.push )
+                                                                val = _g.kancolle_calc.decode(val)
+                                                            this.action_new({
+                                                                'data': 	val
+                                                            },{
+                                                                // 'aircraftmax': TablelistFleets.modalImportCheckAircraftMax.prop('checked') || Lockr.get( 'fleetlist-option-aircraftimportmax' )
+                                                                'aircraftmax': TablelistFleets.modalImportCheckAircraftMax.prop('checked')
+                                                            })
+                                                            _frame.modal.hide()
+                                                            TablelistFleets.modalImportTextarea.val('')
+                                                        }
+                                                    }.bind(this))
+                                            )
+                                    }
+                                    TablelistFleets.modalImportTextarea.val('')
+                                    /*
+                                    TablelistFleets.modalImportBtn.off('click.import')
+                                        .on('click', function(){
+                                            let val = TablelistFleets.modalImportTextarea.val()
+                                            //console.log(val)
+                                            if( val ){
+                                                val = JSON.parse(val)
+                                                if( !val.length || !val.push )
+                                                    val = _g.kancolle_calc.decode(val)
+                                                this.action_new({
+                                                    'data': 	val
+                                                })
+                                                _frame.modal.hide()
+                                                TablelistFleets.modalImportTextarea.val('')
+                                            }
+                                        }.bind(this))
+                                        */
+                                    _frame.modal.show(
+                                        TablelistFleets.modalImport,
+                                        '导入配置代码',
+                                        {
+                                            'classname': 	'infos_fleet infos_fleet_import',
+                                            'detach':		true
+                                        }
+                                    )
+                                }.bind(this))
+                        )
+                        .append(
+                            TablelistFleets.support.buildfile
+                                ? $('<menuitem class="import_file"/>').html('导入配置文件').on('click', function(){
+                                        this.dbfile_selector.trigger('click')
+                                    }.bind(this))
+                                : null
+                        )
+                ]
+                let event
+                if (_g.getCurrentEvent().some(e => {
+                    if (e.code === 'leyteA') {
+                        event = e
+                        return true
+                    }
+                    return false
+                })) {
+                    items.push(
+                        $('<hr/>')
+                    )
+                    items.push(
+                        $('<small class="subtitle">期间限定</small>')
+                    )
+                    items.push(
+                        $(`<div class="title">${event.title[_g.lang]}</div>`)
+                    )
+                    items.push(
+                        $('<menuitem class="shipavatar"/>')
+                            .html('<small class="sup">新建配置</small>第一游击部队 第三部队（西村队）')
+                            .on('click', function(){
+                                // this.action_new()
+                            }.bind(this))
+                    )
+                    items.push(
+                        $('<menuitem class="shipavatar"/>')
+                            .html('<small class="sup">新建配置</small>第二游击部队（志摩队）')
+                            .on('click', function(){
+                                // this.action_new()
+                            }.bind(this))
+                    )
+                }
                 this.menu_new = new _menu({
                     'target': 	this.dom.btn_new,
                     'className':'menu-fleets-new',
-                    'items': [
-                        $('<div class="menu-fleets-new"/>')
-                            .append(
-                                $('<menuitem/>').html('新建配置')
-                                    .on('click', function(){
-                                        this.action_new()
-                                    }.bind(this))
-                            )
-                            .append(
-                                $('<menuitem/>').html('导入配置代码')
-                                    .on('click', function(){
-                                        if( !TablelistFleets.modalImport ){
-                                            TablelistFleets.modalImport = $('<div/>')
-                                                .append(
-                                                    TablelistFleets.modalImportTextarea = $('<textarea/>',{
-                                                        'placeholder': '输入配置代码...'
-                                                    })
-                                                )
-                                                .append(
-                                                    $('<p/>').html('* 配置代码兼容<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
-                                                )
-                                                .append(
-                                                    $('<p class="aircraftimportmax"/>')
-                                                        .append(
-                                                            TablelistFleets.modalImportCheckAircraftMax = $('<input/>',{
-                                                                'type':	'checkbox',
-                                                                'id':	'_input_g' + _g.inputIndex
-                                                            }).prop('checked', Lockr.get( 'fleetlist-option-aircraftimportmax' ))
-                                                        )
-                                                        .append($('<label/>',{
-                                                                'class':'checkbox',
-                                                                'for':	'_input_g' + (_g.inputIndex++),
-                                                                'html':	'飞行器熟练度自动提升至'
-                                                            }) )
-                                                )
-                                                .append(
-                                                    TablelistFleets.modalImportBtn = $('<button class="button"/>').html('导入')
-                                                        .on('click', function(){
-                                                            let val = TablelistFleets.modalImportTextarea.val()
-                                                            //console.log(val)
-                                                            if( val ){
-                                                                val = JSON.parse(val)
-                                                                if( !val.length || !val.push )
-                                                                    val = _g.kancolle_calc.decode(val)
-                                                                this.action_new({
-                                                                    'data': 	val
-                                                                },{
-                                                                    // 'aircraftmax': TablelistFleets.modalImportCheckAircraftMax.prop('checked') || Lockr.get( 'fleetlist-option-aircraftimportmax' )
-                                                                    'aircraftmax': TablelistFleets.modalImportCheckAircraftMax.prop('checked')
-                                                                })
-                                                                _frame.modal.hide()
-                                                                TablelistFleets.modalImportTextarea.val('')
-                                                            }
-                                                        }.bind(this))
-                                                )
-                                        }
-                                        TablelistFleets.modalImportTextarea.val('')
-                                        /*
-                                        TablelistFleets.modalImportBtn.off('click.import')
-                                            .on('click', function(){
-                                                let val = TablelistFleets.modalImportTextarea.val()
-                                                //console.log(val)
-                                                if( val ){
-                                                    val = JSON.parse(val)
-                                                    if( !val.length || !val.push )
-                                                        val = _g.kancolle_calc.decode(val)
-                                                    this.action_new({
-                                                        'data': 	val
-                                                    })
-                                                    _frame.modal.hide()
-                                                    TablelistFleets.modalImportTextarea.val('')
-                                                }
-                                            }.bind(this))
-                                            */
-                                        _frame.modal.show(
-                                            TablelistFleets.modalImport,
-                                            '导入配置代码',
-                                            {
-                                                'classname': 	'infos_fleet infos_fleet_import',
-                                                'detach':		true
-                                            }
-                                        )
-                                    }.bind(this))
-                            )
-                            .append(
-                                TablelistFleets.support.buildfile
-                                    ? $('<menuitem class="import_file"/>').html('导入配置文件').on('click', function(){
-                                            this.dbfile_selector.trigger('click')
-                                        }.bind(this))
-                                    : null
-                            )
-                    ]
+                    items
                 })
                 this.dbfile_selector = $('<input type="file" class="none"/>')
                     .on('change', function(e){
