@@ -546,8 +546,7 @@ _g.events = [{
         ja_jp: '捷号決戦！邀撃、レイテ沖海戦(前篇)',
         zh_cn: '捷号决战！迎击莱特湾海战（前篇）'
     },
-
-    start: 1510328726083,
+    start: 1510844400000,
     end: 1512658800000 }];
 
 _g.getCurrentEvent = function (now) {
