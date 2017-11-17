@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",218,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/44.png)\"></s><strong>四式战 疾风</strong><small>陆军战斗机</small></h3><span>+10 对空</span><span>+1 命中</span><span>+1 回避</span><span>航程: 5</span>")

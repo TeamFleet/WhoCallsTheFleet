@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",270,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/47.png)\"></s><strong>东海<small>(九〇一空)</small></strong><small>陆上哨戒机</small></h3><span>+11 对潜</span><span>+2 爆装</span><span>+1 命中</span><span>+6 索敌</span><span>航程: 8</span>")

@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",269,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/47.png)\"></s><strong>试制东海</strong><small>陆上哨戒机</small></h3><span>+10 对潜</span><span>+2 爆装</span><span>+5 索敌</span><span>航程: 8</span>")
