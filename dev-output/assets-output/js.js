@@ -3067,7 +3067,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
     location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20171111';
+_g.db_version = '20171118';
 
 _g.bgimg_count = 0;
 
@@ -8997,7 +8997,9 @@ var TablelistEquipments = function (_Tablelist3) {
                             e.stopImmediatePropagation();
                             e.stopPropagation();
 
-                            if ($.inArray(etype, TablelistEquipments.types || []) > -1 || $.inArray(eid, TablelistEquipments.extraEquipments || []) > -1) _frame.app_main.mode_selection_callback(eid);
+                            if ($.inArray(etype, TablelistEquipments.types || []) > -1 || $.inArray(eid, TablelistEquipments.extraEquipments || []) > -1) {
+                                _frame.app_main.mode_selection_callback(eid);
+                            }
 
                             setTimeout(function () {
                                 TablelistEquipments.types = [];

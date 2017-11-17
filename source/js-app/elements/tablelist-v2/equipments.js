@@ -189,8 +189,9 @@ class TablelistEquipments extends Tablelist{
                             if(
                                 $.inArray(etype, TablelistEquipments.types || []) > -1
                                 || $.inArray(eid, TablelistEquipments.extraEquipments || []) > -1
-                            )
+                            ){
                                 _frame.app_main.mode_selection_callback(eid)
+                            }
 
                             setTimeout(function(){
                                 TablelistEquipments.types = []
