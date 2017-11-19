@@ -7182,6 +7182,13 @@ body.mod-capture #tip {
 .tablelist-equipments > [name="types"][class]:not(.type61) ~ .tablelist-container .tablelist-body h4[data-type="61"] {
   opacity: .35;
 }
+.tablelist-equipments > [name="types"][class]:not(.type62) ~ .tablelist-container .tablelist-body > [data-equipmenttype="62"] {
+  display: none;
+  opacity: .35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type62) ~ .tablelist-container .tablelist-body h4[data-type="62"] {
+  opacity: .35;
+}
 .tablelist-equipments > [value="3"]:checked ~ .tablelist-container [stat="range"] {
   display: none !important;
 }
