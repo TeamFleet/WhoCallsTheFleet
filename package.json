@@ -5,7 +5,7 @@
   "description": "An offline guidebook for KanColle. Based on NW.JS",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Diablohu/WhoCallsTheFleet"
+    "url": "https://github.com/TeamFleet/WhoCallsTheFleet"
   },
   "repositories": [
     {
@@ -39,12 +39,12 @@
     ],
     "dataVersion": {
       "app": "0.25.1.0",
-      "app-db": "2017.11.19",
+      "app-db": "2017.11.29",
       "bgimgs": "1.18.6.0",
       "pics": "2017.11.19",
       "pics-enemies": "2017.08.12",
       "pics-ships": "2017.11.19",
-      "pics-ships-extra": "2017.11.18"
+      "pics-ships-extra": "2017.11.29"
     },
     "versions": {
       "win32": "0.26.2",
