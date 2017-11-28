@@ -236,14 +236,15 @@
 				flex:		1 0 490px;
 				margin-right:	10px;
 				&.improvement{
-					height:		75px;
+					min-height:	75px;
 					padding-top:10px;
 					overflow:	hidden;
-					.transition-property(height);
+					// .transition-property(min-height);
 					&>span{
 						//display:	none;
+						height: 	0;
 						opacity:	0;
-						.transition-property(opacity);
+						.transition-property(all);
 					}
 				}
 			}
@@ -255,16 +256,20 @@
 			content:	@iconcode-checkbox-checked;
 		}
 		& ~ .content>.flexgrid>.improvement.unit{
-			height:		175px;
+			min-height:	175px;
 			overflow:	visible;
+			&>span{
+				//display:	block;
+				height: 	90px;
+				opacity:	1;
+				//.animate(fadeIn);
+			}
 			@media all and ( max-width: 600px ){
 				height: 	auto;
 				margin-bottom:20px;
-			}
-			&>span{
-				//display:	block;
-				opacity:	1;
-				//.animate(fadeIn);
+				&>span{
+					height: 	auto;
+				}
 			}
 		}
 	}
