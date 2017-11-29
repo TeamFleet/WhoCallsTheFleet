@@ -547,7 +547,7 @@ _g.events = [{
         zh_cn: '捷号决战！迎击莱特湾海战（前篇）'
     },
     start: 1510844400000,
-    end: 1512658800000 }];
+    end: 1512957600000 }];
 
 _g.getCurrentEvent = function (now) {
     if (now instanceof Date) now = now.valueOf;else if (typeof now === 'string') now = parseInt(now);else if (!now) now = new Date().valueOf();
