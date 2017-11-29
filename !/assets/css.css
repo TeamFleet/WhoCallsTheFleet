@@ -4461,7 +4461,6 @@ body.mod-capture #tip {
 .improvement > strong {
   font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
   font-size: 18px;
-  height: 32px;
   line-height: 32px;
   vertical-align: top;
   font-weight: lighter;
@@ -4471,7 +4470,6 @@ body.mod-capture #tip {
   position: relative;
   display: inline-block;
   padding-left: 36px;
-  height: 32px;
   background-size: 36px;
   margin-top: -2px;
   padding-top: 2px;
@@ -4479,7 +4477,6 @@ body.mod-capture #tip {
   font-style: normal;
   text-shadow: 0 1px 0 #000;
   transition-property: color;
-  letter-spacing: -0.05em;
 }
 .improvement > strong > a small {
   padding: .25em;
@@ -14626,30 +14623,34 @@ body > .modal.update_journal.mod-blur-shot > div {
   margin-right: 10px;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > .content > .flexgrid > .unit.improvement {
-  height: 75px;
+  min-height: 75px;
   padding-top: 10px;
   overflow: hidden;
-  transition-property: height;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > .content > .flexgrid > .unit.improvement > span {
+  height: 0;
   opacity: 0;
-  transition-property: opacity;
+  transition-property: all;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > #arsenal_weekday-showmeterials:checked ~ .weekday > label[for="arsenal_weekday-showmeterials"]:before {
   content: "\e601";
 }
 .page-container[page="arsenal"] > .main > .body-weekday > #arsenal_weekday-showmeterials:checked ~ .content > .flexgrid > .improvement.unit {
-  height: 175px;
+  min-height: 175px;
   overflow: visible;
+}
+.page-container[page="arsenal"] > .main > .body-weekday > #arsenal_weekday-showmeterials:checked ~ .content > .flexgrid > .improvement.unit > span {
+  height: 90px;
+  opacity: 1;
 }
 @media all and (max-width: 600px) {
   .page-container[page="arsenal"] > .main > .body-weekday > #arsenal_weekday-showmeterials:checked ~ .content > .flexgrid > .improvement.unit {
     height: auto;
     margin-bottom: 20px;
   }
-}
-.page-container[page="arsenal"] > .main > .body-weekday > #arsenal_weekday-showmeterials:checked ~ .content > .flexgrid > .improvement.unit > span {
-  opacity: 1;
+  .page-container[page="arsenal"] > .main > .body-weekday > #arsenal_weekday-showmeterials:checked ~ .content > .flexgrid > .improvement.unit > span {
+    height: auto;
+  }
 }
 .page-container[page="arsenal"] > .main > .body-all > .improvement {
   min-height: 100px;
