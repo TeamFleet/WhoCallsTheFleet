@@ -129,6 +129,88 @@
 			//	width:	~"calc(50% - 130px)";
 			//	flex-grow:	0;
 			//}
+			.bonus{
+				background: rgba(0,0,0,.2);
+				border: 1px solid fade(#fff, 15%);
+				.border-width(1);
+				// border-radius: 5px;
+				.border-radius(5);
+				clear: both;
+				color: #e6e6e6;
+				display: inline-block;
+				.margin-top(15);
+				overflow: hidden;
+				width: 100%;
+			}
+				.bonus-item{
+					display: block;
+					.padding(10, 10, 5, 10);
+					& + .bonus-item{
+						border-top: 1px solid fade(#fff, 15%);
+						.border-top-width(1);
+					}
+				}
+					.bonus-item-ships{
+						.margin-right(-5);
+    					overflow: hidden;
+					}
+						.bonus-item-ships-ship{
+							float: left;
+							display: block;
+							position: relative;
+							.margin-bottom(5);
+							.margin-right(5);
+							.line-height(20);
+							.padding-left(36);
+							.padding-right(8);
+							.border-radius(10);
+							.transition-property(~"background-color, color, opacity");
+							& > .pic{
+								position: absolute;
+								top: 0;
+								bottom: 0;
+								left: 0;
+								width: 32px;
+								.border-radius(10);
+								background: no-repeat -30px 50% / cover;
+							}
+							&:hover{
+								color: #fff;
+								background: fade(#000, 20%);
+							}
+							&:active{
+								opacity: .5;
+							}
+						}
+					.bonus-item-shipclasses{
+						.margin-right(-5);
+						.margin-top(-5);
+    					overflow: hidden;
+						& > .bonus-item-shipclasses-class{
+							display: inline-block;
+							position: relative;
+							margin: 0;
+							vertical-align: baseline;
+							// .margin-bottom(5);
+							// .margin-right(5);
+							// .line-height(20);
+						}
+					}
+					.bonus-item-stats{
+						.margin-right(-7);
+    					overflow: hidden;
+					}
+						.bonus-item-stats-title{
+							float: left;
+							.margin-right(7);
+						}
+						.bonus-item-stats > span{
+							float: left;
+							.margin-right(7);
+							& > em{
+								padding-left: 0;
+							}
+						}
 		}
 		&.dismantle{
 			& > span{

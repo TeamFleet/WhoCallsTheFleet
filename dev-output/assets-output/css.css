@@ -7848,6 +7848,84 @@ h6 + section.update_journal {
   float: left;
   clear: both;
 }
+.infos-equipment > div.stats .bonus {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-width: 0.05rem;
+  border-radius: 0.25rem;
+  clear: both;
+  color: #e6e6e6;
+  display: inline-block;
+  margin-top: 0.75rem;
+  overflow: hidden;
+  width: 100%;
+}
+.infos-equipment > div.stats .bonus-item {
+  display: block;
+  padding: 0.5rem 0.5rem 0.25rem 0.5rem;
+}
+.infos-equipment > div.stats .bonus-item + .bonus-item {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-top-width: 0.05rem;
+}
+.infos-equipment > div.stats .bonus-item-ships {
+  margin-right: -0.25rem;
+  overflow: hidden;
+}
+.infos-equipment > div.stats .bonus-item-ships-ship {
+  float: left;
+  display: block;
+  position: relative;
+  margin-bottom: 0.25rem;
+  margin-right: 0.25rem;
+  line-height: 1rem;
+  padding-left: 1.8rem;
+  padding-right: 0.4rem;
+  border-radius: 0.5rem;
+  transition-property: background-color, color, opacity;
+}
+.infos-equipment > div.stats .bonus-item-ships-ship > .pic {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 32px;
+  border-radius: 0.5rem;
+  background: no-repeat -30px 50% / cover;
+}
+.infos-equipment > div.stats .bonus-item-ships-ship:hover {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.2);
+}
+.infos-equipment > div.stats .bonus-item-ships-ship:active {
+  opacity: .5;
+}
+.infos-equipment > div.stats .bonus-item-shipclasses {
+  margin-right: -0.25rem;
+  margin-top: -0.25rem;
+  overflow: hidden;
+}
+.infos-equipment > div.stats .bonus-item-shipclasses > .bonus-item-shipclasses-class {
+  display: inline-block;
+  position: relative;
+  margin: 0;
+  vertical-align: baseline;
+}
+.infos-equipment > div.stats .bonus-item-stats {
+  margin-right: -0.35000000000000003rem;
+  overflow: hidden;
+}
+.infos-equipment > div.stats .bonus-item-stats-title {
+  float: left;
+  margin-right: 0.35000000000000003rem;
+}
+.infos-equipment > div.stats .bonus-item-stats > span {
+  float: left;
+  margin-right: 0.35000000000000003rem;
+}
+.infos-equipment > div.stats .bonus-item-stats > span > em {
+  padding-left: 0;
+}
 .infos-equipment > div.dismantle > span {
   background: url(/!/assets/images/stats.png) no-repeat 0 0;
   min-width: 50px;

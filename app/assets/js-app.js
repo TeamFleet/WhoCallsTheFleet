@@ -4311,7 +4311,7 @@ _frame.infos.__equipment = function (id) {
 
     _g.log(d);
 
-    function _stat(stat, title) {
+    function _stat(stat, title, bonus) {
         if (d['stat'][stat]) {
             if (Formula.equipmentType.isInterceptor(d)) {
                 switch (stat) {
@@ -4321,20 +4321,27 @@ _frame.infos.__equipment = function (id) {
                         title = '迎击';break;
                 }
             }
-            var html = '<small class="stat-' + stat + '">' + title + '</small>';
+
+            var value = bonus ? bonus[stat] : d.stat[stat];
+            if (!value && bonus) return undefined;
+
+            var html = '<small class="stat-' + stat + '">' + (bonus ? '' : title) + '</small>';
+
             switch (stat) {
                 case 'range':
-                    html += '<em>' + _g.getStatRange(d['stat'][stat]) + '</em>';
+                    html += '<em>' + _g.getStatRange(value) + '</em>';
                     break;
                 case 'distance':
-                    html += '<em>' + d['stat'][stat] + '</em>';
+                    html += '<em>' + value + '</em>';
                     break;
                 default:
-                    var val = parseInt(d['stat'][stat]);
-                    html += '<em' + (val < 0 ? ' class="negative"' : '') + '>' + (val > 0 ? '+' : '') + val + '</em>';
-                    break;
+                    {
+                        var number = parseInt(value);
+                        html += '<em' + (number < 0 ? ' class="negative"' : '') + '>' + (number > 0 ? '+' : '') + number + '</em>';
+                        break;
+                    }
             }
-            $('<span/>').html(html).appendTo(stat_container);
+            return $('<span/>').html(html).appendTo(stat_container);
         }
     }
 
@@ -4365,6 +4372,43 @@ _frame.infos.__equipment = function (id) {
     _stat('range', '射程');
     if (isAircraft) {
         _stat('distance', '航程');
+    }
+
+    {
+        if (Array.isArray(d.stat_bonus) && d.stat_bonus.length) {
+            var container = $('<div class="bonus"/>').appendTo(stat_container);
+            d.stat_bonus.forEach(function (item) {
+                var el = $('<div class="bonus-item" />').appendTo(container);
+                if (Array.isArray(item.ships) && item.ships.length) {
+                    var ships = $('<div class="bonus-item-ships" />').appendTo(el);
+                    item.ships.forEach(function (ship) {
+                        return $('<a\n                                class="bonus-item-ships-ship"\n                                href="' + _g.getLink('ships', ship) + '"\n                                data-shipid="' + ship + '"\n                            >' + ('' + _g.data.ships[ship]._name) + '</a>').append($('<em class="pic"/>').css({
+                            backgroundImage: 'url(' + _g.getImg('ships', ship, 0).replace(/\\/g, "/").replace(/\/\//g, "/") + ')'
+                        })).appendTo(ships);
+                    });
+                }
+                if (Array.isArray(item.ship_classes) && item.ship_classes.length) {
+                    $('<div class="bonus-item-shipclasses" />').html(item.ship_classes.map(function (shipClass) {
+                        return '<span class="bonus-item-shipclasses-class">' + (_g.data.ship_classes[shipClass].name.zh_cn + '\u7EA7') + ('' + _g.data.ship_types[_g.data.ship_classes[shipClass].ship_type_id].name.zh_cn) + '</span>';
+                    }).join(' / ')).appendTo(el);
+                }
+                var stats = $('<div class="bonus-item-stats"/>').append($('<span class="bonus-item-stats-title">额外收益</span>')).appendTo(el);
+                var addStat = function addStat(stat, name) {
+                    var el = _stat(stat, name, item.bonus);
+                    if (el) return el.appendTo(stats);
+                };
+                addStat('fire', '火力');
+                addStat('torpedo', '雷装');
+                addStat('aa', '对空');
+                addStat('asw', '对潜');
+                addStat('bomb', '爆装');
+                addStat('hit', '命中');
+                addStat('armor', '装甲');
+                addStat('evasion', '回避');
+                addStat('los', '索敌');
+                addStat('range', '射程');
+            });
+        }
     }
 
     if (!stat_container.html()) stat_container.html('<div class="no-content">无...</div>');
