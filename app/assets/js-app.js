@@ -4408,6 +4408,9 @@ _frame.infos.__equipment = function (id) {
                 addStat('los', '索敌');
                 addStat('range', '射程');
             });
+            if (d.stat_bonus.length > 1) {
+                $('<div class="bonus-item bonus-note" />').html('如果存在满足多个条件的舰娘，额外收益取最大值').appendTo(container);
+            }
         }
     }
 

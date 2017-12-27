@@ -7864,6 +7864,9 @@ h6 + section.update_journal {
   display: block;
   padding: 0.5rem 0.5rem 0.25rem 0.5rem;
 }
+.infos-equipment > div.stats .bonus-item.bonus-note {
+  padding-top: 0.25rem;
+}
 .infos-equipment > div.stats .bonus-item + .bonus-item {
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   border-top-width: 0.05rem;
