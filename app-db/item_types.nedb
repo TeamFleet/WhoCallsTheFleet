@@ -9,7 +9,7 @@
 {"name":{"ja_jp":"水上戦闘機","zh_cn":"水上战斗机","en_us":"Seaplane Fighter"},"icon":43,"equipable_on_type":[5,8,12,14,17,24,29],"main_attribute":"aa","id":51,"_id":"6mnL6zlfTmLWOcds","equipable_extra_ship":[136,148,275,276,358,361,446,447,488,496,541,547],"id_ingame":45}
 {"name":{"ja_jp":"艦上偵察機","zh_cn":"舰载侦察机","en_us":"Carrier-based Reconn"},"icon":9,"equipable_on_type":[9,10,11,30],"id":21,"_id":"8dDOVL8ZhWg15aeO","main_attribute":"los","id_ingame":9}
 {"name":{"ja_jp":"水上艦要員","zh_cn":"水上舰要员","en_us":"Surface Ship Personnel"},"icon":32,"equipable_on_type":[1,2,3,4,5,6,7,8,12,17,19,21,23,24,28,31],"id":37,"_id":"E5f0tBThLWVkBvR3","main_attribute":"evasion","equipable_extra_ship":[500],"id_ingame":39}
-{"name":{"ja_jp":"水上爆撃機","zh_cn":"水上轰炸机","en_us":"Seaplane Bomber"},"icon":10,"equipable_on_type":[5,8,12,14,24,29],"id":17,"_id":"E7sK86IWf2vwLmIL","main_attribute":"bomb","equipable_extra_ship":[358,361,446,447,496,547],"id_ingame":11}
+{"name":{"ja_jp":"水上爆撃機","zh_cn":"水上轰炸机","en_us":"Seaplane Bomber"},"icon":10,"equipable_on_type":[5,8,12,14,24,29],"id":17,"_id":"E7sK86IWf2vwLmIL","main_attribute":"bomb","equipable_extra_ship":[358,361,446,447,488,496,547],"id_ingame":11}
 {"name":{"ja_jp":"大口径主砲","zh_cn":"大口径主炮","en_us":"Large Caliber Main Gun"},"icon":3,"equipable_on_type":[6,7,8],"id":5,"_id":"EWSPttMCB2jMKWtZ","main_attribute":"fire","id_ingame":3}
 {"name":{"ja_jp":"陸軍戦闘機","zh_cn":"陆军战斗机","en_us":"Interceptor Fighter (Army)"},"icon":44,"equipable_on_type":[],"id":59,"_id":"EfGfXpr2eKlyZcSO","main_attribute":"aa","id_ingame":48}
 {"name":{"ja_jp":"大型ソナー","zh_cn":"大型声纳","en_us":"Large Sonar"},"icon":18,"equipable_on_type":[4,5,6,7,8,9,10,11,12,23,24,30],"id":28,"_id":"FEqmsrEqEW1JMZi6","main_attribute":"asw","equipable_extra_ship":[529],"id_ingame":40}
