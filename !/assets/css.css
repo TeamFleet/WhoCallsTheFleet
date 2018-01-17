@@ -11960,6 +11960,14 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 .infos-ship > div.equipments > a > small small {
   padding: 0rem 0.1rem;
 }
+.infos-ship > div.equipments > a > small .star {
+  display: inline-block;
+  padding-left: .25em;
+  color: #76d6a6;
+}
+.infos-ship > div.equipments > a > small .star:before {
+  content: "★+";
+}
 .infos-ship > div.equipments > a > em {
   display: block;
   position: absolute;
