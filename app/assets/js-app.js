@@ -6750,96 +6750,106 @@ _frame.infos.__ship = function (id) {
         illustrationsExtra = [],
         has_no = d['no'] && parseInt(d['no']) < 500 ? !0 : !1;
 
-    $('<div class="title"/>').html('<h2 data-content="' + ship_name + '">' + ship_name + '</h2>' + '<small>' + '<span data-tip="' + (has_no ? '图鉴编号' : '无图鉴编号') + '">No.' + (has_no ? d['no'] : '-') + '</span>' + (d['class'] ? _g['data']['ship_classes'][d['class']].name.zh_cn + '级' : '') + (d['class_no'] ? '<em>' + d['class_no'] + '</em>号舰' : '') + (d['type'] ? ' / ' + _g['data']['ship_types'][d['type']].name.zh_cn : '') + '</small>').appendTo(dom);
-
-    var lvlRadio99_id = id + '_stat_lv_99',
-        lvlRadio150_id = id + '_stat_lv_150',
-        curLvl = parseInt(_config.get('ship_infos_lvl') || 99),
-        stats = $('<div class="stats"/>').html('<div class="title">' + '<h4 data-content="基础属性">基础属性</h4>' + '<span>' + '<label for="' + lvlRadio99_id + '" class="lvl99">99</label>' + '<label for="' + lvlRadio150_id + '" class="lvl150">' + _g.shipMaxLv + '</label>' + '</span>' + '</div>').prepend($('<input type="radio" name="ship_infos_lvl_' + id + '" id="' + lvlRadio99_id + '" value="99" checked/>').prop('checked', curLvl == 99).on('change', function () {
-        _config.set('ship_infos_lvl', 99);
-    })).prepend($('<input type="radio" name="ship_infos_lvl_' + id + '" id="' + lvlRadio150_id + '" value="150"/>').prop('checked', curLvl == 150).on('change', function () {
-        _config.set('ship_infos_lvl', 150);
-    })).appendTo(dom),
-        stat1 = $('<div class="stat"/>').appendTo(stats),
-        stat2 = $('<div class="stat"/>').appendTo(stats),
-        stat3 = $('<div class="stat"/>').appendTo(stats),
-        stat_consum = $('<div class="stat consum"/>').appendTo(stats);
-
-    _g.inputIndex += 2;
-
-    _add_stat('hp', '耐久', stat1);
-    _add_stat('armor', '装甲', stat1);
-    _add_stat('evasion', '回避', stat1);
-    _add_stat('carry', '搭载', stat1);
-
-    _add_stat('fire', '火力', stat2);
-    _add_stat('torpedo', '雷装', stat2);
-    _add_stat('aa', '对空', stat2);
-    _add_stat('asw', '对潜', stat2);
-
-    _add_stat('speed', '航速', stat3);
-    _add_stat('range', '射程', stat3);
-    _add_stat('los', '索敌', stat3);
-    _add_stat('luck', '运', stat3);
-
-    _add_stat('fuel', '油耗', stat_consum);
-    _add_stat('ammo', '弹耗', stat_consum);
-
-    var equips = $('<div class="equipments"/>').html('<h4 data-content="初始装备 & 搭载量">初始装备 & 搭载量</h4>').appendTo(dom),
-        i = 0;
-    while (i < 4) {
-        var equip = $('<a/>').appendTo(equips),
-            icon = $('<i/>').appendTo(equip),
-            name = $('<small/>').appendTo(equip),
-            slot = $('<em/>').appendTo(equip);
-
-        if (typeof d['slot'][i] == 'undefined') {
-            equip.addClass('no');
-        } else if (typeof d['equip'][i] == 'undefined' || !d['equip'][i] || d['equip'][i] === '') {
-            equip.addClass('empty');
-            name.html('--未装备--');
-            slot.html(d['slot'][i]);
-        } else {
-            var item_data = _g.data.items[d['equip'][i]];
-
-            equip.attr({
-                'data-equipmentid': d['equip'][i],
-                'data-tip-position': 'left',
-                'data-infos': '[[EQUIPMENT::' + d['equip'][i] + ']]',
-                'data-tip': '[[EQUIPMENT::' + d['equip'][i] + ']]',
-                'href': '?infos=equipment&id=' + d['equip'][i]
-            });
-            name.html(item_data.getName(!0));
-            slot.html(d['slot'][i]);
-            icon.addClass('equiptypeicon mod-' + item_data.getIconId());
-        }
-        i++;
+    {
+        $('<div class="title"/>').html('<h2 data-content="' + ship_name + '">' + ship_name + '</h2>' + '<small>' + '<span data-tip="' + (has_no ? '图鉴编号' : '无图鉴编号') + '">No.' + (has_no ? d['no'] : '-') + '</span>' + (d['class'] ? _g['data']['ship_classes'][d['class']].name.zh_cn + '级' : '') + (d['class_no'] ? '<em>' + d['class_no'] + '</em>号舰' : '') + (d['type'] ? ' / ' + _g['data']['ship_types'][d['type']].name.zh_cn : '') + '</small>').appendTo(dom);
     }
 
-    var modernization = $('<div class="modernization"/>').html('<h4 data-content="合成">合成</h4>').appendTo(equips),
-        stats = $('<div class="stats"/>').appendTo(modernization),
-        has_modernization = !1;
-    if (d['modernization']) d['modernization'].forEach(function (currentValue, i) {
-        if (currentValue) {
-            has_modernization = !0;
-            var stat;
-            switch (i) {
-                case 0:
-                    stat = 'fire';break;
-                case 1:
-                    stat = 'torpedo';break;
-                case 2:
-                    stat = 'aa';break;
-                case 3:
-                    stat = 'armor';break;
-            }
-            $('<span class="stat-' + stat + '"/>').html('+' + currentValue).appendTo(stats);
-        }
-    });
+    {
+        var lvlRadio99_id = id + '_stat_lv_99',
+            lvlRadio150_id = id + '_stat_lv_150',
+            curLvl = parseInt(_config.get('ship_infos_lvl') || 99),
+            stats = $('<div class="stats"/>').html('<div class="title">' + '<h4 data-content="基础属性">基础属性</h4>' + '<span>' + '<label for="' + lvlRadio99_id + '" class="lvl99">99</label>' + '<label for="' + lvlRadio150_id + '" class="lvl150">' + _g.shipMaxLv + '</label>' + '</span>' + '</div>').prepend($('<input type="radio" name="ship_infos_lvl_' + id + '" id="' + lvlRadio99_id + '" value="99" checked/>').prop('checked', curLvl == 99).on('change', function () {
+            _config.set('ship_infos_lvl', 99);
+        })).prepend($('<input type="radio" name="ship_infos_lvl_' + id + '" id="' + lvlRadio150_id + '" value="150"/>').prop('checked', curLvl == 150).on('change', function () {
+            _config.set('ship_infos_lvl', 150);
+        })).appendTo(dom),
+            stat1 = $('<div class="stat"/>').appendTo(stats),
+            stat2 = $('<div class="stat"/>').appendTo(stats),
+            stat3 = $('<div class="stat"/>').appendTo(stats),
+            stat_consum = $('<div class="stat consum"/>').appendTo(stats);
 
-    if (d['id'] == 163) $('<span class="stat-luck"/>').html('+1.2').appendTo(stats);
-    if (d['id'] == 402) $('<span class="stat-luck"/>').html('+1.6').appendTo(stats);
-    if (!has_modernization) modernization.addClass('no').append($('<em/>').html('-'));
+        _g.inputIndex += 2;
+
+        _add_stat('hp', '耐久', stat1);
+        _add_stat('armor', '装甲', stat1);
+        _add_stat('evasion', '回避', stat1);
+        _add_stat('carry', '搭载', stat1);
+
+        _add_stat('fire', '火力', stat2);
+        _add_stat('torpedo', '雷装', stat2);
+        _add_stat('aa', '对空', stat2);
+        _add_stat('asw', '对潜', stat2);
+
+        _add_stat('speed', '航速', stat3);
+        _add_stat('range', '射程', stat3);
+        _add_stat('los', '索敌', stat3);
+        _add_stat('luck', '运', stat3);
+
+        _add_stat('fuel', '油耗', stat_consum);
+        _add_stat('ammo', '弹耗', stat_consum);
+    }
+
+    {
+        var equips = $('<div class="equipments"/>').html('<h4 data-content="初始装备 & 搭载量">初始装备 & 搭载量</h4>').appendTo(dom),
+            i = 0;
+
+        while (i < 4) {
+            var equip = $('<a/>').appendTo(equips),
+                icon = $('<i/>').appendTo(equip),
+                name = $('<small/>').appendTo(equip),
+                slot = $('<em/>').appendTo(equip);
+
+            if (typeof d['slot'][i] == 'undefined') {
+                equip.addClass('no');
+            } else if (typeof d['equip'][i] == 'undefined' || !d['equip'][i] || d['equip'][i] === '') {
+                equip.addClass('empty');
+                name.html('--未装备--');
+                slot.html(d['slot'][i]);
+            } else {
+                var equipmentId = _typeof(d.equip[i]) === 'object' ? d.equip[i].id : d.equip[i];
+                var item_data = _g.data.items[equipmentId];
+                var star = _typeof(d.equip[i]) === 'object' ? d.equip[i].star : undefined;
+                equip.attr({
+                    'data-equipmentid': equipmentId,
+                    'data-tip-position': 'left',
+                    'data-infos': '[[EQUIPMENT::' + equipmentId + ']]',
+                    'data-tip': '[[EQUIPMENT::' + equipmentId + ']]',
+                    'href': '?infos=equipment&id=' + equipmentId
+                });
+                name.html(item_data.getName(!0) + (star ? '<span class="star">' + star + '</span>' : ''));
+                slot.html(d['slot'][i]);
+                icon.addClass('equiptypeicon mod-' + item_data.getIconId());
+            }
+            i++;
+        }
+    }
+
+    {
+        var modernization = $('<div class="modernization"/>').html('<h4 data-content="合成">合成</h4>').appendTo(equips),
+            has_modernization = !1;
+        var _stats = $('<div class="stats"/>').appendTo(modernization);
+        if (d['modernization']) d['modernization'].forEach(function (currentValue, i) {
+            if (currentValue) {
+                has_modernization = !0;
+                var stat;
+                switch (i) {
+                    case 0:
+                        stat = 'fire';break;
+                    case 1:
+                        stat = 'torpedo';break;
+                    case 2:
+                        stat = 'aa';break;
+                    case 3:
+                        stat = 'armor';break;
+                }
+                $('<span class="stat-' + stat + '"/>').html('+' + currentValue).appendTo(_stats);
+            }
+        });
+
+        if (d['id'] == 163) $('<span class="stat-luck"/>').html('+1.2').appendTo(_stats);
+        if (d['id'] == 402) $('<span class="stat-luck"/>').html('+1.6').appendTo(_stats);
+        if (!has_modernization) modernization.addClass('no').append($('<em/>').html('-'));
+    }
 
     if (d['additional_item_types'] && d['additional_item_types'].length) {
         var additional_equipment_types = $('<div class="add_equip"/>').appendTo(dom),
