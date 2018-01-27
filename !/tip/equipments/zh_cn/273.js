@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",273,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/9.png)\"></s><strong>彩云<small>(侦四)</small></strong><small>舰载侦察机</small></h3><span>+2 对空</span><span>+2 命中</span><span>+10 索敌</span><span>航程: 7</span>")

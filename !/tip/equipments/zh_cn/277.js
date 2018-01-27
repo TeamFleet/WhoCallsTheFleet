@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",277,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/7.png)\"></s><strong>FM-2</strong><small>舰载轰炸机</small></h3><span>+2 火力</span><span>+6 对空</span><span>+1 对潜</span><span>+2 爆装</span><span>+2 命中</span><span>+2 回避</span><span>航程: 4</span>")
