@@ -152,7 +152,7 @@ _frame.infos.__ship = function (id) {
         var equips = $('<div class="equipments"/>').html('<h4 data-content="初始装备 & 搭载量">初始装备 & 搭载量</h4>').appendTo(dom)
             , i = 0
 
-        while (i < 4) {
+        while (i < Math.max(4, d.slot.length)) {
             var equip = $('<a/>').appendTo(equips)
                 , icon = $('<i/>').appendTo(equip)
                 , name = $('<small/>').appendTo(equip)
