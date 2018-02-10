@@ -8732,7 +8732,7 @@ body.mod-capture .infos-fleet .fleetships.fleetairfields .tips {
   display: flex;
   flex-flow: row nowrap;
   height: 100%;
-  width: 30%;
+  width: 28%;
   top: 0;
   left: 0;
   overflow: hidden;
@@ -8740,7 +8740,7 @@ body.mod-capture .infos-fleet .fleetships.fleetairfields .tips {
 .infos-fleet .ship > dt > s {
   display: block;
   position: relative;
-  flex: 1 1 150px;
+  flex: 1 1 125px;
   z-index: 1;
   text-decoration: none;
 }
@@ -8772,7 +8772,7 @@ body.mod-capture .infos-fleet .fleetships.fleetairfields .tips {
   display: flex;
   flex-flow: column nowrap;
   position: relative;
-  flex: 3 1 190px;
+  flex: 3 0 170px;
   z-index: 2;
   justify-content: center;
 }
@@ -8835,13 +8835,13 @@ body.mod-capture .infos-fleet .fleetships.fleetairfields .tips {
 .infos-fleet .ship > .options {
   right: 0;
   top: 6px;
-  width: 3.5em;
+  width: 2.91666667em;
   z-index: 2;
   height: calc(100% - 27px - 8px);
   text-align: center;
   justify-content: flex-end;
   align-items: center;
-  padding-right: 7px;
+  padding-right: 4px;
   /*
 			button{
 				color: 		rgba(255, 255, 255, .2);
@@ -9005,7 +9005,7 @@ body.mod-capture .infos-fleet .ship > .options {
 }
 .infos-fleet .ship[data-shipid]:after {
   mask: none;
-  clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 24px), 30% calc(100% - 24px), calc(30% - 15px) 100%, 0% 100%);
+  clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 24px), 28% calc(100% - 24px), calc(28% - 15px) 100%, 0% 100%);
 }
 .infos-fleet .ship[data-shipid] > dt > s {
   cursor: n-resize;
@@ -9039,7 +9039,10 @@ body.mod-capture .infos-fleet .ship > .options {
 .infos-fleet .ship[data-shipid] > dt > div > div {
   display: block;
 }
-.infos-fleet .ship[data-shipid] > .equipments,
+.infos-fleet .ship[data-shipid] > .equipments {
+  display: flex;
+  flex-flow: row nowrap;
+}
 .infos-fleet .ship[data-shipid] > .attributes {
   display: block;
 }
@@ -9129,14 +9132,13 @@ body.mod-capture .infos-fleet .ship[data-shipid] > .equipment-extra:not([data-eq
 }
 .infos-fleet .equipments,
 .infos-fleet .attributes {
-  left: 30%;
-  width: 70%;
+  left: 28%;
+  width: 72%;
 }
 .infos-fleet .equipments {
   top: 6px;
-  left: 30%;
   height: calc(100% - 27px - 8px);
-  padding-right: 3.5em;
+  padding-right: 2.91666667em;
   z-index: 1;
 }
 body.mod-capture .infos-fleet .equipments {
@@ -9231,7 +9233,7 @@ body.mod-capture .infos-fleet .equipments {
   display: inline;
 }
 .infos-fleet .equipment {
-  width: calc(25% - 2px);
+  flex: 1;
   height: 100%;
   display: inline-block;
   background: rgba(0, 0, 0, 0.125) no-repeat 1px 50%;
@@ -9579,7 +9581,7 @@ body.mod-capture .infos-fleet .equipments {
   display: none;
 }
 .infos-fleet .equipment-extra {
-  right: 3.5em;
+  right: 2.91666667em;
   bottom: 4px;
   height: 20px;
   width: 25px;
@@ -11305,13 +11307,14 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   .infos-fleet .ship[data-shipid]:hover > dt > s:before {
     transform: translateX(-10px);
   }
-  .infos-fleet .equipments {
+  .infos-fleet .ship[data-shipid] > .equipments {
     width: auto;
     height: auto;
     padding: 4px 2px 4px 4px;
     overflow: hidden;
     left: 0;
     top: 0;
+    display: block;
   }
   .infos-fleet .attributes {
     position: relative;

@@ -26,6 +26,8 @@
 
 
 .infos-fleet{
+	@width_percentage_infos: 28%;
+
 	.flexbox();
 	.flex-flow(~"column nowrap");
 	
@@ -560,7 +562,7 @@
 			flex-flow: 	row nowrap;
 			height: 	100%;
 			//width: 		~"calc(30% - 15px)";
-			width: 		30%;
+			width: 		@width_percentage_infos;
 			top: 		0;
 			left: 		0;
 			overflow: 	hidden;
@@ -568,7 +570,7 @@
 			&>s{
 				display: 	block;
 				position: 	relative;
-				flex: 		1 1 150px;
+				flex: 		1 1 125px;
 				//background: no-repeat 50% 50% / cover;
 				z-index: 	1;
 				text-decoration: none;
@@ -600,7 +602,7 @@
 				.flexbox;
 				.flex-flow(~"column nowrap");
 				position: 	relative;
-				flex: 		3 1 190px;
+				flex: 		3 0 170px;
 				z-index: 	2;
 				.justify-content(center);
 				&>div{
@@ -677,13 +679,13 @@
 		&>.options{
 			right: 		0;
 			top: 		6px;
-			width: 		unit( 42 / @infos-fleet-base-font-size, em );
+			width: 		unit( 35 / @infos-fleet-base-font-size, em );
 			z-index: 	2;
 			height: 	~"calc(100% - 27px - 8px)";
 			text-align: center;
 			justify-content:flex-end;
 			align-items: 	center;
-			padding-right: 	7px;
+			padding-right: 	4px;
 			/*
 			button{
 				color: 		rgba(255, 255, 255, .2);
@@ -822,8 +824,8 @@
 					0% 0%,
 					100% 0%,
 					100% ~"calc(100% - 24px)",
-					30% ~"calc(100% - 24px)",
-					~"calc(30% - 15px)" 100%,
+					@width_percentage_infos ~"calc(100% - 24px)",
+					~"calc(@{width_percentage_infos} - 15px)" 100%,
 					0% 100%
 				)
 			}
@@ -864,7 +866,10 @@
 			//&>div{
 			//	display: flex;
 			//}
-			&>.equipments,
+			&>.equipments{
+				display: flex;
+				flex-flow: row nowrap;
+			}
 			&>.attributes{
 				display: block;
 			}
@@ -1055,15 +1060,15 @@
 	} // dd.airfield
 
 	.equipments, .attributes{
-		left: 	30%;
-		width: 	70%;
+		left: 	@width_percentage_infos;
+		width: 	(100% - @width_percentage_infos);
 	}
 	.equipments{
 		top: 		6px;
-		left: 		30%;
+		// left: 		30%;
 		//height: 	~"calc(100% - 26px - 8px)";
 		height: 	~"calc(100% - 27px - 8px)";
-		padding-right: unit( 42 / @infos-fleet-base-font-size, em );
+		padding-right: unit( 35 / @infos-fleet-base-font-size, em );
 		z-index: 	1;
 		.mod-capture({
 			padding-right: 4px;
@@ -1181,7 +1186,8 @@
 		//flex: 		1 0 auto;
 		//background-color: rgba(0, 0, 0, .125);
 		//background-size: 36px;
-		width: 		~"calc(25% - 2px)";
+		// width: 		~"calc(25% - 2px)";
+		flex: 1;
 		height: 	100%;
 		display: 	inline-block;
 		background: rgba(0, 0, 0, .125) no-repeat 1px 50%;
@@ -1542,7 +1548,7 @@
 				}
 			}
 	.equipment-extra{
-		right: 		unit( 42 / @infos-fleet-base-font-size, em );
+		right: 		unit( 35 / @infos-fleet-base-font-size, em );
 		bottom: 	4px;
 		height: 	20px;
 		width: 		25px;
@@ -2627,13 +2633,14 @@
         }
 	} // dd.ship
 
-	.equipments{
+	.ship[data-shipid]>.equipments{
 		width: 		auto;
 		height: 	auto;
 		padding: 	4px 2px 4px 4px;
 		overflow: 	hidden;
 		left: 		0;
 		top: 		0;
+		display: block;
 	}
 	
 	.attributes{

@@ -120,7 +120,7 @@ _g.kancolle_calc = {
             return
         version = parseInt(data.version) || this.version
 
-        console.log(11111111111111, data)
+        // console.log(11111111111111, data)
 
         let result
             , i = 0
@@ -231,28 +231,46 @@ _g.kancolle_calc = {
                                     ]
                                 if (data_ship.items) {
                                     k = 0
-                                    let extraslot = data_ship.items.ix
+                                    let extraslot
                                     //while( data_item = data_ship.items['i' + (k+1)] ){
-                                    while (k < _g.kancolle_calc.max_equipments_per_ship) {
-                                        data_item = data_ship.items['i' + (k + 1)]
-                                        if (data_item && data_item.id) {
-                                            if (k + 1 > ship.slot.length) {
-                                                extraslot = data_item
-                                                _ship[2][k] = null
-                                                _ship[3][k] = null
-                                                _ship[4][k] = null
-                                            } else {
-                                                _ship[2][k] = data_item.id
-                                                _ship[3][k] = data_item.rf || null
-                                                _ship[4][k] = data_item.mas || null
-                                            }
-                                        } else/* if (k < ship.slot.length)*/ {
-                                            _ship[2][k] = null
-                                            _ship[3][k] = null
-                                            _ship[4][k] = null
+                                    for (const key in data_ship.items) {
+                                        if (key === 'ix') {
+                                            extraslot = data_ship.items[key]
+                                            continue
                                         }
-                                        k++
+                                        if (key.substr(0, 1) !== 'i') continue
+                                        if (!data_ship.items[key].id) continue
+                                        const obj = data_ship.items[key]
+                                        const number = parseInt(key.substr(1))
+                                        const index = number < 5 ? number - 1 : number
+                                        if (number > ship.slot.length) {
+                                            extraslot = obj
+                                        } else {
+                                            _ship[2][index] = obj.id
+                                            _ship[3][index] = obj.rf || null
+                                            _ship[4][index] = obj.mas || null
+                                        }
                                     }
+                                    // while (k < _g.kancolle_calc.max_equipments_per_ship) {
+                                    //     data_item = data_ship.items['i' + (k + 1)]
+                                    //     if (data_item && data_item.id) {
+                                    //         if (k + 1 > ship.slot.length) {
+                                    //             extraslot = data_item
+                                    //             _ship[2][k] = null
+                                    //             _ship[3][k] = null
+                                    //             _ship[4][k] = null
+                                    //         } else {
+                                    //             _ship[2][k] = data_item.id
+                                    //             _ship[3][k] = data_item.rf || null
+                                    //             _ship[4][k] = data_item.mas || null
+                                    //         }
+                                    //     } else/* if (k < ship.slot.length)*/ {
+                                    //         _ship[2][k] = null
+                                    //         _ship[3][k] = null
+                                    //         _ship[4][k] = null
+                                    //     }
+                                    //     k++
+                                    // }
                                     if (extraslot && extraslot.id) {
                                         _ship[2][4] = extraslot.id
                                         _ship[3][4] = extraslot.rf || null
@@ -330,14 +348,15 @@ _g.kancolle_calc = {
                                     }
                                     data_ship[2].forEach(function (id_item, k) {
                                         if (id_item) {
-                                            result['f' + (i + 1)]['s' + (j + 1)].items['i' + (k + 1)] = {
+                                            const itemNo = k > 4 ? k : k + 1
+                                            result['f' + (i + 1)]['s' + (j + 1)].items['i' + itemNo] = {
                                                 'id': parseInt(id_item)
                                             }
                                             if (data_ship[3])
-                                                result['f' + (i + 1)]['s' + (j + 1)].items['i' + (k + 1)].rf
+                                                result['f' + (i + 1)]['s' + (j + 1)].items['i' + itemNo].rf
                                                     = parseInt(data_ship[3][k]) || 0
                                             if (data_ship[4])
-                                                result['f' + (i + 1)]['s' + (j + 1)].items['i' + (k + 1)].rp
+                                                result['f' + (i + 1)]['s' + (j + 1)].items['i' + itemNo].rp
                                                     = parseInt(data_ship[4][k]) || 0
                                         }
                                     })
@@ -389,7 +408,7 @@ _g.kancolle_calc = {
                                                         ? [`i${ship.slot.length + 1}`]
                                                         : 'ix'
                                                 )
-                                                : [`i${k + 1}`]
+                                                : [`i${k > 4 ? k : k + 1}`]
                                             _ship.items[prop] = {
                                                 'id': parseInt(id_item)
                                             }

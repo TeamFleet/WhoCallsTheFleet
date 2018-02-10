@@ -255,8 +255,7 @@ class InfosFleet {
 
         // 创建DOM
         $('<header/>')
-            .append(
-            this.doms['name'] = new InfosFleetEditableTitle({
+            .append(this.doms['name'] = new InfosFleetEditableTitle({
                 tagName: 'h3',
                 placeholder: '点击编辑标题',
                 onUpdate: newContent => {
@@ -264,19 +263,15 @@ class InfosFleet {
                 }
             }).$el
             )
-            .append(
-            this.doms['preview'] = $('<div class="preview"/>')
+            .append(this.doms['preview'] = $('<div class="preview"/>')
             )
             .appendTo(this.el)
 
         $('<div class="fleets"/>')
-            .append(
-            this.doms['tabs'] = $('<div class="tabs"/>')
+            .append(this.doms['tabs'] = $('<div class="tabs"/>')
             )
-            .append(
-            this.doms['options'] = $('<div class="options"/>')
-                .append(
-                this.doms['hqlvOptionLabel'] = $('<label/>', {
+            .append(this.doms['options'] = $('<div class="options"/>')
+                .append(this.doms['hqlvOptionLabel'] = $('<label/>', {
                     'class': 'option option-hqlv',
                     'html': '司令部等级',
                     'data-tip': this.tip_hqlv_input.printf(defaultHqLv)
@@ -289,8 +284,7 @@ class InfosFleet {
                             }
                         }.bind(this)
                     })
-                    .append(
-                    this.doms['hqlvOption'] = $('<input/>', {
+                    .append(this.doms['hqlvOption'] = $('<input/>', {
                         'type': 'number',
                         'min': 0,
                         'max': _g.hqMaxLv,
@@ -318,8 +312,7 @@ class InfosFleet {
                         })
                     )
                 )
-                .append(
-                this.doms['theme'] = $('<select class="option option-theme-value"/>')
+                .append(this.doms['theme'] = $('<select class="option option-theme-value"/>')
                     .on('change', function () {
                         this._theme = this.doms['theme'].val()
                     }.bind(this))
@@ -336,8 +329,7 @@ class InfosFleet {
                         return els
                     })
                 )
-                .append(
-                this.doms['themeOption'] = $('<button class="option option-theme mod-dropdown"/>').html('主题').on('click', function () {
+                .append(this.doms['themeOption'] = $('<button class="option option-theme mod-dropdown"/>').html('主题').on('click', function () {
                     if (!InfosFleet.menuTheme) {
                         InfosFleet.menuThemeItems = $('<div/>')
                         for (let i = 1; i < 11; i++) {
@@ -357,17 +349,14 @@ class InfosFleet {
                     InfosFleet.menuTheme.show(this.doms['themeOption'])
                 }.bind(this))
                 )
-                .append(
-                this.doms['exportOption'] = $('<button class="option mod-dropdown"/>').html('分享').on('click', function () {
+                .append(this.doms['exportOption'] = $('<button class="option mod-dropdown"/>').html('分享').on('click', function () {
                     if (!InfosFleet.menuExport) {
                         let menuitems = []
                         if (!_g.isClient || _g.isOnline) {
                             menuitems.push($('<div class="item"/>')
-                                .html(
-                                '分享当前配置' + (!_g.isClient ? '<small>可直接分享网址</small>' : '')
+                                .html('分享当前配置' + (!_g.isClient ? '<small>可直接分享网址</small>' : '')
                                 )
-                                .add(
-                                (new ShareBar({
+                                .add((new ShareBar({
                                     title: function () {
                                         return InfosFleet.menuCur.data.name
                                     },
@@ -443,19 +432,18 @@ class InfosFleet {
                     }.bind(this))
                 )
                 */
-                .append(
-                this.doms['optionOptions'] = $('<button class="icon" icon="cog"/>').on('click', function () {
+                .append(this.doms['optionOptions'] = $('<button class="icon" icon="cog"/>').on('click', function () {
                     TablelistFleets.menuOptions_show(this.doms['optionOptions'])
                 }.bind(this))
                 )
-            /*
-            .append(
-                $('<span class="option"/>').html('[PH] 阵型')
-            )
-            .append(
-                $('<span class="option"/>').html('[PH] 导出图片')
-            )
-            */
+                /*
+                .append(
+                    $('<span class="option"/>').html('[PH] 阵型')
+                )
+                .append(
+                    $('<span class="option"/>').html('[PH] 导出图片')
+                )
+                */
             )
             .appendTo(this.el)
 
@@ -898,13 +886,11 @@ InfosFleet.minSubFleetShipsCount = 6
 InfosFleet.modalExport = function (curval) {
     if (!InfosFleet.elModalExport) {
         InfosFleet.elModalExport = $('<div/>')
-            .append(
-            InfosFleet.elModalExportTextarea = $('<textarea/>', {
+            .append(InfosFleet.elModalExportTextarea = $('<textarea/>', {
                 'readonly': true
             })
             )
-            .append(
-            $('<p class="note-codeusage"/>').html('* 该配置代码可用于<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
+            .append($('<p class="note-codeusage"/>').html('* 该配置代码可用于<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>')
             )
         /*
         .append(
@@ -1049,23 +1035,16 @@ InfosFleet.modalRemove_show = function (id, is_list) {
 
     if (!InfosFleet.elModalRemove) {
         InfosFleet.elModalRemove = $('<form/>')
-            .append(
-            InfosFleet.elModalRemoveId = $('<input name="id" type="hidden"/>')
-            )
-            .append(
-            $('<p/>').html('是否删除该舰队配置？')
-            )
-            .append(
-            $('<p class="actions"/>')
-                .append(
-                $('<button/>', {
+            .append(InfosFleet.elModalRemoveId = $('<input name="id" type="hidden"/>'))
+            .append($('<p/>').html('是否删除该舰队配置？'))
+            .append($('<p class="actions"/>')
+                .append($('<button/>', {
                     'type': 'submit',
                     'class': 'button',
                     'html': '是'
                 })
                 )
-                .append(
-                $('<button/>', {
+                .append($('<button/>', {
                     'type': 'button',
                     'class': 'button',
                     'html': '否'
@@ -1198,46 +1177,41 @@ class InfosFleetSubFleet {
         this.elSummary = $('<span class="summary"/>')
             //.html('<h4 data-content="舰队数据">舰队数据</h4>')
             .appendTo(this.el)
-            .append(
-            $('<span class="btn-add-ship"/>')
+            .append($('<span class="btn-add-ship"/>')
                 .on('click', () => {
                     this.createShip(this.ships.length)
                     this.ships[this.ships.length - 1].el.trigger('click')
                 })
             )
-            .append(
-            $('<span class="summary-item"/>')
+            .append($('<span class="summary-item"/>')
                 .html('航速')
                 .append(this.elSummarySpeed = $('<strong/>').html('-')
                 )
             )
-            .append(
-            $('<span class="summary-item"/>')
+            .append($('<span class="summary-item"/>')
                 .html('制空战力')
-                .append(
-                this.elSummaryFighterPower = $('<strong/>').html('-')
+                .append(this.elSummaryFighterPower = $('<strong/>').html('-')
                 )
             )
-            .append(
-            $('<span class="summary-item"/>')
+            .append($('<span class="summary-item"/>')
                 .html('索敌能力')
                 .append(
-                this.elSummaryLos = $('<strong/>').html('-')
+                    this.elSummaryLos = $('<strong/>').html('-')
                 )
             )
             .append(
-            $('<span class="summary-item summary-item-consummation"/>')
-                .html('总消耗')
-                .append(
-                this.elSummaryConsummation = $('<strong/>').html('-')
-                )
+                $('<span class="summary-item summary-item-consummation"/>')
+                    .html('总消耗')
+                    .append(
+                        this.elSummaryConsummation = $('<strong/>').html('-')
+                    )
             )
             .append(
-            this.elSummaryTPcontainer = $('<span class="summary-item hide"/>')
-                .html('运输TP')
-                .append(
-                this.elSummaryTP = $('<strong/>').html('-')
-                )
+                this.elSummaryTPcontainer = $('<span class="summary-item hide"/>')
+                    .html('运输TP')
+                    .append(
+                        this.elSummaryTP = $('<strong/>').html('-')
+                    )
             )
 
 
@@ -1421,6 +1395,7 @@ class InfosFleetSubFleet {
         let hq_lv = this.infosFleet.data.hq_lv || Lockr.get('hqLvDefault', _g.defaultHqLv)
         if (hq_lv < 0)
             hq_lv = Lockr.get('hqLvDefault', _g.defaultHqLv)
+        // console.log(this.data, hq_lv)
 
         return Formula.calcByFleet.los33(this.data, hq_lv)
 
@@ -1592,141 +1567,141 @@ class InfosFleetShip {
         this.el = $('<dd class="ship"/>')
             // 头像 & 名称
             .append(
-            $('<dt/>')
-                .append(
-                this.elAvatar = $('<s touch-action="none"/>')
-                )
-                .append(
-                this.elInfos = $('<div/>').html('<span>' + (this.infosFleet.data._id ? '选择舰娘' : '无舰娘') + '...</span>')
-                    .append(this.elInfosTitle = $('<div class="title"/>'))
+                $('<dt/>')
                     .append(
-                    $('<div class="info"/>')
-                        .append(
-                        $('<label/>').html('Lv.')
-                            .append(
-                            this.elInputLevel = $('<input/>', {
-                                'type': 'number',
-                                'min': 0,
-                                'max': _g.shipMaxLv
-                            }).on({
-                                checkValue: () => {
-                                    let value = this.elInputLevel.val()
-
-                                    if ((typeof value == 'undefined' || value === '') && this.data[1][0])
-                                        this.shipLv = null
-
-                                    value = parseInt(value)
-                                    let min = parseInt(this.elInputLevel.attr('min'))
-                                    if (value < min) {
-                                        value = min
-                                        this.elInputLevel.val(min)
-                                    } else if (value > _g.shipMaxLv) {
-                                        value = _g.shipMaxLv
-                                        this.elInputLevel.val(_g.shipMaxLv)
-                                    }
-                                    if (!isNaN(value) && this.data[1][0] != value)
-                                        this.shipLv = value
-                                },
-
-                                keydown: (e) => {
-                                    if (e.keyCode == 38 || e.keyCode == 40)
-                                        this.elInputLevel.trigger('checkValue')
-                                },
-
-                                // blur: () => {
-                                //     this.elInputLevel.trigger('checkValue')
-                                // },
-
-                                change: () => {
-                                    this.elInputLevel.trigger('checkValue')
-                                }
-                            })
-                            )
-                        )
-                        .append(this.elInfosSpeed = $('<span/>'))
-                        .append(this.elInfosType = $('<span/>'))
+                        this.elAvatar = $('<s touch-action="none"/>')
                     )
-                )
+                    .append(
+                        this.elInfos = $('<div/>').html('<span>' + (this.infosFleet.data._id ? '选择舰娘' : '无舰娘') + '...</span>')
+                            .append(this.elInfosTitle = $('<div class="title"/>'))
+                            .append(
+                                $('<div class="info"/>')
+                                    .append(
+                                        $('<label/>').html('Lv.')
+                                            .append(
+                                                this.elInputLevel = $('<input/>', {
+                                                    'type': 'number',
+                                                    'min': 0,
+                                                    'max': _g.shipMaxLv
+                                                }).on({
+                                                    checkValue: () => {
+                                                        let value = this.elInputLevel.val()
+
+                                                        if ((typeof value == 'undefined' || value === '') && this.data[1][0])
+                                                            this.shipLv = null
+
+                                                        value = parseInt(value)
+                                                        let min = parseInt(this.elInputLevel.attr('min'))
+                                                        if (value < min) {
+                                                            value = min
+                                                            this.elInputLevel.val(min)
+                                                        } else if (value > _g.shipMaxLv) {
+                                                            value = _g.shipMaxLv
+                                                            this.elInputLevel.val(_g.shipMaxLv)
+                                                        }
+                                                        if (!isNaN(value) && this.data[1][0] != value)
+                                                            this.shipLv = value
+                                                    },
+
+                                                    keydown: (e) => {
+                                                        if (e.keyCode == 38 || e.keyCode == 40)
+                                                            this.elInputLevel.trigger('checkValue')
+                                                    },
+
+                                                    // blur: () => {
+                                                    //     this.elInputLevel.trigger('checkValue')
+                                                    // },
+
+                                                    change: () => {
+                                                        this.elInputLevel.trigger('checkValue')
+                                                    }
+                                                })
+                                            )
+                                    )
+                                    .append(this.elInfosSpeed = $('<span/>'))
+                                    .append(this.elInfosType = $('<span/>'))
+                            )
+                    )
             )
             // 装备
             .append(
-            $('<div class="equipments"/>').append(function () {
-                let els = $()
-                for (let i = 0; i < 4; i++) {
-                    els = els.add(this.equipments[i].el)
-                }
-                //this.elAttrbutes = $('<div class="equipment"/>')
-                //els = els.add(this.elAttrbutes)
-                // this.equipments.forEach(equipment => {
-                //     els = els.add(equipment.el)
-                // })
-                return els
-            }.bind(this))
+                this.elEquipments = $('<div class="equipments"/>').append(function () {
+                    let els = $()
+                    for (let i = 0; i < 4; i++) {
+                        els = els.add(this.equipments[i].el)
+                    }
+                    //this.elAttrbutes = $('<div class="equipment"/>')
+                    //els = els.add(this.elAttrbutes)
+                    // this.equipments.forEach(equipment => {
+                    //     els = els.add(equipment.el)
+                    // })
+                    return els
+                }.bind(this))
             )
             // 属性
             .append(
-            $('<div class="attributes"/>')
-                .append(
-                this.elAttrShelling = $('<span class="shelling"/>')
-                )
-                .append(
-                this.elAttrTorpedo = $('<span class="torpedo"/>')
-                )
-                .append(
-                this.elAttrHitSum = $('<span class="hitsum"/>')
-                )
-                .append(
-                this.elAttrHp = $('<span class="hp"/>')
-                )
-                .append(
-                this.elAttrArmor = $('<span class="armor"/>')
-                )
-                .append(
-                this.elAttrEvasion = $('<span class="evasion"/>')
-                )
-                .append(
-                this.elAttrNightBattle = $('<span class="nightbattle" data-text="夜战"/>')
-                )
-                .append(
-                _huCss.csscheck_full('mask-image')
-                    ? null
-                    : $('<div class="bg"/>')
-                )
-            /*
-                .append($('<span class="shelling"/>').html('炮击力').append(
-                    this.elAttrShelling = $('<strong/>').html('-')
-                ))
-                */
+                $('<div class="attributes"/>')
+                    .append(
+                        this.elAttrShelling = $('<span class="shelling"/>')
+                    )
+                    .append(
+                        this.elAttrTorpedo = $('<span class="torpedo"/>')
+                    )
+                    .append(
+                        this.elAttrHitSum = $('<span class="hitsum"/>')
+                    )
+                    .append(
+                        this.elAttrHp = $('<span class="hp"/>')
+                    )
+                    .append(
+                        this.elAttrArmor = $('<span class="armor"/>')
+                    )
+                    .append(
+                        this.elAttrEvasion = $('<span class="evasion"/>')
+                    )
+                    .append(
+                        this.elAttrNightBattle = $('<span class="nightbattle" data-text="夜战"/>')
+                    )
+                    .append(
+                        _huCss.csscheck_full('mask-image')
+                            ? null
+                            : $('<div class="bg"/>')
+                    )
+                /*
+                    .append($('<span class="shelling"/>').html('炮击力').append(
+                        this.elAttrShelling = $('<strong/>').html('-')
+                    ))
+                    */
             )
             // 选项/操作
             .append(
-            $('<div class="options"/>')
-                // .append(
-                //     this.elBtnExtraEquip = this.equipments[4].el
-                // )
-                .append(
-                this.elBtnOptions = $('<button class="options"/>').on('click', function (e) {
-                    this.showMenu()
-                }.bind(this))
-                )
-            /*
-                .append(
-                    $('<button/>',{
-                        'html':			'i',
-                        'data-tip':		'查看资料'
-                    }).on('click', function(e){
-                            _frame.infos.show('[[SHIP::'+this.shipId+']]', $(this))
-                            e.stopPropagation()
+                $('<div class="options"/>')
+                    // .append(
+                    //     this.elBtnExtraEquip = this.equipments[4].el
+                    // )
+                    .append(
+                        this.elBtnOptions = $('<button class="options"/>').on('click', function (e) {
+                            this.showMenu()
                         }.bind(this))
-                )
-                .append(
-                    $('<button/>').html('×')
-                        .on('click', function(e){
-                            this.shipId = null
-                            e.preventDefault()
-                            e.stopPropagation()
-                        }.bind(this))
-                )*/
+                    )
+                /*
+                    .append(
+                        $('<button/>',{
+                            'html':			'i',
+                            'data-tip':		'查看资料'
+                        }).on('click', function(e){
+                                _frame.infos.show('[[SHIP::'+this.shipId+']]', $(this))
+                                e.stopPropagation()
+                            }.bind(this))
+                    )
+                    .append(
+                        $('<button/>').html('×')
+                            .on('click', function(e){
+                                this.shipId = null
+                                e.preventDefault()
+                                e.stopPropagation()
+                            }.bind(this))
+                    )*/
             )
             // 额外装备栏位
             .append(this.equipments[4].el.addClass('equipment-extra'))
@@ -2067,6 +2042,14 @@ class InfosFleetShip {
             delete this.stat.speed
         }
 
+        // 重置：删除多余4格的装备栏
+        if (this.equipments.length > 5) {
+            this.equipments.splice(5, this.equipments.length - 5)
+                .forEach(obj => {
+                    obj.el.remove()
+                })
+        }
+
         if (value) {
             let ship = _g.data.ships[value]
                 , suffix = ship.getSuffix()
@@ -2088,9 +2071,23 @@ class InfosFleetShip {
             this.elInfosSpeed.html(speed)
             this.elInfosType.html(stype)
 
+            // 超过4格装备
+            if (ship && Array.isArray(ship.slot) && ship.slot.length > 4) {
+                for (let i = 5; i < ship.slot.length + 1; i++) {
+                    this.equipments[i] = new InfosFleetShipEquipment(this, i)
+                    this.equipments[i].el.appendTo(this.elEquipments)
+                    // console.log(this.equipments[i], this.elEquipments)
+                }
+            }
+
             // 装备栏数据
             this.equipments.forEach((equipment, i) => {
-                equipment.carry = i < 4 ? ship.slot[i] : 0
+                if (i < 4)
+                    equipment.carry = ship.slot[i]
+                else if (i === 4)
+                    equipment.carry = 0
+                else if (i > 4)
+                    equipment.carry = ship.slot[i - 1]
                 if (!this._updating) {
                     equipment.id = null
                     equipment.star = null
@@ -2404,127 +2401,127 @@ class InfosFleetShipEquipment {
                 }.bind(this)
             })
             .append(
-            this.elCarry = $('<div class="equipment-layer equipment-add"/>')
-                .on('click', function () {
-                    this.selectEquipmentStart()
-                    //this.el.trigger('blur')
-                }.bind(this))
+                this.elCarry = $('<div class="equipment-layer equipment-add"/>')
+                    .on('click', function () {
+                        this.selectEquipmentStart()
+                        //this.el.trigger('blur')
+                    }.bind(this))
             )
             .append(
-            $('<div class="equipment-layer equipment-infos"/>')
-                .append(
-                this.elName = $('<span class="equipment-name"/>')
-                )
-                .append(
-                this.elStar = $('<span class="equipment-star"/>').html(0)
-                )
-                .append(
-                this.elRank = $('<span class="equipment-rank"/>')
-                )
-                .append(function () {
-                    let el = $('<span class="equipment-carry"/>').html(0)
-                    this.elCarry = this.elCarry.add(el)
-                    return el
-                }.bind(this))
+                $('<div class="equipment-layer equipment-infos"/>')
+                    .append(
+                        this.elName = $('<span class="equipment-name"/>')
+                    )
+                    .append(
+                        this.elStar = $('<span class="equipment-star"/>').html(0)
+                    )
+                    .append(
+                        this.elRank = $('<span class="equipment-rank"/>')
+                    )
+                    .append(function () {
+                        let el = $('<span class="equipment-carry"/>').html(0)
+                        this.elCarry = this.elCarry.add(el)
+                        return el
+                    }.bind(this))
             )
             .append(
-            $('<div class="equipment-layer equipment-options"/>')
-                .append(
-                this.elInputStar = $('<input/>', {
-                    'class': 'equipment-starinput',
-                    'type': 'number',
-                    'placeholder': 0,
-                    'min': 0,
-                    'max': 10
-                }).on({
-                    'input': function () {
-                        let value = this.elInputStar.val()
+                $('<div class="equipment-layer equipment-options"/>')
+                    .append(
+                        this.elInputStar = $('<input/>', {
+                            'class': 'equipment-starinput',
+                            'type': 'number',
+                            'placeholder': 0,
+                            'min': 0,
+                            'max': 10
+                        }).on({
+                            'input': function () {
+                                let value = this.elInputStar.val()
 
-                        if ((typeof value == 'undefined' || value === '') && this.star)
-                            this.star = null
+                                if ((typeof value == 'undefined' || value === '') && this.star)
+                                    this.star = null
 
-                        value = parseInt(value)
-                        if (!isNaN(value) && this.star != value)
-                            this.star = value
-                    }.bind(this),
-                    'focus': function () {
-                        clearTimeout(this.elBlurTimeout)
-                        this.el.addClass('is-hover')
-                        //console.log('focus')
-                    }.bind(this),
-                    'blur': function () {
-                        setTimeout(function () {
-                            if (!this.el.is(':focus'))
-                                this.el.removeClass('is-hover')
-                        }.bind(this), 10)
-                    }.bind(this),
-                    'pointerdown': function (e) {
-                        console.log('pointerdown')
-                        if (e.originalEvent.pointerType == 'touch') {
-                            InfosFleetShipEquipment.cur = this.el.addClass('is-hover')
-                            clearTimeout(this.elBlurTimeout)
-                            setTimeout(() => {
-                                this.elInputStar.trigger('focus')
-                            }, 10)
-                        }
-                    }.bind(this),
-                    'pointerenter': function (e) {
-                        if (e.originalEvent.pointerType != 'touch') {
-                            InfosFleetShipEquipment.cur = this.el.addClass('is-hover')
-                            clearTimeout(this.elBlurTimeout)
-                            //.focus()
-                        }
-                    }.bind(this),
-                    'mouseenter': function (e) {
-                        InfosFleetShipEquipment.cur = this.el.addClass('is-hover')
-                        clearTimeout(this.elBlurTimeout)
-                    }.bind(this)
-                })
-                )
-                .append(
-                this.elSelectRank = $('<div/>', {
-                    'class': 'equipment-rankselect',
-                    'html': '<span>...</span>'
-                }).on('click', function () {
-                    if (!this.el.hasClass('is-rankupgradable'))
-                        return
-                    if (!InfosFleet.menuRankSelect) {
-                        InfosFleet.menuRankSelectItems = $('<div/>')
-                        for (let i = 0; i < 8; i++) {
-                            $('<button class="rank-' + i + '"/>')
-                                .html(!i ? '...' : '')
-                                .on('click', function () {
-                                    InfosFleet.menuRankSelectCur.rank = i
-                                })
-                                .appendTo(InfosFleet.menuRankSelectItems)
-                        }
-                        InfosFleet.menuRankSelect = new _menu({
-                            'className': 'contextmenu-infos_fleet_rank_select',
-                            'items': [InfosFleet.menuRankSelectItems]
+                                value = parseInt(value)
+                                if (!isNaN(value) && this.star != value)
+                                    this.star = value
+                            }.bind(this),
+                            'focus': function () {
+                                clearTimeout(this.elBlurTimeout)
+                                this.el.addClass('is-hover')
+                                //console.log('focus')
+                            }.bind(this),
+                            'blur': function () {
+                                setTimeout(function () {
+                                    if (!this.el.is(':focus'))
+                                        this.el.removeClass('is-hover')
+                                }.bind(this), 10)
+                            }.bind(this),
+                            'pointerdown': function (e) {
+                                console.log('pointerdown')
+                                if (e.originalEvent.pointerType == 'touch') {
+                                    InfosFleetShipEquipment.cur = this.el.addClass('is-hover')
+                                    clearTimeout(this.elBlurTimeout)
+                                    setTimeout(() => {
+                                        this.elInputStar.trigger('focus')
+                                    }, 10)
+                                }
+                            }.bind(this),
+                            'pointerenter': function (e) {
+                                if (e.originalEvent.pointerType != 'touch') {
+                                    InfosFleetShipEquipment.cur = this.el.addClass('is-hover')
+                                    clearTimeout(this.elBlurTimeout)
+                                    //.focus()
+                                }
+                            }.bind(this),
+                            'mouseenter': function (e) {
+                                InfosFleetShipEquipment.cur = this.el.addClass('is-hover')
+                                clearTimeout(this.elBlurTimeout)
+                            }.bind(this)
                         })
-                    }
-                    InfosFleet.menuRankSelectCur = this
-                    InfosFleet.menuRankSelect.show(this.elSelectRank/*, 0 - this.elSelectRank.width(), 0 - this.elSelectRank.height() - 5*/)
-                }.bind(this))
-                )
-                .append(
-                //this.elButtonInspect = $('<button class="inspect"/>').html('资料').on('click', function(){
-                this.elButtonInspect = $('<span class="button inspect" icon="search"/>').on('click', function () {
-                    if (this.id)
-                        _frame.infos.show('[[EQUIPMENT::' + this.id + ']]')
-                }.bind(this))
-                )
-                .append(
-                //$('<button class="change"/>').html('更变').on('click',function(){
-                $('<span class="button change" icon="loop"/>').on('click', function () {
-                    this.selectEquipmentStart()
-                }.bind(this))
-                )
-                .append(
-                $('<span class="button remove"/>')/*.html('×')*/.on('click', function () {
-                    this.id = null
-                }.bind(this))
-                )
+                    )
+                    .append(
+                        this.elSelectRank = $('<div/>', {
+                            'class': 'equipment-rankselect',
+                            'html': '<span>...</span>'
+                        }).on('click', function () {
+                            if (!this.el.hasClass('is-rankupgradable'))
+                                return
+                            if (!InfosFleet.menuRankSelect) {
+                                InfosFleet.menuRankSelectItems = $('<div/>')
+                                for (let i = 0; i < 8; i++) {
+                                    $('<button class="rank-' + i + '"/>')
+                                        .html(!i ? '...' : '')
+                                        .on('click', function () {
+                                            InfosFleet.menuRankSelectCur.rank = i
+                                        })
+                                        .appendTo(InfosFleet.menuRankSelectItems)
+                                }
+                                InfosFleet.menuRankSelect = new _menu({
+                                    'className': 'contextmenu-infos_fleet_rank_select',
+                                    'items': [InfosFleet.menuRankSelectItems]
+                                })
+                            }
+                            InfosFleet.menuRankSelectCur = this
+                            InfosFleet.menuRankSelect.show(this.elSelectRank/*, 0 - this.elSelectRank.width(), 0 - this.elSelectRank.height() - 5*/)
+                        }.bind(this))
+                    )
+                    .append(
+                        //this.elButtonInspect = $('<button class="inspect"/>').html('资料').on('click', function(){
+                        this.elButtonInspect = $('<span class="button inspect" icon="search"/>').on('click', function () {
+                            if (this.id)
+                                _frame.infos.show('[[EQUIPMENT::' + this.id + ']]')
+                        }.bind(this))
+                    )
+                    .append(
+                        //$('<button class="change"/>').html('更变').on('click',function(){
+                        $('<span class="button change" icon="loop"/>').on('click', function () {
+                            this.selectEquipmentStart()
+                        }.bind(this))
+                    )
+                    .append(
+                        $('<span class="button remove"/>')/*.html('×')*/.on('click', function () {
+                            this.id = null
+                        }.bind(this))
+                    )
             )
 
         if (carry)
@@ -2857,10 +2854,10 @@ class InfosFleetSubAirfield {
                     <ul class="tip-content">
                         <h4 data-content="小贴士">小贴士</h4>
                         ${
-            tips.map(function (tip) {
-                return `<li>${tip}</li>`
-            }).join('')
-            }
+                tips.map(function (tip) {
+                    return `<li>${tip}</li>`
+                }).join('')
+                }
                     </ul>
                 `)
             .appendTo(this.el)
@@ -2985,13 +2982,13 @@ class InfosFleetAirfield {
 
         this.el = $('<dd class="airfield"/>')
             .append(
-            this.elTitle = new InfosFleetEditableTitle({
-                tagName: 'h4',
-                placeholder: `第${no[index]}航空队`,
-                onUpdate: newContent => {
-                    this._name = newContent
-                }
-            }).$el
+                this.elTitle = new InfosFleetEditableTitle({
+                    tagName: 'h4',
+                    placeholder: `第${no[index]}航空队`,
+                    onUpdate: newContent => {
+                        this._name = newContent
+                    }
+                }).$el
             )
             /*
             .append(
@@ -3005,49 +3002,49 @@ class InfosFleetAirfield {
             )
             */
             .append(
-            $('<div class="aircrafts"/>')
-                .append(
-                function () {
-                    let els = $()
-                    for (let i = 0; i < 4; i++) {
-                        this.aircrafts[i] = new InfosFleetShipEquipment(
-                            this,
-                            i,
-                            18, // carry slot
-                            InfosFleetAirfield.equipmentTypes // equipment types
-                        )
-                        els = els.add(this.aircrafts[i].el)
-                    }
-                    return els
-                }.bind(this)
-                )
+                $('<div class="aircrafts"/>')
+                    .append(
+                        function () {
+                            let els = $()
+                            for (let i = 0; i < 4; i++) {
+                                this.aircrafts[i] = new InfosFleetShipEquipment(
+                                    this,
+                                    i,
+                                    18, // carry slot
+                                    InfosFleetAirfield.equipmentTypes // equipment types
+                                )
+                                els = els.add(this.aircrafts[i].el)
+                            }
+                            return els
+                        }.bind(this)
+                    )
             )
 
         this.elSummary = $('<span class="summary"/>')
             //.html('<h4 data-content="舰队数据">舰队数据</h4>')
             .appendTo(
-            $('<div class="airfield-summary"/>').appendTo(this.el)
+                $('<div class="airfield-summary"/>').appendTo(this.el)
             )
             .append(
-            $('<span class="summary-item"/>')
-                .html('航程')
-                .append(
-                this.elSummaryDistance = $('<strong/>').html('-')
-                )
+                $('<span class="summary-item"/>')
+                    .html('航程')
+                    .append(
+                        this.elSummaryDistance = $('<strong/>').html('-')
+                    )
             )
             .append(
-            $('<span class="summary-item"/>')
-                .html('制空战力')
-                .append(
-                this.elSummaryFighterPower = $('<strong/>').html('-')
-                )
+                $('<span class="summary-item"/>')
+                    .html('制空战力')
+                    .append(
+                        this.elSummaryFighterPower = $('<strong/>').html('-')
+                    )
             )
             .append(
-            $('<span class="summary-item"/>')
-                .html('防空战力')
-                .append(
-                this.elSummaryFighterPowerAA = $('<strong/>').html('-')
-                )
+                $('<span class="summary-item"/>')
+                    .html('防空战力')
+                    .append(
+                        this.elSummaryFighterPowerAA = $('<strong/>').html('-')
+                    )
             )
 
         this.els = this.el

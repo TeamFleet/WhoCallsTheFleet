@@ -2727,8 +2727,6 @@ _g.kancolle_calc = {
         if ((typeof data === 'undefined' ? 'undefined' : _typeof(data)) != 'object') return;
         version = parseInt(data.version) || this.version;
 
-        console.log(11111111111111, data);
-
         var result = void 0,
             i = 0,
             j = 0,
@@ -2820,28 +2818,27 @@ _g.kancolle_calc = {
                                     _ship = _fleet[j] = [data_ship.id, [data_ship.lv || null, data_ship.luck || -1], [], [], []];
                                 if (data_ship.items) {
                                     k = 0;
-                                    var extraslot = data_ship.items.ix;
+                                    var extraslot = void 0;
 
-                                    while (k < _g.kancolle_calc.max_equipments_per_ship) {
-                                        data_item = data_ship.items['i' + (k + 1)];
-                                        if (data_item && data_item.id) {
-                                            if (k + 1 > ship.slot.length) {
-                                                extraslot = data_item;
-                                                _ship[2][k] = null;
-                                                _ship[3][k] = null;
-                                                _ship[4][k] = null;
-                                            } else {
-                                                _ship[2][k] = data_item.id;
-                                                _ship[3][k] = data_item.rf || null;
-                                                _ship[4][k] = data_item.mas || null;
-                                            }
+                                    for (var key in data_ship.items) {
+                                        if (key === 'ix') {
+                                            extraslot = data_ship.items[key];
+                                            continue;
+                                        }
+                                        if (key.substr(0, 1) !== 'i') continue;
+                                        if (!data_ship.items[key].id) continue;
+                                        var obj = data_ship.items[key];
+                                        var number = parseInt(key.substr(1));
+                                        var index = number < 5 ? number - 1 : number;
+                                        if (number > ship.slot.length) {
+                                            extraslot = obj;
                                         } else {
-                                                _ship[2][k] = null;
-                                                _ship[3][k] = null;
-                                                _ship[4][k] = null;
-                                            }
-                                        k++;
+                                            _ship[2][index] = obj.id;
+                                            _ship[3][index] = obj.rf || null;
+                                            _ship[4][index] = obj.mas || null;
+                                        }
                                     }
+
                                     if (extraslot && extraslot.id) {
                                         _ship[2][4] = extraslot.id;
                                         _ship[3][4] = extraslot.rf || null;
@@ -2916,11 +2913,12 @@ _g.kancolle_calc = {
                                     };
                                     data_ship[2].forEach(function (id_item, k) {
                                         if (id_item) {
-                                            result['f' + (i + 1)]['s' + (j + 1)].items['i' + (k + 1)] = {
+                                            var itemNo = k > 4 ? k : k + 1;
+                                            result['f' + (i + 1)]['s' + (j + 1)].items['i' + itemNo] = {
                                                 'id': parseInt(id_item)
                                             };
-                                            if (data_ship[3]) result['f' + (i + 1)]['s' + (j + 1)].items['i' + (k + 1)].rf = parseInt(data_ship[3][k]) || 0;
-                                            if (data_ship[4]) result['f' + (i + 1)]['s' + (j + 1)].items['i' + (k + 1)].rp = parseInt(data_ship[4][k]) || 0;
+                                            if (data_ship[3]) result['f' + (i + 1)]['s' + (j + 1)].items['i' + itemNo].rf = parseInt(data_ship[3][k]) || 0;
+                                            if (data_ship[4]) result['f' + (i + 1)]['s' + (j + 1)].items['i' + itemNo].rp = parseInt(data_ship[4][k]) || 0;
                                         }
                                     });
                                 }
@@ -2965,7 +2963,7 @@ _g.kancolle_calc = {
                                     };
                                     data_ship[2].forEach(function (id_item, k) {
                                         if (id_item) {
-                                            var prop = k == 4 ? ship.slot.length < 4 ? ['i' + (ship.slot.length + 1)] : 'ix' : ['i' + (k + 1)];
+                                            var prop = k == 4 ? ship.slot.length < 4 ? ['i' + (ship.slot.length + 1)] : 'ix' : ['i' + (k > 4 ? k : k + 1)];
                                             _ship.items[prop] = {
                                                 'id': parseInt(id_item)
                                             };
@@ -3067,7 +3065,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
     location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20180128';
+_g.db_version = '20180211';
 
 _g.bgimg_count = 0;
 
@@ -6681,6 +6679,7 @@ var InfosFleetSubFleet = function () {
             var hq_lv = this.infosFleet.data.hq_lv || Lockr.get('hqLvDefault', _g.defaultHqLv);
             if (hq_lv < 0) hq_lv = Lockr.get('hqLvDefault', _g.defaultHqLv);
 
+
             return Formula.calcByFleet.los33(this.data, hq_lv);
         }
     }, {
@@ -6772,7 +6771,7 @@ var InfosFleetShip = function () {
             change: function change() {
                 _this8.elInputLevel.trigger('checkValue');
             }
-        }))).append(this.elInfosSpeed = $('<span/>')).append(this.elInfosType = $('<span/>'))))).append($('<div class="equipments"/>').append(function () {
+        }))).append(this.elInfosSpeed = $('<span/>')).append(this.elInfosType = $('<span/>'))))).append(this.elEquipments = $('<div class="equipments"/>').append(function () {
             var els = $();
             for (var _i15 = 0; _i15 < 4; _i15++) {
                 els = els.add(this.equipments[_i15].el);
@@ -7066,6 +7065,12 @@ var InfosFleetShip = function () {
                 delete this.stat.speed;
             }
 
+            if (this.equipments.length > 5) {
+                this.equipments.splice(5, this.equipments.length - 5).forEach(function (obj) {
+                    obj.el.remove();
+                });
+            }
+
             if (value) {
                 var ship = _g.data.ships[value],
                     _suffix = ship.getSuffix(),
@@ -7082,8 +7087,15 @@ var InfosFleetShip = function () {
                 this.elInfosSpeed.html(speed);
                 this.elInfosType.html(stype);
 
+                if (ship && Array.isArray(ship.slot) && ship.slot.length > 4) {
+                    for (var _i16 = 5; _i16 < ship.slot.length + 1; _i16++) {
+                        this.equipments[_i16] = new InfosFleetShipEquipment(this, _i16);
+                        this.equipments[_i16].el.appendTo(this.elEquipments);
+                    }
+                }
+
                 this.equipments.forEach(function (equipment, i) {
-                    equipment.carry = i < 4 ? ship.slot[i] : 0;
+                    if (i < 4) equipment.carry = ship.slot[i];else if (i === 4) equipment.carry = 0;else if (i > 4) equipment.carry = ship.slot[i - 1];
                     if (!_this10._updating) {
                         equipment.id = null;
                         equipment.star = null;
@@ -7317,14 +7329,14 @@ var InfosFleetShipEquipment = function () {
             if (!InfosFleet.menuRankSelect) {
                 InfosFleet.menuRankSelectItems = $('<div/>');
 
-                var _loop3 = function _loop3(_i16) {
-                    $('<button class="rank-' + _i16 + '"/>').html(!_i16 ? '...' : '').on('click', function () {
-                        InfosFleet.menuRankSelectCur.rank = _i16;
+                var _loop3 = function _loop3(_i17) {
+                    $('<button class="rank-' + _i17 + '"/>').html(!_i17 ? '...' : '').on('click', function () {
+                        InfosFleet.menuRankSelectCur.rank = _i17;
                     }).appendTo(InfosFleet.menuRankSelectItems);
                 };
 
-                for (var _i16 = 0; _i16 < 8; _i16++) {
-                    _loop3(_i16);
+                for (var _i17 = 0; _i17 < 8; _i17++) {
+                    _loop3(_i17);
                 }
                 InfosFleet.menuRankSelect = new _menu({
                     'className': 'contextmenu-infos_fleet_rank_select',
@@ -7684,9 +7696,9 @@ var InfosFleetAirfield = function () {
             }
         }).$el).append($('<div class="aircrafts"/>').append(function () {
             var els = $();
-            for (var _i17 = 0; _i17 < 4; _i17++) {
-                this.aircrafts[_i17] = new InfosFleetShipEquipment(this, _i17, 18, InfosFleetAirfield.equipmentTypes);
-                els = els.add(this.aircrafts[_i17].el);
+            for (var _i18 = 0; _i18 < 4; _i18++) {
+                this.aircrafts[_i18] = new InfosFleetShipEquipment(this, _i18, 18, InfosFleetAirfield.equipmentTypes);
+                els = els.add(this.aircrafts[_i18].el);
             }
             return els;
         }.bind(this)));
@@ -7708,11 +7720,11 @@ var InfosFleetAirfield = function () {
 
             this.data = d || this.data;
 
-            for (var _i18 = 0; _i18 < 4; _i18++) {
-                if (!this.data[_i18]) this.data[_i18] = [];else {
-                    if (this.data[_i18][0]) this.aircrafts[_i18].id = this.data[_i18][0];
-                    if (this.data[_i18][1]) this.aircrafts[_i18].rank = this.data[_i18][1];
-                    if (this.data[_i18][2]) this.aircrafts[_i18].star = this.data[_i18][2];
+            for (var _i19 = 0; _i19 < 4; _i19++) {
+                if (!this.data[_i19]) this.data[_i19] = [];else {
+                    if (this.data[_i19][0]) this.aircrafts[_i19].id = this.data[_i19][0];
+                    if (this.data[_i19][1]) this.aircrafts[_i19].rank = this.data[_i19][1];
+                    if (this.data[_i19][2]) this.aircrafts[_i19].star = this.data[_i19][2];
                 }
             }
 
@@ -9324,7 +9336,7 @@ var TablelistFleets = function (_Tablelist4) {
                         sorted[cur.theme].push(i);
                     });
 
-                    for (var _i19 in sorted) {
+                    for (var _i20 in sorted) {
                         k = 0;
 
                         while (k < _this21.flexgrid_empty_count) {
@@ -9332,7 +9344,7 @@ var TablelistFleets = function (_Tablelist4) {
                             k++;
                         }
 
-                        sorted[_i19].forEach(function (index) {
+                        sorted[_i20].forEach(function (index) {
                             setTimeout(function (i) {
                                 this.append_item(arr[i]);
                                 count++;
@@ -9511,10 +9523,10 @@ var TablelistFleets = function (_Tablelist4) {
 
 
             if (dataDefault.data) {
-                var _i20 = 0;
+                var _i21 = 0;
                 dataDefault.data.forEach(function (fleet) {
                     if (fleet && fleet.push) {
-                        if (_i20 < 4) {
+                        if (_i21 < 4) {
                             fleet.forEach(function (ship) {
                                 if (ship && ship.push) {
                                     ship[2].forEach(function (equipmentId, index) {
@@ -9537,7 +9549,7 @@ var TablelistFleets = function (_Tablelist4) {
                                 }
                             });
                         }
-                        _i20++;
+                        _i21++;
                     }
                 });
                 InfosFleet.clean(dataDefault.data);
@@ -9651,7 +9663,7 @@ var TablelistFleets = function (_Tablelist4) {
                         if (err) deferred.reject('文件载入失败', new Error(err));else deferred.resolve(data);
                     });
                 } else {
-                    for (var _i21 = 0, f; f = $selector[0].files[_i21]; _i21++) {
+                    for (var _i22 = 0, f; f = $selector[0].files[_i22]; _i22++) {
                         var reader = new FileReader();
                         reader.onload = function (theFile) {
                             return function (r) {
