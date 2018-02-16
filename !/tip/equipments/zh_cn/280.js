@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",280,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/1.png)\"></s><strong>QF 4.7inch炮 Mk.XII改</strong><small>小口径主炮</small></h3><span>+3 火力</span><span>+3 对空</span><span>+1 对潜</span><span>+1 命中</span><span>+1 回避</span><span>射程: 短</span>")

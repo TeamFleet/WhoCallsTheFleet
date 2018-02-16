@@ -2825,8 +2825,12 @@ _g.kancolle_calc = {
                                             extraslot = data_ship.items[key];
                                             continue;
                                         }
-                                        if (key.substr(0, 1) !== 'i') continue;
-                                        if (!data_ship.items[key].id) continue;
+                                        if (key.substr(0, 1) !== 'i' || !data_ship.items[key].id) {
+                                            _ship[2].push(null);
+                                            _ship[3].push(null);
+                                            _ship[4].push(null);
+                                            continue;
+                                        }
                                         var obj = data_ship.items[key];
                                         var number = parseInt(key.substr(1));
                                         var index = number < 5 ? number - 1 : number;
@@ -2999,6 +3003,7 @@ _g.kancolle_calc = {
         return result;
     }
 };
+
 _g.events = [{
     code: 'leyteA',
     title: {
@@ -3006,7 +3011,14 @@ _g.events = [{
         zh_cn: '捷号决战！迎击莱特湾海战（前篇）'
     },
     start: 1510844400000,
-    end: 1512957600000 }];
+    end: 1512957600000 }, {
+    code: 'leyteB',
+    title: {
+        ja_jp: '捷号決戦！邀撃、レイテ沖海戦(後篇)',
+        zh_cn: '捷号决战！迎击莱特湾海战（前篇）'
+    },
+    start: 1510844400000,
+    end: 1521388800000 }];
 
 _g.getCurrentEvent = function (now) {
     if (now instanceof Date) now = now.valueOf;else if (typeof now === 'string') now = parseInt(now);else if (!now) now = new Date().valueOf();
@@ -3015,6 +3027,7 @@ _g.getCurrentEvent = function (now) {
         return now >= event.start && now < event.end;
     });
 };
+
 var _config = {
     getFullKeyname: function getFullKeyname(key) {
         return 'config_' + key;
@@ -6477,19 +6490,7 @@ InfosFleet.modalRemove_show = function (id, is_list) {
 };
 InfosFleet.clean = function (arr) {
     if (!arr) return;
-    function _clean(array) {
-        if (array && array.length) {
-            array.forEach(function (v, i) {
-                if (v && v.push) {
-                    _clean(v);
-                } else if (i == array.length - 1 && v === null) {
-                    array.pop();
-                    _clean(array);
-                }
-            });
-        }
-    }
-    _clean(arr);
+
     return arr;
 };
 InfosFleet.decompress = function (code) {
@@ -7904,6 +7905,7 @@ InfosFleetAirfield.dragEnter = function (infosFleetAirfield_enter) {
 };
 
 InfosFleetAirfield.equipmentTypes = $.unique(Formula.equipmentType.LandBased.concat(Formula.equipmentType.Seaplanes).concat(Formula.equipmentType.CarrierBased).concat(Formula.equipmentType.Recons));
+
 _frame.app_main.is_mode_selection = function () {
     return $html.hasClass('mode-selection') || _frame.dom.layout.hasClass('mode-selection');
 };
@@ -9469,7 +9471,7 @@ var TablelistFleets = function (_Tablelist4) {
                 }.bind(this)) : null)];
                 var event = void 0;
                 if (_g.getCurrentEvent().some(function (e) {
-                    if (e.code === 'leyteA') {
+                    if (e.code === 'leyteA' || e.code === 'leyteB') {
                         event = e;
                         return !0;
                     }

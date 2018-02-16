@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",278,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/11.png)\"></s><strong>SK雷达</strong><small>大型电探/雷达</small></h3><span>+8 对空</span><span>+1 命中</span><span>+2 回避</span><span>+10 索敌</span>")
