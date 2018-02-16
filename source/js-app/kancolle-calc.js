@@ -238,8 +238,13 @@ _g.kancolle_calc = {
                                             extraslot = data_ship.items[key]
                                             continue
                                         }
-                                        if (key.substr(0, 1) !== 'i') continue
-                                        if (!data_ship.items[key].id) continue
+                                        if (key.substr(0, 1) !== 'i' ||
+                                            !data_ship.items[key].id) {
+                                            _ship[2].push(null)
+                                            _ship[3].push(null)
+                                            _ship[4].push(null)
+                                            continue
+                                        }
                                         const obj = data_ship.items[key]
                                         const number = parseInt(key.substr(1))
                                         const index = number < 5 ? number - 1 : number

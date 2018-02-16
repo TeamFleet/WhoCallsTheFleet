@@ -583,7 +583,7 @@ class TablelistFleets extends Tablelist{
                 ]
                 let event
                 if (_g.getCurrentEvent().some(e => {
-                    if (e.code === 'leyteA') {
+                    if (e.code === 'leyteA' || e.code === 'leyteB') {
                         event = e
                         return true
                     }

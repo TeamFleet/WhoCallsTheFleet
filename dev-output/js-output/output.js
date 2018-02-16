@@ -4,7 +4,7 @@
 
 var minify = require("../dev-output/js-source/node_modules/html-minifier").minify;
 var fsExtra = require("../dev-output/js-source/node_modules/fs-extra")
-let glob = require("glob");
+let glob = require("../dev-output/js-source/node_modules/glob")
 
 let dev_output_steps = []
     ,dev_output_tmpl
@@ -718,6 +718,7 @@ function dev_output_form(){
     
     return el.container
 }
+
 /*
 
 Template
