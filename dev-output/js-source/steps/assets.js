@@ -282,7 +282,7 @@ dev_output_steps.push(function(){
                         ,_deferred = Q.defer()
                     copyFile2(
                         //node.path.join( _g.root, 'app', 'assets', 'fonts', filename ),
-                        node.path.join( _g.root, '!design', 'iconfont', 'fonts', filename ),
+                        node.path.join( _g.root, 'dev-output', 'js-source', 'fonts', filename ),
                         outputPath,
                         function(err){
                             if( err ){
