@@ -240,9 +240,6 @@ _g.kancolle_calc = {
                                         }
                                         if (key.substr(0, 1) !== 'i' ||
                                             !data_ship.items[key].id) {
-                                            _ship[2].push(null)
-                                            _ship[3].push(null)
-                                            _ship[4].push(null)
                                             continue
                                         }
                                         const obj = data_ship.items[key]
@@ -282,6 +279,17 @@ _g.kancolle_calc = {
                                         _ship[4][4] = extraslot.mas || null
                                     }
                                 }
+                                // console.log(_ship)
+                                _ship.forEach(v => {
+                                    if (Array.isArray(v)) {
+                                        for (let i = 0; i < v.length; i++) {
+                                            if (!v[i])
+                                                v[i] = null
+                                        }
+                                        // console.log(v)
+                                    }
+                                })
+                                // console.log(_ship, _fleet[j])
                             } else {
                                 _fleet[j] = null
                             }
