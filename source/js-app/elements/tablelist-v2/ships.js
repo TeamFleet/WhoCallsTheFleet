@@ -492,8 +492,8 @@ class TablelistShips extends Tablelist {
                         filter(false)
                     }
                     reset()
-                    this.functionsOnEnter.push(reset)
-                    this.functionsOnExit.push(reset)
+                    // this.functionsOnEnter.push(reset)
+                    // this.functionsOnExit.push(reset)
                 }
             }
         }

@@ -8128,8 +8128,6 @@ var TablelistShips = function (_Tablelist) {
                             filter(!1);
                         };
                         reset();
-                        this.functionsOnEnter.push(reset);
-                        this.functionsOnExit.push(reset);
                     }
                 }
             }

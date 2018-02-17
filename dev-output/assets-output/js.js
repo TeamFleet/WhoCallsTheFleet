@@ -8813,8 +8813,6 @@ var TablelistShips = function (_Tablelist2) {
                             filter(!1);
                         };
                         reset();
-                        this.functionsOnEnter.push(reset);
-                        this.functionsOnExit.push(reset);
                     }
                 }
             }
