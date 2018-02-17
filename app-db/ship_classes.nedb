@@ -27,7 +27,7 @@
 {"ship_type_id":28,"id":75,"_id":"EZogkjzM4YkDTpbV","speed_rule":"high-3","name":{"en_us":"Nagara","ja_jp":"長良","zh_cn":"长良"}}
 {"name":{"ja_jp":"J","zh_cn":"J"},"ship_type_id":1,"id":107,"_id":"Erl4Zv7yYnt5v7rx","navy":"rn"}
 {"ship_type_id":11,"id":79,"_id":"FG1QUOKlFDusxWDV","speed_rule":"high-1","name":{"en_us":"Shoukaku","ja_jp":"翔鶴","zh_cn":"翔鹤"}}
-{"id":6,"ship_type_id":8,"_id":"FP4S6jTaP67kVM38","speed_rule":"low-2","name":{"en_us":"Ise","ja_jp":"伊勢","zh_cn":"伊势"}}
+{"id":6,"ship_type_id":8,"_id":"FP4S6jTaP67kVM38","speed_rule":"low-2","name":{"en_us":"Ise","ja_jp":"伊勢","zh_cn":"伊势"},"capabilities":{"anti_air_rocket_barrage":"high"}}
 {"ship_type_id":2,"id":51,"_id":"FWe8gJkEc3hdZrKz","speed_rule":"high-4","name":{"en_us":"Yuubari","ja_jp":"夕張","zh_cn":"夕张"}}
 {"ship_type_id":4,"id":39,"_id":"GGpHWtPGbFEdb938","speed_rule":"high-3","name":{"en_us":"Furutaka","ja_jp":"古鷹","zh_cn":"古鹰"}}
 {"name":{"ja_jp":"伊五百一","zh_cn":"伊501","en_us":"I-501"},"ship_type_id":13,"id":104,"_id":"HFlfZjKO265xIQtq","speed_rule":"low-3"}
