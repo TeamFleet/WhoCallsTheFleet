@@ -309,6 +309,73 @@
 		}
 	}
 
+	// event
+	.event-container{
+		// display: none;
+		flex: 0 0 auto;
+		background: fade(#000, 50%);
+		border-top: 1px solid fade(#fff, 35%);
+		// border-bottom: 1px solid fade(#fff, 35%);
+		padding: 5px 30px;
+		text-align: center;
+		.filter{
+			@left: 26px;
+			display: inline-block;
+			line-height: 26px;
+			padding: 0 10px 0 (@left - 1);
+			margin: 5px;
+			border: 1px solid fade(#fff, 25%);
+			border-radius: 30px;
+			position: relative;
+			overflow: hidden;
+			vertical-align: top;
+			&:before{
+				@size: 10px;
+				content: "";
+				position: absolute;
+				top: 50%;
+				left: ((@left - @size) / 2);
+				width: @size;
+				height: @size;
+				margin-top: (0 - @size / 2);
+				background: fade(#fff, 25%);
+				border-radius: 50%;
+			}
+			&:hover{
+				border-color: fade(#fff, 50%);
+				&:before{
+					background-color: fade(#fff, 50%);
+				}
+			}
+			&.on{
+				color: lighten(#a3c8d9, 15%);
+				border-color: #a3c8d9;
+				background-color: fade(#163340, 65%);
+				&:before{
+					background: #a3c8d9;
+				}
+			}
+		}
+	}
+	.event-leyte-fleet(@fleet) {
+		&[data-leyte-fleet=~"@{fleet}"]{
+			[data-shipid][data-infos]:not([data-leyte-fleet=~"@{fleet}"]){
+				display: none;
+			}
+		}
+	}
+	.event-leyte-fleet(kurita);
+	.event-leyte-fleet(ozawa);
+	.event-leyte-fleet(nishimura);
+	.event-leyte-fleet(shima);
+	.event-leyte-fleet(shima_transport);
+	.event-leyte-fleet(squadron16);
+	&[data-leyte-fleet="off"]{
+		[data-shipid][data-leyte-fleet]{
+			display: none;
+		}
+	}
+
 	@media all and (max-width: @main-sizing-t1-breaking-point ){
 		dl{
 			dd{
@@ -390,6 +457,9 @@
 	
 	
 	.mod-selection({
+		.event-container{
+			display: block;
+		}
 		[data-donotcompare="true"]{
 			display: 	none !important;
 		}

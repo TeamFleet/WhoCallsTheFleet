@@ -6139,6 +6139,70 @@ body.mod-capture #tip {
 .tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid]:not([compare="true"]) {
   display: none;
 }
+.tablelist.ships .event-container {
+  flex: 0 0 auto;
+  background: rgba(0, 0, 0, 0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 5px 30px;
+  text-align: center;
+}
+.tablelist.ships .event-container .filter {
+  display: inline-block;
+  line-height: 26px;
+  padding: 0 10px 0 25px;
+  margin: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 30px;
+  position: relative;
+  overflow: hidden;
+  vertical-align: top;
+}
+.tablelist.ships .event-container .filter:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+}
+.tablelist.ships .event-container .filter:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+.tablelist.ships .event-container .filter:hover:before {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.tablelist.ships .event-container .filter.on {
+  color: #d9e8ef;
+  border-color: #a3c8d9;
+  background-color: rgba(22, 51, 64, 0.65);
+}
+.tablelist.ships .event-container .filter.on:before {
+  background: #a3c8d9;
+}
+.tablelist.ships[data-leyte-fleet=kurita] [data-shipid][data-infos]:not([data-leyte-fleet=kurita]) {
+  display: none;
+}
+.tablelist.ships[data-leyte-fleet=ozawa] [data-shipid][data-infos]:not([data-leyte-fleet=ozawa]) {
+  display: none;
+}
+.tablelist.ships[data-leyte-fleet=nishimura] [data-shipid][data-infos]:not([data-leyte-fleet=nishimura]) {
+  display: none;
+}
+.tablelist.ships[data-leyte-fleet=shima] [data-shipid][data-infos]:not([data-leyte-fleet=shima]) {
+  display: none;
+}
+.tablelist.ships[data-leyte-fleet=shima_transport] [data-shipid][data-infos]:not([data-leyte-fleet=shima_transport]) {
+  display: none;
+}
+.tablelist.ships[data-leyte-fleet=squadron16] [data-shipid][data-infos]:not([data-leyte-fleet=squadron16]) {
+  display: none;
+}
+.tablelist.ships[data-leyte-fleet="off"] [data-shipid][data-leyte-fleet] {
+  display: none;
+}
 @media all and (max-width: 1152px) {
   .tablelist.ships dl dd {
     flex-basis: 24px;
@@ -6197,6 +6261,9 @@ body.mod-capture #tip {
   .tablelist.ships > [viewtype=compare] ~ .tablelist-container .tablelist-body dl[data-shipid][compare="true"] dt a {
     padding-left: 90px;
   }
+}
+#layout.mode-selection .tablelist.ships .event-container {
+  display: block;
 }
 #layout.mode-selection .tablelist.ships [data-donotcompare="true"] {
   display: none !important;

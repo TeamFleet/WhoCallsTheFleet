@@ -40,11 +40,13 @@ _frame.app_main.page['ships'] = {
                     'pageShow': function () {
                         if (!this.tablelistObj)
                             this.tablelistObj = this.tablelist.data('tablelist')
+                        this.tablelistObj.onEnter()
                     }.bind(this),
                     'pageHide': function () {
                         if (this.tablelistObj) {
                             this.tablelistObj.search()
                             this.tablelistObj.dom.searchInput.val('')
+                            this.tablelistObj.onExit()
                         }
                     }.bind(this)
                 })
