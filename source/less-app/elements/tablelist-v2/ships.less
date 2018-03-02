@@ -358,8 +358,8 @@
 		}
 	}
 	.event-leyte-fleet(@fleet) {
-		&[data-leyte-fleet=~"@{fleet}"]{
-			[data-shipid][data-infos]:not([data-leyte-fleet=~"@{fleet}"]){
+		&[data-leyte-fleet=~'"@{fleet}"']{
+			[data-shipid][data-infos]:not([data-leyte-fleet*=~'"|@{fleet}|"']){
 				display: none;
 			}
 		}
@@ -368,8 +368,7 @@
 	.event-leyte-fleet(ozawa);
 	.event-leyte-fleet(nishimura);
 	.event-leyte-fleet(shima);
-	.event-leyte-fleet(shima_transport);
-	.event-leyte-fleet(squadron16);
+	.event-leyte-fleet(ta_go);
 	&[data-leyte-fleet="off"]{
 		[data-shipid][data-leyte-fleet]{
 			display: none;

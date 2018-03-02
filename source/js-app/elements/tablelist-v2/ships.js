@@ -452,8 +452,7 @@ class TablelistShips extends Tablelist {
                     ['ozawa', '小泽'],
                     ['nishimura', '西村'],
                     ['shima', '志摩'],
-                    ['shima_transport', '志摩 (运输)'],
-                    ['squadron16', '第16战队 (运兵)'],
+                    ['ta_go', '多号作战'],
                     ['off', '无所属'],
                 ]
                 const els = {}
