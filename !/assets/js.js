@@ -8780,7 +8780,7 @@ var TablelistShips = function (_Tablelist2) {
                     }
                     return !1;
                 })) {
-                    var filters = [[!1, '全部'], ['kurita', '栗田'], ['ozawa', '小泽'], ['nishimura', '西村'], ['shima', '志摩'], ['shima_transport', '志摩 (运输)'], ['squadron16', '第16战队 (运兵)'], ['off', '无所属']];
+                    var filters = [[!1, '全部'], ['kurita', '栗田'], ['ozawa', '小泽'], ['nishimura', '西村'], ['shima', '志摩'], ['ta_go', '多号作战'], ['off', '无所属']];
                     var els = {};
                     var filter = function filter(_filter) {
                         for (var key in els) {

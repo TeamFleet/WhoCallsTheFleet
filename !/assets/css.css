@@ -6182,22 +6182,19 @@ body.mod-capture #tip {
 .tablelist.ships .event-container .filter.on:before {
   background: #a3c8d9;
 }
-.tablelist.ships[data-leyte-fleet=kurita] [data-shipid][data-infos]:not([data-leyte-fleet=kurita]) {
+.tablelist.ships[data-leyte-fleet="kurita"] [data-shipid][data-infos]:not([data-leyte-fleet*="|kurita|"]) {
   display: none;
 }
-.tablelist.ships[data-leyte-fleet=ozawa] [data-shipid][data-infos]:not([data-leyte-fleet=ozawa]) {
+.tablelist.ships[data-leyte-fleet="ozawa"] [data-shipid][data-infos]:not([data-leyte-fleet*="|ozawa|"]) {
   display: none;
 }
-.tablelist.ships[data-leyte-fleet=nishimura] [data-shipid][data-infos]:not([data-leyte-fleet=nishimura]) {
+.tablelist.ships[data-leyte-fleet="nishimura"] [data-shipid][data-infos]:not([data-leyte-fleet*="|nishimura|"]) {
   display: none;
 }
-.tablelist.ships[data-leyte-fleet=shima] [data-shipid][data-infos]:not([data-leyte-fleet=shima]) {
+.tablelist.ships[data-leyte-fleet="shima"] [data-shipid][data-infos]:not([data-leyte-fleet*="|shima|"]) {
   display: none;
 }
-.tablelist.ships[data-leyte-fleet=shima_transport] [data-shipid][data-infos]:not([data-leyte-fleet=shima_transport]) {
-  display: none;
-}
-.tablelist.ships[data-leyte-fleet=squadron16] [data-shipid][data-infos]:not([data-leyte-fleet=squadron16]) {
+.tablelist.ships[data-leyte-fleet="ta_go"] [data-shipid][data-infos]:not([data-leyte-fleet*="|ta_go|"]) {
   display: none;
 }
 .tablelist.ships[data-leyte-fleet="off"] [data-shipid][data-leyte-fleet] {
