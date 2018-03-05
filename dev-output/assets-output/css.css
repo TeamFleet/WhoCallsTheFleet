@@ -6259,6 +6259,13 @@ body.mod-capture #tip {
     padding-left: 90px;
   }
 }
+@media all and (max-width: 520px) {
+  .tablelist.ships > .options > div.filters > .hide-premodel {
+    display: none;
+    z-index: -1;
+    opacity: 0;
+  }
+}
 #layout.mode-selection .tablelist.ships .event-container {
   display: block;
 }
