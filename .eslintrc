@@ -44,7 +44,8 @@
         "Lockr": false,
         "$html": true,
         "_config": true,
-        "launcherOptions": true
+        "launcherOptions": true,
+        "TablelistEquipments": true
     },
     "settings": {
         "import/ignore": [

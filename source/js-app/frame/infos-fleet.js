@@ -100,7 +100,7 @@ class InfosFleet {
         this.el.addClass('infos-fleet infosbody loading')
             .attr({
                 'data-infos-type': 'fleet',
-                'data-infos-title': '舰队 (' + id + ')'
+                'data-infos-title': '舰队 (' + id + ')',
             })
 
         this.doms = {}
@@ -178,12 +178,14 @@ class InfosFleet {
                     InfosFleetShipEquipment.cur.trigger('blur')
                 if (!is_firstShow) {
                     // 再次显示时，重新计算分舰队的索敌能力
-                    let i = 0
-                        , l = Lockr.get('hqLvDefault', _g.defaultHqLv)
-                    while (i < 4) {
-                        this.fleets[i].summaryCalc(true)
-                        i++
-                    }
+                    let l = Lockr.get('hqLvDefault', _g.defaultHqLv)
+                    this.fleets.forEach(fleet => {
+                        fleet.summaryCalc(true)
+                        const scrollTop = fleet.el.attr('scrollbody')
+                        if (!isNaN(scrollTop)) {
+                            fleet.el.scrollTop(scrollTop)
+                        }
+                    })
                     if (!this._hqlv)
                         this.doms['hqlvOption'].val(l)
                     this.doms['hqlvOptionLabel'].data('tip', this.tip_hqlv_input.printf(l))
@@ -1158,7 +1160,7 @@ class InfosFleetSubFleet {
         this.data = d
         this.infosFleet = infosFleet
 
-        this.el = $('<dl class="fleetships"/>')
+        this.el = $('<dl class="fleetships" scrollbody/>')
         this.label = label
 
         this.ships = []
@@ -2586,7 +2588,7 @@ class InfosFleetShipEquipment {
 
                 TablelistEquipments.isExtraSlot = isExtraSlot
                 TablelistEquipments.types = types
-                TablelistEquipments.shipId = this.infosParent.shipId
+                TablelistEquipments.shipId = this.infosParent.shipId || 'FIELD'
                 TablelistEquipments.extraEquipments = this.extraEquipments ? this.extraEquipments.concat() : []
                 TablelistEquipments.extraEquipments = TablelistEquipments.extraEquipments.filter(eid => {
                     console.log(TablelistEquipments.types, _g.data.items[eid].type)

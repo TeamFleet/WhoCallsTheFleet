@@ -116,27 +116,38 @@ Page.init = function (page) {
     if (!page || !page.length)
         return
 
-    function handlerScroll(e) {
-        //$(e.currentTarget).data('scrollTop', e.currentTarget.scrollTop)
-        e.currentTarget.setAttribute('scrollbody', e.currentTarget.scrollTop)
-    }
+    // function handlerScroll(e) {
+    //     //$(e.currentTarget).data('scrollTop', e.currentTarget.scrollTop)
+    //     e.currentTarget.setAttribute('scrollbody', e.currentTarget.scrollTop)
+    // }
 
     if (p && _frame.app_main.page[p] && _frame.app_main.page[p].init)
         _frame.app_main.page[p].init(page)
     _p.initDOM(page)
 
-    page.find('[scrollbody]').on('scroll', handlerScroll)
+    // page.find('[scrollbody]').on('scroll', handlerScroll)
 
     page.on({
-        'scroll': handlerScroll,
+        // 'scroll': handlerScroll,
         'pageShow.scrollbody': function () {
+            // console.log('pageShow.scrollbody', page, page.attr('scrollbody'))
             page.scrollTop(page.attr('scrollbody') || 0)
             page.find('[scrollbody]').each(function (i, el) {
                 //el.scrollTop = $(el).data('scrollTop')
+                // console.log(
+                //     'pageShow.scrollbody',
+                //     el,
+                //     el.getAttribute('scrollbody')
+                // )
                 el.scrollTop = el.getAttribute('scrollbody') || 0
-                setTimeout(function () {
-                    el.scrollTop = el.getAttribute('scrollbody') || 0
-                }, 10)
+                // setTimeout(function () {
+                //     console.log(
+                //         'pageShow.scrollbody',
+                //         el,
+                //         el.getAttribute('scrollbody')
+                //     )
+                //     el.scrollTop = el.getAttribute('scrollbody') || 0
+                // }, 10)
             })
         }
     })
