@@ -47,8 +47,8 @@
       "pics-ships-extra": "2018.02.17"
     },
     "versions": {
-      "win32": "0.26.2",
-      "win64": "0.26.2",
+      "win32": "0.29.0",
+      "win64": "0.29.0",
       "osx64": "0.21.6"
     },
     "buildDir": "N:\\nwbuild\\build",
