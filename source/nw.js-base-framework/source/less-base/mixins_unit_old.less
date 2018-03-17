@@ -1,0 +1,163 @@
+// rem & px
+.rem(@prop, @value){
+	@rem:	(@value * @base_multiper);
+	@prop:	~"@{rem}rem";
+}
+
+
+
+
+.border(@size, @rest ...){
+	@rem:	(@size * @base_multiper);
+	border:	~"@{size}px @{rest}";
+	border-width:	~"@{rem}rem";
+}
+.border-top(@size, @rest ...){
+	@rem:	(@size * @base_multiper);
+	border-top:	~"@{size}px @{rest}";
+	border-top-width:	~"@{rem}rem";
+}
+.border-right(@size, @rest ...){
+	@rem:	(@size * @base_multiper);
+	border-right:	~"@{size}px @{rest}";
+	border-right-width:	~"@{rem}rem";
+}
+.border-bottom(@size, @rest ...){
+	@rem:	(@size * @base_multiper);
+	border-bottom:	~"@{size}px @{rest}";
+	border-bottom-width:	~"@{rem}rem";
+}
+.border-left(@size, @rest ...){
+	@rem:	(@size * @base_multiper);
+	border-left:	~"@{size}px @{rest}";
+	border-left-width:	~"@{rem}rem";
+}
+
+
+
+
+.border-radius(@size){
+	@rem:	(@size * @base_multiper);
+	border-radius:	~"@{rem}rem";
+}
+
+
+
+.outline(@size, @rest ...){
+	@rem:	(@size * @base_multiper);
+	outline:	~"@{size}px @{rest}";
+	outline-width:	~"@{rem}rem";
+}
+
+
+
+
+
+.margin(@size1, @size2){
+	@rem1:	(@size1 * @base_multiper);
+	@rem2:	(@size2 * @base_multiper);
+	margin:	~"@{size1}px @{size2}px";
+	margin:	~"@{rem1}rem @{rem2}rem";
+}
+.margin(@size1, @size2, @size3){
+	@rem1:	(@size1 * @base_multiper);
+	@rem2:	(@size2 * @base_multiper);
+	@rem3:	(@size3 * @base_multiper);
+	margin:	~"@{size1}px @{size2}px @{size3}px";
+	margin:	~"@{rem1}rem @{rem2}rem @{rem3}rem";
+}
+.margin(@size1, @size2, @size3, @size4){
+	@rem1:	(@size1 * @base_multiper);
+	@rem2:	(@size2 * @base_multiper);
+	@rem3:	(@size3 * @base_multiper);
+	@rem4:	(@size4 * @base_multiper);
+	margin:	~"@{size1}px @{size2}px @{size3}px @{size4}px";
+	margin:	~"@{rem1}rem @{rem2}rem @{rem3}rem @{rem4}rem";
+}
+
+
+
+
+.padding(@size1, @size2){
+	@rem1:	(@size1 * @base_multiper);
+	@rem2:	(@size2 * @base_multiper);
+	padding:	~"@{size1}px @{size2}px";
+	padding:	~"@{rem1}rem @{rem2}rem";
+}
+.padding(@size1, @size2, @size3){
+	@rem1:	(@size1 * @base_multiper);
+	@rem2:	(@size2 * @base_multiper);
+	@rem3:	(@size3 * @base_multiper);
+	padding:	~"@{size1}px @{size2}px @{size3}px";
+	padding:	~"@{rem1}rem @{rem2}rem @{rem3}rem";
+}
+.padding(@size1, @size2, @size3, @size4){
+	@rem1:	(@size1 * @base_multiper);
+	@rem2:	(@size2 * @base_multiper);
+	@rem3:	(@size3 * @base_multiper);
+	@rem4:	(@size4 * @base_multiper);
+	padding:	~"@{size1}px @{size2}px @{size3}px @{size4}px";
+	padding:	~"@{rem1}rem @{rem2}rem @{rem3}rem @{rem4}rem";
+}
+
+
+
+
+.rem(border-width,@value){				@rem:(@value * @base_multiper);border-width:~"@{size}px";border-width:~"@{rem}rem";}
+	.border-width(@size:10){			.rem(border-width,@size);}
+.rem(border-top-width,@value){			@rem:(@value * @base_multiper);border-top-width:~"@{size}px";border-top-width:~"@{rem}rem";}
+	.border-top-width(@size:10){		.rem(border-top-width,@size);}
+.rem(border-right-width,@value){		@rem:(@value * @base_multiper);border-right-width:~"@{size}px";border-right-width:~"@{rem}rem";}
+	.border-right-width(@size:10){		.rem(border-right-width,@size);}
+.rem(border-bottom-width,@value){		@rem:(@value * @base_multiper);border-bottom-width:~"@{size}px";border-bottom-width:~"@{rem}rem";}
+	.border-bottom-width(@size:10){		.rem(border-bottom-width,@size);}
+.rem(border-left-width,@value){			@rem:(@value * @base_multiper);border-left-width:~"@{size}px";border-left-width:~"@{rem}rem";}
+	.border-left-width(@size:10){		.rem(border-left-width,@size);}
+.rem(outline-width,@value){				@rem:(@value * @base_multiper);outline-width:~"@{size}px";outline-width:~"@{rem}rem";}
+	.outline-width(@size:10){			.rem(outline-width,@size);}
+.rem(width,@value){						@rem:(@value * @base_multiper);width:~"@{value}px";width:~"@{rem}rem";}
+	.width(@size:10){					.rem(width,@size);}
+.rem(height,@value){					@rem:(@value * @base_multiper);height:~"@{value}px";height:~"@{rem}rem";}
+	.height(@size:10){					.rem(height,@size);}
+.rem(min-width,@value){					@rem:(@value * @base_multiper);min-width:~"@{value}px";min-width:~"@{rem}rem";}
+	.min-width(@size:10){				.rem(min-width,@size);}
+.rem(min-height,@value){				@rem:(@value * @base_multiper);min-height:~"@{value}px";min-height:~"@{rem}rem";}
+	.min-height(@size:10){				.rem(min-height,@size);}
+.rem(max-width,@value){					@rem:(@value * @base_multiper);max-width:~"@{value}px";max-width:~"@{rem}rem";}
+	.max-width(@size:10){				.rem(max-width,@size);}
+.rem(max-height,@value){				@rem:(@value * @base_multiper);max-height:~"@{value}px";max-height:~"@{rem}rem";}
+	.max-height(@size:10){				.rem(max-height,@size);}
+.rem(font-size,@value){					@rem:(@value * @base_multiper);font-size:~"@{value}px";font-size:~"@{rem}rem";}
+	.font-size( @size:10){				.rem(font-size,@size);}
+.rem(margin,@value){					@rem:(@value * @base_multiper);margin:~"@{value}px";margin:~"@{rem}rem";}
+	.margin(@size:10){					.rem(margin,@size);}
+.rem(margin-top,@value){				@rem:(@value * @base_multiper);margin-top:~"@{value}px";margin-top:~"@{rem}rem";}
+	.margin-top(@size:10){				.rem(margin-top,@size);}
+.rem(margin-right,@value){				@rem:(@value * @base_multiper);margin-right:~"@{value}px";margin-right:~"@{rem}rem";}
+	.margin-right(@size:10){			.rem(margin-right,@size);}
+.rem(margin-bottom,@value){				@rem:(@value * @base_multiper);margin-bottom:~"@{value}px";margin-bottom:~"@{rem}rem";}
+	.margin-bottom(@size:10){			.rem(margin-bottom,@size);}
+.rem(margin-left,@value){				@rem:(@value * @base_multiper);margin-left:~"@{value}px";margin-left:~"@{rem}rem";}
+	.margin-left(@size:10){				.rem(margin-left,@size);}
+.rem(padding,@value){					@rem:(@value * @base_multiper);padding:~"@{value}px";padding:~"@{rem}rem";}
+	.padding(@size:10){					.rem(padding, @size);}
+.rem(padding-top,@value){				@rem:(@value * @base_multiper);padding-top:~"@{value}px";padding-top:~"@{rem}rem";}
+	.padding-top(@size:10){				.rem(padding-top,@size);}
+.rem(padding-right,@value){				@rem:(@value * @base_multiper);padding-right:~"@{value}px";padding-right:~"@{rem}rem";}
+	.padding-right(@size:10){			.rem(padding-right,@size);}
+.rem(padding-bottom,@value){			@rem:(@value * @base_multiper);padding-bottom:~"@{value}px";padding-bottom:~"@{rem}rem";}
+	.padding-bottom(@size:10){			.rem(padding-bottom,@size);}
+.rem(padding-left,@value){				@rem:(@value * @base_multiper);padding-left:~"@{value}px";padding-left:~"@{rem}rem";}
+	.padding-left(@size:10){			.rem(padding-left,@size);}
+.rem(top,@value){						@rem:(@value * @base_multiper);top:~"@{value}px";top:~"@{rem}rem";}
+	.top(@size:10){						.rem(top, @size);}
+.rem(right,@value){						@rem:(@value * @base_multiper);right:~"@{value}px";right:~"@{rem}rem";}
+	.right(@size:10){					.rem(right, @size);}
+.rem(bottom,@value){					@rem:(@value * @base_multiper);bottom:~"@{value}px";bottom:~"@{rem}rem";}
+	.bottom(@size:10){					.rem(bottom, @size);}
+.rem(left,@value){						@rem:(@value * @base_multiper);left:~"@{value}px";left:~"@{rem}rem";}
+	.left(@size:10){					.rem(left, @size);}
+.rem(line-height,@value){				@rem:(@value * @base_multiper);line-height:~"@{value}px";line-height:~"@{rem}rem";}
+	.line-height(@size:10){				.rem(line-height, @size);}
+.rem(text-indent,@value){				@rem:(@value * @base_multiper);text-indent:~"@{value}px";text-indent:~"@{rem}rem";}
+	.text-indent(@size:10){				.rem(text-indent, @size);}
