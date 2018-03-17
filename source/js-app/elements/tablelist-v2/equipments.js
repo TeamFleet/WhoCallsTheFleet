@@ -119,6 +119,14 @@ class TablelistEquipments extends Tablelist {
             let scrollTop = title[0].offsetTop
             if (scrollTop) scrollTop -= 32
             this.dom.tbody.scrollTop(scrollTop || 0)
+            setTimeout(() => {
+                if (!this.dom.tbody.attr('scrollbody') ||
+                    this.dom.tbody.attr('scrollbody') < 10
+                ) {
+                    this.dom.tbody.scrollTop(scrollTop || 0)
+                    this.dom.tbody.attr('scrollbody', scrollTop || 0)
+                }
+            }, 100)
             return
         }
 
