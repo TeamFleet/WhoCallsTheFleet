@@ -132,7 +132,7 @@
 {"ships":[{"id":76,"next_lvl":25,"illust_extra":[4]},{"id":281,"next_lvl":75,"illust_extra":[""]},{"id":157,"next_lvl":"","illust_extra":[5,95]}],"id":117,"_id":"aIH5xROvUOXWiSF4"}
 {"ships":[{"id":540,"next_lvl":47,"illust_extra":[265,270]},{"id":386,"next_lvl":"","illust_extra":[""],"illust_delete":"on"}],"id":207,"_id":"aMGuDd0VYTuy1KTc"}
 {"ships":[{"id":331,"next_lvl":50,"next_blueprint":"on","illust_extra":[80,154]},{"id":429,"next_lvl":"","illust_extra":[80,154,35]}],"id":137,"_id":"aYd1TnxElzulo9mr"}
-{"ships":[{"id":170,"next_lvl":30,"illust_extra":[15,41]},{"id":312,"next_lvl":"","illust_delete":"on","illust_extra":[""]}],"id":55,"_id":"aiRtZrzkfPKojjOQ"}
+{"ships":[{"id":170,"next_lvl":30,"illust_extra":[15,41]},{"id":312,"next_lvl":67,"illust_delete":"on","illust_extra":[""]},{"id":558,"next_lvl":"","illust_extra":[15,41]}],"id":55,"_id":"aiRtZrzkfPKojjOQ"}
 {"ships":[{"id":422,"next_lvl":40,"illust_extra":[""]},{"id":346,"next_lvl":"","illust_delete":"on","illust_extra":[""]}],"id":163,"_id":"b5NUMt6YlD052yIv"}
 {"ships":[{"id":128,"next_lvl":50,"illust_extra":[262]},{"id":400,"next_lvl":"","illust_delete":"on","illust_extra":[""]}],"id":124,"_id":"bIivle3Bhg4bvLXR"}
 {"ships":[{"id":47,"next_lvl":20,"illust_extra":[""]},{"id":247,"next_lvl":"","illust_delete":"on","illust_extra":[""]}],"id":37,"_id":"c267GzxtIIaIB1Gz"}
@@ -151,7 +151,7 @@
 {"ships":[{"id":103,"next_lvl":10,"illust_extra":[49,110]},{"id":105,"next_lvl":12,"illust_extra":[49,110]},{"id":107,"next_lvl":15,"illust_extra":[49,110]},{"id":109,"next_lvl":35,"illust_extra":[49,110]},{"id":292,"next_lvl":50,"illust_delete":"on","illust_extra":[""]},{"id":297,"next_lvl":"","illust_extra":[49,110]}],"id":115,"_id":"ekSLz79MZBl1XrT2"}
 {"ships":[{"id":190,"next_lvl":20,"illust_extra":[66]},{"id":300,"next_lvl":"","illust_delete":"on","illust_extra":[""]}],"id":49,"_id":"ezmtADzLH50QmYXz"}
 {"ships":[{"id":184,"next_lvl":25,"next_blueprint":"on","illust_extra":[77,122,152]},{"id":185,"next_lvl":50,"illust_extra":[77,123,153]},{"id":318,"next_lvl":"","illust_extra":[77,123,153]}],"id":116,"_id":"fCSwkTsX2OpyElsA"}
-{"ships":[{"id":93,"next_lvl":20,"illust_extra":[23,38,117,181]},{"id":230,"next_lvl":"","illust_extra":[23,38,157,181]}],"id":19,"_id":"fGwLa7FxmRPvCHid"}
+{"ships":[{"id":93,"next_lvl":20,"illust_extra":[23,38,117,181,314]},{"id":230,"next_lvl":"","illust_extra":[23,38,157,181,314]}],"id":19,"_id":"fGwLa7FxmRPvCHid"}
 {"ships":[{"id":153,"next_lvl":40,"illust_extra":[""]},{"id":156,"next_lvl":"","illust_extra":[""]}],"id":138,"_id":"fI2zkdQlxK7gQuxm"}
 {"ships":[{"id":2,"next_lvl":20,"illust_extra":[17,275]},{"id":255,"illust_delete":"on","next_lvl":65,"illust_extra":[""]},{"id":435,"next_lvl":"","illust_extra":[17,275]}],"id":2,"_id":"fLcFtYD40PcMw8Wk"}
 {"ships":[{"id":442,"next_lvl":35,"illust_extra":[60,137],"next_blueprint":"on"},{"id":447,"next_lvl":"","illust_extra":[60,137]}],"id":155,"_id":"fs3Z4UyE5XbteyQw"}
@@ -160,7 +160,7 @@
 {"ships":[{"id":409,"next_lvl":30,"illust_extra":[102,298]},{"id":324,"next_lvl":"","illust_delete":"on","illust_extra":[""]}],"id":64,"_id":"goJjCO1ES33oggu4"}
 {"ships":[{"id":6,"next_lvl":20,"illust_extra":[257]},{"id":258,"illust_delete":"on","next_lvl":"","illust_extra":[""]}],"id":3,"_id":"hZNLnE6sTh1Lv49I"}
 {"ships":[{"id":26,"next_lvl":20,"illust_extra":[81,112,143,191,206]},{"id":286,"next_lvl":80,"next_blueprint":"on","illust_extra":[81,112,143,191,206]},{"id":411,"next_lvl":"","illust_extra":[81,112,143,203,206]}],"id":144,"_id":"hkAd6wRTQmilIUja"}
-{"ships":[{"id":167,"next_lvl":45,"illust_extra":[57]},{"id":320,"next_lvl":"","illust_extra":[58]}],"id":54,"_id":"hoL00sF6XgJJ1ACO"}
+{"ships":[{"id":167,"next_lvl":45,"illust_extra":[57]},{"id":320,"next_lvl":68,"illust_extra":[58]},{"id":557,"next_lvl":"","illust_extra":[58]}],"id":54,"_id":"hoL00sF6XgJJ1ACO"}
 {"ships":[{"id":68,"next_lvl":18,"illust_extra":[""]},{"id":271,"next_lvl":75,"illust_delete":"on","illust_extra":[""]},{"id":428,"next_lvl":"","illust_extra":[""]}],"id":104,"_id":"hw2WkwVIljyyEeel"}
 {"ships":[{"id":163,"next_lvl":20,"illust_extra":[159]},{"id":402,"next_lvl":"","illust_delete":"on","illust_extra":[""]}],"id":128,"_id":"iAWIErlduwmhCWdQ"}
 {"ships":[{"id":34,"next_lvl":20,"illust_extra":""},{"id":234,"next_lvl":70,"illust_delete":"on","illust_extra":[""]},{"id":437,"next_lvl":"","illust_extra":[""]}],"id":23,"_id":"iS7IRp7waZC6xG4x"}

@@ -1,6 +1,6 @@
 {"name":{"ja_jp":"炒飯","zh_cn":"炒饭","en_us":"Fried Rice"},"id":27,"sort":33,"_id":"0mDjign24TBTTV4y"}
 {"name":{"zh_cn":"梅雨","ja_jp":"梅雨","en_us":"Rainy Season"},"time":{"zh_cn":"6月初","en_us":"Early June","ja_jp":"6月上旬"},"id":6,"sort":7,"_id":"10gvzkKBaCcHiMci"}
-{"name":{"ja_jp":"スリガオ海峡突入","zh_cn":"突入苏里高海峡","en_us":"Assaulting Surigao Strait"},"id":33,"sort":37,"_id":"1lyxD4ztIvRBxLZi"}
+{"name":{"ja_jp":"スリガオ海峡突入","zh_cn":"突入苏里高海峡","en_us":"Assaulting Surigao Strait"},"id":33,"sort":38,"_id":"1lyxD4ztIvRBxLZi"}
 {"name":{"ja_jp":"冬服","zh_cn":"冬装","en_us":"冬服"},"time":{"ja_jp":"冬","zh_cn":"冬季","en_us":"Winter"},"id":40,"sort":21,"_id":"242dvrkXujChQKVy"}
 {"name":{"zh_cn":"秋","ja_jp":"秋","en_us":"Fall"},"time":{"en_us":"Fall","zh_cn":"秋季","ja_jp":"秋"},"id":15,"sort":15,"_id":"2QAOagqazMCtILL4"}
 {"name":{"zh_cn":"秋刀鱼祭","ja_jp":"秋刀魚祭り","en_us":"Mackerel"},"time":{"zh_cn":"10月中","ja_jp":"10月中旬","en_us":"Mid October"},"id":9,"sort":17,"_id":"4VfMus4ANwRfYWOO"}
@@ -9,31 +9,32 @@
 {"name":{"zh_cn":"圣诞节","ja_jp":"クリスマス","en_us":"Christmas"},"time":{"zh_cn":"12月","ja_jp":"12月","en_us":"December"},"id":11,"sort":20,"_id":"7So2Wp0yj49sGhJS"}
 {"name":{"zh_cn":"铁骨番长","ja_jp":"鉄骨番長","en_us":"Tekkotsu Bancho"},"id":14,"sort":28,"_id":"AmzvCwpXV7MoQ7Nt"}
 {"name":{"ja_jp":"晴れ着","en_us":"晴れ着","zh_cn":"华服"},"time":{"ja_jp":"1月初旬","zh_cn":"1月初","en_us":"Early January"},"id":38,"sort":2,"_id":"BYwJNu1xpz8ryA4j"}
-{"name":{"ja_jp":"売り子","zh_cn":"贩卖","en_us":"売り子"},"id":36,"sort":35,"_id":"EzXm0D7gmzu2pW2H"}
+{"name":{"ja_jp":"売り子","zh_cn":"贩卖","en_us":"売り子"},"id":36,"sort":36,"_id":"EzXm0D7gmzu2pW2H"}
 {"name":{"ja_jp":"打ち上げ","en_us":"打ち上げ","zh_cn":"庆功"},"time":{"ja_jp":"冬","zh_cn":"冬季","en_us":"Winter"},"id":39,"sort":24,"_id":"F6CDXnPazP2kLG5o"}
 {"name":{"zh_cn":"周年庆","ja_jp":"周年記念","en_us":"Anniversary"},"time":{"zh_cn":"4月底","ja_jp":"4月下旬","en_us":"Late April"},"id":5,"sort":6,"_id":"FFm1GR7jpxi6IGqj"}
 {"name":{"ja_jp":"年末年始","en_us":"年末年始","zh_cn":"年末年始"},"time":{"ja_jp":"12月下旬","zh_cn":"12月底","en_us":"Late December"},"id":37,"sort":26,"_id":"GL7HEFuIChUyxUBV"}
-{"name":{"zh_cn":"废弃","en_us":"Scrapped","ja_jp":"スクラップ"},"id":26,"sort":39,"_id":"Gf3nRZ1WSqrazYl7"}
+{"name":{"zh_cn":"废弃","en_us":"Scrapped","ja_jp":"スクラップ"},"id":26,"sort":40,"_id":"Gf3nRZ1WSqrazYl7"}
 {"name":{"zh_cn":"泳装","ja_jp":"水着","en_us":"Swimsuit"},"time":{"ja_jp":"夏","zh_cn":"夏季","en_us":"Summer"},"id":7,"sort":8,"_id":"HJFFplD8oeE9lcvX"}
 {"name":{"ja_jp":"修羅場","zh_cn":"修罗场","en_us":"修羅場"},"time":{"ja_jp":"冬","zh_cn":"冬季","en_us":"Winter"},"id":34,"sort":22,"_id":"KSHojddhwuqrxEM8"}
 {"name":{"ja_jp":"F作業","zh_cn":"F作业","en_us":"F Operation"},"id":31,"sort":18,"_id":"OSuQk4ay2HWBQTww","time":{"en_us":"Mid October","zh_cn":"10月中","ja_jp":"10月中旬"}}
 {"name":{"zh_cn":"万圣节","ja_jp":"ハロウィン","en_us":"Halloween"},"time":{"zh_cn":"10月底","ja_jp":"10月下旬","en_us":"Late October"},"id":10,"sort":19,"_id":"VIM2tUXG1svUjmC0"}
-{"name":{"zh_cn":"恩加诺角决战","ja_jp":"エンガノ岬決戦","en_us":"エンガノ岬決戦"},"id":41,"sort":38,"_id":"X3uQXBz5ucwtP12l"}
+{"name":{"zh_cn":"恩加诺角决战","ja_jp":"エンガノ岬決戦","en_us":"エンガノ岬決戦"},"id":41,"sort":39,"_id":"X3uQXBz5ucwtP12l"}
 {"name":{"zh_cn":"扫除","ja_jp":"師走","en_us":"End of Year"},"time":{"zh_cn":"12月底","ja_jp":"12月下旬","en_us":"Late December"},"id":12,"sort":25,"_id":"YCDJMF4qtbzyYQwE"}
-{"name":{"ja_jp":"コラボ：携帯","zh_cn":"联动：手机版","en_us":"Collab: Mobile Version"},"id":17,"sort":41,"_id":"ZAXCn0NSBRjwuR4u"}
+{"name":{"ja_jp":"コラボ：携帯","zh_cn":"联动：手机版","en_us":"Collab: Mobile Version"},"id":17,"sort":42,"_id":"ZAXCn0NSBRjwuR4u"}
 {"name":{"zh_cn":"浴衣","ja_jp":"浴衣","en_us":"Yukata"},"time":{"ja_jp":"秋","zh_cn":"秋季","en_us":"Fall"},"id":8,"sort":12,"_id":"a5JawyvdLJi9jiHS"}
 {"name":{"zh_cn":"雏祭","ja_jp":"雛祭り","en_us":"Hinamatsuri"},"time":{"zh_cn":"2月底","en_us":"Late February","ja_jp":"2月下旬"},"id":4,"sort":5,"_id":"bb0s4wd7K9MerdG9"}
 {"name":{"ja_jp":"親子丼","zh_cn":"滑蛋鸡肉饭","en_us":"Oyakodon"},"id":21,"sort":31,"_id":"dUKtcZ80fbmVuGwh"}
 {"name":{"ja_jp":"牛丼","zh_cn":"牛肉饭","en_us":"Gyūdon"},"id":20,"sort":29,"_id":"fDiqqjrXvbNyK1RY"}
-{"name":{"ja_jp":"コラボ：三越","zh_cn":"联动：三越","en_us":"Collab: Mitsukoshi"},"id":25,"sort":40,"_id":"fjB8kfsg1UdPAe88"}
+{"name":{"ja_jp":"コラボ：三越","zh_cn":"联动：三越","en_us":"Collab: Mitsukoshi"},"id":25,"sort":41,"_id":"fjB8kfsg1UdPAe88"}
 {"name":{"zh_cn":"新年","ja_jp":"晴れ着","en_us":"New Year"},"id":1,"sort":1,"_id":"h4W4t1pX1cHTCHVM","time":{"ja_jp":"1月初旬","zh_cn":"1月初","en_us":"Early January"}}
+{"name":{"ja_jp":"お出掛け","en_us":"お出掛け","zh_cn":"外出"},"id":42,"sort":35,"_id":"hKRqlwoDPrhmHSvE"}
 {"name":{"ja_jp":"里帰り水着","zh_cn":"回家泳装","en_us":"Special Swimsuit"},"time":{"ja_jp":"夏","zh_cn":"夏季","en_us":"Summer"},"id":29,"sort":9,"_id":"hntC1taJeYHoFvfq"}
 {"name":{"ja_jp":"秋の私服","zh_cn":"秋季私服","en_us":"Fall-ordinary"},"time":{"en_us":"Fall","zh_cn":"秋季","ja_jp":"秋"},"id":32,"sort":14,"_id":"j40ayL75UKWzq2xz"}
 {"name":{"zh_cn":"节分","ja_jp":"節分","en_us":"Setsubun"},"id":2,"sort":3,"_id":"nHBvEj55KP4Z2zFt","time":{"ja_jp":"1月中旬","zh_cn":"1月中","en_us":"Mid January"}}
 {"name":{"ja_jp":"超修羅場","en_us":"超修羅場","zh_cn":"超修罗场"},"time":{"ja_jp":"冬","zh_cn":"冬季","en_us":"Winter"},"id":35,"sort":23,"_id":"nTVWHXEJoHQp72nP"}
 {"name":{"zh_cn":"瑞云祭","ja_jp":"瑞雲祭り","en_us":"Zuiun Fes."},"id":13,"sort":27,"_id":"nfmzGAUlHjVUQUKT"}
 {"name":{"ja_jp":"秋祭り法被","en_us":"Fall Festival Happi","zh_cn":"秋祭法被"},"time":{"ja_jp":"秋","zh_cn":"秋季","en_us":"Fall"},"id":19,"sort":13,"_id":"pavEJmEeCH9YVx1d"}
-{"name":{"ja_jp":"観艦式","zh_cn":"观舰式","en_us":"Naval Review Rehearsals"},"id":30,"sort":36,"_id":"q9Y2IqNebzgugTju"}
+{"name":{"ja_jp":"観艦式","zh_cn":"观舰式","en_us":"Naval Review Rehearsals"},"id":30,"sort":37,"_id":"q9Y2IqNebzgugTju"}
 {"name":{"ja_jp":"カツ丼","zh_cn":"猪排饭","en_us":"Katsudon"},"id":22,"sort":30,"_id":"s7PbIxOqIs3ngU7n"}
 {"name":{"ja_jp":"オクトーバーフェスト","zh_cn":"慕尼黑啤酒节","en_us":"Oktoberfest"},"time":{"zh_cn":"9月底","en_us":"Late September","ja_jp":"9月下旬"},"id":16,"sort":16,"_id":"sxDHtoUVG1NI3wij"}
 {"name":{"ja_jp":"うどん","zh_cn":"乌冬面","en_us":"Udon"},"id":23,"sort":32,"_id":"umln77veQ7zvyheY"}
