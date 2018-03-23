@@ -1,14 +1,14 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.26.4.0",
-			"path":		"data/2018.03.11/app.nwjs-data",
-			"bytes":	4438478
+			"version":	"0.26.5.0",
+			"path":		"data/2018.03.24/app.nwjs-data",
+			"bytes":	4438695
 		},
 		"app-db": {
-			"version":	"2018.03.10",
-			"path":		"data/2018.03.11/app-db.nwjs-data",
-			"bytes":	1314755
+			"version":	"2018.03.24",
+			"path":		"data/2018.03.24/app-db.nwjs-data",
+			"bytes":	1315915
 		},
 		"bgimgs": {
 			"version":	"1.18.6.0",
@@ -26,19 +26,19 @@
 			"bytes":	1013662
 		},
 		"pics-ships": {
-			"version":	"2018.02.25",
-			"path":		"data/2018.02.25/pics-ships.nwjs-data",
-			"bytes":	45847188
+			"version":	"2018.03.24",
+			"path":		"data/2018.03.24/pics-ships.nwjs-data",
+			"bytes":	46086254
 		},
 		"pics-ships-extra": {
-			"version":	"2018.02.17",
-			"path":		"data/2018.02.17/pics-ships-extra.nwjs-data",
-			"bytes":	29140189
+			"version":	"2018.03.24",
+			"path":		"data/2018.03.24/pics-ships-extra.nwjs-data",
+			"bytes":	29207852
 		}
 	},
 
 	"packages-beta": {},
-	"core":  "0.21.6",
+	"core": "0.21.6",
 	"homepage": "http://fleet.moe/",
 	"release-notes": "https://github.com/Diablohu/WhoCallsTheFleet/releases",
 	"forum": "http://bbs.ngacn.cc/read.php?tid=7959995"
