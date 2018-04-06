@@ -3087,7 +3087,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
     location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20180310';
+_g.db_version = '20180407';
 
 _g.bgimg_count=26;
 
