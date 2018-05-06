@@ -45,7 +45,7 @@
 {"ship_type_id":12,"id":77,"_id":"QDw2yfrIJfDl63rN","speed_rule":"low-2","name":{"en_us":"Mizuho","ja_jp":"瑞穂","zh_cn":"瑞穗"}}
 {"name":{"ja_jp":"日振","zh_cn":"日振"},"ship_type_id":31,"id":108,"_id":"R6kZbfO5AV9sBWlt"}
 {"name":{"ja_jp":"Ташкент","zh_cn":"塔什干","en_us":"Tashkent"},"ship_type_id":1,"id":109,"_id":"SVaLWZ2Um7C9td4c","navy":"vmf","speed_rule":"high-1"}
-{"ship_type_id":10,"id":91,"_id":"T5TIzP4V1vYfSz1u","name":{"en_us":"Aquila","ja_jp":"Aquila","zh_cn":"鹫座"},"navy":"rm"}
+{"ship_type_id":10,"id":91,"_id":"T5TIzP4V1vYfSz1u","name":{"en_us":"Aquila","ja_jp":"Aquila","zh_cn":"天鹰"},"navy":"rm"}
 {"ship_type_id":31,"id":92,"_id":"TGSlMB6OBuVzahFV","name":{"en_us":"Shimushu","ja_jp":"占守","zh_cn":"占守"}}
 {"ship_type_id":14,"id":66,"_id":"TkXaOcPURNWGeKqT","speed_rule":"low-3","name":{"en_us":"Junsen Type B","ja_jp":"巡潜乙","zh_cn":"巡潜乙"}}
 {"ship_type_id":4,"id":81,"_id":"TqvaW6jEdVptFohN","speed_rule":"high-3","name":{"en_us":"Zara","ja_jp":"Zara","zh_cn":"扎拉"},"navy":"rm"}
