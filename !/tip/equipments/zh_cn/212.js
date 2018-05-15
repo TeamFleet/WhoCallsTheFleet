@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",212,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/9.png)\"></s><strong>彩云<small>(东卡罗琳空)</small></strong><small>舰载侦察机</small></h3><span>+1 火力</span><span>+2 命中</span><span>+10 索敌</span><span>航程: 8</span>")
+KCTip.loaded("equipments",212,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/9.png)\"></s><strong>彩云<small>(东加罗林空)</small></strong><small>舰载侦察机</small></h3><span>+1 火力</span><span>+2 命中</span><span>+10 索敌</span><span>航程: 8</span>")

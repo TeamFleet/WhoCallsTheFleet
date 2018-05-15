@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",288,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/17.png)\"></s><strong>试制15cm9连装对潜喷进炮</strong><small>爆雷</small></h3><span>+15 对潜</span><span>+1 命中</span>")

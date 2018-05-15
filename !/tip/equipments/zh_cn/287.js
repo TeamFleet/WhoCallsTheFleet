@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",287,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/17.png)\"></s><strong>三式爆雷投射机 集中配备</strong><small>爆雷</small></h3><span>+12 对潜</span>")
