@@ -9910,6 +9910,8 @@ TablelistShips.prototype.append_all_items = function () {
 };
 
 TablelistShips.prototype.init_new = function () {
+    if (!this || !this.dom) return;
+
     this.dom.filter_container = $('<div class="options"/>').appendTo(this.dom.container);
     this.dom.filters = $('<div class="filters"/>').appendTo(this.dom.filter_container);
     this.dom.exit_compare = $('<div class="exit_compare"/>').append($('<button icon="arrow-set2-left"/>').html('结束对比').on('click', function () {

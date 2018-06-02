@@ -316,6 +316,8 @@ TablelistShips.prototype.append_all_items = () => {
 	
 	
 TablelistShips.prototype.init_new = function(){
+	if (!this || !this.dom) return
+
 	// 生成过滤器与选项
 		this.dom.filter_container = $('<div class="options"/>').appendTo( this.dom.container )
 		this.dom.filters = $('<div class="filters"/>').appendTo( this.dom.filter_container )

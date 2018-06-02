@@ -34,6 +34,9 @@ const babel = rootRequire('gulp-babel');
 const rename = rootRequire('gulp-rename');
 const notify = rootRequire("gulp-notify");
 const watchLess = rootRequire('gulp-watch-less2');
+const browserify = require('browserify')
+const source = require('vinyl-source-stream')
+const buffer = require('vinyl-buffer')
 
 function parseKoalaJS() {
     let filename = Array.prototype.pop.call(arguments);
@@ -54,7 +57,7 @@ function parseKoalaJS() {
 gulp.task('js-base', function () {
     return gulp.src(parseKoalaJS(rootSource, 'js-base.js'))
         .pipe(concat('js-base.js'))
-        .pipe(uglify())
+        // .pipe(uglify())
         // .pipe(babel({
         //     'highlightCode': false,
         //     'comments': false,
@@ -75,7 +78,10 @@ gulp.task('js-base', function () {
 });
 
 gulp.task('js-app', function () {
-    return gulp.src(parseKoalaJS(rootSource, 'js-app.js'))
+    return gulp.src(
+        parseKoalaJS(rootSource, 'js-app.js')
+            .concat(path.resolve(__dirname, '../source/js-app/.base/**/*.js'))
+    )
         .pipe(concat('js-app.js'))
         .pipe(babel({
             'highlightCode': false,
@@ -102,7 +108,10 @@ gulp.task('js-output', function () {
 });
 
 gulp.task('Web-js', function () {
-    return gulp.src(parseKoalaJS(rootOutput, 'assets-source', 'js.js'))
+    return gulp.src(
+        parseKoalaJS(rootOutput, 'assets-source', 'js.js')
+            .concat(path.resolve(__dirname, '../source/js-app/.base/**/*.js'))
+    )
         .pipe(concat('js.js'))
         .pipe(babel({
             'highlightCode': false,

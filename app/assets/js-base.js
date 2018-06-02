@@ -1,1 +1,10196 @@
-function _b(e){return _support.check(e)}function addHandler(e,t,n){if(void 0!==e.addEventListener)e.addEventListener(t,n,!1);else{if(void 0===e.attachEvent)throw"Incompatible browser";e.attachEvent("on"+t,n)}}function _possibleConstructorReturn(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}Array.prototype.filter||(Array.prototype.filter=function(e,n){"use strict";if("Function"!=typeof e||!this)throw new TypeError;var r=this.length>>>0,i=new Array(r),o=0,a=-1;if(void 0===n)for(;++a!==r;)if(a in this)if(e(t[a],a,t))i[o++]=t[a];else for(;++a!==r;)a in this&&e.call(n,t[a],a,t)&&(i[o++]=t[a]);return i.length=o,i}),Array.prototype.includes||Object.defineProperty(Array.prototype,"includes",{value:function(e,t){if(null==this)throw new TypeError('"this" is null or not defined');var n=Object(this),r=n.length>>>0;if(0===r)return!1;for(var i=0|t,o=Math.max(i>=0?i:r-Math.abs(i),0);o<r;){if(function(e,t){return e===t||"number"==typeof e&&"number"==typeof t&&isNaN(e)&&isNaN(t)}(n[o],e))return!0;o++}return!1}}),function(e,t){"object"==typeof module&&"object"==typeof module.exports?module.exports=e.document?t(e,!0):function(e){if(!e.document)throw new Error("jQuery requires a window with a document");return t(e)}:t(e)}("undefined"!=typeof window?window:this,function(e,t){function n(e){var t=e.length,n=Q.type(e);return"function"!==n&&!Q.isWindow(e)&&(!(1!==e.nodeType||!t)||("array"===n||0===t||"number"==typeof t&&t>0&&t-1 in e))}function r(e,t,n){if(Q.isFunction(t))return Q.grep(e,function(e,r){return!!t.call(e,r,e)!==n});if(t.nodeType)return Q.grep(e,function(e){return e===t!==n});if("string"==typeof t){if(ae.test(t))return Q.filter(t,e,n);t=Q.filter(t,e)}return Q.grep(e,function(e){return X.call(t,e)>=0!==n})}function i(e,t){for(;(e=e[t])&&1!==e.nodeType;);return e}function o(e){var t=fe[e]={};return Q.each(e.match(de)||[],function(e,n){t[n]=!0}),t}function a(){G.removeEventListener("DOMContentLoaded",a,!1),e.removeEventListener("load",a,!1),Q.ready()}function s(){Object.defineProperty(this.cache={},0,{get:function(){return{}}}),this.expando=Q.expando+s.uid++}function u(e,t,n){var r;if(void 0===n&&1===e.nodeType)if(r="data-"+t.replace(ye,"-$1").toLowerCase(),"string"==typeof(n=e.getAttribute(r))){try{n="true"===n||"false"!==n&&("null"===n?null:+n+""===n?+n:ve.test(n)?Q.parseJSON(n):n)}catch(e){}ge.set(e,t,n)}else n=void 0;return n}function c(){return!0}function l(){return!1}function d(){try{return G.activeElement}catch(e){}}function f(e,t){return Q.nodeName(e,"table")&&Q.nodeName(11!==t.nodeType?t:t.firstChild,"tr")?e.getElementsByTagName("tbody")[0]||e.appendChild(e.ownerDocument.createElement("tbody")):e}function h(e){return e.type=(null!==e.getAttribute("type"))+"/"+e.type,e}function p(e){var t=Le.exec(e.type);return t?e.type=t[1]:e.removeAttribute("type"),e}function m(e,t){for(var n=0,r=e.length;r>n;n++)me.set(e[n],"globalEval",!t||me.get(t[n],"globalEval"))}function g(e,t){var n,r,i,o,a,s,u,c;if(1===t.nodeType){if(me.hasData(e)&&(o=me.access(e),a=me.set(t,o),c=o.events)){delete a.handle,a.events={};for(i in c)for(n=0,r=c[i].length;r>n;n++)Q.event.add(t,i,c[i][n])}ge.hasData(e)&&(s=ge.access(e),u=Q.extend({},s),ge.set(t,u))}}function v(e,t){var n=e.getElementsByTagName?e.getElementsByTagName(t||"*"):e.querySelectorAll?e.querySelectorAll(t||"*"):[];return void 0===t||t&&Q.nodeName(e,t)?Q.merge([e],n):n}function y(e,t){var n=t.nodeName.toLowerCase();"input"===n&&xe.test(e.type)?t.checked=e.checked:("input"===n||"textarea"===n)&&(t.defaultValue=e.defaultValue)}function b(t,n){var r,i=Q(n.createElement(t)).appendTo(n.body),o=e.getDefaultComputedStyle&&(r=e.getDefaultComputedStyle(i[0]))?r.display:Q.css(i[0],"display");return i.detach(),o}function _(e){var t=G,n=Be[e];return n||("none"!==(n=b(e,t))&&n||(je=(je||Q("<iframe frameborder='0' width='0' height='0'/>")).appendTo(t.documentElement),(t=je[0].contentDocument).write(),t.close(),n=b(e,t),je.detach()),Be[e]=n),n}function w(e,t,n){var r,i,o,a,s=e.style;return(n=n||qe(e))&&(a=n.getPropertyValue(t)||n[t]),n&&(""!==a||Q.contains(e.ownerDocument,e)||(a=Q.style(e,t)),Fe.test(a)&&$e.test(t)&&(r=s.width,i=s.minWidth,o=s.maxWidth,s.minWidth=s.maxWidth=s.width=a,a=n.width,s.width=r,s.minWidth=i,s.maxWidth=o)),void 0!==a?a+"":a}function x(e,t){return{get:function(){return e()?void delete this.get:(this.get=t).apply(this,arguments)}}}function S(e,t){if(t in e)return t;for(var n=t[0].toUpperCase()+t.slice(1),r=t,i=Ye.length;i--;)if((t=Ye[i]+n)in e)return t;return r}function C(e,t,n){var r=He.exec(t);return r?Math.max(0,r[1]-(n||0))+(r[2]||"px"):t}function k(e,t,n,r,i){for(var o=n===(r?"border":"content")?4:"width"===t?1:0,a=0;4>o;o+=2)"margin"===n&&(a+=Q.css(e,n+_e[o],!0,i)),r?("content"===n&&(a-=Q.css(e,"padding"+_e[o],!0,i)),"margin"!==n&&(a-=Q.css(e,"border"+_e[o]+"Width",!0,i))):(a+=Q.css(e,"padding"+_e[o],!0,i),"padding"!==n&&(a+=Q.css(e,"border"+_e[o]+"Width",!0,i)));return a}function T(e,t,n){var r=!0,i="width"===t?e.offsetWidth:e.offsetHeight,o=qe(e),a="border-box"===Q.css(e,"boxSizing",!1,o);if(0>=i||null==i){if((0>(i=w(e,t,o))||null==i)&&(i=e.style[t]),Fe.test(i))return i;r=a&&(V.boxSizingReliable()||i===e.style[t]),i=parseFloat(i)||0}return i+k(e,t,n||(a?"border":"content"),r,o)+"px"}function E(e,t){for(var n,r,i,o=[],a=0,s=e.length;s>a;a++)(r=e[a]).style&&(o[a]=me.get(r,"olddisplay"),n=r.style.display,t?(o[a]||"none"!==n||(r.style.display=""),""===r.style.display&&we(r)&&(o[a]=me.access(r,"olddisplay",_(r.nodeName)))):(i=we(r),"none"===n&&i||me.set(r,"olddisplay",i?n:Q.css(r,"display"))));for(a=0;s>a;a++)(r=e[a]).style&&(t&&"none"!==r.style.display&&""!==r.style.display||(r.style.display=t?o[a]||"":"none"));return e}function A(e,t,n,r,i){return new A.prototype.init(e,t,n,r,i)}function I(){return setTimeout(function(){Ke=void 0}),Ke=Q.now()}function N(e,t){var n,r=0,i={height:e};for(t=t?1:0;4>r;r+=2-t)n=_e[r],i["margin"+n]=i["padding"+n]=e;return t&&(i.opacity=i.width=e),i}function M(e,t,n){for(var r,i=(et[t]||[]).concat(et["*"]),o=0,a=i.length;a>o;o++)if(r=i[o].call(n,t,e))return r}function R(e,t){var n,r,i,o,a;for(n in e)if(r=Q.camelCase(n),i=t[r],o=e[n],Q.isArray(o)&&(i=o[1],o=e[n]=o[0]),n!==r&&(e[r]=o,delete e[n]),(a=Q.cssHooks[r])&&"expand"in a){o=a.expand(o),delete e[r];for(n in o)n in e||(e[n]=o[n],t[n]=i)}else t[r]=i}function O(e,t,n){var r,i,o=0,a=Ze.length,s=Q.Deferred().always(function(){delete u.elem}),u=function(){if(i)return!1;for(var t=Ke||I(),n=Math.max(0,c.startTime+c.duration-t),r=1-(n/c.duration||0),o=0,a=c.tweens.length;a>o;o++)c.tweens[o].run(r);return s.notifyWith(e,[c,r,n]),1>r&&a?n:(s.resolveWith(e,[c]),!1)},c=s.promise({elem:e,props:Q.extend({},t),opts:Q.extend(!0,{specialEasing:{}},n),originalProperties:t,originalOptions:n,startTime:Ke||I(),duration:n.duration,tweens:[],createTween:function(t,n){var r=Q.Tween(e,c.opts,t,n,c.opts.specialEasing[t]||c.opts.easing);return c.tweens.push(r),r},stop:function(t){var n=0,r=t?c.tweens.length:0;if(i)return this;for(i=!0;r>n;n++)c.tweens[n].run(1);return t?s.resolveWith(e,[c,t]):s.rejectWith(e,[c,t]),this}}),l=c.props;for(R(l,c.opts.specialEasing);a>o;o++)if(r=Ze[o].call(c,e,l,c.opts))return r;return Q.map(l,M,c),Q.isFunction(c.opts.start)&&c.opts.start.call(e,c),Q.fx.timer(Q.extend(u,{elem:e,anim:c,queue:c.opts.queue})),c.progress(c.opts.progress).done(c.opts.done,c.opts.complete).fail(c.opts.fail).always(c.opts.always)}function L(e){return function(t,n){"string"!=typeof t&&(n=t,t="*");var r,i=0,o=t.toLowerCase().match(de)||[];if(Q.isFunction(n))for(;r=o[i++];)"+"===r[0]?(r=r.slice(1)||"*",(e[r]=e[r]||[]).unshift(n)):(e[r]=e[r]||[]).push(n)}}function D(e,t,n,r){function i(s){var u;return o[s]=!0,Q.each(e[s]||[],function(e,s){var c=s(t,n,r);return"string"!=typeof c||a||o[c]?a?!(u=c):void 0:(t.dataTypes.unshift(c),i(c),!1)}),u}var o={},a=e===mt;return i(t.dataTypes[0])||!o["*"]&&i("*")}function P(e,t){var n,r,i=Q.ajaxSettings.flatOptions||{};for(n in t)void 0!==t[n]&&((i[n]?e:r||(r={}))[n]=t[n]);return r&&Q.extend(!0,e,r),e}function j(e,t,n){for(var r,i,o,a,s=e.contents,u=e.dataTypes;"*"===u[0];)u.shift(),void 0===r&&(r=e.mimeType||t.getResponseHeader("Content-Type"));if(r)for(i in s)if(s[i]&&s[i].test(r)){u.unshift(i);break}if(u[0]in n)o=u[0];else{for(i in n){if(!u[0]||e.converters[i+" "+u[0]]){o=i;break}a||(a=i)}o=o||a}return o?(o!==u[0]&&u.unshift(o),n[o]):void 0}function B(e,t,n,r){var i,o,a,s,u,c={},l=e.dataTypes.slice();if(l[1])for(a in e.converters)c[a.toLowerCase()]=e.converters[a];for(o=l.shift();o;)if(e.responseFields[o]&&(n[e.responseFields[o]]=t),!u&&r&&e.dataFilter&&(t=e.dataFilter(t,e.dataType)),u=o,o=l.shift())if("*"===o)o=u;else if("*"!==u&&u!==o){if(!(a=c[u+" "+o]||c["* "+o]))for(i in c)if((s=i.split(" "))[1]===o&&(a=c[u+" "+s[0]]||c["* "+s[0]])){!0===a?a=c[i]:!0!==c[i]&&(o=s[0],l.unshift(s[1]));break}if(!0!==a)if(a&&e.throws)t=a(t);else try{t=a(t)}catch(e){return{state:"parsererror",error:a?e:"No conversion from "+u+" to "+o}}}return{state:"success",data:t}}function $(e,t,n,r){var i;if(Q.isArray(t))Q.each(t,function(t,i){n||_t.test(e)?r(e,i):$(e+"["+("object"==typeof i?t:"")+"]",i,n,r)});else if(n||"object"!==Q.type(t))r(e,t);else for(i in t)$(e+"["+i+"]",t[i],n,r)}function F(e){return Q.isWindow(e)?e:9===e.nodeType&&e.defaultView}var q=[],z=q.slice,H=q.concat,W=q.push,X=q.indexOf,U={},Y=U.toString,K=U.hasOwnProperty,V={},G=e.document,J="2.1.3",Q=function(e,t){return new Q.fn.init(e,t)},Z=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,ee=/^-ms-/,te=/-([\da-z])/gi,ne=function(e,t){return t.toUpperCase()};Q.fn=Q.prototype={jquery:J,constructor:Q,selector:"",length:0,toArray:function(){return z.call(this)},get:function(e){return null!=e?0>e?this[e+this.length]:this[e]:z.call(this)},pushStack:function(e){var t=Q.merge(this.constructor(),e);return t.prevObject=this,t.context=this.context,t},each:function(e,t){return Q.each(this,e,t)},map:function(e){return this.pushStack(Q.map(this,function(t,n){return e.call(t,n,t)}))},slice:function(){return this.pushStack(z.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},eq:function(e){var t=this.length,n=+e+(0>e?t:0);return this.pushStack(n>=0&&t>n?[this[n]]:[])},end:function(){return this.prevObject||this.constructor(null)},push:W,sort:q.sort,splice:q.splice},Q.extend=Q.fn.extend=function(){var e,t,n,r,i,o,a=arguments[0]||{},s=1,u=arguments.length,c=!1;for("boolean"==typeof a&&(c=a,a=arguments[s]||{},s++),"object"==typeof a||Q.isFunction(a)||(a={}),s===u&&(a=this,s--);u>s;s++)if(null!=(e=arguments[s]))for(t in e)n=a[t],r=e[t],a!==r&&(c&&r&&(Q.isPlainObject(r)||(i=Q.isArray(r)))?(i?(i=!1,o=n&&Q.isArray(n)?n:[]):o=n&&Q.isPlainObject(n)?n:{},a[t]=Q.extend(c,o,r)):void 0!==r&&(a[t]=r));return a},Q.extend({expando:"jQuery"+(J+Math.random()).replace(/\D/g,""),isReady:!0,error:function(e){throw new Error(e)},noop:function(){},isFunction:function(e){return"function"===Q.type(e)},isArray:Array.isArray,isWindow:function(e){return null!=e&&e===e.window},isNumeric:function(e){return!Q.isArray(e)&&e-parseFloat(e)+1>=0},isPlainObject:function(e){return"object"===Q.type(e)&&!e.nodeType&&!Q.isWindow(e)&&!(e.constructor&&!K.call(e.constructor.prototype,"isPrototypeOf"))},isEmptyObject:function(e){var t;for(t in e)return!1;return!0},type:function(e){return null==e?e+"":"object"==typeof e||"function"==typeof e?U[Y.call(e)]||"object":typeof e},globalEval:function(e){var t,n=eval;(e=Q.trim(e))&&(1===e.indexOf("use strict")?(t=G.createElement("script"),t.text=e,G.head.appendChild(t).parentNode.removeChild(t)):n(e))},camelCase:function(e){return e.replace(ee,"ms-").replace(te,ne)},nodeName:function(e,t){return e.nodeName&&e.nodeName.toLowerCase()===t.toLowerCase()},each:function(e,t,r){var i=0,o=e.length,a=n(e);if(r){if(a)for(;o>i&&!1!==t.apply(e[i],r);i++);else for(i in e)if(!1===t.apply(e[i],r))break}else if(a)for(;o>i&&!1!==t.call(e[i],i,e[i]);i++);else for(i in e)if(!1===t.call(e[i],i,e[i]))break;return e},trim:function(e){return null==e?"":(e+"").replace(Z,"")},makeArray:function(e,t){var r=t||[];return null!=e&&(n(Object(e))?Q.merge(r,"string"==typeof e?[e]:e):W.call(r,e)),r},inArray:function(e,t,n){return null==t?-1:X.call(t,e,n)},merge:function(e,t){for(var n=+t.length,r=0,i=e.length;n>r;r++)e[i++]=t[r];return e.length=i,e},grep:function(e,t,n){for(var r=[],i=0,o=e.length,a=!n;o>i;i++)!t(e[i],i)!==a&&r.push(e[i]);return r},map:function(e,t,r){var i,o=0,a=e.length,s=[];if(n(e))for(;a>o;o++)null!=(i=t(e[o],o,r))&&s.push(i);else for(o in e)null!=(i=t(e[o],o,r))&&s.push(i);return H.apply([],s)},guid:1,proxy:function(e,t){var n,r,i;return"string"==typeof t&&(n=e[t],t=e,e=n),Q.isFunction(e)?(r=z.call(arguments,2),i=function(){return e.apply(t||this,r.concat(z.call(arguments)))},i.guid=e.guid=e.guid||Q.guid++,i):void 0},now:Date.now,support:V}),Q.each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(e,t){U["[object "+t+"]"]=t.toLowerCase()});var re=function(e){function t(e,t,n,r){var i,o,a,s,c,d,f,h,p,m;if((t?t.ownerDocument||t:B)!==N&&I(t),t=t||N,n=n||[],s=t.nodeType,"string"!=typeof e||!e||1!==s&&9!==s&&11!==s)return n;if(!r&&R){if(11!==s&&(i=ge.exec(e)))if(a=i[1]){if(9===s){if(!(o=t.getElementById(a))||!o.parentNode)return n;if(o.id===a)return n.push(o),n}else if(t.ownerDocument&&(o=t.ownerDocument.getElementById(a))&&P(t,o)&&o.id===a)return n.push(o),n}else{if(i[2])return G.apply(n,t.getElementsByTagName(e)),n;if((a=i[3])&&b.getElementsByClassName)return G.apply(n,t.getElementsByClassName(a)),n}if(b.qsa&&(!O||!O.test(e))){if(h=f=j,p=t,m=1!==s&&e,1===s&&"object"!==t.nodeName.toLowerCase()){for(d=S(e),(f=t.getAttribute("id"))?h=f.replace(ye,"\\$&"):t.setAttribute("id",h),h="[id='"+h+"'] ",c=d.length;c--;)d[c]=h+l(d[c]);p=ve.test(e)&&u(t.parentNode)||t,m=d.join(",")}if(m)try{return G.apply(n,p.querySelectorAll(m)),n}catch(e){}finally{f||t.removeAttribute("id")}}}return k(e.replace(ae,"$1"),t,n,r)}function n(){function e(n,r){return t.push(n+" ")>_.cacheLength&&delete e[t.shift()],e[n+" "]=r}var t=[];return e}function r(e){return e[j]=!0,e}function i(e){var t=N.createElement("div");try{return!!e(t)}catch(e){return!1}finally{t.parentNode&&t.parentNode.removeChild(t),t=null}}function o(e,t){for(var n=e.split("|"),r=e.length;r--;)_.attrHandle[n[r]]=t}function a(e,t){var n=t&&e,r=n&&1===e.nodeType&&1===t.nodeType&&(~t.sourceIndex||X)-(~e.sourceIndex||X);if(r)return r;if(n)for(;n=n.nextSibling;)if(n===t)return-1;return e?1:-1}function s(e){return r(function(t){return t=+t,r(function(n,r){for(var i,o=e([],n.length,t),a=o.length;a--;)n[i=o[a]]&&(n[i]=!(r[i]=n[i]))})})}function u(e){return e&&void 0!==e.getElementsByTagName&&e}function c(){}function l(e){for(var t=0,n=e.length,r="";n>t;t++)r+=e[t].value;return r}function d(e,t,n){var r=t.dir,i=n&&"parentNode"===r,o=F++;return t.first?function(t,n,o){for(;t=t[r];)if(1===t.nodeType||i)return e(t,n,o)}:function(t,n,a){var s,u,c=[$,o];if(a){for(;t=t[r];)if((1===t.nodeType||i)&&e(t,n,a))return!0}else for(;t=t[r];)if(1===t.nodeType||i){if(u=t[j]||(t[j]={}),(s=u[r])&&s[0]===$&&s[1]===o)return c[2]=s[2];if(u[r]=c,c[2]=e(t,n,a))return!0}}}function f(e){return e.length>1?function(t,n,r){for(var i=e.length;i--;)if(!e[i](t,n,r))return!1;return!0}:e[0]}function h(e,n,r){for(var i=0,o=n.length;o>i;i++)t(e,n[i],r);return r}function p(e,t,n,r,i){for(var o,a=[],s=0,u=e.length,c=null!=t;u>s;s++)(o=e[s])&&(!n||n(o,r,i))&&(a.push(o),c&&t.push(s));return a}function m(e,t,n,i,o,a){return i&&!i[j]&&(i=m(i)),o&&!o[j]&&(o=m(o,a)),r(function(r,a,s,u){var c,l,d,f=[],m=[],g=a.length,v=r||h(t||"*",s.nodeType?[s]:s,[]),y=!e||!r&&t?v:p(v,f,e,s,u),b=n?o||(r?e:g||i)?[]:a:y;if(n&&n(y,b,s,u),i)for(c=p(b,m),i(c,[],s,u),l=c.length;l--;)(d=c[l])&&(b[m[l]]=!(y[m[l]]=d));if(r){if(o||e){if(o){for(c=[],l=b.length;l--;)(d=b[l])&&c.push(y[l]=d);o(null,b=[],c,u)}for(l=b.length;l--;)(d=b[l])&&(c=o?Q(r,d):f[l])>-1&&(r[c]=!(a[c]=d))}}else b=p(b===a?b.splice(g,b.length):b),o?o(null,a,b,u):G.apply(a,b)})}function g(e){for(var t,n,r,i=e.length,o=_.relative[e[0].type],a=o||_.relative[" "],s=o?1:0,u=d(function(e){return e===t},a,!0),c=d(function(e){return Q(t,e)>-1},a,!0),h=[function(e,n,r){var i=!o&&(r||n!==T)||((t=n).nodeType?u(e,n,r):c(e,n,r));return t=null,i}];i>s;s++)if(n=_.relative[e[s].type])h=[d(f(h),n)];else{if((n=_.filter[e[s].type].apply(null,e[s].matches))[j]){for(r=++s;i>r&&!_.relative[e[r].type];r++);return m(s>1&&f(h),s>1&&l(e.slice(0,s-1).concat({value:" "===e[s-2].type?"*":""})).replace(ae,"$1"),n,r>s&&g(e.slice(s,r)),i>r&&g(e=e.slice(r)),i>r&&l(e))}h.push(n)}return f(h)}function v(e,n){var i=n.length>0,o=e.length>0,a=function(r,a,s,u,c){var l,d,f,h=0,m="0",g=r&&[],v=[],y=T,b=r||o&&_.find.TAG("*",c),w=$+=null==y?1:Math.random()||.1,x=b.length;for(c&&(T=a!==N&&a);m!==x&&null!=(l=b[m]);m++){if(o&&l){for(d=0;f=e[d++];)if(f(l,a,s)){u.push(l);break}c&&($=w)}i&&((l=!f&&l)&&h--,r&&g.push(l))}if(h+=m,i&&m!==h){for(d=0;f=n[d++];)f(g,v,a,s);if(r){if(h>0)for(;m--;)g[m]||v[m]||(v[m]=K.call(u));v=p(v)}G.apply(u,v),c&&!r&&v.length>0&&h+n.length>1&&t.uniqueSort(u)}return c&&($=w,T=y),g};return i?r(a):a}var y,b,_,w,x,S,C,k,T,E,A,I,N,M,R,O,L,D,P,j="sizzle"+1*new Date,B=e.document,$=0,F=0,q=n(),z=n(),H=n(),W=function(e,t){return e===t&&(A=!0),0},X=1<<31,U={}.hasOwnProperty,Y=[],K=Y.pop,V=Y.push,G=Y.push,J=Y.slice,Q=function(e,t){for(var n=0,r=e.length;r>n;n++)if(e[n]===t)return n;return-1},Z="checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",ee="[\\x20\\t\\r\\n\\f]",te="(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",ne=te.replace("w","w#"),re="\\["+ee+"*("+te+")(?:"+ee+"*([*^$|!~]?=)"+ee+"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|("+ne+"))|)"+ee+"*\\]",ie=":("+te+")(?:\\((('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|((?:\\\\.|[^\\\\()[\\]]|"+re+")*)|.*)\\)|)",oe=new RegExp(ee+"+","g"),ae=new RegExp("^"+ee+"+|((?:^|[^\\\\])(?:\\\\.)*)"+ee+"+$","g"),se=new RegExp("^"+ee+"*,"+ee+"*"),ue=new RegExp("^"+ee+"*([>+~]|"+ee+")"+ee+"*"),ce=new RegExp("="+ee+"*([^\\]'\"]*?)"+ee+"*\\]","g"),le=new RegExp(ie),de=new RegExp("^"+ne+"$"),fe={ID:new RegExp("^#("+te+")"),CLASS:new RegExp("^\\.("+te+")"),TAG:new RegExp("^("+te.replace("w","w*")+")"),ATTR:new RegExp("^"+re),PSEUDO:new RegExp("^"+ie),CHILD:new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\("+ee+"*(even|odd|(([+-]|)(\\d*)n|)"+ee+"*(?:([+-]|)"+ee+"*(\\d+)|))"+ee+"*\\)|)","i"),bool:new RegExp("^(?:"+Z+")$","i"),needsContext:new RegExp("^"+ee+"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\("+ee+"*((?:-\\d)?\\d*)"+ee+"*\\)|)(?=[^-]|$)","i")},he=/^(?:input|select|textarea|button)$/i,pe=/^h\d$/i,me=/^[^{]+\{\s*\[native \w/,ge=/^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,ve=/[+~]/,ye=/'|\\/g,be=new RegExp("\\\\([\\da-f]{1,6}"+ee+"?|("+ee+")|.)","ig"),_e=function(e,t,n){var r="0x"+t-65536;return r!==r||n?t:0>r?String.fromCharCode(r+65536):String.fromCharCode(r>>10|55296,1023&r|56320)},we=function(){I()};try{G.apply(Y=J.call(B.childNodes),B.childNodes),Y[B.childNodes.length].nodeType}catch(e){G={apply:Y.length?function(e,t){V.apply(e,J.call(t))}:function(e,t){for(var n=e.length,r=0;e[n++]=t[r++];);e.length=n-1}}}b=t.support={},x=t.isXML=function(e){var t=e&&(e.ownerDocument||e).documentElement;return!!t&&"HTML"!==t.nodeName},I=t.setDocument=function(e){var t,n,r=e?e.ownerDocument||e:B;return r!==N&&9===r.nodeType&&r.documentElement?(N=r,M=r.documentElement,(n=r.defaultView)&&n!==n.top&&(n.addEventListener?n.addEventListener("unload",we,!1):n.attachEvent&&n.attachEvent("onunload",we)),R=!x(r),b.attributes=i(function(e){return e.className="i",!e.getAttribute("className")}),b.getElementsByTagName=i(function(e){return e.appendChild(r.createComment("")),!e.getElementsByTagName("*").length}),b.getElementsByClassName=me.test(r.getElementsByClassName),b.getById=i(function(e){return M.appendChild(e).id=j,!r.getElementsByName||!r.getElementsByName(j).length}),b.getById?(_.find.ID=function(e,t){if(void 0!==t.getElementById&&R){var n=t.getElementById(e);return n&&n.parentNode?[n]:[]}},_.filter.ID=function(e){var t=e.replace(be,_e);return function(e){return e.getAttribute("id")===t}}):(delete _.find.ID,_.filter.ID=function(e){var t=e.replace(be,_e);return function(e){var n=void 0!==e.getAttributeNode&&e.getAttributeNode("id");return n&&n.value===t}}),_.find.TAG=b.getElementsByTagName?function(e,t){return void 0!==t.getElementsByTagName?t.getElementsByTagName(e):b.qsa?t.querySelectorAll(e):void 0}:function(e,t){var n,r=[],i=0,o=t.getElementsByTagName(e);if("*"===e){for(;n=o[i++];)1===n.nodeType&&r.push(n);return r}return o},_.find.CLASS=b.getElementsByClassName&&function(e,t){return R?t.getElementsByClassName(e):void 0},L=[],O=[],(b.qsa=me.test(r.querySelectorAll))&&(i(function(e){M.appendChild(e).innerHTML="<a id='"+j+"'></a><select id='"+j+"-\f]' msallowcapture=''><option selected=''></option></select>",e.querySelectorAll("[msallowcapture^='']").length&&O.push("[*^$]="+ee+"*(?:''|\"\")"),e.querySelectorAll("[selected]").length||O.push("\\["+ee+"*(?:value|"+Z+")"),e.querySelectorAll("[id~="+j+"-]").length||O.push("~="),e.querySelectorAll(":checked").length||O.push(":checked"),e.querySelectorAll("a#"+j+"+*").length||O.push(".#.+[+~]")}),i(function(e){var t=r.createElement("input");t.setAttribute("type","hidden"),e.appendChild(t).setAttribute("name","D"),e.querySelectorAll("[name=d]").length&&O.push("name"+ee+"*[*^$|!~]?="),e.querySelectorAll(":enabled").length||O.push(":enabled",":disabled"),e.querySelectorAll("*,:x"),O.push(",.*:")})),(b.matchesSelector=me.test(D=M.matches||M.webkitMatchesSelector||M.mozMatchesSelector||M.oMatchesSelector||M.msMatchesSelector))&&i(function(e){b.disconnectedMatch=D.call(e,"div"),D.call(e,"[s!='']:x"),L.push("!=",ie)}),O=O.length&&new RegExp(O.join("|")),L=L.length&&new RegExp(L.join("|")),t=me.test(M.compareDocumentPosition),P=t||me.test(M.contains)?function(e,t){var n=9===e.nodeType?e.documentElement:e,r=t&&t.parentNode;return e===r||!(!r||1!==r.nodeType||!(n.contains?n.contains(r):e.compareDocumentPosition&&16&e.compareDocumentPosition(r)))}:function(e,t){if(t)for(;t=t.parentNode;)if(t===e)return!0;return!1},W=t?function(e,t){if(e===t)return A=!0,0;var n=!e.compareDocumentPosition-!t.compareDocumentPosition;return n||(1&(n=(e.ownerDocument||e)===(t.ownerDocument||t)?e.compareDocumentPosition(t):1)||!b.sortDetached&&t.compareDocumentPosition(e)===n?e===r||e.ownerDocument===B&&P(B,e)?-1:t===r||t.ownerDocument===B&&P(B,t)?1:E?Q(E,e)-Q(E,t):0:4&n?-1:1)}:function(e,t){if(e===t)return A=!0,0;var n,i=0,o=e.parentNode,s=t.parentNode,u=[e],c=[t];if(!o||!s)return e===r?-1:t===r?1:o?-1:s?1:E?Q(E,e)-Q(E,t):0;if(o===s)return a(e,t);for(n=e;n=n.parentNode;)u.unshift(n);for(n=t;n=n.parentNode;)c.unshift(n);for(;u[i]===c[i];)i++;return i?a(u[i],c[i]):u[i]===B?-1:c[i]===B?1:0},r):N},t.matches=function(e,n){return t(e,null,null,n)},t.matchesSelector=function(e,n){if((e.ownerDocument||e)!==N&&I(e),n=n.replace(ce,"='$1']"),!(!b.matchesSelector||!R||L&&L.test(n)||O&&O.test(n)))try{var r=D.call(e,n);if(r||b.disconnectedMatch||e.document&&11!==e.document.nodeType)return r}catch(e){}return t(n,N,null,[e]).length>0},t.contains=function(e,t){return(e.ownerDocument||e)!==N&&I(e),P(e,t)},t.attr=function(e,t){(e.ownerDocument||e)!==N&&I(e);var n=_.attrHandle[t.toLowerCase()],r=n&&U.call(_.attrHandle,t.toLowerCase())?n(e,t,!R):void 0;return void 0!==r?r:b.attributes||!R?e.getAttribute(t):(r=e.getAttributeNode(t))&&r.specified?r.value:null},t.error=function(e){throw new Error("Syntax error, unrecognized expression: "+e)},t.uniqueSort=function(e){var t,n=[],r=0,i=0;if(A=!b.detectDuplicates,E=!b.sortStable&&e.slice(0),e.sort(W),A){for(;t=e[i++];)t===e[i]&&(r=n.push(i));for(;r--;)e.splice(n[r],1)}return E=null,e},w=t.getText=function(e){var t,n="",r=0,i=e.nodeType;if(i){if(1===i||9===i||11===i){if("string"==typeof e.textContent)return e.textContent;for(e=e.firstChild;e;e=e.nextSibling)n+=w(e)}else if(3===i||4===i)return e.nodeValue}else for(;t=e[r++];)n+=w(t);return n},(_=t.selectors={cacheLength:50,createPseudo:r,match:fe,attrHandle:{},find:{},relative:{">":{dir:"parentNode",first:!0}," ":{dir:"parentNode"},"+":{dir:"previousSibling",first:!0},"~":{dir:"previousSibling"}},preFilter:{ATTR:function(e){return e[1]=e[1].replace(be,_e),e[3]=(e[3]||e[4]||e[5]||"").replace(be,_e),"~="===e[2]&&(e[3]=" "+e[3]+" "),e.slice(0,4)},CHILD:function(e){return e[1]=e[1].toLowerCase(),"nth"===e[1].slice(0,3)?(e[3]||t.error(e[0]),e[4]=+(e[4]?e[5]+(e[6]||1):2*("even"===e[3]||"odd"===e[3])),e[5]=+(e[7]+e[8]||"odd"===e[3])):e[3]&&t.error(e[0]),e},PSEUDO:function(e){var t,n=!e[6]&&e[2];return fe.CHILD.test(e[0])?null:(e[3]?e[2]=e[4]||e[5]||"":n&&le.test(n)&&(t=S(n,!0))&&(t=n.indexOf(")",n.length-t)-n.length)&&(e[0]=e[0].slice(0,t),e[2]=n.slice(0,t)),e.slice(0,3))}},filter:{TAG:function(e){var t=e.replace(be,_e).toLowerCase();return"*"===e?function(){return!0}:function(e){return e.nodeName&&e.nodeName.toLowerCase()===t}},CLASS:function(e){var t=q[e+" "];return t||(t=new RegExp("(^|"+ee+")"+e+"("+ee+"|$)"))&&q(e,function(e){return t.test("string"==typeof e.className&&e.className||void 0!==e.getAttribute&&e.getAttribute("class")||"")})},ATTR:function(e,n,r){return function(i){var o=t.attr(i,e);return null==o?"!="===n:!n||(o+="","="===n?o===r:"!="===n?o!==r:"^="===n?r&&0===o.indexOf(r):"*="===n?r&&o.indexOf(r)>-1:"$="===n?r&&o.slice(-r.length)===r:"~="===n?(" "+o.replace(oe," ")+" ").indexOf(r)>-1:"|="===n&&(o===r||o.slice(0,r.length+1)===r+"-"))}},CHILD:function(e,t,n,r,i){var o="nth"!==e.slice(0,3),a="last"!==e.slice(-4),s="of-type"===t;return 1===r&&0===i?function(e){return!!e.parentNode}:function(t,n,u){var c,l,d,f,h,p,m=o!==a?"nextSibling":"previousSibling",g=t.parentNode,v=s&&t.nodeName.toLowerCase(),y=!u&&!s;if(g){if(o){for(;m;){for(d=t;d=d[m];)if(s?d.nodeName.toLowerCase()===v:1===d.nodeType)return!1;p=m="only"===e&&!p&&"nextSibling"}return!0}if(p=[a?g.firstChild:g.lastChild],a&&y){for(h=(c=(l=g[j]||(g[j]={}))[e]||[])[0]===$&&c[1],f=c[0]===$&&c[2],d=h&&g.childNodes[h];d=++h&&d&&d[m]||(f=h=0)||p.pop();)if(1===d.nodeType&&++f&&d===t){l[e]=[$,h,f];break}}else if(y&&(c=(t[j]||(t[j]={}))[e])&&c[0]===$)f=c[1];else for(;(d=++h&&d&&d[m]||(f=h=0)||p.pop())&&((s?d.nodeName.toLowerCase()!==v:1!==d.nodeType)||!++f||(y&&((d[j]||(d[j]={}))[e]=[$,f]),d!==t)););return(f-=i)===r||f%r==0&&f/r>=0}}},PSEUDO:function(e,n){var i,o=_.pseudos[e]||_.setFilters[e.toLowerCase()]||t.error("unsupported pseudo: "+e);return o[j]?o(n):o.length>1?(i=[e,e,"",n],_.setFilters.hasOwnProperty(e.toLowerCase())?r(function(e,t){for(var r,i=o(e,n),a=i.length;a--;)r=Q(e,i[a]),e[r]=!(t[r]=i[a])}):function(e){return o(e,0,i)}):o}},pseudos:{not:r(function(e){var t=[],n=[],i=C(e.replace(ae,"$1"));return i[j]?r(function(e,t,n,r){for(var o,a=i(e,null,r,[]),s=e.length;s--;)(o=a[s])&&(e[s]=!(t[s]=o))}):function(e,r,o){return t[0]=e,i(t,null,o,n),t[0]=null,!n.pop()}}),has:r(function(e){return function(n){return t(e,n).length>0}}),contains:r(function(e){return e=e.replace(be,_e),function(t){return(t.textContent||t.innerText||w(t)).indexOf(e)>-1}}),lang:r(function(e){return de.test(e||"")||t.error("unsupported lang: "+e),e=e.replace(be,_e).toLowerCase(),function(t){var n;do{if(n=R?t.lang:t.getAttribute("xml:lang")||t.getAttribute("lang"))return(n=n.toLowerCase())===e||0===n.indexOf(e+"-")}while((t=t.parentNode)&&1===t.nodeType);return!1}}),target:function(t){var n=e.location&&e.location.hash;return n&&n.slice(1)===t.id},root:function(e){return e===M},focus:function(e){return e===N.activeElement&&(!N.hasFocus||N.hasFocus())&&!!(e.type||e.href||~e.tabIndex)},enabled:function(e){return!1===e.disabled},disabled:function(e){return!0===e.disabled},checked:function(e){var t=e.nodeName.toLowerCase();return"input"===t&&!!e.checked||"option"===t&&!!e.selected},selected:function(e){return e.parentNode&&e.parentNode.selectedIndex,!0===e.selected},empty:function(e){for(e=e.firstChild;e;e=e.nextSibling)if(e.nodeType<6)return!1;return!0},parent:function(e){return!_.pseudos.empty(e)},header:function(e){return pe.test(e.nodeName)},input:function(e){return he.test(e.nodeName)},button:function(e){var t=e.nodeName.toLowerCase();return"input"===t&&"button"===e.type||"button"===t},text:function(e){var t;return"input"===e.nodeName.toLowerCase()&&"text"===e.type&&(null==(t=e.getAttribute("type"))||"text"===t.toLowerCase())},first:s(function(){return[0]}),last:s(function(e,t){return[t-1]}),eq:s(function(e,t,n){return[0>n?n+t:n]}),even:s(function(e,t){for(var n=0;t>n;n+=2)e.push(n);return e}),odd:s(function(e,t){for(var n=1;t>n;n+=2)e.push(n);return e}),lt:s(function(e,t,n){for(var r=0>n?n+t:n;--r>=0;)e.push(r);return e}),gt:s(function(e,t,n){for(var r=0>n?n+t:n;++r<t;)e.push(r);return e})}}).pseudos.nth=_.pseudos.eq;for(y in{radio:!0,checkbox:!0,file:!0,password:!0,image:!0})_.pseudos[y]=function(e){return function(t){return"input"===t.nodeName.toLowerCase()&&t.type===e}}(y);for(y in{submit:!0,reset:!0})_.pseudos[y]=function(e){return function(t){var n=t.nodeName.toLowerCase();return("input"===n||"button"===n)&&t.type===e}}(y);return c.prototype=_.filters=_.pseudos,_.setFilters=new c,S=t.tokenize=function(e,n){var r,i,o,a,s,u,c,l=z[e+" "];if(l)return n?0:l.slice(0);for(s=e,u=[],c=_.preFilter;s;){(!r||(i=se.exec(s)))&&(i&&(s=s.slice(i[0].length)||s),u.push(o=[])),r=!1,(i=ue.exec(s))&&(r=i.shift(),o.push({value:r,type:i[0].replace(ae," ")}),s=s.slice(r.length));for(a in _.filter)!(i=fe[a].exec(s))||c[a]&&!(i=c[a](i))||(r=i.shift(),o.push({value:r,type:a,matches:i}),s=s.slice(r.length));if(!r)break}return n?s.length:s?t.error(e):z(e,u).slice(0)},C=t.compile=function(e,t){var n,r=[],i=[],o=H[e+" "];if(!o){for(t||(t=S(e)),n=t.length;n--;)(o=g(t[n]))[j]?r.push(o):i.push(o);(o=H(e,v(i,r))).selector=e}return o},k=t.select=function(e,t,n,r){var i,o,a,s,c,d="function"==typeof e&&e,f=!r&&S(e=d.selector||e);if(n=n||[],1===f.length){if((o=f[0]=f[0].slice(0)).length>2&&"ID"===(a=o[0]).type&&b.getById&&9===t.nodeType&&R&&_.relative[o[1].type]){if(!(t=(_.find.ID(a.matches[0].replace(be,_e),t)||[])[0]))return n;d&&(t=t.parentNode),e=e.slice(o.shift().value.length)}for(i=fe.needsContext.test(e)?0:o.length;i--&&(a=o[i],!_.relative[s=a.type]);)if((c=_.find[s])&&(r=c(a.matches[0].replace(be,_e),ve.test(o[0].type)&&u(t.parentNode)||t))){if(o.splice(i,1),!(e=r.length&&l(o)))return G.apply(n,r),n;break}}return(d||C(e,f))(r,t,!R,n,ve.test(e)&&u(t.parentNode)||t),n},b.sortStable=j.split("").sort(W).join("")===j,b.detectDuplicates=!!A,I(),b.sortDetached=i(function(e){return 1&e.compareDocumentPosition(N.createElement("div"))}),i(function(e){return e.innerHTML="<a href='#'></a>","#"===e.firstChild.getAttribute("href")})||o("type|href|height|width",function(e,t,n){return n?void 0:e.getAttribute(t,"type"===t.toLowerCase()?1:2)}),b.attributes&&i(function(e){return e.innerHTML="<input/>",e.firstChild.setAttribute("value",""),""===e.firstChild.getAttribute("value")})||o("value",function(e,t,n){return n||"input"!==e.nodeName.toLowerCase()?void 0:e.defaultValue}),i(function(e){return null==e.getAttribute("disabled")})||o(Z,function(e,t,n){var r;return n?void 0:!0===e[t]?t.toLowerCase():(r=e.getAttributeNode(t))&&r.specified?r.value:null}),t}(e);Q.find=re,Q.expr=re.selectors,Q.expr[":"]=Q.expr.pseudos,Q.unique=re.uniqueSort,Q.text=re.getText,Q.isXMLDoc=re.isXML,Q.contains=re.contains;var ie=Q.expr.match.needsContext,oe=/^<(\w+)\s*\/?>(?:<\/\1>|)$/,ae=/^.[^:#\[\.,]*$/;Q.filter=function(e,t,n){var r=t[0];return n&&(e=":not("+e+")"),1===t.length&&1===r.nodeType?Q.find.matchesSelector(r,e)?[r]:[]:Q.find.matches(e,Q.grep(t,function(e){return 1===e.nodeType}))},Q.fn.extend({find:function(e){var t,n=this.length,r=[],i=this;if("string"!=typeof e)return this.pushStack(Q(e).filter(function(){for(t=0;n>t;t++)if(Q.contains(i[t],this))return!0}));for(t=0;n>t;t++)Q.find(e,i[t],r);return r=this.pushStack(n>1?Q.unique(r):r),r.selector=this.selector?this.selector+" "+e:e,r},filter:function(e){return this.pushStack(r(this,e||[],!1))},not:function(e){return this.pushStack(r(this,e||[],!0))},is:function(e){return!!r(this,"string"==typeof e&&ie.test(e)?Q(e):e||[],!1).length}});var se,ue=/^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/;(Q.fn.init=function(e,t){var n,r;if(!e)return this;if("string"==typeof e){if(!(n="<"===e[0]&&">"===e[e.length-1]&&e.length>=3?[null,e,null]:ue.exec(e))||!n[1]&&t)return!t||t.jquery?(t||se).find(e):this.constructor(t).find(e);if(n[1]){if(t=t instanceof Q?t[0]:t,Q.merge(this,Q.parseHTML(n[1],t&&t.nodeType?t.ownerDocument||t:G,!0)),oe.test(n[1])&&Q.isPlainObject(t))for(n in t)Q.isFunction(this[n])?this[n](t[n]):this.attr(n,t[n]);return this}return(r=G.getElementById(n[2]))&&r.parentNode&&(this.length=1,this[0]=r),this.context=G,this.selector=e,this}return e.nodeType?(this.context=this[0]=e,this.length=1,this):Q.isFunction(e)?void 0!==se.ready?se.ready(e):e(Q):(void 0!==e.selector&&(this.selector=e.selector,this.context=e.context),Q.makeArray(e,this))}).prototype=Q.fn,se=Q(G);var ce=/^(?:parents|prev(?:Until|All))/,le={children:!0,contents:!0,next:!0,prev:!0};Q.extend({dir:function(e,t,n){for(var r=[],i=void 0!==n;(e=e[t])&&9!==e.nodeType;)if(1===e.nodeType){if(i&&Q(e).is(n))break;r.push(e)}return r},sibling:function(e,t){for(var n=[];e;e=e.nextSibling)1===e.nodeType&&e!==t&&n.push(e);return n}}),Q.fn.extend({has:function(e){var t=Q(e,this),n=t.length;return this.filter(function(){for(var e=0;n>e;e++)if(Q.contains(this,t[e]))return!0})},closest:function(e,t){for(var n,r=0,i=this.length,o=[],a=ie.test(e)||"string"!=typeof e?Q(e,t||this.context):0;i>r;r++)for(n=this[r];n&&n!==t;n=n.parentNode)if(n.nodeType<11&&(a?a.index(n)>-1:1===n.nodeType&&Q.find.matchesSelector(n,e))){o.push(n);break}return this.pushStack(o.length>1?Q.unique(o):o)},index:function(e){return e?"string"==typeof e?X.call(Q(e),this[0]):X.call(this,e.jquery?e[0]:e):this[0]&&this[0].parentNode?this.first().prevAll().length:-1},add:function(e,t){return this.pushStack(Q.unique(Q.merge(this.get(),Q(e,t))))},addBack:function(e){return this.add(null==e?this.prevObject:this.prevObject.filter(e))}}),Q.each({parent:function(e){var t=e.parentNode;return t&&11!==t.nodeType?t:null},parents:function(e){return Q.dir(e,"parentNode")},parentsUntil:function(e,t,n){return Q.dir(e,"parentNode",n)},next:function(e){return i(e,"nextSibling")},prev:function(e){return i(e,"previousSibling")},nextAll:function(e){return Q.dir(e,"nextSibling")},prevAll:function(e){return Q.dir(e,"previousSibling")},nextUntil:function(e,t,n){return Q.dir(e,"nextSibling",n)},prevUntil:function(e,t,n){return Q.dir(e,"previousSibling",n)},siblings:function(e){return Q.sibling((e.parentNode||{}).firstChild,e)},children:function(e){return Q.sibling(e.firstChild)},contents:function(e){return e.contentDocument||Q.merge([],e.childNodes)}},function(e,t){Q.fn[e]=function(n,r){var i=Q.map(this,t,n);return"Until"!==e.slice(-5)&&(r=n),r&&"string"==typeof r&&(i=Q.filter(r,i)),this.length>1&&(le[e]||Q.unique(i),ce.test(e)&&i.reverse()),this.pushStack(i)}});var de=/\S+/g,fe={};Q.Callbacks=function(e){var t,n,r,i,a,s,u=[],c=!(e="string"==typeof e?fe[e]||o(e):Q.extend({},e)).once&&[],l=function(o){for(t=e.memory&&o,n=!0,s=i||0,i=0,a=u.length,r=!0;u&&a>s;s++)if(!1===u[s].apply(o[0],o[1])&&e.stopOnFalse){t=!1;break}r=!1,u&&(c?c.length&&l(c.shift()):t?u=[]:d.disable())},d={add:function(){if(u){var n=u.length;!function t(n){Q.each(n,function(n,r){var i=Q.type(r);"function"===i?e.unique&&d.has(r)||u.push(r):r&&r.length&&"string"!==i&&t(r)})}(arguments),r?a=u.length:t&&(i=n,l(t))}return this},remove:function(){return u&&Q.each(arguments,function(e,t){for(var n;(n=Q.inArray(t,u,n))>-1;)u.splice(n,1),r&&(a>=n&&a--,s>=n&&s--)}),this},has:function(e){return e?Q.inArray(e,u)>-1:!(!u||!u.length)},empty:function(){return u=[],a=0,this},disable:function(){return u=c=t=void 0,this},disabled:function(){return!u},lock:function(){return c=void 0,t||d.disable(),this},locked:function(){return!c},fireWith:function(e,t){return!u||n&&!c||(t=t||[],t=[e,t.slice?t.slice():t],r?c.push(t):l(t)),this},fire:function(){return d.fireWith(this,arguments),this},fired:function(){return!!n}};return d},Q.extend({Deferred:function(e){var t=[["resolve","done",Q.Callbacks("once memory"),"resolved"],["reject","fail",Q.Callbacks("once memory"),"rejected"],["notify","progress",Q.Callbacks("memory")]],n="pending",r={state:function(){return n},always:function(){return i.done(arguments).fail(arguments),this},then:function(){var e=arguments;return Q.Deferred(function(n){Q.each(t,function(t,o){var a=Q.isFunction(e[t])&&e[t];i[o[1]](function(){var e=a&&a.apply(this,arguments);e&&Q.isFunction(e.promise)?e.promise().done(n.resolve).fail(n.reject).progress(n.notify):n[o[0]+"With"](this===r?n.promise():this,a?[e]:arguments)})}),e=null}).promise()},promise:function(e){return null!=e?Q.extend(e,r):r}},i={};return r.pipe=r.then,Q.each(t,function(e,o){var a=o[2],s=o[3];r[o[1]]=a.add,s&&a.add(function(){n=s},t[1^e][2].disable,t[2][2].lock),i[o[0]]=function(){return i[o[0]+"With"](this===i?r:this,arguments),this},i[o[0]+"With"]=a.fireWith}),r.promise(i),e&&e.call(i,i),i},when:function(e){var t,n,r,i=0,o=z.call(arguments),a=o.length,s=1!==a||e&&Q.isFunction(e.promise)?a:0,u=1===s?e:Q.Deferred(),c=function(e,n,r){return function(i){n[e]=this,r[e]=arguments.length>1?z.call(arguments):i,r===t?u.notifyWith(n,r):--s||u.resolveWith(n,r)}};if(a>1)for(t=new Array(a),n=new Array(a),r=new Array(a);a>i;i++)o[i]&&Q.isFunction(o[i].promise)?o[i].promise().done(c(i,r,o)).fail(u.reject).progress(c(i,n,t)):--s;return s||u.resolveWith(r,o),u.promise()}});var he;Q.fn.ready=function(e){return Q.ready.promise().done(e),this},Q.extend({isReady:!1,readyWait:1,holdReady:function(e){e?Q.readyWait++:Q.ready(!0)},ready:function(e){(!0===e?--Q.readyWait:Q.isReady)||(Q.isReady=!0,!0!==e&&--Q.readyWait>0||(he.resolveWith(G,[Q]),Q.fn.triggerHandler&&(Q(G).triggerHandler("ready"),Q(G).off("ready"))))}}),Q.ready.promise=function(t){return he||(he=Q.Deferred(),"complete"===G.readyState?setTimeout(Q.ready):(G.addEventListener("DOMContentLoaded",a,!1),e.addEventListener("load",a,!1))),he.promise(t)},Q.ready.promise();var pe=Q.access=function(e,t,n,r,i,o,a){var s=0,u=e.length,c=null==n;if("object"===Q.type(n)){i=!0;for(s in n)Q.access(e,t,s,n[s],!0,o,a)}else if(void 0!==r&&(i=!0,Q.isFunction(r)||(a=!0),c&&(a?(t.call(e,r),t=null):(c=t,t=function(e,t,n){return c.call(Q(e),n)})),t))for(;u>s;s++)t(e[s],n,a?r:r.call(e[s],s,t(e[s],n)));return i?e:c?t.call(e):u?t(e[0],n):o};Q.acceptData=function(e){return 1===e.nodeType||9===e.nodeType||!+e.nodeType},s.uid=1,s.accepts=Q.acceptData,s.prototype={key:function(e){if(!s.accepts(e))return 0;var t={},n=e[this.expando];if(!n){n=s.uid++;try{t[this.expando]={value:n},Object.defineProperties(e,t)}catch(r){t[this.expando]=n,Q.extend(e,t)}}return this.cache[n]||(this.cache[n]={}),n},set:function(e,t,n){var r,i=this.key(e),o=this.cache[i];if("string"==typeof t)o[t]=n;else if(Q.isEmptyObject(o))Q.extend(this.cache[i],t);else for(r in t)o[r]=t[r];return o},get:function(e,t){var n=this.cache[this.key(e)];return void 0===t?n:n[t]},access:function(e,t,n){var r;return void 0===t||t&&"string"==typeof t&&void 0===n?void 0!==(r=this.get(e,t))?r:this.get(e,Q.camelCase(t)):(this.set(e,t,n),void 0!==n?n:t)},remove:function(e,t){var n,r,i,o=this.key(e),a=this.cache[o];if(void 0===t)this.cache[o]={};else{Q.isArray(t)?r=t.concat(t.map(Q.camelCase)):(i=Q.camelCase(t),t in a?r=[t,i]:(r=i,r=r in a?[r]:r.match(de)||[])),n=r.length;for(;n--;)delete a[r[n]]}},hasData:function(e){return!Q.isEmptyObject(this.cache[e[this.expando]]||{})},discard:function(e){e[this.expando]&&delete this.cache[e[this.expando]]}};var me=new s,ge=new s,ve=/^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,ye=/([A-Z])/g;Q.extend({hasData:function(e){return ge.hasData(e)||me.hasData(e)},data:function(e,t,n){return ge.access(e,t,n)},removeData:function(e,t){ge.remove(e,t)},_data:function(e,t,n){return me.access(e,t,n)},_removeData:function(e,t){me.remove(e,t)}}),Q.fn.extend({data:function(e,t){var n,r,i,o=this[0],a=o&&o.attributes;if(void 0===e){if(this.length&&(i=ge.get(o),1===o.nodeType&&!me.get(o,"hasDataAttrs"))){for(n=a.length;n--;)a[n]&&0===(r=a[n].name).indexOf("data-")&&(r=Q.camelCase(r.slice(5)),u(o,r,i[r]));me.set(o,"hasDataAttrs",!0)}return i}return"object"==typeof e?this.each(function(){ge.set(this,e)}):pe(this,function(t){var n,r=Q.camelCase(e);if(o&&void 0===t){if(void 0!==(n=ge.get(o,e)))return n;if(void 0!==(n=ge.get(o,r)))return n;if(void 0!==(n=u(o,r,void 0)))return n}else this.each(function(){var n=ge.get(this,r);ge.set(this,r,t),-1!==e.indexOf("-")&&void 0!==n&&ge.set(this,e,t)})},null,t,arguments.length>1,null,!0)},removeData:function(e){return this.each(function(){ge.remove(this,e)})}}),Q.extend({queue:function(e,t,n){var r;return e?(t=(t||"fx")+"queue",r=me.get(e,t),n&&(!r||Q.isArray(n)?r=me.access(e,t,Q.makeArray(n)):r.push(n)),r||[]):void 0},dequeue:function(e,t){t=t||"fx";var n=Q.queue(e,t),r=n.length,i=n.shift(),o=Q._queueHooks(e,t);"inprogress"===i&&(i=n.shift(),r--),i&&("fx"===t&&n.unshift("inprogress"),delete o.stop,i.call(e,function(){Q.dequeue(e,t)},o)),!r&&o&&o.empty.fire()},_queueHooks:function(e,t){var n=t+"queueHooks";return me.get(e,n)||me.access(e,n,{empty:Q.Callbacks("once memory").add(function(){me.remove(e,[t+"queue",n])})})}}),Q.fn.extend({queue:function(e,t){var n=2;return"string"!=typeof e&&(t=e,e="fx",n--),arguments.length<n?Q.queue(this[0],e):void 0===t?this:this.each(function(){var n=Q.queue(this,e,t);Q._queueHooks(this,e),"fx"===e&&"inprogress"!==n[0]&&Q.dequeue(this,e)})},dequeue:function(e){return this.each(function(){Q.dequeue(this,e)})},clearQueue:function(e){return this.queue(e||"fx",[])},promise:function(e,t){var n,r=1,i=Q.Deferred(),o=this,a=this.length,s=function(){--r||i.resolveWith(o,[o])};for("string"!=typeof e&&(t=e,e=void 0),e=e||"fx";a--;)(n=me.get(o[a],e+"queueHooks"))&&n.empty&&(r++,n.empty.add(s));return s(),i.promise(t)}});var be=/[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source,_e=["Top","Right","Bottom","Left"],we=function(e,t){return e=t||e,"none"===Q.css(e,"display")||!Q.contains(e.ownerDocument,e)},xe=/^(?:checkbox|radio)$/i;!function(){var e=G.createDocumentFragment().appendChild(G.createElement("div")),t=G.createElement("input");t.setAttribute("type","radio"),t.setAttribute("checked","checked"),t.setAttribute("name","t"),e.appendChild(t),V.checkClone=e.cloneNode(!0).cloneNode(!0).lastChild.checked,e.innerHTML="<textarea>x</textarea>",V.noCloneChecked=!!e.cloneNode(!0).lastChild.defaultValue}();var Se="undefined";V.focusinBubbles="onfocusin"in e;var Ce=/^key/,ke=/^(?:mouse|pointer|contextmenu)|click/,Te=/^(?:focusinfocus|focusoutblur)$/,Ee=/^([^.]*)(?:\.(.+)|)$/;Q.event={global:{},add:function(e,t,n,r,i){var o,a,s,u,c,l,d,f,h,p,m,g=me.get(e);if(g)for(n.handler&&(o=n,n=o.handler,i=o.selector),n.guid||(n.guid=Q.guid++),(u=g.events)||(u=g.events={}),(a=g.handle)||(a=g.handle=function(t){return typeof Q!==Se&&Q.event.triggered!==t.type?Q.event.dispatch.apply(e,arguments):void 0}),c=(t=(t||"").match(de)||[""]).length;c--;)s=Ee.exec(t[c])||[],h=m=s[1],p=(s[2]||"").split(".").sort(),h&&(d=Q.event.special[h]||{},h=(i?d.delegateType:d.bindType)||h,d=Q.event.special[h]||{},l=Q.extend({type:h,origType:m,data:r,handler:n,guid:n.guid,selector:i,needsContext:i&&Q.expr.match.needsContext.test(i),namespace:p.join(".")},o),(f=u[h])||(f=u[h]=[],f.delegateCount=0,d.setup&&!1!==d.setup.call(e,r,p,a)||e.addEventListener&&e.addEventListener(h,a,!1)),d.add&&(d.add.call(e,l),l.handler.guid||(l.handler.guid=n.guid)),i?f.splice(f.delegateCount++,0,l):f.push(l),Q.event.global[h]=!0)},remove:function(e,t,n,r,i){var o,a,s,u,c,l,d,f,h,p,m,g=me.hasData(e)&&me.get(e);if(g&&(u=g.events)){for(c=(t=(t||"").match(de)||[""]).length;c--;)if(s=Ee.exec(t[c])||[],h=m=s[1],p=(s[2]||"").split(".").sort(),h){for(d=Q.event.special[h]||{},f=u[h=(r?d.delegateType:d.bindType)||h]||[],s=s[2]&&new RegExp("(^|\\.)"+p.join("\\.(?:.*\\.|)")+"(\\.|$)"),a=o=f.length;o--;)l=f[o],!i&&m!==l.origType||n&&n.guid!==l.guid||s&&!s.test(l.namespace)||r&&r!==l.selector&&("**"!==r||!l.selector)||(f.splice(o,1),l.selector&&f.delegateCount--,d.remove&&d.remove.call(e,l));a&&!f.length&&(d.teardown&&!1!==d.teardown.call(e,p,g.handle)||Q.removeEvent(e,h,g.handle),delete u[h])}else for(h in u)Q.event.remove(e,h+t[c],n,r,!0);Q.isEmptyObject(u)&&(delete g.handle,me.remove(e,"events"))}},trigger:function(t,n,r,i){var o,a,s,u,c,l,d,f=[r||G],h=K.call(t,"type")?t.type:t,p=K.call(t,"namespace")?t.namespace.split("."):[];if(a=s=r=r||G,3!==r.nodeType&&8!==r.nodeType&&!Te.test(h+Q.event.triggered)&&(h.indexOf(".")>=0&&(p=h.split("."),h=p.shift(),p.sort()),c=h.indexOf(":")<0&&"on"+h,t=t[Q.expando]?t:new Q.Event(h,"object"==typeof t&&t),t.isTrigger=i?2:3,t.namespace=p.join("."),t.namespace_re=t.namespace?new RegExp("(^|\\.)"+p.join("\\.(?:.*\\.|)")+"(\\.|$)"):null,t.result=void 0,t.target||(t.target=r),n=null==n?[t]:Q.makeArray(n,[t]),d=Q.event.special[h]||{},i||!d.trigger||!1!==d.trigger.apply(r,n))){if(!i&&!d.noBubble&&!Q.isWindow(r)){for(u=d.delegateType||h,Te.test(u+h)||(a=a.parentNode);a;a=a.parentNode)f.push(a),s=a;s===(r.ownerDocument||G)&&f.push(s.defaultView||s.parentWindow||e)}for(o=0;(a=f[o++])&&!t.isPropagationStopped();)t.type=o>1?u:d.bindType||h,(l=(me.get(a,"events")||{})[t.type]&&me.get(a,"handle"))&&l.apply(a,n),(l=c&&a[c])&&l.apply&&Q.acceptData(a)&&(t.result=l.apply(a,n),!1===t.result&&t.preventDefault());return t.type=h,i||t.isDefaultPrevented()||d._default&&!1!==d._default.apply(f.pop(),n)||!Q.acceptData(r)||c&&Q.isFunction(r[h])&&!Q.isWindow(r)&&((s=r[c])&&(r[c]=null),Q.event.triggered=h,r[h](),Q.event.triggered=void 0,s&&(r[c]=s)),t.result}},dispatch:function(e){e=Q.event.fix(e);var t,n,r,i,o,a=[],s=z.call(arguments),u=(me.get(this,"events")||{})[e.type]||[],c=Q.event.special[e.type]||{};if(s[0]=e,e.delegateTarget=this,!c.preDispatch||!1!==c.preDispatch.call(this,e)){for(a=Q.event.handlers.call(this,e,u),t=0;(i=a[t++])&&!e.isPropagationStopped();)for(e.currentTarget=i.elem,n=0;(o=i.handlers[n++])&&!e.isImmediatePropagationStopped();)(!e.namespace_re||e.namespace_re.test(o.namespace))&&(e.handleObj=o,e.data=o.data,void 0!==(r=((Q.event.special[o.origType]||{}).handle||o.handler).apply(i.elem,s))&&!1===(e.result=r)&&(e.preventDefault(),e.stopPropagation()));return c.postDispatch&&c.postDispatch.call(this,e),e.result}},handlers:function(e,t){var n,r,i,o,a=[],s=t.delegateCount,u=e.target;if(s&&u.nodeType&&(!e.button||"click"!==e.type))for(;u!==this;u=u.parentNode||this)if(!0!==u.disabled||"click"!==e.type){for(r=[],n=0;s>n;n++)o=t[n],i=o.selector+" ",void 0===r[i]&&(r[i]=o.needsContext?Q(i,this).index(u)>=0:Q.find(i,this,null,[u]).length),r[i]&&r.push(o);r.length&&a.push({elem:u,handlers:r})}return s<t.length&&a.push({elem:this,handlers:t.slice(s)}),a},props:"altKey bubbles cancelable ctrlKey currentTarget eventPhase metaKey relatedTarget shiftKey target timeStamp view which".split(" "),fixHooks:{},keyHooks:{props:"char charCode key keyCode".split(" "),filter:function(e,t){return null==e.which&&(e.which=null!=t.charCode?t.charCode:t.keyCode),e}},mouseHooks:{props:"button buttons clientX clientY offsetX offsetY pageX pageY screenX screenY toElement".split(" "),filter:function(e,t){var n,r,i,o=t.button;return null==e.pageX&&null!=t.clientX&&(n=e.target.ownerDocument||G,r=n.documentElement,i=n.body,e.pageX=t.clientX+(r&&r.scrollLeft||i&&i.scrollLeft||0)-(r&&r.clientLeft||i&&i.clientLeft||0),e.pageY=t.clientY+(r&&r.scrollTop||i&&i.scrollTop||0)-(r&&r.clientTop||i&&i.clientTop||0)),e.which||void 0===o||(e.which=1&o?1:2&o?3:4&o?2:0),e}},fix:function(e){if(e[Q.expando])return e;var t,n,r,i=e.type,o=e,a=this.fixHooks[i];for(a||(this.fixHooks[i]=a=ke.test(i)?this.mouseHooks:Ce.test(i)?this.keyHooks:{}),r=a.props?this.props.concat(a.props):this.props,e=new Q.Event(o),t=r.length;t--;)n=r[t],e[n]=o[n];return e.target||(e.target=G),3===e.target.nodeType&&(e.target=e.target.parentNode),a.filter?a.filter(e,o):e},special:{load:{noBubble:!0},focus:{trigger:function(){return this!==d()&&this.focus?(this.focus(),!1):void 0},delegateType:"focusin"},blur:{trigger:function(){return this===d()&&this.blur?(this.blur(),!1):void 0},delegateType:"focusout"},click:{trigger:function(){return"checkbox"===this.type&&this.click&&Q.nodeName(this,"input")?(this.click(),!1):void 0},_default:function(e){return Q.nodeName(e.target,"a")}},beforeunload:{postDispatch:function(e){void 0!==e.result&&e.originalEvent&&(e.originalEvent.returnValue=e.result)}}},simulate:function(e,t,n,r){var i=Q.extend(new Q.Event,n,{type:e,isSimulated:!0,originalEvent:{}});r?Q.event.trigger(i,null,t):Q.event.dispatch.call(t,i),i.isDefaultPrevented()&&n.preventDefault()}},Q.removeEvent=function(e,t,n){e.removeEventListener&&e.removeEventListener(t,n,!1)},Q.Event=function(e,t){return this instanceof Q.Event?(e&&e.type?(this.originalEvent=e,this.type=e.type,this.isDefaultPrevented=e.defaultPrevented||void 0===e.defaultPrevented&&!1===e.returnValue?c:l):this.type=e,t&&Q.extend(this,t),this.timeStamp=e&&e.timeStamp||Q.now(),void(this[Q.expando]=!0)):new Q.Event(e,t)},Q.Event.prototype={isDefaultPrevented:l,isPropagationStopped:l,isImmediatePropagationStopped:l,preventDefault:function(){var e=this.originalEvent;this.isDefaultPrevented=c,e&&e.preventDefault&&e.preventDefault()},stopPropagation:function(){var e=this.originalEvent;this.isPropagationStopped=c,e&&e.stopPropagation&&e.stopPropagation()},stopImmediatePropagation:function(){var e=this.originalEvent;this.isImmediatePropagationStopped=c,e&&e.stopImmediatePropagation&&e.stopImmediatePropagation(),this.stopPropagation()}},Q.each({mouseenter:"mouseover",mouseleave:"mouseout",pointerenter:"pointerover",pointerleave:"pointerout"},function(e,t){Q.event.special[e]={delegateType:t,bindType:t,handle:function(e){var n,r=this,i=e.relatedTarget,o=e.handleObj;return(!i||i!==r&&!Q.contains(r,i))&&(e.type=o.origType,n=o.handler.apply(this,arguments),e.type=t),n}}}),V.focusinBubbles||Q.each({focus:"focusin",blur:"focusout"},function(e,t){var n=function(e){Q.event.simulate(t,e.target,Q.event.fix(e),!0)};Q.event.special[t]={setup:function(){var r=this.ownerDocument||this,i=me.access(r,t);i||r.addEventListener(e,n,!0),me.access(r,t,(i||0)+1)},teardown:function(){var r=this.ownerDocument||this,i=me.access(r,t)-1;i?me.access(r,t,i):(r.removeEventListener(e,n,!0),me.remove(r,t))}}}),Q.fn.extend({on:function(e,t,n,r,i){var o,a;if("object"==typeof e){"string"!=typeof t&&(n=n||t,t=void 0);for(a in e)this.on(a,t,n,e[a],i);return this}if(null==n&&null==r?(r=t,n=t=void 0):null==r&&("string"==typeof t?(r=n,n=void 0):(r=n,n=t,t=void 0)),!1===r)r=l;else if(!r)return this;return 1===i&&(o=r,r=function(e){return Q().off(e),o.apply(this,arguments)},r.guid=o.guid||(o.guid=Q.guid++)),this.each(function(){Q.event.add(this,e,r,n,t)})},one:function(e,t,n,r){return this.on(e,t,n,r,1)},off:function(e,t,n){var r,i;if(e&&e.preventDefault&&e.handleObj)return r=e.handleObj,Q(e.delegateTarget).off(r.namespace?r.origType+"."+r.namespace:r.origType,r.selector,r.handler),this;if("object"==typeof e){for(i in e)this.off(i,t,e[i]);return this}return(!1===t||"function"==typeof t)&&(n=t,t=void 0),!1===n&&(n=l),this.each(function(){Q.event.remove(this,e,n,t)})},trigger:function(e,t){return this.each(function(){Q.event.trigger(e,t,this)})},triggerHandler:function(e,t){var n=this[0];return n?Q.event.trigger(e,t,n,!0):void 0}});var Ae=/<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi,Ie=/<([\w:]+)/,Ne=/<|&#?\w+;/,Me=/<(?:script|style|link)/i,Re=/checked\s*(?:[^=]|=\s*.checked.)/i,Oe=/^$|\/(?:java|ecma)script/i,Le=/^true\/(.*)/,De=/^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g,Pe={option:[1,"<select multiple='multiple'>","</select>"],thead:[1,"<table>","</table>"],col:[2,"<table><colgroup>","</colgroup></table>"],tr:[2,"<table><tbody>","</tbody></table>"],td:[3,"<table><tbody><tr>","</tr></tbody></table>"],_default:[0,"",""]};Pe.optgroup=Pe.option,Pe.tbody=Pe.tfoot=Pe.colgroup=Pe.caption=Pe.thead,Pe.th=Pe.td,Q.extend({clone:function(e,t,n){var r,i,o,a,s=e.cloneNode(!0),u=Q.contains(e.ownerDocument,e);if(!(V.noCloneChecked||1!==e.nodeType&&11!==e.nodeType||Q.isXMLDoc(e)))for(a=v(s),o=v(e),r=0,i=o.length;i>r;r++)y(o[r],a[r]);if(t)if(n)for(o=o||v(e),a=a||v(s),r=0,i=o.length;i>r;r++)g(o[r],a[r]);else g(e,s);return(a=v(s,"script")).length>0&&m(a,!u&&v(e,"script")),s},buildFragment:function(e,t,n,r){for(var i,o,a,s,u,c,l=t.createDocumentFragment(),d=[],f=0,h=e.length;h>f;f++)if((i=e[f])||0===i)if("object"===Q.type(i))Q.merge(d,i.nodeType?[i]:i);else if(Ne.test(i)){for(o=o||l.appendChild(t.createElement("div")),a=(Ie.exec(i)||["",""])[1].toLowerCase(),s=Pe[a]||Pe._default,o.innerHTML=s[1]+i.replace(Ae,"<$1></$2>")+s[2],c=s[0];c--;)o=o.lastChild;Q.merge(d,o.childNodes),(o=l.firstChild).textContent=""}else d.push(t.createTextNode(i));for(l.textContent="",f=0;i=d[f++];)if((!r||-1===Q.inArray(i,r))&&(u=Q.contains(i.ownerDocument,i),o=v(l.appendChild(i),"script"),u&&m(o),n))for(c=0;i=o[c++];)Oe.test(i.type||"")&&n.push(i);return l},cleanData:function(e){for(var t,n,r,i,o=Q.event.special,a=0;void 0!==(n=e[a]);a++){if(Q.acceptData(n)&&(i=n[me.expando])&&(t=me.cache[i])){if(t.events)for(r in t.events)o[r]?Q.event.remove(n,r):Q.removeEvent(n,r,t.handle);me.cache[i]&&delete me.cache[i]}delete ge.cache[n[ge.expando]]}}}),Q.fn.extend({text:function(e){return pe(this,function(e){return void 0===e?Q.text(this):this.empty().each(function(){(1===this.nodeType||11===this.nodeType||9===this.nodeType)&&(this.textContent=e)})},null,e,arguments.length)},append:function(){return this.domManip(arguments,function(e){1!==this.nodeType&&11!==this.nodeType&&9!==this.nodeType||f(this,e).appendChild(e)})},prepend:function(){return this.domManip(arguments,function(e){if(1===this.nodeType||11===this.nodeType||9===this.nodeType){var t=f(this,e);t.insertBefore(e,t.firstChild)}})},before:function(){return this.domManip(arguments,function(e){this.parentNode&&this.parentNode.insertBefore(e,this)})},after:function(){return this.domManip(arguments,function(e){this.parentNode&&this.parentNode.insertBefore(e,this.nextSibling)})},remove:function(e,t){for(var n,r=e?Q.filter(e,this):this,i=0;null!=(n=r[i]);i++)t||1!==n.nodeType||Q.cleanData(v(n)),n.parentNode&&(t&&Q.contains(n.ownerDocument,n)&&m(v(n,"script")),n.parentNode.removeChild(n));return this},empty:function(){for(var e,t=0;null!=(e=this[t]);t++)1===e.nodeType&&(Q.cleanData(v(e,!1)),e.textContent="");return this},clone:function(e,t){return e=null!=e&&e,t=null==t?e:t,this.map(function(){return Q.clone(this,e,t)})},html:function(e){return pe(this,function(e){var t=this[0]||{},n=0,r=this.length;if(void 0===e&&1===t.nodeType)return t.innerHTML;if("string"==typeof e&&!Me.test(e)&&!Pe[(Ie.exec(e)||["",""])[1].toLowerCase()]){e=e.replace(Ae,"<$1></$2>");try{for(;r>n;n++)1===(t=this[n]||{}).nodeType&&(Q.cleanData(v(t,!1)),t.innerHTML=e);t=0}catch(e){}}t&&this.empty().append(e)},null,e,arguments.length)},replaceWith:function(){var e=arguments[0];return this.domManip(arguments,function(t){e=this.parentNode,Q.cleanData(v(this)),e&&e.replaceChild(t,this)}),e&&(e.length||e.nodeType)?this:this.remove()},detach:function(e){return this.remove(e,!0)},domManip:function(e,t){e=H.apply([],e);var n,r,i,o,a,s,u=0,c=this.length,l=this,d=c-1,f=e[0],m=Q.isFunction(f);if(m||c>1&&"string"==typeof f&&!V.checkClone&&Re.test(f))return this.each(function(n){var r=l.eq(n);m&&(e[0]=f.call(this,n,r.html())),r.domManip(e,t)});if(c&&(n=Q.buildFragment(e,this[0].ownerDocument,!1,this),r=n.firstChild,1===n.childNodes.length&&(n=r),r)){for(o=(i=Q.map(v(n,"script"),h)).length;c>u;u++)a=n,u!==d&&(a=Q.clone(a,!0,!0),o&&Q.merge(i,v(a,"script"))),t.call(this[u],a,u);if(o)for(s=i[i.length-1].ownerDocument,Q.map(i,p),u=0;o>u;u++)a=i[u],Oe.test(a.type||"")&&!me.access(a,"globalEval")&&Q.contains(s,a)&&(a.src?Q._evalUrl&&Q._evalUrl(a.src):Q.globalEval(a.textContent.replace(De,"")))}return this}}),Q.each({appendTo:"append",prependTo:"prepend",insertBefore:"before",insertAfter:"after",replaceAll:"replaceWith"},function(e,t){Q.fn[e]=function(e){for(var n,r=[],i=Q(e),o=i.length-1,a=0;o>=a;a++)n=a===o?this:this.clone(!0),Q(i[a])[t](n),W.apply(r,n.get());return this.pushStack(r)}});var je,Be={},$e=/^margin/,Fe=new RegExp("^("+be+")(?!px)[a-z%]+$","i"),qe=function(t){return t.ownerDocument.defaultView.opener?t.ownerDocument.defaultView.getComputedStyle(t,null):e.getComputedStyle(t,null)};!function(){function t(){a.style.cssText="-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;display:block;margin-top:1%;top:1%;border:1px;padding:1px;width:4px;position:absolute",a.innerHTML="",i.appendChild(o);var t=e.getComputedStyle(a,null);n="1%"!==t.top,r="4px"===t.width,i.removeChild(o)}var n,r,i=G.documentElement,o=G.createElement("div"),a=G.createElement("div");a.style&&(a.style.backgroundClip="content-box",a.cloneNode(!0).style.backgroundClip="",V.clearCloneStyle="content-box"===a.style.backgroundClip,o.style.cssText="border:0;width:0;height:0;top:0;left:-9999px;margin-top:1px;position:absolute",o.appendChild(a),e.getComputedStyle&&Q.extend(V,{pixelPosition:function(){return t(),n},boxSizingReliable:function(){return null==r&&t(),r},reliableMarginRight:function(){var t,n=a.appendChild(G.createElement("div"));return n.style.cssText=a.style.cssText="-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;display:block;margin:0;border:0;padding:0",n.style.marginRight=n.style.width="0",a.style.width="1px",i.appendChild(o),t=!parseFloat(e.getComputedStyle(n,null).marginRight),i.removeChild(o),a.removeChild(n),t}}))}(),Q.swap=function(e,t,n,r){var i,o,a={};for(o in t)a[o]=e.style[o],e.style[o]=t[o];i=n.apply(e,r||[]);for(o in t)e.style[o]=a[o];return i};var ze=/^(none|table(?!-c[ea]).+)/,He=new RegExp("^("+be+")(.*)$","i"),We=new RegExp("^([+-])=("+be+")","i"),Xe={position:"absolute",visibility:"hidden",display:"block"},Ue={letterSpacing:"0",fontWeight:"400"},Ye=["Webkit","O","Moz","ms"];Q.extend({cssHooks:{opacity:{get:function(e,t){if(t){var n=w(e,"opacity");return""===n?"1":n}}}},cssNumber:{columnCount:!0,fillOpacity:!0,flexGrow:!0,flexShrink:!0,fontWeight:!0,lineHeight:!0,opacity:!0,order:!0,orphans:!0,widows:!0,zIndex:!0,zoom:!0},cssProps:{float:"cssFloat"},style:function(e,t,n,r){if(e&&3!==e.nodeType&&8!==e.nodeType&&e.style){var i,o,a,s=Q.camelCase(t),u=e.style;return t=Q.cssProps[s]||(Q.cssProps[s]=S(u,s)),a=Q.cssHooks[t]||Q.cssHooks[s],void 0===n?a&&"get"in a&&void 0!==(i=a.get(e,!1,r))?i:u[t]:("string"===(o=typeof n)&&(i=We.exec(n))&&(n=(i[1]+1)*i[2]+parseFloat(Q.css(e,t)),o="number"),void(null!=n&&n===n&&("number"!==o||Q.cssNumber[s]||(n+="px"),V.clearCloneStyle||""!==n||0!==t.indexOf("background")||(u[t]="inherit"),a&&"set"in a&&void 0===(n=a.set(e,n,r))||(u[t]=n))))}},css:function(e,t,n,r){var i,o,a,s=Q.camelCase(t);return t=Q.cssProps[s]||(Q.cssProps[s]=S(e.style,s)),(a=Q.cssHooks[t]||Q.cssHooks[s])&&"get"in a&&(i=a.get(e,!0,n)),void 0===i&&(i=w(e,t,r)),"normal"===i&&t in Ue&&(i=Ue[t]),""===n||n?(o=parseFloat(i),!0===n||Q.isNumeric(o)?o||0:i):i}}),Q.each(["height","width"],function(e,t){Q.cssHooks[t]={get:function(e,n,r){return n?ze.test(Q.css(e,"display"))&&0===e.offsetWidth?Q.swap(e,Xe,function(){return T(e,t,r)}):T(e,t,r):void 0},set:function(e,n,r){var i=r&&qe(e);return C(0,n,r?k(e,t,r,"border-box"===Q.css(e,"boxSizing",!1,i),i):0)}}}),Q.cssHooks.marginRight=x(V.reliableMarginRight,function(e,t){return t?Q.swap(e,{display:"inline-block"},w,[e,"marginRight"]):void 0}),Q.each({margin:"",padding:"",border:"Width"},function(e,t){Q.cssHooks[e+t]={expand:function(n){for(var r=0,i={},o="string"==typeof n?n.split(" "):[n];4>r;r++)i[e+_e[r]+t]=o[r]||o[r-2]||o[0];return i}},$e.test(e)||(Q.cssHooks[e+t].set=C)}),Q.fn.extend({css:function(e,t){return pe(this,function(e,t,n){var r,i,o={},a=0;if(Q.isArray(t)){for(r=qe(e),i=t.length;i>a;a++)o[t[a]]=Q.css(e,t[a],!1,r);return o}return void 0!==n?Q.style(e,t,n):Q.css(e,t)},e,t,arguments.length>1)},show:function(){return E(this,!0)},hide:function(){return E(this)},toggle:function(e){return"boolean"==typeof e?e?this.show():this.hide():this.each(function(){we(this)?Q(this).show():Q(this).hide()})}}),Q.Tween=A,A.prototype={constructor:A,init:function(e,t,n,r,i,o){this.elem=e,this.prop=n,this.easing=i||"swing",this.options=t,this.start=this.now=this.cur(),this.end=r,this.unit=o||(Q.cssNumber[n]?"":"px")},cur:function(){var e=A.propHooks[this.prop];return e&&e.get?e.get(this):A.propHooks._default.get(this)},run:function(e){var t,n=A.propHooks[this.prop];return this.pos=t=this.options.duration?Q.easing[this.easing](e,this.options.duration*e,0,1,this.options.duration):e,this.now=(this.end-this.start)*t+this.start,this.options.step&&this.options.step.call(this.elem,this.now,this),n&&n.set?n.set(this):A.propHooks._default.set(this),this}},A.prototype.init.prototype=A.prototype,A.propHooks={_default:{get:function(e){var t;return null==e.elem[e.prop]||e.elem.style&&null!=e.elem.style[e.prop]?(t=Q.css(e.elem,e.prop,""))&&"auto"!==t?t:0:e.elem[e.prop]},set:function(e){Q.fx.step[e.prop]?Q.fx.step[e.prop](e):e.elem.style&&(null!=e.elem.style[Q.cssProps[e.prop]]||Q.cssHooks[e.prop])?Q.style(e.elem,e.prop,e.now+e.unit):e.elem[e.prop]=e.now}}},A.propHooks.scrollTop=A.propHooks.scrollLeft={set:function(e){e.elem.nodeType&&e.elem.parentNode&&(e.elem[e.prop]=e.now)}},Q.easing={linear:function(e){return e},swing:function(e){return.5-Math.cos(e*Math.PI)/2}},Q.fx=A.prototype.init,Q.fx.step={};var Ke,Ve,Ge=/^(?:toggle|show|hide)$/,Je=new RegExp("^(?:([+-])=|)("+be+")([a-z%]*)$","i"),Qe=/queueHooks$/,Ze=[function(e,t,n){var r,i,o,a,s,u,c,l=this,d={},f=e.style,h=e.nodeType&&we(e),p=me.get(e,"fxshow");n.queue||(null==(s=Q._queueHooks(e,"fx")).unqueued&&(s.unqueued=0,u=s.empty.fire,s.empty.fire=function(){s.unqueued||u()}),s.unqueued++,l.always(function(){l.always(function(){s.unqueued--,Q.queue(e,"fx").length||s.empty.fire()})})),1===e.nodeType&&("height"in t||"width"in t)&&(n.overflow=[f.overflow,f.overflowX,f.overflowY],"inline"===("none"===(c=Q.css(e,"display"))?me.get(e,"olddisplay")||_(e.nodeName):c)&&"none"===Q.css(e,"float")&&(f.display="inline-block")),n.overflow&&(f.overflow="hidden",l.always(function(){f.overflow=n.overflow[0],f.overflowX=n.overflow[1],f.overflowY=n.overflow[2]}));for(r in t)if(i=t[r],Ge.exec(i)){if(delete t[r],o=o||"toggle"===i,i===(h?"hide":"show")){if("show"!==i||!p||void 0===p[r])continue;h=!0}d[r]=p&&p[r]||Q.style(e,r)}else c=void 0;if(Q.isEmptyObject(d))"inline"===("none"===c?_(e.nodeName):c)&&(f.display=c);else{p?"hidden"in p&&(h=p.hidden):p=me.access(e,"fxshow",{}),o&&(p.hidden=!h),h?Q(e).show():l.done(function(){Q(e).hide()}),l.done(function(){var t;me.remove(e,"fxshow");for(t in d)Q.style(e,t,d[t])});for(r in d)a=M(h?p[r]:0,r,l),r in p||(p[r]=a.start,h&&(a.end=a.start,a.start="width"===r||"height"===r?1:0))}}],et={"*":[function(e,t){var n=this.createTween(e,t),r=n.cur(),i=Je.exec(t),o=i&&i[3]||(Q.cssNumber[e]?"":"px"),a=(Q.cssNumber[e]||"px"!==o&&+r)&&Je.exec(Q.css(n.elem,e)),s=1,u=20;if(a&&a[3]!==o){o=o||a[3],i=i||[],a=+r||1;do{s=s||".5",a/=s,Q.style(n.elem,e,a+o)}while(s!==(s=n.cur()/r)&&1!==s&&--u)}return i&&(a=n.start=+a||+r||0,n.unit=o,n.end=i[1]?a+(i[1]+1)*i[2]:+i[2]),n}]};Q.Animation=Q.extend(O,{tweener:function(e,t){Q.isFunction(e)?(t=e,e=["*"]):e=e.split(" ");for(var n,r=0,i=e.length;i>r;r++)n=e[r],et[n]=et[n]||[],et[n].unshift(t)},prefilter:function(e,t){t?Ze.unshift(e):Ze.push(e)}}),Q.speed=function(e,t,n){var r=e&&"object"==typeof e?Q.extend({},e):{complete:n||!n&&t||Q.isFunction(e)&&e,duration:e,easing:n&&t||t&&!Q.isFunction(t)&&t};return r.duration=Q.fx.off?0:"number"==typeof r.duration?r.duration:r.duration in Q.fx.speeds?Q.fx.speeds[r.duration]:Q.fx.speeds._default,(null==r.queue||!0===r.queue)&&(r.queue="fx"),r.old=r.complete,r.complete=function(){Q.isFunction(r.old)&&r.old.call(this),r.queue&&Q.dequeue(this,r.queue)},r},Q.fn.extend({fadeTo:function(e,t,n,r){return this.filter(we).css("opacity",0).show().end().animate({opacity:t},e,n,r)},animate:function(e,t,n,r){var i=Q.isEmptyObject(e),o=Q.speed(t,n,r),a=function(){var t=O(this,Q.extend({},e),o);(i||me.get(this,"finish"))&&t.stop(!0)};return a.finish=a,i||!1===o.queue?this.each(a):this.queue(o.queue,a)},stop:function(e,t,n){var r=function(e){var t=e.stop;delete e.stop,t(n)};return"string"!=typeof e&&(n=t,t=e,e=void 0),t&&!1!==e&&this.queue(e||"fx",[]),this.each(function(){var t=!0,i=null!=e&&e+"queueHooks",o=Q.timers,a=me.get(this);if(i)a[i]&&a[i].stop&&r(a[i]);else for(i in a)a[i]&&a[i].stop&&Qe.test(i)&&r(a[i]);for(i=o.length;i--;)o[i].elem!==this||null!=e&&o[i].queue!==e||(o[i].anim.stop(n),t=!1,o.splice(i,1));(t||!n)&&Q.dequeue(this,e)})},finish:function(e){return!1!==e&&(e=e||"fx"),this.each(function(){var t,n=me.get(this),r=n[e+"queue"],i=n[e+"queueHooks"],o=Q.timers,a=r?r.length:0;for(n.finish=!0,Q.queue(this,e,[]),i&&i.stop&&i.stop.call(this,!0),t=o.length;t--;)o[t].elem===this&&o[t].queue===e&&(o[t].anim.stop(!0),o.splice(t,1));for(t=0;a>t;t++)r[t]&&r[t].finish&&r[t].finish.call(this);delete n.finish})}}),Q.each(["toggle","show","hide"],function(e,t){var n=Q.fn[t];Q.fn[t]=function(e,r,i){return null==e||"boolean"==typeof e?n.apply(this,arguments):this.animate(N(t,!0),e,r,i)}}),Q.each({slideDown:N("show"),slideUp:N("hide"),slideToggle:N("toggle"),fadeIn:{opacity:"show"},fadeOut:{opacity:"hide"},fadeToggle:{opacity:"toggle"}},function(e,t){Q.fn[e]=function(e,n,r){return this.animate(t,e,n,r)}}),Q.timers=[],Q.fx.tick=function(){var e,t=0,n=Q.timers;for(Ke=Q.now();t<n.length;t++)(e=n[t])()||n[t]!==e||n.splice(t--,1);n.length||Q.fx.stop(),Ke=void 0},Q.fx.timer=function(e){Q.timers.push(e),e()?Q.fx.start():Q.timers.pop()},Q.fx.interval=13,Q.fx.start=function(){Ve||(Ve=setInterval(Q.fx.tick,Q.fx.interval))},Q.fx.stop=function(){clearInterval(Ve),Ve=null},Q.fx.speeds={slow:600,fast:200,_default:400},Q.fn.delay=function(e,t){return e=Q.fx?Q.fx.speeds[e]||e:e,t=t||"fx",this.queue(t,function(t,n){var r=setTimeout(t,e);n.stop=function(){clearTimeout(r)}})},function(){var e=G.createElement("input"),t=G.createElement("select"),n=t.appendChild(G.createElement("option"));e.type="checkbox",V.checkOn=""!==e.value,V.optSelected=n.selected,t.disabled=!0,V.optDisabled=!n.disabled,(e=G.createElement("input")).value="t",e.type="radio",V.radioValue="t"===e.value}();var tt,nt=Q.expr.attrHandle;Q.fn.extend({attr:function(e,t){return pe(this,Q.attr,e,t,arguments.length>1)},removeAttr:function(e){return this.each(function(){Q.removeAttr(this,e)})}}),Q.extend({attr:function(e,t,n){var r,i,o=e.nodeType;if(e&&3!==o&&8!==o&&2!==o)return typeof e.getAttribute===Se?Q.prop(e,t,n):(1===o&&Q.isXMLDoc(e)||(t=t.toLowerCase(),r=Q.attrHooks[t]||(Q.expr.match.bool.test(t)?tt:void 0)),void 0===n?r&&"get"in r&&null!==(i=r.get(e,t))?i:null==(i=Q.find.attr(e,t))?void 0:i:null!==n?r&&"set"in r&&void 0!==(i=r.set(e,n,t))?i:(e.setAttribute(t,n+""),n):void Q.removeAttr(e,t))},removeAttr:function(e,t){var n,r,i=0,o=t&&t.match(de);if(o&&1===e.nodeType)for(;n=o[i++];)r=Q.propFix[n]||n,Q.expr.match.bool.test(n)&&(e[r]=!1),e.removeAttribute(n)},attrHooks:{type:{set:function(e,t){if(!V.radioValue&&"radio"===t&&Q.nodeName(e,"input")){var n=e.value;return e.setAttribute("type",t),n&&(e.value=n),t}}}}}),tt={set:function(e,t,n){return!1===t?Q.removeAttr(e,n):e.setAttribute(n,n),n}},Q.each(Q.expr.match.bool.source.match(/\w+/g),function(e,t){var n=nt[t]||Q.find.attr;nt[t]=function(e,t,r){var i,o;return r||(o=nt[t],nt[t]=i,i=null!=n(e,t,r)?t.toLowerCase():null,nt[t]=o),i}});var rt=/^(?:input|select|textarea|button)$/i;Q.fn.extend({prop:function(e,t){return pe(this,Q.prop,e,t,arguments.length>1)},removeProp:function(e){return this.each(function(){delete this[Q.propFix[e]||e]})}}),Q.extend({propFix:{for:"htmlFor",class:"className"},prop:function(e,t,n){var r,i,o=e.nodeType;if(e&&3!==o&&8!==o&&2!==o)return(1!==o||!Q.isXMLDoc(e))&&(t=Q.propFix[t]||t,i=Q.propHooks[t]),void 0!==n?i&&"set"in i&&void 0!==(r=i.set(e,n,t))?r:e[t]=n:i&&"get"in i&&null!==(r=i.get(e,t))?r:e[t]},propHooks:{tabIndex:{get:function(e){return e.hasAttribute("tabindex")||rt.test(e.nodeName)||e.href?e.tabIndex:-1}}}}),V.optSelected||(Q.propHooks.selected={get:function(e){var t=e.parentNode;return t&&t.parentNode&&t.parentNode.selectedIndex,null}}),Q.each(["tabIndex","readOnly","maxLength","cellSpacing","cellPadding","rowSpan","colSpan","useMap","frameBorder","contentEditable"],function(){Q.propFix[this.toLowerCase()]=this});var it=/[\t\r\n\f]/g;Q.fn.extend({addClass:function(e){var t,n,r,i,o,a,s="string"==typeof e&&e,u=0,c=this.length;if(Q.isFunction(e))return this.each(function(t){Q(this).addClass(e.call(this,t,this.className))});if(s)for(t=(e||"").match(de)||[];c>u;u++)if(n=this[u],r=1===n.nodeType&&(n.className?(" "+n.className+" ").replace(it," "):" ")){for(o=0;i=t[o++];)r.indexOf(" "+i+" ")<0&&(r+=i+" ");a=Q.trim(r),n.className!==a&&(n.className=a)}return this},removeClass:function(e){var t,n,r,i,o,a,s=0===arguments.length||"string"==typeof e&&e,u=0,c=this.length;if(Q.isFunction(e))return this.each(function(t){Q(this).removeClass(e.call(this,t,this.className))});if(s)for(t=(e||"").match(de)||[];c>u;u++)if(n=this[u],r=1===n.nodeType&&(n.className?(" "+n.className+" ").replace(it," "):"")){for(o=0;i=t[o++];)for(;r.indexOf(" "+i+" ")>=0;)r=r.replace(" "+i+" "," ");a=e?Q.trim(r):"",n.className!==a&&(n.className=a)}return this},toggleClass:function(e,t){var n=typeof e;return"boolean"==typeof t&&"string"===n?t?this.addClass(e):this.removeClass(e):this.each(Q.isFunction(e)?function(n){Q(this).toggleClass(e.call(this,n,this.className,t),t)}:function(){if("string"===n)for(var t,r=0,i=Q(this),o=e.match(de)||[];t=o[r++];)i.hasClass(t)?i.removeClass(t):i.addClass(t);else(n===Se||"boolean"===n)&&(this.className&&me.set(this,"__className__",this.className),this.className=this.className||!1===e?"":me.get(this,"__className__")||"")})},hasClass:function(e){for(var t=" "+e+" ",n=0,r=this.length;r>n;n++)if(1===this[n].nodeType&&(" "+this[n].className+" ").replace(it," ").indexOf(t)>=0)return!0;return!1}});var ot=/\r/g;Q.fn.extend({val:function(e){var t,n,r,i=this[0];return arguments.length?(r=Q.isFunction(e),this.each(function(n){var i;1===this.nodeType&&(null==(i=r?e.call(this,n,Q(this).val()):e)?i="":"number"==typeof i?i+="":Q.isArray(i)&&(i=Q.map(i,function(e){return null==e?"":e+""})),(t=Q.valHooks[this.type]||Q.valHooks[this.nodeName.toLowerCase()])&&"set"in t&&void 0!==t.set(this,i,"value")||(this.value=i))})):i?(t=Q.valHooks[i.type]||Q.valHooks[i.nodeName.toLowerCase()])&&"get"in t&&void 0!==(n=t.get(i,"value"))?n:"string"==typeof(n=i.value)?n.replace(ot,""):null==n?"":n:void 0}}),Q.extend({valHooks:{option:{get:function(e){var t=Q.find.attr(e,"value");return null!=t?t:Q.trim(Q.text(e))}},select:{get:function(e){for(var t,n,r=e.options,i=e.selectedIndex,o="select-one"===e.type||0>i,a=o?null:[],s=o?i+1:r.length,u=0>i?s:o?i:0;s>u;u++)if(!(!(n=r[u]).selected&&u!==i||(V.optDisabled?n.disabled:null!==n.getAttribute("disabled"))||n.parentNode.disabled&&Q.nodeName(n.parentNode,"optgroup"))){if(t=Q(n).val(),o)return t;a.push(t)}return a},set:function(e,t){for(var n,r,i=e.options,o=Q.makeArray(t),a=i.length;a--;)r=i[a],(r.selected=Q.inArray(r.value,o)>=0)&&(n=!0);return n||(e.selectedIndex=-1),o}}}}),Q.each(["radio","checkbox"],function(){Q.valHooks[this]={set:function(e,t){return Q.isArray(t)?e.checked=Q.inArray(Q(e).val(),t)>=0:void 0}},V.checkOn||(Q.valHooks[this].get=function(e){return null===e.getAttribute("value")?"on":e.value})}),Q.each("blur focus focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup error contextmenu".split(" "),function(e,t){Q.fn[t]=function(e,n){return arguments.length>0?this.on(t,null,e,n):this.trigger(t)}}),Q.fn.extend({hover:function(e,t){return this.mouseenter(e).mouseleave(t||e)},bind:function(e,t,n){return this.on(e,null,t,n)},unbind:function(e,t){return this.off(e,null,t)},delegate:function(e,t,n,r){return this.on(t,e,n,r)},undelegate:function(e,t,n){return 1===arguments.length?this.off(e,"**"):this.off(t,e||"**",n)}});var at=Q.now(),st=/\?/;Q.parseJSON=function(e){return JSON.parse(e+"")},Q.parseXML=function(e){var t,n;if(!e||"string"!=typeof e)return null;try{n=new DOMParser,t=n.parseFromString(e,"text/xml")}catch(e){t=void 0}return(!t||t.getElementsByTagName("parsererror").length)&&Q.error("Invalid XML: "+e),t};var ut=/#.*$/,ct=/([?&])_=[^&]*/,lt=/^(.*?):[ \t]*([^\r\n]*)$/gm,dt=/^(?:GET|HEAD)$/,ft=/^\/\//,ht=/^([\w.+-]+:)(?:\/\/(?:[^\/?#]*@|)([^\/?#:]*)(?::(\d+)|)|)/,pt={},mt={},gt="*/".concat("*"),vt=e.location.href,yt=ht.exec(vt.toLowerCase())||[];Q.extend({active:0,lastModified:{},etag:{},ajaxSettings:{url:vt,type:"GET",isLocal:/^(?:about|app|app-storage|.+-extension|file|res|widget):$/.test(yt[1]),global:!0,processData:!0,async:!0,contentType:"application/x-www-form-urlencoded; charset=UTF-8",accepts:{"*":gt,text:"text/plain",html:"text/html",xml:"application/xml, text/xml",json:"application/json, text/javascript"},contents:{xml:/xml/,html:/html/,json:/json/},responseFields:{xml:"responseXML",text:"responseText",json:"responseJSON"},converters:{"* text":String,"text html":!0,"text json":Q.parseJSON,"text xml":Q.parseXML},flatOptions:{url:!0,context:!0}},ajaxSetup:function(e,t){return t?P(P(e,Q.ajaxSettings),t):P(Q.ajaxSettings,e)},ajaxPrefilter:L(pt),ajaxTransport:L(mt),ajax:function(e,t){function n(e,t,n,a){var u,l,v,y,_,x=t;2!==b&&(b=2,s&&clearTimeout(s),r=void 0,o=a||"",w.readyState=e>0?4:0,u=e>=200&&300>e||304===e,n&&(y=j(d,w,n)),y=B(d,y,w,u),u?(d.ifModified&&((_=w.getResponseHeader("Last-Modified"))&&(Q.lastModified[i]=_),(_=w.getResponseHeader("etag"))&&(Q.etag[i]=_)),204===e||"HEAD"===d.type?x="nocontent":304===e?x="notmodified":(x=y.state,l=y.data,v=y.error,u=!v)):(v=x,(e||!x)&&(x="error",0>e&&(e=0))),w.status=e,w.statusText=(t||x)+"",u?p.resolveWith(f,[l,x,w]):p.rejectWith(f,[w,x,v]),w.statusCode(g),g=void 0,c&&h.trigger(u?"ajaxSuccess":"ajaxError",[w,d,u?l:v]),m.fireWith(f,[w,x]),c&&(h.trigger("ajaxComplete",[w,d]),--Q.active||Q.event.trigger("ajaxStop")))}"object"==typeof e&&(t=e,e=void 0),t=t||{};var r,i,o,a,s,u,c,l,d=Q.ajaxSetup({},t),f=d.context||d,h=d.context&&(f.nodeType||f.jquery)?Q(f):Q.event,p=Q.Deferred(),m=Q.Callbacks("once memory"),g=d.statusCode||{},v={},y={},b=0,_="canceled",w={readyState:0,getResponseHeader:function(e){var t;if(2===b){if(!a)for(a={};t=lt.exec(o);)a[t[1].toLowerCase()]=t[2];t=a[e.toLowerCase()]}return null==t?null:t},getAllResponseHeaders:function(){return 2===b?o:null},setRequestHeader:function(e,t){var n=e.toLowerCase();return b||(e=y[n]=y[n]||e,v[e]=t),this},overrideMimeType:function(e){return b||(d.mimeType=e),this},statusCode:function(e){var t;if(e)if(2>b)for(t in e)g[t]=[g[t],e[t]];else w.always(e[w.status]);return this},abort:function(e){var t=e||_;return r&&r.abort(t),n(0,t),this}};if(p.promise(w).complete=m.add,w.success=w.done,w.error=w.fail,d.url=((e||d.url||vt)+"").replace(ut,"").replace(ft,yt[1]+"//"),d.type=t.method||t.type||d.method||d.type,d.dataTypes=Q.trim(d.dataType||"*").toLowerCase().match(de)||[""],null==d.crossDomain&&(u=ht.exec(d.url.toLowerCase()),d.crossDomain=!(!u||u[1]===yt[1]&&u[2]===yt[2]&&(u[3]||("http:"===u[1]?"80":"443"))===(yt[3]||("http:"===yt[1]?"80":"443")))),d.data&&d.processData&&"string"!=typeof d.data&&(d.data=Q.param(d.data,d.traditional)),D(pt,d,t,w),2===b)return w;(c=Q.event&&d.global)&&0==Q.active++&&Q.event.trigger("ajaxStart"),d.type=d.type.toUpperCase(),d.hasContent=!dt.test(d.type),i=d.url,d.hasContent||(d.data&&(i=d.url+=(st.test(i)?"&":"?")+d.data,delete d.data),!1===d.cache&&(d.url=ct.test(i)?i.replace(ct,"$1_="+at++):i+(st.test(i)?"&":"?")+"_="+at++)),d.ifModified&&(Q.lastModified[i]&&w.setRequestHeader("If-Modified-Since",Q.lastModified[i]),Q.etag[i]&&w.setRequestHeader("If-None-Match",Q.etag[i])),(d.data&&d.hasContent&&!1!==d.contentType||t.contentType)&&w.setRequestHeader("Content-Type",d.contentType),w.setRequestHeader("Accept",d.dataTypes[0]&&d.accepts[d.dataTypes[0]]?d.accepts[d.dataTypes[0]]+("*"!==d.dataTypes[0]?", "+gt+"; q=0.01":""):d.accepts["*"]);for(l in d.headers)w.setRequestHeader(l,d.headers[l]);if(d.beforeSend&&(!1===d.beforeSend.call(f,w,d)||2===b))return w.abort();_="abort";for(l in{success:1,error:1,complete:1})w[l](d[l]);if(r=D(mt,d,t,w)){w.readyState=1,c&&h.trigger("ajaxSend",[w,d]),d.async&&d.timeout>0&&(s=setTimeout(function(){w.abort("timeout")},d.timeout));try{b=1,r.send(v,n)}catch(e){if(!(2>b))throw e;n(-1,e)}}else n(-1,"No Transport");return w},getJSON:function(e,t,n){return Q.get(e,t,n,"json")},getScript:function(e,t){return Q.get(e,void 0,t,"script")}}),Q.each(["get","post"],function(e,t){Q[t]=function(e,n,r,i){return Q.isFunction(n)&&(i=i||r,r=n,n=void 0),Q.ajax({url:e,type:t,dataType:i,data:n,success:r})}}),Q._evalUrl=function(e){return Q.ajax({url:e,type:"GET",dataType:"script",async:!1,global:!1,throws:!0})},Q.fn.extend({wrapAll:function(e){var t;return Q.isFunction(e)?this.each(function(t){Q(this).wrapAll(e.call(this,t))}):(this[0]&&(t=Q(e,this[0].ownerDocument).eq(0).clone(!0),this[0].parentNode&&t.insertBefore(this[0]),t.map(function(){for(var e=this;e.firstElementChild;)e=e.firstElementChild;return e}).append(this)),this)},wrapInner:function(e){return this.each(Q.isFunction(e)?function(t){Q(this).wrapInner(e.call(this,t))}:function(){var t=Q(this),n=t.contents();n.length?n.wrapAll(e):t.append(e)})},wrap:function(e){var t=Q.isFunction(e);return this.each(function(n){Q(this).wrapAll(t?e.call(this,n):e)})},unwrap:function(){return this.parent().each(function(){Q.nodeName(this,"body")||Q(this).replaceWith(this.childNodes)}).end()}}),Q.expr.filters.hidden=function(e){return e.offsetWidth<=0&&e.offsetHeight<=0},Q.expr.filters.visible=function(e){return!Q.expr.filters.hidden(e)};var bt=/%20/g,_t=/\[\]$/,wt=/\r?\n/g,xt=/^(?:submit|button|image|reset|file)$/i,St=/^(?:input|select|textarea|keygen)/i;Q.param=function(e,t){var n,r=[],i=function(e,t){t=Q.isFunction(t)?t():null==t?"":t,r[r.length]=encodeURIComponent(e)+"="+encodeURIComponent(t)};if(void 0===t&&(t=Q.ajaxSettings&&Q.ajaxSettings.traditional),Q.isArray(e)||e.jquery&&!Q.isPlainObject(e))Q.each(e,function(){i(this.name,this.value)});else for(n in e)$(n,e[n],t,i);return r.join("&").replace(bt,"+")},Q.fn.extend({serialize:function(){return Q.param(this.serializeArray())},serializeArray:function(){return this.map(function(){var e=Q.prop(this,"elements");return e?Q.makeArray(e):this}).filter(function(){var e=this.type;return this.name&&!Q(this).is(":disabled")&&St.test(this.nodeName)&&!xt.test(e)&&(this.checked||!xe.test(e))}).map(function(e,t){var n=Q(this).val();return null==n?null:Q.isArray(n)?Q.map(n,function(e){return{name:t.name,value:e.replace(wt,"\r\n")}}):{name:t.name,value:n.replace(wt,"\r\n")}}).get()}}),Q.ajaxSettings.xhr=function(){try{return new XMLHttpRequest}catch(e){}};var Ct=0,kt={},Tt={0:200,1223:204},Et=Q.ajaxSettings.xhr();e.attachEvent&&e.attachEvent("onunload",function(){for(var e in kt)kt[e]()}),V.cors=!!Et&&"withCredentials"in Et,V.ajax=Et=!!Et,Q.ajaxTransport(function(e){var t;return V.cors||Et&&!e.crossDomain?{send:function(n,r){var i,o=e.xhr(),a=++Ct;if(o.open(e.type,e.url,e.async,e.username,e.password),e.xhrFields)for(i in e.xhrFields)o[i]=e.xhrFields[i];e.mimeType&&o.overrideMimeType&&o.overrideMimeType(e.mimeType),e.crossDomain||n["X-Requested-With"]||(n["X-Requested-With"]="XMLHttpRequest");for(i in n)o.setRequestHeader(i,n[i]);t=function(e){return function(){t&&(delete kt[a],t=o.onload=o.onerror=null,"abort"===e?o.abort():"error"===e?r(o.status,o.statusText):r(Tt[o.status]||o.status,o.statusText,"string"==typeof o.responseText?{text:o.responseText}:void 0,o.getAllResponseHeaders()))}},o.onload=t(),o.onerror=t("error"),t=kt[a]=t("abort");try{o.send(e.hasContent&&e.data||null)}catch(e){if(t)throw e}},abort:function(){t&&t()}}:void 0}),Q.ajaxSetup({accepts:{script:"text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"},contents:{script:/(?:java|ecma)script/},converters:{"text script":function(e){return Q.globalEval(e),e}}}),Q.ajaxPrefilter("script",function(e){void 0===e.cache&&(e.cache=!1),e.crossDomain&&(e.type="GET")}),Q.ajaxTransport("script",function(e){if(e.crossDomain){var t,n;return{send:function(r,i){t=Q("<script>").prop({async:!0,charset:e.scriptCharset,src:e.url}).on("load error",n=function(e){t.remove(),n=null,e&&i("error"===e.type?404:200,e.type)}),G.head.appendChild(t[0])},abort:function(){n&&n()}}}});var At=[],It=/(=)\?(?=&|$)|\?\?/;Q.ajaxSetup({jsonp:"callback",jsonpCallback:function(){var e=At.pop()||Q.expando+"_"+at++;return this[e]=!0,e}}),Q.ajaxPrefilter("json jsonp",function(t,n,r){var i,o,a,s=!1!==t.jsonp&&(It.test(t.url)?"url":"string"==typeof t.data&&!(t.contentType||"").indexOf("application/x-www-form-urlencoded")&&It.test(t.data)&&"data");return s||"jsonp"===t.dataTypes[0]?(i=t.jsonpCallback=Q.isFunction(t.jsonpCallback)?t.jsonpCallback():t.jsonpCallback,s?t[s]=t[s].replace(It,"$1"+i):!1!==t.jsonp&&(t.url+=(st.test(t.url)?"&":"?")+t.jsonp+"="+i),t.converters["script json"]=function(){return a||Q.error(i+" was not called"),a[0]},t.dataTypes[0]="json",o=e[i],e[i]=function(){a=arguments},r.always(function(){e[i]=o,t[i]&&(t.jsonpCallback=n.jsonpCallback,At.push(i)),a&&Q.isFunction(o)&&o(a[0]),a=o=void 0}),"script"):void 0}),Q.parseHTML=function(e,t,n){if(!e||"string"!=typeof e)return null;"boolean"==typeof t&&(n=t,t=!1),t=t||G;var r=oe.exec(e),i=!n&&[];return r?[t.createElement(r[1])]:(r=Q.buildFragment([e],t,i),i&&i.length&&Q(i).remove(),Q.merge([],r.childNodes))};var Nt=Q.fn.load;Q.fn.load=function(e,t,n){if("string"!=typeof e&&Nt)return Nt.apply(this,arguments);var r,i,o,a=this,s=e.indexOf(" ");return s>=0&&(r=Q.trim(e.slice(s)),e=e.slice(0,s)),Q.isFunction(t)?(n=t,t=void 0):t&&"object"==typeof t&&(i="POST"),a.length>0&&Q.ajax({url:e,type:i,dataType:"html",data:t}).done(function(e){o=arguments,a.html(r?Q("<div>").append(Q.parseHTML(e)).find(r):e)}).complete(n&&function(e,t){a.each(n,o||[e.responseText,t,e])}),this},Q.each(["ajaxStart","ajaxStop","ajaxComplete","ajaxError","ajaxSuccess","ajaxSend"],function(e,t){Q.fn[t]=function(e){return this.on(t,e)}}),Q.expr.filters.animated=function(e){return Q.grep(Q.timers,function(t){return e===t.elem}).length};var Mt=e.document.documentElement;Q.offset={setOffset:function(e,t,n){var r,i,o,a,s,u,c=Q.css(e,"position"),l=Q(e),d={};"static"===c&&(e.style.position="relative"),s=l.offset(),o=Q.css(e,"top"),u=Q.css(e,"left"),("absolute"===c||"fixed"===c)&&(o+u).indexOf("auto")>-1?(r=l.position(),a=r.top,i=r.left):(a=parseFloat(o)||0,i=parseFloat(u)||0),Q.isFunction(t)&&(t=t.call(e,n,s)),null!=t.top&&(d.top=t.top-s.top+a),null!=t.left&&(d.left=t.left-s.left+i),"using"in t?t.using.call(e,d):l.css(d)}},Q.fn.extend({offset:function(e){if(arguments.length)return void 0===e?this:this.each(function(t){Q.offset.setOffset(this,e,t)});var t,n,r=this[0],i={top:0,left:0},o=r&&r.ownerDocument;return o?(t=o.documentElement,Q.contains(t,r)?(typeof r.getBoundingClientRect!==Se&&(i=r.getBoundingClientRect()),n=F(o),{top:i.top+n.pageYOffset-t.clientTop,left:i.left+n.pageXOffset-t.clientLeft}):i):void 0},position:function(){if(this[0]){var e,t,n=this[0],r={top:0,left:0};return"fixed"===Q.css(n,"position")?t=n.getBoundingClientRect():(e=this.offsetParent(),t=this.offset(),Q.nodeName(e[0],"html")||(r=e.offset()),r.top+=Q.css(e[0],"borderTopWidth",!0),r.left+=Q.css(e[0],"borderLeftWidth",!0)),{top:t.top-r.top-Q.css(n,"marginTop",!0),left:t.left-r.left-Q.css(n,"marginLeft",!0)}}},offsetParent:function(){return this.map(function(){for(var e=this.offsetParent||Mt;e&&!Q.nodeName(e,"html")&&"static"===Q.css(e,"position");)e=e.offsetParent;return e||Mt})}}),Q.each({scrollLeft:"pageXOffset",scrollTop:"pageYOffset"},function(t,n){var r="pageYOffset"===n;Q.fn[t]=function(i){return pe(this,function(t,i,o){var a=F(t);return void 0===o?a?a[n]:t[i]:void(a?a.scrollTo(r?e.pageXOffset:o,r?o:e.pageYOffset):t[i]=o)},t,i,arguments.length,null)}}),Q.each(["top","left"],function(e,t){Q.cssHooks[t]=x(V.pixelPosition,function(e,n){return n?(n=w(e,t),Fe.test(n)?Q(e).position()[t]+"px":n):void 0})}),Q.each({Height:"height",Width:"width"},function(e,t){Q.each({padding:"inner"+e,content:t,"":"outer"+e},function(n,r){Q.fn[r]=function(r,i){var o=arguments.length&&(n||"boolean"!=typeof r),a=n||(!0===r||!0===i?"margin":"border");return pe(this,function(t,n,r){var i;return Q.isWindow(t)?t.document.documentElement["client"+e]:9===t.nodeType?(i=t.documentElement,Math.max(t.body["scroll"+e],i["scroll"+e],t.body["offset"+e],i["offset"+e],i["client"+e])):void 0===r?Q.css(t,n,a):Q.style(t,n,r,a)},t,o?r:void 0,o,null)}})}),Q.fn.size=function(){return this.length},Q.fn.andSelf=Q.fn.addBack,"function"==typeof define&&define.amd&&define("jquery",[],function(){return Q});var Rt=e.jQuery,Ot=e.$;return Q.noConflict=function(t){return e.$===Q&&(e.$=Ot),t&&e.jQuery===Q&&(e.jQuery=Rt),Q},typeof t===Se&&(e.jQuery=e.$=Q),Q});var $window=$(window),$document=$(document),$html=$("html"),$body=$("body"),$body_preventMouseover=!1,$body_isTouch=!1,_g={isinit:!1,isload:!1,isfocus:!document.hasFocus||document.hasFocus(),everfocus:!document.hasFocus||document.hasFocus(),posttime:[],time_format:"m月d日",time_format2:"Y年m月d日",time_diff_range:3456e5,time_diff_range2:31536e6,last:{width:0,height:0},interval:{},initSize:20,baseSize:10,baseMultiper:1,lastBaseSize:10,pixelRatio:window.devicePixelRatio?window.devicePixelRatio:screen.deviceXDPI?screen.deviceXDPI/72:1,maxMultiper:Math.max(1,Math.ceil((screen.availHeight||screen.height||$window.height())/800*10)/10),strings:{},inputIndex:0,lang:"zh_cn",_:!1},_p={comp:{},el:{}},_frame={dom:{},init_all:function(){for(var e in _frame)_frame[e].init&&_frame[e].init()}},_module={},_page={},_data={};if(void 0===_huScrolled)var _huScrolled={};if(!_huScrolled.ver||_huScrolled.ver<1.2){_huScrolled.ver=1.2,_huScrolled.timeout=!1,_huScrolled.throttle=_huScrolled.throttle||100;var bIEnew=/\(Windows NT [0-9\.]+.+Trident\/[0-9\.]+.+rv.{1}[0-9\.]+\)/.test(navigator.userAgent),el=(bIE=!(!window.attachEvent||window.opera)||bIEnew)&&parseFloat(navigator.appVersion.split("MSIE")[1])<9?$window:$document;el.on({"scroll.huScrolled":function(){if(_huScrolled.timeout)return!0;_huScrolled.timeout=setTimeout(function(){$document.trigger("huScrolled"),_huScrolled.timeout=null},_huScrolled.throttle)}})}if(void 0===_huResized)var _huResized={};if((!_huResized.ver||_huResized.ver<2.1)&&(_huResized.ver=2.1,_huResized.throttle=_huResized.throttle||300,_huResized.startSize={},_huResized.viewport=function(){var e=window,t="inner";return"innerWidth"in window||(t="client",e=document.documentElement||document.body),{width:e[t+"Width"],height:e[t+"Height"]}},$window.on({"resize.huResized":function(e,t){t=t||{};var n=_huResized.viewport(),r=_huResized.startSize.width||n.width,i=_huResized.startSize.height||n.height,o=Math.abs(n.width-r)>50||Math.abs(n.height-i)>50;_huResized.timeout&&(clearTimeout(_huResized.timeout),_huResized.timeout=null),_huResized.topmask||(_huResized.topmask=$("<div/>").css({"z-index":"16777269",display:"none",position:"fixed",width:"100%",height:"100%",top:0,left:0,"background-color":"rgba(0,0,0,.5)"}).appendTo($body)),!o||t.isInitial||_huResized.maskShowing||(_huResized.topmask.css("display","block"),_huResized.maskShowing=!0),o||_huResized.isChanging||(_huResized.startSize={width:n.width,height:n.height}),_huResized.isChanging=!0,_huResized.timeout=setTimeout(function(){$window.trigger("huResized"),_huResized.timeout=null,_huResized.maskShowing=!1,_huResized.isChanging=!1,_huResized.topmask.css("display","none"),n=_huResized.viewport(),_huResized.startSize={width:n.width,height:n.height}},t.isInitial?0:_huResized.throttle)}})),void 0===_huCss)var _huCss={};(!_huCss.ver||_huCss.ver<1.2)&&(_huCss.ver=1.2,_huCss.cssprefix_result={},_huCss.csscheck=function(e){if(_huCss.csscheck_div||(_huCss.csscheck_div=document.documentElement),e in _huCss.csscheck_div.style)return!0;var t=e.split("-");e=t[0];for(var n=1;n<t.length;n++)e+=t[1].substr(0,1).toUpperCase()+t[1].substr(1);return e in _huCss.csscheck_div.style},_huCss.csscheck_full=function(e){return _huCss.cssprefix(e,null,!0)},_huCss.cssprefix=function(e,t,n){if(_huCss.cssprefix_result[e])r=_huCss.cssprefix_result[e];else if(!1===_huCss.cssprefix_result[e]){if(n)return!1;r=""}else{var r="",i=["-webkit-","-moz-","-ms-","-o-"];if(!_huCss.csscheck(e)){r=!1;for(var o=0;o<i.length;o++)if(_huCss.csscheck(i[o]+e)){r=i[o];break}}if(_huCss.cssprefix_result[e]=r,n)return r=!1!==r}return r=!1===r?"":r,t?r:r+e},_huCss.csscheck_3d=function(){return _huCss.csscheck_full("perspective")},_huCss.createSheet=function(e){var t=document.createElement("style");if(e&&(t.title=e),document.getElementsByTagName("head")[0].appendChild(t),window.createPopup||t.appendChild(document.createTextNode("")),e)for(var n=0;n<document.styleSheets.length;n++)if(document.styleSheets[n].title==e)return document.styleSheets[n];return document.styleSheets[document.styleSheets.length-1]},_huCss.getSheet=function(e){return(e=e||_huCss.sheet)||(_huCss.sheet=_huCss.createSheet("__huCss_sheet"),e=_huCss.sheet),e},_huCss.getCssRulesNum=function(e){return(e=_huCss.getSheet(e)).cssRules?e.cssRules.length:0},_huCss.addRule=function(e,t,n,r){var i="";r=_huCss.getSheet(r);for(var o in t)_huCss.csscheck_full(o)?i+=_huCss.cssprefix(o)+":"+t[o]+";":"opacity"==o&&_huCss.csscheck_full("filter")&&(i+="filter:alpha(opacity="+100*t[o]+")");if(n||0===n||(n=r.cssRules?r.cssRules.length:_huCss.getCssRulesNum()),r.insertRule)r.insertRule(e+"{"+i+"}",n);else for(e=e.split(","),o=0;o<e.length;o++)r.addRule(e[o],i,n)},_huCss.removeRule=function(e,t){if(!e&&0!==e)return!1;t=_huCss.getSheet(t);try{t.deleteRule(e)}catch(n){t.removeRule(e)}});var _UA=navigator.userAgent,bChrome=/Chrome/.test(_UA),bChromeVer=!!bChrome&&/Chrome\/([0-9\.]+)/.exec(navigator.appVersion),bSafari=/Safari/.test(_UA)&&!bChrome,bFirefox=/Firefox/.test(_UA),bOpera=/Opera/.test(_UA),bWebkit=/WebKit/.test(_UA),bWebkitVer=!!bWebkit&&/(AppleWebKit|Safari)\/([0-9\.]+)/.exec(navigator.appVersion),bIEnewVer=!!(bIEnew=/\(Windows NT [0-9\.]+.+Trident\/[0-9\.]+.+rv.{1}[0-9\.]+\)/.test(_UA))&&parseFloat(_UA.split("rv:")[1]),bIE=!(!window.attachEvent||window.opera)||bIEnew,bIE6=bIE&&parseFloat(navigator.appVersion.split("MSIE")[1])<7,bIE7=bIE&&parseFloat(navigator.appVersion.split("MSIE")[1])<8,bIE8=bIE&&parseFloat(navigator.appVersion.split("MSIE")[1])<9,bIE9=bIE&&parseFloat(navigator.appVersion.split("MSIE")[1])<10,bIE10=bIE&&parseFloat(navigator.appVersion.split("MSIE")[1])<11,bIE11=bIEnewVer&&bIEnewVer<12,bGecko=!bIE&&!bIEnew&&!bWebkit&&-1!=_UA.indexOf("Gecko"),bIphone=/iPhone/i.test(_UA),bIpad=/iPad/i.test(_UA),bAndroid=/Android/i.test(_UA),bIOS=!1,bIOSver=!(!bIphone&&!bIpad)&&/CPU.*OS\s*([0-9_]+)/i.exec(navigator.appVersion),bMobile=bIphone||bIpad||bAndroid,bCSSrem=!bIE8,bCSS3=_huCss.csscheck_full("border-radius"),bCSS3A=_huCss.csscheck_full("animation"),bCSS3flex=_huCss.csscheck_full("flex"),b3D=_huCss.csscheck_full("perspective"),bCSS3calc=bCSSrem,bTouch=/Touch/.test(_UA),bUnsupport=bIE7,bHTML5m3u8=bMobile,bAccessYoutube=!1,bAccessTwitter=!1,bAccessFacebook=!1;if(bWebkitVer&&bWebkitVer.length&&(bWebkitVer=bWebkitVer[2]),bChromeVer&&bChromeVer.length&&(bChromeVer=parseFloat(bChromeVer[1])),bIOSver&&bIOSver.length&&(bIOSver=parseFloat(bIOSver[1].replace(/_/,".")),bIOS=!0),(bChromeVer&&bChromeVer<29||bIOSver&&bIOSver<7)&&(bCSS3flex=!1),bIOSver&&bIOSver<6&&(bCSS3calc=!1),bGecko?$html.addClass("is-gecko"):bIE11&&!bIE10?$html.removeClass("ie9").addClass("ie11"+(bTouch?" ie-touch":"")):bIE10&&!bIE9?$html.removeClass("ie9").addClass("ie10"+(bTouch?" ie-touch":"")):bMobile?($html.addClass("mobile"),bIOS&&$html.addClass("ios"),bIphone&&$html.addClass("iphone"),bIpad&&$html.addClass("ipad"),bAndroid&&$html.addClass("android")):bWebkitVer<537&&$html.addClass("oldwebkit"),bTouch&&$html.addClass("touch"),navigator.userAgent.match(/IEMobile\/10\.0/)){var msViewportStyle=document.createElement("style");msViewportStyle.appendChild(document.createTextNode("@-ms-viewport{width:auto!important}")),document.getElementsByTagName("head")[0].appendChild(msViewportStyle)}_g.getUrl=function(){return location.href.split("#")[0]},_g.uriSearchArr={},_g.uriHashArr={},_g.timeHash=function(){var e=new Date;return e=e.getTime()},_g.uriSearch=function(e){if(!_g.uriSearchArr.length){var t=location.search?location.search.split("?")[1]:"";t=t.split("&");for(var n=0;n<t.length;n++){var r=t[n].split("=");_g.uriSearchArr[r[0]]=r[1]||""}}return e?_g.uriSearchArr[e]:location.search.substr(location.search.indexOf("?")+1)},_g.uriHash=function(e,t,n){var r=location.hash,i=r?r.split("#")[1]:"";if(i=i.split("&"),!_g.uriHashInited){_g.uriHashArr={};for(var o in i){var a=i[o].split("=");""!==a[0]&&(_g.uriHashArr[a[0]]=a[1]||!1)}_g.uriHashInited=!0}if("object"==typeof e){for(var s in e)r=_g.uriHash(s,e[s],r);location.hash=r}else if(!1===t||""===t)"#"!=(r=r.replace("&"+e+"="+_g.uriHashArr[e],"").replace(e+"="+_g.uriHashArr[e],""))&&""!=r&&r||(r="_"),location.hash=r;else if(void 0!==t){if(t==_g.uriHashArr[e])return t;var u=_g.uriHashArr[e]?r.replace(e+"="+_g.uriHashArr[e],e+"="+t):r+(""==r?"#":"&")+e+"="+t;return _g.uriHashArr[e]=t,n?u:(location.hash=u,t)}return e?_g.uriHashArr[e]||!1:location.hash.substr(location.hash.indexOf("#")+1)},_g.randNumber=function(e){var t=new Date;return t=t.getTime(),t=(9301*t+49297)%233280,e||(e=1e3),Math.ceil(t/233280*e)},_g.randInt=function(e,t){return Math.floor(Math.random()*parseInt(e)+(t?parseInt(t):0))},_g.scrollTo=function(e,t){if(isNaN(e))n=(e=$(e)).scrollTop();else{t=e,e=$("html,body");var n=$window.scrollTop()}var r=Math.abs(n-t),i=$window.height(),o=r<=i?200:r/i*200*(2/3);e.stop().animate({scrollTop:t},o)},_g.get_em=function(e,t,n){var r=parseFloat(e);return t=t||$body,n=n||0,isNaN(r)?e:r/parseFloat(t.css("font-size"))+n+"em"},_g.get_fontsize=function(e){return e=e||$body,parseInt(e.css("font-size"))},_g.get_basesize=function(){return parseInt($body.css("font-size"))/_g.initSize*10},_g.get_basesize_true=function(){return parseInt($body.css("font-size"))},_g.get_basemultiper=function(){return parseFloat(_g.get_basesize()/10)},_g.get_rem=function(e){var t=parseFloat(e);return isNaN(t)?e:bCSSrem?t/_g.initSize+"rem":e},_g.rem=function(e,t){var n=parseFloat(e);return isNaN(n)?e:bCSSrem?(n=n/(_g.get_basesize()/10)/_g.initSize,t?n+"rem":Math.round(10*n)/10+"rem"):e},_g.px=function(e,t){var n=parseFloat(e);return isNaN(n)?e:bIE8?e:n*_g.initSize+(t?0:"px")},_g.get_animate_duration=function(e){return _g.isfocus?e:0},_g.goto_hash=function(e,t){if(e=e||location.hash,"!"==(e=e.replace(/^([\#]{0,1})(.+)/,"$2"))[0])return!1;var n=$("#"+e);if(!n.length)return!1;var r=n.offset().top,i=$window.scrollTop(),o=Math.abs(i-r),a=$window.height();return(t=null==t?o<=a?200:o/a*200*(2/3):t)?$("html,body").stop().animate({scrollTop:r},t,function(){location.hash=e}):($("html,body").scrollTop(r),location.hash=e),e},_g.time=function(e){if(!e)return _g.timeNow();for(var t,n=[{exp:/(\d{4}).(\d{1,2}).(\d{1,2})[^0-9]*(\d{0,2})[:]{0,1}(\d{0,2})[:]{0,1}(\d{0,2})([\+\-])(\d{2})\:(\d{2})/i,p:{year:1,month:2,day:3,hour:4,min:5,sec:6,zoneD:7,zoneH:8,zoneM:9}},{exp:/(\d{1,2}).(\d{1,2}).(\d{4})[^0-9]*(\d{0,2})[:]{0,1}(\d{0,2})[:]{0,1}(\d{0,2})/i,p:{year:3,month:1,day:2,hour:4,min:5,sec:6}},{exp:/(\d{4}).(\d{1,2}).(\d{1,2})[^0-9]*(\d{0,2})[:]{0,1}(\d{0,2})[:]{0,1}(\d{0,2})/i,p:{year:1,month:2,day:3,hour:4,min:5,sec:6}}],r=0;r<n.length;r++){var i=n[r].exp,o=e.match(i);if(!t&&o&&o.length){var a=parseInt(o[n[r].p.year]),s=parseInt(o[n[r].p.month])||0,u=parseInt(o[n[r].p.day])||1,c=parseInt(o[n[r].p.hour])||0,l=parseInt(o[n[r].p.min])||0,d=parseInt(o[n[r].p.sec])||0;if(t=new Date(a,s-1,u,c,l,d,0),n[r].p.zoneD&&o[n[r].p.zoneD]){var f="+"==o[n[r].p.zoneD]?-1:1,c=parseInt(o[n[r].p.zoneH])||0,h=f*((l=parseInt(o[n[r].p.zoneM])||0)+60*c+t.getTimezoneOffset())*60*1e3;t=new Date(t.valueOf()+h)}}}return t},_g.timeCal=function(e,t){return e<6e4?Math.floor(e/1e3)+"秒"+(t?"前":""):e<36e5?Math.floor(e/6e4)+"分钟"+(t?"前":""):e<864e5?Math.floor(e/36e5)+"小时"+(t?"前":""):e<1728e5?"昨天":e<2592e6?Math.floor(e/864e5)+"天"+(t?"前":""):e<31536e6?Math.floor(e/2592e6)+"月"+(t?"前":""):Math.floor(e/31536e6)+"年"+(t?"前":"")},_g.timeNow=function(){return(new Date).getTime()},_g.timeDiff=function(e){var t={time:_g.timeNow(),obj:null,format:_g.time_format,format2:_g.time_format2,range:_g.time_diff_range,range2:_g.time_diff_range2,is_init:!0};return $.extend(t,e),!!t.obj&&(e=t)},_g.timeDiffInterval=function(){function e(){if(!_g.isfocus)return!1;for(var e=0;e<_g.posttime.length;e++){var t=_g.posttime[e].is_init?_g.posttime[e]:_g.timeDiff(_g.posttime[e]),n=(new Date).getTime()-t.time,r=t.range,i=t.range2;if(n<r)t.obj.html(n<6e4?"刚刚":_g.timeCal(n,!0));else{var o=n>i?t.format2:t.format,a=t.time;o=(o=(o=(o=(o=o.replace(/Y/g,a.getFullYear())).replace(/M/g,a.getMonth()+1<10?"0"+(a.getMonth()+1):a.getMonth()+1)).replace(/m/g,a.getMonth()+1)).replace(/D/g,a.getDate()<10?"0"+a.getDate():a.getDate())).replace(/d/g,a.getDate()),t.obj.html(o)}}}clearInterval(_g.interval.posttime),e(),_g.interval.posttime=setInterval(function(){e()},6e4)};var _support={cache:{},check:function(e){return e=e.toLowerCase().replace(/[ :-_]/g,""),void 0===_support.cache[e]&&_support["_"+e]&&(_support.cache[e]=_support["_"+e]()),_support.cache[e]}};_support._css3=function(){return _huCss.csscheck_full("border-radius")},_support._css3animation=function(){return _huCss.csscheck_full("animation")},_support._css3transition=function(){return _huCss.csscheck_full("transition")},_support._css3flex=function(){return _huCss.csscheck_full("flex")},_support._css33d=function(){return _huCss.csscheck_full("perspective")},_support._css3d=_support._css33d,_support._css3mediaquery=function(){return!(!window.matchMedia&&!window.msMatchMedia)},_support._mediaquery=_support._css3mediaquery,_support._css3imageset=function(){function e(e){t.css("background-image","image-set(url("+_g.pathImg+"_g-p.gif) 1x)");var n=t.css("background-image");return!(!n||"none"==n)||!(!e||(t.css("background-image",e+"image-set(url("+_g.pathImg+"_g-p.gif) 1x)"),!(n=t.css("background-image"))||"none"==n))&&e}var t=$("<div/>",{style:"background-image:url("+_g.pathImg+"_g-p.gif)"});return bWebkit?e("-webkit-"):bGecko?e("-moz-"):bIE?e("-ms-"):e()},_support._pluginflash=function(){var e=!1;try{e=void 0!==navigator.plugins&&"object"==typeof navigator.plugins["Shockwave Flash"]||window.ActiveXObject&&0!=new ActiveXObject("ShockwaveFlash.ShockwaveFlash")}catch(e){}return e},_support._flash=_support._pluginflash,_support._html5attrdownload=function(){return"download"in document.createElement("a")},_support._html5download=_support._html5attrdownload,_support._html5attributedownload=_support._html5attrdownload,_support._html5videomp4=function(){var e=document.createElement("video"),t=!1;return e.canPlayType&&e.canPlayType("video/mp4").replace(/no/,"")&&(t=!0),t},_support._html5mp4=_support._html5videomp4,_g.init=function(){if(_g.baseSize=_g.get_basesize(),_g.baseMultiper=parseFloat(_g.baseSize/10),_g.lastBaseSize=_g.get_basesize(),_g.isfocus="visible"==Visibility.state(),_g.everfocus=_g.isfocus,Visibility.change(function(e,t){"visible"==t?(_g.isfocus=!0,_g.everfocus||(_g.everfocus=!0,_g.last.width=-1,_g.last.height=-1,_frame.main.last.width=-1,_frame.main.last.height=-1),$window.trigger("resized_check._g"),_g.timeDiffInterval()):_g.isfocus=!1}),$window.on({orientationchange:function(){$window.trigger("resize")},huResized:function(){$window.trigger("resized_check._g")},"resized_check._g":function(){if(!_g.isfocus)return!1;var e=$window,t=e.width(),n=e.height();if(_g.baseSize=_g.get_basesize(),_g.orientation=t>=n?"landscape":"portrait",_g.baseSize!=_g.lastBaseSize&&(_g.baseMultiper=parseFloat(_g.baseSize/10),_g.lastBaseSize=_g.baseSize,_g.isBaseChange=!0,e.trigger("basechange")),t!=_g.last.width||n!=_g.last.height){var r={is_widthchange:t!=_g.last.width,is_heightchange:n!=_g.last.height};e.trigger("resized_before",[r]).trigger("resized",[r]),_g.isEverResized=!0}_g.last.width=t,_g.last.height=n},basechange:function(){_g.isBaseChange&&(_g.isBaseChange=!1,setTimeout(function(){$window.trigger("resized_before").trigger("resized",[{is_basechange:!0}])},_g.animate_duration_delay))},"load.trigger_resized":function(){if(!_g.isfocus)return!1;setTimeout(function(){$window.trigger("resized_before",[{is_load:!0}]).trigger("resized",[{is_load:!0}])},_g.readyLock?4*_g.animate_duration+10:0),_g.isload=!0},"hashchange._global":function(e){_g.uriHashArr={};var t=(location.hash?location.hash.split("#")[1]:"").split("&");for(var n in t){var r=t[n].split("=");""!==r[0]&&(_g.uriHashArr[r[0]]=r[1]||!1)}_g.uriHashInited=!0,_g.uriHash()&&""!=_g.uriHash()||(e.preventDefault(),e.stopPropagation())},"unload.focuswindow":function(){$(this).focus()}}),setTimeout(function(){$window.trigger("hashchange")},_g.animate_duration_delay+10),$document.on({huScrolled:function(){$window.trigger("scrolled")}}),$body.on({"touchstart.preventMouseover":function(){$body.removeClass("hover"),$body_preventMouseover=!0,$body_isTouch=!0},pointerenter:function(e){"touch"==e.originalEvent.pointerType?$body.trigger("touchstart.preventMouseover"):($body_preventMouseover=!1,$body_isTouch=!1)},mouseover:function(){$body_isTouch?($body_isTouch=!1,$body_preventMouseover=!0):($body.addClass("hover"),$body_preventMouseover=!1)},mouseleave:function(){$body.removeClass("hover")}}),top!=self)try{self.location.host!=top.location.host&&top.location.replace(self.location.href),self.location.host==top.location.host&&($body.addClass("only-content"),_g.changeTheme(top._g.getTheme())),$html.css("font-size",top.$html.css("font-size")),$window.on({"resized.iframe_resize":function(){$html.css("font-size",top.$html.css("font-size"))}})}catch(e){}_hotkey.init(),_frame.init_all(),_p.init_document_ready(),$html.addClass("ready"),$window.trigger("resize",[{isInitial:!0}]),_g.readyLock=!0,setTimeout(function(){_g.readyLock=null},4*_g.animate_duration+10);try{window.external.msSiteModeClearBadge()}catch(e){}return _g.isinit=!0,!1},jQuery.cookie=function(e,t,n){if(void 0===t){var r=null;if(document.cookie&&""!=document.cookie)for(var i=document.cookie.split(";"),o=0;o<i.length;o++){var a=jQuery.trim(i[o]);if(a.substring(0,e.length+1)==e+"="){r=decodeURIComponent(a.substring(e.length+1));break}}return r}n=n||{},null===t&&(t="",n.expires=-1);var s="";if(n.expires&&("number"==typeof n.expires||n.expires.toUTCString)){var u;"number"==typeof n.expires?(u=new Date).setTime(u.getTime()+24*n.expires*60*60*1e3):u=n.expires,s="; expires="+u.toUTCString()}var c="; path="+(n.path?n.path:"/"),l=n.domain?"; domain="+n.domain:/(.*)([\.]*)acgdb\.com/.test(location.host)?"; domain=.acgdb.com":"",d=n.secure?"; secure":"";document.cookie=[e,"=",encodeURIComponent(t),s,c,l,d].join("")},function(e){e.fn.innerWidth=function(){return parseFloat(this.css("width"))},e.fn.innerHeight=function(){return parseFloat(this.css("height"))}}(jQuery),$.fn.serializeObject=function(){function e(n,r,i){if(!r.length)return n;var o=r[0];void 0===n[o]?n[o]=r.length>1?{}:i:1==r.length&&(n[o].push||(n[o]=[n[o]]),n[o].push(t(i))),r.shift(),e(n[o],r,i)}function t(e){return"number"==typeof e&&0===e?e:e||""}var n={},r=this.serializeArray();return $.each(r,function(){if(!/^_tabview\-/.test(this.name))if(this.value=isNaN(this.value)||!this.value?this.value:parseFloat(this.value),this.name.indexOf(".")>-1){var r=this.name.split(".");e(n,r,this.value)}else n[this.name]||0===n[this.name]?(n[this.name].push||(n[this.name]=[n[this.name]]),n[this.name].push(t(this.value))):n[this.name]=t(this.value)}),n},_p.initDOM=function(e){return(e=e||_frame.dom.layout||_frame.dom.layout||$body).initAll()},_p.initAll=_p.initDOM,$.fn.initDOM=function(){for(var e in _p.el)_p.el[e].init&&_p.el[e].init(this);return this},$.fn.initAll=$.fn.initDOM,_p.init_document_ready=function(){_p.is_init_document_ready||(_p.initDOM($body),_p.is_init_document_ready=!0)},_p.getSummary=function(){var e=$("#summary").text()||!1;return!e&&$("head").find("meta[name=keywords]").length&&(e=(e=$("head").find("meta[name=Description]").attr("content")).substr(0,e.indexOf(" - ACGDB"))),e},_p.get_tar=function(e,t,n){return e=e||_frame.dom.layout||$("#layout")||$body,"."==t.substr(0,1)&&(t=t.substr(1)),e.hasClass(t)?e:n?e.find('[class^="'+t+'"]'):e.find("."+t)},_p.hashlinks=function(e){(e=e||$body).find("a[href^=#]").each(function(){$(this).off("click.hashlink").on({"click.hashlink":function(){return _g.goto_hash($(this).attr("href")),!1}})})},_p.get_lines=function(e,t){return t=t||e,Math.max(1,Math.floor(Math.min(e.innerHeight(),e.height())/parseFloat(t.css("line-height"))))},_p.el.time={init:function(e){_p.get_tar(e,".time").each(function(){var e=$(this),t=e.text();time=t?_g.time(t):null,time&&_g.posttime.push({time:time,obj:e})}),_g.timeDiffInterval()}},_p.el.timeSec={init:function(e){_p.get_tar(e,".time-sec").each(function(){var e=$(this);if(e.data("acgdb-time-sec"))return e.data("acgdb-time-sec");var t=e.text(),n=/\s*([0-9]+)/.exec(t);if(n&&n.length>1){n=parseInt(n[1]);var r=Math.floor(n/60),i=n%60,o=(r<10?"0":"")+r+":"+(i<10?"0":"")+i+"'";e.text(o)}e.data("acgdb-time-sec",n)})}},_p.removeEmptyTextNode=function(e){if(!(e=$(e)).length)return!1;e.contents().filter(function(){return 3===this.nodeType}).remove()},function(e){"use strict";var t=function(e){return void 0!=e},n=window.Visibility={onVisible:function(e){if(!n.isSupported()||!n.hidden())return e(),n.isSupported();var t=n.change(function(r,i){n.hidden()||(n.unbind(t),e())});return t},change:function(e){if(!n.isSupported())return!1;n._lastCallback+=1;var t=n._lastCallback;return n._callbacks[t]=e,n._setListener(),t},unbind:function(e){delete n._callbacks[e]},afterPrerendering:function(e){if(!n.isSupported()||"prerender"!=n.state())return e(),n.isSupported();var t=n.change(function(r,i){"prerender"!=i&&(n.unbind(t),e())});return t},hidden:function(){return n._prop("hidden",!1)},state:function(){return n._prop("visibilityState","visible")},isSupported:function(){return t(n._prefix())},_doc:window.document,_chechedPrefix:null,_listening:!1,_lastCallback:-1,_callbacks:{},_hiddenBefore:!1,_init:function(){n._hiddenBefore=n.hidden()},_prefix:function(){return null!==n._chechedPrefix?n._chechedPrefix:t(n._doc.visibilityState)?n._chechedPrefix="":t(n._doc.webkitVisibilityState)?n._chechedPrefix="webkit":void 0},_name:function(e){var t=n._prefix();return""==t?e:t+e.substr(0,1).toUpperCase()+e.substr(1)},_prop:function(e,t){return n.isSupported()?n._doc[n._name(e)]:t},_onChange:function(e){var t=n.state();for(var r in n._callbacks)n._callbacks[r].call(n._doc,e,t);n._hiddenBefore=n.hidden()},_setListener:function(){if(!n._listening){var e=n._prefix()+"visibilitychange",t=function(){n._onChange.apply(Visibility,arguments)};n._doc.addEventListener?n._doc.addEventListener(e,t,!1):n._doc.attachEvent(e,t),n._listening=!0,n._hiddenBefore=n.hidden()}}};n._init()}(),function(e){"function"==typeof define&&define.amd?define(["jquery"],e):"object"==typeof exports?module.exports=e:e(jQuery)}(function(e){function t(t){var i,o=t||window.event,a=[].slice.call(arguments,1),s=0,u=0,c=0,l=0,d=0,f={deltaMode:o.deltaMode||0,delta:o.delta||o.wheelDelta||0,deltaX:o.deltaX||o.wheelDeltaX||0,deltaY:o.deltaY||o.wheelDeltaY||0,deltaZ:o.deltaZ||o.wheelDeltaZ||0,deltaLine:o.DOM_DELTA_LINE||0,deltaPage:o.DOM_DELTA_PAGE||0,deltaPixel:o.DOM_DELTA_PIXEL||0,detail:o.detail||0,type:o.type||0};return f.delta||(f.delta=f.deltaX||f.deltaY||f.deltaZ),t=e.event.fix(o),t.type="mousewheel",o.wheelDelta&&(s=o.wheelDelta),o.detail&&(s=-1*o.detail),o.deltaY&&(s=c=-1*o.deltaY),o.deltaX&&(s=-1*(u=o.deltaX)),void 0!==o.wheelDeltaY&&(c=o.wheelDeltaY),void 0!==o.wheelDeltaX&&(u=-1*o.wheelDeltaX),l=Math.abs(s),(!n||l<n)&&(n=l),d=Math.max(Math.abs(c),Math.abs(u)),(!r||d<r)&&(r=d),i=s>0?"floor":"ceil",s=Math[i](s/n),u=Math[i](u/r),c=Math[i](c/r),a.unshift(t,s,u,c,f),(e.event.dispatch||e.event.handle).apply(this,a)}var n,r,i=["wheel","mousewheel","DOMMouseScroll","MozMousePixelScroll"],o="onwheel"in document||document.documentMode>=9?["wheel"]:["mousewheel","DomMouseScroll","MozMousePixelScroll"];if(e.event.fixHooks)for(var a=i.length;a;)e.event.fixHooks[i[--a]]=e.event.mouseHooks;e.event.special.mousewheel={setup:function(){if(this.addEventListener)for(var e=o.length;e;)this.addEventListener(o[--e],t,!1);else this.onmousewheel=t},teardown:function(){if(this.removeEventListener)for(var e=o.length;e;)this.removeEventListener(o[--e],t,!1);else this.onmousewheel=null}},e.fn.extend({mousewheel:function(e){return e?this.bind("mousewheel",e):this.trigger("mousewheel")},unmousewheel:function(e){return this.unbind("mousewheel",e)}})}),Object.defineProperty(Array.prototype,"mergeFrom",{enumerable:!1,value:function(e){return Array.prototype.push.apply(this,e instanceof Array||e.push?e:[e]),this}}),Date.prototype.format=function(e,t){return _g.formatTime(this,e,t)},_g.formatTime_string={zh_CN:{Midnight:"深夜",Sunday:"周日",Monday:"周一",Tuesday:"周二",Wednesday:"周三",Thursday:"周四",Friday:"周五",Saturday:"周六"}},_g.formatTime_weekdaymappding=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],_g.formatTime=function(e,t,n){function r(e){return e<10?"0"+e:e}if(!e)return!1;n=n||{},t=t||"%Y年%m月%d日","date"!=typeof e&&(e=new Date(e));var i=e.valueOf();void 0!==n.output_timezone&&(i+=60*(n.output_timezone+e.getTimezoneOffset()/60)*60*1e3,e=new Date(i));var o=e.getHours(),a=r(o);return n.midnight_astoday&&(o<6||24==o)?(a=o+=24,i-=864e5,e=new Date(i),t=t.replace(/\%midnight/g,"Midnight"._(_g.formatTime_string))):t=t.replace(/\%midnight/g,""),t.replace(/\%Y/g,e.getFullYear()).replace(/\%m/g,r(e.getMonth()+1)).replace(/\%n/g,e.getMonth()+1).replace(/\%d/g,r(e.getDate())).replace(/\%j/g,e.getDate()).replace(/\%G/g,o).replace(/\%H/g,a).replace(/\%i/g,r(e.getMinutes())).replace(/\%s/g,r(e.getSeconds())).replace(/\%l/g,_g.formatTime_weekdaymappding[e.getDay()]._(_g.formatTime_string))},Object.defineProperty(Object.prototype,"_size",{enumerable:!1,get:function(){var e=0;for(var t in this)e++;return e}}),String.prototype.getText=function(e,t){return _g.getText(this,e,t,!0)},String.prototype._=String.prototype.getText,_g.getText=function(e,t,n,r){function o(e){return"object"==typeof e&&e.length?e[0]:e}if(!e||!t)return e;n=n||_g.lang;if(t[e]){if("string"==typeof t[e])return o(t[e]);if(t[e][n])return o(t[e][n])}if(t[n]&&t[n][e])return o(t[n][e]);if("string"!=typeof e&&r){for(_t="",i=0;i<e.length;i++)_t+=e[i];e=_t}return o(e)},_g.hashCode=function(e){e=encodeURIComponent(e);try{return e.split("").reduce(function(e,t){return(e=(e<<5)-e+t.charCodeAt(0))&e},0).toString(16)}catch(i){var t,n,r=0;if(0==e.length)return r;for(t=0,l=e.length;t<l;t++)n=e.charCodeAt(t),r=(r<<5)-r+n,r|=0;return r.toString(16)}},String.prototype.hashCode=function(){return _g.hashCode(this)},String.prototype.filter=function(){return _g.stringFilter(this)},String.prototype.filterCensored=function(){return _g.stringFilterCensored(this)},String.prototype.escape=function(){return $("<div />").text(this).html()};var _tmpl={export:function(e,t){return e.attr&&t?e.prop("outerHTML"):e.attr&&!t?e:!e.attr&&t?e:e.attr||t?void 0:$(e)}},_hotkey={allowed:!0,keyCodeBindings:{}};_hotkey.bind=function(e,t,n,r){if("function"==typeof t)return _hotkey.bind(e,null,t,n);if(!e||!n)return!1;e=parseInt(e),t="text"==typeof t?[t]:t||[],r=r||{},void 0===_hotkey.keyCodeBindings[e]&&(_hotkey.keyCodeBindings[e]={default:[],meta:[],alt:[],shift:[],"meta+alt":[],"meta+shift":[],"alt+shift":[],"meta+alt+shift":[]});var i=!1,o=!1,a=!1;for(var s in t)t[s]=t[s].toLowerCase(),"ctrl"!=t[s]&&"meta"!=t[s]||(i=!0),"alt"==t[s]&&(o=!0),"shift"==t[s]&&(a=!0);return i&&o&&a?_hotkey.keyCodeBindings[e]["meta+alt+shift"].push(n):i&&o?_hotkey.keyCodeBindings[e]["meta+alt"].push(n):i&&a?_hotkey.keyCodeBindings[e]["meta+shift"].push(n):o&&a?_hotkey.keyCodeBindings[e]["alt+shift"].push(n):i?_hotkey.keyCodeBindings[e].meta.push(n):o?_hotkey.keyCodeBindings[e].alt.push(n):a?_hotkey.keyCodeBindings[e].shift.push(n):_hotkey.keyCodeBindings[e].default.push(n),!0},_hotkey._run=function(e){for(var t in e)e[t]()},_hotkey.init=function(){if(_hotkey.is_init)return _hotkey;$window.on("keydown._hotkey",function(e){if("INPUT"!=document.activeElement.tagName&&"TEXTAREA"!=document.activeElement.tagName&&"SELECT"!=document.activeElement.tagName&&!document.activeElement.hasAttribute("contenteditable")&&_hotkey.allowed){var t=parseInt(e.keyCode||e.which);_hotkey.keyCodeBindings[t]&&((e.ctrlKey||e.metaKey)&&e.altKey&&e.shiftKey?_hotkey._run(_hotkey.keyCodeBindings[t]["meta+alt+shift"]):(e.ctrlKey||e.metaKey)&&e.altKey?_hotkey._run(_hotkey.keyCodeBindings[t]["meta+alt"]):(e.ctrlKey||e.metaKey)&&e.shiftKey?_hotkey._run(_hotkey.keyCodeBindings[t]["meta+shift"]):e.altKey&&e.shiftKey?_hotkey._run(_hotkey.keyCodeBindings[t]["alt+shift"]):e.ctrlKey||e.metaKey?_hotkey._run(_hotkey.keyCodeBindings[t].meta):e.altKey?_hotkey._run(_hotkey.keyCodeBindings[t].alt):e.shiftKey?_hotkey._run(_hotkey.keyCodeBindings[t].shift):e.altKey||e.ctrlKey||e.metaKey||e.shiftKey||_hotkey._run(_hotkey.keyCodeBindings[t].default))}}),_hotkey.is_init=!0};var _form={};_form.section=function(e,t,n,r,i,o){if(!e)return!1;if("object"==typeof e)return _form.section(e.type,e.name||null,e.label||null,e.value||null,e.suffix||null,e);if("object"==typeof t)return _form.section(e,t,t.label||null,t.value||null,t.suffix||null,t);if("object"==typeof n)return _form.section(e,t,n.label||null,n.value||null,n.suffix||null,n);if("object"==typeof r)return _form.section(e,t,c,r.value||null,r.suffix||null,r);if("object"==typeof i)return _form.section(e,t,c,r||null,i.suffix||null,i);o=o||{};var a=$("<dl/>").addClass(e,o.className),s=$("<dt/>").appendTo(a),u=$("<dd/>").appendTo(a),c="_input_g"+_g.inputIndex;switch(_g.inputIndex++,e){case"directory":$("<label/>").html(n).appendTo(s);break;default:i?$("<label/>").html(n).appendTo(s):$('<label for="'+c+'"/>').html(n).appendTo(s)}return _form.element(e,t,c,r,o).appendTo(u),i&&$('<label for="'+c+'"/>').html(i).appendTo(u),o.add&&u.append(o.add),u},_form.line=_form.section,_form.element=function(e,t,n,r,i){if(!e)return!1;if("object"==typeof e)return _form.element(e.type,e.name||null,e.id||null,e.value||null,e);if("object"==typeof n)return _form.element(e,t,n.id||null,n.value||null,n);i=i||{},null===(n=n||null)&&(n="_input_g"+_g.inputIndex,_g.inputIndex++);var o=$(),a=i.default||i.defaultValue;switch(e){default:o=$("<input/>",{type:e,name:t,id:n}).val(r);break;case"select":o=$("<select/>",{name:t,id:n}).val(r);l=$('<option value=""/>').appendTo(o);for(var s in r){if("object"==typeof r[s])var u=r[s].value||r[s].val,c=$('<option value="'+u+'"/>').html(r[s].title||r[s].name).appendTo(o);else var u=r[s],c=$('<option value="'+u+'"/>').html(u).appendTo(o);void 0!==a&&u==a&&c.prop("selected",!0),c.val()||c.attr("disabled",!0)}l.html("..."),i.new&&($('<option value="" disabled/>').html("==========").insertAfter(l),$('<option value="___new___"/>').html("+ 新建").insertAfter(l),o.on("change.___new___",function(){"___new___"==o.val()&&(o.val(""),i.new(o))}));break;case"select_group":case"selectGroup":o=$("<select/>",{name:t,id:n}).val(r);var l=$('<option value=""/>').appendTo(o);for(var s in r){var d=$('<optgroup label="'+r[s][0]+'"/>').appendTo(o);for(var f in r[s][1]){var h=r[s][1][f];if("object"==typeof h)c=$('<option value="'+(void 0===h.val?h.value:h.val)+'"/>').html(h.title||h.name).appendTo(d);else c=$('<option value="'+h+'"/>').html(h).appendTo(d);void 0!==a&&c.val()==a&&c.prop("selected",!0),c.val()||c.attr("disabled",!0)}}l.html("..."),i.new&&($('<option value="" disabled/>').html("==========").insertAfter(l),$('<option value="___new___"/>').html("+ 新建").insertAfter(l),o.on("change.___new___",function(){"___new___"==o.val()&&(o.val(""),i.new(o))}));break;case"checkbox":(o=$("<input/>",{type:e,name:t,id:n})).prop("checked",void 0===i.checked?r:i.checked);break;case"checkboxes":for(var s in r)"object"!=typeof(u=r[s])&&(u=[u,!1]),parseInt(s)&&(_g.inputIndex++,n="_input_g"+_g.inputIndex),o=o.add($('<input type="checkbox" name="'+t+'" id="'+n+'" value="'+u[0]+'" />').prop("checked",u[1])).add($('<label for="'+n+'"/>').html(u[2]||u[0]));break;case"directory":case"file":o=$('<input type="text" name="'+t+'" id="'+n+'" />').on({input:function(){o.trigger("change")},click:function(){o.val()||m.trigger("click")}}).val(r);var p=$('<input type="file" class="none"'+("directory"==e?" nwdirectory":"")+" />").on("change",function(){o.val($(this).val()).trigger("change")}),m=$('<button type="button" value="Browse..."/>').html("Browse...").on("click",function(){p.trigger("click")}),g=o.add(p).add(m);i.accept&&p.attr("accept",i.accept)}return i.required&&o.prop("required",!0),i.onchange&&(o.on("change.___onchange___",i.onchange),i.default&&o.trigger("change")),g||o}(function(){if(self!==top&&top.nw&&top.nw.require&&(self.nw=top.nw),self.nw&&self.nw.require){var e=nw.require;self.require=function(){return"nw.gui"===arguments[0]?nw:e.apply(self,[].slice.call(arguments,0))},self.require.cache=e.cache,self.require.extensions=e.extensions,self.require.resolve=e.resolve,self.process||(self.process=self.nw.process),self.Buffer||(self.Buffer=self.nw.Buffer),self.global||(self.global=self.nw.global),self.root||(self.root=self.nw.root)}}());var node={require:function(e,t){return node[e]||t||(node[e]=require(e),void 0===self[e]&&(self[e]=node[e])),t?require(e):node[e]}};if(node.gui=node.require("nw.gui",!0),node.clipboard=node.gui.Clipboard.get(),node.require("path"),node.require("fs"),"undefined"==typeof launcherOptions&&(self.launcherOptions={window:{}}),node.win=node.win||self.win||("undefined"!=typeof nw?nw.Window.get():void 0)||node.gui.Window.get(),void 0===debugmode)var debugmode=node.gui.App.manifest.debug||node.gui.App.manifest.window.debug;global&&launcherOptions&&launcherOptions.window&&void 0!==launcherOptions.window.debug&&(debugmode=launcherOptions.debug||launcherOptions.window.debug),_g.rootscheck=[node.path.dirname(process.execPath),process.cwd(),node.path.join(node.gui.App.dataPath,"/Extracted Data/")],_g.rootscheckentry=node.gui.App.manifest.main,_g.rootscheckentry=_g.rootscheckentry.split("://"),_g.rootscheckentry=_g.rootscheckentry[_g.rootscheckentry.length-1];for(var i=0;i<_g.rootscheck.length;i++){var dir=_g.rootscheck[i];_g.root||!node.fs.existsSync(node.path.join(dir,"app","main.html"))||(_g.root=dir)}_g.execPath=node.path.dirname(process.execPath).split(node.path.sep),_g.execPath="darwin"==process.platform||"nwjs"==_g.execPath[_g.execPath.length-1]&&"nw.exe"==node.path.basename(process.execPath)?process.cwd():node.path.dirname(process.execPath),_g.file_save_as=function(e,t,n){e=node.path.normalize(e),_frame.dom.hidden_saveform||(_frame.dom.hidden_saveform=$('<input type="file" nwsaveas/>').on("change",function(){function t(t){a||(n(t,e,i),a=!0)}var r=_frame.dom.hidden_saveform,i=r.val(),o=r.attr("nwsaveas_file");if(r.attr("nwsaveas","").attr("nwsaveas_file","").val(""),i){var a=!1,s=node.fs.createReadStream(o);s.on("error",function(e){t(e)});var u=node.fs.createWriteStream(i);u.on("error",function(e){t(e)}),u.on("close",function(e){t()}),s.pipe(u)}}).appendTo(_frame.dom.hidden)),_frame.dom.hidden_saveform.attr({nwsaveas:t||"",nwsaveas_file:e}).trigger("click")},_g.zoom=function(e){return e=e||1,node.win.zoomLevel=Math.log(e)/Math.log(1.2),node.win.zoomLevel};var _config={getFullKeyname:function(e){return"config_"+e},get:function(e){if(!localStorage)return!1;e=_config.getFullKeyname(e);var t=Lockr.get(e);return"true"===t||("undefined"===t?(Lockr.rm(e),null):t)},set:function(e,t){if(!localStorage)return!1;e=_config.getFullKeyname(e),null===t&&Lockr.get(e)?Lockr.rm(e):Lockr.set(e,t)}};_frame.app_config={init:function(){if(_frame.app_config.is_init)return!0;_frame.app_config.is_init=!0}},_frame.app_menu={menus:{},init:function(){if(_frame.app_menu.is_init)return!0;_frame.app_menu.menus={},$body.on("contextmenu.contextmenu_image","img[data-filename]",function(e){var t=$(this),n=t.attr("contextmenu");if(!n||"disabled"==!n||"false"==n)return e.preventDefault(),console.log(e),_frame.app_menu.img||(_frame.app_menu.img=new _menu({className:"contextmenu-img",items:[$("<menuitem/>").html("保存图片").on({click:function(){_g.file_save_as(_frame.app_menu.img.file_original,_frame.app_menu.img.file_save_as)}})]})),_frame.app_menu.img.file_original=node.path.normalize(t.attr("src")),_frame.app_menu.img.file_save_as=t.data("filename")||"",_frame.app_menu.img.show(e.clientX,e.clientY),!1}),_frame.app_menu.is_init=!0}},node.openWin=function(e,t){node.gui.Window.open(e,$.extend(!0,{title:null,width:Math.max(Math.floor(.85*screen.availWidth),320),height:Math.max(Math.floor(.85*screen.availHeight),320),toolbar:node.gui.App.manifest.window.toolbar,icon:node.gui.App.manifest.window.icon,position:"center",min_width:320,min_height:320,max_width:null,max_height:null,as_desktop:!1,resizable:node.gui.App.manifest.window.resizable,"always-on-top":!1,fullscreen:!1,show_in_taskbar:node.gui.App.manifest.window.show_in_taskbar,frame:node.gui.App.manifest.window.frame,show:!0,kiosk:!1,transparent:node.gui.App.manifest.window.transparent},t))},_frame.app_window={bindEvents:function(e){e=e||self.win||node.win,setTimeout(function(){e.on("blur",function(){$html.addClass("window-blured")}),e.on("focus",function(){$html.removeClass("window-blured")}),e.on("maximize",function(){$html.addClass("window-maxmize"),_config.set("windowMaximize",!0),_config.set("windowMaximizeX",screen.availLeft||0),_config.set("windowMaximizeY",screen.availTop||0),_config.set("windowX",null),_config.set("windowY",null),_config.set("windowWidth",null),_config.set("windowHeight",null)}),e.on("unmaximize",function(){$html.removeClass("window-maxmize"),_config.set("windowMaximize",null),_config.set("windowMaximizeX",null),_config.set("windowMaximizeY",null)}),e.on("enter-fullscreen",function(){$html.addClass("window-fullscreen"),_config.set("windowFullscreen",!0)}),e.on("leave-fullscreen",function(){$html.removeClass("window-fullscreen"),_config.set("windowFullscreen",null)}),e.on("move",function(e,t){_config.set("windowX",e),_config.set("windowY",t)}),e.on("resize",function(e,t){_config.set("windowWidth",e),_config.set("windowHeight",t)}),$window.on("resize",function(){_config.set("windowWidth",window.outerWidth),_config.set("windowHeight",window.outerHeight)})},100)},init:function(e){if(_frame.app_window.is_init)return!0;if(e=e||self.win||node.win,$html.hasClass("app")){var t=parseInt(_config.get("windowX")),n=parseInt(_config.get("windowY"));if(_config.get("windowMaximize"))t=parseInt(_config.get("windowMaximizeX"))||t,n=parseInt(_config.get("windowMaximizeY"))||n,isNaN(t)||isNaN(n)||e.moveTo(t,n),e.maximize(),$html.addClass("window-maxmize");else{var r=Math.max(parseInt(_config.get("windowWidth")||(launcherOptions&&launcherOptions.window?launcherOptions.window.width:node.gui.App.manifest.window.width)),(launcherOptions&&launcherOptions.window&&launcherOptions.window.min_width?launcherOptions.window.min_width:node.gui.App.manifest.window.min_width)||0),i=Math.max(parseInt(_config.get("windowHeight")||(launcherOptions&&launcherOptions.window?launcherOptions.window.height:node.gui.App.manifest.window.height)),(launcherOptions&&launcherOptions.window&&launcherOptions.window.min_height?launcherOptions.window.min_height:node.gui.App.manifest.window.min_height)||0);if(!isNaN(t)&&!isNaN(n)){e.moveTo(t,n);var o=screen.availWidth+(screen.availLeft||0),a=screen.availHeight+(screen.availTop||0);t<0&&(t=0),r+t>o&&(t=o-r),n<0&&(n=0),i+n>a&&(n=a-i),e.moveTo(t,n)}!isNaN(r)&&!isNaN(i)&&r&&i&&(e.resizeTo(Math.floor(r),Math.floor(i)),t&&n||e.moveTo(Math.floor(screen.availLeft+(screen.availWidth-r)/2),Math.floor(screen.availTop+(screen.availHeight-i)/2)))}if(_frame.app_window.bindEvents(),!launcherOptions&&node.gui.App.manifest.window.frame||launcherOptions&&launcherOptions.window.frame)debugmode&&(_frame.dom.debugbtns=$('<div class="debugbtns"/>').appendTo($body),$("<button/>",{html:"Console"}).on("click",function(){e.showDevTools()}).appendTo(_frame.dom.debugbtns),$("<button/>",{html:"Reload"}).on("click",function(){location.reload()}).appendTo(_frame.dom.debugbtns));else{$html.addClass("window-noframe");var s=$("#titlebar");s&&s.length||(s=$('<div id="titlebar"/>').appendTo($body),$("<strong/>").appendTo(s),$('<div class="buttons"/>').append($('<button class="icon minimize"/>')).append($('<button class="icon maximize"/>')).append($('<button class="icon close"/>')).appendTo(s),$('<div id="window_border"/>').insertAfter(s)),s.children("strong").html(e.title),s.find(".buttons .minimize").on("click",function(){e.minimize()}),s.find(".buttons .maximize").on("click",function(){$html.hasClass("window-maxmize")?(e.restore(),$html.removeClass("window-maxmize"),_config.set("windowMaximize",null),_config.set("windowMaximizeX",null),_config.set("windowMaximizeY",null)):e.maximize()}),s.find(".buttons .close").on("click",function(){e.close()}),debugmode&&($("<button/>",{class:"console",html:"Console"}).on("click",function(){e.showDevTools()}).prependTo(s.find(".buttons")),$("<button/>",{class:"console",html:"Reload"}).on("click",function(){location.reload()}).prependTo(s.find(".buttons")))}e.show(),e.focus()}_frame.app_window.is_init=!0}},_frame.dom={},_frame.main={last:{}},_frame.global={key_registerd:[],esc_funcs:[],allowKeyNav:!0,esc_register:function(e){_frame.global.esc_funcs.push(e)},disableBodyScroll:function(){$(document.body).on("touchmove.disableBodyScroll mousewheel.disableBodyScroll",function(e){e.preventDefault(),e.stopPropagation()})},enableBodyScroll:function(){$(document.body).off("touchmove.disableBodyScroll mousewheel.disableBodyScroll")}},_frame.global.init=function(){return!!_frame.global.is_init||(_frame.dom={layout:$("#layout")},$body.on({"keydown.esckey":function(e){if("INPUT"!=document.activeElement.tagName&&"TEXTAREA"!=document.activeElement.tagName&&"SELECT"!=document.activeElement.tagName&&!$(document.activeElement).attr("contenteditable")&&_frame.global.allowKeyNav)e.altKey||e.ctrlKey||e.metaKey||e.shiftKey||(t=(t=window.event?e.keyCode:e.which).toString());else if(!_frame.global.allowKeyNav&&!(e.altKey||e.ctrlKey||e.metaKey||e.shiftKey)){var t=window.event?e.keyCode:e.which;switch(t=t.toString()){case"27":for(var n=0;n<_frame.global.esc_funcs.length;n++)_frame.global.esc_funcs[n]()}}}}),_frame.dom.hidden=$("<div/>",{class:"none"}).appendTo($body),_frame.dom.hiddenVisible=$("<div/>",{class:"none-visible"}).appendTo($body),_frame.dom.hiddenIframe=$("<iframe/>",{class:"none",name:"hiddeniframe"}).appendTo($body),$body.on("submit.check_submitting_status","form",function(e){var t=$(this);(t.hasClass("submitting")||t.hasClass("loading")||t.hasClass("disabled"))&&e.preventDefault()}),_frame.global.is_init=!0,!0)};var _menu=function(e){this.settings||(this.settings=$.extend(!0,{},this.defaults,e||{}),this.init())};_menu.prototype.defaults={items:[],target:null,className:null},_menu.prototype.init=function(){var e=this;this.dom={},this.dom.menu=$('<div class="menu"/>').addClass(this.settings.className).on("click",function(){e.timeout_hideself||(e.timeout_hideself=setTimeout(function(){e.timeout_hideself=null,e.hide()},10))}),this.dom.body=$('<div class="body"/>').appendTo(this.dom.menu),this.dom.menu.on({"transitionend.menu_hide webkitTransitionEnd.menu_hide mozTransitionEnd.menu_hide":function(t){t.currentTarget==t.target&&"opacity"==t.originalEvent.propertyName&&0===parseFloat(e.dom.menu.css("opacity"))&&e.hideTrue()}});for(var t,n=0;t=this.settings.items[n];n++)if(t){switch(t){case"separator":t=$("<hr/>")}t.hasClass("donot_hide")&&t.on("click",function(){setTimeout(function(){clearTimeout(e.timeout_hideself),e.timeout_hideself=null},1)}),e.appendItem(t)}this.dom.body.find('input[type="checkbox"]+label').addClass("checkbox"),void 0!==node&&this.dom.menu.addClass("mod-blur-shot"),_frame.menu.menus.push(this)},_menu.prototype.show=function(e,t,n){return this.showing?this:"number"==typeof e?this.show("mouse",e,t):(e=e||this.settings.target,clearTimeout(_frame.menu.timeout_hideall),_frame.menu.timeout_hideall=null,this.dom.menu.appendTo(_frame.menu.dom.container).addClass("show"),_frame.menu.dom.container.addClass("on"),this.showing=!0,this.dom.body.children().trigger("show"),this.position(e,t,n),void(void 0!==node?node.win.capturePage(this.capturePage_callback.bind(this),{format:"jpg",datatype:"datauri"}):this.dom.menu.addClass("on")))},_menu.prototype.hide=function(e){if(!this.showing)return!1;e&&(this.callback_hide=e),this.dom.menu.hasClass("on")||this.hideTrue(),this.dom.menu.removeClass("on")},_menu.prototype.hideTrue=function(){this.dom.menu.removeClass("show").css({top:"",left:""}).detach(),this.dom.blured instanceof jQuery&&(this.dom.blured.remove(),delete this.dom.blured),this.showing=!1,_frame.menu.dom.container.removeClass("on"),this.callback_hide&&this.callback_hide(),delete this.callback_hide},_menu.prototype.position=function(e,t,n){var r,i,o,a,s,u;if(e=e||this.settings.target,this.dom.menu.css({top:"",left:""}),e&&e instanceof jQuery){var c=e.offset();r=c.top+e.height()-$body.scrollTop()+(n||0),i=c.left-$body.scrollLeft()+(t||0)}else("mouse"==e||!e&&"number"==typeof t)&&(i=t||0,r=n+5||0);o=$window.height()-10,a=$window.width()-10,s=this.dom.menu.outerHeight(),u=this.dom.menu.outerWidth(),this.dom.menu.css({top:r+s>o?o-s:r,left:i+u>a?a-u:i})},_menu.prototype.appendItem=function(e){if(e instanceof jQuery)return e.appendTo(this.dom.body)},_menu.prototype.capturePage_callback=function(e){this.showing&&(this.dom.blured=$('<s class="blured"/>').css("background-image","url("+e+")").appendTo(this.dom.menu.addClass("on")))},_menu.hideAll=function(e){_frame.menu.timeout_hideall=setTimeout(function(){for(var e in _frame.menu.menus)_frame.menu.menus[e].hide&&_frame.menu.menus[e].hide();_frame.menu.timeout_hideall=null},e||1)},_frame.menu={dom:{},menus:[],init:function(){if(this.is_init)return this;this.dom.container=$('<div class="menus"/>').on({click:function(e,t){_menu.hideAll(t)},contextmenu:function(e){_frame.menu.dom.container.trigger("click"),e.preventDefault()}}).appendTo($body),$body.on("click.cancel_hideall",".menus>.menu",function(e){clearTimeout(_frame.menu.timeout_hideall),_frame.menu.timeout_hideall=null}),this.is_init=!0}},_frame.modal={dom:{},defaults:{classname:"",showBlured:!0},show:function(e,t,n,r){clearTimeout(this.hide_timeout),this.hide_timeout=null,this.dom.container.addClass("show"),this.showing=!0;var i=$.extend({},this.defaults,n);i.detach&&(this.content=e),e.appendTo(this.dom.content),i.onClose&&_frame.modal.dom.container.on("close",i.onClose),t?(this.dom.titlebar.html(t),this.dom.container.addClass("hastitle")):(this.dom.titlebar.html(""),this.dom.container.removeClass("hastitle")),this.dom.box.css({width:i.width||null,height:i.height||null}),i.showBlured&&(this.dom.blured||void 0===node||(node.win.capturePage(function(e){_frame.modal.dom.blured=$("<img/>").attr("src",e).appendTo(_frame.modal.dom.bg)},{format:"jpg",datatype:"datauri"}),this.dom.container.addClass("mod-blur-shot"))),setTimeout(function(){_frame.modal.dom.container.addClass("on "+i.classname).data("customclass",i.classname)},0),_p.initDOM(this.dom.content),this.dom.bg.off("click.blank_to_close").on("click.blank_to_close",function(){i.blank_to_close&&_frame.modal.dom.btn_close.trigger("click")}),r&&r(this.dom.content)},hide:function(){if(!this.showing)return!1;clearTimeout(this.hide_timeout),this.hide_timeout=null,this.dom.container.removeClass("on")},reset:function(){this.resetContent(),this.dom.blured&&(parseInt(this.dom.container.css("opacity"))||(this.dom.blured.remove(),this.dom.blured=null),this.dom.container.removeClass("mod-blur-shot"))},resetContent:function(){this.content&&(this.content.detach(),this.content=null),this.dom.content.empty(),this.dom.container.removeClass(this.dom.container.data("customclass")),this.dom.container.data("customclass",""),this.dom.titlebar.html(""),this.dom.container.removeClass("hastitle")}},_frame.modal.init=function(){return!!this.is_init||(this.dom.container=$('<div class="modal" />').on({"transitionend.modal_hide webkitTransitionEnd.modal_hide mozTransitionEnd.modal_hide":function(e){_frame.modal.showing&&e.currentTarget==e.target&&"opacity"==e.originalEvent.propertyName&&0==_frame.modal.dom.container.css("opacity")&&(_frame.modal.hide_timeout=setTimeout(function(){_frame.modal.reset(),_frame.modal.dom.container.removeClass("show"),_frame.modal.showing=!1,_frame.modal.dom.container.trigger("close").off("close")},10))}}).prependTo($body),this.dom.box=$("<div/>").appendTo(this.dom.container),this.dom.titlebar=$("<header/>").appendTo(this.dom.box),this.dom.content=$("<section/>").appendTo(this.dom.box),this.dom.btn_close=$('<button class="close" />').html("&times;").on("click",function(){_frame.modal.hide()}).appendTo(this.dom.box),this.dom.bg=$("<s/>").appendTo(this.dom.container),_hotkey.bind("27",function(){_frame.modal.hide()}),this.is_init=!0,!0)},_p.tip={pos:"bottom",size_indicator:8,filters:[],countdown_fade:250,init_global:function(){if(this.is_init)return!1;this.dom=$('<div id="tip"/>').on("transitionend webkitTransitionEnd mozTransitionEnd",function(e){e.currentTarget==e.target&&"opacity"==e.originalEvent.propertyName&&0==_p.tip.dom.css("opacity")&&(_p.tip.dom.removeClass("show").css({top:"",left:""}).attr({"data-tip-indicator-pos":"","data-tip-indicator-offset-x":"","data-tip-indicator-offset-y":""}),_p.tip.dom_bluredbg&&_p.tip.dom_bluredbg.css("background-image",""))}).appendTo($body),this.dom_body=$('<div class="body"/>').appendTo(this.dom),void 0!==node&&(this.dom.addClass("mod-blur-shot"),this.dom_bluredbg=$("<div/>").appendTo($('<div class="bluredbg"/>').appendTo(this.dom))),this.is_init=!0},show:function(e,t,n){if(!e)return!1;clearTimeout(this.timeout_fade),this.timeout_fade=null,t=t||"body",this.el=$(t),n=n||this.pos,e=this.content(e),this.init_global(),this.dom.hasClass("show")||(this.dom_bluredbg&&void 0!==node&&node.win.capturePage(function(e){_p.tip.dom_bluredbg.css("background-image","url("+e+")")},{format:"jpg",datatype:"datauri"}),this.dom.addClass("show")),this.position(e,n),this.is_showing=!0},position:function(e,t){var n=e.hashCode();this.curContent!=n&&(this.dom.css({top:"-1000px",left:"-1000px"}),this.dom_body.html(e),_p.initDOM(this.dom_body),this.curContent=n);var r=this["pos_"+t](this.dom.outerWidth(),this.dom.outerHeight());r&&this.move(r.x,r.y)},hide:function(e){if(!this.is_init||!this.is_showing)return!1;this.timeout_fade=setTimeout(function(){_p.tip.el=null,_p.tip.dom.removeClass("on"),_p.tip.is_showing=!1,_p.tip.curContent=null,_p.tip.timeout_fade=null},e?0:this.countdown_fade)},content:function(e,t){return t=t||this.el,e},move:function(e,t){this.dom.css({top:t,left:e}).addClass("on")},get_indicator_size:function(){return this.size_indicator*_g.baseMultiper},pos_mouse:function(e,t){this.el.unbind("mousemove.tooltip").bind("mousemove.tooltip",function(n){var r=n.pageX+25,i=n.pageY+20,o=jQuery(window).innerWidth(),a=jQuery(window).innerHeight(),s=jQuery(window).scrollTop(),u=jQuery(window).scrollLeft();r+e+25>o+u&&(r=r-e-25-20),i+10+t>a+s&&(i=a+s-t-10),_p.tip.move(r,i)})},pos_bottom:function(e,t){var n=this.el,r=this.dom,i=n.offset(),o=i.left+(n.outerWidth()-r.outerWidth())/2,a=i.top+n.outerHeight()+this.get_indicator_size();return this.dom.attr("data-tip-indicator-pos","top"),this.checkpos(o,a,e,t)},pos_top:function(e,t){var n=this.el,r=this.dom,i=n.offset(),o=i.left+(n.outerWidth()-r.outerWidth())/2,a=i.top-t-this.get_indicator_size();return this.dom.attr("data-tip-indicator-pos","bottom"),this.checkpos(o,a,e,t)},pos_left:function(e,t){var n=this.el,r=this.dom,i=n.offset(),o=i.left-e-this.get_indicator_size(),a=i.top+(n.outerHeight()-r.outerHeight())/2;return this.dom.attr("data-tip-indicator-pos","right"),this.checkpos(o,a,e,t)},pos_right:function(e,t){var n=this.el,r=this.dom,i=n.offset(),o=i.left+n.outerWidth()+this.get_indicator_size(),a=i.top+(n.outerHeight()-r.outerHeight())/2;return this.dom.attr("data-tip-indicator-pos","left"),this.checkpos(o,a,e,t)},checkpos:function(e,t,n,r){var i=this.el,o=this.dom,a=i.offset(),s=e,u=t,c={x:s,y:u},l=$document.width()||$window.width();return e+n>l?c=n>a.left?{x:l-n-2,y:t}:this.pos_left(n,r):e<0&&(c=this.pos_right(n,r)),t+r>$(window).scrollTop()+$(window).height()?c=this.pos_top(n,r):t<$(window).scrollTop()&&(c=this.pos_bottom(n,r)),o.attr({"data-tip-indicator-offset-x":e-s+"px","data-tip-indicator-offset-y":t-u+"px"}),c},trigger_by_el:function(e){var t=e.data("tip");e.data("tip-filtered")||(this.filters.forEach(function(e){t=e(t)||t}),e.data({tip:t,"tip-filtered":!0})),this.show(t,e,e.data("tip-position"))}},_p.el.tip={init:function(){if(_p.el.tip.isInit)return!1;$body.on("mouseenter._tip","[data-tip]",function(){$body_preventMouseover||_p.tip.trigger_by_el($(this))}).on("mouseleave._tip","[data-tip]",function(){_p.tip.hide()}).on("click._tip","[data-tip]",function(){_p.tip.hide(!0)}).on("tipshow._tip","[data-tip]",function(){_p.tip.trigger_by_el($(this))}).on("tiphide._tip","[data-tip]",function(){_p.tip.hide()}),_p.el.tip.isInit=!0}},_p.el.links={is_init:!1,click:function(e,t){e.attr("href");if(e.hasClass("disabled"))return t&&(t.preventDefault(),t.stopImmediatePropagation(),t.stopPropagation()),!1},init:function(e){_p.el.links.is_init||($body.on("click.link_delegate","a",function(e){var t=$(this),n=t.attr("target");if(void 0!==node&&(this.hostname!=window.location.hostname&&(n="_external"),"_external"==n||"_blank"==n))return node.gui.Shell.openExternal(t.attr("href")),e.preventDefault(),!0;_p.el.links.click(t,e)}),_p.el.links.is_init=!0)}},_p.el.form={init_el:function(e){if(e.data("is_init_form_el"))return!0;e.find("textarea").on({"keyup.ctrl_enter_submit":function(t){var n=window.event?t.keyCode:t.which;switch(n=n.toString()){case"13":(t.metaKey||t.ctrlKey)&&e.submit()}}}),e.data("is_init_form_el",!0)},init:function(e,t){e=e||$body,(t=t||e.find("form")).each(function(){_p.el.form.init_el($(this))})}},_p.el.flexgrid={create:function(){var e=$('<div class="flexgrid"/>');return _p.el.flexgrid.init_el(e),e},init_el:function(e){if(e.data("is_init_flexgrid"))return!0;if(!e.data("append_before_this")){e.data("append_before_this",$('<div class="unit"/>').appendTo(e));for(var t=0;t<9;)$('<div class="unit"/>').appendTo(e),t++}e.data("is_init_flexgrid",!0)},init:function(e,t){e=e||$body,(t=t||e.find(".flexgrid")).each(function(){_p.el.flexgrid.init_el($(this))})}},jQuery.fn.extend({appendDOM:function(e){return"function"==typeof e&&(e=e()),e&&e.insertBefore(this.data("append_before_this")),this}}),function(e,t){"undefined"!=typeof exports?"undefined"!=typeof module&&module.exports&&(exports=module.exports=t(e,exports)):"function"==typeof define&&define.amd?define(["exports"],function(n){e.Lockr=t(e,n)}):e.Lockr=t(e,{})}(this,function(e,t){"use strict";return Array.prototype.indexOf||(Array.prototype.indexOf=function(e){var t=this.length>>>0,n=Number(arguments[1])||0;for(0>(n=0>n?Math.ceil(n):Math.floor(n))&&(n+=t);t>n;n++)if(n in this&&this[n]===e)return n;return-1}),t.prefix="",t._getPrefixedKey=function(e,t){return(t=t||{}).noPrefix?e:this.prefix+e},t.set=function(e,t,n){var r=this._getPrefixedKey(e,n);try{localStorage.setItem(r,JSON.stringify({data:t}))}catch(n){console&&console.warn("Lockr didn't successfully save the '{"+e+": "+t+"}' pair, because the localStorage is full.")}},t.get=function(e,t,n){var r,i=this._getPrefixedKey(e,n);try{r=JSON.parse(localStorage.getItem(i))}catch(t){try{r=localStorage[i]?JSON.parse('{"data":"'+localStorage.getItem(i)+'"}'):null}catch(t){console&&console.warn("Lockr could not load the item with key "+e)}}return null===r?t:void 0!==r.data?r.data:t},t.sadd=function(e,n,r){var i,o=this._getPrefixedKey(e,r),a=t.smembers(e);if(a.indexOf(n)>-1)return null;try{a.push(n),i=JSON.stringify({data:a}),localStorage.setItem(o,i)}catch(t){console.log(t),console&&console.warn("Lockr didn't successfully add the "+n+" to "+e+" set, because the localStorage is full.")}},t.smembers=function(e,t){var n,r=this._getPrefixedKey(e,t);try{n=JSON.parse(localStorage.getItem(r))}catch(e){n=null}return null===n?[]:n.data||[]},t.sismember=function(e,n,r){return this._getPrefixedKey(e,r),t.smembers(e).indexOf(n)>-1},t.getAll=function(){return Object.keys(localStorage).map(function(e){return t.get(e)})},t.srem=function(e,n,r){var i,o,a=this._getPrefixedKey(e,r),s=t.smembers(e,n);(o=s.indexOf(n))>-1&&s.splice(o,1),i=JSON.stringify({data:s});try{localStorage.setItem(a,i)}catch(t){console&&console.warn("Lockr couldn't remove the "+n+" from the set "+e)}},t.rm=function(e){localStorage.removeItem(e)},t.flush=function(){localStorage.clear()},t});var LZString=function(){function e(e,t){if(!i[e]){i[e]={};for(var n=0;n<e.length;n++)i[e][e.charAt(n)]=n}return i[e][t]}var t=String.fromCharCode,n="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",r="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$",i={},o={compressToBase64:function(e){if(null==e)return"";var t=o._compress(e,6,function(e){return n.charAt(e)});switch(t.length%4){default:case 0:return t;case 1:return t+"===";case 2:return t+"==";case 3:return t+"="}},decompressFromBase64:function(t){return null==t?"":""==t?null:o._decompress(t.length,32,function(r){return e(n,t.charAt(r))})},compressToUTF16:function(e){return null==e?"":o._compress(e,15,function(e){return t(e+32)})+" "},decompressFromUTF16:function(e){return null==e?"":""==e?null:o._decompress(e.length,16384,function(t){return e.charCodeAt(t)-32})},compressToUint8Array:function(e){for(var t=o.compress(e),n=new Uint8Array(2*t.length),r=0,i=t.length;r<i;r++){var a=t.charCodeAt(r);n[2*r]=a>>>8,n[2*r+1]=a%256}return n},decompressFromUint8Array:function(e){if(null===e||void 0===e)return o.decompress(e);for(var n=new Array(e.length/2),r=0,i=n.length;r<i;r++)n[r]=256*e[2*r]+e[2*r+1];var a=[];return n.forEach(function(e){a.push(t(e))}),o.decompress(a.join(""))},compressToEncodedURIComponent:function(e){return null==e?"":o._compress(e,6,function(e){return r.charAt(e)})},decompressFromEncodedURIComponent:function(t){return null==t?"":""==t?null:(t=t.replace(/ /g,"+"),o._decompress(t.length,32,function(n){return e(r,t.charAt(n))}))},compress:function(e){return o._compress(e,16,function(e){return t(e)})},_compress:function(e,t,n){if(null==e)return"";var r,i,o,a={},s={},u="",c="",l="",d=2,f=3,h=2,p=[],m=0,g=0;for(o=0;o<e.length;o+=1)if(u=e.charAt(o),Object.prototype.hasOwnProperty.call(a,u)||(a[u]=f++,s[u]=!0),c=l+u,Object.prototype.hasOwnProperty.call(a,c))l=c;else{if(Object.prototype.hasOwnProperty.call(s,l)){if(l.charCodeAt(0)<256){for(r=0;r<h;r++)m<<=1,g==t-1?(g=0,p.push(n(m)),m=0):g++;for(i=l.charCodeAt(0),r=0;r<8;r++)m=m<<1|1&i,g==t-1?(g=0,p.push(n(m)),m=0):g++,i>>=1}else{for(i=1,r=0;r<h;r++)m=m<<1|i,g==t-1?(g=0,p.push(n(m)),m=0):g++,i=0;for(i=l.charCodeAt(0),r=0;r<16;r++)m=m<<1|1&i,g==t-1?(g=0,p.push(n(m)),m=0):g++,i>>=1}0==--d&&(d=Math.pow(2,h),h++),delete s[l]}else for(i=a[l],r=0;r<h;r++)m=m<<1|1&i,g==t-1?(g=0,p.push(n(m)),m=0):g++,i>>=1;0==--d&&(d=Math.pow(2,h),h++),a[c]=f++,l=String(u)}if(""!==l){if(Object.prototype.hasOwnProperty.call(s,l)){if(l.charCodeAt(0)<256){for(r=0;r<h;r++)m<<=1,g==t-1?(g=0,p.push(n(m)),m=0):g++;for(i=l.charCodeAt(0),r=0;r<8;r++)m=m<<1|1&i,g==t-1?(g=0,p.push(n(m)),m=0):g++,i>>=1}else{for(i=1,r=0;r<h;r++)m=m<<1|i,g==t-1?(g=0,p.push(n(m)),m=0):g++,i=0;for(i=l.charCodeAt(0),r=0;r<16;r++)m=m<<1|1&i,g==t-1?(g=0,p.push(n(m)),m=0):g++,i>>=1}0==--d&&(d=Math.pow(2,h),h++),delete s[l]}else for(i=a[l],r=0;r<h;r++)m=m<<1|1&i,g==t-1?(g=0,p.push(n(m)),m=0):g++,i>>=1;0==--d&&(d=Math.pow(2,h),h++)}for(i=2,r=0;r<h;r++)m=m<<1|1&i,g==t-1?(g=0,p.push(n(m)),m=0):g++,i>>=1;for(;;){if(m<<=1,g==t-1){p.push(n(m));break}g++}return p.join("")},decompress:function(e){return null==e?"":""==e?null:o._decompress(e.length,32768,function(t){return e.charCodeAt(t)})},_decompress:function(e,n,r){var i,o,a,s,u,c,l,d=[],f=4,h=4,p=3,m="",g=[],v={val:r(0),position:n,index:1};for(i=0;i<3;i+=1)d[i]=i;for(a=0,u=Math.pow(2,2),c=1;c!=u;)s=v.val&v.position,v.position>>=1,0==v.position&&(v.position=n,v.val=r(v.index++)),a|=(s>0?1:0)*c,c<<=1;switch(a){case 0:for(a=0,u=Math.pow(2,8),c=1;c!=u;)s=v.val&v.position,v.position>>=1,0==v.position&&(v.position=n,v.val=r(v.index++)),a|=(s>0?1:0)*c,c<<=1;l=t(a);break;case 1:for(a=0,u=Math.pow(2,16),c=1;c!=u;)s=v.val&v.position,v.position>>=1,0==v.position&&(v.position=n,v.val=r(v.index++)),a|=(s>0?1:0)*c,c<<=1;l=t(a);break;case 2:return""}for(d[3]=l,o=l,g.push(l);;){if(v.index>e)return"";for(a=0,u=Math.pow(2,p),c=1;c!=u;)s=v.val&v.position,v.position>>=1,0==v.position&&(v.position=n,v.val=r(v.index++)),a|=(s>0?1:0)*c,c<<=1;switch(l=a){case 0:for(a=0,u=Math.pow(2,8),c=1;c!=u;)s=v.val&v.position,v.position>>=1,0==v.position&&(v.position=n,v.val=r(v.index++)),a|=(s>0?1:0)*c,c<<=1;d[h++]=t(a),l=h-1,f--;break;case 1:for(a=0,u=Math.pow(2,16),c=1;c!=u;)s=v.val&v.position,v.position>>=1,0==v.position&&(v.position=n,v.val=r(v.index++)),a|=(s>0?1:0)*c,c<<=1;d[h++]=t(a),l=h-1,f--;break;case 2:return g.join("")}if(0==f&&(f=Math.pow(2,p),p++),d[l])m=d[l];else{if(l!==h)return null;m=o+o.charAt(0)}g.push(m),d[h++]=o+m.charAt(0),o=m,0==--f&&(f=Math.pow(2,p),p++)}}};return o}();"function"==typeof define&&define.amd?define(function(){return LZString}):"undefined"!=typeof module&&null!=module&&(module.exports=LZString),function(){"use strict";function e(e){return n(r(e),arguments)}function t(t,n){return e.apply(null,[t].concat(n||[]))}function n(t,n){var r,o,a,s,u,c,l,d,f,h=1,p=t.length,m="";for(o=0;o<p;o++)if("string"==typeof t[o])m+=t[o];else if(Array.isArray(t[o])){if((s=t[o])[2])for(r=n[h],a=0;a<s[2].length;a++){if(!r.hasOwnProperty(s[2][a]))throw new Error(e('[sprintf] property "%s" does not exist',s[2][a]));r=r[s[2][a]]}else r=s[1]?n[s[1]]:n[h++];if(i.not_type.test(s[8])&&i.not_primitive.test(s[8])&&r instanceof Function&&(r=r()),i.numeric_arg.test(s[8])&&"number"!=typeof r&&isNaN(r))throw new TypeError(e("[sprintf] expecting number but found %T",r));switch(i.number.test(s[8])&&(d=r>=0),s[8]){case"b":r=parseInt(r,10).toString(2);break;case"c":r=String.fromCharCode(parseInt(r,10));break;case"d":case"i":r=parseInt(r,10);break;case"j":r=JSON.stringify(r,null,s[6]?parseInt(s[6]):0);break;case"e":r=s[7]?parseFloat(r).toExponential(s[7]):parseFloat(r).toExponential();break;case"f":r=s[7]?parseFloat(r).toFixed(s[7]):parseFloat(r);break;case"g":r=s[7]?String(Number(r.toPrecision(s[7]))):parseFloat(r);break;case"o":r=(parseInt(r,10)>>>0).toString(8);break;case"s":r=String(r),r=s[7]?r.substring(0,s[7]):r;break;case"t":r=String(!!r),r=s[7]?r.substring(0,s[7]):r;break;case"T":r=Object.prototype.toString.call(r).slice(8,-1).toLowerCase(),r=s[7]?r.substring(0,s[7]):r;break;case"u":r=parseInt(r,10)>>>0;break;case"v":r=r.valueOf(),r=s[7]?r.substring(0,s[7]):r;break;case"x":r=(parseInt(r,10)>>>0).toString(16);break;case"X":r=(parseInt(r,10)>>>0).toString(16).toUpperCase()}i.json.test(s[8])?m+=r:(!i.number.test(s[8])||d&&!s[3]?f="":(f=d?"+":"-",r=r.toString().replace(i.sign,"")),c=s[4]?"0"===s[4]?"0":s[4].charAt(1):" ",l=s[6]-(f+r).length,u=s[6]&&l>0?c.repeat(l):"",m+=s[5]?f+r+u:"0"===c?f+u+r:u+f+r)}return m}function r(e){if(o[e])return o[e];for(var t,n=e,r=[],a=0;n;){if(null!==(t=i.text.exec(n)))r.push(t[0]);else if(null!==(t=i.modulo.exec(n)))r.push("%");else{if(null===(t=i.placeholder.exec(n)))throw new SyntaxError("[sprintf] unexpected placeholder");if(t[2]){a|=1;var s=[],u=t[2],c=[];if(null===(c=i.key.exec(u)))throw new SyntaxError("[sprintf] failed to parse named argument key");for(s.push(c[1]);""!==(u=u.substring(c[0].length));)if(null!==(c=i.key_access.exec(u)))s.push(c[1]);else{if(null===(c=i.index_access.exec(u)))throw new SyntaxError("[sprintf] failed to parse named argument key");s.push(c[1])}t[2]=s}else a|=2;if(3===a)throw new Error("[sprintf] mixing positional and named placeholders is not (yet) supported");r.push(t)}n=n.substring(t[0].length)}return o[e]=r}var i={not_string:/[^s]/,not_bool:/[^t]/,not_type:/[^T]/,not_primitive:/[^v]/,number:/[diefg]/,numeric_arg:/[bcdiefguxX]/,json:/[j]/,not_json:/[^j]/,text:/^[^\x25]+/,modulo:/^\x25{2}/,placeholder:/^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,key:/^([a-z_][a-z_\d]*)/i,key_access:/^\.([a-z_][a-z_\d]*)/i,index_access:/^\[(\d+)\]/,sign:/^[\+\-]/},o=Object.create(null);"undefined"!=typeof exports&&(exports.sprintf=e,exports.vsprintf=t),"undefined"!=typeof window&&(window.sprintf=e,window.vsprintf=t,"function"==typeof define&&define.amd&&define(function(){return{sprintf:e,vsprintf:t}}))}(),function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):e.PointerEventsPolyfill=t()}(this,function(){"use strict";function e(e,t){t=t||Object.create(null);var n=document.createEvent("Event");n.initEvent(e,t.bubbles||!1,t.cancelable||!1);for(var r,i=2;i<c.length;i++)r=c[i],n[r]=t[r]||l[i];n.buttons=t.buttons||0;var o=0;return o=t.pressure&&n.buttons?t.pressure:n.buttons?.5:0,n.x=n.clientX,n.y=n.clientY,n.pointerId=t.pointerId||0,n.width=t.width||0,n.height=t.height||0,n.pressure=o,n.tiltX=t.tiltX||0,n.tiltY=t.tiltY||0,n.twist=t.twist||0,n.tangentialPressure=t.tangentialPressure||0,n.pointerType=t.pointerType||"",n.hwTimestamp=t.hwTimestamp||0,n.isPrimary=t.isPrimary||!1,n}function t(){this.array=[],this.size=0}function n(e,t,n,r){this.addCallback=e.bind(r),this.removeCallback=t.bind(r),this.changedCallback=n.bind(r),x&&(this.observer=new x(this.mutationWatcher.bind(this)))}function r(e){return"body /shadow-deep/ "+i(e)}function i(e){return'[touch-action="'+e+'"]'}function o(e){return"{ -ms-touch-action: "+e+"; touch-action: "+e+"; }"}function a(e){if(!g.pointermap.has(e)){var t=new Error("InvalidPointerId");throw t.name="InvalidPointerId",t}}function s(e){for(var t=e.parentNode;t&&t!==e.ownerDocument;)t=t.parentNode;if(!t){var n=new Error("InvalidStateError");throw n.name="InvalidStateError",n}}function u(e){return 0!==g.pointermap.get(e).buttons}var c=["bubbles","cancelable","view","detail","screenX","screenY","clientX","clientY","ctrlKey","altKey","shiftKey","metaKey","button","relatedTarget","pageX","pageY"],l=[!1,!1,null,null,0,0,0,0,!1,!1,!1,!1,0,null,0,0],d=window.Map&&window.Map.prototype.forEach?Map:t;t.prototype={set:function(e,t){return void 0===t?this.delete(e):(this.has(e)||this.size++,void(this.array[e]=t))},has:function(e){return void 0!==this.array[e]},delete:function(e){this.has(e)&&(delete this.array[e],this.size--)},get:function(e){return this.array[e]},clear:function(){this.array.length=0,this.size=0},forEach:function(e,t){return this.array.forEach(function(n,r){e.call(t,n,r,this)},this)}};var f=["bubbles","cancelable","view","detail","screenX","screenY","clientX","clientY","ctrlKey","altKey","shiftKey","metaKey","button","relatedTarget","buttons","pointerId","width","height","pressure","tiltX","tiltY","pointerType","hwTimestamp","isPrimary","type","target","currentTarget","which","pageX","pageY","timeStamp"],h=[!1,!1,null,null,0,0,0,0,!1,!1,!1,!1,0,null,0,0,0,0,0,0,0,"",0,!1,"",null,null,0,0,0,0],p={pointerover:1,pointerout:1,pointerenter:1,pointerleave:1},m="undefined"!=typeof SVGElementInstance,g={pointermap:new d,eventMap:Object.create(null),captureInfo:Object.create(null),eventSources:Object.create(null),eventSourceList:[],registerSource:function(e,t){var n=t,r=n.events;r&&(r.forEach(function(e){n[e]&&(this.eventMap[e]=n[e].bind(n))},this),this.eventSources[e]=n,this.eventSourceList.push(n))},register:function(e){for(var t,n=this.eventSourceList.length,r=0;r<n&&(t=this.eventSourceList[r]);r++)t.register.call(t,e)},unregister:function(e){for(var t,n=this.eventSourceList.length,r=0;r<n&&(t=this.eventSourceList[r]);r++)t.unregister.call(t,e)},contains:function(e,t){try{return e.contains(t)}catch(e){return!1}},down:function(e){e.bubbles=!0,this.fireEvent("pointerdown",e)},move:function(e){e.bubbles=!0,this.fireEvent("pointermove",e)},up:function(e){e.bubbles=!0,this.fireEvent("pointerup",e)},enter:function(e){e.bubbles=!1,this.fireEvent("pointerenter",e)},leave:function(e){e.bubbles=!1,this.fireEvent("pointerleave",e)},over:function(e){e.bubbles=!0,this.fireEvent("pointerover",e)},out:function(e){e.bubbles=!0,this.fireEvent("pointerout",e)},cancel:function(e){e.bubbles=!0,this.fireEvent("pointercancel",e)},leaveOut:function(e){this.out(e),this.propagate(e,this.leave,!1)},enterOver:function(e){this.over(e),this.propagate(e,this.enter,!0)},eventHandler:function(e){if(!e._handledByPE){var t=e.type,n=this.eventMap&&this.eventMap[t];n&&n(e),e._handledByPE=!0}},listen:function(e,t){t.forEach(function(t){this.addEvent(e,t)},this)},unlisten:function(e,t){t.forEach(function(t){this.removeEvent(e,t)},this)},addEvent:function(e,t){e.addEventListener(t,this.boundHandler)},removeEvent:function(e,t){e.removeEventListener(t,this.boundHandler)},makeEvent:function(t,n){this.captureInfo[n.pointerId]&&(n.relatedTarget=null);var r=new e(t,n);return n.preventDefault&&(r.preventDefault=n.preventDefault),r._target=r._target||n.target,r},fireEvent:function(e,t){var n=this.makeEvent(e,t);return this.dispatchEvent(n)},cloneEvent:function(e){for(var t,n=Object.create(null),r=0;r<f.length;r++)t=f[r],n[t]=e[t]||h[r],!m||"target"!==t&&"relatedTarget"!==t||n[t]instanceof SVGElementInstance&&(n[t]=n[t].correspondingUseElement);return e.preventDefault&&(n.preventDefault=function(){e.preventDefault()}),n},getTarget:function(e){var t=this.captureInfo[e.pointerId];return t?e._target!==t&&e.type in p?void 0:t:e._target},propagate:function(e,t,n){for(var r=e.target,i=[];r!==document&&!r.contains(e.relatedTarget);)if(i.push(r),!(r=r.parentNode))return;n&&i.reverse(),i.forEach(function(n){e.target=n,t.call(this,e)},this)},setCapture:function(t,n,r){this.captureInfo[t]&&this.releaseCapture(t,r),this.captureInfo[t]=n,this.implicitRelease=this.releaseCapture.bind(this,t,r),document.addEventListener("pointerup",this.implicitRelease),document.addEventListener("pointercancel",this.implicitRelease);var i=new e("gotpointercapture");i.pointerId=t,i._target=n,r||this.asyncDispatchEvent(i)},releaseCapture:function(t,n){var r=this.captureInfo[t];if(r){this.captureInfo[t]=void 0,document.removeEventListener("pointerup",this.implicitRelease),document.removeEventListener("pointercancel",this.implicitRelease);var i=new e("lostpointercapture");i.pointerId=t,i._target=r,n||this.asyncDispatchEvent(i)}},dispatchEvent:function(e){var t=this.getTarget(e);if(t)return t.dispatchEvent(e)},asyncDispatchEvent:function(e){requestAnimationFrame(this.dispatchEvent.bind(this,e))}};g.boundHandler=g.eventHandler.bind(g);var v={shadow:function(e){if(e)return e.shadowRoot||e.webkitShadowRoot},canTarget:function(e){return e&&Boolean(e.elementFromPoint)},targetingShadow:function(e){var t=this.shadow(e);if(this.canTarget(t))return t},olderShadow:function(e){var t=e.olderShadowRoot;if(!t){var n=e.querySelector("shadow");n&&(t=n.olderShadowRoot)}return t},allShadows:function(e){for(var t=[],n=this.shadow(e);n;)t.push(n),n=this.olderShadow(n);return t},searchRoot:function(e,t,n){if(e){var r,i,o=e.elementFromPoint(t,n);for(i=this.targetingShadow(o);i;){if(r=i.elementFromPoint(t,n)){var a=this.targetingShadow(r);return this.searchRoot(a,t,n)||r}i=this.olderShadow(i)}return o}},owner:function(e){for(var t=e;t.parentNode;)t=t.parentNode;return t.nodeType!==Node.DOCUMENT_NODE&&t.nodeType!==Node.DOCUMENT_FRAGMENT_NODE&&(t=document),t},findTarget:function(e){var t=e.clientX,n=e.clientY,r=this.owner(e.target);return r.elementFromPoint(t,n)||(r=document),this.searchRoot(r,t,n)}},y=Array.prototype.forEach.call.bind(Array.prototype.forEach),b=Array.prototype.map.call.bind(Array.prototype.map),_=Array.prototype.slice.call.bind(Array.prototype.slice),w=Array.prototype.filter.call.bind(Array.prototype.filter),x=window.MutationObserver||window.WebKitMutationObserver,S={subtree:!0,childList:!0,attributes:!0,attributeOldValue:!0,attributeFilter:["touch-action"]};n.prototype={watchSubtree:function(e){this.observer&&v.canTarget(e)&&this.observer.observe(e,S)},enableOnSubtree:function(e){this.watchSubtree(e),e===document&&"complete"!==document.readyState?this.installOnLoad():this.installNewSubtree(e)},installNewSubtree:function(e){y(this.findElements(e),this.addElement,this)},findElements:function(e){return e.querySelectorAll?e.querySelectorAll("[touch-action]"):[]},removeElement:function(e){this.removeCallback(e)},addElement:function(e){this.addCallback(e)},elementChanged:function(e,t){this.changedCallback(e,t)},concatLists:function(e,t){return e.concat(_(t))},installOnLoad:function(){document.addEventListener("readystatechange",function(){"complete"===document.readyState&&this.installNewSubtree(document)}.bind(this))},isElement:function(e){return e.nodeType===Node.ELEMENT_NODE},flattenMutationTree:function(e){var t=b(e,this.findElements,this);return t.push(w(e,this.isElement)),t.reduce(this.concatLists,[])},mutationWatcher:function(e){e.forEach(this.mutationHandler,this)},mutationHandler:function(e){"childList"===e.type?(this.flattenMutationTree(e.addedNodes).forEach(this.addElement,this),this.flattenMutationTree(e.removedNodes).forEach(this.removeElement,this)):"attributes"===e.type&&this.elementChanged(e.target,e.oldValue)}};var C=["none","auto","pan-x","pan-y",{rule:"pan-x pan-y",selectors:["pan-x pan-y","pan-y pan-x"]}],k="",T=window.PointerEvent||window.MSPointerEvent,E=!window.ShadowDOMPolyfill&&document.head.createShadowRoot,A=g.pointermap,I=[1,4,2,8,16],N=!1;try{N=1===new MouseEvent("test",{buttons:1}).buttons}catch(e){}var M,R={POINTER_ID:1,POINTER_TYPE:"mouse",events:["mousedown","mousemove","mouseup","mouseover","mouseout"],register:function(e){g.listen(e,this.events)},unregister:function(e){g.unlisten(e,this.events)},lastTouches:[],isEventSimulatedFromTouch:function(e){for(var t,n=this.lastTouches,r=e.clientX,i=e.clientY,o=0,a=n.length;o<a&&(t=n[o]);o++){var s=Math.abs(r-t.x),u=Math.abs(i-t.y);if(s<=25&&u<=25)return!0}},prepareEvent:function(e){var t=g.cloneEvent(e),n=t.preventDefault;return t.preventDefault=function(){e.preventDefault(),n()},t.pointerId=this.POINTER_ID,t.isPrimary=!0,t.pointerType=this.POINTER_TYPE,t},prepareButtonsForMove:function(e,t){var n=A.get(this.POINTER_ID);0!==t.which&&n?e.buttons=n.buttons:e.buttons=0,t.buttons=e.buttons},mousedown:function(e){if(!this.isEventSimulatedFromTouch(e)){var t=A.get(this.POINTER_ID),n=this.prepareEvent(e);N||(n.buttons=I[n.button],t&&(n.buttons|=t.buttons),e.buttons=n.buttons),A.set(this.POINTER_ID,e),t&&0!==t.buttons?g.move(n):g.down(n)}},mousemove:function(e){if(!this.isEventSimulatedFromTouch(e)){var t=this.prepareEvent(e);N||this.prepareButtonsForMove(t,e),t.button=-1,A.set(this.POINTER_ID,e),g.move(t)}},mouseup:function(e){if(!this.isEventSimulatedFromTouch(e)){var t=A.get(this.POINTER_ID),n=this.prepareEvent(e);if(!N){var r=I[n.button];n.buttons=t?t.buttons&~r:0,e.buttons=n.buttons}A.set(this.POINTER_ID,e),n.buttons&=~I[n.button],0===n.buttons?g.up(n):g.move(n)}},mouseover:function(e){if(!this.isEventSimulatedFromTouch(e)){var t=this.prepareEvent(e);N||this.prepareButtonsForMove(t,e),t.button=-1,A.set(this.POINTER_ID,e),g.enterOver(t)}},mouseout:function(e){if(!this.isEventSimulatedFromTouch(e)){var t=this.prepareEvent(e);N||this.prepareButtonsForMove(t,e),t.button=-1,g.leaveOut(t)}},cancel:function(e){var t=this.prepareEvent(e);g.cancel(t),this.deactivateMouse()},deactivateMouse:function(){A.delete(this.POINTER_ID)}},O=g.captureInfo,L=v.findTarget.bind(v),D=v.allShadows.bind(v),P=g.pointermap,j="touch-action",B={events:["touchstart","touchmove","touchend","touchcancel"],register:function(e){M.enableOnSubtree(e)},unregister:function(){},elementAdded:function(e){var t=e.getAttribute(j),n=this.touchActionToScrollType(t);n&&(e._scrollType=n,g.listen(e,this.events),D(e).forEach(function(e){e._scrollType=n,g.listen(e,this.events)},this))},elementRemoved:function(e){e._scrollType=void 0,g.unlisten(e,this.events),D(e).forEach(function(e){e._scrollType=void 0,g.unlisten(e,this.events)},this)},elementChanged:function(e,t){var n=e.getAttribute(j),r=this.touchActionToScrollType(n),i=this.touchActionToScrollType(t);r&&i?(e._scrollType=r,D(e).forEach(function(e){e._scrollType=r},this)):i?this.elementRemoved(e):r&&this.elementAdded(e)},scrollTypes:{EMITTER:"none",XSCROLLER:"pan-x",YSCROLLER:"pan-y",SCROLLER:/^(?:pan-x pan-y)|(?:pan-y pan-x)|auto$/},touchActionToScrollType:function(e){var t=e,n=this.scrollTypes;return"none"===t?"none":t===n.XSCROLLER?"X":t===n.YSCROLLER?"Y":n.SCROLLER.exec(t)?"XY":void 0},POINTER_TYPE:"touch",firstTouch:null,isPrimaryTouch:function(e){return this.firstTouch===e.identifier},setPrimaryTouch:function(e){(0===P.size||1===P.size&&P.has(1))&&(this.firstTouch=e.identifier,this.firstXY={X:e.clientX,Y:e.clientY},this.scrolling=!1,this.cancelResetClickCount())},removePrimaryPointer:function(e){e.isPrimary&&(this.firstTouch=null,this.firstXY=null,this.resetClickCount())},clickCount:0,resetId:null,resetClickCount:function(){var e=function(){this.clickCount=0,this.resetId=null}.bind(this);this.resetId=setTimeout(e,200)},cancelResetClickCount:function(){this.resetId&&clearTimeout(this.resetId)},typeToButtons:function(e){var t=0;return"touchstart"!==e&&"touchmove"!==e||(t=1),t},touchToPointer:function(e){var t=this.currentTouchEvent,n=g.cloneEvent(e),r=n.pointerId=e.identifier+2;n.target=O[r]||L(n),n.bubbles=!0,n.cancelable=!0,n.detail=this.clickCount,n.button=0,n.buttons=this.typeToButtons(t.type),n.width=2*(e.radiusX||e.webkitRadiusX||0),n.height=2*(e.radiusY||e.webkitRadiusY||0),n.pressure=e.force||e.webkitForce||.5,n.isPrimary=this.isPrimaryTouch(e),n.pointerType=this.POINTER_TYPE,n.altKey=t.altKey,n.ctrlKey=t.ctrlKey,n.metaKey=t.metaKey,n.shiftKey=t.shiftKey;var i=this;return n.preventDefault=function(){i.scrolling=!1,i.firstXY=null,t.preventDefault()},n},processTouches:function(e,t){var n=e.changedTouches;this.currentTouchEvent=e;for(var r,i=0;i<n.length;i++)r=n[i],t.call(this,this.touchToPointer(r))},shouldScroll:function(e){if(this.firstXY){var t,n=e.currentTarget._scrollType;if("none"===n)t=!1;else if("XY"===n)t=!0;else{var r=e.changedTouches[0],i=n,o="Y"===n?"X":"Y";t=Math.abs(r["client"+i]-this.firstXY[i])>=Math.abs(r["client"+o]-this.firstXY[o])}return this.firstXY=null,t}},findTouch:function(e,t){for(var n,r=0,i=e.length;r<i&&(n=e[r]);r++)if(n.identifier===t)return!0},vacuumTouches:function(e){var t=e.touches;if(P.size>=t.length){var n=[];P.forEach(function(e,r){if(1!==r&&!this.findTouch(t,r-2)){var i=e.out;n.push(i)}},this),n.forEach(this.cancelOut,this)}},touchstart:function(e){this.vacuumTouches(e),this.setPrimaryTouch(e.changedTouches[0]),this.dedupSynthMouse(e),this.scrolling||(this.clickCount++,this.processTouches(e,this.overDown))},overDown:function(e){P.set(e.pointerId,{target:e.target,out:e,outTarget:e.target}),g.enterOver(e),g.down(e)},touchmove:function(e){this.scrolling||(this.shouldScroll(e)?(this.scrolling=!0,this.touchcancel(e)):(e.preventDefault(),this.processTouches(e,this.moveOverOut)))},moveOverOut:function(e){var t=e,n=P.get(t.pointerId);if(n){var r=n.out,i=n.outTarget;g.move(t),r&&i!==t.target&&(r.relatedTarget=t.target,t.relatedTarget=i,r.target=i,t.target?(g.leaveOut(r),g.enterOver(t)):(t.target=i,t.relatedTarget=null,this.cancelOut(t))),n.out=t,n.outTarget=t.target}},touchend:function(e){this.dedupSynthMouse(e),this.processTouches(e,this.upOut)},upOut:function(e){this.scrolling||(g.up(e),g.leaveOut(e)),this.cleanUpPointer(e)},touchcancel:function(e){this.processTouches(e,this.cancelOut)},cancelOut:function(e){g.cancel(e),g.leaveOut(e),this.cleanUpPointer(e)},cleanUpPointer:function(e){P.delete(e.pointerId),this.removePrimaryPointer(e)},dedupSynthMouse:function(e){var t=R.lastTouches,n=e.changedTouches[0];if(this.isPrimaryTouch(n)){var r={x:n.clientX,y:n.clientY};t.push(r);var i=function(e,t){var n=e.indexOf(t);n>-1&&e.splice(n,1)}.bind(null,t,r);setTimeout(i,2500)}}};M=new n(B.elementAdded,B.elementRemoved,B.elementChanged,B);var $,F,q,z=g.pointermap,H=window.MSPointerEvent&&"number"==typeof window.MSPointerEvent.MSPOINTER_TYPE_MOUSE,W={events:["MSPointerDown","MSPointerMove","MSPointerUp","MSPointerOut","MSPointerOver","MSPointerCancel","MSGotPointerCapture","MSLostPointerCapture"],register:function(e){g.listen(e,this.events)},unregister:function(e){g.unlisten(e,this.events)},POINTER_TYPES:["","unavailable","touch","pen","mouse"],prepareEvent:function(e){var t=e;return H&&(t=g.cloneEvent(e),t.pointerType=this.POINTER_TYPES[e.pointerType]),t},cleanup:function(e){z.delete(e)},MSPointerDown:function(e){z.set(e.pointerId,e);var t=this.prepareEvent(e);g.down(t)},MSPointerMove:function(e){var t=this.prepareEvent(e);g.move(t)},MSPointerUp:function(e){var t=this.prepareEvent(e);g.up(t),this.cleanup(e.pointerId)},MSPointerOut:function(e){var t=this.prepareEvent(e);g.leaveOut(t)},MSPointerOver:function(e){var t=this.prepareEvent(e);g.enterOver(t)},MSPointerCancel:function(e){var t=this.prepareEvent(e);g.cancel(t),this.cleanup(e.pointerId)},MSLostPointerCapture:function(e){var t=g.makeEvent("lostpointercapture",e);g.dispatchEvent(t)},MSGotPointerCapture:function(e){var t=g.makeEvent("gotpointercapture",e);g.dispatchEvent(t)}};return window.navigator.msPointerEnabled?($=function(e){a(e),s(this),u(e)&&(g.setCapture(e,this,!0),this.msSetPointerCapture(e))},F=function(e){a(e),g.releaseCapture(e,!0),this.msReleasePointerCapture(e)}):($=function(e){a(e),s(this),u(e)&&g.setCapture(e,this)},F=function(e){a(e),g.releaseCapture(e)}),q=function(e){return!!g.captureInfo[e]},function(){if(T){C.forEach(function(e){String(e)===e?(k+=i(e)+o(e)+"\n",E&&(k+=r(e)+o(e)+"\n")):(k+=e.selectors.map(i)+o(e.rule)+"\n",E&&(k+=e.selectors.map(r)+o(e.rule)+"\n"))});var e=document.createElement("style");e.textContent=k,document.head.appendChild(e)}}(),function(){if(!window.PointerEvent){if(window.PointerEvent=e,window.navigator.msPointerEnabled){var t=window.navigator.msMaxTouchPoints;Object.defineProperty(window.navigator,"maxTouchPoints",{value:t,enumerable:!0}),g.registerSource("ms",W)}else Object.defineProperty(window.navigator,"maxTouchPoints",{value:0,enumerable:!0}),g.registerSource("mouse",R),void 0!==window.ontouchstart&&g.registerSource("touch",B);g.register(document)}}(),window.Element&&!Element.prototype.setPointerCapture&&Object.defineProperties(Element.prototype,{setPointerCapture:{value:$},releasePointerCapture:{value:F},hasPointerCapture:{value:q}}),{dispatcher:g,Installer:n,PointerEvent:e,PointerMap:d,targetFinding:v}}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{("undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this).localforage=e()}}(function(){return function e(t,n,r){function i(a,s){if(!n[a]){if(!t[a]){var u="function"==typeof require&&require;if(!s&&u)return u(a,!0);if(o)return o(a,!0);var c=new Error("Cannot find module '"+a+"'");throw c.code="MODULE_NOT_FOUND",c}var l=n[a]={exports:{}};t[a][0].call(l.exports,function(e){return i(t[a][1][e]||e)},l,l.exports,e,t,n,r)}return n[a].exports}for(var o="function"==typeof require&&require,a=0;a<r.length;a++)i(r[a]);return i}({1:[function(e,t,n){"use strict";function r(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function i(e,t){e=e||[],t=t||{};try{return new Blob(e,t)}catch(i){if("TypeError"!==i.name)throw i;for(var n=new("undefined"!=typeof BlobBuilder?BlobBuilder:"undefined"!=typeof MSBlobBuilder?MSBlobBuilder:"undefined"!=typeof MozBlobBuilder?MozBlobBuilder:WebKitBlobBuilder),r=0;r<e.length;r+=1)n.append(e[r]);return n.getBlob(t.type)}}function o(e,t){t&&e.then(function(e){t(null,e)},function(e){t(e)})}function a(e,t,n){"function"==typeof t&&e.then(t),"function"==typeof n&&e.catch(n)}function s(e){return"string"!=typeof e&&(console.warn(e+" used as a key, but it is not a string."),e=String(e)),e}function u(e){for(var t=e.length,n=new ArrayBuffer(t),r=new Uint8Array(n),i=0;i<t;i++)r[i]=e.charCodeAt(i);return n}function c(e){return new O(function(t){var n=e.transaction(L,j),r=i([""]);n.objectStore(L).put(r,"key"),n.onabort=function(e){e.preventDefault(),e.stopPropagation(),t(!1)},n.oncomplete=function(){var e=navigator.userAgent.match(/Chrome\/(\d+)/),n=navigator.userAgent.match(/Edge\//);t(n||!e||parseInt(e[1],10)>=43)}}).catch(function(){return!1})}function l(e){return"boolean"==typeof M?O.resolve(M):c(e).then(function(e){return M=e})}function d(e){var t=R[e.name],n={};n.promise=new O(function(e){n.resolve=e}),t.deferredOperations.push(n),t.dbReady?t.dbReady=t.dbReady.then(function(){return n.promise}):t.dbReady=n.promise}function f(e){var t=R[e.name].deferredOperations.pop();t&&t.resolve()}function h(e,t){var n=R[e.name].deferredOperations.pop();n&&n.reject(t)}function p(e,t){return new O(function(n,r){if(e.db){if(!t)return n(e.db);d(e),e.db.close()}var i=[e.name];t&&i.push(e.version);var o=N.open.apply(N,i);t&&(o.onupgradeneeded=function(t){var n=o.result;try{n.createObjectStore(e.storeName),t.oldVersion<=1&&n.createObjectStore(L)}catch(n){if("ConstraintError"!==n.name)throw n;console.warn('The database "'+e.name+'" has been upgraded from version '+t.oldVersion+" to version "+t.newVersion+', but the storage "'+e.storeName+'" already exists.')}}),o.onerror=function(e){e.preventDefault(),r(o.error)},o.onsuccess=function(){n(o.result),f(e)}})}function m(e){return p(e,!1)}function g(e){return p(e,!0)}function v(e,t){if(!e.db)return!0;var n=!e.db.objectStoreNames.contains(e.storeName),r=e.version<e.db.version,i=e.version>e.db.version;if(r&&(e.version!==t&&console.warn('The database "'+e.name+"\" can't be downgraded from version "+e.db.version+" to version "+e.version+"."),e.version=e.db.version),i||n){if(n){var o=e.db.version+1;o>e.version&&(e.version=o)}return!0}return!1}function y(e){return new O(function(t,n){var r=new FileReader;r.onerror=n,r.onloadend=function(n){var r=btoa(n.target.result||"");t({__local_forage_encoded_blob:!0,data:r,type:e.type})},r.readAsBinaryString(e)})}function b(e){return i([u(atob(e.data))],{type:e.type})}function _(e){return e&&e.__local_forage_encoded_blob}function w(e){var t=this,n=t._initReady().then(function(){var e=R[t._dbInfo.name];if(e&&e.dbReady)return e.dbReady});return a(n,e,e),n}function x(e){d(e);for(var t=R[e.name].forages,n=0;n<t.length;n++)t[n]._dbInfo.db&&(t[n]._dbInfo.db.close(),t[n]._dbInfo.db=null);return p(e,!1).then(function(e){for(var n=0;n<t.length;n++)t[n]._dbInfo.db=e}).catch(function(t){throw h(e,t),t})}function S(e,t,n){try{var r=e.db.transaction(e.storeName,t);n(null,r)}catch(r){if(!e.db||"InvalidStateError"===r.name)return x(e).then(function(){var r=e.db.transaction(e.storeName,t);n(null,r)});n(r)}}function C(e){var t,n,r,i,o,a=.75*e.length,s=e.length,u=0;"="===e[e.length-1]&&(a--,"="===e[e.length-2]&&a--);var c=new ArrayBuffer(a),l=new Uint8Array(c);for(t=0;t<s;t+=4)n=$.indexOf(e[t]),r=$.indexOf(e[t+1]),i=$.indexOf(e[t+2]),o=$.indexOf(e[t+3]),l[u++]=n<<2|r>>4,l[u++]=(15&r)<<4|i>>2,l[u++]=(3&i)<<6|63&o;return c}function k(e){var t,n=new Uint8Array(e),r="";for(t=0;t<n.length;t+=3)r+=$[n[t]>>2],r+=$[(3&n[t])<<4|n[t+1]>>4],r+=$[(15&n[t+1])<<2|n[t+2]>>6],r+=$[63&n[t+2]];return n.length%3==2?r=r.substring(0,r.length-1)+"=":n.length%3==1&&(r=r.substring(0,r.length-2)+"=="),r}function T(e,t,n,r){var i=this;e=s(e);var a=new O(function(o,a){i.ready().then(function(){void 0===t&&(t=null);var s=t,u=i._dbInfo;u.serializer.serialize(t,function(t,c){c?a(c):u.db.transaction(function(n){n.executeSql("INSERT OR REPLACE INTO "+u.storeName+" (key, value) VALUES (?, ?)",[e,t],function(){o(s)},function(e,t){a(t)})},function(t){if(t.code===t.QUOTA_ERR){if(r>0)return void o(T.apply(i,[e,s,n,r-1]));a(t)}})})}).catch(a)});return o(a,n),a}function E(e,t){e[t]=function(){var n=arguments;return e.ready().then(function(){return e[t].apply(e,n)})}}function A(){for(var e=1;e<arguments.length;e++){var t=arguments[e];if(t)for(var n in t)t.hasOwnProperty(n)&&(ae(t[n])?arguments[0][n]=t[n].slice():arguments[0][n]=t[n])}return arguments[0]}var I="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},N=function(){try{if("undefined"!=typeof indexedDB)return indexedDB;if("undefined"!=typeof webkitIndexedDB)return webkitIndexedDB;if("undefined"!=typeof mozIndexedDB)return mozIndexedDB;if("undefined"!=typeof OIndexedDB)return OIndexedDB;if("undefined"!=typeof msIndexedDB)return msIndexedDB}catch(e){return}}();"undefined"==typeof Promise&&e("lie/polyfill");var M,R,O=Promise,L="local-forage-detect-blob-support",D=Object.prototype.toString,P="readonly",j="readwrite",B={_driver:"asyncStorage",_initStorage:function(e){var t=this,n={db:null};if(e)for(var r in e)n[r]=e[r];R||(R={});var i=R[n.name];i||(i={forages:[],db:null,dbReady:null,deferredOperations:[]},R[n.name]=i),i.forages.push(t),t._initReady||(t._initReady=t.ready,t.ready=w);for(var o=[],a=0;a<i.forages.length;a++){var s=i.forages[a];s!==t&&o.push(s._initReady().catch(function(){return O.resolve()}))}var u=i.forages.slice(0);return O.all(o).then(function(){return n.db=i.db,m(n)}).then(function(e){return n.db=e,v(n,t._defaultConfig.version)?g(n):e}).then(function(e){n.db=i.db=e,t._dbInfo=n;for(var r=0;r<u.length;r++){var o=u[r];o!==t&&(o._dbInfo.db=n.db,o._dbInfo.version=n.version)}})},_support:function(){try{if(!N)return!1;var e="undefined"!=typeof openDatabase&&/(Safari|iPhone|iPad|iPod)/.test(navigator.userAgent)&&!/Chrome/.test(navigator.userAgent)&&!/BlackBerry/.test(navigator.platform),t="function"==typeof fetch&&-1!==fetch.toString().indexOf("[native code");return(!e||t)&&"undefined"!=typeof indexedDB&&"undefined"!=typeof IDBKeyRange}catch(e){return!1}}(),iterate:function(e,t){var n=this,r=new O(function(t,r){n.ready().then(function(){S(n._dbInfo,P,function(i,o){if(i)return r(i);try{var a=o.objectStore(n._dbInfo.storeName).openCursor(),s=1;a.onsuccess=function(){var n=a.result;if(n){var r=n.value;_(r)&&(r=b(r));var i=e(r,n.key,s++);void 0!==i?t(i):n.continue()}else t()},a.onerror=function(){r(a.error)}}catch(e){r(e)}})}).catch(r)});return o(r,t),r},getItem:function(e,t){var n=this;e=s(e);var r=new O(function(t,r){n.ready().then(function(){S(n._dbInfo,P,function(i,o){if(i)return r(i);try{var a=o.objectStore(n._dbInfo.storeName).get(e);a.onsuccess=function(){var e=a.result;void 0===e&&(e=null),_(e)&&(e=b(e)),t(e)},a.onerror=function(){r(a.error)}}catch(e){r(e)}})}).catch(r)});return o(r,t),r},setItem:function(e,t,n){var r=this;e=s(e);var i=new O(function(n,i){var o;r.ready().then(function(){return o=r._dbInfo,"[object Blob]"===D.call(t)?l(o.db).then(function(e){return e?t:y(t)}):t}).then(function(t){S(r._dbInfo,j,function(o,a){if(o)return i(o);try{var s=a.objectStore(r._dbInfo.storeName).put(t,e);null===t&&(t=void 0),a.oncomplete=function(){void 0===t&&(t=null),n(t)},a.onabort=a.onerror=function(){var e=s.error?s.error:s.transaction.error;i(e)}}catch(e){i(e)}})}).catch(i)});return o(i,n),i},removeItem:function(e,t){var n=this;e=s(e);var r=new O(function(t,r){n.ready().then(function(){S(n._dbInfo,j,function(i,o){if(i)return r(i);try{var a=o.objectStore(n._dbInfo.storeName).delete(e);o.oncomplete=function(){t()},o.onerror=function(){r(a.error)},o.onabort=function(){var e=a.error?a.error:a.transaction.error;r(e)}}catch(e){r(e)}})}).catch(r)});return o(r,t),r},clear:function(e){var t=this,n=new O(function(e,n){t.ready().then(function(){S(t._dbInfo,j,function(r,i){if(r)return n(r);try{var o=i.objectStore(t._dbInfo.storeName).clear();i.oncomplete=function(){e()},i.onabort=i.onerror=function(){var e=o.error?o.error:o.transaction.error;n(e)}}catch(e){n(e)}})}).catch(n)});return o(n,e),n},length:function(e){var t=this,n=new O(function(e,n){t.ready().then(function(){S(t._dbInfo,P,function(r,i){if(r)return n(r);try{var o=i.objectStore(t._dbInfo.storeName).count();o.onsuccess=function(){e(o.result)},o.onerror=function(){n(o.error)}}catch(e){n(e)}})}).catch(n)});return o(n,e),n},key:function(e,t){var n=this,r=new O(function(t,r){e<0?t(null):n.ready().then(function(){S(n._dbInfo,P,function(i,o){if(i)return r(i);try{var a=!1,s=o.objectStore(n._dbInfo.storeName).openCursor();s.onsuccess=function(){var n=s.result;n?0===e?t(n.key):a?t(n.key):(a=!0,n.advance(e)):t(null)},s.onerror=function(){r(s.error)}}catch(e){r(e)}})}).catch(r)});return o(r,t),r},keys:function(e){var t=this,n=new O(function(e,n){t.ready().then(function(){S(t._dbInfo,P,function(r,i){if(r)return n(r);try{var o=i.objectStore(t._dbInfo.storeName).openCursor(),a=[];o.onsuccess=function(){var t=o.result;t?(a.push(t.key),t.continue()):e(a)},o.onerror=function(){n(o.error)}}catch(e){n(e)}})}).catch(n)});return o(n,e),n}},$="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",F="~~local_forage_type~",q=/^~~local_forage_type~([^~]+)~/,z="__lfsc__:",H=z.length,W="arbf",X="blob",U="si08",Y="ui08",K="uic8",V="si16",G="si32",J="ur16",Q="ui32",Z="fl32",ee="fl64",te=H+W.length,ne=Object.prototype.toString,re={serialize:function(e,t){var n="";if(e&&(n=ne.call(e)),e&&("[object ArrayBuffer]"===n||e.buffer&&"[object ArrayBuffer]"===ne.call(e.buffer))){var r,i=z;e instanceof ArrayBuffer?(r=e,i+=W):(r=e.buffer,"[object Int8Array]"===n?i+=U:"[object Uint8Array]"===n?i+=Y:"[object Uint8ClampedArray]"===n?i+=K:"[object Int16Array]"===n?i+=V:"[object Uint16Array]"===n?i+=J:"[object Int32Array]"===n?i+=G:"[object Uint32Array]"===n?i+=Q:"[object Float32Array]"===n?i+=Z:"[object Float64Array]"===n?i+=ee:t(new Error("Failed to get type for BinaryArray"))),t(i+k(r))}else if("[object Blob]"===n){var o=new FileReader;o.onload=function(){var n=F+e.type+"~"+k(this.result);t(z+X+n)},o.readAsArrayBuffer(e)}else try{t(JSON.stringify(e))}catch(n){console.error("Couldn't convert value into a JSON string: ",e),t(null,n)}},deserialize:function(e){if(e.substring(0,H)!==z)return JSON.parse(e);var t,n=e.substring(te),r=e.substring(H,te);if(r===X&&q.test(n)){var o=n.match(q);t=o[1],n=n.substring(o[0].length)}var a=C(n);switch(r){case W:return a;case X:return i([a],{type:t});case U:return new Int8Array(a);case Y:return new Uint8Array(a);case K:return new Uint8ClampedArray(a);case V:return new Int16Array(a);case J:return new Uint16Array(a);case G:return new Int32Array(a);case Q:return new Uint32Array(a);case Z:return new Float32Array(a);case ee:return new Float64Array(a);default:throw new Error("Unkown type: "+r)}},stringToBuffer:C,bufferToString:k},ie={_driver:"webSQLStorage",_initStorage:function(e){var t=this,n={db:null};if(e)for(var r in e)n[r]="string"!=typeof e[r]?e[r].toString():e[r];var i=new O(function(e,r){try{n.db=openDatabase(n.name,String(n.version),n.description,n.size)}catch(e){return r(e)}n.db.transaction(function(i){i.executeSql("CREATE TABLE IF NOT EXISTS "+n.storeName+" (id INTEGER PRIMARY KEY, key unique, value)",[],function(){t._dbInfo=n,e()},function(e,t){r(t)})})});return n.serializer=re,i},_support:"function"==typeof openDatabase,iterate:function(e,t){var n=this,r=new O(function(t,r){n.ready().then(function(){var i=n._dbInfo;i.db.transaction(function(n){n.executeSql("SELECT * FROM "+i.storeName,[],function(n,r){for(var o=r.rows,a=o.length,s=0;s<a;s++){var u=o.item(s),c=u.value;if(c&&(c=i.serializer.deserialize(c)),void 0!==(c=e(c,u.key,s+1)))return void t(c)}t()},function(e,t){r(t)})})}).catch(r)});return o(r,t),r},getItem:function(e,t){var n=this;e=s(e);var r=new O(function(t,r){n.ready().then(function(){var i=n._dbInfo;i.db.transaction(function(n){n.executeSql("SELECT * FROM "+i.storeName+" WHERE key = ? LIMIT 1",[e],function(e,n){var r=n.rows.length?n.rows.item(0).value:null;r&&(r=i.serializer.deserialize(r)),t(r)},function(e,t){r(t)})})}).catch(r)});return o(r,t),r},setItem:function(e,t,n){return T.apply(this,[e,t,n,1])},removeItem:function(e,t){var n=this;e=s(e);var r=new O(function(t,r){n.ready().then(function(){var i=n._dbInfo;i.db.transaction(function(n){n.executeSql("DELETE FROM "+i.storeName+" WHERE key = ?",[e],function(){t()},function(e,t){r(t)})})}).catch(r)});return o(r,t),r},clear:function(e){var t=this,n=new O(function(e,n){t.ready().then(function(){var r=t._dbInfo;r.db.transaction(function(t){t.executeSql("DELETE FROM "+r.storeName,[],function(){e()},function(e,t){n(t)})})}).catch(n)});return o(n,e),n},length:function(e){var t=this,n=new O(function(e,n){t.ready().then(function(){var r=t._dbInfo;r.db.transaction(function(t){t.executeSql("SELECT COUNT(key) as c FROM "+r.storeName,[],function(t,n){var r=n.rows.item(0).c;e(r)},function(e,t){n(t)})})}).catch(n)});return o(n,e),n},key:function(e,t){var n=this,r=new O(function(t,r){n.ready().then(function(){var i=n._dbInfo;i.db.transaction(function(n){n.executeSql("SELECT key FROM "+i.storeName+" WHERE id = ? LIMIT 1",[e+1],function(e,n){var r=n.rows.length?n.rows.item(0).key:null;t(r)},function(e,t){r(t)})})}).catch(r)});return o(r,t),r},keys:function(e){var t=this,n=new O(function(e,n){t.ready().then(function(){var r=t._dbInfo;r.db.transaction(function(t){t.executeSql("SELECT key FROM "+r.storeName,[],function(t,n){for(var r=[],i=0;i<n.rows.length;i++)r.push(n.rows.item(i).key);e(r)},function(e,t){n(t)})})}).catch(n)});return o(n,e),n}},oe={_driver:"localStorageWrapper",_initStorage:function(e){var t=this,n={};if(e)for(var r in e)n[r]=e[r];return n.keyPrefix=n.name+"/",n.storeName!==t._defaultConfig.storeName&&(n.keyPrefix+=n.storeName+"/"),t._dbInfo=n,n.serializer=re,O.resolve()},_support:function(){try{return"undefined"!=typeof localStorage&&"setItem"in localStorage&&"function"==typeof localStorage.setItem}catch(e){return!1}}(),iterate:function(e,t){var n=this,r=n.ready().then(function(){for(var t=n._dbInfo,r=t.keyPrefix,i=r.length,o=localStorage.length,a=1,s=0;s<o;s++){var u=localStorage.key(s);if(0===u.indexOf(r)){var c=localStorage.getItem(u);if(c&&(c=t.serializer.deserialize(c)),void 0!==(c=e(c,u.substring(i),a++)))return c}}});return o(r,t),r},getItem:function(e,t){var n=this;e=s(e);var r=n.ready().then(function(){var t=n._dbInfo,r=localStorage.getItem(t.keyPrefix+e);return r&&(r=t.serializer.deserialize(r)),r});return o(r,t),r},setItem:function(e,t,n){var r=this;e=s(e);var i=r.ready().then(function(){void 0===t&&(t=null);var n=t;return new O(function(i,o){var a=r._dbInfo;a.serializer.serialize(t,function(t,r){if(r)o(r);else try{localStorage.setItem(a.keyPrefix+e,t),i(n)}catch(e){"QuotaExceededError"!==e.name&&"NS_ERROR_DOM_QUOTA_REACHED"!==e.name||o(e),o(e)}})})});return o(i,n),i},removeItem:function(e,t){var n=this;e=s(e);var r=n.ready().then(function(){var t=n._dbInfo;localStorage.removeItem(t.keyPrefix+e)});return o(r,t),r},clear:function(e){var t=this,n=t.ready().then(function(){for(var e=t._dbInfo.keyPrefix,n=localStorage.length-1;n>=0;n--){var r=localStorage.key(n);0===r.indexOf(e)&&localStorage.removeItem(r)}});return o(n,e),n},length:function(e){var t=this.keys().then(function(e){return e.length});return o(t,e),t},key:function(e,t){var n=this,r=n.ready().then(function(){var t,r=n._dbInfo;try{t=localStorage.key(e)}catch(e){t=null}return t&&(t=t.substring(r.keyPrefix.length)),t});return o(r,t),r},keys:function(e){var t=this,n=t.ready().then(function(){for(var e=t._dbInfo,n=localStorage.length,r=[],i=0;i<n;i++)0===localStorage.key(i).indexOf(e.keyPrefix)&&r.push(localStorage.key(i).substring(e.keyPrefix.length));return r});return o(n,e),n}},ae=Array.isArray||function(e){return"[object Array]"===Object.prototype.toString.call(e)},se={},ue={},ce={INDEXEDDB:B,WEBSQL:ie,LOCALSTORAGE:oe},le=["clear","getItem","iterate","key","keys","length","removeItem","setItem"],de={description:"",driver:[ce.INDEXEDDB._driver,ce.WEBSQL._driver,ce.LOCALSTORAGE._driver].slice(),name:"localforage",size:4980736,storeName:"keyvaluepairs",version:1},fe=new(function(){function e(t){r(this,e);for(var n in ce)if(ce.hasOwnProperty(n)){var i=ce[n],o=i._driver;this[n]=o,se[o]||this.defineDriver(i)}this._defaultConfig=A({},de),this._config=A({},this._defaultConfig,t),this._driverSet=null,this._initDriver=null,this._ready=!1,this._dbInfo=null,this._wrapLibraryMethodsWithReady(),this.setDriver(this._config.driver).catch(function(){})}return e.prototype.config=function(e){if("object"===(void 0===e?"undefined":I(e))){if(this._ready)return new Error("Can't call config() after localforage has been used.");for(var t in e){if("storeName"===t&&(e[t]=e[t].replace(/\W/g,"_")),"version"===t&&"number"!=typeof e[t])return new Error("Database version must be a number.");this._config[t]=e[t]}return!("driver"in e&&e.driver)||this.setDriver(this._config.driver)}return"string"==typeof e?this._config[e]:this._config},e.prototype.defineDriver=function(e,t,n){var r=new O(function(t,n){try{var r=e._driver,i=new Error("Custom driver not compliant; see https://mozilla.github.io/localForage/#definedriver");if(!e._driver)return void n(i);for(var o=le.concat("_initStorage"),a=0,s=o.length;a<s;a++){var u=o[a];if(!u||!e[u]||"function"!=typeof e[u])return void n(i)}var c=function(n){se[r]&&console.info("Redefining LocalForage driver: "+r),se[r]=e,ue[r]=n,t()};"_support"in e?e._support&&"function"==typeof e._support?e._support().then(c,n):c(!!e._support):c(!0)}catch(e){n(e)}});return a(r,t,n),r},e.prototype.driver=function(){return this._driver||null},e.prototype.getDriver=function(e,t,n){var r=se[e]?O.resolve(se[e]):O.reject(new Error("Driver not found."));return a(r,t,n),r},e.prototype.getSerializer=function(e){var t=O.resolve(re);return a(t,e),t},e.prototype.ready=function(e){var t=this,n=t._driverSet.then(function(){return null===t._ready&&(t._ready=t._initDriver()),t._ready});return a(n,e,e),n},e.prototype.setDriver=function(e,t,n){function r(){s._config.driver=s.driver()}function i(e){return s._extend(e),r(),s._ready=s._initStorage(s._config),s._ready}function o(e){return function(){function t(){for(;n<e.length;){var o=e[n];return n++,s._dbInfo=null,s._ready=null,s.getDriver(o).then(i).catch(t)}r();var a=new Error("No available storage method found.");return s._driverSet=O.reject(a),s._driverSet}var n=0;return t()}}var s=this;ae(e)||(e=[e]);var u=this._getSupportedDrivers(e),c=null!==this._driverSet?this._driverSet.catch(function(){return O.resolve()}):O.resolve();return this._driverSet=c.then(function(){var e=u[0];return s._dbInfo=null,s._ready=null,s.getDriver(e).then(function(e){s._driver=e._driver,r(),s._wrapLibraryMethodsWithReady(),s._initDriver=o(u)})}).catch(function(){r();var e=new Error("No available storage method found.");return s._driverSet=O.reject(e),s._driverSet}),a(this._driverSet,t,n),this._driverSet},e.prototype.supports=function(e){return!!ue[e]},e.prototype._extend=function(e){A(this,e)},e.prototype._getSupportedDrivers=function(e){for(var t=[],n=0,r=e.length;n<r;n++){var i=e[n];this.supports(i)&&t.push(i)}return t},e.prototype._wrapLibraryMethodsWithReady=function(){for(var e=0,t=le.length;e<t;e++)E(this,le[e])},e.prototype.createInstance=function(t){return new e(t)},e}());t.exports=fe},{undefined:void 0}]},{},[1])(1)});var _createClass=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};!function(e,t){"function"==typeof define&&define.amd?define(t):"object"===("undefined"==typeof module?"undefined":_typeof(module))&&module.exports?module.exports=t():window.KC=t()}(0,function(){"use strict";var e={lang:"zh_cn",joint:"・",maxShipLv:165,maxHqLv:120,db:{},path:{db:"/kcdb/",pics:{ships:"/kcpic/ships/"}},statSpeed:{5:"低速",10:"高速",15:"高速+",20:"最速"},getStatSpeed:function(e){return this.statSpeed[parseInt(e)]},statRange:{1:"短",2:"中",3:"长",4:"超长"},getStatRange:function(e){return this.statRange[parseInt(e)]},textRank:{1:"|",2:"||",3:"|||",4:"\\",5:"\\\\",6:"\\\\\\",7:"》"}},t=function(){function t(e){_classCallCheck(this,t);for(var n in e)this[n]=e[n]}return _createClass(t,[{key:"getName",value:function(t){return t=t||e.lang,this.name?this.name[t]||this.name:null}},{key:"isName",value:function(t,n){if(!0===n&&(n=e.lang),n)return this.name[n]===t;for(var r in this.name)if("suffix"!==r&&this.name[r]===t)return!0;return!1}},{key:"hasName",value:function(t,n){if(!0===n&&(n=e.lang),n)return!!this.name[n].includes(t);for(var r in this.name)if("suffix"!==r&&this.name[r].includes(t))return!0;return!1}},{key:"isNameOf",value:function(){return this.hasName.apply(this,arguments)}},{key:"_name",get:function(){return this.getName()}}]),t}(),n=function(e){function n(e){return _classCallCheck(this,n),_possibleConstructorReturn(this,(n.__proto__||Object.getPrototypeOf(n)).call(this,e))}return _inherits(n,t),n}(),r=function(n){function r(e){_classCallCheck(this,r);var t=_possibleConstructorReturn(this,(r.__proto__||Object.getPrototypeOf(r)).call(this,e));return Object.defineProperty(t,"rankupgradable",{value:t.isRankUpgradable()}),t}return _inherits(r,t),_createClass(r,[{key:"getName",value:function(n,r){r=r||e.lang;var i=t.prototype.getName.call(this,r),o=n&&!0==!n?n:"small";return n?i.replace(/（([^（^）]+)）/g,"<"+o+">($1)</"+o+">"):i}},{key:"getType",value:function(t){return t=t||e.lang,this.type?e.db.item_types[this.type].name[t]:null}},{key:"getIconId",value:function(){return Array.isArray(this.type_ingame)&&this.type_ingame.length>3?this.type_ingame[3]:e.db.item_types[this.type].icon}},{key:"getCaliber",value:function(){var e=this.getName(!1,"ja_jp");return parseFloat(e)}},{key:"getPower",value:function(){return this.stat[e.db.item_types[this.type].main_attribute||"fire"]}},{key:"isEquipableExSlot",value:function(){return this.equipable_exslot?this.equipable_exslot||!1:!!this.type&&(e.db.item_types[this.type].equipable_exslot||!1)}},{key:"isRankUpgradable",value:function(){return c.equipmentType.Aircrafts.includes(this.type)&&this.type!==c.equipmentType.Autogyro&&this.type!==c.equipmentType.AntiSubPatrol}},{key:"getStat",value:function(t,n){t=t.toLowerCase();var r=this.stat[t];if(!n||void 0===r||!Array.isArray(this.stat_bonus))return r;if(n&&Array.isArray(this.stat_bonus)){"object"!==(void 0===n?"undefined":_typeof(n))&&(n=e.db.ships[n]);var i=n.id,o=void 0;if(this.stat_bonus.forEach(function(e){Array.isArray(e.ships)&&e.ships.some(function(t){if(t==i){for(var n in e.bonus)o||(o={}),o[n]=Math.max(e.bonus[n],o[n]||0);return!0}return!1}),Array.isArray(e.ship_classes)&&e.ship_classes.some(function(t){if(t==n.class){for(var r in e.bonus)o||(o={}),o[r]=Math.max(e.bonus[r],o[r]||0);return!0}return!1})}),o)return r+(o[t]||0)}return r}},{key:"_icon",get:function(){return"assets/images/itemicon/"+this.getIconId()+".png"}}]),r}(),i=function(n){function r(e){return _classCallCheck(this,r),_possibleConstructorReturn(this,(r.__proto__||Object.getPrototypeOf(r)).call(this,e))}return _inherits(r,t),_createClass(r,[{key:"getName",value:function(t,n){t=t||"",n=n||e.lang;var r=this.getSuffix(n);return(this.name[n]||this.name.ja_jp)+(r?(!0===t?e.joint:t)+r:"")}},{key:"getNameNoSuffix",value:function(t){return t=t||e.lang,this.name[t]||this.name.ja_jp}},{key:"getSuffix",value:function(t){return t=t||e.lang,this.name.suffix?e.db.ship_namesuffix[this.name.suffix][t]||e.db.ship_namesuffix[this.name.suffix].ja_jp||"":""}},{key:"getType",value:function(t){return t=t||e.lang,this.type?e.db.ship_types[this.type].name[t]||e.db.ship_types[this.type].name.ja_jp||"":null}},{key:"getSeriesData",value:function(){return this.series?e.db.ship_series[this.series].ships:[{id:this.id}]}},{key:"getPic",value:function(t,n){var r=this.getSeriesData();t=parseInt(t||0);for(var i=function(t,r){return void 0!==node&&node&&node.path&&e.path.pics.ships?node.path.join(e.path.pics.ships,t+"/"+r+"."+(n||"webp")):e.path.pics.ships?e.path.pics.ships+t+"/"+r+"."+(n||"png"):"/"+t+"/"+r+"."+(n||"png")},o=0;o<r.length;o++)if(r[o].id==this.id)switch(t){case 0:case 1:case 2:case 3:case 12:case 13:case 14:return i(this.id,t);default:return r[o].illust_delete?i(r[o-1].id,t):i(this.id,t)}}},{key:"getSpeed",value:function(){return e.statSpeed[parseInt(this.stat.speed)]}},{key:"getSpeedRule",value:function(){return this.speed_rule?this.speed_rule:this.class?e.db.ship_classes[this.class].speed_rule:null}},{key:"getRange",value:function(){return e.statRange[parseInt(this.stat.range)]}},{key:"getEquipmentTypes",value:function(){var t=this.additional_disable_item_types||[];return e.db.ship_types[this.type].equipable.concat(this.additional_item_types||[]).filter(function(e){return t.indexOf(e)<0}).sort(function(e,t){return e-t})}},{key:"getAttribute",value:function(t,n){(n=n||1)>r.lvlMax&&(n=r.lvlMax);var i=void 0;switch(t){case"hp":return i=this.stat.hp,n>99&&(i=this.stat.hp>=90?this.stat.hp+9:this.stat.hp>=70?this.stat.hp+8:this.stat.hp>=50?this.stat.hp+7:this.stat.hp>=40?this.stat.hp+6:this.stat.hp>=30?this.stat.hp+5:this.stat.hp+4)>this.stat.hp_max&&(i=this.stat.hp_max),i;case"speed":return e.getStatSpeed(this.stat.speed);case"range":return e.getStatRange(this.stat.range);case"luck":return n>99?this.stat.luck+3:this.stat.luck;case"fuel":case"ammo":return n>99?Math.floor(.85*this.consum[t]):this.consum[t];case"aa":case"armor":case"fire":case"torpedo":return this.stat[t+"_max"]||this.stat[t];default:return function(e,t,n){return e=e||1,t=parseFloat(t),n=parseFloat(n)||t,t<0||n<0?-1:t==n?n:Math.floor(t+(n-t)*e/99)}(n,this.stat[t],this.stat[t+"_max"])}}},{key:"getRel",value:function(t){if(t){if(!this.rels[t]&&this.remodel&&this.remodel.prev)for(var n=e.db.ships[this.remodel.prev];n;){if(n.rels&&n.rels[t])return n.rels[t];n=n.remodel&&n.remodel.prev?e.db.ships[n.remodel.prev]:null}return this.rels[t]}return this.rels}},{key:"getCV",value:function(t){var n=this.getRel("cv");if(n)return e.db.entities[n].getName(t||e.lang)}},{key:"getIllustrator",value:function(t){var n=this.getRel("illustrator");if(n)return e.db.entities[n].getName(t||e.lang)}},{key:"getMinLv",value:function(){var e=this,t=this._series,n=void 0;return t.some(function(r,i){return e.id==r.id&&(n=i?t[i-1].next_lvl:1),n}),n}},{key:"getNavy",value:function(){return this.navy?this.navy:this.class?e.db.ship_classes[this.class].navy||"ijn":"ijn"}},{key:"getCapability",value:function(e){if(!e)return this.capabilities||{};if(this.capabilities)return this.capabilities[e]}},{key:"getStatExtraMax",value:function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:1;switch(e.toLowerCase()){case"hp":var n=this.getAttribute(e,t),r=this.stat.hp_max;return Math.max(0,Math.min(2,r-n));case"asw":return this.stat.asw?9:!!c.shipType.LightCruisers.concat(c.shipType.Destroyers).includes(this.type)&&9;default:return!1}}},{key:"_type",get:function(){return this.getType()}},{key:"_series",get:function(){return this.getSeriesData()}},{key:"_pics",get:function(){for(var e=[],t=0;t<15;t++)e.push(this.getPic(t));return e}},{key:"_speed",get:function(){return this.getSpeed()}},{key:"_speedRule",get:function(){return this.getSpeedRule()}},{key:"_range",get:function(){return this.getRange()}},{key:"_cv",get:function(){return this.getCV()}},{key:"_illustrator",get:function(){return this.getIllustrator()}},{key:"_minLv",get:function(){return this.getMinLv()}},{key:"_navy",get:function(){return this.getNavy()}}]),r}();i.lvlMax=e.maxShipLv;var o=function(e){function n(e){return _classCallCheck(this,n),_possibleConstructorReturn(this,(n.__proto__||Object.getPrototypeOf(n)).call(this,e))}return _inherits(n,t),n}();e.dbLoad=function(t){return"string"==typeof t?e.dbLoad({type:t}):t.type||t.url?$.ajax({url:t.url||e.path.db+"/"+t.type+".json",dataType:"text",success:function(o){var a=[];t.beforeProcess&&(a=t.beforeProcess(o)),void 0===e.db[t.type]&&(e.db[t.type]={}),a.forEach(function(o){if(o){var a=JSON.parse(o);switch(t.type){case"ships":e.db[t.type][a.id]=new i(a);break;case"items":e.db[t.type][a.id]=new r(a);break;case"entities":e.db[t.type][a.id]=new n(a);break;default:e.db[t.type][a.id]=a}}}),t.success&&t.success(o)},complete:function(e,n){t.complete&&t.complete(e,n)}}):null};var a=function(t){return t instanceof i?t:e.db.ships?e.db.ships[t]:{}},s=function(t){return t instanceof r?t:e.db.equipments?e.db.equipments[t]:e.db.items[t]},u=function(e){var t=[];return e.forEach(function(e,n){t[n>=4?n+1:n]=e}),t[4]=0,t},c={equipmentType:{SmallCaliber:1,SmallCaliberHigh:2,SmallCaliberAA:3,MediumCaliber:4,LargeCaliber:5,SuperCaliber:6,SecondaryGun:7,SecondaryGunHigh:8,SecondaryGunAA:9,APShell:11,Torpedo:12,SubmarineTorpedo:13,MidgetSubmarine:14,ReconSeaplane:15,ReconSeaplaneNight:16,SeaplaneBomber:17,CarrierFighter:18,TorpedoBomber:19,DiveBomber:20,CarrierRecon:21,Autogyro:22,AntiSubPatrol:23,SmallRadar:24,LargeRadar:25,DepthCharge:26,Sonar:27,LargeSonar:28,AAGun:29,AAGunConcentrated:30,AAFireDirector:31,AviationPersonnel:36,SurfaceShipPersonnel:37,LandingCraft:38,Searchlight:39,CommandFacility:45,LargeFlyingBoat:45,SearchlightLarge:46,SuparRadar:47,CarrierRecon2:50,SeaplaneFighter:51,AmphibiousCraft:52,LandBasedAttacker:53,Interceptor:54,JetBomberFighter:55,JetBomberFighter2:56,TransportMaterial:57,SubmarineEquipment:58,LandBasedFighter:59,CarrierFighterNight:60,TorpedoBomberNight:61,LandBasedAntiSubPatrol:62},shipType:{Carriers:[9,10,11,30,32],LightCruisers:[2,3,21,28],Destroyers:[1,19],Submarines:[13,14]},calcByShip:{},calcByFleet:{},calcByField:{},calc:{}},l=c.equipmentType;return l.MainGuns=[l.SmallCaliber,l.SmallCaliberHigh,l.SmallCaliberAA,l.MediumCaliber,l.LargeCaliber,l.SuperCaliber],l.SmallCalibers=[l.SmallCaliber,l.SmallCaliberHigh,l.SmallCaliberAA],l.MediumCalibers=[l.MediumCaliber],l.LargeCalibers=[l.LargeCaliber,l.SuperCaliber],l.SecondaryGuns=[l.SecondaryGun,l.SecondaryGunHigh,l.SecondaryGunAA],l.APShells=[l.APShell],l.Torpedos=[l.Torpedo,l.SubmarineTorpedo],l.Seaplanes=[l.ReconSeaplane,l.ReconSeaplaneNight,l.SeaplaneBomber,l.SeaplaneFighter],l.Fighters=[l.SeaplaneBomber,l.CarrierFighter,l.CarrierFighterNight,l.TorpedoBomber,l.TorpedoBomberNight,l.DiveBomber,l.SeaplaneFighter,l.LandBasedAttacker,l.Interceptor,l.JetBomberFighter,l.JetBomberFighter2,l.LandBasedFighter],l.Interceptors=[l.Interceptor,l.LandBasedFighter],l.Recons=[l.ReconSeaplane,l.ReconSeaplaneNight,l.CarrierRecon,l.CarrierRecon2,l.LargeFlyingBoat],l.ReconSeaplanes=[l.ReconSeaplane,l.ReconSeaplaneNight],l.SeaplaneRecons=[l.ReconSeaplane,l.ReconSeaplaneNight,l.LargeFlyingBoat],l.SeaplaneBombers=[l.SeaplaneBomber,l.SeaplaneFighter],l.SeaplaneFighters=[l.SeaplaneFighter],l.CarrierFighters=[l.CarrierFighter,l.CarrierFighterNight],l.CarrierRecons=[l.CarrierRecon,l.CarrierRecon2],l.CarrierBased=[l.CarrierFighter,l.CarrierFighterNight,l.TorpedoBomber,l.TorpedoBomberNight,l.DiveBomber,l.CarrierRecon,l.CarrierRecon2,l.JetBomberFighter,l.JetBomberFighter2],l.LandBased=[l.LandBasedAttacker,l.Interceptor,l.JetBomberFighter,l.JetBomberFighter2,l.LandBasedFighter,l.LandBasedAntiSubPatrol],l.TorpedoBombers=[l.TorpedoBomber,l.TorpedoBomberNight],l.DiveBombers=[l.DiveBomber],l.JetBomberFighters=[l.JetBomberFighter,l.JetBomberFighter2],l.Autogyros=[l.Autogyro],l.AntiSubPatrols=[l.AntiSubPatrol,l.LandBasedAntiSubPatrol],l.Aircrafts=[],[].concat(l.Seaplanes).concat(l.Recons).concat(l.CarrierBased).concat(l.Autogyros).concat(l.AntiSubPatrols).concat(l.LandBased).forEach(function(e){l.Aircrafts.indexOf(e)<0&&l.Aircrafts.push(e)}),l.Radars=[l.SmallRadar,l.LargeRadar,l.SuparRadar],l.SmallRadars=[l.SmallRadar],l.LargeRadars=[l.LargeRadar,l.SuparRadar],l.AntiSubmarines=[l.DepthCharge,l.Sonar,l.LargeSonar],l.DepthCharges=[l.DepthCharge],l.Sonars=[l.Sonar,l.LargeSonar],l.AAGuns=[l.AAGun,l.AAGunConcentrated],l.AAFireDirectors=[l.AAFireDirector],l.Searchlights=[l.Searchlight,l.SearchlightLarge],l.AviationPersonnels=[l.AviationPersonnel],l.SurfaceShipPersonnels=[l.SurfaceShipPersonnel],l.LandingCrafts=[l.LandingCraft,l.AmphibiousCraft],l.AmphibiousCrafts=[l.AmphibiousCraft],l.isInterceptor=function(e){return(!(e=s(e)).type_ingame||47!=e.type_ingame[2])&&l.Interceptors.indexOf(e.type)>-1},c.starMultiper={SmallCalibers:{shelling:1,night:1},MediumCalibers:{shelling:1,night:1},LargeCalibers:{shelling:1.5,night:1},SecondaryGuns:{shelling:1,night:1,hit:1},APShells:{shelling:1,night:1},AAFireDirectors:{shelling:1,night:1},Searchlights:{shelling:1,night:1},AAGuns:{shelling:1,torpedo:1.2},Torpedos:{torpedo:1.2,night:1},DepthCharges:{shelling:.75,antisub:1},Sonars:{shelling:.75,antisub:1},SmallRadars:{los:1.25},LargeRadars:{los:1.4},Seaplanes:{},ReconSeaplanes:{los:1.2},SeaplaneFighters:{fighter:.2},SeaplaneBomber:{los:1.15},CarrierFighters:{fighter:.2},DiveBombers:{fighter:.25,night:1},CarrierRecons:{los:1.2},LandingCrafts:{shelling:1,night:1},Interceptors:{fighter:.2},_10:{shelling:["multiplication",.2],night:1},_66:{shelling:["multiplication",.2],night:1},_220:{shelling:["multiplication",.2],night:1},_275:{shelling:["multiplication",.2],night:1},_12:{shelling:["multiplication",.3],night:["multiplication",.3]},_234:{shelling:["multiplication",.3],night:["multiplication",.3]}},c.getStarMultiplier=function(e,t){if(!c.starMultiper._init){for(var n in c.starMultiper)!function(e){l[e]&&l[e].forEach?l[e].forEach(function(t){c.starMultiper[t]=c.starMultiper[e]}):"number"==typeof l[e]&&(c.starMultiper[l[e]]=c.starMultiper[e])}(n);c.starMultiper._init=!0}var r=c.starMultiper[e]||{};return t?r[t]||0:r},c.getStarBonus=function(e,t,n){e=s(e);var r=Object.assign({},c.getStarMultiplier(e.type),c.starMultiper["_"+e.id])[t],i=void 0===r?0:r,o="sqrt";switch(Array.isArray(i)&&(o=i[0],i=i[1]),o){case"sqrt":return i*Math.sqrt(n);case"multiplication":case"multiple":return i*n}},c.getFighterPowerRankMultiper=function(e,t){e=s(e);var n=[],r={};n[0]=[0,9],n[1]=[10,24],n[2]=[25,39],n[3]=[40,54],n[4]=[55,69],n[5]=[70,84],n[6]=[85,99],n[7]=[100,120],r.CarrierFighter=[0,0,2,5,9,14,14,22],r.SeaplaneBomber=[0,0,1,1,1,3,3,6];var i=n[t],o=0;switch(e.type){case l.CarrierFighter:case l.CarrierFighterNight:case l.Interceptor:case l.SeaplaneFighter:case l.LandBasedFighter:o=r.CarrierFighter[t];break;case l.SeaplaneBomber:o=r.SeaplaneBomber[t]}return{min:Math.sqrt(i[0]/10)+o,max:Math.sqrt(i[1]/10)+o}},c.calculate=function(t,n,o,a,s,d){if(!t||!n)return 0;n instanceof i||(n=e.db.ships[n]);var f=0,h={main:0,secondary:0,torpedo:0,torpedoLateModel:0,seaplane:0,apshell:0,radar:0,radarAA:0,radarSurface:0,submarineEquipment:0,carrierFighterNight:0,torpedoBomberNight:0,aviationPersonnelNight:0,surfaceShipPersonnel:0},p=u(n.slot),m=0;switch(o=o.map(function(t){return t?t instanceof r?t:e.db.equipments?e.db.equipments[t]:e.db.items[t]:null})||[],a=a||[],s=s||[],d=d||{},o.forEach(function(e){e&&(l.MainGuns.indexOf(e.type)>-1?h.main+=1:l.SecondaryGuns.indexOf(e.type)>-1?h.secondary+=1:l.Torpedos.indexOf(e.type)>-1?(h.torpedo+=1,e.name.ja_jp.indexOf("後期型")>-1&&(h.torpedoLateModel+=1)):l.Seaplanes.indexOf(e.type)>-1?h.seaplane+=1:l.APShells.indexOf(e.type)>-1?h.apshell+=1:l.Radars.indexOf(e.type)>-1?(h.radar+=1,e.stat.aa&&(h.radarAA+=1),e.stat.hit&&e.stat.hit>=3&&(h.radarSurface+=1)):l.SubmarineEquipment==e.type?h.submarineEquipment+=1:l.AviationPersonnels.indexOf(e.type)>-1?e.name.ja_jp.indexOf("夜間")>-1&&(h.aviationPersonnelNight+=1):l.SurfaceShipPersonnels.indexOf(e.type)>-1&&(h.surfaceShipPersonnel+=1),e.type_ingame&&(45===e.type_ingame[3]?h.carrierFighterNight+=1:46===e.type_ingame[3]&&(h.torpedoBomberNight+=1)))}),t){case"fighterPower":return m=0,p.map(function(e,t){if(o[t]&&l.Fighters.indexOf(o[t].type)>-1&&e){if(m=Math.sqrt(e)*(o[t].getStat("aa",n)||0),l.CarrierFighters.includes(o[t].type))switch(s[t]){case 1:case"1":m+=1;break;case 2:case"2":m+=4;break;case 3:case"3":m+=6;break;case 4:case"4":m+=11;break;case 5:case"5":m+=16;break;case 6:case"6":m+=17;break;case 7:case"7":m+=25}else if(-1==l.Recons.indexOf(o[t].type)){var r=o[t].type==l.SeaplaneBomber?9:3;m+=1==s[t]?1:r/6*(s[t]-1)}f+=Math.floor(m)}}),f;case"fighterPower_v2":return c.calcByShip.fighterPower_v2(n,o,a,s);case"shelling":case"shellingDamage":return c.shipType.Submarines.indexOf(n.type)>-1?"-":(f=c.calcByShip.shellingPower(n,o,a,s))&&f>-1?Math.floor(f):"-";case"torpedo":case"torpedoDamage":return(f=function(e){return c.calcByShip.torpedoPower(n,o,a,s,e)}())&&f>-1?Math.floor(f):"-";case"nightBattle":var g=c.calcByShip.nightPower(n,o,a,s,{},h);return g.damage<=0?"-":g.value;case"addHit":return p.map(function(e,t){o[t]&&(f+=o[t].getStat("hit",n)||0)}),f>=0?"+"+f:f;case"addArmor":return p.map(function(e,t){o[t]&&(f+=o[t].getStat("armor",n)||0)}),f;case"addEvasion":return p.map(function(e,t){o[t]&&(f+=o[t].getStat("evasion",n)||0)}),f;case"losPower":return c.calcByShip.losPower(n,o,a,s,d);default:return c.calcByShip[t](n,o,a,s,d)}},c.shellingDamage=function(e,t,n,r){return this.calculate("shellingDamage",e,t,n,r)},c.torpedoDamage=function(e,t,n,r){return this.calculate("torpedoDamage",e,t,n,r)},c.fighterPower=function(e,t,n,r){return this.calculate("fighterPower",e,t,n,r)},c.fighterPower_v2=function(e,t,n,r){return this.calculate("fighterPower_v2",e,t,n,r)},c.nightBattle=function(e,t,n,r){return this.calculate("nightBattle",e,t,n,r)},c.addHit=function(e,t,n,r){return this.calculate("addHit",e,t,n,r)},c.addArmor=function(e,t,n,r){return this.calculate("addArmor",e,t,n,r)},c.addEvasion=function(e,t,n,r){return this.calculate("addEvasion",e,t,n,r)},c.losPower=function(e,t,n,r,i){return this.calculate("losPower",e,t,n,r,i)},c.calc.losPower=function(e){var t=["(Intercept)","DiveBombers","TorpedoBombers","CarrierRecons","SeaplaneRecons","SeaplaneBombers","SmallRadars","LargeRadars","Searchlights","statLos","hqLv"],n={"(Intercept)":0,DiveBombers:1.03745043134563,TorpedoBombers:1.3679056374142,CarrierRecons:1.65940512636315,SeaplaneRecons:2,SeaplaneBombers:1.77886368594467,SmallRadars:1.0045778494921,LargeRadars:.990738063979571,Searchlights:.906965144360512,statLos:1.6841895400986,hqLv:-.614246711531445},r={"(Intercept)":4.66445565766347,DiveBombers:.0965028505325845,TorpedoBombers:.108636184978525,CarrierRecons:.0976055279516298,SeaplaneRecons:.0866229392463539,SeaplaneBombers:.0917722496848294,SmallRadars:.0492773648320346,LargeRadars:.0491221486053861,Searchlights:.0658283797225724,statLos:.0781594211213618,hqLv:.0369222352426548},i={"(Intercept)":{"(Intercept)":1,DiveBombers:-.147020064768061,TorpedoBombers:-.379236131621529,CarrierRecons:-.572858669501918,SeaplaneRecons:-.733913857017495,SeaplaneBombers:-.642621825152428,SmallRadars:-.674829588068364,LargeRadars:-.707418111752863,Searchlights:-.502304601556193,statLos:-.737374218573832,hqLv:-.05071933950163},DiveBombers:{"(Intercept)":-.147020064768061,DiveBombers:1,TorpedoBombers:.288506347076736,CarrierRecons:.365820372770994,SeaplaneRecons:.425744409856409,SeaplaneBombers:.417783698791503,SmallRadars:.409046013184429,LargeRadars:.413855653833994,Searchlights:.308730607324667,statLos:.317984916914851,hqLv:-.386740224500626},TorpedoBombers:{"(Intercept)":-.379236131621529,DiveBombers:.288506347076736,TorpedoBombers:1,CarrierRecons:.482215071254241,SeaplaneRecons:.584455876852325,SeaplaneBombers:.558515133495825,SmallRadars:.547260012897553,LargeRadars:.560437619378443,Searchlights:.437934879351188,statLos:.533934507932748,hqLv:-.405349979885748},CarrierRecons:{"(Intercept)":-.572858669501918,DiveBombers:.365820372770994,TorpedoBombers:.482215071254241,CarrierRecons:1,SeaplaneRecons:.804494553748065,SeaplaneBombers:.75671307047535,SmallRadars:.748420581669228,LargeRadars:.767980338133817,Searchlights:.589651513349878,statLos:.743851348255527,hqLv:-.503544281376776},SeaplaneRecons:{"(Intercept)":-.733913857017495,DiveBombers:.425744409856409,TorpedoBombers:.584455876852325,CarrierRecons:.804494553748065,SeaplaneRecons:1,SeaplaneBombers:.932444440578382,SmallRadars:.923988080549326,LargeRadars:.94904944359066,Searchlights:.727912987329348,statLos:.944434077970518,hqLv:-.614921413821462},SeaplaneBombers:{"(Intercept)":-.642621825152428,DiveBombers:.417783698791503,TorpedoBombers:.558515133495825,CarrierRecons:.75671307047535,SeaplaneRecons:.932444440578382,SeaplaneBombers:1,SmallRadars:.864289865445084,LargeRadars:.886872388674911,Searchlights:.68310647756898,statLos:.88122333327317,hqLv:-.624797255805045},SmallRadars:{"(Intercept)":-.674829588068364,DiveBombers:.409046013184429,TorpedoBombers:.547260012897553,CarrierRecons:.748420581669228,SeaplaneRecons:.923988080549326,SeaplaneBombers:.864289865445084,SmallRadars:1,LargeRadars:.872011318623459,Searchlights:.671926570242336,statLos:.857213501657084,hqLv:-.560018086758868},LargeRadars:{"(Intercept)":-.707418111752863,DiveBombers:.413855653833994,TorpedoBombers:.560437619378443,CarrierRecons:.767980338133817,SeaplaneRecons:.94904944359066,SeaplaneBombers:.886872388674911,SmallRadars:.872011318623459,LargeRadars:1,Searchlights:.690102027588321,statLos:.883771367337743,hqLv:-.561336967269448},Searchlights:{"(Intercept)":-.502304601556193,DiveBombers:.308730607324667,TorpedoBombers:.437934879351188,CarrierRecons:.589651513349878,SeaplaneRecons:.727912987329348,SeaplaneBombers:.68310647756898,SmallRadars:.671926570242336,LargeRadars:.690102027588321,Searchlights:1,statLos:.723228553177704,hqLv:-.518427865593732},statLos:{"(Intercept)":-.737374218573832,DiveBombers:.317984916914851,TorpedoBombers:.533934507932748,CarrierRecons:.743851348255527,SeaplaneRecons:.944434077970518,SeaplaneBombers:.88122333327317,SmallRadars:.857213501657084,LargeRadars:.883771367337743,Searchlights:.723228553177704,statLos:1,hqLv:-.620804120587684},hqLv:{"(Intercept)":-.05071933950163,DiveBombers:-.386740224500626,TorpedoBombers:-.405349979885748,CarrierRecons:-.503544281376776,SeaplaneRecons:-.614921413821462,SeaplaneBombers:-.624797255805045,SmallRadars:-.560018086758868,LargeRadars:-.561336967269448,Searchlights:-.518427865593732,statLos:-.620804120587684,hqLv:1}},o={DiveBombers:0,TorpedoBombers:0,CarrierRecons:0,SeaplaneRecons:0,SeaplaneBombers:0,SmallRadars:0,LargeRadars:0,Searchlights:0,statLos:1,hqLv:1};for(var a in e)o[a]=e[a];return function(e){void 0===e["(Intercept)"]&&(e["(Intercept)"]=1),e.hqLv=5*Math.ceil(e.hqLv/5);var o={},a=0,s={},u=0;return t.forEach(function(t){var i=e[t]*n[t];o[t]=i,a+=i,s[t]=e[t]*r[t]}),t.forEach(function(e){t.forEach(function(t){u+=s[e]*s[t]*i[e][t]})}),{x_estimate:o,y_estimate:a,x_std_error:s,y_std_error:u}}(o)},c.calc.los33=function(e){if(e){var t=0,n=0,r={TorpedoBombers:.8,CarrierRecons:1,ReconSeaplane:1.2,ReconSeaplaneNight:1.2,SeaplaneBomber:1.1};return Object.defineProperty(r,"default",{value:.6,enumerable:!1,configurable:!1,writable:!1}),e.equipments.forEach(function(e){if(e.id){var n=s(e.id);if(n.stat.los){var i=r.default,o=e.star||0;for(var a in r){(Array.isArray(l[a])?l[a]:[l[a]]).indexOf(n.type)>-1&&(i=r[a])}t+=i*(n.stat.los+c.getStarBonus(n,"los",o))}}}),e.ships.forEach(function(e){var t=a(e.id),r=t.getAttribute("los",Math.max(e.lv||1,t.getMinLv()));n+=Math.sqrt(Math.max(r,1))}),t+n-Math.ceil(.4*e.hq)+2*(6-e.ships.length)}},c.calc.TP=function(e){var t=0,n=(e=e||{}).ship||{},r=e.equipment||{};for(var i in n){var o=0;switch(i){case 1:case"1":case 19:case"19":case"dd":o=5;break;case 2:case"2":case 28:case"28":case"cl":o=2;break;case 21:case"21":case"ct":o=6;break;case 5:case"5":case"cav":o=4;break;case 8:case"8":case"bbv":o=7;break;case 12:case"12":case 24:case"24":case"av":o=9.5;break;case 14:case"14":case"ssv":o=1;break;case 15:case"15":case"lha":o=12;break;case 29:case"29":case"ao":o=15;break;case 17:case"17":case"as":o=7}t+=o*(parseInt(n[i])||0)}for(var a in r){var u=0,l=parseInt(a),d=void 0;switch(l){case 145:case 150:u=1;break;case 75:u=5;break;case 68:case 193:case 166:u=8;break;case 167:u=2;break;default:switch((d=s(l)).type){case c.equipmentType.LandingCraft:d.name.ja_jp.indexOf("大発動艇")>-1&&(u=8)}}t+=u*(parseInt(r[a])||0)}return t},c.calc.fighterPower=function(t,n,i,o){if(!t)return[0,0];t=t instanceof r?t:e.db.equipments?e.db.equipments[t]:e.db.items[t],n=n||0,i=i||0,o=o||0;var a=[0,0];if(l.Fighters.indexOf(t.type)>-1&&n){var s=((t.stat.aa||0)+(l.isInterceptor(t)?1.5*t.stat.evasion:0)+o*c.getStarMultiplier(t.type,"fighter"))*Math.sqrt(n),u=c.getFighterPowerRankMultiper(t,i);a[0]+=Math.floor(s+u.min),a[1]+=Math.floor(s+u.max)}return a},c.calc.fighterPowerAA=function(e,t,n,r){if(!e)return[0,0];e=s(e),t=t||0,n=n||0,r=r||0;var i=[0,0];if(t){var o=((e.stat.aa||0)+(l.isInterceptor(e)?e.stat.evasion:0)+(l.isInterceptor(e)?2*e.stat.hit:0)+r*c.getStarMultiplier(e.type,"fighter"))*Math.sqrt(t),a=c.getFighterPowerRankMultiper(e,n,{isAA:!0});i[0]+=Math.floor(o+a.min),i[1]+=Math.floor(o+a.max)}return i},c.calcByShip.shellingPower=function(e,t,n,r,i){i=i||{};var o=0,a=!1,s=u(e.slot);if(c.shipType.Carriers.indexOf(e.type)>-1?a=!0:t.some(function(e){if(e&&!a&&l.CarrierBased.indexOf(e.type)>-1)return a=!0,!0}),a&&!i.isNight){var d=0,f=0;return s.map(function(r,i){if(t[i]){var a=t[i];o+=1.5*a.getStat("fire",e)||0,l.TorpedoBombers.indexOf(a.type)>-1&&(d+=a.getStat("torpedo",e)||0),f+=a.getStat("bomb",e)||0,l.SecondaryGuns.indexOf(a.type)>-1&&(o+=Math.sqrt(1.5*(n[i]||0)))}}),d||f?o+=Math.floor(1.5*(Math.floor(1.3*f)+d+e.stat.fire_max))+50:-1}o=e.stat.fire_max||0;var h={CLMainGunNaval:0,CLMainGunTwin:0,ItalianCAMainGun:0};s.map(function(r,a){if(t[a]){var s=t[a];o+=s.getStat("fire",e)||0,c.shipType.LightCruisers.indexOf(e.type)>-1&&(["14cm単装砲","15.2cm単装砲"].forEach(function(e){s.name.ja_jp.includes(e)&&(h.CLMainGunNaval+=1)}),["14cm連装砲","15.2cm連装砲"].forEach(function(e){s.name.ja_jp.includes(e)&&(h.CLMainGunTwin+=1)})),"rm"===e._navy&&s.name.ja_jp.includes("203mm/53")&&(h.ItalianCAMainGun+=1),n[a]&&!i.isNight&&(o+=c.getStarBonus(s,"shelling",n[a]))}});var p=0+2*Math.sqrt(h.CLMainGunTwin)+Math.sqrt(h.CLMainGunNaval)+Math.sqrt(h.ItalianCAMainGun);return o+p},c.calcByShip.torpedoPower=function(e,t,n,r,i){i=i||{};var o=0,a=u(e.slot);return c.shipType.Carriers.indexOf(e.type)>-1&&!i.isNight?i.returnZero?0:-1:(o=e.stat.torpedo_max||0,a.map(function(r,a){if(t[a]){var s=t[a];o+=l.TorpedoBombers.indexOf(s.type)>-1&&!i.isNight?0:s.getStat("torpedo",e)||0,n[a]&&!i.isNight&&(o+=c.getStarBonus(s,"torpedo",n[a]))}}),o)},c.calcByShip.nightPower=function(e,t,n,r,i,o){i=i||{};var a={damage:0},s=0,d=u(e.slot);if((o.aviationPersonnelNight||e.getCapability("count_as_night_operation_aviation_personnel"))&&(o.carrierFighterNight>=1||o.torpedoBomberNight>=1)){d.forEach(function(e,r){t[r]&&n[r]&&(s+=c.getStarBonus(t[r],"night",n[r]))});var f=0,h=0,p=0,m=0,g=0,v=[],y=0,b=0;d.forEach(function(r,i){if(t[i]){var o=t[i],a=!1,s=!1;o.type_ingame&&(45===o.type_ingame[3]?(s=!0,a=!0):46===o.type_ingame[3]&&(s=!0,a=!0)),l.TorpedoBombers.indexOf(o.type)>-1?o.hasName("Swordfish","ja_jp")&&(s=!0,y++):l.DiveBombers.indexOf(o.type)>-1&&o.hasName("岩井","ja_jp")&&(s=!0,b++),a&&(f+=r),s&&(h+=o.getStat("fire",e),p+=o.getStat("torpedo",e),m+=Math.sqrt(r)*((3+1.5*(a?1:0))*(o.getStat("fire",e)+o.getStat("torpedo",e)+o.getStat("bomb",e)+o.getStat("asw",e))/10),n[i]&&(g+=c.getStarBonus(t[i],"night",n[i])))}});var _=y+b;o.carrierFighterNight>=2&&o.torpedoBomberNight>=1&&v.push(1.25),o.carrierFighterNight>=1&&o.torpedoBomberNight>=1&&v.push(1.2),(o.carrierFighterNight>=3||o.carrierFighterNight>=2&&_>=1||o.carrierFighterNight>=1&&o.torpedoBomberNight>=1&&_>=1||o.carrierFighterNight>=1&&o.torpedoBomberNight>=2||o.carrierFighterNight>=1&&_>=2)&&v.push(1.18),a.type="航空",a.hit=1,a.damage=Math.floor(e.stat.fire_max+h+p+3*f+m+g),a.isMax=!0,v.length&&(a.cis=v.map(function(e){return[Math.floor(a.damage*e),1]}))}else if(e.getCapability("participate_night_battle_when_equip_swordfish"))a.damage+=e.stat.fire_max+e.stat.torpedo_max,d.forEach(function(n,r){var i=t[r];t[r]&&l.TorpedoBombers.indexOf(i.type)>-1&&i.name.ja_jp.indexOf("Swordfish")>-1&&(a.damage+=i.getStat("fire",e)+i.getStat("torpedo",e))}),a.type="通常",a.damage=Math.floor(a.damage),a.hit=1;else{if(e.stat.fire+e.stat.torpedo<=0)return{damage:0};var w={};d.forEach(function(e,r){if(t[r]&&(n[r]&&(s+=c.getStarBonus(t[r],"night",n[r])),t[r])){var i=t[r];w[i.id]?w[i.id]++:w[i.id]=1}}),a.damage=c.calcByShip.shellingPower(e,t,n,r,{isNight:!0})+c.calcByShip.torpedoPower(e,t,n,r,{isNight:!0,returnZero:!0})+s,c.shipType.Submarines.indexOf(e.type)>-1&&o.torpedoLateModel>=1&&o.submarineEquipment>=1?(a.type="雷击CI",a.damage=Math.floor(1.75*a.damage),a.hit=2):c.shipType.Submarines.indexOf(e.type)>-1&&o.torpedoLateModel>=2?(a.type="雷击CI",a.damage=Math.floor(1.6*a.damage),a.hit=2):o.torpedo>=2?(a.type="雷击CI",a.damage=Math.floor(1.5*a.damage),a.hit=2):o.main>=3?(a.type="炮击CI",a.damage=Math.floor(2*a.damage),a.hit=1):2==o.main&&o.secondary>=1?(a.type="炮击CI",a.damage=Math.floor(1.75*a.damage),a.hit=1):c.shipType.Destroyers.indexOf(e.type)>-1&&o.torpedo>=1&&o.radarSurface>=1&&o.surfaceShipPersonnel>=1?(a.type="电探CI",a.damage=Math.floor(1.25*a.damage),a.hit=1):c.shipType.Destroyers.indexOf(e.type)>-1&&o.torpedo>=1&&o.radarSurface>=1&&o.main>=1?(a.type="电雷CI",a.damage=w[267]?Math.floor(1.625*a.damage):Math.floor(1.3*a.damage),a.hit=1):o.main>=1&&1==o.torpedo?(a.type="炮雷CI",a.damage=Math.floor(1.3*a.damage),a.hit=2):2==o.main&&o.secondary<=0&&o.torpedo<=0||1==o.main&&o.secondary>=1&&o.torpedo<=0||0==o.main&&o.secondary>=2&&o.torpedo>=0?(a.type="连击",a.damage=Math.floor(1.2*a.damage),a.hit=2):(a.type="通常",a.damage=Math.floor(a.damage),a.hit=1)}var x=" ";if(a.isMax&&(x=" ≤ "),a.isMin&&(x=" ≥ "),a.value=""+a.type+x+a.damage,a.hit&&a.hit>1&&(a.value+=" x "+a.hit),Array.isArray(a.cis)&&a.cis.length)a.value+=" (CI"+x+a.cis.sort(function(e,t){return e[0]-t[0]}).map(function(e){return e[0]+(e[1]&&e[1]>1?" x "+e[1]:"")}).join(" 或 ")+")";else if(a.damage_ci){var S=a.hit_ci||a.hit||1;a.value+=" (CI"+x+a.damage_ci+")",S&&S>1&&(a.value+=" x "+S)}return a},c.calcByShip.fighterPower_v2=function(e,t,n,r){var i=[0,0];return u(e.slot).map(function(e,o){var a=c.calc.fighterPower(t[o],e,r[o]||0,n[o]||0);i[0]+=a[0],i[1]+=a[1]}),i},c.calcByShip.losPower=function(e,t,n,r,i){(i=i||{}).shipLv=i.shipLv||1,i.hqLv=i.hqLv||1,i.shipLv<0&&(i.shipLv=1),i.hqLv<0&&(i.hqLv=1);var o={DiveBombers:0,TorpedoBombers:0,CarrierRecons:0,SeaplaneRecons:0,SeaplaneBombers:0,SmallRadars:0,LargeRadars:0,Searchlights:0,statLos:Math.sqrt(e.getAttribute("los",i.shipLv)),hqLv:i.hqLv};return t.forEach(function(e){if(e)for(var t in o)l[t]&&l[t].push&&l[t].indexOf(e.type)>-1&&(o[t]+=e.stat.los)}),c.calc.losPower(o)},c.calcByShip.TP=function(e,t){if(!e||!t||!t.push)return 0;e=a(e);var n={ship:{},equipment:{}};return n.ship[e.type]=1,t.forEach(function(e){if(e){var t="number"==typeof e?e:s(e).id;n.equipment[t]||(n.equipment[t]=0),n.equipment[t]++}}),e.getCapability("count_as_landing_craft")&&(n.equipment[68]||(n.equipment[68]=0),n.equipment[68]++),c.calc.TP(n)},c.calcByShip.speed=function(t,n,r,i,o){if(!t)return"";if("object"===(void 0===r?"undefined":_typeof(r))&&r.push)return c.calcByShip.speed(t,n,[],[],r);if("object"===(void 0===i?"undefined":_typeof(i))&&i.push)return c.calcByShip.speed(t,n,r,[],i);t=a(t),n=n||[],o=o||{};var u=parseInt(t.stat.speed),l=function(t){return t=Math.min(20,t||u),o.returnNumber?t:e.statSpeed[t]},d={33:0,34:0,87:0},f=t._speedRule||"low-2",h=0;if(n.forEach(function(e){if(e){var t="number"==typeof e?e:s(e).id;void 0!==d[""+t]&&d[""+t]++}}),!d[33])return l();switch(f){case"low-1":h=.3*Math.min(d[34],1)+.7*d[87];break;case"low-2":case"high-3":(d[34]||d[87])&&(h=Math.min(1,d[34]/3+.5*d[87]));break;case"low-3":case"high-4":(d[34]||d[87])&&(u+=5);break;case"high-1":h=.5*d[34]+1*d[87];break;case"high-2":h=.5*d[34]+.5*d[87];break;case"low-4":h=.5}return h>0&&h<1?u+=5:h>=1&&h<1.5?u+=10:h>=1.5&&(u+=15),l()},c.calcByShip.fireRange=function(t,n){if(!t)return"-";n=n||[];var r=parseInt(t.stat.range);return n.forEach(function(e){e&&(r=Math.max(r,s(e).stat.range||0))}),e.statRange[r]},c.calcByFleet.los33=function(e,t){var n=[],r=[];return e.forEach(function(e){if(Array.isArray(e)){var t=e[0];if(t){var i=e[2],o=e[3],a=e[4];r.push({id:t,lv:e[1][0]}),i.forEach(function(e,t){n.push({id:e,star:o[t],rank:a[t]})})}}}),c.calc.los33({hq:t,equipments:n,ships:r})},c.calcByField.fighterPowerAA=function(e){function t(e){return r=Math.max(e,r)}var n=[0,0],r=1;return e.forEach(function(e){var r=s(e[0]||e.equipment||e.equipmentId),i=e[1]||e.star||0,o=e[2]||e.rank||0,a=e[3]||e.carry||0,u=c.calc.fighterPowerAA(r,a,o,i);switch(a||(a=c.equipmentType.Recons.indexOf(r.type)>-1?4:18),n[0]+=u[0],n[1]+=u[1],r.type){case l.CarrierRecon:case l.CarrierRecon2:t(r.stat.los<=7?1.2:r.stat.los>=9?1.3:1.25);break;case l.ReconSeaplane:case l.ReconSeaplaneNight:case l.LargeFlyingBoat:t(r.stat.los<=7?1.1:r.stat.los>=9?1.16:1.13)}}),n[0]=n[0]*r,n[1]=n[1]*r,n},Array.prototype.indexOf||(Array.prototype.indexOf=function(e,t){var n;if(null==this)throw new TypeError('"this" is null or not defined');var r=Object(this),i=r.length>>>0;if(0===i)return-1;var o=+t||0;if(Math.abs(o)===1/0&&(o=0),o>=i)return-1;for(n=Math.max(o>=0?o:i-Math.abs(o),0);n<i;){if(n in r&&r[n]===e)return n;n++}return-1}),e.Entity=n,e.Equipment=r,e.Ship=i,e.Consumable=o,e.formula=c,e}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{("undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this).Clipboard=e()}}(function(){return function e(t,n,r){function i(a,s){if(!n[a]){if(!t[a]){var u="function"==typeof require&&require;if(!s&&u)return u(a,!0);if(o)return o(a,!0);var c=new Error("Cannot find module '"+a+"'");throw c.code="MODULE_NOT_FOUND",c}var l=n[a]={exports:{}};t[a][0].call(l.exports,function(e){return i(t[a][1][e]||e)},l,l.exports,e,t,n,r)}return n[a].exports}for(var o="function"==typeof require&&require,a=0;a<r.length;a++)i(r[a]);return i}({1:[function(e,t,n){var r=9;if("undefined"!=typeof Element&&!Element.prototype.matches){var i=Element.prototype;i.matches=i.matchesSelector||i.mozMatchesSelector||i.msMatchesSelector||i.oMatchesSelector||i.webkitMatchesSelector}t.exports=function(e,t){for(;e&&e.nodeType!==r;){if("function"==typeof e.matches&&e.matches(t))return e;e=e.parentNode}}},{}],2:[function(e,t,n){function r(e,t,n,r){return function(n){n.delegateTarget=i(n.target,t),n.delegateTarget&&r.call(e,n)}}var i=e("./closest");t.exports=function(e,t,n,i,o){var a=r.apply(this,arguments);return e.addEventListener(n,a,o),{destroy:function(){e.removeEventListener(n,a,o)}}}},{"./closest":1}],3:[function(e,t,n){n.node=function(e){return void 0!==e&&e instanceof HTMLElement&&1===e.nodeType},n.nodeList=function(e){var t=Object.prototype.toString.call(e);return void 0!==e&&("[object NodeList]"===t||"[object HTMLCollection]"===t)&&"length"in e&&(0===e.length||n.node(e[0]))},n.string=function(e){return"string"==typeof e||e instanceof String},n.fn=function(e){return"[object Function]"===Object.prototype.toString.call(e)}},{}],4:[function(e,t,n){function r(e,t,n){return e.addEventListener(t,n),{destroy:function(){e.removeEventListener(t,n)}}}function i(e,t,n){return Array.prototype.forEach.call(e,function(e){e.addEventListener(t,n)}),{destroy:function(){Array.prototype.forEach.call(e,function(e){e.removeEventListener(t,n)})}}}function o(e,t,n){return s(document.body,e,t,n)}var a=e("./is"),s=e("delegate");t.exports=function(e,t,n){if(!e&&!t&&!n)throw new Error("Missing required arguments");if(!a.string(t))throw new TypeError("Second argument must be a String");if(!a.fn(n))throw new TypeError("Third argument must be a Function");if(a.node(e))return r(e,t,n);if(a.nodeList(e))return i(e,t,n);if(a.string(e))return o(e,t,n);throw new TypeError("First argument must be a String, HTMLElement, HTMLCollection, or NodeList")}},{"./is":3,delegate:2}],5:[function(e,t,n){t.exports=function(e){var t;if("SELECT"===e.nodeName)e.focus(),t=e.value;else if("INPUT"===e.nodeName||"TEXTAREA"===e.nodeName){var n=e.hasAttribute("readonly");n||e.setAttribute("readonly",""),e.select(),e.setSelectionRange(0,e.value.length),n||e.removeAttribute("readonly"),t=e.value}else{e.hasAttribute("contenteditable")&&e.focus();var r=window.getSelection(),i=document.createRange();i.selectNodeContents(e),r.removeAllRanges(),r.addRange(i),t=r.toString()}return t}},{}],6:[function(e,t,n){function r(){}r.prototype={on:function(e,t,n){var r=this.e||(this.e={});return(r[e]||(r[e]=[])).push({fn:t,ctx:n}),this},once:function(e,t,n){function r(){i.off(e,r),t.apply(n,arguments)}var i=this;return r._=t,this.on(e,r,n)},emit:function(e){var t=[].slice.call(arguments,1),n=((this.e||(this.e={}))[e]||[]).slice(),r=0,i=n.length;for(r;r<i;r++)n[r].fn.apply(n[r].ctx,t);return this},off:function(e,t){var n=this.e||(this.e={}),r=n[e],i=[];if(r&&t)for(var o=0,a=r.length;o<a;o++)r[o].fn!==t&&r[o].fn._!==t&&i.push(r[o]);return i.length?n[e]=i:delete n[e],this}},t.exports=r},{}],7:[function(e,t,n){!function(r,i){if(void 0!==n)i(t,e("select"));else{var o={exports:{}};i(o,r.select),r.clipboardAction=o.exports}}(this,function(e,t){"use strict";function n(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var r=function(e){return e&&e.__esModule?e:{default:e}}(t),i="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},o=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),a=function(){function e(t){n(this,e),this.resolveOptions(t),this.initSelection()}return o(e,[{key:"resolveOptions",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};this.action=e.action,this.container=e.container,this.emitter=e.emitter,this.target=e.target,this.text=e.text,this.trigger=e.trigger,this.selectedText=""}},{key:"initSelection",value:function(){this.text?this.selectFake():this.target&&this.selectTarget()}},{key:"selectFake",value:function(){var e=this,t="rtl"==document.documentElement.getAttribute("dir");this.removeFake(),this.fakeHandlerCallback=function(){return e.removeFake()},this.fakeHandler=this.container.addEventListener("click",this.fakeHandlerCallback)||!0,this.fakeElem=document.createElement("textarea"),this.fakeElem.style.fontSize="12pt",this.fakeElem.style.border="0",this.fakeElem.style.padding="0",this.fakeElem.style.margin="0",this.fakeElem.style.position="absolute",this.fakeElem.style[t?"right":"left"]="-9999px";var n=window.pageYOffset||document.documentElement.scrollTop;this.fakeElem.style.top=n+"px",this.fakeElem.setAttribute("readonly",""),this.fakeElem.value=this.text,this.container.appendChild(this.fakeElem),this.selectedText=(0,r.default)(this.fakeElem),this.copyText()}},{key:"removeFake",value:function(){this.fakeHandler&&(this.container.removeEventListener("click",this.fakeHandlerCallback),this.fakeHandler=null,this.fakeHandlerCallback=null),this.fakeElem&&(this.container.removeChild(this.fakeElem),this.fakeElem=null)}},{key:"selectTarget",value:function(){this.selectedText=(0,r.default)(this.target),this.copyText()}},{key:"copyText",value:function(){var e=void 0;try{e=document.execCommand(this.action)}catch(t){e=!1}this.handleResult(e)}},{key:"handleResult",value:function(e){this.emitter.emit(e?"success":"error",{action:this.action,text:this.selectedText,trigger:this.trigger,clearSelection:this.clearSelection.bind(this)})}},{key:"clearSelection",value:function(){this.trigger&&this.trigger.focus(),window.getSelection().removeAllRanges()}},{key:"destroy",value:function(){this.removeFake()}},{key:"action",set:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"copy";if(this._action=e,"copy"!==this._action&&"cut"!==this._action)throw new Error('Invalid "action" value, use either "copy" or "cut"')},get:function(){return this._action}},{key:"target",set:function(e){if(void 0!==e){if(!e||"object"!==(void 0===e?"undefined":i(e))||1!==e.nodeType)throw new Error('Invalid "target" value, use a valid Element');if("copy"===this.action&&e.hasAttribute("disabled"))throw new Error('Invalid "target" attribute. Please use "readonly" instead of "disabled" attribute');if("cut"===this.action&&(e.hasAttribute("readonly")||e.hasAttribute("disabled")))throw new Error('Invalid "target" attribute. You can\'t cut text from elements with "readonly" or "disabled" attributes');this._target=e}},get:function(){return this._target}}]),e}();e.exports=a})},{select:5}],8:[function(e,t,n){!function(r,i){if(void 0!==n)i(t,e("./clipboard-action"),e("tiny-emitter"),e("good-listener"));else{var o={exports:{}};i(o,r.clipboardAction,r.tinyEmitter,r.goodListener),r.clipboard=o.exports}}(this,function(e,t,n,r){"use strict";function i(e){return e&&e.__esModule?e:{default:e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function a(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function s(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}function u(e,t){var n="data-clipboard-"+e;if(t.hasAttribute(n))return t.getAttribute(n)}var c=i(t),l=i(n),d=i(r),f="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},h=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),p=function(e){function t(e,n){o(this,t);var r=a(this,(t.__proto__||Object.getPrototypeOf(t)).call(this));return r.resolveOptions(n),r.listenClick(e),r}return s(t,l.default),h(t,[{key:"resolveOptions",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};this.action="function"==typeof e.action?e.action:this.defaultAction,this.target="function"==typeof e.target?e.target:this.defaultTarget,this.text="function"==typeof e.text?e.text:this.defaultText,this.container="object"===f(e.container)?e.container:document.body}},{key:"listenClick",value:function(e){var t=this;this.listener=(0,d.default)(e,"click",function(e){return t.onClick(e)})}},{key:"onClick",value:function(e){var t=e.delegateTarget||e.currentTarget;this.clipboardAction&&(this.clipboardAction=null),this.clipboardAction=new c.default({action:this.action(t),target:this.target(t),text:this.text(t),container:this.container,trigger:t,emitter:this})}},{key:"defaultAction",value:function(e){return u("action",e)}},{key:"defaultTarget",value:function(e){var t=u("target",e);if(t)return document.querySelector(t)}},{key:"defaultText",value:function(e){return u("text",e)}},{key:"destroy",value:function(){this.listener.destroy(),this.clipboardAction&&(this.clipboardAction.destroy(),this.clipboardAction=null)}}],[{key:"isSupported",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:["copy","cut"],t="string"==typeof e?[e]:e,n=!!document.queryCommandSupported;return t.forEach(function(e){n=n&&!!document.queryCommandSupported(e)}),n}}]),t}();e.exports=p})},{"./clipboard-action":7,"good-listener":4,"tiny-emitter":6}]},{},[8])(8)}),$document.ready(function(){$body=$("body");for(var e in _g.func_first)_g.func_first[e]();_g.init();for(var e in _g.func_last)_g.func_last[e]()});
+
+if (!Array.prototype.filter)
+    Array.prototype.filter = function(func, thisArg) {
+      'use strict';
+      if ( ! ((typeof func === 'Function') && this) )
+          throw new TypeError();
+      
+      var len = this.length >>> 0,
+          res = new Array(len), // preallocate array
+          c = 0, i = -1;
+      if (thisArg === undefined)
+        while (++i !== len)
+          // checks to see if the key was set
+          if (i in this)
+            if (func(t[i], i, t))
+              res[c++] = t[i];
+      else
+        while (++i !== len)
+          // checks to see if the key was set
+          if (i in this)
+            if (func.call(thisArg, t[i], i, t))
+              res[c++] = t[i];
+      
+      res.length = c; // shrink down array to proper size
+      return res;
+    };
+
+// https://tc39.github.io/ecma262/#sec-array.prototype.includes
+if (!Array.prototype.includes) {
+  Object.defineProperty(Array.prototype, 'includes', {
+    value: function(searchElement, fromIndex) {
+
+      // 1. Let O be ? ToObject(this value).
+      if (this == null) {
+        throw new TypeError('"this" is null or not defined');
+      }
+
+      var o = Object(this);
+
+      // 2. Let len be ? ToLength(? Get(O, "length")).
+      var len = o.length >>> 0;
+
+      // 3. If len is 0, return false.
+      if (len === 0) {
+        return false;
+      }
+
+      // 4. Let n be ? ToInteger(fromIndex).
+      //    (If fromIndex is undefined, this step produces the value 0.)
+      var n = fromIndex | 0;
+
+      // 5. If n ≥ 0, then
+      //  a. Let k be n.
+      // 6. Else n < 0,
+      //  a. Let k be len + n.
+      //  b. If k < 0, let k be 0.
+      var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+      function sameValueZero(x, y) {
+        return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+      }
+
+      // 7. Repeat, while k < len
+      while (k < len) {
+        // a. Let elementK be the result of ? Get(O, ! ToString(k)).
+        // b. If SameValueZero(searchElement, elementK) is true, return true.
+        // c. Increase k by 1. 
+        if (sameValueZero(o[k], searchElement)) {
+          return true;
+        }
+        k++;
+      }
+
+      // 8. Return false
+      return false;
+    }
+  });
+}
+"use strict";
+/*! jQuery v2.1.3 | (c) 2005, 2014 jQuery Foundation, Inc. | jquery.org/license */
+!function(a,b){"object"==typeof module&&"object"==typeof module.exports?module.exports=a.document?b(a,!0):function(a){if(!a.document)throw new Error("jQuery requires a window with a document");return b(a)}:b(a)}("undefined"!=typeof window?window:this,function(a,b){var c=[],d=c.slice,e=c.concat,f=c.push,g=c.indexOf,h={},i=h.toString,j=h.hasOwnProperty,k={},l=a.document,m="2.1.3",n=function(a,b){return new n.fn.init(a,b)},o=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,p=/^-ms-/,q=/-([\da-z])/gi,r=function(a,b){return b.toUpperCase()};n.fn=n.prototype={jquery:m,constructor:n,selector:"",length:0,toArray:function(){return d.call(this)},get:function(a){return null!=a?0>a?this[a+this.length]:this[a]:d.call(this)},pushStack:function(a){var b=n.merge(this.constructor(),a);return b.prevObject=this,b.context=this.context,b},each:function(a,b){return n.each(this,a,b)},map:function(a){return this.pushStack(n.map(this,function(b,c){return a.call(b,c,b)}))},slice:function(){return this.pushStack(d.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},eq:function(a){var b=this.length,c=+a+(0>a?b:0);return this.pushStack(c>=0&&b>c?[this[c]]:[])},end:function(){return this.prevObject||this.constructor(null)},push:f,sort:c.sort,splice:c.splice},n.extend=n.fn.extend=function(){var a,b,c,d,e,f,g=arguments[0]||{},h=1,i=arguments.length,j=!1;for("boolean"==typeof g&&(j=g,g=arguments[h]||{},h++),"object"==typeof g||n.isFunction(g)||(g={}),h===i&&(g=this,h--);i>h;h++)if(null!=(a=arguments[h]))for(b in a)c=g[b],d=a[b],g!==d&&(j&&d&&(n.isPlainObject(d)||(e=n.isArray(d)))?(e?(e=!1,f=c&&n.isArray(c)?c:[]):f=c&&n.isPlainObject(c)?c:{},g[b]=n.extend(j,f,d)):void 0!==d&&(g[b]=d));return g},n.extend({expando:"jQuery"+(m+Math.random()).replace(/\D/g,""),isReady:!0,error:function(a){throw new Error(a)},noop:function(){},isFunction:function(a){return"function"===n.type(a)},isArray:Array.isArray,isWindow:function(a){return null!=a&&a===a.window},isNumeric:function(a){return!n.isArray(a)&&a-parseFloat(a)+1>=0},isPlainObject:function(a){return"object"!==n.type(a)||a.nodeType||n.isWindow(a)?!1:a.constructor&&!j.call(a.constructor.prototype,"isPrototypeOf")?!1:!0},isEmptyObject:function(a){var b;for(b in a)return!1;return!0},type:function(a){return null==a?a+"":"object"==typeof a||"function"==typeof a?h[i.call(a)]||"object":typeof a},globalEval:function(a){var b,c=eval;a=n.trim(a),a&&(1===a.indexOf("use strict")?(b=l.createElement("script"),b.text=a,l.head.appendChild(b).parentNode.removeChild(b)):c(a))},camelCase:function(a){return a.replace(p,"ms-").replace(q,r)},nodeName:function(a,b){return a.nodeName&&a.nodeName.toLowerCase()===b.toLowerCase()},each:function(a,b,c){var d,e=0,f=a.length,g=s(a);if(c){if(g){for(;f>e;e++)if(d=b.apply(a[e],c),d===!1)break}else for(e in a)if(d=b.apply(a[e],c),d===!1)break}else if(g){for(;f>e;e++)if(d=b.call(a[e],e,a[e]),d===!1)break}else for(e in a)if(d=b.call(a[e],e,a[e]),d===!1)break;return a},trim:function(a){return null==a?"":(a+"").replace(o,"")},makeArray:function(a,b){var c=b||[];return null!=a&&(s(Object(a))?n.merge(c,"string"==typeof a?[a]:a):f.call(c,a)),c},inArray:function(a,b,c){return null==b?-1:g.call(b,a,c)},merge:function(a,b){for(var c=+b.length,d=0,e=a.length;c>d;d++)a[e++]=b[d];return a.length=e,a},grep:function(a,b,c){for(var d,e=[],f=0,g=a.length,h=!c;g>f;f++)d=!b(a[f],f),d!==h&&e.push(a[f]);return e},map:function(a,b,c){var d,f=0,g=a.length,h=s(a),i=[];if(h)for(;g>f;f++)d=b(a[f],f,c),null!=d&&i.push(d);else for(f in a)d=b(a[f],f,c),null!=d&&i.push(d);return e.apply([],i)},guid:1,proxy:function(a,b){var c,e,f;return"string"==typeof b&&(c=a[b],b=a,a=c),n.isFunction(a)?(e=d.call(arguments,2),f=function(){return a.apply(b||this,e.concat(d.call(arguments)))},f.guid=a.guid=a.guid||n.guid++,f):void 0},now:Date.now,support:k}),n.each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(a,b){h["[object "+b+"]"]=b.toLowerCase()});function s(a){var b=a.length,c=n.type(a);return"function"===c||n.isWindow(a)?!1:1===a.nodeType&&b?!0:"array"===c||0===b||"number"==typeof b&&b>0&&b-1 in a}var t=function(a){var b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u="sizzle"+1*new Date,v=a.document,w=0,x=0,y=hb(),z=hb(),A=hb(),B=function(a,b){return a===b&&(l=!0),0},C=1<<31,D={}.hasOwnProperty,E=[],F=E.pop,G=E.push,H=E.push,I=E.slice,J=function(a,b){for(var c=0,d=a.length;d>c;c++)if(a[c]===b)return c;return-1},K="checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",L="[\\x20\\t\\r\\n\\f]",M="(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",N=M.replace("w","w#"),O="\\["+L+"*("+M+")(?:"+L+"*([*^$|!~]?=)"+L+"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|("+N+"))|)"+L+"*\\]",P=":("+M+")(?:\\((('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|((?:\\\\.|[^\\\\()[\\]]|"+O+")*)|.*)\\)|)",Q=new RegExp(L+"+","g"),R=new RegExp("^"+L+"+|((?:^|[^\\\\])(?:\\\\.)*)"+L+"+$","g"),S=new RegExp("^"+L+"*,"+L+"*"),T=new RegExp("^"+L+"*([>+~]|"+L+")"+L+"*"),U=new RegExp("="+L+"*([^\\]'\"]*?)"+L+"*\\]","g"),V=new RegExp(P),W=new RegExp("^"+N+"$"),X={ID:new RegExp("^#("+M+")"),CLASS:new RegExp("^\\.("+M+")"),TAG:new RegExp("^("+M.replace("w","w*")+")"),ATTR:new RegExp("^"+O),PSEUDO:new RegExp("^"+P),CHILD:new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\("+L+"*(even|odd|(([+-]|)(\\d*)n|)"+L+"*(?:([+-]|)"+L+"*(\\d+)|))"+L+"*\\)|)","i"),bool:new RegExp("^(?:"+K+")$","i"),needsContext:new RegExp("^"+L+"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\("+L+"*((?:-\\d)?\\d*)"+L+"*\\)|)(?=[^-]|$)","i")},Y=/^(?:input|select|textarea|button)$/i,Z=/^h\d$/i,$=/^[^{]+\{\s*\[native \w/,_=/^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,ab=/[+~]/,bb=/'|\\/g,cb=new RegExp("\\\\([\\da-f]{1,6}"+L+"?|("+L+")|.)","ig"),db=function(a,b,c){var d="0x"+b-65536;return d!==d||c?b:0>d?String.fromCharCode(d+65536):String.fromCharCode(d>>10|55296,1023&d|56320)},eb=function(){m()};try{H.apply(E=I.call(v.childNodes),v.childNodes),E[v.childNodes.length].nodeType}catch(fb){H={apply:E.length?function(a,b){G.apply(a,I.call(b))}:function(a,b){var c=a.length,d=0;while(a[c++]=b[d++]);a.length=c-1}}}function gb(a,b,d,e){var f,h,j,k,l,o,r,s,w,x;if((b?b.ownerDocument||b:v)!==n&&m(b),b=b||n,d=d||[],k=b.nodeType,"string"!=typeof a||!a||1!==k&&9!==k&&11!==k)return d;if(!e&&p){if(11!==k&&(f=_.exec(a)))if(j=f[1]){if(9===k){if(h=b.getElementById(j),!h||!h.parentNode)return d;if(h.id===j)return d.push(h),d}else if(b.ownerDocument&&(h=b.ownerDocument.getElementById(j))&&t(b,h)&&h.id===j)return d.push(h),d}else{if(f[2])return H.apply(d,b.getElementsByTagName(a)),d;if((j=f[3])&&c.getElementsByClassName)return H.apply(d,b.getElementsByClassName(j)),d}if(c.qsa&&(!q||!q.test(a))){if(s=r=u,w=b,x=1!==k&&a,1===k&&"object"!==b.nodeName.toLowerCase()){o=g(a),(r=b.getAttribute("id"))?s=r.replace(bb,"\\$&"):b.setAttribute("id",s),s="[id='"+s+"'] ",l=o.length;while(l--)o[l]=s+rb(o[l]);w=ab.test(a)&&pb(b.parentNode)||b,x=o.join(",")}if(x)try{return H.apply(d,w.querySelectorAll(x)),d}catch(y){}finally{r||b.removeAttribute("id")}}}return i(a.replace(R,"$1"),b,d,e)}function hb(){var a=[];function b(c,e){return a.push(c+" ")>d.cacheLength&&delete b[a.shift()],b[c+" "]=e}return b}function ib(a){return a[u]=!0,a}function jb(a){var b=n.createElement("div");try{return!!a(b)}catch(c){return!1}finally{b.parentNode&&b.parentNode.removeChild(b),b=null}}function kb(a,b){var c=a.split("|"),e=a.length;while(e--)d.attrHandle[c[e]]=b}function lb(a,b){var c=b&&a,d=c&&1===a.nodeType&&1===b.nodeType&&(~b.sourceIndex||C)-(~a.sourceIndex||C);if(d)return d;if(c)while(c=c.nextSibling)if(c===b)return-1;return a?1:-1}function mb(a){return function(b){var c=b.nodeName.toLowerCase();return"input"===c&&b.type===a}}function nb(a){return function(b){var c=b.nodeName.toLowerCase();return("input"===c||"button"===c)&&b.type===a}}function ob(a){return ib(function(b){return b=+b,ib(function(c,d){var e,f=a([],c.length,b),g=f.length;while(g--)c[e=f[g]]&&(c[e]=!(d[e]=c[e]))})})}function pb(a){return a&&"undefined"!=typeof a.getElementsByTagName&&a}c=gb.support={},f=gb.isXML=function(a){var b=a&&(a.ownerDocument||a).documentElement;return b?"HTML"!==b.nodeName:!1},m=gb.setDocument=function(a){var b,e,g=a?a.ownerDocument||a:v;return g!==n&&9===g.nodeType&&g.documentElement?(n=g,o=g.documentElement,e=g.defaultView,e&&e!==e.top&&(e.addEventListener?e.addEventListener("unload",eb,!1):e.attachEvent&&e.attachEvent("onunload",eb)),p=!f(g),c.attributes=jb(function(a){return a.className="i",!a.getAttribute("className")}),c.getElementsByTagName=jb(function(a){return a.appendChild(g.createComment("")),!a.getElementsByTagName("*").length}),c.getElementsByClassName=$.test(g.getElementsByClassName),c.getById=jb(function(a){return o.appendChild(a).id=u,!g.getElementsByName||!g.getElementsByName(u).length}),c.getById?(d.find.ID=function(a,b){if("undefined"!=typeof b.getElementById&&p){var c=b.getElementById(a);return c&&c.parentNode?[c]:[]}},d.filter.ID=function(a){var b=a.replace(cb,db);return function(a){return a.getAttribute("id")===b}}):(delete d.find.ID,d.filter.ID=function(a){var b=a.replace(cb,db);return function(a){var c="undefined"!=typeof a.getAttributeNode&&a.getAttributeNode("id");return c&&c.value===b}}),d.find.TAG=c.getElementsByTagName?function(a,b){return"undefined"!=typeof b.getElementsByTagName?b.getElementsByTagName(a):c.qsa?b.querySelectorAll(a):void 0}:function(a,b){var c,d=[],e=0,f=b.getElementsByTagName(a);if("*"===a){while(c=f[e++])1===c.nodeType&&d.push(c);return d}return f},d.find.CLASS=c.getElementsByClassName&&function(a,b){return p?b.getElementsByClassName(a):void 0},r=[],q=[],(c.qsa=$.test(g.querySelectorAll))&&(jb(function(a){o.appendChild(a).innerHTML="<a id='"+u+"'></a><select id='"+u+"-\f]' msallowcapture=''><option selected=''></option></select>",a.querySelectorAll("[msallowcapture^='']").length&&q.push("[*^$]="+L+"*(?:''|\"\")"),a.querySelectorAll("[selected]").length||q.push("\\["+L+"*(?:value|"+K+")"),a.querySelectorAll("[id~="+u+"-]").length||q.push("~="),a.querySelectorAll(":checked").length||q.push(":checked"),a.querySelectorAll("a#"+u+"+*").length||q.push(".#.+[+~]")}),jb(function(a){var b=g.createElement("input");b.setAttribute("type","hidden"),a.appendChild(b).setAttribute("name","D"),a.querySelectorAll("[name=d]").length&&q.push("name"+L+"*[*^$|!~]?="),a.querySelectorAll(":enabled").length||q.push(":enabled",":disabled"),a.querySelectorAll("*,:x"),q.push(",.*:")})),(c.matchesSelector=$.test(s=o.matches||o.webkitMatchesSelector||o.mozMatchesSelector||o.oMatchesSelector||o.msMatchesSelector))&&jb(function(a){c.disconnectedMatch=s.call(a,"div"),s.call(a,"[s!='']:x"),r.push("!=",P)}),q=q.length&&new RegExp(q.join("|")),r=r.length&&new RegExp(r.join("|")),b=$.test(o.compareDocumentPosition),t=b||$.test(o.contains)?function(a,b){var c=9===a.nodeType?a.documentElement:a,d=b&&b.parentNode;return a===d||!(!d||1!==d.nodeType||!(c.contains?c.contains(d):a.compareDocumentPosition&&16&a.compareDocumentPosition(d)))}:function(a,b){if(b)while(b=b.parentNode)if(b===a)return!0;return!1},B=b?function(a,b){if(a===b)return l=!0,0;var d=!a.compareDocumentPosition-!b.compareDocumentPosition;return d?d:(d=(a.ownerDocument||a)===(b.ownerDocument||b)?a.compareDocumentPosition(b):1,1&d||!c.sortDetached&&b.compareDocumentPosition(a)===d?a===g||a.ownerDocument===v&&t(v,a)?-1:b===g||b.ownerDocument===v&&t(v,b)?1:k?J(k,a)-J(k,b):0:4&d?-1:1)}:function(a,b){if(a===b)return l=!0,0;var c,d=0,e=a.parentNode,f=b.parentNode,h=[a],i=[b];if(!e||!f)return a===g?-1:b===g?1:e?-1:f?1:k?J(k,a)-J(k,b):0;if(e===f)return lb(a,b);c=a;while(c=c.parentNode)h.unshift(c);c=b;while(c=c.parentNode)i.unshift(c);while(h[d]===i[d])d++;return d?lb(h[d],i[d]):h[d]===v?-1:i[d]===v?1:0},g):n},gb.matches=function(a,b){return gb(a,null,null,b)},gb.matchesSelector=function(a,b){if((a.ownerDocument||a)!==n&&m(a),b=b.replace(U,"='$1']"),!(!c.matchesSelector||!p||r&&r.test(b)||q&&q.test(b)))try{var d=s.call(a,b);if(d||c.disconnectedMatch||a.document&&11!==a.document.nodeType)return d}catch(e){}return gb(b,n,null,[a]).length>0},gb.contains=function(a,b){return(a.ownerDocument||a)!==n&&m(a),t(a,b)},gb.attr=function(a,b){(a.ownerDocument||a)!==n&&m(a);var e=d.attrHandle[b.toLowerCase()],f=e&&D.call(d.attrHandle,b.toLowerCase())?e(a,b,!p):void 0;return void 0!==f?f:c.attributes||!p?a.getAttribute(b):(f=a.getAttributeNode(b))&&f.specified?f.value:null},gb.error=function(a){throw new Error("Syntax error, unrecognized expression: "+a)},gb.uniqueSort=function(a){var b,d=[],e=0,f=0;if(l=!c.detectDuplicates,k=!c.sortStable&&a.slice(0),a.sort(B),l){while(b=a[f++])b===a[f]&&(e=d.push(f));while(e--)a.splice(d[e],1)}return k=null,a},e=gb.getText=function(a){var b,c="",d=0,f=a.nodeType;if(f){if(1===f||9===f||11===f){if("string"==typeof a.textContent)return a.textContent;for(a=a.firstChild;a;a=a.nextSibling)c+=e(a)}else if(3===f||4===f)return a.nodeValue}else while(b=a[d++])c+=e(b);return c},d=gb.selectors={cacheLength:50,createPseudo:ib,match:X,attrHandle:{},find:{},relative:{">":{dir:"parentNode",first:!0}," ":{dir:"parentNode"},"+":{dir:"previousSibling",first:!0},"~":{dir:"previousSibling"}},preFilter:{ATTR:function(a){return a[1]=a[1].replace(cb,db),a[3]=(a[3]||a[4]||a[5]||"").replace(cb,db),"~="===a[2]&&(a[3]=" "+a[3]+" "),a.slice(0,4)},CHILD:function(a){return a[1]=a[1].toLowerCase(),"nth"===a[1].slice(0,3)?(a[3]||gb.error(a[0]),a[4]=+(a[4]?a[5]+(a[6]||1):2*("even"===a[3]||"odd"===a[3])),a[5]=+(a[7]+a[8]||"odd"===a[3])):a[3]&&gb.error(a[0]),a},PSEUDO:function(a){var b,c=!a[6]&&a[2];return X.CHILD.test(a[0])?null:(a[3]?a[2]=a[4]||a[5]||"":c&&V.test(c)&&(b=g(c,!0))&&(b=c.indexOf(")",c.length-b)-c.length)&&(a[0]=a[0].slice(0,b),a[2]=c.slice(0,b)),a.slice(0,3))}},filter:{TAG:function(a){var b=a.replace(cb,db).toLowerCase();return"*"===a?function(){return!0}:function(a){return a.nodeName&&a.nodeName.toLowerCase()===b}},CLASS:function(a){var b=y[a+" "];return b||(b=new RegExp("(^|"+L+")"+a+"("+L+"|$)"))&&y(a,function(a){return b.test("string"==typeof a.className&&a.className||"undefined"!=typeof a.getAttribute&&a.getAttribute("class")||"")})},ATTR:function(a,b,c){return function(d){var e=gb.attr(d,a);return null==e?"!="===b:b?(e+="","="===b?e===c:"!="===b?e!==c:"^="===b?c&&0===e.indexOf(c):"*="===b?c&&e.indexOf(c)>-1:"$="===b?c&&e.slice(-c.length)===c:"~="===b?(" "+e.replace(Q," ")+" ").indexOf(c)>-1:"|="===b?e===c||e.slice(0,c.length+1)===c+"-":!1):!0}},CHILD:function(a,b,c,d,e){var f="nth"!==a.slice(0,3),g="last"!==a.slice(-4),h="of-type"===b;return 1===d&&0===e?function(a){return!!a.parentNode}:function(b,c,i){var j,k,l,m,n,o,p=f!==g?"nextSibling":"previousSibling",q=b.parentNode,r=h&&b.nodeName.toLowerCase(),s=!i&&!h;if(q){if(f){while(p){l=b;while(l=l[p])if(h?l.nodeName.toLowerCase()===r:1===l.nodeType)return!1;o=p="only"===a&&!o&&"nextSibling"}return!0}if(o=[g?q.firstChild:q.lastChild],g&&s){k=q[u]||(q[u]={}),j=k[a]||[],n=j[0]===w&&j[1],m=j[0]===w&&j[2],l=n&&q.childNodes[n];while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if(1===l.nodeType&&++m&&l===b){k[a]=[w,n,m];break}}else if(s&&(j=(b[u]||(b[u]={}))[a])&&j[0]===w)m=j[1];else while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if((h?l.nodeName.toLowerCase()===r:1===l.nodeType)&&++m&&(s&&((l[u]||(l[u]={}))[a]=[w,m]),l===b))break;return m-=e,m===d||m%d===0&&m/d>=0}}},PSEUDO:function(a,b){var c,e=d.pseudos[a]||d.setFilters[a.toLowerCase()]||gb.error("unsupported pseudo: "+a);return e[u]?e(b):e.length>1?(c=[a,a,"",b],d.setFilters.hasOwnProperty(a.toLowerCase())?ib(function(a,c){var d,f=e(a,b),g=f.length;while(g--)d=J(a,f[g]),a[d]=!(c[d]=f[g])}):function(a){return e(a,0,c)}):e}},pseudos:{not:ib(function(a){var b=[],c=[],d=h(a.replace(R,"$1"));return d[u]?ib(function(a,b,c,e){var f,g=d(a,null,e,[]),h=a.length;while(h--)(f=g[h])&&(a[h]=!(b[h]=f))}):function(a,e,f){return b[0]=a,d(b,null,f,c),b[0]=null,!c.pop()}}),has:ib(function(a){return function(b){return gb(a,b).length>0}}),contains:ib(function(a){return a=a.replace(cb,db),function(b){return(b.textContent||b.innerText||e(b)).indexOf(a)>-1}}),lang:ib(function(a){return W.test(a||"")||gb.error("unsupported lang: "+a),a=a.replace(cb,db).toLowerCase(),function(b){var c;do if(c=p?b.lang:b.getAttribute("xml:lang")||b.getAttribute("lang"))return c=c.toLowerCase(),c===a||0===c.indexOf(a+"-");while((b=b.parentNode)&&1===b.nodeType);return!1}}),target:function(b){var c=a.location&&a.location.hash;return c&&c.slice(1)===b.id},root:function(a){return a===o},focus:function(a){return a===n.activeElement&&(!n.hasFocus||n.hasFocus())&&!!(a.type||a.href||~a.tabIndex)},enabled:function(a){return a.disabled===!1},disabled:function(a){return a.disabled===!0},checked:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&!!a.checked||"option"===b&&!!a.selected},selected:function(a){return a.parentNode&&a.parentNode.selectedIndex,a.selected===!0},empty:function(a){for(a=a.firstChild;a;a=a.nextSibling)if(a.nodeType<6)return!1;return!0},parent:function(a){return!d.pseudos.empty(a)},header:function(a){return Z.test(a.nodeName)},input:function(a){return Y.test(a.nodeName)},button:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&"button"===a.type||"button"===b},text:function(a){var b;return"input"===a.nodeName.toLowerCase()&&"text"===a.type&&(null==(b=a.getAttribute("type"))||"text"===b.toLowerCase())},first:ob(function(){return[0]}),last:ob(function(a,b){return[b-1]}),eq:ob(function(a,b,c){return[0>c?c+b:c]}),even:ob(function(a,b){for(var c=0;b>c;c+=2)a.push(c);return a}),odd:ob(function(a,b){for(var c=1;b>c;c+=2)a.push(c);return a}),lt:ob(function(a,b,c){for(var d=0>c?c+b:c;--d>=0;)a.push(d);return a}),gt:ob(function(a,b,c){for(var d=0>c?c+b:c;++d<b;)a.push(d);return a})}},d.pseudos.nth=d.pseudos.eq;for(b in{radio:!0,checkbox:!0,file:!0,password:!0,image:!0})d.pseudos[b]=mb(b);for(b in{submit:!0,reset:!0})d.pseudos[b]=nb(b);function qb(){}qb.prototype=d.filters=d.pseudos,d.setFilters=new qb,g=gb.tokenize=function(a,b){var c,e,f,g,h,i,j,k=z[a+" "];if(k)return b?0:k.slice(0);h=a,i=[],j=d.preFilter;while(h){(!c||(e=S.exec(h)))&&(e&&(h=h.slice(e[0].length)||h),i.push(f=[])),c=!1,(e=T.exec(h))&&(c=e.shift(),f.push({value:c,type:e[0].replace(R," ")}),h=h.slice(c.length));for(g in d.filter)!(e=X[g].exec(h))||j[g]&&!(e=j[g](e))||(c=e.shift(),f.push({value:c,type:g,matches:e}),h=h.slice(c.length));if(!c)break}return b?h.length:h?gb.error(a):z(a,i).slice(0)};function rb(a){for(var b=0,c=a.length,d="";c>b;b++)d+=a[b].value;return d}function sb(a,b,c){var d=b.dir,e=c&&"parentNode"===d,f=x++;return b.first?function(b,c,f){while(b=b[d])if(1===b.nodeType||e)return a(b,c,f)}:function(b,c,g){var h,i,j=[w,f];if(g){while(b=b[d])if((1===b.nodeType||e)&&a(b,c,g))return!0}else while(b=b[d])if(1===b.nodeType||e){if(i=b[u]||(b[u]={}),(h=i[d])&&h[0]===w&&h[1]===f)return j[2]=h[2];if(i[d]=j,j[2]=a(b,c,g))return!0}}}function tb(a){return a.length>1?function(b,c,d){var e=a.length;while(e--)if(!a[e](b,c,d))return!1;return!0}:a[0]}function ub(a,b,c){for(var d=0,e=b.length;e>d;d++)gb(a,b[d],c);return c}function vb(a,b,c,d,e){for(var f,g=[],h=0,i=a.length,j=null!=b;i>h;h++)(f=a[h])&&(!c||c(f,d,e))&&(g.push(f),j&&b.push(h));return g}function wb(a,b,c,d,e,f){return d&&!d[u]&&(d=wb(d)),e&&!e[u]&&(e=wb(e,f)),ib(function(f,g,h,i){var j,k,l,m=[],n=[],o=g.length,p=f||ub(b||"*",h.nodeType?[h]:h,[]),q=!a||!f&&b?p:vb(p,m,a,h,i),r=c?e||(f?a:o||d)?[]:g:q;if(c&&c(q,r,h,i),d){j=vb(r,n),d(j,[],h,i),k=j.length;while(k--)(l=j[k])&&(r[n[k]]=!(q[n[k]]=l))}if(f){if(e||a){if(e){j=[],k=r.length;while(k--)(l=r[k])&&j.push(q[k]=l);e(null,r=[],j,i)}k=r.length;while(k--)(l=r[k])&&(j=e?J(f,l):m[k])>-1&&(f[j]=!(g[j]=l))}}else r=vb(r===g?r.splice(o,r.length):r),e?e(null,g,r,i):H.apply(g,r)})}function xb(a){for(var b,c,e,f=a.length,g=d.relative[a[0].type],h=g||d.relative[" "],i=g?1:0,k=sb(function(a){return a===b},h,!0),l=sb(function(a){return J(b,a)>-1},h,!0),m=[function(a,c,d){var e=!g&&(d||c!==j)||((b=c).nodeType?k(a,c,d):l(a,c,d));return b=null,e}];f>i;i++)if(c=d.relative[a[i].type])m=[sb(tb(m),c)];else{if(c=d.filter[a[i].type].apply(null,a[i].matches),c[u]){for(e=++i;f>e;e++)if(d.relative[a[e].type])break;return wb(i>1&&tb(m),i>1&&rb(a.slice(0,i-1).concat({value:" "===a[i-2].type?"*":""})).replace(R,"$1"),c,e>i&&xb(a.slice(i,e)),f>e&&xb(a=a.slice(e)),f>e&&rb(a))}m.push(c)}return tb(m)}function yb(a,b){var c=b.length>0,e=a.length>0,f=function(f,g,h,i,k){var l,m,o,p=0,q="0",r=f&&[],s=[],t=j,u=f||e&&d.find.TAG("*",k),v=w+=null==t?1:Math.random()||.1,x=u.length;for(k&&(j=g!==n&&g);q!==x&&null!=(l=u[q]);q++){if(e&&l){m=0;while(o=a[m++])if(o(l,g,h)){i.push(l);break}k&&(w=v)}c&&((l=!o&&l)&&p--,f&&r.push(l))}if(p+=q,c&&q!==p){m=0;while(o=b[m++])o(r,s,g,h);if(f){if(p>0)while(q--)r[q]||s[q]||(s[q]=F.call(i));s=vb(s)}H.apply(i,s),k&&!f&&s.length>0&&p+b.length>1&&gb.uniqueSort(i)}return k&&(w=v,j=t),r};return c?ib(f):f}return h=gb.compile=function(a,b){var c,d=[],e=[],f=A[a+" "];if(!f){b||(b=g(a)),c=b.length;while(c--)f=xb(b[c]),f[u]?d.push(f):e.push(f);f=A(a,yb(e,d)),f.selector=a}return f},i=gb.select=function(a,b,e,f){var i,j,k,l,m,n="function"==typeof a&&a,o=!f&&g(a=n.selector||a);if(e=e||[],1===o.length){if(j=o[0]=o[0].slice(0),j.length>2&&"ID"===(k=j[0]).type&&c.getById&&9===b.nodeType&&p&&d.relative[j[1].type]){if(b=(d.find.ID(k.matches[0].replace(cb,db),b)||[])[0],!b)return e;n&&(b=b.parentNode),a=a.slice(j.shift().value.length)}i=X.needsContext.test(a)?0:j.length;while(i--){if(k=j[i],d.relative[l=k.type])break;if((m=d.find[l])&&(f=m(k.matches[0].replace(cb,db),ab.test(j[0].type)&&pb(b.parentNode)||b))){if(j.splice(i,1),a=f.length&&rb(j),!a)return H.apply(e,f),e;break}}}return(n||h(a,o))(f,b,!p,e,ab.test(a)&&pb(b.parentNode)||b),e},c.sortStable=u.split("").sort(B).join("")===u,c.detectDuplicates=!!l,m(),c.sortDetached=jb(function(a){return 1&a.compareDocumentPosition(n.createElement("div"))}),jb(function(a){return a.innerHTML="<a href='#'></a>","#"===a.firstChild.getAttribute("href")})||kb("type|href|height|width",function(a,b,c){return c?void 0:a.getAttribute(b,"type"===b.toLowerCase()?1:2)}),c.attributes&&jb(function(a){return a.innerHTML="<input/>",a.firstChild.setAttribute("value",""),""===a.firstChild.getAttribute("value")})||kb("value",function(a,b,c){return c||"input"!==a.nodeName.toLowerCase()?void 0:a.defaultValue}),jb(function(a){return null==a.getAttribute("disabled")})||kb(K,function(a,b,c){var d;return c?void 0:a[b]===!0?b.toLowerCase():(d=a.getAttributeNode(b))&&d.specified?d.value:null}),gb}(a);n.find=t,n.expr=t.selectors,n.expr[":"]=n.expr.pseudos,n.unique=t.uniqueSort,n.text=t.getText,n.isXMLDoc=t.isXML,n.contains=t.contains;var u=n.expr.match.needsContext,v=/^<(\w+)\s*\/?>(?:<\/\1>|)$/,w=/^.[^:#\[\.,]*$/;function x(a,b,c){if(n.isFunction(b))return n.grep(a,function(a,d){return!!b.call(a,d,a)!==c});if(b.nodeType)return n.grep(a,function(a){return a===b!==c});if("string"==typeof b){if(w.test(b))return n.filter(b,a,c);b=n.filter(b,a)}return n.grep(a,function(a){return g.call(b,a)>=0!==c})}n.filter=function(a,b,c){var d=b[0];return c&&(a=":not("+a+")"),1===b.length&&1===d.nodeType?n.find.matchesSelector(d,a)?[d]:[]:n.find.matches(a,n.grep(b,function(a){return 1===a.nodeType}))},n.fn.extend({find:function(a){var b,c=this.length,d=[],e=this;if("string"!=typeof a)return this.pushStack(n(a).filter(function(){for(b=0;c>b;b++)if(n.contains(e[b],this))return!0}));for(b=0;c>b;b++)n.find(a,e[b],d);return d=this.pushStack(c>1?n.unique(d):d),d.selector=this.selector?this.selector+" "+a:a,d},filter:function(a){return this.pushStack(x(this,a||[],!1))},not:function(a){return this.pushStack(x(this,a||[],!0))},is:function(a){return!!x(this,"string"==typeof a&&u.test(a)?n(a):a||[],!1).length}});var y,z=/^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,A=n.fn.init=function(a,b){var c,d;if(!a)return this;if("string"==typeof a){if(c="<"===a[0]&&">"===a[a.length-1]&&a.length>=3?[null,a,null]:z.exec(a),!c||!c[1]&&b)return!b||b.jquery?(b||y).find(a):this.constructor(b).find(a);if(c[1]){if(b=b instanceof n?b[0]:b,n.merge(this,n.parseHTML(c[1],b&&b.nodeType?b.ownerDocument||b:l,!0)),v.test(c[1])&&n.isPlainObject(b))for(c in b)n.isFunction(this[c])?this[c](b[c]):this.attr(c,b[c]);return this}return d=l.getElementById(c[2]),d&&d.parentNode&&(this.length=1,this[0]=d),this.context=l,this.selector=a,this}return a.nodeType?(this.context=this[0]=a,this.length=1,this):n.isFunction(a)?"undefined"!=typeof y.ready?y.ready(a):a(n):(void 0!==a.selector&&(this.selector=a.selector,this.context=a.context),n.makeArray(a,this))};A.prototype=n.fn,y=n(l);var B=/^(?:parents|prev(?:Until|All))/,C={children:!0,contents:!0,next:!0,prev:!0};n.extend({dir:function(a,b,c){var d=[],e=void 0!==c;while((a=a[b])&&9!==a.nodeType)if(1===a.nodeType){if(e&&n(a).is(c))break;d.push(a)}return d},sibling:function(a,b){for(var c=[];a;a=a.nextSibling)1===a.nodeType&&a!==b&&c.push(a);return c}}),n.fn.extend({has:function(a){var b=n(a,this),c=b.length;return this.filter(function(){for(var a=0;c>a;a++)if(n.contains(this,b[a]))return!0})},closest:function(a,b){for(var c,d=0,e=this.length,f=[],g=u.test(a)||"string"!=typeof a?n(a,b||this.context):0;e>d;d++)for(c=this[d];c&&c!==b;c=c.parentNode)if(c.nodeType<11&&(g?g.index(c)>-1:1===c.nodeType&&n.find.matchesSelector(c,a))){f.push(c);break}return this.pushStack(f.length>1?n.unique(f):f)},index:function(a){return a?"string"==typeof a?g.call(n(a),this[0]):g.call(this,a.jquery?a[0]:a):this[0]&&this[0].parentNode?this.first().prevAll().length:-1},add:function(a,b){return this.pushStack(n.unique(n.merge(this.get(),n(a,b))))},addBack:function(a){return this.add(null==a?this.prevObject:this.prevObject.filter(a))}});function D(a,b){while((a=a[b])&&1!==a.nodeType);return a}n.each({parent:function(a){var b=a.parentNode;return b&&11!==b.nodeType?b:null},parents:function(a){return n.dir(a,"parentNode")},parentsUntil:function(a,b,c){return n.dir(a,"parentNode",c)},next:function(a){return D(a,"nextSibling")},prev:function(a){return D(a,"previousSibling")},nextAll:function(a){return n.dir(a,"nextSibling")},prevAll:function(a){return n.dir(a,"previousSibling")},nextUntil:function(a,b,c){return n.dir(a,"nextSibling",c)},prevUntil:function(a,b,c){return n.dir(a,"previousSibling",c)},siblings:function(a){return n.sibling((a.parentNode||{}).firstChild,a)},children:function(a){return n.sibling(a.firstChild)},contents:function(a){return a.contentDocument||n.merge([],a.childNodes)}},function(a,b){n.fn[a]=function(c,d){var e=n.map(this,b,c);return"Until"!==a.slice(-5)&&(d=c),d&&"string"==typeof d&&(e=n.filter(d,e)),this.length>1&&(C[a]||n.unique(e),B.test(a)&&e.reverse()),this.pushStack(e)}});var E=/\S+/g,F={};function G(a){var b=F[a]={};return n.each(a.match(E)||[],function(a,c){b[c]=!0}),b}n.Callbacks=function(a){a="string"==typeof a?F[a]||G(a):n.extend({},a);var b,c,d,e,f,g,h=[],i=!a.once&&[],j=function(l){for(b=a.memory&&l,c=!0,g=e||0,e=0,f=h.length,d=!0;h&&f>g;g++)if(h[g].apply(l[0],l[1])===!1&&a.stopOnFalse){b=!1;break}d=!1,h&&(i?i.length&&j(i.shift()):b?h=[]:k.disable())},k={add:function(){if(h){var c=h.length;!function g(b){n.each(b,function(b,c){var d=n.type(c);"function"===d?a.unique&&k.has(c)||h.push(c):c&&c.length&&"string"!==d&&g(c)})}(arguments),d?f=h.length:b&&(e=c,j(b))}return this},remove:function(){return h&&n.each(arguments,function(a,b){var c;while((c=n.inArray(b,h,c))>-1)h.splice(c,1),d&&(f>=c&&f--,g>=c&&g--)}),this},has:function(a){return a?n.inArray(a,h)>-1:!(!h||!h.length)},empty:function(){return h=[],f=0,this},disable:function(){return h=i=b=void 0,this},disabled:function(){return!h},lock:function(){return i=void 0,b||k.disable(),this},locked:function(){return!i},fireWith:function(a,b){return!h||c&&!i||(b=b||[],b=[a,b.slice?b.slice():b],d?i.push(b):j(b)),this},fire:function(){return k.fireWith(this,arguments),this},fired:function(){return!!c}};return k},n.extend({Deferred:function(a){var b=[["resolve","done",n.Callbacks("once memory"),"resolved"],["reject","fail",n.Callbacks("once memory"),"rejected"],["notify","progress",n.Callbacks("memory")]],c="pending",d={state:function(){return c},always:function(){return e.done(arguments).fail(arguments),this},then:function(){var a=arguments;return n.Deferred(function(c){n.each(b,function(b,f){var g=n.isFunction(a[b])&&a[b];e[f[1]](function(){var a=g&&g.apply(this,arguments);a&&n.isFunction(a.promise)?a.promise().done(c.resolve).fail(c.reject).progress(c.notify):c[f[0]+"With"](this===d?c.promise():this,g?[a]:arguments)})}),a=null}).promise()},promise:function(a){return null!=a?n.extend(a,d):d}},e={};return d.pipe=d.then,n.each(b,function(a,f){var g=f[2],h=f[3];d[f[1]]=g.add,h&&g.add(function(){c=h},b[1^a][2].disable,b[2][2].lock),e[f[0]]=function(){return e[f[0]+"With"](this===e?d:this,arguments),this},e[f[0]+"With"]=g.fireWith}),d.promise(e),a&&a.call(e,e),e},when:function(a){var b=0,c=d.call(arguments),e=c.length,f=1!==e||a&&n.isFunction(a.promise)?e:0,g=1===f?a:n.Deferred(),h=function(a,b,c){return function(e){b[a]=this,c[a]=arguments.length>1?d.call(arguments):e,c===i?g.notifyWith(b,c):--f||g.resolveWith(b,c)}},i,j,k;if(e>1)for(i=new Array(e),j=new Array(e),k=new Array(e);e>b;b++)c[b]&&n.isFunction(c[b].promise)?c[b].promise().done(h(b,k,c)).fail(g.reject).progress(h(b,j,i)):--f;return f||g.resolveWith(k,c),g.promise()}});var H;n.fn.ready=function(a){return n.ready.promise().done(a),this},n.extend({isReady:!1,readyWait:1,holdReady:function(a){a?n.readyWait++:n.ready(!0)},ready:function(a){(a===!0?--n.readyWait:n.isReady)||(n.isReady=!0,a!==!0&&--n.readyWait>0||(H.resolveWith(l,[n]),n.fn.triggerHandler&&(n(l).triggerHandler("ready"),n(l).off("ready"))))}});function I(){l.removeEventListener("DOMContentLoaded",I,!1),a.removeEventListener("load",I,!1),n.ready()}n.ready.promise=function(b){return H||(H=n.Deferred(),"complete"===l.readyState?setTimeout(n.ready):(l.addEventListener("DOMContentLoaded",I,!1),a.addEventListener("load",I,!1))),H.promise(b)},n.ready.promise();var J=n.access=function(a,b,c,d,e,f,g){var h=0,i=a.length,j=null==c;if("object"===n.type(c)){e=!0;for(h in c)n.access(a,b,h,c[h],!0,f,g)}else if(void 0!==d&&(e=!0,n.isFunction(d)||(g=!0),j&&(g?(b.call(a,d),b=null):(j=b,b=function(a,b,c){return j.call(n(a),c)})),b))for(;i>h;h++)b(a[h],c,g?d:d.call(a[h],h,b(a[h],c)));return e?a:j?b.call(a):i?b(a[0],c):f};n.acceptData=function(a){return 1===a.nodeType||9===a.nodeType||!+a.nodeType};function K(){Object.defineProperty(this.cache={},0,{get:function(){return{}}}),this.expando=n.expando+K.uid++}K.uid=1,K.accepts=n.acceptData,K.prototype={key:function(a){if(!K.accepts(a))return 0;var b={},c=a[this.expando];if(!c){c=K.uid++;try{b[this.expando]={value:c},Object.defineProperties(a,b)}catch(d){b[this.expando]=c,n.extend(a,b)}}return this.cache[c]||(this.cache[c]={}),c},set:function(a,b,c){var d,e=this.key(a),f=this.cache[e];if("string"==typeof b)f[b]=c;else if(n.isEmptyObject(f))n.extend(this.cache[e],b);else for(d in b)f[d]=b[d];return f},get:function(a,b){var c=this.cache[this.key(a)];return void 0===b?c:c[b]},access:function(a,b,c){var d;return void 0===b||b&&"string"==typeof b&&void 0===c?(d=this.get(a,b),void 0!==d?d:this.get(a,n.camelCase(b))):(this.set(a,b,c),void 0!==c?c:b)},remove:function(a,b){var c,d,e,f=this.key(a),g=this.cache[f];if(void 0===b)this.cache[f]={};else{n.isArray(b)?d=b.concat(b.map(n.camelCase)):(e=n.camelCase(b),b in g?d=[b,e]:(d=e,d=d in g?[d]:d.match(E)||[])),c=d.length;while(c--)delete g[d[c]]}},hasData:function(a){return!n.isEmptyObject(this.cache[a[this.expando]]||{})},discard:function(a){a[this.expando]&&delete this.cache[a[this.expando]]}};var L=new K,M=new K,N=/^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,O=/([A-Z])/g;function P(a,b,c){var d;if(void 0===c&&1===a.nodeType)if(d="data-"+b.replace(O,"-$1").toLowerCase(),c=a.getAttribute(d),"string"==typeof c){try{c="true"===c?!0:"false"===c?!1:"null"===c?null:+c+""===c?+c:N.test(c)?n.parseJSON(c):c}catch(e){}M.set(a,b,c)}else c=void 0;return c}n.extend({hasData:function(a){return M.hasData(a)||L.hasData(a)},data:function(a,b,c){return M.access(a,b,c)
+},removeData:function(a,b){M.remove(a,b)},_data:function(a,b,c){return L.access(a,b,c)},_removeData:function(a,b){L.remove(a,b)}}),n.fn.extend({data:function(a,b){var c,d,e,f=this[0],g=f&&f.attributes;if(void 0===a){if(this.length&&(e=M.get(f),1===f.nodeType&&!L.get(f,"hasDataAttrs"))){c=g.length;while(c--)g[c]&&(d=g[c].name,0===d.indexOf("data-")&&(d=n.camelCase(d.slice(5)),P(f,d,e[d])));L.set(f,"hasDataAttrs",!0)}return e}return"object"==typeof a?this.each(function(){M.set(this,a)}):J(this,function(b){var c,d=n.camelCase(a);if(f&&void 0===b){if(c=M.get(f,a),void 0!==c)return c;if(c=M.get(f,d),void 0!==c)return c;if(c=P(f,d,void 0),void 0!==c)return c}else this.each(function(){var c=M.get(this,d);M.set(this,d,b),-1!==a.indexOf("-")&&void 0!==c&&M.set(this,a,b)})},null,b,arguments.length>1,null,!0)},removeData:function(a){return this.each(function(){M.remove(this,a)})}}),n.extend({queue:function(a,b,c){var d;return a?(b=(b||"fx")+"queue",d=L.get(a,b),c&&(!d||n.isArray(c)?d=L.access(a,b,n.makeArray(c)):d.push(c)),d||[]):void 0},dequeue:function(a,b){b=b||"fx";var c=n.queue(a,b),d=c.length,e=c.shift(),f=n._queueHooks(a,b),g=function(){n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inprogress"),delete f.stop,e.call(a,g,f)),!d&&f&&f.empty.fire()},_queueHooks:function(a,b){var c=b+"queueHooks";return L.get(a,c)||L.access(a,c,{empty:n.Callbacks("once memory").add(function(){L.remove(a,[b+"queue",c])})})}}),n.fn.extend({queue:function(a,b){var c=2;return"string"!=typeof a&&(b=a,a="fx",c--),arguments.length<c?n.queue(this[0],a):void 0===b?this:this.each(function(){var c=n.queue(this,a,b);n._queueHooks(this,a),"fx"===a&&"inprogress"!==c[0]&&n.dequeue(this,a)})},dequeue:function(a){return this.each(function(){n.dequeue(this,a)})},clearQueue:function(a){return this.queue(a||"fx",[])},promise:function(a,b){var c,d=1,e=n.Deferred(),f=this,g=this.length,h=function(){--d||e.resolveWith(f,[f])};"string"!=typeof a&&(b=a,a=void 0),a=a||"fx";while(g--)c=L.get(f[g],a+"queueHooks"),c&&c.empty&&(d++,c.empty.add(h));return h(),e.promise(b)}});var Q=/[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source,R=["Top","Right","Bottom","Left"],S=function(a,b){return a=b||a,"none"===n.css(a,"display")||!n.contains(a.ownerDocument,a)},T=/^(?:checkbox|radio)$/i;!function(){var a=l.createDocumentFragment(),b=a.appendChild(l.createElement("div")),c=l.createElement("input");c.setAttribute("type","radio"),c.setAttribute("checked","checked"),c.setAttribute("name","t"),b.appendChild(c),k.checkClone=b.cloneNode(!0).cloneNode(!0).lastChild.checked,b.innerHTML="<textarea>x</textarea>",k.noCloneChecked=!!b.cloneNode(!0).lastChild.defaultValue}();var U="undefined";k.focusinBubbles="onfocusin"in a;var V=/^key/,W=/^(?:mouse|pointer|contextmenu)|click/,X=/^(?:focusinfocus|focusoutblur)$/,Y=/^([^.]*)(?:\.(.+)|)$/;function Z(){return!0}function $(){return!1}function _(){try{return l.activeElement}catch(a){}}n.event={global:{},add:function(a,b,c,d,e){var f,g,h,i,j,k,l,m,o,p,q,r=L.get(a);if(r){c.handler&&(f=c,c=f.handler,e=f.selector),c.guid||(c.guid=n.guid++),(i=r.events)||(i=r.events={}),(g=r.handle)||(g=r.handle=function(b){return typeof n!==U&&n.event.triggered!==b.type?n.event.dispatch.apply(a,arguments):void 0}),b=(b||"").match(E)||[""],j=b.length;while(j--)h=Y.exec(b[j])||[],o=q=h[1],p=(h[2]||"").split(".").sort(),o&&(l=n.event.special[o]||{},o=(e?l.delegateType:l.bindType)||o,l=n.event.special[o]||{},k=n.extend({type:o,origType:q,data:d,handler:c,guid:c.guid,selector:e,needsContext:e&&n.expr.match.needsContext.test(e),namespace:p.join(".")},f),(m=i[o])||(m=i[o]=[],m.delegateCount=0,l.setup&&l.setup.call(a,d,p,g)!==!1||a.addEventListener&&a.addEventListener(o,g,!1)),l.add&&(l.add.call(a,k),k.handler.guid||(k.handler.guid=c.guid)),e?m.splice(m.delegateCount++,0,k):m.push(k),n.event.global[o]=!0)}},remove:function(a,b,c,d,e){var f,g,h,i,j,k,l,m,o,p,q,r=L.hasData(a)&&L.get(a);if(r&&(i=r.events)){b=(b||"").match(E)||[""],j=b.length;while(j--)if(h=Y.exec(b[j])||[],o=q=h[1],p=(h[2]||"").split(".").sort(),o){l=n.event.special[o]||{},o=(d?l.delegateType:l.bindType)||o,m=i[o]||[],h=h[2]&&new RegExp("(^|\\.)"+p.join("\\.(?:.*\\.|)")+"(\\.|$)"),g=f=m.length;while(f--)k=m[f],!e&&q!==k.origType||c&&c.guid!==k.guid||h&&!h.test(k.namespace)||d&&d!==k.selector&&("**"!==d||!k.selector)||(m.splice(f,1),k.selector&&m.delegateCount--,l.remove&&l.remove.call(a,k));g&&!m.length&&(l.teardown&&l.teardown.call(a,p,r.handle)!==!1||n.removeEvent(a,o,r.handle),delete i[o])}else for(o in i)n.event.remove(a,o+b[j],c,d,!0);n.isEmptyObject(i)&&(delete r.handle,L.remove(a,"events"))}},trigger:function(b,c,d,e){var f,g,h,i,k,m,o,p=[d||l],q=j.call(b,"type")?b.type:b,r=j.call(b,"namespace")?b.namespace.split("."):[];if(g=h=d=d||l,3!==d.nodeType&&8!==d.nodeType&&!X.test(q+n.event.triggered)&&(q.indexOf(".")>=0&&(r=q.split("."),q=r.shift(),r.sort()),k=q.indexOf(":")<0&&"on"+q,b=b[n.expando]?b:new n.Event(q,"object"==typeof b&&b),b.isTrigger=e?2:3,b.namespace=r.join("."),b.namespace_re=b.namespace?new RegExp("(^|\\.)"+r.join("\\.(?:.*\\.|)")+"(\\.|$)"):null,b.result=void 0,b.target||(b.target=d),c=null==c?[b]:n.makeArray(c,[b]),o=n.event.special[q]||{},e||!o.trigger||o.trigger.apply(d,c)!==!1)){if(!e&&!o.noBubble&&!n.isWindow(d)){for(i=o.delegateType||q,X.test(i+q)||(g=g.parentNode);g;g=g.parentNode)p.push(g),h=g;h===(d.ownerDocument||l)&&p.push(h.defaultView||h.parentWindow||a)}f=0;while((g=p[f++])&&!b.isPropagationStopped())b.type=f>1?i:o.bindType||q,m=(L.get(g,"events")||{})[b.type]&&L.get(g,"handle"),m&&m.apply(g,c),m=k&&g[k],m&&m.apply&&n.acceptData(g)&&(b.result=m.apply(g,c),b.result===!1&&b.preventDefault());return b.type=q,e||b.isDefaultPrevented()||o._default&&o._default.apply(p.pop(),c)!==!1||!n.acceptData(d)||k&&n.isFunction(d[q])&&!n.isWindow(d)&&(h=d[k],h&&(d[k]=null),n.event.triggered=q,d[q](),n.event.triggered=void 0,h&&(d[k]=h)),b.result}},dispatch:function(a){a=n.event.fix(a);var b,c,e,f,g,h=[],i=d.call(arguments),j=(L.get(this,"events")||{})[a.type]||[],k=n.event.special[a.type]||{};if(i[0]=a,a.delegateTarget=this,!k.preDispatch||k.preDispatch.call(this,a)!==!1){h=n.event.handlers.call(this,a,j),b=0;while((f=h[b++])&&!a.isPropagationStopped()){a.currentTarget=f.elem,c=0;while((g=f.handlers[c++])&&!a.isImmediatePropagationStopped())(!a.namespace_re||a.namespace_re.test(g.namespace))&&(a.handleObj=g,a.data=g.data,e=((n.event.special[g.origType]||{}).handle||g.handler).apply(f.elem,i),void 0!==e&&(a.result=e)===!1&&(a.preventDefault(),a.stopPropagation()))}return k.postDispatch&&k.postDispatch.call(this,a),a.result}},handlers:function(a,b){var c,d,e,f,g=[],h=b.delegateCount,i=a.target;if(h&&i.nodeType&&(!a.button||"click"!==a.type))for(;i!==this;i=i.parentNode||this)if(i.disabled!==!0||"click"!==a.type){for(d=[],c=0;h>c;c++)f=b[c],e=f.selector+" ",void 0===d[e]&&(d[e]=f.needsContext?n(e,this).index(i)>=0:n.find(e,this,null,[i]).length),d[e]&&d.push(f);d.length&&g.push({elem:i,handlers:d})}return h<b.length&&g.push({elem:this,handlers:b.slice(h)}),g},props:"altKey bubbles cancelable ctrlKey currentTarget eventPhase metaKey relatedTarget shiftKey target timeStamp view which".split(" "),fixHooks:{},keyHooks:{props:"char charCode key keyCode".split(" "),filter:function(a,b){return null==a.which&&(a.which=null!=b.charCode?b.charCode:b.keyCode),a}},mouseHooks:{props:"button buttons clientX clientY offsetX offsetY pageX pageY screenX screenY toElement".split(" "),filter:function(a,b){var c,d,e,f=b.button;return null==a.pageX&&null!=b.clientX&&(c=a.target.ownerDocument||l,d=c.documentElement,e=c.body,a.pageX=b.clientX+(d&&d.scrollLeft||e&&e.scrollLeft||0)-(d&&d.clientLeft||e&&e.clientLeft||0),a.pageY=b.clientY+(d&&d.scrollTop||e&&e.scrollTop||0)-(d&&d.clientTop||e&&e.clientTop||0)),a.which||void 0===f||(a.which=1&f?1:2&f?3:4&f?2:0),a}},fix:function(a){if(a[n.expando])return a;var b,c,d,e=a.type,f=a,g=this.fixHooks[e];g||(this.fixHooks[e]=g=W.test(e)?this.mouseHooks:V.test(e)?this.keyHooks:{}),d=g.props?this.props.concat(g.props):this.props,a=new n.Event(f),b=d.length;while(b--)c=d[b],a[c]=f[c];return a.target||(a.target=l),3===a.target.nodeType&&(a.target=a.target.parentNode),g.filter?g.filter(a,f):a},special:{load:{noBubble:!0},focus:{trigger:function(){return this!==_()&&this.focus?(this.focus(),!1):void 0},delegateType:"focusin"},blur:{trigger:function(){return this===_()&&this.blur?(this.blur(),!1):void 0},delegateType:"focusout"},click:{trigger:function(){return"checkbox"===this.type&&this.click&&n.nodeName(this,"input")?(this.click(),!1):void 0},_default:function(a){return n.nodeName(a.target,"a")}},beforeunload:{postDispatch:function(a){void 0!==a.result&&a.originalEvent&&(a.originalEvent.returnValue=a.result)}}},simulate:function(a,b,c,d){var e=n.extend(new n.Event,c,{type:a,isSimulated:!0,originalEvent:{}});d?n.event.trigger(e,null,b):n.event.dispatch.call(b,e),e.isDefaultPrevented()&&c.preventDefault()}},n.removeEvent=function(a,b,c){a.removeEventListener&&a.removeEventListener(b,c,!1)},n.Event=function(a,b){return this instanceof n.Event?(a&&a.type?(this.originalEvent=a,this.type=a.type,this.isDefaultPrevented=a.defaultPrevented||void 0===a.defaultPrevented&&a.returnValue===!1?Z:$):this.type=a,b&&n.extend(this,b),this.timeStamp=a&&a.timeStamp||n.now(),void(this[n.expando]=!0)):new n.Event(a,b)},n.Event.prototype={isDefaultPrevented:$,isPropagationStopped:$,isImmediatePropagationStopped:$,preventDefault:function(){var a=this.originalEvent;this.isDefaultPrevented=Z,a&&a.preventDefault&&a.preventDefault()},stopPropagation:function(){var a=this.originalEvent;this.isPropagationStopped=Z,a&&a.stopPropagation&&a.stopPropagation()},stopImmediatePropagation:function(){var a=this.originalEvent;this.isImmediatePropagationStopped=Z,a&&a.stopImmediatePropagation&&a.stopImmediatePropagation(),this.stopPropagation()}},n.each({mouseenter:"mouseover",mouseleave:"mouseout",pointerenter:"pointerover",pointerleave:"pointerout"},function(a,b){n.event.special[a]={delegateType:b,bindType:b,handle:function(a){var c,d=this,e=a.relatedTarget,f=a.handleObj;return(!e||e!==d&&!n.contains(d,e))&&(a.type=f.origType,c=f.handler.apply(this,arguments),a.type=b),c}}}),k.focusinBubbles||n.each({focus:"focusin",blur:"focusout"},function(a,b){var c=function(a){n.event.simulate(b,a.target,n.event.fix(a),!0)};n.event.special[b]={setup:function(){var d=this.ownerDocument||this,e=L.access(d,b);e||d.addEventListener(a,c,!0),L.access(d,b,(e||0)+1)},teardown:function(){var d=this.ownerDocument||this,e=L.access(d,b)-1;e?L.access(d,b,e):(d.removeEventListener(a,c,!0),L.remove(d,b))}}}),n.fn.extend({on:function(a,b,c,d,e){var f,g;if("object"==typeof a){"string"!=typeof b&&(c=c||b,b=void 0);for(g in a)this.on(g,b,c,a[g],e);return this}if(null==c&&null==d?(d=b,c=b=void 0):null==d&&("string"==typeof b?(d=c,c=void 0):(d=c,c=b,b=void 0)),d===!1)d=$;else if(!d)return this;return 1===e&&(f=d,d=function(a){return n().off(a),f.apply(this,arguments)},d.guid=f.guid||(f.guid=n.guid++)),this.each(function(){n.event.add(this,a,d,c,b)})},one:function(a,b,c,d){return this.on(a,b,c,d,1)},off:function(a,b,c){var d,e;if(a&&a.preventDefault&&a.handleObj)return d=a.handleObj,n(a.delegateTarget).off(d.namespace?d.origType+"."+d.namespace:d.origType,d.selector,d.handler),this;if("object"==typeof a){for(e in a)this.off(e,b,a[e]);return this}return(b===!1||"function"==typeof b)&&(c=b,b=void 0),c===!1&&(c=$),this.each(function(){n.event.remove(this,a,c,b)})},trigger:function(a,b){return this.each(function(){n.event.trigger(a,b,this)})},triggerHandler:function(a,b){var c=this[0];return c?n.event.trigger(a,b,c,!0):void 0}});var ab=/<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi,bb=/<([\w:]+)/,cb=/<|&#?\w+;/,db=/<(?:script|style|link)/i,eb=/checked\s*(?:[^=]|=\s*.checked.)/i,fb=/^$|\/(?:java|ecma)script/i,gb=/^true\/(.*)/,hb=/^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g,ib={option:[1,"<select multiple='multiple'>","</select>"],thead:[1,"<table>","</table>"],col:[2,"<table><colgroup>","</colgroup></table>"],tr:[2,"<table><tbody>","</tbody></table>"],td:[3,"<table><tbody><tr>","</tr></tbody></table>"],_default:[0,"",""]};ib.optgroup=ib.option,ib.tbody=ib.tfoot=ib.colgroup=ib.caption=ib.thead,ib.th=ib.td;function jb(a,b){return n.nodeName(a,"table")&&n.nodeName(11!==b.nodeType?b:b.firstChild,"tr")?a.getElementsByTagName("tbody")[0]||a.appendChild(a.ownerDocument.createElement("tbody")):a}function kb(a){return a.type=(null!==a.getAttribute("type"))+"/"+a.type,a}function lb(a){var b=gb.exec(a.type);return b?a.type=b[1]:a.removeAttribute("type"),a}function mb(a,b){for(var c=0,d=a.length;d>c;c++)L.set(a[c],"globalEval",!b||L.get(b[c],"globalEval"))}function nb(a,b){var c,d,e,f,g,h,i,j;if(1===b.nodeType){if(L.hasData(a)&&(f=L.access(a),g=L.set(b,f),j=f.events)){delete g.handle,g.events={};for(e in j)for(c=0,d=j[e].length;d>c;c++)n.event.add(b,e,j[e][c])}M.hasData(a)&&(h=M.access(a),i=n.extend({},h),M.set(b,i))}}function ob(a,b){var c=a.getElementsByTagName?a.getElementsByTagName(b||"*"):a.querySelectorAll?a.querySelectorAll(b||"*"):[];return void 0===b||b&&n.nodeName(a,b)?n.merge([a],c):c}function pb(a,b){var c=b.nodeName.toLowerCase();"input"===c&&T.test(a.type)?b.checked=a.checked:("input"===c||"textarea"===c)&&(b.defaultValue=a.defaultValue)}n.extend({clone:function(a,b,c){var d,e,f,g,h=a.cloneNode(!0),i=n.contains(a.ownerDocument,a);if(!(k.noCloneChecked||1!==a.nodeType&&11!==a.nodeType||n.isXMLDoc(a)))for(g=ob(h),f=ob(a),d=0,e=f.length;e>d;d++)pb(f[d],g[d]);if(b)if(c)for(f=f||ob(a),g=g||ob(h),d=0,e=f.length;e>d;d++)nb(f[d],g[d]);else nb(a,h);return g=ob(h,"script"),g.length>0&&mb(g,!i&&ob(a,"script")),h},buildFragment:function(a,b,c,d){for(var e,f,g,h,i,j,k=b.createDocumentFragment(),l=[],m=0,o=a.length;o>m;m++)if(e=a[m],e||0===e)if("object"===n.type(e))n.merge(l,e.nodeType?[e]:e);else if(cb.test(e)){f=f||k.appendChild(b.createElement("div")),g=(bb.exec(e)||["",""])[1].toLowerCase(),h=ib[g]||ib._default,f.innerHTML=h[1]+e.replace(ab,"<$1></$2>")+h[2],j=h[0];while(j--)f=f.lastChild;n.merge(l,f.childNodes),f=k.firstChild,f.textContent=""}else l.push(b.createTextNode(e));k.textContent="",m=0;while(e=l[m++])if((!d||-1===n.inArray(e,d))&&(i=n.contains(e.ownerDocument,e),f=ob(k.appendChild(e),"script"),i&&mb(f),c)){j=0;while(e=f[j++])fb.test(e.type||"")&&c.push(e)}return k},cleanData:function(a){for(var b,c,d,e,f=n.event.special,g=0;void 0!==(c=a[g]);g++){if(n.acceptData(c)&&(e=c[L.expando],e&&(b=L.cache[e]))){if(b.events)for(d in b.events)f[d]?n.event.remove(c,d):n.removeEvent(c,d,b.handle);L.cache[e]&&delete L.cache[e]}delete M.cache[c[M.expando]]}}}),n.fn.extend({text:function(a){return J(this,function(a){return void 0===a?n.text(this):this.empty().each(function(){(1===this.nodeType||11===this.nodeType||9===this.nodeType)&&(this.textContent=a)})},null,a,arguments.length)},append:function(){return this.domManip(arguments,function(a){if(1===this.nodeType||11===this.nodeType||9===this.nodeType){var b=jb(this,a);b.appendChild(a)}})},prepend:function(){return this.domManip(arguments,function(a){if(1===this.nodeType||11===this.nodeType||9===this.nodeType){var b=jb(this,a);b.insertBefore(a,b.firstChild)}})},before:function(){return this.domManip(arguments,function(a){this.parentNode&&this.parentNode.insertBefore(a,this)})},after:function(){return this.domManip(arguments,function(a){this.parentNode&&this.parentNode.insertBefore(a,this.nextSibling)})},remove:function(a,b){for(var c,d=a?n.filter(a,this):this,e=0;null!=(c=d[e]);e++)b||1!==c.nodeType||n.cleanData(ob(c)),c.parentNode&&(b&&n.contains(c.ownerDocument,c)&&mb(ob(c,"script")),c.parentNode.removeChild(c));return this},empty:function(){for(var a,b=0;null!=(a=this[b]);b++)1===a.nodeType&&(n.cleanData(ob(a,!1)),a.textContent="");return this},clone:function(a,b){return a=null==a?!1:a,b=null==b?a:b,this.map(function(){return n.clone(this,a,b)})},html:function(a){return J(this,function(a){var b=this[0]||{},c=0,d=this.length;if(void 0===a&&1===b.nodeType)return b.innerHTML;if("string"==typeof a&&!db.test(a)&&!ib[(bb.exec(a)||["",""])[1].toLowerCase()]){a=a.replace(ab,"<$1></$2>");try{for(;d>c;c++)b=this[c]||{},1===b.nodeType&&(n.cleanData(ob(b,!1)),b.innerHTML=a);b=0}catch(e){}}b&&this.empty().append(a)},null,a,arguments.length)},replaceWith:function(){var a=arguments[0];return this.domManip(arguments,function(b){a=this.parentNode,n.cleanData(ob(this)),a&&a.replaceChild(b,this)}),a&&(a.length||a.nodeType)?this:this.remove()},detach:function(a){return this.remove(a,!0)},domManip:function(a,b){a=e.apply([],a);var c,d,f,g,h,i,j=0,l=this.length,m=this,o=l-1,p=a[0],q=n.isFunction(p);if(q||l>1&&"string"==typeof p&&!k.checkClone&&eb.test(p))return this.each(function(c){var d=m.eq(c);q&&(a[0]=p.call(this,c,d.html())),d.domManip(a,b)});if(l&&(c=n.buildFragment(a,this[0].ownerDocument,!1,this),d=c.firstChild,1===c.childNodes.length&&(c=d),d)){for(f=n.map(ob(c,"script"),kb),g=f.length;l>j;j++)h=c,j!==o&&(h=n.clone(h,!0,!0),g&&n.merge(f,ob(h,"script"))),b.call(this[j],h,j);if(g)for(i=f[f.length-1].ownerDocument,n.map(f,lb),j=0;g>j;j++)h=f[j],fb.test(h.type||"")&&!L.access(h,"globalEval")&&n.contains(i,h)&&(h.src?n._evalUrl&&n._evalUrl(h.src):n.globalEval(h.textContent.replace(hb,"")))}return this}}),n.each({appendTo:"append",prependTo:"prepend",insertBefore:"before",insertAfter:"after",replaceAll:"replaceWith"},function(a,b){n.fn[a]=function(a){for(var c,d=[],e=n(a),g=e.length-1,h=0;g>=h;h++)c=h===g?this:this.clone(!0),n(e[h])[b](c),f.apply(d,c.get());return this.pushStack(d)}});var qb,rb={};function sb(b,c){var d,e=n(c.createElement(b)).appendTo(c.body),f=a.getDefaultComputedStyle&&(d=a.getDefaultComputedStyle(e[0]))?d.display:n.css(e[0],"display");return e.detach(),f}function tb(a){var b=l,c=rb[a];return c||(c=sb(a,b),"none"!==c&&c||(qb=(qb||n("<iframe frameborder='0' width='0' height='0'/>")).appendTo(b.documentElement),b=qb[0].contentDocument,b.write(),b.close(),c=sb(a,b),qb.detach()),rb[a]=c),c}var ub=/^margin/,vb=new RegExp("^("+Q+")(?!px)[a-z%]+$","i"),wb=function(b){return b.ownerDocument.defaultView.opener?b.ownerDocument.defaultView.getComputedStyle(b,null):a.getComputedStyle(b,null)};function xb(a,b,c){var d,e,f,g,h=a.style;return c=c||wb(a),c&&(g=c.getPropertyValue(b)||c[b]),c&&(""!==g||n.contains(a.ownerDocument,a)||(g=n.style(a,b)),vb.test(g)&&ub.test(b)&&(d=h.width,e=h.minWidth,f=h.maxWidth,h.minWidth=h.maxWidth=h.width=g,g=c.width,h.width=d,h.minWidth=e,h.maxWidth=f)),void 0!==g?g+"":g}function yb(a,b){return{get:function(){return a()?void delete this.get:(this.get=b).apply(this,arguments)}}}!function(){var b,c,d=l.documentElement,e=l.createElement("div"),f=l.createElement("div");if(f.style){f.style.backgroundClip="content-box",f.cloneNode(!0).style.backgroundClip="",k.clearCloneStyle="content-box"===f.style.backgroundClip,e.style.cssText="border:0;width:0;height:0;top:0;left:-9999px;margin-top:1px;position:absolute",e.appendChild(f);function g(){f.style.cssText="-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;display:block;margin-top:1%;top:1%;border:1px;padding:1px;width:4px;position:absolute",f.innerHTML="",d.appendChild(e);var g=a.getComputedStyle(f,null);b="1%"!==g.top,c="4px"===g.width,d.removeChild(e)}a.getComputedStyle&&n.extend(k,{pixelPosition:function(){return g(),b},boxSizingReliable:function(){return null==c&&g(),c},reliableMarginRight:function(){var b,c=f.appendChild(l.createElement("div"));return c.style.cssText=f.style.cssText="-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;display:block;margin:0;border:0;padding:0",c.style.marginRight=c.style.width="0",f.style.width="1px",d.appendChild(e),b=!parseFloat(a.getComputedStyle(c,null).marginRight),d.removeChild(e),f.removeChild(c),b}})}}(),n.swap=function(a,b,c,d){var e,f,g={};for(f in b)g[f]=a.style[f],a.style[f]=b[f];e=c.apply(a,d||[]);for(f in b)a.style[f]=g[f];return e};var zb=/^(none|table(?!-c[ea]).+)/,Ab=new RegExp("^("+Q+")(.*)$","i"),Bb=new RegExp("^([+-])=("+Q+")","i"),Cb={position:"absolute",visibility:"hidden",display:"block"},Db={letterSpacing:"0",fontWeight:"400"},Eb=["Webkit","O","Moz","ms"];function Fb(a,b){if(b in a)return b;var c=b[0].toUpperCase()+b.slice(1),d=b,e=Eb.length;while(e--)if(b=Eb[e]+c,b in a)return b;return d}function Gb(a,b,c){var d=Ab.exec(b);return d?Math.max(0,d[1]-(c||0))+(d[2]||"px"):b}function Hb(a,b,c,d,e){for(var f=c===(d?"border":"content")?4:"width"===b?1:0,g=0;4>f;f+=2)"margin"===c&&(g+=n.css(a,c+R[f],!0,e)),d?("content"===c&&(g-=n.css(a,"padding"+R[f],!0,e)),"margin"!==c&&(g-=n.css(a,"border"+R[f]+"Width",!0,e))):(g+=n.css(a,"padding"+R[f],!0,e),"padding"!==c&&(g+=n.css(a,"border"+R[f]+"Width",!0,e)));return g}function Ib(a,b,c){var d=!0,e="width"===b?a.offsetWidth:a.offsetHeight,f=wb(a),g="border-box"===n.css(a,"boxSizing",!1,f);if(0>=e||null==e){if(e=xb(a,b,f),(0>e||null==e)&&(e=a.style[b]),vb.test(e))return e;d=g&&(k.boxSizingReliable()||e===a.style[b]),e=parseFloat(e)||0}return e+Hb(a,b,c||(g?"border":"content"),d,f)+"px"}function Jb(a,b){for(var c,d,e,f=[],g=0,h=a.length;h>g;g++)d=a[g],d.style&&(f[g]=L.get(d,"olddisplay"),c=d.style.display,b?(f[g]||"none"!==c||(d.style.display=""),""===d.style.display&&S(d)&&(f[g]=L.access(d,"olddisplay",tb(d.nodeName)))):(e=S(d),"none"===c&&e||L.set(d,"olddisplay",e?c:n.css(d,"display"))));for(g=0;h>g;g++)d=a[g],d.style&&(b&&"none"!==d.style.display&&""!==d.style.display||(d.style.display=b?f[g]||"":"none"));return a}n.extend({cssHooks:{opacity:{get:function(a,b){if(b){var c=xb(a,"opacity");return""===c?"1":c}}}},cssNumber:{columnCount:!0,fillOpacity:!0,flexGrow:!0,flexShrink:!0,fontWeight:!0,lineHeight:!0,opacity:!0,order:!0,orphans:!0,widows:!0,zIndex:!0,zoom:!0},cssProps:{"float":"cssFloat"},style:function(a,b,c,d){if(a&&3!==a.nodeType&&8!==a.nodeType&&a.style){var e,f,g,h=n.camelCase(b),i=a.style;return b=n.cssProps[h]||(n.cssProps[h]=Fb(i,h)),g=n.cssHooks[b]||n.cssHooks[h],void 0===c?g&&"get"in g&&void 0!==(e=g.get(a,!1,d))?e:i[b]:(f=typeof c,"string"===f&&(e=Bb.exec(c))&&(c=(e[1]+1)*e[2]+parseFloat(n.css(a,b)),f="number"),null!=c&&c===c&&("number"!==f||n.cssNumber[h]||(c+="px"),k.clearCloneStyle||""!==c||0!==b.indexOf("background")||(i[b]="inherit"),g&&"set"in g&&void 0===(c=g.set(a,c,d))||(i[b]=c)),void 0)}},css:function(a,b,c,d){var e,f,g,h=n.camelCase(b);return b=n.cssProps[h]||(n.cssProps[h]=Fb(a.style,h)),g=n.cssHooks[b]||n.cssHooks[h],g&&"get"in g&&(e=g.get(a,!0,c)),void 0===e&&(e=xb(a,b,d)),"normal"===e&&b in Db&&(e=Db[b]),""===c||c?(f=parseFloat(e),c===!0||n.isNumeric(f)?f||0:e):e}}),n.each(["height","width"],function(a,b){n.cssHooks[b]={get:function(a,c,d){return c?zb.test(n.css(a,"display"))&&0===a.offsetWidth?n.swap(a,Cb,function(){return Ib(a,b,d)}):Ib(a,b,d):void 0},set:function(a,c,d){var e=d&&wb(a);return Gb(a,c,d?Hb(a,b,d,"border-box"===n.css(a,"boxSizing",!1,e),e):0)}}}),n.cssHooks.marginRight=yb(k.reliableMarginRight,function(a,b){return b?n.swap(a,{display:"inline-block"},xb,[a,"marginRight"]):void 0}),n.each({margin:"",padding:"",border:"Width"},function(a,b){n.cssHooks[a+b]={expand:function(c){for(var d=0,e={},f="string"==typeof c?c.split(" "):[c];4>d;d++)e[a+R[d]+b]=f[d]||f[d-2]||f[0];return e}},ub.test(a)||(n.cssHooks[a+b].set=Gb)}),n.fn.extend({css:function(a,b){return J(this,function(a,b,c){var d,e,f={},g=0;if(n.isArray(b)){for(d=wb(a),e=b.length;e>g;g++)f[b[g]]=n.css(a,b[g],!1,d);return f}return void 0!==c?n.style(a,b,c):n.css(a,b)},a,b,arguments.length>1)},show:function(){return Jb(this,!0)},hide:function(){return Jb(this)},toggle:function(a){return"boolean"==typeof a?a?this.show():this.hide():this.each(function(){S(this)?n(this).show():n(this).hide()})}});function Kb(a,b,c,d,e){return new Kb.prototype.init(a,b,c,d,e)}n.Tween=Kb,Kb.prototype={constructor:Kb,init:function(a,b,c,d,e,f){this.elem=a,this.prop=c,this.easing=e||"swing",this.options=b,this.start=this.now=this.cur(),this.end=d,this.unit=f||(n.cssNumber[c]?"":"px")},cur:function(){var a=Kb.propHooks[this.prop];return a&&a.get?a.get(this):Kb.propHooks._default.get(this)},run:function(a){var b,c=Kb.propHooks[this.prop];return this.pos=b=this.options.duration?n.easing[this.easing](a,this.options.duration*a,0,1,this.options.duration):a,this.now=(this.end-this.start)*b+this.start,this.options.step&&this.options.step.call(this.elem,this.now,this),c&&c.set?c.set(this):Kb.propHooks._default.set(this),this}},Kb.prototype.init.prototype=Kb.prototype,Kb.propHooks={_default:{get:function(a){var b;return null==a.elem[a.prop]||a.elem.style&&null!=a.elem.style[a.prop]?(b=n.css(a.elem,a.prop,""),b&&"auto"!==b?b:0):a.elem[a.prop]},set:function(a){n.fx.step[a.prop]?n.fx.step[a.prop](a):a.elem.style&&(null!=a.elem.style[n.cssProps[a.prop]]||n.cssHooks[a.prop])?n.style(a.elem,a.prop,a.now+a.unit):a.elem[a.prop]=a.now}}},Kb.propHooks.scrollTop=Kb.propHooks.scrollLeft={set:function(a){a.elem.nodeType&&a.elem.parentNode&&(a.elem[a.prop]=a.now)}},n.easing={linear:function(a){return a},swing:function(a){return.5-Math.cos(a*Math.PI)/2}},n.fx=Kb.prototype.init,n.fx.step={};var Lb,Mb,Nb=/^(?:toggle|show|hide)$/,Ob=new RegExp("^(?:([+-])=|)("+Q+")([a-z%]*)$","i"),Pb=/queueHooks$/,Qb=[Vb],Rb={"*":[function(a,b){var c=this.createTween(a,b),d=c.cur(),e=Ob.exec(b),f=e&&e[3]||(n.cssNumber[a]?"":"px"),g=(n.cssNumber[a]||"px"!==f&&+d)&&Ob.exec(n.css(c.elem,a)),h=1,i=20;if(g&&g[3]!==f){f=f||g[3],e=e||[],g=+d||1;do h=h||".5",g/=h,n.style(c.elem,a,g+f);while(h!==(h=c.cur()/d)&&1!==h&&--i)}return e&&(g=c.start=+g||+d||0,c.unit=f,c.end=e[1]?g+(e[1]+1)*e[2]:+e[2]),c}]};function Sb(){return setTimeout(function(){Lb=void 0}),Lb=n.now()}function Tb(a,b){var c,d=0,e={height:a};for(b=b?1:0;4>d;d+=2-b)c=R[d],e["margin"+c]=e["padding"+c]=a;return b&&(e.opacity=e.width=a),e}function Ub(a,b,c){for(var d,e=(Rb[b]||[]).concat(Rb["*"]),f=0,g=e.length;g>f;f++)if(d=e[f].call(c,b,a))return d}function Vb(a,b,c){var d,e,f,g,h,i,j,k,l=this,m={},o=a.style,p=a.nodeType&&S(a),q=L.get(a,"fxshow");c.queue||(h=n._queueHooks(a,"fx"),null==h.unqueued&&(h.unqueued=0,i=h.empty.fire,h.empty.fire=function(){h.unqueued||i()}),h.unqueued++,l.always(function(){l.always(function(){h.unqueued--,n.queue(a,"fx").length||h.empty.fire()})})),1===a.nodeType&&("height"in b||"width"in b)&&(c.overflow=[o.overflow,o.overflowX,o.overflowY],j=n.css(a,"display"),k="none"===j?L.get(a,"olddisplay")||tb(a.nodeName):j,"inline"===k&&"none"===n.css(a,"float")&&(o.display="inline-block")),c.overflow&&(o.overflow="hidden",l.always(function(){o.overflow=c.overflow[0],o.overflowX=c.overflow[1],o.overflowY=c.overflow[2]}));for(d in b)if(e=b[d],Nb.exec(e)){if(delete b[d],f=f||"toggle"===e,e===(p?"hide":"show")){if("show"!==e||!q||void 0===q[d])continue;p=!0}m[d]=q&&q[d]||n.style(a,d)}else j=void 0;if(n.isEmptyObject(m))"inline"===("none"===j?tb(a.nodeName):j)&&(o.display=j);else{q?"hidden"in q&&(p=q.hidden):q=L.access(a,"fxshow",{}),f&&(q.hidden=!p),p?n(a).show():l.done(function(){n(a).hide()}),l.done(function(){var b;L.remove(a,"fxshow");for(b in m)n.style(a,b,m[b])});for(d in m)g=Ub(p?q[d]:0,d,l),d in q||(q[d]=g.start,p&&(g.end=g.start,g.start="width"===d||"height"===d?1:0))}}function Wb(a,b){var c,d,e,f,g;for(c in a)if(d=n.camelCase(c),e=b[d],f=a[c],n.isArray(f)&&(e=f[1],f=a[c]=f[0]),c!==d&&(a[d]=f,delete a[c]),g=n.cssHooks[d],g&&"expand"in g){f=g.expand(f),delete a[d];for(c in f)c in a||(a[c]=f[c],b[c]=e)}else b[d]=e}function Xb(a,b,c){var d,e,f=0,g=Qb.length,h=n.Deferred().always(function(){delete i.elem}),i=function(){if(e)return!1;for(var b=Lb||Sb(),c=Math.max(0,j.startTime+j.duration-b),d=c/j.duration||0,f=1-d,g=0,i=j.tweens.length;i>g;g++)j.tweens[g].run(f);return h.notifyWith(a,[j,f,c]),1>f&&i?c:(h.resolveWith(a,[j]),!1)},j=h.promise({elem:a,props:n.extend({},b),opts:n.extend(!0,{specialEasing:{}},c),originalProperties:b,originalOptions:c,startTime:Lb||Sb(),duration:c.duration,tweens:[],createTween:function(b,c){var d=n.Tween(a,j.opts,b,c,j.opts.specialEasing[b]||j.opts.easing);return j.tweens.push(d),d},stop:function(b){var c=0,d=b?j.tweens.length:0;if(e)return this;for(e=!0;d>c;c++)j.tweens[c].run(1);return b?h.resolveWith(a,[j,b]):h.rejectWith(a,[j,b]),this}}),k=j.props;for(Wb(k,j.opts.specialEasing);g>f;f++)if(d=Qb[f].call(j,a,k,j.opts))return d;return n.map(k,Ub,j),n.isFunction(j.opts.start)&&j.opts.start.call(a,j),n.fx.timer(n.extend(i,{elem:a,anim:j,queue:j.opts.queue})),j.progress(j.opts.progress).done(j.opts.done,j.opts.complete).fail(j.opts.fail).always(j.opts.always)}n.Animation=n.extend(Xb,{tweener:function(a,b){n.isFunction(a)?(b=a,a=["*"]):a=a.split(" ");for(var c,d=0,e=a.length;e>d;d++)c=a[d],Rb[c]=Rb[c]||[],Rb[c].unshift(b)},prefilter:function(a,b){b?Qb.unshift(a):Qb.push(a)}}),n.speed=function(a,b,c){var d=a&&"object"==typeof a?n.extend({},a):{complete:c||!c&&b||n.isFunction(a)&&a,duration:a,easing:c&&b||b&&!n.isFunction(b)&&b};return d.duration=n.fx.off?0:"number"==typeof d.duration?d.duration:d.duration in n.fx.speeds?n.fx.speeds[d.duration]:n.fx.speeds._default,(null==d.queue||d.queue===!0)&&(d.queue="fx"),d.old=d.complete,d.complete=function(){n.isFunction(d.old)&&d.old.call(this),d.queue&&n.dequeue(this,d.queue)},d},n.fn.extend({fadeTo:function(a,b,c,d){return this.filter(S).css("opacity",0).show().end().animate({opacity:b},a,c,d)},animate:function(a,b,c,d){var e=n.isEmptyObject(a),f=n.speed(b,c,d),g=function(){var b=Xb(this,n.extend({},a),f);(e||L.get(this,"finish"))&&b.stop(!0)};return g.finish=g,e||f.queue===!1?this.each(g):this.queue(f.queue,g)},stop:function(a,b,c){var d=function(a){var b=a.stop;delete a.stop,b(c)};return"string"!=typeof a&&(c=b,b=a,a=void 0),b&&a!==!1&&this.queue(a||"fx",[]),this.each(function(){var b=!0,e=null!=a&&a+"queueHooks",f=n.timers,g=L.get(this);if(e)g[e]&&g[e].stop&&d(g[e]);else for(e in g)g[e]&&g[e].stop&&Pb.test(e)&&d(g[e]);for(e=f.length;e--;)f[e].elem!==this||null!=a&&f[e].queue!==a||(f[e].anim.stop(c),b=!1,f.splice(e,1));(b||!c)&&n.dequeue(this,a)})},finish:function(a){return a!==!1&&(a=a||"fx"),this.each(function(){var b,c=L.get(this),d=c[a+"queue"],e=c[a+"queueHooks"],f=n.timers,g=d?d.length:0;for(c.finish=!0,n.queue(this,a,[]),e&&e.stop&&e.stop.call(this,!0),b=f.length;b--;)f[b].elem===this&&f[b].queue===a&&(f[b].anim.stop(!0),f.splice(b,1));for(b=0;g>b;b++)d[b]&&d[b].finish&&d[b].finish.call(this);delete c.finish})}}),n.each(["toggle","show","hide"],function(a,b){var c=n.fn[b];n.fn[b]=function(a,d,e){return null==a||"boolean"==typeof a?c.apply(this,arguments):this.animate(Tb(b,!0),a,d,e)}}),n.each({slideDown:Tb("show"),slideUp:Tb("hide"),slideToggle:Tb("toggle"),fadeIn:{opacity:"show"},fadeOut:{opacity:"hide"},fadeToggle:{opacity:"toggle"}},function(a,b){n.fn[a]=function(a,c,d){return this.animate(b,a,c,d)}}),n.timers=[],n.fx.tick=function(){var a,b=0,c=n.timers;for(Lb=n.now();b<c.length;b++)a=c[b],a()||c[b]!==a||c.splice(b--,1);c.length||n.fx.stop(),Lb=void 0},n.fx.timer=function(a){n.timers.push(a),a()?n.fx.start():n.timers.pop()},n.fx.interval=13,n.fx.start=function(){Mb||(Mb=setInterval(n.fx.tick,n.fx.interval))},n.fx.stop=function(){clearInterval(Mb),Mb=null},n.fx.speeds={slow:600,fast:200,_default:400},n.fn.delay=function(a,b){return a=n.fx?n.fx.speeds[a]||a:a,b=b||"fx",this.queue(b,function(b,c){var d=setTimeout(b,a);c.stop=function(){clearTimeout(d)}})},function(){var a=l.createElement("input"),b=l.createElement("select"),c=b.appendChild(l.createElement("option"));a.type="checkbox",k.checkOn=""!==a.value,k.optSelected=c.selected,b.disabled=!0,k.optDisabled=!c.disabled,a=l.createElement("input"),a.value="t",a.type="radio",k.radioValue="t"===a.value}();var Yb,Zb,$b=n.expr.attrHandle;n.fn.extend({attr:function(a,b){return J(this,n.attr,a,b,arguments.length>1)},removeAttr:function(a){return this.each(function(){n.removeAttr(this,a)})}}),n.extend({attr:function(a,b,c){var d,e,f=a.nodeType;if(a&&3!==f&&8!==f&&2!==f)return typeof a.getAttribute===U?n.prop(a,b,c):(1===f&&n.isXMLDoc(a)||(b=b.toLowerCase(),d=n.attrHooks[b]||(n.expr.match.bool.test(b)?Zb:Yb)),void 0===c?d&&"get"in d&&null!==(e=d.get(a,b))?e:(e=n.find.attr(a,b),null==e?void 0:e):null!==c?d&&"set"in d&&void 0!==(e=d.set(a,c,b))?e:(a.setAttribute(b,c+""),c):void n.removeAttr(a,b))
+},removeAttr:function(a,b){var c,d,e=0,f=b&&b.match(E);if(f&&1===a.nodeType)while(c=f[e++])d=n.propFix[c]||c,n.expr.match.bool.test(c)&&(a[d]=!1),a.removeAttribute(c)},attrHooks:{type:{set:function(a,b){if(!k.radioValue&&"radio"===b&&n.nodeName(a,"input")){var c=a.value;return a.setAttribute("type",b),c&&(a.value=c),b}}}}}),Zb={set:function(a,b,c){return b===!1?n.removeAttr(a,c):a.setAttribute(c,c),c}},n.each(n.expr.match.bool.source.match(/\w+/g),function(a,b){var c=$b[b]||n.find.attr;$b[b]=function(a,b,d){var e,f;return d||(f=$b[b],$b[b]=e,e=null!=c(a,b,d)?b.toLowerCase():null,$b[b]=f),e}});var _b=/^(?:input|select|textarea|button)$/i;n.fn.extend({prop:function(a,b){return J(this,n.prop,a,b,arguments.length>1)},removeProp:function(a){return this.each(function(){delete this[n.propFix[a]||a]})}}),n.extend({propFix:{"for":"htmlFor","class":"className"},prop:function(a,b,c){var d,e,f,g=a.nodeType;if(a&&3!==g&&8!==g&&2!==g)return f=1!==g||!n.isXMLDoc(a),f&&(b=n.propFix[b]||b,e=n.propHooks[b]),void 0!==c?e&&"set"in e&&void 0!==(d=e.set(a,c,b))?d:a[b]=c:e&&"get"in e&&null!==(d=e.get(a,b))?d:a[b]},propHooks:{tabIndex:{get:function(a){return a.hasAttribute("tabindex")||_b.test(a.nodeName)||a.href?a.tabIndex:-1}}}}),k.optSelected||(n.propHooks.selected={get:function(a){var b=a.parentNode;return b&&b.parentNode&&b.parentNode.selectedIndex,null}}),n.each(["tabIndex","readOnly","maxLength","cellSpacing","cellPadding","rowSpan","colSpan","useMap","frameBorder","contentEditable"],function(){n.propFix[this.toLowerCase()]=this});var ac=/[\t\r\n\f]/g;n.fn.extend({addClass:function(a){var b,c,d,e,f,g,h="string"==typeof a&&a,i=0,j=this.length;if(n.isFunction(a))return this.each(function(b){n(this).addClass(a.call(this,b,this.className))});if(h)for(b=(a||"").match(E)||[];j>i;i++)if(c=this[i],d=1===c.nodeType&&(c.className?(" "+c.className+" ").replace(ac," "):" ")){f=0;while(e=b[f++])d.indexOf(" "+e+" ")<0&&(d+=e+" ");g=n.trim(d),c.className!==g&&(c.className=g)}return this},removeClass:function(a){var b,c,d,e,f,g,h=0===arguments.length||"string"==typeof a&&a,i=0,j=this.length;if(n.isFunction(a))return this.each(function(b){n(this).removeClass(a.call(this,b,this.className))});if(h)for(b=(a||"").match(E)||[];j>i;i++)if(c=this[i],d=1===c.nodeType&&(c.className?(" "+c.className+" ").replace(ac," "):"")){f=0;while(e=b[f++])while(d.indexOf(" "+e+" ")>=0)d=d.replace(" "+e+" "," ");g=a?n.trim(d):"",c.className!==g&&(c.className=g)}return this},toggleClass:function(a,b){var c=typeof a;return"boolean"==typeof b&&"string"===c?b?this.addClass(a):this.removeClass(a):this.each(n.isFunction(a)?function(c){n(this).toggleClass(a.call(this,c,this.className,b),b)}:function(){if("string"===c){var b,d=0,e=n(this),f=a.match(E)||[];while(b=f[d++])e.hasClass(b)?e.removeClass(b):e.addClass(b)}else(c===U||"boolean"===c)&&(this.className&&L.set(this,"__className__",this.className),this.className=this.className||a===!1?"":L.get(this,"__className__")||"")})},hasClass:function(a){for(var b=" "+a+" ",c=0,d=this.length;d>c;c++)if(1===this[c].nodeType&&(" "+this[c].className+" ").replace(ac," ").indexOf(b)>=0)return!0;return!1}});var bc=/\r/g;n.fn.extend({val:function(a){var b,c,d,e=this[0];{if(arguments.length)return d=n.isFunction(a),this.each(function(c){var e;1===this.nodeType&&(e=d?a.call(this,c,n(this).val()):a,null==e?e="":"number"==typeof e?e+="":n.isArray(e)&&(e=n.map(e,function(a){return null==a?"":a+""})),b=n.valHooks[this.type]||n.valHooks[this.nodeName.toLowerCase()],b&&"set"in b&&void 0!==b.set(this,e,"value")||(this.value=e))});if(e)return b=n.valHooks[e.type]||n.valHooks[e.nodeName.toLowerCase()],b&&"get"in b&&void 0!==(c=b.get(e,"value"))?c:(c=e.value,"string"==typeof c?c.replace(bc,""):null==c?"":c)}}}),n.extend({valHooks:{option:{get:function(a){var b=n.find.attr(a,"value");return null!=b?b:n.trim(n.text(a))}},select:{get:function(a){for(var b,c,d=a.options,e=a.selectedIndex,f="select-one"===a.type||0>e,g=f?null:[],h=f?e+1:d.length,i=0>e?h:f?e:0;h>i;i++)if(c=d[i],!(!c.selected&&i!==e||(k.optDisabled?c.disabled:null!==c.getAttribute("disabled"))||c.parentNode.disabled&&n.nodeName(c.parentNode,"optgroup"))){if(b=n(c).val(),f)return b;g.push(b)}return g},set:function(a,b){var c,d,e=a.options,f=n.makeArray(b),g=e.length;while(g--)d=e[g],(d.selected=n.inArray(d.value,f)>=0)&&(c=!0);return c||(a.selectedIndex=-1),f}}}}),n.each(["radio","checkbox"],function(){n.valHooks[this]={set:function(a,b){return n.isArray(b)?a.checked=n.inArray(n(a).val(),b)>=0:void 0}},k.checkOn||(n.valHooks[this].get=function(a){return null===a.getAttribute("value")?"on":a.value})}),n.each("blur focus focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup error contextmenu".split(" "),function(a,b){n.fn[b]=function(a,c){return arguments.length>0?this.on(b,null,a,c):this.trigger(b)}}),n.fn.extend({hover:function(a,b){return this.mouseenter(a).mouseleave(b||a)},bind:function(a,b,c){return this.on(a,null,b,c)},unbind:function(a,b){return this.off(a,null,b)},delegate:function(a,b,c,d){return this.on(b,a,c,d)},undelegate:function(a,b,c){return 1===arguments.length?this.off(a,"**"):this.off(b,a||"**",c)}});var cc=n.now(),dc=/\?/;n.parseJSON=function(a){return JSON.parse(a+"")},n.parseXML=function(a){var b,c;if(!a||"string"!=typeof a)return null;try{c=new DOMParser,b=c.parseFromString(a,"text/xml")}catch(d){b=void 0}return(!b||b.getElementsByTagName("parsererror").length)&&n.error("Invalid XML: "+a),b};var ec=/#.*$/,fc=/([?&])_=[^&]*/,gc=/^(.*?):[ \t]*([^\r\n]*)$/gm,hc=/^(?:about|app|app-storage|.+-extension|file|res|widget):$/,ic=/^(?:GET|HEAD)$/,jc=/^\/\//,kc=/^([\w.+-]+:)(?:\/\/(?:[^\/?#]*@|)([^\/?#:]*)(?::(\d+)|)|)/,lc={},mc={},nc="*/".concat("*"),oc=a.location.href,pc=kc.exec(oc.toLowerCase())||[];function qc(a){return function(b,c){"string"!=typeof b&&(c=b,b="*");var d,e=0,f=b.toLowerCase().match(E)||[];if(n.isFunction(c))while(d=f[e++])"+"===d[0]?(d=d.slice(1)||"*",(a[d]=a[d]||[]).unshift(c)):(a[d]=a[d]||[]).push(c)}}function rc(a,b,c,d){var e={},f=a===mc;function g(h){var i;return e[h]=!0,n.each(a[h]||[],function(a,h){var j=h(b,c,d);return"string"!=typeof j||f||e[j]?f?!(i=j):void 0:(b.dataTypes.unshift(j),g(j),!1)}),i}return g(b.dataTypes[0])||!e["*"]&&g("*")}function sc(a,b){var c,d,e=n.ajaxSettings.flatOptions||{};for(c in b)void 0!==b[c]&&((e[c]?a:d||(d={}))[c]=b[c]);return d&&n.extend(!0,a,d),a}function tc(a,b,c){var d,e,f,g,h=a.contents,i=a.dataTypes;while("*"===i[0])i.shift(),void 0===d&&(d=a.mimeType||b.getResponseHeader("Content-Type"));if(d)for(e in h)if(h[e]&&h[e].test(d)){i.unshift(e);break}if(i[0]in c)f=i[0];else{for(e in c){if(!i[0]||a.converters[e+" "+i[0]]){f=e;break}g||(g=e)}f=f||g}return f?(f!==i[0]&&i.unshift(f),c[f]):void 0}function uc(a,b,c,d){var e,f,g,h,i,j={},k=a.dataTypes.slice();if(k[1])for(g in a.converters)j[g.toLowerCase()]=a.converters[g];f=k.shift();while(f)if(a.responseFields[f]&&(c[a.responseFields[f]]=b),!i&&d&&a.dataFilter&&(b=a.dataFilter(b,a.dataType)),i=f,f=k.shift())if("*"===f)f=i;else if("*"!==i&&i!==f){if(g=j[i+" "+f]||j["* "+f],!g)for(e in j)if(h=e.split(" "),h[1]===f&&(g=j[i+" "+h[0]]||j["* "+h[0]])){g===!0?g=j[e]:j[e]!==!0&&(f=h[0],k.unshift(h[1]));break}if(g!==!0)if(g&&a["throws"])b=g(b);else try{b=g(b)}catch(l){return{state:"parsererror",error:g?l:"No conversion from "+i+" to "+f}}}return{state:"success",data:b}}n.extend({active:0,lastModified:{},etag:{},ajaxSettings:{url:oc,type:"GET",isLocal:hc.test(pc[1]),global:!0,processData:!0,async:!0,contentType:"application/x-www-form-urlencoded; charset=UTF-8",accepts:{"*":nc,text:"text/plain",html:"text/html",xml:"application/xml, text/xml",json:"application/json, text/javascript"},contents:{xml:/xml/,html:/html/,json:/json/},responseFields:{xml:"responseXML",text:"responseText",json:"responseJSON"},converters:{"* text":String,"text html":!0,"text json":n.parseJSON,"text xml":n.parseXML},flatOptions:{url:!0,context:!0}},ajaxSetup:function(a,b){return b?sc(sc(a,n.ajaxSettings),b):sc(n.ajaxSettings,a)},ajaxPrefilter:qc(lc),ajaxTransport:qc(mc),ajax:function(a,b){"object"==typeof a&&(b=a,a=void 0),b=b||{};var c,d,e,f,g,h,i,j,k=n.ajaxSetup({},b),l=k.context||k,m=k.context&&(l.nodeType||l.jquery)?n(l):n.event,o=n.Deferred(),p=n.Callbacks("once memory"),q=k.statusCode||{},r={},s={},t=0,u="canceled",v={readyState:0,getResponseHeader:function(a){var b;if(2===t){if(!f){f={};while(b=gc.exec(e))f[b[1].toLowerCase()]=b[2]}b=f[a.toLowerCase()]}return null==b?null:b},getAllResponseHeaders:function(){return 2===t?e:null},setRequestHeader:function(a,b){var c=a.toLowerCase();return t||(a=s[c]=s[c]||a,r[a]=b),this},overrideMimeType:function(a){return t||(k.mimeType=a),this},statusCode:function(a){var b;if(a)if(2>t)for(b in a)q[b]=[q[b],a[b]];else v.always(a[v.status]);return this},abort:function(a){var b=a||u;return c&&c.abort(b),x(0,b),this}};if(o.promise(v).complete=p.add,v.success=v.done,v.error=v.fail,k.url=((a||k.url||oc)+"").replace(ec,"").replace(jc,pc[1]+"//"),k.type=b.method||b.type||k.method||k.type,k.dataTypes=n.trim(k.dataType||"*").toLowerCase().match(E)||[""],null==k.crossDomain&&(h=kc.exec(k.url.toLowerCase()),k.crossDomain=!(!h||h[1]===pc[1]&&h[2]===pc[2]&&(h[3]||("http:"===h[1]?"80":"443"))===(pc[3]||("http:"===pc[1]?"80":"443")))),k.data&&k.processData&&"string"!=typeof k.data&&(k.data=n.param(k.data,k.traditional)),rc(lc,k,b,v),2===t)return v;i=n.event&&k.global,i&&0===n.active++&&n.event.trigger("ajaxStart"),k.type=k.type.toUpperCase(),k.hasContent=!ic.test(k.type),d=k.url,k.hasContent||(k.data&&(d=k.url+=(dc.test(d)?"&":"?")+k.data,delete k.data),k.cache===!1&&(k.url=fc.test(d)?d.replace(fc,"$1_="+cc++):d+(dc.test(d)?"&":"?")+"_="+cc++)),k.ifModified&&(n.lastModified[d]&&v.setRequestHeader("If-Modified-Since",n.lastModified[d]),n.etag[d]&&v.setRequestHeader("If-None-Match",n.etag[d])),(k.data&&k.hasContent&&k.contentType!==!1||b.contentType)&&v.setRequestHeader("Content-Type",k.contentType),v.setRequestHeader("Accept",k.dataTypes[0]&&k.accepts[k.dataTypes[0]]?k.accepts[k.dataTypes[0]]+("*"!==k.dataTypes[0]?", "+nc+"; q=0.01":""):k.accepts["*"]);for(j in k.headers)v.setRequestHeader(j,k.headers[j]);if(k.beforeSend&&(k.beforeSend.call(l,v,k)===!1||2===t))return v.abort();u="abort";for(j in{success:1,error:1,complete:1})v[j](k[j]);if(c=rc(mc,k,b,v)){v.readyState=1,i&&m.trigger("ajaxSend",[v,k]),k.async&&k.timeout>0&&(g=setTimeout(function(){v.abort("timeout")},k.timeout));try{t=1,c.send(r,x)}catch(w){if(!(2>t))throw w;x(-1,w)}}else x(-1,"No Transport");function x(a,b,f,h){var j,r,s,u,w,x=b;2!==t&&(t=2,g&&clearTimeout(g),c=void 0,e=h||"",v.readyState=a>0?4:0,j=a>=200&&300>a||304===a,f&&(u=tc(k,v,f)),u=uc(k,u,v,j),j?(k.ifModified&&(w=v.getResponseHeader("Last-Modified"),w&&(n.lastModified[d]=w),w=v.getResponseHeader("etag"),w&&(n.etag[d]=w)),204===a||"HEAD"===k.type?x="nocontent":304===a?x="notmodified":(x=u.state,r=u.data,s=u.error,j=!s)):(s=x,(a||!x)&&(x="error",0>a&&(a=0))),v.status=a,v.statusText=(b||x)+"",j?o.resolveWith(l,[r,x,v]):o.rejectWith(l,[v,x,s]),v.statusCode(q),q=void 0,i&&m.trigger(j?"ajaxSuccess":"ajaxError",[v,k,j?r:s]),p.fireWith(l,[v,x]),i&&(m.trigger("ajaxComplete",[v,k]),--n.active||n.event.trigger("ajaxStop")))}return v},getJSON:function(a,b,c){return n.get(a,b,c,"json")},getScript:function(a,b){return n.get(a,void 0,b,"script")}}),n.each(["get","post"],function(a,b){n[b]=function(a,c,d,e){return n.isFunction(c)&&(e=e||d,d=c,c=void 0),n.ajax({url:a,type:b,dataType:e,data:c,success:d})}}),n._evalUrl=function(a){return n.ajax({url:a,type:"GET",dataType:"script",async:!1,global:!1,"throws":!0})},n.fn.extend({wrapAll:function(a){var b;return n.isFunction(a)?this.each(function(b){n(this).wrapAll(a.call(this,b))}):(this[0]&&(b=n(a,this[0].ownerDocument).eq(0).clone(!0),this[0].parentNode&&b.insertBefore(this[0]),b.map(function(){var a=this;while(a.firstElementChild)a=a.firstElementChild;return a}).append(this)),this)},wrapInner:function(a){return this.each(n.isFunction(a)?function(b){n(this).wrapInner(a.call(this,b))}:function(){var b=n(this),c=b.contents();c.length?c.wrapAll(a):b.append(a)})},wrap:function(a){var b=n.isFunction(a);return this.each(function(c){n(this).wrapAll(b?a.call(this,c):a)})},unwrap:function(){return this.parent().each(function(){n.nodeName(this,"body")||n(this).replaceWith(this.childNodes)}).end()}}),n.expr.filters.hidden=function(a){return a.offsetWidth<=0&&a.offsetHeight<=0},n.expr.filters.visible=function(a){return!n.expr.filters.hidden(a)};var vc=/%20/g,wc=/\[\]$/,xc=/\r?\n/g,yc=/^(?:submit|button|image|reset|file)$/i,zc=/^(?:input|select|textarea|keygen)/i;function Ac(a,b,c,d){var e;if(n.isArray(b))n.each(b,function(b,e){c||wc.test(a)?d(a,e):Ac(a+"["+("object"==typeof e?b:"")+"]",e,c,d)});else if(c||"object"!==n.type(b))d(a,b);else for(e in b)Ac(a+"["+e+"]",b[e],c,d)}n.param=function(a,b){var c,d=[],e=function(a,b){b=n.isFunction(b)?b():null==b?"":b,d[d.length]=encodeURIComponent(a)+"="+encodeURIComponent(b)};if(void 0===b&&(b=n.ajaxSettings&&n.ajaxSettings.traditional),n.isArray(a)||a.jquery&&!n.isPlainObject(a))n.each(a,function(){e(this.name,this.value)});else for(c in a)Ac(c,a[c],b,e);return d.join("&").replace(vc,"+")},n.fn.extend({serialize:function(){return n.param(this.serializeArray())},serializeArray:function(){return this.map(function(){var a=n.prop(this,"elements");return a?n.makeArray(a):this}).filter(function(){var a=this.type;return this.name&&!n(this).is(":disabled")&&zc.test(this.nodeName)&&!yc.test(a)&&(this.checked||!T.test(a))}).map(function(a,b){var c=n(this).val();return null==c?null:n.isArray(c)?n.map(c,function(a){return{name:b.name,value:a.replace(xc,"\r\n")}}):{name:b.name,value:c.replace(xc,"\r\n")}}).get()}}),n.ajaxSettings.xhr=function(){try{return new XMLHttpRequest}catch(a){}};var Bc=0,Cc={},Dc={0:200,1223:204},Ec=n.ajaxSettings.xhr();a.attachEvent&&a.attachEvent("onunload",function(){for(var a in Cc)Cc[a]()}),k.cors=!!Ec&&"withCredentials"in Ec,k.ajax=Ec=!!Ec,n.ajaxTransport(function(a){var b;return k.cors||Ec&&!a.crossDomain?{send:function(c,d){var e,f=a.xhr(),g=++Bc;if(f.open(a.type,a.url,a.async,a.username,a.password),a.xhrFields)for(e in a.xhrFields)f[e]=a.xhrFields[e];a.mimeType&&f.overrideMimeType&&f.overrideMimeType(a.mimeType),a.crossDomain||c["X-Requested-With"]||(c["X-Requested-With"]="XMLHttpRequest");for(e in c)f.setRequestHeader(e,c[e]);b=function(a){return function(){b&&(delete Cc[g],b=f.onload=f.onerror=null,"abort"===a?f.abort():"error"===a?d(f.status,f.statusText):d(Dc[f.status]||f.status,f.statusText,"string"==typeof f.responseText?{text:f.responseText}:void 0,f.getAllResponseHeaders()))}},f.onload=b(),f.onerror=b("error"),b=Cc[g]=b("abort");try{f.send(a.hasContent&&a.data||null)}catch(h){if(b)throw h}},abort:function(){b&&b()}}:void 0}),n.ajaxSetup({accepts:{script:"text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"},contents:{script:/(?:java|ecma)script/},converters:{"text script":function(a){return n.globalEval(a),a}}}),n.ajaxPrefilter("script",function(a){void 0===a.cache&&(a.cache=!1),a.crossDomain&&(a.type="GET")}),n.ajaxTransport("script",function(a){if(a.crossDomain){var b,c;return{send:function(d,e){b=n("<script>").prop({async:!0,charset:a.scriptCharset,src:a.url}).on("load error",c=function(a){b.remove(),c=null,a&&e("error"===a.type?404:200,a.type)}),l.head.appendChild(b[0])},abort:function(){c&&c()}}}});var Fc=[],Gc=/(=)\?(?=&|$)|\?\?/;n.ajaxSetup({jsonp:"callback",jsonpCallback:function(){var a=Fc.pop()||n.expando+"_"+cc++;return this[a]=!0,a}}),n.ajaxPrefilter("json jsonp",function(b,c,d){var e,f,g,h=b.jsonp!==!1&&(Gc.test(b.url)?"url":"string"==typeof b.data&&!(b.contentType||"").indexOf("application/x-www-form-urlencoded")&&Gc.test(b.data)&&"data");return h||"jsonp"===b.dataTypes[0]?(e=b.jsonpCallback=n.isFunction(b.jsonpCallback)?b.jsonpCallback():b.jsonpCallback,h?b[h]=b[h].replace(Gc,"$1"+e):b.jsonp!==!1&&(b.url+=(dc.test(b.url)?"&":"?")+b.jsonp+"="+e),b.converters["script json"]=function(){return g||n.error(e+" was not called"),g[0]},b.dataTypes[0]="json",f=a[e],a[e]=function(){g=arguments},d.always(function(){a[e]=f,b[e]&&(b.jsonpCallback=c.jsonpCallback,Fc.push(e)),g&&n.isFunction(f)&&f(g[0]),g=f=void 0}),"script"):void 0}),n.parseHTML=function(a,b,c){if(!a||"string"!=typeof a)return null;"boolean"==typeof b&&(c=b,b=!1),b=b||l;var d=v.exec(a),e=!c&&[];return d?[b.createElement(d[1])]:(d=n.buildFragment([a],b,e),e&&e.length&&n(e).remove(),n.merge([],d.childNodes))};var Hc=n.fn.load;n.fn.load=function(a,b,c){if("string"!=typeof a&&Hc)return Hc.apply(this,arguments);var d,e,f,g=this,h=a.indexOf(" ");return h>=0&&(d=n.trim(a.slice(h)),a=a.slice(0,h)),n.isFunction(b)?(c=b,b=void 0):b&&"object"==typeof b&&(e="POST"),g.length>0&&n.ajax({url:a,type:e,dataType:"html",data:b}).done(function(a){f=arguments,g.html(d?n("<div>").append(n.parseHTML(a)).find(d):a)}).complete(c&&function(a,b){g.each(c,f||[a.responseText,b,a])}),this},n.each(["ajaxStart","ajaxStop","ajaxComplete","ajaxError","ajaxSuccess","ajaxSend"],function(a,b){n.fn[b]=function(a){return this.on(b,a)}}),n.expr.filters.animated=function(a){return n.grep(n.timers,function(b){return a===b.elem}).length};var Ic=a.document.documentElement;function Jc(a){return n.isWindow(a)?a:9===a.nodeType&&a.defaultView}n.offset={setOffset:function(a,b,c){var d,e,f,g,h,i,j,k=n.css(a,"position"),l=n(a),m={};"static"===k&&(a.style.position="relative"),h=l.offset(),f=n.css(a,"top"),i=n.css(a,"left"),j=("absolute"===k||"fixed"===k)&&(f+i).indexOf("auto")>-1,j?(d=l.position(),g=d.top,e=d.left):(g=parseFloat(f)||0,e=parseFloat(i)||0),n.isFunction(b)&&(b=b.call(a,c,h)),null!=b.top&&(m.top=b.top-h.top+g),null!=b.left&&(m.left=b.left-h.left+e),"using"in b?b.using.call(a,m):l.css(m)}},n.fn.extend({offset:function(a){if(arguments.length)return void 0===a?this:this.each(function(b){n.offset.setOffset(this,a,b)});var b,c,d=this[0],e={top:0,left:0},f=d&&d.ownerDocument;if(f)return b=f.documentElement,n.contains(b,d)?(typeof d.getBoundingClientRect!==U&&(e=d.getBoundingClientRect()),c=Jc(f),{top:e.top+c.pageYOffset-b.clientTop,left:e.left+c.pageXOffset-b.clientLeft}):e},position:function(){if(this[0]){var a,b,c=this[0],d={top:0,left:0};return"fixed"===n.css(c,"position")?b=c.getBoundingClientRect():(a=this.offsetParent(),b=this.offset(),n.nodeName(a[0],"html")||(d=a.offset()),d.top+=n.css(a[0],"borderTopWidth",!0),d.left+=n.css(a[0],"borderLeftWidth",!0)),{top:b.top-d.top-n.css(c,"marginTop",!0),left:b.left-d.left-n.css(c,"marginLeft",!0)}}},offsetParent:function(){return this.map(function(){var a=this.offsetParent||Ic;while(a&&!n.nodeName(a,"html")&&"static"===n.css(a,"position"))a=a.offsetParent;return a||Ic})}}),n.each({scrollLeft:"pageXOffset",scrollTop:"pageYOffset"},function(b,c){var d="pageYOffset"===c;n.fn[b]=function(e){return J(this,function(b,e,f){var g=Jc(b);return void 0===f?g?g[c]:b[e]:void(g?g.scrollTo(d?a.pageXOffset:f,d?f:a.pageYOffset):b[e]=f)},b,e,arguments.length,null)}}),n.each(["top","left"],function(a,b){n.cssHooks[b]=yb(k.pixelPosition,function(a,c){return c?(c=xb(a,b),vb.test(c)?n(a).position()[b]+"px":c):void 0})}),n.each({Height:"height",Width:"width"},function(a,b){n.each({padding:"inner"+a,content:b,"":"outer"+a},function(c,d){n.fn[d]=function(d,e){var f=arguments.length&&(c||"boolean"!=typeof d),g=c||(d===!0||e===!0?"margin":"border");return J(this,function(b,c,d){var e;return n.isWindow(b)?b.document.documentElement["client"+a]:9===b.nodeType?(e=b.documentElement,Math.max(b.body["scroll"+a],e["scroll"+a],b.body["offset"+a],e["offset"+a],e["client"+a])):void 0===d?n.css(b,c,g):n.style(b,c,d,g)},b,f?d:void 0,f,null)}})}),n.fn.size=function(){return this.length},n.fn.andSelf=n.fn.addBack,"function"==typeof define&&define.amd&&define("jquery",[],function(){return n});var Kc=a.jQuery,Lc=a.$;return n.noConflict=function(b){return a.$===n&&(a.$=Lc),b&&a.jQuery===n&&(a.jQuery=Kc),n},typeof b===U&&(a.jQuery=a.$=n),n});
+
+/* Global Variables
+ *******************************************************************
+
+Required jQuery
+
+ *******************************************************************
+*/
+
+
+var $window 	= $(window)
+	,$document 	= $(document)
+	,$html 		= $('html')
+	,$body 		= $('body')
+		,$body_preventMouseover	= false
+		,$body_isTouch			= false
+		//,$body_hover 			= false
+
+
+,_g={
+	// determine if _g.init() run
+		isinit: 	false,
+		
+	// indicate load event
+		isload:		false,
+
+	// indicate if current page/tab is focused, using the lib Visibility
+		isfocus: 	document.hasFocus ? document.hasFocus() : true,
+
+	// indicate if current page/tab is ever focues
+		everfocus:	document.hasFocus ? document.hasFocus() : true,
+
+	posttime:[],
+	time_format:		'm月d日',		// 按PHP date()函数规则
+	time_format2:		'Y年m月d日',		// 按PHP date()函数规则
+	//time_diff_range:	86400000,			// 86400000毫秒，1小时
+	time_diff_range:	4*24*60*60*1000,	// 4天
+	time_diff_range2:	365*24*60*60*1000,	// 365天
+
+	last: {
+		width:		0,
+		height:		0
+	},
+
+	interval:{},
+
+	// 页面初始字号与系数
+	initSize:		20,
+	// 页面基础字号
+	baseSize:		10,
+	// 页面基础尺寸系数（根据基础字号算得）
+	baseMultiper:	1,
+	// 最近一次改动前的基础字号
+	lastBaseSize:	10,
+
+	// 像素缩放值
+	pixelRatio: 	window.devicePixelRatio
+						? window.devicePixelRatio
+						: ( screen.deviceXDPI
+							? screen.deviceXDPI / 72
+							: 1 ),
+
+	// 最大字号倍数
+	maxMultiper: 	Math.max(1,
+						Math.ceil(
+							( screen.availHeight || screen.height || $window.height() ) / 800 * 10
+						) / 10
+					),
+
+	//
+	//readyLock: false
+
+	/*
+	// window.onscroll事件触发后的计时
+	// 该变量为对象，需要使用该计时器时请指定对象变量
+	timeout_scroll:	{
+		// 全局计时延迟
+		throttle:	100
+	},
+
+	// window.resize事件触发后的计时
+	// 大多数浏览器中，windows在触发resize事件时会触发两次，为了使函数仅运行一次，引入该计时
+	// 该变量为对象，需要使用该计时器时请指定对象变量
+	timeout_resize:	{
+		// 全局计时延迟
+		throttle:	200,
+		global:		false
+	},*/
+
+	strings: {},
+
+    // global input Index
+        inputIndex: 0,
+
+    // default locale
+        lang: 'zh_cn',
+
+
+	// placeholder
+	_:	false
+}
+
+// _p.js
+,_p={
+	// objects under _p.el will automatically run _p.el[object].init(), while _p.comp dosen't
+		comp: {},
+		el: {}
+}
+
+// 页面框架
+,_frame = {
+	dom: {},
+	init_all: function(){
+		for( var i in _frame ){
+			if( _frame[i].init ){
+				_frame[i].init()
+			}
+		}
+	}
+}
+
+// 模块
+,_module={}
+
+// 页面
+,_page={}
+
+// 数据
+,_data={}
+
+
+
+
+
+
+
+
+// huScrolled
+if( typeof _huScrolled == 'undefined' )var _huScrolled = {};
+if( !_huScrolled.ver || _huScrolled.ver < 1.2 ){
+	_huScrolled.ver = 1.2;
+	_huScrolled.timeout = false;
+	_huScrolled.throttle = _huScrolled.throttle || 100;
+
+	var bIEnew		= /\(Windows NT [0-9\.]+.+Trident\/[0-9\.]+.+rv.{1}[0-9\.]+\)/.test(navigator.userAgent)
+		,bIE		= (!!(window.attachEvent&&!window.opera)) || bIEnew
+
+	var el = (bIE&&parseFloat(navigator.appVersion.split("MSIE")[1])<9)
+				? $window
+				: $document
+
+	el.on({
+		'scroll.huScrolled':function(){
+			if(_huScrolled.timeout)
+				return true;
+
+			_huScrolled.timeout = setTimeout(function(){
+				$document.trigger('huScrolled');
+
+				_huScrolled.timeout = null;
+			},_huScrolled.throttle)
+		}
+	})
+}
+
+// huResized
+if( typeof _huResized == 'undefined' )var _huResized = {};
+
+if( !_huResized.ver || _huResized.ver < 2.1 ){
+	_huResized.ver = 2.1;
+	_huResized.throttle = _huResized.throttle || 300
+	_huResized.startSize = {}
+	//_huResized.maskShowing = false
+	//_huResized.isChanging = false
+	//_huResized.timeout = null;
+	//_huResized.topmask = null;
+
+	_huResized.viewport = function(){
+		var e 	= window
+			,a 	= 'inner';
+		if ( !( 'innerWidth' in window ) ){
+			a = 'client';
+			e = document.documentElement || document.body;
+		}
+		return {
+			width : e[ a+'Width' ] ,
+			height : e[ a+'Height' ]
+		}
+	}
+
+	$window.on({
+		'resize.huResized':function(e, settings){
+			settings = settings || {}
+
+			var viewport 	= _huResized.viewport()
+				,sWidth 	= _huResized.startSize.width || viewport.width
+				,sHeight 	= _huResized.startSize.height || viewport.height
+				,toshow 	= (Math.abs(viewport.width - sWidth) > 50 || Math.abs(viewport.height - sHeight) > 50)
+
+
+			if(_huResized.timeout){
+				// 存在延迟，取消之
+					clearTimeout( _huResized.timeout )
+					_huResized.timeout = null
+			}
+
+
+			// 没有顶级遮罩，创建
+				if( !_huResized.topmask )
+					_huResized.topmask = $('<div/>').css({
+								'z-index': 	'16777269',
+								'display': 	'none',
+								'position': 'fixed',
+								'width': 	'100%',
+								'height': 	'100%',
+								'top': 		0,
+								'left': 	0,
+								'background-color':'rgba(0,0,0,.5)'
+							}).appendTo( $body )
+
+			 if( toshow && !settings.isInitial && !_huResized.maskShowing ){
+				// 开启顶级遮罩
+					_huResized.topmask.css('display', 'block')
+					_huResized.maskShowing = true
+			}
+
+			if( !toshow && !_huResized.isChanging ){
+				_huResized.startSize = {
+					width: 	viewport.width,
+					height: viewport.height
+				}
+			}
+
+			_huResized.isChanging = true
+
+				_huResized.timeout = setTimeout(function(){
+					$window.trigger('huResized');
+					_huResized.timeout = null;
+					_huResized.maskShowing = false
+					_huResized.isChanging = false
+					// 隐藏顶级遮罩
+						_huResized.topmask.css('display', 'none')
+
+					viewport 	= _huResized.viewport()
+					_huResized.startSize = {
+						width: 	viewport.width,
+						height: viewport.height
+					}
+				}, settings.isInitial ? 0 : _huResized.throttle)
+		}
+	})
+}
+
+// huCss
+if( typeof _huCss == 'undefined' )var _huCss = {};
+if( !_huCss.ver || _huCss.ver < 1.2 ){
+	_huCss.ver = 1.2;
+	_huCss.cssprefix_result = {};
+
+	// CSS Compatibility check
+	_huCss.csscheck = function(prop){
+		if( !_huCss.csscheck_div ){
+			_huCss.csscheck_div = document.documentElement
+			//_huCss.csscheck_div = document.createElement( "div" )
+		}
+		if( prop in _huCss.csscheck_div.style ){
+			return true
+		}else{
+			// parse prop name like "background-image" to "backgroundImage"
+			var strs = prop.split('-')
+				prop = strs[0]
+			for( var i = 1; i < strs.length ;i++){
+				prop += strs[1].substr(0,1).toUpperCase()+strs[1].substr(1)
+			}
+			return ( prop in _huCss.csscheck_div.style )
+		}
+	};
+	_huCss.csscheck_full = function(prop){
+		return _huCss.cssprefix(prop, null, true)
+	};
+
+	// CSS prefix
+	_huCss.cssprefix = function(prop, onlyPrefix, isCheck){
+		if( _huCss.cssprefix_result[prop] ){
+			var b = _huCss.cssprefix_result[prop]
+		}else if( _huCss.cssprefix_result[prop] === false ){
+			if( isCheck )
+				return false;
+			var b = '';
+		}else{
+			var b = ''
+				,pre = [
+					'-webkit-',
+					'-moz-',
+					'-ms-',
+					'-o-'
+				]
+				,check		= _huCss.csscheck(prop)
+
+			if( !check ){
+				b = false;
+				for( var i = 0; i < pre.length; i++ ){
+					if( _huCss.csscheck(pre[i]+prop) ){
+						b = pre[i];
+						break;
+					}
+				}
+			}
+
+			_huCss.cssprefix_result[prop] = b;
+
+			if( isCheck ){
+				b = b===false ? false : true
+				return b;
+			}
+		}
+
+		b = b===false ? '' : b;
+
+		return onlyPrefix ? b : b+prop
+	}
+
+	// check if browser support CSS3 3D transform
+	_huCss.csscheck_3d = function(){
+		return _huCss.csscheck_full('perspective')
+	}
+
+
+	_huCss.createSheet = function(name){
+/*
+			var style = document.createElement('style');
+			document.getElementsByTagName('head')[0].appendChild(style);
+			if (!window.createPopup) { For Safari
+				style.appendChild(document.createTextNode(''));
+			}
+
+			_huCss.sheet = document.styleSheets[document.styleSheets.length - 1];
+
+			sheet = _huCss.sheet
+*/
+		var sheet = document.createElement('style');
+
+		if( name )
+			sheet.title = name
+
+		document.getElementsByTagName('head')[0].appendChild(sheet);
+		if (!window.createPopup) { /* For Safari */
+			sheet.appendChild(document.createTextNode(''));
+		}
+
+		//console.log(sheet)
+		//sheet = document.styleSheets[document.styleSheets.length - 1];
+		if( name ){
+			for( var i = 0; i<document.styleSheets.length; i++ ){
+				if( document.styleSheets[i].title == name ){
+					return document.styleSheets[i]
+				}
+			}
+		}
+
+		return document.styleSheets[document.styleSheets.length - 1];
+
+		//console.log(sheet.title)
+		//return sheet
+	}
+
+	_huCss.getSheet = function(sheet){
+		sheet = sheet || _huCss.sheet;
+		if( !sheet ){
+			_huCss.sheet = _huCss.createSheet('__huCss_sheet');
+
+			sheet = _huCss.sheet
+		}
+		return sheet;
+	}
+
+	_huCss.getCssRulesNum = function(sheet){
+		sheet = _huCss.getSheet(sheet)
+		return sheet.cssRules ? sheet.cssRules.length : 0
+	}
+	// Add CSS Style Sheet
+	_huCss.addRule = function(selector, declaration, index, sheet){
+		var v = ''
+		sheet = _huCss.getSheet(sheet)
+
+		for(var i in declaration){
+			//if( !_huCss.csscheck_full('perspective') && _huCss.csscheck_full('filter') ){
+			if( !_huCss.csscheck_full(i) ){
+				if( i == 'opacity' && _huCss.csscheck_full('filter') ){
+					v += 'filter:alpha(opacity=' + declaration[i]*100 + ')'
+				}
+			}else{
+				v += _huCss.cssprefix(i) + ':' + declaration[i]+';'
+			}
+		}
+
+		if( !index && index !== 0 ){
+			index = sheet.cssRules ? sheet.cssRules.length : _huCss.getCssRulesNum();
+			//index = sheet.cssRules ? sheet.cssRules.length : -1;
+		}
+
+		if(sheet.insertRule){
+			//alert(v)
+			sheet.insertRule(selector+'{'+v+'}', index)
+		}else{
+			selector = selector.split(',')
+			for( i = 0; i<selector.length ; i++){
+				sheet.addRule(selector[i], v, index)
+			}
+		}
+	}
+	_huCss.removeRule = function(index, sheet){
+		if(!index && index!==0 )
+			return false;
+
+		sheet = _huCss.getSheet(sheet)
+		try{
+			sheet.deleteRule(index)
+		}catch(e){
+			sheet.removeRule(index)
+		}
+	}
+}
+
+
+
+
+
+
+
+
+/* Browser Compatibility
+浏览器相关变量
+	userAgent		userAgent值
+	bChrome			是否为Chrome
+	bSafari			是否为Safari
+	bFirefox		是否为Firefox
+	bOpera			是否为Opera
+	bIE				是否为IE
+	bIE6			是否为IE6及以下版本
+	bIE7			是否为IE7及以下版本
+	bIE8			是否为IE8及以下版本
+	bIE9			是否为IE9及以下版本
+	bIE10			是否为IE10及以下版本
+	bWebkit			是否为Webkit核心
+	bGecko			是否为Gecko核心
+	bIphone			是否为iPhone设备
+	bIpad			是否为iPad设备
+	bAndroid		是否为Android设备
+	bMobile			是否为移动设备 (iOS, Android)
+	bCSS3			是否支持CSS3
+	bCSS3A			是否支持CSS3动画及过渡（Animation, Transition）
+	b3D				是否支持CSS3 3D效果
+*/
+var _UA = navigator.userAgent
+	,bChrome	= /Chrome/.test(_UA)
+	,bChromeVer	= bChrome ? /Chrome\/([0-9\.]+)/.exec(navigator.appVersion) : false
+
+	,bSafari	= /Safari/.test(_UA)&&!bChrome
+	,bFirefox	= /Firefox/.test(_UA)
+	,bOpera		= /Opera/.test(_UA)
+
+	,bWebkit	= /WebKit/.test(_UA)
+	,bWebkitVer	= bWebkit ? /(AppleWebKit|Safari)\/([0-9\.]+)/.exec(navigator.appVersion) : false
+
+	,bIEnew		= /\(Windows NT [0-9\.]+.+Trident\/[0-9\.]+.+rv.{1}[0-9\.]+\)/.test(_UA)
+	,bIEnewVer	= bIEnew ? parseFloat(_UA.split('rv:')[1]) : false
+	,bIE		= (!!(window.attachEvent&&!window.opera)) || bIEnew
+	,bIE6		= (bIE&&parseFloat(navigator.appVersion.split("MSIE")[1])<7)
+	,bIE7		= (bIE&&parseFloat(navigator.appVersion.split("MSIE")[1])<8)
+	,bIE8		= (bIE&&parseFloat(navigator.appVersion.split("MSIE")[1])<9)
+	,bIE9		= (bIE&&parseFloat(navigator.appVersion.split("MSIE")[1])<10)
+	,bIE10		= (bIE&&parseFloat(navigator.appVersion.split("MSIE")[1])<11)
+	,bIE11		= (bIEnewVer && bIEnewVer < 12)
+
+	,bGecko		= (!bIE && !bIEnew && !bWebkit && _UA.indexOf("Gecko")!=-1)
+
+	,bIphone	= /iPhone/i.test(_UA)
+	,bIpad		= /iPad/i.test(_UA)
+	,bAndroid	= /Android/i.test(_UA)
+	,bIOS 		= false
+
+	,bIOSver 	= (bIphone || bIpad) ?
+						/CPU.*OS\s*([0-9_]+)/i.exec(navigator.appVersion)
+						: false
+
+	,bMobile	= bIphone || bIpad || bAndroid
+
+	// 是否支持 rem 数值单位
+	,bCSSrem	= !bIE8
+	// 是否支持CSS3
+	,bCSS3		= _huCss.csscheck_full('border-radius')
+	// 是否支持CSS3动画和渐变
+	,bCSS3A		= _huCss.csscheck_full('animation')
+	// 是否支持CSS3 Flex
+	,bCSS3flex	= _huCss.csscheck_full('flex')
+	// 是否支持CSS3 3D
+	,b3D		= _huCss.csscheck_full('perspective')
+	// 是否支持CSS3单位计算（calc）
+	,bCSS3calc	= bCSSrem
+
+	// 是否支持触控
+	,bTouch		= /Touch/.test(_UA)
+
+	// 不支持的浏览器
+	,bUnsupport	= bIE7
+
+	// HTML5支持
+		,bHTML5m3u8 		= bMobile
+
+	// 是否可以访问某些网站
+		,bAccessYoutube 	= false
+		,bAccessTwitter 	= false
+		,bAccessFacebook 	= false
+
+if(bWebkitVer && bWebkitVer.length)
+	bWebkitVer = bWebkitVer[2]
+
+if(bChromeVer && bChromeVer.length)
+	bChromeVer = parseFloat( bChromeVer[1] )
+
+if(bIOSver && bIOSver.length){
+	bIOSver = parseFloat( bIOSver[1].replace(/_/, '.') )
+	bIOS = true
+}
+
+if( (bChromeVer && bChromeVer < 29) || (bIOSver && bIOSver < 7) )
+	bCSS3flex = false
+
+if( bIOSver && bIOSver < 6 ){
+	bCSS3calc = false
+}
+
+/*
+// 针对IE6设置取消背景图缓存
+if(bIE6){
+	try{
+		document.execCommand('BackgroundImageCache',false,true);
+	}catch(e){}
+}
+*/
+
+// HTML标签添加兼容性Class
+if(bGecko){
+	$html.addClass('is-gecko')
+}else if(bIE11 && !bIE10){
+	$html.removeClass('ie9').addClass('ie11' + (bTouch ? ' ie-touch' : '' ))
+}else if(bIE10 && !bIE9){
+	$html.removeClass('ie9').addClass('ie10' + (bTouch ? ' ie-touch' : '' ))
+}else if(bMobile){
+	$html.addClass('mobile')
+	if(bIOS){
+		$html.addClass('ios')
+	}
+	if(bIphone){
+		$html.addClass('iphone')
+	}
+	if(bIpad){
+		$html.addClass('ipad')
+	}
+	if(bAndroid){
+		$html.addClass('android')
+	}
+}else if(bWebkitVer < 537){
+	$html.addClass('oldwebkit')
+}
+
+if( bTouch ){
+	$html.addClass('touch')
+}
+
+
+
+
+/* Global Variables & functions
+ *******************************************************************
+
+ *******************************************************************
+*/
+
+
+
+
+
+
+
+
+
+
+
+// Force viewport fix for Windows Phone
+if (navigator.userAgent.match(/IEMobile\/10\.0/) ) {
+	var msViewportStyle = document.createElement("style");
+	msViewportStyle.appendChild(
+		document.createTextNode(
+			"@-ms-viewport{width:auto!important}"
+		)
+	);
+	document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Global Functions -------------------------------------------------------------------------------------------
+*/
+_g.getUrl=function(){
+	return location.href.split('#')[0]
+};
+
+
+_g.uriSearchArr	= {}
+_g.uriHashArr	= {}
+_g.timeHash=function(){var d=new Date();d=d.getTime();return d};
+_g.uriSearch=function(name){
+	if(!_g.uriSearchArr.length){
+		var _s= location.search ? location.search.split('?')[1] : ''
+		_s = _s.split('&');
+		for(var i=0;i<_s.length;i++){
+			var h=_s[i].split('=')
+			_g.uriSearchArr[h[0]] = h[1] || ''
+		}
+	}
+	return !name
+				? location.search.substr(location.search.indexOf('?')+1)
+				: _g.uriSearchArr[name];
+};
+_g.uriHash=function(name, val, value){
+	var curH = location.hash
+		,_h = curH ? curH.split('#')[1] : '';
+	_h = _h.split('&');
+
+	if( !_g.uriHashInited ){
+		// 缓存数据
+			_g.uriHashArr={};
+			for( var i in _h ){
+				var h = _h[i].split('=')
+				if(h[0] !== '')
+					_g.uriHashArr[h[0]] = h[1] || false
+			}
+			_g.uriHashInited = true
+	}
+	/*
+	_g.uriHashArr={};
+
+
+	for( var i in _h ){
+		var h = _h[i].split('=')
+		_g.uriHashArr[h[0]] = h[1] || false
+	}
+	*/
+	//for( var i=0 ; i<_h.length ; i++){var h=_h[i].split('=');_g.uriHashArr[h[0]]=h[1]||false}
+
+	//val = ( val === null || val === false ) ? false : val
+	//val = val===0 ? 0 : val || false;
+
+	if( typeof( name ) == 'object' ){
+		for( var k in name ){
+			curH = _g.uriHash( k, name[k], curH )
+		}
+		location.hash = curH
+	}else{
+		if( val === false || val === '' ){
+			curH = curH.replace( '&'+name+'='+_g.uriHashArr[name], '' )
+					.replace( name+'='+_g.uriHashArr[name], '' )
+
+			if( curH == '#' || curH == '' || !curH )
+				curH = '_'
+
+			location.hash = curH
+		}else if( typeof( val ) != 'undefined' ){
+			if( val == _g.uriHashArr[name] )
+				return val
+
+			var _val = _g.uriHashArr[name]
+						? curH.replace( name+'='+_g.uriHashArr[name], name+'='+val )
+						: ( curH + ( curH == '' ? '#' : '&' ) + name + '=' + val );
+			_g.uriHashArr[name] = val
+			if( value ){
+				return _val
+			}else{
+				location.hash = _val
+			}
+			return val
+		}
+	}
+	return !name
+			? location.hash.substr(location.hash.indexOf('#')+1)
+			: (_g.uriHashArr[name] || false)
+};
+
+
+_g.randNumber=function(maxn){var d=new Date();d=d.getTime();d=(d*9301+49297)%233280;if(!maxn){maxn=1000};return Math.ceil((d/(233280.0))*maxn)};
+_g.randInt = function(max, min){
+	return Math.floor((Math.random() * parseInt(max)) + (min ? parseInt(min) : 0) )
+};
+
+
+_g.scrollTo=function(tar,y){
+	if(isNaN(tar)){
+		tar=$(tar);
+		var cur = tar.scrollTop();
+	}else{
+		y=tar;
+		tar=$('html,body')
+		var cur = $window.scrollTop();
+	}
+
+	var diff = Math.abs( cur - y )
+		,height = $window.height()
+		,time = diff <= height ? 200 : 200 * ( diff / height ) * ( 2/3 );
+
+	tar.stop().animate({
+		'scrollTop': y
+	},time)
+	//tar.stop().animate({
+	//	'scrollTop':y
+	//},200)
+};
+
+
+_g.get_em = function(num, el, fix){
+	var _num = parseFloat(num);
+	el = el || $body;
+	fix = fix || 0;
+	if(isNaN(_num))
+		return num;
+	return ( _num / parseFloat(el.css('font-size')) + fix ) + 'em';
+}
+
+
+_g.get_fontsize = function(el){
+	el = el || $body;
+	return parseInt(el.css('font-size'));
+}
+
+
+_g.get_basesize = function(){
+	return parseInt( $body.css('font-size') ) / _g.initSize * 10;
+}
+
+_g.get_basesize_true = function(){
+	return parseInt( $body.css('font-size') );
+}
+
+_g.get_basemultiper = function(){
+	return parseFloat( _g.get_basesize() / 10 )
+}
+
+
+
+// 以当前最初字号为基础，计算REM单位
+_g.get_rem = function(unit){
+	/*
+	var _num = parseFloat(num)
+		,el = $('body')
+		,fontsize = parseFloat(el.css('font-size'));
+	if(isNaN(_num))
+		return num;
+	if(bIE8)
+		return _num + 'px';
+	_num = Math.floor( ( _num / fontsize ) * 100) / 100;
+	return _num + 'rem';
+	*/
+	var num = parseFloat(unit)
+
+	if(isNaN(num))
+		return unit;
+
+	if(!bCSSrem)
+		return unit;
+
+	//return (num / _g.baseMultiper / _g.initSize)+'rem'
+	return (num / _g.initSize)+'rem'
+
+}
+
+
+// 以当前基础字号为基础，计算REM单位
+_g.rem = function( unit, demical ){
+	var num = parseFloat(unit)
+
+	if(isNaN(num))
+		return unit;
+
+	if(!bCSSrem)
+		return unit;
+
+	//num = num / _g.baseMultiper / _g.initSize
+	num = num / (_g.get_basesize() / 10) / _g.initSize
+
+	if( demical )
+		return num+'rem'
+
+	//return (Math.ceil(10 * num) / 10)+'rem'
+	return (Math.round(10 * num) / 10)+'rem'
+}
+
+// 计算REM单位为PX单位
+_g.px = function( unit, only_number ){
+	var num = parseFloat(unit)
+
+	if(isNaN(num))
+		return unit;
+
+	if(bIE8)
+		return unit;
+
+	return (num * _g.initSize)+ ( only_number ? 0 : 'px')
+}
+
+
+_g.get_animate_duration = function(duration){
+	return _g.isfocus ? duration : 0;
+};
+
+
+
+
+// 访问锚点
+_g.goto_hash = function(hash, time){
+	hash = hash || location.hash;
+	hash = hash.replace(/^([\#]{0,1})(.+)/, '$2');
+
+	// #!xxooxxooxxoo
+	if( hash[0] == '!' )
+		return false;
+
+	var tar = $('#'+hash);
+	if(!tar.length)
+		return false;
+
+	var tarY = tar.offset().top
+		,curY = $window.scrollTop()
+		,diff = Math.abs( curY - tarY )
+		,height = $window.height();
+
+	time = time == null ? diff <= height ? 200 : 200 * ( diff / height ) * ( 2/3 ) : time;
+
+	if( time ){
+		// 时间不为0
+		$('html,body').stop().animate({
+			'scrollTop': tarY
+		},time,function(){
+			location.hash = hash;
+		})
+	}else{
+		$('html,body').scrollTop( tarY );
+		location.hash = hash;
+	}
+
+	return hash;
+};
+
+
+
+
+
+
+
+
+
+
+
+/* 时间相关操作 -----------------------------------------------------------------------------------------------
+*/
+// 以给定的时间生成Date对象，并返回该对象
+_g.time = function( str ){
+	if(!str)
+		return _g.timeNow();
+
+	var time,
+		patt = [
+				{
+					exp: /(\d{4}).(\d{1,2}).(\d{1,2})[^0-9]*(\d{0,2})[:]{0,1}(\d{0,2})[:]{0,1}(\d{0,2})([\+\-])(\d{2})\:(\d{2})/i, // YYYY/MM/DD hh:mm:ss+00:00
+					p: {
+						year:	1,
+						month:	2,
+						day:	3,
+						hour:	4,
+						min:	5,
+						sec:	6,
+						zoneD: 	7,
+						zoneH: 	8,
+						zoneM: 	9
+					}
+				},
+				{
+					exp: /(\d{1,2}).(\d{1,2}).(\d{4})[^0-9]*(\d{0,2})[:]{0,1}(\d{0,2})[:]{0,1}(\d{0,2})/i, // MM/DD/YYYY hh:mm:ss
+					p: {
+						year:	3,
+						month:	1,
+						day:	2,
+						hour:	4,
+						min:	5,
+						sec:	6
+					}
+				},
+				{
+					exp: /(\d{4}).(\d{1,2}).(\d{1,2})[^0-9]*(\d{0,2})[:]{0,1}(\d{0,2})[:]{0,1}(\d{0,2})/i, // YYYY/MM/DD hh:mm:ss
+					p: {
+						year:	1,
+						month:	2,
+						day:	3,
+						hour:	4,
+						min:	5,
+						sec:	6
+					}
+				}
+			]
+
+	for( var i = 0; i<patt.length ; i++){
+		var exp = patt[i].exp,
+			m = str.match(exp);
+
+		if(!time && m && m.length){
+			var year = parseInt( m[patt[i].p.year] ),
+				month = parseInt( m[patt[i].p.month] ) || 0,
+				day = parseInt( m[patt[i].p.day] ) || 1,
+				hour = parseInt( m[patt[i].p.hour] ) || 0,
+				min = parseInt( m[patt[i].p.min] ) || 0,
+				sec = parseInt( m[patt[i].p.sec] ) || 0
+
+			time = new Date(year,month-1,day,hour,min,sec,0)
+
+			if( patt[i].p.zoneD && m[patt[i].p.zoneD] ){
+				// 存在时区
+				var delta 	= m[patt[i].p.zoneD] == '+' ? -1 : 1
+					,hour 	= parseInt( m[patt[i].p.zoneH] ) || 0
+					,min 	= parseInt( m[patt[i].p.zoneM] ) || 0
+					,zone 	= delta * ( min + hour * 60 + time.getTimezoneOffset() ) * 60 * 1000
+				time = new Date(time.valueOf() + zone)
+			}
+		}
+	}
+
+	return time;
+
+};
+// 计算给定的时间秒毫秒
+_g.timeCal = function(timestamp, hasfix){
+	if(timestamp<60000){
+		// 60秒，1分钟
+		return Math.floor(timestamp/1000)+'秒'+(hasfix?'前':'');
+	}else if(timestamp<3600000){
+		// 60分钟，1小时
+		return Math.floor(timestamp/60000)+'分钟'+(hasfix?'前':'');
+	}else if(timestamp<86400000){
+		// 24小时，1天
+		return Math.floor(timestamp/3600000)+'小时'+(hasfix?'前':'');
+	}else if(timestamp<172800000){
+		// 48小时，昨天
+		return '昨天';
+	}else if(timestamp<2592000000){
+		// 30天，1月
+		return Math.floor(timestamp/86400000)+'天'+(hasfix?'前':'');
+	}else if(timestamp<31536000000){
+		// 365天，1年
+		return Math.floor(timestamp/2592000000)+'月'+(hasfix?'前':'');
+	}else{
+		return Math.floor(timestamp/31536000000)+'年'+(hasfix?'前':'');
+	}
+};
+// 返回当前时间的时间戳
+_g.timeNow = function(){
+	var now=new Date()
+	return now.getTime();
+};
+// 时间差异操作
+_g.timeDiff = function(data){
+	var defaults = {
+		time:	_g.timeNow(),		// 目标时间
+		obj:	null,				// 需操作的元素的jQuery Object
+		format:	_g.time_format,		// 若超过上限则显示的时间格式
+		format2:_g.time_format2,	// 第二阈值的时间格式
+		range:	_g.time_diff_range,	// 第一阈值，毫秒。小于该值时才显示时间差异，否则输出上面格式的时间
+		range2:	_g.time_diff_range2,// 第二阈值，毫秒。大于该值时显示第二时间格式
+		is_init:true
+	}
+	$.extend(defaults, data);
+	if( !defaults.obj )
+		return false;
+	data = defaults;
+	return data
+	/*
+	_g.posttime.push(defaults);
+	_g.timeDiffInterval();*/
+}
+// 每隔1分钟对_g.posttime的元素运行_g.timeCal()
+// 运行该函数可强制刷新一次时钟，多用于新增该类元素后需要立刻获得结果的情形
+_g.timeDiffInterval = function(){
+	function theinterval(){
+		if( !_g.isfocus )
+			return false
+
+		for(var i=0;i<_g.posttime.length;i++){
+			var cur = ( !_g.posttime[i].is_init ) ? _g.timeDiff(_g.posttime[i]) : _g.posttime[i]
+				,now = new Date()
+				//,diff = now.getTime()-cur.time.getTime()
+				,diff = now.getTime()-cur.time
+				,range = cur.range
+				,range2 = cur.range2
+
+			if(diff < range){
+				cur.obj.html(
+					diff < 60000 ? '刚刚' : _g.timeCal(diff, true)
+				)
+			}else{
+				var text = ( diff > range2 ) ? cur.format2 : cur.format,
+					_c = cur.time
+
+				text=text.replace(/Y/g,_c.getFullYear());
+				text=text.replace(/M/g,_c.getMonth()+1<10?'0'+(_c.getMonth()+1):_c.getMonth()+1);
+				text=text.replace(/m/g,_c.getMonth()+1);
+				text=text.replace(/D/g,_c.getDate()<10?'0'+_c.getDate():_c.getDate());
+				text=text.replace(/d/g,_c.getDate());
+
+				cur.obj.html(text)
+			}
+		}
+	}
+	clearInterval(_g.interval.posttime);
+	theinterval();
+	_g.interval.posttime=setInterval(function(){
+		theinterval()
+	},60000);
+};
+
+
+
+
+
+
+
+
+
+/* 浏览器技术支持检查 -----------------------------------------------------------------------------------------
+*/
+var _support = {
+	cache: {},
+	check: function( technology ){
+		technology = technology.toLowerCase()
+						.replace(/[ :-_]/g, '')
+		if( typeof _support.cache[technology] == 'undefined' && _support['_' + technology] ){
+			_support.cache[technology] = _support['_' + technology]()
+		}
+		return _support.cache[technology]
+	}
+}
+function _b( string ){
+	return _support.check( string )
+}
+
+	// CSS3 相关
+		// 基础判断
+			_support._css3 = function(){
+				return _huCss.csscheck_full('border-radius')
+			}
+		// animation
+			_support._css3animation = function(){
+				return _huCss.csscheck_full('animation')
+			}
+		// transition
+			_support._css3transition = function(){
+				return _huCss.csscheck_full('transition')
+			}
+		// flex
+			_support._css3flex = function(){
+				return _huCss.csscheck_full('flex')
+			}
+		// 3D
+			_support._css33d = function(){
+				return _huCss.csscheck_full('perspective')
+			}
+			_support._css3d = _support._css33d
+		// Media Query
+			_support._css3mediaquery = function(){
+				return (window.matchMedia || window.msMatchMedia) ? true : false
+			}
+			_support._mediaquery = _support._css3mediaquery
+		// Image Set
+			_support._css3imageset = function(){
+				var result = null
+					,test = $('<div/>',{
+								'style': 	'background-image:url(' + _g.pathImg + '_g-p.gif' + ')'
+							})
+
+				function _test( prefix ){
+					test.css('background-image', 'image-set(url(' + _g.pathImg + '_g-p.gif' + ') 1x)')
+					var r = test.css('background-image')
+
+					if( r && r != 'none' )
+						return true
+
+					if( prefix ){
+						test.css('background-image', prefix + 'image-set(url(' + _g.pathImg + '_g-p.gif' + ') 1x)')
+						r = test.css('background-image')
+						if( r && r != 'none' )
+							return prefix
+					}
+
+					return false
+				}
+
+				if( bWebkit ){
+					result = _test('-webkit-')
+				}else if( bGecko ){
+					result = _test('-moz-')
+				}else if( bIE ){
+					result = _test('-ms-')
+				}else{
+					result = _test()
+				}
+
+				return result
+			}
+
+	// 常用插件支持
+		// Flash Player
+			_support._pluginflash = function(){
+				var _ = false
+				try{
+					_ = (
+								(
+									typeof navigator.plugins != "undefined"
+									&& typeof navigator.plugins["Shockwave Flash"] == "object"
+								) || (
+									window.ActiveXObject
+									&& (
+										new ActiveXObject("ShockwaveFlash.ShockwaveFlash")
+									) != false
+								)
+							)
+				}catch(e){}
+				return _
+			}
+			_support._flash = _support._pluginflash
+
+	// HTML5支持
+		// 属性: download
+			_support._html5attrdownload = function(){
+				return ("download" in document.createElement("a"))
+			}
+			_support._html5download = _support._html5attrdownload
+			_support._html5attributedownload = _support._html5attrdownload
+		// 视频格式: MP4
+			_support._html5videomp4 = function(){
+				var mp4check = document.createElement('video')
+					,_ = false
+				if(mp4check.canPlayType && mp4check.canPlayType('video/mp4').replace(/no/, ''))
+					_ = true;
+				return _
+			}
+			_support._html5mp4 = _support._html5videomp4
+
+
+
+
+
+
+
+
+
+/* 页面初始化主函数 -------------------------------------------------------------------------------------------
+*/
+_g.init=function(){
+	// 自定义事件
+	// resized：浏览器尺寸改变事件
+		// 为了效率考虑，建立该事件
+		// 所有需要注册在 window.onresize 上的事件均要注册在该事件上
+	// basechange：页面基础字号/基础尺寸系数改变事件
+		// _g.baseSize		页面基础字号
+		// _g.baseMultiper	页面基础尺寸系数
+		// _g.lastBaseSize	最近一次改动前的基础字号
+	// resized_check：检查浏览器尺寸是否改变，如果改变，则触发resized
+	_g.baseSize = _g.get_basesize();
+	_g.baseMultiper = parseFloat( _g.baseSize / 10 );
+	_g.lastBaseSize = _g.get_basesize();
+
+	//_huResized.throttle = 200;
+	//_huResized.throttle = _g.animate_duration_delay;
+
+	_g.isfocus 		= (Visibility.state() == 'visible')
+	_g.everfocus 	= _g.isfocus
+
+	//if( mobileNoHoverState )
+	//	mobileNoHoverState.init()
+
+	Visibility.change(function (e, state) {
+		//console.log( e, state )
+		//Statistics.visibilityChange(state);
+		if( state == 'visible' ){
+			_g.isfocus = true
+			if( !_g.everfocus ){
+				_g.everfocus = true
+				_g.last.width = -1
+				_g.last.height = -1
+				_frame.main.last.width = -1
+				_frame.main.last.height = -1
+			}
+			$window.trigger('resized_check._g');
+			_g.timeDiffInterval()
+		}else{
+			_g.isfocus = false
+		}
+	});
+
+	//_g.parse_urihash.init()
+
+
+
+
+	// 兼容性检查：是否可以访问某些网站
+	/*
+		,bAccessYoutube 	= false
+		,bAccessTwitter 	= false
+		,bAccessFacebook 	= false
+	var accesscheck = $('<iframe/>', {
+		'src': 		'http://www.youtube.com'
+	}).on({
+		'load': function(){
+			bAccessYoutube = true
+			console.log('youtube loaded')
+		},
+		'error': function(){
+			console.log('youtube cannot load')
+		}
+	})
+	*/
+
+
+
+	$window.on({
+		/*
+		'resized.debug': function(event){
+			console.log(event, _g.baseMultiper)
+		},*/
+
+		'orientationchange': function(){
+			// 屏幕角度改变时
+			// 例：iPad 90度旋转
+			$window.trigger('resize')
+		},
+
+		'huResized': function(){
+			$window.trigger('resized_check._g');
+			//$window.trigger('resized');
+			//console.log('resized')
+		},
+		/*
+		'resized._g_last': function(){
+		},*/
+		'resized_check._g': function(){
+			if( !_g.isfocus )
+				return false
+
+			var w = $window
+				,_width = w.width()
+				,_height = w.height()
+			//w.trigger('resized_before')
+
+			/*
+			if( !_g.isEverResized ){
+				w.trigger('resized_before', [{
+						is_widthchange:		true,
+						is_heightchange:	true
+					}])
+					.trigger('resized', [{
+						is_widthchange:		true,
+						is_heightchange:	true
+					}]);
+				_g.isEverResized = true
+			}else{*/
+				_g.baseSize = _g.get_basesize()
+				_g.orientation = _width >= _height ? 'landscape' : 'portrait'
+
+				if( _g.baseSize != _g.lastBaseSize ){
+					_g.baseMultiper = parseFloat( _g.baseSize / 10 );
+					_g.lastBaseSize = _g.baseSize;
+					_g.isBaseChange = true
+					//_g.last.width = -1
+					//_g.last.height = -1
+					w.trigger('basechange');
+				}
+				if( _width != _g.last.width
+					|| _height != _g.last.height
+				){
+					var data = {
+						is_widthchange: 	_width != _g.last.width,
+						is_heightchange: 	_height != _g.last.height
+					}
+
+					w.trigger('resized_before', [data])
+						.trigger('resized', [data]);
+
+					_g.isEverResized = true
+				}
+				_g.last.width = _width
+				_g.last.height = _height
+			//}
+
+		},
+		/*
+		'resize.check_base': function(){
+			//if( _g.timeout_resize_check_base )
+				return false
+			//_g.timeout_resize_check_base = setTimeout(function(){
+				_g.baseSize = _g.get_basesize()
+				if( _g.baseSize != _g.lastBaseSize ){
+					_g.baseMultiper = parseFloat( _g.baseSize / 10 );
+					_g.lastBaseSize = _g.baseSize;
+					$(window).trigger('basechange');
+				}
+				//_g.timeout_resize_check_base = null
+			//}, _huResized.throttle / 20)
+		},*/
+		/*
+		'resize': function(){
+			if(_g.timeout_resize.global)
+				return true;
+
+			_g.timeout_resize.global = setTimeout(function(){
+				$(window).trigger('resized');
+
+				_g.timeout_resize.global = null;
+			},_g.timeout_resize.throttle)
+		},*/
+
+		'basechange': function(){
+			/*
+			$(window).trigger('resized', [{
+					is_basechange:	true
+				}]);
+				*/
+			if( _g.isBaseChange ){
+				_g.isBaseChange = false
+				setTimeout(function(){
+					$window.trigger('resized_before')
+						.trigger('resized', [{
+							is_basechange:	true
+						}]);
+					//console.log( 'basechange' )
+				//},_huResized.throttle)
+				//},_g.animate_duration_delay + 10)
+				},_g.animate_duration_delay)
+			}
+		},
+		/*
+		'huResized.basechange': function(){
+			if( _g.get_basesize() != _g.lastBaseSize ){
+				_g.baseSize = _g.get_basesize();
+				_g.baseMultiper = parseFloat( _g.baseSize / 10 );
+				_g.lastBaseSize = _g.get_basesize();
+				_g.isBaseChange = true
+				$(window).trigger('basechange');
+			}
+		},*/
+		'load.trigger_resized': function(){
+			//_g.last.width = 0
+			//_g.last.height = 0
+			if( !_g.isfocus )
+				return false
+
+			setTimeout(function(){
+				$window.trigger('resized_before', [{
+							//is_basechange:	true,
+							//is_heightchange:true,
+							//is_widthchange:	true
+							is_load:	true
+						}])
+						.trigger('resized', [{
+							//is_basechange:	true,
+							//is_heightchange:true,
+							//is_widthchange:	true
+							is_load:	true
+						}]);
+			}, _g.readyLock ? _g.animate_duration * 4 + 10 : 0)
+			_g.isload = true
+		},
+		/*
+		'focus._g': function(){
+			_g.isfocus = true
+			if( !_g.everfocus ){
+				_g.everfocus = true
+				_g.last.width = -1
+				_g.last.height = -1
+			}
+			$(window).trigger('resized_check._g');
+		},
+		'blur._g': function(){
+			_g.isfocus = false
+		},*/
+		"hashchange._global": function(e){
+			//if( !_g.uriHashInited ){
+				// 缓存数据
+					_g.uriHashArr={};
+					var _h = (location.hash ? location.hash.split('#')[1] : '').split('&');
+					for( var i in _h ){
+						var h = _h[i].split('=')
+						if(h[0] !== '')
+							_g.uriHashArr[h[0]] = h[1] || false
+					}
+					_g.uriHashInited = true
+			//}
+			// 空hash
+				if( !_g.uriHash() || _g.uriHash() == '' ){
+					e.preventDefault()
+					e.stopPropagation()
+				}
+		},
+
+		// 基础字号更改时，重新计算元素offset
+		/*
+		'basechange.huSticky':function(){
+			var scrollTop = $(window).scrollTop();
+			for(var i=0; i<_huSticky.index; i++){
+				var obj = _huSticky.obj[i]
+					,data = obj.data('huSticky');
+				data.outerH	= data.dom.outerHeight(true);
+				if( data.callback.basechange ){
+					data.callback.basechange(data.dom)
+				}else{
+					data.restore();
+					data.pos_ori = obj.offset();
+					data.cal_pos();
+					if( data.callback.resized )
+						data.callback.resized(data.dom);
+				}
+			}
+		}
+		,'mainresized.debug': function(event){
+			console.log(event)
+		}
+
+		,'uploader_complete': function( e, files ){
+			console.log(
+				e,
+				files
+			)
+		}*/
+
+		'unload.focuswindow': function(){
+			$(this).focus()
+		}
+	})
+
+	setTimeout(function(){
+		$window.trigger('hashchange')
+	},_g.animate_duration_delay + 10)
+
+	$document.on({
+		'huScrolled': function(){
+			$window.trigger('scrolled');
+			//console.log('scrolled')
+		}
+		/*,
+		'scrolled.debug': function(event){
+			console.log(event)
+		},
+		'mainscrolled.debug': function(event){
+			console.log(event)
+		}*/
+	})
+
+	$body/*.data('preventMouseover', false)*/.on({
+		'touchstart.preventMouseover': function(){
+			$body.removeClass('hover')
+			$body_preventMouseover = true
+			$body_isTouch = true
+			//$body_hover = false
+			//console.log('touchstart')
+		},
+		//'touchend.preventMouseover': function(){
+			// make touchend trigger after mouseleave
+			//setTimeout(function(){
+			//	$body_preventMouseover = false
+			//	//console.log('touchend')
+			//}, 1)
+		//},
+		'pointerenter': function(e){
+			if( e.originalEvent.pointerType == 'touch' )
+				$body.trigger('touchstart.preventMouseover')
+			else{
+				$body_preventMouseover = false
+				$body_isTouch = false
+			}
+		},
+		//'pointerleave': function(e){
+		//	if( e.originalEvent.pointerType == 'touch' )
+		//		$body.trigger('touchend.preventMouseover')
+		//},
+		//'mouseenter': function(){
+		'mouseover': function(){
+			//console.log('mouseenter')
+			/*
+			if( !$body_preventMouseover ){
+				//if( !$body_hover ){
+					$body.addClass('hover')
+					//$body_hover = true
+				//}
+			}else{
+				$body_preventMouseover = false
+			}*/
+			if( $body_isTouch ){
+				$body_isTouch = false
+				$body_preventMouseover = true
+			}else{
+				$body.addClass('hover')
+				$body_preventMouseover = false
+			}
+		},
+		'mouseleave': function(){
+			$body.removeClass('hover')
+			//$body_hover = false
+		}
+		/*,
+		'scrolled.debug': function(event){
+			console.log(event)
+		},
+		'mainscrolled.debug': function(event){
+			console.log(event)
+		}*/
+	})
+
+	if( top!=self ){
+		try{
+			// 如果页面被套用到其他域名的iframe中，则跳出
+			// 多为ISP劫持
+				if( self.location.host != top.location.host )
+					top.location.replace(self.location.href)
+			// 为body添加样式和主题样式
+				if( self.location.host == top.location.host ){
+					$body.addClass('only-content');
+					_g.changeTheme( top._g.getTheme() )
+				}
+			// 继承font-size
+				$html.css('font-size', top.$html.css('font-size'))
+				$window.on({
+					'resized.iframe_resize': function(){
+						$html.css('font-size', top.$html.css('font-size'))
+					}
+				})
+		}catch(e){
+
+		}
+	}
+
+	// 页面框架处理
+	_hotkey.init()
+	_frame.init_all()
+
+	/*
+	// 模块处理
+	for(var i in _module){
+		if(typeof _module[i].init != 'undefined')
+			_module[i].init()
+	}*/
+
+	/*
+	// 页面处理
+	for(var i in _page){
+		if(typeof _page[i].init != 'undefined')
+			_page[i].init()
+	}*/
+
+	_p.init_document_ready();
+
+	// 为 html 标签添加 ready 样式
+	$html.addClass('ready')
+
+	/*
+	if( _frame.horiz.check() || (_frame.horiz['switch'] && _frame.horiz['switch'].prop('checked') ) )
+		setTimeout(function(){
+			$(window).resize()
+		}, _g.animate_duration_delay)*/
+	$window.trigger('resize', [{ isInitial: true }])
+
+	_g.readyLock = true
+	setTimeout(function(){
+		_g.readyLock = null
+	}, _g.animate_duration * 4 + 10)
+
+	// Clear Badge Message in Windows 8 Start Screen
+		try {
+			window.external.msSiteModeClearBadge();
+		}
+		catch (e) {}
+
+	_g.isinit=true
+	return false;
+};
+
+
+
+function addHandler(object, event, handler) {
+	if (typeof object.addEventListener != 'undefined')
+		object.addEventListener(event, handler, false);
+	else
+		if (typeof object.attachEvent != 'undefined')
+			object.attachEvent('on' + event, handler);
+		else
+			throw 'Incompatible browser';
+}
+
+
+
+/* Cookie -----------------------------------------------------------------------------------------------------
+*/
+jQuery.cookie = function(name, value, options) {
+    if (typeof value != 'undefined') { // name and value given, set cookie
+        options = options || {};
+        if (value === null) {
+            value = '';
+            options.expires = -1;
+        }
+        var expires = '';
+        if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
+            var date;
+            if (typeof options.expires == 'number') {
+                date = new Date();
+                date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
+            } else {
+                date = options.expires;
+            }
+            expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
+        }
+        // CAUTION: Needed to parenthesize options.path and options.domain
+        // in the following expressions, otherwise they evaluate to undefined
+        // in the packed version for some reason...
+        var path = '; path=' + (options.path ? options.path : '/');
+        var domain = options.domain ? '; domain=' + (options.domain) : (/(.*)([\.]*)acgdb\.com/.test(location.host) ? '; domain=.acgdb.com' : '');
+        var secure = options.secure ? '; secure' : '';
+        document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
+    } else { // only name given, get cookie
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 自定义jQuery属性/函数 --------------------------------------------------------------------------------------
+ */
+(function($){
+/* innerWidth & innerHeight -----------------------------------------------------------------------------------
+ * jQuery在1.8版本中为了修正对boxing-size的计算模式，给.width()/.height()函数加了一级验证，会影响到效率
+ * 若想取得元素的CSS宽或高，请使用.innerWidth()或.innerHeight()
+ */
+	$.fn.innerWidth = function(){
+		return parseFloat(this.css('width'));
+	};
+	$.fn.innerHeight = function(){
+		return parseFloat(this.css('height'));
+	};
+
+}(jQuery));
+
+$.fn.serializeObject = function(){
+	var o = {};
+	var a = this.serializeArray();
+	function _mobj( obj, arr, val ){
+		if( !arr.length ){
+			return obj
+		}
+
+		var e = arr[0]
+
+		if( typeof obj[e] == 'undefined' ){
+			obj[e] = arr.length > 1 ? {} : val
+		}else if( arr.length == 1 ){
+			if (!obj[e].push) {
+				obj[e] = [ obj[e] ];
+			}
+				obj[e].push( _val(val) );
+		}
+
+		arr.shift()
+
+		_mobj( obj[e], arr, val )
+	}
+	function _val( value ){
+		if( typeof value == 'number' && value === 0 )
+			return value
+		return value || ''
+	}
+	$.each(a, function() {
+		if( !/^_tabview\-/.test( this.name ) ){
+			this.value = (isNaN(this.value) || !this.value) ? this.value : parseFloat(this.value)
+			if ( this.name.indexOf('.') > -1 ){
+				var sep = this.name.split('.')
+				_mobj( o, sep, this.value )
+			}else{
+				if (o[this.name] || o[this.name] === 0) {
+					if (!o[this.name].push) {
+						o[this.name] = [o[this.name]];
+					}
+						o[this.name].push( _val(this.value) );
+				} else {
+					o[this.name] = _val(this.value);
+				}
+			}
+		}
+	});
+	return o;
+};
+
+/* page elements/components
+*/
+
+
+// indicate whether _p.init_document_ready() run
+	//_p.is_init_document_ready = false
+
+//
+	_p.initDOM = function(tar){
+		//tar = tar || ( _frame.dom.layout || ( $('#layout') || $body ) );
+		tar = tar || ( _frame.dom.layout || ( _frame.dom.layout || $body ) );
+
+		return tar.initAll()
+	}
+	_p.initAll = _p.initDOM
+	$.fn.initDOM = function(){
+		// call init() function in all _p.el
+			for(var i in _p.el){
+				if( _p.el[i].init )
+					_p.el[i].init(this)
+			}
+
+		//_p.hashlinks(tar);
+		return this
+	};
+	$.fn.initAll = $.fn.initDOM
+
+//
+	_p.init_document_ready = function(){
+		if( !_p.is_init_document_ready ){
+			_p.initDOM($body);
+			_p.is_init_document_ready = true
+		}
+	}
+
+
+
+
+
+// 获取页面描述信息
+_p.getSummary=function(){
+	var summary=$('#summary').text()||false;
+	if(!summary&&$('head').find('meta[name=keywords]').length){
+		summary=$('head').find('meta[name=Description]').attr('content');
+		summary=summary.substr(0,summary.indexOf(' - ACGDB'))
+	}
+	return summary;
+},
+
+
+
+
+
+// 获取目标元素/元素组
+_p.get_tar = function(tar, className, is_startwith){
+	//tar = tar || $('body');
+	tar = tar || ( _frame.dom.layout || ( $('#layout') || $body ) );
+
+	if(className.substr(0,1) == '.')
+		className = className.substr(1);
+	if(tar.hasClass(className))
+		return tar;
+	if(is_startwith)
+		return tar.find('[class^="'+className+'"]')
+	return tar.find('.'+className)
+};
+
+
+
+
+
+
+
+
+
+// 处理URI Hash链接
+_p.hashlinks = function(tar){
+	tar = tar || $body;
+	tar.find('a[href^=#]').each(function(){
+		$(this)
+			.off('click.hashlink')
+			.on({
+				'click.hashlink': function(){
+					_g.goto_hash($(this).attr('href'));
+					return false;
+				}
+			})
+	});
+}
+
+
+
+
+
+// 返回目标元素的行数
+_p.get_lines = function(el, el_lineheight){
+	el_lineheight = el_lineheight || el
+	return Math.max(
+				1,
+				Math.floor(
+					Math.min(
+						el.innerHeight(),
+						el.height()
+					) / parseFloat(el_lineheight.css('line-height'))
+				)
+			)
+}
+
+
+
+
+
+// 处理时间元素
+_p.el.time = {
+	init: function(tar){
+		var els = _p.get_tar(tar, '.time');
+		els.each(function(){
+			var o = $(this),
+				str = o.text()
+				time = str ? _g.time(str) : null
+
+			if(time){
+				_g.posttime.push({
+					time:	time,
+					obj:	o
+				})
+			}
+		});
+		_g.timeDiffInterval()
+	}
+}
+// 处理时间元素：秒
+_p.el.timeSec = {
+	init: function(tar){
+		var els = _p.get_tar(tar, '.time-sec');
+		els.each(function(){
+			var o = $(this)
+
+			if( o.data('acgdb-time-sec') )
+				return o.data('acgdb-time-sec')
+
+			var str = o.text()
+				,time = /\s*([0-9]+)/.exec( str )
+			if( time && time.length > 1 ){
+				time = parseInt(time[1])
+				var m 	= Math.floor( time / 60 )
+					,s 	= time % 60
+					,t 	= (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s + "'"
+				o.text(t)
+			}
+			o.data('acgdb-time-sec', time)
+		});
+	}
+}
+
+
+
+
+
+
+
+// 移除空的textNode
+_p.removeEmptyTextNode = function( el ){
+	el = $(el)
+	
+	if( !el.length )
+		return false
+	
+	el.contents()
+		.filter(function() {
+			return this.nodeType === 3; //Node.TEXT_NODE
+		}).remove()
+}
+
+;(function (undefined) {
+    "use strict";
+
+    var defined = function (variable) {
+        return (variable != undefined);
+    };
+
+    // Visibility.js allow you to know, that your web page is in the background
+    // tab and thus not visible to the user. This library is wrap under
+    // Page Visibility API. It fix problems with different vendor prefixes and
+    // add high-level useful functions.
+    var self = window.Visibility = {
+
+        // Call callback only when page become to visible for user or
+        // call it now if page is visible now or Page Visibility API
+        // doesn’t supported.
+        //
+        // Return false if API isn’t supported, true if page is already visible
+        // or listener ID (you can use it in `unbind` method) if page isn’t
+        // visible now.
+        //
+        //   Visibility.onVisible(function () {
+        //       startIntroAnimation();
+        //   });
+        onVisible: function (callback) {
+            if ( !self.isSupported() || !self.hidden() ) {
+                callback();
+                return self.isSupported();
+            }
+
+            var listener = self.change(function (e, state) {
+                if ( !self.hidden() ) {
+                    self.unbind(listener);
+                    callback();
+                }
+            });
+            return listener;
+        },
+
+        // Call callback when visibility will be changed. First argument for
+        // callback will be original event object, second will be visibility
+        // state name.
+        //
+        // Return listener ID to unbind listener by `unbind` method.
+        //
+        // If Page Visibility API doesn’t supported method will be return false
+        // and callback never will be called.
+        //
+        //   Visibility.change(function(e, state) {
+        //       Statistics.visibilityChange(state);
+        //   });
+        //
+        // It is just proxy to `visibilitychange` event, but use vendor prefix.
+        change: function (callback) {
+            if ( !self.isSupported() ) {
+                return false;
+            }
+            self._lastCallback += 1;
+            var number = self._lastCallback;
+            self._callbacks[number] = callback;
+            self._setListener();
+            return number;
+        },
+
+        // Remove `change` listener by it ID.
+        //
+        //   var id = Visibility.change(function(e, state) {
+        //       firstChangeCallback();
+        //       Visibility.unbind(id);
+        //   });
+        unbind: function (id) {
+            delete self._callbacks[id];
+        },
+
+        // Call `callback` in any state, expect “prerender”. If current state
+        // is “prerender” it will wait until state will be changed.
+        // If Page Visibility API doesn’t supported, it will call `callback`
+        // immediately.
+        //
+        // Return false if API isn’t supported, true if page is already after
+        // prerendering or listener ID (you can use it in `unbind` method)
+        // if page is prerended now.
+        //
+        //   Visibility.afterPrerendering(function () {
+        //       Statistics.countVisitor();
+        //   });
+        afterPrerendering: function (callback) {
+            if ( !self.isSupported() || 'prerender' != self.state() ) {
+                callback();
+                return self.isSupported();
+            }
+
+            var listener = self.change(function (e, state) {
+                if ( 'prerender' != state ) {
+                    self.unbind(listener);
+                    callback();
+                }
+            });
+            return listener;
+        },
+
+        // Return true if page now isn’t visible to user.
+        //
+        //   if ( !Visibility.hidden() ) {
+        //       VideoPlayer.play();
+        //   }
+        //
+        // It is just proxy to `document.hidden`, but use vendor prefix.
+        hidden: function () {
+            return self._prop('hidden', false);
+        },
+
+        // Return visibility state: 'visible', 'hidden' or 'prerender'.
+        //
+        //   if ( 'prerender' == Visibility.state() ) {
+        //       Statistics.pageIsPrerendering();
+        //   }
+        //
+        // Don’t use `Visibility.state()` to detect, is page visible, because
+        // visibility states can extend in next API versions.
+        // Use more simpler and general `Visibility.hidden()` for this cases.
+        //
+        // It is just proxy to `document.visibilityState`, but use
+        // vendor prefix.
+        state: function () {
+            return self._prop('visibilityState', 'visible');
+        },
+
+        // Return true if browser support Page Visibility API.
+        //
+        //   if ( Visibility.isSupported() ) {
+        //       Statistics.startTrackingVisibility();
+        //       Visibility.change(function(e, state)) {
+        //           Statistics.trackVisibility(state);
+        //       });
+        //   }
+        isSupported: function () {
+            return defined(self._prefix());
+        },
+
+        // Link to document object to change it in tests.
+        _doc: window.document,
+
+        // Vendor prefix cached by `_prefix` function.
+        _chechedPrefix: null,
+
+        // Is listener for `visibilitychange` event is already added
+        // by `_setListener` method.
+        _listening: false,
+
+        // Last timer number.
+        _lastCallback: -1,
+
+        // Callbacks from `change` method, that wait visibility changes.
+        _callbacks: { },
+
+        // Variable to check hidden-visible state changes.
+        _hiddenBefore: false,
+
+        // Initialize variables on page loading.
+        _init: function () {
+            self._hiddenBefore = self.hidden();
+        },
+
+        // Detect vendor prefix and return it.
+        _prefix: function () {
+            if ( null !== self._chechedPrefix ) {
+                return self._chechedPrefix;
+            }
+            if ( defined(self._doc.visibilityState) ) {
+                return self._chechedPrefix = '';
+            }
+            if ( defined(self._doc.webkitVisibilityState) ) {
+                return self._chechedPrefix = 'webkit';
+            }
+        },
+
+        // Return property name with vendor prefix.
+        _name: function (name) {
+            var prefix = self._prefix();
+            if ( '' == prefix ) {
+                return name;
+            } else {
+                return prefix +
+                    name.substr(0, 1).toUpperCase() + name.substr(1);
+            }
+        },
+
+        // Return document’s property value with name with vendor prefix.
+        // If API is not support, it will retun `unsupported` value.
+        _prop: function (name, unsupported) {
+            if ( !self.isSupported() ) {
+                return unsupported;
+            }
+            return self._doc[self._name(name)];
+        },
+
+        // Listener for `visibilitychange` event.
+        _onChange: function(event) {
+            var state = self.state();
+
+            for ( var i in self._callbacks ) {
+                self._callbacks[i].call(self._doc, event, state);
+            }
+
+            self._hiddenBefore = self.hidden();
+        },
+
+        // Set listener for `visibilitychange` event.
+        _setListener: function () {
+            if ( self._listening ) {
+                return;
+            }
+            var event = self._prefix() + 'visibilitychange';
+            var listener = function () {
+                self._onChange.apply(Visibility, arguments);
+            };
+            if ( self._doc.addEventListener ) {
+                self._doc.addEventListener(event, listener, false);
+            } else {
+                self._doc.attachEvent(event, listener);
+            }
+            self._listening = true;
+            self._hiddenBefore = self.hidden();
+        }
+
+    };
+
+    self._init();
+
+})();
+
+/*! Copyright (c) 2013 Brandon Aaron (http://brandonaaron.net)
+ * Licensed under the MIT License (LICENSE.txt).
+ *
+ * Thanks to: http://adomas.org/javascript-mouse-wheel/ for some pointers.
+ * Thanks to: Mathias Bank(http://www.mathias-bank.de) for a scope bug fix.
+ * Thanks to: Seamus Leahy for adding deltaX and deltaY
+ *
+ * Version: 3.1.3
+ *
+ * Requires: 1.2.2+
+ */
+
+(function (factory) {
+    if ( typeof define === 'function' && define.amd ) {
+        // AMD. Register as an anonymous module.
+        define(['jquery'], factory);
+    } else if (typeof exports === 'object') {
+        // Node/CommonJS style for Browserify
+        module.exports = factory;
+    } else {
+        // Browser globals
+        factory(jQuery);
+    }
+}(function ($) {
+
+    var toFix = ['wheel', 'mousewheel', 'DOMMouseScroll', 'MozMousePixelScroll'];
+    var toBind = 'onwheel' in document || document.documentMode >= 9 ? ['wheel'] : ['mousewheel', 'DomMouseScroll', 'MozMousePixelScroll'];
+    var lowestDelta, lowestDeltaXY;
+
+    if ( $.event.fixHooks ) {
+        for ( var i = toFix.length; i; ) {
+            $.event.fixHooks[ toFix[--i] ] = $.event.mouseHooks;
+        }
+    }
+
+    $.event.special.mousewheel = {
+        setup: function() {
+            if ( this.addEventListener ) {
+                for ( var i = toBind.length; i; ) {
+                    this.addEventListener( toBind[--i], handler, false );
+                }
+            } else {
+                this.onmousewheel = handler;
+            }
+        },
+
+        teardown: function() {
+            if ( this.removeEventListener ) {
+                for ( var i = toBind.length; i; ) {
+                    this.removeEventListener( toBind[--i], handler, false );
+                }
+            } else {
+                this.onmousewheel = null;
+            }
+        }
+    };
+
+    $.fn.extend({
+        mousewheel: function(fn) {
+            return fn ? this.bind("mousewheel", fn) : this.trigger("mousewheel");
+        },
+
+        unmousewheel: function(fn) {
+            return this.unbind("mousewheel", fn);
+        }
+    });
+
+
+    function handler(event) {
+        var orgEvent = event || window.event,
+            args = [].slice.call(arguments, 1),
+            delta = 0,
+            deltaX = 0,
+            deltaY = 0,
+            absDelta = 0,
+            absDeltaXY = 0,
+            fn,
+            wheelData = {
+                deltaMode:      orgEvent.deltaMode || 0,
+                delta:          orgEvent.delta || orgEvent.wheelDelta || 0,
+                deltaX:         orgEvent.deltaX || orgEvent.wheelDeltaX || 0,
+                deltaY:         orgEvent.deltaY || orgEvent.wheelDeltaY || 0,
+                deltaZ:         orgEvent.deltaZ || orgEvent.wheelDeltaZ || 0,
+                deltaLine:      orgEvent.DOM_DELTA_LINE || 0,
+                deltaPage:      orgEvent.DOM_DELTA_PAGE || 0,
+                deltaPixel:     orgEvent.DOM_DELTA_PIXEL || 0,
+                detail:         orgEvent.detail || 0,
+                type:           orgEvent.type || 0
+            }
+
+        if( !wheelData.delta )
+            wheelData.delta = wheelData.deltaX || wheelData.deltaY || wheelData.deltaZ
+
+        event = $.event.fix(orgEvent);
+        event.type = "mousewheel";
+
+        // Old school scrollwheel delta
+        if ( orgEvent.wheelDelta ) { delta = orgEvent.wheelDelta; }
+        if ( orgEvent.detail )     { delta = orgEvent.detail * -1; }
+
+        // New school wheel delta (wheel event)
+        if ( orgEvent.deltaY ) {
+            deltaY = orgEvent.deltaY * -1;
+            delta  = deltaY;
+        }
+        if ( orgEvent.deltaX ) {
+            deltaX = orgEvent.deltaX;
+            delta  = deltaX * -1;
+        }
+
+        // Webkit
+        if ( orgEvent.wheelDeltaY !== undefined ) { deltaY = orgEvent.wheelDeltaY; }
+        if ( orgEvent.wheelDeltaX !== undefined ) { deltaX = orgEvent.wheelDeltaX * -1; }
+
+        // Look for lowest delta to normalize the delta values
+        absDelta = Math.abs(delta);
+        if ( !lowestDelta || absDelta < lowestDelta ) { lowestDelta = absDelta; }
+        absDeltaXY = Math.max(Math.abs(deltaY), Math.abs(deltaX));
+        if ( !lowestDeltaXY || absDeltaXY < lowestDeltaXY ) { lowestDeltaXY = absDeltaXY; }
+
+        // Get a whole value for the deltas
+        fn = delta > 0 ? 'floor' : 'ceil';
+        delta  = Math[fn](delta / lowestDelta);
+        deltaX = Math[fn](deltaX / lowestDeltaXY);
+        deltaY = Math[fn](deltaY / lowestDeltaXY);
+
+        // Add event and delta to the front of the arguments
+        args.unshift(event, delta, deltaX, deltaY, wheelData);
+
+        return ($.event.dispatch || $.event.handle).apply(this, args);
+    }
+
+}));
+
+/* Extra properties & methods for Array
+ *******************************************************************
+
+Array.mergeFrom( array2 )
+	merge array2 into Array
+	returns merged Array
+	unlike concat, this method will not create a new Array
+
+ *******************************************************************
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+Object.defineProperty(Array.prototype, 'mergeFrom', {
+	enumerable:	false,
+	//writable:	false,
+	value: function( arr2 ){
+		Array.prototype.push.apply(
+			this,
+			(arr2 instanceof Array || arr2.push) ? arr2 : [arr2]
+		)
+		return this
+	}
+})
+/*******************************************************************
+ Function shortcut for DATE
+
+ *******************************************************************
+
+ DATE.format( *pattern*, *set* )
+ 	-> _g.getText( DATE, *pattern*, *set* )
+
+_g.formatTime( DATE time, STRING pattern[, OBJECT settings] )
+	根据pattern返回格式化的时间字符串
+	严格遵循PHP规则：http://www.php.net/manual/en/function.date.php
+	返回
+		STRING time
+	变量
+		time				*必须*	DATE 		欲格式化的时间对象，或时间戳
+		pattern 			*必须*	STRING 		格式化公式
+		settings 			[可选] 	OBJECT 		选项参数
+	可用的选项
+		midnight_astoday: false 	BOLLEAN 	设定为 true 后，会将深夜视为前一天，1月2日03:00 这样的时间会被输出成 1月1日27:00
+		output_timezone: null 		NUMBER 		时区，必须为整数，可正负。设定后，会将时间以目标时区当时的时间输出
+	可用格式化公式
+		%Y 					完整的年份 				2013
+		%m 					月，两位数 				01, 02 ~ 12
+		%n 					月 						1, 2 ~ 12
+		%d 					日，两位数 				01, 02, ...
+		%j 					日 		 				1, 2, ...
+		%H 					时，24小时制，两位数 	01, 02, ...
+		%G 					时，24小时制 			1, 2, ...
+		%i 					分，两位数 				01, 02, ...
+		%s 					秒，两位数 				01, 02, ...
+		%l 					星期 					周一, 周二, ...
+	示例
+		_g.formatTime( 1380039114581 , "%Y-%m")
+			-> 2013-09
+
+
+
+ *******************************************************************/
+
+Date.prototype.format = function( pattern, set ){
+	return _g.formatTime( this, pattern, set )
+};
+
+
+
+
+
+
+
+
+
+
+
+_g.formatTime_string = {
+	'zh_CN': {
+		'Midnight': '深夜',
+
+		'Sunday': 	'周日',
+		'Monday': 	'周一',
+		'Tuesday': 	'周二',
+		'Wednesday': '周三',
+		'Thursday': '周四',
+		'Friday': 	'周五',
+		'Saturday':	'周六'
+	}
+}
+_g.formatTime_weekdaymappding = [
+	'Sunday',
+	'Monday',
+	'Tuesday',
+	'Wednesday',
+	'Thursday',
+	'Friday',
+	'Saturday'
+]
+_g.formatTime = function( time, pattern, set ){
+	/*
+		set = {
+			midnight_astoday: 0 / today || 1 / tomorrow
+			output_timezone: -12, -11, ..., -1, 0, 1, ..., 11, 12
+		}
+	*/
+	if( !time )
+		return false
+
+	set = set || {}
+	pattern = pattern || '%Y年%m月%d日'
+
+	if( typeof time != 'date' )
+		time = new Date(time)
+
+	var timestamp = time.valueOf()
+
+	function _zero( num ){
+		return num<10 ? '0'+(num) : num
+	}
+
+	// 计算时区差
+	if( typeof set.output_timezone != 'undefined' ){
+		timestamp+= (set.output_timezone + time.getTimezoneOffset() / 60) * 60 * 60 * 1000
+		time = new Date(timestamp)
+		//console.log( time.getTimezoneOffset() / 60, set.output_timezone + time.getTimezoneOffset() / 60 , time)
+	}
+
+	var _G 	= time.getHours()
+		,_H = _zero(_G)
+
+	if( set.midnight_astoday && (_G < 6 || _G == 24) ){
+		// 如果设定深夜档视为转天
+			// 小时+24
+			// 时间减去一天再输出
+		_G+= 24
+		_H = _G
+		timestamp-= 24 * 60 * 60 * 1000
+		time = new Date(timestamp)
+		pattern = pattern.replace(/\%midnight/g, 'Midnight'._(_g.formatTime_string) )
+	}else{
+		pattern = pattern.replace(/\%midnight/g, '' )
+	}
+
+	return (
+			pattern
+				.replace(/\%Y/g,time.getFullYear())
+
+				.replace(/\%m/g, _zero(time.getMonth()+1) )
+				.replace(/\%n/g,time.getMonth()+1)
+
+				.replace(/\%d/g, _zero(time.getDate()) )
+				.replace(/\%j/g,time.getDate())
+
+				.replace(/\%G/g, _G )
+				.replace(/\%H/g, _H )
+
+				.replace(/\%i/g, _zero(time.getMinutes()) )
+
+				.replace(/\%s/g, _zero(time.getSeconds()) )
+
+				.replace(/\%l/g, _g.formatTime_weekdaymappding[time.getDay()]._(_g.formatTime_string) )
+			)
+};
+/*******************************************************************
+ Function shortcut for OBJECT
+
+ *******************************************************************
+
+ Oebjet._size
+ 	-> 返回第一级项目数量
+
+
+
+
+ *******************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+Object.defineProperty(Object.prototype, '_size', {
+	enumerable:	false,
+	//writable:	false,
+	get: function(){
+		var size = 0
+		for( var i in this ){
+			size++
+		}
+		return size
+	}
+})
+/*******************************************************************
+ Function shortcut for STRING
+
+ *******************************************************************
+_g.getText( STRING text, OBJECT table [, STRING locale] )
+	获取翻译文本，如果查询未果，则返回原值
+	返回
+		STRING text_translated
+	变量
+		text				*必须*	STRING 		欲查询的值
+		table 				*必须*	OBJECT 		查询的表
+		locale 				[可选] 	STRING 		目标语言，如果没有给定，则默认使用当前语言
+	快捷方式
+		STRING._( OBJECT table [, STRING locale] )
+		STRING.getText( OBJECT table [, STRING locale] )
+
+
+ STRING.getText( *table*, *locale* )
+ STRING._( *table*, *locale* )
+ 	-> _g.getText( STRING, *table*, *locale*, true )
+
+
+
+ STRING.hashCode()
+ 	-> _g.hashCode( STRING )
+
+
+
+ STRING.filter()
+ 	-> _g.stringFilter( STRING )
+
+
+
+ STRING.filterCensored()
+ 	-> _g.stringFilterCensored( STRING )
+
+
+
+
+ *******************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+String.prototype.getText = function( table, locale ){
+	return _g.getText( this, table, locale, true )
+};
+String.prototype._ = String.prototype.getText
+
+
+
+
+
+
+// 获取翻译文本
+_g.getText = function( text, table, locale, isString ){
+	if( !text || !table )
+		return text
+
+	function _r( t ){
+		if( typeof t == 'object' && t.length )
+			return t[0]
+		return t
+	}
+
+	locale = locale || _g.lang
+
+	var result = null
+
+	if( table[text] ){
+		if( typeof table[text] == 'string' )
+			return _r(table[text])
+		if( table[text][locale] )
+			return _r(table[text][locale])
+	}
+
+	if( table[locale] ){
+		if( table[locale][text] )
+			return _r(table[locale][text])
+	}
+
+	if( typeof text != 'string' && isString ){
+		_t = ''
+		for( i=0; i<text.length; i++ )
+			_t+= text[i]
+		text = _t
+	}
+
+	return _r(text)
+}
+
+// hashCode
+_g.hashCode = function( t ){
+	var length = 5
+	//var length = 10
+		//,t = this
+	t = encodeURIComponent(t)
+		//,t = escape(this)
+	
+	try{
+		return t.split("").reduce(function(a,b){a=((a<<length)-a)+b.charCodeAt(0);return a&a},0).toString(16);
+	}catch(e){
+		var hash = 0, i, char;
+		if (t.length == 0) return hash;
+		for (i = 0, l = t.length; i < l; i++) {
+			char  = t.charCodeAt(i);
+			hash  = ((hash<<length)-hash)+char;
+			hash |= 0; // Convert to 32bit integer
+		}
+		return hash.toString(16);
+	}
+};
+String.prototype.hashCode = function(){
+	return _g.hashCode( this )
+};
+
+
+
+
+
+
+
+
+String.prototype.filter = function(){
+	return _g.stringFilter( this )
+};
+	String.prototype.filterCensored = function(){
+		return _g.stringFilterCensored( this )
+	}
+
+
+
+
+
+
+
+
+
+String.prototype.escape = function() {
+    return $('<div />').text(this).html();
+};
+/*************************************************
+* Library for HTML Templates
+**************************************************
+
+_tmpl.export( value[, returnHTML] )
+	RETURNS
+		jQuery object or HTML string
+	PARAMETERS
+		JQUERY-OBJECT || HTML-STRING value
+			The thing that will be exported.
+		[optional] BOOLEAN returnHTML
+			default: false
+			Whether export HTML string or not.
+
+**************************************************
+ */
+
+
+
+
+var _tmpl = {
+	export: function( value, returnHTML ){
+		if( value.attr && returnHTML )
+			return value.prop('outerHTML')
+		if( value.attr && !returnHTML )
+			return value
+		if( !value.attr && returnHTML )
+			return value
+		if( !value.attr && !returnHTML )
+			return $(value)
+	}
+}
+/*************************************************
+* Library for Hotkey bindings
+**************************************************
+*
+* Default behavior for hotkey
+*
+* Bind on $window
+* Triggered on keydown event
+* Triggered globally unless:
+	* any input, select or textarea element is being focused
+	* default modal window is showing
+* There's no conflit for hotkey binding. All binded functions will be run simultaneously when triggered.
+*
+**************************************************
+
+_hotkey.bind( keyCode[, modifier], function[, options] )
+	RETURNS
+		true		if bind success
+		false		if bind failed
+	PARAMETERS
+		STRING || NUMBER keyCode
+			You can use STRING.charCodeAt() function to get key code for character.
+		[optional] STRING || ARRAY modifier
+			Keyboard modifier(s). Array means hotkey will be triggered when holding all the modifer keys.
+			Example:
+				'CTRL'
+				'alt'
+				'meta'
+				['Meta', 'Alt']
+		FUNCTION function
+			Function to run.
+		[optional] OBJECT options
+ */
+
+
+
+
+var _hotkey = {
+	allowed: 	true,
+	keyCodeBindings: {}
+}
+
+_hotkey.bind = function(keyCode, modifier, func, options){
+	if( typeof modifier == 'function' )
+		return _hotkey.bind( keyCode, null, modifier, func )
+
+	if( !keyCode || !func )
+		return false
+
+	keyCode = parseInt( keyCode )
+	modifier = typeof modifier == 'text' ? [modifier] : (modifier || [])
+	options = options || {}
+
+	if( typeof _hotkey.keyCodeBindings[keyCode] == 'undefined' )
+		_hotkey.keyCodeBindings[keyCode] = {
+			'default': [],
+			'meta': [],
+			'alt': [],
+			'shift': [],
+			'meta+alt': [],
+			'meta+shift': [],
+			'alt+shift': [],
+			'meta+alt+shift': []
+		}
+
+	var metaKey = false
+		,altKey = false
+		,shiftKey = false
+
+	for( var i in modifier ){
+		modifier[i] = modifier[i].toLowerCase()
+
+		if( modifier[i] == 'ctrl' || modifier[i] == 'meta' )
+			metaKey = true
+		if( modifier[i] == 'alt' )
+			altKey = true
+		if( modifier[i] == 'shift' )
+			shiftKey = true
+	}
+
+	if( metaKey && altKey && shiftKey ){
+		_hotkey.keyCodeBindings[keyCode]['meta+alt+shift'].push( func )
+	}else if( metaKey && altKey ){
+		_hotkey.keyCodeBindings[keyCode]['meta+alt'].push( func )
+	}else if( metaKey && shiftKey ){
+		_hotkey.keyCodeBindings[keyCode]['meta+shift'].push( func )
+	}else if( altKey && shiftKey ){
+		_hotkey.keyCodeBindings[keyCode]['alt+shift'].push( func )
+	}else if( metaKey ){
+		_hotkey.keyCodeBindings[keyCode]['meta'].push( func )
+	}else if( altKey ){
+		_hotkey.keyCodeBindings[keyCode]['alt'].push( func )
+	}else if( shiftKey ){
+		_hotkey.keyCodeBindings[keyCode]['shift'].push( func )
+	}else{
+		_hotkey.keyCodeBindings[keyCode]['default'].push( func )
+	}
+
+	return true
+}
+
+_hotkey._run = function( arr ){
+	for( var i in arr )
+		arr[i]()
+}
+
+_hotkey.init = function(){
+	if( _hotkey.is_init )
+		return _hotkey
+
+	$window.on('keydown._hotkey', function(e){
+		if( document.activeElement.tagName != 'INPUT'
+			&& document.activeElement.tagName != 'TEXTAREA'
+			&& document.activeElement.tagName != 'SELECT'
+			&& !document.activeElement.hasAttribute('contenteditable')
+			&& _hotkey.allowed
+		){
+			var keyCode = parseInt( e.keyCode || e.which )
+			if( _hotkey.keyCodeBindings[keyCode] ){
+				if( (e.ctrlKey || e.metaKey) && e.altKey && e.shiftKey ){
+					_hotkey._run( _hotkey.keyCodeBindings[keyCode]['meta+alt+shift'] )
+				}else if( (e.ctrlKey || e.metaKey) && e.altKey ){
+					_hotkey._run( _hotkey.keyCodeBindings[keyCode]['meta+alt'] )
+				}else if( (e.ctrlKey || e.metaKey) && e.shiftKey ){
+					_hotkey._run( _hotkey.keyCodeBindings[keyCode]['meta+shift'] )
+				}else if( e.altKey && e.shiftKey ){
+					_hotkey._run( _hotkey.keyCodeBindings[keyCode]['alt+shift'] )
+				}else if( e.ctrlKey || e.metaKey ){
+					_hotkey._run( _hotkey.keyCodeBindings[keyCode]['meta'] )
+				}else if( e.altKey ){
+					_hotkey._run( _hotkey.keyCodeBindings[keyCode]['alt'] )
+				}else if( e.shiftKey ){
+					_hotkey._run( _hotkey.keyCodeBindings[keyCode]['shift'] )
+				}else if( !e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey ){
+					_hotkey._run( _hotkey.keyCodeBindings[keyCode]['default'] )
+				}
+			}
+		}
+	})
+
+	_hotkey.is_init = true
+}
+
+/*************************************************
+* Library for form sections creation
+**************************************************
+*
+* Default behavior for forms
+*
+* Each section/line is a DL
+* <DL>
+* 	<DT>
+* 	<DD>
+*
+**************************************************
+*/
+
+var _form = {}
+
+_form.section = function(type, name, label, value, suffix, options){
+	if( !type )
+		return false
+
+	if( typeof type == 'object' )
+		return _form.section(type['type'], type['name'] || null, type['label'] || null, type['value'] || null, type['suffix'] || null, type)
+
+	if( typeof name == 'object' )
+		return _form.section(type, name, name['label'] || null, name['value'] || null, name['suffix'] || null, name)
+
+	if( typeof label == 'object' )
+		return _form.section(type, name, label['label'] || null, label['value'] || null, label['suffix'] || null, label)
+
+	if( typeof value == 'object' )
+		return _form.section(type, name, id, value['value'] || null, value['suffix'] || null, value)
+
+	if( typeof suffix == 'object' )
+		return _form.section(type, name, id, value || null, suffix['suffix'] || null, suffix)
+
+	options = options || {}
+
+	var line = $('<dl/>').addClass(type, options.className)
+		,title = $('<dt/>').appendTo(line)
+		,cont = $('<dd/>').appendTo(line)
+		,id = '_input_g' + _g.inputIndex
+	_g.inputIndex++
+
+	switch( type ){
+		case 'directory':
+			$('<label/>').html( label ).appendTo(title)
+			break;
+		default:
+			if( suffix ){
+				$('<label/>').html( label ).appendTo(title)
+			}else{
+				$('<label for="'+id+'"/>').html( label ).appendTo(title)
+			}
+			break;
+	}
+
+	_form.element(type, name, id, value, options).appendTo(cont)
+
+	if( suffix )
+		$('<label for="'+id+'"/>').html(suffix).appendTo(cont)
+
+	if( options.add )
+		cont.append( options.add )
+
+	return cont
+}
+_form.line = _form.section
+
+_form.element = function(type, name, id, value, options){
+	if( !type )
+		return false
+
+	if( typeof type == 'object' )
+		return _form.element(type['type'], type['name'] || null, type['id'] || null, type['value'] || null, type)
+
+	if( typeof name == 'object' )
+		return _form.element(type, name, name['id'] || null, name['value'] || null, name)
+
+	if( typeof id == 'object' )
+		return _form.element(type, name, id['id'] || null, id['value'] || null, id)
+
+	if( typeof value == 'object' )
+		return _form.element(type, name, id, value['value'] || null, value)
+
+	options = options || {}
+	id = id || null
+
+	if( id === null ){
+		id = '_input_g' + _g.inputIndex
+		_g.inputIndex++
+	}
+
+	var element = $()
+		,defaultValue = options['default'] || options['defaultValue']
+
+	switch( type ){
+		default:
+			element = $('<input/>',{
+					'type': 	type,
+					'name': 	name,
+					'id': 		id
+				}).val(value)
+			break;
+		case 'select':
+			element = $('<select/>',{
+					'name': 	name,
+					'id': 		id
+				}).val(value)
+			var optionEmpty = $('<option value=""/>').appendTo( element )
+			for( var i in value ){
+				if( typeof value[i] == 'object' ){
+					var v = value[i]['value'] || value[i].val
+						,o_el = $('<option value="' + v + '"/>')
+							.html(value[i]['title'] || value[i]['name'])
+							.appendTo( element )
+				}else{
+					var v = value[i]
+						,o_el = $('<option value="' + v + '"/>')
+							.html(v)
+							.appendTo( element )
+				}
+				if( typeof defaultValue != 'undefined' && v == defaultValue ){
+					o_el.prop('selected', true)
+				}
+				if( !o_el.val() ){
+					o_el.attr('disabled', true)
+				}
+			}
+			if( !value || !value.length ){
+				optionEmpty.html('...')
+			}
+			if( options['new'] ){
+				$('<option value="" disabled/>').html('==========').insertAfter( optionEmpty )
+				$('<option value="___new___"/>').html('+ 新建').insertAfter( optionEmpty )
+				element.on('change.___new___', function(){
+					if( element.val() == '___new___' ){
+						element.val('')
+						options['new']( element )
+					}
+				})
+			}
+			break;
+		case 'select_group':
+		case 'selectGroup':
+			element = $('<select/>',{
+					'name': 	name,
+					'id': 		id
+				}).val(value)
+			var optionEmpty = $('<option value=""/>').appendTo( element )
+			for( var i in value ){
+				var group = $('<optgroup label="'+value[i][0]+'"/>').appendTo( element )
+				for( var j in value[i][1] ){
+					var _v = value[i][1][j]
+					if( typeof _v == 'object' ){
+						var o_el = $('<option value="' + (typeof _v.val == 'undefined' ? _v['value'] : _v.val) + '"/>')
+							.html(_v['title'] || _v['name'])
+							.appendTo( group )
+					}else{
+						var o_el = $('<option value="' + _v + '"/>')
+							.html(_v)
+							.appendTo( group )
+					}
+					if( typeof defaultValue != 'undefined' && o_el.val() == defaultValue ){
+						o_el.prop('selected', true)
+					}
+					if( !o_el.val() ){
+						o_el.attr('disabled', true)
+					}
+				}
+			}
+			if( !value || !value.length ){
+				optionEmpty.html('...')
+			}
+			if( options['new'] ){
+				$('<option value="" disabled/>').html('==========').insertAfter( optionEmpty )
+				$('<option value="___new___"/>').html('+ 新建').insertAfter( optionEmpty )
+				element.on('change.___new___', function(){
+					if( element.val() == '___new___' ){
+						element.val('')
+						options['new']( element )
+					}
+				})
+			}
+			break;
+		case 'checkbox':
+			element = $('<input/>',{
+					'type': 	type,
+					'name': 	name,
+					'id': 		id
+				})
+
+			if( typeof value == 'string' && value.toLowerCase() !== 'true' ){
+				element.val(value).prop('checked', options['checked'])
+			}else{
+				element.prop('checked', typeof options['checked'] == 'undefined' ? value : options['checked'])
+			}
+			break;
+		case 'checkboxes':
+			for( var i in value ){
+				var v = value[i]
+				if( typeof v != 'object' )
+					v = [v, false]
+
+				if( parseInt(i) ){
+					_g.inputIndex++
+					id = '_input_g' + _g.inputIndex
+				}
+
+				element = element.add(
+							$('<input type="checkbox" name="'+name+'" id="'+id+'" value="'+v[0]+'" />').prop('checked', v[1])
+						).add(
+							$('<label for="'+id+'"/>').html(v[2] || v[0])
+						)
+			}
+			break;
+		case 'directory':
+		case 'file':
+			element = $('<input type="text" name="'+name+'" id="'+id+'" />')
+								.on({
+									'input': function(){
+										element.trigger('change')
+									},
+									'click': function(){
+										if( !element.val() )
+											button.trigger('click')
+									}
+								}).val(value)
+			var fileinput 	= $('<input type="file" class="none"' +(type == 'directory' ? ' nwdirectory' : '')+ ' />')
+								.on('change', function(){
+									element.val( $(this).val() ).trigger('change')
+								})
+				,button 	= $('<button type="button" value="Browse..."/>').html('Browse...')
+								.on('click', function(){
+									//console.log(123)
+									//if( type == 'file' )
+										fileinput.trigger('click')
+								})
+			var elementAll	= element.add(fileinput).add(button)
+			if( options['accept'] )
+				fileinput.attr('accept', options['accept'])
+			break;
+	}
+
+	if( options.required )
+		element.prop('required', true)
+
+	if( options.onchange ){
+		element.on('change.___onchange___', options.onchange )
+		if( options['default'] )
+			element.trigger('change')
+	}
+
+	if( elementAll )
+		return elementAll
+
+	return element
+}
+// https://github.com/nwjs/nw.js/blob/nw13/src/resources/nw_pre13_shim.js
+(function () {
+
+    // console.log(
+    //     top.nw,
+    //     self.nw
+    // )
+
+    if (self !== top && top.nw && top.nw.require) self.nw = top.nw
+
+    // detect `nw` object of NW13
+    if (!(self.nw && self.nw.require)) return
+
+    var realrequire = nw.require;
+    self.require = function () {
+        if (arguments[0] === 'nw.gui') {
+            return nw;
+        } else {
+            return realrequire.apply(self, [].slice.call(arguments, 0));
+        }
+    };
+    self.require.cache = realrequire.cache;
+    self.require.extensions = realrequire.extensions;
+    self.require.resolve = realrequire.resolve;
+
+    // Following items exist when running with `--mixed-context`.
+    // Copy them from `nw` to browser context
+    if (!self.process) self.process = self.nw.process;
+    if (!self.Buffer) self.Buffer = self.nw.Buffer;
+    if (!self.global) self.global = self.nw.global;
+    if (!self.root) self.root = self.nw.root;
+
+}());
+
+// define and require node.js libraries & modules
+var node = {
+    'require': function (module, only_require) {
+        /*var r = typeof nw != 'undefined' && nw.require
+                    ? nw.require
+                    : require
+                    */
+        if (!node[module] && !only_require) {
+            node[module] = require(module)
+            if (typeof self[module] === 'undefined')
+                self[module] = node[module]
+        } if (only_require)
+            return require(module)
+        return node[module]
+    }
+}
+
+
+node.gui = node.require('nw.gui', true)
+// node.win = node.gui.Window.get()
+node.clipboard = node.gui.Clipboard.get();
+
+node.require('path')
+node.require('fs')
+
+if (typeof launcherOptions === 'undefined')
+    self.launcherOptions = {
+        window: {}
+    }
+node.win = node.win || self.win || (typeof nw !== 'undefined' ? nw.Window.get() : undefined) || node.gui.Window.get()
+
+
+if (typeof debugmode == 'undefined')
+    var debugmode = false
+        || (
+            node.gui.App.manifest['debug']
+            || node.gui.App.manifest['window']['debug']
+        )
+
+if (global && launcherOptions && launcherOptions.window && typeof launcherOptions['window']['debug'] !== 'undefined') {
+    debugmode = launcherOptions['debug'] || launcherOptions['window']['debug']
+}
+
+
+
+// _g.root, nw.js 程序运行目录
+// _g.root = node.path.dirname(process.execPath).split(node.path.sep)
+// _g.root = (_g.root[_g.root.length - 1] == 'nwjs' && node.path.basename( process.execPath ) == 'nw.exe')
+// 				? process.cwd()
+// 				: node.path.dirname(process.execPath)
+// // 对app根目录再做检查，如果不存在，则指向到缓存目录
+// // 该情况通常发生于使用launcer启动时
+// 	try{
+// 		var stat = node.fs.lstatSync( node.path.join( _g.root , '/app/main.html' ) )
+// 	}catch(e){
+// 		_g.root	= node.path.join( node.gui.App.dataPath, '/Extracted Data/')
+// 	}
+// _g.root = node.path.dirname(process.execPath)
+// try {
+//     node.fs.accessSync(
+//         node.path.join(_g.root, 'package.json'),
+//         node.fs.F_OK
+//     );
+// } catch (e) {
+//     _g.root = process.cwd()
+//     try {
+//         node.fs.accessSync(
+//             node.path.join(_g.root, 'package.json'),
+//             node.fs.F_OK
+//         );
+//     } catch (e) {
+//         _g.root = node.path.join(node.gui.App.dataPath, '/Extracted Data/')
+//     }
+// }
+_g.rootscheck = [
+    node.path.dirname(process.execPath),
+    process.cwd(),
+    node.path.join(node.gui.App.dataPath, '/Extracted Data/')
+]
+_g.rootscheckentry = node.gui.App.manifest.main
+_g.rootscheckentry = _g.rootscheckentry.split('://')
+_g.rootscheckentry = _g.rootscheckentry[_g.rootscheckentry.length - 1]
+for (var i = 0; i < _g.rootscheck.length; i++) {
+    var dir = _g.rootscheck[i]
+    // var hasMain = true
+    // try {
+    //     node.fs.accessSync(
+    //         node.path.join(dir, 'app', 'main.html'),
+    //         node.fs.F_OK
+    //     );
+    // } catch (e) {
+    //     hasMain = false
+    // }
+    if (!_g.root && node.fs.existsSync(node.path.join(dir, 'app', 'main.html'))) {
+        _g.root = dir
+        continue
+    }
+}
+
+
+// _g.execPath
+_g.execPath = node.path.dirname(process.execPath).split(node.path.sep)
+_g.execPath = (process.platform == 'darwin' || (_g.execPath[_g.execPath.length - 1] == 'nwjs' && node.path.basename(process.execPath) == 'nw.exe'))
+    ? process.cwd()
+    : node.path.dirname(process.execPath)
+
+
+
+// 文件另存为
+_g.file_save_as = function (path_src, filename, callback) {
+    path_src = node.path.normalize(path_src)
+    if (!_frame.dom.hidden_saveform)
+        _frame.dom.hidden_saveform = $('<input type="file" nwsaveas/>')
+            .on('change', function () {
+                var input = _frame.dom.hidden_saveform
+                    , dest = input.val()
+                    , path_file = input.attr('nwsaveas_file')
+                input.attr('nwsaveas', '').attr('nwsaveas_file', '').val('')
+
+                if (dest) {
+                    var cbCalled = false
+                        , rd = node.fs.createReadStream(path_file)
+                    rd.on("error", function (err) {
+                        done(err);
+                    });
+                    var wr = node.fs.createWriteStream(dest);
+                    wr.on("error", function (err) {
+                        done(err);
+                    });
+                    wr.on("close", function (ex) {
+                        done();
+                    });
+                    rd.pipe(wr);
+                    function done(err) {
+                        if (!cbCalled) {
+                            callback(err, path_src, dest);
+                            cbCalled = true;
+                        }
+                    }
+                }
+            })
+            .appendTo(_frame.dom.hidden)
+    _frame.dom.hidden_saveform
+        .attr({
+            'nwsaveas': filename || '',
+            'nwsaveas_file': path_src
+        }).trigger('click')
+}
+
+
+// Set actual page zoom, 1 = 100%, 0.5 = 50%, 2 = 200%, etc...
+_g.zoom = function (v) {
+    v = v || 1
+    node.win.zoomLevel = Math.log(v) / Math.log(1.2)
+    return node.win.zoomLevel
+}
+
+var _config = {
+    getFullKeyname: function (key) {
+        return 'config_' + key
+    },
+
+    get: function (key) {
+        if (!localStorage)
+            return false
+
+        key = _config.getFullKeyname(key)
+
+        var value = Lockr.get(key)
+        // var value = localStorage[_config.getFullKeyname(key)]
+
+        if (value === 'true')
+            return true
+
+        if (value === 'undefined') {
+            Lockr.rm(key)
+            // delete localStorage[_config.getFullKeyname(key)]
+            return null
+        }
+
+        return value
+    },
+
+    set: function (key, value) {
+        if (!localStorage)
+            return false
+
+        key = _config.getFullKeyname(key)
+
+        if (value === null && Lockr.get(key)) {
+            // delete localStorage[_config.getFullKeyname(key)]
+            Lockr.rm(key)
+        } else {
+            Lockr.set(key, value)
+            // localStorage[_config.getFullKeyname(key)] = value
+        }
+    }
+}
+
+
+
+
+_frame.app_config = {
+    //is_init: false,
+
+    init: function () {
+        if (_frame.app_config.is_init)
+            return true
+
+        _frame.app_config.is_init = true
+    }
+}
+_frame.app_menu = {
+	menus: {},
+	//is_init: false,
+
+	init: function(){
+		if( _frame.app_menu.is_init )
+			return true
+
+		// 创建各种菜单
+			_frame.app_menu.menus = {}
+
+
+		// 事件委托
+			$body.on('contextmenu.contextmenu_image', 'img[data-filename]', function(e){
+				var img = $(this)
+					,attr_contextmenu = img.attr('contextmenu')
+				if( !attr_contextmenu || !attr_contextmenu == 'disabled' || attr_contextmenu == 'false' ){
+					e.preventDefault()
+					console.log(e)
+					if( !_frame.app_menu.img ){
+						_frame.app_menu.img = new _menu({
+								'className': 'contextmenu-img',
+								'items': [
+									$('<menuitem/>').html('保存图片')
+										.on({
+											'click': function(){
+												_g.file_save_as(
+													_frame.app_menu.img.file_original,
+													_frame.app_menu.img.file_save_as
+												)
+											}
+										})
+								]
+							})
+					}
+					_frame.app_menu.img.file_original = node.path.normalize(img.attr('src'))
+					_frame.app_menu.img.file_save_as = img.data('filename') || ''
+					_frame.app_menu.img.show(e.clientX, e.clientY)
+					/*
+					var menu = new node.gui.Menu()
+					menu.append(new node.gui.MenuItem({
+							'label': 	'保存图片',
+							'click': function(){
+								_g.file_save_as(
+									node.path.normalize(img.attr('src')),
+									img.data('filename') || ''
+								)
+							}
+						}));
+					menu.popup(e.clientX, e.clientY);
+					*/
+					return false
+				}
+			})
+
+		_frame.app_menu.is_init = true
+	}
+}
+// 打开新的node-webkit窗口
+node.openWin = function (path, options) {
+    node.gui.Window.open(path, $.extend(true, {
+        "title": null,
+        "width": Math.max(Math.floor(screen.availWidth * 0.85), 320),
+        "height": Math.max(Math.floor(screen.availHeight * 0.85), 320),
+        "toolbar": node.gui.App.manifest['window']['toolbar'],
+        "icon": node.gui.App.manifest['window']['icon'],
+        "position": "center",
+        "min_width": 320,
+        "min_height": 320,
+        "max_width": null,
+        "max_height": null,
+        "as_desktop": false,
+        "resizable": node.gui.App.manifest['window']['resizable'],
+        "always-on-top": false,
+        "fullscreen": false,
+        "show_in_taskbar": node.gui.App.manifest['window']['show_in_taskbar'],
+        "frame": node.gui.App.manifest['window']['frame'],
+        "show": true,
+        "kiosk": false,
+        "transparent": node.gui.App.manifest['window']['transparent']
+    }, options))
+}
+
+
+
+
+
+
+
+
+
+
+//node.win.on('loaded', function(){
+//})
+
+
+
+
+
+
+
+_frame.app_window = {
+    //is_init: false,
+
+    bindEvents: function (thisWin) {
+        thisWin = thisWin || self.win || node.win
+
+        setTimeout(function () {
+            thisWin.on('blur', function () {
+                $html.addClass('window-blured')
+            })
+            thisWin.on('focus', function () {
+                $html.removeClass('window-blured')
+            })
+            thisWin.on('maximize', function () {
+                $html.addClass('window-maxmize')
+                _config.set('windowMaximize', true)
+                _config.set('windowMaximizeX', screen.availLeft || 0)
+                _config.set('windowMaximizeY', screen.availTop || 0)
+                _config.set('windowX', null)
+                _config.set('windowY', null)
+                _config.set('windowWidth', null)
+                _config.set('windowHeight', null)
+            })
+            thisWin.on('unmaximize', function () {
+                $html.removeClass('window-maxmize')
+                _config.set('windowMaximize', null)
+                _config.set('windowMaximizeX', null)
+                _config.set('windowMaximizeY', null)
+            })
+            thisWin.on('enter-fullscreen', function () {
+                $html.addClass('window-fullscreen')
+                _config.set('windowFullscreen', true)
+            })
+            thisWin.on('leave-fullscreen', function () {
+                $html.removeClass('window-fullscreen')
+                _config.set('windowFullscreen', null)
+            })
+            thisWin.on('move', function (x, y) {
+                _config.set('windowX', x)
+                _config.set('windowY', y)
+            })
+            thisWin.on('resize', function (width, height) {
+                _config.set('windowWidth', width)
+                _config.set('windowHeight', height)
+            })
+            //win.on('close', function(){
+            //	alert( 'dumpWindowStatus' )
+            //	this.close(true)
+            //})
+            $window.on('resize', function () {
+                _config.set('windowWidth', window.outerWidth)
+                _config.set('windowHeight', window.outerHeight)
+                // console.log(window.outerWidth, window.outerHeight)
+            })
+        }, 100)
+    },
+
+    init: function (thisWin) {
+        if (_frame.app_window.is_init)
+            return true
+
+        thisWin = thisWin || self.win || node.win
+
+        if ($html.hasClass('app')) {
+            // 恢复窗口尺寸和位置
+            //if( !global.launcherOptions ){
+            var windowX = parseInt(_config.get('windowX'))
+                , windowY = parseInt(_config.get('windowY'))
+            if (_config.get('windowMaximize')) {
+                windowX = parseInt(_config.get('windowMaximizeX')) || windowX
+                windowY = parseInt(_config.get('windowMaximizeY')) || windowY
+                if (!isNaN(windowX) && !isNaN(windowY)) {
+                    thisWin.moveTo(windowX, windowY)
+                }
+                thisWin.maximize()
+                $html.addClass('window-maxmize')
+            } else {
+                var windowWidth = Math.max(
+                    parseInt(
+                        _config.get('windowWidth')
+                        || (launcherOptions && launcherOptions['window']
+                            ? launcherOptions['window']['width']
+                            : node.gui.App.manifest['window']['width'])
+                    )
+                    , (launcherOptions && launcherOptions['window'] && launcherOptions['window']['min_width']
+                        ? launcherOptions['window']['min_width']
+                        : node.gui.App.manifest['window']['min_width']) || 0
+                )
+                    , windowHeight = Math.max(
+                        parseInt(
+                            _config.get('windowHeight')
+                            || (launcherOptions && launcherOptions['window']
+                                ? launcherOptions['window']['height']
+                                : node.gui.App.manifest['window']['height'])
+                        )
+                        , (launcherOptions && launcherOptions['window'] && launcherOptions['window']['min_height']
+                            ? launcherOptions['window']['min_height']
+                            : node.gui.App.manifest['window']['min_height']) || 0
+                    )
+
+                if (!isNaN(windowX) && !isNaN(windowY)) {
+                    thisWin.moveTo(windowX, windowY)
+
+                    var availWidth = screen.availWidth + (screen.availLeft || 0)
+                        , availHeight = screen.availHeight + (screen.availTop || 0)
+
+                    // 保证窗口不超出屏幕
+                    if (windowX < 0)
+                        windowX = 0
+                    if (windowWidth + windowX > availWidth)
+                        windowX = availWidth - windowWidth
+                    if (windowY < 0)
+                        windowY = 0
+                    if (windowHeight + windowY > availHeight)
+                        windowY = availHeight - windowHeight
+
+                    thisWin.moveTo(windowX, windowY)
+                }
+
+                // console.log(_config.get('windowWidth'), _config.get('windowHeight'))
+                // console.log(windowWidth, windowHeight)
+                // alert(_config.get('windowWidth') + ' x ' + _config.get('windowHeight'))
+                // alert(windowWidth + ' x ' + windowHeight)
+                if (!isNaN(windowWidth) && !isNaN(windowHeight) && windowWidth && windowHeight) {
+                    thisWin.resizeTo(Math.floor(windowWidth), Math.floor(windowHeight))
+                    if (!windowX || !windowY) {
+                        thisWin.moveTo(
+                            Math.floor(screen.availLeft + (screen.availWidth - windowWidth) / 2),
+                            Math.floor(screen.availTop + (screen.availHeight - windowHeight) / 2)
+                        )
+                    }
+                }
+            }
+            //}
+
+            // 为窗口绑定事件
+            _frame.app_window.bindEvents()
+
+            // 处理标题栏标题与按钮
+            if ((!launcherOptions && node.gui.App.manifest['window']['frame']) || (launcherOptions && launcherOptions['window']['frame'])) {
+                if (debugmode) {
+                    _frame.dom.debugbtns = $('<div class="debugbtns"/>').appendTo($body)
+                    $('<button/>', {
+                        'html': 'Console'
+                    }).on('click', function () {
+                        thisWin.showDevTools()
+                    }).appendTo(_frame.dom.debugbtns)
+                    $('<button/>', {
+                        'html': 'Reload'
+                    }).on('click', function () {
+                        location.reload()
+                    }).appendTo(_frame.dom.debugbtns)
+                }
+            } else {
+                $html.addClass('window-noframe')
+                var titlebar = $('#titlebar')
+                if (!titlebar || !titlebar.length) {
+                    titlebar = $('<div id="titlebar"/>').appendTo($body)
+                    $('<strong/>').appendTo(titlebar)
+                    $('<div class="buttons"/>')
+                        .append(
+                        $('<button class="icon minimize"/>')
+                        )
+                        .append(
+                        $('<button class="icon maximize"/>')
+                        )
+                        .append(
+                        $('<button class="icon close"/>')
+                        )
+                        .appendTo(titlebar)
+                    $('<div id="window_border"/>').insertAfter(titlebar)
+                }
+                titlebar.children('strong').html(thisWin.title)
+                titlebar.find('.buttons .minimize').on('click', function () {
+                    thisWin.minimize()
+                })
+                titlebar.find('.buttons .maximize').on('click', function () {
+                    if ($html.hasClass('window-maxmize')) {
+                        thisWin.restore()
+                        $html.removeClass('window-maxmize')
+                        _config.set('windowMaximize', null)
+                        _config.set('windowMaximizeX', null)
+                        _config.set('windowMaximizeY', null)
+                    } else
+                        thisWin.maximize()
+                })
+                titlebar.find('.buttons .close').on('click', function () {
+                    thisWin.close()
+                })
+                if (debugmode) {
+                    $('<button/>', {
+                        'class': 'console',
+                        'html': 'Console'
+                    }).on('click', function () {
+                        thisWin.showDevTools()
+                    }).prependTo(titlebar.find('.buttons'))
+                    $('<button/>', {
+                        'class': 'console',
+                        'html': 'Reload'
+                    }).on('click', function () {
+                        location.reload()
+                    }).prependTo(titlebar.find('.buttons'))
+                }
+            }
+
+            thisWin.show()
+            thisWin.focus()
+        }
+
+        _frame.app_window.is_init = true
+    }
+}
+
+/* 
+ */
+
+
+
+_frame.dom = {}
+_frame.main = {
+	'last': {}
+}
+
+
+
+
+_frame.global = {
+	// 已注册的快捷键
+	key_registerd: [],
+
+	esc_funcs: [],
+	//is_init:	false,
+
+	allowKeyNav: true, 			// 是否允许键盘导航，如箭头、pagedown、pageup
+
+
+
+
+	// 注册ESC热键所触发的函数
+	esc_register: function( func ){
+		_frame.global.esc_funcs.push( func )
+	},
+
+
+
+	// 禁用页面自身滚动能力
+	disableBodyScroll: function(){
+		$(document.body).on("touchmove.disableBodyScroll mousewheel.disableBodyScroll", function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+		});
+	},
+	// 恢复页面自身滚动能力
+	enableBodyScroll: function(){
+		$(document.body).off("touchmove.disableBodyScroll mousewheel.disableBodyScroll")
+	}
+
+}
+
+
+
+
+
+
+
+// 初始化
+_frame.global.init = function(){
+	if( _frame.global.is_init )
+		return true
+
+	
+	_frame.dom = {
+		'layout': 	$('#layout')
+	}
+
+
+	// 注册热键
+		$body.on({
+			'keydown.esckey': function(e){
+				if( document.activeElement.tagName != 'INPUT'
+					&& document.activeElement.tagName != 'TEXTAREA'
+					&& document.activeElement.tagName != 'SELECT'
+					&& !$(document.activeElement).attr('contenteditable')
+					&& _frame.global.allowKeyNav
+				){
+					if( !e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey ){
+						var key = window.event ? e.keyCode : e.which
+							key = key.toString()
+						//console.log(key)
+					}
+				}else if( !_frame.global.allowKeyNav ){
+					if( !e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey ){
+						var key = window.event ? e.keyCode : e.which
+							key = key.toString()
+						switch( key ){
+							case '27': // ESC：关闭全部浮动层级
+								for( var i=0; i<_frame.global.esc_funcs.length; i++){
+									_frame.global.esc_funcs[i]()
+								}
+								break;
+						}
+					}
+				}
+			}
+		})
+
+
+	// 创建隐藏地点
+		_frame.dom.hidden 			= $('<div/>',{'class':'none'}).appendTo($body)
+		_frame.dom.hiddenVisible 	= $('<div/>',{'class':'none-visible'}).appendTo($body)
+		_frame.dom.hiddenIframe 	= $('<iframe/>',{'class':'none', 'name':'hiddeniframe'}).appendTo($body)
+
+
+	// 事件委托
+		$body.on( 'submit.check_submitting_status', 'form', function(e){
+			var form = $(this)
+			if( form.hasClass('submitting') || form.hasClass('loading') || form.hasClass('disabled') )
+				e.preventDefault()
+		});
+
+
+	_frame.global.is_init = true
+
+	
+	return true
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _menu = function( settings ){
+	if( !this.settings ){
+		this.settings = $.extend(
+				true,
+				{},
+				this.defaults,
+				settings || {}
+			)
+		
+		this.init()
+	}
+}
+
+_menu.prototype.defaults = {
+	// 菜单项目
+		'items': 		[],
+	// 目标元素，如果存在，会根据该元素计算菜单呼出位置
+		'target': 		null,
+	// 追加样式
+		'className': 	null
+}
+
+_menu.prototype.init = function(){
+	var self = this
+
+	// 创建DOM
+		this.dom = {}
+		this.dom.menu 	= $('<div class="menu"/>')
+							.addClass(this.settings.className)
+							.on('click', function(){
+								if( !self.timeout_hideself )
+									self.timeout_hideself = setTimeout(function(){
+										self.timeout_hideself = null
+										self.hide()
+									}, 10)
+							})
+							//.appendTo(_frame.menu.dom.container)
+		this.dom.body 	= $('<div class="body"/>').appendTo(this.dom.menu)
+	
+	// 绑定transitionend事件，自动触发隐藏函数
+		this.dom.menu.on({
+			//'transitionend.menu_hide': function(e){
+			'transitionend.menu_hide webkitTransitionEnd.menu_hide mozTransitionEnd.menu_hide': function(e){
+				if( e.currentTarget == e.target
+					&& e.originalEvent.propertyName == 'opacity'
+					&& parseFloat(self.dom.menu.css('opacity')) === 0
+				){
+					self.hideTrue()
+				}
+			}
+		})
+	
+	// 创建全部菜单项目
+		for(var i = 0, menuitem; menuitem = this.settings.items[i] ; i++){
+			if( menuitem ){
+				switch( menuitem ){
+					case 'separator':
+						menuitem = $('<hr/>')
+						break;
+				}
+				if( menuitem.hasClass('donot_hide') ){
+					menuitem.on('click', function(){
+						setTimeout(function(){
+							clearTimeout(self.timeout_hideself)
+							self.timeout_hideself = null
+						}, 1)
+					})
+				}
+				self.appendItem( menuitem )
+			}
+		}
+		this.dom.body.find('input[type="checkbox"]+label').addClass('checkbox')
+
+	// 虚化背景
+		if( typeof node != 'undefined' ){
+			this.dom.menu.addClass('mod-blur-shot')
+		}
+
+	_frame.menu.menus.push(this)
+}
+
+_menu.prototype.show = function( targetEl, x, y ){
+	if( this.showing )
+		return this
+	
+	if( typeof targetEl == 'number' )
+		return this.show( 'mouse', targetEl, x )
+
+	targetEl = targetEl || this.settings.target
+
+	clearTimeout(_frame.menu.timeout_hideall)
+	_frame.menu.timeout_hideall = null
+
+	// addClass: show
+		this.dom.menu.appendTo(_frame.menu.dom.container).addClass('show')
+		_frame.menu.dom.container.addClass('on')
+	
+	// 设置状态
+		this.showing = true
+	
+	// 触发所有子元素的onshow事件
+		this.dom.body.children().trigger('show')
+
+	// 计算并设置位置
+		this.position( targetEl, x, y )
+
+	// 虚化背景
+		if( typeof node != 'undefined' ){
+			node.win.capturePage(this.capturePage_callback.bind(this), {
+				format: 'jpg',
+				datatype: 'datauri'
+			})
+		}else{
+			this.dom.menu.addClass('on')
+		}
+}
+
+_menu.prototype.hide = function( callback_hide ){
+	if( !this.showing )
+		return false
+	
+	if( callback_hide )
+		this.callback_hide = callback_hide
+
+	if( !this.dom.menu.hasClass('on') )
+		this.hideTrue()
+
+	// removeClass: on
+		this.dom.menu.removeClass('on')
+}
+
+_menu.prototype.hideTrue = function(){
+	// 重置样式与位置
+		this.dom.menu.removeClass('show')
+			.css({
+				'top': 	'',
+				'left': ''
+			})
+			.detach()
+	
+	// 移除虚化背景DOM
+		if( this.dom.blured instanceof jQuery ){
+			this.dom.blured.remove()
+			delete this.dom.blured
+		}
+	
+	// 重置状态
+		this.showing = false
+		_frame.menu.dom.container.removeClass('on')
+	
+	if( this.callback_hide )
+		this.callback_hide()
+	
+	delete( this.callback_hide )
+}
+
+_menu.prototype.position = function( targetEl, x, y ){
+	var top, left, viewport_height, viewport_width, menu_height, menu_width
+	
+	targetEl = targetEl || this.settings.target
+
+	this.dom.menu
+		.css({
+			'top': 	'',
+			'left': ''
+		})
+
+	if( targetEl && targetEl instanceof jQuery ){
+		var offset 	= targetEl.offset()
+		top		= offset.top + targetEl.height() - $body.scrollTop() + (y || 0)
+		left 	= offset.left - $body.scrollLeft() + (x || 0)
+	}else if( targetEl == 'mouse' || (!targetEl && typeof x == 'number') ){
+		left	= x || 0
+		top 	= (y + 5) || 0
+	}
+
+	viewport_height		= $window.height() - 10
+	viewport_width		= $window.width() - 10
+
+	menu_height			= this.dom.menu.outerHeight()
+	menu_width			= this.dom.menu.outerWidth()
+
+	this.dom.menu.css({
+		'top': 		top + menu_height > viewport_height
+						? viewport_height - menu_height
+						: top,
+		//'left': 	offset.left - $body.scrollLeft()
+		'left': 	left + menu_width > viewport_width
+						? viewport_width - menu_width
+						: left
+	})
+}
+
+_menu.prototype.appendItem = function(item){
+	if( item instanceof jQuery )
+		return item.appendTo( this.dom.body )
+}
+
+_menu.prototype.capturePage_callback = function( datauri ){
+	//console.log(this)
+	if( this.showing ){
+		this.dom.blured = $('<s class="blured"/>').css('background-image', 'url('+datauri+')').appendTo( this.dom.menu.addClass('on') )
+	}
+}
+
+_menu.hideAll = function(ms){
+	_frame.menu.timeout_hideall = setTimeout(function(){
+		for(var i in _frame.menu.menus){
+			if( _frame.menu.menus[i].hide )
+				_frame.menu.menus[i].hide()
+		}
+		_frame.menu.timeout_hideall = null
+	}, ms || 1)
+}
+
+
+
+
+
+
+
+
+
+
+_frame.menu = {
+	dom: {},
+	menus: [],
+	init: function(){
+		if( this.is_init )
+			return this
+		
+		// 创建顶级DOM，用于承载各menu
+			this.dom.container = $('<div class="menus"/>')
+				.on({
+					'click': function(e, ms){
+						_menu.hideAll(ms)
+					},
+					'contextmenu': function(e){
+						_frame.menu.dom.container.trigger('click')
+						e.preventDefault()
+					}/*,
+					'mousemove': function(){
+						if( !_frame.menu.timeout_hideall )
+							_frame.menu.dom.container.trigger('click', [500])
+					}*/
+				})
+				.appendTo($body)
+
+		// 绑定事件，在菜单内的点击不会触发隐藏全部菜单
+			$body.on('click.cancel_hideall', '.menus>.menu', function(e){
+				clearTimeout(_frame.menu.timeout_hideall)
+				_frame.menu.timeout_hideall = null
+			})
+
+		this.is_init = true
+	}
+}
+/* 
+ */
+
+_frame.modal = {
+	dom: {},
+
+	defaults: {
+		// modal追加class
+			'classname': 	'',
+
+		// 尺寸，CSS标准
+			//'width': 		'75%',
+			//'height': 	'75%',
+
+		// 是否显示模糊背景，模拟毛玻璃特效
+			'showBlured': 	true,
+
+		// 是否允许点击空白区域隐藏modal
+			//'blank_to_close': 	false
+		
+		// 隐藏/关闭时，使用 detach 而非 remove
+			// 'detach':	false
+		
+		// 关闭时运行的函数
+			// 'onClose': 	function(){}
+	},
+
+	show: function(content, title, options, callback){
+		clearTimeout( this.hide_timeout )
+		this.hide_timeout = null
+
+		this.dom.container.addClass('show')
+		this.showing = true
+
+		var settings = $.extend( {}, this.defaults, options );
+
+		if( settings.detach )
+			this.content = content
+
+		//this.dom.content.empty()
+		content.appendTo( this.dom.content )
+		
+		if( settings.onClose )
+			_frame.modal.dom.container.on('close', settings.onClose)
+
+		//this.dom.container.removeClass( this.dom.container.data('customclass') )
+
+		//if( this.dom.blured ){
+		//	this.dom.blured.remove()
+		//	this.dom.blured = null
+		//}
+
+		if( title ){
+			this.dom.titlebar.html(title)
+			this.dom.container.addClass('hastitle')
+		}else{
+			this.dom.titlebar.html('')
+			this.dom.container.removeClass('hastitle')
+		}
+
+		this.dom.box.css({
+			'width': 	settings.width || null,
+			'height': 	settings.height || null
+		})
+
+		if( settings.showBlured ){
+			if( !this.dom.blured && typeof node != 'undefined' ){
+				node.win.capturePage(function(datauri){
+					//_frame.modal.dom.blured = $('<img/>').attr('src', datauri).appendTo(_frame.modal.dom.container)
+					//_frame.modal.dom.blured = $('<s/>').css('background-image', 'url('+datauri+')').appendTo(_frame.modal.dom.container)
+					/*_frame.modal.dom.blured = $('<s/>')
+												.append( $('<img/>').attr('src', datauri) )
+												.appendTo(_frame.modal.dom.container)*/
+					_frame.modal.dom.blured = $('<img/>').attr('src', datauri)
+												.appendTo( _frame.modal.dom.bg )
+				}, {
+					format: 'jpg',
+					datatype: 'datauri'
+				})
+				this.dom.container.addClass('mod-blur-shot')
+			}
+		}//else{
+		//	this.dom.container.removeClass('mod-blur-shot')
+		//}
+
+		setTimeout(function(){
+			_frame.modal.dom.container.addClass('on ' + settings.classname).data('customclass', settings.classname)
+		}, 0)
+		_p.initDOM( this.dom.content )
+
+		this.dom.bg.off('click.blank_to_close').on('click.blank_to_close', function(){
+			if( settings.blank_to_close ){
+				_frame.modal.dom.btn_close.trigger('click')
+			}
+		})
+
+		if( callback )
+			callback( this.dom.content )
+	},
+
+	hide: function(){
+		if( !this.showing )
+			return false
+
+		clearTimeout( this.hide_timeout )
+		this.hide_timeout = null
+		this.dom.container.removeClass('on')
+	},
+	//hide_timeout,
+
+	reset: function(){
+		this.resetContent()
+
+		if( this.dom.blured ){
+			if( !parseInt(this.dom.container.css('opacity')) ){
+				this.dom.blured.remove()
+				this.dom.blured = null
+			}
+			this.dom.container.removeClass('mod-blur-shot')
+		}
+	},
+
+	resetContent: function(){
+		if( this.content ){
+			this.content.detach()
+			this.content = null
+		}
+		
+		this.dom.content.empty()
+
+		this.dom.container.removeClass( this.dom.container.data('customclass') )
+		this.dom.container.data('customclass', '')
+
+		this.dom.titlebar.html('')
+		this.dom.container.removeClass('hastitle')
+	}
+}
+
+
+
+
+
+
+
+// 初始化
+_frame.modal.init = function(){
+	if( this.is_init )
+		return true
+
+	this.dom.container = $('<div class="modal" />').on({
+										//'transitionend.modal_hide': function(e){
+										'transitionend.modal_hide webkitTransitionEnd.modal_hide mozTransitionEnd.modal_hide': function(e){
+											if( _frame.modal.showing
+												&& e.currentTarget == e.target
+												&& e.originalEvent.propertyName == 'opacity'
+												&& _frame.modal.dom.container.css('opacity') == 0
+											){
+												_frame.modal.hide_timeout = setTimeout(function(){
+													_frame.modal.reset()
+													_frame.modal.dom.container.removeClass('show')
+														//.off('transitionend.modal_hide')
+													_frame.modal.showing = false
+													_frame.modal.dom.container.trigger('close').off('close')
+												}, 10)
+											}
+										}
+									}).prependTo($body)
+		this.dom.box = $('<div/>').appendTo(this.dom.container)
+			this.dom.titlebar = $('<header/>').appendTo(this.dom.box)
+			this.dom.content = $('<section/>').appendTo(this.dom.box)
+			this.dom.btn_close = $('<button class="close" />').html('&times;').on('click',function(){_frame.modal.hide()}).appendTo(this.dom.box)
+		this.dom.bg = $('<s/>').appendTo(this.dom.container)
+
+	_hotkey.bind(
+		'27',
+		function(){
+			_frame.modal.hide()
+		}
+	)
+
+
+	this.is_init = true
+	return true
+}
+/* Tooltip ----------------------------------------------------------------------------------------------------
+Tooltip
+	_p.tip.show(HTMLcontent, this[, options])
+*/
+
+
+_p.tip = {
+	//is_init:				false,
+	//is_showing:				false,
+	//dom:					null,
+	//el:						null,
+	//el_pending:			null,
+	pos:					'bottom',
+	size_indicator:			8,
+	//timeout_fade:			null,
+
+	// 文本滤镜，可任意加入滤镜函数
+	filters: [],
+
+	// 隐藏tip延迟时间，毫秒
+	countdown_fade:			250,
+
+	// curContent: 			null,			// 当前内容的hashCode
+
+	// 初始化tip
+	init_global: function(){
+		if(this.is_init)
+			return false
+
+		this.dom = $('<div id="tip"/>')
+						//.on('transitionend', function(e){
+						.on('transitionend webkitTransitionEnd mozTransitionEnd', function(e){
+							if( e.currentTarget == e.target && e.originalEvent.propertyName == 'opacity' && _p.tip.dom.css('opacity') == 0 ){
+								_p.tip.dom
+									.removeClass('show')
+									.css({
+										'top': 	'',
+										'left': ''
+									}).attr({
+										'data-tip-indicator-pos':		'',
+										'data-tip-indicator-offset-x':	'',
+										'data-tip-indicator-offset-y':	''
+									})
+								if( _p.tip.dom_bluredbg )
+									_p.tip.dom_bluredbg.css('background-image', '')
+							}
+						})
+						.appendTo($body)
+
+		this.dom_body = $('<div class="body"/>').appendTo(this.dom)
+
+		// 虚化背景
+			if( typeof node != 'undefined' ){
+				this.dom.addClass('mod-blur-shot')
+				this.dom_bluredbg = $('<div/>').appendTo($('<div class="bluredbg"/>').appendTo(this.dom))
+			}
+
+		// 注册ESC热键
+		//_frame.global.esc_register(function(){
+		//	this.hide(true)
+		//})
+
+		this.is_init=true
+	},
+
+	// 显示
+	// cont:	HTML内容
+	// el:		触发tip的DOM，通常为鼠标指向位置
+	// pos:		tip位置
+	show: function( cont, el, pos ){
+		// 如果为非指针指向，不执行
+		// 无内容则不执行
+		//if( $('body').data('preventMouseover') || $body_preventMouseover || !cont )
+		if( !cont )
+			return false
+
+		clearTimeout(this.timeout_fade)
+		this.timeout_fade = null
+
+		//if( el )
+		//	el.data('tip-indicator-pos-original', el.attr('data-tip-indicator-pos') || null)
+
+		el = el || 'body';
+		this.el = $(el)
+
+		pos = pos || this.pos
+
+		// tip已显示则不运行之后的函数
+		//if( this.is_showing )
+			//return true
+
+		cont = this.content(cont)
+
+		this.init_global();
+
+		if( !this.dom.hasClass('show') ){
+			if( this.dom_bluredbg && typeof node != 'undefined' ){
+				node.win.capturePage(function(datauri){
+					_p.tip.dom_bluredbg.css(
+						'background-image',
+						'url('+datauri+')'
+					)
+				}, {
+					format: 'jpg',
+					datatype: 'datauri'
+				})
+			}
+			this.dom.addClass('show')
+		}
+
+		this.position( cont, pos );
+
+		this.is_showing=true;
+	},
+
+	// 计算tip位置
+	position:function(cont, pos){
+		var hashcode = cont.hashCode()
+
+		if( this.curContent != hashcode ){
+			this.dom.css({
+					top:	'-1000px',
+					left:	'-1000px'
+				})
+			this.dom_body.html(cont)
+			_p.initDOM( this.dom_body )
+			/*
+			this.dom.css({
+					top:	'-1000px',
+					left:	'-1000px'
+				}).html(cont)
+			_p.initDOM( this.dom )
+			*/
+
+			this.curContent = hashcode
+		}
+
+		var coords = this['pos_'+pos]( this.dom.outerWidth() , this.dom.outerHeight() );
+		if(coords){
+			this.move(coords.x, coords.y)
+		}
+	},
+
+	// 隐藏tip
+	// is_instant：瞬间隐藏，没有延迟
+	hide:function( is_instant ){
+		if( !this.is_init || !this.is_showing )
+			return false
+
+		//this.el_pending = null
+
+		this.timeout_fade = setTimeout(function(){
+			_p.tip.el = null
+
+			_p.tip.dom.removeClass('on')
+
+			_p.tip.is_showing = false
+			_p.tip.curContent = null
+			
+			_p.tip.timeout_fade = null
+		}, is_instant ? 0 : this.countdown_fade)
+	},
+	
+	// 格式化tip内容
+	content: function( cont, el ){
+		el = el || this.el
+		//var contOriginal = cont
+
+		// 替换快捷键，如果存在acgdb-hotkey
+		//if( cont.indexOf('&HOTKEY') != -1 && el.attr('acgdb-hotkey') ){
+		//	var hotkey = el.attr('acgdb-hotkey-text') || _hotkey.format(el.attr('acgdb-hotkey'))
+		//	cont = cont.replace('&HOTKEY', hotkey)
+		//}
+
+		return cont
+	},
+
+	// 移动tip到 x,y
+	move: function(x,y){
+		this.dom.css({
+			top:	y,
+			left:	x
+		}).addClass('on')
+	},
+
+	// 获取小箭头尺寸
+	get_indicator_size: function(){
+		return this.size_indicator * _g.baseMultiper;
+	},
+
+	// tip位置函数
+	pos_mouse: function(w,h){
+		this.el.unbind('mousemove.tooltip').bind('mousemove.tooltip',function(e){
+			var xOff=25
+				,yOff=30
+				,x=e.pageX+xOff
+				,y=e.pageY+20
+				,_w=jQuery(window).innerWidth()
+				,_h=jQuery(window).innerHeight()
+				,_t=jQuery(window).scrollTop()
+				,_l=jQuery(window).scrollLeft();
+			if(x+w+xOff>_w+_l){
+				x=x-w-xOff-20
+			}
+			if(y+10+h>_h+_t){
+				y=_h+_t-h-10
+			}
+			_p.tip.move(x,y)
+		})
+	},
+	pos_bottom: function(w,h){
+		var el		= this.el
+			,dom	= this.dom
+			,offset	= el.offset()
+			,x		= offset.left + ( el.outerWidth() - dom.outerWidth() )/2
+			,y		= offset.top + el.outerHeight() + this.get_indicator_size()
+
+		this.dom.attr('data-tip-indicator-pos', 'top' )
+
+		return this.checkpos(x,y,w,h)
+	},
+	pos_top: function(w,h){
+		var el		= this.el
+			,dom	= this.dom
+			,offset	= el.offset()
+			,x		= offset.left + ( el.outerWidth() - dom.outerWidth() )/2
+			,y		= offset.top - h - this.get_indicator_size()
+
+		this.dom.attr('data-tip-indicator-pos', 'bottom' )
+
+		return this.checkpos(x,y,w,h)
+	},
+	pos_left: function(w,h){
+		var el		= this.el
+			,dom	= this.dom
+			,offset	= el.offset()
+			,x		= offset.left - w - this.get_indicator_size()
+			,y		= offset.top + ( el.outerHeight() - dom.outerHeight() )/2
+
+		this.dom.attr('data-tip-indicator-pos', 'right' )
+
+		return this.checkpos(x,y,w,h)
+	},
+	pos_right: function(w,h){
+		var el		= this.el
+			,dom	= this.dom
+			,offset	= el.offset()
+			,x		= offset.left + el.outerWidth() + this.get_indicator_size()
+			,y		= offset.top + ( el.outerHeight() - dom.outerHeight() )/2
+
+		this.dom.attr('data-tip-indicator-pos', 'left' )
+
+		return this.checkpos(x,y,w,h)
+	},
+	checkpos: function(x,y,w,h){
+		var el = this.el
+			,dom = this.dom
+			,offset = el.offset()
+			,nx = x
+			,ny = y
+			,pos = {x:nx,y:ny}
+
+			,clientWidth = $document.width() || $window.width()
+
+		// 超出X轴右边界
+		if ((x + w) > clientWidth ){
+			if( w > offset.left ){
+				pos = {
+					'x': clientWidth - w - 2,
+					'y': y
+				}
+			}else{
+				//nx = offset.left - w;
+				pos = this['pos_left']( w , h )
+			}
+		}
+
+		// 超出X轴左边界
+		else if (x < 0)
+			//nx = 15;
+			pos = this['pos_right']( w , h )
+
+		// 超出Y轴下边界
+		if ( (y + h) > ($(window).scrollTop() + $(window).height()) )
+			//ny = this.pos == 'bottom' ? ( offset.top - this.el.outerHeight() ) : ( $(window).scrollTop() + $(window).height() - h );
+			pos = this['pos_top']( w , h )
+
+			/*
+		// Node on top of viewport scroll
+		else if ((offset.top - 100) < $(window).scrollTop())
+			ny = offset.top + this.el.outerHeight();
+
+		// Less than y viewport scrolled
+		else if (y < $(window).scrollTop())
+			ny = $(window).scrollTop() + 10;
+
+		// Less than y viewport
+		else if (y < 0)
+			ny = 15;*/
+
+		// 超出Y轴上边界
+		else if ( y < $(window).scrollTop() )
+			//ny = this.pos == 'bottom' ? ( offset.top - this.el.outerHeight() ) : ( $(window).scrollTop() + $(window).height() - h );
+			pos = this['pos_bottom']( w , h )
+
+		dom.attr({
+			'data-tip-indicator-offset-x': (x - nx)+'px',
+			'data-tip-indicator-offset-y': (y - ny)+'px'
+		})
+		return pos
+	},
+	
+	trigger_by_el: function(el){
+		var cont 		= el.data('tip')
+
+		if( !el.data('tip-filtered') ){
+			this.filters.forEach(function(filter){
+				cont = filter(cont) || cont
+			})
+			el.data({
+				'tip': 				cont,
+				'tip-filtered': 	true
+			})
+		}
+
+		//this.el_pending = el
+		
+		//setTimeout(function(){
+		//	if( this.el_pending == el )
+				this.show(
+					cont,
+					el,
+					el.data('tip-position')
+				)
+		//}, 100)
+	}
+};
+
+
+
+
+
+_p.el.tip = {
+	// isInit: false,
+
+	init: function(){
+		if( _p.el.tip.isInit )
+			return false
+
+		$body.on( 'mouseenter._tip', '[data-tip]', function(){
+				if( !$body_preventMouseover )
+					_p.tip.trigger_by_el($(this))
+			})
+			.on( 'mouseleave._tip', '[data-tip]', function(){
+				_p.tip.hide()
+			})
+			.on( 'click._tip', '[data-tip]', function(){
+				_p.tip.hide(true)
+			})
+			.on( 'tipshow._tip', '[data-tip]', function(){
+				_p.tip.trigger_by_el($(this))
+			})
+			.on( 'tiphide._tip', '[data-tip]', function(){
+				_p.tip.hide()
+			})
+
+		_p.el.tip.isInit = true
+	}
+}
+
+
+// 初始化所有 A 标签，使用delegate方式绑定事件
+
+
+
+_p.el.links = {
+	is_init:	false,
+	
+	// 点击事件
+	click: function(el, e){
+		var href = el.attr('href')
+		/*
+			,is_functional = href
+								? (href.substr(0, 1) == '#' || href.substr(0,11).toLowerCase() == 'javascript:')
+								: true
+								*/
+
+		// 带有 .disabled 的链接点击无效
+		if( el.hasClass('disabled') ){
+			if( e ){
+				e.preventDefault()
+				e.stopImmediatePropagation();
+				e.stopPropagation()
+			}
+			return false
+		}
+	},
+
+	init: function(tar){
+		if( !_p.el.links.is_init ){			
+			$body.on( 'click.link_delegate', 'a', function(e){
+				var el = $(this)
+					,target = el.attr('target')
+				
+				if( typeof node != 'undefined' ){
+					if( this.hostname != window.location.hostname )
+						target = '_external'
+	
+					if( target == '_external' || target == '_blank' ){
+						node.gui.Shell.openExternal(el.attr('href'));
+						e.preventDefault()
+						return true
+					}
+				}
+
+				_p.el.links.click(el, e)
+			})//.on( 'click.openExternalLink', 'a[href][target="_external"]', function(e){
+			//	node.gui.Shell.openExternal($(this).attr('href'));
+			//	e.preventDefault()
+			//});
+
+			_p.el.links.is_init = true
+		}
+	}
+}
+
+/*
+ */
+
+_p.el.form = {
+	init_el: function(el){
+		if( el.data('is_init_form_el') )
+			return true
+
+		// 注册 CTRL+ENTER 快捷键
+		el.find('textarea').on({
+				'keyup.ctrl_enter_submit': function(e){
+					var key = window.event ? e.keyCode : e.which
+						key = key.toString()
+					switch( key ){
+						case '13': // ENTER
+							if( e.metaKey || e.ctrlKey ){
+								// CTRL + ENTER
+								el.submit()
+							}
+							break;
+					}
+				}
+			})
+
+		el.data('is_init_form_el', true)
+	},
+	
+	
+	
+	
+	
+	
+	
+	
+
+	init: function(tar, els){
+		tar = tar || $body;
+		els = els || tar.find('form')
+
+		els.each(function(){
+			_p.el.form.init_el($(this))
+		})
+	}
+};
+
+
+
+
+
+
+
+
+
+
+
+/*
+ */
+_p.el.flexgrid = {
+	create: function(){
+		var el = $('<div class="flexgrid"/>')
+		_p.el.flexgrid.init_el(el)
+		return el
+	},
+
+	init_el: function(el){
+		if( el.data('is_init_flexgrid') )
+			return true
+
+		if( !el.data('append_before_this') ){
+			el.data('append_before_this', $('<div class="unit"/>').appendTo(el))
+			var i = 0
+			while(i < 9){
+				$('<div class="unit"/>').appendTo(el)
+				i++
+			}
+		}
+
+		el.data('is_init_flexgrid', true)
+	},
+
+	init: function(tar, els){
+		tar = tar || $body;
+		els = els || tar.find('.flexgrid')
+
+		els.each(function(){
+			_p.el.flexgrid.init_el($(this))
+		})
+	}
+};
+
+
+
+
+jQuery.fn.extend({
+	appendDOM: function( el_to_append ){
+		if( typeof el_to_append == 'function' )
+			el_to_append = el_to_append()
+			
+		if( el_to_append )
+			el_to_append.insertBefore( this.data('append_before_this') )
+		return this
+	}
+})
+
+/* Element: Input
+*/
+
+/*
+_p.el.input = {
+	index:	0,
+
+	msg: {
+		'text':		'请填写正确的内容',
+		'email':	'请填写正确的电子邮件地址',
+		'url':		'请填写正确的网址'
+	},
+
+	init_el: function(el){
+		if( el.data('is_init_input_el') )
+			return true
+		
+		
+		// 如果元素没有id，则绑定新的id
+		if( !el.attr('id') ){
+			el.attr('id', 'input_global_'+_p.el.input.index)
+			_p.el.input.index++
+		}
+		
+		
+		
+		// 根据input类型执行相应函数
+
+		var type	= el.attr('type')
+
+		if( _p.el.input['type_'+type] )
+			_p.el.input['type_'+type](el)
+		
+		// 自定义select样式
+			_p.el.input.init_el_select_custom( el )
+
+		// 处理textarea
+			_p.el.input.init_el_textarea( el )
+
+		el.data('is_init_input_el', true)
+	},
+	
+	init_el_select_custom: function( el ){
+		if( el[0].tagName == 'SELECT' && el.parent().hasClass('select') ){
+			var select = $('<font/>').appendTo(el.parent())
+			
+			el.on({
+				'change.custom_select': function(){
+					var _el		= $(this)
+						,val	= _el.val()
+						,option	= _el.find('option[value="'+val+'"]')
+					
+					if( option.length ){
+						val = option.html() || option.val()
+					}else{
+						if( !_el.find('option').eq(0).attr('value') )
+							val = _el.find('option').eq(0).html()
+					}
+					
+					select.html( val )
+					
+					//_el.blur();
+				}
+			})
+			
+			el.trigger('change.custom_select')
+		}
+	},
+
+	init_el_textarea: function( el ){
+		if( el[0].tagName == 'TEXTAREA' ){
+			el.on({
+				'change.contentcheck': function(){
+					var el = $(this)
+					if( el.val() ){
+						el.addClass('has_content')
+					}else{
+						el.removeClass('has_content')
+					}
+				}
+			})
+
+			// 字数限制
+			if( max = el.attr('max') ){
+				max = parseInt(max)
+				var tip = $('<em/>',{
+					'class': 	'tip-count',
+					'html': 	'<em>0</em>/'+max
+				}).insertAfter(el)
+				el.on({
+					'input.checkcount': function(){
+						var el = $(this)
+							,count = el.val().length
+						tip.find('em').text( count )
+						if( count > max ){
+							tip.addClass('exceed')
+						}else{
+							tip.removeClass('exceed')
+						}
+					}
+				}).trigger('input.checkcount')
+				if( bIE8 ){
+					el.on({
+						'keydown.checkcount': function(){
+							$(this).trigger('input.checkcount')
+						}
+					})
+				}
+			}
+		}
+	},
+
+	init: function(tar, els){
+		tar = tar || $body;
+		els = els || tar.find('input, select, textarea')
+
+		els.each(function(){
+			_p.el.input.init_el($(this))
+		})
+	},
+	
+	
+	
+	
+	// 检查内容正确性
+	check_valid: function(el){
+		var type	= el.attr('type')
+			,val	= el.val()
+			,valid	= true
+			,pattern= el.attr('pattern')
+			,typetocheck = [
+				'email',
+				'url',
+				'number'
+			]
+			,tocheck = type || pattern
+
+		if( !tocheck || $.inArray(tocheck, typetocheck) < 0 )
+			return true
+		
+		return _g.check_valid( val, tocheck )
+
+		//switch( el.attr('type') ){
+		//	case 'email':
+		//		valid = /^[^\@]+\@[^\@]+\.[a-z]+$/i.test(val)
+		//		break;
+		//	case 'url':
+		//		valid = /^.+\.[a-z]+$/i.test(val)
+		//		break;
+		//}
+		
+		// 正则
+		//if( pattern ){
+		//	pattern = new RegExp(pattern)
+		//	valid = pattern.test(val)
+		//}
+
+		return valid
+	},
+
+
+
+
+	type_text: function(el){
+		el.on({
+			'change.contentcheck': function(){
+				var el = $(this)
+				if( el.val() ){
+					el.addClass('has_content')
+				}else{
+					el.removeClass('has_content')
+				}
+			}
+		})
+	},
+
+
+
+
+	// fix for TYPE
+	type_checkbox: function(el){
+		if( bIE8 ){
+			// 如果当前为选中状态，添加样式
+			if( el.prop('checked') )
+				el.addClass('state-checked')
+		}
+
+		el.on({
+			'change._blur_fix': function(){
+				var el		= $(this)
+
+				if( bIE8 ){
+					if( el.prop('checked') ){
+						el.addClass('state-checked')
+							//.prop('checked', false)
+					}else{
+						el.removeClass('state-checked')
+							//.prop('checked', true)
+					}
+				}
+
+				el.trigger('blur')
+			}
+		})
+	},
+	
+	
+	
+	type_date: function( el ){
+		// 针对移动浏览器，不显示网站自定的日期选择器
+		if( bMobile )
+			return false
+		
+		var name		= el.attr('name') || null
+			,id			= el.attr('id') || null
+			,id_year	= id ? id + '_year' : null
+			,id_month	= id ? id + '_month' : null
+			,id_date	= id ? id + '_date' : null
+			,outer		= $('<span/>',{
+					'class':	'date_picker'
+				}).insertBefore(el)
+
+			,months = [
+					'一月',
+					'二月',
+					'三月',
+					'四月',
+					'五月',
+					'六月',
+					'七月',
+					'八月',
+					'九月',
+					'十月',
+					'十一月',
+					'十二月',
+				]
+			
+			,year = $('<input/>',{
+						'type':		'text',
+						//'max':		4,
+						'id':		id_year,
+						'class':	'date_year'
+					}).on({
+						'input.datechange': function(){
+							var cur_year	= $(this).val()
+								,is_leap	= cur_year ? (( cur_year%4 == 0 && cur_year%100 != 0 ) || cur_year%400 == 0) : false
+								,date_num	= [
+										31,
+										is_leap ? 29 : 28,
+										31,
+										30,
+										31,
+										30,
+										31,
+										31,
+										30,
+										31,
+										30,
+										31
+									]
+
+							month.val('').trigger('change.custom_select').trigger('change.date')
+							//date.val('').empty().trigger('change.custom_select')
+						},
+						'keyup.datechange': function(){
+							if( bIE8 )
+								$(this).trigger('input.datechange')
+						}
+					}).appendTo(outer)
+			
+			,month = $('<select/>',{
+						'class':	'date_month',
+						'id':		id_month
+					}).appendTo(outer)
+			
+			,date = $('<select/>',{
+						'class':	'date_date',
+						'id':		id_date
+					}).appendTo(outer)
+
+			
+		el.addClass('none')
+		
+		$('<label/>',{
+			'for':		id_year,
+			'html':		'年'
+		}).insertAfter(year)
+		
+		month.wrap('<span class="select date_month"/>')
+			.on({
+				'change.date': function(){
+					var cur_year	= year.val()
+						,cur_month	= parseInt($(this).val()) - 1
+						,is_leap	= cur_year ? (( cur_year%4 == 0 && cur_year%100 != 0 ) || cur_year%400 == 0) : false
+						,date_num	= [
+								31,
+								is_leap ? 29 : 28,
+								31,
+								30,
+								31,
+								30,
+								31,
+								31,
+								30,
+								31,
+								30,
+								31
+							]
+					
+					date.val('').trigger('change.custom_select').empty()
+					
+					for( var i=0; i<date_num[cur_month]; i++ ){
+						var num = parseInt(i)
+							,num2 = num+1
+						if( !num ){
+							$('<option/>',{
+								'value':	null,
+								'html':		'--日--'
+							}).appendTo(date)
+						}
+						$('<option/>',{
+							'value':	num2 < 10 ? '0'+num2 : num2,
+							'html':		(num+1)+'日'
+						}).appendTo(date)
+					}
+					
+					date.trigger('change.custom_select')
+				}
+			})
+
+		for( var i in months ){
+			var num = parseInt(i)
+				,num2 = num+1
+			
+			if( !num ){
+				$('<option/>',{
+					'value':	null,
+					'html':		'--月--'
+				}).appendTo(month)
+			}
+			$('<option/>',{
+				'value':	num2 < 10 ? '0'+num2 : num2,
+				'html':		months[num]
+			}).appendTo(month)
+		}
+
+		
+		date.wrap('<span class="select date_date"/>')
+		$('<option/>',{
+			'value':	null,
+			'html':		'--日--'
+		}).appendTo(date)
+
+		_p.el.input.init(outer)
+
+	},
+
+
+
+
+	type_file: function(el){
+		//	<input id="option_dest" type="text" required />
+		//	<button type="button" value="Browse...">浏览...</button>
+		//	<input id="option_dest_selector" type="file" nwdirectory />
+		if( el.prop('nwdirectory') ){
+			var parent 	= el.parent()
+				,text 	= parent.find('input[type="text"]')
+				,button = parent.find('button').on('click', function(){
+								el.trigger('click')
+							})
+			el.on({
+				'click.reset': function(){
+					el.val('')
+				},
+				'change.result': function(){
+					text.val(el.val())
+				}
+			})
+		}
+	}
+}
+*/
+!function(root,factory){"undefined"!=typeof exports?"undefined"!=typeof module&&module.exports&&(exports=module.exports=factory(root,exports)):"function"==typeof define&&define.amd?define(["exports"],function(exports){root.Lockr=factory(root,exports)}):root.Lockr=factory(root,{})}(this,function(root,Lockr){"use strict";return Array.prototype.indexOf||(Array.prototype.indexOf=function(elt){var len=this.length>>>0,from=Number(arguments[1])||0;for(from=0>from?Math.ceil(from):Math.floor(from),0>from&&(from+=len);len>from;from++)if(from in this&&this[from]===elt)return from;return-1}),Lockr.prefix="",Lockr._getPrefixedKey=function(key,options){return options=options||{},options.noPrefix?key:this.prefix+key},Lockr.set=function(key,value,options){var query_key=this._getPrefixedKey(key,options);try{localStorage.setItem(query_key,JSON.stringify({data:value}))}catch(e){console&&console.warn("Lockr didn't successfully save the '{"+key+": "+value+"}' pair, because the localStorage is full.")}},Lockr.get=function(key,missing,options){var value,query_key=this._getPrefixedKey(key,options);try{value=JSON.parse(localStorage.getItem(query_key))}catch(e){try{value=localStorage[query_key]?JSON.parse('{"data":"'+localStorage.getItem(query_key)+'"}'):null}catch(e){console&&console.warn("Lockr could not load the item with key "+key)}}return null===value?missing:"undefined"!=typeof value.data?value.data:missing},Lockr.sadd=function(key,value,options){var json,query_key=this._getPrefixedKey(key,options),values=Lockr.smembers(key);if(values.indexOf(value)>-1)return null;try{values.push(value),json=JSON.stringify({data:values}),localStorage.setItem(query_key,json)}catch(e){console.log(e),console&&console.warn("Lockr didn't successfully add the "+value+" to "+key+" set, because the localStorage is full.")}},Lockr.smembers=function(key,options){var value,query_key=this._getPrefixedKey(key,options);try{value=JSON.parse(localStorage.getItem(query_key))}catch(e){value=null}return null===value?[]:value.data||[]},Lockr.sismember=function(key,value,options){this._getPrefixedKey(key,options);return Lockr.smembers(key).indexOf(value)>-1},Lockr.getAll=function(){var keys=Object.keys(localStorage);return keys.map(function(key){return Lockr.get(key)})},Lockr.srem=function(key,value,options){var json,index,query_key=this._getPrefixedKey(key,options),values=Lockr.smembers(key,value);index=values.indexOf(value),index>-1&&values.splice(index,1),json=JSON.stringify({data:values});try{localStorage.setItem(query_key,json)}catch(e){console&&console.warn("Lockr couldn't remove the "+value+" from the set "+key)}},Lockr.rm=function(key){localStorage.removeItem(key)},Lockr.flush=function(){localStorage.clear()},Lockr});
+// Copyright (c) 2013 Pieroxy <pieroxy@pieroxy.net>
+// This work is free. You can redistribute it and/or modify it
+// under the terms of the WTFPL, Version 2
+// For more information see LICENSE.txt or http://www.wtfpl.net/
+//
+// For more information, the home page:
+// http://pieroxy.net/blog/pages/lz-string/testing.html
+//
+// LZ-based compression algorithm, version 1.4.4
+var LZString = (function() {
+
+// private property
+var f = String.fromCharCode;
+var keyStrBase64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+var keyStrUriSafe = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$";
+var baseReverseDic = {};
+
+function getBaseValue(alphabet, character) {
+  if (!baseReverseDic[alphabet]) {
+    baseReverseDic[alphabet] = {};
+    for (var i=0 ; i<alphabet.length ; i++) {
+      baseReverseDic[alphabet][alphabet.charAt(i)] = i;
+    }
+  }
+  return baseReverseDic[alphabet][character];
+}
+
+var LZString = {
+  compressToBase64 : function (input) {
+    if (input == null) return "";
+    var res = LZString._compress(input, 6, function(a){return keyStrBase64.charAt(a);});
+    switch (res.length % 4) { // To produce valid Base64
+    default: // When could this happen ?
+    case 0 : return res;
+    case 1 : return res+"===";
+    case 2 : return res+"==";
+    case 3 : return res+"=";
+    }
+  },
+
+  decompressFromBase64 : function (input) {
+    if (input == null) return "";
+    if (input == "") return null;
+    return LZString._decompress(input.length, 32, function(index) { return getBaseValue(keyStrBase64, input.charAt(index)); });
+  },
+
+  compressToUTF16 : function (input) {
+    if (input == null) return "";
+    return LZString._compress(input, 15, function(a){return f(a+32);}) + " ";
+  },
+
+  decompressFromUTF16: function (compressed) {
+    if (compressed == null) return "";
+    if (compressed == "") return null;
+    return LZString._decompress(compressed.length, 16384, function(index) { return compressed.charCodeAt(index) - 32; });
+  },
+
+  //compress into uint8array (UCS-2 big endian format)
+  compressToUint8Array: function (uncompressed) {
+    var compressed = LZString.compress(uncompressed);
+    var buf=new Uint8Array(compressed.length*2); // 2 bytes per character
+
+    for (var i=0, TotalLen=compressed.length; i<TotalLen; i++) {
+      var current_value = compressed.charCodeAt(i);
+      buf[i*2] = current_value >>> 8;
+      buf[i*2+1] = current_value % 256;
+    }
+    return buf;
+  },
+
+  //decompress from uint8array (UCS-2 big endian format)
+  decompressFromUint8Array:function (compressed) {
+    if (compressed===null || compressed===undefined){
+        return LZString.decompress(compressed);
+    } else {
+        var buf=new Array(compressed.length/2); // 2 bytes per character
+        for (var i=0, TotalLen=buf.length; i<TotalLen; i++) {
+          buf[i]=compressed[i*2]*256+compressed[i*2+1];
+        }
+
+        var result = [];
+        buf.forEach(function (c) {
+          result.push(f(c));
+        });
+        return LZString.decompress(result.join(''));
+
+    }
+
+  },
+
+
+  //compress into a string that is already URI encoded
+  compressToEncodedURIComponent: function (input) {
+    if (input == null) return "";
+    return LZString._compress(input, 6, function(a){return keyStrUriSafe.charAt(a);});
+  },
+
+  //decompress from an output of compressToEncodedURIComponent
+  decompressFromEncodedURIComponent:function (input) {
+    if (input == null) return "";
+    if (input == "") return null;
+    input = input.replace(/ /g, "+");
+    return LZString._decompress(input.length, 32, function(index) { return getBaseValue(keyStrUriSafe, input.charAt(index)); });
+  },
+
+  compress: function (uncompressed) {
+    return LZString._compress(uncompressed, 16, function(a){return f(a);});
+  },
+  _compress: function (uncompressed, bitsPerChar, getCharFromInt) {
+    if (uncompressed == null) return "";
+    var i, value,
+        context_dictionary= {},
+        context_dictionaryToCreate= {},
+        context_c="",
+        context_wc="",
+        context_w="",
+        context_enlargeIn= 2, // Compensate for the first entry which should not count
+        context_dictSize= 3,
+        context_numBits= 2,
+        context_data=[],
+        context_data_val=0,
+        context_data_position=0,
+        ii;
+
+    for (ii = 0; ii < uncompressed.length; ii += 1) {
+      context_c = uncompressed.charAt(ii);
+      if (!Object.prototype.hasOwnProperty.call(context_dictionary,context_c)) {
+        context_dictionary[context_c] = context_dictSize++;
+        context_dictionaryToCreate[context_c] = true;
+      }
+
+      context_wc = context_w + context_c;
+      if (Object.prototype.hasOwnProperty.call(context_dictionary,context_wc)) {
+        context_w = context_wc;
+      } else {
+        if (Object.prototype.hasOwnProperty.call(context_dictionaryToCreate,context_w)) {
+          if (context_w.charCodeAt(0)<256) {
+            for (i=0 ; i<context_numBits ; i++) {
+              context_data_val = (context_data_val << 1);
+              if (context_data_position == bitsPerChar-1) {
+                context_data_position = 0;
+                context_data.push(getCharFromInt(context_data_val));
+                context_data_val = 0;
+              } else {
+                context_data_position++;
+              }
+            }
+            value = context_w.charCodeAt(0);
+            for (i=0 ; i<8 ; i++) {
+              context_data_val = (context_data_val << 1) | (value&1);
+              if (context_data_position == bitsPerChar-1) {
+                context_data_position = 0;
+                context_data.push(getCharFromInt(context_data_val));
+                context_data_val = 0;
+              } else {
+                context_data_position++;
+              }
+              value = value >> 1;
+            }
+          } else {
+            value = 1;
+            for (i=0 ; i<context_numBits ; i++) {
+              context_data_val = (context_data_val << 1) | value;
+              if (context_data_position ==bitsPerChar-1) {
+                context_data_position = 0;
+                context_data.push(getCharFromInt(context_data_val));
+                context_data_val = 0;
+              } else {
+                context_data_position++;
+              }
+              value = 0;
+            }
+            value = context_w.charCodeAt(0);
+            for (i=0 ; i<16 ; i++) {
+              context_data_val = (context_data_val << 1) | (value&1);
+              if (context_data_position == bitsPerChar-1) {
+                context_data_position = 0;
+                context_data.push(getCharFromInt(context_data_val));
+                context_data_val = 0;
+              } else {
+                context_data_position++;
+              }
+              value = value >> 1;
+            }
+          }
+          context_enlargeIn--;
+          if (context_enlargeIn == 0) {
+            context_enlargeIn = Math.pow(2, context_numBits);
+            context_numBits++;
+          }
+          delete context_dictionaryToCreate[context_w];
+        } else {
+          value = context_dictionary[context_w];
+          for (i=0 ; i<context_numBits ; i++) {
+            context_data_val = (context_data_val << 1) | (value&1);
+            if (context_data_position == bitsPerChar-1) {
+              context_data_position = 0;
+              context_data.push(getCharFromInt(context_data_val));
+              context_data_val = 0;
+            } else {
+              context_data_position++;
+            }
+            value = value >> 1;
+          }
+
+
+        }
+        context_enlargeIn--;
+        if (context_enlargeIn == 0) {
+          context_enlargeIn = Math.pow(2, context_numBits);
+          context_numBits++;
+        }
+        // Add wc to the dictionary.
+        context_dictionary[context_wc] = context_dictSize++;
+        context_w = String(context_c);
+      }
+    }
+
+    // Output the code for w.
+    if (context_w !== "") {
+      if (Object.prototype.hasOwnProperty.call(context_dictionaryToCreate,context_w)) {
+        if (context_w.charCodeAt(0)<256) {
+          for (i=0 ; i<context_numBits ; i++) {
+            context_data_val = (context_data_val << 1);
+            if (context_data_position == bitsPerChar-1) {
+              context_data_position = 0;
+              context_data.push(getCharFromInt(context_data_val));
+              context_data_val = 0;
+            } else {
+              context_data_position++;
+            }
+          }
+          value = context_w.charCodeAt(0);
+          for (i=0 ; i<8 ; i++) {
+            context_data_val = (context_data_val << 1) | (value&1);
+            if (context_data_position == bitsPerChar-1) {
+              context_data_position = 0;
+              context_data.push(getCharFromInt(context_data_val));
+              context_data_val = 0;
+            } else {
+              context_data_position++;
+            }
+            value = value >> 1;
+          }
+        } else {
+          value = 1;
+          for (i=0 ; i<context_numBits ; i++) {
+            context_data_val = (context_data_val << 1) | value;
+            if (context_data_position == bitsPerChar-1) {
+              context_data_position = 0;
+              context_data.push(getCharFromInt(context_data_val));
+              context_data_val = 0;
+            } else {
+              context_data_position++;
+            }
+            value = 0;
+          }
+          value = context_w.charCodeAt(0);
+          for (i=0 ; i<16 ; i++) {
+            context_data_val = (context_data_val << 1) | (value&1);
+            if (context_data_position == bitsPerChar-1) {
+              context_data_position = 0;
+              context_data.push(getCharFromInt(context_data_val));
+              context_data_val = 0;
+            } else {
+              context_data_position++;
+            }
+            value = value >> 1;
+          }
+        }
+        context_enlargeIn--;
+        if (context_enlargeIn == 0) {
+          context_enlargeIn = Math.pow(2, context_numBits);
+          context_numBits++;
+        }
+        delete context_dictionaryToCreate[context_w];
+      } else {
+        value = context_dictionary[context_w];
+        for (i=0 ; i<context_numBits ; i++) {
+          context_data_val = (context_data_val << 1) | (value&1);
+          if (context_data_position == bitsPerChar-1) {
+            context_data_position = 0;
+            context_data.push(getCharFromInt(context_data_val));
+            context_data_val = 0;
+          } else {
+            context_data_position++;
+          }
+          value = value >> 1;
+        }
+
+
+      }
+      context_enlargeIn--;
+      if (context_enlargeIn == 0) {
+        context_enlargeIn = Math.pow(2, context_numBits);
+        context_numBits++;
+      }
+    }
+
+    // Mark the end of the stream
+    value = 2;
+    for (i=0 ; i<context_numBits ; i++) {
+      context_data_val = (context_data_val << 1) | (value&1);
+      if (context_data_position == bitsPerChar-1) {
+        context_data_position = 0;
+        context_data.push(getCharFromInt(context_data_val));
+        context_data_val = 0;
+      } else {
+        context_data_position++;
+      }
+      value = value >> 1;
+    }
+
+    // Flush the last char
+    while (true) {
+      context_data_val = (context_data_val << 1);
+      if (context_data_position == bitsPerChar-1) {
+        context_data.push(getCharFromInt(context_data_val));
+        break;
+      }
+      else context_data_position++;
+    }
+    return context_data.join('');
+  },
+
+  decompress: function (compressed) {
+    if (compressed == null) return "";
+    if (compressed == "") return null;
+    return LZString._decompress(compressed.length, 32768, function(index) { return compressed.charCodeAt(index); });
+  },
+
+  _decompress: function (length, resetValue, getNextValue) {
+    var dictionary = [],
+        next,
+        enlargeIn = 4,
+        dictSize = 4,
+        numBits = 3,
+        entry = "",
+        result = [],
+        i,
+        w,
+        bits, resb, maxpower, power,
+        c,
+        data = {val:getNextValue(0), position:resetValue, index:1};
+
+    for (i = 0; i < 3; i += 1) {
+      dictionary[i] = i;
+    }
+
+    bits = 0;
+    maxpower = Math.pow(2,2);
+    power=1;
+    while (power!=maxpower) {
+      resb = data.val & data.position;
+      data.position >>= 1;
+      if (data.position == 0) {
+        data.position = resetValue;
+        data.val = getNextValue(data.index++);
+      }
+      bits |= (resb>0 ? 1 : 0) * power;
+      power <<= 1;
+    }
+
+    switch (next = bits) {
+      case 0:
+          bits = 0;
+          maxpower = Math.pow(2,8);
+          power=1;
+          while (power!=maxpower) {
+            resb = data.val & data.position;
+            data.position >>= 1;
+            if (data.position == 0) {
+              data.position = resetValue;
+              data.val = getNextValue(data.index++);
+            }
+            bits |= (resb>0 ? 1 : 0) * power;
+            power <<= 1;
+          }
+        c = f(bits);
+        break;
+      case 1:
+          bits = 0;
+          maxpower = Math.pow(2,16);
+          power=1;
+          while (power!=maxpower) {
+            resb = data.val & data.position;
+            data.position >>= 1;
+            if (data.position == 0) {
+              data.position = resetValue;
+              data.val = getNextValue(data.index++);
+            }
+            bits |= (resb>0 ? 1 : 0) * power;
+            power <<= 1;
+          }
+        c = f(bits);
+        break;
+      case 2:
+        return "";
+    }
+    dictionary[3] = c;
+    w = c;
+    result.push(c);
+    while (true) {
+      if (data.index > length) {
+        return "";
+      }
+
+      bits = 0;
+      maxpower = Math.pow(2,numBits);
+      power=1;
+      while (power!=maxpower) {
+        resb = data.val & data.position;
+        data.position >>= 1;
+        if (data.position == 0) {
+          data.position = resetValue;
+          data.val = getNextValue(data.index++);
+        }
+        bits |= (resb>0 ? 1 : 0) * power;
+        power <<= 1;
+      }
+
+      switch (c = bits) {
+        case 0:
+          bits = 0;
+          maxpower = Math.pow(2,8);
+          power=1;
+          while (power!=maxpower) {
+            resb = data.val & data.position;
+            data.position >>= 1;
+            if (data.position == 0) {
+              data.position = resetValue;
+              data.val = getNextValue(data.index++);
+            }
+            bits |= (resb>0 ? 1 : 0) * power;
+            power <<= 1;
+          }
+
+          dictionary[dictSize++] = f(bits);
+          c = dictSize-1;
+          enlargeIn--;
+          break;
+        case 1:
+          bits = 0;
+          maxpower = Math.pow(2,16);
+          power=1;
+          while (power!=maxpower) {
+            resb = data.val & data.position;
+            data.position >>= 1;
+            if (data.position == 0) {
+              data.position = resetValue;
+              data.val = getNextValue(data.index++);
+            }
+            bits |= (resb>0 ? 1 : 0) * power;
+            power <<= 1;
+          }
+          dictionary[dictSize++] = f(bits);
+          c = dictSize-1;
+          enlargeIn--;
+          break;
+        case 2:
+          return result.join('');
+      }
+
+      if (enlargeIn == 0) {
+        enlargeIn = Math.pow(2, numBits);
+        numBits++;
+      }
+
+      if (dictionary[c]) {
+        entry = dictionary[c];
+      } else {
+        if (c === dictSize) {
+          entry = w + w.charAt(0);
+        } else {
+          return null;
+        }
+      }
+      result.push(entry);
+
+      // Add w+entry[0] to the dictionary.
+      dictionary[dictSize++] = w + entry.charAt(0);
+      enlargeIn--;
+
+      w = entry;
+
+      if (enlargeIn == 0) {
+        enlargeIn = Math.pow(2, numBits);
+        numBits++;
+      }
+
+    }
+  }
+};
+  return LZString;
+})();
+
+if (typeof define === 'function' && define.amd) {
+  define(function () { return LZString; });
+} else if( typeof module !== 'undefined' && module != null ) {
+  module.exports = LZString
+}
+
+/* global window, exports, define */
+
+!function() {
+    'use strict'
+
+    var re = {
+        not_string: /[^s]/,
+        not_bool: /[^t]/,
+        not_type: /[^T]/,
+        not_primitive: /[^v]/,
+        number: /[diefg]/,
+        numeric_arg: /[bcdiefguxX]/,
+        json: /[j]/,
+        not_json: /[^j]/,
+        text: /^[^\x25]+/,
+        modulo: /^\x25{2}/,
+        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
+        key: /^([a-z_][a-z_\d]*)/i,
+        key_access: /^\.([a-z_][a-z_\d]*)/i,
+        index_access: /^\[(\d+)\]/,
+        sign: /^[\+\-]/
+    }
+
+    function sprintf(key) {
+        // `arguments` is not an array, but should be fine for this call
+        return sprintf_format(sprintf_parse(key), arguments)
+    }
+
+    function vsprintf(fmt, argv) {
+        return sprintf.apply(null, [fmt].concat(argv || []))
+    }
+
+    function sprintf_format(parse_tree, argv) {
+        var cursor = 1, tree_length = parse_tree.length, arg, output = '', i, k, match, pad, pad_character, pad_length, is_positive, sign
+        for (i = 0; i < tree_length; i++) {
+            if (typeof parse_tree[i] === 'string') {
+                output += parse_tree[i]
+            }
+            else if (Array.isArray(parse_tree[i])) {
+                match = parse_tree[i] // convenience purposes only
+                if (match[2]) { // keyword argument
+                    arg = argv[cursor]
+                    for (k = 0; k < match[2].length; k++) {
+                        if (!arg.hasOwnProperty(match[2][k])) {
+                            throw new Error(sprintf('[sprintf] property "%s" does not exist', match[2][k]))
+                        }
+                        arg = arg[match[2][k]]
+                    }
+                }
+                else if (match[1]) { // positional argument (explicit)
+                    arg = argv[match[1]]
+                }
+                else { // positional argument (implicit)
+                    arg = argv[cursor++]
+                }
+
+                if (re.not_type.test(match[8]) && re.not_primitive.test(match[8]) && arg instanceof Function) {
+                    arg = arg()
+                }
+
+                if (re.numeric_arg.test(match[8]) && (typeof arg !== 'number' && isNaN(arg))) {
+                    throw new TypeError(sprintf('[sprintf] expecting number but found %T', arg))
+                }
+
+                if (re.number.test(match[8])) {
+                    is_positive = arg >= 0
+                }
+
+                switch (match[8]) {
+                    case 'b':
+                        arg = parseInt(arg, 10).toString(2)
+                        break
+                    case 'c':
+                        arg = String.fromCharCode(parseInt(arg, 10))
+                        break
+                    case 'd':
+                    case 'i':
+                        arg = parseInt(arg, 10)
+                        break
+                    case 'j':
+                        arg = JSON.stringify(arg, null, match[6] ? parseInt(match[6]) : 0)
+                        break
+                    case 'e':
+                        arg = match[7] ? parseFloat(arg).toExponential(match[7]) : parseFloat(arg).toExponential()
+                        break
+                    case 'f':
+                        arg = match[7] ? parseFloat(arg).toFixed(match[7]) : parseFloat(arg)
+                        break
+                    case 'g':
+                        arg = match[7] ? String(Number(arg.toPrecision(match[7]))) : parseFloat(arg)
+                        break
+                    case 'o':
+                        arg = (parseInt(arg, 10) >>> 0).toString(8)
+                        break
+                    case 's':
+                        arg = String(arg)
+                        arg = (match[7] ? arg.substring(0, match[7]) : arg)
+                        break
+                    case 't':
+                        arg = String(!!arg)
+                        arg = (match[7] ? arg.substring(0, match[7]) : arg)
+                        break
+                    case 'T':
+                        arg = Object.prototype.toString.call(arg).slice(8, -1).toLowerCase()
+                        arg = (match[7] ? arg.substring(0, match[7]) : arg)
+                        break
+                    case 'u':
+                        arg = parseInt(arg, 10) >>> 0
+                        break
+                    case 'v':
+                        arg = arg.valueOf()
+                        arg = (match[7] ? arg.substring(0, match[7]) : arg)
+                        break
+                    case 'x':
+                        arg = (parseInt(arg, 10) >>> 0).toString(16)
+                        break
+                    case 'X':
+                        arg = (parseInt(arg, 10) >>> 0).toString(16).toUpperCase()
+                        break
+                }
+                if (re.json.test(match[8])) {
+                    output += arg
+                }
+                else {
+                    if (re.number.test(match[8]) && (!is_positive || match[3])) {
+                        sign = is_positive ? '+' : '-'
+                        arg = arg.toString().replace(re.sign, '')
+                    }
+                    else {
+                        sign = ''
+                    }
+                    pad_character = match[4] ? match[4] === '0' ? '0' : match[4].charAt(1) : ' '
+                    pad_length = match[6] - (sign + arg).length
+                    pad = match[6] ? (pad_length > 0 ? pad_character.repeat(pad_length) : '') : ''
+                    output += match[5] ? sign + arg + pad : (pad_character === '0' ? sign + pad + arg : pad + sign + arg)
+                }
+            }
+        }
+        return output
+    }
+
+    var sprintf_cache = Object.create(null)
+
+    function sprintf_parse(fmt) {
+        if (sprintf_cache[fmt]) {
+            return sprintf_cache[fmt]
+        }
+
+        var _fmt = fmt, match, parse_tree = [], arg_names = 0
+        while (_fmt) {
+            if ((match = re.text.exec(_fmt)) !== null) {
+                parse_tree.push(match[0])
+            }
+            else if ((match = re.modulo.exec(_fmt)) !== null) {
+                parse_tree.push('%')
+            }
+            else if ((match = re.placeholder.exec(_fmt)) !== null) {
+                if (match[2]) {
+                    arg_names |= 1
+                    var field_list = [], replacement_field = match[2], field_match = []
+                    if ((field_match = re.key.exec(replacement_field)) !== null) {
+                        field_list.push(field_match[1])
+                        while ((replacement_field = replacement_field.substring(field_match[0].length)) !== '') {
+                            if ((field_match = re.key_access.exec(replacement_field)) !== null) {
+                                field_list.push(field_match[1])
+                            }
+                            else if ((field_match = re.index_access.exec(replacement_field)) !== null) {
+                                field_list.push(field_match[1])
+                            }
+                            else {
+                                throw new SyntaxError('[sprintf] failed to parse named argument key')
+                            }
+                        }
+                    }
+                    else {
+                        throw new SyntaxError('[sprintf] failed to parse named argument key')
+                    }
+                    match[2] = field_list
+                }
+                else {
+                    arg_names |= 2
+                }
+                if (arg_names === 3) {
+                    throw new Error('[sprintf] mixing positional and named placeholders is not (yet) supported')
+                }
+                parse_tree.push(match)
+            }
+            else {
+                throw new SyntaxError('[sprintf] unexpected placeholder')
+            }
+            _fmt = _fmt.substring(match[0].length)
+        }
+        return sprintf_cache[fmt] = parse_tree
+    }
+
+    /**
+     * export to either browser or node.js
+     */
+    /* eslint-disable quote-props */
+    if (typeof exports !== 'undefined') {
+        exports['sprintf'] = sprintf
+        exports['vsprintf'] = vsprintf
+    }
+    if (typeof window !== 'undefined') {
+        window['sprintf'] = sprintf
+        window['vsprintf'] = vsprintf
+
+        if (typeof define === 'function' && define['amd']) {
+            define(function() {
+                return {
+                    'sprintf': sprintf,
+                    'vsprintf': vsprintf
+                }
+            })
+        }
+    }
+    /* eslint-enable quote-props */
+}()
+
+/*!
+ * PEP v0.4.3 | https://github.com/jquery/PEP
+ * Copyright jQuery Foundation and other contributors | http://jquery.org/license
+ */
+!function(a,b){"object"==typeof exports&&"undefined"!=typeof module?module.exports=b():"function"==typeof define&&define.amd?define(b):a.PointerEventsPolyfill=b()}(this,function(){"use strict";function a(a,b){b=b||Object.create(null);var c=document.createEvent("Event");c.initEvent(a,b.bubbles||!1,b.cancelable||!1);
+// define inherited MouseEvent properties
+// skip bubbles and cancelable since they're set above in initEvent()
+for(var d,e=2;e<m.length;e++)d=m[e],c[d]=b[d]||n[e];c.buttons=b.buttons||0;
+// Spec requires that pointers without pressure specified use 0.5 for down
+// state and 0 for up state.
+var f=0;
+// add x/y properties aliased to clientX/Y
+// define the properties of the PointerEvent interface
+return f=b.pressure&&c.buttons?b.pressure:c.buttons?.5:0,c.x=c.clientX,c.y=c.clientY,c.pointerId=b.pointerId||0,c.width=b.width||0,c.height=b.height||0,c.pressure=f,c.tiltX=b.tiltX||0,c.tiltY=b.tiltY||0,c.twist=b.twist||0,c.tangentialPressure=b.tangentialPressure||0,c.pointerType=b.pointerType||"",c.hwTimestamp=b.hwTimestamp||0,c.isPrimary=b.isPrimary||!1,c}function b(){this.array=[],this.size=0}function c(a,b,c,d){this.addCallback=a.bind(d),this.removeCallback=b.bind(d),this.changedCallback=c.bind(d),A&&(this.observer=new A(this.mutationWatcher.bind(this)))}function d(a){return"body /shadow-deep/ "+e(a)}function e(a){return'[touch-action="'+a+'"]'}function f(a){return"{ -ms-touch-action: "+a+"; touch-action: "+a+"; }"}function g(){if(F){D.forEach(function(a){String(a)===a?(E+=e(a)+f(a)+"\n",G&&(E+=d(a)+f(a)+"\n")):(E+=a.selectors.map(e)+f(a.rule)+"\n",G&&(E+=a.selectors.map(d)+f(a.rule)+"\n"))});var a=document.createElement("style");a.textContent=E,document.head.appendChild(a)}}function h(){
+// only activate if this platform does not have pointer events
+if(!window.PointerEvent){if(window.PointerEvent=a,window.navigator.msPointerEnabled){var b=window.navigator.msMaxTouchPoints;Object.defineProperty(window.navigator,"maxTouchPoints",{value:b,enumerable:!0}),u.registerSource("ms",_)}else Object.defineProperty(window.navigator,"maxTouchPoints",{value:0,enumerable:!0}),u.registerSource("mouse",N),void 0!==window.ontouchstart&&u.registerSource("touch",V);u.register(document)}}function i(a){if(!u.pointermap.has(a)){var b=new Error("InvalidPointerId");throw b.name="InvalidPointerId",b}}function j(a){for(var b=a.parentNode;b&&b!==a.ownerDocument;)b=b.parentNode;if(!b){var c=new Error("InvalidStateError");throw c.name="InvalidStateError",c}}function k(a){var b=u.pointermap.get(a);return 0!==b.buttons}function l(){window.Element&&!Element.prototype.setPointerCapture&&Object.defineProperties(Element.prototype,{setPointerCapture:{value:W},releasePointerCapture:{value:X},hasPointerCapture:{value:Y}})}/**
+   * This is the constructor for new PointerEvents.
+   *
+   * New Pointer Events must be given a type, and an optional dictionary of
+   * initialization properties.
+   *
+   * Due to certain platform requirements, events returned from the constructor
+   * identify as MouseEvents.
+   *
+   * @constructor
+   * @param {String} inType The type of the event to create.
+   * @param {Object} [inDict] An optional dictionary of initial event properties.
+   * @return {Event} A new PointerEvent of type `inType`, initialized with properties from `inDict`.
+   */
+var m=["bubbles","cancelable","view","detail","screenX","screenY","clientX","clientY","ctrlKey","altKey","shiftKey","metaKey","button","relatedTarget","pageX","pageY"],n=[!1,!1,null,null,0,0,0,0,!1,!1,!1,!1,0,null,0,0],o=window.Map&&window.Map.prototype.forEach,p=o?Map:b;b.prototype={set:function(a,b){return void 0===b?this["delete"](a):(this.has(a)||this.size++,void(this.array[a]=b))},has:function(a){return void 0!==this.array[a]},"delete":function(a){this.has(a)&&(delete this.array[a],this.size--)},get:function(a){return this.array[a]},clear:function(){this.array.length=0,this.size=0},
+// return value, key, map
+forEach:function(a,b){return this.array.forEach(function(c,d){a.call(b,c,d,this)},this)}};var q=[
+// MouseEvent
+"bubbles","cancelable","view","detail","screenX","screenY","clientX","clientY","ctrlKey","altKey","shiftKey","metaKey","button","relatedTarget",
+// DOM Level 3
+"buttons",
+// PointerEvent
+"pointerId","width","height","pressure","tiltX","tiltY","pointerType","hwTimestamp","isPrimary",
+// event instance
+"type","target","currentTarget","which","pageX","pageY","timeStamp"],r=[
+// MouseEvent
+!1,!1,null,null,0,0,0,0,!1,!1,!1,!1,0,null,
+// DOM Level 3
+0,
+// PointerEvent
+0,0,0,0,0,0,"",0,!1,
+// event instance
+"",null,null,0,0,0,0],s={pointerover:1,pointerout:1,pointerenter:1,pointerleave:1},t="undefined"!=typeof SVGElementInstance,u={pointermap:new p,eventMap:Object.create(null),captureInfo:Object.create(null),
+// Scope objects for native events.
+// This exists for ease of testing.
+eventSources:Object.create(null),eventSourceList:[],/**
+     * Add a new event source that will generate pointer events.
+     *
+     * `inSource` must contain an array of event names named `events`, and
+     * functions with the names specified in the `events` array.
+     * @param {string} name A name for the event source
+     * @param {Object} source A new source of platform events.
+     */
+registerSource:function(a,b){var c=b,d=c.events;d&&(d.forEach(function(a){c[a]&&(this.eventMap[a]=c[a].bind(c))},this),this.eventSources[a]=c,this.eventSourceList.push(c))},register:function(a){for(var b,c=this.eventSourceList.length,d=0;d<c&&(b=this.eventSourceList[d]);d++)
+// call eventsource register
+b.register.call(b,a)},unregister:function(a){for(var b,c=this.eventSourceList.length,d=0;d<c&&(b=this.eventSourceList[d]);d++)
+// call eventsource register
+b.unregister.call(b,a)},contains:/*scope.external.contains || */function(a,b){try{return a.contains(b)}catch(c){
+// most likely: https://bugzilla.mozilla.org/show_bug.cgi?id=208427
+return!1}},
+// EVENTS
+down:function(a){a.bubbles=!0,this.fireEvent("pointerdown",a)},move:function(a){a.bubbles=!0,this.fireEvent("pointermove",a)},up:function(a){a.bubbles=!0,this.fireEvent("pointerup",a)},enter:function(a){a.bubbles=!1,this.fireEvent("pointerenter",a)},leave:function(a){a.bubbles=!1,this.fireEvent("pointerleave",a)},over:function(a){a.bubbles=!0,this.fireEvent("pointerover",a)},out:function(a){a.bubbles=!0,this.fireEvent("pointerout",a)},cancel:function(a){a.bubbles=!0,this.fireEvent("pointercancel",a)},leaveOut:function(a){this.out(a),this.propagate(a,this.leave,!1)},enterOver:function(a){this.over(a),this.propagate(a,this.enter,!0)},
+// LISTENER LOGIC
+eventHandler:function(a){
+// This is used to prevent multiple dispatch of pointerevents from
+// platform events. This can happen when two elements in different scopes
+// are set up to create pointer events, which is relevant to Shadow DOM.
+if(!a._handledByPE){var b=a.type,c=this.eventMap&&this.eventMap[b];c&&c(a),a._handledByPE=!0}},
+// set up event listeners
+listen:function(a,b){b.forEach(function(b){this.addEvent(a,b)},this)},
+// remove event listeners
+unlisten:function(a,b){b.forEach(function(b){this.removeEvent(a,b)},this)},addEvent:/*scope.external.addEvent || */function(a,b){a.addEventListener(b,this.boundHandler)},removeEvent:/*scope.external.removeEvent || */function(a,b){a.removeEventListener(b,this.boundHandler)},
+// EVENT CREATION AND TRACKING
+/**
+     * Creates a new Event of type `inType`, based on the information in
+     * `inEvent`.
+     *
+     * @param {string} inType A string representing the type of event to create
+     * @param {Event} inEvent A platform event with a target
+     * @return {Event} A PointerEvent of type `inType`
+     */
+makeEvent:function(b,c){
+// relatedTarget must be null if pointer is captured
+this.captureInfo[c.pointerId]&&(c.relatedTarget=null);var d=new a(b,c);return c.preventDefault&&(d.preventDefault=c.preventDefault),d._target=d._target||c.target,d},
+// make and dispatch an event in one call
+fireEvent:function(a,b){var c=this.makeEvent(a,b);return this.dispatchEvent(c)},/**
+     * Returns a snapshot of inEvent, with writable properties.
+     *
+     * @param {Event} inEvent An event that contains properties to copy.
+     * @return {Object} An object containing shallow copies of `inEvent`'s
+     *    properties.
+     */
+cloneEvent:function(a){for(var b,c=Object.create(null),d=0;d<q.length;d++)b=q[d],c[b]=a[b]||r[d],
+// Work around SVGInstanceElement shadow tree
+// Return the <use> element that is represented by the instance for Safari, Chrome, IE.
+// This is the behavior implemented by Firefox.
+!t||"target"!==b&&"relatedTarget"!==b||c[b]instanceof SVGElementInstance&&(c[b]=c[b].correspondingUseElement);
+// keep the semantics of preventDefault
+return a.preventDefault&&(c.preventDefault=function(){a.preventDefault()}),c},getTarget:function(a){var b=this.captureInfo[a.pointerId];return b?a._target!==b&&a.type in s?void 0:b:a._target},propagate:function(a,b,c){
+// Order of conditions due to document.contains() missing in IE.
+for(var d=a.target,e=[];d!==document&&!d.contains(a.relatedTarget);)
+// Touch: Do not propagate if node is detached.
+if(e.push(d),d=d.parentNode,!d)return;c&&e.reverse(),e.forEach(function(c){a.target=c,b.call(this,a)},this)},setCapture:function(b,c,d){this.captureInfo[b]&&this.releaseCapture(b,d),this.captureInfo[b]=c,this.implicitRelease=this.releaseCapture.bind(this,b,d),document.addEventListener("pointerup",this.implicitRelease),document.addEventListener("pointercancel",this.implicitRelease);var e=new a("gotpointercapture");e.pointerId=b,e._target=c,d||this.asyncDispatchEvent(e)},releaseCapture:function(b,c){var d=this.captureInfo[b];if(d){this.captureInfo[b]=void 0,document.removeEventListener("pointerup",this.implicitRelease),document.removeEventListener("pointercancel",this.implicitRelease);var e=new a("lostpointercapture");e.pointerId=b,e._target=d,c||this.asyncDispatchEvent(e)}},/**
+     * Dispatches the event to its target.
+     *
+     * @param {Event} inEvent The event to be dispatched.
+     * @return {Boolean} True if an event handler returns true, false otherwise.
+     */
+dispatchEvent:/*scope.external.dispatchEvent || */function(a){var b=this.getTarget(a);if(b)return b.dispatchEvent(a)},asyncDispatchEvent:function(a){requestAnimationFrame(this.dispatchEvent.bind(this,a))}};u.boundHandler=u.eventHandler.bind(u);var v={shadow:function(a){if(a)return a.shadowRoot||a.webkitShadowRoot},canTarget:function(a){return a&&Boolean(a.elementFromPoint)},targetingShadow:function(a){var b=this.shadow(a);if(this.canTarget(b))return b},olderShadow:function(a){var b=a.olderShadowRoot;if(!b){var c=a.querySelector("shadow");c&&(b=c.olderShadowRoot)}return b},allShadows:function(a){for(var b=[],c=this.shadow(a);c;)b.push(c),c=this.olderShadow(c);return b},searchRoot:function(a,b,c){if(a){var d,e,f=a.elementFromPoint(b,c);for(
+// is element a shadow host?
+e=this.targetingShadow(f);e;){if(
+// find the the element inside the shadow root
+d=e.elementFromPoint(b,c)){
+// shadowed element may contain a shadow root
+var g=this.targetingShadow(d);return this.searchRoot(g,b,c)||d}
+// check for older shadows
+e=this.olderShadow(e)}
+// light dom element is the target
+return f}},owner:function(a){
+// walk up until you hit the shadow root or document
+for(var b=a;b.parentNode;)b=b.parentNode;
+// the owner element is expected to be a Document or ShadowRoot
+return b.nodeType!==Node.DOCUMENT_NODE&&b.nodeType!==Node.DOCUMENT_FRAGMENT_NODE&&(b=document),b},findTarget:function(a){var b=a.clientX,c=a.clientY,d=this.owner(a.target);
+// if x, y is not in this root, fall back to document search
+return d.elementFromPoint(b,c)||(d=document),this.searchRoot(d,b,c)}},w=Array.prototype.forEach.call.bind(Array.prototype.forEach),x=Array.prototype.map.call.bind(Array.prototype.map),y=Array.prototype.slice.call.bind(Array.prototype.slice),z=Array.prototype.filter.call.bind(Array.prototype.filter),A=window.MutationObserver||window.WebKitMutationObserver,B="[touch-action]",C={subtree:!0,childList:!0,attributes:!0,attributeOldValue:!0,attributeFilter:["touch-action"]};c.prototype={watchSubtree:function(a){
+// Only watch scopes that can target find, as these are top-level.
+// Otherwise we can see duplicate additions and removals that add noise.
+//
+// TODO(dfreedman): For some instances with ShadowDOMPolyfill, we can see
+// a removal without an insertion when a node is redistributed among
+// shadows. Since it all ends up correct in the document, watching only
+// the document will yield the correct mutations to watch.
+this.observer&&v.canTarget(a)&&this.observer.observe(a,C)},enableOnSubtree:function(a){this.watchSubtree(a),a===document&&"complete"!==document.readyState?this.installOnLoad():this.installNewSubtree(a)},installNewSubtree:function(a){w(this.findElements(a),this.addElement,this)},findElements:function(a){return a.querySelectorAll?a.querySelectorAll(B):[]},removeElement:function(a){this.removeCallback(a)},addElement:function(a){this.addCallback(a)},elementChanged:function(a,b){this.changedCallback(a,b)},concatLists:function(a,b){return a.concat(y(b))},
+// register all touch-action = none nodes on document load
+installOnLoad:function(){document.addEventListener("readystatechange",function(){"complete"===document.readyState&&this.installNewSubtree(document)}.bind(this))},isElement:function(a){return a.nodeType===Node.ELEMENT_NODE},flattenMutationTree:function(a){
+// find children with touch-action
+var b=x(a,this.findElements,this);
+// flatten the list
+// make sure the added nodes are accounted for
+return b.push(z(a,this.isElement)),b.reduce(this.concatLists,[])},mutationWatcher:function(a){a.forEach(this.mutationHandler,this)},mutationHandler:function(a){if("childList"===a.type){var b=this.flattenMutationTree(a.addedNodes);b.forEach(this.addElement,this);var c=this.flattenMutationTree(a.removedNodes);c.forEach(this.removeElement,this)}else"attributes"===a.type&&this.elementChanged(a.target,a.oldValue)}};var D=["none","auto","pan-x","pan-y",{rule:"pan-x pan-y",selectors:["pan-x pan-y","pan-y pan-x"]}],E="",F=window.PointerEvent||window.MSPointerEvent,G=!window.ShadowDOMPolyfill&&document.head.createShadowRoot,H=u.pointermap,I=25,J=[1,4,2,8,16],K=!1;try{K=1===new MouseEvent("test",{buttons:1}).buttons}catch(L){}
+// handler block for native mouse events
+var M,N={POINTER_ID:1,POINTER_TYPE:"mouse",events:["mousedown","mousemove","mouseup","mouseover","mouseout"],register:function(a){u.listen(a,this.events)},unregister:function(a){u.unlisten(a,this.events)},lastTouches:[],
+// collide with the global mouse listener
+isEventSimulatedFromTouch:function(a){for(var b,c=this.lastTouches,d=a.clientX,e=a.clientY,f=0,g=c.length;f<g&&(b=c[f]);f++){
+// simulated mouse events will be swallowed near a primary touchend
+var h=Math.abs(d-b.x),i=Math.abs(e-b.y);if(h<=I&&i<=I)return!0}},prepareEvent:function(a){var b=u.cloneEvent(a),c=b.preventDefault;return b.preventDefault=function(){a.preventDefault(),c()},b.pointerId=this.POINTER_ID,b.isPrimary=!0,b.pointerType=this.POINTER_TYPE,b},prepareButtonsForMove:function(a,b){var c=H.get(this.POINTER_ID);
+// Update buttons state after possible out-of-document mouseup.
+0!==b.which&&c?a.buttons=c.buttons:a.buttons=0,b.buttons=a.buttons},mousedown:function(a){if(!this.isEventSimulatedFromTouch(a)){var b=H.get(this.POINTER_ID),c=this.prepareEvent(a);K||(c.buttons=J[c.button],b&&(c.buttons|=b.buttons),a.buttons=c.buttons),H.set(this.POINTER_ID,a),b&&0!==b.buttons?u.move(c):u.down(c)}},mousemove:function(a){if(!this.isEventSimulatedFromTouch(a)){var b=this.prepareEvent(a);K||this.prepareButtonsForMove(b,a),b.button=-1,H.set(this.POINTER_ID,a),u.move(b)}},mouseup:function(a){if(!this.isEventSimulatedFromTouch(a)){var b=H.get(this.POINTER_ID),c=this.prepareEvent(a);if(!K){var d=J[c.button];
+// Produces wrong state of buttons in Browsers without `buttons` support
+// when a mouse button that was pressed outside the document is released
+// inside and other buttons are still pressed down.
+c.buttons=b?b.buttons&~d:0,a.buttons=c.buttons}H.set(this.POINTER_ID,a),
+// Support: Firefox <=44 only
+// FF Ubuntu includes the lifted button in the `buttons` property on
+// mouseup.
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1223366
+c.buttons&=~J[c.button],0===c.buttons?u.up(c):u.move(c)}},mouseover:function(a){if(!this.isEventSimulatedFromTouch(a)){var b=this.prepareEvent(a);K||this.prepareButtonsForMove(b,a),b.button=-1,H.set(this.POINTER_ID,a),u.enterOver(b)}},mouseout:function(a){if(!this.isEventSimulatedFromTouch(a)){var b=this.prepareEvent(a);K||this.prepareButtonsForMove(b,a),b.button=-1,u.leaveOut(b)}},cancel:function(a){var b=this.prepareEvent(a);u.cancel(b),this.deactivateMouse()},deactivateMouse:function(){H["delete"](this.POINTER_ID)}},O=u.captureInfo,P=v.findTarget.bind(v),Q=v.allShadows.bind(v),R=u.pointermap,S=2500,T=200,U="touch-action",V={events:["touchstart","touchmove","touchend","touchcancel"],register:function(a){M.enableOnSubtree(a)},unregister:function(){},elementAdded:function(a){var b=a.getAttribute(U),c=this.touchActionToScrollType(b);c&&(a._scrollType=c,u.listen(a,this.events),
+// set touch-action on shadows as well
+Q(a).forEach(function(a){a._scrollType=c,u.listen(a,this.events)},this))},elementRemoved:function(a){a._scrollType=void 0,u.unlisten(a,this.events),
+// remove touch-action from shadow
+Q(a).forEach(function(a){a._scrollType=void 0,u.unlisten(a,this.events)},this)},elementChanged:function(a,b){var c=a.getAttribute(U),d=this.touchActionToScrollType(c),e=this.touchActionToScrollType(b);
+// simply update scrollType if listeners are already established
+d&&e?(a._scrollType=d,Q(a).forEach(function(a){a._scrollType=d},this)):e?this.elementRemoved(a):d&&this.elementAdded(a)},scrollTypes:{EMITTER:"none",XSCROLLER:"pan-x",YSCROLLER:"pan-y",SCROLLER:/^(?:pan-x pan-y)|(?:pan-y pan-x)|auto$/},touchActionToScrollType:function(a){var b=a,c=this.scrollTypes;return"none"===b?"none":b===c.XSCROLLER?"X":b===c.YSCROLLER?"Y":c.SCROLLER.exec(b)?"XY":void 0},POINTER_TYPE:"touch",firstTouch:null,isPrimaryTouch:function(a){return this.firstTouch===a.identifier},setPrimaryTouch:function(a){
+// set primary touch if there no pointers, or the only pointer is the mouse
+(0===R.size||1===R.size&&R.has(1))&&(this.firstTouch=a.identifier,this.firstXY={X:a.clientX,Y:a.clientY},this.scrolling=!1,this.cancelResetClickCount())},removePrimaryPointer:function(a){a.isPrimary&&(this.firstTouch=null,this.firstXY=null,this.resetClickCount())},clickCount:0,resetId:null,resetClickCount:function(){var a=function(){this.clickCount=0,this.resetId=null}.bind(this);this.resetId=setTimeout(a,T)},cancelResetClickCount:function(){this.resetId&&clearTimeout(this.resetId)},typeToButtons:function(a){var b=0;return"touchstart"!==a&&"touchmove"!==a||(b=1),b},touchToPointer:function(a){var b=this.currentTouchEvent,c=u.cloneEvent(a),d=c.pointerId=a.identifier+2;c.target=O[d]||P(c),c.bubbles=!0,c.cancelable=!0,c.detail=this.clickCount,c.button=0,c.buttons=this.typeToButtons(b.type),c.width=2*(a.radiusX||a.webkitRadiusX||0),c.height=2*(a.radiusY||a.webkitRadiusY||0),c.pressure=a.force||a.webkitForce||.5,c.isPrimary=this.isPrimaryTouch(a),c.pointerType=this.POINTER_TYPE,
+// forward modifier keys
+c.altKey=b.altKey,c.ctrlKey=b.ctrlKey,c.metaKey=b.metaKey,c.shiftKey=b.shiftKey;
+// forward touch preventDefaults
+var e=this;return c.preventDefault=function(){e.scrolling=!1,e.firstXY=null,b.preventDefault()},c},processTouches:function(a,b){var c=a.changedTouches;this.currentTouchEvent=a;for(var d,e=0;e<c.length;e++)d=c[e],b.call(this,this.touchToPointer(d))},
+// For single axis scrollers, determines whether the element should emit
+// pointer events or behave as a scroller
+shouldScroll:function(a){if(this.firstXY){var b,c=a.currentTarget._scrollType;if("none"===c)
+// this element is a touch-action: none, should never scroll
+b=!1;else if("XY"===c)
+// this element should always scroll
+b=!0;else{var d=a.changedTouches[0],e=c,f="Y"===c?"X":"Y",g=Math.abs(d["client"+e]-this.firstXY[e]),h=Math.abs(d["client"+f]-this.firstXY[f]);
+// if delta in the scroll axis > delta other axis, scroll instead of
+// making events
+b=g>=h}return this.firstXY=null,b}},findTouch:function(a,b){for(var c,d=0,e=a.length;d<e&&(c=a[d]);d++)if(c.identifier===b)return!0},
+// In some instances, a touchstart can happen without a touchend. This
+// leaves the pointermap in a broken state.
+// Therefore, on every touchstart, we remove the touches that did not fire a
+// touchend event.
+// To keep state globally consistent, we fire a
+// pointercancel for this "abandoned" touch
+vacuumTouches:function(a){var b=a.touches;
+// pointermap.size should be < tl.length here, as the touchstart has not
+// been processed yet.
+if(R.size>=b.length){var c=[];R.forEach(function(a,d){
+// Never remove pointerId == 1, which is mouse.
+// Touch identifiers are 2 smaller than their pointerId, which is the
+// index in pointermap.
+if(1!==d&&!this.findTouch(b,d-2)){var e=a.out;c.push(e)}},this),c.forEach(this.cancelOut,this)}},touchstart:function(a){this.vacuumTouches(a),this.setPrimaryTouch(a.changedTouches[0]),this.dedupSynthMouse(a),this.scrolling||(this.clickCount++,this.processTouches(a,this.overDown))},overDown:function(a){R.set(a.pointerId,{target:a.target,out:a,outTarget:a.target}),u.enterOver(a),u.down(a)},touchmove:function(a){this.scrolling||(this.shouldScroll(a)?(this.scrolling=!0,this.touchcancel(a)):(a.preventDefault(),this.processTouches(a,this.moveOverOut)))},moveOverOut:function(a){var b=a,c=R.get(b.pointerId);
+// a finger drifted off the screen, ignore it
+if(c){var d=c.out,e=c.outTarget;u.move(b),d&&e!==b.target&&(d.relatedTarget=b.target,b.relatedTarget=e,
+// recover from retargeting by shadow
+d.target=e,b.target?(u.leaveOut(d),u.enterOver(b)):(
+// clean up case when finger leaves the screen
+b.target=e,b.relatedTarget=null,this.cancelOut(b))),c.out=b,c.outTarget=b.target}},touchend:function(a){this.dedupSynthMouse(a),this.processTouches(a,this.upOut)},upOut:function(a){this.scrolling||(u.up(a),u.leaveOut(a)),this.cleanUpPointer(a)},touchcancel:function(a){this.processTouches(a,this.cancelOut)},cancelOut:function(a){u.cancel(a),u.leaveOut(a),this.cleanUpPointer(a)},cleanUpPointer:function(a){R["delete"](a.pointerId),this.removePrimaryPointer(a)},
+// prevent synth mouse events from creating pointer events
+dedupSynthMouse:function(a){var b=N.lastTouches,c=a.changedTouches[0];
+// only the primary finger will synth mouse events
+if(this.isPrimaryTouch(c)){
+// remember x/y of last touch
+var d={x:c.clientX,y:c.clientY};b.push(d);var e=function(a,b){var c=a.indexOf(b);c>-1&&a.splice(c,1)}.bind(null,b,d);setTimeout(e,S)}}};M=new c(V.elementAdded,V.elementRemoved,V.elementChanged,V);var W,X,Y,Z=u.pointermap,$=window.MSPointerEvent&&"number"==typeof window.MSPointerEvent.MSPOINTER_TYPE_MOUSE,_={events:["MSPointerDown","MSPointerMove","MSPointerUp","MSPointerOut","MSPointerOver","MSPointerCancel","MSGotPointerCapture","MSLostPointerCapture"],register:function(a){u.listen(a,this.events)},unregister:function(a){u.unlisten(a,this.events)},POINTER_TYPES:["","unavailable","touch","pen","mouse"],prepareEvent:function(a){var b=a;return $&&(b=u.cloneEvent(a),b.pointerType=this.POINTER_TYPES[a.pointerType]),b},cleanup:function(a){Z["delete"](a)},MSPointerDown:function(a){Z.set(a.pointerId,a);var b=this.prepareEvent(a);u.down(b)},MSPointerMove:function(a){var b=this.prepareEvent(a);u.move(b)},MSPointerUp:function(a){var b=this.prepareEvent(a);u.up(b),this.cleanup(a.pointerId)},MSPointerOut:function(a){var b=this.prepareEvent(a);u.leaveOut(b)},MSPointerOver:function(a){var b=this.prepareEvent(a);u.enterOver(b)},MSPointerCancel:function(a){var b=this.prepareEvent(a);u.cancel(b),this.cleanup(a.pointerId)},MSLostPointerCapture:function(a){var b=u.makeEvent("lostpointercapture",a);u.dispatchEvent(b)},MSGotPointerCapture:function(a){var b=u.makeEvent("gotpointercapture",a);u.dispatchEvent(b)}},aa=window.navigator;aa.msPointerEnabled?(W=function(a){i(a),j(this),k(a)&&(u.setCapture(a,this,!0),this.msSetPointerCapture(a))},X=function(a){i(a),u.releaseCapture(a,!0),this.msReleasePointerCapture(a)}):(W=function(a){i(a),j(this),k(a)&&u.setCapture(a,this)},X=function(a){i(a),u.releaseCapture(a)}),Y=function(a){return!!u.captureInfo[a]},g(),h(),l();var ba={dispatcher:u,Installer:c,PointerEvent:a,PointerMap:p,targetFinding:v};return ba});
+/*!
+    localForage -- Offline Storage, Improved
+    Version 1.5.2
+    https://localforage.github.io/localForage
+    (c) 2013-2017 Mozilla, Apache License 2.0
+*/
+!function(a){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=a();else if("function"==typeof define&&define.amd)define([],a);else{var b;b="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,b.localforage=a()}}(function(){return function a(b,c,d){function e(g,h){if(!c[g]){if(!b[g]){var i="function"==typeof require&&require;if(!h&&i)return i(g,!0);if(f)return f(g,!0);var j=new Error("Cannot find module '"+g+"'");throw j.code="MODULE_NOT_FOUND",j}var k=c[g]={exports:{}};b[g][0].call(k.exports,function(a){var c=b[g][1][a];return e(c||a)},k,k.exports,a,b,c,d)}return c[g].exports}for(var f="function"==typeof require&&require,g=0;g<d.length;g++)e(d[g]);return e}({1:[function(a,b,c){"use strict";function d(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function e(){try{if("undefined"!=typeof indexedDB)return indexedDB;if("undefined"!=typeof webkitIndexedDB)return webkitIndexedDB;if("undefined"!=typeof mozIndexedDB)return mozIndexedDB;if("undefined"!=typeof OIndexedDB)return OIndexedDB;if("undefined"!=typeof msIndexedDB)return msIndexedDB}catch(a){return}}function f(){try{if(!ja)return!1;var a="undefined"!=typeof openDatabase&&/(Safari|iPhone|iPad|iPod)/.test(navigator.userAgent)&&!/Chrome/.test(navigator.userAgent)&&!/BlackBerry/.test(navigator.platform),b="function"==typeof fetch&&-1!==fetch.toString().indexOf("[native code");return(!a||b)&&"undefined"!=typeof indexedDB&&"undefined"!=typeof IDBKeyRange}catch(a){return!1}}function g(a,b){a=a||[],b=b||{};try{return new Blob(a,b)}catch(f){if("TypeError"!==f.name)throw f;for(var c="undefined"!=typeof BlobBuilder?BlobBuilder:"undefined"!=typeof MSBlobBuilder?MSBlobBuilder:"undefined"!=typeof MozBlobBuilder?MozBlobBuilder:WebKitBlobBuilder,d=new c,e=0;e<a.length;e+=1)d.append(a[e]);return d.getBlob(b.type)}}function h(a,b){b&&a.then(function(a){b(null,a)},function(a){b(a)})}function i(a,b,c){"function"==typeof b&&a.then(b),"function"==typeof c&&a.catch(c)}function j(a){return"string"!=typeof a&&(console.warn(a+" used as a key, but it is not a string."),a=String(a)),a}function k(a){for(var b=a.length,c=new ArrayBuffer(b),d=new Uint8Array(c),e=0;e<b;e++)d[e]=a.charCodeAt(e);return c}function l(a){return new ma(function(b){var c=a.transaction(na,qa),d=g([""]);c.objectStore(na).put(d,"key"),c.onabort=function(a){a.preventDefault(),a.stopPropagation(),b(!1)},c.oncomplete=function(){var a=navigator.userAgent.match(/Chrome\/(\d+)/),c=navigator.userAgent.match(/Edge\//);b(c||!a||parseInt(a[1],10)>=43)}}).catch(function(){return!1})}function m(a){return"boolean"==typeof ka?ma.resolve(ka):l(a).then(function(a){return ka=a})}function n(a){var b=la[a.name],c={};c.promise=new ma(function(a){c.resolve=a}),b.deferredOperations.push(c),b.dbReady?b.dbReady=b.dbReady.then(function(){return c.promise}):b.dbReady=c.promise}function o(a){var b=la[a.name],c=b.deferredOperations.pop();c&&c.resolve()}function p(a,b){var c=la[a.name],d=c.deferredOperations.pop();d&&d.reject(b)}function q(a,b){return new ma(function(c,d){if(a.db){if(!b)return c(a.db);n(a),a.db.close()}var e=[a.name];b&&e.push(a.version);var f=ja.open.apply(ja,e);b&&(f.onupgradeneeded=function(b){var c=f.result;try{c.createObjectStore(a.storeName),b.oldVersion<=1&&c.createObjectStore(na)}catch(c){if("ConstraintError"!==c.name)throw c;console.warn('The database "'+a.name+'" has been upgraded from version '+b.oldVersion+" to version "+b.newVersion+', but the storage "'+a.storeName+'" already exists.')}}),f.onerror=function(a){a.preventDefault(),d(f.error)},f.onsuccess=function(){c(f.result),o(a)}})}function r(a){return q(a,!1)}function s(a){return q(a,!0)}function t(a,b){if(!a.db)return!0;var c=!a.db.objectStoreNames.contains(a.storeName),d=a.version<a.db.version,e=a.version>a.db.version;if(d&&(a.version!==b&&console.warn('The database "'+a.name+"\" can't be downgraded from version "+a.db.version+" to version "+a.version+"."),a.version=a.db.version),e||c){if(c){var f=a.db.version+1;f>a.version&&(a.version=f)}return!0}return!1}function u(a){return new ma(function(b,c){var d=new FileReader;d.onerror=c,d.onloadend=function(c){var d=btoa(c.target.result||"");b({__local_forage_encoded_blob:!0,data:d,type:a.type})},d.readAsBinaryString(a)})}function v(a){return g([k(atob(a.data))],{type:a.type})}function w(a){return a&&a.__local_forage_encoded_blob}function x(a){var b=this,c=b._initReady().then(function(){var a=la[b._dbInfo.name];if(a&&a.dbReady)return a.dbReady});return i(c,a,a),c}function y(a){n(a);for(var b=la[a.name],c=b.forages,d=0;d<c.length;d++)c[d]._dbInfo.db&&(c[d]._dbInfo.db.close(),c[d]._dbInfo.db=null);return q(a,!1).then(function(a){for(var b=0;b<c.length;b++)c[b]._dbInfo.db=a}).catch(function(b){throw p(a,b),b})}function z(a,b,c){try{var d=a.db.transaction(a.storeName,b);c(null,d)}catch(d){if(!a.db||"InvalidStateError"===d.name)return y(a).then(function(){var d=a.db.transaction(a.storeName,b);c(null,d)});c(d)}}function A(a){function b(){return ma.resolve()}var c=this,d={db:null};if(a)for(var e in a)d[e]=a[e];la||(la={});var f=la[d.name];f||(f={forages:[],db:null,dbReady:null,deferredOperations:[]},la[d.name]=f),f.forages.push(c),c._initReady||(c._initReady=c.ready,c.ready=x);for(var g=[],h=0;h<f.forages.length;h++){var i=f.forages[h];i!==c&&g.push(i._initReady().catch(b))}var j=f.forages.slice(0);return ma.all(g).then(function(){return d.db=f.db,r(d)}).then(function(a){return d.db=a,t(d,c._defaultConfig.version)?s(d):a}).then(function(a){d.db=f.db=a,c._dbInfo=d;for(var b=0;b<j.length;b++){var e=j[b];e!==c&&(e._dbInfo.db=d.db,e._dbInfo.version=d.version)}})}function B(a,b){var c=this;a=j(a);var d=new ma(function(b,d){c.ready().then(function(){z(c._dbInfo,pa,function(e,f){if(e)return d(e);try{var g=f.objectStore(c._dbInfo.storeName),h=g.get(a);h.onsuccess=function(){var a=h.result;void 0===a&&(a=null),w(a)&&(a=v(a)),b(a)},h.onerror=function(){d(h.error)}}catch(a){d(a)}})}).catch(d)});return h(d,b),d}function C(a,b){var c=this,d=new ma(function(b,d){c.ready().then(function(){z(c._dbInfo,pa,function(e,f){if(e)return d(e);try{var g=f.objectStore(c._dbInfo.storeName),h=g.openCursor(),i=1;h.onsuccess=function(){var c=h.result;if(c){var d=c.value;w(d)&&(d=v(d));var e=a(d,c.key,i++);void 0!==e?b(e):c.continue()}else b()},h.onerror=function(){d(h.error)}}catch(a){d(a)}})}).catch(d)});return h(d,b),d}function D(a,b,c){var d=this;a=j(a);var e=new ma(function(c,e){var f;d.ready().then(function(){return f=d._dbInfo,"[object Blob]"===oa.call(b)?m(f.db).then(function(a){return a?b:u(b)}):b}).then(function(b){z(d._dbInfo,qa,function(f,g){if(f)return e(f);try{var h=g.objectStore(d._dbInfo.storeName),i=h.put(b,a);null===b&&(b=void 0),g.oncomplete=function(){void 0===b&&(b=null),c(b)},g.onabort=g.onerror=function(){var a=i.error?i.error:i.transaction.error;e(a)}}catch(a){e(a)}})}).catch(e)});return h(e,c),e}function E(a,b){var c=this;a=j(a);var d=new ma(function(b,d){c.ready().then(function(){z(c._dbInfo,qa,function(e,f){if(e)return d(e);try{var g=f.objectStore(c._dbInfo.storeName),h=g.delete(a);f.oncomplete=function(){b()},f.onerror=function(){d(h.error)},f.onabort=function(){var a=h.error?h.error:h.transaction.error;d(a)}}catch(a){d(a)}})}).catch(d)});return h(d,b),d}function F(a){var b=this,c=new ma(function(a,c){b.ready().then(function(){z(b._dbInfo,qa,function(d,e){if(d)return c(d);try{var f=e.objectStore(b._dbInfo.storeName),g=f.clear();e.oncomplete=function(){a()},e.onabort=e.onerror=function(){var a=g.error?g.error:g.transaction.error;c(a)}}catch(a){c(a)}})}).catch(c)});return h(c,a),c}function G(a){var b=this,c=new ma(function(a,c){b.ready().then(function(){z(b._dbInfo,pa,function(d,e){if(d)return c(d);try{var f=e.objectStore(b._dbInfo.storeName),g=f.count();g.onsuccess=function(){a(g.result)},g.onerror=function(){c(g.error)}}catch(a){c(a)}})}).catch(c)});return h(c,a),c}function H(a,b){var c=this,d=new ma(function(b,d){if(a<0)return void b(null);c.ready().then(function(){z(c._dbInfo,pa,function(e,f){if(e)return d(e);try{var g=f.objectStore(c._dbInfo.storeName),h=!1,i=g.openCursor();i.onsuccess=function(){var c=i.result;if(!c)return void b(null);0===a?b(c.key):h?b(c.key):(h=!0,c.advance(a))},i.onerror=function(){d(i.error)}}catch(a){d(a)}})}).catch(d)});return h(d,b),d}function I(a){var b=this,c=new ma(function(a,c){b.ready().then(function(){z(b._dbInfo,pa,function(d,e){if(d)return c(d);try{var f=e.objectStore(b._dbInfo.storeName),g=f.openCursor(),h=[];g.onsuccess=function(){var b=g.result;if(!b)return void a(h);h.push(b.key),b.continue()},g.onerror=function(){c(g.error)}}catch(a){c(a)}})}).catch(c)});return h(c,a),c}function J(){return"function"==typeof openDatabase}function K(a){var b,c,d,e,f,g=.75*a.length,h=a.length,i=0;"="===a[a.length-1]&&(g--,"="===a[a.length-2]&&g--);var j=new ArrayBuffer(g),k=new Uint8Array(j);for(b=0;b<h;b+=4)c=sa.indexOf(a[b]),d=sa.indexOf(a[b+1]),e=sa.indexOf(a[b+2]),f=sa.indexOf(a[b+3]),k[i++]=c<<2|d>>4,k[i++]=(15&d)<<4|e>>2,k[i++]=(3&e)<<6|63&f;return j}function L(a){var b,c=new Uint8Array(a),d="";for(b=0;b<c.length;b+=3)d+=sa[c[b]>>2],d+=sa[(3&c[b])<<4|c[b+1]>>4],d+=sa[(15&c[b+1])<<2|c[b+2]>>6],d+=sa[63&c[b+2]];return c.length%3==2?d=d.substring(0,d.length-1)+"=":c.length%3==1&&(d=d.substring(0,d.length-2)+"=="),d}function M(a,b){var c="";if(a&&(c=Ja.call(a)),a&&("[object ArrayBuffer]"===c||a.buffer&&"[object ArrayBuffer]"===Ja.call(a.buffer))){var d,e=va;a instanceof ArrayBuffer?(d=a,e+=xa):(d=a.buffer,"[object Int8Array]"===c?e+=za:"[object Uint8Array]"===c?e+=Aa:"[object Uint8ClampedArray]"===c?e+=Ba:"[object Int16Array]"===c?e+=Ca:"[object Uint16Array]"===c?e+=Ea:"[object Int32Array]"===c?e+=Da:"[object Uint32Array]"===c?e+=Fa:"[object Float32Array]"===c?e+=Ga:"[object Float64Array]"===c?e+=Ha:b(new Error("Failed to get type for BinaryArray"))),b(e+L(d))}else if("[object Blob]"===c){var f=new FileReader;f.onload=function(){var c=ta+a.type+"~"+L(this.result);b(va+ya+c)},f.readAsArrayBuffer(a)}else try{b(JSON.stringify(a))}catch(c){console.error("Couldn't convert value into a JSON string: ",a),b(null,c)}}function N(a){if(a.substring(0,wa)!==va)return JSON.parse(a);var b,c=a.substring(Ia),d=a.substring(wa,Ia);if(d===ya&&ua.test(c)){var e=c.match(ua);b=e[1],c=c.substring(e[0].length)}var f=K(c);switch(d){case xa:return f;case ya:return g([f],{type:b});case za:return new Int8Array(f);case Aa:return new Uint8Array(f);case Ba:return new Uint8ClampedArray(f);case Ca:return new Int16Array(f);case Ea:return new Uint16Array(f);case Da:return new Int32Array(f);case Fa:return new Uint32Array(f);case Ga:return new Float32Array(f);case Ha:return new Float64Array(f);default:throw new Error("Unkown type: "+d)}}function O(a){var b=this,c={db:null};if(a)for(var d in a)c[d]="string"!=typeof a[d]?a[d].toString():a[d];var e=new ma(function(a,d){try{c.db=openDatabase(c.name,String(c.version),c.description,c.size)}catch(a){return d(a)}c.db.transaction(function(e){e.executeSql("CREATE TABLE IF NOT EXISTS "+c.storeName+" (id INTEGER PRIMARY KEY, key unique, value)",[],function(){b._dbInfo=c,a()},function(a,b){d(b)})})});return c.serializer=Ka,e}function P(a,b){var c=this;a=j(a);var d=new ma(function(b,d){c.ready().then(function(){var e=c._dbInfo;e.db.transaction(function(c){c.executeSql("SELECT * FROM "+e.storeName+" WHERE key = ? LIMIT 1",[a],function(a,c){var d=c.rows.length?c.rows.item(0).value:null;d&&(d=e.serializer.deserialize(d)),b(d)},function(a,b){d(b)})})}).catch(d)});return h(d,b),d}function Q(a,b){var c=this,d=new ma(function(b,d){c.ready().then(function(){var e=c._dbInfo;e.db.transaction(function(c){c.executeSql("SELECT * FROM "+e.storeName,[],function(c,d){for(var f=d.rows,g=f.length,h=0;h<g;h++){var i=f.item(h),j=i.value;if(j&&(j=e.serializer.deserialize(j)),void 0!==(j=a(j,i.key,h+1)))return void b(j)}b()},function(a,b){d(b)})})}).catch(d)});return h(d,b),d}function R(a,b,c,d){var e=this;a=j(a);var f=new ma(function(f,g){e.ready().then(function(){void 0===b&&(b=null);var h=b,i=e._dbInfo;i.serializer.serialize(b,function(b,j){j?g(j):i.db.transaction(function(c){c.executeSql("INSERT OR REPLACE INTO "+i.storeName+" (key, value) VALUES (?, ?)",[a,b],function(){f(h)},function(a,b){g(b)})},function(b){if(b.code===b.QUOTA_ERR){if(d>0)return void f(R.apply(e,[a,h,c,d-1]));g(b)}})})}).catch(g)});return h(f,c),f}function S(a,b,c){return R.apply(this,[a,b,c,1])}function T(a,b){var c=this;a=j(a);var d=new ma(function(b,d){c.ready().then(function(){var e=c._dbInfo;e.db.transaction(function(c){c.executeSql("DELETE FROM "+e.storeName+" WHERE key = ?",[a],function(){b()},function(a,b){d(b)})})}).catch(d)});return h(d,b),d}function U(a){var b=this,c=new ma(function(a,c){b.ready().then(function(){var d=b._dbInfo;d.db.transaction(function(b){b.executeSql("DELETE FROM "+d.storeName,[],function(){a()},function(a,b){c(b)})})}).catch(c)});return h(c,a),c}function V(a){var b=this,c=new ma(function(a,c){b.ready().then(function(){var d=b._dbInfo;d.db.transaction(function(b){b.executeSql("SELECT COUNT(key) as c FROM "+d.storeName,[],function(b,c){var d=c.rows.item(0).c;a(d)},function(a,b){c(b)})})}).catch(c)});return h(c,a),c}function W(a,b){var c=this,d=new ma(function(b,d){c.ready().then(function(){var e=c._dbInfo;e.db.transaction(function(c){c.executeSql("SELECT key FROM "+e.storeName+" WHERE id = ? LIMIT 1",[a+1],function(a,c){var d=c.rows.length?c.rows.item(0).key:null;b(d)},function(a,b){d(b)})})}).catch(d)});return h(d,b),d}function X(a){var b=this,c=new ma(function(a,c){b.ready().then(function(){var d=b._dbInfo;d.db.transaction(function(b){b.executeSql("SELECT key FROM "+d.storeName,[],function(b,c){for(var d=[],e=0;e<c.rows.length;e++)d.push(c.rows.item(e).key);a(d)},function(a,b){c(b)})})}).catch(c)});return h(c,a),c}function Y(){try{return"undefined"!=typeof localStorage&&"setItem"in localStorage&&"function"==typeof localStorage.setItem}catch(a){return!1}}function Z(a){var b=this,c={};if(a)for(var d in a)c[d]=a[d];return c.keyPrefix=c.name+"/",c.storeName!==b._defaultConfig.storeName&&(c.keyPrefix+=c.storeName+"/"),b._dbInfo=c,c.serializer=Ka,ma.resolve()}function $(a){var b=this,c=b.ready().then(function(){for(var a=b._dbInfo.keyPrefix,c=localStorage.length-1;c>=0;c--){var d=localStorage.key(c);0===d.indexOf(a)&&localStorage.removeItem(d)}});return h(c,a),c}function _(a,b){var c=this;a=j(a);var d=c.ready().then(function(){var b=c._dbInfo,d=localStorage.getItem(b.keyPrefix+a);return d&&(d=b.serializer.deserialize(d)),d});return h(d,b),d}function aa(a,b){var c=this,d=c.ready().then(function(){for(var b=c._dbInfo,d=b.keyPrefix,e=d.length,f=localStorage.length,g=1,h=0;h<f;h++){var i=localStorage.key(h);if(0===i.indexOf(d)){var j=localStorage.getItem(i);if(j&&(j=b.serializer.deserialize(j)),void 0!==(j=a(j,i.substring(e),g++)))return j}}});return h(d,b),d}function ba(a,b){var c=this,d=c.ready().then(function(){var b,d=c._dbInfo;try{b=localStorage.key(a)}catch(a){b=null}return b&&(b=b.substring(d.keyPrefix.length)),b});return h(d,b),d}function ca(a){var b=this,c=b.ready().then(function(){for(var a=b._dbInfo,c=localStorage.length,d=[],e=0;e<c;e++)0===localStorage.key(e).indexOf(a.keyPrefix)&&d.push(localStorage.key(e).substring(a.keyPrefix.length));return d});return h(c,a),c}function da(a){var b=this,c=b.keys().then(function(a){return a.length});return h(c,a),c}function ea(a,b){var c=this;a=j(a);var d=c.ready().then(function(){var b=c._dbInfo;localStorage.removeItem(b.keyPrefix+a)});return h(d,b),d}function fa(a,b,c){var d=this;a=j(a);var e=d.ready().then(function(){void 0===b&&(b=null);var c=b;return new ma(function(e,f){var g=d._dbInfo;g.serializer.serialize(b,function(b,d){if(d)f(d);else try{localStorage.setItem(g.keyPrefix+a,b),e(c)}catch(a){"QuotaExceededError"!==a.name&&"NS_ERROR_DOM_QUOTA_REACHED"!==a.name||f(a),f(a)}})})});return h(e,c),e}function ga(a,b){a[b]=function(){var c=arguments;return a.ready().then(function(){return a[b].apply(a,c)})}}function ha(){for(var a=1;a<arguments.length;a++){var b=arguments[a];if(b)for(var c in b)b.hasOwnProperty(c)&&(Na(b[c])?arguments[0][c]=b[c].slice():arguments[0][c]=b[c])}return arguments[0]}var ia="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(a){return typeof a}:function(a){return a&&"function"==typeof Symbol&&a.constructor===Symbol&&a!==Symbol.prototype?"symbol":typeof a},ja=e();"undefined"==typeof Promise&&a("lie/polyfill");var ka,la,ma=Promise,na="local-forage-detect-blob-support",oa=Object.prototype.toString,pa="readonly",qa="readwrite",ra={_driver:"asyncStorage",_initStorage:A,_support:f(),iterate:C,getItem:B,setItem:D,removeItem:E,clear:F,length:G,key:H,keys:I},sa="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",ta="~~local_forage_type~",ua=/^~~local_forage_type~([^~]+)~/,va="__lfsc__:",wa=va.length,xa="arbf",ya="blob",za="si08",Aa="ui08",Ba="uic8",Ca="si16",Da="si32",Ea="ur16",Fa="ui32",Ga="fl32",Ha="fl64",Ia=wa+xa.length,Ja=Object.prototype.toString,Ka={serialize:M,deserialize:N,stringToBuffer:K,bufferToString:L},La={_driver:"webSQLStorage",_initStorage:O,_support:J(),iterate:Q,getItem:P,setItem:S,removeItem:T,clear:U,length:V,key:W,keys:X},Ma={_driver:"localStorageWrapper",_initStorage:Z,_support:Y(),iterate:aa,getItem:_,setItem:fa,removeItem:ea,clear:$,length:da,key:ba,keys:ca},Na=Array.isArray||function(a){return"[object Array]"===Object.prototype.toString.call(a)},Oa={},Pa={},Qa={INDEXEDDB:ra,WEBSQL:La,LOCALSTORAGE:Ma},Ra=[Qa.INDEXEDDB._driver,Qa.WEBSQL._driver,Qa.LOCALSTORAGE._driver],Sa=["clear","getItem","iterate","key","keys","length","removeItem","setItem"],Ta={description:"",driver:Ra.slice(),name:"localforage",size:4980736,storeName:"keyvaluepairs",version:1},Ua=function(){function a(b){d(this,a);for(var c in Qa)if(Qa.hasOwnProperty(c)){var e=Qa[c],f=e._driver;this[c]=f,Oa[f]||this.defineDriver(e)}this._defaultConfig=ha({},Ta),this._config=ha({},this._defaultConfig,b),this._driverSet=null,this._initDriver=null,this._ready=!1,this._dbInfo=null,this._wrapLibraryMethodsWithReady(),this.setDriver(this._config.driver).catch(function(){})}return a.prototype.config=function(a){if("object"===(void 0===a?"undefined":ia(a))){if(this._ready)return new Error("Can't call config() after localforage has been used.");for(var b in a){if("storeName"===b&&(a[b]=a[b].replace(/\W/g,"_")),"version"===b&&"number"!=typeof a[b])return new Error("Database version must be a number.");this._config[b]=a[b]}return!("driver"in a&&a.driver)||this.setDriver(this._config.driver)}return"string"==typeof a?this._config[a]:this._config},a.prototype.defineDriver=function(a,b,c){var d=new ma(function(b,c){try{var d=a._driver,e=new Error("Custom driver not compliant; see https://mozilla.github.io/localForage/#definedriver");if(!a._driver)return void c(e);for(var f=Sa.concat("_initStorage"),g=0,h=f.length;g<h;g++){var i=f[g];if(!i||!a[i]||"function"!=typeof a[i])return void c(e)}var j=function(c){Oa[d]&&console.info("Redefining LocalForage driver: "+d),Oa[d]=a,Pa[d]=c,b()};"_support"in a?a._support&&"function"==typeof a._support?a._support().then(j,c):j(!!a._support):j(!0)}catch(a){c(a)}});return i(d,b,c),d},a.prototype.driver=function(){return this._driver||null},a.prototype.getDriver=function(a,b,c){var d=Oa[a]?ma.resolve(Oa[a]):ma.reject(new Error("Driver not found."));return i(d,b,c),d},a.prototype.getSerializer=function(a){var b=ma.resolve(Ka);return i(b,a),b},a.prototype.ready=function(a){var b=this,c=b._driverSet.then(function(){return null===b._ready&&(b._ready=b._initDriver()),b._ready});return i(c,a,a),c},a.prototype.setDriver=function(a,b,c){function d(){g._config.driver=g.driver()}function e(a){return g._extend(a),d(),g._ready=g._initStorage(g._config),g._ready}function f(a){return function(){function b(){for(;c<a.length;){var f=a[c];return c++,g._dbInfo=null,g._ready=null,g.getDriver(f).then(e).catch(b)}d();var h=new Error("No available storage method found.");return g._driverSet=ma.reject(h),g._driverSet}var c=0;return b()}}var g=this;Na(a)||(a=[a]);var h=this._getSupportedDrivers(a),j=null!==this._driverSet?this._driverSet.catch(function(){return ma.resolve()}):ma.resolve();return this._driverSet=j.then(function(){var a=h[0];return g._dbInfo=null,g._ready=null,g.getDriver(a).then(function(a){g._driver=a._driver,d(),g._wrapLibraryMethodsWithReady(),g._initDriver=f(h)})}).catch(function(){d();var a=new Error("No available storage method found.");return g._driverSet=ma.reject(a),g._driverSet}),i(this._driverSet,b,c),this._driverSet},a.prototype.supports=function(a){return!!Pa[a]},a.prototype._extend=function(a){ha(this,a)},a.prototype._getSupportedDrivers=function(a){for(var b=[],c=0,d=a.length;c<d;c++){var e=a[c];this.supports(e)&&b.push(e)}return b},a.prototype._wrapLibraryMethodsWithReady=function(){for(var a=0,b=Sa.length;a<b;a++)ga(this,Sa[a])},a.prototype.createInstance=function(b){return new a(b)},a}(),Va=new Ua;b.exports=Va},{undefined:void 0}]},{},[1])(1)});
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || !1; descriptor.configurable = !0; if ("value" in descriptor) descriptor.writable = !0; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: !1, writable: !0, configurable: !0 } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+;(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__equipmentTypes', function () {
+    /*
+     * HA       High Angle
+     * AAFD     Anti-Air Fire Director
+     */
+
+    var types = {
+
+        // Type ID
+        SmallCaliber: 1, // 小口径主炮
+        SmallCaliberHigh: 2, // 小口径高角主炮
+        SmallCaliberHA: 2, // 小口径高角主炮
+        SmallCaliberAA: 3, // 小口径高角主炮（强化）
+        SmallCaliberAAFD: 3, // 小口径高角主炮（强化）
+        MediumCaliber: 4, // 中口径主炮
+        LargeCaliber: 5, // 大口径主炮
+        SuperCaliber: 6, // 超大口径主炮
+        SecondaryGun: 7, // 副炮
+        SecondaryGunHigh: 8, // 高角副炮
+        SecondaryGunHA: 8, // 高角副炮
+        SecondaryGunAA: 9, // 高角副炮（强化）
+        SecondaryGunAAFD: 9, // 高角副炮（强化）
+        Type3Shell: 10, // 对空强化弹
+        APShell: 11, // 穿甲弹
+        Torpedo: 12, // 鱼雷
+        SubmarineTorpedo: 13, // 潜艇鱼雷
+        MidgetSubmarine: 14, // 微型潜艇
+        ReconSeaplane: 15, // 水上侦察机
+        ReconSeaplaneNight: 16, // 夜侦
+        SeaplaneBomber: 17, // 水上轰炸机
+        CarrierFighter: 18, // 舰战 / 舰载战斗机
+        TorpedoBomber: 19, // 舰攻 / 舰载鱼雷轰炸机
+        DiveBomber: 20, // 舰爆 / 舰载俯冲轰炸机
+        CarrierRecon: 21, // 舰侦 / 舰载侦察机
+        Autogyro: 22, // 旋翼机
+        AntiSubPatrol: 23, // 对潜哨戒机
+        SmallRadar: 24, // 小型雷达
+        LargeRadar: 25, // 大型雷达
+        DepthCharge: 26, // 爆雷
+        Sonar: 27, // 声纳
+        LargeSonar: 28, // 大型声纳
+        AAGun: 29, // 对空机枪
+        AAGunConcentrated: 30, // 对空机枪（强化）
+        AAGunCD: 30, // 对空机枪（强化）
+        CDMG: 30, // 对空机枪（强化）
+        AAFireDirector: 31, // 高射装置
+        AAFD: 31, // 高射装置
+        AviationPersonnel: 36, // 航空作战整备员
+        SurfaceShipPersonnel: 37, // 水上舰要员
+        LandingCraft: 38, // 登陆艇
+        Searchlight: 39, // 探照灯
+        SupplyContainer: 41, // 簡易輸送部材
+        CommandFacility: 45, // 舰队司令部设施
+        LargeFlyingBoat: 45, // 大型水上飞艇
+        SearchlightLarge: 46, // 大型探照灯
+        SuparRadar: 47, // 超大型雷达
+        CombatRation: 48, // 戦闘糧食
+        CarrierRecon2: 50, // 舰侦II / 舰载侦察机II
+        SeaplaneFighter: 51, // 水战 / 水上战斗机
+        AmphibiousCraft: 52, // 特型内火艇
+        LandBasedAttacker: 53, // 陆攻 / 陆上攻击机
+        Interceptor: 54, // 局战 / 局地战斗机
+        JetBomberFighter: 55, // 喷气式战斗轰炸机
+        JetBomberFighter2: 56, // 喷气式战斗轰炸机
+        TransportMaterial: 57, // 运输设备
+        SubmarineEquipment: 58, // 潜艇装备
+        LandBasedFighter: 59, // 陆战 / 陆上战斗机
+        CarrierFighterNight: 60, // 夜战 / 舰载战斗机（夜间）
+        TorpedoBomberNight: 61, // 夜攻 / 舰载鱼雷机（夜间）
+        LandBasedAntiSubPatrol: 62 // 陆上哨戒机
+
+
+        // Groups
+    };types.MainGuns = [types.SmallCaliber, types.SmallCaliberHigh, types.SmallCaliberAA, types.MediumCaliber, types.LargeCaliber, types.SuperCaliber];
+    types.MainCalibers = types.MainGuns;
+
+    types.SmallCalibers = [types.SmallCaliber, types.SmallCaliberHigh, types.SmallCaliberAA];
+
+    types.MediumCalibers = [types.MediumCaliber];
+
+    types.LargeCalibers = [types.LargeCaliber, types.SuperCaliber];
+
+    types.SecondaryGuns = [types.SecondaryGun, types.SecondaryGunHigh, types.SecondaryGunAA];
+
+    types.HAMounts = [types.SmallCaliberHigh, types.SmallCaliberAA, types.SecondaryGunHigh, types.SecondaryGunAA];
+
+    types.HAMountsAAFD = [types.SmallCaliberAA, types.SecondaryGunAA];
+
+    types.APShells = [types.APShell];
+
+    types.Torpedos = [types.Torpedo, types.SubmarineTorpedo];
+
+    types.Seaplanes = [types.ReconSeaplane, types.ReconSeaplaneNight, types.SeaplaneBomber, types.SeaplaneFighter];
+
+    types.Fighters = [types.SeaplaneBomber, types.CarrierFighter, types.CarrierFighterNight, types.TorpedoBomber, types.TorpedoBomberNight, types.DiveBomber, types.SeaplaneFighter, types.LandBasedAttacker, types.Interceptor,
+    // types.CarrierRecon
+    types.JetBomberFighter, types.JetBomberFighter2, types.LandBasedFighter];
+
+    types.Interceptors = [types.Interceptor, types.LandBasedFighter];
+
+    types.Recons = [types.ReconSeaplane, types.ReconSeaplaneNight, types.CarrierRecon, types.CarrierRecon2, types.LargeFlyingBoat];
+
+    types.SeaplaneRecons = [types.ReconSeaplane, types.ReconSeaplaneNight];
+
+    types.SeaplaneReconsAll = [types.ReconSeaplane, types.ReconSeaplaneNight, types.LargeFlyingBoat];
+
+    types.SeaplaneBombers = [types.SeaplaneBomber, types.SeaplaneFighter];
+
+    types.SeaplaneFighters = [types.SeaplaneFighter];
+
+    types.CarrierFighters = [types.CarrierFighter, types.CarrierFighterNight];
+
+    types.CarrierRecons = [types.CarrierRecon, types.CarrierRecon2];
+
+    types.CarrierBased = [types.CarrierFighter, types.CarrierFighterNight, types.TorpedoBomber, types.TorpedoBomberNight, types.DiveBomber, types.CarrierRecon, types.CarrierRecon2, types.JetBomberFighter, types.JetBomberFighter2];
+
+    types.LandBased = [types.LandBasedAttacker, types.Interceptor, types.JetBomberFighter, types.JetBomberFighter2, types.LandBasedFighter, types.LandBasedAntiSubPatrol];
+
+    types.TorpedoBombers = [types.TorpedoBomber, types.TorpedoBomberNight];
+
+    types.DiveBombers = [types.DiveBomber];
+
+    types.JetBomberFighters = [types.JetBomberFighter, types.JetBomberFighter2];
+
+    types.Jets = [types.JetBomberFighter, types.JetBomberFighter2];
+
+    types.Autogyros = [types.Autogyro];
+
+    types.AntiSubPatrols = [types.AntiSubPatrol, types.LandBasedAntiSubPatrol];
+
+    types.Aircrafts = [];
+    [].concat(types.Seaplanes).concat(types.Recons).concat(types.CarrierBased).concat(types.Autogyros).concat(types.AntiSubPatrols).concat(types.LandBased).forEach(function (v) {
+        if (types.Aircrafts.indexOf(v) < 0) types.Aircrafts.push(v);
+    });
+
+    types.Radars = [types.SmallRadar, types.LargeRadar, types.SuparRadar];
+
+    types.SmallRadars = [types.SmallRadar];
+
+    types.LargeRadars = [types.LargeRadar, types.SuparRadar];
+
+    types.AntiSubmarines = [types.DepthCharge, types.Sonar, types.LargeSonar];
+
+    types.DepthCharges = [types.DepthCharge];
+
+    types.Sonars = [types.Sonar, types.LargeSonar];
+
+    types.AAGuns = [types.AAGun, types.AAGunConcentrated];
+
+    types.AAFireDirectors = [types.AAFireDirector];
+    types.AAFDs = types.AAFireDirectors;
+
+    types.Searchlights = [types.Searchlight, types.SearchlightLarge];
+
+    types.AviationPersonnels = [types.AviationPersonnel];
+
+    types.SurfaceShipPersonnels = [types.SurfaceShipPersonnel];
+
+    types.LandingCrafts = [types.LandingCraft, types.AmphibiousCraft];
+
+    types.AmphibiousCrafts = [types.AmphibiousCraft];
+
+    types.SupplyContainers = [types.SupplyContainer];
+
+    types.CombatRations = [types.CombatRation];
+
+    return types;
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__getEquipment', function () {
+    return function (equipment) {
+        if (equipment && (typeof equipment === 'undefined' ? 'undefined' : _typeof(equipment)) === 'object' && equipment.id) {
+            return equipment;
+        } else if (!isNaN(equipment)) {
+            return _g.data.items[parseInt(equipment)];
+        } else {
+            return undefined;
+        }
+    };
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__getShip', function () {
+    return function (ship) {
+        if (ship && (typeof ship === 'undefined' ? 'undefined' : _typeof(ship)) === 'object' && ship.id) {
+            return ship;
+        } else if (!isNaN(ship)) {
+            return _g.data.ships[parseInt(ship)];
+        } else {
+            return undefined;
+        }
+    };
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__getShipAndEquipments', function () {
+    return function (ship) {
+        var equipments = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+        var equipmentStars = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+        var equipmentRanks = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+
+        var getShip = window.__getShip;
+        var getEquipment = window.__getEquipment;
+        var maxSlotsPlusExtra = 5;
+
+        if (typeof equipments === 'number' || typeof equipments === 'string') equipments = [equipments];
+        if (typeof equipmentStars === 'number' || typeof equipmentStars === 'string') equipmentStars = [equipmentStars];
+        if (typeof equipmentRanks === 'number' || typeof equipmentRanks === 'string') equipmentRanks = [equipmentRanks];
+
+        ship = getShip(ship);
+
+        equipments = [].concat(_toConsumableArray(Array(Math.max(maxSlotsPlusExtra, ship.slot.length + 1)))).map(function (_, index) {
+            if (!ship) return undefined;
+            if (ship.slot.length <= index && index < 4) return undefined;
+            return getEquipment(equipments[index]) || undefined;
+            // if (!equipment) return undefined
+            // if (equipmentStars[index]) equipment.star = equipmentStars[index]
+            // if (equipmentRanks[index]) equipment.rank = equipmentRanks[index]
+            // return equipment
+        });
+
+        return {
+            ship: ship,
+            equipments: equipments,
+            equipmentStars: equipments.map(function (_, index) {
+                return _typeof(equipments[index]) === 'object' ? Math.min(10, parseInt(equipmentStars[index]) || 0) : undefined;
+            }),
+            equipmentRanks: equipments.map(function (_, index) {
+                return _typeof(equipments[index]) === 'object' ? Math.min(7, parseInt(equipmentRanks[index]) || 0) : undefined;
+            })
+        };
+    };
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__checkEquipment', function () {
+    /**
+     * 检查装备是否满足给定条件
+     * 
+     * @param {(number|Equipment)} equipment 要判断的装备
+     * @param {any} [conditions={}] 条件，需满足所有条件
+     * @param {(number|number[])} [conditions.isID] 判断装备ID是否精确匹配或匹配其中一项
+     * @param {(number|number[])} [conditions.isNotID] 判断装备ID是否不匹配
+     * @param {(string|string[])} [conditions.isName] 判断装备名是否精确匹配或匹配其中一项
+     * @param {(string|string[])} [conditions.isNotName] 判断装备名是否不匹配
+     * @param {(string|string[])} [conditions.isNameOf] 判断装备名片段是否匹配或匹配其中一项
+     * @param {(string|string[])} [conditions.isNotNameOf] 判断装备名片段是否不匹配
+     * @param {(number|number[])} [conditions.isType] 判断装备是否属于给定舰种或匹配其中一项
+     * @param {(number|number[])} [conditions.isNotType] 判断装备是否不属于给定舰种
+     */
+    return function (equipment) {
+        var conditions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+        var getEquipment = window.__getEquipment;
+        var equipmentTypes = window.__equipmentTypes;
+        var ArrayOrItem = window.__ArrayOrItem;
+        var ArrayOrItemAll = window.__ArrayOrItemAll;
+
+        equipment = getEquipment(equipment);
+        if (typeof equipment === 'undefined') return !1;
+
+        var checkCondition = {
+            // 是特定ID
+            isid: function isid(equipment, id) {
+                return ArrayOrItem(id, function (id) {
+                    if (isNaN(id)) return !1;
+                    return parseInt(id) === equipment.id;
+                });
+            },
+            // 不是特定ID
+            isnotid: function isnotid(equipment, id) {
+                return ArrayOrItemAll(id, function (id) {
+                    if (isNaN(id)) return !1;
+                    return parseInt(id) !== equipment.id;
+                });
+            },
+
+            // 完全匹配特定名称
+            isname: function isname(equipment, name) {
+                return ArrayOrItem(name, function (name) {
+                    return equipment.isName(name)
+                    // for (let key in equipment.name) {
+                    //     if (key === 'suffix') continue
+                    //     if (equipment.name[key] === name) return true
+                    // }
+                    // return false
+                    ;
+                });
+            },
+            // 不是特定名称
+            isnotname: function isnotname(equipment, name) {
+                return ArrayOrItemAll(name, function (name) {
+                    return !equipment.isName(name)
+                    // for (let key in equipment.name) {
+                    //     if (key === 'suffix') continue
+                    //     if (equipment.name[key] === name) return false
+                    // }
+                    // return true
+                    ;
+                });
+            },
+
+            // 名称里包含特定字段
+            isnameof: function isnameof(equipment, name) {
+                return ArrayOrItem(name, function (name) {
+                    return equipment.hasName(name)
+                    // for (let key in equipment.name) {
+                    //     if (key === 'suffix') continue
+                    //     if (equipment.name[key].includes(name)) return true
+                    // }
+                    // return false
+                    ;
+                });
+            },
+            // 名称里不包含特定字段
+            isnotnameof: function isnotnameof(equipment, name) {
+                return ArrayOrItemAll(name, function (name) {
+                    return !equipment.hasName(name)
+                    // for (let key in equipment.name) {
+                    //     if (key === 'suffix') continue
+                    //     if (equipment.name[key].includes(name)) return false
+                    // }
+                    // return true
+                    ;
+                });
+            },
+
+            // 是特定类型
+            // 如果判断条件为Object，也会进入该条件
+            istype: function istype(equipment, type, conditions) {
+                return ArrayOrItem(type, function (type) {
+                    if (isNaN(type)) return !1;
+                    if (parseInt(type) !== equipment.type) return !1;
+                    // 条件是Object
+                    if ((typeof conditions === 'undefined' ? 'undefined' : _typeof(conditions)) === 'object') {
+                        // 包含属性
+                        if (conditions.hasStat) {
+                            var pass = !0;
+                            for (var stat in conditions.hasStat) {
+                                if (Array.isArray(conditions.hasStat[stat])) {
+                                    if (equipment.stat[stat] < conditions.hasStat[stat][0]) pass = !1;
+                                    if (equipment.stat[stat] > conditions.hasStat[stat][1]) pass = !1;
+                                } else if (equipment.stat[stat] < conditions.hasStat[stat]) {
+                                    pass = !1;
+                                }
+                            }
+                            if (!pass) return !1;
+                        }
+                    }
+                    return !0;
+                });
+            },
+            // 不是特定类型
+            isnottype: function isnottype(equipment, type) {
+                return ArrayOrItemAll(type, function (type) {
+                    if (isNaN(type)) return !1;
+                    return parseInt(type) !== equipment.type;
+                });
+            },
+            // 是对空电探/雷达
+            isaaradar: function isaaradar(equipment, isTrue) {
+                // console.log(`[${equipment.id}]`, equipment._name)
+                return (this.istype(equipment, equipmentTypes.Radars) && !isNaN(equipment.stat.aa) && equipment.stat.aa >= 2) === isTrue;
+            },
+            // 是对水面电探/雷达
+            issurfaceradar: function issurfaceradar(equipment, isTrue) {
+                // console.log(`[${equipment.id}]`, equipment._name)
+                return (this.istype(equipment, equipmentTypes.Radars) && (isNaN(equipment.stat.aa) || equipment.stat.aa < 2)) === isTrue;
+            }
+
+            // 需满足所有条件
+        };for (var key in conditions) {
+            if (checkCondition[key.toLowerCase()]) {
+                // checkCondition 中存在该条件，直接运行
+                if (!checkCondition[key.toLowerCase()](equipment, conditions[key])) return !1;
+            } else if (key.substr(0, 2) === 'is') {
+                // 以 is 为开头，通常为检查装备类型
+                var typeName = key.substr(2);
+                if (typeName === 'HAMountAAFD') {
+                    typeName = 'HAMountsAAFD';
+                } else if (typeName + 's' in equipmentTypes) {
+                    typeName = typeName + 's';
+                } else if (typeName in equipmentTypes) {
+                    typeName = typeName;
+                } else {
+                    return !1;
+                }
+                // console.log(typeName)
+                // 条件是否为Object
+                var isConditionObj = _typeof(conditions[key]) === 'object' && !Array.isArray(conditions[key]);
+                var objConditions = conditions[key] && isConditionObj ? conditions[key] : undefined;
+                if (!checkCondition[conditions[key] === !0 || isConditionObj ? 'istype' : 'isnottype'](equipment, equipmentTypes[typeName], objConditions)) return !1;
+            }
+        }
+
+        return !0;
+    };
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__checkEquipments', function () {
+    var checkListStatic = ['id', 'name', 'nameof', 'type'];
+
+    /**
+     * 检查装备列表是否满足给定条件
+     * 
+     * @param {(number[]|Equipment[])} equipments 要判断的装备列表
+     * @param {any} [conditions={}] 条件，需满足所有条件
+     */
+    var check = function check(equipments) {
+        var conditions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+        var getEquipment = window.__getEquipment;
+        var checkEquipment = window.__checkEquipment;
+
+        if (!Array.isArray(equipments)) return check([equipments], conditions);
+
+        // 需满足所有条件
+
+        var _loop = function _loop(key) {
+            if (conditions[key] === !1) {
+                // 条件：不存在
+                if (!equipments.every(function (equipment) {
+                    return checkEquipment(equipment, _defineProperty({}, key.replace(/^has/, 'is'), conditions[key]));
+                })) return {
+                        v: !1
+                    };
+            } else if (conditions[key] === !0) {
+                // 条件：存在
+                if (!equipments.some(function (equipment) {
+                    return checkEquipment(equipment, _defineProperty({}, key.replace(/^has/, 'is'), conditions[key]));
+                })) return {
+                        v: !1
+                    };
+            } else if (key.substr(0, 3) === 'has' && checkListStatic.includes(key.substr(3).toLowerCase())) {
+                // 条件：checkListStatic 中的项目
+                if (Array.isArray(conditions[key])) {
+                    if (!conditions[key].every(function (value) {
+                        return equipments.some(function (equipment) {
+                            return checkEquipment(equipment, _defineProperty({}, key.replace(/^has/, 'is'), value));
+                        });
+                    })) return {
+                            v: !1
+                        };
+                } else {
+                    if (!equipments.some(function (equipment) {
+                        return checkEquipment(equipment, _defineProperty({}, key.replace(/^has/, 'is'), conditions[key]));
+                    })) return {
+                            v: !1
+                        };
+                }
+            } else if (key.substr(0, 3) === 'has' && _typeof(conditions[key]) === 'object' && !Array.isArray(conditions[key])) {
+                // 条件合集
+                var thisCondition = Object.assign({}, conditions[key]);
+                var count = typeof thisCondition.count === 'undefined' ? 1 : thisCondition.count;
+                delete thisCondition.count;
+                var filtered = equipments.filter(function (equipment) {
+                    return checkEquipment(equipment, _defineProperty({}, key.replace(/^has/, 'is'), thisCondition));
+                });
+                // console.log(thisCondition, equipments, filtered.length, count)
+                if (filtered.length < count) return {
+                        v: !1
+                    };
+            } else if (key.substr(0, 3) === 'has' && !isNaN(conditions[key])) {
+                // 条件：有至少 N 个
+                var _filtered = equipments.filter(function (equipment) {
+                    return checkEquipment(equipment, _defineProperty({}, key.replace(/^has/, 'is'), !0));
+                });
+                if (_filtered.length < conditions[key]) return {
+                        v: !1
+                    };
+            } else if (key.substr(0, 3) === 'has' && Array.isArray(conditions[key])) {
+                // 条件：有至少 value[0] 个至多 value[1] 个
+                var _filtered2 = equipments.filter(function (equipment) {
+                    return checkEquipment(equipment, _defineProperty({}, key.replace(/^has/, 'is'), !0));
+                });
+                if (_filtered2.length < conditions[key][0] || _filtered2.length > conditions[key][1]) return {
+                        v: !1
+                    };
+            }
+        };
+
+        for (var key in conditions) {
+            var _ret = _loop(key);
+
+            if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+        }
+
+        return !0;
+    };
+
+    return check;
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__checkShip', function () {
+    /**
+     * 检查舰娘是否满足给定条件
+     * 
+     * @param {(number|Ship)} ship 要判断的舰娘
+     * @param {any} [conditions={}] 条件，需满足所有条件
+     * @param {(number|number[])} [conditions.isID] 判断舰娘ID是否精确匹配或匹配其中一项
+     * @param {(number|number[])} [conditions.isNotID] 判断舰娘ID是否不匹配
+     * @param {(string|string[])} [conditions.isName] 判断舰娘名是否精确匹配或匹配其中一项
+     * @param {(string|string[])} [conditions.isNotName] 判断舰娘名是否不匹配
+     * @param {(number|number[])} [conditions.isType] 判断舰娘是否属于给定舰种或匹配其中一项
+     * @param {(number|number[])} [conditions.isNotType] 判断舰娘是否不属于给定舰种
+     * @param {(number|number[])} [conditions.isClass] 判断舰娘是否属于给定舰级或匹配其中一项
+     * @param {(number|number[])} [conditions.isNotClass] 判断舰娘是否不属于给定舰级
+     * @param {boolean} [conditions.isBattleship]
+     * @param {boolean} [conditions.isBB]
+     * @param {boolean} [conditions.isCarrier]
+     * @param {boolean} [conditions.isCV]
+     * @param {boolean} [conditions.isSubmarine]
+     * @param {boolean} [conditions.isSS]
+     * @param {number|[min,max]} [conditions.hasSlot] 判断舰娘的可配置栏位精确有 number 个，或 min ~ max 个
+     * @param {number} [conditions.hasSlotMin] 判断舰娘的可配置栏位至少有 number 个
+     * @param {number} [conditions.hasSlotMax] 判断舰娘的可配置栏位最多有 number 个
+     */
+    return function (ship) {
+        var conditions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+        var getShip = window.__getShip;
+        var ArrayOrItem = window.__ArrayOrItem;
+        var ArrayOrItemAll = window.__ArrayOrItemAll;
+
+        var checkCondition = {
+            // isID
+            isid: function isid(ship, id) {
+                return ArrayOrItem(id, function (id) {
+                    if (isNaN(id)) return !1;
+                    return parseInt(id) === ship.id;
+                });
+            },
+            isnotid: function isnotid(ship, id) {
+                return ArrayOrItemAll(id, function (id) {
+                    if (isNaN(id)) return !1;
+                    return parseInt(id) !== ship.id;
+                });
+            },
+
+            // isName
+            isname: function isname(ship, name) {
+                return ArrayOrItem(name, function (name) {
+                    return ship.isName(name)
+                    // for (let key in ship.name) {
+                    //     if (key === 'suffix') continue
+                    //     if (ship.name[key].toLowerCase() === name) return true
+                    // }
+                    // return false
+                    ;
+                });
+            },
+            isnotname: function isnotname(ship, name) {
+                return ArrayOrItemAll(name, function (name) {
+                    return !ship.isName(name)
+                    // for (let key in ship.name) {
+                    //     if (key === 'suffix') continue
+                    //     if (ship.name[key].toLowerCase() === name) return false
+                    // }
+                    // return true
+                    ;
+                });
+            },
+
+            // isType
+            istype: function istype(ship, type) {
+                return ArrayOrItem(type, function (type) {
+                    if (isNaN(type)) return !1;
+                    return parseInt(type) === ship.type;
+                });
+            },
+            isnottype: function isnottype(ship, type) {
+                return ArrayOrItemAll(type, function (type) {
+                    if (isNaN(type)) return !1;
+                    return parseInt(type) !== ship.type;
+                });
+            },
+            isbattleship: function isbattleship(ship, isTrue) {
+                return this.istype(ship, [8, 6, 20, 7, 18]) === isTrue;
+            },
+            isbb: function isbb(ship, isTrue) {
+                return this.isbattleship(ship, isTrue);
+            },
+            iscarrier: function iscarrier(ship, isTrue) {
+                return this.istype(ship, [11, 10, 9, 30, 32]) === isTrue;
+            },
+            iscv: function iscv(ship, isTrue) {
+                return this.iscarrier(ship, isTrue);
+            },
+            issubmarine: function issubmarine(ship, isTrue) {
+                return this.istype(ship, [14, 13]) === isTrue;
+            },
+            isss: function isss(ship, isTrue) {
+                return this.issubmarine(ship, isTrue);
+            },
+
+            // isClass
+            isclass: function isclass(ship, Class) {
+                return ArrayOrItem(Class, function (Class) {
+                    if (isNaN(Class)) return !1;
+                    return parseInt(Class) === ship.class;
+                });
+            },
+            isnotclass: function isnotclass(ship, Class) {
+                return ArrayOrItemAll(Class, function (Class) {
+                    if (isNaN(Class)) return !1;
+                    return parseInt(Class) !== ship.class;
+                });
+            },
+
+            // hasSlot
+            hasslot: function hasslot(ship, num) {
+                if (!Array.isArray(ship.slot)) return !1;
+                if (Array.isArray(num)) {
+                    if (isNaN(num[0]) && !isNaN(num[1])) return ship.slot.length <= parseInt(num[1]);else if (!isNaN(num[0]) && isNaN(num[1])) return ship.slot.length >= parseInt(num[0]);else if (!isNaN(num[0]) && !isNaN(num[1])) return ship.slot.length >= parseInt(num[0]) && ship.slot.length <= parseInt(num[1]);else return !1;
+                } else return !isNaN(num) && parseInt(num) === ship.slot.length;
+            },
+            hasslotmin: function hasslotmin(ship, min) {
+                return this.hasslot(ship, [min, undefined]);
+            },
+            hasslotmax: function hasslotmax(ship, max) {
+                return this.hasslot(ship, [undefined, max]);
+            },
+
+            // minLevel
+            minlevel: function minlevel(ship, level) {
+                if (typeof ship.level !== 'undefined') return ship.level >= level;
+                return !0;
+            }
+        };
+
+        ship = getShip(ship);
+        if (typeof ship === 'undefined') return !1;
+
+        // 需满足所有条件
+        for (var key in conditions) {
+            if (!checkCondition[key.toLowerCase()](ship, conditions[key])) return !1;
+        }
+
+        return !0;
+    };
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__calculateBonus', function () {
+    /**
+     * Calculate stat bonus for specified ship with equipment(s)
+     */
+    var calculateBonus = function calculateBonus(ship) {
+        var equipments = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+        var equipmentStars = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+        var equipmentRanks = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+        var stat = arguments[4];
+
+        if (typeof equipmentStars === 'string') return calculateBonus(ship, equipments, undefined, undefined, equipmentStars);
+
+        var getShipAndEquipments = window.__getShipAndEquipments;
+        var checkShip = window.__checkShip;
+        var checkEquipments = window.__checkEquipments;
+        var bonus = window.__bonus;
+
+        var _getShipAndEquipments = getShipAndEquipments(ship, equipments, equipmentStars, equipmentRanks);
+
+        ship = _getShipAndEquipments.ship;
+        equipments = _getShipAndEquipments.equipments;
+        equipmentStars = _getShipAndEquipments.equipmentStars;
+        equipmentRanks = _getShipAndEquipments.equipmentRanks;
+
+
+        var result = {};
+        var conditions = bonus.filter(function (bonus) {
+            return checkShip(ship, bonus.ship);
+        });
+        var addResult = function addResult() {
+            var bonus = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+            for (var _stat in bonus) {
+                if (typeof result[_stat] === 'undefined') result[_stat] = bonus[_stat];else result[_stat] += bonus[_stat];
+            }
+        };
+
+        // condition: single equipment
+        conditions.filter(function (bonus) {
+            return typeof bonus.equipment === 'number' && equipments.some(function (equipment) {
+                return equipment && equipment.id && equipment.id == bonus.equipment;
+            });
+        }).forEach(function (bonus) {
+            var thisBonus = {};
+
+            if (_typeof(bonus.bonusImprove) === 'object') {
+                var starsDesc = Object.keys(bonus.bonusImprove).sort(function (a, b) {
+                    return parseInt(b) - parseInt(a);
+                });
+                equipments.forEach(function (equipment, index) {
+                    if (equipment && equipment.id && equipment.id == bonus.equipment) {
+                        starsDesc.some(function (star) {
+                            if (equipmentStars[index] >= star) {
+                                for (var _stat2 in bonus.bonusImprove[star]) {
+                                    if (typeof thisBonus[_stat2] === 'undefined') thisBonus[_stat2] = bonus.bonusImprove[star][_stat2];else thisBonus[_stat2] += bonus.bonusImprove[star][_stat2];
+                                }
+                                return !0;
+                            }
+                            return !1;
+                        });
+                    }
+                });
+            } else {
+                var thisCount = 0;
+
+                // count for equipment
+                equipments.forEach(function (equipment) {
+                    if (equipment && equipment.id && equipment.id == bonus.equipment) {
+                        thisCount++;
+                    }
+                });
+
+                if (_typeof(bonus.bonusCount) === 'object') {
+                    Object.keys(bonus.bonusCount).sort(function (a, b) {
+                        return parseInt(b) - parseInt(a);
+                    }).some(function (count) {
+                        if (thisCount >= count) {
+                            thisBonus = _extends({}, bonus.bonusCount[count]);
+                            return !0;
+                        }
+                        return !1;
+                    });
+                } else if (_typeof(bonus.bonus) === 'object') {
+                    thisBonus = _extends({}, bonus.bonus);
+                    // add for count
+                    for (var _stat3 in thisBonus) {
+                        thisBonus[_stat3] = thisBonus[_stat3] * thisCount;
+                    }
+                }
+            }
+
+            addResult(thisBonus);
+        });
+
+        // condition: equipment-set
+        conditions.filter(function (bonus) {
+            return _typeof(bonus.equipments) === 'object' && checkEquipments(equipments, bonus.equipments);
+        }).forEach(function (bonus) {
+            addResult(bonus.bonus);
+        });
+
+        if (typeof stat === 'string') return result[stat] || 0;
+
+        return result;
+    };
+
+    return calculateBonus;
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__bonus', function () {
+    // 装备额外属性
+
+    var BB_KongouClass2ndRemodel = [149, // 金剛改二
+    150, // 比叡改二
+    151, // 榛名改二
+    152];
+    var BB_IseClassRemodel = [82, // 伊勢改
+    88];
+
+    var CL_KumaClass2ndRemodel = [547, // 多摩改二
+    146];
+    var CL_KumaClassRemodel = [216, // 多摩改
+    217].concat(CL_KumaClass2ndRemodel);
+
+    var DD_FubukiClass2ndRemodel = [426, // 吹雪改二
+    420];
+    var DD_AyanamiClass2ndRemodel = [195, // 綾波改二
+    407];
+    var DD_AkatsukiClass2ndRemodel = [437, // 暁改二
+    147];
+    var DD_HatsuharuClass2ndRemodel = [326, // 初春改二
+    419];
+    var DD_ShiratsuyuClass2ndRemodel = [145, // 時雨改二
+    498, // 村雨改二
+    144, // 夕立改二
+    469];
+    var DD_AsashioClass2ndRemodel = [463, // 朝潮改二
+    468, // 朝潮改二丁
+    199, // 大潮改二
+    489, // 満潮改二
+    490, // 荒潮改二
+    198, // 霰改二
+    464, // 霞改二
+    470];
+    var DD_KagerouClass2ndRemodel = [566, // 陽炎改二
+    567];
+    var DD_YuugumoClass2ndRemodel = [543];
+    var DD_YuugumoClass2ndRemodel_PLUS_ShimakazeRemodel = DD_YuugumoClass2ndRemodel.concat([229]);
+
+    /**
+     * @member {Number} [equipment] 单一装备
+     * @member {Object} [equipments] 条件：装备组合
+     * @member {Object} ship 条件：匹配的舰娘
+     * @member {Object} [bonus] 收益
+     * @member {Object} [bonusCount] 仅当为单一装备时可用：不同装备数量的收益
+     * @member {Object} [bonusImprove] 仅当为单一装备时可用：不同改修星级的收益
+     */
+    return [
+
+    /**
+     * 小口径主炮
+     */
+    // 12.7cm連装砲C型改二
+    // @ 陽炎型 改二
+    {
+        equipment: 266,
+        ship: {
+            isID: DD_KagerouClass2ndRemodel
+        },
+        bonusCount: {
+            1: {
+                fire: 1
+            },
+            2: {
+                fire: 3
+            }
+        }
+    },
+    // 12.7cm連装砲D型改二
+    // @ 陽炎型
+    {
+        equipment: 267,
+        ship: {
+            isClass: [21],
+            isNotID: DD_KagerouClass2ndRemodel
+        },
+        bonus: {
+            fire: 1,
+            evasion: 1
+        }
+    },
+    // 12.7cm連装砲D型改二
+    // @ 夕雲型 / 島風型
+    {
+        equipment: 267,
+        ship: {
+            isClass: [22, 24],
+            isNotID: DD_YuugumoClass2ndRemodel
+        },
+        bonus: {
+            fire: 2,
+            evasion: 1
+        }
+    },
+    // 12.7cm連装砲D型改二
+    // @ 陽炎型 改二
+    {
+        equipment: 267,
+        ship: {
+            isID: DD_KagerouClass2ndRemodel
+        },
+        bonusCount: {
+            1: {
+                fire: 2,
+                evasion: 1
+            },
+            2: {
+                fire: 3,
+                evasion: 2
+            },
+            3: {
+                fire: 4,
+                evasion: 3
+            }
+        }
+    },
+    // 12.7cm連装砲D型改二
+    // @ 夕雲型 改二
+    {
+        equipment: 267,
+        ship: {
+            isID: DD_YuugumoClass2ndRemodel
+        },
+        bonus: {
+            fire: 3,
+            evasion: 1
+        }
+    },
+
+    /**
+     * 大口径主炮
+     */
+    // 35.6cm連装砲(ダズル迷彩)
+    // @ 金剛改二
+    {
+        equipment: 104,
+        ship: {
+            isID: [149]
+        },
+        bonus: {
+            fire: 2
+        }
+    },
+    // 35.6cm連装砲(ダズル迷彩)
+    // @ 榛名改二
+    {
+        equipment: 104,
+        ship: {
+            isID: [151]
+        },
+        bonus: {
+            fire: 2,
+            aa: 1,
+            evasion: 2
+        }
+    },
+    // 35.6cm連装砲(ダズル迷彩)
+    // @ 比叡改二 / 霧島改二
+    {
+        equipment: 104,
+        ship: {
+            isID: [150, 152]
+        },
+        bonus: {
+            fire: 1
+        }
+    },
+    // 35.6cm三連装砲改(ダズル迷彩仕様)
+    // @ 金剛改二
+    {
+        equipment: 289,
+        ship: {
+            isID: [149]
+        },
+        bonus: {
+            fire: 2
+        }
+    },
+    // 35.6cm三連装砲改(ダズル迷彩仕様)
+    // @ 榛名改二
+    {
+        equipment: 289,
+        ship: {
+            isID: [151]
+        },
+        bonus: {
+            fire: 2,
+            aa: 1,
+            evasion: 2
+        }
+    },
+    // 35.6cm三連装砲改(ダズル迷彩仕様)
+    // @ 比叡改二 / 霧島改二
+    {
+        equipment: 289,
+        ship: {
+            isID: [150, 152]
+        },
+        bonus: {
+            fire: 1
+        }
+    },
+    // 41cm三連装砲改二
+    // @ 伊勢型 改
+    {
+        equipment: 290,
+        ship: {
+            isID: BB_IseClassRemodel
+        },
+        bonus: {
+            fire: 2,
+            aa: 2,
+            evasion: 1
+        }
+    },
+
+    /**
+     * 鱼雷发射管
+     */
+    // 61cm三連装(酸素)魚雷後期型
+    // @ 特型駆逐艦 改二 / 初春型 改二
+    {
+        equipment: 285,
+        ship: {
+            isID: [].concat(DD_FubukiClass2ndRemodel, DD_AyanamiClass2ndRemodel, DD_AkatsukiClass2ndRemodel, DD_HatsuharuClass2ndRemodel)
+        },
+        bonusImprove: {
+            0: {
+                torpedo: 2,
+                evasion: 1
+            },
+            10: {
+                fire: 1,
+                torpedo: 2,
+                evasion: 1
+            }
+        }
+    },
+    // 61cm四連装(酸素)魚雷
+    // @ 陽炎型 改二
+    {
+        equipment: 15,
+        ship: {
+            isID: DD_KagerouClass2ndRemodel
+        },
+        bonusCount: {
+            1: {
+                torpedo: 2
+            },
+            2: {
+                torpedo: 4
+            }
+        }
+    },
+    // 61cm四連装(酸素)魚雷後期型
+    // @ 陽炎型 改二
+    {
+        equipment: 286,
+        ship: {
+            isID: DD_KagerouClass2ndRemodel
+        },
+        bonusImprove: {
+            0: {
+                torpedo: 2,
+                evasion: 1
+            },
+            5: {
+                torpedo: 3,
+                evasion: 1
+            },
+            10: {
+                fire: 1,
+                torpedo: 3,
+                evasion: 1
+            }
+        }
+    },
+    // 61cm四連装(酸素)魚雷後期型
+    // @ 白露型 改二 / 朝潮型 改二 / 夕雲型 改二
+    {
+        equipment: 286,
+        ship: {
+            isID: [].concat(DD_ShiratsuyuClass2ndRemodel, DD_AsashioClass2ndRemodel, DD_YuugumoClass2ndRemodel)
+        },
+        bonusImprove: {
+            0: {
+                torpedo: 2,
+                evasion: 1
+            },
+            10: {
+                fire: 1,
+                torpedo: 2,
+                evasion: 1
+            }
+        }
+    },
+
+    /**
+     * 装甲板
+     */
+    // 北方迷彩(＋北方装備)
+    // @ 球磨型 改
+    {
+        equipment: 268,
+        ship: {
+            isID: CL_KumaClassRemodel
+        },
+        bonusCount: {
+            1: {
+                armor: 2,
+                evasion: 7
+            }
+        }
+    },
+
+    /**
+     * 组合
+     */
+    // 12.7cm連装砲D型改二 + 水上電探
+    // @ 夕雲型 改二 / 島風改
+    {
+        equipments: {
+            hasId: [267],
+            hasSurfaceRadar: !0
+        },
+        ship: {
+            isId: DD_YuugumoClass2ndRemodel_PLUS_ShimakazeRemodel
+        },
+        bonus: {
+            fire: 1,
+            torpedo: 3,
+            evasion: 2
+        }
+    },
+    // 35.6cm三連装砲改(ダズル迷彩仕様) + 水上電探
+    // @ 金剛型 改二
+    {
+        equipments: {
+            hasId: [289],
+            hasSurfaceRadar: !0
+        },
+        ship: {
+            isId: BB_KongouClass2ndRemodel
+        },
+        bonus: {
+            fire: 2
+        }
+    },
+    // 41cm三連装砲改二 + 対空電探
+    // @ 伊勢型 改
+    {
+        equipments: {
+            hasId: [290],
+            hasAARadar: !0
+        },
+        ship: {
+            isId: BB_IseClassRemodel
+        },
+        bonus: {
+            aa: 2,
+            evasion: 3
+        }
+    }];
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__ArrayOrItem', function () {
+    return function (arg, func) {
+        if (Array.isArray(arg)) return arg.some(func);
+        return func(arg);
+    };
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__ArrayOrItemAll', function () {
+    return function (arg, func) {
+        if (Array.isArray(arg)) return arg.every(func);
+        return func(arg);
+    };
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('KC', function () {
+
+    "use strict";
+
+    var KC = {
+        lang: 'zh_cn',
+        joint: '・',
+        maxShipLv: 165,
+        maxHqLv: 120,
+        db: {},
+        path: {
+            db: '/kcdb/',
+            pics: {
+                ships: '/kcpic/ships/'
+            }
+        },
+        statSpeed: {
+            5: '低速',
+            10: '高速',
+            15: '高速+',
+            20: '最速'
+        },
+        getStatSpeed: function getStatSpeed(speed) {
+            return this.statSpeed[parseInt(speed)];
+        },
+        statRange: {
+            1: '短',
+            2: '中',
+            3: '长',
+            4: '超长'
+        },
+        getStatRange: function getStatRange(range) {
+            return this.statRange[parseInt(range)];
+        },
+        textRank: {
+            1: '|',
+            2: '||',
+            3: '|||',
+            4: '\\',
+            5: '\\\\',
+            6: '\\\\\\',
+            7: '》'
+        }
+    };
+
+    /**
+     * KC Classes
+     */
+    // Base class
+
+    var ItemBase = function () {
+        function ItemBase(data) {
+            _classCallCheck(this, ItemBase);
+
+            for (var i in data) {
+                this[i] = data[i];
+            }
+        }
+
+        _createClass(ItemBase, [{
+            key: 'getName',
+            value: function getName(language) {
+                language = language || KC.lang;
+                return this.name ? this.name[language] || this.name : null;
+            }
+        }, {
+            key: 'isName',
+
+
+            /**
+             * 检查名称是否为（完全匹配）给定字符串
+             * 
+             * @param {String} nameToCheck - 要检查的名称
+             * @param {Boolean|String} [locale] - 要检查的语言。如果为 true 检查当前语言，如果为 falsy 检查所有语言
+             * @returns {Boolean} - 是否匹配
+             */
+            value: function isName(nameToCheck, locale) {
+                if (locale === !0) locale = KC.lang;
+                if (locale) {
+                    if (this.name[locale] === nameToCheck) return !0;
+                    return !1;
+                }
+
+                for (var key in this.name) {
+                    if (key === 'suffix') continue;
+                    if (this.name[key] === nameToCheck) return !0;
+                }
+                return !1;
+            }
+
+            /**
+             * 检查名称是否包含给定字符串
+             * 
+             * @param {String} nameToCheck - 要检查的名称
+             * @param {Boolean|String} [locale] - 要检查的语言。如果为 true 检查当前语言，如果为 falsy 检查所有语言
+             * @returns {Boolean} - 是否匹配
+             */
+
+        }, {
+            key: 'hasName',
+            value: function hasName(nameToCheck, locale) {
+                if (locale === !0) locale = KC.lang;
+                if (locale) {
+                    if (this.name[locale].includes(nameToCheck)) return !0;
+                    return !1;
+                }
+
+                for (var key in this.name) {
+                    if (key === 'suffix') continue;
+                    if (this.name[key].includes(nameToCheck)) return !0;
+                }
+                return !1;
+            }
+        }, {
+            key: 'isNameOf',
+            value: function isNameOf() {
+                return this.hasName.apply(this, arguments);
+            }
+        }, {
+            key: '_name',
+            get: function get() {
+                return this.getName();
+            }
+        }]);
+
+        return ItemBase;
+    }();
+    // Class for Entity (Person/Group, such as CVs, illustrators)
+
+
+    var Entity = function (_ItemBase) {
+        _inherits(Entity, _ItemBase);
+
+        function Entity(data) {
+            _classCallCheck(this, Entity);
+
+            return _possibleConstructorReturn(this, (Entity.__proto__ || Object.getPrototypeOf(Entity)).call(this, data));
+        }
+
+        return Entity;
+    }(ItemBase);
+
+    var Equipment = function (_ItemBase2) {
+        _inherits(Equipment, _ItemBase2);
+
+        function Equipment(data) {
+            _classCallCheck(this, Equipment);
+
+            var _this2 = _possibleConstructorReturn(this, (Equipment.__proto__ || Object.getPrototypeOf(Equipment)).call(this, data));
+
+            Object.defineProperty(_this2, 'rankupgradable', {
+                value: _this2.isRankUpgradable()
+            });
+            return _this2;
+        }
+
+        _createClass(Equipment, [{
+            key: 'getName',
+            value: function getName(small_brackets, language) {
+                language = language || KC.lang;
+                var result = ItemBase.prototype.getName.call(this, language),
+                    small_brackets_tag = small_brackets && !small_brackets === !0 ? small_brackets : 'small';
+                return small_brackets ? result.replace(/（([^（^）]+)）/g, '<' + small_brackets_tag + '>($1)</' + small_brackets_tag + '>') : result;
+            }
+        }, {
+            key: 'getType',
+            value: function getType(language) {
+                language = language || KC.lang;
+                return this.type ? KC.db.item_types[this.type].name[language] : null;
+            }
+        }, {
+            key: 'getIconId',
+            value: function getIconId() {
+                if (Array.isArray(this.type_ingame) && this.type_ingame.length > 3) return this.type_ingame[3];
+                return KC.db.item_types[this.type].icon;
+            }
+        }, {
+            key: 'getCaliber',
+            value: function getCaliber() {
+                var name = this.getName(!1, 'ja_jp'),
+                    caliber = parseFloat(name);
+
+                return caliber;
+            }
+        }, {
+            key: 'getPower',
+            value: function getPower() {
+                return this.stat[KC.db.item_types[this.type].main_attribute || 'fire'];
+                /*
+                switch( this.type ){
+                    // Guns
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                        case 9:
+                }
+                */
+            }
+
+            /**
+             * 判断是否可装备入补强增设栏位
+             * 
+             * @returns {boolean}
+             */
+
+        }, {
+            key: 'isEquipableExSlot',
+            value: function isEquipableExSlot() {
+                if (this.equipable_exslot) return this.equipable_exslot || !1;
+                return this.type ? KC.db.item_types[this.type].equipable_exslot || !1 : !1;
+            }
+
+            /**
+             * 判断是否可提升熟练度
+             * 
+             * @returns {boolean}
+             */
+
+        }, {
+            key: 'isRankUpgradable',
+            value: function isRankUpgradable() {
+                return formula.equipmentType.Aircrafts.includes(this.type) && this.type !== formula.equipmentType.Autogyro && this.type !== formula.equipmentType.AntiSubPatrol;
+            }
+
+            /**
+             * 获取属性
+             * 
+             * @param {String} statType - 属性类型
+            * @param {Number|Object} [ship] - 舰娘ID或舰娘数据，如果给出，会查询额外收益
+             * @returns {boolean}
+             */
+
+        }, {
+            key: 'getStat',
+            value: function getStat(statType, ship) {
+                statType = statType.toLowerCase();
+                var base = this.stat[statType];
+                if (!ship || base === undefined || !Array.isArray(this.stat_bonus)) return base;
+                if (ship && Array.isArray(this.stat_bonus)) {
+                    if ((typeof ship === 'undefined' ? 'undefined' : _typeof(ship)) !== 'object') ship = KC.db.ships[ship];
+                    var shipId = ship.id;
+
+                    var bonus = void 0;
+
+                    this.stat_bonus.forEach(function (o) {
+                        if (Array.isArray(o.ships)) o.ships.some(function (ship) {
+                            if (ship == shipId) {
+                                for (var stat in o.bonus) {
+                                    if (!bonus) bonus = {};
+                                    bonus[stat] = Math.max(o.bonus[stat], bonus[stat] || 0);
+                                }
+                                return !0;
+                            }
+                            return !1;
+                        });
+                        if (Array.isArray(o.ship_classes)) o.ship_classes.some(function (classId) {
+                            if (classId == ship.class) {
+                                for (var stat in o.bonus) {
+                                    if (!bonus) bonus = {};
+                                    bonus[stat] = Math.max(o.bonus[stat], bonus[stat] || 0);
+                                }
+                                return !0;
+                            }
+                            return !1;
+                        });
+                        // return typeof bonus !== 'undefined'
+                    });
+                    if (bonus) {
+                        return base + (bonus[statType] || 0);
+                    }
+                }
+                return base;
+            }
+        }, {
+            key: '_icon',
+            get: function get() {
+                return 'assets/images/itemicon/' + this.getIconId() + '.png';
+            }
+        }]);
+
+        return Equipment;
+    }(ItemBase);
+
+    var Ship = function (_ItemBase3) {
+        _inherits(Ship, _ItemBase3);
+
+        function Ship(data) {
+            _classCallCheck(this, Ship);
+
+            return _possibleConstructorReturn(this, (Ship.__proto__ || Object.getPrototypeOf(Ship)).call(this, data));
+        }
+        /**
+         * @param {string} joint - OPTIONAL - 连接符，如果存在后缀名，则在舰名和后缀名之间插入该字符串
+         * @param {bollean} joint - OPTIONAL - 如果为 true，则添加默认连接符；false，则不添加连接符
+         * @param {null} joint - OPTIONAL - 不添加连接符
+         * @param {string} language - OPTIONAL - 语言代码，默认为 KCTip.lang
+         * @return {string} 舰名 + 连接符（如果有） + 后缀名（如果有）
+         * 快捷方式 - ship._name (默认连接符，默认语言)
+         */
+
+
+        _createClass(Ship, [{
+            key: 'getName',
+            value: function getName(joint, language) {
+                joint = joint || '';
+                language = language || KC.lang;
+                var suffix = this.getSuffix(language);
+                return (this.name[language] || this.name.ja_jp) + (suffix ? (joint === !0 ? KC.joint : joint) + suffix : '');
+            }
+            /*	获取舰名，不包括后缀
+                变量
+                    language	[OPTIONAL]
+                        String		语言代码，默认为 KC.lang
+                返回值
+                    String		舰名，不包括后缀
+            */
+
+        }, {
+            key: 'getNameNoSuffix',
+            value: function getNameNoSuffix(language) {
+                language = language || KC.lang;
+                return this.name[language] || this.name.ja_jp;
+            }
+            /*	获取后缀名
+                变量
+                    language	[OPTIONAL]
+                        String		语言代码，默认为 KC.lang
+                返回值
+                    String		后缀名
+            */
+
+        }, {
+            key: 'getSuffix',
+            value: function getSuffix(language) {
+                language = language || KC.lang;
+                return this.name.suffix ? KC.db.ship_namesuffix[this.name.suffix][language] || KC.db.ship_namesuffix[this.name.suffix].ja_jp || '' : '';
+            }
+            /*	获取舰种
+                变量
+                    language	[OPTIONAL]
+                        String		语言代码，默认为 KC.lang
+                返回值
+                    String		舰种
+                快捷方式
+                    ship._type	默认语言
+            */
+
+        }, {
+            key: 'getType',
+            value: function getType(language) {
+                language = language || KC.lang;
+                return this.type ? KC.db.ship_types[this.type].name[language] || KC.db.ship_types[this.type].name.ja_jp || '' : null;
+            }
+        }, {
+            key: 'getSeriesData',
+
+            /*	获取系列数据
+                返回值
+                    Object		系列
+            */
+            value: function getSeriesData() {
+                return this.series ? KC.db.ship_series[this.series].ships : [{
+                    'id': this.id
+                }];
+            }
+        }, {
+            key: 'getPic',
+
+            /**
+             * 获取图鉴uri/path
+             * 
+             * @param {number} [picId = 0] - 图鉴Id，默认 0
+             * @param {string} [ext]
+             * @returns {string} uri/path
+             * 
+             * @memberOf Ship
+             * 
+             * 快捷方式
+             *      ship._pics	获取全部图鉴，Array
+             */
+            value: function getPic(picId, ext) {
+                var series = this.getSeriesData();
+                picId = parseInt(picId || 0);
+
+                var getURI = function getURI(i, p) {
+                    if (typeof node != 'undefined' && node && node.path && KC.path.pics.ships) return node.path.join(KC.path.pics.ships, i + '/' + p + '.' + (ext ? ext : 'webp'));
+                    if (KC.path.pics.ships) return KC.path.pics.ships + i + '/' + p + '.' + (ext ? ext : 'png');
+                    return '/' + i + '/' + p + '.' + (ext ? ext : 'png');
+                };
+
+                for (var i = 0; i < series.length; i++) {
+                    if (series[i].id == this.id) {
+                        switch (picId) {
+                            case 0:
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 12:
+                            case 13:
+                            case 14:
+                                return getURI(this.id, picId);
+                            //break;
+                            default:
+                                if (series[i].illust_delete) {
+                                    return getURI(series[i - 1].id, picId);
+                                } else {
+                                    return getURI(this.id, picId);
+                                }
+                            //break;
+                        }
+                        //break;
+                    }
+                }
+            }
+        }, {
+            key: 'getSpeed',
+            value: function getSpeed() /*language*/{
+                // language = language || KC.lang
+                return KC.statSpeed[parseInt(this.stat.speed)];
+            }
+        }, {
+            key: 'getSpeedRule',
+            value: function getSpeedRule() {
+                if (this.speed_rule) return this.speed_rule;
+                // if (this.name.ja_jp === '天津風') return 'high-2'
+                return this.class ? KC.db.ship_classes[this.class].speed_rule : null;
+            }
+        }, {
+            key: 'getRange',
+            value: function getRange() /*language*/{
+                // language = language || KC.lang
+                return KC.statRange[parseInt(this.stat.range)];
+            }
+        }, {
+            key: 'getEquipmentTypes',
+            value: function getEquipmentTypes() {
+                var disabled = this.additional_disable_item_types || [];
+                return KC.db.ship_types[this.type].equipable.concat(this.additional_item_types || []).filter(function (type) {
+                    return disabled.indexOf(type) < 0;
+                }).sort(function (a, b) {
+                    return a - b;
+                });
+            }
+        }, {
+            key: 'getAttribute',
+            value: function getAttribute(attr, lvl) {
+                lvl = lvl || 1;
+                if (lvl > Ship.lvlMax) lvl = Ship.lvlMax;
+
+                var getStatOfLvl = function getStatOfLvl(lvl, base, max) {
+                    lvl = lvl || 1;
+                    base = parseFloat(base);
+                    max = parseFloat(max) || base;
+                    if (base < 0 || max < 0) return -1;
+                    if (base == max) return max;
+                    return Math.floor(base + (max - base) * lvl / 99);
+                };
+
+                var value = void 0;
+
+                switch (attr) {
+                    case 'hp':
+                        value = this.stat.hp;
+                        if (lvl > 99) {
+                            if (this.stat.hp >= 90) value = this.stat.hp + 9;else if (this.stat.hp >= 70) value = this.stat.hp + 8;else if (this.stat.hp >= 50) value = this.stat.hp + 7;else if (this.stat.hp >= 40) value = this.stat.hp + 6;else if (this.stat.hp >= 30) value = this.stat.hp + 5;else value = this.stat.hp + 4;
+                            if (value > this.stat.hp_max) value = this.stat.hp_max;
+                        }
+                        return value;
+                    //break;
+                    case 'speed':
+                        return KC.getStatSpeed(this.stat.speed);
+                    //break;
+                    case 'range':
+                        return KC.getStatRange(this.stat.range);
+                    //break;
+                    case 'luck':
+                        if (lvl > 99) return this.stat.luck + 3;
+                        return this.stat.luck;
+                    //break;
+                    case 'fuel':
+                    case 'ammo':
+                        if (lvl > 99) return Math.floor(this.consum[attr] * 0.85);
+                        return this.consum[attr];
+                    //break;
+                    case 'aa':
+                    case 'armor':
+                    case 'fire':
+                    case 'torpedo':
+                        return this.stat[attr + '_max'] || this.stat[attr];
+                    //break;
+                    default:
+                        return getStatOfLvl(lvl, this.stat[attr], this.stat[attr + '_max']);
+                    //break;
+                }
+            }
+            /*	获取关系
+                变量
+                    relation	[OPTIONAL]
+                        String		关系名
+                返回值
+                    Object			如果没有给出 relation，返回关系对象
+                    String||Number	如果给出 relation，返回值，默认读取 rels 下的属性，如果不存在，读取上一个改造版本的对应关系
+            */
+
+        }, {
+            key: 'getRel',
+            value: function getRel(relation) {
+                if (relation) {
+                    if (!this.rels[relation] && this.remodel && this.remodel.prev) {
+                        var prev = KC.db.ships[this.remodel.prev];
+                        while (prev) {
+                            if (prev.rels && prev.rels[relation]) return prev.rels[relation];
+                            if (!prev.remodel || !prev.remodel.prev) prev = null;else prev = KC.db.ships[prev.remodel.prev];
+                        }
+                    }
+                    return this.rels[relation];
+                } else {
+                    return this.rels;
+                }
+            }
+            /*	获取声优
+                变量
+                    language	[OPTIONAL]
+                        String		语言代码，默认为 KC.lang
+                返回值
+                    String		声优名
+                快捷方式
+                    ship._cv	默认语言
+            */
+
+        }, {
+            key: 'getCV',
+            value: function getCV(language) {
+                var entity = this.getRel('cv');
+                if (entity) return KC.db.entities[entity].getName(language || KC.lang);
+                return;
+            }
+        }, {
+            key: 'getIllustrator',
+
+            /*	获取画师
+                变量
+                    language	[OPTIONAL]
+                        String		语言代码，默认为 KC.lang
+                返回值
+                    String		画师名
+                快捷方式
+                    ship._illustrator	默认语言
+            */
+            value: function getIllustrator(language) {
+                var entity = this.getRel('illustrator');
+                if (entity) return KC.db.entities[entity].getName(language || KC.lang);
+                return;
+            }
+        }, {
+            key: 'getMinLv',
+
+
+            /* 获取该舰娘可能的最低等级
+             */
+            value: function getMinLv() {
+                var _this4 = this;
+
+                var series = this._series;
+                var lv = void 0;
+                series.some(function (o, index) {
+                    if (_this4.id == o.id) {
+                        if (index) {
+                            lv = series[index - 1].next_lvl;
+                        } else {
+                            lv = 1;
+                        }
+                    }
+                    return lv;
+                });
+                return lv;
+            }
+        }, {
+            key: 'getNavy',
+
+
+            /**
+             * 获取所属海军简称
+             * 
+             * @readonly
+             * @returns {String}
+             */
+            value: function getNavy() {
+                if (this.navy) return this.navy;
+                return this.class ? KC.db.ship_classes[this.class].navy || 'ijn' : 'ijn';
+            }
+        }, {
+            key: 'getCapability',
+
+
+            /**
+             * 获取额外能力
+             * 
+             * @param {String} [type] - 要获取的能力
+             * @returns {Object|...} - 如果提供了 type，返回该能力。如果没有，返回 Object
+             */
+            value: function getCapability(type) {
+                if (!type) return this.capabilities || {};
+                if (!this.capabilities) return undefined;
+                return this.capabilities[type];
+            }
+
+            /**
+             * 获取额外可提升的值
+             * 
+             * @param {String} [type] - 要获取的属性名
+             * @returns {Number} - 数值
+             */
+
+        }, {
+            key: 'getStatExtraMax',
+            value: function getStatExtraMax(type) {
+                var lvl = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+                switch (type.toLowerCase()) {
+                    case 'hp':
+                        {
+                            // const hpBase = this.getStat(type, 99)
+                            // const hpAfterMarriage = this.getStat(type, 100)
+                            var stat = this.getAttribute(type, lvl);
+                            var statMax = this.stat.hp_max;
+                            return Math.max(0, Math.min(2, statMax - stat));
+                        }
+                    case 'asw':
+                        {
+                            if (this.stat.asw) return 9;
+                            if (formula.shipType.LightCruisers.concat(formula.shipType.Destroyers).includes(this.type)) return 9;
+                            return !1;
+                        }
+                    default:
+                        return !1;
+                }
+            }
+        }, {
+            key: '_type',
+            get: function get() {
+                return this.getType();
+            }
+        }, {
+            key: '_series',
+            get: function get() {
+                return this.getSeriesData();
+            }
+        }, {
+            key: '_pics',
+            get: function get() {
+                var arr = [];
+                for (var i = 0; i < 15; i++) {
+                    arr.push(this.getPic(i));
+                }
+                return arr;
+            }
+        }, {
+            key: '_speed',
+            get: function get() {
+                return this.getSpeed();
+            }
+        }, {
+            key: '_speedRule',
+            get: function get() {
+                return this.getSpeedRule();
+            }
+        }, {
+            key: '_range',
+            get: function get() {
+                return this.getRange();
+            }
+        }, {
+            key: '_cv',
+            get: function get() {
+                return this.getCV();
+            }
+        }, {
+            key: '_illustrator',
+            get: function get() {
+                return this.getIllustrator();
+            }
+        }, {
+            key: '_minLv',
+            get: function get() {
+                return this.getMinLv();
+            }
+        }, {
+            key: '_navy',
+            get: function get() {
+                return this.getNavy();
+            }
+        }]);
+
+        return Ship;
+    }(ItemBase);
+
+    Ship.lvlMax = KC.maxShipLv;
+
+    var Consumable = function (_ItemBase4) {
+        _inherits(Consumable, _ItemBase4);
+
+        function Consumable(data) {
+            _classCallCheck(this, Consumable);
+
+            return _possibleConstructorReturn(this, (Consumable.__proto__ || Object.getPrototypeOf(Consumable)).call(this, data));
+        }
+
+        return Consumable;
+    }(ItemBase);
+
+    /**
+     * KC Database
+     */
+
+
+    KC.dbLoad = function (o) {
+        if (typeof o == 'string') return KC.dbLoad({ type: o });
+
+        if (!o.type && !o.url) return null;
+
+        return $.ajax({
+            'url': o.url || KC.path.db + '/' + o.type + '.json',
+            'dataType': 'text',
+            'success': function success(data) {
+                var arr = [];
+                if (o.beforeProcess) arr = o.beforeProcess(data);
+                if (typeof KC.db[o.type] == 'undefined') KC.db[o.type] = {};
+                arr.forEach(function (str) {
+                    if (str) {
+                        var doc = JSON.parse(str);
+                        switch (o.type) {
+                            case 'ships':
+                                KC.db[o.type][doc.id] = new Ship(doc);
+                                break;
+                            case 'items':
+                                KC.db[o.type][doc.id] = new Equipment(doc);
+                                break;
+                            case 'entities':
+                                KC.db[o.type][doc.id] = new Entity(doc);
+                                break;
+                            default:
+                                KC.db[o.type][doc.id] = doc;
+                                break;
+                        }
+                    }
+                });
+                if (o.success) o.success(data);
+            },
+            'complete': function complete(jqXHR, textStatus) {
+                if (o.complete) o.complete(jqXHR, textStatus);
+            }
+        });
+    };
+
+    /**
+     * KC Formulas
+     */
+    var _ship = function _ship(ship) {
+        return ship instanceof Ship ? ship : KC.db.ships ? KC.db.ships[ship] : {};
+    };
+    var _equipment = function _equipment(equipment) {
+        return equipment instanceof Equipment ? equipment : KC.db.equipments ? KC.db.equipments[equipment] : KC.db.items[equipment];
+    };
+    var _slots = function _slots(arrSlot) {
+        var slots = [];
+        arrSlot.forEach(function (value, index) {
+            slots[index >= 4 ? index + 1 : index] = value;
+        });
+        // let slots = arrSlot.map(value => value)
+        slots[4] = 0;
+        return slots;
+    };
+    var formula = {
+        // 装备类型
+        equipmentType: {
+            SmallCaliber: 1, // 小口径主炮
+            SmallCaliberHigh: 2, // 小口径主炮（高角）
+            SmallCaliberAA: 3, // 小口径主炮（高射）
+            MediumCaliber: 4, // 中口径主炮
+            LargeCaliber: 5, // 大口径主炮
+            SuperCaliber: 6, // 超大口径主炮
+            SecondaryGun: 7, // 副炮
+            SecondaryGunHigh: 8, // 副炮（高角）
+            SecondaryGunAA: 9, // 副炮（高射）
+            APShell: 11, // 穿甲弹
+            Torpedo: 12, // 鱼雷
+            SubmarineTorpedo: 13, // 潜艇鱼雷
+            MidgetSubmarine: 14, // 微型潜艇
+            ReconSeaplane: 15, // 水上侦察机
+            ReconSeaplaneNight: 16, // 夜侦
+            SeaplaneBomber: 17, // 水上轰炸机
+            CarrierFighter: 18, // 舰战 / 舰载战斗机
+            TorpedoBomber: 19, // 舰攻 / 舰载鱼雷轰炸机
+            DiveBomber: 20, // 舰爆 / 舰载俯冲轰炸机
+            CarrierRecon: 21, // 舰侦 / 舰载侦察机
+            Autogyro: 22, // 旋翼机
+            AntiSubPatrol: 23, // 对潜哨戒机
+            SmallRadar: 24, // 小型雷达
+            LargeRadar: 25, // 大型雷达
+            DepthCharge: 26, // 爆雷
+            Sonar: 27, // 声纳
+            LargeSonar: 28, // 大型声纳
+            AAGun: 29, // 对空机枪
+            AAGunConcentrated: 30, // 对空机枪（集中配备）
+            AAFireDirector: 31, // 高射装置
+            AviationPersonnel: 36, // 航空作战整备员
+            SurfaceShipPersonnel: 37, // 水上舰要员
+            LandingCraft: 38, // 登陆艇
+            Searchlight: 39, // 探照灯
+            CommandFacility: 45, // 舰队司令部设施
+            LargeFlyingBoat: 45, // 大型水上飞艇
+            SearchlightLarge: 46, // 大型探照灯
+            SuparRadar: 47, // 超大型雷达
+            CarrierRecon2: 50, // 舰侦II / 舰载侦察机II
+            SeaplaneFighter: 51, // 水战 / 水上战斗机
+            AmphibiousCraft: 52, // 特型内火艇
+            LandBasedAttacker: 53, // 陆攻 / 陆上攻击机
+            Interceptor: 54, // 局战 / 局地战斗机
+            JetBomberFighter: 55, // 喷气式战斗轰炸机
+            JetBomberFighter2: 56, // 喷气式战斗轰炸机
+            TransportMaterial: 57, // 运输设备
+            SubmarineEquipment: 58, // 潜艇装备
+            LandBasedFighter: 59, // 陆战 / 陆上战斗机
+            CarrierFighterNight: 60, // 夜战 / 舰载战斗机（夜间）
+            TorpedoBomberNight: 61, // 夜攻 / 舰载鱼雷机（夜间）
+            LandBasedAntiSubPatrol: 62 // 陆上哨戒机
+        },
+        // 舰种
+        shipType: {
+            // 航母系列
+            Carriers: [9, // 轻型航母
+            10, // 正规航母
+            11, // 装甲航母
+            30, // 攻击型轻航母
+            32],
+            // 轻巡系列
+            LightCruisers: [2, // 轻巡洋舰
+            3, // 重雷装巡洋舰
+            21, // 练习巡洋舰
+            28 // 防空轻巡洋舰
+            ],
+            // 驱逐舰系列
+            Destroyers: [1, // 驱逐舰
+            19 // 防空驱逐舰
+            ],
+            // 潜艇系列
+            Submarines: [13, // 潜艇
+            14 // 航母潜艇
+            ]
+        },
+        // 根据舰娘与其装备计算
+        calcByShip: {},
+        // 根据舰队配置计算
+        calcByFleet: {},
+        // 根据航空队机场与其飞行器配置计算
+        calcByField: {},
+        calc: {}
+    };
+    var _equipmentType = formula.equipmentType;
+    {
+        // 装备类型集合
+        _equipmentType.MainGuns = [_equipmentType.SmallCaliber, _equipmentType.SmallCaliberHigh, _equipmentType.SmallCaliberAA, _equipmentType.MediumCaliber, _equipmentType.LargeCaliber, _equipmentType.SuperCaliber];
+
+        _equipmentType.SmallCalibers = [_equipmentType.SmallCaliber, _equipmentType.SmallCaliberHigh, _equipmentType.SmallCaliberAA];
+
+        _equipmentType.MediumCalibers = [_equipmentType.MediumCaliber];
+
+        _equipmentType.LargeCalibers = [_equipmentType.LargeCaliber, _equipmentType.SuperCaliber];
+
+        _equipmentType.SecondaryGuns = [_equipmentType.SecondaryGun, _equipmentType.SecondaryGunHigh, _equipmentType.SecondaryGunAA];
+
+        _equipmentType.APShells = [_equipmentType.APShell];
+
+        _equipmentType.Torpedos = [_equipmentType.Torpedo, _equipmentType.SubmarineTorpedo];
+
+        _equipmentType.Seaplanes = [_equipmentType.ReconSeaplane, _equipmentType.ReconSeaplaneNight, _equipmentType.SeaplaneBomber, _equipmentType.SeaplaneFighter];
+
+        _equipmentType.Fighters = [_equipmentType.SeaplaneBomber, _equipmentType.CarrierFighter, _equipmentType.CarrierFighterNight, _equipmentType.TorpedoBomber, _equipmentType.TorpedoBomberNight, _equipmentType.DiveBomber, _equipmentType.SeaplaneFighter, _equipmentType.LandBasedAttacker, _equipmentType.Interceptor,
+        // _equipmentType.CarrierRecon
+        _equipmentType.JetBomberFighter, _equipmentType.JetBomberFighter2, _equipmentType.LandBasedFighter];
+
+        _equipmentType.Interceptors = [_equipmentType.Interceptor, _equipmentType.LandBasedFighter];
+
+        _equipmentType.Recons = [_equipmentType.ReconSeaplane, _equipmentType.ReconSeaplaneNight, _equipmentType.CarrierRecon, _equipmentType.CarrierRecon2, _equipmentType.LargeFlyingBoat];
+
+        _equipmentType.ReconSeaplanes = [_equipmentType.ReconSeaplane, _equipmentType.ReconSeaplaneNight];
+
+        _equipmentType.SeaplaneRecons = [_equipmentType.ReconSeaplane, _equipmentType.ReconSeaplaneNight, _equipmentType.LargeFlyingBoat];
+
+        _equipmentType.SeaplaneBombers = [_equipmentType.SeaplaneBomber, _equipmentType.SeaplaneFighter];
+
+        _equipmentType.SeaplaneFighters = [_equipmentType.SeaplaneFighter];
+
+        _equipmentType.CarrierFighters = [_equipmentType.CarrierFighter, _equipmentType.CarrierFighterNight];
+
+        _equipmentType.CarrierRecons = [_equipmentType.CarrierRecon, _equipmentType.CarrierRecon2];
+
+        _equipmentType.CarrierBased = [_equipmentType.CarrierFighter, _equipmentType.CarrierFighterNight, _equipmentType.TorpedoBomber, _equipmentType.TorpedoBomberNight, _equipmentType.DiveBomber, _equipmentType.CarrierRecon, _equipmentType.CarrierRecon2, _equipmentType.JetBomberFighter, _equipmentType.JetBomberFighter2];
+
+        _equipmentType.LandBased = [_equipmentType.LandBasedAttacker, _equipmentType.Interceptor, _equipmentType.JetBomberFighter, _equipmentType.JetBomberFighter2, _equipmentType.LandBasedFighter, _equipmentType.LandBasedAntiSubPatrol];
+
+        _equipmentType.TorpedoBombers = [_equipmentType.TorpedoBomber, _equipmentType.TorpedoBomberNight];
+
+        _equipmentType.DiveBombers = [_equipmentType.DiveBomber];
+
+        _equipmentType.JetBomberFighters = [_equipmentType.JetBomberFighter, _equipmentType.JetBomberFighter2];
+
+        _equipmentType.Autogyros = [_equipmentType.Autogyro];
+
+        _equipmentType.AntiSubPatrols = [_equipmentType.AntiSubPatrol, _equipmentType.LandBasedAntiSubPatrol];
+
+        _equipmentType.Aircrafts = [];
+        [].concat(_equipmentType.Seaplanes).concat(_equipmentType.Recons).concat(_equipmentType.CarrierBased).concat(_equipmentType.Autogyros).concat(_equipmentType.AntiSubPatrols).concat(_equipmentType.LandBased).forEach(function (v) {
+            if (_equipmentType.Aircrafts.indexOf(v) < 0) _equipmentType.Aircrafts.push(v);
+        });
+
+        _equipmentType.Radars = [_equipmentType.SmallRadar, _equipmentType.LargeRadar, _equipmentType.SuparRadar];
+
+        _equipmentType.SmallRadars = [_equipmentType.SmallRadar];
+
+        _equipmentType.LargeRadars = [_equipmentType.LargeRadar, _equipmentType.SuparRadar];
+
+        _equipmentType.AntiSubmarines = [_equipmentType.DepthCharge, _equipmentType.Sonar, _equipmentType.LargeSonar];
+
+        _equipmentType.DepthCharges = [_equipmentType.DepthCharge];
+
+        _equipmentType.Sonars = [_equipmentType.Sonar, _equipmentType.LargeSonar];
+
+        _equipmentType.AAGuns = [_equipmentType.AAGun, _equipmentType.AAGunConcentrated];
+
+        _equipmentType.AAFireDirectors = [_equipmentType.AAFireDirector];
+
+        _equipmentType.Searchlights = [_equipmentType.Searchlight, _equipmentType.SearchlightLarge];
+
+        _equipmentType.AviationPersonnels = [_equipmentType.AviationPersonnel];
+
+        _equipmentType.SurfaceShipPersonnels = [_equipmentType.SurfaceShipPersonnel];
+
+        _equipmentType.LandingCrafts = [_equipmentType.LandingCraft, _equipmentType.AmphibiousCraft];
+
+        _equipmentType.AmphibiousCrafts = [_equipmentType.AmphibiousCraft];
+
+        _equipmentType.isInterceptor = function (equipment) {
+            equipment = _equipment(equipment);
+
+            if (equipment.type_ingame && equipment.type_ingame[2] == 47) return !1;
+
+            return _equipmentType.Interceptors.indexOf(equipment.type) > -1;
+        };
+    }
+
+    // 改修收益系数
+    formula.starMultiper = {
+        SmallCalibers: {
+            shelling: 1,
+            night: 1
+        },
+        MediumCalibers: {
+            shelling: 1,
+            night: 1
+        },
+        LargeCalibers: {
+            shelling: 1.5,
+            night: 1
+        },
+        SecondaryGuns: {
+            shelling: 1,
+            night: 1,
+            hit: 1
+        },
+        APShells: {
+            shelling: 1,
+            night: 1
+        },
+        AAFireDirectors: {
+            shelling: 1,
+            night: 1
+        },
+        Searchlights: {
+            shelling: 1,
+            night: 1
+        },
+        AAGuns: {
+            shelling: 1,
+            torpedo: 1.2
+        },
+        Torpedos: {
+            torpedo: 1.2,
+            night: 1
+        },
+        DepthCharges: {
+            shelling: 0.75,
+            antisub: 1
+        },
+        Sonars: {
+            shelling: 0.75,
+            antisub: 1
+        },
+        SmallRadars: {
+            los: 1.25
+        },
+        LargeRadars: {
+            los: 1.4
+        },
+        Seaplanes: {},
+        ReconSeaplanes: {
+            los: 1.2
+        },
+        SeaplaneFighters: {
+            fighter: 0.2
+        },
+        SeaplaneBomber: {
+            // fighter: 0.2
+            los: 1.15
+        },
+        CarrierFighters: {
+            fighter: 0.2
+        },
+        DiveBombers: {
+            fighter: 0.25,
+            night: 1
+        },
+        CarrierRecons: {
+            los: 1.2
+        },
+        LandingCrafts: {
+            shelling: 1,
+            night: 1
+        },
+        Interceptors: {
+            fighter: 0.2
+        },
+
+        _10: {
+            shelling: ['multiplication', 0.2],
+            night: 1
+        },
+        _66: {
+            shelling: ['multiplication', 0.2],
+            night: 1
+            // aa
+            // aaFleet
+        },
+        _220: {
+            shelling: ['multiplication', 0.2],
+            night: 1
+            // aa
+            // aaFleet
+        },
+        _275: {
+            shelling: ['multiplication', 0.2],
+            night: 1
+            // aa
+            // aaFleet
+        },
+        // _247: {
+        //     _type: 'multiplication',
+        //     shelling: 0.3,
+        //     night: 0.3,
+        // },
+        _12: {
+            shelling: ['multiplication', 0.3],
+            night: ['multiplication', 0.3]
+        },
+        _234: {
+            shelling: ['multiplication', 0.3],
+            night: ['multiplication', 0.3]
+        }
+    };
+    // 获取改修加成对象
+    formula.getStarMultiplier = function (equipmentType, statType) {
+        // 如果 equipmentType 以 _ 开头，如 _123，则代表第 123 号装备，而非装备类型
+        if (!formula.starMultiper._init) {
+            var _loop2 = function _loop2(i) {
+                if (_equipmentType[i] && _equipmentType[i].forEach) {
+                    _equipmentType[i].forEach(function (tid) {
+                        formula.starMultiper[tid] = formula.starMultiper[i];
+                    });
+                } else if (typeof _equipmentType[i] === 'number') {
+                    formula.starMultiper[_equipmentType[i]] = formula.starMultiper[i];
+                }
+            };
+
+            for (var i in formula.starMultiper) {
+                _loop2(i);
+            }
+            formula.starMultiper._init = !0;
+        }
+        var bonus = formula.starMultiper[equipmentType] || {};
+        if (statType) return bonus[statType] || 0;
+        return bonus;
+    };
+    // 计算改修加成
+    formula.getStarBonus = function (equipment, stat, star) {
+        equipment = _equipment(equipment);
+
+        var _Object$assign = Object.assign({}, formula.getStarMultiplier(equipment.type), formula.starMultiper['_' + equipment.id]),
+            _Object$assign$stat = _Object$assign[stat],
+            bonus = _Object$assign$stat === undefined ? 0 : _Object$assign$stat;
+
+        var bonusType = 'sqrt';
+
+        if (Array.isArray(bonus)) {
+            bonusType = bonus[0];
+            bonus = bonus[1];
+        }
+
+        // const {
+        //     [stat]: bonus = 0,
+        //     _type: bonusType = 'sqrt'
+        // } = typeof formula.starMultiper[`_${equipment.id}`] === 'object'
+        //     ? formula.starMultiper[`_${equipment.id}`]
+        //     : formula.getStarMultiplier(equipment.type)
+        switch (bonusType) {
+            case 'sqrt':
+                {
+                    return bonus * Math.sqrt(star);
+                }
+            case 'multiplication':
+            case 'multiple':
+                {
+                    return bonus * star;
+                }
+        }
+    };
+    // 飞行器熟练度对制空战力的加成
+    formula.getFighterPowerRankMultiper = function (equipment, rank /*, options*/) {
+        equipment = _equipment(equipment);
+
+        var rankInternal = [],
+            typeValue = {};
+
+        rankInternal[0] = [0, 9];
+        rankInternal[1] = [10, 24];
+        rankInternal[2] = [25, 39];
+        rankInternal[3] = [40, 54];
+        rankInternal[4] = [55, 69];
+        rankInternal[5] = [70, 84];
+        rankInternal[6] = [85, 99];
+        rankInternal[7] = [100, 120];
+
+        typeValue.CarrierFighter = [0, 0, 2, 5, 9, 14, 14, 22];
+
+        typeValue.SeaplaneBomber = [0, 0, 1, 1, 1, 3, 3, 6];
+
+        var _rankInternal = rankInternal[rank],
+            _typeValue = 0;
+
+        switch (equipment.type) {
+            case _equipmentType.CarrierFighter:
+            case _equipmentType.CarrierFighterNight:
+            case _equipmentType.Interceptor:
+            case _equipmentType.SeaplaneFighter:
+            case _equipmentType.LandBasedFighter:
+                _typeValue = typeValue.CarrierFighter[rank];
+                break;
+            case _equipmentType.SeaplaneBomber:
+                _typeValue = typeValue.SeaplaneBomber[rank];
+                break;
+        }
+
+        return {
+            min: Math.sqrt(_rankInternal[0] / 10) + _typeValue,
+            max: Math.sqrt(_rankInternal[1] / 10) + _typeValue
+        };
+    };
+    formula.calculate = function (type, ship, equipments_by_slot, star_by_slot, rank_by_slot, options) {
+        /**
+         * 计算
+         * @param {string} type - 计算类型
+         * @param {number || Ship} ship - 舰娘
+         * @param {array} equipments_by_slot - 每格装备ID/装备object
+         * @param {array} star_by_slot - 每格装备改修星级
+         * @param {array} rank_by_slot - 每格装备熟练度
+         * @param {object} options - 选项
+         */
+        if (!type || !ship) return 0;
+
+        if (!(ship instanceof Ship)) ship = KC.db.ships[ship];
+
+        var result = 0,
+            count = {
+            'main': 0,
+            'secondary': 0,
+            'torpedo': 0,
+            'torpedoLateModel': 0,
+            'seaplane': 0,
+            'apshell': 0,
+            'radar': 0,
+            radarAA: 0,
+            radarSurface: 0,
+            'submarineEquipment': 0,
+            'carrierFighterNight': 0,
+            // 'diveBomberIwai': 0,
+            'torpedoBomberNight': 0,
+            // 'torpedoBomberSwordfish': 0,
+            'aviationPersonnelNight': 0,
+            surfaceShipPersonnel: 0
+        },
+            slots = _slots(ship.slot)
+        // , powerTorpedo = function (options) {
+        //     options = options || {}
+        //     let result = 0
+        //     if (formula.shipType.Carriers.indexOf(ship.type) > -1 && !options.isNight) {
+        //         return options.returnZero ? 0 : -1
+        //     } else {
+        //         result = ship.stat.torpedo_max || 0
+        //         slots.map(function (carry, index) {
+        //             if (equipments_by_slot[index]) {
+        //                 // result += (equipments_by_slot[index].type == _equipmentType.TorpedoBomber && !options.isNight)
+        //                 result += (_equipmentType.TorpedoBombers.indexOf(equipments_by_slot[index].type) > -1 && !options.isNight)
+        //                     ? 0
+        //                     : (equipments_by_slot[index].stat.torpedo || 0)
+
+        //                 // 改修加成
+        //                 if (star_by_slot[index] && !options.isNight) {
+        //                     result += Math.sqrt(star_by_slot[index]) * formula.getStarMultiplier(
+        //                         equipments_by_slot[index].type,
+        //                         'torpedo'
+        //                     )
+        //                 }
+        //             }
+        //         })
+        //         return result
+        //     }
+        //     //return (ship.stat.torpedo_max || 0)
+        // }
+        ,
+            value = 0;
+
+        equipments_by_slot = equipments_by_slot.map(function (equipment) {
+            if (!equipment) return null;
+            if (equipment instanceof Equipment) return equipment;
+            return KC.db.equipments ? KC.db.equipments[equipment] : KC.db.items[equipment];
+        }) || [];
+        star_by_slot = star_by_slot || [];
+        rank_by_slot = rank_by_slot || [];
+        options = options || {};
+
+        equipments_by_slot.forEach(function (equipment) {
+            if (!equipment) return;
+            // 主炮
+            if (_equipmentType.MainGuns.indexOf(equipment.type) > -1) count.main += 1;
+            // 副炮
+            else if (_equipmentType.SecondaryGuns.indexOf(equipment.type) > -1) count.secondary += 1;
+                // 鱼雷
+                else if (_equipmentType.Torpedos.indexOf(equipment.type) > -1) {
+                        count.torpedo += 1;
+                        if (equipment.name.ja_jp.indexOf('後期型') > -1) count.torpedoLateModel += 1;
+                    }
+                    // 水上机
+                    else if (_equipmentType.Seaplanes.indexOf(equipment.type) > -1) count.seaplane += 1;
+                        // 穿甲弹
+                        else if (_equipmentType.APShells.indexOf(equipment.type) > -1) count.apshell += 1;
+                            // 电探/雷达
+                            else if (_equipmentType.Radars.indexOf(equipment.type) > -1) {
+                                    count.radar += 1;
+                                    if (equipment.stat.aa) count.radarAA += 1;
+                                    // else
+                                    if (equipment.stat.hit && equipment.stat.hit >= 3) count.radarSurface += 1;
+                                }
+                                // 潜艇装备
+                                else if (_equipmentType.SubmarineEquipment == equipment.type) count.submarineEquipment += 1;
+                                    // else if (_equipmentType.TorpedoBombers.indexOf(equipment.type) > -1) {
+                                    //     if (equipment.name.ja_jp.indexOf('Swordfish') > -1)
+                                    //         count.torpedoBomberSwordfish += 1
+                                    // }
+                                    // 夜间整备员
+                                    else if (_equipmentType.AviationPersonnels.indexOf(equipment.type) > -1) {
+                                            if (equipment.name.ja_jp.indexOf('夜間') > -1) count.aviationPersonnelNight += 1;
+                                        }
+                                        // else if (_equipmentType.DiveBombers.indexOf(equipment.type) > -1) {
+                                        //     if (equipment.name.ja_jp.indexOf('岩井') > -1)
+                                        //         count.diveBomberIwai += 1
+                                        // }
+                                        // 水上舰要员
+                                        else if (_equipmentType.SurfaceShipPersonnels.indexOf(equipment.type) > -1) count.surfaceShipPersonnel += 1;
+
+            // 夜间飞行器
+            if (equipment.type_ingame) {
+                // 夜间战斗机
+                if (equipment.type_ingame[3] === 45) count.carrierFighterNight += 1;
+                // 夜间轰炸机
+                else if (equipment.type_ingame[3] === 46) count.torpedoBomberNight += 1;
+            }
+        });
+
+        var bonus = __calculateBonus(ship, equipments_by_slot, star_by_slot, rank_by_slot);
+
+        var powerTorpedo = function powerTorpedo(options) {
+            return formula.calcByShip.torpedoPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, options, bonus);
+        };
+
+        switch (type) {
+            // 制空战力，装备须为战斗机类型 _equipmentType.Fighters
+            // 计算公式参考 http://bbs.ngacn.cc/read.php?tid=8680767
+            case 'fighterPower':
+                value = 0;
+                slots.map(function (carry, index) {
+                    if (equipments_by_slot[index] && _equipmentType.Fighters.indexOf(equipments_by_slot[index].type) > -1 && carry) {
+                        value = Math.sqrt(carry) * (equipments_by_slot[index].getStat('aa', ship) || 0);
+                        if (_equipmentType.CarrierFighters.includes(equipments_by_slot[index].type)) {
+                            switch (rank_by_slot[index]) {
+                                case 1:case '1':
+                                    value += 1;break;
+                                case 2:case '2':
+                                    value += 4;break;
+                                case 3:case '3':
+                                    value += 6;break;
+                                case 4:case '4':
+                                    value += 11;break;
+                                case 5:case '5':
+                                    value += 16;break;
+                                case 6:case '6':
+                                    value += 17;break;
+                                case 7:case '7':
+                                    value += 25;break;
+                            }
+                        } else if (_equipmentType.Recons.indexOf(equipments_by_slot[index].type) == -1) {
+                            var max_per_slot = equipments_by_slot[index].type == _equipmentType.SeaplaneBomber ? 9 : 3;
+                            value += rank_by_slot[index] == 1 ? 1 : max_per_slot / 6 * (rank_by_slot[index] - 1);
+                        }
+                        result += Math.floor(value);
+                    }
+                });
+                return result;
+            //return Math.floor(result)
+            //break;
+
+            // 同时返回制空战力的上下限
+            // 返回值为Array
+            case 'fighterPower_v2':
+                return formula.calcByShip.fighterPower_v2(ship, equipments_by_slot, star_by_slot, rank_by_slot);
+            //break;
+
+            // 炮击威力，除潜艇外
+            case 'shelling':
+            case 'shellingDamage':
+                if (formula.shipType.Submarines.indexOf(ship.type) > -1) {
+                    return '-';
+                } else {
+                    result = formula.calcByShip.shellingPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, {}, bonus);
+                    if (result && result > -1) return Math.floor(result); // + 5
+                    return '-';
+                }
+            //break;
+
+            // 雷击威力，航母除外
+            case 'torpedo':
+            case 'torpedoDamage':
+                result = powerTorpedo();
+                if (result && result > -1) return Math.floor(result); // + 5
+                return '-';
+            //break;
+
+            // 夜战模式 & 伤害力
+            case 'nightBattle':
+                {
+                    var nightPower = formula.calcByShip.nightPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, {}, count, bonus);
+                    return nightPower.damage <= 0 ? '-' : nightPower.value;
+                    //break;
+                }
+
+            // 命中总和
+            case 'addHit':
+                slots.map(function (carry, index) {
+                    if (equipments_by_slot[index]) result += equipments_by_slot[index].getStat('hit', ship) || 0;
+                });
+                result += bonus.hit || 0;
+                return result >= 0 ? '+' + result : result;
+            //break;
+
+            // 装甲总和
+            case 'addArmor':
+                slots.map(function (carry, index) {
+                    if (equipments_by_slot[index]) result += equipments_by_slot[index].getStat('armor', ship) || 0;
+                });
+                return result + (bonus.armor || 0);
+            //break;
+
+            // 回避总和
+            case 'addEvasion':
+                slots.map(function (carry, index) {
+                    if (equipments_by_slot[index]) result += equipments_by_slot[index].getStat('evasion', ship) || 0;
+                });
+                return result + (bonus.evasion || 0);
+            //break;
+
+            // 索敌能力
+            case 'losPower':
+                return formula.calcByShip.losPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, options);
+            //break;
+            default:
+                return formula.calcByShip[type](ship, equipments_by_slot, star_by_slot, rank_by_slot, options, bonus);
+            //break;
+        }
+
+        //return '-'
+    };
+    // 计算快捷方式
+    formula.shellingDamage = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+        return this.calculate('shellingDamage', ship, equipments_by_slot, star_by_slot, rank_by_slot);
+    };
+    formula.torpedoDamage = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+        return this.calculate('torpedoDamage', ship, equipments_by_slot, star_by_slot, rank_by_slot);
+    };
+    formula.fighterPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+        return this.calculate('fighterPower', ship, equipments_by_slot, star_by_slot, rank_by_slot);
+    };
+    formula.fighterPower_v2 = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+        return this.calculate('fighterPower_v2', ship, equipments_by_slot, star_by_slot, rank_by_slot);
+    };
+    formula.nightBattle = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+        return this.calculate('nightBattle', ship, equipments_by_slot, star_by_slot, rank_by_slot);
+    };
+    formula.addHit = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+        return this.calculate('addHit', ship, equipments_by_slot, star_by_slot, rank_by_slot);
+    };
+    formula.addArmor = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+        return this.calculate('addArmor', ship, equipments_by_slot, star_by_slot, rank_by_slot);
+    };
+    formula.addEvasion = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+        return this.calculate('addEvasion', ship, equipments_by_slot, star_by_slot, rank_by_slot);
+    };
+    formula.losPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, options) {
+        return this.calculate('losPower', ship, equipments_by_slot, star_by_slot, rank_by_slot, options);
+    };
+    // Formulas
+    formula.calc.losPower = function (data) {
+        // http://biikame.hatenablog.com/entry/2014/11/14/224925
+
+        var calc = function calc(x) {
+            if (typeof x['(Intercept)'] == 'undefined') x['(Intercept)'] = 1;
+            x.hqLv = Math.ceil(x.hqLv / 5) * 5;
+            var x_estimate = {};
+            var y_estimate = 0;
+            var x_std_error = {};
+            var y_std_error = 0;
+            keys.forEach(function (key) {
+                var estimate = x[key] * estimate_coefficients[key];
+                x_estimate[key] = estimate;
+                y_estimate += estimate;
+                x_std_error[key] = x[key] * std_error_coefficients[key];
+            });
+            keys.forEach(function (key) {
+                keys.forEach(function (key2) {
+                    y_std_error += x_std_error[key] * x_std_error[key2] * correlation[key][key2];
+                });
+            });
+            return {
+                x_estimate: x_estimate,
+                y_estimate: y_estimate,
+                x_std_error: x_std_error,
+                y_std_error: y_std_error
+            };
+        };
+        var keys = ['(Intercept)', 'DiveBombers', 'TorpedoBombers', 'CarrierRecons', 'SeaplaneRecons', 'SeaplaneBombers', 'SmallRadars', 'LargeRadars', 'Searchlights', 'statLos', 'hqLv'];
+        var estimate_coefficients = {
+            '(Intercept)': 0,
+            'DiveBombers': 1.03745043134563,
+            'TorpedoBombers': 1.3679056374142,
+            'CarrierRecons': 1.65940512636315,
+            'SeaplaneRecons': 2,
+            'SeaplaneBombers': 1.77886368594467,
+            'SmallRadars': 1.0045778494921,
+            'LargeRadars': 0.990738063979571,
+            'Searchlights': 0.906965144360512,
+            'statLos': 1.6841895400986,
+            'hqLv': -0.614246711531445
+        };
+        var std_error_coefficients = {
+            '(Intercept)': 4.66445565766347,
+            'DiveBombers': 0.0965028505325845,
+            'TorpedoBombers': 0.108636184978525,
+            'CarrierRecons': 0.0976055279516298,
+            'SeaplaneRecons': 0.0866229392463539,
+            'SeaplaneBombers': 0.0917722496848294,
+            'SmallRadars': 0.0492773648320346,
+            'LargeRadars': 0.0491221486053861,
+            'Searchlights': 0.0658283797225724,
+            'statLos': 0.0781594211213618,
+            'hqLv': 0.0369222352426548
+        };
+        var correlation = {
+            '(Intercept)': {
+                '(Intercept)': 1,
+                'DiveBombers': -0.147020064768061,
+                'TorpedoBombers': -0.379236131621529,
+                'CarrierRecons': -0.572858669501918,
+                'SeaplaneRecons': -0.733913857017495,
+                'SeaplaneBombers': -0.642621825152428,
+                'SmallRadars': -0.674829588068364,
+                'LargeRadars': -0.707418111752863,
+                'Searchlights': -0.502304601556193,
+                'statLos': -0.737374218573832,
+                'hqLv': -0.05071933950163
+            },
+            'DiveBombers': {
+                '(Intercept)': -0.147020064768061,
+                'DiveBombers': 1,
+                'TorpedoBombers': 0.288506347076736,
+                'CarrierRecons': 0.365820372770994,
+                'SeaplaneRecons': 0.425744409856409,
+                'SeaplaneBombers': 0.417783698791503,
+                'SmallRadars': 0.409046013184429,
+                'LargeRadars': 0.413855653833994,
+                'Searchlights': 0.308730607324667,
+                'statLos': 0.317984916914851,
+                'hqLv': -0.386740224500626
+            },
+            'TorpedoBombers': {
+                '(Intercept)': -0.379236131621529,
+                'DiveBombers': 0.288506347076736,
+                'TorpedoBombers': 1,
+                'CarrierRecons': 0.482215071254241,
+                'SeaplaneRecons': 0.584455876852325,
+                'SeaplaneBombers': 0.558515133495825,
+                'SmallRadars': 0.547260012897553,
+                'LargeRadars': 0.560437619378443,
+                'Searchlights': 0.437934879351188,
+                'statLos': 0.533934507932748,
+                'hqLv': -0.405349979885748
+            },
+            'CarrierRecons': {
+                '(Intercept)': -0.572858669501918,
+                'DiveBombers': 0.365820372770994,
+                'TorpedoBombers': 0.482215071254241,
+                'CarrierRecons': 1,
+                'SeaplaneRecons': 0.804494553748065,
+                'SeaplaneBombers': 0.75671307047535,
+                'SmallRadars': 0.748420581669228,
+                'LargeRadars': 0.767980338133817,
+                'Searchlights': 0.589651513349878,
+                'statLos': 0.743851348255527,
+                'hqLv': -0.503544281376776
+            },
+            'SeaplaneRecons': {
+                '(Intercept)': -0.733913857017495,
+                'DiveBombers': 0.425744409856409,
+                'TorpedoBombers': 0.584455876852325,
+                'CarrierRecons': 0.804494553748065,
+                'SeaplaneRecons': 1,
+                'SeaplaneBombers': 0.932444440578382,
+                'SmallRadars': 0.923988080549326,
+                'LargeRadars': 0.94904944359066,
+                'Searchlights': 0.727912987329348,
+                'statLos': 0.944434077970518,
+                'hqLv': -0.614921413821462
+            },
+            'SeaplaneBombers': {
+                '(Intercept)': -0.642621825152428,
+                'DiveBombers': 0.417783698791503,
+                'TorpedoBombers': 0.558515133495825,
+                'CarrierRecons': 0.75671307047535,
+                'SeaplaneRecons': 0.932444440578382,
+                'SeaplaneBombers': 1,
+                'SmallRadars': 0.864289865445084,
+                'LargeRadars': 0.886872388674911,
+                'Searchlights': 0.68310647756898,
+                'statLos': 0.88122333327317,
+                'hqLv': -0.624797255805045
+            },
+            'SmallRadars': {
+                '(Intercept)': -0.674829588068364,
+                'DiveBombers': 0.409046013184429,
+                'TorpedoBombers': 0.547260012897553,
+                'CarrierRecons': 0.748420581669228,
+                'SeaplaneRecons': 0.923988080549326,
+                'SeaplaneBombers': 0.864289865445084,
+                'SmallRadars': 1,
+                'LargeRadars': 0.872011318623459,
+                'Searchlights': 0.671926570242336,
+                'statLos': 0.857213501657084,
+                'hqLv': -0.560018086758868
+            },
+            'LargeRadars': {
+                '(Intercept)': -0.707418111752863,
+                'DiveBombers': 0.413855653833994,
+                'TorpedoBombers': 0.560437619378443,
+                'CarrierRecons': 0.767980338133817,
+                'SeaplaneRecons': 0.94904944359066,
+                'SeaplaneBombers': 0.886872388674911,
+                'SmallRadars': 0.872011318623459,
+                'LargeRadars': 1,
+                'Searchlights': 0.690102027588321,
+                'statLos': 0.883771367337743,
+                'hqLv': -0.561336967269448
+            },
+            'Searchlights': {
+                '(Intercept)': -0.502304601556193,
+                'DiveBombers': 0.308730607324667,
+                'TorpedoBombers': 0.437934879351188,
+                'CarrierRecons': 0.589651513349878,
+                'SeaplaneRecons': 0.727912987329348,
+                'SeaplaneBombers': 0.68310647756898,
+                'SmallRadars': 0.671926570242336,
+                'LargeRadars': 0.690102027588321,
+                'Searchlights': 1,
+                'statLos': 0.723228553177704,
+                'hqLv': -0.518427865593732
+            },
+            'statLos': {
+                '(Intercept)': -0.737374218573832,
+                'DiveBombers': 0.317984916914851,
+                'TorpedoBombers': 0.533934507932748,
+                'CarrierRecons': 0.743851348255527,
+                'SeaplaneRecons': 0.944434077970518,
+                'SeaplaneBombers': 0.88122333327317,
+                'SmallRadars': 0.857213501657084,
+                'LargeRadars': 0.883771367337743,
+                'Searchlights': 0.723228553177704,
+                'statLos': 1,
+                'hqLv': -0.620804120587684
+            },
+            'hqLv': {
+                '(Intercept)': -0.05071933950163,
+                'DiveBombers': -0.386740224500626,
+                'TorpedoBombers': -0.405349979885748,
+                'CarrierRecons': -0.503544281376776,
+                'SeaplaneRecons': -0.614921413821462,
+                'SeaplaneBombers': -0.624797255805045,
+                'SmallRadars': -0.560018086758868,
+                'LargeRadars': -0.561336967269448,
+                'Searchlights': -0.518427865593732,
+                'statLos': -0.620804120587684,
+                'hqLv': 1
+            }
+        };
+
+        var x = {
+            'DiveBombers': 0,
+            'TorpedoBombers': 0,
+            'CarrierRecons': 0,
+            'SeaplaneRecons': 0,
+            'SeaplaneBombers': 0,
+            'SmallRadars': 0,
+            'LargeRadars': 0,
+            'Searchlights': 0,
+            'statLos': 1,
+            'hqLv': 1
+        };
+
+        for (var i in data) {
+            x[i] = data[i];
+        }
+
+        return calc(x);
+        //var result = calc(x);
+        //var score = result.y_estimate.toFixed(1) + ' ± ' + result.y_std_error.toFixed(1);
+    };
+    formula.calc.los33 = function (data) {
+        if (!data) return;
+        /* data {
+            hq: 90,
+            equipments: [
+                {
+                    id: 123,
+                    star: 4,
+                    rank: 7
+                }
+            ],
+            ships: [
+                {
+                    id: 123,
+                    lv: 90
+                }
+            ]
+        }
+         */
+
+        var totalEquipmentValue = 0,
+            totalShipValue = 0;
+
+        var equipmentTypeValues = {
+            TorpedoBombers: 0.8,
+            CarrierRecons: 1,
+
+            ReconSeaplane: 1.2,
+            ReconSeaplaneNight: 1.2,
+            SeaplaneBomber: 1.1
+        };
+        Object.defineProperty(equipmentTypeValues, 'default', {
+            value: 0.6,
+            enumerable: !1,
+            configurable: !1,
+            writable: !1
+        });
+
+        data.equipments.forEach(function (o) {
+            if (o.id) {
+                var equipment = _equipment(o.id);
+
+                if (equipment.stat.los) {
+                    var typeValue = equipmentTypeValues.default;
+                    var star = o.star || 0;
+
+                    for (var types in equipmentTypeValues) {
+                        var typesForCheck = [];
+
+                        if (Array.isArray(_equipmentType[types])) typesForCheck = _equipmentType[types];else typesForCheck = [_equipmentType[types]];
+
+                        if (typesForCheck.indexOf(equipment.type) > -1) typeValue = equipmentTypeValues[types];
+                    }
+
+                    totalEquipmentValue += typeValue * (equipment.stat.los + formula.getStarBonus(equipment, 'los', star)
+                    // + formula.getStarMultiplier(equipment.type, 'los') * Math.sqrt(star)
+                    );
+                }
+            }
+        });
+
+        data.ships.forEach(function (o) {
+            var ship = _ship(o.id);
+            var shipLOS = ship.getAttribute('los', Math.max(o.lv || 1, ship.getMinLv()));
+
+            totalShipValue += Math.sqrt(Math.max(shipLOS, 1));
+        });
+
+        return totalEquipmentValue + totalShipValue - Math.ceil(data.hq * 0.4) + 2 * (6 - data.ships.length);
+    };
+    formula.calc.TP = function (count) {
+        /* count
+        * {
+        * 		ship: {
+        * 			dd
+        * 			cl
+        * 			ct
+        * 			cav
+        * 			bbv
+        * 			av
+        * 			ssv
+        * 			lha
+        * 			ao
+        * 			as
+        * 		},
+        * 		equipment: {
+        * 			68	// landing craft
+        * 			75  // canister
+        * 			166  // landing craft (force)
+        * 		}
+        * }
+        */
+        count = count || {};
+        var result = 0,
+            ship = count.ship || {},
+            equipment = count.equipment || {};
+
+        for (var i in ship) {
+            var multiper = 0;
+            switch (i) {
+                case 1:
+                case '1':
+                case 19:
+                case '19':
+                case 'dd':
+                    multiper = 5;break;
+
+                case 2:
+                case '2':
+                case 28:
+                case '28':
+                case 'cl':
+                    multiper = 2;break;
+
+                case 21:
+                case '21':
+                case 'ct':
+                    multiper = 6;break;
+
+                case 5:
+                case '5':
+                case 'cav':
+                    multiper = 4;break;
+
+                case 8:
+                case '8':
+                case 'bbv':
+                    multiper = 7;break;
+
+                case 12:
+                case '12':
+                case 24:
+                case '24':
+                case 'av':
+                    multiper = 9.5;break;
+
+                case 14:
+                case '14':
+                case 'ssv':
+                    multiper = 1;break;
+
+                case 15:
+                case '15':
+                case 'lha':
+                    multiper = 12;break;
+
+                case 29:
+                case '29':
+                case 'ao':
+                    multiper = 15;break;
+
+                case 17:
+                case '17':
+                case 'as':
+                    multiper = 7;break;
+            }
+            result += multiper * (parseInt(ship[i]) || 0);
+        }
+
+        for (var _i in equipment) {
+            var _multiper = 0,
+                id = parseInt(_i),
+                data = void 0;
+            switch (id) {
+                // 戦闘糧食
+                case 145:
+                    _multiper = 1;break;
+                // 秋刀魚の缶詰
+                case 150:
+                    _multiper = 1;break;
+                // canister
+                case 75:
+                    _multiper = 5;break;
+                // landing craft
+                case 68:
+                    _multiper = 8;break;
+                // landing craft (large)
+                case 193:
+                    _multiper = 8;break;
+                // landing craft (force)
+                case 166:
+                    _multiper = 8;break;
+                // 特二式内火艇
+                case 167:
+                    _multiper = 2;break;
+                default:
+                    // 瑞云 & 晴岚
+                    data = _equipment(id);
+                    switch (data.type) {
+                        // case formula.equipmentType.SeaplaneBomber:
+                        //     if( data.name.ja_jp.indexOf('瑞雲') > -1 )
+                        //         multiper = 2
+                        //     else if( data.name.ja_jp.indexOf('晴嵐') > -1 )
+                        //         multiper = 4
+                        //     break;
+                        case formula.equipmentType.LandingCraft:
+                            if (data.name.ja_jp.indexOf('大発動艇') > -1) _multiper = 8;
+                            break;
+                    }
+            }
+            result += _multiper * (parseInt(equipment[_i]) || 0);
+        }
+
+        return result;
+    };
+    formula.calc.fighterPower = function (equipment, carry, rank, star) {
+        if (!equipment) return [0, 0];
+
+        equipment = equipment instanceof Equipment ? equipment : KC.db.equipments ? KC.db.equipments[equipment] : KC.db.items[equipment];
+        carry = carry || 0;
+        rank = rank || 0;
+        star = star || 0;
+
+        // http://bbs.ngacn.cc/read.php?tid=8680767
+        // http://ja.kancolle.wikia.com/wiki/%E8%89%A6%E8%BC%89%E6%A9%9F%E7%86%9F%E7%B7%B4%E5%BA%A6
+
+        var results = [0, 0];
+
+        if (_equipmentType.Fighters.indexOf(equipment.type) > -1 && carry) {
+            // Math.floor(Math.sqrt(carry) * (equipment.stat.aa || 0) + Math.sqrt( rankInternal / 10 ) + typeValue)
+            // if( star ) console.log( equipment._name, '★+' + star, star * formula.getStarMultiplier( equipment.type, 'fighter' ) )
+            var statAA = (equipment.stat.aa || 0) + (_equipmentType.isInterceptor(equipment) ? equipment.stat.evasion * 1.5 : 0) + star * formula.getStarMultiplier(equipment.type, 'fighter'),
+                base = statAA * Math.sqrt(carry),
+                rankBonus = formula.getFighterPowerRankMultiper(equipment, rank);
+
+            results[0] += Math.floor(base + rankBonus.min);
+            results[1] += Math.floor(base + rankBonus.max);
+        }
+
+        return results;
+    };
+    formula.calc.fighterPowerAA = function (equipment, carry, rank, star) {
+        if (!equipment) return [0, 0];
+
+        equipment = _equipment(equipment);
+        carry = carry || 0;
+        rank = rank || 0;
+        star = star || 0;
+
+        // http://wikiwiki.jp/kancolle/?%B4%F0%C3%CF%B9%D2%B6%F5%C2%E2#AirSupremacy
+
+        var results = [0, 0];
+
+        if (carry) {
+            var statAA = (equipment.stat.aa || 0) + (_equipmentType.isInterceptor(equipment) ? equipment.stat.evasion : 0) + (_equipmentType.isInterceptor(equipment) ? equipment.stat.hit * 2 : 0) + star * formula.getStarMultiplier(equipment.type, 'fighter'),
+                base = statAA * Math.sqrt(carry),
+                rankBonus = formula.getFighterPowerRankMultiper(equipment, rank, {
+                isAA: !0
+            });
+
+            results[0] += Math.floor(base + rankBonus.min);
+            results[1] += Math.floor(base + rankBonus.max);
+        }
+
+        return results;
+    };
+    // Calculate by Ship
+    formula.calcByShip.shellingPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, options, bonus) {
+        options = options || {};
+        bonus = bonus || __calculateBonus(ship, equipments_by_slot, star_by_slot, rank_by_slot);
+
+        var result = 0,
+            isCV = !1,
+            slots = _slots(ship.slot);
+
+        // 检查是否为航母攻击模式
+        if (formula.shipType.Carriers.indexOf(ship.type) > -1) {
+            isCV = !0;
+        } else {
+            //equipments_by_slot.forEach(function(equipment){
+            //	if( equipment && !isCV && _equipmentType.CarrierBased.indexOf( equipment.type ) > -1 )
+            //		isCV = true
+            //})
+            equipments_by_slot.some(function (equipment) {
+                if (equipment && !isCV && _equipmentType.CarrierBased.indexOf(equipment.type) > -1) {
+                    isCV = !0;
+                    return !0;
+                }
+            });
+        }
+
+        if (isCV && !options.isNight) {
+            // 航母攻击模式
+            var torpedoDamage = 0,
+                bombDamage = 0;
+            slots.map(function (carry, index) {
+                if (equipments_by_slot[index]) {
+                    var equipment = equipments_by_slot[index];
+                    // result += (equipment.stat.fire * 1.5) || 0
+                    result += equipment.getStat('fire', ship) * 1.5 || 0;
+
+                    // if (equipment.type == _equipmentType.TorpedoBomber)
+                    if (_equipmentType.TorpedoBombers.indexOf(equipment.type) > -1)
+                        // torpedoDamage += equipment.stat.torpedo || 0
+                        torpedoDamage += equipment.getStat('torpedo', ship) || 0;
+
+                    //if( equipment.type == _equipmentType.DiveBomber )
+                    // bombDamage += equipment.stat.bomb || 0
+                    bombDamage += equipment.getStat('bomb', ship) || 0;
+
+                    if (_equipmentType.SecondaryGuns.indexOf(equipment.type) > -1) result += Math.sqrt((star_by_slot[index] || 0) * 1.5);
+                }
+            });
+            if (!torpedoDamage && !bombDamage) return -1;else result += Math.floor(1.5 * (Math.floor(bombDamage * 1.3) + torpedoDamage + ship.stat.fire_max + (bonus.fire || 0))) + 50;
+            return result;
+        } else {
+            // 其他舰种
+            result = ship.stat.fire_max || 0;
+
+            // 特定种类装备数量，仅在满足对特定条件时才会纳入数量统计
+            var count = {
+                CLMainGunNaval: 0, // 轻巡系主炮（单装炮）
+                CLMainGunTwin: 0, // 轻巡系主炮（连装炮）
+                ItalianCAMainGun: 0 // 意大利重巡主炮（仅对意大利重巡洋舰生效）
+            };
+            slots.map(function (carry, index) {
+                if (equipments_by_slot[index]) {
+                    var equipment = equipments_by_slot[index];
+                    // result += equipment.stat.fire || 0
+                    result += equipment.getStat('fire', ship) || 0;
+
+                    // 轻巡系主炮加成
+                    if (formula.shipType.LightCruisers.indexOf(ship.type) > -1) {
+                        ['14cm単装砲', '15.2cm単装砲'].forEach(function (name) {
+                            // console.log(
+                            //     name,
+                            //     equipment.name.ja_jp,
+                            //     equipment.name.ja_jp.includes(name)
+                            // );
+                            if (equipment.name.ja_jp.includes(name)) count.CLMainGunNaval += 1;
+                        });
+                        ['14cm連装砲', '15.2cm連装砲'].forEach(function (name) {
+                            if (equipment.name.ja_jp.includes(name)) count.CLMainGunTwin += 1;
+                        });
+                    }
+
+                    // 意大利重巡主炮加成
+                    if (ship._navy === 'rm') {
+                        // console.log(ship, equipment)
+                        if (equipment.name.ja_jp.includes('203mm/53')) count.ItalianCAMainGun += 1;
+                    }
+
+                    // 改修加成
+                    if (star_by_slot[index] && !options.isNight) {
+                        /*
+                        console.log(
+                            equipments_by_slot[index]._name,
+                            '★+' + star_by_slot[index],
+                            formula.getStarMultiplier(
+                                equipments_by_slot[index].type,
+                                options.isNight ? 'night' : 'shelling'
+                            ),
+                            Math.sqrt(star_by_slot[index]) * formula.getStarMultiplier(
+                                equipments_by_slot[index].type,
+                                options.isNight ? 'night' : 'shelling'
+                            ),
+                            options.isNight ? '夜战' : '昼战'
+                        )
+                        */
+                        result += formula.getStarBonus(equipment, 'shelling', star_by_slot[index]);
+                        // result += Math.sqrt(star_by_slot[index]) * formula.getStarMultiplier(
+                        //     equipment.type,
+                        //     'shelling'
+                        // )
+                    }
+                }
+            });
+
+            // console.log(count)
+
+            // 加成
+            var thisBonus = 0
+            // 轻巡系主炮加成
+            + 2 * Math.sqrt(count.CLMainGunTwin) + Math.sqrt(count.CLMainGunNaval)
+            // 意大利重巡主炮加成（仅对意大利重巡洋舰生效）
+            + Math.sqrt(count.ItalianCAMainGun) + (bonus.fire || 0);
+
+            return result + thisBonus;
+        }
+        //return (ship.stat.fire_max || 0)
+    };
+    formula.calcByShip.torpedoPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, options, bonus) {
+        options = options || {};
+        bonus = bonus || __calculateBonus(ship, equipments_by_slot, star_by_slot, rank_by_slot);
+
+        var result = 0;
+        var slots = _slots(ship.slot);
+
+        if (formula.shipType.Carriers.indexOf(ship.type) > -1 && !options.isNight) {
+            return options.returnZero ? 0 : -1;
+        } else {
+            result = (ship.stat.torpedo_max || 0) + (bonus.torpedo || 0);
+            slots.map(function (carry, index) {
+                if (equipments_by_slot[index]) {
+                    var equipment = equipments_by_slot[index];
+                    // result += (equipment.type == _equipmentType.TorpedoBomber && !options.isNight)
+                    result += _equipmentType.TorpedoBombers.indexOf(equipment.type) > -1 && !options.isNight ? 0 : equipment.getStat('torpedo', ship) || 0;
+
+                    // 改修加成
+                    if (star_by_slot[index] && !options.isNight) {
+                        result += formula.getStarBonus(equipment, 'torpedo', star_by_slot[index]);
+                        // result += Math.sqrt(star_by_slot[index]) * formula.getStarMultiplier(
+                        //     equipment.type,
+                        //     'torpedo'
+                        // )
+                    }
+                }
+            });
+            return result;
+        }
+    };
+    formula.calcByShip.nightPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, options, count, bonus) {
+        options = options || {};
+        bonus = bonus || __calculateBonus(ship, equipments_by_slot, star_by_slot, rank_by_slot);
+
+        var result = {
+            // value: ''
+            // type: undefined,
+            damage: 0
+
+            // 改修加成
+        };var starBonus = 0;
+        var slots = _slots(ship.slot);
+
+        // 航空夜战
+        // http://bbs.ngacn.cc/read.php?tid=12445064
+        // http://bbs.ngacn.cc/read.php?tid=12590487
+        if ((count.aviationPersonnelNight || ship.getCapability('count_as_night_operation_aviation_personnel')) && (count.carrierFighterNight >= 1 || count.torpedoBomberNight >= 1)) {
+            // (裸火力+特殊机体火力+特殊机体雷装+3*sum(夜战机体格子剩余机数)+sum(特殊机体系数*sqrt(特殊机体格子剩余机数))+夜间接触补正+特殊机体改修补正)*CI系数
+            // 夜战机体：F6F-3N，F6F-5N，TBM-3D
+            // 特殊机体：所有夜战机体，剑鱼系，零战62型(爆战/岩井队)
+
+            // 基本攻击力 = 素火力 + ∑(夜间飞机火力)※ +∑(夜间飞机雷装)※ + ∑(夜间飞机搭载补正) + 夜间接触补正
+            // 夜间飞机搭载补正 = 系数A*机数 + 系数B*(火力+雷装+爆装+对潜)*√(机数) + √(★)
+
+            slots.forEach(function (carry, index) {
+                if (!equipments_by_slot[index]) return;
+
+                if (star_by_slot[index]) {
+                    starBonus += formula.getStarBonus(equipments_by_slot[index], 'night', star_by_slot[index]);
+                    // starBonus += Math.sqrt(star_by_slot[index]) * formula.getStarMultiplier(
+                    //     equipments_by_slot[index].type,
+                    //     'night'
+                    // )
+                }
+            });
+
+            var nightCarry = 0; // 夜战机体机数
+            var spFire = 0; // 特殊机体火力
+            var spTorpedo = 0; // 特殊机体雷装
+            var spBonus = 0; // sum(特殊机体系数*sqrt(特殊机体机数))
+            var spStarBonus = 0; // 特殊机体改修补正
+            var multiplierCI = [];
+            // let hasAttacker = false
+
+            var countTorpedoBomberSwordfish = 0;
+            var countDiveBomberIwai = 0;
+
+            slots.forEach(function (carry, index) {
+                if (!equipments_by_slot[index]) return;
+
+                var equipment = equipments_by_slot[index];
+                var isNightAircraft = !1; // 是否为夜战机
+                var isSPAircraft = !1; // 是否为特殊机
+
+                if (equipment.type_ingame) {
+                    // 夜战
+                    if (equipment.type_ingame[3] === 45) {
+                        isSPAircraft = !0;
+                        isNightAircraft = !0;
+                    }
+                    // 夜攻
+                    else if (equipment.type_ingame[3] === 46) {
+                            isSPAircraft = !0;
+                            isNightAircraft = !0;
+                        }
+                }
+                if (_equipmentType.TorpedoBombers.indexOf(equipment.type) > -1) {
+                    if (equipment.hasName('Swordfish', 'ja_jp')) {
+                        isSPAircraft = !0;
+                        countTorpedoBomberSwordfish++;
+                    }
+                } else if (_equipmentType.DiveBombers.indexOf(equipment.type) > -1) {
+                    if (equipment.hasName('岩井', 'ja_jp')) {
+                        isSPAircraft = !0;
+                        countDiveBomberIwai++;
+                    }
+                }
+                // if (
+                //     _equipmentType.Aircrafts.indexOf(equipment.type) > -1
+                //     && (
+                //         equipment.stat.bomb
+                //         || equipment.stat.torpedo
+                //     )
+                // ) hasAttacker = true
+
+                if (isNightAircraft) {
+                    nightCarry += carry;
+                }
+
+                if (isSPAircraft) {
+                    spFire += equipment.getStat('fire', ship);
+                    spTorpedo += equipment.getStat('torpedo', ship);
+                    spBonus += Math.sqrt(carry) * ((3 + 1.5 * (isNightAircraft ? 1 : 0)) * (equipment.getStat('fire', ship) + equipment.getStat('torpedo', ship) + equipment.getStat('bomb', ship) + equipment.getStat('asw', ship)) / 10);
+                    if (star_by_slot[index]) {
+                        spStarBonus += formula.getStarBonus(equipments_by_slot[index], 'night', star_by_slot[index]);
+                        // spStarBonus += Math.sqrt(star_by_slot[index]) * formula.getStarMultiplier(
+                        //     equipments_by_slot[index].type,
+                        //     'night'
+                        // )
+                    }
+                }
+            });
+
+            // if (!hasAttacker) return { damage: 0 }
+
+            var equipSPBomber = countTorpedoBomberSwordfish + countDiveBomberIwai;
+            if (count.carrierFighterNight >= 2 && count.torpedoBomberNight >= 1) multiplierCI.push(1.25);
+            if (count.carrierFighterNight >= 1 && count.torpedoBomberNight >= 1) multiplierCI.push(1.2);
+            if (count.carrierFighterNight >= 3 || count.carrierFighterNight >= 2 && equipSPBomber >= 1 || count.carrierFighterNight >= 1 && count.torpedoBomberNight >= 1 && equipSPBomber >= 1 || count.carrierFighterNight >= 1 && count.torpedoBomberNight >= 2 || count.carrierFighterNight >= 1 && equipSPBomber >= 2) multiplierCI.push(1.18);
+
+            result.type = '航空';
+            result.hit = 1;
+            result.damage = Math.floor(ship.stat.fire_max + (bonus.fire || 0) + spFire + spTorpedo + 3 * nightCarry + spBonus + spStarBonus);
+            result.isMax = !0;
+
+            if (multiplierCI.length) {
+                result.cis = multiplierCI.map(function (multiplier) {
+                    return [Math.floor(result.damage * multiplier), 1];
+                });
+                // result.damage_ci = Math.floor(result.damage * CI)
+            }
+        }
+
+        // Ark Royal：剑鱼夜战
+        else if (ship.getCapability('participate_night_battle_when_equip_swordfish')) {
+                result.damage += ship.stat.fire_max + (bonus.fire || 0) + ship.stat.torpedo_max + (bonus.torpedo || 0);
+                slots.forEach(function (carry, index) {
+                    var equipment = equipments_by_slot[index];
+                    if (!equipments_by_slot[index]) return;
+                    if (_equipmentType.TorpedoBombers.indexOf(equipment.type) > -1) {
+                        if (equipment.name.ja_jp.indexOf('Swordfish') > -1) {
+                            // result.damage += equipment.stat.fire + equipment.stat.torpedo
+                            result.damage += equipment.getStat('fire', ship) + equipment.getStat('torpedo', ship);
+                        }
+                    }
+                });
+                result.type = '通常';
+                result.damage = Math.floor(result.damage);
+                result.hit = 1;
+            }
+
+            // Base rule: If a ships has either Fire or Torpedo stat on level 1, she can participate night battle
+
+            else if (ship.stat.fire + ship.stat.torpedo <= 0)
+                    // if (!ship.additional_night_shelling && formula.shipType.Carriers.indexOf(ship.type) > -1) {
+                    // 航母没有夜战
+                    return {
+                        damage: 0
+
+                        // 其他夜战方式
+                    };else {
+                    var equipmentCount = {};
+                    slots.forEach(function (carry, index) {
+                        if (!equipments_by_slot[index]) return;
+
+                        if (star_by_slot[index]) {
+                            starBonus += formula.getStarBonus(equipments_by_slot[index], 'night', star_by_slot[index]);
+                            // starBonus += Math.sqrt(star_by_slot[index]) * formula.getStarMultiplier(
+                            //     equipments_by_slot[index].type,
+                            //     'night'
+                            // )
+                        }
+
+                        if (!equipments_by_slot[index]) return;
+                        var equipment = equipments_by_slot[index];
+                        if (!equipmentCount[equipment.id]) equipmentCount[equipment.id] = 1;else equipmentCount[equipment.id]++;
+                    });
+
+                    //console.log(count)
+                    result.damage = formula.calcByShip.shellingPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, {
+                        isNight: !0
+                    }, bonus) + formula.calcByShip.torpedoPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, {
+                        isNight: !0, returnZero: !0
+                    }, bonus) + starBonus;
+                    /*
+                    console.log(
+                        '夜',
+                        formula.calcByShip.shellingPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, {isNight: true}),
+                        powerTorpedo({isNight: true, returnZero: true}),
+                        result.damage
+                    )
+                    */
+                    // http://wikiwiki.jp/kancolle/?%C0%EF%C6%AE%A4%CB%A4%C4%A4%A4%A4%C6#NightBattle
+                    // console.log(
+                    //     count,
+                    //     formula.shipType.Submarines.indexOf(ship.type)
+                    // )
+
+                    // 潜艇专用
+                    if (formula.shipType.Submarines.indexOf(ship.type) > -1 && count.torpedoLateModel >= 1 && count.submarineEquipment >= 1) {
+                        result.type = '雷击CI';
+                        result.damage = Math.floor(result.damage * 1.75);
+                        result.hit = 2;
+                    }
+
+                    // 潜艇专用
+                    else if (formula.shipType.Submarines.indexOf(ship.type) > -1 && count.torpedoLateModel >= 2) {
+                            result.type = '雷击CI';
+                            result.damage = Math.floor(result.damage * 1.6);
+                            result.hit = 2;
+                        } else if (count.torpedo >= 2) {
+                            result.type = '雷击CI';
+                            result.damage = Math.floor(result.damage * 1.5);
+                            result.hit = 2;
+                        } else if (count.main >= 3) {
+                            result.type = '炮击CI';
+                            result.damage = Math.floor(result.damage * 2);
+                            result.hit = 1;
+                        } else if (count.main == 2 && count.secondary >= 1) {
+                            result.type = '炮击CI';
+                            result.damage = Math.floor(result.damage * 1.75);
+                            result.hit = 1;
+                        }
+
+                        // 驱逐舰专用 - 鱼雷+水上电探+瞭望员
+                        else if (formula.shipType.Destroyers.indexOf(ship.type) > -1 && count.torpedo >= 1 && count.radarSurface >= 1 && count.surfaceShipPersonnel >= 1) {
+                                result.type = '电探CI';
+                                result.damage = Math.floor(result.damage * 1.25);
+                                result.hit = 1;
+                                // result.isMin = true
+                            }
+
+                            // 驱逐舰专用 - 主炮+鱼雷+水上电探
+                            else if (formula.shipType.Destroyers.indexOf(ship.type) > -1 && count.torpedo >= 1 && count.radarSurface >= 1 && count.main >= 1) {
+                                    // [267] 12.7cm連装砲D型改二
+                                    result.type = '电雷CI';
+                                    result.damage = equipmentCount[267] ? Math.floor(result.damage * 1.625) : Math.floor(result.damage * 1.3);
+                                    result.hit = 1;
+                                    // result.isMin = true
+                                }
+
+                                // 
+                                else if (count.main >= 1 && count.torpedo == 1) {
+                                        result.type = '炮雷CI';
+                                        result.damage = Math.floor(result.damage * 1.3);
+                                        result.hit = 2;
+                                    }
+
+                                    // 标准连击
+                                    else if (count.main == 2 && count.secondary <= 0 && count.torpedo <= 0 || count.main == 1 && count.secondary >= 1 && count.torpedo <= 0 || count.main == 0 && count.secondary >= 2 && count.torpedo >= 0) {
+                                            result.type = '连击';
+                                            result.damage = Math.floor(result.damage * 1.2);
+                                            result.hit = 2;
+                                        }
+
+                                        // 通常攻击
+                                        else {
+                                                result.type = '通常';
+                                                result.damage = Math.floor(result.damage);
+                                                result.hit = 1;
+                                            }
+                }
+
+        var jointSymbol = ' ';
+        if (result.isMax) jointSymbol = ' ≤ ';
+        if (result.isMin) jointSymbol = ' ≥ ';
+        result.value = '' + result.type + jointSymbol + result.damage;
+        if (result.hit && result.hit > 1) result.value += ' x ' + result.hit;
+        if (Array.isArray(result.cis) && result.cis.length) {
+            result.value += ' (CI' + jointSymbol + result.cis.sort(function (a, b) {
+                return a[0] - b[0];
+            }).map(function (ci) {
+                return ci[0] + (ci[1] && ci[1] > 1 ? ' x ' + ci[1] : '');
+            }).join(' 或 ') + ')';
+        } else if (result.damage_ci) {
+            var hit = result.hit_ci || result.hit || 1;
+            result.value += ' (CI' + jointSymbol + result.damage_ci + ')';
+            if (hit && hit > 1) result.value += ' x ' + hit;
+        }
+
+        return result;
+    };
+    formula.calcByShip.fighterPower_v2 = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+        var results = [0, 0],
+            slots = _slots(ship.slot);
+
+        slots.map(function (carry, index) {
+            var r = formula.calc.fighterPower(equipments_by_slot[index], carry, rank_by_slot[index] || 0, star_by_slot[index] || 0);
+            results[0] += r[0];
+            results[1] += r[1];
+        });
+        return results;
+    };
+    formula.calcByShip.losPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, options) {
+        // http://biikame.hatenablog.com/entry/2014/11/14/224925
+
+        options = options || {};
+        options.shipLv = options.shipLv || 1;
+        options.hqLv = options.hqLv || 1;
+
+        if (options.shipLv < 0) options.shipLv = 1;
+        if (options.hqLv < 0) options.hqLv = 1;
+
+        var x = {
+            'DiveBombers': 0,
+            'TorpedoBombers': 0,
+            'CarrierRecons': 0,
+            'SeaplaneRecons': 0,
+            'SeaplaneBombers': 0,
+            'SmallRadars': 0,
+            'LargeRadars': 0,
+            'Searchlights': 0,
+            'statLos': Math.sqrt(ship.getAttribute('los', options.shipLv)),
+            'hqLv': options.hqLv
+        };
+
+        equipments_by_slot.forEach(function (equipment) {
+            if (equipment) {
+                for (var i in x) {
+                    if (_equipmentType[i] && _equipmentType[i].push && _equipmentType[i].indexOf(equipment.type) > -1) x[i] += equipment.stat.los;
+                }
+            }
+        });
+
+        return formula.calc.losPower(x);
+    };
+    formula.calcByShip.TP = function (ship, equipments_by_slot) {
+        if (!ship || !equipments_by_slot || !equipments_by_slot.push) return 0;
+
+        ship = _ship(ship);
+        var count = {
+            ship: {},
+            equipment: {}
+        };
+        count.ship[ship.type] = 1;
+        equipments_by_slot.forEach(function (equipment) {
+            if (equipment) {
+                var id = typeof equipment == 'number' ? equipment : _equipment(equipment)['id'];
+                if (!count.equipment[id]) count.equipment[id] = 0;
+                count.equipment[id]++;
+            }
+        });
+
+        var count_as_landing_craft = ship.getCapability('count_as_landing_craft');
+        // console.log('count_as_landing_craft', count_as_landing_craft)
+        if (count_as_landing_craft) {
+            if (!count.equipment[68]) count.equipment[68] = 0;
+            count.equipment[68]++;
+        }
+
+        return formula.calc.TP(count);
+    };
+    formula.calcByShip.speed = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, options) {
+        if (!ship) return '';
+        if ((typeof star_by_slot === 'undefined' ? 'undefined' : _typeof(star_by_slot)) === 'object' && star_by_slot.push) return formula.calcByShip.speed(ship, equipments_by_slot, [], [], star_by_slot);
+        if ((typeof rank_by_slot === 'undefined' ? 'undefined' : _typeof(rank_by_slot)) === 'object' && rank_by_slot.push) return formula.calcByShip.speed(ship, equipments_by_slot, star_by_slot, [], rank_by_slot);
+
+        ship = _ship(ship);
+        equipments_by_slot = equipments_by_slot || [];
+        options = options || {};
+
+        var result = parseInt(ship.stat.speed);
+        var theResult = function theResult(_theResult) {
+            _theResult = Math.min(20, _theResult || result);
+            if (options.returnNumber) return _theResult;
+            return KC.statSpeed[_theResult];
+        };
+
+        // if (equipments_by_slot[4]) {
+        //     let id = typeof equipment == 'number' ? equipments_by_slot[4] : _equipment(equipments_by_slot[4])['id']
+        //     if( id != 33 )
+        //         return theResult()
+        // } else {
+        //     return theResult()
+        // }
+
+        var count = {
+            '33': 0,
+            '34': 0,
+            '87': 0
+        };
+        var rule = ship._speedRule || 'low-2';
+        var multiper = 0;
+
+        equipments_by_slot.forEach(function (equipment) {
+            if (!equipment) return;
+
+            var id = typeof equipment == 'number' ? equipment : _equipment(equipment)['id'];
+
+            if (typeof count['' + id] !== 'undefined') count['' + id]++;
+        });
+
+        if (!count['33']) return theResult();
+
+        switch (rule) {
+            case 'low-1':
+                // 低速A
+                // 	基础		5
+                // 	最大		20
+                // 	1x + 0y		+5		0.3x
+                // 	2x + 0y		+5		0.3x
+                // 	3x + 0y		+5		0.3x
+                // 	0x + 1y		+5		0.7x
+                // 	1x + 1y		+10		1x
+                // 	2x + 1y		+10		1x
+                // 	3x + 1y		+10		1x
+                // 	0x + 2y		+10		1.4x
+                // 	1x + 2y		+15		1.7x
+                // 	2x + 2y		+15		1.7x
+                // 	3x + 2y		+15		1.7x
+                // 	0x + 3y		+15		2.1x
+                // 	1x + 2y		+15
+                // 	2x + 2y		+15
+                // 	3x + 2y		+15
+                // 	x = 0.3
+                // 	y = 0.7
+                multiper = 0.3 * Math.min(count['34'], 1) + 0.7 * count['87'];
+                break;
+            case 'low-2':
+            case 'high-3':
+                // 低速B
+                // 	基础		5
+                // 	最大		15
+                // 	1x + 0y		+5		0.33x
+                // 	2x + 0y		+5		0.66x
+                // 	3x + 0y		+10		1x
+                // 	0x + 1y		+5		0.5x
+                // 	1x + 1y		+5		0.83x
+                // 	2x + 1y		+10		1.33x
+                // 	0x + 2y		+10		1x
+                // 	x = 0.33
+                // 	y = 0.5
+                // 高速C
+                // 	基础		10
+                // 	最大		20
+                // 	1x + 0y		+5		0.33x
+                // 	2x + 0y		+5		0.66x
+                // 	3x + 0y		+10		1x
+                // 	0x + 1y		+5		0.5x
+                // 	1x + 1y		+5		0.83x
+                // 	2x + 1y		+10		1.33x
+                // 	0x + 2y		+10		1x
+                // 	x = 0.33
+                // 	y = 0.5
+                if (count['34'] || count['87']) multiper = Math.min(1, count['34'] / 3 + 0.5 * count['87']);
+                break;
+            case 'low-3':
+            case 'high-4':
+                // 低速C
+                // 	基础		5
+                // 	最大		10
+                // 高速D
+                // 	基础		10
+                // 	最大		15
+                if (count['34'] || count['87']) result += 5;
+                break;
+            case 'high-1':
+                // 高速A
+                // 	基础		10
+                // 	最大 		20
+                // 	1x + 0y		+5		0.5x
+                // 	1x + 1y		+10		1.5x
+                // 	0x + 1y		+10		1x
+                // 	x = 0.5
+                // 	y = 1
+                multiper = 0.5 * count['34'] + 1 * count['87'];
+                break;
+            case 'high-2':
+                // 高速B
+                // 	基础		10
+                // 	最大 		20
+                // 	1x + 0y		+5		0.5x
+                // 	2x + 0y		+10		1x
+                // 	0x + 1y		+5		0.5x
+                // 	1x + 1y		+10		1x
+                // 	0x + 2y		+10		1x
+                // 	x = 0.5
+                // 	y = 0.5
+                multiper = 0.5 * count['34'] + 0.5 * count['87'];
+                break;
+            case 'low-4':
+                // 低速4
+                // 	基础		5
+                // 	最大 		20
+                // 	1x + 0y		+5		0.5x
+                // 	2x + 0y		+10		1x
+                // 	0x + 1y		+5		0.5x
+                // 	1x + 1y		+10		1x
+                // 	0x + 2y		+10		1x
+                // 	x = 0.5
+                // 	y = 0.5
+                multiper = 0.5;
+                break;
+        }
+
+        // console.log(
+        //     ship, equipments_by_slot,
+        //     count,
+        //     rule,
+        //     multiper
+        // )
+
+        if (multiper > 0 && multiper < 1) result += 5;else if (multiper >= 1 && multiper < 1.5) result += 10;else if (multiper >= 1.5) result += 15;
+
+        return theResult();
+    };
+    formula.calcByShip.fireRange = function (ship, equipments_by_slot) {
+        if (!ship) return '-';
+        equipments_by_slot = equipments_by_slot || [];
+
+        var result = parseInt(ship.stat.range);
+
+        equipments_by_slot.forEach(function (equipment) {
+            if (!equipment) return;
+
+            result = Math.max(result, _equipment(equipment).stat.range || 0);
+        });
+
+        return KC.statRange[result];
+    };
+    // Calculate by Fleet
+    formula.calcByFleet.los33 = function (data, hq) {
+        /* data [
+            [
+                {number} shipId,
+                [ // ship stat
+                    {number} shipLv,
+                    {number} shipLuck
+                ],
+                [ // equipment id
+                    {number} slot 1 id,
+                    {number} slot 2 id,
+                    {number} slot 3 id,
+                    {number} slot 4 id,
+                    {number} slot x id
+                ],
+                [ // equipment star
+                    {number} slot 1 star,
+                    {number} slot 2 star,
+                    {number} slot 3 star,
+                    {number} slot 4 star,
+                    {number} slot x star
+                ],
+                [ // equipment rank
+                    {number} slot 1 rank,
+                    {number} slot 2 rank,
+                    {number} slot 3 rank,
+                    {number} slot 4 rank,
+                    {number} slot x rank
+                ]
+            ]
+        ]*/
+
+        var equipments = [],
+            ships = [];
+
+        data.forEach(function (dataShip) {
+            if (!Array.isArray(dataShip)) return;
+
+            var shipId = dataShip[0];
+
+            if (shipId) {
+                var equipmentIdPerSlot = dataShip[2];
+                var equipmentStarPerSlot = dataShip[3];
+                var equipmentRankPerSlot = dataShip[4];
+                ships.push({
+                    id: shipId,
+                    lv: dataShip[1][0]
+                });
+                equipmentIdPerSlot.forEach(function (equipmentId, index) {
+                    equipments.push({
+                        id: equipmentId,
+                        star: equipmentStarPerSlot[index],
+                        rank: equipmentRankPerSlot[index]
+                    });
+                });
+            }
+        });
+
+        return formula.calc.los33({
+            hq: hq,
+            equipments: equipments,
+            ships: ships
+        });
+    };
+    // Calculate by Airfield
+    formula.calcByField.fighterPowerAA = function (data) {
+        /*
+         * data [
+         *      equipment: equipmentId || Equipment,
+         *      star: Number,
+         *      rank: Number,
+         *      [carry]: Number
+         * ]
+         */
+        var result = [0, 0],
+            reconBonus = 1;
+
+        function getReconBonus(bonus) {
+            reconBonus = Math.max(bonus, reconBonus);
+            return reconBonus;
+        }
+
+        data.forEach(function (d) {
+            var equipment = _equipment(d[0] || d.equipment || d.equipmentId),
+                star = d[1] || d.star || 0,
+                rank = d[2] || d.rank || 0,
+                carry = d[3] || d.carry || 0,
+                _r = formula.calc.fighterPowerAA(equipment, carry, rank, star);
+
+            if (!carry) {
+                if (formula.equipmentType.Recons.indexOf(equipment.type) > -1) carry = 4;else carry = 18;
+            }
+            result[0] += _r[0];
+            result[1] += _r[1];
+
+            // 计算侦察机加成
+            switch (equipment.type) {
+                case _equipmentType.CarrierRecon:
+                case _equipmentType.CarrierRecon2:
+                    if (equipment.stat.los <= 7) {
+                        getReconBonus(1.2);
+                    } else if (equipment.stat.los >= 9) {
+                        getReconBonus(1.3);
+                    } else {
+                        getReconBonus(1.25);
+                    }
+                    break;
+                case _equipmentType.ReconSeaplane:
+                case _equipmentType.ReconSeaplaneNight:
+                case _equipmentType.LargeFlyingBoat:
+                    if (equipment.stat.los <= 7) {
+                        getReconBonus(1.1);
+                    } else if (equipment.stat.los >= 9) {
+                        getReconBonus(1.16);
+                    } else {
+                        getReconBonus(1.13);
+                    }
+                    break;
+            }
+        });
+
+        result[0] = result[0] * reconBonus;
+        result[1] = result[1] * reconBonus;
+
+        return result;
+    };
+    // Get bonus for specified ship and equipment(s)
+    formula.getBonus = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, stat) {
+        return __calculateBonus(ship, equipments_by_slot, star_by_slot, rank_by_slot, stat);
+    };
+
+    /**
+     * ES/JS Functions/Features
+     */
+    // Array.prototype.indexOf()
+    // Production steps of ECMA-262, Edition 5, 15.4.4.14
+    // Reference: http://es5.github.io/#x15.4.4.14
+    if (!Array.prototype.indexOf) {
+        Array.prototype.indexOf = function (searchElement, fromIndex) {
+
+            var k;
+
+            // 1. Let o be the result of calling ToObject passing
+            //    the this value as the argument.
+            if (this == null) {
+                throw new TypeError('"this" is null or not defined');
+            }
+
+            var o = Object(this);
+
+            // 2. Let lenValue be the result of calling the Get
+            //    internal method of o with the argument "length".
+            // 3. Let len be ToUint32(lenValue).
+            var len = o.length >>> 0;
+
+            // 4. If len is 0, return -1.
+            if (len === 0) {
+                return -1;
+            }
+
+            // 5. If argument fromIndex was passed let n be
+            //    ToInteger(fromIndex); else let n be 0.
+            var n = +fromIndex || 0;
+
+            if (Math.abs(n) === Infinity) {
+                n = 0;
+            }
+
+            // 6. If n >= len, return -1.
+            if (n >= len) {
+                return -1;
+            }
+
+            // 7. If n >= 0, then Let k be n.
+            // 8. Else, n<0, Let k be len - abs(n).
+            //    If k is less than 0, then let k be 0.
+            k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+            // 9. Repeat, while k < len
+            while (k < len) {
+                // a. Let Pk be ToString(k).
+                //   This is implicit for LHS operands of the in operator
+                // b. Let kPresent be the result of calling the
+                //    HasProperty internal method of o with argument Pk.
+                //   This step can be combined with c
+                // c. If kPresent is true, then
+                //    i.  Let elementK be the result of calling the Get
+                //        internal method of o with the argument ToString(k).
+                //   ii.  Let same be the result of applying the
+                //        Strict Equality Comparison Algorithm to
+                //        searchElement and elementK.
+                //  iii.  If same is true, return k.
+                if (k in o && o[k] === searchElement) {
+                    return k;
+                }
+                k++;
+            }
+            return -1;
+        };
+    }
+
+    /**
+     * 
+     */
+    KC.Entity = Entity;
+    KC.Equipment = Equipment;
+    KC.Ship = Ship;
+    KC.Consumable = Consumable;
+    KC.formula = formula;
+
+    return KC;
+});
+/*!
+ * clipboard.js v1.7.1
+ * https://zenorocha.github.io/clipboard.js
+ *
+ * Licensed MIT © Zeno Rocha
+ */
+!function(t){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=t();else if("function"==typeof define&&define.amd)define([],t);else{var e;e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,e.Clipboard=t()}}(function(){var t,e,n;return function t(e,n,o){function i(a,c){if(!n[a]){if(!e[a]){var l="function"==typeof require&&require;if(!c&&l)return l(a,!0);if(r)return r(a,!0);var s=new Error("Cannot find module '"+a+"'");throw s.code="MODULE_NOT_FOUND",s}var u=n[a]={exports:{}};e[a][0].call(u.exports,function(t){var n=e[a][1][t];return i(n||t)},u,u.exports,t,e,n,o)}return n[a].exports}for(var r="function"==typeof require&&require,a=0;a<o.length;a++)i(o[a]);return i}({1:[function(t,e,n){function o(t,e){for(;t&&t.nodeType!==i;){if("function"==typeof t.matches&&t.matches(e))return t;t=t.parentNode}}var i=9;if("undefined"!=typeof Element&&!Element.prototype.matches){var r=Element.prototype;r.matches=r.matchesSelector||r.mozMatchesSelector||r.msMatchesSelector||r.oMatchesSelector||r.webkitMatchesSelector}e.exports=o},{}],2:[function(t,e,n){function o(t,e,n,o,r){var a=i.apply(this,arguments);return t.addEventListener(n,a,r),{destroy:function(){t.removeEventListener(n,a,r)}}}function i(t,e,n,o){return function(n){n.delegateTarget=r(n.target,e),n.delegateTarget&&o.call(t,n)}}var r=t("./closest");e.exports=o},{"./closest":1}],3:[function(t,e,n){n.node=function(t){return void 0!==t&&t instanceof HTMLElement&&1===t.nodeType},n.nodeList=function(t){var e=Object.prototype.toString.call(t);return void 0!==t&&("[object NodeList]"===e||"[object HTMLCollection]"===e)&&"length"in t&&(0===t.length||n.node(t[0]))},n.string=function(t){return"string"==typeof t||t instanceof String},n.fn=function(t){return"[object Function]"===Object.prototype.toString.call(t)}},{}],4:[function(t,e,n){function o(t,e,n){if(!t&&!e&&!n)throw new Error("Missing required arguments");if(!c.string(e))throw new TypeError("Second argument must be a String");if(!c.fn(n))throw new TypeError("Third argument must be a Function");if(c.node(t))return i(t,e,n);if(c.nodeList(t))return r(t,e,n);if(c.string(t))return a(t,e,n);throw new TypeError("First argument must be a String, HTMLElement, HTMLCollection, or NodeList")}function i(t,e,n){return t.addEventListener(e,n),{destroy:function(){t.removeEventListener(e,n)}}}function r(t,e,n){return Array.prototype.forEach.call(t,function(t){t.addEventListener(e,n)}),{destroy:function(){Array.prototype.forEach.call(t,function(t){t.removeEventListener(e,n)})}}}function a(t,e,n){return l(document.body,t,e,n)}var c=t("./is"),l=t("delegate");e.exports=o},{"./is":3,delegate:2}],5:[function(t,e,n){function o(t){var e;if("SELECT"===t.nodeName)t.focus(),e=t.value;else if("INPUT"===t.nodeName||"TEXTAREA"===t.nodeName){var n=t.hasAttribute("readonly");n||t.setAttribute("readonly",""),t.select(),t.setSelectionRange(0,t.value.length),n||t.removeAttribute("readonly"),e=t.value}else{t.hasAttribute("contenteditable")&&t.focus();var o=window.getSelection(),i=document.createRange();i.selectNodeContents(t),o.removeAllRanges(),o.addRange(i),e=o.toString()}return e}e.exports=o},{}],6:[function(t,e,n){function o(){}o.prototype={on:function(t,e,n){var o=this.e||(this.e={});return(o[t]||(o[t]=[])).push({fn:e,ctx:n}),this},once:function(t,e,n){function o(){i.off(t,o),e.apply(n,arguments)}var i=this;return o._=e,this.on(t,o,n)},emit:function(t){var e=[].slice.call(arguments,1),n=((this.e||(this.e={}))[t]||[]).slice(),o=0,i=n.length;for(o;o<i;o++)n[o].fn.apply(n[o].ctx,e);return this},off:function(t,e){var n=this.e||(this.e={}),o=n[t],i=[];if(o&&e)for(var r=0,a=o.length;r<a;r++)o[r].fn!==e&&o[r].fn._!==e&&i.push(o[r]);return i.length?n[t]=i:delete n[t],this}},e.exports=o},{}],7:[function(e,n,o){!function(i,r){if("function"==typeof t&&t.amd)t(["module","select"],r);else if(void 0!==o)r(n,e("select"));else{var a={exports:{}};r(a,i.select),i.clipboardAction=a.exports}}(this,function(t,e){"use strict";function n(t){return t&&t.__esModule?t:{default:t}}function o(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}var i=n(e),r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},a=function(){function t(t,e){for(var n=0;n<e.length;n++){var o=e[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(t,o.key,o)}}return function(e,n,o){return n&&t(e.prototype,n),o&&t(e,o),e}}(),c=function(){function t(e){o(this,t),this.resolveOptions(e),this.initSelection()}return a(t,[{key:"resolveOptions",value:function t(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};this.action=e.action,this.container=e.container,this.emitter=e.emitter,this.target=e.target,this.text=e.text,this.trigger=e.trigger,this.selectedText=""}},{key:"initSelection",value:function t(){this.text?this.selectFake():this.target&&this.selectTarget()}},{key:"selectFake",value:function t(){var e=this,n="rtl"==document.documentElement.getAttribute("dir");this.removeFake(),this.fakeHandlerCallback=function(){return e.removeFake()},this.fakeHandler=this.container.addEventListener("click",this.fakeHandlerCallback)||!0,this.fakeElem=document.createElement("textarea"),this.fakeElem.style.fontSize="12pt",this.fakeElem.style.border="0",this.fakeElem.style.padding="0",this.fakeElem.style.margin="0",this.fakeElem.style.position="absolute",this.fakeElem.style[n?"right":"left"]="-9999px";var o=window.pageYOffset||document.documentElement.scrollTop;this.fakeElem.style.top=o+"px",this.fakeElem.setAttribute("readonly",""),this.fakeElem.value=this.text,this.container.appendChild(this.fakeElem),this.selectedText=(0,i.default)(this.fakeElem),this.copyText()}},{key:"removeFake",value:function t(){this.fakeHandler&&(this.container.removeEventListener("click",this.fakeHandlerCallback),this.fakeHandler=null,this.fakeHandlerCallback=null),this.fakeElem&&(this.container.removeChild(this.fakeElem),this.fakeElem=null)}},{key:"selectTarget",value:function t(){this.selectedText=(0,i.default)(this.target),this.copyText()}},{key:"copyText",value:function t(){var e=void 0;try{e=document.execCommand(this.action)}catch(t){e=!1}this.handleResult(e)}},{key:"handleResult",value:function t(e){this.emitter.emit(e?"success":"error",{action:this.action,text:this.selectedText,trigger:this.trigger,clearSelection:this.clearSelection.bind(this)})}},{key:"clearSelection",value:function t(){this.trigger&&this.trigger.focus(),window.getSelection().removeAllRanges()}},{key:"destroy",value:function t(){this.removeFake()}},{key:"action",set:function t(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"copy";if(this._action=e,"copy"!==this._action&&"cut"!==this._action)throw new Error('Invalid "action" value, use either "copy" or "cut"')},get:function t(){return this._action}},{key:"target",set:function t(e){if(void 0!==e){if(!e||"object"!==(void 0===e?"undefined":r(e))||1!==e.nodeType)throw new Error('Invalid "target" value, use a valid Element');if("copy"===this.action&&e.hasAttribute("disabled"))throw new Error('Invalid "target" attribute. Please use "readonly" instead of "disabled" attribute');if("cut"===this.action&&(e.hasAttribute("readonly")||e.hasAttribute("disabled")))throw new Error('Invalid "target" attribute. You can\'t cut text from elements with "readonly" or "disabled" attributes');this._target=e}},get:function t(){return this._target}}]),t}();t.exports=c})},{select:5}],8:[function(e,n,o){!function(i,r){if("function"==typeof t&&t.amd)t(["module","./clipboard-action","tiny-emitter","good-listener"],r);else if(void 0!==o)r(n,e("./clipboard-action"),e("tiny-emitter"),e("good-listener"));else{var a={exports:{}};r(a,i.clipboardAction,i.tinyEmitter,i.goodListener),i.clipboard=a.exports}}(this,function(t,e,n,o){"use strict";function i(t){return t&&t.__esModule?t:{default:t}}function r(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function a(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}function c(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}function l(t,e){var n="data-clipboard-"+t;if(e.hasAttribute(n))return e.getAttribute(n)}var s=i(e),u=i(n),f=i(o),d="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},h=function(){function t(t,e){for(var n=0;n<e.length;n++){var o=e[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(t,o.key,o)}}return function(e,n,o){return n&&t(e.prototype,n),o&&t(e,o),e}}(),p=function(t){function e(t,n){r(this,e);var o=a(this,(e.__proto__||Object.getPrototypeOf(e)).call(this));return o.resolveOptions(n),o.listenClick(t),o}return c(e,t),h(e,[{key:"resolveOptions",value:function t(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};this.action="function"==typeof e.action?e.action:this.defaultAction,this.target="function"==typeof e.target?e.target:this.defaultTarget,this.text="function"==typeof e.text?e.text:this.defaultText,this.container="object"===d(e.container)?e.container:document.body}},{key:"listenClick",value:function t(e){var n=this;this.listener=(0,f.default)(e,"click",function(t){return n.onClick(t)})}},{key:"onClick",value:function t(e){var n=e.delegateTarget||e.currentTarget;this.clipboardAction&&(this.clipboardAction=null),this.clipboardAction=new s.default({action:this.action(n),target:this.target(n),text:this.text(n),container:this.container,trigger:n,emitter:this})}},{key:"defaultAction",value:function t(e){return l("action",e)}},{key:"defaultTarget",value:function t(e){var n=l("target",e);if(n)return document.querySelector(n)}},{key:"defaultText",value:function t(e){return l("text",e)}},{key:"destroy",value:function t(){this.listener.destroy(),this.clipboardAction&&(this.clipboardAction.destroy(),this.clipboardAction=null)}}],[{key:"isSupported",value:function t(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:["copy","cut"],n="string"==typeof e?[e]:e,o=!!document.queryCommandSupported;return n.forEach(function(t){o=o&&!!document.queryCommandSupported(t)}),o}}]),e}(u.default);t.exports=p})},{"./clipboard-action":7,"good-listener":4,"tiny-emitter":6}]},{},[8])(8)});
+$document.ready(function(){
+
+	//var timeStart = _g.timeNow()
+
+	$body 		= $('body')
+
+	// 延迟一段时间，保存正确的基础字号信息
+	//setTimeout(function(){
+		//_g.baseSize = _g.get_basesize();
+		//_g.baseMultiper = parseFloat( _g.baseSize / 10 );
+		//_g.lastBaseSize = _g.get_basesize();
+		
+	//}, bIE10 ? 0 : 0 )
+	// 延迟处理ready函数，以解决一些匪夷所思的bug
+	//setTimeout(function(){
+		//console.log( document.hasFocus ? document.hasFocus() : '123' )
+		//console.log(_g.baseMultiper)
+		for( var i in _g.func_first ){
+			_g.func_first[i]()
+		}
+		
+		_g.init();
+		// 触发一次窗口的resize，以解决一些奇怪的bug
+		//$(window).resize();
+		
+		for( var i in _g.func_last ){
+			_g.func_last[i]()
+		}
+	//}, bIE10 ? 1 : 1 )
+	//}, _g.animate_duration_delay * 10 )
+	//setTimeout(function(){
+		//console.log( document.hasFocus ? document.hasFocus() : '123' )
+	//}, _g.animate_duration_delay * 10 )
+	/*
+	setTimeout(function(){
+		if( _g.axis == 'y' )
+			$(window).resize();
+	}, _g.animate_duration_delay)*/
+
+	//var timeEnd = _g.timeNow()
+	//	,t = timeEnd - timeStart
+
+	//console.log(
+	//	'time initializing: '+ (timeEnd - timeStart) +'ms'
+	//)
+
+	//if( t > 5000 ){
+	//if( t > 5000 || bMobile ){
+	//	$html.addClass('no-transition')
+	//}
+});

@@ -3255,8 +3255,4016 @@ var d={x:c.clientX,y:c.clientY};b.push(d);var e=function(a,b){var c=a.indexOf(b)
     (c) 2013-2017 Mozilla, Apache License 2.0
 */
 !function(a){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=a();else if("function"==typeof define&&define.amd)define([],a);else{var b;b="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,b.localforage=a()}}(function(){return function a(b,c,d){function e(g,h){if(!c[g]){if(!b[g]){var i="function"==typeof require&&require;if(!h&&i)return i(g,!0);if(f)return f(g,!0);var j=new Error("Cannot find module '"+g+"'");throw j.code="MODULE_NOT_FOUND",j}var k=c[g]={exports:{}};b[g][0].call(k.exports,function(a){var c=b[g][1][a];return e(c||a)},k,k.exports,a,b,c,d)}return c[g].exports}for(var f="function"==typeof require&&require,g=0;g<d.length;g++)e(d[g]);return e}({1:[function(a,b,c){"use strict";function d(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function e(){try{if("undefined"!=typeof indexedDB)return indexedDB;if("undefined"!=typeof webkitIndexedDB)return webkitIndexedDB;if("undefined"!=typeof mozIndexedDB)return mozIndexedDB;if("undefined"!=typeof OIndexedDB)return OIndexedDB;if("undefined"!=typeof msIndexedDB)return msIndexedDB}catch(a){return}}function f(){try{if(!ja)return!1;var a="undefined"!=typeof openDatabase&&/(Safari|iPhone|iPad|iPod)/.test(navigator.userAgent)&&!/Chrome/.test(navigator.userAgent)&&!/BlackBerry/.test(navigator.platform),b="function"==typeof fetch&&-1!==fetch.toString().indexOf("[native code");return(!a||b)&&"undefined"!=typeof indexedDB&&"undefined"!=typeof IDBKeyRange}catch(a){return!1}}function g(a,b){a=a||[],b=b||{};try{return new Blob(a,b)}catch(f){if("TypeError"!==f.name)throw f;for(var c="undefined"!=typeof BlobBuilder?BlobBuilder:"undefined"!=typeof MSBlobBuilder?MSBlobBuilder:"undefined"!=typeof MozBlobBuilder?MozBlobBuilder:WebKitBlobBuilder,d=new c,e=0;e<a.length;e+=1)d.append(a[e]);return d.getBlob(b.type)}}function h(a,b){b&&a.then(function(a){b(null,a)},function(a){b(a)})}function i(a,b,c){"function"==typeof b&&a.then(b),"function"==typeof c&&a.catch(c)}function j(a){return"string"!=typeof a&&(console.warn(a+" used as a key, but it is not a string."),a=String(a)),a}function k(a){for(var b=a.length,c=new ArrayBuffer(b),d=new Uint8Array(c),e=0;e<b;e++)d[e]=a.charCodeAt(e);return c}function l(a){return new ma(function(b){var c=a.transaction(na,qa),d=g([""]);c.objectStore(na).put(d,"key"),c.onabort=function(a){a.preventDefault(),a.stopPropagation(),b(!1)},c.oncomplete=function(){var a=navigator.userAgent.match(/Chrome\/(\d+)/),c=navigator.userAgent.match(/Edge\//);b(c||!a||parseInt(a[1],10)>=43)}}).catch(function(){return!1})}function m(a){return"boolean"==typeof ka?ma.resolve(ka):l(a).then(function(a){return ka=a})}function n(a){var b=la[a.name],c={};c.promise=new ma(function(a){c.resolve=a}),b.deferredOperations.push(c),b.dbReady?b.dbReady=b.dbReady.then(function(){return c.promise}):b.dbReady=c.promise}function o(a){var b=la[a.name],c=b.deferredOperations.pop();c&&c.resolve()}function p(a,b){var c=la[a.name],d=c.deferredOperations.pop();d&&d.reject(b)}function q(a,b){return new ma(function(c,d){if(a.db){if(!b)return c(a.db);n(a),a.db.close()}var e=[a.name];b&&e.push(a.version);var f=ja.open.apply(ja,e);b&&(f.onupgradeneeded=function(b){var c=f.result;try{c.createObjectStore(a.storeName),b.oldVersion<=1&&c.createObjectStore(na)}catch(c){if("ConstraintError"!==c.name)throw c;console.warn('The database "'+a.name+'" has been upgraded from version '+b.oldVersion+" to version "+b.newVersion+', but the storage "'+a.storeName+'" already exists.')}}),f.onerror=function(a){a.preventDefault(),d(f.error)},f.onsuccess=function(){c(f.result),o(a)}})}function r(a){return q(a,!1)}function s(a){return q(a,!0)}function t(a,b){if(!a.db)return!0;var c=!a.db.objectStoreNames.contains(a.storeName),d=a.version<a.db.version,e=a.version>a.db.version;if(d&&(a.version!==b&&console.warn('The database "'+a.name+"\" can't be downgraded from version "+a.db.version+" to version "+a.version+"."),a.version=a.db.version),e||c){if(c){var f=a.db.version+1;f>a.version&&(a.version=f)}return!0}return!1}function u(a){return new ma(function(b,c){var d=new FileReader;d.onerror=c,d.onloadend=function(c){var d=btoa(c.target.result||"");b({__local_forage_encoded_blob:!0,data:d,type:a.type})},d.readAsBinaryString(a)})}function v(a){return g([k(atob(a.data))],{type:a.type})}function w(a){return a&&a.__local_forage_encoded_blob}function x(a){var b=this,c=b._initReady().then(function(){var a=la[b._dbInfo.name];if(a&&a.dbReady)return a.dbReady});return i(c,a,a),c}function y(a){n(a);for(var b=la[a.name],c=b.forages,d=0;d<c.length;d++)c[d]._dbInfo.db&&(c[d]._dbInfo.db.close(),c[d]._dbInfo.db=null);return q(a,!1).then(function(a){for(var b=0;b<c.length;b++)c[b]._dbInfo.db=a}).catch(function(b){throw p(a,b),b})}function z(a,b,c){try{var d=a.db.transaction(a.storeName,b);c(null,d)}catch(d){if(!a.db||"InvalidStateError"===d.name)return y(a).then(function(){var d=a.db.transaction(a.storeName,b);c(null,d)});c(d)}}function A(a){function b(){return ma.resolve()}var c=this,d={db:null};if(a)for(var e in a)d[e]=a[e];la||(la={});var f=la[d.name];f||(f={forages:[],db:null,dbReady:null,deferredOperations:[]},la[d.name]=f),f.forages.push(c),c._initReady||(c._initReady=c.ready,c.ready=x);for(var g=[],h=0;h<f.forages.length;h++){var i=f.forages[h];i!==c&&g.push(i._initReady().catch(b))}var j=f.forages.slice(0);return ma.all(g).then(function(){return d.db=f.db,r(d)}).then(function(a){return d.db=a,t(d,c._defaultConfig.version)?s(d):a}).then(function(a){d.db=f.db=a,c._dbInfo=d;for(var b=0;b<j.length;b++){var e=j[b];e!==c&&(e._dbInfo.db=d.db,e._dbInfo.version=d.version)}})}function B(a,b){var c=this;a=j(a);var d=new ma(function(b,d){c.ready().then(function(){z(c._dbInfo,pa,function(e,f){if(e)return d(e);try{var g=f.objectStore(c._dbInfo.storeName),h=g.get(a);h.onsuccess=function(){var a=h.result;void 0===a&&(a=null),w(a)&&(a=v(a)),b(a)},h.onerror=function(){d(h.error)}}catch(a){d(a)}})}).catch(d)});return h(d,b),d}function C(a,b){var c=this,d=new ma(function(b,d){c.ready().then(function(){z(c._dbInfo,pa,function(e,f){if(e)return d(e);try{var g=f.objectStore(c._dbInfo.storeName),h=g.openCursor(),i=1;h.onsuccess=function(){var c=h.result;if(c){var d=c.value;w(d)&&(d=v(d));var e=a(d,c.key,i++);void 0!==e?b(e):c.continue()}else b()},h.onerror=function(){d(h.error)}}catch(a){d(a)}})}).catch(d)});return h(d,b),d}function D(a,b,c){var d=this;a=j(a);var e=new ma(function(c,e){var f;d.ready().then(function(){return f=d._dbInfo,"[object Blob]"===oa.call(b)?m(f.db).then(function(a){return a?b:u(b)}):b}).then(function(b){z(d._dbInfo,qa,function(f,g){if(f)return e(f);try{var h=g.objectStore(d._dbInfo.storeName),i=h.put(b,a);null===b&&(b=void 0),g.oncomplete=function(){void 0===b&&(b=null),c(b)},g.onabort=g.onerror=function(){var a=i.error?i.error:i.transaction.error;e(a)}}catch(a){e(a)}})}).catch(e)});return h(e,c),e}function E(a,b){var c=this;a=j(a);var d=new ma(function(b,d){c.ready().then(function(){z(c._dbInfo,qa,function(e,f){if(e)return d(e);try{var g=f.objectStore(c._dbInfo.storeName),h=g.delete(a);f.oncomplete=function(){b()},f.onerror=function(){d(h.error)},f.onabort=function(){var a=h.error?h.error:h.transaction.error;d(a)}}catch(a){d(a)}})}).catch(d)});return h(d,b),d}function F(a){var b=this,c=new ma(function(a,c){b.ready().then(function(){z(b._dbInfo,qa,function(d,e){if(d)return c(d);try{var f=e.objectStore(b._dbInfo.storeName),g=f.clear();e.oncomplete=function(){a()},e.onabort=e.onerror=function(){var a=g.error?g.error:g.transaction.error;c(a)}}catch(a){c(a)}})}).catch(c)});return h(c,a),c}function G(a){var b=this,c=new ma(function(a,c){b.ready().then(function(){z(b._dbInfo,pa,function(d,e){if(d)return c(d);try{var f=e.objectStore(b._dbInfo.storeName),g=f.count();g.onsuccess=function(){a(g.result)},g.onerror=function(){c(g.error)}}catch(a){c(a)}})}).catch(c)});return h(c,a),c}function H(a,b){var c=this,d=new ma(function(b,d){if(a<0)return void b(null);c.ready().then(function(){z(c._dbInfo,pa,function(e,f){if(e)return d(e);try{var g=f.objectStore(c._dbInfo.storeName),h=!1,i=g.openCursor();i.onsuccess=function(){var c=i.result;if(!c)return void b(null);0===a?b(c.key):h?b(c.key):(h=!0,c.advance(a))},i.onerror=function(){d(i.error)}}catch(a){d(a)}})}).catch(d)});return h(d,b),d}function I(a){var b=this,c=new ma(function(a,c){b.ready().then(function(){z(b._dbInfo,pa,function(d,e){if(d)return c(d);try{var f=e.objectStore(b._dbInfo.storeName),g=f.openCursor(),h=[];g.onsuccess=function(){var b=g.result;if(!b)return void a(h);h.push(b.key),b.continue()},g.onerror=function(){c(g.error)}}catch(a){c(a)}})}).catch(c)});return h(c,a),c}function J(){return"function"==typeof openDatabase}function K(a){var b,c,d,e,f,g=.75*a.length,h=a.length,i=0;"="===a[a.length-1]&&(g--,"="===a[a.length-2]&&g--);var j=new ArrayBuffer(g),k=new Uint8Array(j);for(b=0;b<h;b+=4)c=sa.indexOf(a[b]),d=sa.indexOf(a[b+1]),e=sa.indexOf(a[b+2]),f=sa.indexOf(a[b+3]),k[i++]=c<<2|d>>4,k[i++]=(15&d)<<4|e>>2,k[i++]=(3&e)<<6|63&f;return j}function L(a){var b,c=new Uint8Array(a),d="";for(b=0;b<c.length;b+=3)d+=sa[c[b]>>2],d+=sa[(3&c[b])<<4|c[b+1]>>4],d+=sa[(15&c[b+1])<<2|c[b+2]>>6],d+=sa[63&c[b+2]];return c.length%3==2?d=d.substring(0,d.length-1)+"=":c.length%3==1&&(d=d.substring(0,d.length-2)+"=="),d}function M(a,b){var c="";if(a&&(c=Ja.call(a)),a&&("[object ArrayBuffer]"===c||a.buffer&&"[object ArrayBuffer]"===Ja.call(a.buffer))){var d,e=va;a instanceof ArrayBuffer?(d=a,e+=xa):(d=a.buffer,"[object Int8Array]"===c?e+=za:"[object Uint8Array]"===c?e+=Aa:"[object Uint8ClampedArray]"===c?e+=Ba:"[object Int16Array]"===c?e+=Ca:"[object Uint16Array]"===c?e+=Ea:"[object Int32Array]"===c?e+=Da:"[object Uint32Array]"===c?e+=Fa:"[object Float32Array]"===c?e+=Ga:"[object Float64Array]"===c?e+=Ha:b(new Error("Failed to get type for BinaryArray"))),b(e+L(d))}else if("[object Blob]"===c){var f=new FileReader;f.onload=function(){var c=ta+a.type+"~"+L(this.result);b(va+ya+c)},f.readAsArrayBuffer(a)}else try{b(JSON.stringify(a))}catch(c){console.error("Couldn't convert value into a JSON string: ",a),b(null,c)}}function N(a){if(a.substring(0,wa)!==va)return JSON.parse(a);var b,c=a.substring(Ia),d=a.substring(wa,Ia);if(d===ya&&ua.test(c)){var e=c.match(ua);b=e[1],c=c.substring(e[0].length)}var f=K(c);switch(d){case xa:return f;case ya:return g([f],{type:b});case za:return new Int8Array(f);case Aa:return new Uint8Array(f);case Ba:return new Uint8ClampedArray(f);case Ca:return new Int16Array(f);case Ea:return new Uint16Array(f);case Da:return new Int32Array(f);case Fa:return new Uint32Array(f);case Ga:return new Float32Array(f);case Ha:return new Float64Array(f);default:throw new Error("Unkown type: "+d)}}function O(a){var b=this,c={db:null};if(a)for(var d in a)c[d]="string"!=typeof a[d]?a[d].toString():a[d];var e=new ma(function(a,d){try{c.db=openDatabase(c.name,String(c.version),c.description,c.size)}catch(a){return d(a)}c.db.transaction(function(e){e.executeSql("CREATE TABLE IF NOT EXISTS "+c.storeName+" (id INTEGER PRIMARY KEY, key unique, value)",[],function(){b._dbInfo=c,a()},function(a,b){d(b)})})});return c.serializer=Ka,e}function P(a,b){var c=this;a=j(a);var d=new ma(function(b,d){c.ready().then(function(){var e=c._dbInfo;e.db.transaction(function(c){c.executeSql("SELECT * FROM "+e.storeName+" WHERE key = ? LIMIT 1",[a],function(a,c){var d=c.rows.length?c.rows.item(0).value:null;d&&(d=e.serializer.deserialize(d)),b(d)},function(a,b){d(b)})})}).catch(d)});return h(d,b),d}function Q(a,b){var c=this,d=new ma(function(b,d){c.ready().then(function(){var e=c._dbInfo;e.db.transaction(function(c){c.executeSql("SELECT * FROM "+e.storeName,[],function(c,d){for(var f=d.rows,g=f.length,h=0;h<g;h++){var i=f.item(h),j=i.value;if(j&&(j=e.serializer.deserialize(j)),void 0!==(j=a(j,i.key,h+1)))return void b(j)}b()},function(a,b){d(b)})})}).catch(d)});return h(d,b),d}function R(a,b,c,d){var e=this;a=j(a);var f=new ma(function(f,g){e.ready().then(function(){void 0===b&&(b=null);var h=b,i=e._dbInfo;i.serializer.serialize(b,function(b,j){j?g(j):i.db.transaction(function(c){c.executeSql("INSERT OR REPLACE INTO "+i.storeName+" (key, value) VALUES (?, ?)",[a,b],function(){f(h)},function(a,b){g(b)})},function(b){if(b.code===b.QUOTA_ERR){if(d>0)return void f(R.apply(e,[a,h,c,d-1]));g(b)}})})}).catch(g)});return h(f,c),f}function S(a,b,c){return R.apply(this,[a,b,c,1])}function T(a,b){var c=this;a=j(a);var d=new ma(function(b,d){c.ready().then(function(){var e=c._dbInfo;e.db.transaction(function(c){c.executeSql("DELETE FROM "+e.storeName+" WHERE key = ?",[a],function(){b()},function(a,b){d(b)})})}).catch(d)});return h(d,b),d}function U(a){var b=this,c=new ma(function(a,c){b.ready().then(function(){var d=b._dbInfo;d.db.transaction(function(b){b.executeSql("DELETE FROM "+d.storeName,[],function(){a()},function(a,b){c(b)})})}).catch(c)});return h(c,a),c}function V(a){var b=this,c=new ma(function(a,c){b.ready().then(function(){var d=b._dbInfo;d.db.transaction(function(b){b.executeSql("SELECT COUNT(key) as c FROM "+d.storeName,[],function(b,c){var d=c.rows.item(0).c;a(d)},function(a,b){c(b)})})}).catch(c)});return h(c,a),c}function W(a,b){var c=this,d=new ma(function(b,d){c.ready().then(function(){var e=c._dbInfo;e.db.transaction(function(c){c.executeSql("SELECT key FROM "+e.storeName+" WHERE id = ? LIMIT 1",[a+1],function(a,c){var d=c.rows.length?c.rows.item(0).key:null;b(d)},function(a,b){d(b)})})}).catch(d)});return h(d,b),d}function X(a){var b=this,c=new ma(function(a,c){b.ready().then(function(){var d=b._dbInfo;d.db.transaction(function(b){b.executeSql("SELECT key FROM "+d.storeName,[],function(b,c){for(var d=[],e=0;e<c.rows.length;e++)d.push(c.rows.item(e).key);a(d)},function(a,b){c(b)})})}).catch(c)});return h(c,a),c}function Y(){try{return"undefined"!=typeof localStorage&&"setItem"in localStorage&&"function"==typeof localStorage.setItem}catch(a){return!1}}function Z(a){var b=this,c={};if(a)for(var d in a)c[d]=a[d];return c.keyPrefix=c.name+"/",c.storeName!==b._defaultConfig.storeName&&(c.keyPrefix+=c.storeName+"/"),b._dbInfo=c,c.serializer=Ka,ma.resolve()}function $(a){var b=this,c=b.ready().then(function(){for(var a=b._dbInfo.keyPrefix,c=localStorage.length-1;c>=0;c--){var d=localStorage.key(c);0===d.indexOf(a)&&localStorage.removeItem(d)}});return h(c,a),c}function _(a,b){var c=this;a=j(a);var d=c.ready().then(function(){var b=c._dbInfo,d=localStorage.getItem(b.keyPrefix+a);return d&&(d=b.serializer.deserialize(d)),d});return h(d,b),d}function aa(a,b){var c=this,d=c.ready().then(function(){for(var b=c._dbInfo,d=b.keyPrefix,e=d.length,f=localStorage.length,g=1,h=0;h<f;h++){var i=localStorage.key(h);if(0===i.indexOf(d)){var j=localStorage.getItem(i);if(j&&(j=b.serializer.deserialize(j)),void 0!==(j=a(j,i.substring(e),g++)))return j}}});return h(d,b),d}function ba(a,b){var c=this,d=c.ready().then(function(){var b,d=c._dbInfo;try{b=localStorage.key(a)}catch(a){b=null}return b&&(b=b.substring(d.keyPrefix.length)),b});return h(d,b),d}function ca(a){var b=this,c=b.ready().then(function(){for(var a=b._dbInfo,c=localStorage.length,d=[],e=0;e<c;e++)0===localStorage.key(e).indexOf(a.keyPrefix)&&d.push(localStorage.key(e).substring(a.keyPrefix.length));return d});return h(c,a),c}function da(a){var b=this,c=b.keys().then(function(a){return a.length});return h(c,a),c}function ea(a,b){var c=this;a=j(a);var d=c.ready().then(function(){var b=c._dbInfo;localStorage.removeItem(b.keyPrefix+a)});return h(d,b),d}function fa(a,b,c){var d=this;a=j(a);var e=d.ready().then(function(){void 0===b&&(b=null);var c=b;return new ma(function(e,f){var g=d._dbInfo;g.serializer.serialize(b,function(b,d){if(d)f(d);else try{localStorage.setItem(g.keyPrefix+a,b),e(c)}catch(a){"QuotaExceededError"!==a.name&&"NS_ERROR_DOM_QUOTA_REACHED"!==a.name||f(a),f(a)}})})});return h(e,c),e}function ga(a,b){a[b]=function(){var c=arguments;return a.ready().then(function(){return a[b].apply(a,c)})}}function ha(){for(var a=1;a<arguments.length;a++){var b=arguments[a];if(b)for(var c in b)b.hasOwnProperty(c)&&(Na(b[c])?arguments[0][c]=b[c].slice():arguments[0][c]=b[c])}return arguments[0]}var ia="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(a){return typeof a}:function(a){return a&&"function"==typeof Symbol&&a.constructor===Symbol&&a!==Symbol.prototype?"symbol":typeof a},ja=e();"undefined"==typeof Promise&&a("lie/polyfill");var ka,la,ma=Promise,na="local-forage-detect-blob-support",oa=Object.prototype.toString,pa="readonly",qa="readwrite",ra={_driver:"asyncStorage",_initStorage:A,_support:f(),iterate:C,getItem:B,setItem:D,removeItem:E,clear:F,length:G,key:H,keys:I},sa="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",ta="~~local_forage_type~",ua=/^~~local_forage_type~([^~]+)~/,va="__lfsc__:",wa=va.length,xa="arbf",ya="blob",za="si08",Aa="ui08",Ba="uic8",Ca="si16",Da="si32",Ea="ur16",Fa="ui32",Ga="fl32",Ha="fl64",Ia=wa+xa.length,Ja=Object.prototype.toString,Ka={serialize:M,deserialize:N,stringToBuffer:K,bufferToString:L},La={_driver:"webSQLStorage",_initStorage:O,_support:J(),iterate:Q,getItem:P,setItem:S,removeItem:T,clear:U,length:V,key:W,keys:X},Ma={_driver:"localStorageWrapper",_initStorage:Z,_support:Y(),iterate:aa,getItem:_,setItem:fa,removeItem:ea,clear:$,length:da,key:ba,keys:ca},Na=Array.isArray||function(a){return"[object Array]"===Object.prototype.toString.call(a)},Oa={},Pa={},Qa={INDEXEDDB:ra,WEBSQL:La,LOCALSTORAGE:Ma},Ra=[Qa.INDEXEDDB._driver,Qa.WEBSQL._driver,Qa.LOCALSTORAGE._driver],Sa=["clear","getItem","iterate","key","keys","length","removeItem","setItem"],Ta={description:"",driver:Ra.slice(),name:"localforage",size:4980736,storeName:"keyvaluepairs",version:1},Ua=function(){function a(b){d(this,a);for(var c in Qa)if(Qa.hasOwnProperty(c)){var e=Qa[c],f=e._driver;this[c]=f,Oa[f]||this.defineDriver(e)}this._defaultConfig=ha({},Ta),this._config=ha({},this._defaultConfig,b),this._driverSet=null,this._initDriver=null,this._ready=!1,this._dbInfo=null,this._wrapLibraryMethodsWithReady(),this.setDriver(this._config.driver).catch(function(){})}return a.prototype.config=function(a){if("object"===(void 0===a?"undefined":ia(a))){if(this._ready)return new Error("Can't call config() after localforage has been used.");for(var b in a){if("storeName"===b&&(a[b]=a[b].replace(/\W/g,"_")),"version"===b&&"number"!=typeof a[b])return new Error("Database version must be a number.");this._config[b]=a[b]}return!("driver"in a&&a.driver)||this.setDriver(this._config.driver)}return"string"==typeof a?this._config[a]:this._config},a.prototype.defineDriver=function(a,b,c){var d=new ma(function(b,c){try{var d=a._driver,e=new Error("Custom driver not compliant; see https://mozilla.github.io/localForage/#definedriver");if(!a._driver)return void c(e);for(var f=Sa.concat("_initStorage"),g=0,h=f.length;g<h;g++){var i=f[g];if(!i||!a[i]||"function"!=typeof a[i])return void c(e)}var j=function(c){Oa[d]&&console.info("Redefining LocalForage driver: "+d),Oa[d]=a,Pa[d]=c,b()};"_support"in a?a._support&&"function"==typeof a._support?a._support().then(j,c):j(!!a._support):j(!0)}catch(a){c(a)}});return i(d,b,c),d},a.prototype.driver=function(){return this._driver||null},a.prototype.getDriver=function(a,b,c){var d=Oa[a]?ma.resolve(Oa[a]):ma.reject(new Error("Driver not found."));return i(d,b,c),d},a.prototype.getSerializer=function(a){var b=ma.resolve(Ka);return i(b,a),b},a.prototype.ready=function(a){var b=this,c=b._driverSet.then(function(){return null===b._ready&&(b._ready=b._initDriver()),b._ready});return i(c,a,a),c},a.prototype.setDriver=function(a,b,c){function d(){g._config.driver=g.driver()}function e(a){return g._extend(a),d(),g._ready=g._initStorage(g._config),g._ready}function f(a){return function(){function b(){for(;c<a.length;){var f=a[c];return c++,g._dbInfo=null,g._ready=null,g.getDriver(f).then(e).catch(b)}d();var h=new Error("No available storage method found.");return g._driverSet=ma.reject(h),g._driverSet}var c=0;return b()}}var g=this;Na(a)||(a=[a]);var h=this._getSupportedDrivers(a),j=null!==this._driverSet?this._driverSet.catch(function(){return ma.resolve()}):ma.resolve();return this._driverSet=j.then(function(){var a=h[0];return g._dbInfo=null,g._ready=null,g.getDriver(a).then(function(a){g._driver=a._driver,d(),g._wrapLibraryMethodsWithReady(),g._initDriver=f(h)})}).catch(function(){d();var a=new Error("No available storage method found.");return g._driverSet=ma.reject(a),g._driverSet}),i(this._driverSet,b,c),this._driverSet},a.prototype.supports=function(a){return!!Pa[a]},a.prototype._extend=function(a){ha(this,a)},a.prototype._getSupportedDrivers=function(a){for(var b=[],c=0,d=a.length;c<d;c++){var e=a[c];this.supports(e)&&b.push(e)}return b},a.prototype._wrapLibraryMethodsWithReady=function(){for(var a=0,b=Sa.length;a<b;a++)ga(this,Sa[a])},a.prototype.createInstance=function(b){return new a(b)},a}(),Va=new Ua;b.exports=Va},{undefined:void 0}]},{},[1])(1)});
-"use strict";function _possibleConstructorReturn(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var _createClass=function(){function e(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,a,r){return a&&e(t.prototype,a),r&&e(t,r),t}}(),_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};!function(e,t){"function"==typeof define&&define.amd?define(t):"object"===("undefined"==typeof module?"undefined":_typeof(module))&&module.exports?module.exports=t():window[e]=t()}("KC",function(){var e={lang:"zh_cn",joint:"・",maxShipLv:165,maxHqLv:120,db:{},path:{db:"/kcdb/",pics:{ships:"/kcpic/ships/"}},statSpeed:{5:"低速",10:"高速",15:"高速+",20:"最速"},getStatSpeed:function(e){return this.statSpeed[parseInt(e)]},statRange:{1:"短",2:"中",3:"长",4:"超长"},getStatRange:function(e){return this.statRange[parseInt(e)]},textRank:{1:"|",2:"||",3:"|||",4:"\\",5:"\\\\",6:"\\\\\\",7:"》"}},t=function(){function t(e){_classCallCheck(this,t);for(var a in e)this[a]=e[a]}return _createClass(t,[{key:"getName",value:function(t){return t=t||e.lang,this.name?this.name[t]||this.name:null}},{key:"isName",value:function(t,a){if(a===!0&&(a=e.lang),a)return this.name[a]===t;for(var r in this.name)if("suffix"!==r&&this.name[r]===t)return!0;return!1}},{key:"hasName",value:function(t,a){if(a===!0&&(a=e.lang),a)return!!this.name[a].includes(t);for(var r in this.name)if("suffix"!==r&&this.name[r].includes(t))return!0;return!1}},{key:"isNameOf",value:function(){return this.hasName.apply(this,arguments)}},{key:"_name",get:function(){return this.getName()}}]),t}(),a=function(e){function t(e){return _classCallCheck(this,t),_possibleConstructorReturn(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))}return _inherits(t,e),t}(t),r=function(a){function r(e){_classCallCheck(this,r);var t=_possibleConstructorReturn(this,(r.__proto__||Object.getPrototypeOf(r)).call(this,e));return Object.defineProperty(t,"rankupgradable",{value:t.isRankUpgradable()}),t}return _inherits(r,a),_createClass(r,[{key:"getName",value:function(a,r){r=r||e.lang;var i=t.prototype.getName.call(this,r),n=a&&!a==!0?a:"small";return a?i.replace(/（([^（^）]+)）/g,"<"+n+">($1)</"+n+">"):i}},{key:"getType",value:function(t){return t=t||e.lang,this.type?e.db.item_types[this.type].name[t]:null}},{key:"getIconId",value:function(){return Array.isArray(this.type_ingame)&&this.type_ingame.length>3?this.type_ingame[3]:e.db.item_types[this.type].icon}},{key:"getCaliber",value:function(){var e=this.getName(!1,"ja_jp"),t=parseFloat(e);return t}},{key:"getPower",value:function(){return this.stat[e.db.item_types[this.type].main_attribute||"fire"]}},{key:"isEquipableExSlot",value:function(){return this.equipable_exslot?this.equipable_exslot||!1:!!this.type&&(e.db.item_types[this.type].equipable_exslot||!1)}},{key:"isRankUpgradable",value:function(){return l.equipmentType.Aircrafts.includes(this.type)&&this.type!==l.equipmentType.Autogyro&&this.type!==l.equipmentType.AntiSubPatrol}},{key:"getStat",value:function(t,a){t=t.toLowerCase();var r=this.stat[t];if(!a||void 0===r||!Array.isArray(this.stat_bonus))return r;if(a&&Array.isArray(this.stat_bonus)){"object"!==("undefined"==typeof a?"undefined":_typeof(a))&&(a=e.db.ships[a]);var i=a.id,n=void 0;if(this.stat_bonus.forEach(function(e){Array.isArray(e.ships)&&e.ships.some(function(t){if(t==i){for(var a in e.bonus)n||(n={}),n[a]=Math.max(e.bonus[a],n[a]||0);return!0}return!1}),Array.isArray(e.ship_classes)&&e.ship_classes.some(function(t){if(t==a["class"]){for(var r in e.bonus)n||(n={}),n[r]=Math.max(e.bonus[r],n[r]||0);return!0}return!1})}),n)return r+(n[t]||0)}return r}},{key:"_icon",get:function(){return"assets/images/itemicon/"+this.getIconId()+".png"}}]),r}(t),i=function(t){function a(e){return _classCallCheck(this,a),_possibleConstructorReturn(this,(a.__proto__||Object.getPrototypeOf(a)).call(this,e))}return _inherits(a,t),_createClass(a,[{key:"getName",value:function(t,a){t=t||"",a=a||e.lang;var r=this.getSuffix(a);return(this.name[a]||this.name.ja_jp)+(r?(t===!0?e.joint:t)+r:"")}},{key:"getNameNoSuffix",value:function(t){return t=t||e.lang,this.name[t]||this.name.ja_jp}},{key:"getSuffix",value:function(t){return t=t||e.lang,this.name.suffix?e.db.ship_namesuffix[this.name.suffix][t]||e.db.ship_namesuffix[this.name.suffix].ja_jp||"":""}},{key:"getType",value:function(t){return t=t||e.lang,this.type?e.db.ship_types[this.type].name[t]||e.db.ship_types[this.type].name.ja_jp||"":null}},{key:"getSeriesData",value:function(){return this.series?e.db.ship_series[this.series].ships:[{id:this.id}]}},{key:"getPic",value:function(t,a){var r=this.getSeriesData();t=parseInt(t||0);for(var i=function(t,r){return"undefined"!=typeof node&&node&&node.path&&e.path.pics.ships?node.path.join(e.path.pics.ships,t+"/"+r+"."+(a?a:"webp")):e.path.pics.ships?e.path.pics.ships+t+"/"+r+"."+(a?a:"png"):"/"+t+"/"+r+"."+(a?a:"png")},n=0;n<r.length;n++)if(r[n].id==this.id)switch(t){case 0:case 1:case 2:case 3:case 12:case 13:case 14:return i(this.id,t);default:return r[n].illust_delete?i(r[n-1].id,t):i(this.id,t)}}},{key:"getSpeed",value:function(){return e.statSpeed[parseInt(this.stat.speed)]}},{key:"getSpeedRule",value:function(){return this.speed_rule?this.speed_rule:this["class"]?e.db.ship_classes[this["class"]].speed_rule:null}},{key:"getRange",value:function(){return e.statRange[parseInt(this.stat.range)]}},{key:"getEquipmentTypes",value:function(){var t=this.additional_disable_item_types||[];return e.db.ship_types[this.type].equipable.concat(this.additional_item_types||[]).filter(function(e){return t.indexOf(e)<0}).sort(function(e,t){return e-t})}},{key:"getAttribute",value:function(t,r){r=r||1,r>a.lvlMax&&(r=a.lvlMax);var i=function(e,t,a){return e=e||1,t=parseFloat(t),a=parseFloat(a)||t,t<0||a<0?-1:t==a?a:Math.floor(t+(a-t)*e/99)},n=void 0;switch(t){case"hp":return n=this.stat.hp,r>99&&(n=this.stat.hp>=90?this.stat.hp+9:this.stat.hp>=70?this.stat.hp+8:this.stat.hp>=50?this.stat.hp+7:this.stat.hp>=40?this.stat.hp+6:this.stat.hp>=30?this.stat.hp+5:this.stat.hp+4,n>this.stat.hp_max&&(n=this.stat.hp_max)),n;case"speed":return e.getStatSpeed(this.stat.speed);case"range":return e.getStatRange(this.stat.range);case"luck":return r>99?this.stat.luck+3:this.stat.luck;case"fuel":case"ammo":return r>99?Math.floor(.85*this.consum[t]):this.consum[t];case"aa":case"armor":case"fire":case"torpedo":return this.stat[t+"_max"]||this.stat[t];default:return i(r,this.stat[t],this.stat[t+"_max"])}}},{key:"getRel",value:function(t){if(t){if(!this.rels[t]&&this.remodel&&this.remodel.prev)for(var a=e.db.ships[this.remodel.prev];a;){if(a.rels&&a.rels[t])return a.rels[t];a=a.remodel&&a.remodel.prev?e.db.ships[a.remodel.prev]:null}return this.rels[t]}return this.rels}},{key:"getCV",value:function(t){var a=this.getRel("cv");if(a)return e.db.entities[a].getName(t||e.lang)}},{key:"getIllustrator",value:function(t){var a=this.getRel("illustrator");if(a)return e.db.entities[a].getName(t||e.lang)}},{key:"getMinLv",value:function(){var e=this,t=this._series,a=void 0;return t.some(function(r,i){return e.id==r.id&&(a=i?t[i-1].next_lvl:1),a}),a}},{key:"getNavy",value:function(){return this.navy?this.navy:this["class"]?e.db.ship_classes[this["class"]].navy||"ijn":"ijn"}},{key:"getCapability",value:function(e){if(!e)return this.capabilities||{};if(this.capabilities)return this.capabilities[e]}},{key:"getStatExtraMax",value:function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:1;switch(e.toLowerCase()){case"hp":var a=this.getAttribute(e,t),r=this.stat.hp_max;return Math.max(0,Math.min(2,r-a));case"asw":return this.stat.asw?9:!!l.shipType.LightCruisers.concat(l.shipType.Destroyers).includes(this.type)&&9;default:return!1}}},{key:"_type",get:function(){return this.getType()}},{key:"_series",get:function(){return this.getSeriesData()}},{key:"_pics",get:function(){for(var e=[],t=0;t<15;t++)e.push(this.getPic(t));return e}},{key:"_speed",get:function(){return this.getSpeed()}},{key:"_speedRule",get:function(){return this.getSpeedRule()}},{key:"_range",get:function(){return this.getRange()}},{key:"_cv",get:function(){return this.getCV()}},{key:"_illustrator",get:function(){return this.getIllustrator()}},{key:"_minLv",get:function(){return this.getMinLv()}},{key:"_navy",get:function(){return this.getNavy()}}]),a}(t);i.lvlMax=e.maxShipLv;var n=function(e){function t(e){return _classCallCheck(this,t),_possibleConstructorReturn(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))}return _inherits(t,e),t}(t);e.dbLoad=function(t){return"string"==typeof t?e.dbLoad({type:t}):t.type||t.url?$.ajax({url:t.url||e.path.db+"/"+t.type+".json",dataType:"text",success:function(n){var s=[];t.beforeProcess&&(s=t.beforeProcess(n)),"undefined"==typeof e.db[t.type]&&(e.db[t.type]={}),s.forEach(function(n){if(n){var s=JSON.parse(n);switch(t.type){case"ships":e.db[t.type][s.id]=new i(s);break;case"items":e.db[t.type][s.id]=new r(s);break;case"entities":e.db[t.type][s.id]=new a(s);break;default:e.db[t.type][s.id]=s}}}),t.success&&t.success(n)},complete:function(e,a){t.complete&&t.complete(e,a)}}):null};var s=function(t){return t instanceof i?t:e.db.ships?e.db.ships[t]:{}},o=function(t){return t instanceof r?t:e.db.equipments?e.db.equipments[t]:e.db.items[t]},c=function(e){var t=[];return e.forEach(function(e,a){t[a>=4?a+1:a]=e}),t[4]=0,t},l={equipmentType:{SmallCaliber:1,SmallCaliberHigh:2,SmallCaliberAA:3,MediumCaliber:4,LargeCaliber:5,SuperCaliber:6,SecondaryGun:7,SecondaryGunHigh:8,SecondaryGunAA:9,APShell:11,Torpedo:12,SubmarineTorpedo:13,MidgetSubmarine:14,ReconSeaplane:15,ReconSeaplaneNight:16,SeaplaneBomber:17,CarrierFighter:18,TorpedoBomber:19,DiveBomber:20,CarrierRecon:21,Autogyro:22,AntiSubPatrol:23,SmallRadar:24,LargeRadar:25,DepthCharge:26,Sonar:27,LargeSonar:28,AAGun:29,AAGunConcentrated:30,AAFireDirector:31,AviationPersonnel:36,SurfaceShipPersonnel:37,LandingCraft:38,Searchlight:39,CommandFacility:45,LargeFlyingBoat:45,SearchlightLarge:46,SuparRadar:47,CarrierRecon2:50,SeaplaneFighter:51,AmphibiousCraft:52,LandBasedAttacker:53,Interceptor:54,JetBomberFighter:55,JetBomberFighter2:56,TransportMaterial:57,SubmarineEquipment:58,LandBasedFighter:59,CarrierFighterNight:60,TorpedoBomberNight:61,LandBasedAntiSubPatrol:62},shipType:{Carriers:[9,10,11,30,32],LightCruisers:[2,3,21,28],Destroyers:[1,19],Submarines:[13,14]},calcByShip:{},calcByFleet:{},calcByField:{},calc:{}},h=l.equipmentType;return h.MainGuns=[h.SmallCaliber,h.SmallCaliberHigh,h.SmallCaliberAA,h.MediumCaliber,h.LargeCaliber,h.SuperCaliber],h.SmallCalibers=[h.SmallCaliber,h.SmallCaliberHigh,h.SmallCaliberAA],h.MediumCalibers=[h.MediumCaliber],h.LargeCalibers=[h.LargeCaliber,h.SuperCaliber],h.SecondaryGuns=[h.SecondaryGun,h.SecondaryGunHigh,h.SecondaryGunAA],h.APShells=[h.APShell],h.Torpedos=[h.Torpedo,h.SubmarineTorpedo],h.Seaplanes=[h.ReconSeaplane,h.ReconSeaplaneNight,h.SeaplaneBomber,h.SeaplaneFighter],h.Fighters=[h.SeaplaneBomber,h.CarrierFighter,h.CarrierFighterNight,h.TorpedoBomber,h.TorpedoBomberNight,h.DiveBomber,h.SeaplaneFighter,h.LandBasedAttacker,h.Interceptor,h.JetBomberFighter,h.JetBomberFighter2,h.LandBasedFighter],h.Interceptors=[h.Interceptor,h.LandBasedFighter],h.Recons=[h.ReconSeaplane,h.ReconSeaplaneNight,h.CarrierRecon,h.CarrierRecon2,h.LargeFlyingBoat],h.ReconSeaplanes=[h.ReconSeaplane,h.ReconSeaplaneNight],h.SeaplaneRecons=[h.ReconSeaplane,h.ReconSeaplaneNight,h.LargeFlyingBoat],h.SeaplaneBombers=[h.SeaplaneBomber,h.SeaplaneFighter],h.SeaplaneFighters=[h.SeaplaneFighter],h.CarrierFighters=[h.CarrierFighter,h.CarrierFighterNight],h.CarrierRecons=[h.CarrierRecon,h.CarrierRecon2],h.CarrierBased=[h.CarrierFighter,h.CarrierFighterNight,h.TorpedoBomber,h.TorpedoBomberNight,h.DiveBomber,h.CarrierRecon,h.CarrierRecon2,h.JetBomberFighter,h.JetBomberFighter2],h.LandBased=[h.LandBasedAttacker,h.Interceptor,h.JetBomberFighter,h.JetBomberFighter2,h.LandBasedFighter,h.LandBasedAntiSubPatrol],h.TorpedoBombers=[h.TorpedoBomber,h.TorpedoBomberNight],h.DiveBombers=[h.DiveBomber],h.JetBomberFighters=[h.JetBomberFighter,h.JetBomberFighter2],h.Autogyros=[h.Autogyro],h.AntiSubPatrols=[h.AntiSubPatrol,h.LandBasedAntiSubPatrol],h.Aircrafts=[],[].concat(h.Seaplanes).concat(h.Recons).concat(h.CarrierBased).concat(h.Autogyros).concat(h.AntiSubPatrols).concat(h.LandBased).forEach(function(e){h.Aircrafts.indexOf(e)<0&&h.Aircrafts.push(e)}),h.Radars=[h.SmallRadar,h.LargeRadar,h.SuparRadar],h.SmallRadars=[h.SmallRadar],h.LargeRadars=[h.LargeRadar,h.SuparRadar],h.AntiSubmarines=[h.DepthCharge,h.Sonar,h.LargeSonar],h.DepthCharges=[h.DepthCharge],h.Sonars=[h.Sonar,h.LargeSonar],h.AAGuns=[h.AAGun,h.AAGunConcentrated],h.AAFireDirectors=[h.AAFireDirector],h.Searchlights=[h.Searchlight,h.SearchlightLarge],h.AviationPersonnels=[h.AviationPersonnel],h.SurfaceShipPersonnels=[h.SurfaceShipPersonnel],h.LandingCrafts=[h.LandingCraft,h.AmphibiousCraft],h.AmphibiousCrafts=[h.AmphibiousCraft],h.isInterceptor=function(e){return e=o(e),(!e.type_ingame||47!=e.type_ingame[2])&&h.Interceptors.indexOf(e.type)>-1},l.starMultiper={SmallCalibers:{shelling:1,night:1},MediumCalibers:{shelling:1,night:1},LargeCalibers:{shelling:1.5,night:1},SecondaryGuns:{shelling:1,night:1,hit:1},APShells:{shelling:1,night:1},AAFireDirectors:{shelling:1,night:1},Searchlights:{shelling:1,night:1},AAGuns:{shelling:1,torpedo:1.2},Torpedos:{torpedo:1.2,night:1},DepthCharges:{shelling:.75,antisub:1},Sonars:{shelling:.75,antisub:1},SmallRadars:{los:1.25},LargeRadars:{los:1.4},Seaplanes:{},ReconSeaplanes:{los:1.2},SeaplaneFighters:{fighter:.2},SeaplaneBomber:{los:1.15},CarrierFighters:{fighter:.2},DiveBombers:{fighter:.25,night:1},CarrierRecons:{los:1.2},LandingCrafts:{shelling:1,night:1},Interceptors:{fighter:.2},_10:{shelling:["multiplication",.2],night:1},_66:{shelling:["multiplication",.2],night:1},_220:{shelling:["multiplication",.2],night:1},_275:{shelling:["multiplication",.2],night:1},_12:{shelling:["multiplication",.3],night:["multiplication",.3]},_234:{shelling:["multiplication",.3],night:["multiplication",.3]}},l.getStarMultiplier=function(e,t){if(!l.starMultiper._init){var a=function(e){h[e]&&h[e].forEach?h[e].forEach(function(t){l.starMultiper[t]=l.starMultiper[e]}):"number"==typeof h[e]&&(l.starMultiper[h[e]]=l.starMultiper[e])};for(var r in l.starMultiper)a(r);l.starMultiper._init=!0}var i=l.starMultiper[e]||{};return t?i[t]||0:i},l.getStarBonus=function(e,t,a){e=o(e);var r=Object.assign({},l.getStarMultiplier(e.type),l.starMultiper["_"+e.id]),i=r[t],n=void 0===i?0:i,s="sqrt";switch(Array.isArray(n)&&(s=n[0],n=n[1]),s){case"sqrt":return n*Math.sqrt(a);case"multiplication":case"multiple":return n*a}},l.getFighterPowerRankMultiper=function(e,t){e=o(e);var a=[],r={};a[0]=[0,9],a[1]=[10,24],a[2]=[25,39],a[3]=[40,54],a[4]=[55,69],a[5]=[70,84],a[6]=[85,99],a[7]=[100,120],r.CarrierFighter=[0,0,2,5,9,14,14,22],r.SeaplaneBomber=[0,0,1,1,1,3,3,6];var i=a[t],n=0;switch(e.type){case h.CarrierFighter:case h.CarrierFighterNight:case h.Interceptor:case h.SeaplaneFighter:case h.LandBasedFighter:n=r.CarrierFighter[t];break;case h.SeaplaneBomber:n=r.SeaplaneBomber[t]}return{min:Math.sqrt(i[0]/10)+n,max:Math.sqrt(i[1]/10)+n}},l.calculate=function(t,a,n,s,o,p){if(!t||!a)return 0;a instanceof i||(a=e.db.ships[a]);var u=0,f={main:0,secondary:0,torpedo:0,torpedoLateModel:0,seaplane:0,apshell:0,radar:0,radarAA:0,radarSurface:0,submarineEquipment:0,carrierFighterNight:0,torpedoBomberNight:0,aviationPersonnelNight:0,surfaceShipPersonnel:0},d=c(a.slot),g=function(e){return l.calcByShip.torpedoPower(a,n,s,o,e)},m=0;switch(n=n.map(function(t){return t?t instanceof r?t:e.db.equipments?e.db.equipments[t]:e.db.items[t]:null})||[],s=s||[],o=o||[],p=p||{},n.forEach(function(e){e&&(h.MainGuns.indexOf(e.type)>-1?f.main+=1:h.SecondaryGuns.indexOf(e.type)>-1?f.secondary+=1:h.Torpedos.indexOf(e.type)>-1?(f.torpedo+=1,e.name.ja_jp.indexOf("後期型")>-1&&(f.torpedoLateModel+=1)):h.Seaplanes.indexOf(e.type)>-1?f.seaplane+=1:h.APShells.indexOf(e.type)>-1?f.apshell+=1:h.Radars.indexOf(e.type)>-1?(f.radar+=1,e.stat.aa&&(f.radarAA+=1),e.stat.hit&&e.stat.hit>=3&&(f.radarSurface+=1)):h.SubmarineEquipment==e.type?f.submarineEquipment+=1:h.AviationPersonnels.indexOf(e.type)>-1?e.name.ja_jp.indexOf("夜間")>-1&&(f.aviationPersonnelNight+=1):h.SurfaceShipPersonnels.indexOf(e.type)>-1&&(f.surfaceShipPersonnel+=1),e.type_ingame&&(45===e.type_ingame[3]?f.carrierFighterNight+=1:46===e.type_ingame[3]&&(f.torpedoBomberNight+=1)))}),t){case"fighterPower":return m=0,d.map(function(e,t){if(n[t]&&h.Fighters.indexOf(n[t].type)>-1&&e){if(m=Math.sqrt(e)*(n[t].getStat("aa",a)||0),h.CarrierFighters.includes(n[t].type))switch(o[t]){case 1:case"1":m+=1;break;case 2:case"2":m+=4;break;case 3:case"3":m+=6;break;case 4:case"4":m+=11;break;case 5:case"5":m+=16;break;case 6:case"6":m+=17;break;case 7:case"7":m+=25}else if(h.Recons.indexOf(n[t].type)==-1){var r=n[t].type==h.SeaplaneBomber?9:3;m+=1==o[t]?1:r/6*(o[t]-1)}u+=Math.floor(m)}}),u;case"fighterPower_v2":return l.calcByShip.fighterPower_v2(a,n,s,o);case"shelling":case"shellingDamage":return l.shipType.Submarines.indexOf(a.type)>-1?"-":(u=l.calcByShip.shellingPower(a,n,s,o),u&&u>-1?Math.floor(u):"-");case"torpedo":case"torpedoDamage":return u=g(),u&&u>-1?Math.floor(u):"-";case"nightBattle":var b=l.calcByShip.nightPower(a,n,s,o,{},f);return b.damage<=0?"-":b.value;case"addHit":return d.map(function(e,t){n[t]&&(u+=n[t].getStat("hit",a)||0)}),u>=0?"+"+u:u;case"addArmor":return d.map(function(e,t){n[t]&&(u+=n[t].getStat("armor",a)||0)}),u;case"addEvasion":return d.map(function(e,t){n[t]&&(u+=n[t].getStat("evasion",a)||0)}),u;case"losPower":return l.calcByShip.losPower(a,n,s,o,p);default:return l.calcByShip[t](a,n,s,o,p)}},l.shellingDamage=function(e,t,a,r){return this.calculate("shellingDamage",e,t,a,r)},l.torpedoDamage=function(e,t,a,r){return this.calculate("torpedoDamage",e,t,a,r)},l.fighterPower=function(e,t,a,r){return this.calculate("fighterPower",e,t,a,r)},l.fighterPower_v2=function(e,t,a,r){return this.calculate("fighterPower_v2",e,t,a,r)},l.nightBattle=function(e,t,a,r){return this.calculate("nightBattle",e,t,a,r)},l.addHit=function(e,t,a,r){return this.calculate("addHit",e,t,a,r)},l.addArmor=function(e,t,a,r){return this.calculate("addArmor",e,t,a,r)},l.addEvasion=function(e,t,a,r){return this.calculate("addEvasion",e,t,a,r)},l.losPower=function(e,t,a,r,i){return this.calculate("losPower",e,t,a,r,i)},l.calc.losPower=function(e){var t=function(e){"undefined"==typeof e["(Intercept)"]&&(e["(Intercept)"]=1),e.hqLv=5*Math.ceil(e.hqLv/5);var t={},s=0,o={},c=0;return a.forEach(function(a){var n=e[a]*r[a];t[a]=n,s+=n,o[a]=e[a]*i[a]}),a.forEach(function(e){a.forEach(function(t){c+=o[e]*o[t]*n[e][t]})}),{x_estimate:t,y_estimate:s,x_std_error:o,y_std_error:c}},a=["(Intercept)","DiveBombers","TorpedoBombers","CarrierRecons","SeaplaneRecons","SeaplaneBombers","SmallRadars","LargeRadars","Searchlights","statLos","hqLv"],r={"(Intercept)":0,DiveBombers:1.03745043134563,TorpedoBombers:1.3679056374142,CarrierRecons:1.65940512636315,SeaplaneRecons:2,SeaplaneBombers:1.77886368594467,SmallRadars:1.0045778494921,LargeRadars:.990738063979571,Searchlights:.906965144360512,statLos:1.6841895400986,hqLv:-.614246711531445},i={"(Intercept)":4.66445565766347,DiveBombers:.0965028505325845,TorpedoBombers:.108636184978525,CarrierRecons:.0976055279516298,SeaplaneRecons:.0866229392463539,SeaplaneBombers:.0917722496848294,SmallRadars:.0492773648320346,LargeRadars:.0491221486053861,Searchlights:.0658283797225724,statLos:.0781594211213618,hqLv:.0369222352426548},n={"(Intercept)":{"(Intercept)":1,DiveBombers:-.147020064768061,TorpedoBombers:-.379236131621529,CarrierRecons:-.572858669501918,SeaplaneRecons:-.733913857017495,SeaplaneBombers:-.642621825152428,SmallRadars:-.674829588068364,LargeRadars:-.707418111752863,Searchlights:-.502304601556193,statLos:-.737374218573832,hqLv:-.05071933950163},DiveBombers:{"(Intercept)":-.147020064768061,DiveBombers:1,TorpedoBombers:.288506347076736,CarrierRecons:.365820372770994,SeaplaneRecons:.425744409856409,SeaplaneBombers:.417783698791503,SmallRadars:.409046013184429,LargeRadars:.413855653833994,Searchlights:.308730607324667,statLos:.317984916914851,hqLv:-.386740224500626},TorpedoBombers:{"(Intercept)":-.379236131621529,DiveBombers:.288506347076736,TorpedoBombers:1,CarrierRecons:.482215071254241,SeaplaneRecons:.584455876852325,SeaplaneBombers:.558515133495825,SmallRadars:.547260012897553,LargeRadars:.560437619378443,Searchlights:.437934879351188,statLos:.533934507932748,hqLv:-.405349979885748},CarrierRecons:{"(Intercept)":-.572858669501918,DiveBombers:.365820372770994,TorpedoBombers:.482215071254241,CarrierRecons:1,SeaplaneRecons:.804494553748065,SeaplaneBombers:.75671307047535,SmallRadars:.748420581669228,LargeRadars:.767980338133817,Searchlights:.589651513349878,statLos:.743851348255527,hqLv:-.503544281376776},SeaplaneRecons:{"(Intercept)":-.733913857017495,DiveBombers:.425744409856409,TorpedoBombers:.584455876852325,CarrierRecons:.804494553748065,SeaplaneRecons:1,SeaplaneBombers:.932444440578382,SmallRadars:.923988080549326,LargeRadars:.94904944359066,Searchlights:.727912987329348,statLos:.944434077970518,hqLv:-.614921413821462},SeaplaneBombers:{"(Intercept)":-.642621825152428,DiveBombers:.417783698791503,TorpedoBombers:.558515133495825,CarrierRecons:.75671307047535,SeaplaneRecons:.932444440578382,SeaplaneBombers:1,SmallRadars:.864289865445084,LargeRadars:.886872388674911,Searchlights:.68310647756898,statLos:.88122333327317,hqLv:-.624797255805045},SmallRadars:{"(Intercept)":-.674829588068364,DiveBombers:.409046013184429,TorpedoBombers:.547260012897553,CarrierRecons:.748420581669228,SeaplaneRecons:.923988080549326,SeaplaneBombers:.864289865445084,SmallRadars:1,LargeRadars:.872011318623459,Searchlights:.671926570242336,statLos:.857213501657084,hqLv:-.560018086758868},LargeRadars:{"(Intercept)":-.707418111752863,DiveBombers:.413855653833994,TorpedoBombers:.560437619378443,CarrierRecons:.767980338133817,SeaplaneRecons:.94904944359066,SeaplaneBombers:.886872388674911,SmallRadars:.872011318623459,LargeRadars:1,Searchlights:.690102027588321,statLos:.883771367337743,hqLv:-.561336967269448},Searchlights:{"(Intercept)":-.502304601556193,DiveBombers:.308730607324667,TorpedoBombers:.437934879351188,CarrierRecons:.589651513349878,SeaplaneRecons:.727912987329348,SeaplaneBombers:.68310647756898,SmallRadars:.671926570242336,LargeRadars:.690102027588321,Searchlights:1,statLos:.723228553177704,hqLv:-.518427865593732},statLos:{"(Intercept)":-.737374218573832,DiveBombers:.317984916914851,TorpedoBombers:.533934507932748,CarrierRecons:.743851348255527,SeaplaneRecons:.944434077970518,SeaplaneBombers:.88122333327317,SmallRadars:.857213501657084,LargeRadars:.883771367337743,Searchlights:.723228553177704,statLos:1,hqLv:-.620804120587684},hqLv:{"(Intercept)":-.05071933950163,DiveBombers:-.386740224500626,TorpedoBombers:-.405349979885748,CarrierRecons:-.503544281376776,SeaplaneRecons:-.614921413821462,SeaplaneBombers:-.624797255805045,SmallRadars:-.560018086758868,LargeRadars:-.561336967269448,Searchlights:-.518427865593732,statLos:-.620804120587684,hqLv:1}},s={DiveBombers:0,TorpedoBombers:0,CarrierRecons:0,SeaplaneRecons:0,SeaplaneBombers:0,SmallRadars:0,LargeRadars:0,Searchlights:0,statLos:1,hqLv:1};for(var o in e)s[o]=e[o];return t(s)},l.calc.los33=function(e){if(e){var t=0,a=0,r={TorpedoBombers:.8,CarrierRecons:1,ReconSeaplane:1.2,ReconSeaplaneNight:1.2,SeaplaneBomber:1.1};return Object.defineProperty(r,"default",{value:.6,enumerable:!1,configurable:!1,writable:!1}),e.equipments.forEach(function(e){if(e.id){var a=o(e.id);if(a.stat.los){var i=r["default"],n=e.star||0;for(var s in r){var c=[];c=Array.isArray(h[s])?h[s]:[h[s]],c.indexOf(a.type)>-1&&(i=r[s])}t+=i*(a.stat.los+l.getStarBonus(a,"los",n))}}}),e.ships.forEach(function(e){var t=s(e.id),r=t.getAttribute("los",Math.max(e.lv||1,t.getMinLv()));a+=Math.sqrt(Math.max(r,1))}),t+a-Math.ceil(.4*e.hq)+2*(6-e.ships.length)}},l.calc.TP=function(e){e=e||{};var t=0,a=e.ship||{},r=e.equipment||{};for(var i in a){var n=0;switch(i){case 1:case"1":case 19:case"19":case"dd":n=5;break;case 2:case"2":case 28:case"28":case"cl":n=2;break;case 21:case"21":case"ct":n=6;break;case 5:case"5":case"cav":n=4;break;case 8:case"8":case"bbv":n=7;break;case 12:case"12":case 24:case"24":case"av":n=9.5;break;case 14:case"14":case"ssv":n=1;break;case 15:case"15":case"lha":n=12;break;case 29:case"29":case"ao":n=15;break;case 17:case"17":case"as":n=7}t+=n*(parseInt(a[i])||0)}for(var s in r){var c=0,h=parseInt(s),p=void 0;switch(h){case 145:c=1;break;case 150:c=1;break;case 75:c=5;break;case 68:c=8;break;case 193:c=8;break;case 166:c=8;break;case 167:c=2;break;default:switch(p=o(h),p.type){case l.equipmentType.LandingCraft:p.name.ja_jp.indexOf("大発動艇")>-1&&(c=8)}}t+=c*(parseInt(r[s])||0)}return t},l.calc.fighterPower=function(t,a,i,n){if(!t)return[0,0];t=t instanceof r?t:e.db.equipments?e.db.equipments[t]:e.db.items[t],a=a||0,i=i||0,n=n||0;var s=[0,0];if(h.Fighters.indexOf(t.type)>-1&&a){var o=(t.stat.aa||0)+(h.isInterceptor(t)?1.5*t.stat.evasion:0)+n*l.getStarMultiplier(t.type,"fighter"),c=o*Math.sqrt(a),p=l.getFighterPowerRankMultiper(t,i);s[0]+=Math.floor(c+p.min),s[1]+=Math.floor(c+p.max)}return s},l.calc.fighterPowerAA=function(e,t,a,r){if(!e)return[0,0];e=o(e),t=t||0,a=a||0,r=r||0;var i=[0,0];if(t){var n=(e.stat.aa||0)+(h.isInterceptor(e)?e.stat.evasion:0)+(h.isInterceptor(e)?2*e.stat.hit:0)+r*l.getStarMultiplier(e.type,"fighter"),s=n*Math.sqrt(t),c=l.getFighterPowerRankMultiper(e,a,{isAA:!0});i[0]+=Math.floor(s+c.min),i[1]+=Math.floor(s+c.max)}return i},l.calcByShip.shellingPower=function(e,t,a,r,i){i=i||{};var n=0,s=!1,o=c(e.slot);if(l.shipType.Carriers.indexOf(e.type)>-1?s=!0:t.some(function(e){if(e&&!s&&h.CarrierBased.indexOf(e.type)>-1)return s=!0,!0}),s&&!i.isNight){var p=0,u=0;return o.map(function(r,i){if(t[i]){var s=t[i];n+=1.5*s.getStat("fire",e)||0,h.TorpedoBombers.indexOf(s.type)>-1&&(p+=s.getStat("torpedo",e)||0),u+=s.getStat("bomb",e)||0,h.SecondaryGuns.indexOf(s.type)>-1&&(n+=Math.sqrt(1.5*(a[i]||0)))}}),p||u?n+=Math.floor(1.5*(Math.floor(1.3*u)+p+e.stat.fire_max))+50:-1}n=e.stat.fire_max||0;var f={CLMainGunNaval:0,CLMainGunTwin:0,ItalianCAMainGun:0};o.map(function(r,s){if(t[s]){var o=t[s];n+=o.getStat("fire",e)||0,l.shipType.LightCruisers.indexOf(e.type)>-1&&(["14cm単装砲","15.2cm単装砲"].forEach(function(e){o.name.ja_jp.includes(e)&&(f.CLMainGunNaval+=1)}),["14cm連装砲","15.2cm連装砲"].forEach(function(e){o.name.ja_jp.includes(e)&&(f.CLMainGunTwin+=1)})),"rm"===e._navy&&o.name.ja_jp.includes("203mm/53")&&(f.ItalianCAMainGun+=1),a[s]&&!i.isNight&&(n+=l.getStarBonus(o,"shelling",a[s]))}});var d=0+2*Math.sqrt(f.CLMainGunTwin)+Math.sqrt(f.CLMainGunNaval)+Math.sqrt(f.ItalianCAMainGun);return n+d},l.calcByShip.torpedoPower=function(e,t,a,r,i){i=i||{};var n=0,s=c(e.slot);return l.shipType.Carriers.indexOf(e.type)>-1&&!i.isNight?i.returnZero?0:-1:(n=e.stat.torpedo_max||0,s.map(function(r,s){if(t[s]){var o=t[s];n+=h.TorpedoBombers.indexOf(o.type)>-1&&!i.isNight?0:o.getStat("torpedo",e)||0,a[s]&&!i.isNight&&(n+=l.getStarBonus(o,"torpedo",a[s]))}}),n)},l.calcByShip.nightPower=function(e,t,a,r,i,n){i=i||{};var s={damage:0},o=0,p=c(e.slot);if((n.aviationPersonnelNight||e.getCapability("count_as_night_operation_aviation_personnel"))&&(n.carrierFighterNight>=1||n.torpedoBomberNight>=1)){p.forEach(function(e,r){t[r]&&a[r]&&(o+=l.getStarBonus(t[r],"night",a[r]))});var u=0,f=0,d=0,g=0,m=0,b=[],y=0,S=0;p.forEach(function(r,i){if(t[i]){var n=t[i],s=!1,o=!1;n.type_ingame&&(45===n.type_ingame[3]?(o=!0,s=!0):46===n.type_ingame[3]&&(o=!0,s=!0)),h.TorpedoBombers.indexOf(n.type)>-1?n.hasName("Swordfish","ja_jp")&&(o=!0,y++):h.DiveBombers.indexOf(n.type)>-1&&n.hasName("岩井","ja_jp")&&(o=!0,S++),s&&(u+=r),o&&(f+=n.getStat("fire",e),d+=n.getStat("torpedo",e),g+=Math.sqrt(r)*((3+1.5*(s?1:0))*(n.getStat("fire",e)+n.getStat("torpedo",e)+n.getStat("bomb",e)+n.getStat("asw",e))/10),a[i]&&(m+=l.getStarBonus(t[i],"night",a[i])))}});var v=y+S;n.carrierFighterNight>=2&&n.torpedoBomberNight>=1&&b.push(1.25),n.carrierFighterNight>=1&&n.torpedoBomberNight>=1&&b.push(1.2),(n.carrierFighterNight>=3||n.carrierFighterNight>=2&&v>=1||n.carrierFighterNight>=1&&n.torpedoBomberNight>=1&&v>=1||n.carrierFighterNight>=1&&n.torpedoBomberNight>=2||n.carrierFighterNight>=1&&v>=2)&&b.push(1.18),s.type="航空",s.hit=1,s.damage=Math.floor(e.stat.fire_max+f+d+3*u+g+m),s.isMax=!0,b.length&&(s.cis=b.map(function(e){return[Math.floor(s.damage*e),1]}))}else if(e.getCapability("participate_night_battle_when_equip_swordfish"))s.damage+=e.stat.fire_max+e.stat.torpedo_max,p.forEach(function(a,r){var i=t[r];t[r]&&h.TorpedoBombers.indexOf(i.type)>-1&&i.name.ja_jp.indexOf("Swordfish")>-1&&(s.damage+=i.getStat("fire",e)+i.getStat("torpedo",e))}),s.type="通常",s.damage=Math.floor(s.damage),s.hit=1;else{if(e.stat.fire+e.stat.torpedo<=0)return{damage:0};var _={};p.forEach(function(e,r){if(t[r]&&(a[r]&&(o+=l.getStarBonus(t[r],"night",a[r])),t[r])){var i=t[r];_[i.id]?_[i.id]++:_[i.id]=1}}),s.damage=l.calcByShip.shellingPower(e,t,a,r,{isNight:!0})+l.calcByShip.torpedoPower(e,t,a,r,{isNight:!0,returnZero:!0})+o,l.shipType.Submarines.indexOf(e.type)>-1&&n.torpedoLateModel>=1&&n.submarineEquipment>=1?(s.type="雷击CI",s.damage=Math.floor(1.75*s.damage),s.hit=2):l.shipType.Submarines.indexOf(e.type)>-1&&n.torpedoLateModel>=2?(s.type="雷击CI",s.damage=Math.floor(1.6*s.damage),s.hit=2):n.torpedo>=2?(s.type="雷击CI",s.damage=Math.floor(1.5*s.damage),s.hit=2):n.main>=3?(s.type="炮击CI",s.damage=Math.floor(2*s.damage),s.hit=1):2==n.main&&n.secondary>=1?(s.type="炮击CI",s.damage=Math.floor(1.75*s.damage),s.hit=1):l.shipType.Destroyers.indexOf(e.type)>-1&&n.torpedo>=1&&n.radarSurface>=1&&n.surfaceShipPersonnel>=1?(s.type="电探CI",s.damage=Math.floor(1.25*s.damage),s.hit=1):l.shipType.Destroyers.indexOf(e.type)>-1&&n.torpedo>=1&&n.radarSurface>=1&&n.main>=1?(s.type="电雷CI",s.damage=_[267]?Math.floor(1.625*s.damage):Math.floor(1.3*s.damage),s.hit=1):n.main>=1&&1==n.torpedo?(s.type="炮雷CI",s.damage=Math.floor(1.3*s.damage),s.hit=2):2==n.main&&n.secondary<=0&&n.torpedo<=0||1==n.main&&n.secondary>=1&&n.torpedo<=0||0==n.main&&n.secondary>=2&&n.torpedo>=0?(s.type="连击",s.damage=Math.floor(1.2*s.damage),s.hit=2):(s.type="通常",s.damage=Math.floor(s.damage),s.hit=1)}var B=" ";if(s.isMax&&(B=" ≤ "),s.isMin&&(B=" ≥ "),s.value=""+s.type+B+s.damage,s.hit&&s.hit>1&&(s.value+=" x "+s.hit),Array.isArray(s.cis)&&s.cis.length)s.value+=" (CI"+B+s.cis.sort(function(e,t){return e[0]-t[0]}).map(function(e){return e[0]+(e[1]&&e[1]>1?" x "+e[1]:"")}).join(" 或 ")+")";else if(s.damage_ci){var C=s.hit_ci||s.hit||1;s.value+=" (CI"+B+s.damage_ci+")",C&&C>1&&(s.value+=" x "+C)}return s},l.calcByShip.fighterPower_v2=function(e,t,a,r){var i=[0,0],n=c(e.slot);return n.map(function(e,n){var s=l.calc.fighterPower(t[n],e,r[n]||0,a[n]||0);i[0]+=s[0],i[1]+=s[1]}),i},l.calcByShip.losPower=function(e,t,a,r,i){i=i||{},i.shipLv=i.shipLv||1,i.hqLv=i.hqLv||1,i.shipLv<0&&(i.shipLv=1),i.hqLv<0&&(i.hqLv=1);var n={DiveBombers:0,TorpedoBombers:0,CarrierRecons:0,SeaplaneRecons:0,SeaplaneBombers:0,SmallRadars:0,LargeRadars:0,Searchlights:0,statLos:Math.sqrt(e.getAttribute("los",i.shipLv)),hqLv:i.hqLv};return t.forEach(function(e){if(e)for(var t in n)h[t]&&h[t].push&&h[t].indexOf(e.type)>-1&&(n[t]+=e.stat.los);
-}),l.calc.losPower(n)},l.calcByShip.TP=function(e,t){if(!e||!t||!t.push)return 0;e=s(e);var a={ship:{},equipment:{}};a.ship[e.type]=1,t.forEach(function(e){if(e){var t="number"==typeof e?e:o(e).id;a.equipment[t]||(a.equipment[t]=0),a.equipment[t]++}});var r=e.getCapability("count_as_landing_craft");return r&&(a.equipment[68]||(a.equipment[68]=0),a.equipment[68]++),l.calc.TP(a)},l.calcByShip.speed=function(t,a,r,i,n){if(!t)return"";if("object"===("undefined"==typeof r?"undefined":_typeof(r))&&r.push)return l.calcByShip.speed(t,a,[],[],r);if("object"===("undefined"==typeof i?"undefined":_typeof(i))&&i.push)return l.calcByShip.speed(t,a,r,[],i);t=s(t),a=a||[],n=n||{};var c=parseInt(t.stat.speed),h=function(t){return t=Math.min(20,t||c),n.returnNumber?t:e.statSpeed[t]},p={33:0,34:0,87:0},u=t._speedRule||"low-2",f=0;if(a.forEach(function(e){if(e){var t="number"==typeof e?e:o(e).id;"undefined"!=typeof p[""+t]&&p[""+t]++}}),!p[33])return h();switch(u){case"low-1":f=.3*Math.min(p[34],1)+.7*p[87];break;case"low-2":case"high-3":(p[34]||p[87])&&(f=Math.min(1,p[34]/3+.5*p[87]));break;case"low-3":case"high-4":(p[34]||p[87])&&(c+=5);break;case"high-1":f=.5*p[34]+1*p[87];break;case"high-2":f=.5*p[34]+.5*p[87];break;case"low-4":f=.5}return f>0&&f<1?c+=5:f>=1&&f<1.5?c+=10:f>=1.5&&(c+=15),h()},l.calcByShip.fireRange=function(t,a){if(!t)return"-";a=a||[];var r=parseInt(t.stat.range);return a.forEach(function(e){e&&(r=Math.max(r,o(e).stat.range||0))}),e.statRange[r]},l.calcByFleet.los33=function(e,t){var a=[],r=[];return e.forEach(function(e){if(Array.isArray(e)){var t=e[0];if(t){var i=e[2],n=e[3],s=e[4];r.push({id:t,lv:e[1][0]}),i.forEach(function(e,t){a.push({id:e,star:n[t],rank:s[t]})})}}}),l.calc.los33({hq:t,equipments:a,ships:r})},l.calcByField.fighterPowerAA=function(e){function t(e){return r=Math.max(e,r)}var a=[0,0],r=1;return e.forEach(function(e){var r=o(e[0]||e.equipment||e.equipmentId),i=e[1]||e.star||0,n=e[2]||e.rank||0,s=e[3]||e.carry||0,c=l.calc.fighterPowerAA(r,s,n,i);switch(s||(s=l.equipmentType.Recons.indexOf(r.type)>-1?4:18),a[0]+=c[0],a[1]+=c[1],r.type){case h.CarrierRecon:case h.CarrierRecon2:t(r.stat.los<=7?1.2:r.stat.los>=9?1.3:1.25);break;case h.ReconSeaplane:case h.ReconSeaplaneNight:case h.LargeFlyingBoat:t(r.stat.los<=7?1.1:r.stat.los>=9?1.16:1.13)}}),a[0]=a[0]*r,a[1]=a[1]*r,a},Array.prototype.indexOf||(Array.prototype.indexOf=function(e,t){var a;if(null==this)throw new TypeError('"this" is null or not defined');var r=Object(this),i=r.length>>>0;if(0===i)return-1;var n=+t||0;if(Math.abs(n)===1/0&&(n=0),n>=i)return-1;for(a=Math.max(n>=0?n:i-Math.abs(n),0);a<i;){if(a in r&&r[a]===e)return a;a++}return-1}),e.Entity=a,e.Equipment=r,e.Ship=i,e.Consumable=n,e.formula=l,e});
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || !1; descriptor.configurable = !0; if ("value" in descriptor) descriptor.writable = !0; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: !1, writable: !0, configurable: !0 } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+;(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__equipmentTypes', function () {
+    /*
+     * HA       High Angle
+     * AAFD     Anti-Air Fire Director
+     */
+
+    var types = {
+
+        // Type ID
+        SmallCaliber: 1, // 小口径主炮
+        SmallCaliberHigh: 2, // 小口径高角主炮
+        SmallCaliberHA: 2, // 小口径高角主炮
+        SmallCaliberAA: 3, // 小口径高角主炮（强化）
+        SmallCaliberAAFD: 3, // 小口径高角主炮（强化）
+        MediumCaliber: 4, // 中口径主炮
+        LargeCaliber: 5, // 大口径主炮
+        SuperCaliber: 6, // 超大口径主炮
+        SecondaryGun: 7, // 副炮
+        SecondaryGunHigh: 8, // 高角副炮
+        SecondaryGunHA: 8, // 高角副炮
+        SecondaryGunAA: 9, // 高角副炮（强化）
+        SecondaryGunAAFD: 9, // 高角副炮（强化）
+        Type3Shell: 10, // 对空强化弹
+        APShell: 11, // 穿甲弹
+        Torpedo: 12, // 鱼雷
+        SubmarineTorpedo: 13, // 潜艇鱼雷
+        MidgetSubmarine: 14, // 微型潜艇
+        ReconSeaplane: 15, // 水上侦察机
+        ReconSeaplaneNight: 16, // 夜侦
+        SeaplaneBomber: 17, // 水上轰炸机
+        CarrierFighter: 18, // 舰战 / 舰载战斗机
+        TorpedoBomber: 19, // 舰攻 / 舰载鱼雷轰炸机
+        DiveBomber: 20, // 舰爆 / 舰载俯冲轰炸机
+        CarrierRecon: 21, // 舰侦 / 舰载侦察机
+        Autogyro: 22, // 旋翼机
+        AntiSubPatrol: 23, // 对潜哨戒机
+        SmallRadar: 24, // 小型雷达
+        LargeRadar: 25, // 大型雷达
+        DepthCharge: 26, // 爆雷
+        Sonar: 27, // 声纳
+        LargeSonar: 28, // 大型声纳
+        AAGun: 29, // 对空机枪
+        AAGunConcentrated: 30, // 对空机枪（强化）
+        AAGunCD: 30, // 对空机枪（强化）
+        CDMG: 30, // 对空机枪（强化）
+        AAFireDirector: 31, // 高射装置
+        AAFD: 31, // 高射装置
+        AviationPersonnel: 36, // 航空作战整备员
+        SurfaceShipPersonnel: 37, // 水上舰要员
+        LandingCraft: 38, // 登陆艇
+        Searchlight: 39, // 探照灯
+        SupplyContainer: 41, // 簡易輸送部材
+        CommandFacility: 45, // 舰队司令部设施
+        LargeFlyingBoat: 45, // 大型水上飞艇
+        SearchlightLarge: 46, // 大型探照灯
+        SuparRadar: 47, // 超大型雷达
+        CombatRation: 48, // 戦闘糧食
+        CarrierRecon2: 50, // 舰侦II / 舰载侦察机II
+        SeaplaneFighter: 51, // 水战 / 水上战斗机
+        AmphibiousCraft: 52, // 特型内火艇
+        LandBasedAttacker: 53, // 陆攻 / 陆上攻击机
+        Interceptor: 54, // 局战 / 局地战斗机
+        JetBomberFighter: 55, // 喷气式战斗轰炸机
+        JetBomberFighter2: 56, // 喷气式战斗轰炸机
+        TransportMaterial: 57, // 运输设备
+        SubmarineEquipment: 58, // 潜艇装备
+        LandBasedFighter: 59, // 陆战 / 陆上战斗机
+        CarrierFighterNight: 60, // 夜战 / 舰载战斗机（夜间）
+        TorpedoBomberNight: 61, // 夜攻 / 舰载鱼雷机（夜间）
+        LandBasedAntiSubPatrol: 62 // 陆上哨戒机
+
+
+        // Groups
+    };types.MainGuns = [types.SmallCaliber, types.SmallCaliberHigh, types.SmallCaliberAA, types.MediumCaliber, types.LargeCaliber, types.SuperCaliber];
+    types.MainCalibers = types.MainGuns;
+
+    types.SmallCalibers = [types.SmallCaliber, types.SmallCaliberHigh, types.SmallCaliberAA];
+
+    types.MediumCalibers = [types.MediumCaliber];
+
+    types.LargeCalibers = [types.LargeCaliber, types.SuperCaliber];
+
+    types.SecondaryGuns = [types.SecondaryGun, types.SecondaryGunHigh, types.SecondaryGunAA];
+
+    types.HAMounts = [types.SmallCaliberHigh, types.SmallCaliberAA, types.SecondaryGunHigh, types.SecondaryGunAA];
+
+    types.HAMountsAAFD = [types.SmallCaliberAA, types.SecondaryGunAA];
+
+    types.APShells = [types.APShell];
+
+    types.Torpedos = [types.Torpedo, types.SubmarineTorpedo];
+
+    types.Seaplanes = [types.ReconSeaplane, types.ReconSeaplaneNight, types.SeaplaneBomber, types.SeaplaneFighter];
+
+    types.Fighters = [types.SeaplaneBomber, types.CarrierFighter, types.CarrierFighterNight, types.TorpedoBomber, types.TorpedoBomberNight, types.DiveBomber, types.SeaplaneFighter, types.LandBasedAttacker, types.Interceptor,
+    // types.CarrierRecon
+    types.JetBomberFighter, types.JetBomberFighter2, types.LandBasedFighter];
+
+    types.Interceptors = [types.Interceptor, types.LandBasedFighter];
+
+    types.Recons = [types.ReconSeaplane, types.ReconSeaplaneNight, types.CarrierRecon, types.CarrierRecon2, types.LargeFlyingBoat];
+
+    types.SeaplaneRecons = [types.ReconSeaplane, types.ReconSeaplaneNight];
+
+    types.SeaplaneReconsAll = [types.ReconSeaplane, types.ReconSeaplaneNight, types.LargeFlyingBoat];
+
+    types.SeaplaneBombers = [types.SeaplaneBomber, types.SeaplaneFighter];
+
+    types.SeaplaneFighters = [types.SeaplaneFighter];
+
+    types.CarrierFighters = [types.CarrierFighter, types.CarrierFighterNight];
+
+    types.CarrierRecons = [types.CarrierRecon, types.CarrierRecon2];
+
+    types.CarrierBased = [types.CarrierFighter, types.CarrierFighterNight, types.TorpedoBomber, types.TorpedoBomberNight, types.DiveBomber, types.CarrierRecon, types.CarrierRecon2, types.JetBomberFighter, types.JetBomberFighter2];
+
+    types.LandBased = [types.LandBasedAttacker, types.Interceptor, types.JetBomberFighter, types.JetBomberFighter2, types.LandBasedFighter, types.LandBasedAntiSubPatrol];
+
+    types.TorpedoBombers = [types.TorpedoBomber, types.TorpedoBomberNight];
+
+    types.DiveBombers = [types.DiveBomber];
+
+    types.JetBomberFighters = [types.JetBomberFighter, types.JetBomberFighter2];
+
+    types.Jets = [types.JetBomberFighter, types.JetBomberFighter2];
+
+    types.Autogyros = [types.Autogyro];
+
+    types.AntiSubPatrols = [types.AntiSubPatrol, types.LandBasedAntiSubPatrol];
+
+    types.Aircrafts = [];
+    [].concat(types.Seaplanes).concat(types.Recons).concat(types.CarrierBased).concat(types.Autogyros).concat(types.AntiSubPatrols).concat(types.LandBased).forEach(function (v) {
+        if (types.Aircrafts.indexOf(v) < 0) types.Aircrafts.push(v);
+    });
+
+    types.Radars = [types.SmallRadar, types.LargeRadar, types.SuparRadar];
+
+    types.SmallRadars = [types.SmallRadar];
+
+    types.LargeRadars = [types.LargeRadar, types.SuparRadar];
+
+    types.AntiSubmarines = [types.DepthCharge, types.Sonar, types.LargeSonar];
+
+    types.DepthCharges = [types.DepthCharge];
+
+    types.Sonars = [types.Sonar, types.LargeSonar];
+
+    types.AAGuns = [types.AAGun, types.AAGunConcentrated];
+
+    types.AAFireDirectors = [types.AAFireDirector];
+    types.AAFDs = types.AAFireDirectors;
+
+    types.Searchlights = [types.Searchlight, types.SearchlightLarge];
+
+    types.AviationPersonnels = [types.AviationPersonnel];
+
+    types.SurfaceShipPersonnels = [types.SurfaceShipPersonnel];
+
+    types.LandingCrafts = [types.LandingCraft, types.AmphibiousCraft];
+
+    types.AmphibiousCrafts = [types.AmphibiousCraft];
+
+    types.SupplyContainers = [types.SupplyContainer];
+
+    types.CombatRations = [types.CombatRation];
+
+    return types;
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__getEquipment', function () {
+    return function (equipment) {
+        if (equipment && (typeof equipment === 'undefined' ? 'undefined' : _typeof(equipment)) === 'object' && equipment.id) {
+            return equipment;
+        } else if (!isNaN(equipment)) {
+            return _g.data.items[parseInt(equipment)];
+        } else {
+            return undefined;
+        }
+    };
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__getShip', function () {
+    return function (ship) {
+        if (ship && (typeof ship === 'undefined' ? 'undefined' : _typeof(ship)) === 'object' && ship.id) {
+            return ship;
+        } else if (!isNaN(ship)) {
+            return _g.data.ships[parseInt(ship)];
+        } else {
+            return undefined;
+        }
+    };
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__getShipAndEquipments', function () {
+    return function (ship) {
+        var equipments = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+        var equipmentStars = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+        var equipmentRanks = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+
+        var getShip = window.__getShip;
+        var getEquipment = window.__getEquipment;
+        var maxSlotsPlusExtra = 5;
+
+        if (typeof equipments === 'number' || typeof equipments === 'string') equipments = [equipments];
+        if (typeof equipmentStars === 'number' || typeof equipmentStars === 'string') equipmentStars = [equipmentStars];
+        if (typeof equipmentRanks === 'number' || typeof equipmentRanks === 'string') equipmentRanks = [equipmentRanks];
+
+        ship = getShip(ship);
+
+        equipments = [].concat(_toConsumableArray(Array(Math.max(maxSlotsPlusExtra, ship.slot.length + 1)))).map(function (_, index) {
+            if (!ship) return undefined;
+            if (ship.slot.length <= index && index < 4) return undefined;
+            return getEquipment(equipments[index]) || undefined;
+            // if (!equipment) return undefined
+            // if (equipmentStars[index]) equipment.star = equipmentStars[index]
+            // if (equipmentRanks[index]) equipment.rank = equipmentRanks[index]
+            // return equipment
+        });
+
+        return {
+            ship: ship,
+            equipments: equipments,
+            equipmentStars: equipments.map(function (_, index) {
+                return _typeof(equipments[index]) === 'object' ? Math.min(10, parseInt(equipmentStars[index]) || 0) : undefined;
+            }),
+            equipmentRanks: equipments.map(function (_, index) {
+                return _typeof(equipments[index]) === 'object' ? Math.min(7, parseInt(equipmentRanks[index]) || 0) : undefined;
+            })
+        };
+    };
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__checkEquipment', function () {
+    /**
+     * 检查装备是否满足给定条件
+     * 
+     * @param {(number|Equipment)} equipment 要判断的装备
+     * @param {any} [conditions={}] 条件，需满足所有条件
+     * @param {(number|number[])} [conditions.isID] 判断装备ID是否精确匹配或匹配其中一项
+     * @param {(number|number[])} [conditions.isNotID] 判断装备ID是否不匹配
+     * @param {(string|string[])} [conditions.isName] 判断装备名是否精确匹配或匹配其中一项
+     * @param {(string|string[])} [conditions.isNotName] 判断装备名是否不匹配
+     * @param {(string|string[])} [conditions.isNameOf] 判断装备名片段是否匹配或匹配其中一项
+     * @param {(string|string[])} [conditions.isNotNameOf] 判断装备名片段是否不匹配
+     * @param {(number|number[])} [conditions.isType] 判断装备是否属于给定舰种或匹配其中一项
+     * @param {(number|number[])} [conditions.isNotType] 判断装备是否不属于给定舰种
+     */
+    return function (equipment) {
+        var conditions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+        var getEquipment = window.__getEquipment;
+        var equipmentTypes = window.__equipmentTypes;
+        var ArrayOrItem = window.__ArrayOrItem;
+        var ArrayOrItemAll = window.__ArrayOrItemAll;
+
+        equipment = getEquipment(equipment);
+        if (typeof equipment === 'undefined') return !1;
+
+        var checkCondition = {
+            // 是特定ID
+            isid: function isid(equipment, id) {
+                return ArrayOrItem(id, function (id) {
+                    if (isNaN(id)) return !1;
+                    return parseInt(id) === equipment.id;
+                });
+            },
+            // 不是特定ID
+            isnotid: function isnotid(equipment, id) {
+                return ArrayOrItemAll(id, function (id) {
+                    if (isNaN(id)) return !1;
+                    return parseInt(id) !== equipment.id;
+                });
+            },
+
+            // 完全匹配特定名称
+            isname: function isname(equipment, name) {
+                return ArrayOrItem(name, function (name) {
+                    return equipment.isName(name)
+                    // for (let key in equipment.name) {
+                    //     if (key === 'suffix') continue
+                    //     if (equipment.name[key] === name) return true
+                    // }
+                    // return false
+                    ;
+                });
+            },
+            // 不是特定名称
+            isnotname: function isnotname(equipment, name) {
+                return ArrayOrItemAll(name, function (name) {
+                    return !equipment.isName(name)
+                    // for (let key in equipment.name) {
+                    //     if (key === 'suffix') continue
+                    //     if (equipment.name[key] === name) return false
+                    // }
+                    // return true
+                    ;
+                });
+            },
+
+            // 名称里包含特定字段
+            isnameof: function isnameof(equipment, name) {
+                return ArrayOrItem(name, function (name) {
+                    return equipment.hasName(name)
+                    // for (let key in equipment.name) {
+                    //     if (key === 'suffix') continue
+                    //     if (equipment.name[key].includes(name)) return true
+                    // }
+                    // return false
+                    ;
+                });
+            },
+            // 名称里不包含特定字段
+            isnotnameof: function isnotnameof(equipment, name) {
+                return ArrayOrItemAll(name, function (name) {
+                    return !equipment.hasName(name)
+                    // for (let key in equipment.name) {
+                    //     if (key === 'suffix') continue
+                    //     if (equipment.name[key].includes(name)) return false
+                    // }
+                    // return true
+                    ;
+                });
+            },
+
+            // 是特定类型
+            // 如果判断条件为Object，也会进入该条件
+            istype: function istype(equipment, type, conditions) {
+                return ArrayOrItem(type, function (type) {
+                    if (isNaN(type)) return !1;
+                    if (parseInt(type) !== equipment.type) return !1;
+                    // 条件是Object
+                    if ((typeof conditions === 'undefined' ? 'undefined' : _typeof(conditions)) === 'object') {
+                        // 包含属性
+                        if (conditions.hasStat) {
+                            var pass = !0;
+                            for (var stat in conditions.hasStat) {
+                                if (Array.isArray(conditions.hasStat[stat])) {
+                                    if (equipment.stat[stat] < conditions.hasStat[stat][0]) pass = !1;
+                                    if (equipment.stat[stat] > conditions.hasStat[stat][1]) pass = !1;
+                                } else if (equipment.stat[stat] < conditions.hasStat[stat]) {
+                                    pass = !1;
+                                }
+                            }
+                            if (!pass) return !1;
+                        }
+                    }
+                    return !0;
+                });
+            },
+            // 不是特定类型
+            isnottype: function isnottype(equipment, type) {
+                return ArrayOrItemAll(type, function (type) {
+                    if (isNaN(type)) return !1;
+                    return parseInt(type) !== equipment.type;
+                });
+            },
+            // 是对空电探/雷达
+            isaaradar: function isaaradar(equipment, isTrue) {
+                // console.log(`[${equipment.id}]`, equipment._name)
+                return (this.istype(equipment, equipmentTypes.Radars) && !isNaN(equipment.stat.aa) && equipment.stat.aa >= 2) === isTrue;
+            },
+            // 是对水面电探/雷达
+            issurfaceradar: function issurfaceradar(equipment, isTrue) {
+                // console.log(`[${equipment.id}]`, equipment._name)
+                return (this.istype(equipment, equipmentTypes.Radars) && (isNaN(equipment.stat.aa) || equipment.stat.aa < 2)) === isTrue;
+            }
+
+            // 需满足所有条件
+        };for (var key in conditions) {
+            if (checkCondition[key.toLowerCase()]) {
+                // checkCondition 中存在该条件，直接运行
+                if (!checkCondition[key.toLowerCase()](equipment, conditions[key])) return !1;
+            } else if (key.substr(0, 2) === 'is') {
+                // 以 is 为开头，通常为检查装备类型
+                var typeName = key.substr(2);
+                if (typeName === 'HAMountAAFD') {
+                    typeName = 'HAMountsAAFD';
+                } else if (typeName + 's' in equipmentTypes) {
+                    typeName = typeName + 's';
+                } else if (typeName in equipmentTypes) {
+                    typeName = typeName;
+                } else {
+                    return !1;
+                }
+                // console.log(typeName)
+                // 条件是否为Object
+                var isConditionObj = _typeof(conditions[key]) === 'object' && !Array.isArray(conditions[key]);
+                var objConditions = conditions[key] && isConditionObj ? conditions[key] : undefined;
+                if (!checkCondition[conditions[key] === !0 || isConditionObj ? 'istype' : 'isnottype'](equipment, equipmentTypes[typeName], objConditions)) return !1;
+            }
+        }
+
+        return !0;
+    };
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__checkEquipments', function () {
+    var checkListStatic = ['id', 'name', 'nameof', 'type'];
+
+    /**
+     * 检查装备列表是否满足给定条件
+     * 
+     * @param {(number[]|Equipment[])} equipments 要判断的装备列表
+     * @param {any} [conditions={}] 条件，需满足所有条件
+     */
+    var check = function check(equipments) {
+        var conditions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+        var getEquipment = window.__getEquipment;
+        var checkEquipment = window.__checkEquipment;
+
+        if (!Array.isArray(equipments)) return check([equipments], conditions);
+
+        // 需满足所有条件
+
+        var _loop = function _loop(key) {
+            if (conditions[key] === !1) {
+                // 条件：不存在
+                if (!equipments.every(function (equipment) {
+                    return checkEquipment(equipment, _defineProperty({}, key.replace(/^has/, 'is'), conditions[key]));
+                })) return {
+                        v: !1
+                    };
+            } else if (conditions[key] === !0) {
+                // 条件：存在
+                if (!equipments.some(function (equipment) {
+                    return checkEquipment(equipment, _defineProperty({}, key.replace(/^has/, 'is'), conditions[key]));
+                })) return {
+                        v: !1
+                    };
+            } else if (key.substr(0, 3) === 'has' && checkListStatic.includes(key.substr(3).toLowerCase())) {
+                // 条件：checkListStatic 中的项目
+                if (Array.isArray(conditions[key])) {
+                    if (!conditions[key].every(function (value) {
+                        return equipments.some(function (equipment) {
+                            return checkEquipment(equipment, _defineProperty({}, key.replace(/^has/, 'is'), value));
+                        });
+                    })) return {
+                            v: !1
+                        };
+                } else {
+                    if (!equipments.some(function (equipment) {
+                        return checkEquipment(equipment, _defineProperty({}, key.replace(/^has/, 'is'), conditions[key]));
+                    })) return {
+                            v: !1
+                        };
+                }
+            } else if (key.substr(0, 3) === 'has' && _typeof(conditions[key]) === 'object' && !Array.isArray(conditions[key])) {
+                // 条件合集
+                var thisCondition = Object.assign({}, conditions[key]);
+                var count = typeof thisCondition.count === 'undefined' ? 1 : thisCondition.count;
+                delete thisCondition.count;
+                var filtered = equipments.filter(function (equipment) {
+                    return checkEquipment(equipment, _defineProperty({}, key.replace(/^has/, 'is'), thisCondition));
+                });
+                // console.log(thisCondition, equipments, filtered.length, count)
+                if (filtered.length < count) return {
+                        v: !1
+                    };
+            } else if (key.substr(0, 3) === 'has' && !isNaN(conditions[key])) {
+                // 条件：有至少 N 个
+                var _filtered = equipments.filter(function (equipment) {
+                    return checkEquipment(equipment, _defineProperty({}, key.replace(/^has/, 'is'), !0));
+                });
+                if (_filtered.length < conditions[key]) return {
+                        v: !1
+                    };
+            } else if (key.substr(0, 3) === 'has' && Array.isArray(conditions[key])) {
+                // 条件：有至少 value[0] 个至多 value[1] 个
+                var _filtered2 = equipments.filter(function (equipment) {
+                    return checkEquipment(equipment, _defineProperty({}, key.replace(/^has/, 'is'), !0));
+                });
+                if (_filtered2.length < conditions[key][0] || _filtered2.length > conditions[key][1]) return {
+                        v: !1
+                    };
+            }
+        };
+
+        for (var key in conditions) {
+            var _ret = _loop(key);
+
+            if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+        }
+
+        return !0;
+    };
+
+    return check;
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__checkShip', function () {
+    /**
+     * 检查舰娘是否满足给定条件
+     * 
+     * @param {(number|Ship)} ship 要判断的舰娘
+     * @param {any} [conditions={}] 条件，需满足所有条件
+     * @param {(number|number[])} [conditions.isID] 判断舰娘ID是否精确匹配或匹配其中一项
+     * @param {(number|number[])} [conditions.isNotID] 判断舰娘ID是否不匹配
+     * @param {(string|string[])} [conditions.isName] 判断舰娘名是否精确匹配或匹配其中一项
+     * @param {(string|string[])} [conditions.isNotName] 判断舰娘名是否不匹配
+     * @param {(number|number[])} [conditions.isType] 判断舰娘是否属于给定舰种或匹配其中一项
+     * @param {(number|number[])} [conditions.isNotType] 判断舰娘是否不属于给定舰种
+     * @param {(number|number[])} [conditions.isClass] 判断舰娘是否属于给定舰级或匹配其中一项
+     * @param {(number|number[])} [conditions.isNotClass] 判断舰娘是否不属于给定舰级
+     * @param {boolean} [conditions.isBattleship]
+     * @param {boolean} [conditions.isBB]
+     * @param {boolean} [conditions.isCarrier]
+     * @param {boolean} [conditions.isCV]
+     * @param {boolean} [conditions.isSubmarine]
+     * @param {boolean} [conditions.isSS]
+     * @param {number|[min,max]} [conditions.hasSlot] 判断舰娘的可配置栏位精确有 number 个，或 min ~ max 个
+     * @param {number} [conditions.hasSlotMin] 判断舰娘的可配置栏位至少有 number 个
+     * @param {number} [conditions.hasSlotMax] 判断舰娘的可配置栏位最多有 number 个
+     */
+    return function (ship) {
+        var conditions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+        var getShip = window.__getShip;
+        var ArrayOrItem = window.__ArrayOrItem;
+        var ArrayOrItemAll = window.__ArrayOrItemAll;
+
+        var checkCondition = {
+            // isID
+            isid: function isid(ship, id) {
+                return ArrayOrItem(id, function (id) {
+                    if (isNaN(id)) return !1;
+                    return parseInt(id) === ship.id;
+                });
+            },
+            isnotid: function isnotid(ship, id) {
+                return ArrayOrItemAll(id, function (id) {
+                    if (isNaN(id)) return !1;
+                    return parseInt(id) !== ship.id;
+                });
+            },
+
+            // isName
+            isname: function isname(ship, name) {
+                return ArrayOrItem(name, function (name) {
+                    return ship.isName(name)
+                    // for (let key in ship.name) {
+                    //     if (key === 'suffix') continue
+                    //     if (ship.name[key].toLowerCase() === name) return true
+                    // }
+                    // return false
+                    ;
+                });
+            },
+            isnotname: function isnotname(ship, name) {
+                return ArrayOrItemAll(name, function (name) {
+                    return !ship.isName(name)
+                    // for (let key in ship.name) {
+                    //     if (key === 'suffix') continue
+                    //     if (ship.name[key].toLowerCase() === name) return false
+                    // }
+                    // return true
+                    ;
+                });
+            },
+
+            // isType
+            istype: function istype(ship, type) {
+                return ArrayOrItem(type, function (type) {
+                    if (isNaN(type)) return !1;
+                    return parseInt(type) === ship.type;
+                });
+            },
+            isnottype: function isnottype(ship, type) {
+                return ArrayOrItemAll(type, function (type) {
+                    if (isNaN(type)) return !1;
+                    return parseInt(type) !== ship.type;
+                });
+            },
+            isbattleship: function isbattleship(ship, isTrue) {
+                return this.istype(ship, [8, 6, 20, 7, 18]) === isTrue;
+            },
+            isbb: function isbb(ship, isTrue) {
+                return this.isbattleship(ship, isTrue);
+            },
+            iscarrier: function iscarrier(ship, isTrue) {
+                return this.istype(ship, [11, 10, 9, 30, 32]) === isTrue;
+            },
+            iscv: function iscv(ship, isTrue) {
+                return this.iscarrier(ship, isTrue);
+            },
+            issubmarine: function issubmarine(ship, isTrue) {
+                return this.istype(ship, [14, 13]) === isTrue;
+            },
+            isss: function isss(ship, isTrue) {
+                return this.issubmarine(ship, isTrue);
+            },
+
+            // isClass
+            isclass: function isclass(ship, Class) {
+                return ArrayOrItem(Class, function (Class) {
+                    if (isNaN(Class)) return !1;
+                    return parseInt(Class) === ship.class;
+                });
+            },
+            isnotclass: function isnotclass(ship, Class) {
+                return ArrayOrItemAll(Class, function (Class) {
+                    if (isNaN(Class)) return !1;
+                    return parseInt(Class) !== ship.class;
+                });
+            },
+
+            // hasSlot
+            hasslot: function hasslot(ship, num) {
+                if (!Array.isArray(ship.slot)) return !1;
+                if (Array.isArray(num)) {
+                    if (isNaN(num[0]) && !isNaN(num[1])) return ship.slot.length <= parseInt(num[1]);else if (!isNaN(num[0]) && isNaN(num[1])) return ship.slot.length >= parseInt(num[0]);else if (!isNaN(num[0]) && !isNaN(num[1])) return ship.slot.length >= parseInt(num[0]) && ship.slot.length <= parseInt(num[1]);else return !1;
+                } else return !isNaN(num) && parseInt(num) === ship.slot.length;
+            },
+            hasslotmin: function hasslotmin(ship, min) {
+                return this.hasslot(ship, [min, undefined]);
+            },
+            hasslotmax: function hasslotmax(ship, max) {
+                return this.hasslot(ship, [undefined, max]);
+            },
+
+            // minLevel
+            minlevel: function minlevel(ship, level) {
+                if (typeof ship.level !== 'undefined') return ship.level >= level;
+                return !0;
+            }
+        };
+
+        ship = getShip(ship);
+        if (typeof ship === 'undefined') return !1;
+
+        // 需满足所有条件
+        for (var key in conditions) {
+            if (!checkCondition[key.toLowerCase()](ship, conditions[key])) return !1;
+        }
+
+        return !0;
+    };
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__calculateBonus', function () {
+    /**
+     * Calculate stat bonus for specified ship with equipment(s)
+     */
+    var calculateBonus = function calculateBonus(ship) {
+        var equipments = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+        var equipmentStars = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+        var equipmentRanks = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+        var stat = arguments[4];
+
+        if (typeof equipmentStars === 'string') return calculateBonus(ship, equipments, undefined, undefined, equipmentStars);
+
+        var getShipAndEquipments = window.__getShipAndEquipments;
+        var checkShip = window.__checkShip;
+        var checkEquipments = window.__checkEquipments;
+        var bonus = window.__bonus;
+
+        var _getShipAndEquipments = getShipAndEquipments(ship, equipments, equipmentStars, equipmentRanks);
+
+        ship = _getShipAndEquipments.ship;
+        equipments = _getShipAndEquipments.equipments;
+        equipmentStars = _getShipAndEquipments.equipmentStars;
+        equipmentRanks = _getShipAndEquipments.equipmentRanks;
+
+
+        var result = {};
+        var conditions = bonus.filter(function (bonus) {
+            return checkShip(ship, bonus.ship);
+        });
+        var addResult = function addResult() {
+            var bonus = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+            for (var _stat in bonus) {
+                if (typeof result[_stat] === 'undefined') result[_stat] = bonus[_stat];else result[_stat] += bonus[_stat];
+            }
+        };
+
+        // condition: single equipment
+        conditions.filter(function (bonus) {
+            return typeof bonus.equipment === 'number' && equipments.some(function (equipment) {
+                return equipment && equipment.id && equipment.id == bonus.equipment;
+            });
+        }).forEach(function (bonus) {
+            var thisBonus = {};
+
+            if (_typeof(bonus.bonusImprove) === 'object') {
+                var starsDesc = Object.keys(bonus.bonusImprove).sort(function (a, b) {
+                    return parseInt(b) - parseInt(a);
+                });
+                equipments.forEach(function (equipment, index) {
+                    if (equipment && equipment.id && equipment.id == bonus.equipment) {
+                        starsDesc.some(function (star) {
+                            if (equipmentStars[index] >= star) {
+                                for (var _stat2 in bonus.bonusImprove[star]) {
+                                    if (typeof thisBonus[_stat2] === 'undefined') thisBonus[_stat2] = bonus.bonusImprove[star][_stat2];else thisBonus[_stat2] += bonus.bonusImprove[star][_stat2];
+                                }
+                                return !0;
+                            }
+                            return !1;
+                        });
+                    }
+                });
+            } else {
+                var thisCount = 0;
+
+                // count for equipment
+                equipments.forEach(function (equipment) {
+                    if (equipment && equipment.id && equipment.id == bonus.equipment) {
+                        thisCount++;
+                    }
+                });
+
+                if (_typeof(bonus.bonusCount) === 'object') {
+                    Object.keys(bonus.bonusCount).sort(function (a, b) {
+                        return parseInt(b) - parseInt(a);
+                    }).some(function (count) {
+                        if (thisCount >= count) {
+                            thisBonus = _extends({}, bonus.bonusCount[count]);
+                            return !0;
+                        }
+                        return !1;
+                    });
+                } else if (_typeof(bonus.bonus) === 'object') {
+                    thisBonus = _extends({}, bonus.bonus);
+                    // add for count
+                    for (var _stat3 in thisBonus) {
+                        thisBonus[_stat3] = thisBonus[_stat3] * thisCount;
+                    }
+                }
+            }
+
+            addResult(thisBonus);
+        });
+
+        // condition: equipment-set
+        conditions.filter(function (bonus) {
+            return _typeof(bonus.equipments) === 'object' && checkEquipments(equipments, bonus.equipments);
+        }).forEach(function (bonus) {
+            addResult(bonus.bonus);
+        });
+
+        if (typeof stat === 'string') return result[stat] || 0;
+
+        return result;
+    };
+
+    return calculateBonus;
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__bonus', function () {
+    // 装备额外属性
+
+    var BB_KongouClass2ndRemodel = [149, // 金剛改二
+    150, // 比叡改二
+    151, // 榛名改二
+    152];
+    var BB_IseClassRemodel = [82, // 伊勢改
+    88];
+
+    var CL_KumaClass2ndRemodel = [547, // 多摩改二
+    146];
+    var CL_KumaClassRemodel = [216, // 多摩改
+    217].concat(CL_KumaClass2ndRemodel);
+
+    var DD_FubukiClass2ndRemodel = [426, // 吹雪改二
+    420];
+    var DD_AyanamiClass2ndRemodel = [195, // 綾波改二
+    407];
+    var DD_AkatsukiClass2ndRemodel = [437, // 暁改二
+    147];
+    var DD_HatsuharuClass2ndRemodel = [326, // 初春改二
+    419];
+    var DD_ShiratsuyuClass2ndRemodel = [145, // 時雨改二
+    498, // 村雨改二
+    144, // 夕立改二
+    469];
+    var DD_AsashioClass2ndRemodel = [463, // 朝潮改二
+    468, // 朝潮改二丁
+    199, // 大潮改二
+    489, // 満潮改二
+    490, // 荒潮改二
+    198, // 霰改二
+    464, // 霞改二
+    470];
+    var DD_KagerouClass2ndRemodel = [566, // 陽炎改二
+    567];
+    var DD_YuugumoClass2ndRemodel = [543];
+    var DD_YuugumoClass2ndRemodel_PLUS_ShimakazeRemodel = DD_YuugumoClass2ndRemodel.concat([229]);
+
+    /**
+     * @member {Number} [equipment] 单一装备
+     * @member {Object} [equipments] 条件：装备组合
+     * @member {Object} ship 条件：匹配的舰娘
+     * @member {Object} [bonus] 收益
+     * @member {Object} [bonusCount] 仅当为单一装备时可用：不同装备数量的收益
+     * @member {Object} [bonusImprove] 仅当为单一装备时可用：不同改修星级的收益
+     */
+    return [
+
+    /**
+     * 小口径主炮
+     */
+    // 12.7cm連装砲C型改二
+    // @ 陽炎型 改二
+    {
+        equipment: 266,
+        ship: {
+            isID: DD_KagerouClass2ndRemodel
+        },
+        bonusCount: {
+            1: {
+                fire: 1
+            },
+            2: {
+                fire: 3
+            }
+        }
+    },
+    // 12.7cm連装砲D型改二
+    // @ 陽炎型
+    {
+        equipment: 267,
+        ship: {
+            isClass: [21],
+            isNotID: DD_KagerouClass2ndRemodel
+        },
+        bonus: {
+            fire: 1,
+            evasion: 1
+        }
+    },
+    // 12.7cm連装砲D型改二
+    // @ 夕雲型 / 島風型
+    {
+        equipment: 267,
+        ship: {
+            isClass: [22, 24],
+            isNotID: DD_YuugumoClass2ndRemodel
+        },
+        bonus: {
+            fire: 2,
+            evasion: 1
+        }
+    },
+    // 12.7cm連装砲D型改二
+    // @ 陽炎型 改二
+    {
+        equipment: 267,
+        ship: {
+            isID: DD_KagerouClass2ndRemodel
+        },
+        bonusCount: {
+            1: {
+                fire: 2,
+                evasion: 1
+            },
+            2: {
+                fire: 3,
+                evasion: 2
+            },
+            3: {
+                fire: 4,
+                evasion: 3
+            }
+        }
+    },
+    // 12.7cm連装砲D型改二
+    // @ 夕雲型 改二
+    {
+        equipment: 267,
+        ship: {
+            isID: DD_YuugumoClass2ndRemodel
+        },
+        bonus: {
+            fire: 3,
+            evasion: 1
+        }
+    },
+
+    /**
+     * 大口径主炮
+     */
+    // 35.6cm連装砲(ダズル迷彩)
+    // @ 金剛改二
+    {
+        equipment: 104,
+        ship: {
+            isID: [149]
+        },
+        bonus: {
+            fire: 2
+        }
+    },
+    // 35.6cm連装砲(ダズル迷彩)
+    // @ 榛名改二
+    {
+        equipment: 104,
+        ship: {
+            isID: [151]
+        },
+        bonus: {
+            fire: 2,
+            aa: 1,
+            evasion: 2
+        }
+    },
+    // 35.6cm連装砲(ダズル迷彩)
+    // @ 比叡改二 / 霧島改二
+    {
+        equipment: 104,
+        ship: {
+            isID: [150, 152]
+        },
+        bonus: {
+            fire: 1
+        }
+    },
+    // 35.6cm三連装砲改(ダズル迷彩仕様)
+    // @ 金剛改二
+    {
+        equipment: 289,
+        ship: {
+            isID: [149]
+        },
+        bonus: {
+            fire: 2
+        }
+    },
+    // 35.6cm三連装砲改(ダズル迷彩仕様)
+    // @ 榛名改二
+    {
+        equipment: 289,
+        ship: {
+            isID: [151]
+        },
+        bonus: {
+            fire: 2,
+            aa: 1,
+            evasion: 2
+        }
+    },
+    // 35.6cm三連装砲改(ダズル迷彩仕様)
+    // @ 比叡改二 / 霧島改二
+    {
+        equipment: 289,
+        ship: {
+            isID: [150, 152]
+        },
+        bonus: {
+            fire: 1
+        }
+    },
+    // 41cm三連装砲改二
+    // @ 伊勢型 改
+    {
+        equipment: 290,
+        ship: {
+            isID: BB_IseClassRemodel
+        },
+        bonus: {
+            fire: 2,
+            aa: 2,
+            evasion: 1
+        }
+    },
+
+    /**
+     * 鱼雷发射管
+     */
+    // 61cm三連装(酸素)魚雷後期型
+    // @ 特型駆逐艦 改二 / 初春型 改二
+    {
+        equipment: 285,
+        ship: {
+            isID: [].concat(DD_FubukiClass2ndRemodel, DD_AyanamiClass2ndRemodel, DD_AkatsukiClass2ndRemodel, DD_HatsuharuClass2ndRemodel)
+        },
+        bonusImprove: {
+            0: {
+                torpedo: 2,
+                evasion: 1
+            },
+            10: {
+                fire: 1,
+                torpedo: 2,
+                evasion: 1
+            }
+        }
+    },
+    // 61cm四連装(酸素)魚雷
+    // @ 陽炎型 改二
+    {
+        equipment: 15,
+        ship: {
+            isID: DD_KagerouClass2ndRemodel
+        },
+        bonusCount: {
+            1: {
+                torpedo: 2
+            },
+            2: {
+                torpedo: 4
+            }
+        }
+    },
+    // 61cm四連装(酸素)魚雷後期型
+    // @ 陽炎型 改二
+    {
+        equipment: 286,
+        ship: {
+            isID: DD_KagerouClass2ndRemodel
+        },
+        bonusImprove: {
+            0: {
+                torpedo: 2,
+                evasion: 1
+            },
+            5: {
+                torpedo: 3,
+                evasion: 1
+            },
+            10: {
+                fire: 1,
+                torpedo: 3,
+                evasion: 1
+            }
+        }
+    },
+    // 61cm四連装(酸素)魚雷後期型
+    // @ 白露型 改二 / 朝潮型 改二 / 夕雲型 改二
+    {
+        equipment: 286,
+        ship: {
+            isID: [].concat(DD_ShiratsuyuClass2ndRemodel, DD_AsashioClass2ndRemodel, DD_YuugumoClass2ndRemodel)
+        },
+        bonusImprove: {
+            0: {
+                torpedo: 2,
+                evasion: 1
+            },
+            10: {
+                fire: 1,
+                torpedo: 2,
+                evasion: 1
+            }
+        }
+    },
+
+    /**
+     * 装甲板
+     */
+    // 北方迷彩(＋北方装備)
+    // @ 球磨型 改
+    {
+        equipment: 268,
+        ship: {
+            isID: CL_KumaClassRemodel
+        },
+        bonusCount: {
+            1: {
+                armor: 2,
+                evasion: 7
+            }
+        }
+    },
+
+    /**
+     * 组合
+     */
+    // 12.7cm連装砲D型改二 + 水上電探
+    // @ 夕雲型 改二 / 島風改
+    {
+        equipments: {
+            hasId: [267],
+            hasSurfaceRadar: !0
+        },
+        ship: {
+            isId: DD_YuugumoClass2ndRemodel_PLUS_ShimakazeRemodel
+        },
+        bonus: {
+            fire: 1,
+            torpedo: 3,
+            evasion: 2
+        }
+    },
+    // 35.6cm三連装砲改(ダズル迷彩仕様) + 水上電探
+    // @ 金剛型 改二
+    {
+        equipments: {
+            hasId: [289],
+            hasSurfaceRadar: !0
+        },
+        ship: {
+            isId: BB_KongouClass2ndRemodel
+        },
+        bonus: {
+            fire: 2
+        }
+    },
+    // 41cm三連装砲改二 + 対空電探
+    // @ 伊勢型 改
+    {
+        equipments: {
+            hasId: [290],
+            hasAARadar: !0
+        },
+        ship: {
+            isId: BB_IseClassRemodel
+        },
+        bonus: {
+            aa: 2,
+            evasion: 3
+        }
+    }];
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__ArrayOrItem', function () {
+    return function (arg, func) {
+        if (Array.isArray(arg)) return arg.some(func);
+        return func(arg);
+    };
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('__ArrayOrItemAll', function () {
+    return function (arg, func) {
+        if (Array.isArray(arg)) return arg.every(func);
+        return func(arg);
+    };
+});(function (name, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        window[name] = factory();
+    }
+})('KC', function () {
+
+    "use strict";
+
+    var KC = {
+        lang: 'zh_cn',
+        joint: '・',
+        maxShipLv: 165,
+        maxHqLv: 120,
+        db: {},
+        path: {
+            db: '/kcdb/',
+            pics: {
+                ships: '/kcpic/ships/'
+            }
+        },
+        statSpeed: {
+            5: '低速',
+            10: '高速',
+            15: '高速+',
+            20: '最速'
+        },
+        getStatSpeed: function getStatSpeed(speed) {
+            return this.statSpeed[parseInt(speed)];
+        },
+        statRange: {
+            1: '短',
+            2: '中',
+            3: '长',
+            4: '超长'
+        },
+        getStatRange: function getStatRange(range) {
+            return this.statRange[parseInt(range)];
+        },
+        textRank: {
+            1: '|',
+            2: '||',
+            3: '|||',
+            4: '\\',
+            5: '\\\\',
+            6: '\\\\\\',
+            7: '》'
+        }
+    };
+
+    /**
+     * KC Classes
+     */
+    // Base class
+
+    var ItemBase = function () {
+        function ItemBase(data) {
+            _classCallCheck(this, ItemBase);
+
+            for (var i in data) {
+                this[i] = data[i];
+            }
+        }
+
+        _createClass(ItemBase, [{
+            key: 'getName',
+            value: function getName(language) {
+                language = language || KC.lang;
+                return this.name ? this.name[language] || this.name : null;
+            }
+        }, {
+            key: 'isName',
+
+
+            /**
+             * 检查名称是否为（完全匹配）给定字符串
+             * 
+             * @param {String} nameToCheck - 要检查的名称
+             * @param {Boolean|String} [locale] - 要检查的语言。如果为 true 检查当前语言，如果为 falsy 检查所有语言
+             * @returns {Boolean} - 是否匹配
+             */
+            value: function isName(nameToCheck, locale) {
+                if (locale === !0) locale = KC.lang;
+                if (locale) {
+                    if (this.name[locale] === nameToCheck) return !0;
+                    return !1;
+                }
+
+                for (var key in this.name) {
+                    if (key === 'suffix') continue;
+                    if (this.name[key] === nameToCheck) return !0;
+                }
+                return !1;
+            }
+
+            /**
+             * 检查名称是否包含给定字符串
+             * 
+             * @param {String} nameToCheck - 要检查的名称
+             * @param {Boolean|String} [locale] - 要检查的语言。如果为 true 检查当前语言，如果为 falsy 检查所有语言
+             * @returns {Boolean} - 是否匹配
+             */
+
+        }, {
+            key: 'hasName',
+            value: function hasName(nameToCheck, locale) {
+                if (locale === !0) locale = KC.lang;
+                if (locale) {
+                    if (this.name[locale].includes(nameToCheck)) return !0;
+                    return !1;
+                }
+
+                for (var key in this.name) {
+                    if (key === 'suffix') continue;
+                    if (this.name[key].includes(nameToCheck)) return !0;
+                }
+                return !1;
+            }
+        }, {
+            key: 'isNameOf',
+            value: function isNameOf() {
+                return this.hasName.apply(this, arguments);
+            }
+        }, {
+            key: '_name',
+            get: function get() {
+                return this.getName();
+            }
+        }]);
+
+        return ItemBase;
+    }();
+    // Class for Entity (Person/Group, such as CVs, illustrators)
+
+
+    var Entity = function (_ItemBase) {
+        _inherits(Entity, _ItemBase);
+
+        function Entity(data) {
+            _classCallCheck(this, Entity);
+
+            return _possibleConstructorReturn(this, (Entity.__proto__ || Object.getPrototypeOf(Entity)).call(this, data));
+        }
+
+        return Entity;
+    }(ItemBase);
+
+    var Equipment = function (_ItemBase2) {
+        _inherits(Equipment, _ItemBase2);
+
+        function Equipment(data) {
+            _classCallCheck(this, Equipment);
+
+            var _this2 = _possibleConstructorReturn(this, (Equipment.__proto__ || Object.getPrototypeOf(Equipment)).call(this, data));
+
+            Object.defineProperty(_this2, 'rankupgradable', {
+                value: _this2.isRankUpgradable()
+            });
+            return _this2;
+        }
+
+        _createClass(Equipment, [{
+            key: 'getName',
+            value: function getName(small_brackets, language) {
+                language = language || KC.lang;
+                var result = ItemBase.prototype.getName.call(this, language),
+                    small_brackets_tag = small_brackets && !small_brackets === !0 ? small_brackets : 'small';
+                return small_brackets ? result.replace(/（([^（^）]+)）/g, '<' + small_brackets_tag + '>($1)</' + small_brackets_tag + '>') : result;
+            }
+        }, {
+            key: 'getType',
+            value: function getType(language) {
+                language = language || KC.lang;
+                return this.type ? KC.db.item_types[this.type].name[language] : null;
+            }
+        }, {
+            key: 'getIconId',
+            value: function getIconId() {
+                if (Array.isArray(this.type_ingame) && this.type_ingame.length > 3) return this.type_ingame[3];
+                return KC.db.item_types[this.type].icon;
+            }
+        }, {
+            key: 'getCaliber',
+            value: function getCaliber() {
+                var name = this.getName(!1, 'ja_jp'),
+                    caliber = parseFloat(name);
+
+                return caliber;
+            }
+        }, {
+            key: 'getPower',
+            value: function getPower() {
+                return this.stat[KC.db.item_types[this.type].main_attribute || 'fire'];
+                /*
+                switch( this.type ){
+                    // Guns
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                        case 9:
+                }
+                */
+            }
+
+            /**
+             * 判断是否可装备入补强增设栏位
+             * 
+             * @returns {boolean}
+             */
+
+        }, {
+            key: 'isEquipableExSlot',
+            value: function isEquipableExSlot() {
+                if (this.equipable_exslot) return this.equipable_exslot || !1;
+                return this.type ? KC.db.item_types[this.type].equipable_exslot || !1 : !1;
+            }
+
+            /**
+             * 判断是否可提升熟练度
+             * 
+             * @returns {boolean}
+             */
+
+        }, {
+            key: 'isRankUpgradable',
+            value: function isRankUpgradable() {
+                return formula.equipmentType.Aircrafts.includes(this.type) && this.type !== formula.equipmentType.Autogyro && this.type !== formula.equipmentType.AntiSubPatrol;
+            }
+
+            /**
+             * 获取属性
+             * 
+             * @param {String} statType - 属性类型
+            * @param {Number|Object} [ship] - 舰娘ID或舰娘数据，如果给出，会查询额外收益
+             * @returns {boolean}
+             */
+
+        }, {
+            key: 'getStat',
+            value: function getStat(statType, ship) {
+                statType = statType.toLowerCase();
+                var base = this.stat[statType];
+                if (!ship || base === undefined || !Array.isArray(this.stat_bonus)) return base;
+                if (ship && Array.isArray(this.stat_bonus)) {
+                    if ((typeof ship === 'undefined' ? 'undefined' : _typeof(ship)) !== 'object') ship = KC.db.ships[ship];
+                    var shipId = ship.id;
+
+                    var bonus = void 0;
+
+                    this.stat_bonus.forEach(function (o) {
+                        if (Array.isArray(o.ships)) o.ships.some(function (ship) {
+                            if (ship == shipId) {
+                                for (var stat in o.bonus) {
+                                    if (!bonus) bonus = {};
+                                    bonus[stat] = Math.max(o.bonus[stat], bonus[stat] || 0);
+                                }
+                                return !0;
+                            }
+                            return !1;
+                        });
+                        if (Array.isArray(o.ship_classes)) o.ship_classes.some(function (classId) {
+                            if (classId == ship.class) {
+                                for (var stat in o.bonus) {
+                                    if (!bonus) bonus = {};
+                                    bonus[stat] = Math.max(o.bonus[stat], bonus[stat] || 0);
+                                }
+                                return !0;
+                            }
+                            return !1;
+                        });
+                        // return typeof bonus !== 'undefined'
+                    });
+                    if (bonus) {
+                        return base + (bonus[statType] || 0);
+                    }
+                }
+                return base;
+            }
+        }, {
+            key: '_icon',
+            get: function get() {
+                return 'assets/images/itemicon/' + this.getIconId() + '.png';
+            }
+        }]);
+
+        return Equipment;
+    }(ItemBase);
+
+    var Ship = function (_ItemBase3) {
+        _inherits(Ship, _ItemBase3);
+
+        function Ship(data) {
+            _classCallCheck(this, Ship);
+
+            return _possibleConstructorReturn(this, (Ship.__proto__ || Object.getPrototypeOf(Ship)).call(this, data));
+        }
+        /**
+         * @param {string} joint - OPTIONAL - 连接符，如果存在后缀名，则在舰名和后缀名之间插入该字符串
+         * @param {bollean} joint - OPTIONAL - 如果为 true，则添加默认连接符；false，则不添加连接符
+         * @param {null} joint - OPTIONAL - 不添加连接符
+         * @param {string} language - OPTIONAL - 语言代码，默认为 KCTip.lang
+         * @return {string} 舰名 + 连接符（如果有） + 后缀名（如果有）
+         * 快捷方式 - ship._name (默认连接符，默认语言)
+         */
+
+
+        _createClass(Ship, [{
+            key: 'getName',
+            value: function getName(joint, language) {
+                joint = joint || '';
+                language = language || KC.lang;
+                var suffix = this.getSuffix(language);
+                return (this.name[language] || this.name.ja_jp) + (suffix ? (joint === !0 ? KC.joint : joint) + suffix : '');
+            }
+            /*	获取舰名，不包括后缀
+                变量
+                    language	[OPTIONAL]
+                        String		语言代码，默认为 KC.lang
+                返回值
+                    String		舰名，不包括后缀
+            */
+
+        }, {
+            key: 'getNameNoSuffix',
+            value: function getNameNoSuffix(language) {
+                language = language || KC.lang;
+                return this.name[language] || this.name.ja_jp;
+            }
+            /*	获取后缀名
+                变量
+                    language	[OPTIONAL]
+                        String		语言代码，默认为 KC.lang
+                返回值
+                    String		后缀名
+            */
+
+        }, {
+            key: 'getSuffix',
+            value: function getSuffix(language) {
+                language = language || KC.lang;
+                return this.name.suffix ? KC.db.ship_namesuffix[this.name.suffix][language] || KC.db.ship_namesuffix[this.name.suffix].ja_jp || '' : '';
+            }
+            /*	获取舰种
+                变量
+                    language	[OPTIONAL]
+                        String		语言代码，默认为 KC.lang
+                返回值
+                    String		舰种
+                快捷方式
+                    ship._type	默认语言
+            */
+
+        }, {
+            key: 'getType',
+            value: function getType(language) {
+                language = language || KC.lang;
+                return this.type ? KC.db.ship_types[this.type].name[language] || KC.db.ship_types[this.type].name.ja_jp || '' : null;
+            }
+        }, {
+            key: 'getSeriesData',
+
+            /*	获取系列数据
+                返回值
+                    Object		系列
+            */
+            value: function getSeriesData() {
+                return this.series ? KC.db.ship_series[this.series].ships : [{
+                    'id': this.id
+                }];
+            }
+        }, {
+            key: 'getPic',
+
+            /**
+             * 获取图鉴uri/path
+             * 
+             * @param {number} [picId = 0] - 图鉴Id，默认 0
+             * @param {string} [ext]
+             * @returns {string} uri/path
+             * 
+             * @memberOf Ship
+             * 
+             * 快捷方式
+             *      ship._pics	获取全部图鉴，Array
+             */
+            value: function getPic(picId, ext) {
+                var series = this.getSeriesData();
+                picId = parseInt(picId || 0);
+
+                var getURI = function getURI(i, p) {
+                    if (typeof node != 'undefined' && node && node.path && KC.path.pics.ships) return node.path.join(KC.path.pics.ships, i + '/' + p + '.' + (ext ? ext : 'webp'));
+                    if (KC.path.pics.ships) return KC.path.pics.ships + i + '/' + p + '.' + (ext ? ext : 'png');
+                    return '/' + i + '/' + p + '.' + (ext ? ext : 'png');
+                };
+
+                for (var i = 0; i < series.length; i++) {
+                    if (series[i].id == this.id) {
+                        switch (picId) {
+                            case 0:
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 12:
+                            case 13:
+                            case 14:
+                                return getURI(this.id, picId);
+                            //break;
+                            default:
+                                if (series[i].illust_delete) {
+                                    return getURI(series[i - 1].id, picId);
+                                } else {
+                                    return getURI(this.id, picId);
+                                }
+                            //break;
+                        }
+                        //break;
+                    }
+                }
+            }
+        }, {
+            key: 'getSpeed',
+            value: function getSpeed() /*language*/{
+                // language = language || KC.lang
+                return KC.statSpeed[parseInt(this.stat.speed)];
+            }
+        }, {
+            key: 'getSpeedRule',
+            value: function getSpeedRule() {
+                if (this.speed_rule) return this.speed_rule;
+                // if (this.name.ja_jp === '天津風') return 'high-2'
+                return this.class ? KC.db.ship_classes[this.class].speed_rule : null;
+            }
+        }, {
+            key: 'getRange',
+            value: function getRange() /*language*/{
+                // language = language || KC.lang
+                return KC.statRange[parseInt(this.stat.range)];
+            }
+        }, {
+            key: 'getEquipmentTypes',
+            value: function getEquipmentTypes() {
+                var disabled = this.additional_disable_item_types || [];
+                return KC.db.ship_types[this.type].equipable.concat(this.additional_item_types || []).filter(function (type) {
+                    return disabled.indexOf(type) < 0;
+                }).sort(function (a, b) {
+                    return a - b;
+                });
+            }
+        }, {
+            key: 'getAttribute',
+            value: function getAttribute(attr, lvl) {
+                lvl = lvl || 1;
+                if (lvl > Ship.lvlMax) lvl = Ship.lvlMax;
+
+                var getStatOfLvl = function getStatOfLvl(lvl, base, max) {
+                    lvl = lvl || 1;
+                    base = parseFloat(base);
+                    max = parseFloat(max) || base;
+                    if (base < 0 || max < 0) return -1;
+                    if (base == max) return max;
+                    return Math.floor(base + (max - base) * lvl / 99);
+                };
+
+                var value = void 0;
+
+                switch (attr) {
+                    case 'hp':
+                        value = this.stat.hp;
+                        if (lvl > 99) {
+                            if (this.stat.hp >= 90) value = this.stat.hp + 9;else if (this.stat.hp >= 70) value = this.stat.hp + 8;else if (this.stat.hp >= 50) value = this.stat.hp + 7;else if (this.stat.hp >= 40) value = this.stat.hp + 6;else if (this.stat.hp >= 30) value = this.stat.hp + 5;else value = this.stat.hp + 4;
+                            if (value > this.stat.hp_max) value = this.stat.hp_max;
+                        }
+                        return value;
+                    //break;
+                    case 'speed':
+                        return KC.getStatSpeed(this.stat.speed);
+                    //break;
+                    case 'range':
+                        return KC.getStatRange(this.stat.range);
+                    //break;
+                    case 'luck':
+                        if (lvl > 99) return this.stat.luck + 3;
+                        return this.stat.luck;
+                    //break;
+                    case 'fuel':
+                    case 'ammo':
+                        if (lvl > 99) return Math.floor(this.consum[attr] * 0.85);
+                        return this.consum[attr];
+                    //break;
+                    case 'aa':
+                    case 'armor':
+                    case 'fire':
+                    case 'torpedo':
+                        return this.stat[attr + '_max'] || this.stat[attr];
+                    //break;
+                    default:
+                        return getStatOfLvl(lvl, this.stat[attr], this.stat[attr + '_max']);
+                    //break;
+                }
+            }
+            /*	获取关系
+                变量
+                    relation	[OPTIONAL]
+                        String		关系名
+                返回值
+                    Object			如果没有给出 relation，返回关系对象
+                    String||Number	如果给出 relation，返回值，默认读取 rels 下的属性，如果不存在，读取上一个改造版本的对应关系
+            */
+
+        }, {
+            key: 'getRel',
+            value: function getRel(relation) {
+                if (relation) {
+                    if (!this.rels[relation] && this.remodel && this.remodel.prev) {
+                        var prev = KC.db.ships[this.remodel.prev];
+                        while (prev) {
+                            if (prev.rels && prev.rels[relation]) return prev.rels[relation];
+                            if (!prev.remodel || !prev.remodel.prev) prev = null;else prev = KC.db.ships[prev.remodel.prev];
+                        }
+                    }
+                    return this.rels[relation];
+                } else {
+                    return this.rels;
+                }
+            }
+            /*	获取声优
+                变量
+                    language	[OPTIONAL]
+                        String		语言代码，默认为 KC.lang
+                返回值
+                    String		声优名
+                快捷方式
+                    ship._cv	默认语言
+            */
+
+        }, {
+            key: 'getCV',
+            value: function getCV(language) {
+                var entity = this.getRel('cv');
+                if (entity) return KC.db.entities[entity].getName(language || KC.lang);
+                return;
+            }
+        }, {
+            key: 'getIllustrator',
+
+            /*	获取画师
+                变量
+                    language	[OPTIONAL]
+                        String		语言代码，默认为 KC.lang
+                返回值
+                    String		画师名
+                快捷方式
+                    ship._illustrator	默认语言
+            */
+            value: function getIllustrator(language) {
+                var entity = this.getRel('illustrator');
+                if (entity) return KC.db.entities[entity].getName(language || KC.lang);
+                return;
+            }
+        }, {
+            key: 'getMinLv',
+
+
+            /* 获取该舰娘可能的最低等级
+             */
+            value: function getMinLv() {
+                var _this4 = this;
+
+                var series = this._series;
+                var lv = void 0;
+                series.some(function (o, index) {
+                    if (_this4.id == o.id) {
+                        if (index) {
+                            lv = series[index - 1].next_lvl;
+                        } else {
+                            lv = 1;
+                        }
+                    }
+                    return lv;
+                });
+                return lv;
+            }
+        }, {
+            key: 'getNavy',
+
+
+            /**
+             * 获取所属海军简称
+             * 
+             * @readonly
+             * @returns {String}
+             */
+            value: function getNavy() {
+                if (this.navy) return this.navy;
+                return this.class ? KC.db.ship_classes[this.class].navy || 'ijn' : 'ijn';
+            }
+        }, {
+            key: 'getCapability',
+
+
+            /**
+             * 获取额外能力
+             * 
+             * @param {String} [type] - 要获取的能力
+             * @returns {Object|...} - 如果提供了 type，返回该能力。如果没有，返回 Object
+             */
+            value: function getCapability(type) {
+                if (!type) return this.capabilities || {};
+                if (!this.capabilities) return undefined;
+                return this.capabilities[type];
+            }
+
+            /**
+             * 获取额外可提升的值
+             * 
+             * @param {String} [type] - 要获取的属性名
+             * @returns {Number} - 数值
+             */
+
+        }, {
+            key: 'getStatExtraMax',
+            value: function getStatExtraMax(type) {
+                var lvl = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+                switch (type.toLowerCase()) {
+                    case 'hp':
+                        {
+                            // const hpBase = this.getStat(type, 99)
+                            // const hpAfterMarriage = this.getStat(type, 100)
+                            var stat = this.getAttribute(type, lvl);
+                            var statMax = this.stat.hp_max;
+                            return Math.max(0, Math.min(2, statMax - stat));
+                        }
+                    case 'asw':
+                        {
+                            if (this.stat.asw) return 9;
+                            if (formula.shipType.LightCruisers.concat(formula.shipType.Destroyers).includes(this.type)) return 9;
+                            return !1;
+                        }
+                    default:
+                        return !1;
+                }
+            }
+        }, {
+            key: '_type',
+            get: function get() {
+                return this.getType();
+            }
+        }, {
+            key: '_series',
+            get: function get() {
+                return this.getSeriesData();
+            }
+        }, {
+            key: '_pics',
+            get: function get() {
+                var arr = [];
+                for (var i = 0; i < 15; i++) {
+                    arr.push(this.getPic(i));
+                }
+                return arr;
+            }
+        }, {
+            key: '_speed',
+            get: function get() {
+                return this.getSpeed();
+            }
+        }, {
+            key: '_speedRule',
+            get: function get() {
+                return this.getSpeedRule();
+            }
+        }, {
+            key: '_range',
+            get: function get() {
+                return this.getRange();
+            }
+        }, {
+            key: '_cv',
+            get: function get() {
+                return this.getCV();
+            }
+        }, {
+            key: '_illustrator',
+            get: function get() {
+                return this.getIllustrator();
+            }
+        }, {
+            key: '_minLv',
+            get: function get() {
+                return this.getMinLv();
+            }
+        }, {
+            key: '_navy',
+            get: function get() {
+                return this.getNavy();
+            }
+        }]);
+
+        return Ship;
+    }(ItemBase);
+
+    Ship.lvlMax = KC.maxShipLv;
+
+    var Consumable = function (_ItemBase4) {
+        _inherits(Consumable, _ItemBase4);
+
+        function Consumable(data) {
+            _classCallCheck(this, Consumable);
+
+            return _possibleConstructorReturn(this, (Consumable.__proto__ || Object.getPrototypeOf(Consumable)).call(this, data));
+        }
+
+        return Consumable;
+    }(ItemBase);
+
+    /**
+     * KC Database
+     */
+
+
+    KC.dbLoad = function (o) {
+        if (typeof o == 'string') return KC.dbLoad({ type: o });
+
+        if (!o.type && !o.url) return null;
+
+        return $.ajax({
+            'url': o.url || KC.path.db + '/' + o.type + '.json',
+            'dataType': 'text',
+            'success': function success(data) {
+                var arr = [];
+                if (o.beforeProcess) arr = o.beforeProcess(data);
+                if (typeof KC.db[o.type] == 'undefined') KC.db[o.type] = {};
+                arr.forEach(function (str) {
+                    if (str) {
+                        var doc = JSON.parse(str);
+                        switch (o.type) {
+                            case 'ships':
+                                KC.db[o.type][doc.id] = new Ship(doc);
+                                break;
+                            case 'items':
+                                KC.db[o.type][doc.id] = new Equipment(doc);
+                                break;
+                            case 'entities':
+                                KC.db[o.type][doc.id] = new Entity(doc);
+                                break;
+                            default:
+                                KC.db[o.type][doc.id] = doc;
+                                break;
+                        }
+                    }
+                });
+                if (o.success) o.success(data);
+            },
+            'complete': function complete(jqXHR, textStatus) {
+                if (o.complete) o.complete(jqXHR, textStatus);
+            }
+        });
+    };
+
+    /**
+     * KC Formulas
+     */
+    var _ship = function _ship(ship) {
+        return ship instanceof Ship ? ship : KC.db.ships ? KC.db.ships[ship] : {};
+    };
+    var _equipment = function _equipment(equipment) {
+        return equipment instanceof Equipment ? equipment : KC.db.equipments ? KC.db.equipments[equipment] : KC.db.items[equipment];
+    };
+    var _slots = function _slots(arrSlot) {
+        var slots = [];
+        arrSlot.forEach(function (value, index) {
+            slots[index >= 4 ? index + 1 : index] = value;
+        });
+        // let slots = arrSlot.map(value => value)
+        slots[4] = 0;
+        return slots;
+    };
+    var formula = {
+        // 装备类型
+        equipmentType: {
+            SmallCaliber: 1, // 小口径主炮
+            SmallCaliberHigh: 2, // 小口径主炮（高角）
+            SmallCaliberAA: 3, // 小口径主炮（高射）
+            MediumCaliber: 4, // 中口径主炮
+            LargeCaliber: 5, // 大口径主炮
+            SuperCaliber: 6, // 超大口径主炮
+            SecondaryGun: 7, // 副炮
+            SecondaryGunHigh: 8, // 副炮（高角）
+            SecondaryGunAA: 9, // 副炮（高射）
+            APShell: 11, // 穿甲弹
+            Torpedo: 12, // 鱼雷
+            SubmarineTorpedo: 13, // 潜艇鱼雷
+            MidgetSubmarine: 14, // 微型潜艇
+            ReconSeaplane: 15, // 水上侦察机
+            ReconSeaplaneNight: 16, // 夜侦
+            SeaplaneBomber: 17, // 水上轰炸机
+            CarrierFighter: 18, // 舰战 / 舰载战斗机
+            TorpedoBomber: 19, // 舰攻 / 舰载鱼雷轰炸机
+            DiveBomber: 20, // 舰爆 / 舰载俯冲轰炸机
+            CarrierRecon: 21, // 舰侦 / 舰载侦察机
+            Autogyro: 22, // 旋翼机
+            AntiSubPatrol: 23, // 对潜哨戒机
+            SmallRadar: 24, // 小型雷达
+            LargeRadar: 25, // 大型雷达
+            DepthCharge: 26, // 爆雷
+            Sonar: 27, // 声纳
+            LargeSonar: 28, // 大型声纳
+            AAGun: 29, // 对空机枪
+            AAGunConcentrated: 30, // 对空机枪（集中配备）
+            AAFireDirector: 31, // 高射装置
+            AviationPersonnel: 36, // 航空作战整备员
+            SurfaceShipPersonnel: 37, // 水上舰要员
+            LandingCraft: 38, // 登陆艇
+            Searchlight: 39, // 探照灯
+            CommandFacility: 45, // 舰队司令部设施
+            LargeFlyingBoat: 45, // 大型水上飞艇
+            SearchlightLarge: 46, // 大型探照灯
+            SuparRadar: 47, // 超大型雷达
+            CarrierRecon2: 50, // 舰侦II / 舰载侦察机II
+            SeaplaneFighter: 51, // 水战 / 水上战斗机
+            AmphibiousCraft: 52, // 特型内火艇
+            LandBasedAttacker: 53, // 陆攻 / 陆上攻击机
+            Interceptor: 54, // 局战 / 局地战斗机
+            JetBomberFighter: 55, // 喷气式战斗轰炸机
+            JetBomberFighter2: 56, // 喷气式战斗轰炸机
+            TransportMaterial: 57, // 运输设备
+            SubmarineEquipment: 58, // 潜艇装备
+            LandBasedFighter: 59, // 陆战 / 陆上战斗机
+            CarrierFighterNight: 60, // 夜战 / 舰载战斗机（夜间）
+            TorpedoBomberNight: 61, // 夜攻 / 舰载鱼雷机（夜间）
+            LandBasedAntiSubPatrol: 62 // 陆上哨戒机
+        },
+        // 舰种
+        shipType: {
+            // 航母系列
+            Carriers: [9, // 轻型航母
+            10, // 正规航母
+            11, // 装甲航母
+            30, // 攻击型轻航母
+            32],
+            // 轻巡系列
+            LightCruisers: [2, // 轻巡洋舰
+            3, // 重雷装巡洋舰
+            21, // 练习巡洋舰
+            28 // 防空轻巡洋舰
+            ],
+            // 驱逐舰系列
+            Destroyers: [1, // 驱逐舰
+            19 // 防空驱逐舰
+            ],
+            // 潜艇系列
+            Submarines: [13, // 潜艇
+            14 // 航母潜艇
+            ]
+        },
+        // 根据舰娘与其装备计算
+        calcByShip: {},
+        // 根据舰队配置计算
+        calcByFleet: {},
+        // 根据航空队机场与其飞行器配置计算
+        calcByField: {},
+        calc: {}
+    };
+    var _equipmentType = formula.equipmentType;
+    {
+        // 装备类型集合
+        _equipmentType.MainGuns = [_equipmentType.SmallCaliber, _equipmentType.SmallCaliberHigh, _equipmentType.SmallCaliberAA, _equipmentType.MediumCaliber, _equipmentType.LargeCaliber, _equipmentType.SuperCaliber];
+
+        _equipmentType.SmallCalibers = [_equipmentType.SmallCaliber, _equipmentType.SmallCaliberHigh, _equipmentType.SmallCaliberAA];
+
+        _equipmentType.MediumCalibers = [_equipmentType.MediumCaliber];
+
+        _equipmentType.LargeCalibers = [_equipmentType.LargeCaliber, _equipmentType.SuperCaliber];
+
+        _equipmentType.SecondaryGuns = [_equipmentType.SecondaryGun, _equipmentType.SecondaryGunHigh, _equipmentType.SecondaryGunAA];
+
+        _equipmentType.APShells = [_equipmentType.APShell];
+
+        _equipmentType.Torpedos = [_equipmentType.Torpedo, _equipmentType.SubmarineTorpedo];
+
+        _equipmentType.Seaplanes = [_equipmentType.ReconSeaplane, _equipmentType.ReconSeaplaneNight, _equipmentType.SeaplaneBomber, _equipmentType.SeaplaneFighter];
+
+        _equipmentType.Fighters = [_equipmentType.SeaplaneBomber, _equipmentType.CarrierFighter, _equipmentType.CarrierFighterNight, _equipmentType.TorpedoBomber, _equipmentType.TorpedoBomberNight, _equipmentType.DiveBomber, _equipmentType.SeaplaneFighter, _equipmentType.LandBasedAttacker, _equipmentType.Interceptor,
+        // _equipmentType.CarrierRecon
+        _equipmentType.JetBomberFighter, _equipmentType.JetBomberFighter2, _equipmentType.LandBasedFighter];
+
+        _equipmentType.Interceptors = [_equipmentType.Interceptor, _equipmentType.LandBasedFighter];
+
+        _equipmentType.Recons = [_equipmentType.ReconSeaplane, _equipmentType.ReconSeaplaneNight, _equipmentType.CarrierRecon, _equipmentType.CarrierRecon2, _equipmentType.LargeFlyingBoat];
+
+        _equipmentType.ReconSeaplanes = [_equipmentType.ReconSeaplane, _equipmentType.ReconSeaplaneNight];
+
+        _equipmentType.SeaplaneRecons = [_equipmentType.ReconSeaplane, _equipmentType.ReconSeaplaneNight, _equipmentType.LargeFlyingBoat];
+
+        _equipmentType.SeaplaneBombers = [_equipmentType.SeaplaneBomber, _equipmentType.SeaplaneFighter];
+
+        _equipmentType.SeaplaneFighters = [_equipmentType.SeaplaneFighter];
+
+        _equipmentType.CarrierFighters = [_equipmentType.CarrierFighter, _equipmentType.CarrierFighterNight];
+
+        _equipmentType.CarrierRecons = [_equipmentType.CarrierRecon, _equipmentType.CarrierRecon2];
+
+        _equipmentType.CarrierBased = [_equipmentType.CarrierFighter, _equipmentType.CarrierFighterNight, _equipmentType.TorpedoBomber, _equipmentType.TorpedoBomberNight, _equipmentType.DiveBomber, _equipmentType.CarrierRecon, _equipmentType.CarrierRecon2, _equipmentType.JetBomberFighter, _equipmentType.JetBomberFighter2];
+
+        _equipmentType.LandBased = [_equipmentType.LandBasedAttacker, _equipmentType.Interceptor, _equipmentType.JetBomberFighter, _equipmentType.JetBomberFighter2, _equipmentType.LandBasedFighter, _equipmentType.LandBasedAntiSubPatrol];
+
+        _equipmentType.TorpedoBombers = [_equipmentType.TorpedoBomber, _equipmentType.TorpedoBomberNight];
+
+        _equipmentType.DiveBombers = [_equipmentType.DiveBomber];
+
+        _equipmentType.JetBomberFighters = [_equipmentType.JetBomberFighter, _equipmentType.JetBomberFighter2];
+
+        _equipmentType.Autogyros = [_equipmentType.Autogyro];
+
+        _equipmentType.AntiSubPatrols = [_equipmentType.AntiSubPatrol, _equipmentType.LandBasedAntiSubPatrol];
+
+        _equipmentType.Aircrafts = [];
+        [].concat(_equipmentType.Seaplanes).concat(_equipmentType.Recons).concat(_equipmentType.CarrierBased).concat(_equipmentType.Autogyros).concat(_equipmentType.AntiSubPatrols).concat(_equipmentType.LandBased).forEach(function (v) {
+            if (_equipmentType.Aircrafts.indexOf(v) < 0) _equipmentType.Aircrafts.push(v);
+        });
+
+        _equipmentType.Radars = [_equipmentType.SmallRadar, _equipmentType.LargeRadar, _equipmentType.SuparRadar];
+
+        _equipmentType.SmallRadars = [_equipmentType.SmallRadar];
+
+        _equipmentType.LargeRadars = [_equipmentType.LargeRadar, _equipmentType.SuparRadar];
+
+        _equipmentType.AntiSubmarines = [_equipmentType.DepthCharge, _equipmentType.Sonar, _equipmentType.LargeSonar];
+
+        _equipmentType.DepthCharges = [_equipmentType.DepthCharge];
+
+        _equipmentType.Sonars = [_equipmentType.Sonar, _equipmentType.LargeSonar];
+
+        _equipmentType.AAGuns = [_equipmentType.AAGun, _equipmentType.AAGunConcentrated];
+
+        _equipmentType.AAFireDirectors = [_equipmentType.AAFireDirector];
+
+        _equipmentType.Searchlights = [_equipmentType.Searchlight, _equipmentType.SearchlightLarge];
+
+        _equipmentType.AviationPersonnels = [_equipmentType.AviationPersonnel];
+
+        _equipmentType.SurfaceShipPersonnels = [_equipmentType.SurfaceShipPersonnel];
+
+        _equipmentType.LandingCrafts = [_equipmentType.LandingCraft, _equipmentType.AmphibiousCraft];
+
+        _equipmentType.AmphibiousCrafts = [_equipmentType.AmphibiousCraft];
+
+        _equipmentType.isInterceptor = function (equipment) {
+            equipment = _equipment(equipment);
+
+            if (equipment.type_ingame && equipment.type_ingame[2] == 47) return !1;
+
+            return _equipmentType.Interceptors.indexOf(equipment.type) > -1;
+        };
+    }
+
+    // 改修收益系数
+    formula.starMultiper = {
+        SmallCalibers: {
+            shelling: 1,
+            night: 1
+        },
+        MediumCalibers: {
+            shelling: 1,
+            night: 1
+        },
+        LargeCalibers: {
+            shelling: 1.5,
+            night: 1
+        },
+        SecondaryGuns: {
+            shelling: 1,
+            night: 1,
+            hit: 1
+        },
+        APShells: {
+            shelling: 1,
+            night: 1
+        },
+        AAFireDirectors: {
+            shelling: 1,
+            night: 1
+        },
+        Searchlights: {
+            shelling: 1,
+            night: 1
+        },
+        AAGuns: {
+            shelling: 1,
+            torpedo: 1.2
+        },
+        Torpedos: {
+            torpedo: 1.2,
+            night: 1
+        },
+        DepthCharges: {
+            shelling: 0.75,
+            antisub: 1
+        },
+        Sonars: {
+            shelling: 0.75,
+            antisub: 1
+        },
+        SmallRadars: {
+            los: 1.25
+        },
+        LargeRadars: {
+            los: 1.4
+        },
+        Seaplanes: {},
+        ReconSeaplanes: {
+            los: 1.2
+        },
+        SeaplaneFighters: {
+            fighter: 0.2
+        },
+        SeaplaneBomber: {
+            // fighter: 0.2
+            los: 1.15
+        },
+        CarrierFighters: {
+            fighter: 0.2
+        },
+        DiveBombers: {
+            fighter: 0.25,
+            night: 1
+        },
+        CarrierRecons: {
+            los: 1.2
+        },
+        LandingCrafts: {
+            shelling: 1,
+            night: 1
+        },
+        Interceptors: {
+            fighter: 0.2
+        },
+
+        _10: {
+            shelling: ['multiplication', 0.2],
+            night: 1
+        },
+        _66: {
+            shelling: ['multiplication', 0.2],
+            night: 1
+            // aa
+            // aaFleet
+        },
+        _220: {
+            shelling: ['multiplication', 0.2],
+            night: 1
+            // aa
+            // aaFleet
+        },
+        _275: {
+            shelling: ['multiplication', 0.2],
+            night: 1
+            // aa
+            // aaFleet
+        },
+        // _247: {
+        //     _type: 'multiplication',
+        //     shelling: 0.3,
+        //     night: 0.3,
+        // },
+        _12: {
+            shelling: ['multiplication', 0.3],
+            night: ['multiplication', 0.3]
+        },
+        _234: {
+            shelling: ['multiplication', 0.3],
+            night: ['multiplication', 0.3]
+        }
+    };
+    // 获取改修加成对象
+    formula.getStarMultiplier = function (equipmentType, statType) {
+        // 如果 equipmentType 以 _ 开头，如 _123，则代表第 123 号装备，而非装备类型
+        if (!formula.starMultiper._init) {
+            var _loop2 = function _loop2(i) {
+                if (_equipmentType[i] && _equipmentType[i].forEach) {
+                    _equipmentType[i].forEach(function (tid) {
+                        formula.starMultiper[tid] = formula.starMultiper[i];
+                    });
+                } else if (typeof _equipmentType[i] === 'number') {
+                    formula.starMultiper[_equipmentType[i]] = formula.starMultiper[i];
+                }
+            };
+
+            for (var i in formula.starMultiper) {
+                _loop2(i);
+            }
+            formula.starMultiper._init = !0;
+        }
+        var bonus = formula.starMultiper[equipmentType] || {};
+        if (statType) return bonus[statType] || 0;
+        return bonus;
+    };
+    // 计算改修加成
+    formula.getStarBonus = function (equipment, stat, star) {
+        equipment = _equipment(equipment);
+
+        var _Object$assign = Object.assign({}, formula.getStarMultiplier(equipment.type), formula.starMultiper['_' + equipment.id]),
+            _Object$assign$stat = _Object$assign[stat],
+            bonus = _Object$assign$stat === undefined ? 0 : _Object$assign$stat;
+
+        var bonusType = 'sqrt';
+
+        if (Array.isArray(bonus)) {
+            bonusType = bonus[0];
+            bonus = bonus[1];
+        }
+
+        // const {
+        //     [stat]: bonus = 0,
+        //     _type: bonusType = 'sqrt'
+        // } = typeof formula.starMultiper[`_${equipment.id}`] === 'object'
+        //     ? formula.starMultiper[`_${equipment.id}`]
+        //     : formula.getStarMultiplier(equipment.type)
+        switch (bonusType) {
+            case 'sqrt':
+                {
+                    return bonus * Math.sqrt(star);
+                }
+            case 'multiplication':
+            case 'multiple':
+                {
+                    return bonus * star;
+                }
+        }
+    };
+    // 飞行器熟练度对制空战力的加成
+    formula.getFighterPowerRankMultiper = function (equipment, rank /*, options*/) {
+        equipment = _equipment(equipment);
+
+        var rankInternal = [],
+            typeValue = {};
+
+        rankInternal[0] = [0, 9];
+        rankInternal[1] = [10, 24];
+        rankInternal[2] = [25, 39];
+        rankInternal[3] = [40, 54];
+        rankInternal[4] = [55, 69];
+        rankInternal[5] = [70, 84];
+        rankInternal[6] = [85, 99];
+        rankInternal[7] = [100, 120];
+
+        typeValue.CarrierFighter = [0, 0, 2, 5, 9, 14, 14, 22];
+
+        typeValue.SeaplaneBomber = [0, 0, 1, 1, 1, 3, 3, 6];
+
+        var _rankInternal = rankInternal[rank],
+            _typeValue = 0;
+
+        switch (equipment.type) {
+            case _equipmentType.CarrierFighter:
+            case _equipmentType.CarrierFighterNight:
+            case _equipmentType.Interceptor:
+            case _equipmentType.SeaplaneFighter:
+            case _equipmentType.LandBasedFighter:
+                _typeValue = typeValue.CarrierFighter[rank];
+                break;
+            case _equipmentType.SeaplaneBomber:
+                _typeValue = typeValue.SeaplaneBomber[rank];
+                break;
+        }
+
+        return {
+            min: Math.sqrt(_rankInternal[0] / 10) + _typeValue,
+            max: Math.sqrt(_rankInternal[1] / 10) + _typeValue
+        };
+    };
+    formula.calculate = function (type, ship, equipments_by_slot, star_by_slot, rank_by_slot, options) {
+        /**
+         * 计算
+         * @param {string} type - 计算类型
+         * @param {number || Ship} ship - 舰娘
+         * @param {array} equipments_by_slot - 每格装备ID/装备object
+         * @param {array} star_by_slot - 每格装备改修星级
+         * @param {array} rank_by_slot - 每格装备熟练度
+         * @param {object} options - 选项
+         */
+        if (!type || !ship) return 0;
+
+        if (!(ship instanceof Ship)) ship = KC.db.ships[ship];
+
+        var result = 0,
+            count = {
+            'main': 0,
+            'secondary': 0,
+            'torpedo': 0,
+            'torpedoLateModel': 0,
+            'seaplane': 0,
+            'apshell': 0,
+            'radar': 0,
+            radarAA: 0,
+            radarSurface: 0,
+            'submarineEquipment': 0,
+            'carrierFighterNight': 0,
+            // 'diveBomberIwai': 0,
+            'torpedoBomberNight': 0,
+            // 'torpedoBomberSwordfish': 0,
+            'aviationPersonnelNight': 0,
+            surfaceShipPersonnel: 0
+        },
+            slots = _slots(ship.slot)
+        // , powerTorpedo = function (options) {
+        //     options = options || {}
+        //     let result = 0
+        //     if (formula.shipType.Carriers.indexOf(ship.type) > -1 && !options.isNight) {
+        //         return options.returnZero ? 0 : -1
+        //     } else {
+        //         result = ship.stat.torpedo_max || 0
+        //         slots.map(function (carry, index) {
+        //             if (equipments_by_slot[index]) {
+        //                 // result += (equipments_by_slot[index].type == _equipmentType.TorpedoBomber && !options.isNight)
+        //                 result += (_equipmentType.TorpedoBombers.indexOf(equipments_by_slot[index].type) > -1 && !options.isNight)
+        //                     ? 0
+        //                     : (equipments_by_slot[index].stat.torpedo || 0)
+
+        //                 // 改修加成
+        //                 if (star_by_slot[index] && !options.isNight) {
+        //                     result += Math.sqrt(star_by_slot[index]) * formula.getStarMultiplier(
+        //                         equipments_by_slot[index].type,
+        //                         'torpedo'
+        //                     )
+        //                 }
+        //             }
+        //         })
+        //         return result
+        //     }
+        //     //return (ship.stat.torpedo_max || 0)
+        // }
+        ,
+            value = 0;
+
+        equipments_by_slot = equipments_by_slot.map(function (equipment) {
+            if (!equipment) return null;
+            if (equipment instanceof Equipment) return equipment;
+            return KC.db.equipments ? KC.db.equipments[equipment] : KC.db.items[equipment];
+        }) || [];
+        star_by_slot = star_by_slot || [];
+        rank_by_slot = rank_by_slot || [];
+        options = options || {};
+
+        equipments_by_slot.forEach(function (equipment) {
+            if (!equipment) return;
+            // 主炮
+            if (_equipmentType.MainGuns.indexOf(equipment.type) > -1) count.main += 1;
+            // 副炮
+            else if (_equipmentType.SecondaryGuns.indexOf(equipment.type) > -1) count.secondary += 1;
+                // 鱼雷
+                else if (_equipmentType.Torpedos.indexOf(equipment.type) > -1) {
+                        count.torpedo += 1;
+                        if (equipment.name.ja_jp.indexOf('後期型') > -1) count.torpedoLateModel += 1;
+                    }
+                    // 水上机
+                    else if (_equipmentType.Seaplanes.indexOf(equipment.type) > -1) count.seaplane += 1;
+                        // 穿甲弹
+                        else if (_equipmentType.APShells.indexOf(equipment.type) > -1) count.apshell += 1;
+                            // 电探/雷达
+                            else if (_equipmentType.Radars.indexOf(equipment.type) > -1) {
+                                    count.radar += 1;
+                                    if (equipment.stat.aa) count.radarAA += 1;
+                                    // else
+                                    if (equipment.stat.hit && equipment.stat.hit >= 3) count.radarSurface += 1;
+                                }
+                                // 潜艇装备
+                                else if (_equipmentType.SubmarineEquipment == equipment.type) count.submarineEquipment += 1;
+                                    // else if (_equipmentType.TorpedoBombers.indexOf(equipment.type) > -1) {
+                                    //     if (equipment.name.ja_jp.indexOf('Swordfish') > -1)
+                                    //         count.torpedoBomberSwordfish += 1
+                                    // }
+                                    // 夜间整备员
+                                    else if (_equipmentType.AviationPersonnels.indexOf(equipment.type) > -1) {
+                                            if (equipment.name.ja_jp.indexOf('夜間') > -1) count.aviationPersonnelNight += 1;
+                                        }
+                                        // else if (_equipmentType.DiveBombers.indexOf(equipment.type) > -1) {
+                                        //     if (equipment.name.ja_jp.indexOf('岩井') > -1)
+                                        //         count.diveBomberIwai += 1
+                                        // }
+                                        // 水上舰要员
+                                        else if (_equipmentType.SurfaceShipPersonnels.indexOf(equipment.type) > -1) count.surfaceShipPersonnel += 1;
+
+            // 夜间飞行器
+            if (equipment.type_ingame) {
+                // 夜间战斗机
+                if (equipment.type_ingame[3] === 45) count.carrierFighterNight += 1;
+                // 夜间轰炸机
+                else if (equipment.type_ingame[3] === 46) count.torpedoBomberNight += 1;
+            }
+        });
+
+        var bonus = __calculateBonus(ship, equipments_by_slot, star_by_slot, rank_by_slot);
+
+        var powerTorpedo = function powerTorpedo(options) {
+            return formula.calcByShip.torpedoPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, options, bonus);
+        };
+
+        switch (type) {
+            // 制空战力，装备须为战斗机类型 _equipmentType.Fighters
+            // 计算公式参考 http://bbs.ngacn.cc/read.php?tid=8680767
+            case 'fighterPower':
+                value = 0;
+                slots.map(function (carry, index) {
+                    if (equipments_by_slot[index] && _equipmentType.Fighters.indexOf(equipments_by_slot[index].type) > -1 && carry) {
+                        value = Math.sqrt(carry) * (equipments_by_slot[index].getStat('aa', ship) || 0);
+                        if (_equipmentType.CarrierFighters.includes(equipments_by_slot[index].type)) {
+                            switch (rank_by_slot[index]) {
+                                case 1:case '1':
+                                    value += 1;break;
+                                case 2:case '2':
+                                    value += 4;break;
+                                case 3:case '3':
+                                    value += 6;break;
+                                case 4:case '4':
+                                    value += 11;break;
+                                case 5:case '5':
+                                    value += 16;break;
+                                case 6:case '6':
+                                    value += 17;break;
+                                case 7:case '7':
+                                    value += 25;break;
+                            }
+                        } else if (_equipmentType.Recons.indexOf(equipments_by_slot[index].type) == -1) {
+                            var max_per_slot = equipments_by_slot[index].type == _equipmentType.SeaplaneBomber ? 9 : 3;
+                            value += rank_by_slot[index] == 1 ? 1 : max_per_slot / 6 * (rank_by_slot[index] - 1);
+                        }
+                        result += Math.floor(value);
+                    }
+                });
+                return result;
+            //return Math.floor(result)
+            //break;
+
+            // 同时返回制空战力的上下限
+            // 返回值为Array
+            case 'fighterPower_v2':
+                return formula.calcByShip.fighterPower_v2(ship, equipments_by_slot, star_by_slot, rank_by_slot);
+            //break;
+
+            // 炮击威力，除潜艇外
+            case 'shelling':
+            case 'shellingDamage':
+                if (formula.shipType.Submarines.indexOf(ship.type) > -1) {
+                    return '-';
+                } else {
+                    result = formula.calcByShip.shellingPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, {}, bonus);
+                    if (result && result > -1) return Math.floor(result); // + 5
+                    return '-';
+                }
+            //break;
+
+            // 雷击威力，航母除外
+            case 'torpedo':
+            case 'torpedoDamage':
+                result = powerTorpedo();
+                if (result && result > -1) return Math.floor(result); // + 5
+                return '-';
+            //break;
+
+            // 夜战模式 & 伤害力
+            case 'nightBattle':
+                {
+                    var nightPower = formula.calcByShip.nightPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, {}, count, bonus);
+                    return nightPower.damage <= 0 ? '-' : nightPower.value;
+                    //break;
+                }
+
+            // 命中总和
+            case 'addHit':
+                slots.map(function (carry, index) {
+                    if (equipments_by_slot[index]) result += equipments_by_slot[index].getStat('hit', ship) || 0;
+                });
+                result += bonus.hit || 0;
+                return result >= 0 ? '+' + result : result;
+            //break;
+
+            // 装甲总和
+            case 'addArmor':
+                slots.map(function (carry, index) {
+                    if (equipments_by_slot[index]) result += equipments_by_slot[index].getStat('armor', ship) || 0;
+                });
+                return result + (bonus.armor || 0);
+            //break;
+
+            // 回避总和
+            case 'addEvasion':
+                slots.map(function (carry, index) {
+                    if (equipments_by_slot[index]) result += equipments_by_slot[index].getStat('evasion', ship) || 0;
+                });
+                return result + (bonus.evasion || 0);
+            //break;
+
+            // 索敌能力
+            case 'losPower':
+                return formula.calcByShip.losPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, options);
+            //break;
+            default:
+                return formula.calcByShip[type](ship, equipments_by_slot, star_by_slot, rank_by_slot, options, bonus);
+            //break;
+        }
+
+        //return '-'
+    };
+    // 计算快捷方式
+    formula.shellingDamage = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+        return this.calculate('shellingDamage', ship, equipments_by_slot, star_by_slot, rank_by_slot);
+    };
+    formula.torpedoDamage = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+        return this.calculate('torpedoDamage', ship, equipments_by_slot, star_by_slot, rank_by_slot);
+    };
+    formula.fighterPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+        return this.calculate('fighterPower', ship, equipments_by_slot, star_by_slot, rank_by_slot);
+    };
+    formula.fighterPower_v2 = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+        return this.calculate('fighterPower_v2', ship, equipments_by_slot, star_by_slot, rank_by_slot);
+    };
+    formula.nightBattle = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+        return this.calculate('nightBattle', ship, equipments_by_slot, star_by_slot, rank_by_slot);
+    };
+    formula.addHit = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+        return this.calculate('addHit', ship, equipments_by_slot, star_by_slot, rank_by_slot);
+    };
+    formula.addArmor = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+        return this.calculate('addArmor', ship, equipments_by_slot, star_by_slot, rank_by_slot);
+    };
+    formula.addEvasion = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+        return this.calculate('addEvasion', ship, equipments_by_slot, star_by_slot, rank_by_slot);
+    };
+    formula.losPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, options) {
+        return this.calculate('losPower', ship, equipments_by_slot, star_by_slot, rank_by_slot, options);
+    };
+    // Formulas
+    formula.calc.losPower = function (data) {
+        // http://biikame.hatenablog.com/entry/2014/11/14/224925
+
+        var calc = function calc(x) {
+            if (typeof x['(Intercept)'] == 'undefined') x['(Intercept)'] = 1;
+            x.hqLv = Math.ceil(x.hqLv / 5) * 5;
+            var x_estimate = {};
+            var y_estimate = 0;
+            var x_std_error = {};
+            var y_std_error = 0;
+            keys.forEach(function (key) {
+                var estimate = x[key] * estimate_coefficients[key];
+                x_estimate[key] = estimate;
+                y_estimate += estimate;
+                x_std_error[key] = x[key] * std_error_coefficients[key];
+            });
+            keys.forEach(function (key) {
+                keys.forEach(function (key2) {
+                    y_std_error += x_std_error[key] * x_std_error[key2] * correlation[key][key2];
+                });
+            });
+            return {
+                x_estimate: x_estimate,
+                y_estimate: y_estimate,
+                x_std_error: x_std_error,
+                y_std_error: y_std_error
+            };
+        };
+        var keys = ['(Intercept)', 'DiveBombers', 'TorpedoBombers', 'CarrierRecons', 'SeaplaneRecons', 'SeaplaneBombers', 'SmallRadars', 'LargeRadars', 'Searchlights', 'statLos', 'hqLv'];
+        var estimate_coefficients = {
+            '(Intercept)': 0,
+            'DiveBombers': 1.03745043134563,
+            'TorpedoBombers': 1.3679056374142,
+            'CarrierRecons': 1.65940512636315,
+            'SeaplaneRecons': 2,
+            'SeaplaneBombers': 1.77886368594467,
+            'SmallRadars': 1.0045778494921,
+            'LargeRadars': 0.990738063979571,
+            'Searchlights': 0.906965144360512,
+            'statLos': 1.6841895400986,
+            'hqLv': -0.614246711531445
+        };
+        var std_error_coefficients = {
+            '(Intercept)': 4.66445565766347,
+            'DiveBombers': 0.0965028505325845,
+            'TorpedoBombers': 0.108636184978525,
+            'CarrierRecons': 0.0976055279516298,
+            'SeaplaneRecons': 0.0866229392463539,
+            'SeaplaneBombers': 0.0917722496848294,
+            'SmallRadars': 0.0492773648320346,
+            'LargeRadars': 0.0491221486053861,
+            'Searchlights': 0.0658283797225724,
+            'statLos': 0.0781594211213618,
+            'hqLv': 0.0369222352426548
+        };
+        var correlation = {
+            '(Intercept)': {
+                '(Intercept)': 1,
+                'DiveBombers': -0.147020064768061,
+                'TorpedoBombers': -0.379236131621529,
+                'CarrierRecons': -0.572858669501918,
+                'SeaplaneRecons': -0.733913857017495,
+                'SeaplaneBombers': -0.642621825152428,
+                'SmallRadars': -0.674829588068364,
+                'LargeRadars': -0.707418111752863,
+                'Searchlights': -0.502304601556193,
+                'statLos': -0.737374218573832,
+                'hqLv': -0.05071933950163
+            },
+            'DiveBombers': {
+                '(Intercept)': -0.147020064768061,
+                'DiveBombers': 1,
+                'TorpedoBombers': 0.288506347076736,
+                'CarrierRecons': 0.365820372770994,
+                'SeaplaneRecons': 0.425744409856409,
+                'SeaplaneBombers': 0.417783698791503,
+                'SmallRadars': 0.409046013184429,
+                'LargeRadars': 0.413855653833994,
+                'Searchlights': 0.308730607324667,
+                'statLos': 0.317984916914851,
+                'hqLv': -0.386740224500626
+            },
+            'TorpedoBombers': {
+                '(Intercept)': -0.379236131621529,
+                'DiveBombers': 0.288506347076736,
+                'TorpedoBombers': 1,
+                'CarrierRecons': 0.482215071254241,
+                'SeaplaneRecons': 0.584455876852325,
+                'SeaplaneBombers': 0.558515133495825,
+                'SmallRadars': 0.547260012897553,
+                'LargeRadars': 0.560437619378443,
+                'Searchlights': 0.437934879351188,
+                'statLos': 0.533934507932748,
+                'hqLv': -0.405349979885748
+            },
+            'CarrierRecons': {
+                '(Intercept)': -0.572858669501918,
+                'DiveBombers': 0.365820372770994,
+                'TorpedoBombers': 0.482215071254241,
+                'CarrierRecons': 1,
+                'SeaplaneRecons': 0.804494553748065,
+                'SeaplaneBombers': 0.75671307047535,
+                'SmallRadars': 0.748420581669228,
+                'LargeRadars': 0.767980338133817,
+                'Searchlights': 0.589651513349878,
+                'statLos': 0.743851348255527,
+                'hqLv': -0.503544281376776
+            },
+            'SeaplaneRecons': {
+                '(Intercept)': -0.733913857017495,
+                'DiveBombers': 0.425744409856409,
+                'TorpedoBombers': 0.584455876852325,
+                'CarrierRecons': 0.804494553748065,
+                'SeaplaneRecons': 1,
+                'SeaplaneBombers': 0.932444440578382,
+                'SmallRadars': 0.923988080549326,
+                'LargeRadars': 0.94904944359066,
+                'Searchlights': 0.727912987329348,
+                'statLos': 0.944434077970518,
+                'hqLv': -0.614921413821462
+            },
+            'SeaplaneBombers': {
+                '(Intercept)': -0.642621825152428,
+                'DiveBombers': 0.417783698791503,
+                'TorpedoBombers': 0.558515133495825,
+                'CarrierRecons': 0.75671307047535,
+                'SeaplaneRecons': 0.932444440578382,
+                'SeaplaneBombers': 1,
+                'SmallRadars': 0.864289865445084,
+                'LargeRadars': 0.886872388674911,
+                'Searchlights': 0.68310647756898,
+                'statLos': 0.88122333327317,
+                'hqLv': -0.624797255805045
+            },
+            'SmallRadars': {
+                '(Intercept)': -0.674829588068364,
+                'DiveBombers': 0.409046013184429,
+                'TorpedoBombers': 0.547260012897553,
+                'CarrierRecons': 0.748420581669228,
+                'SeaplaneRecons': 0.923988080549326,
+                'SeaplaneBombers': 0.864289865445084,
+                'SmallRadars': 1,
+                'LargeRadars': 0.872011318623459,
+                'Searchlights': 0.671926570242336,
+                'statLos': 0.857213501657084,
+                'hqLv': -0.560018086758868
+            },
+            'LargeRadars': {
+                '(Intercept)': -0.707418111752863,
+                'DiveBombers': 0.413855653833994,
+                'TorpedoBombers': 0.560437619378443,
+                'CarrierRecons': 0.767980338133817,
+                'SeaplaneRecons': 0.94904944359066,
+                'SeaplaneBombers': 0.886872388674911,
+                'SmallRadars': 0.872011318623459,
+                'LargeRadars': 1,
+                'Searchlights': 0.690102027588321,
+                'statLos': 0.883771367337743,
+                'hqLv': -0.561336967269448
+            },
+            'Searchlights': {
+                '(Intercept)': -0.502304601556193,
+                'DiveBombers': 0.308730607324667,
+                'TorpedoBombers': 0.437934879351188,
+                'CarrierRecons': 0.589651513349878,
+                'SeaplaneRecons': 0.727912987329348,
+                'SeaplaneBombers': 0.68310647756898,
+                'SmallRadars': 0.671926570242336,
+                'LargeRadars': 0.690102027588321,
+                'Searchlights': 1,
+                'statLos': 0.723228553177704,
+                'hqLv': -0.518427865593732
+            },
+            'statLos': {
+                '(Intercept)': -0.737374218573832,
+                'DiveBombers': 0.317984916914851,
+                'TorpedoBombers': 0.533934507932748,
+                'CarrierRecons': 0.743851348255527,
+                'SeaplaneRecons': 0.944434077970518,
+                'SeaplaneBombers': 0.88122333327317,
+                'SmallRadars': 0.857213501657084,
+                'LargeRadars': 0.883771367337743,
+                'Searchlights': 0.723228553177704,
+                'statLos': 1,
+                'hqLv': -0.620804120587684
+            },
+            'hqLv': {
+                '(Intercept)': -0.05071933950163,
+                'DiveBombers': -0.386740224500626,
+                'TorpedoBombers': -0.405349979885748,
+                'CarrierRecons': -0.503544281376776,
+                'SeaplaneRecons': -0.614921413821462,
+                'SeaplaneBombers': -0.624797255805045,
+                'SmallRadars': -0.560018086758868,
+                'LargeRadars': -0.561336967269448,
+                'Searchlights': -0.518427865593732,
+                'statLos': -0.620804120587684,
+                'hqLv': 1
+            }
+        };
+
+        var x = {
+            'DiveBombers': 0,
+            'TorpedoBombers': 0,
+            'CarrierRecons': 0,
+            'SeaplaneRecons': 0,
+            'SeaplaneBombers': 0,
+            'SmallRadars': 0,
+            'LargeRadars': 0,
+            'Searchlights': 0,
+            'statLos': 1,
+            'hqLv': 1
+        };
+
+        for (var i in data) {
+            x[i] = data[i];
+        }
+
+        return calc(x);
+        //var result = calc(x);
+        //var score = result.y_estimate.toFixed(1) + ' ± ' + result.y_std_error.toFixed(1);
+    };
+    formula.calc.los33 = function (data) {
+        if (!data) return;
+        /* data {
+            hq: 90,
+            equipments: [
+                {
+                    id: 123,
+                    star: 4,
+                    rank: 7
+                }
+            ],
+            ships: [
+                {
+                    id: 123,
+                    lv: 90
+                }
+            ]
+        }
+         */
+
+        var totalEquipmentValue = 0,
+            totalShipValue = 0;
+
+        var equipmentTypeValues = {
+            TorpedoBombers: 0.8,
+            CarrierRecons: 1,
+
+            ReconSeaplane: 1.2,
+            ReconSeaplaneNight: 1.2,
+            SeaplaneBomber: 1.1
+        };
+        Object.defineProperty(equipmentTypeValues, 'default', {
+            value: 0.6,
+            enumerable: !1,
+            configurable: !1,
+            writable: !1
+        });
+
+        data.equipments.forEach(function (o) {
+            if (o.id) {
+                var equipment = _equipment(o.id);
+
+                if (equipment.stat.los) {
+                    var typeValue = equipmentTypeValues.default;
+                    var star = o.star || 0;
+
+                    for (var types in equipmentTypeValues) {
+                        var typesForCheck = [];
+
+                        if (Array.isArray(_equipmentType[types])) typesForCheck = _equipmentType[types];else typesForCheck = [_equipmentType[types]];
+
+                        if (typesForCheck.indexOf(equipment.type) > -1) typeValue = equipmentTypeValues[types];
+                    }
+
+                    totalEquipmentValue += typeValue * (equipment.stat.los + formula.getStarBonus(equipment, 'los', star)
+                    // + formula.getStarMultiplier(equipment.type, 'los') * Math.sqrt(star)
+                    );
+                }
+            }
+        });
+
+        data.ships.forEach(function (o) {
+            var ship = _ship(o.id);
+            var shipLOS = ship.getAttribute('los', Math.max(o.lv || 1, ship.getMinLv()));
+
+            totalShipValue += Math.sqrt(Math.max(shipLOS, 1));
+        });
+
+        return totalEquipmentValue + totalShipValue - Math.ceil(data.hq * 0.4) + 2 * (6 - data.ships.length);
+    };
+    formula.calc.TP = function (count) {
+        /* count
+        * {
+        * 		ship: {
+        * 			dd
+        * 			cl
+        * 			ct
+        * 			cav
+        * 			bbv
+        * 			av
+        * 			ssv
+        * 			lha
+        * 			ao
+        * 			as
+        * 		},
+        * 		equipment: {
+        * 			68	// landing craft
+        * 			75  // canister
+        * 			166  // landing craft (force)
+        * 		}
+        * }
+        */
+        count = count || {};
+        var result = 0,
+            ship = count.ship || {},
+            equipment = count.equipment || {};
+
+        for (var i in ship) {
+            var multiper = 0;
+            switch (i) {
+                case 1:
+                case '1':
+                case 19:
+                case '19':
+                case 'dd':
+                    multiper = 5;break;
+
+                case 2:
+                case '2':
+                case 28:
+                case '28':
+                case 'cl':
+                    multiper = 2;break;
+
+                case 21:
+                case '21':
+                case 'ct':
+                    multiper = 6;break;
+
+                case 5:
+                case '5':
+                case 'cav':
+                    multiper = 4;break;
+
+                case 8:
+                case '8':
+                case 'bbv':
+                    multiper = 7;break;
+
+                case 12:
+                case '12':
+                case 24:
+                case '24':
+                case 'av':
+                    multiper = 9.5;break;
+
+                case 14:
+                case '14':
+                case 'ssv':
+                    multiper = 1;break;
+
+                case 15:
+                case '15':
+                case 'lha':
+                    multiper = 12;break;
+
+                case 29:
+                case '29':
+                case 'ao':
+                    multiper = 15;break;
+
+                case 17:
+                case '17':
+                case 'as':
+                    multiper = 7;break;
+            }
+            result += multiper * (parseInt(ship[i]) || 0);
+        }
+
+        for (var _i in equipment) {
+            var _multiper = 0,
+                id = parseInt(_i),
+                data = void 0;
+            switch (id) {
+                // 戦闘糧食
+                case 145:
+                    _multiper = 1;break;
+                // 秋刀魚の缶詰
+                case 150:
+                    _multiper = 1;break;
+                // canister
+                case 75:
+                    _multiper = 5;break;
+                // landing craft
+                case 68:
+                    _multiper = 8;break;
+                // landing craft (large)
+                case 193:
+                    _multiper = 8;break;
+                // landing craft (force)
+                case 166:
+                    _multiper = 8;break;
+                // 特二式内火艇
+                case 167:
+                    _multiper = 2;break;
+                default:
+                    // 瑞云 & 晴岚
+                    data = _equipment(id);
+                    switch (data.type) {
+                        // case formula.equipmentType.SeaplaneBomber:
+                        //     if( data.name.ja_jp.indexOf('瑞雲') > -1 )
+                        //         multiper = 2
+                        //     else if( data.name.ja_jp.indexOf('晴嵐') > -1 )
+                        //         multiper = 4
+                        //     break;
+                        case formula.equipmentType.LandingCraft:
+                            if (data.name.ja_jp.indexOf('大発動艇') > -1) _multiper = 8;
+                            break;
+                    }
+            }
+            result += _multiper * (parseInt(equipment[_i]) || 0);
+        }
+
+        return result;
+    };
+    formula.calc.fighterPower = function (equipment, carry, rank, star) {
+        if (!equipment) return [0, 0];
+
+        equipment = equipment instanceof Equipment ? equipment : KC.db.equipments ? KC.db.equipments[equipment] : KC.db.items[equipment];
+        carry = carry || 0;
+        rank = rank || 0;
+        star = star || 0;
+
+        // http://bbs.ngacn.cc/read.php?tid=8680767
+        // http://ja.kancolle.wikia.com/wiki/%E8%89%A6%E8%BC%89%E6%A9%9F%E7%86%9F%E7%B7%B4%E5%BA%A6
+
+        var results = [0, 0];
+
+        if (_equipmentType.Fighters.indexOf(equipment.type) > -1 && carry) {
+            // Math.floor(Math.sqrt(carry) * (equipment.stat.aa || 0) + Math.sqrt( rankInternal / 10 ) + typeValue)
+            // if( star ) console.log( equipment._name, '★+' + star, star * formula.getStarMultiplier( equipment.type, 'fighter' ) )
+            var statAA = (equipment.stat.aa || 0) + (_equipmentType.isInterceptor(equipment) ? equipment.stat.evasion * 1.5 : 0) + star * formula.getStarMultiplier(equipment.type, 'fighter'),
+                base = statAA * Math.sqrt(carry),
+                rankBonus = formula.getFighterPowerRankMultiper(equipment, rank);
+
+            results[0] += Math.floor(base + rankBonus.min);
+            results[1] += Math.floor(base + rankBonus.max);
+        }
+
+        return results;
+    };
+    formula.calc.fighterPowerAA = function (equipment, carry, rank, star) {
+        if (!equipment) return [0, 0];
+
+        equipment = _equipment(equipment);
+        carry = carry || 0;
+        rank = rank || 0;
+        star = star || 0;
+
+        // http://wikiwiki.jp/kancolle/?%B4%F0%C3%CF%B9%D2%B6%F5%C2%E2#AirSupremacy
+
+        var results = [0, 0];
+
+        if (carry) {
+            var statAA = (equipment.stat.aa || 0) + (_equipmentType.isInterceptor(equipment) ? equipment.stat.evasion : 0) + (_equipmentType.isInterceptor(equipment) ? equipment.stat.hit * 2 : 0) + star * formula.getStarMultiplier(equipment.type, 'fighter'),
+                base = statAA * Math.sqrt(carry),
+                rankBonus = formula.getFighterPowerRankMultiper(equipment, rank, {
+                isAA: !0
+            });
+
+            results[0] += Math.floor(base + rankBonus.min);
+            results[1] += Math.floor(base + rankBonus.max);
+        }
+
+        return results;
+    };
+    // Calculate by Ship
+    formula.calcByShip.shellingPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, options, bonus) {
+        options = options || {};
+        bonus = bonus || __calculateBonus(ship, equipments_by_slot, star_by_slot, rank_by_slot);
+
+        var result = 0,
+            isCV = !1,
+            slots = _slots(ship.slot);
+
+        // 检查是否为航母攻击模式
+        if (formula.shipType.Carriers.indexOf(ship.type) > -1) {
+            isCV = !0;
+        } else {
+            //equipments_by_slot.forEach(function(equipment){
+            //	if( equipment && !isCV && _equipmentType.CarrierBased.indexOf( equipment.type ) > -1 )
+            //		isCV = true
+            //})
+            equipments_by_slot.some(function (equipment) {
+                if (equipment && !isCV && _equipmentType.CarrierBased.indexOf(equipment.type) > -1) {
+                    isCV = !0;
+                    return !0;
+                }
+            });
+        }
+
+        if (isCV && !options.isNight) {
+            // 航母攻击模式
+            var torpedoDamage = 0,
+                bombDamage = 0;
+            slots.map(function (carry, index) {
+                if (equipments_by_slot[index]) {
+                    var equipment = equipments_by_slot[index];
+                    // result += (equipment.stat.fire * 1.5) || 0
+                    result += equipment.getStat('fire', ship) * 1.5 || 0;
+
+                    // if (equipment.type == _equipmentType.TorpedoBomber)
+                    if (_equipmentType.TorpedoBombers.indexOf(equipment.type) > -1)
+                        // torpedoDamage += equipment.stat.torpedo || 0
+                        torpedoDamage += equipment.getStat('torpedo', ship) || 0;
+
+                    //if( equipment.type == _equipmentType.DiveBomber )
+                    // bombDamage += equipment.stat.bomb || 0
+                    bombDamage += equipment.getStat('bomb', ship) || 0;
+
+                    if (_equipmentType.SecondaryGuns.indexOf(equipment.type) > -1) result += Math.sqrt((star_by_slot[index] || 0) * 1.5);
+                }
+            });
+            if (!torpedoDamage && !bombDamage) return -1;else result += Math.floor(1.5 * (Math.floor(bombDamage * 1.3) + torpedoDamage + ship.stat.fire_max + (bonus.fire || 0))) + 50;
+            return result;
+        } else {
+            // 其他舰种
+            result = ship.stat.fire_max || 0;
+
+            // 特定种类装备数量，仅在满足对特定条件时才会纳入数量统计
+            var count = {
+                CLMainGunNaval: 0, // 轻巡系主炮（单装炮）
+                CLMainGunTwin: 0, // 轻巡系主炮（连装炮）
+                ItalianCAMainGun: 0 // 意大利重巡主炮（仅对意大利重巡洋舰生效）
+            };
+            slots.map(function (carry, index) {
+                if (equipments_by_slot[index]) {
+                    var equipment = equipments_by_slot[index];
+                    // result += equipment.stat.fire || 0
+                    result += equipment.getStat('fire', ship) || 0;
+
+                    // 轻巡系主炮加成
+                    if (formula.shipType.LightCruisers.indexOf(ship.type) > -1) {
+                        ['14cm単装砲', '15.2cm単装砲'].forEach(function (name) {
+                            // console.log(
+                            //     name,
+                            //     equipment.name.ja_jp,
+                            //     equipment.name.ja_jp.includes(name)
+                            // );
+                            if (equipment.name.ja_jp.includes(name)) count.CLMainGunNaval += 1;
+                        });
+                        ['14cm連装砲', '15.2cm連装砲'].forEach(function (name) {
+                            if (equipment.name.ja_jp.includes(name)) count.CLMainGunTwin += 1;
+                        });
+                    }
+
+                    // 意大利重巡主炮加成
+                    if (ship._navy === 'rm') {
+                        // console.log(ship, equipment)
+                        if (equipment.name.ja_jp.includes('203mm/53')) count.ItalianCAMainGun += 1;
+                    }
+
+                    // 改修加成
+                    if (star_by_slot[index] && !options.isNight) {
+                        /*
+                        console.log(
+                            equipments_by_slot[index]._name,
+                            '★+' + star_by_slot[index],
+                            formula.getStarMultiplier(
+                                equipments_by_slot[index].type,
+                                options.isNight ? 'night' : 'shelling'
+                            ),
+                            Math.sqrt(star_by_slot[index]) * formula.getStarMultiplier(
+                                equipments_by_slot[index].type,
+                                options.isNight ? 'night' : 'shelling'
+                            ),
+                            options.isNight ? '夜战' : '昼战'
+                        )
+                        */
+                        result += formula.getStarBonus(equipment, 'shelling', star_by_slot[index]);
+                        // result += Math.sqrt(star_by_slot[index]) * formula.getStarMultiplier(
+                        //     equipment.type,
+                        //     'shelling'
+                        // )
+                    }
+                }
+            });
+
+            // console.log(count)
+
+            // 加成
+            var thisBonus = 0
+            // 轻巡系主炮加成
+            + 2 * Math.sqrt(count.CLMainGunTwin) + Math.sqrt(count.CLMainGunNaval)
+            // 意大利重巡主炮加成（仅对意大利重巡洋舰生效）
+            + Math.sqrt(count.ItalianCAMainGun) + (bonus.fire || 0);
+
+            return result + thisBonus;
+        }
+        //return (ship.stat.fire_max || 0)
+    };
+    formula.calcByShip.torpedoPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, options, bonus) {
+        options = options || {};
+        bonus = bonus || __calculateBonus(ship, equipments_by_slot, star_by_slot, rank_by_slot);
+
+        var result = 0;
+        var slots = _slots(ship.slot);
+
+        if (formula.shipType.Carriers.indexOf(ship.type) > -1 && !options.isNight) {
+            return options.returnZero ? 0 : -1;
+        } else {
+            result = (ship.stat.torpedo_max || 0) + (bonus.torpedo || 0);
+            slots.map(function (carry, index) {
+                if (equipments_by_slot[index]) {
+                    var equipment = equipments_by_slot[index];
+                    // result += (equipment.type == _equipmentType.TorpedoBomber && !options.isNight)
+                    result += _equipmentType.TorpedoBombers.indexOf(equipment.type) > -1 && !options.isNight ? 0 : equipment.getStat('torpedo', ship) || 0;
+
+                    // 改修加成
+                    if (star_by_slot[index] && !options.isNight) {
+                        result += formula.getStarBonus(equipment, 'torpedo', star_by_slot[index]);
+                        // result += Math.sqrt(star_by_slot[index]) * formula.getStarMultiplier(
+                        //     equipment.type,
+                        //     'torpedo'
+                        // )
+                    }
+                }
+            });
+            return result;
+        }
+    };
+    formula.calcByShip.nightPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, options, count, bonus) {
+        options = options || {};
+        bonus = bonus || __calculateBonus(ship, equipments_by_slot, star_by_slot, rank_by_slot);
+
+        var result = {
+            // value: ''
+            // type: undefined,
+            damage: 0
+
+            // 改修加成
+        };var starBonus = 0;
+        var slots = _slots(ship.slot);
+
+        // 航空夜战
+        // http://bbs.ngacn.cc/read.php?tid=12445064
+        // http://bbs.ngacn.cc/read.php?tid=12590487
+        if ((count.aviationPersonnelNight || ship.getCapability('count_as_night_operation_aviation_personnel')) && (count.carrierFighterNight >= 1 || count.torpedoBomberNight >= 1)) {
+            // (裸火力+特殊机体火力+特殊机体雷装+3*sum(夜战机体格子剩余机数)+sum(特殊机体系数*sqrt(特殊机体格子剩余机数))+夜间接触补正+特殊机体改修补正)*CI系数
+            // 夜战机体：F6F-3N，F6F-5N，TBM-3D
+            // 特殊机体：所有夜战机体，剑鱼系，零战62型(爆战/岩井队)
+
+            // 基本攻击力 = 素火力 + ∑(夜间飞机火力)※ +∑(夜间飞机雷装)※ + ∑(夜间飞机搭载补正) + 夜间接触补正
+            // 夜间飞机搭载补正 = 系数A*机数 + 系数B*(火力+雷装+爆装+对潜)*√(机数) + √(★)
+
+            slots.forEach(function (carry, index) {
+                if (!equipments_by_slot[index]) return;
+
+                if (star_by_slot[index]) {
+                    starBonus += formula.getStarBonus(equipments_by_slot[index], 'night', star_by_slot[index]);
+                    // starBonus += Math.sqrt(star_by_slot[index]) * formula.getStarMultiplier(
+                    //     equipments_by_slot[index].type,
+                    //     'night'
+                    // )
+                }
+            });
+
+            var nightCarry = 0; // 夜战机体机数
+            var spFire = 0; // 特殊机体火力
+            var spTorpedo = 0; // 特殊机体雷装
+            var spBonus = 0; // sum(特殊机体系数*sqrt(特殊机体机数))
+            var spStarBonus = 0; // 特殊机体改修补正
+            var multiplierCI = [];
+            // let hasAttacker = false
+
+            var countTorpedoBomberSwordfish = 0;
+            var countDiveBomberIwai = 0;
+
+            slots.forEach(function (carry, index) {
+                if (!equipments_by_slot[index]) return;
+
+                var equipment = equipments_by_slot[index];
+                var isNightAircraft = !1; // 是否为夜战机
+                var isSPAircraft = !1; // 是否为特殊机
+
+                if (equipment.type_ingame) {
+                    // 夜战
+                    if (equipment.type_ingame[3] === 45) {
+                        isSPAircraft = !0;
+                        isNightAircraft = !0;
+                    }
+                    // 夜攻
+                    else if (equipment.type_ingame[3] === 46) {
+                            isSPAircraft = !0;
+                            isNightAircraft = !0;
+                        }
+                }
+                if (_equipmentType.TorpedoBombers.indexOf(equipment.type) > -1) {
+                    if (equipment.hasName('Swordfish', 'ja_jp')) {
+                        isSPAircraft = !0;
+                        countTorpedoBomberSwordfish++;
+                    }
+                } else if (_equipmentType.DiveBombers.indexOf(equipment.type) > -1) {
+                    if (equipment.hasName('岩井', 'ja_jp')) {
+                        isSPAircraft = !0;
+                        countDiveBomberIwai++;
+                    }
+                }
+                // if (
+                //     _equipmentType.Aircrafts.indexOf(equipment.type) > -1
+                //     && (
+                //         equipment.stat.bomb
+                //         || equipment.stat.torpedo
+                //     )
+                // ) hasAttacker = true
+
+                if (isNightAircraft) {
+                    nightCarry += carry;
+                }
+
+                if (isSPAircraft) {
+                    spFire += equipment.getStat('fire', ship);
+                    spTorpedo += equipment.getStat('torpedo', ship);
+                    spBonus += Math.sqrt(carry) * ((3 + 1.5 * (isNightAircraft ? 1 : 0)) * (equipment.getStat('fire', ship) + equipment.getStat('torpedo', ship) + equipment.getStat('bomb', ship) + equipment.getStat('asw', ship)) / 10);
+                    if (star_by_slot[index]) {
+                        spStarBonus += formula.getStarBonus(equipments_by_slot[index], 'night', star_by_slot[index]);
+                        // spStarBonus += Math.sqrt(star_by_slot[index]) * formula.getStarMultiplier(
+                        //     equipments_by_slot[index].type,
+                        //     'night'
+                        // )
+                    }
+                }
+            });
+
+            // if (!hasAttacker) return { damage: 0 }
+
+            var equipSPBomber = countTorpedoBomberSwordfish + countDiveBomberIwai;
+            if (count.carrierFighterNight >= 2 && count.torpedoBomberNight >= 1) multiplierCI.push(1.25);
+            if (count.carrierFighterNight >= 1 && count.torpedoBomberNight >= 1) multiplierCI.push(1.2);
+            if (count.carrierFighterNight >= 3 || count.carrierFighterNight >= 2 && equipSPBomber >= 1 || count.carrierFighterNight >= 1 && count.torpedoBomberNight >= 1 && equipSPBomber >= 1 || count.carrierFighterNight >= 1 && count.torpedoBomberNight >= 2 || count.carrierFighterNight >= 1 && equipSPBomber >= 2) multiplierCI.push(1.18);
+
+            result.type = '航空';
+            result.hit = 1;
+            result.damage = Math.floor(ship.stat.fire_max + (bonus.fire || 0) + spFire + spTorpedo + 3 * nightCarry + spBonus + spStarBonus);
+            result.isMax = !0;
+
+            if (multiplierCI.length) {
+                result.cis = multiplierCI.map(function (multiplier) {
+                    return [Math.floor(result.damage * multiplier), 1];
+                });
+                // result.damage_ci = Math.floor(result.damage * CI)
+            }
+        }
+
+        // Ark Royal：剑鱼夜战
+        else if (ship.getCapability('participate_night_battle_when_equip_swordfish')) {
+                result.damage += ship.stat.fire_max + (bonus.fire || 0) + ship.stat.torpedo_max + (bonus.torpedo || 0);
+                slots.forEach(function (carry, index) {
+                    var equipment = equipments_by_slot[index];
+                    if (!equipments_by_slot[index]) return;
+                    if (_equipmentType.TorpedoBombers.indexOf(equipment.type) > -1) {
+                        if (equipment.name.ja_jp.indexOf('Swordfish') > -1) {
+                            // result.damage += equipment.stat.fire + equipment.stat.torpedo
+                            result.damage += equipment.getStat('fire', ship) + equipment.getStat('torpedo', ship);
+                        }
+                    }
+                });
+                result.type = '通常';
+                result.damage = Math.floor(result.damage);
+                result.hit = 1;
+            }
+
+            // Base rule: If a ships has either Fire or Torpedo stat on level 1, she can participate night battle
+
+            else if (ship.stat.fire + ship.stat.torpedo <= 0)
+                    // if (!ship.additional_night_shelling && formula.shipType.Carriers.indexOf(ship.type) > -1) {
+                    // 航母没有夜战
+                    return {
+                        damage: 0
+
+                        // 其他夜战方式
+                    };else {
+                    var equipmentCount = {};
+                    slots.forEach(function (carry, index) {
+                        if (!equipments_by_slot[index]) return;
+
+                        if (star_by_slot[index]) {
+                            starBonus += formula.getStarBonus(equipments_by_slot[index], 'night', star_by_slot[index]);
+                            // starBonus += Math.sqrt(star_by_slot[index]) * formula.getStarMultiplier(
+                            //     equipments_by_slot[index].type,
+                            //     'night'
+                            // )
+                        }
+
+                        if (!equipments_by_slot[index]) return;
+                        var equipment = equipments_by_slot[index];
+                        if (!equipmentCount[equipment.id]) equipmentCount[equipment.id] = 1;else equipmentCount[equipment.id]++;
+                    });
+
+                    //console.log(count)
+                    result.damage = formula.calcByShip.shellingPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, {
+                        isNight: !0
+                    }, bonus) + formula.calcByShip.torpedoPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, {
+                        isNight: !0, returnZero: !0
+                    }, bonus) + starBonus;
+                    /*
+                    console.log(
+                        '夜',
+                        formula.calcByShip.shellingPower(ship, equipments_by_slot, star_by_slot, rank_by_slot, {isNight: true}),
+                        powerTorpedo({isNight: true, returnZero: true}),
+                        result.damage
+                    )
+                    */
+                    // http://wikiwiki.jp/kancolle/?%C0%EF%C6%AE%A4%CB%A4%C4%A4%A4%A4%C6#NightBattle
+                    // console.log(
+                    //     count,
+                    //     formula.shipType.Submarines.indexOf(ship.type)
+                    // )
+
+                    // 潜艇专用
+                    if (formula.shipType.Submarines.indexOf(ship.type) > -1 && count.torpedoLateModel >= 1 && count.submarineEquipment >= 1) {
+                        result.type = '雷击CI';
+                        result.damage = Math.floor(result.damage * 1.75);
+                        result.hit = 2;
+                    }
+
+                    // 潜艇专用
+                    else if (formula.shipType.Submarines.indexOf(ship.type) > -1 && count.torpedoLateModel >= 2) {
+                            result.type = '雷击CI';
+                            result.damage = Math.floor(result.damage * 1.6);
+                            result.hit = 2;
+                        } else if (count.torpedo >= 2) {
+                            result.type = '雷击CI';
+                            result.damage = Math.floor(result.damage * 1.5);
+                            result.hit = 2;
+                        } else if (count.main >= 3) {
+                            result.type = '炮击CI';
+                            result.damage = Math.floor(result.damage * 2);
+                            result.hit = 1;
+                        } else if (count.main == 2 && count.secondary >= 1) {
+                            result.type = '炮击CI';
+                            result.damage = Math.floor(result.damage * 1.75);
+                            result.hit = 1;
+                        }
+
+                        // 驱逐舰专用 - 鱼雷+水上电探+瞭望员
+                        else if (formula.shipType.Destroyers.indexOf(ship.type) > -1 && count.torpedo >= 1 && count.radarSurface >= 1 && count.surfaceShipPersonnel >= 1) {
+                                result.type = '电探CI';
+                                result.damage = Math.floor(result.damage * 1.25);
+                                result.hit = 1;
+                                // result.isMin = true
+                            }
+
+                            // 驱逐舰专用 - 主炮+鱼雷+水上电探
+                            else if (formula.shipType.Destroyers.indexOf(ship.type) > -1 && count.torpedo >= 1 && count.radarSurface >= 1 && count.main >= 1) {
+                                    // [267] 12.7cm連装砲D型改二
+                                    result.type = '电雷CI';
+                                    result.damage = equipmentCount[267] ? Math.floor(result.damage * 1.625) : Math.floor(result.damage * 1.3);
+                                    result.hit = 1;
+                                    // result.isMin = true
+                                }
+
+                                // 
+                                else if (count.main >= 1 && count.torpedo == 1) {
+                                        result.type = '炮雷CI';
+                                        result.damage = Math.floor(result.damage * 1.3);
+                                        result.hit = 2;
+                                    }
+
+                                    // 标准连击
+                                    else if (count.main == 2 && count.secondary <= 0 && count.torpedo <= 0 || count.main == 1 && count.secondary >= 1 && count.torpedo <= 0 || count.main == 0 && count.secondary >= 2 && count.torpedo >= 0) {
+                                            result.type = '连击';
+                                            result.damage = Math.floor(result.damage * 1.2);
+                                            result.hit = 2;
+                                        }
+
+                                        // 通常攻击
+                                        else {
+                                                result.type = '通常';
+                                                result.damage = Math.floor(result.damage);
+                                                result.hit = 1;
+                                            }
+                }
+
+        var jointSymbol = ' ';
+        if (result.isMax) jointSymbol = ' ≤ ';
+        if (result.isMin) jointSymbol = ' ≥ ';
+        result.value = '' + result.type + jointSymbol + result.damage;
+        if (result.hit && result.hit > 1) result.value += ' x ' + result.hit;
+        if (Array.isArray(result.cis) && result.cis.length) {
+            result.value += ' (CI' + jointSymbol + result.cis.sort(function (a, b) {
+                return a[0] - b[0];
+            }).map(function (ci) {
+                return ci[0] + (ci[1] && ci[1] > 1 ? ' x ' + ci[1] : '');
+            }).join(' 或 ') + ')';
+        } else if (result.damage_ci) {
+            var hit = result.hit_ci || result.hit || 1;
+            result.value += ' (CI' + jointSymbol + result.damage_ci + ')';
+            if (hit && hit > 1) result.value += ' x ' + hit;
+        }
+
+        return result;
+    };
+    formula.calcByShip.fighterPower_v2 = function (ship, equipments_by_slot, star_by_slot, rank_by_slot) {
+        var results = [0, 0],
+            slots = _slots(ship.slot);
+
+        slots.map(function (carry, index) {
+            var r = formula.calc.fighterPower(equipments_by_slot[index], carry, rank_by_slot[index] || 0, star_by_slot[index] || 0);
+            results[0] += r[0];
+            results[1] += r[1];
+        });
+        return results;
+    };
+    formula.calcByShip.losPower = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, options) {
+        // http://biikame.hatenablog.com/entry/2014/11/14/224925
+
+        options = options || {};
+        options.shipLv = options.shipLv || 1;
+        options.hqLv = options.hqLv || 1;
+
+        if (options.shipLv < 0) options.shipLv = 1;
+        if (options.hqLv < 0) options.hqLv = 1;
+
+        var x = {
+            'DiveBombers': 0,
+            'TorpedoBombers': 0,
+            'CarrierRecons': 0,
+            'SeaplaneRecons': 0,
+            'SeaplaneBombers': 0,
+            'SmallRadars': 0,
+            'LargeRadars': 0,
+            'Searchlights': 0,
+            'statLos': Math.sqrt(ship.getAttribute('los', options.shipLv)),
+            'hqLv': options.hqLv
+        };
+
+        equipments_by_slot.forEach(function (equipment) {
+            if (equipment) {
+                for (var i in x) {
+                    if (_equipmentType[i] && _equipmentType[i].push && _equipmentType[i].indexOf(equipment.type) > -1) x[i] += equipment.stat.los;
+                }
+            }
+        });
+
+        return formula.calc.losPower(x);
+    };
+    formula.calcByShip.TP = function (ship, equipments_by_slot) {
+        if (!ship || !equipments_by_slot || !equipments_by_slot.push) return 0;
+
+        ship = _ship(ship);
+        var count = {
+            ship: {},
+            equipment: {}
+        };
+        count.ship[ship.type] = 1;
+        equipments_by_slot.forEach(function (equipment) {
+            if (equipment) {
+                var id = typeof equipment == 'number' ? equipment : _equipment(equipment)['id'];
+                if (!count.equipment[id]) count.equipment[id] = 0;
+                count.equipment[id]++;
+            }
+        });
+
+        var count_as_landing_craft = ship.getCapability('count_as_landing_craft');
+        // console.log('count_as_landing_craft', count_as_landing_craft)
+        if (count_as_landing_craft) {
+            if (!count.equipment[68]) count.equipment[68] = 0;
+            count.equipment[68]++;
+        }
+
+        return formula.calc.TP(count);
+    };
+    formula.calcByShip.speed = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, options) {
+        if (!ship) return '';
+        if ((typeof star_by_slot === 'undefined' ? 'undefined' : _typeof(star_by_slot)) === 'object' && star_by_slot.push) return formula.calcByShip.speed(ship, equipments_by_slot, [], [], star_by_slot);
+        if ((typeof rank_by_slot === 'undefined' ? 'undefined' : _typeof(rank_by_slot)) === 'object' && rank_by_slot.push) return formula.calcByShip.speed(ship, equipments_by_slot, star_by_slot, [], rank_by_slot);
+
+        ship = _ship(ship);
+        equipments_by_slot = equipments_by_slot || [];
+        options = options || {};
+
+        var result = parseInt(ship.stat.speed);
+        var theResult = function theResult(_theResult) {
+            _theResult = Math.min(20, _theResult || result);
+            if (options.returnNumber) return _theResult;
+            return KC.statSpeed[_theResult];
+        };
+
+        // if (equipments_by_slot[4]) {
+        //     let id = typeof equipment == 'number' ? equipments_by_slot[4] : _equipment(equipments_by_slot[4])['id']
+        //     if( id != 33 )
+        //         return theResult()
+        // } else {
+        //     return theResult()
+        // }
+
+        var count = {
+            '33': 0,
+            '34': 0,
+            '87': 0
+        };
+        var rule = ship._speedRule || 'low-2';
+        var multiper = 0;
+
+        equipments_by_slot.forEach(function (equipment) {
+            if (!equipment) return;
+
+            var id = typeof equipment == 'number' ? equipment : _equipment(equipment)['id'];
+
+            if (typeof count['' + id] !== 'undefined') count['' + id]++;
+        });
+
+        if (!count['33']) return theResult();
+
+        switch (rule) {
+            case 'low-1':
+                // 低速A
+                // 	基础		5
+                // 	最大		20
+                // 	1x + 0y		+5		0.3x
+                // 	2x + 0y		+5		0.3x
+                // 	3x + 0y		+5		0.3x
+                // 	0x + 1y		+5		0.7x
+                // 	1x + 1y		+10		1x
+                // 	2x + 1y		+10		1x
+                // 	3x + 1y		+10		1x
+                // 	0x + 2y		+10		1.4x
+                // 	1x + 2y		+15		1.7x
+                // 	2x + 2y		+15		1.7x
+                // 	3x + 2y		+15		1.7x
+                // 	0x + 3y		+15		2.1x
+                // 	1x + 2y		+15
+                // 	2x + 2y		+15
+                // 	3x + 2y		+15
+                // 	x = 0.3
+                // 	y = 0.7
+                multiper = 0.3 * Math.min(count['34'], 1) + 0.7 * count['87'];
+                break;
+            case 'low-2':
+            case 'high-3':
+                // 低速B
+                // 	基础		5
+                // 	最大		15
+                // 	1x + 0y		+5		0.33x
+                // 	2x + 0y		+5		0.66x
+                // 	3x + 0y		+10		1x
+                // 	0x + 1y		+5		0.5x
+                // 	1x + 1y		+5		0.83x
+                // 	2x + 1y		+10		1.33x
+                // 	0x + 2y		+10		1x
+                // 	x = 0.33
+                // 	y = 0.5
+                // 高速C
+                // 	基础		10
+                // 	最大		20
+                // 	1x + 0y		+5		0.33x
+                // 	2x + 0y		+5		0.66x
+                // 	3x + 0y		+10		1x
+                // 	0x + 1y		+5		0.5x
+                // 	1x + 1y		+5		0.83x
+                // 	2x + 1y		+10		1.33x
+                // 	0x + 2y		+10		1x
+                // 	x = 0.33
+                // 	y = 0.5
+                if (count['34'] || count['87']) multiper = Math.min(1, count['34'] / 3 + 0.5 * count['87']);
+                break;
+            case 'low-3':
+            case 'high-4':
+                // 低速C
+                // 	基础		5
+                // 	最大		10
+                // 高速D
+                // 	基础		10
+                // 	最大		15
+                if (count['34'] || count['87']) result += 5;
+                break;
+            case 'high-1':
+                // 高速A
+                // 	基础		10
+                // 	最大 		20
+                // 	1x + 0y		+5		0.5x
+                // 	1x + 1y		+10		1.5x
+                // 	0x + 1y		+10		1x
+                // 	x = 0.5
+                // 	y = 1
+                multiper = 0.5 * count['34'] + 1 * count['87'];
+                break;
+            case 'high-2':
+                // 高速B
+                // 	基础		10
+                // 	最大 		20
+                // 	1x + 0y		+5		0.5x
+                // 	2x + 0y		+10		1x
+                // 	0x + 1y		+5		0.5x
+                // 	1x + 1y		+10		1x
+                // 	0x + 2y		+10		1x
+                // 	x = 0.5
+                // 	y = 0.5
+                multiper = 0.5 * count['34'] + 0.5 * count['87'];
+                break;
+            case 'low-4':
+                // 低速4
+                // 	基础		5
+                // 	最大 		20
+                // 	1x + 0y		+5		0.5x
+                // 	2x + 0y		+10		1x
+                // 	0x + 1y		+5		0.5x
+                // 	1x + 1y		+10		1x
+                // 	0x + 2y		+10		1x
+                // 	x = 0.5
+                // 	y = 0.5
+                multiper = 0.5;
+                break;
+        }
+
+        // console.log(
+        //     ship, equipments_by_slot,
+        //     count,
+        //     rule,
+        //     multiper
+        // )
+
+        if (multiper > 0 && multiper < 1) result += 5;else if (multiper >= 1 && multiper < 1.5) result += 10;else if (multiper >= 1.5) result += 15;
+
+        return theResult();
+    };
+    formula.calcByShip.fireRange = function (ship, equipments_by_slot) {
+        if (!ship) return '-';
+        equipments_by_slot = equipments_by_slot || [];
+
+        var result = parseInt(ship.stat.range);
+
+        equipments_by_slot.forEach(function (equipment) {
+            if (!equipment) return;
+
+            result = Math.max(result, _equipment(equipment).stat.range || 0);
+        });
+
+        return KC.statRange[result];
+    };
+    // Calculate by Fleet
+    formula.calcByFleet.los33 = function (data, hq) {
+        /* data [
+            [
+                {number} shipId,
+                [ // ship stat
+                    {number} shipLv,
+                    {number} shipLuck
+                ],
+                [ // equipment id
+                    {number} slot 1 id,
+                    {number} slot 2 id,
+                    {number} slot 3 id,
+                    {number} slot 4 id,
+                    {number} slot x id
+                ],
+                [ // equipment star
+                    {number} slot 1 star,
+                    {number} slot 2 star,
+                    {number} slot 3 star,
+                    {number} slot 4 star,
+                    {number} slot x star
+                ],
+                [ // equipment rank
+                    {number} slot 1 rank,
+                    {number} slot 2 rank,
+                    {number} slot 3 rank,
+                    {number} slot 4 rank,
+                    {number} slot x rank
+                ]
+            ]
+        ]*/
+
+        var equipments = [],
+            ships = [];
+
+        data.forEach(function (dataShip) {
+            if (!Array.isArray(dataShip)) return;
+
+            var shipId = dataShip[0];
+
+            if (shipId) {
+                var equipmentIdPerSlot = dataShip[2];
+                var equipmentStarPerSlot = dataShip[3];
+                var equipmentRankPerSlot = dataShip[4];
+                ships.push({
+                    id: shipId,
+                    lv: dataShip[1][0]
+                });
+                equipmentIdPerSlot.forEach(function (equipmentId, index) {
+                    equipments.push({
+                        id: equipmentId,
+                        star: equipmentStarPerSlot[index],
+                        rank: equipmentRankPerSlot[index]
+                    });
+                });
+            }
+        });
+
+        return formula.calc.los33({
+            hq: hq,
+            equipments: equipments,
+            ships: ships
+        });
+    };
+    // Calculate by Airfield
+    formula.calcByField.fighterPowerAA = function (data) {
+        /*
+         * data [
+         *      equipment: equipmentId || Equipment,
+         *      star: Number,
+         *      rank: Number,
+         *      [carry]: Number
+         * ]
+         */
+        var result = [0, 0],
+            reconBonus = 1;
+
+        function getReconBonus(bonus) {
+            reconBonus = Math.max(bonus, reconBonus);
+            return reconBonus;
+        }
+
+        data.forEach(function (d) {
+            var equipment = _equipment(d[0] || d.equipment || d.equipmentId),
+                star = d[1] || d.star || 0,
+                rank = d[2] || d.rank || 0,
+                carry = d[3] || d.carry || 0,
+                _r = formula.calc.fighterPowerAA(equipment, carry, rank, star);
+
+            if (!carry) {
+                if (formula.equipmentType.Recons.indexOf(equipment.type) > -1) carry = 4;else carry = 18;
+            }
+            result[0] += _r[0];
+            result[1] += _r[1];
+
+            // 计算侦察机加成
+            switch (equipment.type) {
+                case _equipmentType.CarrierRecon:
+                case _equipmentType.CarrierRecon2:
+                    if (equipment.stat.los <= 7) {
+                        getReconBonus(1.2);
+                    } else if (equipment.stat.los >= 9) {
+                        getReconBonus(1.3);
+                    } else {
+                        getReconBonus(1.25);
+                    }
+                    break;
+                case _equipmentType.ReconSeaplane:
+                case _equipmentType.ReconSeaplaneNight:
+                case _equipmentType.LargeFlyingBoat:
+                    if (equipment.stat.los <= 7) {
+                        getReconBonus(1.1);
+                    } else if (equipment.stat.los >= 9) {
+                        getReconBonus(1.16);
+                    } else {
+                        getReconBonus(1.13);
+                    }
+                    break;
+            }
+        });
+
+        result[0] = result[0] * reconBonus;
+        result[1] = result[1] * reconBonus;
+
+        return result;
+    };
+    // Get bonus for specified ship and equipment(s)
+    formula.getBonus = function (ship, equipments_by_slot, star_by_slot, rank_by_slot, stat) {
+        return __calculateBonus(ship, equipments_by_slot, star_by_slot, rank_by_slot, stat);
+    };
+
+    /**
+     * ES/JS Functions/Features
+     */
+    // Array.prototype.indexOf()
+    // Production steps of ECMA-262, Edition 5, 15.4.4.14
+    // Reference: http://es5.github.io/#x15.4.4.14
+    if (!Array.prototype.indexOf) {
+        Array.prototype.indexOf = function (searchElement, fromIndex) {
+
+            var k;
+
+            // 1. Let o be the result of calling ToObject passing
+            //    the this value as the argument.
+            if (this == null) {
+                throw new TypeError('"this" is null or not defined');
+            }
+
+            var o = Object(this);
+
+            // 2. Let lenValue be the result of calling the Get
+            //    internal method of o with the argument "length".
+            // 3. Let len be ToUint32(lenValue).
+            var len = o.length >>> 0;
+
+            // 4. If len is 0, return -1.
+            if (len === 0) {
+                return -1;
+            }
+
+            // 5. If argument fromIndex was passed let n be
+            //    ToInteger(fromIndex); else let n be 0.
+            var n = +fromIndex || 0;
+
+            if (Math.abs(n) === Infinity) {
+                n = 0;
+            }
+
+            // 6. If n >= len, return -1.
+            if (n >= len) {
+                return -1;
+            }
+
+            // 7. If n >= 0, then Let k be n.
+            // 8. Else, n<0, Let k be len - abs(n).
+            //    If k is less than 0, then let k be 0.
+            k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+            // 9. Repeat, while k < len
+            while (k < len) {
+                // a. Let Pk be ToString(k).
+                //   This is implicit for LHS operands of the in operator
+                // b. Let kPresent be the result of calling the
+                //    HasProperty internal method of o with argument Pk.
+                //   This step can be combined with c
+                // c. If kPresent is true, then
+                //    i.  Let elementK be the result of calling the Get
+                //        internal method of o with the argument ToString(k).
+                //   ii.  Let same be the result of applying the
+                //        Strict Equality Comparison Algorithm to
+                //        searchElement and elementK.
+                //  iii.  If same is true, return k.
+                if (k in o && o[k] === searchElement) {
+                    return k;
+                }
+                k++;
+            }
+            return -1;
+        };
+    }
+
+    /**
+     * 
+     */
+    KC.Entity = Entity;
+    KC.Equipment = Equipment;
+    KC.Ship = Ship;
+    KC.Consumable = Consumable;
+    KC.formula = formula;
+
+    return KC;
+});
 /*!
  * clipboard.js v1.7.1
  * https://zenorocha.github.io/clipboard.js
