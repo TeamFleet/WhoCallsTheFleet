@@ -80,6 +80,7 @@
 
 // @koala-prepend "../../source/js-app/frame/modal/_base.js"
 // @koala-prepend "../../source/js-app/frame/modal/equipable.js"
+// @koala-prepend "../../source/js-app/frame/modal/bonuses.js"
 
 // @koala-prepend "../../source/js-app/elements/tablelist.js"
 // @koala-prepend "../../source/js-app/elements/tablelist-entities.js"

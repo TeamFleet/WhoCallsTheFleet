@@ -231,7 +231,7 @@ _frame.infos.__equipment = function (id) {
                 class: 'button button-viewbonuses',
                 disabled: d.getBonuses().length <= 0,
                 icon: 'search',
-                html: '装备属性加成...',
+                html: '属性加成...',
                 "data-equipment-id": d.id,
             })
                 .appendTo(container)

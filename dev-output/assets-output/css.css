@@ -14298,6 +14298,388 @@ body > .modal.update_journal.mod-blur-shot > div {
 	}
 }
 */
+body > .modal.hastitle.modal-bonuses > div {
+  height: auto;
+  width: 50%;
+  min-width: 640px;
+}
+@media all and (max-width: 720px) {
+  body > .modal.hastitle.modal-bonuses > div {
+    min-width: 0;
+    width: calc(100% - 40px);
+  }
+}
+body > .modal.hastitle.modal-bonuses > div > header {
+  overflow: hidden;
+}
+body > .modal.hastitle.modal-bonuses > div > header > strong {
+  display: block;
+  font-size: 1.25em;
+  letter-spacing: .1em;
+  line-height: 1em;
+  margin: 0.4em 0 0.2em 0;
+  color: #fff;
+  font-weight: normal;
+}
+body > .modal.hastitle.modal-bonuses > div > header > span {
+  display: block;
+  font-size: 1em;
+  line-height: 1em;
+  font-style: italic;
+}
+body > .modal.hastitle.modal-bonuses section {
+  max-height: calc(100vh - 100px);
+}
+body > .modal.hastitle.modal-bonuses section .bonus::after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+}
+body > .modal.hastitle.modal-bonuses section .bonus + .bonus {
+  margin-top: 10px;
+  border-top: 10px solid transparent;
+  position: relative;
+}
+body > .modal.hastitle.modal-bonuses section .bonus + .bonus::before {
+  content: "";
+  top: -10px;
+  height: 1px;
+  left: -10px;
+  right: -10px;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.25);
+}
+body > .modal.hastitle.modal-bonuses section .bonus .equipments .link_equipment {
+  line-height: 16px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  font-size: 16px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .equipments a.link_equipment {
+  color: #8fffc5;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .equipments a.link_equipment:hover {
+  color: #fff;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .equipments a.link_equipment:active {
+  color: rgba(255, 255, 255, 0.65);
+}
+body > .modal.hastitle.modal-bonuses section .bonus .ships {
+  border-left: 36px solid transparent;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .ships .condition {
+  display: block;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .ships .item {
+  display: inline-block;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .ships .item.ship-class {
+  line-height: 16px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  font-size: 16px;
+  color: #fff;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .ships .item.ship-class::before {
+  content: '/';
+  display: inline-block;
+  padding: 0 .35em;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .ships .item.ship-class:first-child::before {
+  content: initial;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .ships .item.ship {
+  line-height: 16px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  font-size: 16px;
+  color: #fff;
+  overflow: hidden;
+  height: 30px;
+  position: relative;
+  padding-left: 42px;
+  margin-right: 14px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .ships .item.ship .avatar {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 37px;
+  height: 25px;
+  border-radius: 12.5px;
+  overflow: hidden;
+  margin-top: -12.5px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .ships .item.ship .avatar img {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: -40px;
+  width: auto;
+  height: auto;
+  min-height: 100%;
+  max-height: 100%;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .ships .item.ship.ship-link {
+  color: #8ddbff;
+  transition-property: color;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .ships .item.ship.ship-link:hover {
+  color: #fff;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .ships .item.ship.ship-link:active {
+  color: rgba(255, 255, 255, 0.65);
+}
+body > .modal.hastitle.modal-bonuses section .bonus .ships .item.ship:last-child {
+  margin-right: 0;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .ships .item.ship-exclude {
+  font-size: 13px;
+  display: inline-block;
+  line-height: 22px;
+  height: 22px;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.25);
+  padding: 0 8px 0 24px;
+  position: relative;
+  margin: 0 5px 5px 0;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .ships .item.ship-exclude::before {
+  content: "×";
+  font-size: 16px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  text-align: center;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats {
+  padding-left: 36px;
+  position: relative;
+  overflow: hidden;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .info {
+  display: block;
+  font-size: 14px;
+  line-height: 22px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .has-extra {
+  position: relative;
+  display: block;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .has-extra .extra {
+  position: absolute;
+  width: 36px;
+  left: -36px;
+  text-align: right;
+  top: 50%;
+  line-height: 0;
+  padding-right: 10px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .has-extra .star {
+  color: #2eff93;
+  font-size: 14px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .has-extra .star::before {
+  content: "\2605";
+  font-size: 125%;
+  padding-right: 2px;
+  vertical-align: bottom;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .has-extra .star[data-star="0"] {
+  color: rgba(255, 255, 255, 0.35);
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .has-extra .star[data-star="10"] {
+  background: url(/!/assets/images/improve-max.svg) no-repeat 100% 50%;
+  color: transparent;
+  overflow: hidden;
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  margin-top: -12px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .has-extra .star[data-star="10"]::before {
+  content: initial;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .has-extra .count {
+  font-size: 14px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .has-extra .count::before {
+  content: '×';
+  font-size: 125%;
+  padding-right: 2px;
+  vertical-align: bottom;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat {
+  position: relative;
+  padding-left: 20px;
+  color: #2cace8;
+  font-size: 16px;
+  line-height: 22px;
+  display: inline-block;
+  padding-right: 10px;
+  margin-top: 2px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat::before {
+  content: "";
+  background: url(/!/assets/images/stats.png) no-repeat;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  line-height: 0;
+  margin-top: -9px;
+  display: block;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="hp"]::before {
+  background-position: 0% 0%;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="armor"]::before {
+  background-position: 0% -18px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="evasion"]::before {
+  background-position: 0% -36px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="carry"]::before {
+  background-position: 0% -54px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="fire"]::before {
+  background-position: 0% -72px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="torpedo"]::before {
+  background-position: 0% -90px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="aa"]::before {
+  background-position: 0% -108px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="asw"]::before {
+  background-position: 0% -126px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="speed"]::before {
+  background-position: 0% -144px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="range"]::before,
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="distance"]::before {
+  background-position: 0% -162px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="los"]::before {
+  background-position: 0% -180px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="luck"]::before {
+  background-position: 0% -198px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="fuel"]::before {
+  background-position: 0% -216px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="ammo"]::before {
+  background-position: 0% -234px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="bomb"]::before {
+  background-position: 0% -252px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="hit"]::before {
+  background-position: 0% -270px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus-set .equipments {
+  position: relative;
+}
+body > .modal.hastitle.modal-bonuses section .bonus-set .equipments .equipment {
+  display: block;
+  position: relative;
+}
+body > .modal.hastitle.modal-bonuses section .bonus-set .equipments .equipment + .equipment {
+  margin-top: 15px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus-set .equipments .equipment + .equipment::before {
+  color: #fff6cc;
+  font-size: 30px;
+  line-height: 0;
+  left: 32px;
+  text-shadow: 0 0 10px #fef6e6;
+  content: "＋";
+  position: absolute;
+  top: -10px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus-set .equipments::after {
+  color: #fff6cc;
+  font-size: 30px;
+  left: 32px;
+  text-shadow: 0 0 10px #fef6e6;
+  content: "＝";
+  position: absolute;
+  bottom: -12px;
+  line-height: 0;
+  transform-origin: 50% 50%;
+  transform: rotate(90deg);
+}
+body > .modal.hastitle.modal-bonuses section .bonus-set .ships + .equipments {
+  margin-top: 20px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus-set .ships + .equipments::before {
+  color: #fff6cc;
+  font-size: 30px;
+  line-height: 0;
+  left: 32px;
+  text-shadow: 0 0 10px #fef6e6;
+  content: "＋";
+  position: absolute;
+  top: -10px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus-set .stats .info {
+  padding-left: 26px;
+}
+body > .modal.hastitle.modal-bonuses.modal-bonuses-ship > div {
+  padding-top: 60px !important;
+}
+body > .modal.hastitle.modal-bonuses.modal-bonuses-ship > div > header {
+  height: 60px;
+  padding-left: 135px;
+}
+body > .modal.hastitle.modal-bonuses.modal-bonuses-ship > div > header > img {
+  position: absolute;
+  top: 0;
+  left: -25px;
+  width: auto;
+  height: auto;
+  min-height: 100%;
+  max-height: 100%;
+  z-index: -1;
+  mask: linear-gradient(to right, #000 100px, transparent 180px);
+  -webkit-mask: linear-gradient(to right, #000 100px, transparent 180px);
+}
+body > .modal.hastitle.modal-bonuses.modal-bonuses-ship > div > button.close {
+  height: 60px;
+  line-height: 60px;
+}
+body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div {
+  padding-top: 60px !important;
+}
+body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > header {
+  height: 60px;
+  padding-left: 46px;
+}
+body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > header > i {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  width: 36px;
+  height: 36px;
+  z-index: -1;
+  margin-top: -18px;
+  background: no-repeat 50% 50%;
+}
+body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.close {
+  height: 60px;
+  line-height: 60px;
+}
 #tip {
   font-size: 0.7000000000000001rem;
   max-width: 16.5rem;
