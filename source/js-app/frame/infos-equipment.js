@@ -85,12 +85,12 @@ _frame.infos.__equipment = function (id) {
         )
         .appendTo( title )
         */
-    $('<button/>', {
-        'type': 'button',
-        'class': 'button-equipable',
-        'html': '可装备于...',
-        'data-equipment-type': d['type']
-    }).appendTo(title.find('small').eq(0))
+    // $('<button/>', {
+    //     'type': 'button',
+    //     'class': 'button-equipable',
+    //     'html': '可装备于...',
+    //     'data-equipment-type': d['type']
+    // }).appendTo(title.find('small').eq(0))
 
     // 属性
     var stats = $('<div class="stats"/>')
@@ -212,6 +212,31 @@ _frame.infos.__equipment = function (id) {
                 }
             }
     */
+
+    { // 按钮组：额外信息
+        const container = $('<div class="additionals"/>').appendTo(stats)
+        { // 按钮：查询可装备于
+            $('<button />', {
+                type: 'button',
+                class: 'button button-equipable',
+                icon: 'search',
+                html: '可装备于...',
+                'data-equipment-type': d['type'],
+            })
+                .appendTo(container)
+        }
+        { // 按钮：查询额外属性加成
+            $('<button />', {
+                type: 'button',
+                class: 'button button-viewbonuses',
+                disabled: d.getBonuses().length <= 0,
+                icon: 'search',
+                html: '装备属性加成...',
+                "data-equipment-id": d.id,
+            })
+                .appendTo(container)
+        }
+    }
 
     // 废弃获得资源
     var dismantle = $('<div class="dismantle"/>')

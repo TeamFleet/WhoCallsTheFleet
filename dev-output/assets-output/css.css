@@ -8000,6 +8000,55 @@ h6 + section.update_journal {
 .infos-equipment > div.stats .bonus-item-stats > span > em {
   padding-left: 0;
 }
+.infos-equipment > div.stats > .additionals {
+  overflow: hidden;
+  margin-top: 1em;
+  margin-right: -8px;
+}
+.infos-equipment > div.stats > .additionals .button {
+  appearance: none;
+  color: #8fffc5;
+  display: block;
+  border: 1px solid #8fffc5;
+  border-radius: 3px;
+  font-size: inherit;
+  line-height: 1.2em;
+  padding: .25em .5em;
+  font-weight: normal;
+  transition-property: color, background-color, border-color;
+  position: relative;
+  float: left;
+  margin-right: 8px;
+}
+.infos-equipment > div.stats > .additionals .button:hover {
+  background: #8fffc5;
+  color: #000f07;
+}
+.infos-equipment > div.stats > .additionals .button:active {
+  background: #39d585;
+  color: #000f07;
+}
+.infos-equipment > div.stats > .additionals .button[icon] {
+  padding-left: 1.6em;
+}
+.infos-equipment > div.stats > .additionals .button[icon]::before {
+  position: absolute;
+  top: 50%;
+  line-height: 0;
+  left: .5em;
+  margin-top: 1px;
+  opacity: 1;
+}
+.infos-equipment > div.stats > .additionals .button[disabled] {
+  color: #d9d9d9;
+  border-color: #d9d9d9;
+  opacity: 0.5;
+}
+.infos-equipment > div.stats > .additionals .button[disabled]:hover,
+.infos-equipment > div.stats > .additionals .button[disabled]:active {
+  background: transparent;
+  color: #d9d9d9;
+}
 .infos-equipment > div.dismantle > span {
   background: url(/!/assets/images/stats.png) no-repeat 0 0;
   min-width: 50px;
@@ -12118,7 +12167,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   color: #00090e;
 }
 .infos-ship > div.additionals .button:active {
-  background: #58bae7;
+  background: #38a3d5;
   color: #00090e;
 }
 .infos-ship > div.additionals .button[icon] {

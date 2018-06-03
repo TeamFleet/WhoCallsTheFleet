@@ -77,11 +77,81 @@ modal.bonuses = (() => ({
         })
         return r
     },
+    renderConditionShips: bonus => {
+        let condition = ''
+        if (typeof bonus.ship.isClass !== 'undefined') {
+            const classes = Array.isArray(bonus.ship.isClass)
+                ? bonus.ship.isClass
+                : [bonus.ship.isClass]
+            condition += `<div class="condition">`
+                + classes
+                    .map(classId => {
+                        const d = _g.data.ship_classes[parseInt(classId)]
+                        const type = _g.data.ship_types[parseInt(d.ship_type_id)]
+                        return `${d.name.zh_cn || d.name.ja_jp}级${type.name.zh_cn || type.name.ja_jp}`
+                    })
+                    .map(s => `<span class="item ship-class">${s}</span>`)
+                    .join('')
+                + `</div>`
+        }
+        if (typeof bonus.ship.isID !== 'undefined') {
+            const ids = Array.isArray(bonus.ship.isID)
+                ? bonus.ship.isID
+                : [bonus.ship.isID]
+            condition += `<div class="condition">`
+                + ids
+                    .map(shipId => {
+                        const ship = _g.data.ships[parseInt(shipId)]
+                        return `<a class="item ship ship-link" href="${_g.getLink('ships', ship.id)}" data-shipid="${ship.id}">`
+                            + `<em class="avatar"><img src="${ship.getPic(0, _g.imgExt)}"/></em>`
+                            + `${ship._name}`
+                            + `</a>`
+                    })
+                    .join('')
+                + `</div>`
+        }
+        if (typeof bonus.ship.isNotID !== 'undefined') {
+            const ids = Array.isArray(bonus.ship.isNotID)
+                ? bonus.ship.isNotID
+                : [bonus.ship.isNotID]
+            condition += `<div class="condition">`
+                + ids
+                    .map(shipId => {
+                        const ship = _g.data.ships[parseInt(shipId)]
+                        return `<span class="item ship-exclude">`
+                            + `${ship._name}`
+                            + `</span>`
+                    })
+                    .join('')
+                + `</div>`
+        }
+
+        if (condition)
+            return `<div class="ships">${condition}</div>`
+
+        return ''
+    },
     renderBonusSingle: function (bonus) {
+        let condition = ''
         let bonusStats = ''
+        let bonusInfoText = ''
+
+        switch (this.type) {
+            case 'ship': {
+                condition = `<div class="equipments">`
+                    + _tmpl.link_equipment(bonus.equipment, undefined, true)
+                    + `</div>`
+                break
+            }
+            case 'equipment': {
+                condition = this.renderConditionShips(bonus)
+                bonusInfoText = '装备于以上舰娘时，'
+                break
+            }
+        }
 
         if (typeof bonus.bonusCount === 'object') {
-            bonusStats = `<span class="info">该装备根据数量提供属性加成 (超额的部分不提供加成)</span>`
+            bonusInfoText += `该装备根据数量提供属性加成 (超额的部分不提供加成)</span>`
             Object.keys(bonus.bonusCount)
                 .sort((a, b) => parseInt(a) - parseInt(b))
                 .forEach(count => {
@@ -91,7 +161,7 @@ modal.bonuses = (() => ({
                         + `</div>`
                 })
         } else if (typeof bonus.bonusImprove === 'object') {
-            bonusStats = `<span class="info">每个该装备根据改修星级提供属性加成</span>`
+            bonusInfoText += `每个该装备根据改修星级提供属性加成`
             Object.keys(bonus.bonusImprove)
                 .sort((a, b) => parseInt(a) - parseInt(b))
                 .forEach(star => {
@@ -101,34 +171,52 @@ modal.bonuses = (() => ({
                         + `</div>`
                 })
         } else if (typeof bonus.bonus === 'object') {
-            bonusStats = `<span class="info">每个该装备提供属性加成</span>`
-                + this.renderStat(bonus.bonus)
+            bonusInfoText += `每个该装备提供属性加成`
+            bonusStats = this.renderStat(bonus.bonus)
         }
 
         return $(
             `<div class="bonus bonus-single">`
-            + `<div class="equipments">`
-            + _tmpl.link_equipment(bonus.equipment, undefined, true)
-            + `</div>`
+            + condition
             + `<div class="stats">`
+            + `<span class="info">${bonusInfoText}</span>`
             + bonusStats
             + `</div>`
             + `</div>`
         )
     },
     renderBonusSet: function (bonus) {
+        let condition = ''
         let bonusStats = ''
-        if (typeof bonus.bonus === 'object') {
-            bonusStats = `<span class="info">满足该条件时提供属性加成</span>`
-                + this.renderStat(bonus.bonus)
+        let bonusInfoText = ''
+
+        switch (this.type) {
+            case 'ship': {
+                break
+            }
+            case 'equipment': {
+                condition = this.renderConditionShips(bonus)
+                break
+            }
         }
+
+        if (typeof bonus.bonus === 'object') {
+            bonusInfoText = '满足该条件时提供额外属性加成'
+            bonusStats = this.renderStat(bonus.bonus)
+        }
+
         return $(
             `<div class="bonus bonus-set">`
+            + condition
             + `<div class="equipments">`
             + bonus.list
                 .map(item => {
                     if (!isNaN(item))
-                        return _tmpl.link_equipment(item, undefined, true)
+                        return _tmpl.link_equipment(
+                            item,
+                            this.type === 'equipment' && item == this.equipment.id ? 'span' : undefined,
+                            true
+                        )
                     if (typeof item === 'string') {
                         switch (item) {
                             case 'SurfaceRadar':
@@ -148,6 +236,7 @@ modal.bonuses = (() => ({
                 .join('')
             + `</div>`
             + `<div class="stats">`
+            + `<span class="info">${bonusInfoText}</span>`
             + bonusStats
             + `</div>`
             + `</div>`
@@ -167,6 +256,7 @@ modal.bonuses = (() => ({
                 return $(
                     `<strong>${this.equipment._name}</strong>`
                     + `<span>属性加成</span>`
+                    + `<i style="background-image:url(assets/images/itemicon/${this.equipment.getIconId()}.png)"></i>`
                 )
             }
         }

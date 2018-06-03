@@ -228,7 +228,7 @@ _frame.infos.__ship = function (id) {
                 class: 'button button-viewbonuses',
                 disabled: d.getBonuses().length <= 0,
                 icon: 'search',
-                html: '装备属性加成',
+                html: '装备属性加成...',
                 "data-ship-id": d.id,
                 // "data-tip": bonuses.length <= 0 ? 'NO' : undefined,
             })

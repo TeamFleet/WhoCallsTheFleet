@@ -5417,6 +5417,14 @@ _frame.infos.__equipment_init = function ($el) {
     }
 
     $el.on('click.equipable', 'button[data-equipment-type]', showEquipable);
+
+    {
+        $el.on('click.viewbonuses', '.button-viewbonuses', function (evt) {
+            evt.preventDefault();
+            if (evt.target.disabled) return;
+            modal.bonuses.show('equipment', evt.target.getAttribute('data-equipment-id'));
+        });
+    }
 };
 
 _frame.infos.__ship_init = function ($el) {
