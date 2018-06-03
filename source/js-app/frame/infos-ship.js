@@ -61,10 +61,10 @@ _frame.infos.__ship = function (id) {
 
         $('<span/>')
             .html('<small class="stat-' + name + '">' + title + '</small>'
-            + '<em' + (valMax ? ' class="lvl99"' : '') + '>' + val99 + '</em>'
-            + (valMax ? '<em class="lvl150">' + valMax + '</em>' : '')
-            //+ '<em class="lvl99'+( !val150 ? ' lvl150' : '' )+'">' + val99 + '</em>'
-            //+ ( val150 ? '<em class="lvl150">' + val150 + '</em>' : '' )
+                + '<em' + (valMax ? ' class="lvl99"' : '') + '>' + val99 + '</em>'
+                + (valMax ? '<em class="lvl150">' + valMax + '</em>' : '')
+                //+ '<em class="lvl99'+( !val150 ? ' lvl150' : '' )+'">' + val99 + '</em>'
+                //+ ( val150 ? '<em class="lvl150">' + val150 + '</em>' : '' )
             )
             .appendTo(tar)
     }
@@ -80,17 +80,17 @@ _frame.infos.__ship = function (id) {
     { // 名称 & 舰种 & 舰级
         $('<div class="title"/>')
             .html('<h2 data-content="' + ship_name + '">' + ship_name + '</h2>'
-            + '<small>'
-            + '<span data-tip="' + (has_no ? '图鉴编号' : '无图鉴编号') + '">No.'
-            + (has_no
-                ? d['no']
-                : '-'
-            )
-            + '</span>'
-            + (d['class'] ? _g['data']['ship_classes'][d['class']].name.zh_cn + '级' : '')
-            + (d['class_no'] ? '<em>' + d['class_no'] + '</em>号舰' : '')
-            + (d['type'] ? ' / ' + _g['data']['ship_types'][d['type']].name.zh_cn : '')
-            + '</small>'
+                + '<small>'
+                + '<span data-tip="' + (has_no ? '图鉴编号' : '无图鉴编号') + '">No.'
+                + (has_no
+                    ? d['no']
+                    : '-'
+                )
+                + '</span>'
+                + (d['class'] ? _g['data']['ship_classes'][d['class']].name.zh_cn + '级' : '')
+                + (d['class_no'] ? '<em>' + d['class_no'] + '</em>号舰' : '')
+                + (d['type'] ? ' / ' + _g['data']['ship_types'][d['type']].name.zh_cn : '')
+                + '</small>'
             ).appendTo(dom)
     }
 
@@ -102,12 +102,12 @@ _frame.infos.__ship = function (id) {
             , curLvl = parseInt(_config.get('ship_infos_lvl') || 99)
             , stats = $('<div class="stats"/>')
                 .html('<div class="title">'
-                + '<h4 data-content="基础属性">基础属性</h4>'
-                + '<span>'
-                + '<label for="' + lvlRadio99_id + '" class="lvl99">99</label>'
-                + '<label for="' + lvlRadio150_id + '" class="lvl150">' + _g.shipMaxLv + '</label>'
-                + '</span>'
-                + '</div>'
+                    + '<h4 data-content="基础属性">基础属性</h4>'
+                    + '<span>'
+                    + '<label for="' + lvlRadio99_id + '" class="lvl99">99</label>'
+                    + '<label for="' + lvlRadio150_id + '" class="lvl150">' + _g.shipMaxLv + '</label>'
+                    + '</span>'
+                    + '</div>'
                 )
                 .prepend($('<input type="radio" name="ship_infos_lvl_' + id + '" id="' + lvlRadio99_id + '" value="99" checked/>')
                     .prop('checked', curLvl == 99)
@@ -220,6 +220,22 @@ _frame.infos.__ship = function (id) {
             modernization.addClass('no').append($('<em/>').html('-'))
     }
 
+    { // 按钮组：额外信息
+        const container = $('<div class="additionals"/>').appendTo(dom)
+        { // 按钮：查询装备额外属性加成
+            $('<button />', {
+                type: 'button',
+                class: 'button button-viewbonuses',
+                disabled: d.getBonuses().length <= 0,
+                icon: 'search',
+                html: '装备属性加成',
+                "data-ship-id": d.id,
+                // "data-tip": bonuses.length <= 0 ? 'NO' : undefined,
+            })
+                .appendTo(container)
+        }
+    }
+
     // 可额外装备
     if (d['additional_item_types'] && d['additional_item_types'].length) {
         var additional_equipment_types = $('<div class="add_equip"/>').appendTo(dom)
@@ -255,14 +271,14 @@ _frame.infos.__ship = function (id) {
             'class': 'entity'
         })
             .html('<strong>声优</strong>'
-            + '<span>' + (d._cv || '?') + '</span>'
+                + '<span>' + (d._cv || '?') + '</span>'
             )
             .appendTo(dom)
         , illustratorLink = $('<a/>', {
             'class': 'entity'
         })
             .html('<strong>画师</strong>'
-            + '<span>' + (d._illustrator || '?') + '</span>'
+                + '<span>' + (d._illustrator || '?') + '</span>'
             )
             .appendTo(dom)
     if (cvId)
@@ -276,10 +292,10 @@ _frame.infos.__ship = function (id) {
             'data-infos': '[[ENTITY::' + illustratorId + ']]'
         })
     /*
-var consum = $('<span class="consum"/>').html('<strong>消耗</strong>').appendTo(dom)
-_add_stat( 'fuel', 		'', _val( d['consum']['fuel'] ),		consum )
-_add_stat( 'ammo', 		'', _val( d['consum']['ammo'] ),		consum )
-*/
+    var consum = $('<span class="consum"/>').html('<strong>消耗</strong>').appendTo(dom)
+    _add_stat( 'fuel', 		'', _val( d['consum']['fuel'] ),		consum )
+    _add_stat( 'ammo', 		'', _val( d['consum']['ammo'] ),		consum )
+    */
 
     // 图鉴
     // illustrations

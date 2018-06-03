@@ -12096,6 +12096,51 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 .infos-ship > div.equipments > .modernization > .stats > span:before {
   top: 0;
 }
+.infos-ship > div.additionals {
+  overflow: hidden;
+}
+.infos-ship > div.additionals .button {
+  appearance: none;
+  color: #8ddbff;
+  display: block;
+  border: 1px solid #8ddbff;
+  border-radius: 3px;
+  font-size: inherit;
+  line-height: 1.2em;
+  padding: .25em .5em;
+  font-weight: normal;
+  transition-property: color, background-color, border-color;
+  position: relative;
+  float: left;
+}
+.infos-ship > div.additionals .button:hover {
+  background: #8ddbff;
+  color: #00090e;
+}
+.infos-ship > div.additionals .button:active {
+  background: #58bae7;
+  color: #00090e;
+}
+.infos-ship > div.additionals .button[icon] {
+  padding-left: 1.6em;
+}
+.infos-ship > div.additionals .button[icon]::before {
+  position: absolute;
+  top: 50%;
+  line-height: 0;
+  left: .5em;
+  margin-top: 1px;
+}
+.infos-ship > div.additionals .button[disabled] {
+  color: #d9d9d9;
+  border-color: #d9d9d9;
+  opacity: 0.5;
+}
+.infos-ship > div.additionals .button[disabled]:hover,
+.infos-ship > div.additionals .button[disabled]:active {
+  background: transparent;
+  color: #d9d9d9;
+}
 .infos-ship > div.add_equip {
   position: relative;
 }

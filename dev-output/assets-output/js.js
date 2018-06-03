@@ -5418,6 +5418,15 @@ _frame.infos.__equipment_init = function ($el) {
 };
 
 _frame.infos.__ship_init = function ($el) {
+
+    {
+        $el.on('click.viewbonuses', '.button-viewbonuses', function (evt) {
+            evt.preventDefault();
+            if (evt.target.disabled) return;
+            modal.shipBonuses.show(evt.target.getAttribute('data-ship-id'));
+        });
+    }
+
     var x = void 0,
         originalX = -1,
         startX = void 0,

@@ -1,3 +1,5 @@
+@import '../mixins/button-hollow.less';
+
 .layout-infos-ship(){
     @illust-switch-point-size:  22;
     
@@ -234,6 +236,13 @@
 							top:		0;
 						}
 					}
+				}
+			}
+			&.additionals{
+				overflow: hidden;
+				.button{
+					.button-hollow(#8ddbff);
+					float: left;
 				}
 			}
 			&.add_equip{

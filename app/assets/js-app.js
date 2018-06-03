@@ -6862,6 +6862,20 @@ _frame.infos.__ship = function (id) {
         if (!has_modernization) modernization.addClass('no').append($('<em/>').html('-'));
     }
 
+    {
+        var container = $('<div class="additionals"/>').appendTo(dom);
+        {
+            $('<button />', {
+                type: 'button',
+                class: 'button button-viewbonuses',
+                disabled: d.getBonuses().length <= 0,
+                icon: 'search',
+                html: '装备属性加成',
+                "data-ship-id": d.id
+            }).appendTo(container);
+        }
+    }
+
     if (d['additional_item_types'] && d['additional_item_types'].length) {
         var additional_equipment_types = $('<div class="add_equip"/>').appendTo(dom),
             _additional_equipment_types = $('<div/>').html('<h4 data-content="额外装备类型">额外装备类型</h4>').appendTo(additional_equipment_types);
@@ -6992,6 +7006,15 @@ _frame.infos.__ship = function (id) {
 };
 
 _frame.infos.__ship_init = function ($el) {
+
+    {
+        $el.on('click.viewbonuses', '.button-viewbonuses', function (evt) {
+            evt.preventDefault();
+            if (evt.target.disabled) return;
+            modal.shipBonuses.show(evt.target.getAttribute('data-ship-id'));
+        });
+    }
+
     var x = void 0,
         originalX = -1,
         startX = void 0,
@@ -7249,6 +7272,7 @@ _frame.infos.__ship_init = function ($el) {
         illustShift(1, !0);
     }).insertAfter(labels.eq(labels.length - 1));
 };
+
 _frame.app_main.is_mode_selection = function () {
     return $html.hasClass('mode-selection') || _frame.dom.layout.hasClass('mode-selection');
 };
@@ -7408,6 +7432,30 @@ modal.equipable = {
             'detach': !0
         });
     }
+};
+modal.shipBonuses = {
+
+    show: function show(shipId) {
+        return _frame.modal.show(modal.shipBonuses.getFrame(shipId), modal.shipBonuses.getTitle(shipId), {
+            'classname': 'modal-shipbonuses',
+            'detach': !0
+        });
+    },
+
+    _cache: {},
+    getFrame: function getFrame(shipId) {
+        var cache = modal.shipBonuses._cache;
+
+        if (cache[shipId]) return cache[shipId];
+
+        cache[shipId] = $('<div>123123123</div>');
+
+        return cache[shipId];
+    },
+    getTitle: function getTitle(shipId) {
+        return _g.data.ships[shipId]._name + ' / \u88C5\u5907\u5C5E\u6027\u52A0\u6210';
+    }
+
 };
 
 _p.el.tablelist = {

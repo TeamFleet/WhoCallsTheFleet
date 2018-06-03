@@ -108,10 +108,7 @@ gulp.task('js-output', function () {
 });
 
 gulp.task('Web-js', function () {
-    return gulp.src(
-        parseKoalaJS(rootOutput, 'assets-source', 'js.js')
-            .concat(path.resolve(__dirname, '../source/js-app/.base/**/*.js'))
-    )
+    return gulp.src(parseKoalaJS(rootOutput, 'assets-source', 'js.js'))
         .pipe(concat('js.js'))
         .pipe(babel({
             'highlightCode': false,

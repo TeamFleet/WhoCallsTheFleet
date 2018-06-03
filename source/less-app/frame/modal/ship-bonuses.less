@@ -1,0 +1,24 @@
+body > .modal.modal-shipbonuses{
+    &>div{
+        height:     auto;
+        width:      50%;
+        min-width:  @screen-width-t5-breaking-point;
+        @media all and (max-width: @mobileview-breaking-point ){
+            min-width:  0;
+            width:      ~"calc(100% - 40px)";
+        }
+    }
+    
+    section{
+        max-height: ~"calc(100vh - 100px)";
+        p{
+            font-size: 		16px;
+            //color: 			@color_accent;
+            margin-bottom: 	.5em;
+        }
+        div ~ p{
+            margin-top: 1em;
+        }
+        
+    }
+}

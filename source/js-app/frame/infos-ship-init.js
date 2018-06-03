@@ -1,5 +1,13 @@
 
 _frame.infos.__ship_init = function( $el ){
+
+    { // 按钮：查询装备额外属性加成
+        $el.on('click.viewbonuses', '.button-viewbonuses', evt => {
+            evt.preventDefault()
+            if (evt.target.disabled) return
+            modal.shipBonuses.show(evt.target.getAttribute('data-ship-id'))
+        })
+    }
     
     // touch support for illustrations
         let x

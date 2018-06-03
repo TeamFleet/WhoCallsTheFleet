@@ -1,0 +1,44 @@
+.button-hollow(@color) {
+    appearance: none;
+    color: @color;
+    display: block;
+    border: 1px solid @color;
+    border-radius: 3px;
+    font-size: inherit;
+    line-height: 1.2em;
+    padding: .25em .5em;
+    font-weight: normal;
+    transition-property: color, background-color, border-color;
+    position: relative;
+
+    &:hover{
+        background: @color;
+        color: darken(@color, 75%);
+    }
+    &:active{
+        background: desaturate(darken(@color, 15%), 25%);
+        color: darken(@color, 75%);
+    }
+
+    &[icon]{
+        padding-left: 1.6em;
+        &::before{
+            position: absolute;
+            top: 50%;
+            line-height: 0;
+            left: .5em;
+            margin-top: 1px;
+        }
+    }
+
+    &[disabled]{
+        @color: hsl(0, 0%, 85%);
+        color: @color;
+        border-color: @color;
+        opacity: 0.5;
+        &:hover, &:active{
+            background: transparent;
+            color: @color;
+        }
+    }
+}
