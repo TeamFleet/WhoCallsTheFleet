@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",289,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/3.png)\"></s><strong>35.6cm三连装炮改<small>(炫光迷彩制式)</small></strong><small>大口径主炮</small></h3><span>+19 火力</span><span>+5 对空</span><span>+3 命中</span><span>+2 回避</span><span>射程: 长</span>")

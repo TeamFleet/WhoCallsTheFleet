@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",290,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/3.png)\"></s><strong>41cm三连装炮改二</strong><small>大口径主炮</small></h3><span>+23 火力</span><span>+6 对空</span><span>+5 命中</span><span>射程: 长</span>")
