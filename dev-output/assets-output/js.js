@@ -2516,6 +2516,7 @@ _g.updateDefaultHqLv = function (val) {
     }
 };
 
+_g.stats = [['fire', '火力'], ['torpedo', '雷装'], ['aa', '对空'], ['asw', '对潜'], ['bomb', '爆装'], ['hit', '命中'], ['armor', '装甲'], ['evasion', '回避'], ['los', '索敌'], ['range', '射程']];
 _g.statSpeed = KC.statSpeed;
 _g.statRange = KC.statRange;
 _g.textRank = KC.textRank;
@@ -2708,6 +2709,7 @@ setTimeout(function () {
         }, !0);
     });
 }
+
 var _ga = {
     counter: function counter(path, title, screenName) {
 
@@ -5423,7 +5425,7 @@ _frame.infos.__ship_init = function ($el) {
         $el.on('click.viewbonuses', '.button-viewbonuses', function (evt) {
             evt.preventDefault();
             if (evt.target.disabled) return;
-            modal.shipBonuses.show(evt.target.getAttribute('data-ship-id'));
+            modal.bonuses.show('ship', evt.target.getAttribute('data-ship-id'));
         });
     }
 

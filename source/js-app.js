@@ -49,7 +49,7 @@
 
 // @koala-prepend "js-app/frame/modal/_base.js"
 // @koala-prepend "js-app/frame/modal/equipable.js"
-// @koala-prepend "js-app/frame/modal/ship-bonuses.js"
+// @koala-prepend "js-app/frame/modal/bonuses.js"
 
 // @koala-prepend "js-app/elements/tablelist.js"
 // @koala-prepend "js-app/elements/tablelist-v2/ships.js"

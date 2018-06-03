@@ -65,6 +65,18 @@ _g.updateDefaultHqLv = function (val) {
     }
 };
 
+_g.stats = [
+    ['fire', '火力'],
+    ['torpedo', '雷装'],
+    ['aa', '对空'],
+    ['asw', '对潜'],
+    ['bomb', '爆装'],
+    ['hit', '命中'],
+    ['armor', '装甲'],
+    ['evasion', '回避'],
+    ['los', '索敌'],
+    ['range', '射程'],
+]
 _g.statSpeed = KC.statSpeed;
 _g.statRange = KC.statRange;
 _g.textRank = KC.textRank;

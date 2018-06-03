@@ -1,0 +1,216 @@
+@import '../../mixins/stat.less';
+
+body > .modal.hastitle.modal-bonuses{
+
+    @header-height: 60px;
+
+    &>div{
+        height: auto;
+        width: 50%;
+        min-width: @screen-width-t5-breaking-point;
+        padding-top: @header-height !important;
+        @media all and (max-width: @mobileview-breaking-point ){
+            min-width:  0;
+            width:      ~"calc(100% - 40px)";
+        }
+
+        & > header{
+            @img-width: 75px;
+            @img-offset-x: -30px;
+            @img-mask-pos-1: (@img-width - @img-offset-x);
+            @img-mask-pos-2: (@img-width - @img-offset-x + 80);
+            height: @header-height;
+            padding-left: (@img-width + 60);
+            overflow: hidden;
+            & > img{
+                position: absolute;
+                top: 0;
+                left: @img-offset-x;
+                width: auto;
+                height: auto;
+                min-height: 100%;
+                max-height: 100%;
+                z-index: -1;
+                .mask(~"linear-gradient(to right, #000 @{img-mask-pos-1}, transparent @{img-mask-pos-2})");
+            }
+            & > strong{
+                display: block;
+                font-size: 1.25em;
+                letter-spacing: .15em;
+                line-height: 1em;
+                margin: 0.4em 0 0.2em 0;
+                color: #fff;
+            }
+            & > span{
+                display: block;
+                font-size: 1em;
+                line-height: 1em;
+                font-style: italic;
+            }
+        }
+
+        & > button.close{
+            // top: ((@header-height - 40px) / 2);
+            height: @header-height;
+            line-height: @header-height;
+        }
+    }
+    
+    section{
+        max-height: ~"calc(100vh - 100px)";
+        @icon-width: 36px;
+        
+        .bonus{
+            &::after{
+                content: "";
+                display: block;
+                height: 0;
+                clear: both;
+            }
+            & + .bonus{
+                margin-top: 10px;
+                border-top: 10px solid transparent;
+                position: relative;
+                &::before{
+                    content: "";
+                    top: -10px;
+                    height: 1px;
+                    left: -10px;
+                    right: -10px;
+                    position: absolute;
+                    background: fade(#fff, 25%);
+                }
+            }
+            // &:first-child{
+            //     border-top: 10px solid transparent;
+            // }
+            // &:last-child{
+            //     border-bottom: 10px solid transparent;
+            // }
+
+            .equipments{
+                .link_equipment{
+                    @line-height: 16px;
+                    line-height: @line-height;
+                    padding-top: ((30px - @line-height) / 2);
+                    padding-bottom: ((30px - @line-height) / 2);
+                    font-size: 18px;
+                }
+                a.link_equipment{
+                    color: #8ddbff;
+                    &:hover{
+                        color: #fff;
+                    }
+                }
+            }
+            .stats{
+                @padding-left: @icon-width;
+                padding-left: @padding-left;
+                position: relative;
+                overflow: hidden;
+                .info{
+                    display: block;
+                    font-size: 14px;
+                    line-height: 22px;
+                }
+                .has-extra{
+                    position: relative;
+                    display: block;
+                    .extra{
+                        position: absolute;
+                        width: @padding-left;
+                        left: (0 - @padding-left);
+                        text-align: right;
+                        top: 50%;
+                        line-height: 0;
+                        padding-right: 10px;
+                    }
+                    .star{
+                        color: #2eff93;
+                        font-size: 14px;
+                        &::before{
+                            content: "\2605";
+                            font-size: 125%;
+                            padding-right: 2px;
+                            vertical-align: bottom;
+                        }
+                        &[data-star="0"]{
+                            color: fade(#fff, 35%);
+                        }
+                        &[data-star="10"]{
+                            background: ~"url(@{folder_images}/improve-max.svg) no-repeat 100% 50%";
+                            color: transparent;
+                            overflow: hidden;
+                            width: 24px;
+                            height: 24px;
+                            background-size: contain;
+                            margin-top: -12px;
+                            &::before{
+                                content: initial;
+                            }
+                        }
+                    }
+                    .count{
+                        font-size: 14px;
+                        &::before{
+                            content: '×';
+                            font-size: 125%;
+                            padding-right: 2px;
+                            vertical-align: bottom;
+                        }
+                    }
+                }
+                .stat{
+                    .stat();
+                    color: #2cace8;
+                    font-size: 16px;
+                    line-height: 22px;
+                    display: inline-block;
+                    padding-right: 10px;
+                    margin-top: 2px;
+                }
+            }
+        }
+        .bonus-set{
+            .equipments{
+                .style-symbol(){
+                    color: #fff6cc;
+                    font-size: 30px;
+                    line-height: 0;
+                    left: (@icon-width - 4);
+                    text-shadow: 0 0 10px #fef6e6;
+                }
+                position: relative;
+                .equipment{
+                    display: block;
+                    position: relative;
+                    & + .equipment{
+                        margin-top: 15px;
+                        &::before{
+                            .style-symbol();
+                            content: "＋";
+                            position: absolute;
+                            font-size: 30px;
+                            top: -10px;
+                        }
+                    }
+                }
+                &::after{
+                    .style-symbol();
+                    content: "＝";
+                    position: absolute;
+                    bottom: -12px;
+                    line-height: 0;
+                    transform-origin: 50% 50%;
+                    transform: rotate(90deg);
+                }
+            }
+            .stats{
+                .info{
+                    padding-left: 26px;
+                }
+            }
+        }
+    }
+
+}
