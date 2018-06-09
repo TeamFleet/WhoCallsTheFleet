@@ -7425,6 +7425,11 @@ var InfosFleetShipEquipment = function () {
                     TablelistEquipments.isExtraSlot = isExtraSlot;
                     TablelistEquipments.types = types;
                     TablelistEquipments.shipId = this.infosParent.shipId || 'FIELD';
+                    try {
+                        TablelistEquipments.currentSelected = this.infosParent.data[2] || [];
+                    } catch (e) {
+                        TablelistEquipments.currentSelected = [];
+                    }
                     TablelistEquipments.extraEquipments = this.extraEquipments ? this.extraEquipments.concat() : [];
                     TablelistEquipments.extraEquipments = TablelistEquipments.extraEquipments.filter(function (eid) {
                         console.log(TablelistEquipments.types, _g.data.items[eid].type);
@@ -9181,6 +9186,8 @@ var TablelistEquipments = function (_Tablelist3) {
 
         _this22.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['对空', 'aa'], ['对潜', 'asw'], ['爆装', 'bomb'], ['命中', 'hit'], ['装甲', 'armor'], ['回避', 'evasion'], ['索敌', 'los'], ['射程', 'range'], ['可改修', 'improvable']];
 
+        _this22.equipmentsHasBonus = {};
+
         _frame.app_main.loading.push('tablelist_' + _this22._index);
         _frame.app_main.is_loaded = !1;
 
@@ -9216,6 +9223,44 @@ var TablelistEquipments = function (_Tablelist3) {
                         opacity: 1
                     }).addClass('extra');
                 });
+            }
+
+            if (!TablelistEquipments.shipId || isNaN(TablelistEquipments.shipId)) {
+                for (var id in this.equipmentsHasBonus) {
+                    this.equipmentsHasBonus[id].removeClass('disabled');
+                }
+            } else {
+                (function () {
+                    var count = {};
+                    if (Array.isArray(TablelistEquipments.currentSelected)) {
+                        TablelistEquipments.currentSelected.forEach(function (_id) {
+                            var id = parseInt(_id);
+                            if (typeof count[id] === 'undefined') count[id] = 0;
+                            count[id]++;
+                        });
+                    }
+
+                    var _loop4 = function _loop4(_id3) {
+                        var equipment = _g.data.items[_id3];
+                        var ship = _g.data.ships[TablelistEquipments.shipId];
+                        var filtered = equipment.getBonuses().filter(function (bonus) {
+                            if (!KC.check.ship(ship, bonus.ship)) return !1;
+                            if (bonus.equipment && _typeof(bonus.bonusCount) === 'object') {
+                                var max = parseInt(Object.keys(bonus.bonusCount).sort(function (a, b) {
+                                    return parseInt(b) - parseInt(a);
+                                })[0]);
+                                var current = count[bonus.equipment] || 0;
+                                if (current >= max) return !1;
+                            }
+                            return !0;
+                        });
+                        if (filtered.length) _this23.equipmentsHasBonus[_id3].removeClass('disabled');else _this23.equipmentsHasBonus[_id3].addClass('disabled');
+                    };
+
+                    for (var _id3 in _this23.equipmentsHasBonus) {
+                        _loop4(_id3);
+                    }
+                })();
             }
         }
     }, {
@@ -9351,6 +9396,21 @@ var TablelistEquipments = function (_Tablelist3) {
                 } else {
                     var etype = parseInt(tr.attr('data-equipmenttype')) || -1,
                         eid = parseInt(tr.attr('data-equipmentid'));
+
+                    var parse = function parse() {
+                        var equipment = _g.data.items[eid];
+                        if (equipment) {
+                            var bonuses = equipment.getBonuses();
+                            if (Array.isArray(bonuses) && bonuses.length) {
+                                _this25.equipmentsHasBonus[eid] = tr;
+                                tr.addClass('has-bonus');
+                            }
+                        } else {
+                            setTimeout(parse, 100);
+                        }
+                    };
+                    parse();
+
                     tr.on('click', function (e, forceInfos) {
                         if (!forceInfos && _frame.app_main.is_mode_selection()) {
                             e.preventDefault();
@@ -9395,6 +9455,7 @@ TablelistEquipments.gen_helper_equipable_on = function (type_id) {
 TablelistEquipments.types = [];
 TablelistEquipments.shipId = null;
 TablelistEquipments.shipIdLast = null;
+TablelistEquipments.currentSelected = [];
 
 var TablelistFleets = function (_Tablelist4) {
     _inherits(TablelistFleets, _Tablelist4);

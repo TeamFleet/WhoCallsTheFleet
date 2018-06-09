@@ -19,6 +19,9 @@ class TablelistEquipments extends Tablelist {
             ['可改修', 'improvable']
         ]
 
+        // 有特效的装备 ID
+        this.equipmentsHasBonus = {}
+
         // 标记全局载入状态
         _frame.app_main.loading.push('tablelist_' + this._index)
         _frame.app_main.is_loaded = false
@@ -57,6 +60,43 @@ class TablelistEquipments extends Tablelist {
                     opacity: 1
                 }).addClass('extra')
             })
+        }
+
+        // 检查bonus
+        if (!TablelistEquipments.shipId || isNaN(TablelistEquipments.shipId)) {
+            for (let id in this.equipmentsHasBonus) {
+                this.equipmentsHasBonus[id].removeClass('disabled')
+            }
+        } else {
+            const count = {}
+            if (Array.isArray(TablelistEquipments.currentSelected)) {
+                TablelistEquipments.currentSelected.forEach(_id => {
+                    const id = parseInt(_id)
+                    if (typeof count[id] === 'undefined')
+                        count[id] = 0
+                    count[id]++
+                })
+            }
+            for (let id in this.equipmentsHasBonus) {
+                const equipment = _g.data.items[id]
+                const ship = _g.data.ships[TablelistEquipments.shipId]
+                const filtered = equipment.getBonuses()
+                    .filter(bonus => {
+                        if (!KC.check.ship(ship, bonus.ship))
+                            return false
+                        if (bonus.equipment && typeof bonus.bonusCount === 'object') {
+                            const max = parseInt(Object.keys(bonus.bonusCount).sort((a, b) => parseInt(b) - parseInt(a))[0])
+                            const current = count[bonus.equipment] || 0
+                            if (current >= max) return false
+                        }
+                        return true
+                    })
+                if (filtered.length)
+                    this.equipmentsHasBonus[id].removeClass('disabled')
+                else
+                    this.equipmentsHasBonus[id].addClass('disabled')
+            }
+            // console.log(this.equipmentsHasBonus)
         }
     }
 
@@ -224,6 +264,21 @@ class TablelistEquipments extends Tablelist {
                 //let equipment_data = _g.data.items[ tr.attr('data-equipmentid') ]
                 let etype = parseInt(tr.attr('data-equipmenttype')) || -1
                     , eid = parseInt(tr.attr('data-equipmentid'))
+
+                const parse = () => {
+                    const equipment = _g.data.items[eid]
+                    if (equipment) {
+                        const bonuses = equipment.getBonuses()
+                        if (Array.isArray(bonuses) && bonuses.length) {
+                            this.equipmentsHasBonus[eid] = tr
+                            tr.addClass('has-bonus')
+                        }
+                    } else {
+                        setTimeout(parse, 100)
+                    }
+                }
+                parse()
+
                 tr.on('click', (e, forceInfos) => {
                     if (!forceInfos && _frame.app_main.is_mode_selection()) {
                         e.preventDefault()
@@ -274,3 +329,4 @@ TablelistEquipments.gen_helper_equipable_on = function (type_id) {
 TablelistEquipments.types = []
 TablelistEquipments.shipId = null
 TablelistEquipments.shipIdLast = null
+TablelistEquipments.currentSelected = []

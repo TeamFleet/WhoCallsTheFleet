@@ -2589,6 +2589,11 @@ class InfosFleetShipEquipment {
                 TablelistEquipments.isExtraSlot = isExtraSlot
                 TablelistEquipments.types = types
                 TablelistEquipments.shipId = this.infosParent.shipId || 'FIELD'
+                try {
+                    TablelistEquipments.currentSelected = this.infosParent.data[2] || []
+                } catch (e) {
+                    TablelistEquipments.currentSelected = []
+                }
                 TablelistEquipments.extraEquipments = this.extraEquipments ? this.extraEquipments.concat() : []
                 TablelistEquipments.extraEquipments = TablelistEquipments.extraEquipments.filter(eid => {
                     console.log(TablelistEquipments.types, _g.data.items[eid].type)
