@@ -4022,7 +4022,12 @@ _tmpl.link_equipment = function (equipment, tagName, returnHTML, improvementStar
         var equipmentId = equipment['id'];
     }
 
-    return _tmpl.export('<' + tagName + (tagName == 'a' ? ' href="?infos=equipment&id=' + equipmentId + '"' : '') + ' class="link_equipment"' + ' data-equipmentid="' + equipmentId + '"' + ' data-tip-position="right"' + ' data-infos="[[EQUIPMENT::' + equipmentId + ']]"' + ' data-tip="[[EQUIPMENT::' + equipmentId + ']]"' + '>' + '<i style="background-image:url(assets/images/itemicon/' + equipment.getIconId() + '.png)"></i>' + '<span>' + equipment.getName(!0) + '</span>' + (improvementStar !== null ? '<em' + (improvementStar <= 0 ? ' class="zero"' : '') + '>+' + improvementStar + '</em>' : '') + '</' + tagName + '>', returnHTML);
+    return _tmpl.export('<' + tagName + (tagName == 'a' ? ' href="?infos=equipment&id=' + equipmentId + '"' : '') + ' class="link_equipment"' + ' data-equipmentid="' + equipmentId + '"' + ' data-tip-position="right"' + ' data-infos="[[EQUIPMENT::' + equipmentId + ']]"' + ' data-tip="[[EQUIPMENT::' + equipmentId + ']]"' + '>' + '<i style="background-image:url(assets/images/itemicon/' + equipment.getIconId() + '.png)"></i>' + '<span>' + equipment.getName(!0) + '</span>' + function () {
+        if (typeof improvementStar === 'undefined' || improvementStar === null) return '';
+        if (improvementStar >= 10) return '<em class="max"></em>';
+        if (improvementStar <= 0) return '<em class="zero">+0</em>';
+        return '<em>+' + improvementStar + '</em>';
+    }() + '</' + tagName + '>', returnHTML);
 };
 
 _tmpl.link_ship = function (ship, tagName, returnHTML, mode, extraIllust) {
@@ -7404,7 +7409,7 @@ var InfosFleetShipEquipment = function () {
                     var ship = shipId && _g.data.ships[shipId];
 
                     var shipExtraSlotExtra = shipId && ship.additional_exslot_item_ids;
-                    var shipCanEquip = shipId ? ship.getEquipmentTypes() : [];
+                    var shipCanEquip = shipId ? ship.getEquipmentTypes(this.index) : [];
 
                     var types = shipId ? shipCanEquip : [];
                     var isExtraSlot = !1;
@@ -8160,7 +8165,19 @@ modal.bonuses = function () {
                     stat = _arr[0];
 
                 if (isNaN(bonus[stat]) || !bonus[stat]) return !1;
-                r += '<span class="stat" data-stat="' + stat + '">+' + bonus[stat] + '</span>';
+
+                var content = '+' + bonus[stat];
+                switch (stat) {
+                    case 'range':
+                        {
+                            if (bonus[stat] <= 1) content = '射程提高一档';
+                            break;
+                        }
+                }
+
+                if (typeof bonus[stat] === 'string') content += ' (该属性不叠加)';
+
+                r += '<span class="stat" data-stat="' + stat + '">' + content + '</span>';
             });
             return r;
         },
@@ -8263,6 +8280,9 @@ modal.bonuses = function () {
 
             return $('<div class="bonus bonus-set">' + condition + '<div class="equipments">' + bonus.list.map(function (item) {
                 if (!isNaN(item)) return _tmpl.link_equipment(item, _this18.type === 'equipment' && item == _this18.equipment.id ? 'span' : undefined, !0);
+                if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' && item.id) {
+                    return _tmpl.link_equipment(item.id, _this18.type === 'equipment' && item.id == _this18.equipment.id ? 'span' : undefined, !0, item.star);
+                }
                 if (typeof item === 'string') {
                     switch (item) {
                         case 'SurfaceRadar':

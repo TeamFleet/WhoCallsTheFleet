@@ -32,5 +32,21 @@
 		&.zero{
 			color:	fade(#aaa, 65%);
 		}
+		&.max{
+			background: ~"url(@{folder_images}/improve-max.svg) no-repeat 100% 50%";
+			background-size: contain;
+			color: transparent;
+			overflow: hidden;
+			width: 24px;
+			height: 24px;
+			display: inline-block;
+			vertical-align: middle;
+			position: relative;
+			top: -1px;
+			left: 10px;
+			&::before{
+				content: initial;
+			}
+		}
 	}
 }

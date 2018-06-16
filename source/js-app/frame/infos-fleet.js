@@ -2565,7 +2565,7 @@ class InfosFleetShipEquipment {
                 // const shipClass = shipId && _g.data.ship_classes[ship.class]
                 // const shipClassExtraSlotExtra = shipId && shipClass && shipClass.extraSlotExtra
                 const shipExtraSlotExtra = shipId && ship.additional_exslot_item_ids
-                const shipCanEquip = shipId ? ship.getEquipmentTypes() : []
+                const shipCanEquip = shipId ? ship.getEquipmentTypes(this.index) : []
 
                 let types = shipId
                     ? shipCanEquip

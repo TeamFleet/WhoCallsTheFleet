@@ -73,7 +73,19 @@ modal.bonuses = (() => ({
             const [stat] = arr
             if (isNaN(bonus[stat]) || !bonus[stat])
                 return false
-            r += `<span class="stat" data-stat="${stat}">+${bonus[stat]}</span>`
+
+            let content = `+${bonus[stat]}`
+            switch (stat) {
+                case 'range': {
+                    if (bonus[stat] <= 1) content = '射程提高一档'
+                    break
+                }
+            }
+
+            if (typeof bonus[stat] === 'string')
+                content += ' (该属性不叠加)'
+
+            r += `<span class="stat" data-stat="${stat}">${content}</span>`
         })
         return r
     },
@@ -217,6 +229,14 @@ modal.bonuses = (() => ({
                             this.type === 'equipment' && item == this.equipment.id ? 'span' : undefined,
                             true
                         )
+                    if (typeof item === 'object' && item.id) {
+                        return _tmpl.link_equipment(
+                            item.id,
+                            this.type === 'equipment' && item.id == this.equipment.id ? 'span' : undefined,
+                            true,
+                            item.star
+                        )
+                    }
                     if (typeof item === 'string') {
                         switch (item) {
                             case 'SurfaceRadar':

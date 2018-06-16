@@ -89,6 +89,7 @@
 {"name":{"ja_jp":"Richelieu","zh_cn":"黎塞留","en_us":"Richelieu"},"ship_type_id":7,"id":100,"_id":"qYySAovCnmgN7j7v","navy":"mn"}
 {"ship_type_id":2,"id":50,"_id":"rTcwRUa6ruzaEqeS","speed_rule":"high-3","name":{"en_us":"Sendai","ja_jp":"川内","zh_cn":"川内"}}
 {"ship_type_id":9,"id":38,"_id":"s4IsfZ3yRCMr7V5U","speed_rule":"high-3","name":{"en_us":"Chitose","ja_jp":"千歳","zh_cn":"千岁"}}
+{"name":{"ja_jp":"改伊勢","zh_cn":"改伊势","en_us":"Revised Ise"},"ship_type_id":33,"id":113,"_id":"s5BBroTMtfkzbgpJ","capabilities":{"anti_air_rocket_barrage":"high"},"speed_rule":"low-2"}
 {"ship_type_id":14,"id":67,"_id":"sqbMptvXyvskgG6W","speed_rule":"low-3","name":{"en_us":"Junsen Type B Kai Ni","ja_jp":"巡潜乙（改二）","zh_cn":"巡潜乙（改二）"}}
 {"ship_type_id":1,"id":20,"_id":"ssTgmPb3uPu3CxBy","speed_rule":"high-3","name":{"en_us":"Asashio","ja_jp":"朝潮","zh_cn":"朝潮"}}
 {"ship_type_id":2,"id":48,"_id":"t84eJdJn5UOoVByp","speed_rule":"high-3","name":{"en_us":"Kuma","ja_jp":"球磨","zh_cn":"球磨"}}
