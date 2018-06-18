@@ -5100,6 +5100,22 @@ body.mod-capture #tip {
 .link_equipment > em.zero {
   color: rgba(170, 170, 170, 0.65);
 }
+.link_equipment > em.max {
+  background: url(/!/assets/images/improve-max.svg) no-repeat 100% 50%;
+  background-size: contain;
+  color: transparent;
+  overflow: hidden;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+  left: 10px;
+}
+.link_equipment > em.max::before {
+  content: initial;
+}
 .flexgrid.list-ship {
   flex-flow: row wrap;
   justify-content: flex-start;
@@ -6720,6 +6736,33 @@ body.mod-capture #tip {
   font-size: 12px;
   justify-content: center;
 }
+.tablelist-equipments .tablelist-body dl.has-bonus dt::before,
+.tablelist-equipments .tablelist-body dl.has-bonus dt::after {
+  content: "";
+  position: absolute;
+  transform: scale(0.5);
+  transform-origin: 50% 50%;
+  margin: -1px 0 0 7px;
+}
+.tablelist-equipments .tablelist-body dl.has-bonus dt::before {
+  border: 12px solid transparent;
+  border-bottom-color: #8fffc5;
+  left: 0;
+  top: -4px;
+}
+.tablelist-equipments .tablelist-body dl.has-bonus dt::after {
+  width: 8px;
+  height: 10px;
+  background: #8fffc5;
+  left: 8px;
+  top: 11px;
+}
+.tablelist-equipments .tablelist-body dl.has-bonus.disabled dt::before {
+  border-bottom-color: #808080;
+}
+.tablelist-equipments .tablelist-body dl.has-bonus.disabled dt::after {
+  background: #808080;
+}
 .tablelist-equipments > .msgs {
   background: rgba(22, 64, 42, 0.65);
   color: #a3d9bd;
@@ -7297,6 +7340,16 @@ body.mod-capture #tip {
   .tablelist-equipments .tablelist-header dl dd {
     flex-basis: 24px;
     transform: rotate(-30deg);
+  }
+  .tablelist-equipments .tablelist-body dl.has-bonus dt::before,
+  .tablelist-equipments .tablelist-body dl.has-bonus dt::after {
+    content: initial;
+  }
+  .tablelist-equipments .tablelist-body dl.has-bonus dt {
+    color: #8fffc5;
+  }
+  .tablelist-equipments .tablelist-body dl.has-bonus.disabled dt {
+    color: inherit;
   }
   .tablelist-equipments .tablelist-body dl dd {
     flex-basis: 24px;

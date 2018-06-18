@@ -3091,7 +3091,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
     location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20180603';
+_g.db_version = '20180617';
 
 _g.bgimg_count=26;
 
@@ -4022,7 +4022,12 @@ _tmpl.link_equipment = function (equipment, tagName, returnHTML, improvementStar
         var equipmentId = equipment['id'];
     }
 
-    return _tmpl.export('<' + tagName + (tagName == 'a' ? ' href="?infos=equipment&id=' + equipmentId + '"' : '') + ' class="link_equipment"' + ' data-equipmentid="' + equipmentId + '"' + ' data-tip-position="right"' + ' data-infos="[[EQUIPMENT::' + equipmentId + ']]"' + ' data-tip="[[EQUIPMENT::' + equipmentId + ']]"' + '>' + '<i style="background-image:url(/!/assets/images/itemicon/' + equipment.getIconId() + '.png)"></i>' + '<span>' + equipment.getName(!0) + '</span>' + (improvementStar !== null ? '<em' + (improvementStar <= 0 ? ' class="zero"' : '') + '>+' + improvementStar + '</em>' : '') + '</' + tagName + '>', returnHTML);
+    return _tmpl.export('<' + tagName + (tagName == 'a' ? ' href="?infos=equipment&id=' + equipmentId + '"' : '') + ' class="link_equipment"' + ' data-equipmentid="' + equipmentId + '"' + ' data-tip-position="right"' + ' data-infos="[[EQUIPMENT::' + equipmentId + ']]"' + ' data-tip="[[EQUIPMENT::' + equipmentId + ']]"' + '>' + '<i style="background-image:url(/!/assets/images/itemicon/' + equipment.getIconId() + '.png)"></i>' + '<span>' + equipment.getName(!0) + '</span>' + function () {
+        if (typeof improvementStar === 'undefined' || improvementStar === null) return '';
+        if (improvementStar >= 10) return '<em class="max"></em>';
+        if (improvementStar <= 0) return '<em class="zero">+0</em>';
+        return '<em>+' + improvementStar + '</em>';
+    }() + '</' + tagName + '>', returnHTML);
 };
 
 _tmpl.link_ship = function (ship, tagName, returnHTML, mode, extraIllust) {
@@ -7404,7 +7409,7 @@ var InfosFleetShipEquipment = function () {
                     var ship = shipId && _g.data.ships[shipId];
 
                     var shipExtraSlotExtra = shipId && ship.additional_exslot_item_ids;
-                    var shipCanEquip = shipId ? ship.getEquipmentTypes() : [];
+                    var shipCanEquip = shipId ? ship.getEquipmentTypes(this.index) : [];
 
                     var types = shipId ? shipCanEquip : [];
                     var isExtraSlot = !1;
@@ -7425,6 +7430,11 @@ var InfosFleetShipEquipment = function () {
                     TablelistEquipments.isExtraSlot = isExtraSlot;
                     TablelistEquipments.types = types;
                     TablelistEquipments.shipId = this.infosParent.shipId || 'FIELD';
+                    try {
+                        TablelistEquipments.currentSelected = this.infosParent.data[2] || [];
+                    } catch (e) {
+                        TablelistEquipments.currentSelected = [];
+                    }
                     TablelistEquipments.extraEquipments = this.extraEquipments ? this.extraEquipments.concat() : [];
                     TablelistEquipments.extraEquipments = TablelistEquipments.extraEquipments.filter(function (eid) {
                         console.log(TablelistEquipments.types, _g.data.items[eid].type);
@@ -8155,7 +8165,19 @@ modal.bonuses = function () {
                     stat = _arr[0];
 
                 if (isNaN(bonus[stat]) || !bonus[stat]) return !1;
-                r += '<span class="stat" data-stat="' + stat + '">+' + bonus[stat] + '</span>';
+
+                var content = '+' + bonus[stat];
+                switch (stat) {
+                    case 'range':
+                        {
+                            if (bonus[stat] <= 1) content = '射程提高一档';
+                            break;
+                        }
+                }
+
+                if (typeof bonus[stat] === 'string') content += ' (该属性不叠加)';
+
+                r += '<span class="stat" data-stat="' + stat + '">' + content + '</span>';
             });
             return r;
         },
@@ -8258,6 +8280,9 @@ modal.bonuses = function () {
 
             return $('<div class="bonus bonus-set">' + condition + '<div class="equipments">' + bonus.list.map(function (item) {
                 if (!isNaN(item)) return _tmpl.link_equipment(item, _this18.type === 'equipment' && item == _this18.equipment.id ? 'span' : undefined, !0);
+                if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' && item.id) {
+                    return _tmpl.link_equipment(item.id, _this18.type === 'equipment' && item.id == _this18.equipment.id ? 'span' : undefined, !0, item.star);
+                }
                 if (typeof item === 'string') {
                     switch (item) {
                         case 'SurfaceRadar':
@@ -9181,6 +9206,8 @@ var TablelistEquipments = function (_Tablelist3) {
 
         _this22.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['对空', 'aa'], ['对潜', 'asw'], ['爆装', 'bomb'], ['命中', 'hit'], ['装甲', 'armor'], ['回避', 'evasion'], ['索敌', 'los'], ['射程', 'range'], ['可改修', 'improvable']];
 
+        _this22.equipmentsHasBonus = {};
+
         _frame.app_main.loading.push('tablelist_' + _this22._index);
         _frame.app_main.is_loaded = !1;
 
@@ -9216,6 +9243,44 @@ var TablelistEquipments = function (_Tablelist3) {
                         opacity: 1
                     }).addClass('extra');
                 });
+            }
+
+            if (!TablelistEquipments.shipId || isNaN(TablelistEquipments.shipId)) {
+                for (var id in this.equipmentsHasBonus) {
+                    this.equipmentsHasBonus[id].removeClass('disabled');
+                }
+            } else {
+                (function () {
+                    var count = {};
+                    if (Array.isArray(TablelistEquipments.currentSelected)) {
+                        TablelistEquipments.currentSelected.forEach(function (_id) {
+                            var id = parseInt(_id);
+                            if (typeof count[id] === 'undefined') count[id] = 0;
+                            count[id]++;
+                        });
+                    }
+
+                    var _loop4 = function _loop4(_id3) {
+                        var equipment = _g.data.items[_id3];
+                        var ship = _g.data.ships[TablelistEquipments.shipId];
+                        var filtered = equipment.getBonuses().filter(function (bonus) {
+                            if (!KC.check.ship(ship, bonus.ship)) return !1;
+                            if (bonus.equipment && _typeof(bonus.bonusCount) === 'object') {
+                                var max = parseInt(Object.keys(bonus.bonusCount).sort(function (a, b) {
+                                    return parseInt(b) - parseInt(a);
+                                })[0]);
+                                var current = count[bonus.equipment] || 0;
+                                if (current >= max) return !1;
+                            }
+                            return !0;
+                        });
+                        if (filtered.length) _this23.equipmentsHasBonus[_id3].removeClass('disabled');else _this23.equipmentsHasBonus[_id3].addClass('disabled');
+                    };
+
+                    for (var _id3 in _this23.equipmentsHasBonus) {
+                        _loop4(_id3);
+                    }
+                })();
             }
         }
     }, {
@@ -9351,6 +9416,21 @@ var TablelistEquipments = function (_Tablelist3) {
                 } else {
                     var etype = parseInt(tr.attr('data-equipmenttype')) || -1,
                         eid = parseInt(tr.attr('data-equipmentid'));
+
+                    var parse = function parse() {
+                        var equipment = _g.data.items[eid];
+                        if (equipment) {
+                            var bonuses = equipment.getBonuses();
+                            if (Array.isArray(bonuses) && bonuses.length) {
+                                _this25.equipmentsHasBonus[eid] = tr;
+                                tr.addClass('has-bonus');
+                            }
+                        } else {
+                            setTimeout(parse, 100);
+                        }
+                    };
+                    parse();
+
                     tr.on('click', function (e, forceInfos) {
                         if (!forceInfos && _frame.app_main.is_mode_selection()) {
                             e.preventDefault();
@@ -9395,6 +9475,7 @@ TablelistEquipments.gen_helper_equipable_on = function (type_id) {
 TablelistEquipments.types = [];
 TablelistEquipments.shipId = null;
 TablelistEquipments.shipIdLast = null;
+TablelistEquipments.currentSelected = [];
 
 var TablelistFleets = function (_Tablelist4) {
     _inherits(TablelistFleets, _Tablelist4);
