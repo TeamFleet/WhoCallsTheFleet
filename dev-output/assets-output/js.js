@@ -3091,7 +3091,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
     location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20180617';
+_g.db_version = '20180701';
 
 _g.bgimg_count = 0;
 
@@ -8183,6 +8183,15 @@ modal.bonuses = function () {
         },
         renderConditionShips: function renderConditionShips(bonus) {
             var condition = '';
+            if (typeof bonus.ship.isType !== 'undefined') {
+                var types = Array.isArray(bonus.ship.isType) ? bonus.ship.isType : [bonus.ship.isType];
+                condition += '<div class="condition">' + types.map(function (typeId) {
+                    var type = _g.data.ship_types[parseInt(typeId)];
+                    return type.name.zh_cn || type.name.ja_jp;
+                }).map(function (s) {
+                    return '<span class="item ship-class">' + s + '</span>';
+                }).join('') + '</div>';
+            }
             if (typeof bonus.ship.isClass !== 'undefined') {
                 var classes = Array.isArray(bonus.ship.isClass) ? bonus.ship.isClass : [bonus.ship.isClass];
                 condition += '<div class="condition">' + classes.map(function (classId) {

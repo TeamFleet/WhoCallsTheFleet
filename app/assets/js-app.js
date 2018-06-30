@@ -7559,6 +7559,15 @@ modal.bonuses = function () {
         },
         renderConditionShips: function renderConditionShips(bonus) {
             var condition = '';
+            if (typeof bonus.ship.isType !== 'undefined') {
+                var types = Array.isArray(bonus.ship.isType) ? bonus.ship.isType : [bonus.ship.isType];
+                condition += '<div class="condition">' + types.map(function (typeId) {
+                    var type = _g.data.ship_types[parseInt(typeId)];
+                    return type.name.zh_cn || type.name.ja_jp;
+                }).map(function (s) {
+                    return '<span class="item ship-class">' + s + '</span>';
+                }).join('') + '</div>';
+            }
             if (typeof bonus.ship.isClass !== 'undefined') {
                 var classes = Array.isArray(bonus.ship.isClass) ? bonus.ship.isClass : [bonus.ship.isClass];
                 condition += '<div class="condition">' + classes.map(function (classId) {

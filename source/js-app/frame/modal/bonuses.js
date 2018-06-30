@@ -91,6 +91,20 @@ modal.bonuses = (() => ({
     },
     renderConditionShips: bonus => {
         let condition = ''
+        if (typeof bonus.ship.isType !== 'undefined') {
+            const types = Array.isArray(bonus.ship.isType)
+                ? bonus.ship.isType
+                : [bonus.ship.isType]
+            condition += `<div class="condition">`
+                + types
+                    .map(typeId => {
+                        const type = _g.data.ship_types[parseInt(typeId)]
+                        return (type.name.zh_cn || type.name.ja_jp)
+                    })
+                    .map(s => `<span class="item ship-class">${s}</span>`)
+                    .join('')
+                + `</div>`
+        }
         if (typeof bonus.ship.isClass !== 'undefined') {
             const classes = Array.isArray(bonus.ship.isClass)
                 ? bonus.ship.isClass
