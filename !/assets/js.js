@@ -3091,7 +3091,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
     location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20180701';
+_g.db_version = '20180708';
 
 _g.bgimg_count=26;
 
@@ -8148,16 +8148,24 @@ modal.bonuses = function () {
                 if (_typeof(bonus.equipments) === 'object') bonuses.set.push(bonus);else bonuses.single.push(bonus);
             });
 
-            bonuses.single.forEach(function (bonus) {
-                cache[id] = cache[id].add(_this16.renderBonusSingle(bonus));
-            });
-            bonuses.set.forEach(function (bonus) {
-                cache[id] = cache[id].add(_this16.renderBonusSet(bonus));
-            });
+            if (bonuses.single.length) {
+                bonuses.single.forEach(function (bonus) {
+                    cache[id] = cache[id].add(_this16.renderBonusSingle(bonus));
+                });
+            }
+            if (bonuses.set.length) {
+                cache[id] = cache[id].add(this.renderSubTitle('set'));
+                bonuses.set.forEach(function (bonus) {
+                    cache[id] = cache[id].add(_this16.renderBonusSet(bonus));
+                });
+            }
 
             return cache[id];
         },
 
+        renderSubTitle: function renderSubTitle(type) {
+            return $('<div class="bonus bonus-title">' + (type === 'set' ? '套装加成' : '') + '</div>');
+        },
         renderStat: function renderStat(bonus) {
             var r = '';
             _g.stats.forEach(function (arr) {
@@ -8289,6 +8297,11 @@ modal.bonuses = function () {
 
             return $('<div class="bonus bonus-set">' + condition + '<div class="equipments">' + bonus.list.map(function (item) {
                 if (!isNaN(item)) return _tmpl.link_equipment(item, _this18.type === 'equipment' && item == _this18.equipment.id ? 'span' : undefined, !0);
+                if (Array.isArray(item)) {
+                    return item.map(function (item) {
+                        return _tmpl.link_equipment(item, _this18.type === 'equipment' && item == _this18.equipment.id ? 'span' : undefined, !0);
+                    }).join(' / ');
+                }
                 if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' && item.id) {
                     return _tmpl.link_equipment(item.id, _this18.type === 'equipment' && item.id == _this18.equipment.id ? 'span' : undefined, !0, item.star);
                 }
@@ -9274,6 +9287,7 @@ var TablelistEquipments = function (_Tablelist3) {
                         var ship = _g.data.ships[TablelistEquipments.shipId];
                         var filtered = equipment.getBonuses().filter(function (bonus) {
                             if (!KC.check.ship(ship, bonus.ship)) return !1;
+
                             if (bonus.equipment && _typeof(bonus.bonusCount) === 'object') {
                                 var max = parseInt(Object.keys(bonus.bonusCount).sort(function (a, b) {
                                     return parseInt(b) - parseInt(a);
@@ -9283,6 +9297,7 @@ var TablelistEquipments = function (_Tablelist3) {
                             }
                             return !0;
                         });
+
                         if (filtered.length) _this23.equipmentsHasBonus[_id3].removeClass('disabled');else _this23.equipmentsHasBonus[_id3].addClass('disabled');
                     };
 

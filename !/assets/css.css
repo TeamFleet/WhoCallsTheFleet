@@ -14383,6 +14383,9 @@ body > .modal.hastitle.modal-bonuses > div > header > span {
 body > .modal.hastitle.modal-bonuses section {
   max-height: calc(100vh - 100px);
 }
+body > .modal.hastitle.modal-bonuses section .bonus {
+  position: relative;
+}
 body > .modal.hastitle.modal-bonuses section .bonus::after {
   content: "";
   display: block;
@@ -14688,6 +14691,22 @@ body > .modal.hastitle.modal-bonuses section .bonus-set .ships + .equipments::be
 }
 body > .modal.hastitle.modal-bonuses section .bonus-set .stats .info {
   padding-left: 26px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus-title {
+  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
+  font-size: 18px;
+  font-style: italic;
+  line-height: 1.25em;
+}
+body > .modal.hastitle.modal-bonuses section .bonus-title::after {
+  position: absolute;
+  height: auto;
+  top: -9px;
+  bottom: -10px;
+  left: -10px;
+  width: 250px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.25) 50%, transparent);
+  z-index: -1;
 }
 body > .modal.hastitle.modal-bonuses.modal-bonuses-ship > div {
   padding-top: 60px !important;
