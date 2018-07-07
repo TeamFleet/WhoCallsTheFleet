@@ -84,6 +84,7 @@ class TablelistEquipments extends Tablelist {
                     .filter(bonus => {
                         if (!KC.check.ship(ship, bonus.ship))
                             return false
+                        // console.log(bonus)
                         if (bonus.equipment && typeof bonus.bonusCount === 'object') {
                             const max = parseInt(Object.keys(bonus.bonusCount).sort((a, b) => parseInt(b) - parseInt(a))[0])
                             const current = count[bonus.equipment] || 0
@@ -91,6 +92,7 @@ class TablelistEquipments extends Tablelist {
                         }
                         return true
                     })
+                // console.log(id, equipment._name, equipment.getBonuses(), filtered)
                 if (filtered.length)
                     this.equipmentsHasBonus[id].removeClass('disabled')
                 else

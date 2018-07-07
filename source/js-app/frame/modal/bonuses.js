@@ -57,16 +57,29 @@ modal.bonuses = (() => ({
                 bonuses.single.push(bonus)
         })
 
-        bonuses.single.forEach(bonus => {
-            cache[id] = cache[id].add(this.renderBonusSingle(bonus))
-        })
-        bonuses.set.forEach(bonus => {
-            cache[id] = cache[id].add(this.renderBonusSet(bonus))
-        })
+        if (bonuses.single.length) {
+            // cache[id] = cache[id].add(this.renderSubTitle('single'))
+            bonuses.single.forEach(bonus => {
+                cache[id] = cache[id].add(this.renderBonusSingle(bonus))
+            })
+        }
+        if (bonuses.set.length) {
+            cache[id] = cache[id].add(this.renderSubTitle('set'))
+            bonuses.set.forEach(bonus => {
+                cache[id] = cache[id].add(this.renderBonusSet(bonus))
+            })
+        }
 
         return cache[id]
     },
 
+    renderSubTitle: type => {
+        return $(
+            `<div class="bonus bonus-title">`
+            + (type === 'set' ? '套装加成' : '')
+            + `</div>`
+        )
+    },
     renderStat: (bonus) => {
         let r = ''
         _g.stats.forEach(arr => {
@@ -243,6 +256,13 @@ modal.bonuses = (() => ({
                             this.type === 'equipment' && item == this.equipment.id ? 'span' : undefined,
                             true
                         )
+                    if (Array.isArray(item)) {
+                        return item.map(item => _tmpl.link_equipment(
+                            item,
+                            this.type === 'equipment' && item == this.equipment.id ? 'span' : undefined,
+                            true
+                        )).join(' / ')
+                    }
                     if (typeof item === 'object' && item.id) {
                         return _tmpl.link_equipment(
                             item.id,

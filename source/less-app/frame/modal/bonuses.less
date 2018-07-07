@@ -47,6 +47,7 @@ body > .modal.hastitle.modal-bonuses{
         @icon-width: 36px;
         
         .bonus{
+            position: relative;
             &::after{
                 content: "";
                 display: block;
@@ -298,6 +299,22 @@ body > .modal.hastitle.modal-bonuses{
                 .info{
                     padding-left: 26px;
                 }
+            }
+        }
+        .bonus-title{
+            font-family: @font_famliy_Song;
+            font-size: 18px;
+            font-style: italic;
+            line-height: 1.25em;
+            &::after{
+                position: absolute;
+                height: auto;
+                top: -9px;
+                bottom: -10px;
+                left: -10px;
+                width: 250px;
+                background: linear-gradient(to right, fade(#fff, 25%) 50%, transparent);
+                z-index: -1;
             }
         }
     }
