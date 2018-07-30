@@ -4099,41 +4099,41 @@ _frame.modal = {
 
 	defaults: {
 		// modal追加class
-			'classname': 	'',
+		'classname': '',
 
 		// 尺寸，CSS标准
-			//'width': 		'75%',
-			//'height': 	'75%',
+		//'width': 		'75%',
+		//'height': 	'75%',
 
 		// 是否显示模糊背景，模拟毛玻璃特效
-			'showBlured': 	true,
+		'showBlured': true,
 
 		// 是否允许点击空白区域隐藏modal
-			//'blank_to_close': 	false
-		
+		//'blank_to_close': 	false
+
 		// 隐藏/关闭时，使用 detach 而非 remove
-			// 'detach':	false
-		
+		// 'detach':	false
+
 		// 关闭时运行的函数
-			// 'onClose': 	function(){}
+		// 'onClose': 	function(){}
 	},
 
-	show: function(content, title, options, callback){
-		clearTimeout( this.hide_timeout )
+	show: function (content, title, options, callback) {
+		clearTimeout(this.hide_timeout)
 		this.hide_timeout = null
 
 		this.dom.container.addClass('show')
 		this.showing = true
 
-		var settings = $.extend( {}, this.defaults, options );
+		var settings = $.extend({}, this.defaults, options);
 
-		if( settings.detach )
+		if (settings.detach)
 			this.content = content
 
 		//this.dom.content.empty()
-		content.appendTo( this.dom.content )
-		
-		if( settings.onClose )
+		content.appendTo(this.dom.content)
+
+		if (settings.onClose)
 			_frame.modal.dom.container.on('close', settings.onClose)
 
 		//this.dom.container.removeClass( this.dom.container.data('customclass') )
@@ -4143,69 +4143,71 @@ _frame.modal = {
 		//	this.dom.blured = null
 		//}
 
-		if( title ){
+		if (title) {
 			this.dom.titlebar.html(title)
 			this.dom.container.addClass('hastitle')
-		}else{
+		} else {
 			this.dom.titlebar.html('')
 			this.dom.container.removeClass('hastitle')
 		}
 
 		this.dom.box.css({
-			'width': 	settings.width || null,
-			'height': 	settings.height || null
+			'width': settings.width || null,
+			'height': settings.height || null
 		})
 
-		if( settings.showBlured ){
-			if( !this.dom.blured && typeof node != 'undefined' ){
-				node.win.capturePage(function(datauri){
+		if (settings.showBlured) {
+			if (!this.dom.blured && typeof node != 'undefined') {
+				node.win.capturePage(function (datauri) {
 					//_frame.modal.dom.blured = $('<img/>').attr('src', datauri).appendTo(_frame.modal.dom.container)
 					//_frame.modal.dom.blured = $('<s/>').css('background-image', 'url('+datauri+')').appendTo(_frame.modal.dom.container)
 					/*_frame.modal.dom.blured = $('<s/>')
 												.append( $('<img/>').attr('src', datauri) )
 												.appendTo(_frame.modal.dom.container)*/
 					_frame.modal.dom.blured = $('<img/>').attr('src', datauri)
-												.appendTo( _frame.modal.dom.bg )
+						.appendTo(_frame.modal.dom.bg)
 				}, {
-					format: 'jpg',
-					datatype: 'datauri'
-				})
+						format: 'jpg',
+						datatype: 'datauri'
+					})
 				this.dom.container.addClass('mod-blur-shot')
 			}
 		}//else{
 		//	this.dom.container.removeClass('mod-blur-shot')
 		//}
 
-		setTimeout(function(){
+		setTimeout(function () {
 			_frame.modal.dom.container.addClass('on ' + settings.classname).data('customclass', settings.classname)
 		}, 0)
-		_p.initDOM( this.dom.content )
+		_p.initDOM(this.dom.content)
 
-		this.dom.bg.off('click.blank_to_close').on('click.blank_to_close', function(){
-			if( settings.blank_to_close ){
+		this.dom.bg.off('click.blank_to_close').on('click.blank_to_close', function () {
+			if (settings.blank_to_close) {
 				_frame.modal.dom.btn_close.trigger('click')
 			}
 		})
 
-		if( callback )
-			callback( this.dom.content )
+		if (callback)
+			callback(this.dom.content)
+
+		this.dom.content.scrollTop(0)
 	},
 
-	hide: function(){
-		if( !this.showing )
+	hide: function () {
+		if (!this.showing)
 			return false
 
-		clearTimeout( this.hide_timeout )
+		clearTimeout(this.hide_timeout)
 		this.hide_timeout = null
 		this.dom.container.removeClass('on')
 	},
 	//hide_timeout,
 
-	reset: function(){
+	reset: function () {
 		this.resetContent()
 
-		if( this.dom.blured ){
-			if( !parseInt(this.dom.container.css('opacity')) ){
+		if (this.dom.blured) {
+			if (!parseInt(this.dom.container.css('opacity'))) {
 				this.dom.blured.remove()
 				this.dom.blured = null
 			}
@@ -4213,15 +4215,15 @@ _frame.modal = {
 		}
 	},
 
-	resetContent: function(){
-		if( this.content ){
+	resetContent: function () {
+		if (this.content) {
 			this.content.detach()
 			this.content = null
 		}
-		
+
 		this.dom.content.empty()
 
-		this.dom.container.removeClass( this.dom.container.data('customclass') )
+		this.dom.container.removeClass(this.dom.container.data('customclass'))
 		this.dom.container.data('customclass', '')
 
 		this.dom.titlebar.html('')
@@ -4236,37 +4238,37 @@ _frame.modal = {
 
 
 // 初始化
-_frame.modal.init = function(){
-	if( this.is_init )
+_frame.modal.init = function () {
+	if (this.is_init)
 		return true
 
 	this.dom.container = $('<div class="modal" />').on({
-										//'transitionend.modal_hide': function(e){
-										'transitionend.modal_hide webkitTransitionEnd.modal_hide mozTransitionEnd.modal_hide': function(e){
-											if( _frame.modal.showing
-												&& e.currentTarget == e.target
-												&& e.originalEvent.propertyName == 'opacity'
-												&& _frame.modal.dom.container.css('opacity') == 0
-											){
-												_frame.modal.hide_timeout = setTimeout(function(){
-													_frame.modal.reset()
-													_frame.modal.dom.container.removeClass('show')
-														//.off('transitionend.modal_hide')
-													_frame.modal.showing = false
-													_frame.modal.dom.container.trigger('close').off('close')
-												}, 10)
-											}
-										}
-									}).prependTo($body)
-		this.dom.box = $('<div/>').appendTo(this.dom.container)
-			this.dom.titlebar = $('<header/>').appendTo(this.dom.box)
-			this.dom.content = $('<section/>').appendTo(this.dom.box)
-			this.dom.btn_close = $('<button class="close" />').html('&times;').on('click',function(){_frame.modal.hide()}).appendTo(this.dom.box)
-		this.dom.bg = $('<s/>').appendTo(this.dom.container)
+		//'transitionend.modal_hide': function(e){
+		'transitionend.modal_hide webkitTransitionEnd.modal_hide mozTransitionEnd.modal_hide': function (e) {
+			if (_frame.modal.showing
+				&& e.currentTarget == e.target
+				&& e.originalEvent.propertyName == 'opacity'
+				&& _frame.modal.dom.container.css('opacity') == 0
+			) {
+				_frame.modal.hide_timeout = setTimeout(function () {
+					_frame.modal.reset()
+					_frame.modal.dom.container.removeClass('show')
+					//.off('transitionend.modal_hide')
+					_frame.modal.showing = false
+					_frame.modal.dom.container.trigger('close').off('close')
+				}, 10)
+			}
+		}
+	}).prependTo($body)
+	this.dom.box = $('<div/>').appendTo(this.dom.container)
+	this.dom.titlebar = $('<header/>').appendTo(this.dom.box)
+	this.dom.content = $('<section/>').appendTo(this.dom.box)
+	this.dom.btn_close = $('<button class="close" />').html('&times;').on('click', function () { _frame.modal.hide() }).appendTo(this.dom.box)
+	this.dom.bg = $('<s/>').appendTo(this.dom.container)
 
 	_hotkey.bind(
 		'27',
-		function(){
+		function () {
 			_frame.modal.hide()
 		}
 	)
@@ -4275,6 +4277,7 @@ _frame.modal.init = function(){
 	this.is_init = true
 	return true
 }
+
 /* Tooltip ----------------------------------------------------------------------------------------------------
 Tooltip
 	_p.tip.show(HTMLcontent, this[, options])
@@ -6222,7 +6225,7 @@ var d={x:c.clientX,y:c.clientY};b.push(d);var e=function(a,b){var c=a.indexOf(b)
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nfunction _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }\n\n/**\r\n * 装备额外属性收益\r\n * @module\r\n */\n\n/**\r\n * @member {Number} [equipment] 单一装备\r\n * @member {Object} [equipments] 条件：装备组合\r\n * @member {Object} ship 条件：匹配的舰娘\r\n * @member {Object} [bonus] 收益。数字表示可叠加，字符串表示仅单次\r\n * @member {Object} [bonusCount] 仅当为单一装备时可用：不同装备数量的收益\r\n * @member {Object} [bonusImprove] 仅当为单一装备时可用：不同改修星级的收益\r\n * @member {Array} [list] 显示的内容\r\n */\nmodule.exports = [].concat(_toConsumableArray(__webpack_require__(/*! ./小口径主砲/12cm単装砲改二 */ \"./node_modules/kckit/src/data/bonus/小口径主砲/12cm単装砲改二.js\")), _toConsumableArray(__webpack_require__(/*! ./小口径主砲/12.7cm単装高角砲(後期型) */ \"./node_modules/kckit/src/data/bonus/小口径主砲/12.7cm単装高角砲(後期型).js\")), _toConsumableArray(__webpack_require__(/*! ./小口径主砲/12.7cm連装砲A型改二 */ \"./node_modules/kckit/src/data/bonus/小口径主砲/12.7cm連装砲A型改二.js\")), _toConsumableArray(__webpack_require__(/*! ./小口径主砲/12.7cm連装砲A型改三(戦時改修)+高射装置 */ \"./node_modules/kckit/src/data/bonus/小口径主砲/12.7cm連装砲A型改三(戦時改修)+高射装置.js\")), _toConsumableArray(__webpack_require__(/*! ./小口径主砲/12.7cm連装砲B型改二 */ \"./node_modules/kckit/src/data/bonus/小口径主砲/12.7cm連装砲B型改二.js\")), _toConsumableArray(__webpack_require__(/*! ./小口径主砲/12.7cm連装砲B型改四(戦時改修)+高射装置 */ \"./node_modules/kckit/src/data/bonus/小口径主砲/12.7cm連装砲B型改四(戦時改修)+高射装置.js\")), _toConsumableArray(__webpack_require__(/*! ./小口径主砲/12.7cm連装砲C型改二 */ \"./node_modules/kckit/src/data/bonus/小口径主砲/12.7cm連装砲C型改二.js\")), _toConsumableArray(__webpack_require__(/*! ./小口径主砲/12.7cm連装砲D型改二 */ \"./node_modules/kckit/src/data/bonus/小口径主砲/12.7cm連装砲D型改二.js\")), _toConsumableArray(__webpack_require__(/*! ./大口径主砲/35.6cm連装砲(ダズル迷彩) */ \"./node_modules/kckit/src/data/bonus/大口径主砲/35.6cm連装砲(ダズル迷彩).js\")), _toConsumableArray(__webpack_require__(/*! ./大口径主砲/35.6cm三連装砲改(ダズル迷彩仕様) */ \"./node_modules/kckit/src/data/bonus/大口径主砲/35.6cm三連装砲改(ダズル迷彩仕様).js\")), _toConsumableArray(__webpack_require__(/*! ./大口径主砲/41cm三連装砲改二 */ \"./node_modules/kckit/src/data/bonus/大口径主砲/41cm三連装砲改二.js\")), _toConsumableArray(__webpack_require__(/*! ./魚雷/61cm三連装(酸素)魚雷後期型 */ \"./node_modules/kckit/src/data/bonus/魚雷/61cm三連装(酸素)魚雷後期型.js\")), _toConsumableArray(__webpack_require__(/*! ./魚雷/61cm四連装(酸素)魚雷 */ \"./node_modules/kckit/src/data/bonus/魚雷/61cm四連装(酸素)魚雷.js\")), _toConsumableArray(__webpack_require__(/*! ./魚雷/61cm四連装(酸素)魚雷後期型 */ \"./node_modules/kckit/src/data/bonus/魚雷/61cm四連装(酸素)魚雷後期型.js\")), _toConsumableArray(__webpack_require__(/*! ./水上機/瑞雲(六三四空) */ \"./node_modules/kckit/src/data/bonus/水上機/瑞雲(六三四空).js\")), _toConsumableArray(__webpack_require__(/*! ./水上機/瑞雲12型(六三四空) */ \"./node_modules/kckit/src/data/bonus/水上機/瑞雲12型(六三四空).js\")), _toConsumableArray(__webpack_require__(/*! ./水上機/瑞雲(六三四空／熟練) */ \"./node_modules/kckit/src/data/bonus/水上機/瑞雲(六三四空／熟練).js\")), _toConsumableArray(__webpack_require__(/*! ./艦上機/彗星 */ \"./node_modules/kckit/src/data/bonus/艦上機/彗星.js\")), _toConsumableArray(__webpack_require__(/*! ./艦上機/彗星(六〇一空) */ \"./node_modules/kckit/src/data/bonus/艦上機/彗星(六〇一空).js\")), _toConsumableArray(__webpack_require__(/*! ./艦上機/彗星一二型甲 */ \"./node_modules/kckit/src/data/bonus/艦上機/彗星一二型甲.js\")), _toConsumableArray(__webpack_require__(/*! ./艦上機/彗星(江草隊) */ \"./node_modules/kckit/src/data/bonus/艦上機/彗星(江草隊).js\")), _toConsumableArray(__webpack_require__(/*! ./艦上機/彗星二二型(六三四空) */ \"./node_modules/kckit/src/data/bonus/艦上機/彗星二二型(六三四空).js\")), _toConsumableArray(__webpack_require__(/*! ./艦上機/彗星二二型(六三四空／熟練) */ \"./node_modules/kckit/src/data/bonus/艦上機/彗星二二型(六三四空／熟練).js\")), _toConsumableArray(__webpack_require__(/*! ./艦上機/二式艦上偵察機 */ \"./node_modules/kckit/src/data/bonus/艦上機/二式艦上偵察機.js\")), _toConsumableArray(__webpack_require__(/*! ./増設バルジ/北方迷彩(＋北方装備) */ \"./node_modules/kckit/src/data/bonus/増設バルジ/北方迷彩(＋北方装備).js\")));\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/bonus/index.js?");
+eval("\n\nfunction _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }\n\n/**\r\n * 装备额外属性收益\r\n * @module\r\n */\n\n/**\r\n * @member {Number} [equipment] 单一装备\r\n * @member {Object} [equipments] 条件：装备组合\r\n * @member {Object} ship 条件：匹配的舰娘\r\n * @member {Object} [bonus] 收益。数字表示可叠加，字符串表示仅单次\r\n * @member {Object} [bonusCount] 仅当为单一装备时可用：不同装备数量的收益\r\n * @member {Object} [bonusImprove] 仅当为单一装备时可用：不同改修星级的收益\r\n * @member {Array} [list] 显示的内容\r\n */\nmodule.exports = [].concat(_toConsumableArray(__webpack_require__(/*! ./小口径主砲/12cm単装砲改二 */ \"./node_modules/kckit/src/data/bonus/小口径主砲/12cm単装砲改二.js\")), _toConsumableArray(__webpack_require__(/*! ./小口径主砲/12.7cm単装高角砲(後期型) */ \"./node_modules/kckit/src/data/bonus/小口径主砲/12.7cm単装高角砲(後期型).js\")), _toConsumableArray(__webpack_require__(/*! ./小口径主砲/12.7cm連装砲A型改二 */ \"./node_modules/kckit/src/data/bonus/小口径主砲/12.7cm連装砲A型改二.js\")), _toConsumableArray(__webpack_require__(/*! ./小口径主砲/12.7cm連装砲A型改三(戦時改修)+高射装置 */ \"./node_modules/kckit/src/data/bonus/小口径主砲/12.7cm連装砲A型改三(戦時改修)+高射装置.js\")), _toConsumableArray(__webpack_require__(/*! ./小口径主砲/12.7cm連装砲B型改二 */ \"./node_modules/kckit/src/data/bonus/小口径主砲/12.7cm連装砲B型改二.js\")), _toConsumableArray(__webpack_require__(/*! ./小口径主砲/12.7cm連装砲B型改四(戦時改修)+高射装置 */ \"./node_modules/kckit/src/data/bonus/小口径主砲/12.7cm連装砲B型改四(戦時改修)+高射装置.js\")), _toConsumableArray(__webpack_require__(/*! ./小口径主砲/12.7cm連装砲C型改二 */ \"./node_modules/kckit/src/data/bonus/小口径主砲/12.7cm連装砲C型改二.js\")), _toConsumableArray(__webpack_require__(/*! ./小口径主砲/12.7cm連装砲D型改二 */ \"./node_modules/kckit/src/data/bonus/小口径主砲/12.7cm連装砲D型改二.js\")), _toConsumableArray(__webpack_require__(/*! ./大口径主砲/35.6cm連装砲(ダズル迷彩) */ \"./node_modules/kckit/src/data/bonus/大口径主砲/35.6cm連装砲(ダズル迷彩).js\")), _toConsumableArray(__webpack_require__(/*! ./大口径主砲/35.6cm三連装砲改(ダズル迷彩仕様) */ \"./node_modules/kckit/src/data/bonus/大口径主砲/35.6cm三連装砲改(ダズル迷彩仕様).js\")), _toConsumableArray(__webpack_require__(/*! ./大口径主砲/41cm三連装砲改二 */ \"./node_modules/kckit/src/data/bonus/大口径主砲/41cm三連装砲改二.js\")), _toConsumableArray(__webpack_require__(/*! ./大口径主砲/16inch Mk.I三連装砲 */ \"./node_modules/kckit/src/data/bonus/大口径主砲/16inch Mk.I三連装砲.js\")), _toConsumableArray(__webpack_require__(/*! ./魚雷/61cm三連装(酸素)魚雷後期型 */ \"./node_modules/kckit/src/data/bonus/魚雷/61cm三連装(酸素)魚雷後期型.js\")), _toConsumableArray(__webpack_require__(/*! ./魚雷/61cm四連装(酸素)魚雷 */ \"./node_modules/kckit/src/data/bonus/魚雷/61cm四連装(酸素)魚雷.js\")), _toConsumableArray(__webpack_require__(/*! ./魚雷/61cm四連装(酸素)魚雷後期型 */ \"./node_modules/kckit/src/data/bonus/魚雷/61cm四連装(酸素)魚雷後期型.js\")), _toConsumableArray(__webpack_require__(/*! ./水上機/瑞雲(六三四空) */ \"./node_modules/kckit/src/data/bonus/水上機/瑞雲(六三四空).js\")), _toConsumableArray(__webpack_require__(/*! ./水上機/瑞雲12型(六三四空) */ \"./node_modules/kckit/src/data/bonus/水上機/瑞雲12型(六三四空).js\")), _toConsumableArray(__webpack_require__(/*! ./水上機/瑞雲(六三四空／熟練) */ \"./node_modules/kckit/src/data/bonus/水上機/瑞雲(六三四空／熟練).js\")), _toConsumableArray(__webpack_require__(/*! ./艦上機/彗星 */ \"./node_modules/kckit/src/data/bonus/艦上機/彗星.js\")), _toConsumableArray(__webpack_require__(/*! ./艦上機/彗星(六〇一空) */ \"./node_modules/kckit/src/data/bonus/艦上機/彗星(六〇一空).js\")), _toConsumableArray(__webpack_require__(/*! ./艦上機/彗星一二型甲 */ \"./node_modules/kckit/src/data/bonus/艦上機/彗星一二型甲.js\")), _toConsumableArray(__webpack_require__(/*! ./艦上機/彗星(江草隊) */ \"./node_modules/kckit/src/data/bonus/艦上機/彗星(江草隊).js\")), _toConsumableArray(__webpack_require__(/*! ./艦上機/彗星二二型(六三四空) */ \"./node_modules/kckit/src/data/bonus/艦上機/彗星二二型(六三四空).js\")), _toConsumableArray(__webpack_require__(/*! ./艦上機/彗星二二型(六三四空／熟練) */ \"./node_modules/kckit/src/data/bonus/艦上機/彗星二二型(六三四空／熟練).js\")), _toConsumableArray(__webpack_require__(/*! ./艦上機/二式艦上偵察機 */ \"./node_modules/kckit/src/data/bonus/艦上機/二式艦上偵察機.js\")), _toConsumableArray(__webpack_require__(/*! ./対空機銃/20連装7inch UP Rocket Launchers */ \"./node_modules/kckit/src/data/bonus/対空機銃/20連装7inch UP Rocket Launchers.js\")), _toConsumableArray(__webpack_require__(/*! ./増設バルジ/北方迷彩(＋北方装備) */ \"./node_modules/kckit/src/data/bonus/増設バルジ/北方迷彩(＋北方装備).js\")));\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/bonus/index.js?");
 
 /***/ }),
 
@@ -6235,6 +6238,18 @@ eval("\n\nfunction _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var 
 
 "use strict";
 eval("\n\n/**\r\n * 装备额外属性收益 - 北方迷彩(＋北方装備)\r\n * \r\n * @module\r\n */\n\nvar _require = __webpack_require__(/*! ../../ships */ \"./node_modules/kckit/src/data/ships.js\"),\n    CL_KumaClassRemodelAll = _require.CL_KumaClassRemodelAll;\n\nmodule.exports = [\n\n// @ 球磨型 改\n{\n    equipment: 268,\n    ship: {\n        isID: CL_KumaClassRemodelAll\n    },\n    bonusCount: {\n        1: {\n            armor: 2,\n            evasion: 7\n        }\n    }\n}];\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/bonus/%E5%A2%97%E8%A8%AD%E3%83%90%E3%83%AB%E3%82%B8/%E5%8C%97%E6%96%B9%E8%BF%B7%E5%BD%A9(%EF%BC%8B%E5%8C%97%E6%96%B9%E8%A3%85%E5%82%99).js?");
+
+/***/ }),
+
+/***/ "./node_modules/kckit/src/data/bonus/大口径主砲/16inch Mk.I三連装砲.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/kckit/src/data/bonus/大口径主砲/16inch Mk.I三連装砲.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nvar _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };\n\n/**\r\n * 装备额外属性收益 - 16inch Mk.I三連装砲 (Series)\r\n * [298] 16inch Mk.I三連装砲\r\n * [299] 16inch Mk.I三連装砲＋AFCT改\r\n * [300] 16inch Mk.I三連装砲改＋FCR type284\r\n * \r\n * @module\r\n */\n\nvar bonusWarspiteKai = {\n    ship: {\n        isID: [364]\n    },\n    bonus: {\n        fire: 2,\n        armor: 1,\n        evasion: -2\n    }\n};\nvar bonusKongouKaiNi = {\n    ship: {\n        isID: [149]\n    },\n    bonus: {\n        fire: 1,\n        armor: 1,\n        evasion: -3\n    }\n};\n\nmodule.exports = [\n\n// @ Warspite改\n_extends({\n    equipment: 298\n}, bonusWarspiteKai), _extends({\n    equipment: 299\n}, bonusWarspiteKai), _extends({\n    equipment: 300\n}, bonusWarspiteKai),\n\n// @ 金剛改二\n_extends({\n    equipment: 298\n}, bonusKongouKaiNi), _extends({\n    equipment: 299\n}, bonusKongouKaiNi), _extends({\n    equipment: 300\n}, bonusKongouKaiNi)];\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/bonus/%E5%A4%A7%E5%8F%A3%E5%BE%84%E4%B8%BB%E7%A0%B2/16inch_Mk.I%E4%B8%89%E9%80%A3%E8%A3%85%E7%A0%B2.js?");
 
 /***/ }),
 
@@ -6271,6 +6286,18 @@ eval("\n\n/**\r\n * 装备额外属性收益 - 35.6cm連装砲(ダズル迷彩)\
 
 "use strict";
 eval("\n\n/**\r\n * 装备额外属性收益 - 41cm三連装砲改二\r\n * \r\n * @module\r\n */\n\nvar _require = __webpack_require__(/*! ../../ships */ \"./node_modules/kckit/src/data/ships.js\"),\n    BB_IseClassRemodel = _require.BB_IseClassRemodel,\n    BB_IseClass2ndRemodel = _require.BB_IseClass2ndRemodel,\n    BB_IseClassRemodelAll = _require.BB_IseClassRemodelAll,\n    BB_FusouClass2ndRemodel = _require.BB_FusouClass2ndRemodel;\n\nmodule.exports = [\n\n// @ 扶桑型 改二\n{\n    equipment: 290,\n    ship: {\n        isID: BB_FusouClass2ndRemodel\n    },\n    bonus: {\n        fire: 1\n    }\n},\n\n// @ 伊勢型 改\n{\n    equipment: 290,\n    ship: {\n        isID: BB_IseClassRemodel\n    },\n    bonus: {\n        fire: 2,\n        aa: 2,\n        evasion: 1\n    }\n},\n\n// @ 伊勢型 改二\n{\n    equipment: 290,\n    ship: {\n        isID: BB_IseClass2ndRemodel\n    },\n    bonus: {\n        fire: 3,\n        aa: 2,\n        evasion: 1\n    }\n},\n\n// ------------------------------------------------------------------------\n\n// + 对空電探\n// @ 伊勢型 改+\n{\n    list: [290, 'AARadar'],\n    equipments: {\n        hasID: [290],\n        hasAARadar: !0\n    },\n    ship: {\n        isID: BB_IseClassRemodelAll\n    },\n    bonus: {\n        aa: 2,\n        evasion: 3\n    }\n}];\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/bonus/%E5%A4%A7%E5%8F%A3%E5%BE%84%E4%B8%BB%E7%A0%B2/41cm%E4%B8%89%E9%80%A3%E8%A3%85%E7%A0%B2%E6%94%B9%E4%BA%8C.js?");
+
+/***/ }),
+
+/***/ "./node_modules/kckit/src/data/bonus/対空機銃/20連装7inch UP Rocket Launchers.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/kckit/src/data/bonus/対空機銃/20連装7inch UP Rocket Launchers.js ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\n/**\r\n * 装备额外属性收益 - 20連装7inch UP Rocket Launchers\r\n * \r\n * @module\r\n */\n\nmodule.exports = [{\n    equipment: 301,\n    ship: {\n        isID: [364, // Warspite改\n        393, // Ark Royal改\n        394]\n    },\n    bonus: {\n        aa: 2,\n        evasion: 1,\n        armor: 1\n    }\n}];\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/bonus/%E5%AF%BE%E7%A9%BA%E6%A9%9F%E9%8A%83/20%E9%80%A3%E8%A3%857inch_UP_Rocket_Launchers.js?");
 
 /***/ }),
 
@@ -6318,7 +6345,7 @@ eval("\n\n/**\r\n * 装备额外属性收益 - 12.7cm連装砲A型改二\r\n * \
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\n/**\r\n * 装备额外属性收益 - 12.7cm連装砲A型改二\r\n * \r\n * @module\r\n */\n\nvar _require = __webpack_require__(/*! ../../ships */ \"./node_modules/kckit/src/data/ships.js\"),\n    DD_AyanamiClassRemodelAll = _require.DD_AyanamiClassRemodelAll,\n    DD_AkatsukiClassRemodelAll = _require.DD_AkatsukiClassRemodelAll,\n    DD_HatsuharuClassRemodelAll = _require.DD_HatsuharuClassRemodelAll;\n\nmodule.exports = [\n\n// 綾波型改 / 暁型改 / 初春型改\n{\n    equipment: 63,\n    ship: {\n        isID: DD_AyanamiClassRemodelAll.concat(DD_AkatsukiClassRemodelAll).concat(DD_HatsuharuClassRemodelAll)\n    },\n    bonus: {\n        aa: 1\n    }\n}, {\n    equipment: 63,\n    ship: {\n        isID: [242, // 白露改\n        497, // 白露改二\n        498]\n    },\n    bonus: {\n        evasion: 1\n    }\n}, {\n    equipment: 63,\n    ship: {\n        isID: [145]\n    },\n    bonus: {\n        fire: 2\n    }\n}, {\n    equipment: 63,\n    ship: {\n        isID: [469]\n    },\n    bonus: {\n        evasion: 2\n    }\n}, {\n    equipment: 63,\n    ship: {\n        isID: [144]\n    },\n    bonus: {\n        fire: 2,\n        torpedo: 1,\n        aa: 1,\n        evasion: 2\n    }\n}];\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/bonus/%E5%B0%8F%E5%8F%A3%E5%BE%84%E4%B8%BB%E7%A0%B2/12.7cm%E9%80%A3%E8%A3%85%E7%A0%B2B%E5%9E%8B%E6%94%B9%E4%BA%8C.js?");
+eval("\n\n/**\r\n * 装备额外属性收益 - 12.7cm連装砲A型改二\r\n * \r\n * @module\r\n */\n\nvar _require = __webpack_require__(/*! ../../ships */ \"./node_modules/kckit/src/data/ships.js\"),\n    DD_AyanamiClassRemodelAll = _require.DD_AyanamiClassRemodelAll,\n    DD_AkatsukiClassRemodelAll = _require.DD_AkatsukiClassRemodelAll,\n    DD_HatsuharuClassRemodelAll = _require.DD_HatsuharuClassRemodelAll;\n\nmodule.exports = [\n\n// 綾波型改 / 暁型改 / 初春型改\n{\n    equipment: 63,\n    ship: {\n        isID: DD_AyanamiClassRemodelAll.concat(DD_AkatsukiClassRemodelAll).concat(DD_HatsuharuClassRemodelAll)\n    },\n    bonus: {\n        aa: 1\n    }\n}, {\n    equipment: 63,\n    ship: {\n        isID: [242, // 白露改\n        497, // 白露改二\n        498]\n    },\n    bonus: {\n        evasion: 1\n    }\n}, {\n    equipment: 63,\n    ship: {\n        isID: [145]\n    },\n    bonus: {\n        fire: 2\n    }\n}, {\n    equipment: 63,\n    ship: {\n        isID: [469]\n    },\n    bonus: {\n        evasion: 2\n    }\n}, {\n    equipment: 63,\n    ship: {\n        isID: [144]\n    },\n    bonus: {\n        fire: 1,\n        torpedo: 1,\n        aa: 1,\n        evasion: 2\n    }\n}];\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/bonus/%E5%B0%8F%E5%8F%A3%E5%BE%84%E4%B8%BB%E7%A0%B2/12.7cm%E9%80%A3%E8%A3%85%E7%A0%B2B%E5%9E%8B%E6%94%B9%E4%BA%8C.js?");
 
 /***/ }),
 
@@ -6330,7 +6357,7 @@ eval("\n\n/**\r\n * 装备额外属性收益 - 12.7cm連装砲A型改二\r\n * \
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\n/**\r\n * 装备额外属性收益 - 12.7cm連装砲B型改四(戦時改修)+高射装置\r\n * \r\n * @module\r\n */\n\nvar _require = __webpack_require__(/*! ../../ships */ \"./node_modules/kckit/src/data/ships.js\"),\n    DD_ShiratsuyuClass2ndRemodel = _require.DD_ShiratsuyuClass2ndRemodel;\n\nvar _require2 = __webpack_require__(/*! ../../ship-classes */ \"./node_modules/kckit/src/data/ship-classes.js\"),\n    DD_Ayanami = _require2.DD_Ayanami,\n    DD_Akatsuki = _require2.DD_Akatsuki,\n    DD_Hatsuharu = _require2.DD_Hatsuharu,\n    DD_Shiratsuyu = _require2.DD_Shiratsuyu;\n\nvar classesAyanamiAkatsuki = [DD_Ayanami, DD_Akatsuki];\nvar classesAyanamiAkatsukiHatsuharu = [DD_Ayanami, DD_Akatsuki, DD_Hatsuharu];\n\nmodule.exports = [\n\n// 綾波型 / 暁型\n{\n    equipment: 296,\n    ship: {\n        isClass: classesAyanamiAkatsuki\n    },\n    bonus: {\n        fire: 1\n    }\n},\n\n// 初春型\n{\n    equipment: 296,\n    ship: {\n        isClass: [DD_Hatsuharu]\n    },\n    bonus: {\n        fire: 1,\n        evasion: 1\n    }\n},\n\n// 白露型\n{\n    equipment: 296,\n    ship: {\n        isClass: [DD_Shiratsuyu],\n        isNotID: DD_ShiratsuyuClass2ndRemodel\n    },\n    bonus: {\n        fire: 1\n    }\n}, {\n    equipment: 296,\n    ship: {\n        isID: [497]\n    },\n    bonus: {\n        fire: 2,\n        evasion: 2\n    }\n}, {\n    equipment: 296,\n    ship: {\n        isID: [145]\n    },\n    bonus: {\n        fire: 2,\n        aa: 1,\n        evasion: 2\n    }\n}, {\n    equipment: 296,\n    ship: {\n        isID: [498]\n    },\n    bonus: {\n        fire: 1,\n        aa: 1,\n        evasion: 2\n    }\n}, {\n    equipment: 296,\n    ship: {\n        isID: [144]\n    },\n    bonus: {\n        fire: 2,\n        torpedo: 1,\n        evasion: 1\n    }\n}, {\n    equipment: 296,\n    ship: {\n        isID: [469]\n    },\n    bonus: {\n        fire: 1,\n        evasion: 1\n    }\n},\n\n// ------------------------------------------------------------------------\n\n// + 对水上電探\n{\n    list: [296, 'SurfaceRadar'],\n    equipments: {\n        hasID: [296],\n        hasSurfaceRadar: !0\n    },\n    ship: {\n        isClass: classesAyanamiAkatsukiHatsuharu\n    },\n    bonus: {\n        fire: 1,\n        torpedo: 2,\n        evasion: 2\n    }\n}, {\n    list: [296, 'SurfaceRadar'],\n    equipments: {\n        hasID: [296],\n        hasSurfaceRadar: !0\n    },\n    ship: {\n        isClass: [DD_Shiratsuyu]\n    },\n    bonus: {\n        fire: 1,\n        torpedo: 3,\n        evasion: 2\n    }\n},\n\n// + 对空電探\n{\n    list: [296, 'AARadar'],\n    equipments: {\n        hasID: [296],\n        hasAARadar: !0\n    },\n    ship: {\n        isClass: classesAyanamiAkatsukiHatsuharu\n    },\n    bonus: {\n        aa: 5\n    }\n}, {\n    list: [296, 'AARadar'],\n    equipments: {\n        hasID: [296],\n        hasAARadar: !0\n    },\n    ship: {\n        isClass: [DD_Shiratsuyu]\n    },\n    bonus: {\n        aa: 6\n    }\n},\n\n// + 61cm三連装(酸素)魚雷後期型\n{\n    list: [296, 285],\n    equipments: [{\n        isID: 296\n    }, {\n        isID: 285\n    }],\n    ship: {\n        isClass: classesAyanamiAkatsuki\n    },\n    bonus: {\n        fire: 1,\n        torpedo: 3\n    }\n},\n\n// + 61cm四連装(酸素)魚雷後期型\n{\n    list: [296, 286],\n    equipments: [{\n        isID: 296\n    }, {\n        isID: 286\n    }],\n    ship: {\n        isClass: [DD_Shiratsuyu]\n    },\n    bonus: {\n        fire: 1,\n        torpedo: 3\n    }\n}];\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/bonus/%E5%B0%8F%E5%8F%A3%E5%BE%84%E4%B8%BB%E7%A0%B2/12.7cm%E9%80%A3%E8%A3%85%E7%A0%B2B%E5%9E%8B%E6%94%B9%E5%9B%9B(%E6%88%A6%E6%99%82%E6%94%B9%E4%BF%AE)+%E9%AB%98%E5%B0%84%E8%A3%85%E7%BD%AE.js?");
+eval("\n\n/**\r\n * 装备额外属性收益 - 12.7cm連装砲B型改四(戦時改修)+高射装置\r\n * \r\n * @module\r\n */\n\nvar _require = __webpack_require__(/*! ../../ships */ \"./node_modules/kckit/src/data/ships.js\"),\n    DD_ShiratsuyuClass2ndRemodel = _require.DD_ShiratsuyuClass2ndRemodel;\n\nvar _require2 = __webpack_require__(/*! ../../ship-classes */ \"./node_modules/kckit/src/data/ship-classes.js\"),\n    DD_Ayanami = _require2.DD_Ayanami,\n    DD_Akatsuki = _require2.DD_Akatsuki,\n    DD_Hatsuharu = _require2.DD_Hatsuharu,\n    DD_Shiratsuyu = _require2.DD_Shiratsuyu;\n\nvar classesAyanamiAkatsuki = [DD_Ayanami, DD_Akatsuki];\nvar classesAyanamiAkatsukiShiratsuyu = [DD_Ayanami, DD_Akatsuki, DD_Shiratsuyu];\nvar classesAyanamiAkatsukiHatsuharu = [DD_Ayanami, DD_Akatsuki, DD_Hatsuharu];\n\nmodule.exports = [\n\n// 綾波型 / 暁型 / 白露型\n{\n    equipment: 296,\n    ship: {\n        isClass: classesAyanamiAkatsukiShiratsuyu,\n        isNotID: DD_ShiratsuyuClass2ndRemodel\n    },\n    bonus: {\n        fire: 1\n    }\n},\n\n// 初春型\n{\n    equipment: 296,\n    ship: {\n        isClass: [DD_Hatsuharu]\n    },\n    bonus: {\n        fire: 1,\n        evasion: 1\n    }\n}, {\n    equipment: 296,\n    ship: {\n        isID: [497]\n    },\n    bonus: {\n        fire: 2,\n        evasion: 2\n    }\n}, {\n    equipment: 296,\n    ship: {\n        isID: [145]\n    },\n    bonus: {\n        fire: 2,\n        aa: 1,\n        evasion: 2\n    }\n}, {\n    equipment: 296,\n    ship: {\n        isID: [498]\n    },\n    bonus: {\n        fire: 1,\n        aa: 1,\n        evasion: 2\n    }\n}, {\n    equipment: 296,\n    ship: {\n        isID: [144]\n    },\n    bonus: {\n        fire: 2,\n        torpedo: 1,\n        evasion: 1\n    }\n}, {\n    equipment: 296,\n    ship: {\n        isID: [469]\n    },\n    bonus: {\n        fire: 1,\n        evasion: 1\n    }\n},\n\n// ------------------------------------------------------------------------\n\n// + 对水上電探\n{\n    list: [296, 'SurfaceRadar'],\n    equipments: {\n        hasID: [296],\n        hasSurfaceRadar: !0\n    },\n    ship: {\n        isClass: classesAyanamiAkatsukiHatsuharu\n    },\n    bonus: {\n        fire: 1,\n        torpedo: 2,\n        evasion: 2\n    }\n}, {\n    list: [296, 'SurfaceRadar'],\n    equipments: {\n        hasID: [296],\n        hasSurfaceRadar: !0\n    },\n    ship: {\n        isClass: [DD_Shiratsuyu]\n    },\n    bonus: {\n        fire: 1,\n        torpedo: 3,\n        evasion: 2\n    }\n},\n\n// + 对空電探\n{\n    list: [296, 'AARadar'],\n    equipments: {\n        hasID: [296],\n        hasAARadar: !0\n    },\n    ship: {\n        isClass: classesAyanamiAkatsukiHatsuharu\n    },\n    bonus: {\n        aa: 5\n    }\n}, {\n    list: [296, 'AARadar'],\n    equipments: {\n        hasID: [296],\n        hasAARadar: !0\n    },\n    ship: {\n        isClass: [DD_Shiratsuyu]\n    },\n    bonus: {\n        aa: 6\n    }\n},\n\n// + 61cm三連装(酸素)魚雷後期型\n{\n    list: [296, 285],\n    equipments: [{\n        isID: 296\n    }, {\n        isID: 285\n    }],\n    ship: {\n        isClass: classesAyanamiAkatsuki\n    },\n    bonus: {\n        fire: 1,\n        torpedo: 3\n    }\n},\n\n// + 61cm四連装(酸素)魚雷後期型\n{\n    list: [296, 286],\n    equipments: [{\n        isID: 296\n    }, {\n        isID: 286\n    }],\n    ship: {\n        isClass: [DD_Shiratsuyu]\n    },\n    bonus: {\n        fire: 1,\n        torpedo: 3\n    }\n}];\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/bonus/%E5%B0%8F%E5%8F%A3%E5%BE%84%E4%B8%BB%E7%A0%B2/12.7cm%E9%80%A3%E8%A3%85%E7%A0%B2B%E5%9E%8B%E6%94%B9%E5%9B%9B(%E6%88%A6%E6%99%82%E6%94%B9%E4%BF%AE)+%E9%AB%98%E5%B0%84%E8%A3%85%E7%BD%AE.js?");
 
 /***/ }),
 

@@ -14644,6 +14644,9 @@ body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="bomb
 body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="hit"]::before {
   background-position: 0% -270px;
 }
+body > .modal.hastitle.modal-bonuses section .bonus .stats .stat.negative {
+  color: #f76e6e;
+}
 body > .modal.hastitle.modal-bonuses section .bonus-set .equipments {
   position: relative;
 }

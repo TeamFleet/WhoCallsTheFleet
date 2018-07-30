@@ -87,18 +87,27 @@ modal.bonuses = (() => ({
             if (isNaN(bonus[stat]) || !bonus[stat])
                 return false
 
-            let content = `+${bonus[stat]}`
+            const value = bonus[stat]
+            let content = ''
+
             switch (stat) {
                 case 'range': {
-                    if (bonus[stat] <= 1) content = '射程提高一档'
+                    if (value <= 1)
+                        content = '射程提高一档'
                     break
                 }
             }
 
-            if (typeof bonus[stat] === 'string')
-                content += ' (该属性不叠加)'
+            const classNames = ['stat']
+            if (typeof value === 'string')
+                content += `+${value} (该属性不叠加)`
+            else if (value < 0) {
+                content = `${value}`
+                classNames.push('negative')
+            } else
+                content = `+${value}`
 
-            r += `<span class="stat" data-stat="${stat}">${content}</span>`
+            r += `<span class="${classNames.join(' ')}" data-stat="${stat}">${content}</span>`
         })
         return r
     },
