@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",300,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/3.png)\"></s><strong>16inch MK.I 三连装炮改+FCR type284</strong><small>大口径主炮</small></h3><span>+23 火力</span><span>+7 对空</span><span>+6 命中</span><span>+1 装甲</span><span>+2 回避</span><span>射程: 长</span>")

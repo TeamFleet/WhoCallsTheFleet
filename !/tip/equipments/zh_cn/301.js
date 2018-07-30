@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",301,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/15.png)\"></s><strong>20连装7inch UP火箭发射器</strong><small>对空机枪</small></h3><span>+7 对空</span><span>+2 回避</span>")

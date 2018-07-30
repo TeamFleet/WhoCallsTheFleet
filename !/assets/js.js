@@ -2020,6 +2020,8 @@ _frame.modal = {
         });
 
         if (callback) callback(this.dom.content);
+
+        this.dom.content.scrollTop(0);
     },
 
     hide: function hide() {
@@ -2090,7 +2092,6 @@ _frame.modal.init = function () {
     this.is_init = !0;
     return !0;
 };
-
 
 _p.tip = {
     pos: 'bottom',
@@ -3091,7 +3092,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
     location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20180719';
+_g.db_version = '20180731';
 
 _g.bgimg_count=26;
 
@@ -8174,18 +8175,24 @@ modal.bonuses = function () {
 
                 if (isNaN(bonus[stat]) || !bonus[stat]) return !1;
 
-                var content = '+' + bonus[stat];
+                var value = bonus[stat];
+                var content = '';
+
                 switch (stat) {
                     case 'range':
                         {
-                            if (bonus[stat] <= 1) content = '射程提高一档';
+                            if (value <= 1) content = '射程提高一档';
                             break;
                         }
                 }
 
-                if (typeof bonus[stat] === 'string') content += ' (该属性不叠加)';
+                var classNames = ['stat'];
+                if (typeof value === 'string') content += '+' + value + ' (\u8BE5\u5C5E\u6027\u4E0D\u53E0\u52A0)';else if (value < 0) {
+                    content = '' + value;
+                    classNames.push('negative');
+                } else content = '+' + value;
 
-                r += '<span class="stat" data-stat="' + stat + '">' + content + '</span>';
+                r += '<span class="' + classNames.join(' ') + '" data-stat="' + stat + '">' + content + '</span>';
             });
             return r;
         },
