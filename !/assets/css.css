@@ -698,7 +698,7 @@ body > .menus > .menu > .body .group {
 body > .menus > .menu > .body .group menuitem,
 body > .menus > .menu > .body .group .menuitem {
   display: inline-block;
-  padding: 0 .5em;
+  padding: 0 0.5em;
 }
 body > .menus > .menu > .body hr {
   display: block;
@@ -889,7 +889,7 @@ body > .modal > s {
 }
 body > .modal.mod-blur-shot > s {
   background: transparent;
-  box-shadow: inset 0 0 50px 25px #666666;
+  box-shadow: inset 0 0 50px 25px hsl(0, 0%, 40%);
 }
 body > .modal.mod-blur-shot > s:before {
   z-index: 2;
@@ -1168,8 +1168,8 @@ ul{
 }
 .debugbtns button {
   line-height: 1.25em;
-  padding: .25em .5em;
-  margin-left: .5em;
+  padding: 0.25em 0.5em;
+  margin-left: 0.5em;
   color: #fff;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.25) 100%);
   transition-property: background;
@@ -1883,7 +1883,7 @@ h6 {
   font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
   line-height: 1.2em;
   position: relative;
-  color: #e2decf;
+  color: hsl(46, 25%, 85%);
 }
 h1 small,
 h2 small,
@@ -1892,7 +1892,7 @@ h4 small,
 h5 small,
 h6 small {
   font-size: small;
-  opacity: .75;
+  opacity: 0.75;
   padding-left: 1em;
 }
 h1[data-content]:before,
@@ -1901,7 +1901,7 @@ h3[data-content]:before,
 h4[data-content]:before,
 h5[data-content]:before,
 h6[data-content]:before {
-  color: #b39b4d;
+  color: hsl(46, 40%, 50%);
   content: attr(data-content);
   display: block;
   font: inherit;
@@ -1946,7 +1946,7 @@ section.update_journal a,
 .page-container[page="home"] .cols > .col-33 a {
   display: inline-block;
   color: #e0e0e0;
-  margin: 0.4px .15em;
+  margin: 0.4px 0.15em;
   background: rgba(0, 0, 0, 0.25);
   border-radius: 3px;
   transition-property: color, background;
@@ -1967,7 +1967,7 @@ section.update_journal a:active,
 }
 a.link:not(.link_ship):not(.link_equipment):not(.link_entity),
 section.update_journal a:not(.link_ship):not(.link_equipment):not(.link_entity) {
-  padding: 0 .35em;
+  padding: 0 0.35em;
 }
 a.link.link_ship,
 section.update_journal a.link_ship {
@@ -1984,7 +1984,7 @@ fieldset {
   padding-top: 4rem;
   height: 100%;
   transition-property: filter, padding !important;
-  transition-duration: .75s;
+  transition-duration: 0.75s;
 }
 body.mod-capture #layout {
   transition-property: none !important;
@@ -1995,7 +1995,7 @@ body.mod-capture #layout {
   z-index: 10;
   top: 0;
   left: 50%;
-  padding: .65em 1em;
+  padding: 0.65em 1em;
   color: #fff;
   font-size: 16px;
   user-select: none;
@@ -2009,11 +2009,11 @@ body.mod-capture #layout {
 }
 #layout[data-errorbadge]:after {
   content: attr(data-errorbadge);
-  background: rgba(255, 0, 0, 0.575);
+  background: hsla(0, 100%, 50%, 0.575);
 }
 #layout[data-msgbadge]:after {
   content: attr(data-msgbadge);
-  background: rgba(0, 170, 255, 0.575);
+  background: hsla(200, 100%, 50%, 0.575);
 }
 #layout > .g {
   position: absolute;
@@ -2026,7 +2026,7 @@ body.mod-capture #layout {
   left: 0;
   animation: fadeIn 0.3s ease-out;
   transition-property: transform;
-  transition-duration: .75s;
+  transition-duration: 0.75s;
   transform: translateY(100%);
 }
 #layout > .g > .close {
@@ -2119,7 +2119,7 @@ nav > div {
   max-width: calc(100% - 80px - 10px);
   transition-property: transform, top, opacity;
   transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
-  transition-duration: .3s !important;
+  transition-duration: 0.3s !important;
   /*
 		@media all and (min-width: 1920px ){
 			margin-left:	~"calc((100% - 1920px) / 2 + @{nav_height}px - 10px)";
@@ -2665,12 +2665,12 @@ main:after {
 }
 .infosbody > div.title > small em {
   font-style: normal;
-  padding: 0 .25em;
+  padding: 0 0.25em;
 }
 .infosbody > div.title > small span {
   display: inline-block;
-  margin: 0 .65em 0 0;
-  padding: 0 .3em;
+  margin: 0 0.65em 0 0;
+  padding: 0 0.3em;
   border-radius: 3px;
   font-size: smaller;
   position: relative;
@@ -2680,7 +2680,7 @@ main:after {
 .infosbody > div.title > small small {
   font-size: inherit;
   display: inline-block;
-  margin: .25em 1.5em .25em 0;
+  margin: 0.25em 1.5em 0.25em 0;
 }
 .infosbody > div.title > small ~ small {
   margin-top: 5px;
@@ -2706,8 +2706,8 @@ main:after {
 }
 .infosbody > div.stats > .stat span > em sup {
   position: absolute;
-  padding-left: .25em;
-  top: .5em;
+  padding-left: 0.25em;
+  top: 0.5em;
 }
 .infosbody > div.warning {
   position: absolute;
@@ -2833,7 +2833,7 @@ main:after {
 }
 @media all and (max-width: 1152px) {
   #layout.is-infos-on nav > div.history ~ div.pages .button + .button {
-    margin-left: .5em;
+    margin-left: 0.5em;
   }
 }
 @media all and (max-width: 700px) {
@@ -3003,7 +3003,7 @@ main:after {
   color: #fff;
 }
 .bgcontrols .controls button.on {
-  background: #cc8f00;
+  background: hsl(42, 100%, 40%);
   color: #fff;
 }
 .bgcontrols .list {
@@ -3045,7 +3045,7 @@ main:after {
   padding-bottom: 100%;
   height: 0;
   background: no-repeat 50% 38.2% / cover;
-  opacity: .25;
+  opacity: 0.25;
 }
 .bgcontrols dl dd i {
   display: block;
@@ -3057,7 +3057,7 @@ main:after {
   height: 25px;
   background: rgba(0, 0, 0, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.65);
-  opacity: .5;
+  opacity: 0.5;
   color: #fff;
   font-style: normal;
   /*
@@ -3101,7 +3101,7 @@ main:after {
   height: 22px;
   border-radius: 50%;
   z-index: 10;
-  background: rgba(223, 32, 32, 0.75);
+  background: hsla(0, 75%, 50%, 0.75);
   text-decoration: none;
 }
 .bgcontrols dl dd del:before {
@@ -3117,7 +3117,7 @@ main:after {
   text-align: center;
 }
 .bgcontrols dl dd del:hover {
-  background: #df2020;
+  background: hsl(0, 75%, 50%);
 }
 .bgcontrols dl dd:before,
 .bgcontrols dl dd:after {
@@ -3143,13 +3143,13 @@ main:after {
   background: rgba(255, 255, 255, 0.35);
 }
 .bgcontrols dl dd:hover s {
-  opacity: .5;
+  opacity: 0.5;
 }
 .bgcontrols dl dd.on s {
   opacity: 1;
 }
 .bgcontrols dl dd.on:before {
-  border: 3px solid #ffd980;
+  border: 3px solid hsl(42, 100%, 75%);
 }
 .bgcontrols dl dd.on:after {
   display: none;
@@ -3161,7 +3161,7 @@ main:after {
   content: "\ed6e";
 }
 .bgcontrols dl dd.add s {
-  opacity: .25;
+  opacity: 0.25;
 }
 .bgcontrols dl dd.add s:before,
 .bgcontrols dl dd.add s:after {
@@ -3185,12 +3185,12 @@ main:after {
   background: rgba(255, 255, 255, 0.2);
 }
 .bgcontrols dl dd.add:hover s {
-  opacity: .35;
+  opacity: 0.35;
 }
 .bgcontrols .notes {
   border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.15);
-  padding: .35em .5em;
+  padding: 0.35em 0.5em;
   margin-right: 10px;
 }
 .bgcontrols.mod-viewing > .wrapper {
@@ -3244,7 +3244,7 @@ main:after {
 }
 #layout.mod-bgcontrols .bgcontrols > .wrapper,
 #layout.mod-bgcontrols .bgcontrols .bgimgs {
-  transition-duration: .5s;
+  transition-duration: 0.5s;
 }
 #layout.mod-bgcontrols .bgcontrols .bgimgs {
   animation-name: sideInRightReverse;
@@ -3310,7 +3310,7 @@ main:after {
 }
 @media all and (max-width: 1152px) {
   .mode-selection nav > div.history ~ div.pages .button + .button {
-    margin-left: .5em;
+    margin-left: 0.5em;
   }
 }
 @media all and (max-width: 700px) {
@@ -3711,7 +3711,7 @@ html #titlebar .scale:before {
 }
 html #titlebar .scale:after {
   content: '%';
-  padding-left: .15em;
+  padding-left: 0.15em;
 }
 html.app-ready #titlebar {
   background: transparent !important;
@@ -3782,7 +3782,7 @@ body.mod-capture #tip {
   nav {
     height: 56px;
     line-height: 56px;
-    background: #464339;
+    background: hsl(47, 10%, 25%);
     overflow: visible;
   }
   nav > div.pages {
@@ -3821,7 +3821,7 @@ body.mod-capture #tip {
   nav > div.pages .button[mod-state]:after {
     position: relative;
     top: -0.5em;
-    left: .5em;
+    left: 0.5em;
     transform: none;
     vertical-align: super;
   }
@@ -4479,20 +4479,20 @@ body.mod-capture #tip {
   transition-property: color;
 }
 .improvement > strong > a small {
-  padding: .25em;
+  padding: 0.25em;
   font-size: inherit;
 }
 .improvement > strong > a:hover {
-  color: #aaff80;
+  color: hsl(100, 100%, 75%);
 }
 .improvement > strong > a:active {
-  color: #7bcb52;
+  color: hsl(100, 54%, 56%);
 }
 .improvement > strong > b {
   display: inline-block;
   height: 12px;
   width: 20px;
-  margin: 0 .2em 0 .35em;
+  margin: 0 0.2em 0 0.35em;
   vertical-align: baseline;
   position: relative;
   /*
@@ -4513,7 +4513,7 @@ body.mod-capture #tip {
   margin-top: -2px;
   height: 4px;
   width: 14px;
-  background: #88ff4d;
+  background: hsl(100, 100%, 65%);
   left: 0;
 }
 .improvement > strong > b:after {
@@ -4522,15 +4522,15 @@ body.mod-capture #tip {
   height: 0;
   border: 7px solid transparent;
   border-right: 0;
-  border-left-color: #88ff4d;
+  border-left-color: hsl(100, 100%, 65%);
   margin-top: -7px;
 }
 .improvement > strong > i {
   font-size: 14px;
-  color: #76d6a6;
+  color: hsl(150, 54%, 65%);
   font-style: normal;
-  padding-bottom: .25em;
-  padding-left: .25em;
+  padding-bottom: 0.25em;
+  padding-left: 0.25em;
 }
 .improvement > strong > i:before {
   font-size: 18px;
@@ -4557,10 +4557,10 @@ body.mod-capture #tip {
   transition-property: color;
 }
 .improvement > font > a:hover {
-  color: #aaff80;
+  color: hsl(100, 100%, 75%);
 }
 .improvement > font > a:active {
-  color: #7bcb52;
+  color: hsl(100, 54%, 56%);
 }
 .improvement > span {
   font-weight: lighter;
@@ -4598,8 +4598,8 @@ body.mod-capture #tip {
 .improvement > span > span > a > i,
 .improvement > span > span .consumable > i,
 .improvement > span > span a.equiptypeicon > i {
-  color: #7bcb52;
-  padding-left: .25em;
+  color: hsl(100, 54%, 56%);
+  padding-left: 0.25em;
 }
 .improvement > span > span > i.no,
 .improvement > span > span > a.no,
@@ -4615,19 +4615,19 @@ body.mod-capture #tip {
 }
 .improvement > span > span > i.fuel {
   background-position: 0 -216px;
-  color: #7ebd75;
+  color: hsl(113, 35%, 60%);
 }
 .improvement > span > span > i.ammo {
   background-position: 0 -234px;
-  color: #ccbf8e;
+  color: hsl(47, 38%, 68%);
 }
 .improvement > span > span > i.steel {
   background-position: 0 -288px;
-  color: #e3e3e3;
+  color: hsl(0, 0%, 89%);
 }
 .improvement > span > span > i.bauxite {
   background-position: 0 -306px;
-  color: #f2bb91;
+  color: hsl(26, 79%, 76%);
 }
 .improvement > span > span > i.dev_mat {
   background-position: 0 -324px;
@@ -4665,10 +4665,10 @@ body.mod-capture #tip {
 					*/
 }
 .improvement > span > span > .items a.equiptypeicon:hover {
-  color: #aaff80;
+  color: hsl(100, 100%, 75%);
 }
 .improvement > span > span > .items a.equiptypeicon:active {
-  color: #7bcb52;
+  color: hsl(100, 54%, 56%);
 }
 .improvement.improvement-details {
   display: block;
@@ -4708,25 +4708,25 @@ body.mod-capture #tip {
   margin-left: 1px;
 }
 .improvement.improvement-details > font > b > i.on {
-  color: #c5ffa8;
-  background: rgba(59, 179, 0, 0.5);
+  color: hsl(100, 100%, 83%);
+  background: hsla(100, 100%, 35%, 0.5);
 }
 .improvement.improvement-details > font > b > i:first-of-type {
   border-radius: 3px 0 0 3px;
 }
 .improvement.improvement-details > font > b > i:last-of-type {
   border-radius: 0 3px 3px 0;
-  margin-right: .5em;
+  margin-right: 0.5em;
 }
 .improvement.improvement-details > font > b > a {
   display: inline-block;
   transition-property: color;
 }
 .improvement.improvement-details > font > b > a:hover {
-  color: #aaff80;
+  color: hsl(100, 100%, 75%);
 }
 .improvement.improvement-details > font > b > a:active {
-  color: #7bcb52;
+  color: hsl(100, 54%, 56%);
 }
 .improvement.improvement-details > font > b > a:not[href] {
   pointer-events: none;
@@ -4783,7 +4783,7 @@ body.mod-capture #tip {
 }
 .link_entity:active,
 .link_ship:active {
-  opacity: .5;
+  opacity: 0.5;
 }
 .link_ship {
   padding-right: 40px;
@@ -4804,7 +4804,7 @@ body.mod-capture #tip {
   position: absolute;
   display: block;
   font-size: 22px;
-  color: #ffffff;
+  color: hsl(0, 0%, 100%);
   transform: rotate(15deg);
   top: 0;
   left: 74px;
@@ -4842,9 +4842,9 @@ body.mod-capture #tip {
   height: 30px;
   width: 0;
   border: 3px solid transparent;
-  border-right: 4px solid rgba(230, 230, 230, 0.8);
+  border-right: 4px solid hsla(0, 0%, 90%, 0.8);
   border-left: 0;
-  filter: drop-shadow(0 0 10px #e6e6e6);
+  filter: drop-shadow(0 0 10px hsl(0, 0%, 90%));
   z-index: 7;
   transition: none 0.2s ease-out;
   transition-property: top, height, border;
@@ -4994,7 +4994,7 @@ body.mod-capture #tip {
   }
 }
 .link_fleet:hover {
-  background: rgba(230, 230, 230, 0.15) !important;
+  background: hsla(0, 0%, 90%, 0.15) !important;
 }
 .link_fleet:hover:before {
   top: 0;
@@ -5003,67 +5003,67 @@ body.mod-capture #tip {
   border-bottom-width: 0;
 }
 .link_fleet[data-theme="2"]:before {
-  border-right-color: rgba(255, 184, 168, 0.8);
-  filter: drop-shadow(0 0 10px #ffb8a8);
+  border-right-color: hsla(11, 100%, 83%, 0.8);
+  filter: drop-shadow(0 0 10px hsl(11, 100%, 83%));
 }
 .link_fleet[data-theme="2"]:hover {
-  background: rgba(255, 184, 168, 0.15) !important;
+  background: hsla(11, 100%, 83%, 0.15) !important;
 }
 .link_fleet[data-theme="3"]:before {
-  border-right-color: rgba(255, 242, 168, 0.8);
-  filter: drop-shadow(0 0 10px #fff2a8);
+  border-right-color: hsla(51, 100%, 83%, 0.8);
+  filter: drop-shadow(0 0 10px hsl(50.999999999999986, 100%, 83%));
 }
 .link_fleet[data-theme="3"]:hover {
-  background: rgba(255, 242, 168, 0.15) !important;
+  background: hsla(51, 100%, 83%, 0.15) !important;
 }
 .link_fleet[data-theme="4"]:before {
-  border-right-color: rgba(210, 255, 168, 0.8);
-  filter: drop-shadow(0 0 10px #d2ffa8);
+  border-right-color: hsla(91, 100%, 83%, 0.8);
+  filter: drop-shadow(0 0 10px hsl(90.99999999999997, 100%, 83%));
 }
 .link_fleet[data-theme="4"]:hover {
-  background: rgba(210, 255, 168, 0.15) !important;
+  background: hsla(91, 100%, 83%, 0.15) !important;
 }
 .link_fleet[data-theme="5"]:before {
-  border-right-color: rgba(168, 255, 184, 0.8);
-  filter: drop-shadow(0 0 10px #a8ffb8);
+  border-right-color: hsla(131, 100%, 83%, 0.8);
+  filter: drop-shadow(0 0 10px hsl(131, 100%, 83%));
 }
 .link_fleet[data-theme="5"]:hover {
-  background: rgba(168, 255, 184, 0.15) !important;
+  background: hsla(131, 100%, 83%, 0.15) !important;
 }
 .link_fleet[data-theme="6"]:before {
-  border-right-color: rgba(168, 255, 242, 0.8);
-  filter: drop-shadow(0 0 10px #a8fff2);
+  border-right-color: hsla(171, 100%, 83%, 0.8);
+  filter: drop-shadow(0 0 10px hsl(170.99999999999997, 100%, 83%));
 }
 .link_fleet[data-theme="6"]:hover {
-  background: rgba(168, 255, 242, 0.15) !important;
+  background: hsla(171, 100%, 83%, 0.15) !important;
 }
 .link_fleet[data-theme="7"]:before {
-  border-right-color: rgba(168, 210, 255, 0.8);
-  filter: drop-shadow(0 0 10px #a8d2ff);
+  border-right-color: hsla(211, 100%, 83%, 0.8);
+  filter: drop-shadow(0 0 10px hsl(211, 100%, 83%));
 }
 .link_fleet[data-theme="7"]:hover {
-  background: rgba(168, 210, 255, 0.15) !important;
+  background: hsla(211, 100%, 83%, 0.15) !important;
 }
 .link_fleet[data-theme="8"]:before {
-  border-right-color: rgba(184, 168, 255, 0.8);
-  filter: drop-shadow(0 0 10px #b8a8ff);
+  border-right-color: hsla(251, 100%, 83%, 0.8);
+  filter: drop-shadow(0 0 10px hsl(250.99999999999994, 100%, 83%));
 }
 .link_fleet[data-theme="8"]:hover {
-  background: rgba(184, 168, 255, 0.15) !important;
+  background: hsla(251, 100%, 83%, 0.15) !important;
 }
 .link_fleet[data-theme="9"]:before {
-  border-right-color: rgba(242, 168, 255, 0.8);
-  filter: drop-shadow(0 0 10px #f2a8ff);
+  border-right-color: hsla(291, 100%, 83%, 0.8);
+  filter: drop-shadow(0 0 10px hsl(290.99999999999994, 100%, 83%));
 }
 .link_fleet[data-theme="9"]:hover {
-  background: rgba(242, 168, 255, 0.15) !important;
+  background: hsla(291, 100%, 83%, 0.15) !important;
 }
 .link_fleet[data-theme="10"]:before {
-  border-right-color: rgba(255, 168, 210, 0.8);
-  filter: drop-shadow(0 0 10px #ffa8d2);
+  border-right-color: hsla(331, 100%, 83%, 0.8);
+  filter: drop-shadow(0 0 10px hsl(331, 100%, 83%));
 }
 .link_fleet[data-theme="10"]:hover {
-  background: rgba(255, 168, 210, 0.15) !important;
+  background: hsla(331, 100%, 83%, 0.15) !important;
 }
 .link_equipment {
   display: inline-block;
@@ -5088,14 +5088,14 @@ body.mod-capture #tip {
   top: -3px;
 }
 .link_equipment > em {
-  color: #2ce887;
-  padding-left: .75em;
+  color: hsl(149, 80%, 54%);
+  padding-left: 0.75em;
   font-style: normal;
 }
 .link_equipment > em:before {
   content: '\2605';
   font-size: 18px;
-  padding-right: .15em;
+  padding-right: 0.15em;
 }
 .link_equipment > em.zero {
   color: rgba(170, 170, 170, 0.65);
@@ -5137,7 +5137,7 @@ body.mod-capture #tip {
 }
 .tab {
   display: inline-block;
-  opacity: .75;
+  opacity: 0.75;
   font-weight: lighter;
   height: 100%;
   position: relative;
@@ -5211,7 +5211,7 @@ body.mod-capture #tip {
   padding-left: 80px;
   padding-right: 80px;
   transition-property: opacity;
-  transition-duration: .35s;
+  transition-duration: 0.35s;
   z-index: 1;
   font-weight: lighter;
   font-size: 14px;
@@ -5241,7 +5241,7 @@ body.mod-capture #tip {
   }
 }
 .tablelist > .options > div.filters {
-  transition-delay: .5s;
+  transition-delay: 0.5s;
   z-index: 3;
 }
 .tablelist > .options > div.filters button[icon]:before {
@@ -5354,7 +5354,7 @@ body.mod-capture #tip {
 }
 .tablelist > .options > div.filters > .viewtype input:checked + label {
   color: #fff;
-  transition-duration: .5s !important;
+  transition-duration: 0.5s !important;
 }
 .tablelist > .options > div.filters > .buttons_right {
   float: right;
@@ -5536,20 +5536,20 @@ body.mod-capture #tip {
   line-height: 40px;
   text-align: center;
   font-size: 30px;
-  color: #63899c;
+  color: hsl(200, 22%, 50%);
   transition-property: color;
   font-family: Gothic;
   font-weight: lighter;
 }
 .tablelist > .msgs > div.compareinfos > button:hover,
 .tablelist > .msgs > div.equipmentsinfos > button:hover {
-  color: #aec5d0;
+  color: hsl(200, 27%, 75%);
 }
 .tablelist > .msgs > div.comparestart {
   transition-property: background;
 }
 .tablelist > .msgs > div.comparestart:hover {
-  background: rgba(108, 134, 147, 0.35);
+  background: hsla(200, 15%, 50%, 0.35);
 }
 .tablelist > .msgs[data-msgs] {
   height: 40px;
@@ -5581,7 +5581,7 @@ body.mod-capture #tip {
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35) 1px, rgba(230, 230, 230, 0.25) 1px, rgba(230, 230, 230, 0.25) calc(100% - 1px), rgba(255, 255, 255, 0.35) calc(100% - 1px)) no-repeat 0 0;
   background-size: 100% 31px;
   transition-property: background-size, padding-top;
-  transition-duration: .5s;
+  transition-duration: 0.5s;
 }
 .tablelist-header dl,
 .tablelist-body {
@@ -5678,9 +5678,9 @@ body.mod-capture #tip {
   margin: -6px 4px 0 2px;
 }
 .tablelist-body h4 small {
-  padding-left: .5em;
+  padding-left: 0.5em;
   font-size: 75%;
-  opacity: .75;
+  opacity: 0.75;
 }
 .tablelist-body h4 label.checkbox {
   position: relative;
@@ -5695,7 +5695,7 @@ body.mod-capture #tip {
   position: relative;
   text-shadow: none;
   margin: auto 8px auto -20px;
-  opacity: .175;
+  opacity: 0.175;
   top: auto;
 }
 @media all and (max-width: 720px) {
@@ -5704,19 +5704,19 @@ body.mod-capture #tip {
   }
 }
 .tablelist-body h4 label.checkbox:hover:before {
-  opacity: .75;
+  opacity: 0.75;
 }
 .tablelist-body h4 input[type="checkbox"]:indeterminate + label.checkbox:before {
-  opacity: .45;
+  opacity: 0.45;
 }
 .tablelist-body h4 input[type="checkbox"]:indeterminate + label.checkbox:after {
-  opacity: .45;
+  opacity: 0.45;
   left: 4px;
   margin: -6px auto auto -20px;
 }
 .tablelist-body h4 input[type="checkbox"]:indeterminate + label.checkbox:hover:before,
 .tablelist-body h4 input[type="checkbox"]:indeterminate + label.checkbox:hover:after {
-  opacity: .75;
+  opacity: 0.75;
 }
 .tablelist-body h4 input[type="checkbox"]:checked + label.checkbox:before {
   opacity: 1;
@@ -5760,10 +5760,10 @@ body.mod-capture #tip {
 				*/
 }
 .tablelist-body dl dd sup {
-  padding-left: .25em;
+  padding-left: 0.25em;
 }
 .tablelist-body dl dd.negative {
-  color: #f76e6e;
+  color: hsl(0, 90%, 70%);
 }
 .tablelist-body dl dd[value="0"],
 .tablelist-body dl dd[value="-1"]:not(.negative) {
@@ -5777,19 +5777,19 @@ body.mod-capture #tip {
   background-color: transparent;
 }
 .tablelist-body dl dd.is-hover[stat="fire"] {
-  background-color: rgba(189, 33, 15, 0.25);
+  background-color: hsla(6, 85%, 40%, 0.25);
 }
 .tablelist-body dl dd.is-hover[stat="torpedo"] {
-  background-color: rgba(15, 111, 189, 0.25);
+  background-color: hsla(207, 85%, 40%, 0.25);
 }
 .tablelist-body dl dd.is-hover[stat="nightpower"] {
   background-color: rgba(102, 72, 102, 0.5);
 }
 .tablelist-body dl dd.is-hover[stat="aa"] {
-  background-color: rgba(189, 90, 15, 0.25);
+  background-color: hsla(26, 85%, 40%, 0.25);
 }
 .tablelist-body dl dd.is-hover[stat="armor"] {
-  background-color: rgba(189, 128, 15, 0.25);
+  background-color: hsla(39, 85%, 40%, 0.25);
 }
 .tablelist-body dl:hover {
   background-color: rgba(0, 0, 0, 0.2);
@@ -5865,7 +5865,7 @@ body.mod-capture #tip {
   z-index: 1;
 }
 .tablelist > .options[viewtype="compare"] > div.exit_compare {
-  transition-delay: .5s;
+  transition-delay: 0.5s;
   opacity: 1;
   z-index: 3;
 }
@@ -5906,7 +5906,7 @@ body.mod-capture #tip {
   height: 100%;
   line-height: 49px;
   margin: 0;
-  opacity: .175;
+  opacity: 0.175;
   transition-property: opacity;
 }
 .tablelist.ships .tablelist-body dl[data-shipid] dt label.checkbox:before {
@@ -5925,7 +5925,7 @@ body.mod-capture #tip {
   top: 5px;
 }
 .tablelist.ships .tablelist-body dl[data-shipid] dt label.checkbox:hover {
-  opacity: .9;
+  opacity: 0.9;
 }
 .tablelist.ships .tablelist-body dl[data-shipid] dt img {
   position: absolute;
@@ -5948,12 +5948,12 @@ body.mod-capture #tip {
 }
 .tablelist.ships .tablelist-body dl[data-shipid] dt strong small {
   font-weight: normal;
-  opacity: .75;
+  opacity: 0.75;
   font-size: 12px;
   display: block;
   line-height: 1.5em;
   margin-top: -3px;
-  padding: 0 0 0 .25em;
+  padding: 0 0 0 0.25em;
 }
 .tablelist.ships .tablelist-body dl[data-shipid] dt > em {
   display: none;
@@ -6061,14 +6061,14 @@ body.mod-capture #tip {
   display: none !important;
 }
 .tablelist.ships .tablelist-body dl[data-shipid][compare="true"] dt label.checkbox {
-  opacity: .9 !important;
+  opacity: 0.9 !important;
 }
 .tablelist.ships .tablelist-body dl[data-shipid][compare="true"] dt label.checkbox:before {
   left: 5px;
   content: "\e601";
 }
 .tablelist.ships .tablelist-body dl[data-shipid][compare="true"] dt label.checkbox:after {
-  background: rgba(31, 111, 147, 0.85);
+  background: hsla(199, 65%, 35%, 0.85);
 }
 @media all and (max-width: 720px) {
   .tablelist.ships > [viewtype="list"] ~ .tablelist-container .tablelist-body dl[data-shipid] dt label.checkbox {
@@ -6115,7 +6115,7 @@ body.mod-capture #tip {
   padding-left: 100px;
 }
 .tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body dl[data-shipid] dt a:active {
-  opacity: .5;
+  opacity: 0.5;
 }
 .tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body dl[data-shipid] dt img {
   top: 0;
@@ -6129,7 +6129,7 @@ body.mod-capture #tip {
   position: absolute;
   display: block;
   font-size: 20px;
-  color: #ffffff;
+  color: hsl(0, 0%, 100%);
   transform: rotate(15deg);
   top: -2px;
   left: 80px;
@@ -6250,7 +6250,7 @@ body.mod-capture #tip {
 }
 @media all and (max-width: 600px) {
   .tablelist.ships dl dd {
-    flex-grow: .75;
+    flex-grow: 0.75;
   }
   .tablelist.ships .tablelist-body dl dd {
     border-left: 1px solid rgba(255, 255, 255, 0.1);
@@ -6335,8 +6335,8 @@ body.mod-capture #tip {
   font-size: smaller;
   font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
   display: inline-block;
-  padding-left: .5em;
-  opacity: .65;
+  padding-left: 0.5em;
+  opacity: 0.65;
   font-weight: lighter;
 }
 #layout.mode-selection .tablelist.ships h4:not([inited]) ~ dl {
@@ -6746,29 +6746,29 @@ body.mod-capture #tip {
 }
 .tablelist-equipments .tablelist-body dl.has-bonus dt::before {
   border: 12px solid transparent;
-  border-bottom-color: #8fffc5;
+  border-bottom-color: hsl(149, 100%, 78%);
   left: 0;
   top: -4px;
 }
 .tablelist-equipments .tablelist-body dl.has-bonus dt::after {
   width: 8px;
   height: 10px;
-  background: #8fffc5;
+  background: hsl(149, 100%, 78%);
   left: 8px;
   top: 11px;
 }
 .tablelist-equipments .tablelist-body dl.has-bonus.disabled dt::before {
-  border-bottom-color: #808080;
+  border-bottom-color: hsl(0, 0%, 50%);
 }
 .tablelist-equipments .tablelist-body dl.has-bonus.disabled dt::after {
-  background: #808080;
+  background: hsl(0, 0%, 50%);
 }
 .tablelist-equipments > .msgs {
   background: rgba(22, 64, 42, 0.65);
   color: #a3d9bd;
 }
 .tablelist-equipments > .msgs > div.equipmentsinfos > button:hover {
-  color: #aed0bf;
+  color: hsl(149, 27%, 75%);
 }
 .tablelist-equipments > [value="1"]:checked ~ .options > .filters > label[data-equipmentcollection="1"] {
   opacity: 1;
@@ -6868,437 +6868,437 @@ body.mod-capture #tip {
 }
 .tablelist-equipments > [name="types"][class]:not(.type1) ~ .tablelist-container .tablelist-body > [data-equipmenttype="1"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type1) ~ .tablelist-container .tablelist-body h4[data-type="1"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type2) ~ .tablelist-container .tablelist-body > [data-equipmenttype="2"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type2) ~ .tablelist-container .tablelist-body h4[data-type="2"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type3) ~ .tablelist-container .tablelist-body > [data-equipmenttype="3"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type3) ~ .tablelist-container .tablelist-body h4[data-type="3"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type4) ~ .tablelist-container .tablelist-body > [data-equipmenttype="4"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type4) ~ .tablelist-container .tablelist-body h4[data-type="4"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type5) ~ .tablelist-container .tablelist-body > [data-equipmenttype="5"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type5) ~ .tablelist-container .tablelist-body h4[data-type="5"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type6) ~ .tablelist-container .tablelist-body > [data-equipmenttype="6"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type6) ~ .tablelist-container .tablelist-body h4[data-type="6"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type7) ~ .tablelist-container .tablelist-body > [data-equipmenttype="7"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type7) ~ .tablelist-container .tablelist-body h4[data-type="7"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type8) ~ .tablelist-container .tablelist-body > [data-equipmenttype="8"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type8) ~ .tablelist-container .tablelist-body h4[data-type="8"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type9) ~ .tablelist-container .tablelist-body > [data-equipmenttype="9"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type9) ~ .tablelist-container .tablelist-body h4[data-type="9"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type10) ~ .tablelist-container .tablelist-body > [data-equipmenttype="10"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type10) ~ .tablelist-container .tablelist-body h4[data-type="10"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type11) ~ .tablelist-container .tablelist-body > [data-equipmenttype="11"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type11) ~ .tablelist-container .tablelist-body h4[data-type="11"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type12) ~ .tablelist-container .tablelist-body > [data-equipmenttype="12"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type12) ~ .tablelist-container .tablelist-body h4[data-type="12"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type13) ~ .tablelist-container .tablelist-body > [data-equipmenttype="13"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type13) ~ .tablelist-container .tablelist-body h4[data-type="13"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type14) ~ .tablelist-container .tablelist-body > [data-equipmenttype="14"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type14) ~ .tablelist-container .tablelist-body h4[data-type="14"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type15) ~ .tablelist-container .tablelist-body > [data-equipmenttype="15"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type15) ~ .tablelist-container .tablelist-body h4[data-type="15"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type16) ~ .tablelist-container .tablelist-body > [data-equipmenttype="16"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type16) ~ .tablelist-container .tablelist-body h4[data-type="16"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type17) ~ .tablelist-container .tablelist-body > [data-equipmenttype="17"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type17) ~ .tablelist-container .tablelist-body h4[data-type="17"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type18) ~ .tablelist-container .tablelist-body > [data-equipmenttype="18"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type18) ~ .tablelist-container .tablelist-body h4[data-type="18"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type19) ~ .tablelist-container .tablelist-body > [data-equipmenttype="19"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type19) ~ .tablelist-container .tablelist-body h4[data-type="19"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type20) ~ .tablelist-container .tablelist-body > [data-equipmenttype="20"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type20) ~ .tablelist-container .tablelist-body h4[data-type="20"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type21) ~ .tablelist-container .tablelist-body > [data-equipmenttype="21"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type21) ~ .tablelist-container .tablelist-body h4[data-type="21"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type22) ~ .tablelist-container .tablelist-body > [data-equipmenttype="22"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type22) ~ .tablelist-container .tablelist-body h4[data-type="22"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type23) ~ .tablelist-container .tablelist-body > [data-equipmenttype="23"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type23) ~ .tablelist-container .tablelist-body h4[data-type="23"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type24) ~ .tablelist-container .tablelist-body > [data-equipmenttype="24"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type24) ~ .tablelist-container .tablelist-body h4[data-type="24"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type25) ~ .tablelist-container .tablelist-body > [data-equipmenttype="25"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type25) ~ .tablelist-container .tablelist-body h4[data-type="25"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type26) ~ .tablelist-container .tablelist-body > [data-equipmenttype="26"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type26) ~ .tablelist-container .tablelist-body h4[data-type="26"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type27) ~ .tablelist-container .tablelist-body > [data-equipmenttype="27"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type27) ~ .tablelist-container .tablelist-body h4[data-type="27"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type28) ~ .tablelist-container .tablelist-body > [data-equipmenttype="28"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type28) ~ .tablelist-container .tablelist-body h4[data-type="28"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type29) ~ .tablelist-container .tablelist-body > [data-equipmenttype="29"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type29) ~ .tablelist-container .tablelist-body h4[data-type="29"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type30) ~ .tablelist-container .tablelist-body > [data-equipmenttype="30"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type30) ~ .tablelist-container .tablelist-body h4[data-type="30"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type31) ~ .tablelist-container .tablelist-body > [data-equipmenttype="31"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type31) ~ .tablelist-container .tablelist-body h4[data-type="31"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type32) ~ .tablelist-container .tablelist-body > [data-equipmenttype="32"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type32) ~ .tablelist-container .tablelist-body h4[data-type="32"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type33) ~ .tablelist-container .tablelist-body > [data-equipmenttype="33"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type33) ~ .tablelist-container .tablelist-body h4[data-type="33"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type34) ~ .tablelist-container .tablelist-body > [data-equipmenttype="34"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type34) ~ .tablelist-container .tablelist-body h4[data-type="34"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type35) ~ .tablelist-container .tablelist-body > [data-equipmenttype="35"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type35) ~ .tablelist-container .tablelist-body h4[data-type="35"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type36) ~ .tablelist-container .tablelist-body > [data-equipmenttype="36"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type36) ~ .tablelist-container .tablelist-body h4[data-type="36"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type37) ~ .tablelist-container .tablelist-body > [data-equipmenttype="37"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type37) ~ .tablelist-container .tablelist-body h4[data-type="37"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type38) ~ .tablelist-container .tablelist-body > [data-equipmenttype="38"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type38) ~ .tablelist-container .tablelist-body h4[data-type="38"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type39) ~ .tablelist-container .tablelist-body > [data-equipmenttype="39"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type39) ~ .tablelist-container .tablelist-body h4[data-type="39"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type40) ~ .tablelist-container .tablelist-body > [data-equipmenttype="40"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type40) ~ .tablelist-container .tablelist-body h4[data-type="40"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type41) ~ .tablelist-container .tablelist-body > [data-equipmenttype="41"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type41) ~ .tablelist-container .tablelist-body h4[data-type="41"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type42) ~ .tablelist-container .tablelist-body > [data-equipmenttype="42"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type42) ~ .tablelist-container .tablelist-body h4[data-type="42"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type43) ~ .tablelist-container .tablelist-body > [data-equipmenttype="43"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type43) ~ .tablelist-container .tablelist-body h4[data-type="43"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type44) ~ .tablelist-container .tablelist-body > [data-equipmenttype="44"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type44) ~ .tablelist-container .tablelist-body h4[data-type="44"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type45) ~ .tablelist-container .tablelist-body > [data-equipmenttype="45"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type45) ~ .tablelist-container .tablelist-body h4[data-type="45"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type46) ~ .tablelist-container .tablelist-body > [data-equipmenttype="46"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type46) ~ .tablelist-container .tablelist-body h4[data-type="46"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type47) ~ .tablelist-container .tablelist-body > [data-equipmenttype="47"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type47) ~ .tablelist-container .tablelist-body h4[data-type="47"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type48) ~ .tablelist-container .tablelist-body > [data-equipmenttype="48"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type48) ~ .tablelist-container .tablelist-body h4[data-type="48"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type49) ~ .tablelist-container .tablelist-body > [data-equipmenttype="49"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type49) ~ .tablelist-container .tablelist-body h4[data-type="49"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type50) ~ .tablelist-container .tablelist-body > [data-equipmenttype="50"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type50) ~ .tablelist-container .tablelist-body h4[data-type="50"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type51) ~ .tablelist-container .tablelist-body > [data-equipmenttype="51"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type51) ~ .tablelist-container .tablelist-body h4[data-type="51"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type52) ~ .tablelist-container .tablelist-body > [data-equipmenttype="52"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type52) ~ .tablelist-container .tablelist-body h4[data-type="52"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type53) ~ .tablelist-container .tablelist-body > [data-equipmenttype="53"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type53) ~ .tablelist-container .tablelist-body h4[data-type="53"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type54) ~ .tablelist-container .tablelist-body > [data-equipmenttype="54"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type54) ~ .tablelist-container .tablelist-body h4[data-type="54"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type55) ~ .tablelist-container .tablelist-body > [data-equipmenttype="55"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type55) ~ .tablelist-container .tablelist-body h4[data-type="55"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type56) ~ .tablelist-container .tablelist-body > [data-equipmenttype="56"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type56) ~ .tablelist-container .tablelist-body h4[data-type="56"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type57) ~ .tablelist-container .tablelist-body > [data-equipmenttype="57"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type57) ~ .tablelist-container .tablelist-body h4[data-type="57"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type58) ~ .tablelist-container .tablelist-body > [data-equipmenttype="58"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type58) ~ .tablelist-container .tablelist-body h4[data-type="58"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type59) ~ .tablelist-container .tablelist-body > [data-equipmenttype="59"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type59) ~ .tablelist-container .tablelist-body h4[data-type="59"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type60) ~ .tablelist-container .tablelist-body > [data-equipmenttype="60"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type60) ~ .tablelist-container .tablelist-body h4[data-type="60"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type61) ~ .tablelist-container .tablelist-body > [data-equipmenttype="61"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type61) ~ .tablelist-container .tablelist-body h4[data-type="61"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type62) ~ .tablelist-container .tablelist-body > [data-equipmenttype="62"] {
   display: none;
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type62) ~ .tablelist-container .tablelist-body h4[data-type="62"] {
-  opacity: .35;
+  opacity: 0.35;
 }
 .tablelist-equipments > [value="3"]:checked ~ .tablelist-container [stat="range"] {
   display: none !important;
@@ -7334,7 +7334,7 @@ body.mod-capture #tip {
   }
   .tablelist-equipments dl dt {
     padding-left: 0 !important;
-    padding-right: .25em;
+    padding-right: 0.25em;
     flex-basis: 90px;
   }
   .tablelist-equipments .tablelist-header dl dd {
@@ -7346,7 +7346,7 @@ body.mod-capture #tip {
     content: initial;
   }
   .tablelist-equipments .tablelist-body dl.has-bonus dt {
-    color: #8fffc5;
+    color: hsl(149, 100%, 78%);
   }
   .tablelist-equipments .tablelist-body dl.has-bonus.disabled dt {
     color: inherit;
@@ -7477,7 +7477,7 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
 .tablelist.fleets .tablelist-container > .nocontent > div > span {
   font-size: 60px;
   line-height: 70px;
-  letter-spacing: .15em;
+  letter-spacing: 0.15em;
   display: block;
   font-weight: lighter;
 }
@@ -7491,7 +7491,7 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
   height: 40px;
   font-size: 16px;
   color: rgba(255, 255, 255, 0.5);
-  letter-spacing: .1em;
+  letter-spacing: 0.1em;
   padding: 0 5em;
   background: rgba(0, 0, 0, 0.25);
   border-radius: 5px;
@@ -7562,9 +7562,9 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
   font-size: 18px;
 }
 .tablelist.entities .typetitle small {
-  padding-left: .5em;
+  padding-left: 0.5em;
   font-size: 75%;
-  opacity: .75;
+  opacity: 0.75;
 }
 .tablelist.entities .tablelist-list {
   margin-right: -10px;
@@ -7586,7 +7586,7 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
   background-color: rgba(0, 0, 0, 0.2);
 }
 .tablelist.entities .tablelist-list > .unit.illustrator:active {
-  opacity: .5;
+  opacity: 0.5;
 }
 body > .menus > .menu.menu-tablelistfleets-options > .body .option-in-tablelist {
   display: none;
@@ -7602,7 +7602,7 @@ body > .menus > .menu.menu-tablelistfleets-options > .body menuitem.option-aircr
   transform: translateY(15%);
 }
 body > .menus > .menu.menu-tablelistfleets-options > .body .option-filelocation {
-  padding: 0 1em .5em 1em;
+  padding: 0 1em 0.5em 1em;
 }
 body > .menus > .menu.menu-tablelistfleets-options > .body .option-filelocation button {
   float: right;
@@ -7678,31 +7678,31 @@ h6 + section.update_journal {
   margin-left: -33px;
 }
 .menu.contextmenu-fleet[data-theme="2"] > .body .theme-block {
-  background: rgba(255, 109, 77, 0.35);
+  background: hsla(11, 100%, 65%, 0.35);
 }
 .menu.contextmenu-fleet[data-theme="3"] > .body .theme-block {
-  background: rgba(255, 228, 77, 0.35);
+  background: hsla(51, 100%, 65%, 0.35);
 }
 .menu.contextmenu-fleet[data-theme="4"] > .body .theme-block {
-  background: rgba(163, 255, 77, 0.35);
+  background: hsla(91, 100%, 65%, 0.35);
 }
 .menu.contextmenu-fleet[data-theme="5"] > .body .theme-block {
-  background: rgba(77, 255, 109, 0.35);
+  background: hsla(131, 100%, 65%, 0.35);
 }
 .menu.contextmenu-fleet[data-theme="6"] > .body .theme-block {
-  background: rgba(77, 255, 228, 0.35);
+  background: hsla(171, 100%, 65%, 0.35);
 }
 .menu.contextmenu-fleet[data-theme="7"] > .body .theme-block {
-  background: rgba(77, 163, 255, 0.35);
+  background: hsla(211, 100%, 65%, 0.35);
 }
 .menu.contextmenu-fleet[data-theme="8"] > .body .theme-block {
-  background: rgba(109, 77, 255, 0.35);
+  background: hsla(251, 100%, 65%, 0.35);
 }
 .menu.contextmenu-fleet[data-theme="9"] > .body .theme-block {
-  background: rgba(228, 77, 255, 0.35);
+  background: hsla(291, 100%, 65%, 0.35);
 }
 .menu.contextmenu-fleet[data-theme="10"] > .body .theme-block {
-  background: rgba(255, 77, 163, 0.35);
+  background: hsla(331, 100%, 65%, 0.35);
 }
 .menu.contextmenu-ship > .body menuitem.move {
   display: inline-block;
@@ -7740,8 +7740,8 @@ h6 + section.update_journal {
 .infos-entity h4,
 .infos-entity h5,
 .infos-entity h6 {
-  color: #ccffff;
-  text-shadow: 0 0 0.16666667em #4dffff;
+  color: hsl(180, 100%, 90%);
+  text-shadow: 0 0 0.16666667em hsl(180, 100%, 65%);
 }
 .infos-entity h1:before,
 .infos-entity h2:before,
@@ -7749,7 +7749,7 @@ h6 + section.update_journal {
 .infos-entity h4:before,
 .infos-entity h5:before,
 .infos-entity h6:before {
-  color: #4dffff;
+  color: hsl(180, 100%, 65%);
 }
 .infos-entity h1 small,
 .infos-entity h2 small,
@@ -7759,11 +7759,11 @@ h6 + section.update_journal {
 .infos-entity h6 small {
   font-size: smaller;
   text-shadow: none;
-  opacity: .75;
-  padding-left: .5em;
+  opacity: 0.75;
+  padding-left: 0.5em;
 }
 .infos-entity > .title small {
-  color: #52cbcb;
+  color: hsl(180, 54%, 56%);
 }
 .infos-entity .entity-info {
   padding-top: 3em;
@@ -7836,8 +7836,8 @@ h6 + section.update_journal {
 .infos-equipment h4,
 .infos-equipment h5,
 .infos-equipment h6 {
-  color: #ccffe5;
-  text-shadow: 0 0 0.16666667em #4dffa3;
+  color: hsl(149, 100%, 90%);
+  text-shadow: 0 0 0.16666667em hsl(149, 100%, 65%);
 }
 .infos-equipment h1:before,
 .infos-equipment h2:before,
@@ -7845,36 +7845,36 @@ h6 + section.update_journal {
 .infos-equipment h4:before,
 .infos-equipment h5:before,
 .infos-equipment h6:before {
-  color: #4dffa3;
+  color: hsl(149, 100%, 65%);
 }
 .infos-equipment .link_equipment[data-infos]:hover {
-  color: #8fffc5;
+  color: hsl(149, 100%, 78%);
 }
 .infos-equipment .link_equipment[data-infos]:active {
-  color: #52cb8d;
+  color: hsl(149, 54%, 56%);
 }
 .infos-equipment .indicator.true {
-  color: #8fffc5 !important;
+  color: hsl(149, 100%, 78%) !important;
 }
 .infos-equipment .indicator.true:before {
-  background: linear-gradient(to bottom, #a8ffd2, #29ff90);
+  background: linear-gradient(to bottom, hsl(149, 100%, 83%), hsl(149, 100%, 58%));
 }
 .infos-equipment .right-gutter {
   padding-right: 14.5rem;
 }
 .infos-equipment .button-equipable {
-  color: #8fffc5;
-  border: 1px solid #8fffc5;
-  padding: 0 .3em;
+  color: hsl(149, 100%, 78%);
+  border: 1px solid hsl(149, 100%, 78%);
+  padding: 0 0.3em;
   border-radius: 3px;
   transition-property: color, background-color, border-color;
 }
 .infos-equipment .button-equipable:hover {
-  color: #293d33;
-  background: #8fffc5;
+  color: hsl(149, 20%, 20%);
+  background: hsl(149, 100%, 78%);
 }
 .infos-equipment .button-equipable:active {
-  background: rgba(140, 242, 190, 0.75);
+  background: hsla(149, 80%, 75%, 0.75);
 }
 .infos-equipment > div {
   flex: 1 0 auto;
@@ -7925,14 +7925,14 @@ h6 + section.update_journal {
 			*/
 }
 .infos-equipment > div.title small {
-  color: #8fffc5;
+  color: hsl(149, 100%, 78%);
 }
 .infos-equipment > div.title small span {
-  background: rgba(140, 242, 190, 0.75);
-  color: #293d33;
+  background: hsla(149, 80%, 75%, 0.75);
+  color: hsl(149, 20%, 20%);
 }
 .infos-equipment > div.title small .button-equipable {
-  margin-left: .65em;
+  margin-left: 0.65em;
   top: -0.1em;
   position: relative;
   font-size: smaller;
@@ -7944,10 +7944,10 @@ h6 + section.update_journal {
   margin-right: 2em;
 }
 .infos-equipment > div.stats > .stat span > em {
-  color: #2ce887;
+  color: hsl(149, 80%, 54%);
 }
 .infos-equipment > div.stats > .stat span > em.negative {
-  color: #f76e6e;
+  color: hsl(0, 90%, 70%);
 }
 .infos-equipment > div.stats > .stat ~ .stat {
   padding-top: 0.15000000000000002rem;
@@ -8025,7 +8025,7 @@ h6 + section.update_journal {
   background: rgba(0, 0, 0, 0.2);
 }
 .infos-equipment > div.stats .bonus-item-ships-ship:active {
-  opacity: .5;
+  opacity: 0.5;
 }
 .infos-equipment > div.stats .bonus-item-shipclasses {
   margin-right: -0.25rem;
@@ -8060,13 +8060,13 @@ h6 + section.update_journal {
 }
 .infos-equipment > div.stats > .additionals .button {
   appearance: none;
-  color: #8fffc5;
+  color: hsl(149, 100%, 78%);
   display: block;
-  border: 1px solid #8fffc5;
+  border: 1px solid hsl(149, 100%, 78%);
   border-radius: 3px;
   font-size: inherit;
   line-height: 1.2em;
-  padding: .25em .5em;
+  padding: 0.25em 0.5em;
   font-weight: normal;
   transition-property: color, background-color, border-color;
   position: relative;
@@ -8074,12 +8074,12 @@ h6 + section.update_journal {
   margin-right: 8px;
 }
 .infos-equipment > div.stats > .additionals .button:hover {
-  background: #8fffc5;
-  color: #000f07;
+  background: hsl(149, 100%, 78%);
+  color: hsl(149, 100%, 3%);
 }
 .infos-equipment > div.stats > .additionals .button:active {
-  background: #39d585;
-  color: #000f07;
+  background: hsl(149, 65%, 53%);
+  color: hsl(149, 100%, 3%);
 }
 .infos-equipment > div.stats > .additionals .button[icon] {
   padding-left: 1.6em;
@@ -8088,19 +8088,19 @@ h6 + section.update_journal {
   position: absolute;
   top: 50%;
   line-height: 0;
-  left: .5em;
+  left: 0.5em;
   margin-top: 1px;
   opacity: 1;
 }
 .infos-equipment > div.stats > .additionals .button[disabled] {
-  color: #d9d9d9;
-  border-color: #d9d9d9;
+  color: hsl(0, 0%, 85%);
+  border-color: hsl(0, 0%, 85%);
   opacity: 0.5;
 }
 .infos-equipment > div.stats > .additionals .button[disabled]:hover,
 .infos-equipment > div.stats > .additionals .button[disabled]:active {
   background: transparent;
-  color: #d9d9d9;
+  color: hsl(0, 0%, 85%);
 }
 .infos-equipment > div.dismantle > span {
   background: url(/!/assets/images/stats.png) no-repeat 0 0;
@@ -8112,19 +8112,19 @@ h6 + section.update_journal {
 }
 .infos-equipment > div.dismantle > span.fuel {
   background-position: 0 -216px;
-  color: #7ebd75;
+  color: hsl(113, 35%, 60%);
 }
 .infos-equipment > div.dismantle > span.ammo {
   background-position: 0 -234px;
-  color: #ccbf8e;
+  color: hsl(47, 38%, 68%);
 }
 .infos-equipment > div.dismantle > span.steel {
   background-position: 0 -288px;
-  color: #e3e3e3;
+  color: hsl(0, 0%, 89%);
 }
 .infos-equipment > div.dismantle > span.bauxite {
   background-position: 0 -306px;
-  color: #f2bb91;
+  color: hsl(26, 79%, 76%);
 }
 .infos-equipment > div.improvement-options {
   display: flex;
@@ -8194,17 +8194,17 @@ h6 + section.update_journal {
   vertical-align: top;
   transition-property: color;
   font-style: normal;
-  margin-left: .5em;
+  margin-left: 0.5em;
 }
 .infos-equipment > div.improvement-options .improvement-details > b > a small {
-  padding: .25em;
+  padding: 0.25em;
 }
 .infos-equipment > div.improvement-options .improvement-details > b > i {
   display: inline-block;
   font-size: 14px;
-  color: #76d6a4;
+  color: hsl(149, 54%, 65%);
   font-style: normal;
-  padding-left: .25em;
+  padding-left: 0.25em;
 }
 .infos-equipment > div.improvement-options .improvement-details > b > i:before {
   font-size: 18px;
@@ -8215,8 +8215,8 @@ h6 + section.update_journal {
   padding-left: 1rem;
 }
 .infos-equipment > div.improvement-options .improvement-details > font > b > i.on {
-  color: #a8ffd2;
-  background: rgba(0, 179, 86, 0.5);
+  color: hsl(149, 100%, 83%);
+  background: hsla(149, 100%, 35%, 0.5);
 }
 .infos-equipment > div.improvement-options .improvement-details > span {
   position: relative;
@@ -8229,13 +8229,13 @@ h6 + section.update_journal {
   padding-left: 1rem;
 }
 .infos-equipment > div.improvement-options .improvement-details > span > span > i > i {
-  color: #52cb8d;
+  color: hsl(149, 54%, 56%);
 }
 .infos-equipment > div.improvement-options .improvement-details [data-infos]:hover {
-  color: #8fffc5;
+  color: hsl(149, 100%, 78%);
 }
 .infos-equipment > div.improvement-options .improvement-details [data-infos]:active {
-  color: #52cb8d;
+  color: hsl(149, 54%, 56%);
 }
 .infos-equipment > div.upgrade-from {
   /*
@@ -8430,13 +8430,13 @@ body.mod-capture .infos-fleet:before {
 .infos-fleet h3[data-content],
 .infos-fleet h4[data-content],
 .infos-fleet h5[data-content] {
-  color: #bab8ab;
+  color: hsl(50, 10%, 70%);
   text-shadow: 0 0 0.16666667em rgba(255, 255, 255, 0.5);
 }
 .infos-fleet h3[data-content]:before,
 .infos-fleet h4[data-content]:before,
 .infos-fleet h5[data-content]:before {
-  color: #ffffff;
+  color: hsl(0, 0%, 100%);
   mask-image: linear-gradient(to top, transparent, #000);
   -webkit-mask-image: linear-gradient(to top, transparent, #000);
 }
@@ -8504,13 +8504,13 @@ html.is-gecko .infos-fleet .title-editable[data-content]:before {
   margin: 0;
 }
 .infos-fleet > header h3:not([data-content]) {
-  color: #999999;
+  color: hsl(0, 0%, 60%);
 }
 .infos-fleet > header h3[data-content] {
-  color: #c2bda3;
+  color: hsl(50, 20%, 70%);
 }
 .infos-fleet > header h3[data-content]:before {
-  color: #ffffff;
+  color: hsl(0, 0%, 100%);
 }
 .infos-fleet > header .preview {
   position: absolute;
@@ -8554,7 +8554,7 @@ body.mod-capture .infos-fleet > header:before {
   padding: 0 52px 0 0;
   mix-blend-mode: overlay;
   font-size: 16px;
-  letter-spacing: .1em;
+  letter-spacing: 0.1em;
 }
 body.mod-capture .infos-fleet > header:after {
   content: '';
@@ -8578,7 +8578,7 @@ body.mod-capture .infos-fleet > header:after {
   font-weight: lighter;
   line-height: 1.5rem;
   height: 1.5rem;
-  padding: 0 .5em;
+  padding: 0 0.5em;
   border: 0.05rem solid transparent;
   border-bottom-width: 0;
   transition-property: color, background-position, border-color;
@@ -8659,7 +8659,7 @@ body.mod-capture .infos-fleet > header:after {
   position: relative;
   text-align: center;
   vertical-align: top;
-  margin-left: .65em;
+  margin-left: 0.65em;
 }
 .infos-fleet > .fleets .options > .icon[icon]:before {
   font-size: 16px;
@@ -8700,31 +8700,31 @@ body.mod-capture .infos-fleet > .fleets .options > .icon {
   display: none;
 }
 .infos-fleet > .fleets .options > .option-theme-value[value="2"] + .option-theme:before {
-  background: rgba(255, 47, 0, 0.35);
+  background: hsla(11, 100%, 50%, 0.35);
 }
 .infos-fleet > .fleets .options > .option-theme-value[value="3"] + .option-theme:before {
-  background: rgba(255, 217, 0, 0.35);
+  background: hsla(51, 100%, 50%, 0.35);
 }
 .infos-fleet > .fleets .options > .option-theme-value[value="4"] + .option-theme:before {
-  background: rgba(123, 255, 0, 0.35);
+  background: hsla(91, 100%, 50%, 0.35);
 }
 .infos-fleet > .fleets .options > .option-theme-value[value="5"] + .option-theme:before {
-  background: rgba(0, 255, 47, 0.35);
+  background: hsla(131, 100%, 50%, 0.35);
 }
 .infos-fleet > .fleets .options > .option-theme-value[value="6"] + .option-theme:before {
-  background: rgba(0, 255, 217, 0.35);
+  background: hsla(171, 100%, 50%, 0.35);
 }
 .infos-fleet > .fleets .options > .option-theme-value[value="7"] + .option-theme:before {
-  background: rgba(0, 123, 255, 0.35);
+  background: hsla(211, 100%, 50%, 0.35);
 }
 .infos-fleet > .fleets .options > .option-theme-value[value="8"] + .option-theme:before {
-  background: rgba(47, 0, 255, 0.35);
+  background: hsla(251, 100%, 50%, 0.35);
 }
 .infos-fleet > .fleets .options > .option-theme-value[value="9"] + .option-theme:before {
-  background: rgba(217, 0, 255, 0.35);
+  background: hsla(291, 100%, 50%, 0.35);
 }
 .infos-fleet > .fleets .options > .option-theme-value[value="10"] + .option-theme:before {
-  background: rgba(255, 0, 123, 0.35);
+  background: hsla(331, 100%, 50%, 0.35);
 }
 .infos-fleet > .fleets .options > .option-hqlv input {
   width: 2.25em;
@@ -8964,7 +8964,7 @@ body.mod-capture .infos-fleet .fleetships.fleetairfields .tips {
 }
 .infos-fleet .ship > dt > div > .title h5 {
   font-size: 150%;
-  margin-left: .35em;
+  margin-left: 0.35em;
 }
 .infos-fleet .ship > dt > div > .info {
   line-height: 20px;
@@ -8985,7 +8985,7 @@ body.mod-capture .infos-fleet .fleetships.fleetairfields .tips {
   font-weight: lighter;
 }
 .infos-fleet .ship > dt > div > .info span + span {
-  padding-left: .5em;
+  padding-left: 0.5em;
 }
 .infos-fleet .ship > dt > div > .info [data-speed="15"] {
   color: #d6f4ff;
@@ -9102,11 +9102,11 @@ body.mod-capture .infos-fleet .ship > .options {
 }
 .infos-fleet .ship:not([data-shipid]) > dt > div {
   color: #fff;
-  opacity: .25;
+  opacity: 0.25;
   font-size: 166.66666667%;
 }
 .infos-fleet .ship:not([data-shipid]):hover > dt > div {
-  opacity: .5;
+  opacity: 0.5;
 }
 .infos-fleet .ship[data-shipid] {
   /*
@@ -9195,7 +9195,7 @@ body.mod-capture .infos-fleet .ship > .options {
   width: 35%;
   left: 0;
   transform: translateX(-40px);
-  opacity: .75;
+  opacity: 0.75;
   font-size: 333.33333333%;
   z-index: 2;
 }
@@ -9233,7 +9233,7 @@ body.mod-capture .infos-fleet .ship[data-shipid] > .equipment-extra:not([data-eq
   text-shadow: 0 0 30px #000;
 }
 .infos-fleet .ship[data-shipid].moving {
-  opacity: .5;
+  opacity: 0.5;
 }
 .infos-fleet .ship[data-shipid].moving > dt > s:before {
   display: none;
@@ -9323,7 +9323,7 @@ body.mod-capture .infos-fleet .equipments {
   line-height: 24px;
   font-size: 1em;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  opacity: .6;
+  opacity: 0.6;
 }
 .infos-fleet .attributes:after {
   content: "";
@@ -9356,11 +9356,11 @@ body.mod-capture .infos-fleet .equipments {
   height: 18px;
   line-height: 0;
   transform: translateY(-9px);
-  opacity: .65;
+  opacity: 0.65;
   display: inline-block;
 }
 .infos-fleet .attributes > span.negative {
-  color: #ff8a80;
+  color: hsl(5, 100%, 75%);
 }
 .infos-fleet .attributes > span.shelling:before {
   background-position: 0 -72px;
@@ -9432,7 +9432,7 @@ body.mod-capture .infos-fleet .equipments {
 .infos-fleet .equipment:before {
   font-family: icons;
   content: "\e611";
-  opacity: .15;
+  opacity: 0.15;
   top: 50%;
   line-height: 0;
   text-align: center;
@@ -9466,10 +9466,10 @@ body.mod-capture .infos-fleet .equipments {
 }
 .infos-fleet .equipment[data-equipmentid].is-aircraft .equipment-carry {
   opacity: 1;
-  color: rgba(46, 255, 147, 0.65);
+  color: hsla(149, 100%, 59%, 0.65);
 }
 .infos-fleet .equipment[data-equipmentid].is-aircraft[data-carry="0"] {
-  color: #ff8a80 !important;
+  color: hsl(5, 100%, 75%) !important;
 }
 .infos-fleet .equipment[data-equipmentid].is-aircraft[data-carry="0"] > .equipment-infos > .equipment-name {
   color: inherit !important;
@@ -9582,7 +9582,7 @@ body.mod-capture .infos-fleet .equipments {
 .infos-fleet .equipment[data-star] > .equipment-options:before,
 .infos-fleet .equipment[data-star] > .equipment-options .equipment-starinput {
   opacity: 1;
-  color: rgba(46, 255, 147, 0.75);
+  color: hsla(149, 100%, 59%, 0.75);
 }
 .infos-fleet .equipment[data-star="1"] > .equipment-infos > .equipment-star,
 .infos-fleet .equipment[data-star="2"] > .equipment-infos > .equipment-star,
@@ -9593,7 +9593,7 @@ body.mod-capture .infos-fleet .equipments {
 .infos-fleet .equipment[data-star="7"] > .equipment-infos > .equipment-star,
 .infos-fleet .equipment[data-star="8"] > .equipment-infos > .equipment-star,
 .infos-fleet .equipment[data-star="9"] > .equipment-infos > .equipment-star {
-  color: #2eff93;
+  color: hsl(149, 100%, 59%);
   opacity: 0.65;
 }
 .infos-fleet .equipment[data-star="10"] > .equipment-infos > .equipment-star {
@@ -9618,7 +9618,7 @@ body.mod-capture .infos-fleet .equipments {
   align-items: center;
 }
 .infos-fleet .equipment-add {
-  opacity: .25;
+  opacity: 0.25;
   font-size: 133.33333333%;
 }
 .infos-fleet .equipment-add:before {
@@ -9626,7 +9626,7 @@ body.mod-capture .infos-fleet .equipments {
   content: "\ed5a";
   vertical-align: bottom;
   font-weight: lighter;
-  padding-right: .25em;
+  padding-right: 0.25em;
 }
 .infos-fleet .equipment-infos,
 .infos-fleet .equipment-options {
@@ -9649,7 +9649,7 @@ body.mod-capture .infos-fleet .equipments {
   top: 50%;
   line-height: 0;
   height: 45%;
-  opacity: .25;
+  opacity: 0.25;
 }
 .infos-fleet .equipment-star,
 .infos-fleet .equipment-carry {
@@ -9692,11 +9692,11 @@ body.mod-capture .infos-fleet .equipments {
   left: calc(10% + 24px);
   font-size: 125%;
   line-height: 0;
-  opacity: .5;
+  opacity: 0.5;
   pointer-events: none;
 }
 .infos-fleet .equipment-options .button {
-  opacity: .45;
+  opacity: 0.45;
   flex: 1 0 20px;
   height: 100%;
   text-align: center;
@@ -9708,7 +9708,7 @@ body.mod-capture .infos-fleet .equipments {
   opacity: 1;
 }
 .infos-fleet .equipment-options .button:active {
-  opacity: .3;
+  opacity: 0.3;
 }
 .infos-fleet .equipment-options .button[icon]:before,
 .infos-fleet .equipment-options .button.remove:before {
@@ -9759,12 +9759,12 @@ body.mod-capture .infos-fleet .equipments {
   height: 20px;
   width: 25px;
   font-size: 12px;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: hsla(0, 0%, 0%, 0.1);
   background-size: auto 120%;
   border-radius: 0 0 5px 5px !important;
-  border-left: 1px solid rgba(255, 255, 255, 0.075);
-  border-right: 1px solid rgba(255, 255, 255, 0.075);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.175);
+  border-left: 1px solid hsla(0, 0%, 100%, 0.075);
+  border-right: 1px solid hsla(0, 0%, 100%, 0.075);
+  border-bottom: 1px solid hsla(0, 0%, 100%, 0.175);
   display: none;
   z-index: 10;
 }
@@ -9775,7 +9775,7 @@ body.mod-capture .infos-fleet .equipment-extra {
   color: transparent;
 }
 .infos-fleet .equipment-extra .equipment-add:before {
-  color: rgba(255, 255, 255, 0.75);
+  color: hsla(0, 0%, 100%, 0.75);
   position: absolute;
   padding: 0;
   font-size: 80%;
@@ -9853,7 +9853,7 @@ body.mod-capture .infos-fleet .equipment-extra {
   height: 25px;
   top: 5px;
   box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.35);
-  opacity: .5;
+  opacity: 0.5;
   margin-left: -1.6rem;
 }
 .infos-fleet .summary .btn-add-ship:before {
@@ -9896,13 +9896,13 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   line-height: 1.78571429em;
   display: inline-block;
   background: rgba(255, 255, 255, 0.1);
-  padding: 0 0 0 .5em;
+  padding: 0 0 0 0.5em;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 .infos-fleet .summary-item strong {
   display: inline-block;
-  padding: 0 .5em;
-  margin: 0 0 0 .5em;
+  padding: 0 0.5em;
+  margin: 0 0 0 0.5em;
   line-height: inherit;
   background: rgba(0, 0, 0, 0.25);
   font-weight: normal;
@@ -9924,13 +9924,13 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   left: 0;
   margin-top: -9px;
   content: "";
-  opacity: .5;
+  opacity: 0.5;
 }
 .infos-fleet .summary-item-consummation .fuel + .fuel,
 .infos-fleet .summary-item-consummation .ammo + .fuel,
 .infos-fleet .summary-item-consummation .fuel + .ammo,
 .infos-fleet .summary-item-consummation .ammo + .ammo {
-  margin-left: .25em;
+  margin-left: 0.25em;
 }
 .infos-fleet .summary-item-consummation .fuel:before {
   background-position: 0 -216px;
@@ -10086,7 +10086,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 }
 .infos-fleet.loading .loading-msg {
   font-size: 3em;
-  letter-spacing: .25em;
+  letter-spacing: 0.25em;
   color: rgba(255, 255, 255, 0.2);
 }
 .infos-fleet.mod-preview .title-editable {
@@ -10118,50 +10118,50 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   background-color: rgba(0, 0, 0, 0.125);
 }
 #layout[data-theme="1"] main {
-  background-color: rgba(128, 128, 128, 0.65);
+  background-color: hsla(0, 0%, 50%, 0.65);
 }
 #layout[data-theme="2"] main:after {
-  background-color: rgba(60, 56, 55, 0.75);
-  background-image: linear-gradient(to bottom, #fcad9c 4px, rgba(252, 153, 131, 0.2) 4px, transparent 25%);
+  background-color: hsla(11, 5%, 22.5%, 0.75);
+  background-image: linear-gradient(to bottom, hsl(11, 95%, 80%) 4px, hsla(11, 95%, 75%, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
   #layout[data-theme="2"] main:after {
-    background-color: rgba(63, 54, 52, 0.95);
+    background-color: hsla(11, 10%, 22.5%, 0.95);
   }
 }
 #layout[data-theme="2"] .infos-fleet h3[data-content],
 #layout[data-theme="2"] .infos-fleet h4[data-content],
 #layout[data-theme="2"] .infos-fleet h5[data-content] {
-  color: #f59d89;
+  color: hsl(11, 85%, 75%);
 }
 #layout[data-theme="2"] .infos-fleet h3[data-content]:before,
 #layout[data-theme="2"] .infos-fleet h4[data-content]:before,
 #layout[data-theme="2"] .infos-fleet h5[data-content]:before {
-  color: #f9f6f6;
+  color: hsl(11, 19%, 97%);
 }
 #layout[data-theme="2"] .infos-fleet .title-editable:not([data-content]) {
-  color: #b8867a;
+  color: hsl(11, 30%, 60%);
 }
 #layout[data-theme="2"] .infos-fleet .title-editable[data-content] {
-  color: #fb846a;
+  color: hsl(11, 95%, 70%);
 }
 #layout[data-theme="2"] .infos-fleet .title-editable[data-content]:before {
-  color: #fff3f0;
+  color: hsl(11, 95%, 97%);
 }
 #layout[data-theme="2"] .infos-fleet > .fleets .tabs label.highlight {
-  color: #fdc2b4;
+  color: hsl(11, 95%, 85%);
 }
 #layout[data-theme="2"] .infos-fleet > .fleets .tabs label.highlight:hover {
-  color: #fdc2b4;
+  color: hsl(11, 95%, 85%);
 }
 #layout[data-theme="2"] .infos-fleet .fleetships {
-  color: rgba(254, 235, 230, 0.75);
+  color: hsla(11, 95%, 95%, 0.75);
 }
 #layout[data-theme="2"] .infos-fleet .ship:hover:before,
 #layout[data-theme="2"] .infos-fleet .summary .btn-add-ship:hover:before {
-  border-right-color: rgba(252, 173, 156, 0.95);
+  border-right-color: hsla(11, 95%, 80%, 0.95);
 }
 #layout[data-theme="2"] .infos-fleet .ship > dt {
   /*
@@ -10180,7 +10180,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 						}*/
 }
 #layout[data-theme="2"] .infos-fleet .ship > dt > s:after {
-  background: linear-gradient(to right, rgba(254, 235, 230, 0.5) 25%, transparent) repeat-y 0 0;
+  background: linear-gradient(to right, hsla(11, 95%, 95%, 0.5) 25%, transparent) repeat-y 0 0;
 }
 #layout[data-theme="2"] .infos-fleet .ship:hover {
   /*
@@ -10197,10 +10197,10 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 						*/
 }
 #layout[data-theme="2"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
-  color: rgba(225, 216, 214, 0.75);
+  color: hsla(11, 15%, 86%, 0.75);
 }
 #layout[data-theme="2"] .infos-fleet .ship:not([data-shipid]) > dt > div {
-  color: #fee2dc;
+  color: hsl(11, 95%, 93%);
 }
 #layout[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
@@ -10212,56 +10212,56 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 							*/
 }
 #layout[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
-  background: linear-gradient(to right, rgba(18, 9, 7, 0.4) 50%, transparent);
+  background: linear-gradient(to right, hsla(11, 45%, 5%, 0.4) 50%, transparent);
 }
 #layout[data-theme="2"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
-  color: #feebe6;
+  color: hsl(11, 95%, 95%);
 }
 #layout[data-theme="2"] .infos-fleet .equipment-name {
-  color: #fee6e1;
+  color: hsl(11, 95%, 94%);
 }
 #layout[data-theme="3"] main:after {
-  background-color: rgba(63, 61, 52, 0.75);
-  background-image: linear-gradient(to bottom, #fff099 4px, rgba(255, 236, 128, 0.2) 4px, transparent 25%);
+  background-color: hsla(51, 10%, 22.5%, 0.75);
+  background-image: linear-gradient(to bottom, hsl(51, 100%, 80%) 4px, hsla(51, 100%, 75%, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
   #layout[data-theme="3"] main:after {
-    background-color: rgba(63, 61, 52, 0.95);
+    background-color: hsla(51, 10%, 22.5%, 0.95);
   }
 }
 #layout[data-theme="3"] .infos-fleet h3[data-content],
 #layout[data-theme="3"] .infos-fleet h4[data-content],
 #layout[data-theme="3"] .infos-fleet h5[data-content] {
-  color: #f9e786;
+  color: hsl(51, 90%, 75%);
 }
 #layout[data-theme="3"] .infos-fleet h3[data-content]:before,
 #layout[data-theme="3"] .infos-fleet h4[data-content]:before,
 #layout[data-theme="3"] .infos-fleet h5[data-content]:before {
-  color: #f9f9f6;
+  color: hsl(51, 24%, 97%);
 }
 #layout[data-theme="3"] .infos-fleet .title-editable:not([data-content]) {
-  color: #bdb275;
+  color: hsl(51, 35%, 60%);
 }
 #layout[data-theme="3"] .infos-fleet .title-editable[data-content] {
-  color: #ffe866;
+  color: hsl(51, 100%, 70%);
 }
 #layout[data-theme="3"] .infos-fleet .title-editable[data-content]:before {
-  color: #fffdf0;
+  color: hsl(51, 100%, 97%);
 }
 #layout[data-theme="3"] .infos-fleet > .fleets .tabs label.highlight {
-  color: #fff4b3;
+  color: hsl(51, 100%, 85%);
 }
 #layout[data-theme="3"] .infos-fleet > .fleets .tabs label.highlight:hover {
-  color: #fff4b3;
+  color: hsl(51, 100%, 85%);
 }
 #layout[data-theme="3"] .infos-fleet .fleetships {
-  color: rgba(255, 251, 229, 0.75);
+  color: hsla(51, 100%, 95%, 0.75);
 }
 #layout[data-theme="3"] .infos-fleet .ship:hover:before,
 #layout[data-theme="3"] .infos-fleet .summary .btn-add-ship:hover:before {
-  border-right-color: rgba(255, 240, 153, 0.95);
+  border-right-color: hsla(51, 100%, 80%, 0.95);
 }
 #layout[data-theme="3"] .infos-fleet .ship > dt {
   /*
@@ -10280,7 +10280,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 						}*/
 }
 #layout[data-theme="3"] .infos-fleet .ship > dt > s:after {
-  background: linear-gradient(to right, rgba(255, 251, 229, 0.5) 25%, transparent) repeat-y 0 0;
+  background: linear-gradient(to right, hsla(51, 100%, 95%, 0.5) 25%, transparent) repeat-y 0 0;
 }
 #layout[data-theme="3"] .infos-fleet .ship:hover {
   /*
@@ -10297,10 +10297,10 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 						*/
 }
 #layout[data-theme="3"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
-  color: rgba(226, 224, 212, 0.75);
+  color: hsla(51, 20%, 86%, 0.75);
 }
 #layout[data-theme="3"] .infos-fleet .ship:not([data-shipid]) > dt > div {
-  color: #fffadb;
+  color: hsl(51, 100%, 93%);
 }
 #layout[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
@@ -10312,56 +10312,56 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 							*/
 }
 #layout[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
-  background: linear-gradient(to right, rgba(19, 17, 6, 0.4) 50%, transparent);
+  background: linear-gradient(to right, hsla(51, 50%, 5%, 0.4) 50%, transparent);
 }
 #layout[data-theme="3"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
-  color: #fffbe5;
+  color: hsl(51, 100%, 95%);
 }
 #layout[data-theme="3"] .infos-fleet .equipment-name {
-  color: #fffae0;
+  color: hsl(51, 100%, 94%);
 }
 #layout[data-theme="4"] main:after {
-  background-color: rgba(57, 57, 57, 0.75);
-  background-image: linear-gradient(to bottom, #cafa9e 4px, rgba(189, 249, 134, 0.2) 4px, transparent 25%);
+  background-color: hsla(0, 0%, 22.5%, 0.75);
+  background-image: linear-gradient(to bottom, hsl(91, 90%, 80%) 4px, hsla(91, 90%, 75%, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
   #layout[data-theme="4"] main:after {
-    background-color: rgba(57, 63, 52, 0.95);
+    background-color: hsla(91, 10%, 22.5%, 0.95);
   }
 }
 #layout[data-theme="4"] .infos-fleet h3[data-content],
 #layout[data-theme="4"] .infos-fleet h4[data-content],
 #layout[data-theme="4"] .infos-fleet h5[data-content] {
-  color: #bef28c;
+  color: hsl(91, 80%, 75%);
 }
 #layout[data-theme="4"] .infos-fleet h3[data-content]:before,
 #layout[data-theme="4"] .infos-fleet h4[data-content]:before,
 #layout[data-theme="4"] .infos-fleet h5[data-content]:before {
-  color: #f7f8f6;
+  color: hsl(91, 14%, 97%);
 }
 #layout[data-theme="4"] .infos-fleet .title-editable:not([data-content]) {
-  color: #98b380;
+  color: hsl(91, 25%, 60%);
 }
 #layout[data-theme="4"] .infos-fleet .title-editable[data-content] {
-  color: #b0f76e;
+  color: hsl(91, 90%, 70%);
 }
 #layout[data-theme="4"] .infos-fleet .title-editable[data-content]:before {
-  color: #f7fef0;
+  color: hsl(91, 90%, 97%);
 }
 #layout[data-theme="4"] .infos-fleet > .fleets .tabs label.highlight {
-  color: #d8fbb6;
+  color: hsl(91, 90%, 85%);
 }
 #layout[data-theme="4"] .infos-fleet > .fleets .tabs label.highlight:hover {
-  color: #d8fbb6;
+  color: hsl(91, 90%, 85%);
 }
 #layout[data-theme="4"] .infos-fleet .fleetships {
-  color: rgba(242, 254, 231, 0.75);
+  color: hsla(91, 90%, 95%, 0.75);
 }
 #layout[data-theme="4"] .infos-fleet .ship:hover:before,
 #layout[data-theme="4"] .infos-fleet .summary .btn-add-ship:hover:before {
-  border-right-color: rgba(202, 250, 158, 0.95);
+  border-right-color: hsla(91, 90%, 80%, 0.95);
 }
 #layout[data-theme="4"] .infos-fleet .ship > dt {
   /*
@@ -10380,7 +10380,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 						}*/
 }
 #layout[data-theme="4"] .infos-fleet .ship > dt > s:after {
-  background: linear-gradient(to right, rgba(242, 254, 231, 0.5) 25%, transparent) repeat-y 0 0;
+  background: linear-gradient(to right, hsla(91, 90%, 95%, 0.5) 25%, transparent) repeat-y 0 0;
 }
 #layout[data-theme="4"] .infos-fleet .ship:hover {
   /*
@@ -10397,10 +10397,10 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 						*/
 }
 #layout[data-theme="4"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
-  color: rgba(219, 223, 216, 0.75);
+  color: hsla(91, 10%, 86%, 0.75);
 }
 #layout[data-theme="4"] .infos-fleet .ship:not([data-shipid]) > dt > div {
-  color: #edfddd;
+  color: hsl(91, 90%, 93%);
 }
 #layout[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
@@ -10412,56 +10412,56 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 							*/
 }
 #layout[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
-  background: linear-gradient(to right, rgba(13, 18, 8, 0.4) 50%, transparent);
+  background: linear-gradient(to right, hsla(91, 40%, 5%, 0.4) 50%, transparent);
 }
 #layout[data-theme="4"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
-  color: #f2fee7;
+  color: hsl(91, 90%, 95%);
 }
 #layout[data-theme="4"] .infos-fleet .equipment-name {
-  color: #effde2;
+  color: hsl(91, 90%, 94%);
 }
 #layout[data-theme="5"] main:after {
-  background-color: rgba(52, 63, 54, 0.75);
-  background-image: linear-gradient(to bottom, #99ffac 4px, rgba(128, 255, 151, 0.2) 4px, transparent 25%);
+  background-color: hsla(131, 10%, 22.5%, 0.75);
+  background-image: linear-gradient(to bottom, hsl(131, 100%, 80%) 4px, hsla(131, 100%, 75%, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
   #layout[data-theme="5"] main:after {
-    background-color: rgba(52, 63, 54, 0.95);
+    background-color: hsla(131, 10%, 22.5%, 0.95);
   }
 }
 #layout[data-theme="5"] .infos-fleet h3[data-content],
 #layout[data-theme="5"] .infos-fleet h4[data-content],
 #layout[data-theme="5"] .infos-fleet h5[data-content] {
-  color: #86f99b;
+  color: hsl(131, 90%, 75%);
 }
 #layout[data-theme="5"] .infos-fleet h3[data-content]:before,
 #layout[data-theme="5"] .infos-fleet h4[data-content]:before,
 #layout[data-theme="5"] .infos-fleet h5[data-content]:before {
-  color: #f6f9f6;
+  color: hsl(131, 24%, 97%);
 }
 #layout[data-theme="5"] .infos-fleet .title-editable:not([data-content]) {
-  color: #75bd82;
+  color: hsl(131, 35%, 60%);
 }
 #layout[data-theme="5"] .infos-fleet .title-editable[data-content] {
-  color: #66ff82;
+  color: hsl(131, 100%, 70%);
 }
 #layout[data-theme="5"] .infos-fleet .title-editable[data-content]:before {
-  color: #f0fff3;
+  color: hsl(131, 100%, 97%);
 }
 #layout[data-theme="5"] .infos-fleet > .fleets .tabs label.highlight {
-  color: #b3ffc1;
+  color: hsl(131, 100%, 85%);
 }
 #layout[data-theme="5"] .infos-fleet > .fleets .tabs label.highlight:hover {
-  color: #b3ffc1;
+  color: hsl(131, 100%, 85%);
 }
 #layout[data-theme="5"] .infos-fleet .fleetships {
-  color: rgba(229, 255, 234, 0.75);
+  color: hsla(131, 100%, 95%, 0.75);
 }
 #layout[data-theme="5"] .infos-fleet .ship:hover:before,
 #layout[data-theme="5"] .infos-fleet .summary .btn-add-ship:hover:before {
-  border-right-color: rgba(153, 255, 172, 0.95);
+  border-right-color: hsla(131, 100%, 80%, 0.95);
 }
 #layout[data-theme="5"] .infos-fleet .ship > dt {
   /*
@@ -10480,7 +10480,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 						}*/
 }
 #layout[data-theme="5"] .infos-fleet .ship > dt > s:after {
-  background: linear-gradient(to right, rgba(229, 255, 234, 0.5) 25%, transparent) repeat-y 0 0;
+  background: linear-gradient(to right, hsla(131, 100%, 95%, 0.5) 25%, transparent) repeat-y 0 0;
 }
 #layout[data-theme="5"] .infos-fleet .ship:hover {
   /*
@@ -10497,10 +10497,10 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 						*/
 }
 #layout[data-theme="5"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
-  color: rgba(212, 226, 215, 0.75);
+  color: hsla(131, 20%, 86%, 0.75);
 }
 #layout[data-theme="5"] .infos-fleet .ship:not([data-shipid]) > dt > div {
-  color: #dbffe2;
+  color: hsl(131, 100%, 93%);
 }
 #layout[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
@@ -10512,56 +10512,56 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 							*/
 }
 #layout[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
-  background: linear-gradient(to right, rgba(6, 19, 9, 0.4) 50%, transparent);
+  background: linear-gradient(to right, hsla(131, 50%, 5%, 0.4) 50%, transparent);
 }
 #layout[data-theme="5"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
-  color: #e5ffea;
+  color: hsl(131, 100%, 95%);
 }
 #layout[data-theme="5"] .infos-fleet .equipment-name {
-  color: #e0ffe6;
+  color: hsl(131, 100%, 94%);
 }
 #layout[data-theme="6"] main:after {
-  background-color: rgba(52, 63, 61, 0.75);
-  background-image: linear-gradient(to bottom, #99fff0 4px, rgba(128, 255, 236, 0.2) 4px, transparent 25%);
+  background-color: hsla(171, 10%, 22.5%, 0.75);
+  background-image: linear-gradient(to bottom, hsl(171, 100%, 80%) 4px, hsla(171, 100%, 75%, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
   #layout[data-theme="6"] main:after {
-    background-color: rgba(52, 63, 61, 0.95);
+    background-color: hsla(171, 10%, 22.5%, 0.95);
   }
 }
 #layout[data-theme="6"] .infos-fleet h3[data-content],
 #layout[data-theme="6"] .infos-fleet h4[data-content],
 #layout[data-theme="6"] .infos-fleet h5[data-content] {
-  color: #86f9e7;
+  color: hsl(171, 90%, 75%);
 }
 #layout[data-theme="6"] .infos-fleet h3[data-content]:before,
 #layout[data-theme="6"] .infos-fleet h4[data-content]:before,
 #layout[data-theme="6"] .infos-fleet h5[data-content]:before {
-  color: #f6f9f9;
+  color: hsl(171, 24%, 97%);
 }
 #layout[data-theme="6"] .infos-fleet .title-editable:not([data-content]) {
-  color: #75bdb2;
+  color: hsl(171, 35%, 60%);
 }
 #layout[data-theme="6"] .infos-fleet .title-editable[data-content] {
-  color: #66ffe8;
+  color: hsl(171, 100%, 70%);
 }
 #layout[data-theme="6"] .infos-fleet .title-editable[data-content]:before {
-  color: #f0fffd;
+  color: hsl(171, 100%, 97%);
 }
 #layout[data-theme="6"] .infos-fleet > .fleets .tabs label.highlight {
-  color: #b3fff4;
+  color: hsl(171, 100%, 85%);
 }
 #layout[data-theme="6"] .infos-fleet > .fleets .tabs label.highlight:hover {
-  color: #b3fff4;
+  color: hsl(171, 100%, 85%);
 }
 #layout[data-theme="6"] .infos-fleet .fleetships {
-  color: rgba(229, 255, 251, 0.75);
+  color: hsla(171, 100%, 95%, 0.75);
 }
 #layout[data-theme="6"] .infos-fleet .ship:hover:before,
 #layout[data-theme="6"] .infos-fleet .summary .btn-add-ship:hover:before {
-  border-right-color: rgba(153, 255, 240, 0.95);
+  border-right-color: hsla(171, 100%, 80%, 0.95);
 }
 #layout[data-theme="6"] .infos-fleet .ship > dt {
   /*
@@ -10580,7 +10580,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 						}*/
 }
 #layout[data-theme="6"] .infos-fleet .ship > dt > s:after {
-  background: linear-gradient(to right, rgba(229, 255, 251, 0.5) 25%, transparent) repeat-y 0 0;
+  background: linear-gradient(to right, hsla(171, 100%, 95%, 0.5) 25%, transparent) repeat-y 0 0;
 }
 #layout[data-theme="6"] .infos-fleet .ship:hover {
   /*
@@ -10597,10 +10597,10 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 						*/
 }
 #layout[data-theme="6"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
-  color: rgba(212, 226, 224, 0.75);
+  color: hsla(171, 20%, 86%, 0.75);
 }
 #layout[data-theme="6"] .infos-fleet .ship:not([data-shipid]) > dt > div {
-  color: #dbfffa;
+  color: hsl(171, 100%, 93%);
 }
 #layout[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
@@ -10612,56 +10612,56 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 							*/
 }
 #layout[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
-  background: linear-gradient(to right, rgba(6, 19, 17, 0.4) 50%, transparent);
+  background: linear-gradient(to right, hsla(171, 50%, 5%, 0.4) 50%, transparent);
 }
 #layout[data-theme="6"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
-  color: #e5fffb;
+  color: hsl(171, 100%, 95%);
 }
 #layout[data-theme="6"] .infos-fleet .equipment-name {
-  color: #e0fffa;
+  color: hsl(171, 100%, 94%);
 }
 #layout[data-theme="7"] main:after {
-  background-color: rgba(49, 57, 66, 0.75);
-  background-image: linear-gradient(to bottom, #99caff 4px, rgba(128, 189, 255, 0.2) 4px, transparent 25%);
+  background-color: hsla(211, 15%, 22.5%, 0.75);
+  background-image: linear-gradient(to bottom, hsl(211, 100%, 80%) 4px, hsla(211, 100%, 75%, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
   #layout[data-theme="7"] main:after {
-    background-color: rgba(52, 57, 63, 0.95);
+    background-color: hsla(211, 10%, 22.5%, 0.95);
   }
 }
 #layout[data-theme="7"] .infos-fleet h3[data-content],
 #layout[data-theme="7"] .infos-fleet h4[data-content],
 #layout[data-theme="7"] .infos-fleet h5[data-content] {
-  color: #83bdfc;
+  color: hsl(211, 95%, 75%);
 }
 #layout[data-theme="7"] .infos-fleet h3[data-content]:before,
 #layout[data-theme="7"] .infos-fleet h4[data-content]:before,
 #layout[data-theme="7"] .infos-fleet h5[data-content]:before {
-  color: #f5f7fa;
+  color: hsl(211, 29%, 97%);
 }
 #layout[data-theme="7"] .infos-fleet .title-editable:not([data-content]) {
-  color: #7098c2;
+  color: hsl(211, 40%, 60%);
 }
 #layout[data-theme="7"] .infos-fleet .title-editable[data-content] {
-  color: #66b0ff;
+  color: hsl(211, 100%, 70%);
 }
 #layout[data-theme="7"] .infos-fleet .title-editable[data-content]:before {
-  color: #f0f7ff;
+  color: hsl(211, 100%, 97%);
 }
 #layout[data-theme="7"] .infos-fleet > .fleets .tabs label.highlight {
-  color: #b3d7ff;
+  color: hsl(211, 100%, 85%);
 }
 #layout[data-theme="7"] .infos-fleet > .fleets .tabs label.highlight:hover {
-  color: #b3d7ff;
+  color: hsl(211, 100%, 85%);
 }
 #layout[data-theme="7"] .infos-fleet .fleetships {
-  color: rgba(229, 242, 255, 0.75);
+  color: hsla(211, 100%, 95%, 0.75);
 }
 #layout[data-theme="7"] .infos-fleet .ship:hover:before,
 #layout[data-theme="7"] .infos-fleet .summary .btn-add-ship:hover:before {
-  border-right-color: rgba(153, 202, 255, 0.95);
+  border-right-color: hsla(211, 100%, 80%, 0.95);
 }
 #layout[data-theme="7"] .infos-fleet .ship > dt {
   /*
@@ -10680,7 +10680,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 						}*/
 }
 #layout[data-theme="7"] .infos-fleet .ship > dt > s:after {
-  background: linear-gradient(to right, rgba(229, 242, 255, 0.5) 25%, transparent) repeat-y 0 0;
+  background: linear-gradient(to right, hsla(211, 100%, 95%, 0.5) 25%, transparent) repeat-y 0 0;
 }
 #layout[data-theme="7"] .infos-fleet .ship:hover {
   /*
@@ -10697,10 +10697,10 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 						*/
 }
 #layout[data-theme="7"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
-  color: rgba(210, 219, 228, 0.75);
+  color: hsla(211, 25%, 86%, 0.75);
 }
 #layout[data-theme="7"] .infos-fleet .ship:not([data-shipid]) > dt > div {
-  color: #dbedff;
+  color: hsl(211, 100%, 93%);
 }
 #layout[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
@@ -10712,56 +10712,56 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 							*/
 }
 #layout[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
-  background: linear-gradient(to right, rgba(6, 13, 20, 0.4) 50%, transparent);
+  background: linear-gradient(to right, hsla(211, 55%, 5%, 0.4) 50%, transparent);
 }
 #layout[data-theme="7"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
-  color: #e5f2ff;
+  color: hsl(211, 100%, 95%);
 }
 #layout[data-theme="7"] .infos-fleet .equipment-name {
-  color: #e0efff;
+  color: hsl(211, 100%, 94%);
 }
 #layout[data-theme="8"] main:after {
-  background-color: rgba(66, 63, 77, 0.75);
-  background-image: linear-gradient(to bottom, #c1b3ff 4px, rgba(172, 153, 255, 0.2) 4px, transparent 25%);
+  background-color: hsla(251, 10%, 27.5%, 0.75);
+  background-image: linear-gradient(to bottom, hsl(251, 100%, 85%) 4px, hsla(251, 100%, 80%, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
   #layout[data-theme="8"] main:after {
-    background-color: rgba(54, 52, 63, 0.95);
+    background-color: hsla(251, 10%, 22.5%, 0.95);
   }
 }
 #layout[data-theme="8"] .infos-fleet h3[data-content],
 #layout[data-theme="8"] .infos-fleet h4[data-content],
 #layout[data-theme="8"] .infos-fleet h5[data-content] {
-  color: #af9efa;
+  color: hsl(251, 90%, 80%);
 }
 #layout[data-theme="8"] .infos-fleet h3[data-content]:before,
 #layout[data-theme="8"] .infos-fleet h4[data-content]:before,
 #layout[data-theme="8"] .infos-fleet h5[data-content]:before {
-  color: #ffffff;
+  color: hsl(0, 0%, 100%);
 }
 #layout[data-theme="8"] .infos-fleet .title-editable:not([data-content]) {
-  color: #9287c5;
+  color: hsl(251, 35%, 65%);
 }
 #layout[data-theme="8"] .infos-fleet .title-editable[data-content] {
-  color: #9780ff;
+  color: hsl(251, 100%, 75%);
 }
 #layout[data-theme="8"] .infos-fleet .title-editable[data-content]:before {
-  color: #ffffff;
+  color: hsl(0, 0%, 100%);
 }
 #layout[data-theme="8"] .infos-fleet > .fleets .tabs label.highlight {
-  color: #d5ccff;
+  color: hsl(251, 100%, 90%);
 }
 #layout[data-theme="8"] .infos-fleet > .fleets .tabs label.highlight:hover {
-  color: #d5ccff;
+  color: hsl(251, 100%, 90%);
 }
 #layout[data-theme="8"] .infos-fleet .fleetships {
-  color: rgba(255, 255, 255, 0.75);
+  color: hsla(0, 0%, 100%, 0.75);
 }
 #layout[data-theme="8"] .infos-fleet .ship:hover:before,
 #layout[data-theme="8"] .infos-fleet .summary .btn-add-ship:hover:before {
-  border-right-color: rgba(193, 179, 255, 0.95);
+  border-right-color: hsla(251, 100%, 85%, 0.95);
 }
 #layout[data-theme="8"] .infos-fleet .ship > dt {
   /*
@@ -10780,7 +10780,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 						}*/
 }
 #layout[data-theme="8"] .infos-fleet .ship > dt > s:after {
-  background: linear-gradient(to right, rgba(255, 255, 255, 0.5) 25%, transparent) repeat-y 0 0;
+  background: linear-gradient(to right, hsla(0, 0%, 100%, 0.5) 25%, transparent) repeat-y 0 0;
 }
 #layout[data-theme="8"] .infos-fleet .ship:hover {
   /*
@@ -10797,10 +10797,10 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 						*/
 }
 #layout[data-theme="8"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
-  color: rgba(229, 227, 237, 0.75);
+  color: hsla(251, 20%, 91%, 0.75);
 }
 #layout[data-theme="8"] .infos-fleet .ship:not([data-shipid]) > dt > div {
-  color: #f7f5ff;
+  color: hsl(251, 100%, 98%);
 }
 #layout[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
@@ -10812,56 +10812,56 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 							*/
 }
 #layout[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
-  background: linear-gradient(to right, rgba(17, 13, 38, 0.4) 50%, transparent);
+  background: linear-gradient(to right, hsla(251, 50%, 10%, 0.4) 50%, transparent);
 }
 #layout[data-theme="8"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
-  color: #ffffff;
+  color: hsl(0, 0%, 100%);
 }
 #layout[data-theme="8"] .infos-fleet .equipment-name {
-  color: #fbfaff;
+  color: hsl(251, 100%, 99%);
 }
 #layout[data-theme="9"] main:after {
-  background-color: rgba(61, 52, 63, 0.75);
-  background-image: linear-gradient(to bottom, #f099ff 4px, rgba(236, 128, 255, 0.2) 4px, transparent 25%);
+  background-color: hsla(291, 10%, 22.5%, 0.75);
+  background-image: linear-gradient(to bottom, hsl(291, 100%, 80%) 4px, hsla(291, 100%, 75%, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
   #layout[data-theme="9"] main:after {
-    background-color: rgba(61, 52, 63, 0.95);
+    background-color: hsla(291, 10%, 22.5%, 0.95);
   }
 }
 #layout[data-theme="9"] .infos-fleet h3[data-content],
 #layout[data-theme="9"] .infos-fleet h4[data-content],
 #layout[data-theme="9"] .infos-fleet h5[data-content] {
-  color: #e786f9;
+  color: hsl(291, 90%, 75%);
 }
 #layout[data-theme="9"] .infos-fleet h3[data-content]:before,
 #layout[data-theme="9"] .infos-fleet h4[data-content]:before,
 #layout[data-theme="9"] .infos-fleet h5[data-content]:before {
-  color: #f9f6f9;
+  color: hsl(291, 24%, 97%);
 }
 #layout[data-theme="9"] .infos-fleet .title-editable:not([data-content]) {
-  color: #b275bd;
+  color: hsl(291, 35%, 60%);
 }
 #layout[data-theme="9"] .infos-fleet .title-editable[data-content] {
-  color: #e866ff;
+  color: hsl(291, 100%, 70%);
 }
 #layout[data-theme="9"] .infos-fleet .title-editable[data-content]:before {
-  color: #fdf0ff;
+  color: hsl(291, 100%, 97%);
 }
 #layout[data-theme="9"] .infos-fleet > .fleets .tabs label.highlight {
-  color: #f4b3ff;
+  color: hsl(291, 100%, 85%);
 }
 #layout[data-theme="9"] .infos-fleet > .fleets .tabs label.highlight:hover {
-  color: #f4b3ff;
+  color: hsl(291, 100%, 85%);
 }
 #layout[data-theme="9"] .infos-fleet .fleetships {
-  color: rgba(251, 229, 255, 0.75);
+  color: hsla(291, 100%, 95%, 0.75);
 }
 #layout[data-theme="9"] .infos-fleet .ship:hover:before,
 #layout[data-theme="9"] .infos-fleet .summary .btn-add-ship:hover:before {
-  border-right-color: rgba(240, 153, 255, 0.95);
+  border-right-color: hsla(291, 100%, 80%, 0.95);
 }
 #layout[data-theme="9"] .infos-fleet .ship > dt {
   /*
@@ -10880,7 +10880,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 						}*/
 }
 #layout[data-theme="9"] .infos-fleet .ship > dt > s:after {
-  background: linear-gradient(to right, rgba(251, 229, 255, 0.5) 25%, transparent) repeat-y 0 0;
+  background: linear-gradient(to right, hsla(291, 100%, 95%, 0.5) 25%, transparent) repeat-y 0 0;
 }
 #layout[data-theme="9"] .infos-fleet .ship:hover {
   /*
@@ -10897,10 +10897,10 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 						*/
 }
 #layout[data-theme="9"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
-  color: rgba(224, 212, 226, 0.75);
+  color: hsla(291, 20%, 86%, 0.75);
 }
 #layout[data-theme="9"] .infos-fleet .ship:not([data-shipid]) > dt > div {
-  color: #fadbff;
+  color: hsl(291, 100%, 93%);
 }
 #layout[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
@@ -10912,56 +10912,56 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 							*/
 }
 #layout[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
-  background: linear-gradient(to right, rgba(17, 6, 19, 0.4) 50%, transparent);
+  background: linear-gradient(to right, hsla(291, 50%, 5%, 0.4) 50%, transparent);
 }
 #layout[data-theme="9"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
-  color: #fbe5ff;
+  color: hsl(291, 100%, 95%);
 }
 #layout[data-theme="9"] .infos-fleet .equipment-name {
-  color: #fae0ff;
+  color: hsl(291, 100%, 94%);
 }
 #layout[data-theme="10"] main:after {
-  background-color: rgba(77, 63, 70, 0.75);
-  background-image: linear-gradient(to bottom, #ffb3d7 4px, rgba(255, 153, 202, 0.2) 4px, transparent 25%);
+  background-color: hsla(331, 10%, 27.5%, 0.75);
+  background-image: linear-gradient(to bottom, hsl(331, 100%, 85%) 4px, hsla(331, 100%, 80%, 0.2) 4px, transparent 25%);
   background-repeat: repeat-x;
   background-position: 0 0;
 }
 @media all and (max-width: 720px) {
   #layout[data-theme="10"] main:after {
-    background-color: rgba(63, 52, 57, 0.95);
+    background-color: hsla(331, 10%, 22.5%, 0.95);
   }
 }
 #layout[data-theme="10"] .infos-fleet h3[data-content],
 #layout[data-theme="10"] .infos-fleet h4[data-content],
 #layout[data-theme="10"] .infos-fleet h5[data-content] {
-  color: #fa9eca;
+  color: hsl(331, 90%, 80%);
 }
 #layout[data-theme="10"] .infos-fleet h3[data-content]:before,
 #layout[data-theme="10"] .infos-fleet h4[data-content]:before,
 #layout[data-theme="10"] .infos-fleet h5[data-content]:before {
-  color: #ffffff;
+  color: hsl(0, 0%, 100%);
 }
 #layout[data-theme="10"] .infos-fleet .title-editable:not([data-content]) {
-  color: #c587a5;
+  color: hsl(331, 35%, 65%);
 }
 #layout[data-theme="10"] .infos-fleet .title-editable[data-content] {
-  color: #ff80bd;
+  color: hsl(331, 100%, 75%);
 }
 #layout[data-theme="10"] .infos-fleet .title-editable[data-content]:before {
-  color: #ffffff;
+  color: hsl(0, 0%, 100%);
 }
 #layout[data-theme="10"] .infos-fleet > .fleets .tabs label.highlight {
-  color: #ffcce5;
+  color: hsl(331, 100%, 90%);
 }
 #layout[data-theme="10"] .infos-fleet > .fleets .tabs label.highlight:hover {
-  color: #ffcce5;
+  color: hsl(331, 100%, 90%);
 }
 #layout[data-theme="10"] .infos-fleet .fleetships {
-  color: rgba(255, 255, 255, 0.75);
+  color: hsla(0, 0%, 100%, 0.75);
 }
 #layout[data-theme="10"] .infos-fleet .ship:hover:before,
 #layout[data-theme="10"] .infos-fleet .summary .btn-add-ship:hover:before {
-  border-right-color: rgba(255, 179, 215, 0.95);
+  border-right-color: hsla(331, 100%, 85%, 0.95);
 }
 #layout[data-theme="10"] .infos-fleet .ship > dt {
   /*
@@ -10980,7 +10980,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 						}*/
 }
 #layout[data-theme="10"] .infos-fleet .ship > dt > s:after {
-  background: linear-gradient(to right, rgba(255, 255, 255, 0.5) 25%, transparent) repeat-y 0 0;
+  background: linear-gradient(to right, hsla(0, 0%, 100%, 0.5) 25%, transparent) repeat-y 0 0;
 }
 #layout[data-theme="10"] .infos-fleet .ship:hover {
   /*
@@ -10997,10 +10997,10 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 						*/
 }
 #layout[data-theme="10"] .infos-fleet .ship:not([data-shipid]) > dt > s:before {
-  color: rgba(237, 227, 232, 0.75);
+  color: hsla(331, 20%, 91%, 0.75);
 }
 #layout[data-theme="10"] .infos-fleet .ship:not([data-shipid]) > dt > div {
-  color: #fff5fa;
+  color: hsl(331, 100%, 98%);
 }
 #layout[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div {
   /*
@@ -11012,13 +11012,13 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 							*/
 }
 #layout[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div:after {
-  background: linear-gradient(to right, rgba(38, 13, 25, 0.4) 50%, transparent);
+  background: linear-gradient(to right, hsla(331, 50%, 10%, 0.4) 50%, transparent);
 }
 #layout[data-theme="10"] .infos-fleet .ship.mod-nomask[data-shipid] > dt > div .info {
-  color: #ffffff;
+  color: hsl(0, 0%, 100%);
 }
 #layout[data-theme="10"] .infos-fleet .equipment-name {
-  color: #fffafc;
+  color: hsl(331, 100%, 99%);
 }
 .menu.contextmenu-infos_fleet_themes > .body > div {
   padding: 5px;
@@ -11055,34 +11055,34 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   background: rgba(255, 255, 255, 0.15);
 }
 .menu.contextmenu-infos_fleet_themes > .body > div button.theme-2 {
-  background: rgba(255, 109, 77, 0.35);
+  background: hsla(11, 100%, 65%, 0.35);
 }
 .menu.contextmenu-infos_fleet_themes > .body > div button.theme-3 {
-  background: rgba(255, 228, 77, 0.35);
+  background: hsla(51, 100%, 65%, 0.35);
 }
 .menu.contextmenu-infos_fleet_themes > .body > div button.theme-4 {
-  background: rgba(163, 255, 77, 0.35);
+  background: hsla(91, 100%, 65%, 0.35);
 }
 .menu.contextmenu-infos_fleet_themes > .body > div button.theme-5 {
-  background: rgba(77, 255, 109, 0.35);
+  background: hsla(131, 100%, 65%, 0.35);
 }
 .menu.contextmenu-infos_fleet_themes > .body > div button.theme-6 {
-  background: rgba(77, 255, 228, 0.35);
+  background: hsla(171, 100%, 65%, 0.35);
 }
 .menu.contextmenu-infos_fleet_themes > .body > div button.theme-7 {
-  background: rgba(77, 163, 255, 0.35);
+  background: hsla(211, 100%, 65%, 0.35);
 }
 .menu.contextmenu-infos_fleet_themes > .body > div button.theme-8 {
-  background: rgba(109, 77, 255, 0.35);
+  background: hsla(251, 100%, 65%, 0.35);
 }
 .menu.contextmenu-infos_fleet_themes > .body > div button.theme-9 {
-  background: rgba(228, 77, 255, 0.35);
+  background: hsla(291, 100%, 65%, 0.35);
 }
 .menu.contextmenu-infos_fleet_themes > .body > div button.theme-10 {
-  background: rgba(255, 77, 163, 0.35);
+  background: hsla(331, 100%, 65%, 0.35);
 }
 .menu.contextmenu-infos_fleet_themes > .body > div small {
-  color: #999999;
+  color: hsl(0, 0%, 60%);
   padding-left: 1em;
   font-size: 12px;
 }
@@ -11520,7 +11520,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
     right: 42px;
     top: 3px;
     border-radius: 5px !important;
-    border-top: 1px solid rgba(0, 0, 0, 0.15);
+    border-top: 1px solid hsla(0, 0%, 0%, 0.15);
     background-position: 0 50%;
   }
   .infos-fleet .equipment-extra[data-equipmentid] {
@@ -12002,8 +12002,8 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   color: #8ddbff;
 }
 .infos-ship > div.title small span {
-  background: rgba(140, 210, 242, 0.75);
-  color: #29373d;
+  background: hsla(199, 80%, 75%, 0.75);
+  color: hsl(199, 20%, 20%);
 }
 .infos-ship > div.stats {
   flex-basis: 65%;
@@ -12028,7 +12028,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 }
 .infos-ship > div.stats > .title > span:before {
   content: 'Lv.';
-  padding-right: .15em;
+  padding-right: 0.15em;
   font-size: smaller;
   font-style: italic;
 }
@@ -12036,7 +12036,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   transition-property: color;
 }
 .infos-ship > div.stats > .title > span label + label {
-  padding-left: .25em;
+  padding-left: 0.25em;
 }
 .infos-ship > div.stats > .stat {
   border: 0 solid rgba(44, 172, 232, 0.25);
@@ -12058,7 +12058,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   margin-top: 0.25rem;
 }
 .infos-ship > div.stats > .stat ~ .stat.consum {
-  border-color: rgba(232, 44, 44, 0.25);
+  border-color: hsla(0, 80%, 54%, 0.25);
 }
 .infos-ship > div.stats > .stat ~ .stat.consum span > em {
   color: #eb6969;
@@ -12138,8 +12138,8 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 }
 .infos-ship > div.equipments > a > small .star {
   display: inline-block;
-  padding-left: .25em;
-  color: #76d6a6;
+  padding-left: 0.25em;
+  color: hsl(150, 54%, 65%);
 }
 .infos-ship > div.equipments > a > small .star:before {
   content: "★+";
@@ -12161,7 +12161,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   color: #497488;
 }
 .infos-ship > div.equipments > a.no {
-  opacity: .25;
+  opacity: 0.25;
 }
 .infos-ship > div.equipments > a ~ a {
   margin-top: 0.4rem;
@@ -12190,7 +12190,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   line-height: 0.9rem;
   position: relative;
   display: inline-block;
-  margin-left: .35em;
+  margin-left: 0.35em;
   color: #2cace8;
   padding-left: 1rem;
   vertical-align: bottom;
@@ -12209,7 +12209,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   border-radius: 3px;
   font-size: inherit;
   line-height: 1.2em;
-  padding: .25em .5em;
+  padding: 0.25em 0.5em;
   font-weight: normal;
   transition-property: color, background-color, border-color;
   position: relative;
@@ -12230,19 +12230,19 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   position: absolute;
   top: 50%;
   line-height: 0;
-  left: .5em;
+  left: 0.5em;
   margin-top: 1px;
   opacity: 1;
 }
 .infos-ship > div.additionals .button[disabled] {
-  color: #d9d9d9;
-  border-color: #d9d9d9;
+  color: hsl(0, 0%, 85%);
+  border-color: hsl(0, 0%, 85%);
   opacity: 0.5;
 }
 .infos-ship > div.additionals .button[disabled]:hover,
 .infos-ship > div.additionals .button[disabled]:active {
   background: transparent;
-  color: #d9d9d9;
+  color: hsl(0, 0%, 85%);
 }
 .infos-ship > div.add_equip {
   position: relative;
@@ -12306,10 +12306,10 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 }
 .infos-ship > div.remodels .flexgrid > a.unit strong:before {
   content: 'Lv.';
-  padding-right: .15em;
+  padding-right: 0.15em;
   font-size: smaller;
   font-style: italic;
-  opacity: .65;
+  opacity: 0.65;
 }
 .infos-ship > div.remodels .flexgrid > a.unit i {
   z-index: 2;
@@ -12338,7 +12338,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   top: 4px;
   right: 4px;
   font-size: 24px;
-  color: rgba(229, 247, 255, 0.75);
+  color: hsla(199, 100%, 95%, 0.75);
   transform: rotate(15deg);
 }
 .infos-ship > div.remodels .flexgrid > a.unit:before,
@@ -12373,19 +12373,19 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   top: 0.2rem;
 }
 .infos-ship > div.remodels .flexgrid > a.unit.mod-blueprint strong {
-  color: #fcbbbb;
+  color: hsl(0, 91%, 86%);
 }
 .infos-ship > div.remodels .flexgrid > a.unit.mod-blueprint strong:after {
   background-image: url(/!/assets/images/blueprint.png);
 }
 .infos-ship > div.remodels .flexgrid > a.unit.mod-catapult strong {
-  color: #e6fcbb;
+  color: hsl(80, 91%, 86%);
 }
 .infos-ship > div.remodels .flexgrid > a.unit.mod-catapult strong:after {
   background-image: url(/!/assets/images/catapult.png);
 }
 .infos-ship > div.remodels .flexgrid > a.unit.mod-blueprint.mod-catapult strong {
-  color: #fce6bb;
+  color: hsl(40, 91%, 86%);
 }
 .infos-ship > div.remodels .flexgrid > a.unit.mod-blueprint.mod-catapult strong:after {
   background: url(/!/assets/images/blueprint.png) no-repeat 0 0 / contain, url(/!/assets/images/catapult.png) no-repeat 100% 0 / contain;
@@ -12401,7 +12401,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   opacity: 1;
 }
 .infos-ship > div.remodels .flexgrid > a.unit:active i {
-  opacity: .5;
+  opacity: 0.5;
 }
 .infos-ship > div.remodels .flexgrid > a.unit.on {
   z-index: 2;
@@ -12409,8 +12409,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 }
 .infos-ship > div.remodels .flexgrid > a.unit.on:before {
   border-color: #9bbecf;
-  box-shadow: inset 0 0 5px #2cace8,
-												0 0 5px #2cace8;
+  box-shadow: inset 0 0 5px #2cace8, 0 0 5px #2cace8;
 }
 .infos-ship > div.remodels .flexgrid > a.unit.on:after {
   background-color: #9bbecf;
@@ -12447,8 +12446,8 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   line-height: 0;
   text-align: center;
   font-size: 22px;
-  color: #fff6cc;
-  text-shadow: 0 0 10px #fef6e6;
+  color: hsl(50, 100%, 90%);
+  text-shadow: 0 0 10px hsl(40, 95%, 95%);
 }
 .infos-ship > span,
 .infos-ship > a {
@@ -12463,7 +12462,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   width: 140px;
   height: 54px;
   vertical-align: top;
-  background: rgba(19, 108, 108, 0.325);
+  background: hsla(180, 70%, 25%, 0.325);
   border-radius: 0 5px 5px 0;
   transition-property: background-color;
   z-index: 2;
@@ -12471,7 +12470,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 .infos-ship > .entity > strong {
   font-size: 0.65rem;
   line-height: 1rem;
-  color: #bfd9d9;
+  color: hsl(180, 25%, 80%);
   font-weight: normal;
   display: block;
 }
@@ -12479,7 +12478,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   padding-top: 0.1rem;
   font-size: 0.7000000000000001rem;
   line-height: 1rem;
-  color: #8cd9d9;
+  color: hsl(180, 50%, 70%);
   display: block;
 }
 .infos-ship > .entity + .entity {
@@ -12487,7 +12486,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   border-radius: 5px 0 0 5px;
 }
 .infos-ship > .entity[href]:hover {
-  background: rgba(27, 152, 152, 0.325);
+  background: hsla(180, 70%, 35%, 0.325);
 }
 .infos-ship > aside {
   flex: 0;
@@ -12702,7 +12701,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 .infos-ship > aside:not(.mod-scroll-snap) > input[type="radio"][value="20"]:checked ~ .wrapper .body {
   transform: translateX(-1900%);
 }
-@media all and (min-width: 1601px) and (min-aspect-ratio: 5/4) {
+@media all and (min-width: 1601px) and (min-aspect-ratio: 1.25) {
   .infos-ship {
     padding-right: calc( 45% + 80px );
   }
@@ -12788,7 +12787,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
     padding: 0 25%;
   }
 }
-@media all and (min-width: 721px) and (max-width: 1152px) and (min-aspect-ratio: 5/4), (min-width: 721px) and (max-width: 1152px) and (max-height: 800px) {
+@media all and (min-width: 721px) and (max-width: 1152px) and (min-aspect-ratio: 1.25), (min-width: 721px) and (max-width: 1152px) and (max-height: 800px) {
   .infos-ship {
     padding-right: calc( 20% + 60px );
   }
@@ -12811,7 +12810,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
     border-top: 60px solid transparent;
   }
 }
-@media all and (min-width: 721px) and (max-width: 1152px) and (max-height: 700px) and (min-aspect-ratio: 5/4) {
+@media all and (min-width: 721px) and (max-width: 1152px) and (max-height: 700px) and (min-aspect-ratio: 1.25) {
   .infos-ship:after {
     display: none;
   }
@@ -12820,10 +12819,10 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   .infos-ship > div.add_equip > div > span {
     margin-top: -7px;
     margin-bottom: -7px;
-    margin-right: .25em;
+    margin-right: 0.25em;
   }
 }
-@media all and (max-width: 720px), (min-width: 721px) and (min-height: 801px) and (max-aspect-ratio: 5/4) {
+@media all and (max-width: 720px), (min-width: 721px) and (min-height: 801px) and (max-aspect-ratio: 1.25) {
   .infos-ship {
     /*
 			&>div.add_equip{
@@ -12861,7 +12860,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
     border-top: 60px solid transparent;
   }
 }
-@media all and (min-width: 721px) and (min-height: 801px) and (max-aspect-ratio: 5/4) {
+@media all and (min-width: 721px) and (min-height: 801px) and (max-aspect-ratio: 1.25) {
   .infos-ship {
     padding-right: 45%;
   }
@@ -12869,7 +12868,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
     width: 45%;
   }
 }
-@media all and (min-width: 721px) and (min-height: 801px) and (max-aspect-ratio: 5/4), (max-width: 540px) {
+@media all and (min-width: 721px) and (min-height: 801px) and (max-aspect-ratio: 1.25), (max-width: 540px) {
   .infos-ship > div.stats,
   .infos-ship > div.equipments {
     flex: none;
@@ -12885,7 +12884,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
     text-align: left;
   }
 }
-@media all and (min-width: 721px) and (min-height: 801px) and (max-aspect-ratio: 5/4), (min-width: 461px) and (max-width: 540px) {
+@media all and (min-width: 721px) and (min-height: 801px) and (max-aspect-ratio: 1.25), (min-width: 461px) and (max-width: 540px) {
   .infos-ship > div.stats > .stat {
     width: 50%;
     display: inline-block;
@@ -12979,7 +12978,7 @@ body > .modal > div > header {
   line-height: 40px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.1));
-  padding: 0 .5em;
+  padding: 0 0.5em;
   font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
   font-size: 18px;
   color: rgba(255, 255, 255, 0.75);
@@ -13016,10 +13015,10 @@ body > .modal.modal-nwjs-core-updated > div > section {
   padding: 1rem;
 }
 body > .modal.modal-nwjs-core-updated > div h3 {
-  margin-bottom: .75em;
+  margin-bottom: 0.75em;
 }
 body > .modal.modal-nwjs-core-updated > div li {
-  margin-top: .4em;
+  margin-top: 0.4em;
 }
 body > .modal.modal-nwjs-core-updated > div p {
   margin-top: 1em;
@@ -13561,7 +13560,7 @@ body > .modal.modal-equipable section {
 }
 body > .modal.modal-equipable section p {
   font-size: 16px;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
 }
 body > .modal.modal-equipable section div ~ p {
   margin-top: 1em;
@@ -13584,12 +13583,12 @@ body > .modal.modal-equipable section .flexgrid.equipable-types > .unit:not(:emp
   font-size: 13px;
   font-weight: normal;
   color: rgba(255, 255, 255, 0.35);
-  background: rgba(128, 128, 128, 0.35);
+  background: hsla(0, 0%, 50%, 0.35);
   text-align: center;
 }
 body > .modal.modal-equipable section .flexgrid.equipable-types > .unit:not(:empty).on {
-  color: #a8ffd2;
-  background: rgba(0, 179, 86, 0.5);
+  color: hsl(149, 100%, 83%);
+  background: hsla(149, 100%, 35%, 0.5);
 }
 body > .modal.infos_fleet.on > div {
   animation: scale-in 0.5s;
@@ -13611,7 +13610,7 @@ body > .modal.infos_fleet > div > section textarea {
 body > .modal.infos_fleet > div > section textarea::-webkit-input-placeholder {
   color: rgba(255, 255, 255, 0.25);
   font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
-  padding: .25em;
+  padding: 0.25em;
 }
 body > .modal.infos_fleet > div > section p {
   margin-bottom: 1em;
@@ -13620,8 +13619,8 @@ body > .modal.infos_fleet > div > section p {
 body > .modal.infos_fleet > div > section a {
   display: inline-block;
   color: #e0e0e0;
-  margin: 0.4px .15em;
-  padding: 0 .35em;
+  margin: 0.4px 0.15em;
+  padding: 0 0.35em;
   background: rgba(0, 0, 0, 0.25);
   text-decoration: none;
   border-radius: 3px;
@@ -14368,7 +14367,7 @@ body > .modal.hastitle.modal-bonuses > div > header {
 body > .modal.hastitle.modal-bonuses > div > header > strong {
   display: block;
   font-size: 1.25em;
-  letter-spacing: .1em;
+  letter-spacing: 0.1em;
   line-height: 1em;
   margin: 0.4em 0 0.2em 0;
   color: #fff;
@@ -14440,7 +14439,7 @@ body > .modal.hastitle.modal-bonuses section .bonus .ships .item.ship-class {
 body > .modal.hastitle.modal-bonuses section .bonus .ships .item.ship-class::before {
   content: '/';
   display: inline-block;
-  padding: 0 .35em;
+  padding: 0 0.35em;
 }
 body > .modal.hastitle.modal-bonuses section .bonus .ships .item.ship-class:first-child::before {
   content: initial;
@@ -14645,7 +14644,7 @@ body > .modal.hastitle.modal-bonuses section .bonus .stats .stat[data-stat="hit"
   background-position: 0% -270px;
 }
 body > .modal.hastitle.modal-bonuses section .bonus .stats .stat.negative {
-  color: #f76e6e;
+  color: hsl(0, 90%, 70%);
 }
 body > .modal.hastitle.modal-bonuses section .bonus-set .equipments {
   position: relative;
@@ -14901,17 +14900,17 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
 }
 #layout[data-theme="ships"] main:after,
 #layout[data-theme="ship"] main:after {
-  background: rgba(37, 49, 55, 0.7);
+  background: hsla(199, 20%, 18%, 0.7);
 }
 @media all and (max-width: 720px) {
   #layout[data-theme="ships"] main:after,
   #layout[data-theme="ship"] main:after {
-    background-color: rgba(37, 49, 55, 0.95);
+    background-color: hsla(199, 20%, 18%, 0.95);
   }
 }
 #layout[data-theme="ships"] nav,
 #layout[data-theme="ship"] nav {
-  background: #123f54;
+  background: hsl(199, 65%, 20%);
 }
 /*
 .page-container[page="ships"],
@@ -14963,8 +14962,8 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
 }
 .page-container[page="ships"] .tablelist-container.sortable .tablelist-header [stat]:hover,
 .page-container[page="ships"] .tablelist-container.sortable .tablelist-header [stat].sorting {
-  color: #b3e5ff;
-  text-shadow: 0 0 2px #00aaff, 0 0 1px #00334d;
+  color: hsl(200, 100%, 85%);
+  text-shadow: 0 0 2px hsl(200, 100%, 50%), 0 0 1px hsl(200, 100%, 15%);
 }
 .page-container[page="ships"] .tablelist-container.sortable .tablelist-header [stat].sorting:before {
   position: absolute;
@@ -14978,25 +14977,25 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
   border: 6px solid transparent;
 }
 .page-container[page="ships"] .tablelist-container.sortable .tablelist-header [stat].sorting.desc:before {
-  border-top-color: #4dc3ff;
+  border-top-color: hsl(200, 100%, 65%);
 }
 .page-container[page="ships"] .tablelist-container.sortable .tablelist-header [stat].sorting.asc:before {
-  border-bottom-color: #4dc3ff;
+  border-bottom-color: hsl(200, 100%, 65%);
   border-top-width: 0;
 }
 #layout[data-theme="entities"] main:after,
 #layout[data-theme="entity"] main:after {
-  background: rgba(37, 55, 55, 0.7);
+  background: hsla(180, 20%, 18%, 0.7);
 }
 @media all and (max-width: 720px) {
   #layout[data-theme="entities"] main:after,
   #layout[data-theme="entity"] main:after {
-    background-color: rgba(37, 55, 55, 0.95);
+    background-color: hsla(180, 20%, 18%, 0.95);
   }
 }
 #layout[data-theme="entities"] nav,
 #layout[data-theme="entity"] nav {
-  background: #125454;
+  background: hsl(180, 65%, 20%);
 }
 .page-container[page="entities"] {
   border-bottom-width: 0;
@@ -15008,17 +15007,17 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
 */
 #layout[data-theme="equipments"] main:after,
 #layout[data-theme="equipment"] main:after {
-  background: rgba(37, 55, 46, 0.7);
+  background: hsla(149, 20%, 18%, 0.7);
 }
 @media all and (max-width: 720px) {
   #layout[data-theme="equipments"] main:after,
   #layout[data-theme="equipment"] main:after {
-    background-color: rgba(37, 55, 46, 0.95);
+    background-color: hsla(149, 20%, 18%, 0.95);
   }
 }
 #layout[data-theme="equipments"] nav,
 #layout[data-theme="equipment"] nav {
-  background: #125432;
+  background: hsl(149, 65%, 20%);
 }
 .page-container[page="equipments"] .helper,
 .page-container.infos[data-infostype="equipment"] .helper {
@@ -15030,26 +15029,26 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
   line-height: 0.8rem;
   font-size: 0.65rem;
   border-radius: 50%;
-  background: linear-gradient(to bottom, #00994a, #006631);
-  color: #ccffe5;
+  background: linear-gradient(to bottom, hsl(149, 100%, 30%), hsl(149, 100%, 20%));
+  color: hsl(149, 100%, 90%);
   text-align: center;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Lucida Grande", "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif, caption;
-  box-shadow: 0 1px 1px rgba(204, 255, 229, 0.5);
+  box-shadow: 0 1px 1px hsla(149, 100%, 90%, 0.5);
   margin-left: 0.4rem;
 }
 .page-container[page="equipments"] {
   border-width: 0 !important;
 }
 #layout[data-theme="arsenal"] main:after {
-  background: rgba(43, 55, 37, 0.7);
+  background: hsla(100, 20%, 18%, 0.7);
 }
 @media all and (max-width: 720px) {
   #layout[data-theme="arsenal"] main:after {
-    background-color: rgba(43, 55, 37, 0.95);
+    background-color: hsla(100, 20%, 18%, 0.95);
   }
 }
 #layout[data-theme="arsenal"] nav {
-  background: #285412;
+  background: hsl(100, 65%, 20%);
 }
 .page-container[page="arsenal"] > input[type="radio"] {
   display: none;
@@ -15182,56 +15181,56 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
 }
 .page-container[page="arsenal"] > .main > .body-weekday > input[type="radio"]#arsenal_weekday-0:checked ~ .weekday label[for="arsenal_weekday-0"] {
   cursor: default;
-  background-color: rgba(59, 179, 0, 0.5);
-  color: #c5ffa8;
+  background-color: hsla(100, 100%, 35%, 0.5);
+  color: hsl(100, 100%, 83%);
 }
 .page-container[page="arsenal"] > .main > .body-weekday > input[type="radio"]#arsenal_weekday-0:checked ~ .content-0 {
   display: block;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > input[type="radio"]#arsenal_weekday-1:checked ~ .weekday label[for="arsenal_weekday-1"] {
   cursor: default;
-  background-color: rgba(59, 179, 0, 0.5);
-  color: #c5ffa8;
+  background-color: hsla(100, 100%, 35%, 0.5);
+  color: hsl(100, 100%, 83%);
 }
 .page-container[page="arsenal"] > .main > .body-weekday > input[type="radio"]#arsenal_weekday-1:checked ~ .content-1 {
   display: block;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > input[type="radio"]#arsenal_weekday-2:checked ~ .weekday label[for="arsenal_weekday-2"] {
   cursor: default;
-  background-color: rgba(59, 179, 0, 0.5);
-  color: #c5ffa8;
+  background-color: hsla(100, 100%, 35%, 0.5);
+  color: hsl(100, 100%, 83%);
 }
 .page-container[page="arsenal"] > .main > .body-weekday > input[type="radio"]#arsenal_weekday-2:checked ~ .content-2 {
   display: block;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > input[type="radio"]#arsenal_weekday-3:checked ~ .weekday label[for="arsenal_weekday-3"] {
   cursor: default;
-  background-color: rgba(59, 179, 0, 0.5);
-  color: #c5ffa8;
+  background-color: hsla(100, 100%, 35%, 0.5);
+  color: hsl(100, 100%, 83%);
 }
 .page-container[page="arsenal"] > .main > .body-weekday > input[type="radio"]#arsenal_weekday-3:checked ~ .content-3 {
   display: block;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > input[type="radio"]#arsenal_weekday-4:checked ~ .weekday label[for="arsenal_weekday-4"] {
   cursor: default;
-  background-color: rgba(59, 179, 0, 0.5);
-  color: #c5ffa8;
+  background-color: hsla(100, 100%, 35%, 0.5);
+  color: hsl(100, 100%, 83%);
 }
 .page-container[page="arsenal"] > .main > .body-weekday > input[type="radio"]#arsenal_weekday-4:checked ~ .content-4 {
   display: block;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > input[type="radio"]#arsenal_weekday-5:checked ~ .weekday label[for="arsenal_weekday-5"] {
   cursor: default;
-  background-color: rgba(59, 179, 0, 0.5);
-  color: #c5ffa8;
+  background-color: hsla(100, 100%, 35%, 0.5);
+  color: hsl(100, 100%, 83%);
 }
 .page-container[page="arsenal"] > .main > .body-weekday > input[type="radio"]#arsenal_weekday-5:checked ~ .content-5 {
   display: block;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > input[type="radio"]#arsenal_weekday-6:checked ~ .weekday label[for="arsenal_weekday-6"] {
   cursor: default;
-  background-color: rgba(59, 179, 0, 0.5);
-  color: #c5ffa8;
+  background-color: hsla(100, 100%, 35%, 0.5);
+  color: hsl(100, 100%, 83%);
 }
 .page-container[page="arsenal"] > .main > .body-weekday > input[type="radio"]#arsenal_weekday-6:checked ~ .content-6 {
   display: block;
@@ -15295,8 +15294,8 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
   transition-property: color, background-color;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > .weekday > div > label:hover {
-  background-color: rgba(59, 179, 0, 0.25);
-  color: #c5ffa8;
+  background-color: hsla(100, 100%, 35%, 0.25);
+  color: hsl(100, 100%, 83%);
 }
 .page-container[page="arsenal"] > .main > .body-weekday > .weekday > label,
 .page-container[page="arsenal"] > .main > .body-weekday > .weekday > span {
@@ -15320,7 +15319,7 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
   vertical-align: top;
 }
 .page-container[page="arsenal"] > .main > .body-weekday > .weekday > span b {
-  color: #7bcb52;
+  color: hsl(100, 54%, 56%);
 }
 .page-container[page="arsenal"] > .main > .body-weekday > .weekday > label:hover {
   color: rgba(255, 255, 255, 0.75);
@@ -15541,15 +15540,15 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
   }
 }
 #layout[data-theme="about"] main:after {
-  background: rgba(55, 37, 37, 0.7);
+  background: hsla(0, 20%, 18%, 0.7);
 }
 @media all and (max-width: 720px) {
   #layout[data-theme="about"] main:after {
-    background-color: rgba(55, 37, 37, 0.95);
+    background-color: hsla(0, 20%, 18%, 0.95);
   }
 }
 #layout[data-theme="about"] nav {
-  background: #541212;
+  background: hsl(0, 65%, 20%);
 }
 .page-container[page="about"] {
   font-size: 0.7000000000000001rem;
@@ -15561,8 +15560,8 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
 .page-container[page="about"] h4,
 .page-container[page="about"] h5,
 .page-container[page="about"] h6 {
-  color: #ffb3b3;
-  text-shadow: 0 0 0.16666667em #ff4d4d;
+  color: hsl(0, 100%, 85%);
+  text-shadow: 0 0 0.16666667em hsl(0, 100%, 65%);
 }
 .page-container[page="about"] h1[data-content],
 .page-container[page="about"] h2[data-content],
@@ -15570,8 +15569,8 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
 .page-container[page="about"] h4[data-content],
 .page-container[page="about"] h5[data-content],
 .page-container[page="about"] h6[data-content] {
-  color: #ffd9d9;
-  text-shadow: 0 0 0.16666667em #ff8080;
+  color: hsl(0, 100%, 92.5%);
+  text-shadow: 0 0 0.16666667em hsl(0, 100%, 75%);
 }
 .page-container[page="about"] h1[data-content]:before,
 .page-container[page="about"] h2[data-content]:before,
@@ -15579,7 +15578,7 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
 .page-container[page="about"] h4[data-content]:before,
 .page-container[page="about"] h5[data-content]:before,
 .page-container[page="about"] h6[data-content]:before {
-  color: #ff8080;
+  color: hsl(0, 100%, 75%);
 }
 .page-container[page="about"] h1 small,
 .page-container[page="about"] h2 small,
@@ -15620,7 +15619,7 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
   margin: 0 auto 8px auto;
   position: relative;
   border-radius: 50%;
-  background: rgba(48, 29, 29, 0.75);
+  background: hsla(0, 25%, 15%, 0.75);
   overflow: hidden;
 }
 .page-container[page="about"] .infos section > em > img {
@@ -15636,7 +15635,7 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
 }
 .page-container[page="about"] .infos section > span {
   display: block;
-  color: #ffb3b3;
+  color: hsl(0, 100%, 85%);
   margin: -1em auto 4px auto;
 }
 .page-container[page="about"] .infos section > p {
@@ -15644,14 +15643,14 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
 }
 .page-container[page="about"] .infos section a {
   text-decoration: none;
-  color: #ff4d4d;
+  color: hsl(0, 100%, 65%);
   transition-property: color;
 }
 .page-container[page="about"] .infos section a:hover {
-  color: #fff2f2;
+  color: hsl(0, 100%, 97.5%);
 }
 .page-container[page="about"] .infos section a:active {
-  color: #ffb3b3;
+  color: hsl(0, 100%, 85%);
 }
 .page-container[page="about"] .infos section a[icon]:before {
   font-size: 0.8rem;
@@ -15673,7 +15672,7 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
   left: 0;
   font-size: 14px;
   font-family: Arial;
-  color: #bea7a7;
+  color: hsl(0, 15%, 70%);
   transition: none 0.2s ease-out;
   transition-property: transform;
 }
@@ -15749,8 +15748,8 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
   width: 33.3333%;
 }
 .page-container[page="home"] .cols > .col-33 a {
-  padding-left: .35em;
-  padding-right: .35em;
+  padding-left: 0.35em;
+  padding-right: 0.35em;
 }
 .page-container[page="home"] .cols > .col-66 {
   width: 66.6666%;
@@ -15789,15 +15788,15 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
   margin-top: 1em;
 }
 #layout[data-theme="calctp"] main:after {
-  background: rgba(55, 52, 37, 0.7);
+  background: hsla(49, 20%, 18%, 0.7);
 }
 @media all and (max-width: 720px) {
   #layout[data-theme="calctp"] main:after {
-    background-color: rgba(55, 52, 37, 0.95);
+    background-color: hsla(49, 20%, 18%, 0.95);
   }
 }
 #layout[data-theme="calctp"] nav {
-  background: #544812;
+  background: hsl(49, 65%, 20%);
 }
 .page-container[page="calctp"] {
   font-size: 14px;
@@ -15808,8 +15807,8 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
 .page-container[page="calctp"] h4,
 .page-container[page="calctp"] h5,
 .page-container[page="calctp"] h6 {
-  color: #fff1b3;
-  text-shadow: 0 0 0.16666667em #ffde4d;
+  color: hsl(49, 100%, 85%);
+  text-shadow: 0 0 0.16666667em hsl(49, 100%, 65%);
 }
 .page-container[page="calctp"] h1[data-content],
 .page-container[page="calctp"] h2[data-content],
@@ -15817,8 +15816,8 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
 .page-container[page="calctp"] h4[data-content],
 .page-container[page="calctp"] h5[data-content],
 .page-container[page="calctp"] h6[data-content] {
-  color: #fff8d9;
-  text-shadow: 0 0 0.16666667em #ffe880;
+  color: hsl(49, 100%, 92.5%);
+  text-shadow: 0 0 0.16666667em hsl(49, 100%, 75%);
 }
 .page-container[page="calctp"] h1[data-content]:before,
 .page-container[page="calctp"] h2[data-content]:before,
@@ -15826,7 +15825,7 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
 .page-container[page="calctp"] h4[data-content]:before,
 .page-container[page="calctp"] h5[data-content]:before,
 .page-container[page="calctp"] h6[data-content]:before {
-  color: #ffe880;
+  color: hsl(49, 100%, 75%);
 }
 .page-container[page="calctp"] form.tpcalculator {
   margin-top: 1.5em;
@@ -15840,7 +15839,7 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
   background: rgba(0, 0, 0, 0.2);
 }
 .page-container[page="calctp"] form.tpcalculator fieldset legend {
-  color: #fff1b3;
+  color: hsl(49, 100%, 85%);
 }
 .page-container[page="calctp"] form.tpcalculator fieldset p {
   display: inline-block;

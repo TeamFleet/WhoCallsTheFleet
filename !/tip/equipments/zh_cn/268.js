@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",268,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/23.png)\"></s><strong>北方迷彩<small>(+北方装备)</small></strong><small>增设装甲板 (中型)</small></h3><span>+2 装甲</span><span>+2 回避</span>")
+KCTip.loaded("equipments",268,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/23.png)\"></s><strong>北方迷彩<small>(+北方装备)</small></strong><small>增设装甲 (中型)</small></h3><span>+2 装甲</span><span>+2 回避</span>")
