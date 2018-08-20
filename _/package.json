@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nw ../",
     "package": "node ./packaging",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp"
   },
   "author": "",
   "license": "ISC",
@@ -14,7 +15,7 @@
     "animate.css": "^3.5.2",
     "clipboard": "^1.7.1",
     "jquery": "3.2.1",
-    "kckit": "^0.13.18",
+    "kckit": "^0.13.19",
     "kctip": "^0.5.0",
     "localforage": "^1.5.2",
     "lockr": "^0.8.4",
