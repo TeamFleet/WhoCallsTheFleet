@@ -123,10 +123,10 @@ function dev_output_filter(output, pagetype, name){
         scrapePtrn = /0\.webp\"/gi
             while( (searchRes = scrapePtrn.exec(output)) !== null ){
                 try{
-                    let mask = '-mask-1'
+                    let mask = '-1'
                         ,c = ' class="nomask"'
                     if( pagetype == 'page' && name == 'ships' )
-                        mask = '-mask-1'
+                        mask = '-1'
                     else if( pagetype == 'infos' && name == 'ship' ){
                         mask = ''
                         c = ''
@@ -1058,7 +1058,7 @@ dev_output_steps.push(function(){
 
 			while( (searchRes = scrapePtrn.exec(mainhtml)) !== null ){
 				try{
-					mainhtml = mainhtml.replace( searchRes[0], 'style="background-image:url(/!/pics/entities/'+searchRes[1]+'/0-mask-1.png)"')
+					mainhtml = mainhtml.replace( searchRes[0], 'style="background-image:url(/!/pics/entities/'+searchRes[1]+'/0-1.png)"')
 				}catch(e){}
 			}
 			
@@ -1178,6 +1178,7 @@ dev_output_steps.push(function(){
 
 	return masterDeferred.promise
 })
+
 /*
 
 Template
@@ -1679,7 +1680,7 @@ dev_output_steps.push(function(){
 				}
 
 				output = 'KCTip.loaded("ships",'+d.id+',"'+l+'","'
-							+ '<img src=\\"http://fleet.moe/!/pics-ships/'+d.id+'/2.jpg\\" width=\\"218\\" height=\\"300\\"/>'
+							+ '<img src=\\"http://fleet.moe/!/pics-ships/'+d.id+'/2.png\\" width=\\"218\\" height=\\"300\\"/>'
 							+ '<h3>' + d.getNameNoSuffix(l) + '<small>' + d.getSuffix(l) + '</small></h3>'
 							+ '<h4>'
 								+ ( d['class'] ? _g['data']['ship_classes'][d['class']].name[l] + '级' : '' )

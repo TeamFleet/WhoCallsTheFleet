@@ -4795,6 +4795,7 @@ body.mod-capture #tip {
   pointer-events: none;
   position: absolute;
   left: -50px;
+  max-height: 100%;
 }
 .link_ship img.nomask {
   mask: none;

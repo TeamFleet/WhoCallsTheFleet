@@ -9554,7 +9554,7 @@ var TablelistFleets = function (_Tablelist3) {
 TablelistFleets.support = {};
 TablelistFleets.support.buildfile = _g.isNWjs || window.File && window.FileReader && window.FileList && window.Blob && window.URL ? !0 : !1;
 
-TablelistFleets.avatarImgSuffix = _huCss.csscheck_full('mask-image') ? '.' + _g.imgExt : '-mask-2.png';
+TablelistFleets.avatarImgSuffix = _huCss.csscheck_full('mask-image') ? '.' + _g.imgExt : '-2.png';
 
 TablelistFleets.menuOptions_show = function ($el, $el_tablelist) {
     if (!TablelistFleets.menuOptions) {

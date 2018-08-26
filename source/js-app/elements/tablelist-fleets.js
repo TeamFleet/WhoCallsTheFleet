@@ -445,7 +445,7 @@ class TablelistFleets extends Tablelist{
 						while( j < 6 ){
 							if( ships[j] && ships[j][0] )
 								html+='<img src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0'
-										+ (_huCss.csscheck_full('mask-image') ? '.webp' : '-mask-2.png')
+										+ (_huCss.csscheck_full('mask-image') ? '.webp' : '-2.png')
 										+ '" contextmenu="disabled"'
 										+ (_huCss.csscheck_full('mask-image') ? '' : ' class="nomask"')
 										+ '/>'

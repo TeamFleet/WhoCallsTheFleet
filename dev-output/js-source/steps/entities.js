@@ -62,7 +62,7 @@ dev_output_steps.push(function(){
 
 			while( (searchRes = scrapePtrn.exec(mainhtml)) !== null ){
 				try{
-					mainhtml = mainhtml.replace( searchRes[0], 'style="background-image:url(/!/pics/entities/'+searchRes[1]+'/0-mask-1.png)"')
+					mainhtml = mainhtml.replace( searchRes[0], 'style="background-image:url(/!/pics/entities/'+searchRes[1]+'/0-1.png)"')
 				}catch(e){}
 			}
 			

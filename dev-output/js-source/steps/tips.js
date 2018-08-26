@@ -57,7 +57,7 @@ dev_output_steps.push(function(){
 				}
 
 				output = 'KCTip.loaded("ships",'+d.id+',"'+l+'","'
-							+ '<img src=\\"http://fleet.moe/!/pics-ships/'+d.id+'/2.jpg\\" width=\\"218\\" height=\\"300\\"/>'
+							+ '<img src=\\"http://fleet.moe/!/pics-ships/'+d.id+'/2.png\\" width=\\"218\\" height=\\"300\\"/>'
 							+ '<h3>' + d.getNameNoSuffix(l) + '<small>' + d.getSuffix(l) + '</small></h3>'
 							+ '<h4>'
 								+ ( d['class'] ? _g['data']['ship_classes'][d['class']].name[l] + '级' : '' )

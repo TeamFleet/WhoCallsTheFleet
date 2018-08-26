@@ -3092,7 +3092,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
     location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20180821';
+_g.db_version = '20180826';
 
 _g.bgimg_count = 0;
 
@@ -10209,7 +10209,7 @@ var TablelistFleets = function (_Tablelist4) {
 TablelistFleets.support = {};
 TablelistFleets.support.buildfile = _g.isNWjs || window.File && window.FileReader && window.FileList && window.Blob && window.URL ? !0 : !1;
 
-TablelistFleets.avatarImgSuffix = _huCss.csscheck_full('mask-image') ? '.' + _g.imgExt : '-mask-2.png';
+TablelistFleets.avatarImgSuffix = _huCss.csscheck_full('mask-image') ? '.' + _g.imgExt : '-2.png';
 
 TablelistFleets.menuOptions_show = function ($el, $el_tablelist) {
     if (!TablelistFleets.menuOptions) {
