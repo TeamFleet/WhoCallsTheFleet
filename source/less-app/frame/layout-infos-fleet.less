@@ -1116,7 +1116,8 @@
 			//opacity: 	.85;
 			&:before{
 				content: 	"";
-				background: ~"url(@{folder_images}/stats.png) no-repeat 0 0";
+				background: ~"url(@{file_stats}) no-repeat 0 0";
+				background-size: 18px auto;
 				position: 	absolute;
 				top: 		50%;
 				left: 		6px;
@@ -1191,7 +1192,7 @@
 		height: 	100%;
 		display: 	inline-block;
 		background: rgba(0, 0, 0, .125) no-repeat 1px 50%;
-		background-size: 36px 36px;
+		background-size: 36px auto;
 		margin: 	0 2px 0 0;
 		transition-property: background-color;
 		position: 	relative;
@@ -1292,7 +1293,7 @@
 					//}
 					&>.equipment-rank{
 						display: 	block;
-						background: ~"url(@{folder_images}/Aircraft_Proficiency.png) no-repeat 50% -100% / cover";
+						background: ~"url(@{file_proficiency}) no-repeat 50% -100% / cover";
 					}
 				}
 				&>.equipment-options{
@@ -1312,7 +1313,7 @@
 							width: 		@width;
 							height: 	@height;
 							line-height:@height;
-							background: ~"url(@{folder_images}/Aircraft_Proficiency.png) no-repeat 50% -100% / cover";
+							background: ~"url(@{file_proficiency}) no-repeat 50% -100% / cover";
 							text-align: center;
 							display: 	inline-block;
 							transform: 	translateY(-50%);
@@ -1708,7 +1709,8 @@
 				&:before{
 					display: 	block;
 					position: 	absolute;
-					background: ~"url(@{folder_images}/stats.png) no-repeat 0 0";
+					background: ~"url(@{file_stats}) no-repeat 0 0";
+					background-size: 18px auto;
 					width: 		18px;
 					height: 	18px;
 					top: 		50%;
@@ -2193,7 +2195,7 @@
 	button{
 		width: 		32px;
 		height: 	32px;
-		background: ~"url(@{folder_images}/Aircraft_Proficiency.png) no-repeat 50% 0 / 24px 224px";
+		background: ~"url(@{file_proficiency}) no-repeat 50% 0 / 24px 224px";
 		text-align: center;
 		color: 		rgba(255, 255, 255, .5);
 		vertical-align: top;

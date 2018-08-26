@@ -2579,8 +2579,9 @@ main:after {
   left: 0;
   width: 0.9rem;
   height: 0.9rem;
-  background-image: url(/!/assets/images/stats.png);
+  background-image: url(/!/assets/images/stats.png?20180826);
   background-repeat: no-repeat;
+  background-size: 18px auto;
 }
 .infosbody .stat-hp:before {
   background-position: 0 0;
@@ -4078,7 +4079,7 @@ body.mod-capture #tip {
   }
 }
 .equiptypeicon {
-  background-image: url(/!/assets/images/equiptypeicon.png?20170829);
+  background-image: url(/!/assets/images/equiptypeicon.png?20180826);
   background-repeat: no-repeat;
   background-position: 50% 0;
   background-size: cover;
@@ -4610,8 +4611,9 @@ body.mod-capture #tip {
   padding-left: 6px;
 }
 .improvement > span > span > i {
-  background: url(/!/assets/images/stats.png) no-repeat 0 0;
+  background: url(/!/assets/images/stats.png?20180826) no-repeat 0 0;
   background-position: 0 -200%;
+  background-size: 18px auto;
 }
 .improvement > span > span > i.fuel {
   background-position: 0 -216px;
@@ -5083,7 +5085,7 @@ body.mod-capture #tip {
   height: 36px;
   display: inline-block;
   background: no-repeat 50% 50%;
-  background-size: 36px 36px;
+  background-size: 36px auto;
   vertical-align: top;
   position: absolute;
   left: 0;
@@ -7597,7 +7599,7 @@ body > .menus > .menu.menu-tablelistfleets-options > .body menuitem.option-aircr
   content: '';
   width: 15.6px;
   height: 20.8px;
-  background: url(/!/assets/images/Aircraft_Proficiency.png) no-repeat 50% 100% / cover;
+  background: url(/!/assets/images/Aircraft_Proficiency.png?20180826) no-repeat 50% 100% / cover;
   display: inline-block;
   margin-left: 5px;
   vertical-align: text-bottom;
@@ -8105,7 +8107,8 @@ h6 + section.update_journal {
   color: hsl(0, 0%, 85%);
 }
 .infos-equipment > div.dismantle > span {
-  background: url(/!/assets/images/stats.png) no-repeat 0 0;
+  background: url(/!/assets/images/stats.png?20180826) no-repeat 0 0;
+  background-size: 18px auto;
   min-width: 50px;
   padding-left: 22px;
   vertical-align: top;
@@ -9350,7 +9353,8 @@ body.mod-capture .infos-fleet .equipments {
 }
 .infos-fleet .attributes > span:before {
   content: "";
-  background: url(/!/assets/images/stats.png) no-repeat 0 0;
+  background: url(/!/assets/images/stats.png?20180826) no-repeat 0 0;
+  background-size: 18px auto;
   position: absolute;
   top: 50%;
   left: 6px;
@@ -9412,7 +9416,7 @@ body.mod-capture .infos-fleet .equipments {
   height: 100%;
   display: inline-block;
   background: rgba(0, 0, 0, 0.125) no-repeat 1px 50%;
-  background-size: 36px 36px;
+  background-size: 36px auto;
   margin: 0 2px 0 0;
   transition-property: background-color;
   position: relative;
@@ -9485,7 +9489,7 @@ body.mod-capture .infos-fleet .equipments {
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable > .equipment-infos > .equipment-rank {
   display: block;
-  background: url(/!/assets/images/Aircraft_Proficiency.png) no-repeat 50% -100% / cover;
+  background: url(/!/assets/images/Aircraft_Proficiency.png?20180826) no-repeat 50% -100% / cover;
 }
 .infos-fleet .equipment[data-equipmentid].is-rankupgradable > .equipment-options .equipment-starinput {
   border-top-right-radius: 0;
@@ -9920,7 +9924,8 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 .infos-fleet .summary-item-consummation .ammo:before {
   display: block;
   position: absolute;
-  background: url(/!/assets/images/stats.png) no-repeat 0 0;
+  background: url(/!/assets/images/stats.png?20180826) no-repeat 0 0;
+  background-size: 18px auto;
   width: 18px;
   height: 18px;
   top: 50%;
@@ -13211,7 +13216,7 @@ body > .modal.modal-nwjs-core-updated > div p {
 								.top( (26 - 18) / 2 - 1 );
 								.width(18);
 								.height(18);
-								background:	~"url(@{folder_images}/stats.png) no-repeat 0 0";
+								background:	~"url(@{file_stats}) no-repeat 0 0";
 							}
 							&.stat-hp:before{
 								background-position:	0 0;
@@ -13669,7 +13674,7 @@ body > .modal.infos_fleet > div > section p.aircraftimportmax label.checkbox:aft
   content: '';
   width: 15.6px;
   height: 20.8px;
-  background: url(/!/assets/images/Aircraft_Proficiency.png) no-repeat 50% 100% / cover;
+  background: url(/!/assets/images/Aircraft_Proficiency.png?20180826) no-repeat 50% 100% / cover;
   display: inline-block;
   margin-left: 5px;
   vertical-align: text-bottom;
@@ -14017,7 +14022,7 @@ body > .modal.update_journal.mod-blur-shot > div {
 								.top( (26 - 18) / 2 - 1 );
 								.width(18);
 								.height(18);
-								background:	~"url(@{folder_images}/stats.png) no-repeat 0 0";
+								background:	~"url(@{file_stats}) no-repeat 0 0";
 							}
 							&.stat-hp:before{
 								background-position:	0 0;
@@ -14587,7 +14592,8 @@ body > .modal.hastitle.modal-bonuses section .bonus .stats .stat {
 }
 body > .modal.hastitle.modal-bonuses section .bonus .stats .stat::before {
   content: "";
-  background: url(/!/assets/images/stats.png) no-repeat;
+  background: url(/!/assets/images/stats.png?20180826) no-repeat;
+  background-size: 18px auto;
   position: absolute;
   top: 50%;
   left: 0;
