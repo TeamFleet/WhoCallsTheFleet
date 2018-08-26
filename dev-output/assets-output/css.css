@@ -9521,7 +9521,7 @@ body.mod-capture .infos-fleet .equipments {
   width: 18px;
   height: 24px;
   line-height: 24px;
-  background: url(/!/assets/images/Aircraft_Proficiency.png) no-repeat 50% -100% / cover;
+  background: url(/!/assets/images/Aircraft_Proficiency.png?20180826) no-repeat 50% -100% / cover;
   text-align: center;
   display: inline-block;
   transform: translateY(-50%);
@@ -11128,7 +11128,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
 .menu.contextmenu-infos_fleet_rank_select > .body > div button {
   width: 32px;
   height: 32px;
-  background: url(/!/assets/images/Aircraft_Proficiency.png) no-repeat 50% 0 / 24px 224px;
+  background: url(/!/assets/images/Aircraft_Proficiency.png?20180826) no-repeat 50% 0 / 24px 224px;
   text-align: center;
   color: rgba(255, 255, 255, 0.5);
   vertical-align: top;
