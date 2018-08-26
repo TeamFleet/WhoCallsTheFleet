@@ -2,8 +2,6 @@
 !*
 _.cmd
 koala*.*
-/!design
-!design
 node_modules/
 
 # Windows image file caches

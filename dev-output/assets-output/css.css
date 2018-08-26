@@ -5083,6 +5083,7 @@ body.mod-capture #tip {
   height: 36px;
   display: inline-block;
   background: no-repeat 50% 50%;
+  background-size: 36px 36px;
   vertical-align: top;
   position: absolute;
   left: 0;
@@ -9411,6 +9412,7 @@ body.mod-capture .infos-fleet .equipments {
   height: 100%;
   display: inline-block;
   background: rgba(0, 0, 0, 0.125) no-repeat 1px 50%;
+  background-size: 36px 36px;
   margin: 0 2px 0 0;
   transition-property: background-color;
   position: relative;
