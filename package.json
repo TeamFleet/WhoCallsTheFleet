@@ -70,8 +70,18 @@
       "bgimgs",
       "pics",
       "pics-enemies",
-      "pics-ships",
-      "pics-ships-extra"
+      "pics-ships-1",
+      "pics-ships-2",
+      "pics-ships-3",
+      "pics-ships-4",
+      "pics-ships-5",
+      "pics-ships-6",
+      "pics-ships-7",
+      "pics-ships-92",
+      "pics-ships-extra-1",
+      "pics-ships-extra-2",
+      "pics-ships-extra-3",
+      "pics-ships-extra-4"
     ],
     "launcherSplash": "./source/launcher.webp",
     "macIcns": "./source/appicon.icns"
