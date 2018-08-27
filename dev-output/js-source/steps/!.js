@@ -92,10 +92,6 @@ function dev_output_filter(output, pagetype, name){
             '/!/pics-ships-extra/'
         ],
         [
-            /\/!\/pics-ships-[0-9]+/gi,
-            '/!/pics-ships'
-        ],
-        [
             /\/!\/pics-ships\/\/\//gi,
             '/!/pics-ships/'
         ],
@@ -118,7 +114,11 @@ function dev_output_filter(output, pagetype, name){
         [
             /\(assets\//gi,
             '(/!/assets/'
-        ]
+        ],
+        [
+            /\/!\/pics-ships-[0-9]+\//gi,
+            '/!/pics-ships/'
+        ],
     ]
 
     let searchRes, scrapePtrn
