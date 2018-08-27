@@ -9,7 +9,7 @@ _p.tip.filters.push( function(cont){
 _p.tip.content_ship = function( d ){
 	var ship_name = d.getName(_g.joint)
 		,html = '<h3 class="shipinfo">'
-				+ '<img src="' + _g.path.pics.ships + '/' + d['id']+'/0.webp" width="160" height="40"/>'
+				+ '<img src="' + KC.getFolderGroup(_g.path.pics.ships, d['id']) + '/' + d['id']+'/0.webp" width="160" height="40"/>'
 				+ '<strong data-content="' + ship_name + '">'
 					+ ship_name
 				+ '</strong>'

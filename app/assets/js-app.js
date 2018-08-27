@@ -1275,9 +1275,9 @@ _g.path = {
     'bgimg_dir': node.path.join(_g.root, '/bgimgs/'),
     'bgimg_custom_dir': node.path.join(_g.root, '/app/assets/images/homebg-custom/'),
     'pics': {
-        ships: node.path.join(_g.root, '/pics-ships/'),
-        shipsExtra: node.path.join(_g.root, '/pics-ships-extra/'),
-        items: node.path.join(_g.root, '/pics/items/')
+        ships: node.path.join(_g.root, '/pics-ships'),
+        shipsExtra: node.path.join(_g.root, '/pics-ships-extra'),
+        items: node.path.join(_g.root, '/pics/items')
     }
 };
 KC.path.pics = _g.path.pics;
@@ -1400,7 +1400,8 @@ _g.getLink = function (t, id) {
 };
 
 _g.getImg = function (t, id, img) {
-    return node.path.normalize(_g.path.pics[t]) + '/' + id + '/' + img + '.webp';
+    if (t === 'ships' || t === 'shipsExtra') t = KC.getFolderGroup(_g.path.pics[t], id);else t = _g.path.pics[t];
+    return node.path.normalize(t) + '/' + id + '/' + img + '.webp';
 };
 
 _frame.app_main = {
@@ -7001,7 +7002,7 @@ _frame.infos.__ship = function (id) {
                 'data-infos': '[[SHIP::' + currentValue['id'] + ']]',
                 'data-tip': tip,
                 'data-infos-nohistory': !0,
-                'html': '<i><img src="' + _g.path.pics.ships + '/' + currentValue['id'] + '/0.webp"/></i>' + (remodel_lvl ? '<strong>' + _val(remodel_lvl) + '</strong>' : '') + (has_extra_illust ? '<em icon="hanger"></em>' : '') + flag
+                'html': '<i><img src="' + KC.getFolderGroup(_g.path.pics.ships, currentValue['id']) + '/' + currentValue['id'] + '/0.webp"/></i>' + (remodel_lvl ? '<strong>' + _val(remodel_lvl) + '</strong>' : '') + (has_extra_illust ? '<em icon="hanger"></em>' : '') + flag
             }));
 
             if (currentValue.next_loop) remodels_container.appendDOM($('<span class="unit" icon="loop-alt3" data-tip="可在两个改造版本间切换"/>').html('&nbsp;'));
@@ -7030,12 +7031,12 @@ _frame.infos.__ship = function (id) {
         var index = 0;
 
         illustrations.forEach(function (currentValue) {
-            check_append(node.path.normalize(_g.path.pics.ships) + currentValue + '/8.webp', 0);
-            check_append(node.path.normalize(_g.path.pics.ships) + currentValue + '/9.webp', 1);
+            check_append(node.path.normalize(KC.getFolderGroup(_g.path.pics.ships, currentValue)) + currentValue + '/8.webp', 0);
+            check_append(node.path.normalize(KC.getFolderGroup(_g.path.pics.ships, currentValue)) + currentValue + '/9.webp', 1);
         });
         illustrationsExtra.forEach(function (currentValue) {
-            check_append(node.path.normalize(_g.path.pics.shipsExtra) + currentValue + '/8.webp', 0);
-            check_append(node.path.normalize(_g.path.pics.shipsExtra) + currentValue + '/9.webp', 1);
+            check_append(node.path.normalize(KC.getFolderGroup(_g.path.pics.shipsExtra, currentValue)) + currentValue + '/8.webp', 0);
+            check_append(node.path.normalize(KC.getFolderGroup(_g.path.pics.shipsExtra, currentValue)) + currentValue + '/9.webp', 1);
         });
         if (index % 2) illusts.addClass('is-singlelast');
     }
@@ -7421,7 +7422,7 @@ if (typeof _p.tip != 'undefined') {
 
     _p.tip.content_ship = function (d) {
         var ship_name = d.getName(_g.joint),
-            html = '<h3 class="shipinfo">' + '<img src="' + _g.path.pics.ships + '/' + d['id'] + '/0.webp" width="160" height="40"/>' + '<strong data-content="' + ship_name + '">' + ship_name + '</strong>' + (d['type'] ? '<small>' + _g['data']['ship_types'][d['type']].name.zh_cn + '</span>' : '') + '</h3>';
+            html = '<h3 class="shipinfo">' + '<img src="' + KC.getFolderGroup(_g.path.pics.ships, d['id']) + '/' + d['id'] + '/0.webp" width="160" height="40"/>' + '<strong data-content="' + ship_name + '">' + ship_name + '</strong>' + (d['type'] ? '<small>' + _g['data']['ship_types'][d['type']].name.zh_cn + '</span>' : '') + '</h3>';
 
         return html;
     };
@@ -9212,7 +9213,7 @@ var TablelistFleets = function (_Tablelist3) {
                             count = Math.min(8, Math.max(6, ships.length)),
                             html = '<i data-count="' + count + '">';
                         while (j < count) {
-                            if (ships[j] && ships[j][0]) html += '<img class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '" src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0' + TablelistFleets.avatarImgSuffix + '" contextmenu="disabled"' + '/>';else html += '<s class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '"/>';
+                            if (ships[j] && ships[j][0]) html += '<img class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '" src="' + KC.getFolderGroup(_g.path.pics.ships, ships[j][0]) + '/' + ships[j][0] + '/0' + TablelistFleets.avatarImgSuffix + '" contextmenu="disabled"' + '/>';else html += '<s class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '"/>';
                             j++;
                         }
                         html += '</i>';
@@ -9629,7 +9630,7 @@ TablelistFleets.modalBuildConflictShow = function (data, deferred) {
             ships = InfosFleet.decompress(data.data)[0] || [],
             j = 0;
         while (j < 6) {
-            if (ships[j] && ships[j][0]) html += '<img class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '" src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0' + TablelistFleets.avatarImgSuffix + '" contextmenu="disabled"' + '/>';else html += '<s class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '"/>';
+            if (ships[j] && ships[j][0]) html += '<img class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '" src="' + KC.getFolderGroup(_g.path.pics.ships, ships[j][0]) + '/' + ships[j][0] + '/0' + TablelistFleets.avatarImgSuffix + '" contextmenu="disabled"' + '/>';else html += '<s class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '"/>';
             j++;
         }
         html += '</i>';

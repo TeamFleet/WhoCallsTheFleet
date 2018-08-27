@@ -361,7 +361,7 @@ _frame.infos.__ship = function (id) {
                     'data-infos': '[[SHIP::' + currentValue['id'] + ']]',
                     'data-tip': tip,
                     'data-infos-nohistory': true,
-                    'html': '<i><img src="' + _g.path.pics.ships + '/' + currentValue['id'] + '/0.webp"/></i>'
+                    'html': '<i><img src="' + KC.getFolderGroup(_g.path.pics.ships, currentValue['id']) + '/' + currentValue['id'] + '/0.webp"/></i>'
                         + (remodel_lvl ? '<strong>' + _val(remodel_lvl) + '</strong>' : '')
                         + (has_extra_illust ? '<em icon="hanger"></em>' : '')
                         + flag
@@ -427,13 +427,13 @@ _frame.infos.__ship = function (id) {
         }
         illustrations.forEach(function (currentValue) {
             //lastContainer = false
-            check_append(node.path.normalize(_g.path.pics.ships) + currentValue + '/8.webp', 0)
-            check_append(node.path.normalize(_g.path.pics.ships) + currentValue + '/9.webp', 1)
+            check_append(node.path.normalize(KC.getFolderGroup(_g.path.pics.ships, currentValue)) + currentValue + '/8.webp', 0)
+            check_append(node.path.normalize(KC.getFolderGroup(_g.path.pics.ships, currentValue)) + currentValue + '/9.webp', 1)
         })
         illustrationsExtra.forEach(function (currentValue) {
             //lastContainer = false
-            check_append(node.path.normalize(_g.path.pics.shipsExtra) + currentValue + '/8.webp', 0)
-            check_append(node.path.normalize(_g.path.pics.shipsExtra) + currentValue + '/9.webp', 1)
+            check_append(node.path.normalize(KC.getFolderGroup(_g.path.pics.shipsExtra, currentValue)) + currentValue + '/8.webp', 0)
+            check_append(node.path.normalize(KC.getFolderGroup(_g.path.pics.shipsExtra, currentValue)) + currentValue + '/9.webp', 1)
         })
         if (index % 2)
             illusts.addClass('is-singlelast')

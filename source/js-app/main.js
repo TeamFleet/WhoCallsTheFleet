@@ -29,9 +29,9 @@
         'bgimg_dir':node.path.join(_g.root, '/bgimgs/'),
         'bgimg_custom_dir':node.path.join(_g.root, '/app/assets/images/homebg-custom/'),
         'pics': {
-            ships: 	    node.path.join(_g.root, '/pics-ships/'),
-            shipsExtra: node.path.join(_g.root, '/pics-ships-extra/'),
-            items: 	    node.path.join(_g.root, '/pics/items/')
+            ships: 	    node.path.join(_g.root, '/pics-ships'),
+            shipsExtra: node.path.join(_g.root, '/pics-ships-extra'),
+            items: 	    node.path.join(_g.root, '/pics/items')
         }
     }
     KC.path.pics = _g.path.pics
@@ -205,7 +205,11 @@
     }
     
     _g.getImg = function( t, id, img ){
-        return `${node.path.normalize(_g.path.pics[t])}/${id}/${img}.webp`
+        if (t === 'ships' || t === 'shipsExtra')
+            t = KC.getFolderGroup(_g.path.pics[t], id)
+        else
+            t = _g.path.pics[t]
+        return `${node.path.normalize(t)}/${id}/${img}.webp`
     }
 
 

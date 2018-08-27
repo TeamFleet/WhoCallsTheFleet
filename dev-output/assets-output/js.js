@@ -3092,7 +3092,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
     location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20180826';
+_g.db_version = '20180828';
 
 _g.bgimg_count = 0;
 
@@ -8046,7 +8046,7 @@ if (typeof _p.tip != 'undefined') {
 
     _p.tip.content_ship = function (d) {
         var ship_name = d.getName(_g.joint),
-            html = '<h3 class="shipinfo">' + '<img src="' + _g.path.pics.ships + '/' + d['id'] + '/0.webp" width="160" height="40"/>' + '<strong data-content="' + ship_name + '">' + ship_name + '</strong>' + (d['type'] ? '<small>' + _g['data']['ship_types'][d['type']].name.zh_cn + '</span>' : '') + '</h3>';
+            html = '<h3 class="shipinfo">' + '<img src="' + KC.getFolderGroup(_g.path.pics.ships, d['id']) + '/' + d['id'] + '/0.webp" width="160" height="40"/>' + '<strong data-content="' + ship_name + '">' + ship_name + '</strong>' + (d['type'] ? '<small>' + _g['data']['ship_types'][d['type']].name.zh_cn + '</span>' : '') + '</h3>';
 
         return html;
     };
@@ -9867,7 +9867,7 @@ var TablelistFleets = function (_Tablelist4) {
                             count = Math.min(8, Math.max(6, ships.length)),
                             html = '<i data-count="' + count + '">';
                         while (j < count) {
-                            if (ships[j] && ships[j][0]) html += '<img class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '" src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0' + TablelistFleets.avatarImgSuffix + '" contextmenu="disabled"' + '/>';else html += '<s class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '"/>';
+                            if (ships[j] && ships[j][0]) html += '<img class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '" src="' + KC.getFolderGroup(_g.path.pics.ships, ships[j][0]) + '/' + ships[j][0] + '/0' + TablelistFleets.avatarImgSuffix + '" contextmenu="disabled"' + '/>';else html += '<s class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '"/>';
                             j++;
                         }
                         html += '</i>';
@@ -10284,7 +10284,7 @@ TablelistFleets.modalBuildConflictShow = function (data, deferred) {
             ships = InfosFleet.decompress(data.data)[0] || [],
             j = 0;
         while (j < 6) {
-            if (ships[j] && ships[j][0]) html += '<img class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '" src="' + _g.path.pics.ships + '/' + ships[j][0] + '/0' + TablelistFleets.avatarImgSuffix + '" contextmenu="disabled"' + '/>';else html += '<s class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '"/>';
+            if (ships[j] && ships[j][0]) html += '<img class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '" src="' + KC.getFolderGroup(_g.path.pics.ships, ships[j][0]) + '/' + ships[j][0] + '/0' + TablelistFleets.avatarImgSuffix + '" contextmenu="disabled"' + '/>';else html += '<s class="img' + (_huCss.csscheck_full('mask-image') ? '' : ' nomask') + '"/>';
             j++;
         }
         html += '</i>';

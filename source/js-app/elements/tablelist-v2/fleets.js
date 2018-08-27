@@ -441,7 +441,7 @@ class TablelistFleets extends Tablelist{
                         while( j < count ){
                             if( ships[j] && ships[j][0] )
                                 html+='<img class="img'+(_huCss.csscheck_full('mask-image') ? '' : ' nomask')
-                                        +'" src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0'
+                                        +'" src="' + KC.getFolderGroup(_g.path.pics.ships, ships[j][0]) + '/' + ships[j][0]+'/0'
                                         + TablelistFleets.avatarImgSuffix
                                         + '" contextmenu="disabled"'
                                         + '/>'
@@ -1077,7 +1077,7 @@ TablelistFleets.modalBuildConflictShow = function(data, deferred){
             while( j < 6 ){
                 if( ships[j] && ships[j][0] )
                     html+='<img class="img'+(_huCss.csscheck_full('mask-image') ? '' : ' nomask')
-                            +'" src="' + _g.path.pics.ships + '/' + ships[j][0]+'/0'
+                            +'" src="' + KC.getFolderGroup(_g.path.pics.ships, ships[j][0]) + '/' + ships[j][0]+'/0'
                             + TablelistFleets.avatarImgSuffix
                             + '" contextmenu="disabled"'
                             + '/>'

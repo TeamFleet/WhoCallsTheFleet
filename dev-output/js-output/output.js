@@ -39,6 +39,9 @@ function dev_output_filter(output, pagetype, name){
     }
     */
 
+    const pathPicsShips = _g.path.pics.ships + '-[0-9]+'
+    const pathPicsShipsExtra = _g.path.pics.shipsExtra + '-[0-9]+'
+
     let replacePair = [
         [
             /\.\.\/\.\.\/app\//gi,
@@ -57,19 +60,19 @@ function dev_output_filter(output, pagetype, name){
         //     '/!/pics/'
         // ],
         [
-            new RegExp(_g.path.pics.ships.replace(/\\/g, '/').replace(/\./g, '\\.'), 'gi'),
+            new RegExp(pathPicsShips.replace(/\\/g, '/').replace(/\./g, '\\.'), 'gi'),
             '/!/pics-ships/'
         ],
         [
-            new RegExp(_g.path.pics.ships.replace(/\\/g, '\\\\').replace(/\./g, '\\.'), 'gi'),
+            new RegExp(pathPicsShips.replace(/\\/g, '\\\\').replace(/\./g, '\\.'), 'gi'),
             '/!/pics-ships/'
         ],
         [
-            new RegExp(_g.path.pics.shipsExtra.replace(/\\/g, '/').replace(/\./g, '\\.'), 'gi'),
+            new RegExp(pathPicsShipsExtra.replace(/\\/g, '/').replace(/\./g, '\\.'), 'gi'),
             '/!/pics-ships-extra/'
         ],
         [
-            new RegExp(_g.path.pics.shipsExtra.replace(/\\/g, '\\\\').replace(/\./g, '\\.'), 'gi'),
+            new RegExp(pathPicsShipsExtra.replace(/\\/g, '\\\\').replace(/\./g, '\\.'), 'gi'),
             '/!/pics-ships-extra/'
         ],
         [
@@ -81,7 +84,19 @@ function dev_output_filter(output, pagetype, name){
             '/!/pics/items/'
         ],
         [
-            /\.\.\/pics\/ships\//gi,
+            /\.\.\/pics\/ships\-[0-9]+\//gi,
+            '/!/pics-ships/'
+        ],
+        [
+            /\.\.\/pics\/ships-extra\-[0-9]+\//gi,
+            '/!/pics-ships-extra/'
+        ],
+        [
+            /\/!\/pics-ships-[0-9]+/gi,
+            '/!/pics-ships'
+        ],
+        [
+            /\/!\/pics-ships\/\/\//gi,
             '/!/pics-ships/'
         ],
         [
