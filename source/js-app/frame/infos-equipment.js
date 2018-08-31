@@ -299,7 +299,7 @@ _frame.infos.__equipment = function (id) {
     // 图鉴
     var illusts = $('<aside class="illustrations"/>').appendTo(dom)
     try {
-        var file = node.path.normalize(_g.path.pics.items) + d['id'] + '/card.webp'
+        var file = node.path.normalize(_g.path.pics.items) + '/' + d['id'] + '/card.webp'
             , stat = node.fs.lstatSync(file)
         if (stat && stat.isFile()) {
             $('<img src="' + file + '" data-filename="' + d.getName() + '.webp"/>')
