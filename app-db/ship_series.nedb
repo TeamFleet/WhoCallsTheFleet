@@ -77,6 +77,7 @@
 {"ships":[{"id":90,"next_lvl":30,"illust_extra":[235]},{"id":279,"next_lvl":78,"illust_delete":"on","illust_extra":[""]},{"id":197,"next_lvl":"","illust_extra":[235]}],"id":132,"_id":"K9FxAAaiHMfEaaHN"}
 {"ships":[{"id":465,"next_lvl":35,"illust_extra":[69,93,229]},{"id":356,"next_lvl":"","illust_extra":[""],"illust_delete":"on"}],"id":170,"_id":"KS6w5eRpzO5i3aVB"}
 {"ships":[{"id":161,"next_lvl":25,"illust_extra":[151]},{"id":166,"next_lvl":"","illust_extra":[151]}],"id":122,"_id":"KnMZ8JpMfRj1w9v4"}
+{"ships":[{"id":534,"next_lvl":60,"illust_extra":[""]},{"id":381,"next_lvl":85,"illust_extra":[""],"next_blueprint":"on"},{"id":536,"next_lvl":"","illust_extra":[""]}],"id":219,"_id":"KtUFeRJRXsO3CzCr"}
 {"ships":[{"id":494,"next_lvl":45,"illust_extra":[""]},{"id":374,"next_lvl":"","illust_extra":[""]}],"id":190,"_id":"KuDpOf72q3bqjvq5"}
 {"ships":[{"id":35,"next_lvl":20,"illust_extra":""},{"id":235,"next_lvl":70,"illust_delete":"on","illust_extra":[""]},{"id":147,"next_lvl":"","illust_extra":[233]}],"id":24,"_id":"KzEEYKjw6Hag1nb8"}
 {"ships":[{"id":182,"next_lvl":35,"illust_extra":[9,160,176,198]},{"id":187,"next_lvl":"","illust_extra":[10,31,96,161,177,199]}],"id":92,"_id":"LUoKf38FUGBHtQ8g"}
@@ -105,6 +106,7 @@
 {"ships":[{"id":70,"next_lvl":10,"illust_extra":[108,209,244]},{"id":73,"next_lvl":"","illust_extra":[108,209,244]}],"id":106,"_id":"RXyTt5d4TnlWa71h"}
 {"ships":[{"id":515,"next_lvl":45,"illust_extra":[""]},{"id":393,"next_lvl":"","illust_extra":[""],"illust_delete":"on"}],"id":202,"_id":"SLvotm1mBhdlx8TS"}
 {"ships":[{"id":44,"next_lvl":20,"illust_extra":[56,315]},{"id":244,"next_lvl":70,"illust_extra":[20,22,56,315]},{"id":498,"next_lvl":"","illust_extra":[20,22,56,317]}],"id":33,"_id":"SRCkgd4po6ejc8Zd"}
+{"ships":[{"id":527,"next_lvl":35,"illust_extra":[""]},{"id":686,"next_lvl":"","illust_delete":"on","illust_extra":[""]}],"id":218,"_id":"SXaJqEp42QbzlTdj"}
 {"ships":[{"id":458,"next_lvl":30,"illust_extra":[213]},{"id":350,"next_lvl":"","illust_delete":"on","illust_extra":[""]}],"id":165,"_id":"Six8nqM5fWKjPc5Z"}
 {"ships":[{"id":531,"next_lvl":37,"illust_extra":[258,274,322]},{"id":385,"next_lvl":"","illust_extra":[""],"illust_delete":"on"}],"id":206,"_id":"SqAX59pn0tq2nB6O"}
 {"ships":[{"id":445,"next_lvl":35,"illust_extra":[76,142,175]},{"id":450,"next_lvl":"","illust_extra":[76,142,175]}],"id":156,"_id":"T8dEbHNVzOaFdyaH"}
