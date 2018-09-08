@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",302,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/8.png)\"></s><strong>九七式舰攻<small>(九三一空/熟练)</small></strong><small>舰载鱼雷轰炸机</small></h3><span>+8 雷装</span><span>+9 对潜</span><span>+2 命中</span><span>+1 回避</span><span>+3 索敌</span><span>航程: 4</span>")
