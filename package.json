@@ -1,7 +1,7 @@
 {
   "name": "WhoCallsTheFleet",
   "main": "app/main.html",
-  "version": "0.28.2",
+  "version": "0.28.3",
   "description": "An offline guidebook for KanColle. Based on NW.JS",
   "repository": {
     "type": "git",
@@ -38,17 +38,17 @@
       "package.json"
     ],
     "dataVersion": {
-      "app": "0.28.2.0",
-      "app-db": "2018.09.09",
+      "app": "0.28.3.0",
+      "app-db": "2018.09.13",
       "bgimgs": "1.18.6.0",
-      "pics": "2018.09.09",
+      "pics": "2018.09.13",
       "pics-enemies": "2018.08.28",
       "pics-ships-1": "2018.08.28",
       "pics-ships-2": "2018.08.28",
       "pics-ships-3": "2018.08.28",
       "pics-ships-4": "2018.09.09",
       "pics-ships-5": "2018.08.28",
-      "pics-ships-6": "2018.09.09",
+      "pics-ships-6": "2018.09.13",
       "pics-ships-7": "2018.09.09",
       "pics-ships-92": "2018.08.28",
       "pics-ships-extra-1": "2018.08.28",

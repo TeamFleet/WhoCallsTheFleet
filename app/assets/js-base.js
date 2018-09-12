@@ -6405,7 +6405,7 @@ eval("\n\n/**\r\n * 装备额外属性收益 - 12.7cm連装砲D型改二\r\n * \
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\n/**\r\n * 装备额外属性收益 - 12cm単装砲改二\r\n * \r\n * @module\r\n */\n\nmodule.exports = [\n\n// @ 海防艦\n{\n    equipment: 293,\n    ship: {\n        isType: [31]\n    },\n    bonus: {\n        fire: 1,\n        aa: 1,\n        evasion: 2\n    }\n},\n\n// @ 神風型 / 睦月型\n{\n    equipment: 293,\n    ship: {\n        isClass: [84, 12]\n    },\n    bonus: {\n        fire: 2,\n        aa: 1,\n        evasion: 3\n    }\n}];\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/bonus/%E5%B0%8F%E5%8F%A3%E5%BE%84%E4%B8%BB%E7%A0%B2/12cm%E5%8D%98%E8%A3%85%E7%A0%B2%E6%94%B9%E4%BA%8C.js?");
+eval("\n\n/**\r\n * 装备额外属性收益 - 12cm単装砲改二\r\n * \r\n * @module\r\n */\n\nmodule.exports = [{\n    equipment: 293,\n    ship: {\n        isClass: [92, // 占守型\n        94]\n    },\n    bonus: {\n        fire: 1,\n        aa: 1,\n        evasion: 2\n    }\n}, {\n    equipment: 293,\n    ship: {\n        isClass: [84, // 神風型\n        12]\n    },\n    bonus: {\n        fire: 2,\n        aa: 1,\n        evasion: 3\n    }\n}];\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/bonus/%E5%B0%8F%E5%8F%A3%E5%BE%84%E4%B8%BB%E7%A0%B2/12cm%E5%8D%98%E8%A3%85%E7%A0%B2%E6%94%B9%E4%BA%8C.js?");
 
 /***/ }),
 
@@ -6453,7 +6453,7 @@ eval("\n\n/**\r\n * 装备额外属性收益 - 瑞雲12型(六三四空)\r\n * \
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\n/**\r\n * 装备额外属性收益 - Ju87C改二(KMX搭載機)\r\n * \r\n * @module\r\n */\n\nmodule.exports = [{\n    equipment: 305,\n    ship: {\n        isID: [380, // 大鷹改\n        529, // 大鷹改二\n        353, // Graf Zeppelin改\n        365]\n    },\n    bonus: {\n        asw: 1,\n        evasion: 1\n    }\n}];\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/bonus/%E8%89%A6%E4%B8%8A%E6%A9%9F/Ju87C%E6%94%B9%E4%BA%8C(KMX%E6%90%AD%E8%BC%89%E6%A9%9F).js?");
+eval("\n\nvar _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };\n\n/**\r\n * 装备额外属性收益 - Ju87C改二(KMX搭載機)\r\n * \r\n * @module\r\n */\n\nvar bonusGrafZeppelinAquila = {\n    ship: {\n        isID: [353, // Graf Zeppelin改\n        365]\n    },\n    bonus: {\n        fire: 1,\n        evasion: 1\n    }\n};\nvar bonusGambierBay = {\n    ship: {\n        isID: [396]\n    },\n    bonus: {\n        evasion: 1\n    }\n};\nvar bonusTaiyou = {\n    ship: {\n        isID: [380, // 大鷹改\n        529]\n    },\n    bonus: {\n        asw: 1,\n        evasion: 1\n    }\n};\nvar bonusShinyou = {\n    ship: {\n        isID: [381, // 神鷹改\n        536]\n    },\n    bonus: {\n        asw: 3,\n        evasion: 2\n    }\n};\n\nmodule.exports = [\n\n// Ju87C改二(KMX搭載機)\n_extends({\n    equipment: 305\n}, bonusGrafZeppelinAquila), _extends({\n    equipment: 305\n}, bonusGambierBay), _extends({\n    equipment: 305\n}, bonusTaiyou), _extends({\n    equipment: 305\n}, bonusShinyou),\n\n// Ju87C改二(KMX搭載機/熟練)\n_extends({\n    equipment: 306\n}, bonusGrafZeppelinAquila), _extends({\n    equipment: 306\n}, bonusGambierBay), _extends({\n    equipment: 306\n}, bonusTaiyou), _extends({\n    equipment: 306\n}, bonusShinyou)];\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/bonus/%E8%89%A6%E4%B8%8A%E6%A9%9F/Ju87C%E6%94%B9%E4%BA%8C(KMX%E6%90%AD%E8%BC%89%E6%A9%9F).js?");
 
 /***/ }),
 
@@ -6465,7 +6465,7 @@ eval("\n\n/**\r\n * 装备额外属性收益 - Ju87C改二(KMX搭載機)\r\n * \
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\n/**\r\n * 装备额外属性收益 - 九七式艦攻(九三一空)\r\n * \r\n * @module\r\n */\n\nmodule.exports = [{\n    equipment: 82,\n    ship: {\n        isID: [380, // 大鷹改\n        529]\n    },\n    bonus: {\n        asw: 1,\n        evasion: 1\n    }\n}];\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/bonus/%E8%89%A6%E4%B8%8A%E6%A9%9F/%E4%B9%9D%E4%B8%83%E5%BC%8F%E8%89%A6%E6%94%BB(%E4%B9%9D%E4%B8%89%E4%B8%80%E7%A9%BA).js?");
+eval("\n\nvar _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };\n\n/**\r\n * 装备额外属性收益 - 九七式艦攻(九三一空)\r\n * \r\n * @module\r\n */\n\nvar bonusTaiyou = {\n    ship: {\n        isID: [380, // 大鷹改\n        529, // 大鷹改二\n        381, // 神鷹改\n        536]\n    },\n    bonus: {\n        asw: 1,\n        evasion: 1\n    }\n};\n\nmodule.exports = [\n\n// 九七式艦攻(九三一空)\n_extends({\n    equipment: 82\n}, bonusTaiyou),\n\n// 九七式艦攻(九三一空/熟練)\n_extends({\n    equipment: 302\n}, bonusTaiyou)];\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/bonus/%E8%89%A6%E4%B8%8A%E6%A9%9F/%E4%B9%9D%E4%B8%83%E5%BC%8F%E8%89%A6%E6%94%BB(%E4%B9%9D%E4%B8%89%E4%B8%80%E7%A9%BA).js?");
 
 /***/ }),
 

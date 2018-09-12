@@ -15,6 +15,7 @@
 {"id":4,"ship_type_id":6,"_id":"8Sh8jh40V9c1dwKp","speed_rule":"low-2","name":{"en_us":"Fusou","ja_jp":"扶桑","zh_cn":"扶桑"}}
 {"id":5,"ship_type_id":16,"_id":"8xQPYsq6jHfdAjBa","speed_rule":"low-3","name":{"en_us":"Akashi","ja_jp":"明石","zh_cn":"明石"}}
 {"name":{"ja_jp":"Lexington","zh_cn":"列克星敦","en_us":"Lexington"},"ship_type_id":11,"id":105,"_id":"9B4Fg2wROIO0QVaS","speed_rule":"high-3","navy":"usn"}
+{"name":{"ja_jp":"Gotland","zh_cn":"哥特兰","en_us":"Gotland"},"ship_type_id":2,"id":114,"_id":"9TYhXiyhxptAtc1A","navy":"sm"}
 {"ship_type_id":1,"id":22,"_id":"AcZKZJTEy3ySYL7p","speed_rule":"high-3","name":{"en_us":"Yuugumo","ja_jp":"夕雲","zh_cn":"夕云"}}
 {"ship_type_id":1,"id":78,"_id":"AtJsZGIYiyfK2m47","speed_rule":"high-3","name":{"en_us":"Maestrale","ja_jp":"Maestrale","zh_cn":"西北风"},"navy":"rm"}
 {"ship_type_id":13,"id":64,"_id":"BS1phNGWHoLWnP2X","speed_rule":"low-3","name":{"en_us":"Type 3 Submergence Transport Vehicle","ja_jp":"三式潜航輸送艇","zh_cn":"三式潜航运输艇"}}
@@ -103,6 +104,7 @@
 {"id":13,"ship_type_id":17,"_id":"wIQmLK3nowZHC6W9","speed_rule":"low-2","name":{"en_us":"Taigei","ja_jp":"大鯨","zh_cn":"大鲸"}}
 {"ship_type_id":14,"id":88,"_id":"wSSuUroh6oRBa3zc","speed_rule":"low-3","name":{"en_us":"Junsen Type A Kai Ni","ja_jp":"巡潜甲型改二","zh_cn":"巡潜甲型改二"}}
 {"ship_type_id":10,"id":30,"_id":"wc6e0apWiuxMjzUa","speed_rule":"high-1","name":{"en_us":"Shoukaku","ja_jp":"翔鶴","zh_cn":"翔鹤"}}
+{"name":{"ja_jp":"Nelson","zh_cn":"纳尔逊","en_us":"Nelson"},"ship_type_id":6,"id":115,"_id":"wmoSdmAIXxfcTcfL","navy":"rn"}
 {"ship_type_id":2,"id":49,"_id":"wxZ0fgIHk6PXIfFP","speed_rule":"high-3","name":{"en_us":"Nagara","ja_jp":"長良","zh_cn":"长良"}}
 {"id":14,"ship_type_id":18,"_id":"x7qm99OMLRKbJfnx","speed_rule":"high-3","name":{"en_us":"","ja_jp":"Bismarck","zh_cn":"俾斯麦"}}
 {"name":{"ja_jp":"Essex","zh_cn":"埃塞克斯"},"ship_type_id":10,"id":110,"_id":"yCbmTHhmquQzIcX0","navy":"usn"}

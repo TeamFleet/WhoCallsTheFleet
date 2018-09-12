@@ -1,4 +1,4 @@
-@count:     7;
+@count:     8;
 
 // const navies = [
 //     "ijn", // 日本帝国海军
@@ -8,6 +8,7 @@
 //     "rn", // 英国皇家海军"
 //     "usn", // 美国海军"
 //     "vmf" // 苏联海军"
+//     "sm" // 瑞典海军"
 // ]
 .flag-navy{
     @size:      20px;
@@ -41,6 +42,9 @@
     &[data-navy="vmf"]{
         background-position: 50% percentage(6 / (@count - 1));
     }
+    &[data-navy="sm"]{
+        background-position: 50% percentage(7 / (@count - 1));
+    }
 
     .navies(@n, @i: 0) when (@i =< @n) {
         &[data-navy="@{i}"]{
@@ -55,27 +59,27 @@
     @media 
     (-webkit-min-device-pixel-ratio: 1.25), 
     (min-resolution: 120dpi){
-        background-image:   url(~"@{folder_images}/navy-flags/shadow@1.25.png");
+        background-image:   url(~"@{folder_images}/navy-flags/shadow@1.25.png?@{file_flags_shadow_revision}");
     }
 
     /* 1.5 dpr */
     @media 
     (-webkit-min-device-pixel-ratio: 1.5), 
     (min-resolution: 144dpi){
-        background-image:   url(~"@{folder_images}/navy-flags/shadow@1.5.png");
+        background-image:   url(~"@{folder_images}/navy-flags/shadow@1.5.png?@{file_flags_shadow_revision}");
     }
 
     /* 2.0 dpr */
     @media 
     (-webkit-min-device-pixel-ratio: 2), 
     (min-resolution: 192dpi){
-        background-image:   url(~"@{folder_images}/navy-flags/shadow@2.png");
+        background-image:   url(~"@{folder_images}/navy-flags/shadow@2.png?@{file_flags_shadow_revision}");
     }
 
     /* 3.0 dpr */
     @media 
     (-webkit-min-device-pixel-ratio: 3), 
     (min-resolution: 288dpi){
-        background-image:   url(~"@{folder_images}/navy-flags/shadow@3.png");
+        background-image:   url(~"@{folder_images}/navy-flags/shadow@3.png?@{file_flags_shadow_revision}");
     }
 }
