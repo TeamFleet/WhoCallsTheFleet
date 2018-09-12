@@ -4387,65 +4387,71 @@ body.mod-capture #tip {
   background-position: 50% 0%;
 }
 .flag-navy[data-navy="km"] {
-  background-position: 50% 16.66666667%;
+  background-position: 50% 14.28571429%;
 }
 .flag-navy[data-navy="rm"] {
-  background-position: 50% 33.33333333%;
+  background-position: 50% 28.57142857%;
 }
 .flag-navy[data-navy="mn"] {
-  background-position: 50% 50%;
+  background-position: 50% 42.85714286%;
 }
 .flag-navy[data-navy="rn"] {
-  background-position: 50% 66.66666667%;
+  background-position: 50% 57.14285714%;
 }
 .flag-navy[data-navy="usn"] {
-  background-position: 50% 83.33333333%;
+  background-position: 50% 71.42857143%;
 }
 .flag-navy[data-navy="vmf"] {
+  background-position: 50% 85.71428571%;
+}
+.flag-navy[data-navy="sm"] {
   background-position: 50% 100%;
 }
 .flag-navy[data-navy="0"] {
   background-position: 50% 0%;
 }
 .flag-navy[data-navy="1"] {
-  background-position: 50% 16.66666667%;
+  background-position: 50% 14.28571429%;
 }
 .flag-navy[data-navy="2"] {
-  background-position: 50% 33.33333333%;
+  background-position: 50% 28.57142857%;
 }
 .flag-navy[data-navy="3"] {
-  background-position: 50% 50%;
+  background-position: 50% 42.85714286%;
 }
 .flag-navy[data-navy="4"] {
-  background-position: 50% 66.66666667%;
+  background-position: 50% 57.14285714%;
 }
 .flag-navy[data-navy="5"] {
-  background-position: 50% 83.33333333%;
+  background-position: 50% 71.42857143%;
 }
 .flag-navy[data-navy="6"] {
-  background-position: 50% 100%;
+  background-position: 50% 85.71428571%;
 }
 .flag-navy[data-navy="7"] {
-  background-position: 50% 116.66666667%;
+  background-position: 50% 100%;
+}
+.flag-navy[data-navy="8"] {
+  background-position: 50% 114.28571429%;
 }
 @media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
   .flag-navy {
-    background-image: url(/!/assets/images/navy-flags/shadow@1.25.png);
+    background-image: url(/!/assets/images/navy-flags/shadow@1.25.png?20180913);
   }
 }
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
   .flag-navy {
-    background-image: url(/!/assets/images/navy-flags/shadow@1.5.png);
+    background-image: url(/!/assets/images/navy-flags/shadow@1.5.png?20180913);
   }
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .flag-navy {
-    background-image: url(/!/assets/images/navy-flags/shadow@2.png);
+    background-image: url(/!/assets/images/navy-flags/shadow@2.png?20180913);
   }
 }
 @media (-webkit-min-device-pixel-ratio: 3), (min-resolution: 288dpi) {
   .flag-navy {
-    background-image: url(/!/assets/images/navy-flags/shadow@3.png);
+    background-image: url(/!/assets/images/navy-flags/shadow@3.png?20180913);
   }
 }
 .improvement {
