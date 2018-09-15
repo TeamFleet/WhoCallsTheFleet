@@ -91,7 +91,7 @@
 	},
 
 	"packages-beta": {},
-	"core": "0.21.6",
+	"core":  "0.21.6",
 	"homepage": "http://fleet.moe/",
 	"release-notes": "https://github.com/Diablohu/WhoCallsTheFleet/releases",
 	"forum": "http://bbs.ngacn.cc/read.php?tid=7959995"
