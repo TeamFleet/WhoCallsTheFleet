@@ -6237,7 +6237,7 @@ eval("\n\nfunction _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\n/**\r\n * 装备额外属性收益 - Bofors 15.2cm連装砲 Model 1930\r\n * \r\n * @module\r\n */\n\n// https://wikiwiki.jp/kancolle/Bofors15.2cm%E9%80%A3%E8%A3%85%E7%A0%B2%20Model1930\n\nvar _require = __webpack_require__(/*! ../../ship-classes */ \"./node_modules/kckit/src/data/ship-classes.js\"),\n    CL_Kuma = _require.CL_Kuma,\n    CL_Nagara = _require.CL_Nagara,\n    CL_Sendai = _require.CL_Sendai,\n    CL_Agano = _require.CL_Agano,\n    CLT_Kuma = _require.CLT_Kuma,\n    CL_Gotland = _require.CL_Gotland;\n\nmodule.exports = [{\n    equipment: 303,\n    ship: {\n        isClass: [CL_Kuma, CL_Nagara, CL_Sendai, CL_Agano, CLT_Kuma]\n    },\n    bonus: {\n        fire: 1,\n        aa: 1\n    }\n}, {\n    equipment: 303,\n    ship: {\n        isClass: [CL_Gotland]\n    },\n    bonus: {\n        fire: 1,\n        aa: 2,\n        evasion: 1\n    }\n}];\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/bonus/%E4%B8%AD%E5%8F%A3%E5%BE%84%E4%B8%BB%E7%A0%B2/Bofors_15.2cm%E9%80%A3%E8%A3%85%E7%A0%B2_Model_1930.js?");
+eval("\n\n/**\r\n * 装备额外属性收益 - Bofors 15.2cm連装砲 Model 1930\r\n * \r\n * @module\r\n */\n\n// https://wikiwiki.jp/kancolle/Bofors15.2cm%E9%80%A3%E8%A3%85%E7%A0%B2%20Model1930\n\nvar _require = __webpack_require__(/*! ../../ship-classes */ \"./node_modules/kckit/src/data/ship-classes.js\"),\n    CL_Kuma = _require.CL_Kuma,\n    CL_Nagara = _require.CL_Nagara,\n    CL_Sendai = _require.CL_Sendai,\n    CL_Agano = _require.CL_Agano,\n    CLT_Kuma = _require.CLT_Kuma,\n    CL_Gotland = _require.CL_Gotland,\n    CLV_Gotland = _require.CLV_Gotland;\n\nmodule.exports = [{\n    equipment: 303,\n    ship: {\n        isClass: [CL_Kuma, CL_Nagara, CL_Sendai, CL_Agano, CLT_Kuma]\n    },\n    bonus: {\n        fire: 1,\n        aa: 1\n    }\n}, {\n    equipment: 303,\n    ship: {\n        isClass: [CL_Gotland, CLV_Gotland]\n    },\n    bonus: {\n        fire: 1,\n        aa: 2,\n        evasion: 1\n    }\n}];\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/bonus/%E4%B8%AD%E5%8F%A3%E5%BE%84%E4%B8%BB%E7%A0%B2/Bofors_15.2cm%E9%80%A3%E8%A3%85%E7%A0%B2_Model_1930.js?");
 
 /***/ }),
 
@@ -6621,7 +6621,7 @@ eval("\n\n/**\r\n * 装备额外属性收益 - 試製61cm六連装(酸素)魚雷
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nmodule.exports = {\n\n    BB_QueenElizabeth: 85,\n    BB_Nelson: 115,\n\n    CV_ArkRoyal: 101,\n\n    CL_Kuma: 48,\n    CL_Nagara: 49,\n    CL_Sendai: 50,\n    CL_Agano: 52,\n    CL_Gotland: 114,\n    CLT_Kuma: 54,\n\n    DD_Special: [15, 16, 17],\n    DD_Tokugata: [15, 16, 17],\n    DD_Fubuki: 15,\n    DD_Ayanami: 16,\n    DD_Akatsuki: 17,\n    DD_Hatsuharu: 18,\n    DD_Shiratsuyu: 19,\n    DD_Akizuki: 23,\n    DD_J: 107\n\n};\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/ship-classes.js?");
+eval("\n\nmodule.exports = {\n\n    BB_QueenElizabeth: 85,\n    BB_Nelson: 115,\n\n    CV_ArkRoyal: 101,\n\n    CL_Kuma: 48,\n    CL_Nagara: 49,\n    CL_Sendai: 50,\n    CL_Agano: 52,\n    CL_Gotland: 114,\n    CLT_Kuma: 54,\n    CLV_Gotland: 116,\n\n    DD_Special: [15, 16, 17],\n    DD_Tokugata: [15, 16, 17],\n    DD_Fubuki: 15,\n    DD_Ayanami: 16,\n    DD_Akatsuki: 17,\n    DD_Hatsuharu: 18,\n    DD_Shiratsuyu: 19,\n    DD_Akizuki: 23,\n    DD_J: 107\n\n};\n\n//# sourceURL=webpack:///./node_modules/kckit/src/data/ship-classes.js?");
 
 /***/ }),
 
