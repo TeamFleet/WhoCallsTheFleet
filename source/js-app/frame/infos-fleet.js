@@ -1934,6 +1934,18 @@ class InfosFleetShip {
                         }
                     }),
 
+                $('<menuitem/>').html('查看装备属性加成...')
+                    .on({
+                        'show': function () {
+                            const $el = InfosFleetShip.menuItems[4]
+                            $el.off('click.fleet-ship-show-bonuses')
+                            $el.on('click.fleet-ship-show-bonuses', function () {
+                                // console.log('ship-id', InfosFleetShip.menuCurObj.shipId)
+                                modal.bonuses.show('ship', InfosFleetShip.menuCurObj.shipId)
+                            })
+                        }
+                    }),
+
                 $('<menuitem/>').html('移除')
                     .on({
                         'click': function (e) {
@@ -1949,7 +1961,7 @@ class InfosFleetShip {
                     }),
 
                 $('<div/>').on('show', function () {
-                    var $div = InfosFleetShip.menuItems[6].empty()
+                    var $div = InfosFleetShip.menuItems[7].empty()
                     if (InfosFleetShip.menuCurObj.shipId) {
                         var series = _g['data']['ships'][InfosFleetShip.menuCurObj.shipId].getSeriesData() || []
                         if (series.length > 1) {

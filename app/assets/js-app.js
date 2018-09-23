@@ -5773,6 +5773,14 @@ var InfosFleetShip = function () {
                     'show': function show() {
                         InfosFleetShip.menuItems[3].attr('data-infos', '[[SHIP::' + InfosFleetShip.menuCurObj.shipId + ']]');
                     }
+                }), $('<menuitem/>').html('查看装备属性加成...').on({
+                    'show': function show() {
+                        var $el = InfosFleetShip.menuItems[4];
+                        $el.off('click.fleet-ship-show-bonuses');
+                        $el.on('click.fleet-ship-show-bonuses', function () {
+                            modal.bonuses.show('ship', InfosFleetShip.menuCurObj.shipId);
+                        });
+                    }
                 }), $('<menuitem/>').html('移除').on({
                     'click': function click(e) {
                         InfosFleetShip.menuCurObj.shipId = null;
@@ -5782,7 +5790,7 @@ var InfosFleetShip = function () {
                         InfosFleetShip.menuCurObj.selectShipStart();
                     }
                 }), $('<div/>').on('show', function () {
-                    var $div = InfosFleetShip.menuItems[6].empty();
+                    var $div = InfosFleetShip.menuItems[7].empty();
                     if (InfosFleetShip.menuCurObj.shipId) {
                         var series = _g['data']['ships'][InfosFleetShip.menuCurObj.shipId].getSeriesData() || [];
                         if (series.length > 1) {
@@ -7535,6 +7543,9 @@ modal.bonuses = function () {
                 bonuses.set.forEach(function (bonus) {
                     cache[id] = cache[id].add(_this16.renderBonusSet(bonus));
                 });
+            }
+            if (!bonuses.single.length && !bonuses.set.length) {
+                cache[id] = $('<span class="no-bonuses">无</span>');
             }
 
             return cache[id];

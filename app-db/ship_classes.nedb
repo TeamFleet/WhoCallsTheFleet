@@ -94,6 +94,7 @@
 {"ship_type_id":14,"id":67,"_id":"sqbMptvXyvskgG6W","speed_rule":"low-3","name":{"en_us":"Junsen Type B Kai Ni","ja_jp":"巡潜乙（改二）","zh_cn":"巡潜乙（改二）"}}
 {"ship_type_id":1,"id":20,"_id":"ssTgmPb3uPu3CxBy","speed_rule":"high-3","name":{"en_us":"Asashio","ja_jp":"朝潮","zh_cn":"朝潮"}}
 {"ship_type_id":2,"id":48,"_id":"t84eJdJn5UOoVByp","speed_rule":"high-3","name":{"en_us":"Kuma","ja_jp":"球磨","zh_cn":"球磨"}}
+{"name":{"ja_jp":"Gotland","zh_cn":"哥特兰"},"ship_type_id":34,"id":116,"_id":"tN2i0YzhCj6YglHx","navy":"sm"}
 {"ship_type_id":10,"id":27,"_id":"tj5fsdvqsUpt5yUq","speed_rule":"high-4","name":{"en_us":"Kaga","ja_jp":"加賀","zh_cn":"加贺"}}
 {"ship_type_id":21,"id":55,"_id":"u2OtssehEtbGtBOz","speed_rule":"low-2","name":{"en_us":"Katori","ja_jp":"香取","zh_cn":"香取"}}
 {"ship_type_id":29,"id":76,"_id":"uBFfKbVS5UnIqTnt","speed_rule":"low-3","name":{"en_us":"Revised Kazahaya","ja_jp":"改風早","zh_cn":"改风早"}}

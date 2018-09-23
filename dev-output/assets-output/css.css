@@ -12590,6 +12590,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   border-top: 10px solid transparent;
   border-bottom: 75px solid transparent;
   mask-image: linear-gradient(to left, transparent, #000 20px, #000 calc(100% - 20px), transparent);
+  overflow: hidden;
 }
 .infos-ship > aside .body {
   position: absolute;
@@ -14395,6 +14396,10 @@ body > .modal.hastitle.modal-bonuses > div > header > span {
 }
 body > .modal.hastitle.modal-bonuses section {
   max-height: calc(100vh - 100px);
+}
+body > .modal.hastitle.modal-bonuses section .no-bonuses {
+  color: hsl(0, 0%, 50%);
+  font-style: italic;
 }
 body > .modal.hastitle.modal-bonuses section .bonus {
   position: relative;

@@ -69,6 +69,9 @@ modal.bonuses = (() => ({
                 cache[id] = cache[id].add(this.renderBonusSet(bonus))
             })
         }
+        if (!bonuses.single.length && !bonuses.set.length) {
+            cache[id] = $('<span class="no-bonuses">无</span>')
+        }
 
         return cache[id]
     },
