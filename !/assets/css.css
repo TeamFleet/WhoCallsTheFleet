@@ -12590,7 +12590,6 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   border-top: 10px solid transparent;
   border-bottom: 75px solid transparent;
   mask-image: linear-gradient(to left, transparent, #000 20px, #000 calc(100% - 20px), transparent);
-  overflow: hidden;
 }
 .infos-ship > aside .body {
   position: absolute;
@@ -12652,7 +12651,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   transform: scale(0.7272727272727273);
 }
 .infos-ship > aside.mod-scroll-snap .body {
-  overflow: auto;
+  overflow: hidden;
   overflow-style: none;
   -ms-overflow-style: none;
 }

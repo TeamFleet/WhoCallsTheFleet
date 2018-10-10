@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",307,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/11.png)\"></s><strong>GFCS Mk.37</strong><small>小型电探/雷达</small></h3><span>+2 火力</span><span>+7 对空</span><span>+9 命中</span><span>+1 装甲</span><span>+2 回避</span><span>+6 索敌</span><span>射程: 中</span>")
