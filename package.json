@@ -38,10 +38,10 @@
       "package.json"
     ],
     "dataVersion": {
-      "app": "0.29.0.0",
-      "app-db": "2018.10.27",
+      "app": "0.29.1.0",
+      "app-db": "2018.11.03",
       "bgimgs": "1.18.6.0",
-      "pics": "2018.10.11",
+      "pics": "2018.11.03",
       "pics-enemies": "2018.08.28",
       "pics-ships-1": "2018.10.27",
       "pics-ships-2": "2018.10.27",
@@ -65,7 +65,7 @@
       "pics-ships-extra-5": "2018.10.27",
       "pics-ships-extra-6": "2018.10.27",
       "pics-ships-extra-7": "2018.10.27",
-      "pics-ships-extra-8": "2018.10.27"
+      "pics-ships-extra-8": "2018.11.03"
     },
     "versions": {
       "win32": "0.29.0",
