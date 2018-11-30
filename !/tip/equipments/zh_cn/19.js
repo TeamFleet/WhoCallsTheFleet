@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",19,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/6.png)\"></s><strong>九六式舰战</strong><small>舰载战斗机</small></h3><span>+2 对空</span><span>航程: 3</span>")
+KCTip.loaded("equipments",19,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/6.png)\"></s><strong>九六式舰战</strong><small>舰载战斗机</small></h3><span>+3 对空</span><span>+1 回避</span><span>航程: 3</span>")

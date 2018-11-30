@@ -7310,6 +7310,13 @@ body.mod-capture #tip {
 .tablelist-equipments > [name="types"][class]:not(.type62) ~ .tablelist-container .tablelist-body h4[data-type="62"] {
   opacity: 0.35;
 }
+.tablelist-equipments > [name="types"][class]:not(.type63) ~ .tablelist-container .tablelist-body > [data-equipmenttype="63"] {
+  display: none;
+  opacity: 0.35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type63) ~ .tablelist-container .tablelist-body h4[data-type="63"] {
+  opacity: 0.35;
+}
 .tablelist-equipments > [value="3"]:checked ~ .tablelist-container [stat="range"] {
   display: none !important;
 }
@@ -14589,6 +14596,11 @@ body > .modal.hastitle.modal-bonuses section .bonus .stats .has-extra .count::be
   font-size: 125%;
   padding-right: 2px;
   vertical-align: bottom;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .stats .has-extra .area {
+  font-size: 14px;
+  width: auto;
+  text-align: right;
 }
 body > .modal.hastitle.modal-bonuses section .bonus .stats .stat {
   position: relative;

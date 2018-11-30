@@ -3092,7 +3092,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
     location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20181124';
+_g.db_version = '20181201';
 
 _g.bgimg_count=26;
 
@@ -8218,6 +8218,15 @@ modal.bonuses = function () {
                     return '<span class="item ship-class">' + s + '</span>';
                 }).join('') + '</div>';
             }
+            if (typeof bonus.ship.isNotType !== 'undefined') {
+                var _types2 = Array.isArray(bonus.ship.isNotType) ? bonus.ship.isNotType : [bonus.ship.isNotType];
+                condition += '<div class="condition">' + _types2.map(function (typeId) {
+                    var type = _g.data.ship_types[parseInt(typeId)];
+                    return type.name.zh_cn || type.name.ja_jp;
+                }).map(function (s) {
+                    return '<span class="item ship-exclude">' + s + '</span>';
+                }).join('') + '</div>';
+            }
             if (typeof bonus.ship.isClass !== 'undefined') {
                 var classes = Array.isArray(bonus.ship.isClass) ? bonus.ship.isClass : [bonus.ship.isClass];
                 condition += '<div class="condition">' + classes.map(function (classId) {
@@ -8263,7 +8272,16 @@ modal.bonuses = function () {
                 case 'equipment':
                     {
                         condition = this.renderConditionShips(bonus);
-                        bonusInfoText = '装备于以上舰娘时，';
+                        var conditionKeys = _typeof(bonus.ship) === 'object' ? Object.keys(bonus.ship).filter(function (key) {
+                            return key.toLowerCase() !== 'canequip';
+                        }) : [];
+                        var hasNoCondition = _typeof(bonus.ship) === 'object' && conditionKeys.length === 0;
+                        var isOnlyNotType = _typeof(bonus.ship) === 'object' && conditionKeys.length === 1 && bonus.ship.isNotType !== 'undefined';
+                        bonusInfoText = function () {
+                            if (hasNoCondition) return '装备于任意舰娘时，';
+                            if (isOnlyNotType) return '';
+                            return '装备于以上舰娘时，';
+                        }();
                         break;
                     }
             }
@@ -8281,6 +8299,14 @@ modal.bonuses = function () {
                     return parseInt(a) - parseInt(b);
                 }).forEach(function (star) {
                     bonusStats += '<div class="has-extra">' + ('<div class="extra star" data-star="' + star + '">' + star + '</div>') + _this17.renderStat(bonus.bonusImprove[star]) + '</div>';
+                });
+            } else if (_typeof(bonus.bonusArea) === 'object') {
+                bonusInfoText += '\u6BCF\u4E2A\u8BE5\u88C5\u5907\u6839\u636E\u6240\u5904\u6D77\u57DF\u63D0\u4F9B\u5C5E\u6027\u52A0\u6210';
+                var areas = {
+                    north: '北方'
+                };
+                Object.keys(bonus.bonusArea).forEach(function (area) {
+                    bonusStats += '<div class="has-extra">' + ('<div class="extra area">' + areas[area.toLowerCase()] + '</div>') + _this17.renderStat(bonus.bonusArea[area]) + '</div>';
                 });
             } else if (_typeof(bonus.bonus) === 'object') {
                 bonusInfoText += '\u6BCF\u4E2A\u8BE5\u88C5\u5907\u63D0\u4F9B\u5C5E\u6027\u52A0\u6210';
