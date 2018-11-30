@@ -130,6 +130,20 @@ modal.bonuses = (() => ({
                     .join('')
                 + `</div>`
         }
+        if (typeof bonus.ship.isNotType !== 'undefined') {
+            const types = Array.isArray(bonus.ship.isNotType)
+                ? bonus.ship.isNotType
+                : [bonus.ship.isNotType]
+            condition += `<div class="condition">`
+                + types
+                    .map(typeId => {
+                        const type = _g.data.ship_types[parseInt(typeId)]
+                        return (type.name.zh_cn || type.name.ja_jp)
+                    })
+                    .map(s => `<span class="item ship-exclude">${s}</span>`)
+                    .join('')
+                + `</div>`
+        }
         if (typeof bonus.ship.isClass !== 'undefined') {
             const classes = Array.isArray(bonus.ship.isClass)
                 ? bonus.ship.isClass
@@ -196,7 +210,25 @@ modal.bonuses = (() => ({
             }
             case 'equipment': {
                 condition = this.renderConditionShips(bonus)
-                bonusInfoText = '装备于以上舰娘时，'
+                const conditionKeys = typeof bonus.ship === 'object'
+                    ? Object.keys(bonus.ship).filter(key => key.toLowerCase() !== 'canequip')
+                    : []
+                const hasNoCondition = (
+                    typeof bonus.ship === 'object' &&
+                    conditionKeys.length === 0
+                )
+                const isOnlyNotType = (
+                    typeof bonus.ship === 'object' &&
+                    conditionKeys.length === 1 &&
+                    bonus.ship.isNotType !== 'undefined'
+                )
+                bonusInfoText = (() => {
+                    if (hasNoCondition)
+                        return '装备于任意舰娘时，'
+                    if (isOnlyNotType)
+                        return ''
+                    return '装备于以上舰娘时，'
+                })()
                 break
             }
         }
@@ -219,6 +251,18 @@ modal.bonuses = (() => ({
                     bonusStats += `<div class="has-extra">`
                         + `<div class="extra star" data-star="${star}">${star}</div>`
                         + this.renderStat(bonus.bonusImprove[star])
+                        + `</div>`
+                })
+        } else if (typeof bonus.bonusArea === 'object') {
+            bonusInfoText += `每个该装备根据所处海域提供属性加成`
+            const areas = {
+                north: '北方'
+            }
+            Object.keys(bonus.bonusArea)
+                .forEach(area => {
+                    bonusStats += `<div class="has-extra">`
+                        + `<div class="extra area">${areas[area.toLowerCase()]}</div>`
+                        + this.renderStat(bonus.bonusArea[area])
                         + `</div>`
                 })
         } else if (typeof bonus.bonus === 'object') {
