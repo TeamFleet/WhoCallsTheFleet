@@ -6,7 +6,7 @@
 {"name":{"zh_cn":"秋刀鱼祭","ja_jp":"秋刀魚祭り","en_us":"Mackerel"},"time":{"zh_cn":"10月中","ja_jp":"10月中旬","en_us":"Mid October"},"id":9,"sort":20,"_id":"4VfMus4ANwRfYWOO","revision":3}
 {"name":{"zh_cn":"情人节","ja_jp":"バレンタイン","en_us":"Valentines"},"time":{"zh_cn":"2月中","ja_jp":"2月中旬","en_us":"Mid February"},"id":3,"sort":4,"_id":"4iLWgFmJ5SBDtcgG"}
 {"name":{"ja_jp":"夏","zh_cn":"夏","en_us":"Summer"},"time":{"ja_jp":"夏","zh_cn":"夏季","en_us":"Summer"},"id":18,"sort":14,"_id":"55yfwxZQ81CuJuRz"}
-{"name":{"zh_cn":"圣诞节","ja_jp":"クリスマス","en_us":"Christmas"},"time":{"zh_cn":"12月","ja_jp":"12月","en_us":"December"},"id":11,"sort":24,"_id":"7So2Wp0yj49sGhJS","revision":2}
+{"name":{"zh_cn":"圣诞节","ja_jp":"クリスマス","en_us":"Christmas"},"time":{"zh_cn":"12月","ja_jp":"12月","en_us":"December"},"id":11,"sort":24,"_id":"7So2Wp0yj49sGhJS","revision":3}
 {"name":{"ja_jp":"冬の私服","zh_cn":"冬季私服","en_us":"Winter-ordinary"},"time":{"ja_jp":"冬","zh_cn":"冬季","en_us":"Winter"},"id":47,"sort":27,"_id":"7aPINbjxoi0Y7V8S","revision":2}
 {"name":{"zh_cn":"铁骨番长","ja_jp":"鉄骨番長","en_us":"Tekkotsu Bancho"},"id":14,"sort":32,"_id":"AmzvCwpXV7MoQ7Nt"}
 {"name":{"ja_jp":"かき氷","zh_cn":"刨冰","en_us":"Shaved Ice"},"time":{"ja_jp":"夏","zh_cn":"夏季","en_us":"Summer"},"id":44,"sort":12,"_id":"Aw3DaZdlUzpnaJ15"}
