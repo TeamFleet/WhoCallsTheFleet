@@ -68,9 +68,9 @@
       "pics-ships-extra-8": "2018.12.15"
     },
     "versions": {
-      "win32": "0.29.0",
-      "win64": "0.29.0",
-      "osx64": "0.21.6"
+      "win32": "0.35.2",
+      "win64": "0.35.2",
+      "osx64": "0.35.2"
     },
     "buildDir": "N:\\nwbuild\\build",
     "winIco": "./source/appicon.ico",
