@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",315,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/11.png)\"></s><strong>SG雷达<small>(初期型)</small></strong><small>小型电探/雷达</small></h3><span>+1 火力</span><span>+3 对空</span><span>+3 对潜</span><span>+8 命中</span><span>+6 回避</span><span>+8 索敌</span><span>射程: 中</span>")

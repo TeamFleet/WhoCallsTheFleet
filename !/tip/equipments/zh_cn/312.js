@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",312,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/9.png)\"></s><strong>二式陆上侦察机<small>(熟练)</small></strong><small>陆上侦察机</small></h3><span>+3 对空</span><span>+3 命中</span><span>+1 装甲</span><span>+9 索敌</span><span>航程: 9</span>")
