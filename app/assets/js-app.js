@@ -8830,7 +8830,7 @@ var TablelistEquipments = function (_Tablelist2) {
                         headerAlt.addClass('header-alt');
                         headerAlt.removeAttr('data-equipmentid');
                         headerAlt.removeAttr('data-infos');
-                        headerAlt.removeAttr('data-equipmenttype');
+
                         headerAlt.find('dt').empty();
                         headerAlt.find('dd').empty().removeAttr('value');
 

@@ -268,7 +268,7 @@ class TablelistEquipments extends Tablelist {
                     headerAlt.addClass('header-alt')
                     headerAlt.removeAttr('data-equipmentid')
                     headerAlt.removeAttr('data-infos')
-                    headerAlt.removeAttr('data-equipmenttype')
+                    // headerAlt.removeAttr('data-equipmenttype')
                     headerAlt.find('dt').empty()
                     headerAlt.find('dd').empty().removeAttr('value')
                     // headerAlt.find('[stat="aa"]').html('<span>对空</span><sup>制空</sup><sub>防空</sub>')
