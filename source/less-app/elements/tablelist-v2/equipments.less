@@ -58,14 +58,43 @@
 					}
 				}
 			}
+			&.header-alt,
+			&.mod-interceptor dd[stat="aa"]{
+				sup, sub{
+					position: relative;
+					display: inline-block;
+					width: 0;
+					white-space: nowrap;
+					text-align: left;
+					transform-origin: 0% 50%;
+					transform: scale((10 / 12));
+					font-style: italic;
+				}
+				sup{
+					top: -6px;
+				}
+				sub{
+					top: 6px;
+					width: 10px;
+				}
+			}
 			&.header-alt{
 				position: relative;
 				border-bottom-color: transparent;
 				top: (0 - @base-cell-height);
 				margin-bottom: (0 - @base-cell-height);
 				z-index: -1;
+				dd{
+					top: -6px;
+				}
 				dd.is-hover{
 					background: transparent;
+				}
+				dd[stat="aa"]{
+					white-space: nowrap;
+					sub{
+						width: 20px;
+					}
 				}
 				dd[stat="craftable"]{
 					em{
@@ -79,6 +108,12 @@
 							margin-left: 1em;
 						}
 					}
+				}
+			}
+			&.mod-interceptor{
+				dt, dd[stat="aa"]{
+					padding-top: 8px;
+					padding-bottom: 8px;
 				}
 			}
 			&[data-equipmentid]{

@@ -8833,9 +8833,11 @@ var TablelistEquipments = function (_Tablelist2) {
                         headerAlt.removeAttr('data-equipmenttype');
                         headerAlt.find('dt').empty();
                         headerAlt.find('dd').empty().removeAttr('value');
+
+                        headerAlt.find('[stat="aa"]').html('<span>对空</span><sup>出击</sup><sub>防空</sub>');
                         headerAlt.find('[stat="hit"]').text('对爆');
                         headerAlt.find('[stat="evasion"]').text('迎击');
-                        headerAlt.find('[stat="craftable"]').html('<em>制空</em><em>防空</em>');
+
                         headerAlt.insertAfter(tr);
                     }
                 } else {
@@ -8877,7 +8879,10 @@ var TablelistEquipments = function (_Tablelist2) {
                     });
 
                     if (Formula.equipmentType.Interceptors.includes(tr.data('equipmenttype'))) {
-                        tr.find('[stat="craftable"]').removeAttr('value').html('<em>' + ((equipment.stat.aa || 0) + (equipment.stat.evasion * 1.5 || 0)) + '</em>' + ('<em>' + ((equipment.stat.aa || 0) + (equipment.stat.evasion || 0) + (equipment.stat.hit * 2 || 0)) + '</em>'));
+                        tr.addClass('mod-interceptor');
+                        var cellAA = tr.find('[stat="aa"]');
+                        var valueAA = equipment.stat.aa || 0;
+                        cellAA.html('<span>' + valueAA + '</span>' + ('<sup>' + ((equipment.stat.aa || 0) + (equipment.stat.evasion * 1.5 || 0)) + '</sup>') + ('<sub>' + ((equipment.stat.aa || 0) + (equipment.stat.evasion || 0) + (equipment.stat.hit * 2 || 0)) + '</sub>'));
                     }
                 }
             }.bind(this));
