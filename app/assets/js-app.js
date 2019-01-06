@@ -8824,12 +8824,26 @@ var TablelistEquipments = function (_Tablelist2) {
                 if (tr[0].tagName == 'H4') {
                     header_index++;
                     this.dom.types[header_index] = tr;
+
+                    if (Formula.equipmentType.Interceptors.includes(tr.data('type'))) {
+                        var headerAlt = tr.next().clone();
+                        headerAlt.addClass('header-alt');
+                        headerAlt.removeAttr('data-equipmentid');
+                        headerAlt.removeAttr('data-infos');
+                        headerAlt.removeAttr('data-equipmenttype');
+                        headerAlt.find('dt').empty();
+                        headerAlt.find('dd').empty().removeAttr('value');
+                        headerAlt.find('[stat="hit"]').text('对爆');
+                        headerAlt.find('[stat="evasion"]').text('迎击');
+                        headerAlt.find('[stat="craftable"]').html('<em>制空</em><em>防空</em>');
+                        headerAlt.insertAfter(tr);
+                    }
                 } else {
                     var etype = parseInt(tr.attr('data-equipmenttype')) || -1,
                         eid = parseInt(tr.attr('data-equipmentid'));
 
+                    var equipment = _g.data.items[eid];
                     var parse = function parse() {
-                        var equipment = _g.data.items[eid];
                         if (equipment) {
                             var bonuses = equipment.getBonuses();
                             if (Array.isArray(bonuses) && bonuses.length) {
@@ -8861,6 +8875,10 @@ var TablelistEquipments = function (_Tablelist2) {
                             }, 20);
                         }
                     });
+
+                    if (Formula.equipmentType.Interceptors.includes(tr.data('equipmenttype'))) {
+                        tr.find('[stat="craftable"]').removeAttr('value').html('<em>' + ((equipment.stat.aa || 0) + (equipment.stat.evasion * 1.5 || 0)) + '</em>' + ('<em>' + ((equipment.stat.aa || 0) + (equipment.stat.evasion || 0) + (equipment.stat.hit * 2 || 0)) + '</em>'));
+                    }
                 }
             }.bind(this));
 

@@ -58,6 +58,47 @@
 					}
 				}
 			}
+			&.header-alt{
+				position: relative;
+				border-bottom-color: transparent;
+				top: (0 - @base-cell-height);
+				margin-bottom: (0 - @base-cell-height);
+				z-index: -1;
+				dd.is-hover{
+					background: transparent;
+				}
+				dd[stat="craftable"]{
+					em{
+						position: absolute;
+						width: 100%;
+						font-size: 12px;
+						margin-left: -1em;
+						transform: rotate(-30deg);
+						font-style: normal;
+						& + em{
+							margin-left: 1em;
+						}
+					}
+				}
+			}
+			&[data-equipmentid]{
+				dd[stat="craftable"]{
+					em{
+						position: relative;
+						font-style: normal;
+						text-align: right;
+						padding-right: 2px;
+						flex: 1 1 50%;
+						// top: -4px;
+						transform: rotate(-30deg);
+						& + em{
+							text-align: left;
+							padding-left: 2px;
+							// top: 4px;
+						}
+					}
+				}
+			}
 		}
 	}
 	

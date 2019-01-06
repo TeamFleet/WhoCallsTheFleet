@@ -113,7 +113,7 @@
     "height": 720,
     "icon": "./app/assets/images/appicon.png",
     "position": "center",
-    "min_width": 640,
+    "min_width": 480,
     "min_height": 480,
     "resizable": true,
     "always_on_top": false,
