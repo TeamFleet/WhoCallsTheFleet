@@ -1,146 +1,146 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.29.8.0",
-			"path":		"data/2018.12.28/app.nwjs-data",
-			"bytes":	4707270
+			"version":	"0.30.0.0",
+			"path":		"data/2019.01.07/app.nwjs-data",
+			"bytes":	4709113
 		},
 		"app-db": {
-			"version":	"2018.12.28",
-			"path":		"data/2018.12.28/app-db.nwjs-data",
-			"bytes":	1363887
+			"version":	"2019.01.07",
+			"path":		"data/2019.01.07/app-db.nwjs-data",
+			"bytes":	1395204
 		},
 		"bgimgs": {
 			"version":	"1.18.6.0",
-			"path":		"data/2018.10.27/bgimgs.nwjs-data",
+			"path":		"data/2019.01.07/bgimgs.nwjs-data",
 			"bytes":	12494509
 		},
 		"pics": {
 			"version":	"2018.12.28",
-			"path":		"data/2018.12.28/pics.nwjs-data",
+			"path":		"data/2019.01.07/pics.nwjs-data",
 			"bytes":	33714190
 		},
 		"pics-enemies": {
 			"version":	"2018.08.28",
-			"path":		"data/2018.10.27/pics-enemies.nwjs-data",
+			"path":		"data/2019.01.07/pics-enemies.nwjs-data",
 			"bytes":	1013662
 		},
 
 		"pics-ships-1": {
 			"version":	"2018.12.08",
-			"path":		"data/2018.12.08/pics-ships-1.nwjs-data",
+			"path":		"data/2019.01.07/pics-ships-1.nwjs-data",
 			"bytes":	21164226
 		},
 		"pics-ships-2": {
 			"version":	"2018.12.08",
-			"path":		"data/2018.12.08/pics-ships-2.nwjs-data",
+			"path":		"data/2019.01.07/pics-ships-2.nwjs-data",
 			"bytes":	24755036
 		},
 		"pics-ships-3": {
 			"version":	"2018.12.28",
-			"path":		"data/2018.12.28/pics-ships-3.nwjs-data",
+			"path":		"data/2019.01.07/pics-ships-3.nwjs-data",
 			"bytes":	28781977
 		},
 		"pics-ships-4": {
 			"version":	"2018.11.18",
-			"path":		"data/2018.11.18/pics-ships-4.nwjs-data",
+			"path":		"data/2019.01.07/pics-ships-4.nwjs-data",
 			"bytes":	26183813
 		},
 		"pics-ships-5": {
 			"version":	"2018.12.08",
-			"path":		"data/2018.12.08/pics-ships-5.nwjs-data",
+			"path":		"data/2019.01.07/pics-ships-5.nwjs-data",
 			"bytes":	3824339
 		},
 		"pics-ships-6": {
 			"version":	"2018.11.18",
-			"path":		"data/2018.11.18/pics-ships-6.nwjs-data",
+			"path":		"data/2019.01.07/pics-ships-6.nwjs-data",
 			"bytes":	5341882
 		},
 		"pics-ships-7": {
 			"version":	"2018.11.18",
-			"path":		"data/2018.11.18/pics-ships-7.nwjs-data",
+			"path":		"data/2019.01.07/pics-ships-7.nwjs-data",
 			"bytes":	8238597
 		},
 		"pics-ships-8": {
 			"version":	"2018.12.08",
-			"path":		"data/2018.12.08/pics-ships-8.nwjs-data",
+			"path":		"data/2019.01.07/pics-ships-8.nwjs-data",
 			"bytes":	4377400
 		},
 		"pics-ships-9": {
 			"version":	"2018.12.08",
-			"path":		"data/2018.12.08/pics-ships-9.nwjs-data",
+			"path":		"data/2019.01.07/pics-ships-9.nwjs-data",
 			"bytes":	27062270
 		},
 		"pics-ships-10": {
 			"version":	"2018.12.28",
-			"path":		"data/2018.12.28/pics-ships-10.nwjs-data",
+			"path":		"data/2019.01.07/pics-ships-10.nwjs-data",
 			"bytes":	22855130
 		},
 		"pics-ships-11": {
 			"version":	"2018.12.28",
-			"path":		"data/2018.12.28/pics-ships-11.nwjs-data",
+			"path":		"data/2019.01.07/pics-ships-11.nwjs-data",
 			"bytes":	16922413
 		},
 		"pics-ships-12": {
 			"version":	"2018.12.28",
-			"path":		"data/2018.12.28/pics-ships-12.nwjs-data",
+			"path":		"data/2019.01.07/pics-ships-12.nwjs-data",
 			"bytes":	11960405
 		},
 		"pics-ships-13": {
 			"version":	"2018.10.27",
-			"path":		"data/2018.10.27/pics-ships-13.nwjs-data",
+			"path":		"data/2019.01.07/pics-ships-13.nwjs-data",
 			"bytes":	307081
 		},
 		"pics-ships-14": {
 			"version":	"2018.12.28",
-			"path":		"data/2018.12.28/pics-ships-14.nwjs-data",
+			"path":		"data/2019.01.07/pics-ships-14.nwjs-data",
 			"bytes":	1173760
 		},
 		"pics-ships-184": {
 			"version":	"2018.10.27",
-			"path":		"data/2018.10.27/pics-ships-184.nwjs-data",
+			"path":		"data/2019.01.07/pics-ships-184.nwjs-data",
 			"bytes":	1431531
 		},
 
 		"pics-ships-extra-1": {
-			"version":	"2018.12.08",
-			"path":		"data/2018.12.08/pics-ships-extra-1.nwjs-data",
-			"bytes":	18484401
+			"version":	"2019.01.07",
+			"path":		"data/2019.01.07/pics-ships-extra-1.nwjs-data",
+			"bytes":	20625460
 		},
 		"pics-ships-extra-2": {
-			"version":	"2018.12.28",
-			"path":		"data/2018.12.28/pics-ships-extra-2.nwjs-data",
-			"bytes":	13372758
+			"version":	"2019.01.07",
+			"path":		"data/2019.01.07/pics-ships-extra-2.nwjs-data",
+			"bytes":	16532433
 		},
 		"pics-ships-extra-3": {
 			"version":	"2018.10.27",
-			"path":		"data/2018.10.27/pics-ships-extra-3.nwjs-data",
+			"path":		"data/2019.01.07/pics-ships-extra-3.nwjs-data",
 			"bytes":	14856621
 		},
 		"pics-ships-extra-4": {
-			"version":	"2018.12.08",
-			"path":		"data/2018.12.08/pics-ships-extra-4.nwjs-data",
-			"bytes":	13962504
+			"version":	"2019.01.07",
+			"path":		"data/2019.01.07/pics-ships-extra-4.nwjs-data",
+			"bytes":	14777924
 		},
 		"pics-ships-extra-5": {
 			"version":	"2018.11.18",
-			"path":		"data/2018.11.18/pics-ships-extra-5.nwjs-data",
+			"path":		"data/2019.01.07/pics-ships-extra-5.nwjs-data",
 			"bytes":	14894174
 		},
 		"pics-ships-extra-6": {
-			"version":	"2018.12.28",
-			"path":		"data/2018.12.28/pics-ships-extra-6.nwjs-data",
-			"bytes":	13040550
+			"version":	"2019.01.07",
+			"path":		"data/2019.01.07/pics-ships-extra-6.nwjs-data",
+			"bytes":	14074798
 		},
 		"pics-ships-extra-7": {
 			"version":	"2018.10.27",
-			"path":		"data/2018.10.27/pics-ships-extra-7.nwjs-data",
+			"path":		"data/2019.01.07/pics-ships-extra-7.nwjs-data",
 			"bytes":	12035497
 		},
 		"pics-ships-extra-8": {
-			"version":	"2018.12.28",
-			"path":		"data/2018.12.28/pics-ships-extra-8.nwjs-data",
-			"bytes":	9206677
+			"version":	"2019.01.07",
+			"path":		"data/2019.01.07/pics-ships-extra-8.nwjs-data",
+			"bytes":	10249280
 		}
 
 	},

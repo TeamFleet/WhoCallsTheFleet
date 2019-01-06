@@ -1830,7 +1830,7 @@ menuitem {
   }
 }
 ::-webkit-scrollbar {
-  width: 0.5rem;
+  width: 0.6000000000000001rem;
 }
 ::-webkit-scrollbar-button {
   height: 1px;
@@ -6772,6 +6772,75 @@ body.mod-capture #tip {
 }
 .tablelist-equipments .tablelist-body dl.has-bonus.disabled dt::after {
   background: hsl(0, 0%, 50%);
+}
+.tablelist-equipments .tablelist-body dl.header-alt sup,
+.tablelist-equipments .tablelist-body dl.mod-interceptor dd[stat="aa"] sup,
+.tablelist-equipments .tablelist-body dl.header-alt sub,
+.tablelist-equipments .tablelist-body dl.mod-interceptor dd[stat="aa"] sub {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  white-space: nowrap;
+  text-align: left;
+  transform-origin: 0% 50%;
+  transform: scale(0.83333333);
+  font-style: italic;
+}
+.tablelist-equipments .tablelist-body dl.header-alt sup,
+.tablelist-equipments .tablelist-body dl.mod-interceptor dd[stat="aa"] sup {
+  top: -6px;
+}
+.tablelist-equipments .tablelist-body dl.header-alt sub,
+.tablelist-equipments .tablelist-body dl.mod-interceptor dd[stat="aa"] sub {
+  top: 6px;
+  width: 10px;
+}
+.tablelist-equipments .tablelist-body dl.header-alt {
+  position: relative;
+  border-bottom-color: transparent;
+  top: -25px;
+  margin-bottom: -25px;
+  z-index: -1;
+}
+.tablelist-equipments .tablelist-body dl.header-alt dd {
+  top: -6px;
+}
+.tablelist-equipments .tablelist-body dl.header-alt dd.is-hover {
+  background: transparent;
+}
+.tablelist-equipments .tablelist-body dl.header-alt dd[stat="aa"] {
+  white-space: nowrap;
+}
+.tablelist-equipments .tablelist-body dl.header-alt dd[stat="aa"] sub {
+  width: 20px;
+}
+.tablelist-equipments .tablelist-body dl.header-alt dd[stat="craftable"] em {
+  position: absolute;
+  width: 100%;
+  font-size: 12px;
+  margin-left: -1em;
+  transform: rotate(-30deg);
+  font-style: normal;
+}
+.tablelist-equipments .tablelist-body dl.header-alt dd[stat="craftable"] em + em {
+  margin-left: 1em;
+}
+.tablelist-equipments .tablelist-body dl.mod-interceptor dt,
+.tablelist-equipments .tablelist-body dl.mod-interceptor dd[stat="aa"] {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.tablelist-equipments .tablelist-body dl[data-equipmentid] dd[stat="craftable"] em {
+  position: relative;
+  font-style: normal;
+  text-align: right;
+  padding-right: 2px;
+  flex: 1 1 50%;
+  transform: rotate(-30deg);
+}
+.tablelist-equipments .tablelist-body dl[data-equipmentid] dd[stat="craftable"] em + em {
+  text-align: left;
+  padding-left: 2px;
 }
 .tablelist-equipments > .msgs {
   background: rgba(22, 64, 42, 0.65);

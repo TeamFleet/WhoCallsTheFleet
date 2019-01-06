@@ -3092,7 +3092,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
     location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20181228';
+_g.db_version = '20190106';
 
 _g.bgimg_count=26;
 
@@ -7777,7 +7777,7 @@ var InfosFleetAirfield = function () {
     }, {
         key: 'getCarry',
         value: function getCarry(equipment) {
-            if (Formula.equipmentType.Recons.indexOf(equipment.type) > -1) return 4;else return 18;
+            if (Formula.equipmentType.Recons.indexOf(equipment.type) > -1) return KC.planesPerSlotLBAS.recon;else return KC.planesPerSlotLBAS.attacker;
         }
     }, {
         key: 'summaryCalc',
@@ -7792,17 +7792,13 @@ var InfosFleetAirfield = function () {
                     recon: 0
                 },
                     fighterPowerAA = [0, 0],
-                    dataFighterPowerAA = [];
+                    planes = [];
 
                 this.data.forEach(function (d) {
                     if (d[0]) {
                         var e = _g.data.items[d[0]],
                             carry = this.getCarry(e),
-                            fp = Formula.calc.fighterPower(e, carry, d[1], d[2]),
                             _distance = e.stat.distance || 0;
-
-                        fighterPower[0] += fp[0];
-                        fighterPower[1] += fp[1];
 
                         if (Formula.equipmentType.Recons.indexOf(e.type) > -1) {
                             distance.recon = Math.max(distance.recon, _distance);
@@ -7811,7 +7807,7 @@ var InfosFleetAirfield = function () {
                             distance.max = Math.max(distance.max, _distance);
                         }
 
-                        dataFighterPowerAA.push({
+                        planes.push({
                             equipment: e,
                             rank: d[1],
                             star: d[2],
@@ -7820,7 +7816,8 @@ var InfosFleetAirfield = function () {
                     }
                 }, this);
 
-                fighterPowerAA = Formula.calcByField.fighterPowerAA(dataFighterPowerAA);
+                fighterPower = Formula.calcByField.fighterPower(planes);
+                fighterPowerAA = Formula.calcByField.fighterPowerAA(planes);
 
                 var renderMinMax = function renderMinMax(data, dom) {
                     if (Math.max(data[0], data[1]) > 0) {
@@ -9481,12 +9478,28 @@ var TablelistEquipments = function (_Tablelist3) {
                 if (tr[0].tagName == 'H4') {
                     header_index++;
                     this.dom.types[header_index] = tr;
+
+                    if (Formula.equipmentType.Interceptors.includes(tr.data('type'))) {
+                        var headerAlt = tr.next().clone();
+                        headerAlt.addClass('header-alt');
+                        headerAlt.removeAttr('data-equipmentid');
+                        headerAlt.removeAttr('data-infos');
+
+                        headerAlt.find('dt').empty();
+                        headerAlt.find('dd').empty().removeAttr('value');
+
+                        headerAlt.find('[stat="aa"]').html('<span>对空</span><sup>出击</sup><sub>防空</sub>');
+                        headerAlt.find('[stat="hit"]').text('对爆');
+                        headerAlt.find('[stat="evasion"]').text('迎击');
+
+                        headerAlt.insertAfter(tr);
+                    }
                 } else {
                     var etype = parseInt(tr.attr('data-equipmenttype')) || -1,
                         eid = parseInt(tr.attr('data-equipmentid'));
 
+                    var equipment = _g.data.items[eid];
                     var parse = function parse() {
-                        var equipment = _g.data.items[eid];
                         if (equipment) {
                             var bonuses = equipment.getBonuses();
                             if (Array.isArray(bonuses) && bonuses.length) {
@@ -9518,6 +9531,13 @@ var TablelistEquipments = function (_Tablelist3) {
                             }, 20);
                         }
                     });
+
+                    if (Formula.equipmentType.Interceptors.includes(tr.data('equipmenttype'))) {
+                        tr.addClass('mod-interceptor');
+                        var cellAA = tr.find('[stat="aa"]');
+                        var valueAA = equipment.stat.aa || 0;
+                        cellAA.html('<span>' + valueAA + '</span>' + ('<sup>' + ((equipment.stat.aa || 0) + (equipment.stat.evasion * 1.5 || 0)) + '</sup>') + ('<sub>' + ((equipment.stat.aa || 0) + (equipment.stat.evasion || 0) + (equipment.stat.hit * 2 || 0)) + '</sub>'));
+                    }
                 }
             }.bind(this));
 
