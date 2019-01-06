@@ -3092,7 +3092,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
     location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20181228';
+_g.db_version = '20190106';
 
 _g.bgimg_count = 0;
 
@@ -7777,7 +7777,7 @@ var InfosFleetAirfield = function () {
     }, {
         key: 'getCarry',
         value: function getCarry(equipment) {
-            if (Formula.equipmentType.Recons.indexOf(equipment.type) > -1) return 4;else return 18;
+            if (Formula.equipmentType.Recons.indexOf(equipment.type) > -1) return KC.planesPerSlotLBAS.recon;else return KC.planesPerSlotLBAS.attacker;
         }
     }, {
         key: 'summaryCalc',
@@ -7792,17 +7792,13 @@ var InfosFleetAirfield = function () {
                     recon: 0
                 },
                     fighterPowerAA = [0, 0],
-                    dataFighterPowerAA = [];
+                    planes = [];
 
                 this.data.forEach(function (d) {
                     if (d[0]) {
                         var e = _g.data.items[d[0]],
                             carry = this.getCarry(e),
-                            fp = Formula.calc.fighterPower(e, carry, d[1], d[2]),
                             _distance = e.stat.distance || 0;
-
-                        fighterPower[0] += fp[0];
-                        fighterPower[1] += fp[1];
 
                         if (Formula.equipmentType.Recons.indexOf(e.type) > -1) {
                             distance.recon = Math.max(distance.recon, _distance);
@@ -7811,7 +7807,7 @@ var InfosFleetAirfield = function () {
                             distance.max = Math.max(distance.max, _distance);
                         }
 
-                        dataFighterPowerAA.push({
+                        planes.push({
                             equipment: e,
                             rank: d[1],
                             star: d[2],
@@ -7820,7 +7816,8 @@ var InfosFleetAirfield = function () {
                     }
                 }, this);
 
-                fighterPowerAA = Formula.calcByField.fighterPowerAA(dataFighterPowerAA);
+                fighterPower = Formula.calcByField.fighterPower(planes);
+                fighterPowerAA = Formula.calcByField.fighterPowerAA(planes);
 
                 var renderMinMax = function renderMinMax(data, dom) {
                     if (Math.max(data[0], data[1]) > 0) {

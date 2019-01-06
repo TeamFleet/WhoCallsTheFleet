@@ -3119,9 +3119,9 @@ class InfosFleetAirfield {
     // 获取搭载量
     getCarry(equipment) {
         if (Formula.equipmentType.Recons.indexOf(equipment.type) > -1)
-            return 4
+            return KC.planesPerSlotLBAS.recon
         else
-            return 18
+            return KC.planesPerSlotLBAS.attacker
     }
 
     // 更新属性总览
@@ -3137,17 +3137,17 @@ class InfosFleetAirfield {
                     recon: 0
                 }
                 , fighterPowerAA = [0, 0]
-                , dataFighterPowerAA = []
+                , planes = []
 
             this.data.forEach(function (d) {
                 if (d[0]) {
                     let e = _g.data.items[d[0]]
                         , carry = this.getCarry(e)
-                        , fp = Formula.calc.fighterPower(e, carry, d[1], d[2])
+                        // , fp = Formula.calc.fighterPower(e, carry, d[1], d[2])
                         , _distance = e.stat.distance || 0
 
-                    fighterPower[0] += fp[0]
-                    fighterPower[1] += fp[1]
+                    // fighterPower[0] += fp[0]
+                    // fighterPower[1] += fp[1]
 
                     if (Formula.equipmentType.Recons.indexOf(e.type) > -1) {
                         distance.recon = Math.max(distance.recon, _distance)
@@ -3156,7 +3156,7 @@ class InfosFleetAirfield {
                         distance.max = Math.max(distance.max, _distance)
                     }
 
-                    dataFighterPowerAA.push({
+                    planes.push({
                         equipment: e,
                         rank: d[1],
                         star: d[2],
@@ -3165,7 +3165,8 @@ class InfosFleetAirfield {
                 }
             }, this)
 
-            fighterPowerAA = Formula.calcByField.fighterPowerAA(dataFighterPowerAA)
+            fighterPower = Formula.calcByField.fighterPower(planes)
+            fighterPowerAA = Formula.calcByField.fighterPowerAA(planes)
 
             let renderMinMax = function (data, dom) {
                 if (Math.max(data[0], data[1]) > 0) {
