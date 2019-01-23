@@ -36,7 +36,7 @@
 {"name":{"ja_jp":"お出掛け","en_us":"お出掛け","zh_cn":"外出"},"id":42,"sort":42,"_id":"hKRqlwoDPrhmHSvE"}
 {"name":{"ja_jp":"里帰り水着","zh_cn":"回家泳装","en_us":"Special Swimsuit"},"time":{"ja_jp":"夏","zh_cn":"夏季","en_us":"Summer"},"id":29,"sort":10,"_id":"hntC1taJeYHoFvfq"}
 {"name":{"ja_jp":"秋の私服","zh_cn":"秋季私服","en_us":"Fall-ordinary"},"time":{"en_us":"Fall","zh_cn":"秋季","ja_jp":"秋"},"id":32,"sort":17,"_id":"j40ayL75UKWzq2xz","revision":3}
-{"name":{"zh_cn":"节分","ja_jp":"節分","en_us":"Setsubun"},"id":2,"sort":3,"_id":"nHBvEj55KP4Z2zFt","time":{"ja_jp":"1月中旬","zh_cn":"1月中","en_us":"Mid January"}}
+{"name":{"zh_cn":"节分","ja_jp":"節分","en_us":"Setsubun"},"id":2,"sort":3,"_id":"nHBvEj55KP4Z2zFt","time":{"ja_jp":"1月中旬","zh_cn":"1月中","en_us":"Mid January"},"revision":2}
 {"name":{"ja_jp":"超修羅場","en_us":"超修羅場","zh_cn":"超修罗场"},"time":{"ja_jp":"冬","zh_cn":"冬季","en_us":"Winter"},"id":35,"sort":26,"_id":"nTVWHXEJoHQp72nP","revision":2}
 {"name":{"zh_cn":"瑞云祭","ja_jp":"瑞雲祭り","en_us":"Zuiun Fes."},"id":13,"sort":33,"_id":"nfmzGAUlHjVUQUKT"}
 {"name":{"ja_jp":"秋祭り法被","en_us":"Fall Festival Happi","zh_cn":"秋祭法被"},"time":{"ja_jp":"秋","zh_cn":"秋季","en_us":"Fall"},"id":19,"sort":16,"_id":"pavEJmEeCH9YVx1d","revision":2}
