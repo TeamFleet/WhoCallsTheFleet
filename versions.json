@@ -1,14 +1,14 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.30.0.0",
-			"path":		"data/2019.01.07/app.nwjs-data",
-			"bytes":	4709113
+			"version":	"0.30.1.0",
+			"path":		"data/2019.01.29/app.nwjs-data",
+			"bytes":	4710556
 		},
 		"app-db": {
-			"version":	"2019.01.07",
-			"path":		"data/2019.01.07/app-db.nwjs-data",
-			"bytes":	1395204
+			"version":	"2019.01.29",
+			"path":		"data/2019.01.29/app-db.nwjs-data",
+			"bytes":	1379123
 		},
 		"bgimgs": {
 			"version":	"1.18.6.0",
@@ -47,9 +47,9 @@
 			"bytes":	26183813
 		},
 		"pics-ships-5": {
-			"version":	"2018.12.08",
-			"path":		"data/2019.01.07/pics-ships-5.nwjs-data",
-			"bytes":	3824339
+			"version":	"2019.01.29",
+			"path":		"data/2019.01.29/pics-ships-5.nwjs-data",
+			"bytes":	4021699
 		},
 		"pics-ships-6": {
 			"version":	"2018.11.18",
@@ -108,9 +108,9 @@
 			"bytes":	20625460
 		},
 		"pics-ships-extra-2": {
-			"version":	"2019.01.07",
-			"path":		"data/2019.01.07/pics-ships-extra-2.nwjs-data",
-			"bytes":	16532433
+			"version":	"2019.01.29",
+			"path":		"data/2019.01.29/pics-ships-extra-2.nwjs-data",
+			"bytes":	16898318
 		},
 		"pics-ships-extra-3": {
 			"version":	"2018.10.27",
@@ -118,9 +118,9 @@
 			"bytes":	14856621
 		},
 		"pics-ships-extra-4": {
-			"version":	"2019.01.07",
-			"path":		"data/2019.01.07/pics-ships-extra-4.nwjs-data",
-			"bytes":	14777924
+			"version":	"2019.01.29",
+			"path":		"data/2019.01.29/pics-ships-extra-4.nwjs-data",
+			"bytes":	16000909
 		},
 		"pics-ships-extra-5": {
 			"version":	"2018.11.18",
@@ -128,9 +128,9 @@
 			"bytes":	14894174
 		},
 		"pics-ships-extra-6": {
-			"version":	"2019.01.07",
-			"path":		"data/2019.01.07/pics-ships-extra-6.nwjs-data",
-			"bytes":	14074798
+			"version":	"2019.01.29",
+			"path":		"data/2019.01.29/pics-ships-extra-6.nwjs-data",
+			"bytes":	14534791
 		},
 		"pics-ships-extra-7": {
 			"version":	"2018.10.27",
@@ -138,9 +138,9 @@
 			"bytes":	12035497
 		},
 		"pics-ships-extra-8": {
-			"version":	"2019.01.07",
-			"path":		"data/2019.01.07/pics-ships-extra-8.nwjs-data",
-			"bytes":	10249280
+			"version":	"2019.01.29",
+			"path":		"data/2019.01.29/pics-ships-extra-8.nwjs-data",
+			"bytes":	11887281
 		}
 
 	},
