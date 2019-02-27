@@ -29,7 +29,7 @@
 {"name":{"zh_cn":"年末","ja_jp":"師走","en_us":"End of Year"},"time":{"zh_cn":"12月底","ja_jp":"12月下旬","en_us":"Late December"},"id":12,"sort":31,"_id":"YCDJMF4qtbzyYQwE","revision":2}
 {"name":{"ja_jp":"コラボ：携帯","zh_cn":"联动：手机版","en_us":"Collab: Mobile Version"},"id":17,"sort":50,"_id":"ZAXCn0NSBRjwuR4u"}
 {"name":{"zh_cn":"浴衣","ja_jp":"浴衣","en_us":"Yukata"},"time":{"ja_jp":"秋","zh_cn":"秋季","en_us":"Fall"},"id":8,"sort":15,"_id":"a5JawyvdLJi9jiHS","revision":2}
-{"name":{"zh_cn":"雏祭","ja_jp":"雛祭り","en_us":"Hinamatsuri"},"time":{"zh_cn":"2月底","en_us":"Late February","ja_jp":"2月下旬"},"id":4,"sort":5,"_id":"bb0s4wd7K9MerdG9"}
+{"name":{"zh_cn":"雏祭","ja_jp":"桃の節句 / 雛祭り","en_us":"Hinamatsuri"},"time":{"zh_cn":"2月底","en_us":"Late February","ja_jp":"2月下旬"},"id":4,"sort":5,"_id":"bb0s4wd7K9MerdG9"}
 {"name":{"ja_jp":"親子丼","zh_cn":"滑蛋鸡肉饭","en_us":"Oyakodon"},"id":21,"sort":37,"_id":"dUKtcZ80fbmVuGwh"}
 {"name":{"ja_jp":"牛丼","zh_cn":"牛肉饭","en_us":"Gyūdon"},"id":20,"sort":35,"_id":"fDiqqjrXvbNyK1RY"}
 {"name":{"ja_jp":"コラボ：三越","zh_cn":"联动：三越","en_us":"Collab: Mitsukoshi"},"id":25,"sort":49,"_id":"fjB8kfsg1UdPAe88","revision":2}
