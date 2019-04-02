@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",319,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/7.png)\"></s><strong>彗星一二型<small>(六三四空/三号爆弹搭载机)</small></strong><small>舰载俯冲轰炸机</small></h3><span>+3 对空</span><span>+2 对潜</span><span>+12 爆装</span><span>+1 命中</span><span>+1 回避</span><span>航程: 5</span>")

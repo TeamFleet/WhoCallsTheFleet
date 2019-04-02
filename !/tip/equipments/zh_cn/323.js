@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",323,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/10.png)\"></s><strong>瑞云改二<small>(六三四空/熟练)</small></strong><small>水上轰炸机</small></h3><span>+2 火力</span><span>+5 对空</span><span>+7 对潜</span><span>+11 爆装</span><span>+3 命中</span><span>+3 回避</span><span>+8 索敌</span><span>航程: 5</span>")
