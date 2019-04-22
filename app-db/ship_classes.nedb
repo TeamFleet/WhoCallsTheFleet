@@ -69,6 +69,7 @@
 {"id":9,"ship_type_id":7,"_id":"dLZ8YVNL7vozx2TK","speed_rule":"high-2","name":{"en_us":"Kongou","ja_jp":"金剛","zh_cn":"金刚"}}
 {"ship_type_id":13,"id":62,"_id":"dUnjH1tY6sJU8n8f","speed_rule":"low-3","name":{"en_us":"Type IXC U-boat","ja_jp":"UボートIXC","zh_cn":"U型潜艇IXC"},"navy":"km"}
 {"ship_type_id":1,"id":16,"_id":"evm4ogjAEbdtDCSs","speed_rule":"high-3","name":{"en_us":"Ayanami","ja_jp":"綾波","zh_cn":"绫波"}}
+{"name":{"ja_jp":"改金剛","zh_cn":"改金刚","en_us":"Revised Kongou"},"ship_type_id":7,"id":119,"_id":"fNIBeCW5BTWyVapU","speed_rule":"high-2"}
 {"ship_type_id":9,"id":33,"_id":"fc4I0XDHvViLR6T8","speed_rule":"low-2","name":{"en_us":"Houshou","ja_jp":"鳳翔","zh_cn":"凤翔"}}
 {"ship_type_id":32,"id":96,"_id":"ffyU0DgRZRHGjaiW","name":{"en_us":"Taiyou","ja_jp":"大鷹","zh_cn":"大鹰"}}
 {"ship_type_id":2,"id":52,"_id":"hJAm96B6jC0wWmvP","speed_rule":"high-2","name":{"en_us":"Agano","ja_jp":"阿賀野","zh_cn":"阿贺野"}}
