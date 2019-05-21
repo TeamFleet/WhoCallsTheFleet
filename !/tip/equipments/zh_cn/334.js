@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",334,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/38.png)\"></s><strong>烈风改<small>(三五二空/熟练)</small></strong><small>截击机</small></h3><span>+11 对空</span><span>+7 对爆</span><span>+1 装甲</span><span>+3 迎击</span><span>航程: 4</span>")

@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",341,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/2.png)\"></s><strong>152mm/55 三连装速射炮改</strong><small>中口径主炮</small></h3><span>+9 火力</span><span>+3 对空</span><span>+2 命中</span><span>+1 装甲</span><span>+1 回避</span><span>射程: 中</span>")

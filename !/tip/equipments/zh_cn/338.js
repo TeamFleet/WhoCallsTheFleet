@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",338,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/45.png)\"></s><strong>烈风改二戊型</strong><small>舰载战斗机（夜间）</small></h3><span>+2 火力</span><span>+11 对空</span><span>+2 回避</span><span>+1 索敌</span><span>航程: 5</span>")
