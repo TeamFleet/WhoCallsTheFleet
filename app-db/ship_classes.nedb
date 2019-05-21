@@ -3,7 +3,7 @@
 {"id":1,"ship_type_id":20,"_id":"1ly1K7GgqVSs3MOY","speed_rule":"low-2","name":{"en_us":"","ja_jp":"長門","zh_cn":"长门"}}
 {"name":{"ja_jp":"日進","zh_cn":"日进","en_us":"Nisshin"},"ship_type_id":12,"id":118,"_id":"2XjwEygFhIzdGz5V"}
 {"ship_type_id":14,"id":68,"_id":"3TtUWRHqFYIrakb9","speed_rule":"low-3","name":{"en_us":"Sentoku (I-400)","ja_jp":"潜特","zh_cn":"潜特"}}
-{"name":{"ja_jp":"G.Garibaldi","zh_cn":"朱塞佩·加里波第"},"ship_type_id":2,"id":120,"_id":"4i5wMtJnzTZT1SpP","navy":"rm"}
+{"name":{"ja_jp":"Duca degli Abruzzi","zh_cn":"阿布鲁齐公爵"},"ship_type_id":2,"id":120,"_id":"4i5wMtJnzTZT1SpP","navy":"rm"}
 {"ship_type_id":13,"id":59,"_id":"5lSLj3e764aqi9Wg","speed_rule":"low-3","name":{"en_us":"Junsen 3","ja_jp":"巡潜3","zh_cn":"巡潜3"}}
 {"id":2,"ship_type_id":6,"_id":"6XmCza9ct2aXmYxi","speed_rule":"low-2","name":{"en_us":"Ise","ja_jp":"伊勢","zh_cn":"伊势"}}
 {"ship_type_id":23,"id":69,"_id":"6haxyRDjPtNvLEHP","speed_rule":"high-3","name":{"en_us":"Takao","ja_jp":"高雄","zh_cn":"高雄"}}
