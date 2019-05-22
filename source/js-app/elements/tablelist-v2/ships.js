@@ -495,6 +495,59 @@ class TablelistShips extends Tablelist {
                     // this.functionsOnExit.push(reset)
                 }
             }
+
+            // 活动相关的史实舰队
+            _g.getCurrentEvent()
+                .filter(event => Array.isArray(event.historicalFleets))
+                .forEach(event => {
+                    const { historicalFleets, code } = event
+                    const filters = [
+                        [false, '全部']
+                    ]
+                    historicalFleets.forEach((fleet, index) => {
+                        filters.push(['' + index, fleet])
+                    })
+                    const attrName = `data-${code}-fleet`
+                    const els = {}
+                    const filter = (filter) => {
+                        for (const key in els) {
+                            els[key].removeClass('on')
+                        }
+                        if (filter) {
+                            els[filter].addClass('on')
+                            this.dom.container
+                                .attr(attrName, filter)
+                        } else {
+                            els._.addClass('on')
+                            this.dom.container
+                                .removeAttr(attrName)
+                        }
+                    }
+                    const container =
+                        $('<div class="event-container"/>')
+                            .insertAfter(this.dom.filter_container)
+                    filters.forEach(o => {
+                        const type = o[0]
+                        const name = o[1]
+                        els[type || '_'] = $('<span/>', {
+                            class: 'filter',
+                            [attrName]: type || undefined,
+                            html: name
+                        })
+                            .on('click', () => filter(type))
+                            .appendTo(container)
+                    })
+                    console.log(els)
+                    filter(false)
+                    { // 重置过滤器
+                        const reset = () => {
+                            filter(false)
+                        }
+                        reset()
+                        // this.functionsOnEnter.push(reset)
+                        // this.functionsOnExit.push(reset)
+                    }
+                })
         }
     }
 
