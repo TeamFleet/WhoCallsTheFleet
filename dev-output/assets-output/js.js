@@ -3040,7 +3040,7 @@ _g.events = [{
         ja_jp: '発動！友軍救援「第二次ハワイ作戦」',
         zh_cn: '发动！友军救援“第二次夏威夷作战”'
     },
-    historicalFleets: ['第四百战队', '第二舰队', '参与AL作战', '参与珍珠港空袭'],
+    historicalFleets: ['第四百战队 (E1)', '第二舰队 (E2)', '第五战队 & 苏联友军 (E3)', '参与珍珠港空袭'],
     start: 1558364400000,
     end: 1561082400000 }];
 
@@ -3102,7 +3102,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
     location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20190521';
+_g.db_version = '20190525';
 
 _g.bgimg_count = 0;
 
@@ -9131,6 +9131,7 @@ var TablelistShips = function (_Tablelist2) {
                     historicalFleets.forEach(function (fleet, index) {
                         filters.push(['' + index, fleet]);
                     });
+                    filters.push(['off', '无所属']);
                     var attrName = 'data-' + code + '-fleet';
                     var els = {};
                     var filter = function filter(_filter2) {

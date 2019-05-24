@@ -507,6 +507,7 @@ class TablelistShips extends Tablelist {
                     historicalFleets.forEach((fleet, index) => {
                         filters.push(['' + index, fleet])
                     })
+                    filters.push(['off', '无所属'])
                     const attrName = `data-${code}-fleet`
                     const els = {}
                     const filter = (filter) => {

@@ -369,6 +369,11 @@
 	.event-leyte-fleet(nishimura);
 	.event-leyte-fleet(shima);
 	.event-leyte-fleet(ta_go);
+	&[data-leyte-fleet="off"]{
+		[data-shipid][data-leyte-fleet]{
+			display: none;
+		}
+	}
 
 	.event-hawaii2nd-fleet(@fleetIndex) {
 		&[data-hawaii2nd-fleet=~'"@{fleetIndex}"']{
@@ -382,9 +387,8 @@
 	.event-hawaii2nd-fleet(2);
 	.event-hawaii2nd-fleet(3);
 	.event-hawaii2nd-fleet(4);
-
-	&[data-leyte-fleet="off"]{
-		[data-shipid][data-leyte-fleet]{
+	&[data-hawaii2nd-fleet="off"]{
+		[data-shipid][data-hawaii2nd-fleet]{
 			display: none;
 		}
 	}

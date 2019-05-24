@@ -578,7 +578,7 @@ _g.events = [{
         ja_jp: '発動！友軍救援「第二次ハワイ作戦」',
         zh_cn: '发动！友军救援“第二次夏威夷作战”'
     },
-    historicalFleets: ['第四百战队', '第二舰队', '参与AL作战', '参与珍珠港空袭'],
+    historicalFleets: ['第四百战队 (E1)', '第二舰队 (E2)', '第五战队 & 苏联友军 (E3)', '参与珍珠港空袭'],
     start: 1558364400000,
     end: 1561082400000 }];
 
@@ -8477,6 +8477,7 @@ var TablelistShips = function (_Tablelist) {
                     historicalFleets.forEach(function (fleet, index) {
                         filters.push(['' + index, fleet]);
                     });
+                    filters.push(['off', '无所属']);
                     var attrName = 'data-' + code + '-fleet';
                     var els = {};
                     var filter = function filter(_filter2) {

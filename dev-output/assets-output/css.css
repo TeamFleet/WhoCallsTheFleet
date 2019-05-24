@@ -6223,6 +6223,9 @@ body.mod-capture #tip {
 .tablelist.ships[data-leyte-fleet="ta_go"] [data-shipid][data-infos]:not([data-leyte-fleet*="|ta_go|"]) {
   display: none;
 }
+.tablelist.ships[data-leyte-fleet="off"] [data-shipid][data-leyte-fleet] {
+  display: none;
+}
 .tablelist.ships[data-hawaii2nd-fleet="0"] [data-shipid][data-infos]:not([data-hawaii2nd-fleet*="|0|"]) {
   display: none;
 }
@@ -6238,7 +6241,7 @@ body.mod-capture #tip {
 .tablelist.ships[data-hawaii2nd-fleet="4"] [data-shipid][data-infos]:not([data-hawaii2nd-fleet*="|4|"]) {
   display: none;
 }
-.tablelist.ships[data-leyte-fleet="off"] [data-shipid][data-leyte-fleet] {
+.tablelist.ships[data-hawaii2nd-fleet="off"] [data-shipid][data-hawaii2nd-fleet] {
   display: none;
 }
 @media all and (max-width: 1152px) {
@@ -9061,12 +9064,14 @@ body.mod-capture .infos-fleet .fleetships.fleetairfields .tips {
   margin-bottom: 0;
 }
 .infos-fleet .ship > dt > div > .title h4 {
-  font-size: 233.33333333%;
-  line-height: 32px;
+  font-size: 216.66666667%;
+  line-height: 28px;
+  white-space: nowrap;
 }
 .infos-fleet .ship > dt > div > .title h5 {
   font-size: 150%;
   margin-left: 0.35em;
+  white-space: nowrap;
 }
 .infos-fleet .ship > dt > div > .info {
   line-height: 20px;
