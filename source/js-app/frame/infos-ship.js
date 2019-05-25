@@ -88,8 +88,9 @@ _frame.infos.__ship = function (id) {
                 )
                 + '</span>'
                 + (d['class'] ? _g['data']['ship_classes'][d['class']].name.zh_cn + '级' : '')
-                + (d['class_no'] ? '<em>' + d['class_no'] + '</em>号舰' : '')
+                + (d['class_no'] && !isNaN(d['class_no']) ? '<em>' + d['class_no'] + '</em>号舰' : '')
                 + (d['type'] ? ' / ' + _g['data']['ship_types'][d['type']].name.zh_cn : '')
+                + (d['class_no'] && isNaN(d['class_no']) ? ' /<em>' + d['class_no'] + '</em>' : '')
                 + '</small>'
             ).appendTo(dom)
     }

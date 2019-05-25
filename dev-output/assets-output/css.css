@@ -6172,6 +6172,9 @@ body.mod-capture #tip {
   padding: 5px 30px;
   text-align: center;
 }
+.tablelist.ships .event-container > strong {
+  display: block;
+}
 .tablelist.ships .event-container .filter {
   display: inline-block;
   line-height: 26px;

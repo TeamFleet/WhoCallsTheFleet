@@ -527,6 +527,7 @@ class TablelistShips extends Tablelist {
                     const container =
                         $('<div class="event-container"/>')
                             .insertAfter(this.dom.filter_container)
+                            .html(`<strong>${event.title.zh_cn}</strong>`)
                     filters.forEach(o => {
                         const type = o[0]
                         const name = o[1]

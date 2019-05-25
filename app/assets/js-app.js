@@ -578,7 +578,7 @@ _g.events = [{
         ja_jp: '発動！友軍救援「第二次ハワイ作戦」',
         zh_cn: '发动！友军救援“第二次夏威夷作战”'
     },
-    historicalFleets: ['第四百战队 (E1)', '第二舰队 (E2)', '第五战队 & 苏联友军 (E3)', '参与珍珠港空袭'],
+    historicalFleets: ['E1: 第四百战队', 'E2: 第二舰队 & 其他加强舰', 'E3: 第五战队 & 苏联友军', 'E4: 参与珍珠港空袭'],
     start: 1558364400000,
     end: 1561082400000 }];
 
@@ -6816,7 +6816,7 @@ _frame.infos.__ship = function (id) {
         has_no = d['no'] && parseInt(d['no']) < 500 ? !0 : !1;
 
     {
-        $('<div class="title"/>').html('<h2 data-content="' + ship_name + '">' + ship_name + '</h2>' + '<small>' + '<span data-tip="' + (has_no ? '图鉴编号' : '无图鉴编号') + '">No.' + (has_no ? d['no'] : '-') + '</span>' + (d['class'] ? _g['data']['ship_classes'][d['class']].name.zh_cn + '级' : '') + (d['class_no'] ? '<em>' + d['class_no'] + '</em>号舰' : '') + (d['type'] ? ' / ' + _g['data']['ship_types'][d['type']].name.zh_cn : '') + '</small>').appendTo(dom);
+        $('<div class="title"/>').html('<h2 data-content="' + ship_name + '">' + ship_name + '</h2>' + '<small>' + '<span data-tip="' + (has_no ? '图鉴编号' : '无图鉴编号') + '">No.' + (has_no ? d['no'] : '-') + '</span>' + (d['class'] ? _g['data']['ship_classes'][d['class']].name.zh_cn + '级' : '') + (d['class_no'] && !isNaN(d['class_no']) ? '<em>' + d['class_no'] + '</em>号舰' : '') + (d['type'] ? ' / ' + _g['data']['ship_types'][d['type']].name.zh_cn : '') + (d['class_no'] && isNaN(d['class_no']) ? ' /<em>' + d['class_no'] + '</em>' : '') + '</small>').appendTo(dom);
     }
 
     {
@@ -8492,7 +8492,7 @@ var TablelistShips = function (_Tablelist) {
                             _this20.dom.container.removeAttr(attrName);
                         }
                     };
-                    var container = $('<div class="event-container"/>').insertAfter(_this20.dom.filter_container);
+                    var container = $('<div class="event-container"/>').insertAfter(_this20.dom.filter_container).html('<strong>' + event.title.zh_cn + '</strong>');
                     filters.forEach(function (o) {
                         var _$;
 
