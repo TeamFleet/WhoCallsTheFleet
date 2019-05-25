@@ -6,6 +6,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -3032,7 +3034,15 @@ _g.events = [{
         zh_cn: '捷号决战！迎击莱特湾海战（后篇）'
     },
     start: 1510844400000,
-    end: 1521770400000 }];
+    end: 1521770400000 }, {
+    code: 'hawaii2nd',
+    title: {
+        ja_jp: '発動！友軍救援「第二次ハワイ作戦」',
+        zh_cn: '发动！友军救援“第二次夏威夷作战”'
+    },
+    historicalFleets: ['E1: 第四百战队', 'E2: 第二舰队 & 其他加强舰', 'E3: 第五战队 & 苏联友军', 'E4: 参与珍珠港空袭'],
+    start: 1558364400000,
+    end: 1561082400000 }];
 
 _g.getCurrentEvent = function (now) {
     if (now instanceof Date) now = now.valueOf;else if (typeof now === 'string') now = parseInt(now);else if (!now) now = new Date().valueOf();
@@ -3092,7 +3102,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
     location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20190521';
+_g.db_version = '20190525';
 
 _g.bgimg_count=26;
 
@@ -9110,6 +9120,53 @@ var TablelistShips = function (_Tablelist2) {
                         reset();
                     }
                 }
+
+                _g.getCurrentEvent().filter(function (event) {
+                    return Array.isArray(event.historicalFleets);
+                }).forEach(function (event) {
+                    var historicalFleets = event.historicalFleets,
+                        code = event.code;
+
+                    var filters = [[!1, '全部']];
+                    historicalFleets.forEach(function (fleet, index) {
+                        filters.push(['' + index, fleet]);
+                    });
+                    filters.push(['off', '无所属']);
+                    var attrName = 'data-' + code + '-fleet';
+                    var els = {};
+                    var filter = function filter(_filter2) {
+                        for (var key in els) {
+                            els[key].removeClass('on');
+                        }
+                        if (_filter2) {
+                            els[_filter2].addClass('on');
+                            _this21.dom.container.attr(attrName, _filter2);
+                        } else {
+                            els._.addClass('on');
+                            _this21.dom.container.removeAttr(attrName);
+                        }
+                    };
+                    var container = $('<div class="event-container"/>').insertAfter(_this21.dom.filter_container).html('<strong>' + event.title.zh_cn + '</strong>');
+                    filters.forEach(function (o) {
+                        var _$;
+
+                        var type = o[0];
+                        var name = o[1];
+                        els[type || '_'] = $('<span/>', (_$ = {
+                            class: 'filter'
+                        }, _defineProperty(_$, attrName, type || undefined), _defineProperty(_$, 'html', name), _$)).on('click', function () {
+                            return filter(type);
+                        }).appendTo(container);
+                    });
+                    console.log(els);
+                    filter(!1);
+                    {
+                        var _reset = function _reset() {
+                            filter(!1);
+                        };
+                        _reset();
+                    }
+                });
             }
         }
     }, {
