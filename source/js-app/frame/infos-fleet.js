@@ -2651,7 +2651,7 @@ class InfosFleetShipEquipment {
             if (InfosFleetShipEquipment.improvableExtra.indexOf(value) > -1)
                 this.improvable = true
             else
-                this.improvable = _g.data.items[value].improvable || false
+                this.improvable = _g.data.items[value].improvable || _g.data.items[value].has_improved_reward || false
 
             this.el.attr({
                 'data-equipmentid': value,

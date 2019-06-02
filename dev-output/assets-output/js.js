@@ -7494,7 +7494,7 @@ var InfosFleetShipEquipment = function () {
             if (value && !isNaN(value)) {
                 if (this.isParentAirfield) this.infosParent.data[this.index][0] = value;else this.infosParent.data[2][this.index] = value;
 
-                if (InfosFleetShipEquipment.improvableExtra.indexOf(value) > -1) this.improvable = !0;else this.improvable = _g.data.items[value].improvable || !1;
+                if (InfosFleetShipEquipment.improvableExtra.indexOf(value) > -1) this.improvable = !0;else this.improvable = _g.data.items[value].improvable || _g.data.items[value].has_improved_reward || !1;
 
                 this.el.attr({
                     'data-equipmentid': value,
