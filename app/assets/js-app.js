@@ -580,7 +580,7 @@ _g.events = [{
     },
     historicalFleets: ['E1: 第四百战队', 'E2: 第二舰队 & 其他加强舰', 'E3: 第五战队 & 苏联友军', 'E4: 参与珍珠港空袭'],
     start: 1558364400000,
-    end: 1561082400000 }];
+    end: 1561428000000 }];
 
 _g.getCurrentEvent = function (now) {
     if (now instanceof Date) now = now.valueOf;else if (typeof now === 'string') now = parseInt(now);else if (!now) now = new Date().valueOf();
