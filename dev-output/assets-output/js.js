@@ -7454,11 +7454,17 @@ var InfosFleetShipEquipment = function () {
                     } catch (e) {
                         TablelistEquipments.currentSelected = [];
                     }
-                    TablelistEquipments.extraEquipments = this.extraEquipments ? this.extraEquipments.concat() : [];
-                    TablelistEquipments.extraEquipments = TablelistEquipments.extraEquipments.filter(function (eid) {
-                        console.log(TablelistEquipments.types, _g.data.items[eid].type);
-                        return shipCanEquip.indexOf(_g.data.items[eid].type) > -1;
-                    });
+
+                    {
+                        TablelistEquipments.extraEquipments = this.extraEquipments ? this.extraEquipments.concat() : [];
+                        TablelistEquipments.extraEquipments = TablelistEquipments.extraEquipments.filter(function (eid) {
+                            console.log(TablelistEquipments.types, _g.data.items[eid].type);
+                            return shipCanEquip.indexOf(_g.data.items[eid].type) > -1;
+                        });
+                        if (Array.isArray(ship.additional_items)) {
+                            TablelistEquipments.extraEquipments = TablelistEquipments.extraEquipments.concat(ship.additional_items);
+                        }
+                    }
                     if (isExtraSlot && Array.isArray(shipExtraSlotExtra)) TablelistEquipments.extraEquipments = TablelistEquipments.extraEquipments.concat(shipExtraSlotExtra);
 
                     _frame.app_main.page['equipments'].object.tablelistObj.apply_types();
