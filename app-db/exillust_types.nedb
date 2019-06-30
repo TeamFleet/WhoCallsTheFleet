@@ -1,6 +1,6 @@
 {"time":{"en_us":"Winter","zh_cn":"冬季","ja_jp":"冬"},"name":{"ja_jp":"麦酒乾杯","en_us":"麦酒乾杯","zh_cn":"麦酒干杯"},"id":49,"sort":31,"_id":"07G035Akpqwr2i3k"}
 {"name":{"ja_jp":"炒飯","zh_cn":"炒饭","en_us":"Fried Rice"},"id":27,"sort":40,"_id":"0mDjign24TBTTV4y"}
-{"name":{"zh_cn":"梅雨","ja_jp":"梅雨","en_us":"Rainy Season"},"time":{"zh_cn":"6月初","en_us":"Early June","ja_jp":"6月上旬"},"id":6,"sort":9,"_id":"10gvzkKBaCcHiMci"}
+{"name":{"zh_cn":"梅雨","ja_jp":"梅雨","en_us":"Rainy Season"},"time":{"zh_cn":"6月初","en_us":"Early June","ja_jp":"6月上旬"},"id":6,"sort":9,"_id":"10gvzkKBaCcHiMci","revision":2}
 {"name":{"ja_jp":"スリガオ海峡突入","zh_cn":"突入苏里高海峡","en_us":"Assaulting Surigao Strait"},"id":33,"sort":47,"_id":"1lyxD4ztIvRBxLZi"}
 {"name":{"ja_jp":"秋冬の制服","zh_cn":"秋冬制服","en_us":"秋冬の制服"},"time":{"ja_jp":"秋冬","zh_cn":"秋冬","en_us":"Fall & Winter"},"id":40,"sort":24,"_id":"242dvrkXujChQKVy","revision":2}
 {"name":{"zh_cn":"秋","ja_jp":"秋","en_us":"Fall"},"time":{"en_us":"Fall","zh_cn":"秋季","ja_jp":"秋"},"id":15,"sort":19,"_id":"2QAOagqazMCtILL4","revision":2}
