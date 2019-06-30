@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",344,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/46.png)\"></s><strong>九七式舰攻改 试制三号戊型<small>(空六号电探改装备机)</small></strong><small>舰载鱼雷轰炸机（夜间）</small></h3><span>+7 雷装</span><span>+6 对潜</span><span>+1 命中</span><span>+4 索敌</span><span>航程: 4</span>")
