@@ -2614,7 +2614,7 @@ class InfosFleetShipEquipment {
                         console.log(TablelistEquipments.types, _g.data.items[eid].type)
                         return shipCanEquip.indexOf(_g.data.items[eid].type) > -1
                     })
-                    if (Array.isArray(ship.additional_items)) {
+                    if (ship && Array.isArray(ship.additional_items)) {
                         TablelistEquipments.extraEquipments = TablelistEquipments.extraEquipments
                             .concat(ship.additional_items)
                     }
