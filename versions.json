@@ -1,14 +1,14 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.30.15.0",
-			"path":		"data/2019.07.01/app.nwjs-data",
-			"bytes":	4724261
+			"version":	"0.30.16.0",
+			"path":		"data/2019.07.19/app.nwjs-data",
+			"bytes":	4724355
 		},
 		"app-db": {
-			"version":	"2019.07.01",
-			"path":		"data/2019.07.01/app-db.nwjs-data",
-			"bytes":	1392517
+			"version":	"2019.07.19",
+			"path":		"data/2019.07.19/app-db.nwjs-data",
+			"bytes":	1715880
 		},
 		"bgimgs": {
 			"version":	"1.18.6.0",
@@ -148,9 +148,9 @@
 			"bytes":	13905837
 		},
 		"pics-ships-extra-9": {
-			"version":	"2019.07.01",
-			"path":		"data/2019.07.01/pics-ships-extra-9.nwjs-data",
-			"bytes":	5108993
+			"version":	"2019.07.19",
+			"path":		"data/2019.07.19/pics-ships-extra-9.nwjs-data",
+			"bytes":	6157830
 		}
 
 	},
