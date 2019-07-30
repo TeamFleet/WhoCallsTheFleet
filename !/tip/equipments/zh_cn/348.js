@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",348,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/31.png)\"></s><strong>舰载型 四式20cm对地喷进炮</strong><small>对地装备</small></h3><span>-2 装甲</span>")

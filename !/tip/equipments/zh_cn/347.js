@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",347,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/17.png)\"></s><strong>二式12cm迫击炮改 集中配备</strong><small>爆雷</small></h3><span>+7 对潜</span><span>-1 装甲</span><span>+1 回避</span>")
