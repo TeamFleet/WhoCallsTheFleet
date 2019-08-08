@@ -6,7 +6,7 @@
 {"id":16,"code":"AR","code_game":"工","_id":"AFURy2WZIqq4CKUU","equipable":[1,2,3,7,8,9,22,24,29,30,31,32,33,35,40,42,48,57],"name":{"en_us":"Repair Ship","ja_jp":"工作艦","zh_cn":"维修舰"}}
 {"id":6,"code":"BB","code_game":"戦","_id":"BczYbfqkt4Ls7SjP","equipable":[4,5,7,8,9,10,11,15,16,24,25,28,29,30,31,32,34,35,37,39,40,43,46,47,48],"name":{"en_us":"Battleship","ja_jp":"戦艦","zh_cn":"战列舰"}}
 {"code":"CL","code_game":"轻巡","id":28,"_id":"Bib8DbFYAMz6wfDb","equipable":[1,2,3,4,7,8,9,12,15,16,24,25,26,27,29,30,31,32,35,37,39,40,41,43,44,48],"name":{"en_us":"Anti-Air Light Cruiser","ja_jp":"防空軽巡洋艦","zh_cn":"防空轻巡洋舰"},"tp":2}
-{"id":15,"code":"LHA","code_game":"揚陸","_id":"BjToFvya7RxsFQfd","equipable":[1,2,3,7,8,9,18,22,23,24,29,30,31,32,35,38,41,43,44,48,52,57,60],"name":{"en_us":"Amphibious Assault Ship","ja_jp":"揚陸艦","zh_cn":"登陆突击舰"},"tp":12}
+{"id":15,"code":"LHA","code_game":"揚陸","_id":"BjToFvya7RxsFQfd","equipable":[1,2,3,7,8,9,18,22,23,24,26,28,29,30,31,32,35,38,41,43,44,48,52,57,60],"name":{"en_us":"Amphibious Assault Ship","ja_jp":"揚陸艦","zh_cn":"登陆突击舰"},"tp":12}
 {"id":2,"code":"CL","code_game":"軽巡","_id":"CtjPGYnkHetTij9H","equipable":[1,2,3,4,7,8,9,12,15,16,24,25,26,27,29,30,31,32,35,37,39,40,41,43,44,48],"name":{"en_us":"Light Cruiser","ja_jp":"軽巡洋艦","zh_cn":"轻巡洋舰"},"tp":2}
 {"code":"CA","code_game":"重巡","id":25,"_id":"DgRcE2Ez9sClji86","donotcompare":"on","name":{"en_us":"The Fleet of Fog Heavy Cruiser","ja_jp":"霧の艦隊重巡洋艦","zh_cn":"海雾舰队重巡洋舰"}}
 {"code":"AV","code_game":"水母","id":24,"_id":"Eb002iRVxWDaoxfJ","equipable":[1,2,3,7,8,9,15,16,17,24,25,26,28,29,30,31,32,33,35,37,39,40,41,43,45,48,51,57],"name":{"en_us":"Seaplane Tender (Large)","ja_jp":"飞行艇母舰","zh_cn":"飞行艇母舰"},"capabilities":{"anti_air_rocket_barrage":true},"tp":9.5}
