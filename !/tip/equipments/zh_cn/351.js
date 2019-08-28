@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",351,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/38.png)\"></s><strong>试制 秋水</strong><small>截击机</small></h3><span>+2 对空</span><span>+8 对爆</span><span>航程: 1</span>")
