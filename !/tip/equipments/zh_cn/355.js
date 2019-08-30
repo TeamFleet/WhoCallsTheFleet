@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",355,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/20.png)\"></s><strong>M4A1 DD</strong><small>登陆艇</small></h3><span>+2 火力</span><span>-1 回避</span>")
