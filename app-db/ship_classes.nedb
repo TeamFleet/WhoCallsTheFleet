@@ -71,6 +71,7 @@
 {"ship_type_id":6,"id":85,"_id":"dAWqBqZF5LTupVGw","speed_rule":"low-2","name":{"en_us":"Queen Elizabeth","ja_jp":"Queen Elizabeth","zh_cn":"伊丽莎白女王"},"navy":"rn"}
 {"id":9,"ship_type_id":7,"_id":"dLZ8YVNL7vozx2TK","speed_rule":"high-2","name":{"en_us":"Kongou","ja_jp":"金剛","zh_cn":"金刚"}}
 {"ship_type_id":13,"id":62,"_id":"dUnjH1tY6sJU8n8f","speed_rule":"low-3","name":{"en_us":"Type IXC U-boat","ja_jp":"UボートIXC","zh_cn":"U型潜艇IXC"},"navy":"km"}
+{"name":{"ja_jp":"御蔵","zh_cn":"御藏"},"ship_type_id":31,"id":123,"_id":"dhkmd60arVZ99GzN"}
 {"ship_type_id":1,"id":16,"_id":"evm4ogjAEbdtDCSs","speed_rule":"high-3","name":{"en_us":"Ayanami","ja_jp":"綾波","zh_cn":"绫波"}}
 {"name":{"ja_jp":"改金剛","zh_cn":"改金刚","en_us":"Revised Kongou"},"ship_type_id":7,"id":119,"_id":"fNIBeCW5BTWyVapU","speed_rule":"high-2"}
 {"ship_type_id":9,"id":33,"_id":"fc4I0XDHvViLR6T8","speed_rule":"low-2","name":{"en_us":"Houshou","ja_jp":"鳳翔","zh_cn":"凤翔"}}
