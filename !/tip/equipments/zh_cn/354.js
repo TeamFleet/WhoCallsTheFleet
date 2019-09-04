@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",354,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/38.png)\"></s><strong>Fw190 D-9</strong><small>截击机</small></h3><span>+2 火力</span><span>+12 对空</span><span>+3 对爆</span><span>+3 迎击</span><span>航程: 3</span>")

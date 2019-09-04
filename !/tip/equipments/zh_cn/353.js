@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",353,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/6.png)\"></s><strong>Fw190 A-5改<small>(熟练)</small></strong><small>舰载战斗机</small></h3><span>+2 火力</span><span>+11 对空</span><span>+1 命中</span><span>+3 回避</span><span>航程: 4</span>")
