@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",349,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/31.png)\"></s><strong>四式20cm对地喷进炮 集中配备</strong><small>对地装备</small></h3><span>+1 火力</span><span>-4 装甲</span>")
