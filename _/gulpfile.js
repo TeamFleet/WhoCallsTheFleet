@@ -12,7 +12,7 @@ const rootOutput = '../dev-output';
 
 // Include Plugins
 const concat = require('gulp-concat');
-const uglify = require('gulp-uglify');
+// const uglify = require('gulp-uglify');
 const less = require('gulp-less');
 //const minifyCSS = require('gulp-minify-css');
 const nano = require('gulp-cssnano');
@@ -27,6 +27,15 @@ const watchLess = require('gulp-watch-less2');
 const browserify = require('browserify')
 const source = require('vinyl-source-stream')
 const buffer = require('vinyl-buffer')
+const terser = require("gulp-terser")
+
+// Defaults ===================================================================
+
+const terserOptions = {
+    mangle: false,
+    keep_classnames: true,
+    keep_fnames: true,
+}
 
 // Tasks ======================================================================
 
@@ -34,7 +43,7 @@ const scripts = {
     base: () => 
         gulp.src(parseKoalaJS(rootSource, 'js-base.js'))
             .pipe(concat('js-base.js'))
-            // .pipe(uglify())
+            // .pipe(terser(terserOptions))
             // .pipe(babel({
             //     'highlightCode': false,
             //     'comments': false,
@@ -71,13 +80,13 @@ const scripts = {
                 //     require("@babel/plugin-transform-minify-booleans")
                 // ]
             }))
-            //.pipe(uglify())
+            //.pipe(terser(terserOptions))
             .pipe(gulp.dest(path.join(root, 'app', 'assets'))),
 
     output: () => 
         gulp.src(parseKoalaJS(rootOutput, 'js-source', 'output.js'))
             .pipe(concat('output.js'))
-            //.pipe(uglify())
+            //.pipe(terser(terserOptions))
             .pipe(gulp.dest(path.join(rootOutput, 'js-output'))),
 
     web: () => 
@@ -97,28 +106,28 @@ const scripts = {
                 // ]
             }))
             .pipe(gulp.dest(path.join(rootOutput, 'assets-output')))
-            .pipe(uglify())
+            .pipe(terser(terserOptions))
             .pipe(rename({ extname: '.min.js' }))
             .pipe(gulp.dest(path.join(rootOutput, 'assets-output'))),
 
     webLibs: () =>
         gulp.src(parseKoalaJS(rootOutput, 'assets-source', 'libs.js'))
             .pipe(concat('libs.js'))
-            .pipe(babel({
-                'highlightCode': false,
-                'comments': false,
-                'compact': false,
-                'ast': false,
-                "presets": [
-                    require('@babel/preset-env')//,
-                    //"stage-0"
-                ],
-                // "plugins": [
-                //     require("@babel/plugin-transform-minify-booleans")
-                // ]
-            }))
+            // .pipe(babel({
+            //     'highlightCode': false,
+            //     'comments': false,
+            //     'compact': false,
+            //     'ast': false,
+            //     "presets": [
+            //         require('@babel/preset-env')//,
+            //         //"stage-0"
+            //     ],
+            //     // "plugins": [
+            //     //     require("@babel/plugin-transform-minify-booleans")
+            //     // ]
+            // }))
             .pipe(gulp.dest(path.join(rootOutput, 'assets-output')))
-            .pipe(uglify())
+            .pipe(terser(terserOptions))
             .pipe(rename({ extname: '.min.js' }))
             .pipe(gulp.dest(path.join(rootOutput, 'assets-output'))),
 
@@ -126,7 +135,7 @@ const scripts = {
         gulp.src(parseKoalaJS(rootOutput, 'assets-source', 'lib.canvas.js'))
             .pipe(concat('lib.canvas.js'))
             .pipe(gulp.dest(path.join(rootOutput, 'assets-output')))
-            .pipe(uglify())
+            .pipe(terser(terserOptions))
             .pipe(rename({ extname: '.min.js' }))
             .pipe(gulp.dest(path.join(rootOutput, 'assets-output')))
 }

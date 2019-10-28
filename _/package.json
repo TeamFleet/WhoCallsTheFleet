@@ -45,9 +45,11 @@
     "gulp-notify": "^3.2.0",
     "gulp-postcss": "^8.0.0",
     "gulp-rename": "^1.4.0",
+    "gulp-terser": "^1.2.0",
     "gulp-uglify": "^3.0.1",
     "gulp-watch-less2": "^2.0.4",
     "less-plugin-clean-css": "^1.5.1",
+    "terser": "^4.3.9",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
   }
