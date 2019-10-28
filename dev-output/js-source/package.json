@@ -1,16 +1,18 @@
 {
-  "name": "WhoCallsTheFleet-Web-Output",
+  "name": "whocallsthefleet-web-output",
   "version": "1.0.0",
   "description": "",
   "main": "entry.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "up": "yarn upgrade-interactive --latest"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "fs-extra": "^0.26.4",
+    "glob": "^7.1.2",
     "html-minifier": "^1.0.0",
-    "glob": "^7.1.2"
+    "lz-string": "^1.4.4"
   }
 }

@@ -6,7 +6,7 @@
 // @koala-prepend "../../_/node_modules/lockr/lockr.min.js"
 // @koala-prepend "../../_/node_modules/lz-string/libs/lz-string.js"
 // @koala-prepend "../../_/node_modules/sprintf-js/src/sprintf.js"
-// @koala-prepend "../../_/node_modules/pepjs/dist/pep.min.js"
+// @koala-prepend "../../_/node_modules/pepjs/dist/pep.js"
 // @koala-prepend "../../_/node_modules/localforage/dist/localforage.nopromises.min.js"
 
 // @koala-prepend "../../_/node_modules/kckit/dist/kckit.min.js"

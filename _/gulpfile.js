@@ -1,46 +1,276 @@
 "use strict";
 
-const dev = true
+const fs = require('fs');
+const path = require('path');
+const gulp = require('gulp');
 
-const rootRequire = function (name) {
-    try {
-        return require(name);
-    } catch (e) {
-        return require('../node_modules/' + name);
-    }
-}
+const dev = true
 
 const root = '../';
 const rootSource = '../source';
 const rootOutput = '../dev-output';
 
-const fs = rootRequire('fs');
-const path = rootRequire('path');
-
-// Include gulp
-const gulp = rootRequire('gulp');
-
 // Include Plugins
-const concat = rootRequire('gulp-concat');
-const uglify = rootRequire('gulp-uglify');
-const less = rootRequire('gulp-less');
-//const minifyCSS = rootRequire('gulp-minify-css');
-const nano = rootRequire('gulp-cssnano');
-const postcss = rootRequire('gulp-postcss');
-const autoprefixer = rootRequire('autoprefixer');
-const LessPluginCleanCSS = rootRequire('less-plugin-clean-css');
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
+const less = require('gulp-less');
+//const minifyCSS = require('gulp-minify-css');
+const nano = require('gulp-cssnano');
+const postcss = require('gulp-postcss');
+const autoprefixer = require('autoprefixer');
+const LessPluginCleanCSS = require('less-plugin-clean-css');
 const cleanCSSPlugin = new LessPluginCleanCSS({ advanced: true });
-const babel = rootRequire('gulp-babel');
-const rename = rootRequire('gulp-rename');
-const notify = rootRequire("gulp-notify");
-const watchLess = rootRequire('gulp-watch-less2');
+const babel = require('gulp-babel');
+const rename = require('gulp-rename');
+const notify = require("gulp-notify");
+const watchLess = require('gulp-watch-less2');
 const browserify = require('browserify')
 const source = require('vinyl-source-stream')
 const buffer = require('vinyl-buffer')
 
+// Tasks ======================================================================
+
+const scripts = {
+    base: () => 
+        gulp.src(parseKoalaJS(rootSource, 'js-base.js'))
+            .pipe(concat('js-base.js'))
+            // .pipe(uglify())
+            // .pipe(babel({
+            //     'highlightCode': false,
+            //     'comments': false,
+            //     'compact': false,
+            //     'ast': false,
+            //     "presets": [
+            //         require('@babel/preset-es2015'),
+            //         require('@babel/preset-stage-0'),
+            //         // "es2015",
+            //         // "stage-0"
+            //     ],
+            //     "plugins": [
+            //         require("@babel/plugin-transform-minify-booleans")
+            //         // "transform-minify-booleans"
+            //     ]
+            // }))
+            .pipe(gulp.dest(path.join(root, 'app', 'assets'))),
+
+    app: () => 
+        gulp.src(
+            parseKoalaJS(rootSource, 'js-app.js')
+                .concat(path.resolve(__dirname, '../source/js-app/.base/**/*.js'))
+        )
+            .pipe(concat('js-app.js'))
+            .pipe(babel({
+                'highlightCode': false,
+                'comments': false,
+                'compact': false,
+                'ast': false,
+                "presets": [
+                    require('@babel/preset-env')
+                ],
+                // "plugins": [
+                //     require("@babel/plugin-transform-minify-booleans")
+                // ]
+            }))
+            //.pipe(uglify())
+            .pipe(gulp.dest(path.join(root, 'app', 'assets'))),
+
+    output: () => 
+        gulp.src(parseKoalaJS(rootOutput, 'js-source', 'output.js'))
+            .pipe(concat('output.js'))
+            //.pipe(uglify())
+            .pipe(gulp.dest(path.join(rootOutput, 'js-output'))),
+
+    web: () => 
+        gulp.src(parseKoalaJS(rootOutput, 'assets-source', 'js.js'))
+            .pipe(concat('js.js'))
+            .pipe(babel({
+                'highlightCode': false,
+                'comments': false,
+                'compact': false,
+                'ast': false,
+                "presets": [
+                    require('@babel/preset-env')//,
+                    //"stage-0"
+                ],
+                // "plugins": [
+                //     require("@babel/plugin-transform-minify-booleans")
+                // ]
+            }))
+            .pipe(gulp.dest(path.join(rootOutput, 'assets-output')))
+            .pipe(uglify())
+            .pipe(rename({ extname: '.min.js' }))
+            .pipe(gulp.dest(path.join(rootOutput, 'assets-output'))),
+
+    webLibs: () =>
+        gulp.src(parseKoalaJS(rootOutput, 'assets-source', 'libs.js'))
+            .pipe(concat('libs.js'))
+            .pipe(babel({
+                'highlightCode': false,
+                'comments': false,
+                'compact': false,
+                'ast': false,
+                "presets": [
+                    require('@babel/preset-env')//,
+                    //"stage-0"
+                ],
+                // "plugins": [
+                //     require("@babel/plugin-transform-minify-booleans")
+                // ]
+            }))
+            .pipe(gulp.dest(path.join(rootOutput, 'assets-output')))
+            .pipe(uglify())
+            .pipe(rename({ extname: '.min.js' }))
+            .pipe(gulp.dest(path.join(rootOutput, 'assets-output'))),
+
+    webLibsCanvas: () => 
+        gulp.src(parseKoalaJS(rootOutput, 'assets-source', 'lib.canvas.js'))
+            .pipe(concat('lib.canvas.js'))
+            .pipe(gulp.dest(path.join(rootOutput, 'assets-output')))
+            .pipe(uglify())
+            .pipe(rename({ extname: '.min.js' }))
+            .pipe(gulp.dest(path.join(rootOutput, 'assets-output')))
+}
+
+const styles = {
+    base: () => {
+        const f = path.join(rootSource, 'css-base.less');
+        return gulp.src(f)
+            .pipe(watchLess(f, { verbose: true }, function () {
+                lessCompile(f, path.join(root, 'app', 'assets'), {
+                    onlyMinify: true
+                })
+            }))
+        /*
+        return gulp.src( path.join( rootSource, 'css-base.less' ) )
+            .pipe(less())
+            .pipe(nano())
+            //.pipe(postcss([
+            //	autoprefixer()
+            //]))
+            .pipe(gulp.dest( path.join( root, 'app', 'assets' ) ));
+        */
+    },
+
+    app: () => {
+        const f = path.join(rootSource, 'css-app.less');
+        return gulp.src(f)
+            .pipe(watchLess(f, { verbose: true }, function () {
+                lessCompile(f, path.join(root, 'app', 'assets'), {
+                    onlyMinify: true,
+                    nano: {
+                        autoprefixer: {
+                            browsers: ['Chrome >= 41'],
+                            add: true
+                        }
+                    }
+                })
+            }))
+        /*
+        return gulp.src( path.join( rootSource, 'css-app.less' ) )
+            .pipe(less())
+            //.pipe(less({
+            //	'plugins':	[cleanCSSPlugin]
+            //}))
+            .pipe(postcss([
+                autoprefixer({browsers: ['Chrome >= 41']})
+            ]))
+            .pipe(nano({
+                //safe: 	true
+            }))
+            .pipe(gulp.dest( path.join( root, 'app', 'assets' ) ));
+        */
+    },
+
+    web: () => {
+        let f = path.join(rootOutput, 'assets-source', 'css.less');
+        return gulp.src(f)
+            .pipe(watchLess(f, { verbose: true }, function () {
+                lessCompile(f, path.join(rootOutput, 'assets-output'), {
+                    nano: {
+                        autoprefixer: {
+                            'browsers': [
+                                'Android >= 2',
+                                'Chrome >= 20',
+                                'Firefox >= 20',
+                                'ie >= 11',
+                                'Edge >= 12',
+                                'iOS >= 5',
+                                'ChromeAndroid >= 20',
+                                'ExplorerMobile >= 11'
+                            ],
+                            add: true
+                        }
+                    }
+                })
+            }))
+        /*
+        return gulp.src( path.join( rootOutput, 'assets-source', 'css.less' ) )
+            .pipe(less())
+            .pipe(postcss([
+                autoprefixer()
+            ]))
+            .pipe(gulp.dest( path.join( rootOutput, 'assets-output' ) ))
+            //.pipe(nano())
+            .pipe(nano({
+                //safe: 	true
+            }))
+            .pipe(rename({ extname: '.min.css' }))
+            .pipe(gulp.dest( path.join( rootOutput, 'assets-output' ) ));
+        */
+    }
+}
+
+const allTasks = {
+    scripts: Object.values(scripts),
+    styles: Object.values(styles)
+}
+
+const build = gulp.parallel(
+    ...Object.values(allTasks).map(tasks => gulp.parallel(...tasks))
+)
+
+exports.build = build
+
+exports.watch = function () {
+    gulp.watch(
+        path.join(rootSource, 'js-app', '**/*.js'),
+        [scripts.app, scripts.web]
+    );
+    gulp.watch(
+        path.join(rootSource, 'KanColle-JS-Kit', '**/*.js'),
+        [scripts.app, scripts.web]
+    );
+    gulp.watch(
+        path.join(rootSource, 'nw.js-base-framework', '**/*.js'),
+        [scripts.base, scripts.app, scripts.web]
+    );
+    gulp.watch(
+        path.join(rootSource, 'libs', '**/*.js'),
+        [scripts.app, scripts.webLibs]
+    );
+    gulp.watch(
+        path.join(rootSource, 'js-app', 'canvas', '**/*.js'),
+        [scripts.webLibsCanvas]
+    );
+    //gulp.watch(
+    //		path.join( rootSource, '**/*.js' ),
+    //		[scripts.base, scripts.app, scripts.web, scripts.webLibs]
+    //	);
+    gulp.watch(
+        path.join(rootOutput, 'js-source', '**/*.js'),
+        [scripts.output]
+    );
+    //gulp.watch(
+    //		path.join( rootSource, '**/*.less' ),
+    //		['css-app', 'css-base', 'Web-css']
+    //	);
+}
+
+// Commons ====================================================================
+
 function parseKoalaJS() {
-    let filename = Array.prototype.pop.call(arguments);
-    let dir = Array.prototype.join.call(arguments, '/');
+    const filename = Array.prototype.pop.call(arguments);
+    const dir = Array.prototype.join.call(arguments, '/');
     return fs.readFileSync(path.join(dir, filename), 'utf-8')
         .replace(/\r?\n|\r/g, '')
         .split('// @koala-prepend ')
@@ -50,189 +280,12 @@ function parseKoalaJS() {
         .map(function (value) {
             if (value)
                 return path.join(dir, value.replace(/^"(.+)"$/g, '$1'))
-        });
+        })
+        // .map(v => {
+        //     console.log(v)
+        //     return v
+        // });
 }
-
-
-gulp.task('js-base', function () {
-    return gulp.src(parseKoalaJS(rootSource, 'js-base.js'))
-        .pipe(concat('js-base.js'))
-        // .pipe(uglify())
-        // .pipe(babel({
-        //     'highlightCode': false,
-        //     'comments': false,
-        //     'compact': false,
-        //     'ast': false,
-        //     "presets": [
-        //         rootRequire('babel-preset-es2015'),
-        //         rootRequire('babel-preset-stage-0'),
-        //         // "es2015",
-        //         // "stage-0"
-        //     ],
-        //     "plugins": [
-        //         require("babel-plugin-transform-minify-booleans")
-        //         // "transform-minify-booleans"
-        //     ]
-        // }))
-        .pipe(gulp.dest(path.join(root, 'app', 'assets')));
-});
-
-gulp.task('js-app', function () {
-    return gulp.src(
-        parseKoalaJS(rootSource, 'js-app.js')
-            .concat(path.resolve(__dirname, '../source/js-app/.base/**/*.js'))
-    )
-        .pipe(concat('js-app.js'))
-        .pipe(babel({
-            'highlightCode': false,
-            'comments': false,
-            'compact': false,
-            'ast': false,
-            "presets": [
-                rootRequire('babel-preset-es2015'),
-                rootRequire('babel-preset-latest')
-            ],
-            "plugins": [
-                require("babel-plugin-transform-minify-booleans")
-            ]
-        }))
-        //.pipe(uglify())
-        .pipe(gulp.dest(path.join(root, 'app', 'assets')));
-});
-
-gulp.task('js-output', function () {
-    return gulp.src(parseKoalaJS(rootOutput, 'js-source', 'output.js'))
-        .pipe(concat('output.js'))
-        //.pipe(uglify())
-        .pipe(gulp.dest(path.join(rootOutput, 'js-output')));
-});
-
-gulp.task('Web-js', function () {
-    return gulp.src(parseKoalaJS(rootOutput, 'assets-source', 'js.js'))
-        .pipe(concat('js.js'))
-        .pipe(babel({
-            'highlightCode': false,
-            'comments': false,
-            'compact': false,
-            'ast': false,
-            "presets": [
-                rootRequire('babel-preset-latest')//,
-                //"stage-0"
-            ],
-            "plugins": [
-                require("babel-plugin-transform-minify-booleans")
-            ]
-        }))
-        .pipe(gulp.dest(path.join(rootOutput, 'assets-output')))
-        .pipe(uglify())
-        .pipe(rename({ extname: '.min.js' }))
-        .pipe(gulp.dest(path.join(rootOutput, 'assets-output')));
-});
-
-gulp.task('Web-js-libs', function () {
-    return gulp.src(parseKoalaJS(rootOutput, 'assets-source', 'libs.js'))
-        .pipe(concat('libs.js'))
-        .pipe(gulp.dest(path.join(rootOutput, 'assets-output')))
-        .pipe(uglify())
-        .pipe(rename({ extname: '.min.js' }))
-        .pipe(gulp.dest(path.join(rootOutput, 'assets-output')));
-});
-
-gulp.task('Web-js-lib-canvas', function () {
-    return gulp.src(parseKoalaJS(rootOutput, 'assets-source', 'lib.canvas.js'))
-        .pipe(concat('lib.canvas.js'))
-        .pipe(gulp.dest(path.join(rootOutput, 'assets-output')))
-        .pipe(uglify())
-        .pipe(rename({ extname: '.min.js' }))
-        .pipe(gulp.dest(path.join(rootOutput, 'assets-output')));
-});
-
-gulp.task('css-app', function () {
-    let f = path.join(rootSource, 'css-app.less');
-    return gulp.src(f)
-        .pipe(watchLess(f, { verbose: true }, function () {
-            lessCompile(f, path.join(root, 'app', 'assets'), {
-                onlyMinify: true,
-                nano: {
-                    autoprefixer: {
-                        browsers: ['Chrome >= 41'],
-                        add: true
-                    }
-                }
-            })
-        }))
-    /*
-    return gulp.src( path.join( rootSource, 'css-app.less' ) )
-        .pipe(less())
-        //.pipe(less({
-        //	'plugins':	[cleanCSSPlugin]
-        //}))
-        .pipe(postcss([
-            autoprefixer({browsers: ['Chrome >= 41']})
-        ]))
-        .pipe(nano({
-            //safe: 	true
-        }))
-        .pipe(gulp.dest( path.join( root, 'app', 'assets' ) ));
-    */
-});
-
-gulp.task('css-base', function () {
-    let f = path.join(rootSource, 'css-base.less');
-    return gulp.src(f)
-        .pipe(watchLess(f, { verbose: true }, function () {
-            lessCompile(f, path.join(root, 'app', 'assets'), {
-                onlyMinify: true
-            })
-        }))
-    /*
-    return gulp.src( path.join( rootSource, 'css-base.less' ) )
-        .pipe(less())
-        .pipe(nano())
-        //.pipe(postcss([
-        //	autoprefixer()
-        //]))
-        .pipe(gulp.dest( path.join( root, 'app', 'assets' ) ));
-    */
-});
-
-gulp.task('Web-css', function () {
-    let f = path.join(rootOutput, 'assets-source', 'css.less');
-    return gulp.src(f)
-        .pipe(watchLess(f, { verbose: true }, function () {
-            lessCompile(f, path.join(rootOutput, 'assets-output'), {
-                nano: {
-                    autoprefixer: {
-                        'browsers': [
-                            'Android >= 2',
-                            'Chrome >= 20',
-                            'Firefox >= 20',
-                            'ie >= 11',
-                            'Edge >= 12',
-                            'iOS >= 5',
-                            'ChromeAndroid >= 20',
-                            'ExplorerMobile >= 11'
-                        ],
-                        add: true
-                    }
-                }
-            })
-        }))
-    /*
-    return gulp.src( path.join( rootOutput, 'assets-source', 'css.less' ) )
-        .pipe(less())
-        .pipe(postcss([
-            autoprefixer()
-        ]))
-        .pipe(gulp.dest( path.join( rootOutput, 'assets-output' ) ))
-        //.pipe(nano())
-        .pipe(nano({
-            //safe: 	true
-        }))
-        .pipe(rename({ extname: '.min.css' }))
-        .pipe(gulp.dest( path.join( rootOutput, 'assets-output' ) ));
-    */
-});
 
 function lessCompile(file, outputPath, options) {
     options = options || {}
@@ -276,50 +329,4 @@ function lessCompile(file, outputPath, options) {
     }
 }
 
-gulp.task('watch', function () {
-    gulp.watch(
-        path.join(rootSource, 'js-app', '**/*.js'),
-        ['js-app', 'Web-js']
-    );
-    gulp.watch(
-        path.join(rootSource, 'KanColle-JS-Kit', '**/*.js'),
-        ['js-app', 'Web-js']
-    );
-    gulp.watch(
-        path.join(rootSource, 'nw.js-base-framework', '**/*.js'),
-        ['js-base', 'js-app', 'Web-js']
-    );
-    gulp.watch(
-        path.join(rootSource, 'libs', '**/*.js'),
-        ['js-app', 'Web-js-libs']
-    );
-    gulp.watch(
-        path.join(rootSource, 'js-app', 'canvas', '**/*.js'),
-        ['Web-js-lib-canvas']
-    );
-    //gulp.watch(
-    //		path.join( rootSource, '**/*.js' ),
-    //		['js-base', 'js-app', 'Web-js', 'Web-js-libs']
-    //	);
-    gulp.watch(
-        path.join(rootOutput, 'js-source', '**/*.js'),
-        ['js-output']
-    );
-    //gulp.watch(
-    //		path.join( rootSource, '**/*.less' ),
-    //		['css-app', 'css-base', 'Web-css']
-    //	);
-});
-
-gulp.task('default', [
-    'js-base',
-    'js-app',
-    'js-output',
-    'Web-js',
-    'Web-js-libs',
-    'Web-js-lib-canvas',
-    'css-base',
-    'css-app',
-    'Web-css',
-    'watch'
-]);
+exports.default = build
