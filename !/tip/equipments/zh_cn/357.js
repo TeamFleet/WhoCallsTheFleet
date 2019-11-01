@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",357,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/2.png)\"></s><strong>8inch三连装炮 Mk.9 mod.2</strong><small>中口径主炮</small></h3><span>+12 火力</span><span>+2 对空</span><span>+1 命中</span><span>-1 回避</span><span>射程: 中</span>")
