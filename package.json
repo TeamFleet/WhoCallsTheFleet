@@ -73,7 +73,7 @@
     "versions": {
       "win32": "0.35.2",
       "win64": "0.35.2",
-      "osx64": "0.36.4"
+      "osx64": "0.42.1"
     },
     "buildDir": "N:\\nwbuild\\build",
     "winIco": "./source/appicon.ico",
