@@ -9,6 +9,7 @@
 //     "usn", // 美国海军"
 //     "vmf" // 苏联海军"
 //     "sm" // 瑞典海军"
+//     "ran" // 澳大利亚皇家海军"
 // ]
 .flag-navy{
     @size:      20px;
@@ -33,7 +34,8 @@
     &[data-navy="mn"]{
         background-position: 50% percentage(3 / (@count - 1));
     }
-    &[data-navy="rn"]{
+    &[data-navy="rn"],
+    &[data-navy="ran"]{
         background-position: 50% percentage(4 / (@count - 1));
     }
     &[data-navy="usn"]{
