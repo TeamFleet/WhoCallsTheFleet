@@ -1,4 +1,4 @@
-@count:     8;
+@count:     10;
 
 // const navies = [
 //     "ijn", // 日本帝国海军
@@ -10,6 +10,7 @@
 //     "vmf" // 苏联海军"
 //     "sm" // 瑞典海军"
 //     "ran" // 澳大利亚皇家海军"
+//     “rnln” // 荷兰皇家海军
 // ]
 .flag-navy{
     @size:      20px;
@@ -20,7 +21,7 @@
     height:     @height;
     display:    inline-block;
 
-    background:     url(~"@{folder_images}/navy-flags/shadow.png") no-repeat 50% @height / cover;
+    background:     url(~"@{folder_images}/navy-flags/shadow.png?@{file_flags_shadow_revision}") no-repeat 50% @height / cover;
 
     &[data-navy="ijn"]{
         background-position: 50% 0%;
@@ -34,8 +35,7 @@
     &[data-navy="mn"]{
         background-position: 50% percentage(3 / (@count - 1));
     }
-    &[data-navy="rn"],
-    &[data-navy="ran"]{
+    &[data-navy="rn"]{
         background-position: 50% percentage(4 / (@count - 1));
     }
     &[data-navy="usn"]{
@@ -46,6 +46,12 @@
     }
     &[data-navy="sm"]{
         background-position: 50% percentage(7 / (@count - 1));
+    }
+    &[data-navy="ran"]{
+        background-position: 50% percentage(8 / (@count - 1));
+    }
+    &[data-navy="rnln"]{
+        background-position: 50% percentage(9 / (@count - 1));
     }
 
     .navies(@n, @i: 0) when (@i =< @n) {

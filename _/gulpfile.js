@@ -298,20 +298,26 @@ function parseKoalaJS() {
 
 function lessCompile(file, outputPath, options) {
     options = options || {}
+    const input = path.resolve(__dirname, file)
+    const output = path.resolve(__dirname, outputPath)
 
+    const logError = (...args) => {
+        console.log(`ERROR: Compiling LESS ${input} -> ${output}`)
+        console.log(...args)
+    }
     function log() {
-        console.log(`Compiled LESS ${file}`)
+        console.log(`Compiled LESS ${input} -> ${output}`)
     }
 
     if (options.onlyMinify) {
-        return gulp.src(file)
+        return gulp.src(input)
             .pipe(less())
             .pipe(nano(options.nano))
-            .pipe(gulp.dest(outputPath))
+            .pipe(gulp.dest(output))
             .on('end', log)
-            .on('error', log);
+            .on('error', logError);
     } else {
-        return gulp.src(file)
+        return gulp.src(input)
             .pipe(less())
             /*
             .pipe(postcss([
@@ -329,12 +335,12 @@ function lessCompile(file, outputPath, options) {
                 })
             ]))
             */
-            .pipe(gulp.dest(outputPath))
+            .pipe(gulp.dest(output))
             .pipe(nano(options.nano))
             .pipe(rename({ extname: '.min.css' }))
-            .pipe(gulp.dest(outputPath))
+            .pipe(gulp.dest(output))
             .on('end', log)
-            .on('error', log);
+            .on('error', logError);
     }
 }
 
