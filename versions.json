@@ -1,14 +1,14 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.30.26.0",
-			"path":		"data/2019.12.01/app.nwjs-data",
-			"bytes":	4798524
+			"version":	"0.30.27.0",
+			"path":		"data/2019.12.08/app.nwjs-data",
+			"bytes":	4801219
 		},
 		"app-db": {
-			"version":	"2019.12.01",
-			"path":		"data/2019.12.01/app-db.nwjs-data",
-			"bytes":	1781506
+			"version":	"2019.12.08",
+			"path":		"data/2019.12.08/app-db.nwjs-data",
+			"bytes":	1783572
 		},
 		"bgimgs": {
 			"version":	"1.18.6.0",
@@ -16,9 +16,9 @@
 			"bytes":	12494509
 		},
 		"pics": {
-			"version":	"2019.12.01",
-			"path":		"data/2019.12.01/pics.nwjs-data",
-			"bytes":	38766009
+			"version":	"2019.12.08",
+			"path":		"data/2019.12.08/pics.nwjs-data",
+			"bytes":	38985939
 		},
 		"pics-enemies": {
 			"version":	"2018.08.28",
@@ -82,19 +82,19 @@
 			"bytes":	17308521
 		},
 		"pics-ships-12": {
-			"version":	"2019.12.01",
-			"path":		"data/2019.12.01/pics-ships-12.nwjs-data",
-			"bytes":	19203525
+			"version":	"2019.12.08",
+			"path":		"data/2019.12.08/pics-ships-12.nwjs-data",
+			"bytes":	19969093
 		},
 		"pics-ships-13": {
-			"version":	"2019.12.01",
-			"path":		"data/2019.12.01/pics-ships-13.nwjs-data",
-			"bytes":	5376956
+			"version":	"2019.12.08",
+			"path":		"data/2019.12.08/pics-ships-13.nwjs-data",
+			"bytes":	5727431
 		},
 		"pics-ships-14": {
-			"version":	"2019.08.31",
-			"path":		"data/2019.08.31/pics-ships-14.nwjs-data",
-			"bytes":	2775751
+			"version":	"2019.12.08",
+			"path":		"data/2019.12.08/pics-ships-14.nwjs-data",
+			"bytes":	3892539
 		},
 		"pics-ships-18": {
 			"version":	"2019.09.04",

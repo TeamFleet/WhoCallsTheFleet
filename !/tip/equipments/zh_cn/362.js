@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",362,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/16.png)\"></s><strong>5inch连装两用炮<small>(集中配备)</small></strong><small>中口径高角主炮 (对空强化)</small></h3><span>+5 火力</span><span>+11 对空</span><span>+2 命中</span><span>+2 回避</span><span>射程: 中</span>")
