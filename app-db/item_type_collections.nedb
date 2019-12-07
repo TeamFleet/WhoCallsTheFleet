@@ -1,4 +1,4 @@
-{"name":{"zh_cn":"火炮&强化弹","en_us":"Guns&Shells"},"types":[1,2,3,4,5,6,7,8,9,10,11],"id":1,"_id":"61h8WVc70QyxUWFX"}
+{"name":{"zh_cn":"火炮&强化弹","en_us":"Guns&Shells"},"types":[1,2,3,4,64,5,6,7,8,9,10,11],"id":1,"_id":"61h8WVc70QyxUWFX"}
 {"name":{"zh_cn":"鱼雷&微型潜艇","en_us":"Torpedos&Midget"},"types":[12,13,14],"id":2,"_id":"7cwKLyrHAmuYBYss"}
 {"name":{"zh_cn":"飞行器","en_us":"Aircrafts"},"types":[15,16,17,51,18,60,20,19,61,21,50,55,22,23,45,53,62,54,59,63],"id":3,"_id":"GSHIXVrKBws5ov3X"}
 {"name":{"zh_cn":"舰艇强化","en_us":"Impr."},"types":[32,33,34],"id":7,"_id":"MgkRw4h6gYNBkSx8"}
