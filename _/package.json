@@ -16,7 +16,7 @@
     "animate.css": "^3.7.0",
     "clipboard": "^2.0.1",
     "jquery": "3.4.1",
-    "kckit": "0.16.0",
+    "kckit": "0.17.0",
     "kctip": "^0.5.0",
     "localforage": "^1.7.2",
     "lockr": "^0.8.4",
@@ -26,8 +26,8 @@
     "sprintf-js": "^1.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.4",
-    "@babel/preset-env": "^7.7.4",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
     "autoprefixer": "^9.7.3",
     "babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
     "babel-plugin-transform-minify-booleans": "^6.9.4",
@@ -49,7 +49,7 @@
     "gulp-uglify": "^3.0.1",
     "gulp-watch-less2": "^2.0.4",
     "less-plugin-clean-css": "^1.5.1",
-    "terser": "^4.4.0",
+    "terser": "^4.4.3",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
   }
