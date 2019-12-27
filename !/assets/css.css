@@ -6842,6 +6842,17 @@ body.mod-capture #tip {
 .tablelist-equipments .tablelist-body dl.has-bonus.disabled dt::after {
   background: hsl(0, 0%, 50%);
 }
+.tablelist-equipments .tablelist-body dl.has-bonus.is-negative dt::before {
+  border-top-color: hsl(5, 100%, 75%);
+  border-bottom-color: transparent;
+  top: auto;
+  bottom: -6px;
+}
+.tablelist-equipments .tablelist-body dl.has-bonus.is-negative dt::after {
+  background: hsl(5, 100%, 75%);
+  top: auto;
+  bottom: 9px;
+}
 .tablelist-equipments .tablelist-body dl.header-alt sup,
 .tablelist-equipments .tablelist-body dl.mod-interceptor dd[stat="aa"] sup,
 .tablelist-equipments .tablelist-body dl.header-alt sub,

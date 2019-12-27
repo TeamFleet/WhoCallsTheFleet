@@ -3093,7 +3093,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
   location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20191221';
+_g.db_version = '20191228';
 _g.bgimg_count=26;
 _g.event = {
   'animationend': 'animationend webkitAnimationEnd',
@@ -9417,6 +9417,7 @@ var TablelistEquipments = function (_Tablelist3) {
       if (!TablelistEquipments.shipId || isNaN(TablelistEquipments.shipId)) {
         for (var id in this.equipmentsHasBonus) {
           this.equipmentsHasBonus[id].removeClass('disabled');
+          this.equipmentsHasBonus[id].removeClass('is-negative');
         }
       } else {
         (function () {
@@ -9446,7 +9447,26 @@ var TablelistEquipments = function (_Tablelist3) {
 
               return true;
             });
-            if (filtered.length) _this23.equipmentsHasBonus[_id3].removeClass('disabled');else _this23.equipmentsHasBonus[_id3].addClass('disabled');
+
+            if (filtered.length) {
+              var mainAttribute = _g.data.item_types[equipment.type].main_attribute;
+              var isNegative = filtered.every(function () {
+                var o = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+                var bonus = o.bonus || {};
+                var mainStat = bonus[mainAttribute] || 0;
+                return mainStat < 0;
+              });
+
+              _this23.equipmentsHasBonus[_id3].removeClass('disabled');
+
+              if (isNegative) {
+                _this23.equipmentsHasBonus[_id3].addClass('is-negative');
+              } else {
+                _this23.equipmentsHasBonus[_id3].removeClass('is-negative');
+              }
+            } else {
+              _this23.equipmentsHasBonus[_id3].addClass('disabled');
+            }
           };
 
           for (var _id3 in _this23.equipmentsHasBonus) {
