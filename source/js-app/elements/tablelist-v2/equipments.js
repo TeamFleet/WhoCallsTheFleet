@@ -66,6 +66,7 @@ class TablelistEquipments extends Tablelist {
         if (!TablelistEquipments.shipId || isNaN(TablelistEquipments.shipId)) {
             for (let id in this.equipmentsHasBonus) {
                 this.equipmentsHasBonus[id].removeClass('disabled')
+                this.equipmentsHasBonus[id].removeClass('is-negative')
             }
         } else {
             const count = {}
@@ -93,10 +94,22 @@ class TablelistEquipments extends Tablelist {
                         return true
                     })
                 // console.log(id, equipment._name, equipment.getBonuses(), filtered)
-                if (filtered.length)
+                if (filtered.length) {
+                    const mainAttribute = _g.data.item_types[equipment.type].main_attribute
+                    const isNegative = filtered.every((o = {}) => {
+                        const bonus = o.bonus || {}
+                        const mainStat = bonus[mainAttribute] || 0
+                        return mainStat < 0
+                    })
                     this.equipmentsHasBonus[id].removeClass('disabled')
-                else
+                    if (isNegative) {
+                        this.equipmentsHasBonus[id].addClass('is-negative')
+                    } else {
+                        this.equipmentsHasBonus[id].removeClass('is-negative')
+                    }
+                } else {
                     this.equipmentsHasBonus[id].addClass('disabled')
+                }
             }
             // console.log(this.equipmentsHasBonus)
         }

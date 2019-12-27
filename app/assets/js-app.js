@@ -8924,6 +8924,7 @@ var TablelistEquipments = function (_Tablelist2) {
       if (!TablelistEquipments.shipId || isNaN(TablelistEquipments.shipId)) {
         for (var id in this.equipmentsHasBonus) {
           this.equipmentsHasBonus[id].removeClass('disabled');
+          this.equipmentsHasBonus[id].removeClass('is-negative');
         }
       } else {
         (function () {
@@ -8953,7 +8954,26 @@ var TablelistEquipments = function (_Tablelist2) {
 
               return true;
             });
-            if (filtered.length) _this22.equipmentsHasBonus[_id3].removeClass('disabled');else _this22.equipmentsHasBonus[_id3].addClass('disabled');
+
+            if (filtered.length) {
+              var mainAttribute = _g.data.item_types[equipment.type].main_attribute;
+              var isNegative = filtered.every(function () {
+                var o = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+                var bonus = o.bonus || {};
+                var mainStat = bonus[mainAttribute] || 0;
+                return mainStat < 0;
+              });
+
+              _this22.equipmentsHasBonus[_id3].removeClass('disabled');
+
+              if (isNegative) {
+                _this22.equipmentsHasBonus[_id3].addClass('is-negative');
+              } else {
+                _this22.equipmentsHasBonus[_id3].removeClass('is-negative');
+              }
+            } else {
+              _this22.equipmentsHasBonus[_id3].addClass('disabled');
+            }
           };
 
           for (var _id3 in _this22.equipmentsHasBonus) {

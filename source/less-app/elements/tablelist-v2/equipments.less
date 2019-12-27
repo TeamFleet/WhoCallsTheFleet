@@ -28,6 +28,7 @@
 			&.has-bonus{
 				@color: hsl(149, 100%, 78%);
 				@color-disabled: hsl(0, 0%, 50%);
+				@color-negative: hsl(5, 100%, 75%);
 				@size: 12px;
 				dt::before, dt::after{
 					content: "";
@@ -55,6 +56,19 @@
 					}
 					dt::after{
 						background: @color-disabled;
+					}
+				}
+				&.is-negative{
+					dt::before{
+						border-top-color: @color-negative;
+						border-bottom-color: transparent;
+    					top: auto;
+    					bottom: -6px;
+					}
+					dt::after{
+						background: @color-negative;
+						top: auto;
+    					bottom: 9px;
 					}
 				}
 			}
