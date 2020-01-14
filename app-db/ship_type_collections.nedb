@@ -1,5 +1,5 @@
 {"name":{"zh_cn":"驱逐舰","en_us":"Destroyers","ja_jp":"駆逐艦"},"types":[[1,19]],"id":4,"_id":"STrlqZfKVFD8K7Vw"}
-{"name":{"zh_cn":"巡洋舰","en_us":"Cruisers","ja_jp":"巡洋艦"},"types":[5,[4,23],3,34,28,2,21],"id":3,"_id":"Ybyl4QliNoSycOC7"}
+{"name":{"zh_cn":"巡洋舰","en_us":"Cruisers","ja_jp":"巡洋艦"},"types":[5,[4,23],3,34,35,28,2,21],"id":3,"_id":"Ybyl4QliNoSycOC7"}
 {"name":{"zh_cn":"潜艇","en_us":"Submarines","ja_jp":"潜水艦"},"types":[14,13],"id":5,"_id":"lmYeXVnlEzZu5qD9"}
 {"name":{"zh_cn":"战列舰","en_us":"Battleships","ja_jp":"戦艦"},"types":[33,8,[6,20],[7,18]],"id":1,"_id":"nLHC1gpWE191Z9G6"}
 {"name":{"zh_cn":"航空母舰","en_us":"Carriers","ja_jp":"空母"},"types":[11,10,[9,30,32]],"id":2,"_id":"phOle1KVBEgM6hll"}
