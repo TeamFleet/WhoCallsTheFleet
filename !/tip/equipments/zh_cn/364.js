@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",364,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/5.png)\"></s><strong>甲标的 丁型改<small>(蛟龙改)</small></strong><small>微型潜艇</small></h3><span>+17 雷装</span><span>+2 命中</span><span>+2 索敌</span>")

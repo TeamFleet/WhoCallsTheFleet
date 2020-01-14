@@ -6784,6 +6784,24 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="21"]:checked ~ .tablelist-container h4[data-header="21"] label.checkbox {
   transform: translateX(30px);
 }
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="22"]:not(:checked) ~ .tablelist-container h4[data-header="22"] label.checkbox {
+  z-index: -1;
+}
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="22"]:not(:checked) ~ .tablelist-container h4[data-header="22"] label.checkbox:before {
+  opacity: 0;
+}
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="22"]:not(:checked) ~ .tablelist-container dl[data-header="22"] {
+  display: none !important;
+}
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="22"]:checked ~ .tablelist-container h4[data-header="22"] label.shiptype {
+  width: 30px;
+}
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="22"]:checked ~ .tablelist-container h4[data-header="22"] label.shiptype:before {
+  transform: rotate(90deg) translateX(-1px);
+}
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="22"]:checked ~ .tablelist-container h4[data-header="22"] label.checkbox {
+  transform: translateX(30px);
+}
 .tablelist.ships.mod-search .tablelist-body h4 {
   display: none;
 }
