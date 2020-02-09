@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",365,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/13.png)\"></s><strong>一式穿甲弹改</strong><small>对舰强化弹</small></h3><span>+11 火力</span><span>+2 命中</span>")
