@@ -1079,12 +1079,15 @@
 	.attributes{
 		bottom: 	0%;
 		height: 	25px;
-		line-height:24px;
+		// line-height:24px;
 		font-size: 	1em;
 		//background: rgba(0,0,0,.025);
 		border-top: 1px solid rgba(255, 255, 255, .1);
 		//border-bottom: 	1px solid rgba(255, 255, 255, .05);
 		opacity: 	.6;
+		padding-right: 80px;
+		line-height: 14px;
+		padding-top: 5px;
 		&:after{
 			content: 	"";
 			position: 	absolute;
@@ -2483,15 +2486,20 @@
 		padding-right: 2px;
 	}
 	.attributes{
-		bottom: 	-21px;
-		height: 	21px;
-		line-height:20px;
+		bottom: 0;
+		height: auto;
+		transform: translateY(100%);
+		padding-top: 4px;
+		padding-bottom: 4px;
+		padding-right: 60px;
+		// line-height:20px;
 		border-top: 0;
+		// padding-top: 0;
 		padding-left:8px;
 		&:after{
-			left: 	10px;
-			transform: 	skew(30deg);
-			transform-origin: 0 100%;
+			left: -5px;
+			transform: 	skew(25deg);
+			transform-origin: 0% 0%;
 			background: rgba(0,0,0,.2);
 			border-left: 	1px solid rgba(255,255,255, .25);
 			border-bottom: 	1px solid rgba(255,255,255, .25);
@@ -2656,6 +2664,7 @@
 		bottom: 	auto;
 		padding: 	0 4px 4px 4px;
 		line-height:22px;
+		transform: none;
 		&:after{
 			transform: 	none;
 			left: 		0;
