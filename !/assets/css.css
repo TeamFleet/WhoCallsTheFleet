@@ -9521,10 +9521,12 @@ body.mod-capture .infos-fleet .equipments {
 .infos-fleet .attributes {
   bottom: 0%;
   height: 25px;
-  line-height: 24px;
   font-size: 1em;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   opacity: 0.6;
+  padding-right: 80px;
+  line-height: 14px;
+  padding-top: 5px;
 }
 .infos-fleet .attributes:after {
   content: "";
@@ -11554,16 +11556,19 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
     padding-right: 2px;
   }
   .infos-fleet .attributes {
-    bottom: -21px;
-    height: 21px;
-    line-height: 20px;
+    bottom: 0;
+    height: auto;
+    transform: translateY(100%);
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-right: 60px;
     border-top: 0;
     padding-left: 8px;
   }
   .infos-fleet .attributes:after {
-    left: 10px;
-    transform: skew(30deg);
-    transform-origin: 0 100%;
+    left: -5px;
+    transform: skew(25deg);
+    transform-origin: 0% 0%;
     background: rgba(0, 0, 0, 0.2);
     border-left: 1px solid rgba(255, 255, 255, 0.25);
     border-bottom: 1px solid rgba(255, 255, 255, 0.25);
@@ -11701,6 +11706,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
     bottom: auto;
     padding: 0 4px 4px 4px;
     line-height: 22px;
+    transform: none;
   }
   .infos-fleet .attributes:after {
     transform: none;

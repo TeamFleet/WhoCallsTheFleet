@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",370,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/10.png)\"></s><strong>剑鱼<small>(Swordfish)</small>Mk.II改<small>(水侦型)</small></strong><small>水上侦察机</small></h3><span>+1 火力</span><span>+6 对潜</span><span>+2 命中</span><span>+5 索敌</span><span>航程: 3</span>")
