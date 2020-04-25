@@ -74,9 +74,9 @@
     "versions": {
       "win32": "0.35.2",
       "win64": "0.35.2",
-      "osx64": "0.43.3"
+      "osx64": "0.45.4"
     },
-    "buildDir": "../app-build",
+    "buildDir": "D:\\Projects\\@fleet\\app-build",
     "winIco": "./source/appicon.ico",
     "enableLauncher": true,
     "dataRelative": [
