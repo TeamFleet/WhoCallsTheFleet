@@ -76,7 +76,7 @@
       "win64": "0.35.2",
       "osx64": "0.43.3"
     },
-    "buildDir": "N:\\nwbuild\\build",
+    "buildDir": "../app-build",
     "winIco": "./source/appicon.ico",
     "enableLauncher": true,
     "dataRelative": [
