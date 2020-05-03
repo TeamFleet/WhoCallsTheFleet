@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",375,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/6.png)\"></s><strong>XF5U</strong><small>舰载战斗机</small></h3><span>+12 对空</span><span>+2 回避</span><span>+1 索敌</span><span>航程: 4</span>")

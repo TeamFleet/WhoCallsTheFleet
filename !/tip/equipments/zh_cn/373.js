@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",373,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/46.png)\"></s><strong>天山一二型甲改<small>(空六号电探改装备机)</small></strong><small>舰载鱼雷轰炸机（夜间）</small></h3><span>+11 雷装</span><span>+1 对空</span><span>+6 对潜</span><span>+1 命中</span><span>+5 索敌</span><span>航程: 5</span>")
