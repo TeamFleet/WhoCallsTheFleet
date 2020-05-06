@@ -9660,6 +9660,7 @@ body.mod-capture .infos-fleet .equipments {
 .infos-fleet .equipment[data-equipmentid] > .equipment-infos {
   display: flex;
   z-index: 10;
+  pointer-events: none;
 }
 .infos-fleet .equipment[data-equipmentid].is-hover > .equipment-infos {
   display: none;
