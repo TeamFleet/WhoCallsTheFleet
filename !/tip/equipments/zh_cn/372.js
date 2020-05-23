@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",372,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/8.png)\"></s><strong>天山一二型甲</strong><small>舰载鱼雷轰炸机</small></h3><span>+9 雷装</span><span>+1 对空</span><span>+4 对潜</span><span>+2 索敌</span><span>航程: 5</span>")

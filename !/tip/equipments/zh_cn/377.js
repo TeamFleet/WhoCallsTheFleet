@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",377,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/17.png)\"></s><strong>RUR-4A Weapon Alpha 改</strong><small>爆雷</small></h3><span>+17 对潜</span><span>+1 命中</span><span>+1 装甲</span><span>+1 回避</span>")

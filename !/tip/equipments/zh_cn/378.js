@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",378,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/17.png)\"></s><strong>对潜短鱼雷<small>(试做初期型)</small></strong><small>爆雷</small></h3><span>+2 雷装</span><span>+20 对潜</span>")
