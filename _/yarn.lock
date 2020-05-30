@@ -4907,10 +4907,10 @@ just-debounce@^1.0.0:
   resolved "https://registry.yarnpkg.com/just-debounce/-/just-debounce-1.0.0.tgz#87fccfaeffc0b68cd19d55f6722943f929ea35ea"
   integrity sha1-h/zPrv/AtozRnVX2cilD+SnqNeo=
 
-kckit@0.28.0:
-  version "0.28.0"
-  resolved "https://registry.yarnpkg.com/kckit/-/kckit-0.28.0.tgz#6f0d5c26605370db09e95bc324476bba56621f77"
-  integrity sha512-bv+Mo57XUGHEvwUMPuom+jZrHY3aicWBiNlojicm5Cf1RgRI3/bDAGJCFDpFaFHZA39UeJXyCeKIXq93Ux8bzA==
+kckit@0.29.1:
+  version "0.29.1"
+  resolved "https://registry.yarnpkg.com/kckit/-/kckit-0.29.1.tgz#1e0a5bdc275bade96d083be47e519439fc983eee"
+  integrity sha512-k8TLx7Oo7CzhCAPCTTJUr5QJY8OqonzemGQ9DcLluWWKBY39JaJY06shiDpxAX0Nz2PIhS7ecD5B0ZEdyqexsw==
 
 kctip@^0.5.0:
   version "0.5.0"
