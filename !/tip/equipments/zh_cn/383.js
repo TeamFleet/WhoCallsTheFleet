@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",383,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/5.png)\"></s><strong>后期型53cm舰首鱼雷<small>(8门)</small></strong><small>潜艇专用鱼雷</small></h3><span>+19 雷装</span><span>+3 命中</span><span>+1 回避</span><span>射程: 短</span>")

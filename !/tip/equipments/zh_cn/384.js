@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",384,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/42.png)\"></s><strong>后期型潜艇搭载电探&逆探</strong><small>潜艇装备</small></h3><span>+2 火力</span><span>+4 雷装</span><span>+4 命中</span><span>+1 装甲</span><span>+13 回避</span><span>+7 索敌</span>")
