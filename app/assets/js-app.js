@@ -2,33 +2,43 @@
 
 var _this28 = void 0;
 
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3205,12 +3215,14 @@ _frame.app_main.page['fleets'] = {
     this.object = new (function (_Page) {
       _inherits(_class, _Page);
 
+      var _super = _createSuper(_class);
+
       function _class($page) {
         var _this;
 
         _classCallCheck(this, _class);
 
-        _this = _possibleConstructorReturn(this, _getPrototypeOf(_class).call(this, $page));
+        _this = _super.call(this, $page);
         $page.on({
           'pageShow': function pageShow() {
             if (this.inited) {
@@ -3232,12 +3244,14 @@ _frame.app_main.page['ships'] = {
     this.object = new (function (_Page2) {
       _inherits(_class2, _Page2);
 
+      var _super2 = _createSuper(_class2);
+
       function _class2($page) {
         var _this2;
 
         _classCallCheck(this, _class2);
 
-        _this2 = _possibleConstructorReturn(this, _getPrototypeOf(_class2).call(this, $page));
+        _this2 = _super2.call(this, $page);
         _this2.tablelist = $page.find('.tablelist');
         _this2.tablelistObj = _this2.tablelist.data('tablelist');
         $page.on({
@@ -3268,12 +3282,14 @@ _frame.app_main.page['equipments'] = {
     this.object = new (function (_Page3) {
       _inherits(_class3, _Page3);
 
+      var _super3 = _createSuper(_class3);
+
       function _class3($page) {
         var _this3;
 
         _classCallCheck(this, _class3);
 
-        _this3 = _possibleConstructorReturn(this, _getPrototypeOf(_class3).call(this, $page));
+        _this3 = _super3.call(this, $page);
         _this3.tablelist = $page.find('.tablelist');
         _this3.tablelistObj = _this3.tablelist.data('tablelist');
         $page.on({
@@ -8307,12 +8323,14 @@ Tablelist.genId = function (text) {
 var TablelistShips = function (_Tablelist) {
   _inherits(TablelistShips, _Tablelist);
 
+  var _super4 = _createSuper(TablelistShips);
+
   function TablelistShips(container, options) {
     var _this19;
 
     _classCallCheck(this, TablelistShips);
 
-    _this19 = _possibleConstructorReturn(this, _getPrototypeOf(TablelistShips).call(this, container, options));
+    _this19 = _super4.call(this, container, options);
     _this19.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['夜战', 'nightpower'], ['对空', 'aa'], ['对潜', 'asw'], ['耐久', 'hp'], ['装甲', 'armor'], ['回避', 'evasion'], ['搭载', 'carry'], ['航速', 'speed'], ['射程', 'range'], ['索敌', 'los'], ['运', 'luck'], ['油耗', 'consum_fuel'], ['弹耗', 'consum_ammo'], ['多立绘', 'extra_illust']];
     _this19.header_checkbox = [];
     _this19.mode_selection_filters = $();
@@ -8872,12 +8890,14 @@ var TablelistShips = function (_Tablelist) {
 var TablelistEquipments = function (_Tablelist2) {
   _inherits(TablelistEquipments, _Tablelist2);
 
+  var _super5 = _createSuper(TablelistEquipments);
+
   function TablelistEquipments(container, options) {
     var _this21;
 
     _classCallCheck(this, TablelistEquipments);
 
-    _this21 = _possibleConstructorReturn(this, _getPrototypeOf(TablelistEquipments).call(this, container, options));
+    _this21 = _super5.call(this, container, options);
     _this21.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['对空', 'aa'], ['对潜', 'asw'], ['爆装', 'bomb'], ['命中', 'hit'], ['装甲', 'armor'], ['回避', 'evasion'], ['索敌', 'los'], ['射程', 'range'], ['可改修', 'improvable']];
     _this21.equipmentsHasBonus = {};
 
@@ -9195,12 +9215,14 @@ TablelistEquipments.currentSelected = [];
 var TablelistFleets = function (_Tablelist3) {
   _inherits(TablelistFleets, _Tablelist3);
 
+  var _super6 = _createSuper(TablelistFleets);
+
   function TablelistFleets(container, options) {
     var _this25;
 
     _classCallCheck(this, TablelistFleets);
 
-    _this25 = _possibleConstructorReturn(this, _getPrototypeOf(TablelistFleets).call(this, container, options));
+    _this25 = _super6.call(this, container, options);
     _this25.columns = ['  ', ['创建者', 'user'], ['修改时间', 'time_modify'], ['评价', 'rating'], ['', 'options']];
     _this25.kancolle_calc = {
       '_ApplicationId': 'l1aps8iaIfcq2ZzhOHJWNUU2XrNySIzRahodijXW',
@@ -9375,53 +9397,34 @@ var TablelistFleets = function (_Tablelist3) {
 
         if (!fleetdata.data || !fleetdata.data.length || !fleetdata.data.push) return false;
         var is_valid = false;
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+
+        var _iterator = _createForOfIteratorHelper(fleetdata.data),
+            _step;
 
         try {
-          for (var _iterator = fleetdata.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
             var fleet = _step.value;
 
             if (fleet && fleet.length && fleet.push) {
-              var _iteratorNormalCompletion2 = true;
-              var _didIteratorError2 = false;
-              var _iteratorError2 = undefined;
+              var _iterator2 = _createForOfIteratorHelper(fleet),
+                  _step2;
 
               try {
-                for (var _iterator2 = fleet[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
                   var shipdata = _step2.value;
                   if (typeof shipdata != 'undefined' && shipdata && shipdata.push && typeof shipdata[0] != 'undefined' && shipdata[0]) is_valid = true;
                 }
               } catch (err) {
-                _didIteratorError2 = true;
-                _iteratorError2 = err;
+                _iterator2.e(err);
               } finally {
-                try {
-                  if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-                    _iterator2["return"]();
-                  }
-                } finally {
-                  if (_didIteratorError2) {
-                    throw _iteratorError2;
-                  }
-                }
+                _iterator2.f();
               }
             }
           }
         } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
+          _iterator.e(err);
         } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-              _iterator["return"]();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
+          _iterator.f();
         }
 
         return is_valid;
@@ -10350,12 +10353,14 @@ TablelistFleets.migrateBuilds = function (location) {
 var TablelistEntities = function (_Tablelist4) {
   _inherits(TablelistEntities, _Tablelist4);
 
+  var _super7 = _createSuper(TablelistEntities);
+
   function TablelistEntities(container, options) {
     var _this27;
 
     _classCallCheck(this, TablelistEntities);
 
-    _this27 = _possibleConstructorReturn(this, _getPrototypeOf(TablelistEntities).call(this, container, options));
+    _this27 = _super7.call(this, container, options);
 
     _frame.app_main.loading.push('tablelist_' + _this27._index);
 

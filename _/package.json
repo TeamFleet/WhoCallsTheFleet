@@ -14,11 +14,11 @@
   "license": "ISC",
   "dependencies": {
     "animate.css": "^3.7.0",
-    "clipboard": "^2.0.1",
-    "jquery": "3.4.1",
-    "kckit": "0.29.1",
+    "clipboard": "^2.0.6",
+    "jquery": "3.5.1",
+    "kckit": "0.30.0",
     "kctip": "^0.5.0",
-    "localforage": "^1.7.2",
+    "localforage": "^1.7.4",
     "lockr": "^0.8.4",
     "lz-string": "^1.4.4",
     "nedb": "^1.8.0",
@@ -26,14 +26,14 @@
     "sprintf-js": "^1.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
-    "autoprefixer": "^9.7.3",
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "autoprefixer": "^9.8.4",
     "babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
     "babel-plugin-transform-minify-booleans": "^6.9.4",
     "babel-preset-latest": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "browserify": "^16.2.2",
+    "browserify": "^16.5.1",
     "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
@@ -49,7 +49,7 @@
     "gulp-uglify": "^3.0.1",
     "gulp-watch-less2": "^2.0.4",
     "less-plugin-clean-css": "^1.5.1",
-    "terser": "^4.4.3",
+    "terser": "^4.8.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
   }
