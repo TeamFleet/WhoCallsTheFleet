@@ -17,7 +17,7 @@
 {"id":1,"code":"DD","code_game":"駆逐","_id":"NkAIZy0T53JXtl5i","equipable":[1,2,3,12,24,26,27,29,30,31,32,35,37,39,40,41,44,48],"name":{"en_us":"Destroyer","ja_jp":"駆逐艦","zh_cn":"驱逐舰"},"tp":5}
 {"id":18,"code":"BB","code_game":"戦","_id":"OjTTOwKy8NOi0hn7","hide":true,"name":{"en_us":"Battlecruiser (Torpedo)","ja_jp":"巡洋戦艦 (雷装)","zh_cn":"战列巡洋舰 (雷装)"}}
 {"code":"SS","code_game":"潜","id":27,"_id":"Pdeen1MBrbDLor8A","donotcompare":"on","name":{"en_us":"The Fleet of Fog Battle-Submarine","ja_jp":"霧の艦隊攻撃型潜水艦","zh_cn":"海雾舰队攻击型潜艇"}}
-{"id":17,"code":"AS","code_game":"潜母艦","_id":"Ux0mZqyBxLsy5ZNH","equipable":[1,2,3,7,8,9,15,16,22,24,29,30,31,32,33,35,37,40,43,44,48,51],"name":{"en_us":"Submarine Tender","ja_jp":"潜水母艦","zh_cn":"潜艇补给舰"},"tp":7}
+{"id":17,"code":"AS","code_game":"潜母艦","_id":"Ux0mZqyBxLsy5ZNH","equipable":[1,2,3,7,8,9,15,16,22,24,28,29,30,31,32,33,35,37,40,43,44,48,51],"name":{"en_us":"Submarine Tender","ja_jp":"潜水母艦","zh_cn":"潜艇补给舰"},"tp":7}
 {"id":13,"code":"SS","code_game":"潜","_id":"VQCtCVBTtEZ7vIiA","equipable":[12,13,14,27,32,35,44,48,52,58],"name":{"en_us":"Submarine","ja_jp":"潜水艦","zh_cn":"潜艇"}}
 {"id":3,"code":"CLT","code_game":"雷巡","_id":"Y9ZS4xMtWS793wNU","equipable":[1,2,3,4,7,8,9,12,14,24,25,26,27,29,30,31,32,35,37,40,43,48,64],"name":{"en_us":"Torpedo Cruiser","ja_jp":"重雷装巡洋艦","zh_cn":"重雷装巡洋舰"}}
 {"id":4,"code":"CA","code_game":"重巡","_id":"ZhdM4QnIYs0Gvd0t","equipable":[4,7,8,9,10,12,15,16,24,25,28,29,30,31,32,33,35,37,39,40,43,48,64],"name":{"en_us":"Heavy Cruiser","ja_jp":"重巡洋艦","zh_cn":"重巡洋舰"}}
