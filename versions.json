@@ -1,14 +1,14 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.30.44.0",
-			"path":		"data/2020.08.01/app.nwjs-data",
-			"bytes":	4570501
+			"version":	"0.30.45.0",
+			"path":		"data/2020.08.08/app.nwjs-data",
+			"bytes":	4570620
 		},
 		"app-db": {
-			"version":	"2020.08.01",
-			"path":		"data/2020.08.01/app-db.nwjs-data",
-			"bytes":	1757989
+			"version":	"2020.08.08",
+			"path":		"data/2020.08.08/app-db.nwjs-data",
+			"bytes":	1824329
 		},
 		"bgimgs": {
 			"version":	"1.18.6.0",
@@ -163,15 +163,15 @@
 			"bytes":	15881059
 		},
 		"pics-ships-extra-10": {
-			"version":	"2020.08.01",
-			"path":		"data/2020.08.01/pics-ships-extra-10.nwjs-data",
-			"bytes":	7738196
+			"version":	"2020.08.08",
+			"path":		"data/2020.08.08/pics-ships-extra-10.nwjs-data",
+			"bytes":	10143387
 		}
 
 	},
 
 	"packages-beta": {},
-	"core":  "0.21.6",
+	"core": "0.21.6",
 	"homepage": "http://fleet.moe/",
 	"release-notes": "https://github.com/Diablohu/WhoCallsTheFleet/releases",
 	"forum": "http://bbs.ngacn.cc/read.php?tid=7959995"
