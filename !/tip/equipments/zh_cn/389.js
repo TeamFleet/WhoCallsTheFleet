@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",389,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/46.png)\"></s><strong>TBM-3W+3S</strong><small>舰载鱼雷轰炸机（夜间）</small></h3><span>+3 火力</span><span>+10 雷装</span><span>+13 对潜</span><span>+7 爆装</span><span>+3 命中</span><span>+10 索敌</span><span>航程: 5</span>")
