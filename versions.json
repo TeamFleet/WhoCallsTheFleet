@@ -1,14 +1,14 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.30.47.0",
-			"path":		"data/2020.09.18/app.nwjs-data",
-			"bytes":	4572996
+			"version":	"0.30.48.0",
+			"path":		"data/2020.10.17/app.nwjs-data",
+			"bytes":	4573769
 		},
 		"app-db": {
-			"version":	"2020.09.18",
-			"path":		"data/2020.09.18/app-db.nwjs-data",
-			"bytes":	1826829
+			"version":	"2020.10.17",
+			"path":		"data/2020.10.17/app-db.nwjs-data",
+			"bytes":	1828290
 		},
 		"bgimgs": {
 			"version":	"1.18.6.0",
@@ -16,9 +16,9 @@
 			"bytes":	12494509
 		},
 		"pics": {
-			"version":	"2020.08.29",
-			"path":		"data/2020.08.29/pics.nwjs-data",
-			"bytes":	41346557
+			"version":	"2020.10.17",
+			"path":		"data/2020.10.17/pics.nwjs-data",
+			"bytes":	41619169
 		},
 		"pics-enemies": {
 			"version":	"2018.08.28",
@@ -87,9 +87,9 @@
 			"bytes":	20916398
 		},
 		"pics-ships-13": {
-			"version":	"2020.08.29",
-			"path":		"data/2020.08.29/pics-ships-13.nwjs-data",
-			"bytes":	15541707
+			"version":	"2020.10.17",
+			"path":		"data/2020.10.17/pics-ships-13.nwjs-data",
+			"bytes":	15904034
 		},
 		"pics-ships-14": {
 			"version":	"2020.08.29",
@@ -128,9 +128,9 @@
 			"bytes":	18213485
 		},
 		"pics-ships-extra-3": {
-			"version":	"2019.07.01",
-			"path":		"data/2019.07.01/pics-ships-extra-3.nwjs-data",
-			"bytes":	16635746
+			"version":	"2020.10.17",
+			"path":		"data/2020.10.17/pics-ships-extra-3.nwjs-data",
+			"bytes":	16795750
 		},
 		"pics-ships-extra-4": {
 			"version":	"2019.12.01",
@@ -163,15 +163,15 @@
 			"bytes":	15881059
 		},
 		"pics-ships-extra-10": {
-			"version":	"2020.09.18",
-			"path":		"data/2020.09.18/pics-ships-extra-10.nwjs-data",
-			"bytes":	12305278
+			"version":	"2020.10.17",
+			"path":		"data/2020.10.17/pics-ships-extra-10.nwjs-data",
+			"bytes":	14039480
 		}
 
 	},
 
 	"packages-beta": {},
-	"core":  "0.21.6",
+	"core": "0.21.6",
 	"homepage": "http://fleet.moe/",
 	"release-notes": "https://github.com/Diablohu/WhoCallsTheFleet/releases",
 	"forum": "http://bbs.ngacn.cc/read.php?tid=7959995"

@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",391,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/7.png)\"></s><strong>九九式舰爆二二型</strong><small>舰载俯冲轰炸机</small></h3><span>+3 对潜</span><span>+6 爆装</span><span>+1 命中</span><span>+2 索敌</span><span>航程: 3</span>")
