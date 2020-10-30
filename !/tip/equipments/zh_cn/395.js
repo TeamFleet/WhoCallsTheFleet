@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",395,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/49.png)\"></s><strong>深山</strong><small>大型陆上机</small></h3><span>+16 雷装</span><span>+1 对空</span><span>+17 爆装</span><span>航程: 10</span>")

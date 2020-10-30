@@ -3103,7 +3103,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
   location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20201017';
+_g.db_version = '20201031';
 _g.bgimg_count=26;
 _g.event = {
   'animationend': 'animationend webkitAnimationEnd',
@@ -7566,7 +7566,7 @@ var InfosFleetShipEquipment = function () {
         } else this.el.removeClass('is-aircraft is-rankupgradable');
 
         if (this.isParentAirfield) {
-          if (Formula.equipmentType.Recons.indexOf(_g.data.items[value].type) > -1) this.carry = 4;else this.carry = 18;
+          this.carry = InfosFleetAirfield.getCarryFromType(_g.data.items[value].type);
         }
       } else {
         if (this.isParentAirfield) {
@@ -7828,7 +7828,7 @@ var InfosFleetAirfield = function () {
   }, {
     key: "getCarry",
     value: function getCarry(equipment) {
-      if (Formula.equipmentType.Recons.indexOf(equipment.type) > -1) return KC.planesPerSlotLBAS.recon;else return KC.planesPerSlotLBAS.attacker;
+      return InfosFleetAirfield.getCarryFromType(equipment.type);
     }
   }, {
     key: "summaryCalc",
@@ -7983,6 +7983,10 @@ InfosFleetAirfield.dragEnter = function (infosFleetAirfield_enter) {
 };
 
 InfosFleetAirfield.equipmentTypes = $.unique(Formula.equipmentType.LandBased.concat(Formula.equipmentType.Seaplanes).concat(Formula.equipmentType.CarrierBased).concat(Formula.equipmentType.Recons));
+
+InfosFleetAirfield.getCarryFromType = function (equipmentType) {
+  if (Formula.equipmentType.Recons.indexOf(equipmentType) > -1) return KC.planesPerSlotLBAS.recon;else if (Formula.equipmentType.LandBasedLarge.indexOf(equipmentType) > -1) return KC.planesPerSlotLBAS.large;else return KC.planesPerSlotLBAS.attacker;
+};
 
 _frame.app_main.is_mode_selection = function () {
   return $html.hasClass('mode-selection') || _frame.dom.layout.hasClass('mode-selection');
