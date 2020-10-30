@@ -6499,7 +6499,7 @@ var InfosFleetShipEquipment = function () {
         } else this.el.removeClass('is-aircraft is-rankupgradable');
 
         if (this.isParentAirfield) {
-          if (Formula.equipmentType.Recons.indexOf(_g.data.items[value].type) > -1) this.carry = 4;else this.carry = 18;
+          this.carry = InfosFleetAirfield.getCarryFromType(_g.data.items[value].type);
         }
       } else {
         if (this.isParentAirfield) {
@@ -6761,7 +6761,7 @@ var InfosFleetAirfield = function () {
   }, {
     key: "getCarry",
     value: function getCarry(equipment) {
-      if (Formula.equipmentType.Recons.indexOf(equipment.type) > -1) return KC.planesPerSlotLBAS.recon;else return KC.planesPerSlotLBAS.attacker;
+      return InfosFleetAirfield.getCarryFromType(equipment.type);
     }
   }, {
     key: "summaryCalc",
@@ -6916,6 +6916,10 @@ InfosFleetAirfield.dragEnter = function (infosFleetAirfield_enter) {
 };
 
 InfosFleetAirfield.equipmentTypes = $.unique(Formula.equipmentType.LandBased.concat(Formula.equipmentType.Seaplanes).concat(Formula.equipmentType.CarrierBased).concat(Formula.equipmentType.Recons));
+
+InfosFleetAirfield.getCarryFromType = function (equipmentType) {
+  if (Formula.equipmentType.Recons.indexOf(equipmentType) > -1) return KC.planesPerSlotLBAS.recon;else if (Formula.equipmentType.LandBasedLarge.indexOf(equipmentType) > -1) return KC.planesPerSlotLBAS.large;else return KC.planesPerSlotLBAS.attacker;
+};
 
 _frame.infos.__fleet__OUTPUT = function (id) {
   return $('<div class="infos-fleet loading"/>').append($('<div class="loading-msg"/>').html('Loading...'));

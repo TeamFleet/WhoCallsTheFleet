@@ -2678,10 +2678,7 @@ class InfosFleetShipEquipment {
                 this.el.removeClass('is-aircraft is-rankupgradable')
             // 基地航空队 - 如果选择为侦察机，搭载修改为4
             if (this.isParentAirfield) {
-                if (Formula.equipmentType.Recons.indexOf(_g.data.items[value].type) > -1)
-                    this.carry = 4
-                else
-                    this.carry = 18
+                this.carry = InfosFleetAirfield.getCarryFromType(_g.data.items[value].type)
             }
         } else {
             if (this.isParentAirfield) {
@@ -3126,10 +3123,7 @@ class InfosFleetAirfield {
 
     // 获取搭载量
     getCarry(equipment) {
-        if (Formula.equipmentType.Recons.indexOf(equipment.type) > -1)
-            return KC.planesPerSlotLBAS.recon
-        else
-            return KC.planesPerSlotLBAS.attacker
+        return InfosFleetAirfield.getCarryFromType(equipment.type)
     }
 
     // 更新属性总览
@@ -3314,3 +3308,11 @@ InfosFleetAirfield.equipmentTypes = $.unique(
         .concat(Formula.equipmentType.CarrierBased)
         .concat(Formula.equipmentType.Recons)
 )
+InfosFleetAirfield.getCarryFromType = function (equipmentType) {
+    if (Formula.equipmentType.Recons.indexOf(equipmentType) > -1)
+        return KC.planesPerSlotLBAS.recon
+    else if (Formula.equipmentType.LandBasedLarge.indexOf(equipmentType) > -1)
+        return KC.planesPerSlotLBAS.large
+    else
+        return KC.planesPerSlotLBAS.attacker
+}
