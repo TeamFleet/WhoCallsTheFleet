@@ -45,6 +45,7 @@
 {"ship_type_id":1,"id":25,"_id":"LFktZnFndcgKf7Ar","speed_rule":"high-3","name":{"en_us":"Type 1934","ja_jp":"Z1","zh_cn":"Z1"},"navy":"km"}
 {"name":{"ja_jp":"改赤城","zh_cn":"改赤城","en_us":"Revised Akagi"},"ship_type_id":10,"id":121,"_id":"LGu7cgj9z6oQF21f","speed_rule":"high-3"}
 {"ship_type_id":9,"id":37,"_id":"LkECCXzx3uRECMCo","speed_rule":"low-2","name":{"en_us":"Hiyou","ja_jp":"飛鷹","zh_cn":"飞鹰"}}
+{"name":{"ja_jp":"改装陽炎","zh_cn":"改装阳炎"},"ship_type_id":1,"id":138,"_id":"MMjDJ7lYAh3ehJAF","navy":"rocn"}
 {"ship_type_id":13,"id":63,"_id":"MXCJDdredQZNAeyX","speed_rule":"low-3","name":{"en_us":"Ro-series","ja_jp":"呂号","zh_cn":"吕号"}}
 {"name":{"ja_jp":"John C.Butler","zh_cn":"约翰·C·巴特勒","en_us":""},"ship_type_id":1,"id":112,"_id":"Nvzvklc2BNAuwjnZ","navy":"usn","speed_rule":"low-4"}
 {"name":{"ja_jp":"神威","zh_cn":"神威","en_us":"Kamoi"},"ship_type_id":29,"id":98,"_id":"O3lucZpi7fHXfyYb"}
@@ -97,6 +98,7 @@
 {"id":11,"ship_type_id":8,"_id":"kSJwuMPND49q30PL","speed_rule":"low-2","name":{"en_us":"Fusou","ja_jp":"扶桑","zh_cn":"扶桑"}}
 {"ship_type_id":2,"id":53,"_id":"lAB5BEpDEOb0YJya","speed_rule":"high-3","name":{"en_us":"Ooyodo","ja_jp":"大淀","zh_cn":"大淀"}}
 {"ship_type_id":1,"id":21,"_id":"lV7UMq31ARn8yjAj","speed_rule":"high-3","name":{"en_us":"Kagerou","ja_jp":"陽炎","zh_cn":"阳炎"}}
+{"name":{"ja_jp":"改陽炎","zh_cn":"改阳炎"},"ship_type_id":1,"id":139,"_id":"lW14O1UZkXsKiJZ2"}
 {"id":12,"ship_type_id":1,"_id":"lwGizhf1akrQ7WjP","speed_rule":"high-3","name":{"en_us":"Mutsuki","ja_jp":"睦月","zh_cn":"睦月"}}
 {"ship_type_id":10,"id":26,"_id":"m3KaV0Fw0rYP6TJV","speed_rule":"high-3","name":{"en_us":"Akagi","ja_jp":"赤城","zh_cn":"赤城"}}
 {"ship_type_id":4,"id":42,"_id":"mjCd471R46EOYXXd","speed_rule":"high-3","name":{"en_us":"Takao","ja_jp":"高雄","zh_cn":"高雄"}}

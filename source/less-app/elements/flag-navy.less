@@ -1,4 +1,4 @@
-@count:     10;
+@count:     11;
 
 // const navies = [
 //     "ijn", // 日本帝国海军
@@ -52,6 +52,9 @@
     }
     &[data-navy="rnln"]{
         background-position: 50% percentage(9 / (@count - 1));
+    }
+    &[data-navy="rocn"]{
+        background-position: 50% percentage(10 / (@count - 1));
     }
 
     .navies(@n, @i: 0) when (@i =< @n) {
