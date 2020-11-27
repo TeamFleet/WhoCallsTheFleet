@@ -1,14 +1,14 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.30.50.0",
-			"path":		"data/2020.11.14/app.nwjs-data",
-			"bytes":	4880179
+			"version":	"0.30.51.0",
+			"path":		"data/2020.11.28/app.nwjs-data",
+			"bytes":	4882181
 		},
 		"app-db": {
-			"version":	"2020.11.14",
-			"path":		"data/2020.11.14/app-db.nwjs-data",
-			"bytes":	1831352
+			"version":	"2020.11.28",
+			"path":		"data/2020.11.28/app-db.nwjs-data",
+			"bytes":	1833074
 		},
 		"bgimgs": {
 			"version":	"1.18.6.0",
@@ -16,9 +16,9 @@
 			"bytes":	12494509
 		},
 		"pics": {
-			"version":	"2020.11.14",
-			"path":		"data/2020.11.14/pics.nwjs-data",
-			"bytes":	41893443
+			"version":	"2020.11.28",
+			"path":		"data/2020.11.28/pics.nwjs-data",
+			"bytes":	42241666
 		},
 		"pics-enemies": {
 			"version":	"2018.08.28",
@@ -77,9 +77,9 @@
 			"bytes":	22855130
 		},
 		"pics-ships-11": {
-			"version":	"2019.09.04",
-			"path":		"data/2019.09.04/pics-ships-11.nwjs-data",
-			"bytes":	17308521
+			"version":	"2020.11.28",
+			"path":		"data/2020.11.28/pics-ships-11.nwjs-data",
+			"bytes":	17696632
 		},
 		"pics-ships-12": {
 			"version":	"2020.04.26",
@@ -92,14 +92,14 @@
 			"bytes":	15904034
 		},
 		"pics-ships-14": {
-			"version":	"2020.11.14",
-			"path":		"data/2020.11.14/pics-ships-14.nwjs-data",
-			"bytes":	5729009
+			"version":	"2020.11.28",
+			"path":		"data/2020.11.28/pics-ships-14.nwjs-data",
+			"bytes":	7528675
 		},
 		"pics-ships-15": {
-			"version":	"2020.07.12",
-			"path":		"data/2020.07.12/pics-ships-15.nwjs-data",
-			"bytes":	1409903
+			"version":	"2020.11.28",
+			"path":		"data/2020.11.28/pics-ships-15.nwjs-data",
+			"bytes":	1795045
 		},
 		"pics-ships-18": {
 			"version":	"2019.09.04",
@@ -171,7 +171,7 @@
 	},
 
 	"packages-beta": {},
-	"core":    "0.21.6",
+	"core": "0.21.6",
 	"homepage": "http://fleet.moe/",
 	"release-notes": "https://github.com/Diablohu/WhoCallsTheFleet/releases",
 	"forum": "http://bbs.ngacn.cc/read.php?tid=7959995"

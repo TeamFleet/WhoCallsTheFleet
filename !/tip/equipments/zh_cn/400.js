@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",400,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/5.png)\"></s><strong>533mm三连装鱼雷<small>(53-39型)</small></strong><small>鱼雷</small></h3><span>+1 火力</span><span>+6 雷装</span><span>+1 命中</span><span>+2 回避</span><span>射程: 短</span>")

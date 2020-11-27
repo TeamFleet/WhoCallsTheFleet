@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",402,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/29.png)\"></s><strong>寒冷地装备&甲板要员</strong><small>航空要员</small></h3>")
