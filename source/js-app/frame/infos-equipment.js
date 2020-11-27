@@ -222,6 +222,7 @@ _frame.infos.__equipment = function (id) {
                 icon: 'search',
                 html: '可装备于...',
                 'data-equipment-type': d['type'],
+                'data-equipment-id': d.id,
             })
                 .appendTo(container)
         }

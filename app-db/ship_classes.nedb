@@ -61,6 +61,7 @@
 {"name":{"ja_jp":"Northampton","zh_cn":"北安普顿","en_us":"Northampton"},"ship_type_id":4,"id":124,"_id":"TqSucKfVc35XtQvm","navy":"usn"}
 {"ship_type_id":4,"id":81,"_id":"TqvaW6jEdVptFohN","speed_rule":"high-3","name":{"en_us":"Zara","ja_jp":"Zara","zh_cn":"扎拉"},"navy":"rm"}
 {"name":{"ja_jp":"Yorktown","zh_cn":"约克城"},"ship_type_id":10,"id":135,"_id":"URPYgaL8JlUwTXo4","navy":"usn"}
+{"name":{"ja_jp":"North Carolina","zh_cn":"北卡罗莱纳","en_us":"North Carolina"},"ship_type_id":7,"id":141,"_id":"VaCsevxhYgGjiiKV","navy":"usn"}
 {"ship_type_id":7,"id":70,"_id":"X7YkWImv52ZLa7tS","speed_rule":"high-3","name":{"en_us":"Vittorio Veneto","ja_jp":"V.Veneto","zh_cn":"维托里奥·维内托"},"navy":"rm"}
 {"ship_type_id":9,"id":36,"_id":"YN9ONCrGYRZHFcBl","speed_rule":"high-3","name":{"en_us":"Shouhou","ja_jp":"祥鳳","zh_cn":"祥凤"}}
 {"ship_type_id":13,"id":61,"_id":"YZ70kvfsnx9rAx3z","speed_rule":"low-3","name":{"en_us":"Junsen Type B Kai Ni","ja_jp":"巡潜乙（改二）","zh_cn":"巡潜乙（改二）"}}
@@ -129,6 +130,7 @@
 {"name":{"ja_jp":"Nelson","zh_cn":"纳尔逊","en_us":"Nelson"},"ship_type_id":6,"id":115,"_id":"wmoSdmAIXxfcTcfL","navy":"rn"}
 {"ship_type_id":2,"id":49,"_id":"wxZ0fgIHk6PXIfFP","speed_rule":"high-3","name":{"en_us":"Nagara","ja_jp":"長良","zh_cn":"长良"}}
 {"id":14,"ship_type_id":18,"_id":"x7qm99OMLRKbJfnx","speed_rule":"high-3","name":{"en_us":"","ja_jp":"Bismarck","zh_cn":"俾斯麦"}}
+{"name":{"ja_jp":"Town","zh_cn":"城","en_us":"Town"},"ship_type_id":2,"id":140,"_id":"xVHRpX0vuNR7LwYV","navy":"rn"}
 {"name":{"ja_jp":"Perth","zh_cn":"珀斯","en_us":"Perth"},"ship_type_id":2,"id":125,"_id":"xyzF3wJ2mOHKhV5B","navy":"ran"}
 {"name":{"ja_jp":"Essex","zh_cn":"埃塞克斯"},"ship_type_id":10,"id":110,"_id":"yCbmTHhmquQzIcX0","navy":"usn"}
 {"ship_type_id":5,"id":90,"_id":"yEuYyegyCYUN5hJ1","name":{"en_us":"Revised Mogami","ja_jp":"改最上","zh_cn":"改最上"},"speed_rule":"high-1"}

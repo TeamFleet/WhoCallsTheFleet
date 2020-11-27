@@ -1,7 +1,10 @@
 
 _frame.infos.__equipment_init = function( $el ){  
     function showEquipable( e ){
-        return modal.equipable.show( e.currentTarget.getAttribute('data-equipment-type') )
+        return modal.equipable.show(
+            e.currentTarget.getAttribute('data-equipment-type'),
+            e.currentTarget.getAttribute('data-equipment-id')
+        )
     }
     
     $el.on('click.equipable', 'button[data-equipment-type]', showEquipable)

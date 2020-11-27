@@ -4610,7 +4610,8 @@ _frame.infos.__equipment = function (id) {
         "class": 'button button-equipable',
         icon: 'search',
         html: '可装备于...',
-        'data-equipment-type': d['type']
+        'data-equipment-type': d['type'],
+        'data-equipment-id': d.id
       }).appendTo(_container);
     }
     {
@@ -4677,7 +4678,7 @@ _frame.infos.__equipment = function (id) {
 
 _frame.infos.__equipment_init = function ($el) {
   function showEquipable(e) {
-    return modal.equipable.show(e.currentTarget.getAttribute('data-equipment-type'));
+    return modal.equipable.show(e.currentTarget.getAttribute('data-equipment-type'), e.currentTarget.getAttribute('data-equipment-id'));
   }
 
   $el.on('click.equipable', 'button[data-equipment-type]', showEquipable);
@@ -7659,7 +7660,7 @@ if (typeof _p.tip != 'undefined') {
 var modal = {};
 modal.equipable = {
   'frames': {},
-  'frame': function frame(typeId) {
+  'frame': function frame(typeId, equipmentId) {
     if (!typeId) return false;
 
     if (!this.frames[typeId]) {
@@ -7668,6 +7669,12 @@ modal.equipable = {
           onType = equipType.equipable_on_type || [],
           extraShip = equipType.equipable_extra_ship || [],
           types = [];
+
+      if (equipmentId && _g.data.items[equipmentId] && Array.isArray(_g.data.items[equipmentId].equipable_extra_ship)) {
+        _g.data.items[equipmentId].equipable_extra_ship.forEach(function (shipId) {
+          extraShip.push(shipId);
+        });
+      }
 
       _g.ship_type_order_full.forEach(function (ship_type) {
         if (onType.indexOf(ship_type) > -1) types.push(ship_type);
@@ -7694,8 +7701,8 @@ modal.equipable = {
 
     return this.frames[typeId];
   },
-  'show': function show(typeId) {
-    return _frame.modal.show(this.frame(typeId), "".concat(_g.data.item_types[typeId].name.zh_cn, " \u53EF\u88C5\u5907\u4E8E..."), {
+  'show': function show(typeId, equipmentId) {
+    return _frame.modal.show(this.frame(typeId, equipmentId), "".concat(_g.data.item_types[typeId].name.zh_cn, " \u53EF\u88C5\u5907\u4E8E..."), {
       'classname': 'modal-equipable',
       'detach': true
     });
@@ -7950,8 +7957,9 @@ modal.bonuses = function () {
         bonusStats = this.renderStat(bonus.bonus);
       }
 
-      return $("<div class=\"bonus bonus-set\">" + condition + "<div class=\"equipments\">" + bonus.list.map(function (item) {
-        if (!isNaN(item)) return _tmpl.link_equipment(item, _this18.type === 'equipment' && item == _this18.equipment.id ? 'span' : undefined, true);
+      var stars = bonus.listStar || [];
+      return $("<div class=\"bonus bonus-set\">" + condition + "<div class=\"equipments\">" + bonus.list.map(function (item, index) {
+        if (!isNaN(item)) return _tmpl.link_equipment(item, _this18.type === 'equipment' && item == _this18.equipment.id ? 'span' : undefined, true, stars[index] || undefined);
 
         if (Array.isArray(item)) {
           return item.map(function (item) {

@@ -1,6 +1,6 @@
 modal.equipable = {
     'frames': {},
-    'frame': function( typeId ){
+    'frame': function( typeId, equipmentId ){
         if( !typeId )
             return false
 
@@ -11,6 +11,15 @@ modal.equipable = {
                 ,onType = equipType.equipable_on_type || []
                 ,extraShip = equipType.equipable_extra_ship || []
                 ,types = []
+            
+            if( equipmentId
+                && _g.data.items[equipmentId]
+                && Array.isArray(_g.data.items[equipmentId].equipable_extra_ship)
+            ) {
+                _g.data.items[equipmentId].equipable_extra_ship.forEach(function(shipId) {
+                    extraShip.push(shipId)
+                })
+            }
                     
             _g.ship_type_order_full.forEach( function(ship_type){
                 if( onType.indexOf( ship_type ) > -1 )
@@ -49,9 +58,9 @@ modal.equipable = {
         
         return this.frames[typeId]
     },
-    'show': function( typeId ){
+    'show': function( typeId, equipmentId ){
         return _frame.modal.show(
-            this.frame( typeId ),
+            this.frame( typeId, equipmentId ),
             //'可装备于...',
             `${_g.data.item_types[typeId].name.zh_cn} 可装备于...`,
             {

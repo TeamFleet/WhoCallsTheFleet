@@ -300,17 +300,20 @@ modal.bonuses = (() => ({
             bonusStats = this.renderStat(bonus.bonus)
         }
 
+        const stars = bonus.listStar || []
+
         return $(
             `<div class="bonus bonus-set">`
             + condition
             + `<div class="equipments">`
             + bonus.list
-                .map(item => {
+                .map((item, index) => {
                     if (!isNaN(item))
                         return _tmpl.link_equipment(
                             item,
                             this.type === 'equipment' && item == this.equipment.id ? 'span' : undefined,
-                            true
+                            true,
+                            stars[index] || undefined
                         )
                     if (Array.isArray(item)) {
                         return item.map(item => _tmpl.link_equipment(
