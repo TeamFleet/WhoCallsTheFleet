@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",404,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/37.png)\"></s><strong>四式重爆 飞龙<small>(熟练)</small></strong><small>陆上轰炸机</small></h3><span>+14 雷装</span><span>+5 对空</span><span>+5 对潜</span><span>+16 爆装</span><span>+2 命中</span><span>+5 索敌</span><span>航程: 5</span>")
