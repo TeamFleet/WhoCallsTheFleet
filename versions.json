@@ -17,7 +17,7 @@
 		},
 		"pics": {
 			"version":	"2021.01.05",
-			"path":		"data/2020.11.28/pics.nwjs-data",
+			"path":		"data/2021.01.05/pics.nwjs-data",
 			"bytes":	42434424
 		},
 		"pics-enemies": {
@@ -176,7 +176,7 @@
 	},
 
 	"packages-beta": {},
-	"core":  "0.21.6",
+	"core": "0.21.6",
 	"homepage": "http://fleet.moe/",
 	"release-notes": "https://github.com/Diablohu/WhoCallsTheFleet/releases",
 	"forum": "http://bbs.ngacn.cc/read.php?tid=7959995"
