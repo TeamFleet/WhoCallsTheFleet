@@ -1,7 +1,7 @@
 {
   "name": "WhoCallsTheFleet",
   "main": "app/main.html",
-  "version": "0.30.52",
+  "version": "0.30.53",
   "description": "An offline guidebook for KanColle. Based on NW.JS",
   "repository": {
     "type": "git",
@@ -38,10 +38,10 @@
       "package.json"
     ],
     "dataVersion": {
-      "app": "0.30.52.0",
-      "app-db": "2020.12.20",
+      "app": "0.30.53.0",
+      "app-db": "2021.01.05",
       "bgimgs": "1.18.6.0",
-      "pics": "2020.11.28",
+      "pics": "2021.01.05",
       "pics-enemies": "2018.08.28",
       "pics-ships-1": "2018.12.08",
       "pics-ships-2": "2018.12.08",
