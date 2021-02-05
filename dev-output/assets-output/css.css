@@ -14789,6 +14789,18 @@ body > .modal.hastitle.modal-bonuses section .bonus + .bonus::before {
   position: absolute;
   background: rgba(255, 255, 255, 0.25);
 }
+@supports (position: sticky) {
+  body > .modal.hastitle.modal-bonuses section .bonus + .bonus.bonus-title {
+    position: sticky;
+    top: -0.55rem;
+    z-index: 100;
+  }
+  body > .modal.hastitle.modal-bonuses section .bonus + .bonus.bonus-title::after {
+    right: -10px;
+    width: auto;
+    background: linear-gradient(90deg, hsla(0, 0%, 30%, 0.95) 25%, hsla(0, 0%, 20%, 0.85) 50%, transparent);
+  }
+}
 body > .modal.hastitle.modal-bonuses section .bonus .equipments .link_equipment {
   line-height: 16px;
   padding-top: 7px;
@@ -14803,6 +14815,28 @@ body > .modal.hastitle.modal-bonuses section .bonus .equipments a.link_equipment
 }
 body > .modal.hastitle.modal-bonuses section .bonus .equipments a.link_equipment:active {
   color: rgba(255, 255, 255, 0.65);
+}
+body > .modal.hastitle.modal-bonuses section .bonus .equipments > .one-of {
+  margin-left: 36px;
+  margin-top: 5px;
+  border: 1px solid rgba(255, 246, 204, 0.5);
+  padding: 8px 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(254, 246, 230, 0.5), inset 0 0 10px rgba(254, 246, 230, 0.5);
+  font-size: 14px;
+  background: rgba(254, 246, 230, 0.1);
+}
+body > .modal.hastitle.modal-bonuses section .bonus .equipments > .one-of .info {
+  display: block;
+  font-style: italic;
+  color: rgba(255, 246, 204, 0.75);
+}
+body > .modal.hastitle.modal-bonuses section .bonus .equipments > .one-of .link_equipment {
+  font-size: inherit;
+  margin-bottom: -6px;
+}
+body > .modal.hastitle.modal-bonuses section .bonus .equipments > .one-of-trail {
+  height: 10px;
 }
 body > .modal.hastitle.modal-bonuses section .bonus .ships {
   border-left: 36px solid transparent;
@@ -15099,6 +15133,11 @@ body > .modal.hastitle.modal-bonuses section .bonus-title::after {
   width: 250px;
   background: linear-gradient(to right, rgba(255, 255, 255, 0.25) 50%, transparent);
   z-index: -1;
+}
+body > .modal.hastitle.modal-bonuses section .bonus-title small {
+  margin-left: 1em;
+  font-size: 14px;
+  font-weight: normal;
 }
 body > .modal.hastitle.modal-bonuses.modal-bonuses-ship > div {
   padding-top: 60px !important;

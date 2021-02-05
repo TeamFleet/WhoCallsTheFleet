@@ -48,6 +48,7 @@
 {"ship_type_id":9,"id":37,"_id":"LkECCXzx3uRECMCo","speed_rule":"low-2","name":{"en_us":"Hiyou","ja_jp":"飛鷹","zh_cn":"飞鹰"}}
 {"name":{"ja_jp":"改装陽炎","zh_cn":"改装阳炎"},"ship_type_id":1,"id":138,"_id":"MMjDJ7lYAh3ehJAF","navy":"rocn"}
 {"ship_type_id":13,"id":63,"_id":"MXCJDdredQZNAeyX","speed_rule":"low-3","name":{"en_us":"Ro-series","ja_jp":"呂号","zh_cn":"吕号"}}
+{"name":{"ja_jp":"改阿賀野","zh_cn":"改阿贺野","en_us":"Revised Agano"},"ship_type_id":2,"id":143,"_id":"MvTlUFVIc4eEpmtN","speed_rule":"high-2","equipable_exclude_by_slot":[null,null,null,[12]]}
 {"name":{"ja_jp":"John C.Butler","zh_cn":"约翰·C·巴特勒","en_us":""},"ship_type_id":1,"id":112,"_id":"Nvzvklc2BNAuwjnZ","navy":"usn","speed_rule":"low-4"}
 {"name":{"ja_jp":"神威","zh_cn":"神威","en_us":"Kamoi"},"ship_type_id":29,"id":98,"_id":"O3lucZpi7fHXfyYb"}
 {"id":7,"ship_type_id":7,"_id":"PkNoV9TpcX3TA9qG","speed_rule":"high-3","name":{"en_us":"Bismarck","ja_jp":"Bismarck","zh_cn":"俾斯麦"},"navy":"km"}

@@ -3103,7 +3103,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
   location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20210117';
+_g.db_version = '20210206';
 _g.bgimg_count = 0;
 _g.event = {
   'animationend': 'animationend webkitAnimationEnd',
@@ -8234,7 +8234,7 @@ modal.bonuses = function () {
       return cache[id];
     },
     renderSubTitle: function renderSubTitle(type) {
-      return $("<div class=\"bonus bonus-title\">" + (type === 'set' ? '套装加成' : '') + "</div>");
+      return $("<div class=\"bonus bonus-title\">" + (type === 'set' ? '套装加成<small>每一个条件的效果仅计算一次，多个条件的效果可叠加</small>' : '') + "</div>");
     },
     renderStat: function renderStat(bonus) {
       var r = '';
@@ -8326,6 +8326,13 @@ modal.bonuses = function () {
       if (condition) return "<div class=\"ships\">".concat(condition, "</div>");
       return '';
     },
+    renderConditionEquipmentOneOfForSet: function renderConditionEquipmentOneOfForSet(bonus) {
+      if (!bonus.equipments || !Array.isArray(bonus.equipments.hasOneOf)) return '';
+      return "<div class=\"one-of\">" + "<span class=\"info\">\u4EC5\u5728\u62E5\u6709\u4EE5\u4E0B\u4EFB\u610F\u88C5\u5907\u65F6\uFF0C\u62E5\u6709\u591A\u4E2A\u65F6\u6548\u679C\u4E0D\u53E0\u52A0\uFF0C\u53EF\u4E0E\u5176\u4ED6\u6761\u4EF6\u53E0\u52A0</span>" + bonus.equipments.hasOneOf.map(function (condition) {
+        if (condition.isID) return _tmpl.link_equipment(condition.isID, 'span', true);
+        return '';
+      }).join('') + "</div>" + "<div class=\"one-of-trail\"></div>";
+    },
     renderBonusSingle: function renderBonusSingle(bonus) {
       var _this17 = this;
 
@@ -8414,6 +8421,7 @@ modal.bonuses = function () {
       }
 
       var stars = bonus.listStar || [];
+      console.log(bonus);
       return $("<div class=\"bonus bonus-set\">" + condition + "<div class=\"equipments\">" + bonus.list.map(function (item, index) {
         if (!isNaN(item)) return _tmpl.link_equipment(item, _this18.type === 'equipment' && item == _this18.equipment.id ? 'span' : undefined, true, stars[index] || undefined);
 
@@ -8428,17 +8436,40 @@ modal.bonuses = function () {
         }
 
         if (typeof item === 'string') {
+          var iconId, name;
+
           switch (item) {
             case 'SurfaceRadar':
-              return "<span class=\"link_equipment\">" + "<i style=\"background-image:url(assets/images/itemicon/11.png)\"></i>" + "<span>\u5BF9\u6C34\u9762\u96F7\u8FBE/\u7535\u63A2</span>" + "</span>";
+              {
+                iconId = 11;
+                name = '对水面雷达/电探';
+                return "<span class=\"link_equipment\">" + "<i style=\"background-image:url(assets/images/itemicon/11.png)\"></i>" + "<span>\u5BF9\u6C34\u9762\u96F7\u8FBE/\u7535\u63A2</span>" + "</span>";
+              }
 
             case 'AARadar':
-              return "<span class=\"link_equipment\">" + "<i style=\"background-image:url(assets/images/itemicon/11.png)\"></i>" + "<span>\u5BF9\u7A7A\u96F7\u8FBE/\u7535\u63A2</span>" + "</span>";
+              {
+                iconId = 11;
+                name = '对空雷达/电探';
+                return "<span class=\"link_equipment\">" + "<i style=\"background-image:url(assets/images/itemicon/11.png)\"></i>" + "<span>\u5BF9\u7A7A\u96F7\u8FBE/\u7535\u63A2</span>" + "</span>";
+              }
+
+            default:
+              {
+                var typeId = KC.formula.equipmentType[item];
+
+                if (typeId) {
+                  var type = _g.data.item_types[typeId];
+                  iconId = type.icon;
+                  name = type.name.zh_cn;
+                }
+              }
           }
+
+          if (iconId && name) return "<span class=\"link_equipment\">" + "<i style=\"background-image:url(assets/images/itemicon/".concat(iconId, ".png)\"></i>") + "<span>".concat(name, "</span>") + "</span>";
         }
       }).map(function (item) {
         return "<div class=\"equipment\">".concat(item, "</div>");
-      }).join('') + "</div>" + "<div class=\"stats\">" + "<span class=\"info\">".concat(bonusInfoText, "</span>") + bonusStats + "</div>" + "</div>");
+      }).join('') + this.renderConditionEquipmentOneOfForSet(bonus) + "</div>" + "<div class=\"stats\">" + "<span class=\"info\">".concat(bonusInfoText, "</span>") + bonusStats + "</div>" + "</div>");
     },
     getTitle: function getTitle() {
       switch (this.type) {

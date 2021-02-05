@@ -79,7 +79,7 @@ modal.bonuses = (() => ({
     renderSubTitle: type => {
         return $(
             `<div class="bonus bonus-title">`
-            + (type === 'set' ? '套装加成' : '')
+            + (type === 'set' ? '套装加成<small>每一个条件的效果仅计算一次，多个条件的效果可叠加</small>' : '')
             + `</div>`
         )
     },
@@ -196,6 +196,24 @@ modal.bonuses = (() => ({
 
         return ''
     },
+    renderConditionEquipmentOneOfForSet: (bonus) => {
+        if (!bonus.equipments || !Array.isArray(bonus.equipments.hasOneOf))
+            return ''
+        
+        return `<div class="one-of">`
+        + `<span class="info">仅在拥有以下任意装备时，拥有多个时效果不叠加，可与其他条件叠加</span>`
+        + bonus.equipments.hasOneOf.map(condition => {
+            if (condition.isID)
+                return _tmpl.link_equipment(
+                    condition.isID,
+                    'span',
+                    true,
+                )
+            return ''
+        }).join('')
+        + `</div>`
+        + `<div class="one-of-trail"></div>`
+    },
     renderBonusSingle: function (bonus) {
         let condition = ''
         let bonusStats = ''
@@ -302,6 +320,8 @@ modal.bonuses = (() => ({
 
         const stars = bonus.listStar || []
 
+        console.log(bonus)
+
         return $(
             `<div class="bonus bonus-set">`
             + condition
@@ -331,22 +351,43 @@ modal.bonuses = (() => ({
                         )
                     }
                     if (typeof item === 'string') {
+                        let iconId, name
                         switch (item) {
-                            case 'SurfaceRadar':
+                            case 'SurfaceRadar': {
+                                iconId = 11
+                                name = '对水面雷达/电探'
                                 return `<span class="link_equipment">`
                                     + `<i style="background-image:url(assets/images/itemicon/11.png)"></i>`
                                     + `<span>对水面雷达/电探</span>`
                                     + `</span>`
-                            case 'AARadar':
+                            }
+                            case 'AARadar': {
+                                iconId = 11
+                                name = '对空雷达/电探'
                                 return `<span class="link_equipment">`
                                     + `<i style="background-image:url(assets/images/itemicon/11.png)"></i>`
                                     + `<span>对空雷达/电探</span>`
                                     + `</span>`
+                            }
+                            default: {
+                                const typeId = KC.formula.equipmentType[item]
+                                if (typeId) {
+                                    const type = _g.data.item_types[typeId]
+                                    iconId = type.icon
+                                    name = type.name.zh_cn
+                                }
+                            }
                         }
+                        if (iconId && name) 
+                            return `<span class="link_equipment">`
+                                + `<i style="background-image:url(assets/images/itemicon/${iconId}.png)"></i>`
+                                + `<span>${name}</span>`
+                                + `</span>`
                     }
                 })
                 .map(item => `<div class="equipment">${item}</div>`)
                 .join('')
+            + this.renderConditionEquipmentOneOfForSet(bonus)
             + `</div>`
             + `<div class="stats">`
             + `<span class="info">${bonusInfoText}</span>`

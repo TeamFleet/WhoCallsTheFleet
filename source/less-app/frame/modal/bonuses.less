@@ -4,13 +4,15 @@ body > .modal.hastitle.modal-bonuses{
     @icon-size: 36px;
     @color-link-equipment: #8fffc5;
     @color-link-ship: #8ddbff;
+    @color-symbol: #fff6cc;
+    @color-symbol-glow: #fef6e6;
 
     .style-symbol(){
-        color: #fff6cc;
+        color: @color-symbol;
         font-size: 30px;
         line-height: 0;
         left: (@icon-width - 4);
-        text-shadow: 0 0 10px #fef6e6;
+        text-shadow: 0 0 10px @color-symbol-glow;
     }
 
     &>div{
@@ -72,6 +74,18 @@ body > .modal.hastitle.modal-bonuses{
                     position: absolute;
                     background: fade(#fff, 25%);
                 }
+                @supports (position: sticky) {
+                    &.bonus-title{
+                        position: sticky;
+                        top: -0.55rem;
+                        z-index: 100;
+                        &::after{
+                            right: -10px;
+                            width: auto;
+                            background: linear-gradient(90deg,hsla(0,0%,30%,.95) 25%,hsla(0,0%,20%,.85) 50%,transparent);
+                        }
+                    }
+                }
             }
             // &:first-child{
             //     border-top: 10px solid transparent;
@@ -101,6 +115,28 @@ body > .modal.hastitle.modal-bonuses{
                     &:active{
                         color: fade(#fff, 65%);
                     }
+                }
+                & > .one-of{
+                    margin-left: @icon-size;
+                    margin-top: 5px;
+                    border: 1px solid fade(@color-symbol, 50%);
+                    padding: 8px 10px;
+                    border-radius: 5px;
+                    box-shadow: 0 0 10px fade(@color-symbol-glow, 50%), inset 0 0 10px fade(@color-symbol-glow, 50%);
+                    font-size: 14px;
+                    background: fade(@color-symbol-glow, 10%);
+                    .info {
+                        display: block;
+                        font-style: italic;
+                        color: fade(@color-symbol, 75%);
+                    }
+                    .link_equipment{
+                        font-size: inherit;
+                        margin-bottom: -6px;
+                    }
+                }
+                & > .one-of-trail{
+                    height: 10px;
                 }
             }
             .ships{
@@ -328,6 +364,11 @@ body > .modal.hastitle.modal-bonuses{
                 width: 250px;
                 background: linear-gradient(to right, fade(#fff, 25%) 50%, transparent);
                 z-index: -1;
+            }
+            small {
+                margin-left: 1em;
+                font-size: 14px;
+                font-weight: normal;
             }
         }
     }
