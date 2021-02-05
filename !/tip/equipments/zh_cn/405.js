@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",405,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/37.png)\"></s><strong>Do 217 E-5+Hs293初期型</strong><small>陆上轰炸机</small></h3><span>+13 雷装</span><span>+4 对空</span><span>+22 爆装</span><span>+2 命中</span><span>+3 索敌</span><span>航程: 4</span>")
