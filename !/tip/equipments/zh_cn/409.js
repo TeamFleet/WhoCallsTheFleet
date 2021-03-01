@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",409,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/20.png)\"></s><strong>武装大发</strong><small>登陆艇</small></h3><span>+1 火力</span><span>+1 对空</span><span>+1 命中</span>")
