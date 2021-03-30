@@ -76,14 +76,14 @@ modal.bonuses = (() => ({
         return cache[id]
     },
 
-    renderSubTitle: type => {
+    renderSubTitle(type) {
         return $(
             `<div class="bonus bonus-title">`
             + (type === 'set' ? '套装加成<small>每一个条件的效果仅计算一次，多个条件的效果可叠加</small>' : '')
             + `</div>`
         )
     },
-    renderStat: (bonus) => {
+    renderStat(bonus) {
         let r = ''
         _g.stats.forEach(arr => {
             const [stat] = arr
@@ -114,7 +114,7 @@ modal.bonuses = (() => ({
         })
         return r
     },
-    renderConditionShips: bonus => {
+    renderConditionShips(bonus) {
         let condition = ''
         if (typeof bonus.ship.isType !== 'undefined') {
             const types = Array.isArray(bonus.ship.isType)
@@ -196,16 +196,18 @@ modal.bonuses = (() => ({
 
         return ''
     },
-    renderConditionEquipmentOneOfForSet: (bonus) => {
-        if (!bonus.equipments || !Array.isArray(bonus.equipments.hasOneOf))
+    renderConditionEquipmentOneOf(equipments) {
+        if (!Array.isArray(equipments) && equipments.length)
             return ''
         
         return `<div class="one-of">`
-        + `<span class="info">仅在拥有以下任意装备时，拥有多个时效果不叠加，可与其他条件叠加</span>`
-        + bonus.equipments.hasOneOf.map(condition => {
-            if (condition.isID)
+        // + `<span class="info">仅在拥有以下任意装备时，拥有多个时效果不叠加，可与其他条件叠加</span>`
+        + `<span class="info">仅限：</span>`
+        + equipments.map(condition => {
+            const id = condition.isID || condition
+            if (!isNaN(id))
                 return _tmpl.link_equipment(
-                    condition.isID,
+                    id,
                     'span',
                     true,
                 )
@@ -213,6 +215,12 @@ modal.bonuses = (() => ({
         }).join('')
         + `</div>`
         + `<div class="one-of-trail"></div>`
+    },
+    renderConditionEquipmentOneOfForSet(bonus) {
+        if (!bonus.equipments || !Array.isArray(bonus.equipments.hasOneOf))
+            return ''
+        
+        return this.renderConditionEquipmentOneOf(bonus.equipments.hasOneOf)
     },
     renderBonusSingle: function (bonus) {
         let condition = ''
@@ -299,9 +307,11 @@ modal.bonuses = (() => ({
         )
     },
     renderBonusSet: function (bonus) {
+        const _this = this
         let condition = ''
         let bonusStats = ''
         let bonusInfoText = ''
+        let noNeedAdditionalList = false
 
         switch (this.type) {
             case 'ship': {
@@ -352,22 +362,21 @@ modal.bonuses = (() => ({
                     }
                     if (typeof item === 'string') {
                         let iconId, name
-                        switch (item) {
+                        let type = item
+                        let ids = []
+                        const matches = /([a-zA-Z0-9]+)\[([0-9,]+)\]/.exec(item)
+                        if (Array.isArray(matches) && matches.length > 2) {
+                            type = matches[1]
+                            ids = matches[2].split(',')
+                        }
+                        switch (type) {
                             case 'SurfaceRadar': {
                                 iconId = 11
                                 name = '对水面雷达/电探'
-                                return `<span class="link_equipment">`
-                                    + `<i style="background-image:url(assets/images/itemicon/11.png)"></i>`
-                                    + `<span>对水面雷达/电探</span>`
-                                    + `</span>`
                             }
                             case 'AARadar': {
                                 iconId = 11
                                 name = '对空雷达/电探'
-                                return `<span class="link_equipment">`
-                                    + `<i style="background-image:url(assets/images/itemicon/11.png)"></i>`
-                                    + `<span>对空雷达/电探</span>`
-                                    + `</span>`
                             }
                             default: {
                                 const typeId = KC.formula.equipmentType[item]
@@ -378,16 +387,20 @@ modal.bonuses = (() => ({
                                 }
                             }
                         }
+                        if (ids.length) noNeedAdditionalList = true
                         if (iconId && name) 
                             return `<span class="link_equipment">`
                                 + `<i style="background-image:url(assets/images/itemicon/${iconId}.png)"></i>`
                                 + `<span>${name}</span>`
                                 + `</span>`
+                                + (ids.length > 0
+                                    ? _this.renderConditionEquipmentOneOf(ids)
+                                    : '')
                     }
                 })
                 .map(item => `<div class="equipment">${item}</div>`)
                 .join('')
-            + this.renderConditionEquipmentOneOfForSet(bonus)
+            + (noNeedAdditionalList ? '' : this.renderConditionEquipmentOneOfForSet(bonus))
             + `</div>`
             + `<div class="stats">`
             + `<span class="info">${bonusInfoText}</span>`

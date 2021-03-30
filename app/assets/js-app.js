@@ -1,6 +1,6 @@
 "use strict";
 
-var _this28 = void 0;
+var _this29 = void 0;
 
 function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
@@ -3218,11 +3218,11 @@ _frame.app_main.page['fleets'] = {
       var _super = _createSuper(_class);
 
       function _class($page) {
-        var _this;
+        var _this2;
 
         _classCallCheck(this, _class);
 
-        _this = _super.call(this, $page);
+        _this2 = _super.call(this, $page);
         $page.on({
           'pageShow': function pageShow() {
             if (this.inited) {
@@ -3232,7 +3232,7 @@ _frame.app_main.page['fleets'] = {
             this.inited = true;
           }
         });
-        return _this;
+        return _this2;
       }
 
       return _class;
@@ -3247,30 +3247,30 @@ _frame.app_main.page['ships'] = {
       var _super2 = _createSuper(_class2);
 
       function _class2($page) {
-        var _this2;
+        var _this3;
 
         _classCallCheck(this, _class2);
 
-        _this2 = _super2.call(this, $page);
-        _this2.tablelist = $page.find('.tablelist');
-        _this2.tablelistObj = _this2.tablelist.data('tablelist');
+        _this3 = _super2.call(this, $page);
+        _this3.tablelist = $page.find('.tablelist');
+        _this3.tablelistObj = _this3.tablelist.data('tablelist');
         $page.on({
           'modeSelectionEnter': function (e, callback_select) {
             this.modeSelectionEnter(callback_select);
-          }.bind(_assertThisInitialized(_this2)),
+          }.bind(_assertThisInitialized(_this3)),
           'pageShow': function () {
             if (!this.tablelistObj) this.tablelistObj = this.tablelist.data('tablelist');
             this.tablelistObj.onEnter();
-          }.bind(_assertThisInitialized(_this2)),
+          }.bind(_assertThisInitialized(_this3)),
           'pageHide': function () {
             if (this.tablelistObj) {
               this.tablelistObj.search();
               this.tablelistObj.dom.searchInput.val('');
               this.tablelistObj.onExit();
             }
-          }.bind(_assertThisInitialized(_this2))
+          }.bind(_assertThisInitialized(_this3))
         });
-        return _this2;
+        return _this3;
       }
 
       return _class2;
@@ -3285,17 +3285,17 @@ _frame.app_main.page['equipments'] = {
       var _super3 = _createSuper(_class3);
 
       function _class3($page) {
-        var _this3;
+        var _this4;
 
         _classCallCheck(this, _class3);
 
-        _this3 = _super3.call(this, $page);
-        _this3.tablelist = $page.find('.tablelist');
-        _this3.tablelistObj = _this3.tablelist.data('tablelist');
+        _this4 = _super3.call(this, $page);
+        _this4.tablelist = $page.find('.tablelist');
+        _this4.tablelistObj = _this4.tablelist.data('tablelist');
         $page.on({
           'modeSelectionEnter': function (e, callback_select, callback_enter) {
             this.modeSelectionEnter(callback_select, callback_enter);
-          }.bind(_assertThisInitialized(_this3)),
+          }.bind(_assertThisInitialized(_this4)),
           'pageShow': function () {
             if (!this.tablelistObj) this.tablelistObj = this.tablelist.data('tablelist');
 
@@ -3303,7 +3303,7 @@ _frame.app_main.page['equipments'] = {
               this.tablelistObj.thead_redraw();
               this.tablelistObj.apply_types();
             }
-          }.bind(_assertThisInitialized(_this3)),
+          }.bind(_assertThisInitialized(_this4)),
           'pageHide': function () {
             TablelistEquipments.types = [];
             TablelistEquipments.shipId = null;
@@ -3311,9 +3311,9 @@ _frame.app_main.page['equipments'] = {
             if (this.tablelistObj) {
               this.tablelistObj.apply_types();
             }
-          }.bind(_assertThisInitialized(_this3))
+          }.bind(_assertThisInitialized(_this4))
         });
-        return _this3;
+        return _this4;
       }
 
       return _class3;
@@ -3558,11 +3558,11 @@ var Journal = function () {
   }, {
     key: "genSection",
     value: function genSection(defaultShow) {
-      var _this4 = this;
+      var _this5 = this;
 
       var id = 'update_journal_' + this.data._id,
           checkbox = $('<input type="checkbox" id="' + id + '"/>').prop('checked', defaultShow ? true : false).on('change', function (e) {
-        if (e.target.checked) _this4.show();
+        if (e.target.checked) _this5.show();
       });
       this.section = $('<section class="update_journal" data-version-' + this.data.type + '="' + this.data.version + '"/>').append($("<label for=\"".concat(id, "\"/>")).append(this.genTitle()));
       if (defaultShow) this.show();
@@ -4823,7 +4823,7 @@ var InfosFleet = function () {
   _createClass(InfosFleet, [{
     key: "init",
     value: function init(d) {
-      var _this5 = this;
+      var _this6 = this;
 
       if (!d) return false;
       this.el.on({
@@ -4869,7 +4869,7 @@ var InfosFleet = function () {
         tagName: 'h3',
         placeholder: '点击编辑标题',
         onUpdate: function onUpdate(newContent) {
-          _this5._name = newContent;
+          _this6._name = newContent;
         }
       }).$el).append(this.doms['preview'] = $('<div class="preview"/>')).appendTo(this.el);
       $('<div class="fleets"/>').append(this.doms['tabs'] = $('<div class="tabs"/>')).append(this.doms['options'] = $('<div class="options"/>').append(this.doms['hqlvOptionLabel'] = $('<label/>', {
@@ -4921,7 +4921,7 @@ var InfosFleet = function () {
 
         return els;
       })).append(this.doms['themeOption'] = $('<button class="option option-theme mod-dropdown"/>').html('主题').on('click', function () {
-        var _this6 = this;
+        var _this7 = this;
 
         if (!InfosFleet.menuTheme) {
           InfosFleet.menuThemeItems = $('<div/>');
@@ -4930,7 +4930,7 @@ var InfosFleet = function () {
             $('<button class="theme-' + _i3 + '"/>').html(_i3).on('click', function () {
               InfosFleet.menuCur._theme = _i3;
               this.el.attr('data-theme', this._theme);
-            }.bind(_this6)).appendTo(InfosFleet.menuThemeItems);
+            }.bind(_this7)).appendTo(InfosFleet.menuThemeItems);
           };
 
           for (var _i3 = 1; _i3 < 11; _i3++) {
@@ -5055,8 +5055,8 @@ var InfosFleet = function () {
           if (Array.isArray(data) && data.some(function (ship) {
             return Array.isArray(ship) && ship[0];
           })) {
-            if (_this5.subfleetinputs[index]) {
-              _this5.subfleetinputs[index].prop('checked', true).trigger('change');
+            if (_this6.subfleetinputs[index]) {
+              _this6.subfleetinputs[index].prop('checked', true).trigger('change');
             }
 
             return true;
@@ -5589,7 +5589,7 @@ InfosFleet.decompressMetaData = function (code) {
 
 var InfosFleetSubFleet = function () {
   function InfosFleetSubFleet(infosFleet, d, index, label) {
-    var _this7 = this;
+    var _this8 = this;
 
     _classCallCheck(this, InfosFleetSubFleet);
 
@@ -5607,9 +5607,9 @@ var InfosFleetSubFleet = function () {
     }
 
     this.elSummary = $('<span class="summary"/>').appendTo(this.el).append($('<span class="btn-add-ship"/>').on('click', function () {
-      _this7.createShip(_this7.ships.length);
+      _this8.createShip(_this8.ships.length);
 
-      _this7.ships[_this7.ships.length - 1].el.trigger('click');
+      _this8.ships[_this8.ships.length - 1].el.trigger('click');
     })).append($('<span class="summary-item"/>').html('航速').append(this.elSummarySpeed = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('制空战力').append(this.elSummaryFighterPower = $('<strong/>').html('-'))).append($('<span class="summary-item"/>').html('索敌能力').append(this.elSummaryLos = $('<strong/>').html('-'))).append($('<span class="summary-item summary-item-consummation"/>').html('总消耗').append(this.elSummaryConsummation = $('<strong/>').html('-'))).append(this.elSummaryTPcontainer = $('<span class="summary-item hide"/>').html('运输TP').append(this.elSummaryTP = $('<strong/>').html('-')));
     $body.on('update_defaultHqLv.fleet' + infosFleet.data._id + '-' + (index + 1), function () {
       if (this.infosFleet.is_showing) this.summaryCalc(true);
@@ -5751,7 +5751,7 @@ var InfosFleetSubFleet = function () {
 
 var InfosFleetShip = function () {
   function InfosFleetShip(infosFleet, infosFleetSubFleet, index, d) {
-    var _this8 = this;
+    var _this9 = this;
 
     _classCallCheck(this, InfosFleetShip);
 
@@ -5791,29 +5791,29 @@ var InfosFleetShip = function () {
       'max': _g.shipMaxLv
     }).on({
       checkValue: function checkValue() {
-        var value = _this8.elInputLevel.val();
+        var value = _this9.elInputLevel.val();
 
-        if ((typeof value == 'undefined' || value === '') && _this8.data[1][0]) _this8.shipLv = null;
+        if ((typeof value == 'undefined' || value === '') && _this9.data[1][0]) _this9.shipLv = null;
         value = parseInt(value);
-        var min = parseInt(_this8.elInputLevel.attr('min'));
+        var min = parseInt(_this9.elInputLevel.attr('min'));
 
         if (value < min) {
           value = min;
 
-          _this8.elInputLevel.val(min);
+          _this9.elInputLevel.val(min);
         } else if (value > _g.shipMaxLv) {
           value = _g.shipMaxLv;
 
-          _this8.elInputLevel.val(_g.shipMaxLv);
+          _this9.elInputLevel.val(_g.shipMaxLv);
         }
 
-        if (!isNaN(value) && _this8.data[1][0] != value) _this8.shipLv = value;
+        if (!isNaN(value) && _this9.data[1][0] != value) _this9.shipLv = value;
       },
       keydown: function keydown(e) {
-        if (e.keyCode == 38 || e.keyCode == 40) _this8.elInputLevel.trigger('checkValue');
+        if (e.keyCode == 38 || e.keyCode == 40) _this9.elInputLevel.trigger('checkValue');
       },
       change: function change() {
-        _this8.elInputLevel.trigger('checkValue');
+        _this9.elInputLevel.trigger('checkValue');
       }
     }))).append(this.elInfosSpeed = $('<span/>')).append(this.elInfosType = $('<span/>'))))).append(this.elEquipments = $('<div class="equipments"/>').append(function () {
       var els = $();
@@ -5938,7 +5938,7 @@ var InfosFleetShip = function () {
   }, {
     key: "updateEl",
     value: function updateEl(d) {
-      var _this9 = this;
+      var _this10 = this;
 
       this._updating = true;
       this.data = d || this.data;
@@ -5951,9 +5951,9 @@ var InfosFleetShip = function () {
         this.shipId = this.data[0];
         if (this.data[1][0]) this.shipLv = this.data[1][0];
         this.equipments.forEach(function (equipment, i) {
-          equipment.id = _this9.data[2][i];
-          equipment.star = _this9.data[3][i];
-          equipment.rank = _this9.data[4][i];
+          equipment.id = _this10.data[2][i];
+          equipment.star = _this10.data[3][i];
+          equipment.rank = _this10.data[4][i];
         });
         this.updateAttrs();
       }
@@ -6096,7 +6096,7 @@ var InfosFleetShip = function () {
       return this.data[0];
     },
     set: function set(value) {
-      var _this10 = this;
+      var _this11 = this;
 
       if (value != this.data[0]) {
         this.data[0] = value;
@@ -6134,7 +6134,7 @@ var InfosFleetShip = function () {
         this.equipments.forEach(function (equipment, i) {
           if (i < 4) equipment.carry = ship.slot[i];else if (i === 4) equipment.carry = 0;else if (i > 4) equipment.carry = ship.slot[i - 1];
 
-          if (!_this10._updating) {
+          if (!_this11._updating) {
             equipment.id = null;
             equipment.star = null;
             equipment.rank = null;
@@ -6255,16 +6255,16 @@ var InfosFleetShipEquipment = function () {
         InfosFleetShipEquipment.cur = this.el.addClass('is-hover');
       }.bind(this),
       'blur': function () {
-        var _this11 = this;
+        var _this12 = this;
 
         this.elBlurTimeout = setTimeout(function () {
-          _this11.el.removeClass('is-hover');
+          _this12.el.removeClass('is-hover');
 
           InfosFleetShipEquipment.cur = null;
         }, 10);
       }.bind(this),
       'pointerenter': function (e) {
-        var _this12 = this;
+        var _this13 = this;
 
         if (e.originalEvent.pointerType != 'touch') {
           InfosFleetShipEquipment.cur = this.el.addClass('is-hover');
@@ -6275,20 +6275,20 @@ var InfosFleetShipEquipment = function () {
 
             if (tip) {
               setTimeout(function () {
-                _this12.el.attr('data-tip', tip);
+                _this13.el.attr('data-tip', tip);
 
                 setTimeout(function () {
-                  if (!_this12.el.data('tip-filtered_')) {
+                  if (!_this13.el.data('tip-filtered_')) {
                     _p.tip.filters.forEach(function (filter) {
                       tip = filter(tip) || tip;
                     });
 
-                    _this12.el.data({
+                    _this13.el.data({
                       'tip-filtered_': tip
                     });
                   }
 
-                  _p.tip.show(_this12.el.data('tip-filtered_'), _this12.el, _this12.el.data('tip-position'));
+                  _p.tip.show(_this13.el.data('tip-filtered_'), _this13.el, _this13.el.data('tip-position'));
                 }, 100);
               }, 10);
             }
@@ -6330,7 +6330,7 @@ var InfosFleetShipEquipment = function () {
         }.bind(this), 10);
       }.bind(this),
       'pointerdown': function (e) {
-        var _this13 = this;
+        var _this14 = this;
 
         console.log('pointerdown');
 
@@ -6338,7 +6338,7 @@ var InfosFleetShipEquipment = function () {
           InfosFleetShipEquipment.cur = this.el.addClass('is-hover');
           clearTimeout(this.elBlurTimeout);
           setTimeout(function () {
-            _this13.elInputStar.trigger('focus');
+            _this14.elInputStar.trigger('focus');
           }, 10);
         }
       }.bind(this),
@@ -6641,7 +6641,7 @@ var InfosFleetSubAirfield = function () {
   _createClass(InfosFleetSubAirfield, [{
     key: "updateEl",
     value: function updateEl(d) {
-      var _this14 = this;
+      var _this15 = this;
 
       this.data = d || this.data;
       var count = 0;
@@ -6654,7 +6654,7 @@ var InfosFleetSubAirfield = function () {
 
       if (this.infosFleet.data.name_airfields && this.infosFleet.data.name_airfields.push) {
         this.infosFleet.data.name_airfields.forEach(function (name, i) {
-          _this14.fields[i].elTitle.html(name).trigger('namechange', [name]).trigger('blur');
+          _this15.fields[i].elTitle.html(name).trigger('namechange', [name]).trigger('blur');
         });
       }
 
@@ -6701,7 +6701,7 @@ var InfosFleetSubAirfield = function () {
 
 var InfosFleetAirfield = function () {
   function InfosFleetAirfield(infosFleet, infosParent, index, d) {
-    var _this15 = this;
+    var _this16 = this;
 
     _classCallCheck(this, InfosFleetAirfield);
 
@@ -6717,7 +6717,7 @@ var InfosFleetAirfield = function () {
       tagName: 'h4',
       placeholder: "\u7B2C".concat(no[index], "\u822A\u7A7A\u961F"),
       onUpdate: function onUpdate(newContent) {
-        _this15._name = newContent;
+        _this16._name = newContent;
       }
     }).$el).append($('<div class="aircrafts"/>').append(function () {
       var els = $();
@@ -7743,7 +7743,7 @@ modal.bonuses = function () {
       equipment: {}
     },
     getFrame: function getFrame() {
-      var _this16 = this;
+      var _this17 = this;
 
       var cache = this._cache[this.type];
       var obj = this.ship || this.equipment;
@@ -7760,14 +7760,14 @@ modal.bonuses = function () {
 
       if (bonuses.single.length) {
         bonuses.single.forEach(function (bonus) {
-          cache[id] = cache[id].add(_this16.renderBonusSingle(bonus));
+          cache[id] = cache[id].add(_this17.renderBonusSingle(bonus));
         });
       }
 
       if (bonuses.set.length) {
         cache[id] = cache[id].add(this.renderSubTitle('set'));
         bonuses.set.forEach(function (bonus) {
-          cache[id] = cache[id].add(_this16.renderBonusSet(bonus));
+          cache[id] = cache[id].add(_this17.renderBonusSet(bonus));
         });
       }
 
@@ -7870,15 +7870,20 @@ modal.bonuses = function () {
       if (condition) return "<div class=\"ships\">".concat(condition, "</div>");
       return '';
     },
-    renderConditionEquipmentOneOfForSet: function renderConditionEquipmentOneOfForSet(bonus) {
-      if (!bonus.equipments || !Array.isArray(bonus.equipments.hasOneOf)) return '';
-      return "<div class=\"one-of\">" + "<span class=\"info\">\u4EC5\u5728\u62E5\u6709\u4EE5\u4E0B\u4EFB\u610F\u88C5\u5907\u65F6\uFF0C\u62E5\u6709\u591A\u4E2A\u65F6\u6548\u679C\u4E0D\u53E0\u52A0\uFF0C\u53EF\u4E0E\u5176\u4ED6\u6761\u4EF6\u53E0\u52A0</span>" + bonus.equipments.hasOneOf.map(function (condition) {
-        if (condition.isID) return _tmpl.link_equipment(condition.isID, 'span', true);
+    renderConditionEquipmentOneOf: function renderConditionEquipmentOneOf(equipments) {
+      if (!Array.isArray(equipments) && equipments.length) return '';
+      return "<div class=\"one-of\">" + "<span class=\"info\">\u4EC5\u9650\uFF1A</span>" + equipments.map(function (condition) {
+        var id = condition.isID || condition;
+        if (!isNaN(id)) return _tmpl.link_equipment(id, 'span', true);
         return '';
       }).join('') + "</div>" + "<div class=\"one-of-trail\"></div>";
     },
+    renderConditionEquipmentOneOfForSet: function renderConditionEquipmentOneOfForSet(bonus) {
+      if (!bonus.equipments || !Array.isArray(bonus.equipments.hasOneOf)) return '';
+      return this.renderConditionEquipmentOneOf(bonus.equipments.hasOneOf);
+    },
     renderBonusSingle: function renderBonusSingle(bonus) {
-      var _this17 = this;
+      var _this18 = this;
 
       var condition = '';
       var bonusStats = '';
@@ -7915,14 +7920,14 @@ modal.bonuses = function () {
         Object.keys(bonus.bonusCount).sort(function (a, b) {
           return parseInt(a) - parseInt(b);
         }).forEach(function (count) {
-          bonusStats += "<div class=\"has-extra\">" + "<div class=\"extra count\" data-count=\"".concat(count, "\">").concat(count, "</div>") + _this17.renderStat(bonus.bonusCount[count]) + "</div>";
+          bonusStats += "<div class=\"has-extra\">" + "<div class=\"extra count\" data-count=\"".concat(count, "\">").concat(count, "</div>") + _this18.renderStat(bonus.bonusCount[count]) + "</div>";
         });
       } else if (_typeof(bonus.bonusImprove) === 'object') {
         bonusInfoText += "\u6BCF\u4E2A\u8BE5\u88C5\u5907\u6839\u636E\u6539\u4FEE\u661F\u7EA7\u63D0\u4F9B\u5C5E\u6027\u52A0\u6210";
         Object.keys(bonus.bonusImprove).sort(function (a, b) {
           return parseInt(a) - parseInt(b);
         }).forEach(function (star) {
-          bonusStats += "<div class=\"has-extra\">" + "<div class=\"extra star\" data-star=\"".concat(star, "\">").concat(star, "</div>") + _this17.renderStat(bonus.bonusImprove[star]) + "</div>";
+          bonusStats += "<div class=\"has-extra\">" + "<div class=\"extra star\" data-star=\"".concat(star, "\">").concat(star, "</div>") + _this18.renderStat(bonus.bonusImprove[star]) + "</div>";
         });
       } else if (_typeof(bonus.bonusArea) === 'object') {
         bonusInfoText += "\u6BCF\u4E2A\u8BE5\u88C5\u5907\u6839\u636E\u6240\u5904\u6D77\u57DF\u63D0\u4F9B\u5C5E\u6027\u52A0\u6210";
@@ -7930,7 +7935,7 @@ modal.bonuses = function () {
           north: '北方'
         };
         Object.keys(bonus.bonusArea).forEach(function (area) {
-          bonusStats += "<div class=\"has-extra\">" + "<div class=\"extra area\">".concat(areas[area.toLowerCase()], "</div>") + _this17.renderStat(bonus.bonusArea[area]) + "</div>";
+          bonusStats += "<div class=\"has-extra\">" + "<div class=\"extra area\">".concat(areas[area.toLowerCase()], "</div>") + _this18.renderStat(bonus.bonusArea[area]) + "</div>";
         });
       } else if (_typeof(bonus.bonus) === 'object') {
         bonusInfoText += "\u6BCF\u4E2A\u8BE5\u88C5\u5907\u63D0\u4F9B\u5C5E\u6027\u52A0\u6210";
@@ -7940,11 +7945,14 @@ modal.bonuses = function () {
       return $("<div class=\"bonus bonus-single\">" + condition + "<div class=\"stats\">" + "<span class=\"info\">".concat(bonusInfoText, "</span>") + bonusStats + "</div>" + "</div>");
     },
     renderBonusSet: function renderBonusSet(bonus) {
-      var _this18 = this;
+      var _this19 = this;
+
+      var _this = this;
 
       var condition = '';
       var bonusStats = '';
       var bonusInfoText = '';
+      var noNeedAdditionalList = false;
 
       switch (this.type) {
         case 'ship':
@@ -7967,34 +7975,40 @@ modal.bonuses = function () {
       var stars = bonus.listStar || [];
       console.log(bonus);
       return $("<div class=\"bonus bonus-set\">" + condition + "<div class=\"equipments\">" + bonus.list.map(function (item, index) {
-        if (!isNaN(item)) return _tmpl.link_equipment(item, _this18.type === 'equipment' && item == _this18.equipment.id ? 'span' : undefined, true, stars[index] || undefined);
+        if (!isNaN(item)) return _tmpl.link_equipment(item, _this19.type === 'equipment' && item == _this19.equipment.id ? 'span' : undefined, true, stars[index] || undefined);
 
         if (Array.isArray(item)) {
           return item.map(function (item) {
-            return _tmpl.link_equipment(item, _this18.type === 'equipment' && item == _this18.equipment.id ? 'span' : undefined, true);
+            return _tmpl.link_equipment(item, _this19.type === 'equipment' && item == _this19.equipment.id ? 'span' : undefined, true);
           }).join(' / ');
         }
 
         if (_typeof(item) === 'object' && item.id) {
-          return _tmpl.link_equipment(item.id, _this18.type === 'equipment' && item.id == _this18.equipment.id ? 'span' : undefined, true, item.star);
+          return _tmpl.link_equipment(item.id, _this19.type === 'equipment' && item.id == _this19.equipment.id ? 'span' : undefined, true, item.star);
         }
 
         if (typeof item === 'string') {
           var iconId, name;
+          var type = item;
+          var ids = [];
+          var matches = /([a-zA-Z0-9]+)\[([0-9,]+)\]/.exec(item);
 
-          switch (item) {
+          if (Array.isArray(matches) && matches.length > 2) {
+            type = matches[1];
+            ids = matches[2].split(',');
+          }
+
+          switch (type) {
             case 'SurfaceRadar':
               {
                 iconId = 11;
                 name = '对水面雷达/电探';
-                return "<span class=\"link_equipment\">" + "<i style=\"background-image:url(assets/images/itemicon/11.png)\"></i>" + "<span>\u5BF9\u6C34\u9762\u96F7\u8FBE/\u7535\u63A2</span>" + "</span>";
               }
 
             case 'AARadar':
               {
                 iconId = 11;
                 name = '对空雷达/电探';
-                return "<span class=\"link_equipment\">" + "<i style=\"background-image:url(assets/images/itemicon/11.png)\"></i>" + "<span>\u5BF9\u7A7A\u96F7\u8FBE/\u7535\u63A2</span>" + "</span>";
               }
 
             default:
@@ -8002,18 +8016,19 @@ modal.bonuses = function () {
                 var typeId = KC.formula.equipmentType[item];
 
                 if (typeId) {
-                  var type = _g.data.item_types[typeId];
-                  iconId = type.icon;
-                  name = type.name.zh_cn;
+                  var _type = _g.data.item_types[typeId];
+                  iconId = _type.icon;
+                  name = _type.name.zh_cn;
                 }
               }
           }
 
-          if (iconId && name) return "<span class=\"link_equipment\">" + "<i style=\"background-image:url(assets/images/itemicon/".concat(iconId, ".png)\"></i>") + "<span>".concat(name, "</span>") + "</span>";
+          if (ids.length) noNeedAdditionalList = true;
+          if (iconId && name) return "<span class=\"link_equipment\">" + "<i style=\"background-image:url(assets/images/itemicon/".concat(iconId, ".png)\"></i>") + "<span>".concat(name, "</span>") + "</span>" + (ids.length > 0 ? _this.renderConditionEquipmentOneOf(ids) : '');
         }
       }).map(function (item) {
         return "<div class=\"equipment\">".concat(item, "</div>");
-      }).join('') + this.renderConditionEquipmentOneOfForSet(bonus) + "</div>" + "<div class=\"stats\">" + "<span class=\"info\">".concat(bonusInfoText, "</span>") + bonusStats + "</div>" + "</div>");
+      }).join('') + (noNeedAdditionalList ? '' : this.renderConditionEquipmentOneOfForSet(bonus)) + "</div>" + "<div class=\"stats\">" + "<span class=\"info\">".concat(bonusInfoText, "</span>") + bonusStats + "</div>" + "</div>");
     },
     getTitle: function getTitle() {
       switch (this.type) {
@@ -8369,27 +8384,27 @@ var TablelistShips = function (_Tablelist) {
   var _super4 = _createSuper(TablelistShips);
 
   function TablelistShips(container, options) {
-    var _this19;
+    var _this20;
 
     _classCallCheck(this, TablelistShips);
 
-    _this19 = _super4.call(this, container, options);
-    _this19.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['夜战', 'nightpower'], ['对空', 'aa'], ['对潜', 'asw'], ['耐久', 'hp'], ['装甲', 'armor'], ['回避', 'evasion'], ['搭载', 'carry'], ['航速', 'speed'], ['射程', 'range'], ['索敌', 'los'], ['运', 'luck'], ['油耗', 'consum_fuel'], ['弹耗', 'consum_ammo'], ['多立绘', 'extra_illust']];
-    _this19.header_checkbox = [];
-    _this19.mode_selection_filters = $();
-    _this19.rows = $();
-    _this19.rowsById = {};
-    _this19.rowsByHeader = {};
-    _this19.functionsOnEnter = [];
-    _this19.functionsOnExit = [];
+    _this20 = _super4.call(this, container, options);
+    _this20.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['夜战', 'nightpower'], ['对空', 'aa'], ['对潜', 'asw'], ['耐久', 'hp'], ['装甲', 'armor'], ['回避', 'evasion'], ['搭载', 'carry'], ['航速', 'speed'], ['射程', 'range'], ['索敌', 'los'], ['运', 'luck'], ['油耗', 'consum_fuel'], ['弹耗', 'consum_ammo'], ['多立绘', 'extra_illust']];
+    _this20.header_checkbox = [];
+    _this20.mode_selection_filters = $();
+    _this20.rows = $();
+    _this20.rowsById = {};
+    _this20.rowsByHeader = {};
+    _this20.functionsOnEnter = [];
+    _this20.functionsOnExit = [];
 
-    _frame.app_main.loading.push('tablelist_' + _this19._index);
+    _frame.app_main.loading.push('tablelist_' + _this20._index);
 
     _frame.app_main.is_loaded = false;
-    _this19.initProgressMax = 0;
-    _this19.initProgressCur = 0;
+    _this20.initProgressMax = 0;
+    _this20.initProgressCur = 0;
 
-    _this19.dom.container.on({
+    _this20.dom.container.on({
       'initprogress': function initprogress(e, cur, max) {
         this.initProgressCur = cur || this.initProgressCur;
         this.initProgressMax = max || this.initProgressMax;
@@ -8397,10 +8412,10 @@ var TablelistShips = function (_Tablelist) {
     });
 
     if (container.children('.tablelist-container').length) {
-      _this19.init_parse();
+      _this20.init_parse();
     }
 
-    return _this19;
+    return _this20;
   }
 
   _createClass(TablelistShips, [{
@@ -8579,7 +8594,7 @@ var TablelistShips = function (_Tablelist) {
   }, {
     key: "init_parse",
     value: function init_parse() {
-      var _this20 = this;
+      var _this21 = this;
 
       {
         this.dom.filter_container = this.dom.container.children('.options');
@@ -8706,11 +8721,11 @@ var TablelistShips = function (_Tablelist) {
             if (_filter) {
               els[_filter].addClass('on');
 
-              _this20.dom.container.attr('data-leyte-fleet', _filter);
+              _this21.dom.container.attr('data-leyte-fleet', _filter);
             } else {
               els._.addClass('on');
 
-              _this20.dom.container.removeAttr('data-leyte-fleet');
+              _this21.dom.container.removeAttr('data-leyte-fleet');
             }
           };
 
@@ -8758,15 +8773,15 @@ var TablelistShips = function (_Tablelist) {
             if (_filter2) {
               els[_filter2].addClass('on');
 
-              _this20.dom.container.attr(attrName, _filter2);
+              _this21.dom.container.attr(attrName, _filter2);
             } else {
               els._.addClass('on');
 
-              _this20.dom.container.removeAttr(attrName);
+              _this21.dom.container.removeAttr(attrName);
             }
           };
 
-          var container = $('<div class="event-container"/>').insertAfter(_this20.dom.filter_container).html("<strong>".concat(event.title.zh_cn, "</strong>"));
+          var container = $('<div class="event-container"/>').insertAfter(_this21.dom.filter_container).html("<strong>".concat(event.title.zh_cn, "</strong>"));
           filters.forEach(function (o) {
             var _$;
 
@@ -8936,29 +8951,29 @@ var TablelistEquipments = function (_Tablelist2) {
   var _super5 = _createSuper(TablelistEquipments);
 
   function TablelistEquipments(container, options) {
-    var _this21;
+    var _this22;
 
     _classCallCheck(this, TablelistEquipments);
 
-    _this21 = _super5.call(this, container, options);
-    _this21.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['对空', 'aa'], ['对潜', 'asw'], ['爆装', 'bomb'], ['命中', 'hit'], ['装甲', 'armor'], ['回避', 'evasion'], ['索敌', 'los'], ['射程', 'range'], ['可改修', 'improvable']];
-    _this21.equipmentsHasBonus = {};
+    _this22 = _super5.call(this, container, options);
+    _this22.columns = ['  ', ['火力', 'fire'], ['雷装', 'torpedo'], ['对空', 'aa'], ['对潜', 'asw'], ['爆装', 'bomb'], ['命中', 'hit'], ['装甲', 'armor'], ['回避', 'evasion'], ['索敌', 'los'], ['射程', 'range'], ['可改修', 'improvable']];
+    _this22.equipmentsHasBonus = {};
 
-    _frame.app_main.loading.push('tablelist_' + _this21._index);
+    _frame.app_main.loading.push('tablelist_' + _this22._index);
 
     _frame.app_main.is_loaded = false;
 
     if (container.children('.tablelist-container').length) {
-      _this21.init_parse();
+      _this22.init_parse();
     }
 
-    return _this21;
+    return _this22;
   }
 
   _createClass(TablelistEquipments, [{
     key: "apply_types",
     value: function apply_types() {
-      var _this22 = this;
+      var _this23 = this;
 
       this.dom.filter_types.removeAttr('class');
 
@@ -8977,7 +8992,7 @@ var TablelistEquipments = function (_Tablelist2) {
 
       if (TablelistEquipments.extraEquipments) {
         TablelistEquipments.extraEquipments.forEach(function (id) {
-          _this22.dom.tbody.children('[data-equipmentid="' + id + '"]').css({
+          _this23.dom.tbody.children('[data-equipmentid="' + id + '"]').css({
             display: 'flex',
             opacity: 1
           }).addClass('extra');
@@ -9027,19 +9042,19 @@ var TablelistEquipments = function (_Tablelist2) {
                 return mainStat < 0;
               });
 
-              _this22.equipmentsHasBonus[_id3].removeClass('disabled');
+              _this23.equipmentsHasBonus[_id3].removeClass('disabled');
 
               if (isNegative) {
-                _this22.equipmentsHasBonus[_id3].addClass('is-negative');
+                _this23.equipmentsHasBonus[_id3].addClass('is-negative');
               } else {
-                _this22.equipmentsHasBonus[_id3].removeClass('is-negative');
+                _this23.equipmentsHasBonus[_id3].removeClass('is-negative');
               }
             } else {
-              _this22.equipmentsHasBonus[_id3].addClass('disabled');
+              _this23.equipmentsHasBonus[_id3].addClass('disabled');
             }
           };
 
-          for (var _id3 in _this22.equipmentsHasBonus) {
+          for (var _id3 in _this23.equipmentsHasBonus) {
             _loop4(_id3);
           }
         })();
@@ -9048,7 +9063,7 @@ var TablelistEquipments = function (_Tablelist2) {
   }, {
     key: "apply_types_check",
     value: function apply_types_check() {
-      var _this23 = this;
+      var _this24 = this;
 
       if (TablelistEquipments.shipIdLast && TablelistEquipments.shipIdLast == TablelistEquipments.shipId) {
         if (this.dom && this.dom.container && this.dom.container.length) {
@@ -9095,10 +9110,10 @@ var TablelistEquipments = function (_Tablelist2) {
         if (scrollTop) scrollTop -= 32;
         this.dom.tbody.scrollTop(scrollTop || 0);
         setTimeout(function () {
-          if (!_this23.dom.tbody.attr('scrollbody') || _this23.dom.tbody.attr('scrollbody') < 10) {
-            _this23.dom.tbody.scrollTop(scrollTop || 0);
+          if (!_this24.dom.tbody.attr('scrollbody') || _this24.dom.tbody.attr('scrollbody') < 10) {
+            _this24.dom.tbody.scrollTop(scrollTop || 0);
 
-            _this23.dom.tbody.attr('scrollbody', scrollTop || 0);
+            _this24.dom.tbody.attr('scrollbody', scrollTop || 0);
           }
         }, 100);
         return;
@@ -9160,7 +9175,7 @@ var TablelistEquipments = function (_Tablelist2) {
       this.dom.types = [];
       var header_index = -1;
       this.dom.tbody.children('h4, dl').each(function (index, tr) {
-        var _this24 = this;
+        var _this25 = this;
 
         tr = $(tr);
 
@@ -9190,7 +9205,7 @@ var TablelistEquipments = function (_Tablelist2) {
               var bonuses = equipment.getBonuses();
 
               if (Array.isArray(bonuses) && bonuses.length) {
-                _this24.equipmentsHasBonus[eid] = tr;
+                _this25.equipmentsHasBonus[eid] = tr;
                 tr.addClass('has-bonus');
               }
             } else {
@@ -9215,7 +9230,7 @@ var TablelistEquipments = function (_Tablelist2) {
                 TablelistEquipments.shipId = null;
                 tr.removeAttr('style');
 
-                _this24.reset_types();
+                _this25.reset_types();
               }, 20);
             }
           });
@@ -9261,30 +9276,30 @@ var TablelistFleets = function (_Tablelist3) {
   var _super6 = _createSuper(TablelistFleets);
 
   function TablelistFleets(container, options) {
-    var _this25;
+    var _this26;
 
     _classCallCheck(this, TablelistFleets);
 
-    _this25 = _super6.call(this, container, options);
-    _this25.columns = ['  ', ['创建者', 'user'], ['修改时间', 'time_modify'], ['评价', 'rating'], ['', 'options']];
-    _this25.kancolle_calc = {
+    _this26 = _super6.call(this, container, options);
+    _this26.columns = ['  ', ['创建者', 'user'], ['修改时间', 'time_modify'], ['评价', 'rating'], ['', 'options']];
+    _this26.kancolle_calc = {
       '_ApplicationId': 'l1aps8iaIfcq2ZzhOHJWNUU2XrNySIzRahodijXW',
       '_ClientVersion': 'js1.2.19',
       '_InstallationId': '62522018-ec82-b434-f5a5-08c3ab61d932',
       '_JavaScriptKey': 'xOrFpWEQZFxUDK2fN1DwbKoj3zTKAEkgJHzwTuZ4'
     };
 
-    _frame.app_main.loading.push('tablelist_' + _this25._index);
+    _frame.app_main.loading.push('tablelist_' + _this26._index);
 
     _frame.app_main.is_loaded = false;
-    _this25.dom.filter_container = $('<div class="options" viewtype="card"/>').appendTo(_this25.dom.container);
-    _this25.dom.filters = $('<div class="filters"/>').appendTo(_this25.dom.filter_container);
-    _this25.dom.btn_new = $('<button class="new" icon="import"/>').html('新建/导入').on('click', function (e, target) {
+    _this26.dom.filter_container = $('<div class="options" viewtype="card"/>').appendTo(_this26.dom.container);
+    _this26.dom.filters = $('<div class="filters"/>').appendTo(_this26.dom.filter_container);
+    _this26.dom.btn_new = $('<button class="new" icon="import"/>').html('新建/导入').on('click', function (e, target) {
       this.btn_new(target);
-    }.bind(_assertThisInitialized(_this25))).appendTo(_this25.dom.filters);
+    }.bind(_assertThisInitialized(_this26))).appendTo(_this26.dom.filters);
 
     if (TablelistFleets.support.buildfile) {
-      _this25.dom.btn_exportFile = $('<button class="export" icon="floppy-disk"/>').html('导出配置文件').on('click', function () {
+      _this26.dom.btn_exportFile = $('<button class="export" icon="floppy-disk"/>').html('导出配置文件').on('click', function () {
         _db.fleets.persistence.compactDatafile();
 
         if (_g.isNWjs) {
@@ -9311,11 +9326,11 @@ var TablelistFleets = function (_Tablelist3) {
             _frame.app_main.loading_complete('tablelist_fleets_export');
           });
         }
-      }).appendTo(_this25.dom.filters);
+      }).appendTo(_this26.dom.filters);
     }
 
-    _this25.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(_this25.dom.filters);
-    _this25.dom.setting_hqlv = $('<label/>', {
+    _this26.dom.buttons_right = $('<div class="buttons_right"/>').appendTo(_this26.dom.filters);
+    _this26.dom.setting_hqlv = $('<label/>', {
       'class': 'setting setting-hqlv',
       'html': '默认司令部等级',
       'data-tip': '如果舰队配置没有设置司令部等级，<br/>则会使用该默认数值<br/>司令部等级会影响索敌能力的计算'
@@ -9325,18 +9340,18 @@ var TablelistFleets = function (_Tablelist3) {
           e.stopImmediatePropagation();
           e.stopPropagation();
         }
-      }.bind(_assertThisInitialized(_this25))
-    }).append(_this25.dom.setting_hqlv_input = $('<input/>', {
+      }.bind(_assertThisInitialized(_this26))
+    }).append(_this26.dom.setting_hqlv_input = $('<input/>', {
       'type': 'number',
       'min': 0,
       'max': _g.hqMaxLv
     }).val(Lockr.get('hqLvDefault', _g.defaultHqLv)).on({
       'input': function () {
         _g.updateDefaultHqLv(this.dom.setting_hqlv_input.val());
-      }.bind(_assertThisInitialized(_this25)),
+      }.bind(_assertThisInitialized(_this26)),
       'focus.tipshow': function () {
         this.dom.setting_hqlv_input.trigger('tipshow');
-      }.bind(_assertThisInitialized(_this25)),
+      }.bind(_assertThisInitialized(_this26)),
       'blur.tiphide': function () {
         this.dom.setting_hqlv_input.trigger('tiphide');
 
@@ -9344,30 +9359,30 @@ var TablelistFleets = function (_Tablelist3) {
           this.dom.setting_hqlv_input.val(_g.hqMaxLv);
           this.dom.setting_hqlv_input.trigger('input');
         }
-      }.bind(_assertThisInitialized(_this25)),
+      }.bind(_assertThisInitialized(_this26)),
       'click': function click(e) {
         e.stopImmediatePropagation();
         e.stopPropagation();
       }
-    })).appendTo(_this25.dom.buttons_right);
+    })).appendTo(_this26.dom.buttons_right);
     $body.on('update_defaultHqLv.update_fleets_hqlv_input', function (e, val) {
       this.dom.setting_hqlv_input.val(val);
-    }.bind(_assertThisInitialized(_this25)));
-    _this25.dom.btn_settings = $('<button icon="cog"/>').on('click', function () {
+    }.bind(_assertThisInitialized(_this26)));
+    _this26.dom.btn_settings = $('<button icon="cog"/>').on('click', function () {
       this.btn_settings();
-    }.bind(_assertThisInitialized(_this25))).appendTo(_this25.dom.buttons_right);
-    _this25.dom.table = $('<div class="tablelist-container"/>').appendTo(_this25.dom.container);
-    _this25.dom.thead = $('<dl/>').appendTo($('<div class="tablelist-header"/>').appendTo(_this25.dom.table));
-    _this25.dom.tbody = $('<div class="tablelist-body" scrollbody/>').appendTo(_this25.dom.table).on('contextmenu.contextmenu_fleet', '[data-fleetid]', function (e) {
+    }.bind(_assertThisInitialized(_this26))).appendTo(_this26.dom.buttons_right);
+    _this26.dom.table = $('<div class="tablelist-container"/>').appendTo(_this26.dom.container);
+    _this26.dom.thead = $('<dl/>').appendTo($('<div class="tablelist-header"/>').appendTo(_this26.dom.table));
+    _this26.dom.tbody = $('<div class="tablelist-body" scrollbody/>').appendTo(_this26.dom.table).on('contextmenu.contextmenu_fleet', '[data-fleetid]', function (e) {
       this.contextmenu_show($(e.currentTarget), null, e);
       e.preventDefault();
-    }.bind(_assertThisInitialized(_this25))).on('click.contextmenu_fleet', '[data-fleetid]>dt>em', function (e) {
+    }.bind(_assertThisInitialized(_this26))).on('click.contextmenu_fleet', '[data-fleetid]>dt>em', function (e) {
       this.contextmenu_show($(e.currentTarget).parent().parent(), $(e.currentTarget));
       e.stopImmediatePropagation();
       e.stopPropagation();
-    }.bind(_assertThisInitialized(_this25)));
+    }.bind(_assertThisInitialized(_this26)));
 
-    _this25.columns.forEach(function (v, i) {
+    _this26.columns.forEach(function (v, i) {
       if (_typeof(v) == 'object') {
         $('<dd/>', {
           'stat': v[1],
@@ -9376,19 +9391,19 @@ var TablelistFleets = function (_Tablelist3) {
       } else {
         $('<dt/>').html(v[0]).appendTo(this.dom.thead);
       }
-    }.bind(_assertThisInitialized(_this25)));
+    }.bind(_assertThisInitialized(_this26)));
 
     $('<div class="nocontent container"/>').append($($('<div/>').append($('<span>').html('暂无舰队配置')).append($('<button>').html('新建/导入').on('click', function (e) {
       this.dom.btn_new.trigger('click', [e]);
-    }.bind(_assertThisInitialized(_this25)))))).appendTo(_this25.dom.table);
+    }.bind(_assertThisInitialized(_this26)))))).appendTo(_this26.dom.table);
 
-    _this25.dom.container.on('focus.number_input_select', 'input[type="number"]', function (e) {
+    _this26.dom.container.on('focus.number_input_select', 'input[type="number"]', function (e) {
       e.currentTarget.select();
     });
 
-    _this25.genlist();
+    _this26.genlist();
 
-    return _this25;
+    return _this26;
   }
 
   _createClass(TablelistFleets, [{
@@ -9508,7 +9523,7 @@ var TablelistFleets = function (_Tablelist3) {
   }, {
     key: "append_all_items",
     value: function append_all_items(arr) {
-      var _this26 = this;
+      var _this27 = this;
 
       arr = arr || [];
       arr.sort(function (a, b) {
@@ -9533,8 +9548,8 @@ var TablelistFleets = function (_Tablelist3) {
           for (var _i10 in sorted) {
             k = 0;
 
-            while (k < _this26.flexgrid_empty_count) {
-              if (!k) _this26.flexgrid_ph = $('<dl data-fleetid trindex="99999"/>').appendTo(_this26.dom.tbody);else $('<dl data-fleetid trindex="99999"/>').appendTo(_this26.dom.tbody);
+            while (k < _this27.flexgrid_empty_count) {
+              if (!k) _this27.flexgrid_ph = $('<dl data-fleetid trindex="99999"/>').appendTo(_this27.dom.tbody);else $('<dl data-fleetid trindex="99999"/>').appendTo(_this27.dom.tbody);
               k++;
             }
 
@@ -9544,13 +9559,13 @@ var TablelistFleets = function (_Tablelist3) {
                 count++;
                 if (count >= arr.length - 1) deferred.resolve();
               }.bind(this)(index), 0);
-            }.bind(_this26));
+            }.bind(_this27));
 
             $('<h4/>', {
-              'trindex': ++_this26.trIndex,
+              'trindex': ++_this27.trIndex,
               'html': '&nbsp;'
-            }).appendTo(_this26.dom.tbody);
-            _this26.trIndex++;
+            }).appendTo(_this27.dom.tbody);
+            _this27.trIndex++;
           }
         })();
       } else {
@@ -10399,23 +10414,23 @@ var TablelistEntities = function (_Tablelist4) {
   var _super7 = _createSuper(TablelistEntities);
 
   function TablelistEntities(container, options) {
-    var _this27;
+    var _this28;
 
     _classCallCheck(this, TablelistEntities);
 
-    _this27 = _super7.call(this, container, options);
+    _this28 = _super7.call(this, container, options);
 
-    _frame.app_main.loading.push('tablelist_' + _this27._index);
+    _frame.app_main.loading.push('tablelist_' + _this28._index);
 
     _frame.app_main.is_loaded = false;
 
     if (container.children('.tablelist-list').length) {
-      _this27.init_parse();
-    } else if (_this27.init_new) {
-      _this27.init_new(options);
+      _this28.init_parse();
+    } else if (_this28.init_new) {
+      _this28.init_new(options);
     }
 
-    return _this27;
+    return _this28;
   }
 
   _createClass(TablelistEntities, [{
@@ -10749,26 +10764,26 @@ TablelistShips.prototype.append_all_items = function () {
         }
 
         var checkbox_id = Tablelist.genId();
-        _this28.last_item = $('<tr class="typetitle" data-trindex="' + _this28.trIndex + '">' + '<th colspan="' + (_this28.columns.length + 1) + '">' + '<label class="checkbox" for="' + checkbox_id + '">' + _g.data['ship_type_order'][i]['name']['zh_cn'] + (_g.data['ship_type_order'][i]['name']['zh_cn'] == data_shiptype.name.zh_cn ? '<small>[' + data_shiptype['code'] + ']</small>' : '') + '</label></th></tr>').appendTo(_this28.dom.tbody);
-        _this28.trIndex++;
+        _this29.last_item = $('<tr class="typetitle" data-trindex="' + _this29.trIndex + '">' + '<th colspan="' + (_this29.columns.length + 1) + '">' + '<label class="checkbox" for="' + checkbox_id + '">' + _g.data['ship_type_order'][i]['name']['zh_cn'] + (_g.data['ship_type_order'][i]['name']['zh_cn'] == data_shiptype.name.zh_cn ? '<small>[' + data_shiptype['code'] + ']</small>' : '') + '</label></th></tr>').appendTo(_this29.dom.tbody);
+        _this29.trIndex++;
         var k = 0;
 
-        while (k < _this28.flexgrid_empty_count) {
-          var _index = _this28.trIndex + _g.data.ship_id_by_type[i].length + k;
+        while (k < _this29.flexgrid_empty_count) {
+          var _index = _this29.trIndex + _g.data.ship_id_by_type[i].length + k;
 
-          $('<tr class="empty" data-trindex="' + _index + '" data-shipid/>').appendTo(_this28.dom.tbody);
+          $('<tr class="empty" data-trindex="' + _index + '" data-shipid/>').appendTo(_this29.dom.tbody);
           k++;
         }
 
-        _checkbox2 = _this28.create_title_checkbox(checkbox_id, i);
-        _this28.header_checkbox[i] = _checkbox2;
+        _checkbox2 = _this29.create_title_checkbox(checkbox_id, i);
+        _this29.header_checkbox[i] = _checkbox2;
       }
 
-      _this28.append_item(_g.data.ships[_g.data.ship_id_by_type[i][j]], i);
+      _this29.append_item(_g.data.ships[_g.data.ship_id_by_type[i][j]], i);
 
       setTimeout(function () {
         if (j >= _g.data.ship_id_by_type[i].length - 1) {
-          _this28.trIndex += _this28.flexgrid_empty_count;
+          _this29.trIndex += _this29.flexgrid_empty_count;
 
           _do(i + 1, 0);
         } else {
@@ -10776,13 +10791,13 @@ TablelistShips.prototype.append_all_items = function () {
         }
       }, 0);
     } else {
-      _this28.mark_high();
+      _this29.mark_high();
 
-      _this28.thead_redraw();
+      _this29.thead_redraw();
 
-      _frame.app_main.loaded('tablelist_' + _this28._index, true);
+      _frame.app_main.loaded('tablelist_' + _this29._index, true);
 
-      delete _this28.last_item;
+      delete _this29.last_item;
     }
   };
 
