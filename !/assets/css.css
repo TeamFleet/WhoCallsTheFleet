@@ -14816,7 +14816,7 @@ body > .modal.hastitle.modal-bonuses section .bonus .equipments a.link_equipment
 body > .modal.hastitle.modal-bonuses section .bonus .equipments a.link_equipment:active {
   color: rgba(255, 255, 255, 0.65);
 }
-body > .modal.hastitle.modal-bonuses section .bonus .equipments > .one-of {
+body > .modal.hastitle.modal-bonuses section .bonus .equipments .one-of {
   margin-left: 36px;
   margin-top: 5px;
   border: 1px solid rgba(255, 246, 204, 0.5);
@@ -14826,16 +14826,16 @@ body > .modal.hastitle.modal-bonuses section .bonus .equipments > .one-of {
   font-size: 14px;
   background: rgba(254, 246, 230, 0.1);
 }
-body > .modal.hastitle.modal-bonuses section .bonus .equipments > .one-of .info {
+body > .modal.hastitle.modal-bonuses section .bonus .equipments .one-of .info {
   display: block;
   font-style: italic;
   color: rgba(255, 246, 204, 0.75);
 }
-body > .modal.hastitle.modal-bonuses section .bonus .equipments > .one-of .link_equipment {
+body > .modal.hastitle.modal-bonuses section .bonus .equipments .one-of .link_equipment {
   font-size: inherit;
   margin-bottom: -6px;
 }
-body > .modal.hastitle.modal-bonuses section .bonus .equipments > .one-of-trail {
+body > .modal.hastitle.modal-bonuses section .bonus .equipments .one-of-trail {
   height: 10px;
 }
 body > .modal.hastitle.modal-bonuses section .bonus .ships {

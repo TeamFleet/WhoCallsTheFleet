@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",410,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/11.png)\"></s><strong>21号对空电探改二</strong><small>大型电探/雷达</small></h3><span>+7 对空</span><span>+4 命中</span><span>+4 回避</span><span>+7 索敌</span>")
