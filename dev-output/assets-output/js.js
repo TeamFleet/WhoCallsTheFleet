@@ -3103,7 +3103,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
   location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20210331';
+_g.db_version = '20210423';
 _g.bgimg_count = 0;
 _g.event = {
   'animationend': 'animationend webkitAnimationEnd',
@@ -7552,7 +7552,7 @@ var InfosFleetShipEquipment = function () {
 
       if (value && !isNaN(value)) {
         if (this.isParentAirfield) this.infosParent.data[this.index][0] = value;else this.infosParent.data[2][this.index] = value;
-        if (InfosFleetShipEquipment.improvableExtra.indexOf(value) > -1) this.improvable = true;else this.improvable = _g.data.items[value].improvable || _g.data.items[value].has_improved_reward || false;
+        this.improvable = true;
         this.el.attr({
           'data-equipmentid': value,
           'data-tip': '[[EQUIPMENT::' + value + ']]',
@@ -7574,7 +7574,7 @@ var InfosFleetShipEquipment = function () {
           this.carry = 18;
         } else this.infosParent.data[2][this.index] = null;
 
-        this.improvable = false;
+        this.improvable = true;
         this.el.removeAttr('data-equipmentId').removeAttr('data-tip').removeAttr('data-star').removeAttr('data-rank').removeAttr('touch-action').css('background-image', '').removeClass('is-aircraft is-rankupgradable');
         this.elName.html('');
       }

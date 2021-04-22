@@ -1,7 +1,7 @@
 {
   "name": "WhoCallsTheFleet",
   "main": "app/main.html",
-  "version": "0.30.57",
+  "version": "0.30.58",
   "description": "An offline guidebook for KanColle. Based on NW.JS",
   "repository": {
     "type": "git",
@@ -38,10 +38,10 @@
       "package.json"
     ],
     "dataVersion": {
-      "app": "0.30.57.0",
-      "app-db": "2021.03.31",
+      "app": "0.30.58.0",
+      "app-db": "2021.04.23",
       "bgimgs": "1.18.6.0",
-      "pics": "2021.03.31",
+      "pics": "2021.04.23",
       "pics-enemies": "2018.08.28",
       "pics-ships-1": "2018.12.08",
       "pics-ships-2": "2018.12.08",
@@ -58,7 +58,7 @@
       "pics-ships-13": "2020.12.20",
       "pics-ships-14": "2021.03.31",
       "pics-ships-15": "2020.12.20",
-      "pics-ships-18": "2019.09.04",
+      "pics-ships-18": "2021.04.23",
       "pics-ships-30": "2019.05.25",
       "pics-ships-184": "2018.08.28",
       "pics-ships-extra-1": "2019.10.07",
@@ -71,7 +71,8 @@
       "pics-ships-extra-8": "2019.03.03",
       "pics-ships-extra-9": "2020.03.29",
       "pics-ships-extra-10": "2020.12.20",
-      "pics-ships-extra-11": "2021.03.31"
+      "pics-ships-extra-11": "2021.04.23",
+      "pics-ships-extra-12": "2021.04.23"
     },
     "versions": {
       "win32": "0.35.2",
@@ -115,7 +116,8 @@
       "pics-ships-extra-8",
       "pics-ships-extra-9",
       "pics-ships-extra-10",
-      "pics-ships-extra-11"
+      "pics-ships-extra-11",
+      "pics-ships-extra-12"
     ],
     "launcherSplash": "./source/launcher.webp",
     "macIcns": "./source/appicon.icns"

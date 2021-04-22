@@ -2656,10 +2656,11 @@ class InfosFleetShipEquipment {
                 this.infosParent.data[2][this.index] = value
 
             // 装备是否可改修
-            if (InfosFleetShipEquipment.improvableExtra.indexOf(value) > -1)
-                this.improvable = true
-            else
-                this.improvable = _g.data.items[value].improvable || _g.data.items[value].has_improved_reward || false
+            this.improvable = true
+            // if (InfosFleetShipEquipment.improvableExtra.indexOf(value) > -1)
+            //     this.improvable = true
+            // else
+            //     this.improvable = _g.data.items[value].improvable || _g.data.items[value].has_improved_reward || false
 
             this.el.attr({
                 'data-equipmentid': value,
@@ -2686,7 +2687,8 @@ class InfosFleetShipEquipment {
                 this.carry = 18
             } else
                 this.infosParent.data[2][this.index] = null
-            this.improvable = false
+            this.improvable = true
+            // this.improvable = false
             this.el.removeAttr('data-equipmentId')
                 .removeAttr('data-tip')
                 .removeAttr('data-star')
@@ -2809,6 +2811,7 @@ class InfosFleetShipEquipment {
 
     // 是否可改修
     set improvable(value) {
+        // return true
         // if (this.isParentAirfield || !value) {
         if (!value) {
             this.el.removeAttr('data-star')
