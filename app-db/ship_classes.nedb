@@ -51,6 +51,7 @@
 {"name":{"ja_jp":"改阿賀野","zh_cn":"改阿贺野","en_us":"Revised Agano"},"ship_type_id":2,"id":143,"_id":"MvTlUFVIc4eEpmtN","speed_rule":"high-2","equipable_exclude_by_slot":[null,null,null,[12]]}
 {"name":{"ja_jp":"John C.Butler","zh_cn":"约翰·C·巴特勒","en_us":""},"ship_type_id":1,"id":112,"_id":"Nvzvklc2BNAuwjnZ","navy":"usn","speed_rule":"low-4"}
 {"name":{"ja_jp":"神威","zh_cn":"神威","en_us":"Kamoi"},"ship_type_id":29,"id":98,"_id":"O3lucZpi7fHXfyYb"}
+{"name":{"ja_jp":"潜高","zh_cn":"潜高"},"ship_type_id":13,"id":146,"_id":"PSBFXovnUlkOWJkU"}
 {"id":7,"ship_type_id":7,"_id":"PkNoV9TpcX3TA9qG","speed_rule":"high-3","name":{"en_us":"Bismarck","ja_jp":"Bismarck","zh_cn":"俾斯麦"},"navy":"km"}
 {"ship_type_id":24,"id":71,"_id":"QCTrW1I7vS81vUaV","speed_rule":"low-2","name":{"en_us":"Akitsushima","ja_jp":"秋津洲","zh_cn":"秋津洲"}}
 {"ship_type_id":12,"id":77,"_id":"QDw2yfrIJfDl63rN","speed_rule":"low-2","name":{"en_us":"Mizuho","ja_jp":"瑞穂","zh_cn":"瑞穗"}}
@@ -60,7 +61,7 @@
 {"ship_type_id":10,"id":91,"_id":"T5TIzP4V1vYfSz1u","name":{"en_us":"Aquila","ja_jp":"Aquila","zh_cn":"天鹰"},"navy":"rm"}
 {"ship_type_id":31,"id":92,"_id":"TGSlMB6OBuVzahFV","name":{"en_us":"Shimushu","ja_jp":"占守","zh_cn":"占守"}}
 {"ship_type_id":14,"id":66,"_id":"TkXaOcPURNWGeKqT","speed_rule":"low-3","name":{"en_us":"Junsen Type B","ja_jp":"巡潜乙","zh_cn":"巡潜乙"}}
-{"name":{"ja_jp":"Northampton","zh_cn":"北安普顿","en_us":"Northampton"},"ship_type_id":4,"id":124,"_id":"TqSucKfVc35XtQvm","navy":"usn"}
+{"name":{"ja_jp":"Northampton","zh_cn":"北安普敦","en_us":"Northampton"},"ship_type_id":4,"id":124,"_id":"TqSucKfVc35XtQvm","navy":"usn"}
 {"ship_type_id":4,"id":81,"_id":"TqvaW6jEdVptFohN","speed_rule":"high-3","name":{"en_us":"Zara","ja_jp":"Zara","zh_cn":"扎拉"},"navy":"rm"}
 {"name":{"ja_jp":"Yorktown","zh_cn":"约克城"},"ship_type_id":10,"id":135,"_id":"URPYgaL8JlUwTXo4","navy":"usn"}
 {"name":{"ja_jp":"North Carolina","zh_cn":"北卡罗莱纳","en_us":"North Carolina"},"ship_type_id":7,"id":141,"_id":"VaCsevxhYgGjiiKV","navy":"usn"}
