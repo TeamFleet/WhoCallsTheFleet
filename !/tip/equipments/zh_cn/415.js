@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",415,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/10.png)\"></s><strong>SO3C 海鸥<small>(Seamew)</small>改</strong><small>水上侦察机</small></h3><span>+1 对空</span><span>+2 对潜</span><span>+3 命中</span><span>+7 索敌</span><span>航程: 4</span>")

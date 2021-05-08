@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",412,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/32.png)\"></s><strong>水雷战队 熟练瞭望员</strong><small>水上舰要员</small></h3><span>+3 雷装</span><span>+1 对空</span><span>+2 命中</span><span>+3 回避</span><span>+2 索敌</span><span>射程: 中</span>")

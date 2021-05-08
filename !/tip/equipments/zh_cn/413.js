@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",413,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/28.png)\"></s><strong>精锐水雷战队 司令部</strong><small>司令部设施</small></h3><span>+3 雷装</span><span>+2 命中</span><span>+1 索敌</span>")
