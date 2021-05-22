@@ -1662,7 +1662,7 @@ class InfosFleetShip {
                         this.elAttrEvasion = $('<span class="evasion"/>')
                     )
                     .append(
-                        this.elAttrNightBattle = $('<span class="nightbattle" data-text="夜战"/>')
+                        this.elAttrNightBattle = $('<span class="nightbattle" data-text="夜"/>')
                     )
                     .append(
                         _huCss.csscheck_full('mask-image')

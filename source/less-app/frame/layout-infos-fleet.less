@@ -1054,6 +1054,7 @@
 			.summary{
 				flex: 	none;
 				display:block;
+				padding-top: 0;
 			}
 		}
 		@media all and (min-height: @screen-width-t7-breaking-point ){
@@ -2575,6 +2576,13 @@
             margin-left: 0;
         }
 	}
+	.airfield{
+		.airfield-summary{
+			.summary{
+				padding-top: 0;
+			}
+		}
+	} // dd.airfield
 }}
 
 
@@ -2761,6 +2769,7 @@
 		flex-flow: 	row wrap;
 		flex: 		1 0 auto;
 		padding: 	2px;
+		height: auto;
 		.equipment{
 			margin: 	2px;
 			//flex: 		1 0 200px;
