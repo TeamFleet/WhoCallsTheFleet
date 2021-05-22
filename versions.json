@@ -1,14 +1,14 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.30.59.0",
-			"path":		"data/2021.05.09/app.nwjs-data",
-			"bytes":	4896399
+			"version":	"0.31.0.0",
+			"path":		"data/2021.05.23/app.nwjs-data",
+			"bytes":	4897729
 		},
 		"app-db": {
-			"version":	"2021.05.09",
-			"path":		"data/2021.05.09/app-db.nwjs-data",
-			"bytes":	1846409
+			"version":	"2021.05.23",
+			"path":		"data/2021.05.23/app-db.nwjs-data",
+			"bytes":	2190009
 		},
 		"bgimgs": {
 			"version":	"1.18.6.0",
@@ -16,9 +16,9 @@
 			"bytes":	12494509
 		},
 		"pics": {
-			"version":	"2021.05.09",
-			"path":		"data/2021.05.09/pics.nwjs-data",
-			"bytes":	43388123
+			"version":	"2021.05.23",
+			"path":		"data/2021.05.23/pics.nwjs-data",
+			"bytes":	43733507
 		},
 		"pics-enemies": {
 			"version":	"2018.08.28",
@@ -82,29 +82,29 @@
 			"bytes":	18336435
 		},
 		"pics-ships-12": {
-			"version":	"2020.04.26",
-			"path":		"data/2020.04.26/pics-ships-12.nwjs-data",
-			"bytes":	20916398
+			"version":	"2021.05.23",
+			"path":		"data/2021.05.23/pics-ships-12.nwjs-data",
+			"bytes":	21323802
 		},
 		"pics-ships-13": {
-			"version":	"2021.05.09",
-			"path":		"data/2021.05.09/pics-ships-13.nwjs-data",
-			"bytes":	16573049
+			"version":	"2021.05.23",
+			"path":		"data/2021.05.23/pics-ships-13.nwjs-data",
+			"bytes":	16995312
 		},
 		"pics-ships-14": {
-			"version":	"2021.05.09",
-			"path":		"data/2021.05.09/pics-ships-14.nwjs-data",
-			"bytes":	11506377
+			"version":	"2021.05.23",
+			"path":		"data/2021.05.23/pics-ships-14.nwjs-data",
+			"bytes":	12025475
 		},
 		"pics-ships-15": {
-			"version":	"2021.05.09",
-			"path":		"data/2021.05.09/pics-ships-15.nwjs-data",
-			"bytes":	2771966
+			"version":	"2021.05.23",
+			"path":		"data/2021.05.23/pics-ships-15.nwjs-data",
+			"bytes":	3509419
 		},
 		"pics-ships-18": {
-			"version":	"2021.05.09",
-			"path":		"data/2021.05.09/pics-ships-18.nwjs-data",
-			"bytes":	1865313
+			"version":	"2021.05.23",
+			"path":		"data/2021.05.23/pics-ships-18.nwjs-data",
+			"bytes":	
 		},
 		"pics-ships-30": {
 			"version":	"2019.05.25",

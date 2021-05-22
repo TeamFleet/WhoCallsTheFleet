@@ -9667,6 +9667,7 @@ body.mod-capture .infos-fleet .ship[data-shipid] > .equipment-extra:not([data-eq
 .infos-fleet .airfield .airfield-summary .summary {
   flex: none;
   display: block;
+  padding-top: 0;
 }
 @media all and (min-height: 540px) {
   .infos-fleet .airfield {
@@ -11800,6 +11801,9 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
   .infos-fleet .summary .btn-add-ship {
     margin-left: 0;
   }
+  .infos-fleet .airfield .airfield-summary .summary {
+    padding-top: 0;
+  }
 }
 @media all and (max-width: 720px) {
   .infos-fleet:before {
@@ -11968,6 +11972,7 @@ body.mod-capture .infos-fleet .summary .btn-add-ship {
     flex-flow: row wrap;
     flex: 1 0 auto;
     padding: 2px;
+    height: auto;
   }
   .infos-fleet .aircrafts .equipment {
     margin: 2px;

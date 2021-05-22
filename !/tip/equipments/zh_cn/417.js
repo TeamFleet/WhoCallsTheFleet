@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",417,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/38.png)\"></s><strong>零式舰战32型<small>(台南空)</small></strong><small>截击机</small></h3><span>+12 对空</span><span>+1 对爆</span><span>+4 迎击</span><span>+1 索敌</span><span>航程: 5</span>")

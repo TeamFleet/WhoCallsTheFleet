@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",418,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/38.png)\"></s><strong>零式舰战22型<small>(251空)</small></strong><small>截击机</small></h3><span>+12 对空</span><span>+1 对爆</span><span>+3 迎击</span><span>+1 索敌</span><span>航程: 7</span>")
