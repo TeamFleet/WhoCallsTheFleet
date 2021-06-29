@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",419,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/7.png)\"></s><strong>SBD-5</strong><small>舰载俯冲轰炸机</small></h3><span>+1 火力</span><span>+2 对空</span><span>+4 对潜</span><span>+7 爆装</span><span>+2 命中</span><span>+3 回避</span><span>+3 索敌</span><span>航程: 4</span>")
