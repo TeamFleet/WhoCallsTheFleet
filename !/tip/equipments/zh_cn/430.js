@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",430,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/16.png)\"></s><strong>65mm/64 单装速射炮改</strong><small>高角副炮 (对空强化)</small></h3><span>+1 火力</span><span>+9 对空</span><span>+1 回避</span><span>射程: 短</span>")

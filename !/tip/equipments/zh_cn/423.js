@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",423,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/9.png)\"></s><strong>管鼻鹱<small>(Fulmar)</small><small>(战斗侦察/熟练)</small></strong><small>舰载侦察机</small></h3><span>+2 火力</span><span>+4 对空</span><span>+3 对潜</span><span>+3 命中</span><span>+3 回避</span><span>+4 索敌</span><span>航程: 4</span>")

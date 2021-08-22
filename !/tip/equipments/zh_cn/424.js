@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",424,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/8.png)\"></s><strong>梭鱼<small>(Barracuda)</small> Mk.II</strong><small>舰载鱼雷轰炸机</small></h3><span>+7 雷装</span><span>+5 对潜</span><span>+1 命中</span><span>+2 索敌</span><span>航程: 4</span>")
