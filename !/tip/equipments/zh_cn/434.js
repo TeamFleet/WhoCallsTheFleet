@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",434,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/6.png)\"></s><strong>海盗<small>(Corsair)</small> Mk.II</strong><small>舰载战斗机</small></h3><span>+1 火力</span><span>+10 对空</span><span>+1 回避</span><span>+1 索敌</span><span>航程: 6</span>")

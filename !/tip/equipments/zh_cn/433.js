@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",433,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/37.png)\"></s><strong>SM.79 bis<small>(熟练)</small></strong><small>陆上轰炸机</small></h3><span>+13 雷装</span><span>+3 对空</span><span>+4 对潜</span><span>+14 爆装</span><span>+2 命中</span><span>+3 索敌</span><span>航程: 8</span>")

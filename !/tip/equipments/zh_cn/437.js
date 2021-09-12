@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",437,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/6.png)\"></s><strong>试制阵风</strong><small>舰载战斗机</small></h3><span>+13 对空</span><span>+1 命中</span><span>+1 回避</span><span>航程: 5</span>")
