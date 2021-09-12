@@ -3103,7 +3103,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
   location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20210822';
+_g.db_version = '20210913';
 _g.bgimg_count = 0;
 _g.event = {
   'animationend': 'animationend webkitAnimationEnd',
@@ -4144,6 +4144,7 @@ var Page = function () {
   function Page($page) {
     _classCallCheck(this, Page);
 
+    this.lastScrollY = 0;
     $page.on({
       'pageHide': function () {
         this.modeSelectionExit();

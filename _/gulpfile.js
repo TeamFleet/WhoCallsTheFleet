@@ -241,38 +241,11 @@ const build = gulp.parallel(
 exports.build = build
 
 exports.watch = function () {
+    build()
     gulp.watch(
-        path.join(rootSource, 'js-app', '**/*.js'),
-        [scripts.app, scripts.web]
-    );
-    gulp.watch(
-        path.join(rootSource, 'KanColle-JS-Kit', '**/*.js'),
-        [scripts.app, scripts.web]
-    );
-    gulp.watch(
-        path.join(rootSource, 'nw.js-base-framework', '**/*.js'),
-        [scripts.base, scripts.app, scripts.web]
-    );
-    gulp.watch(
-        path.join(rootSource, 'libs', '**/*.js'),
-        [scripts.app, scripts.webLibs]
-    );
-    gulp.watch(
-        path.join(rootSource, 'js-app', 'canvas', '**/*.js'),
-        [scripts.webLibsCanvas]
-    );
-    //gulp.watch(
-    //		path.join( rootSource, '**/*.js' ),
-    //		[scripts.base, scripts.app, scripts.web, scripts.webLibs]
-    //	);
-    gulp.watch(
-        path.join(rootOutput, 'js-source', '**/*.js'),
-        [scripts.output]
-    );
-    //gulp.watch(
-    //		path.join( rootSource, '**/*.less' ),
-    //		['css-app', 'css-base', 'Web-css']
-    //	);
+        `${rootSource}/**/*.js`,
+        gulp.parallel(Object.values(allTasks.scripts))
+    )
 }
 
 // Commons ====================================================================

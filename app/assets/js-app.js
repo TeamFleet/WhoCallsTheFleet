@@ -1381,6 +1381,18 @@ _g.ship_type_order = [];
 _g.ship_type_order_full = [];
 _g.ship_type_order_map = {};
 
+_g.v1Frame = function () {
+  var localCheck = node.path.resolve(_g.root, '../Yuubari');
+
+  if (node.fs.existsSync(localCheck)) {
+    return {
+      root: 'http://localhost:8703/'
+    };
+  }
+
+  return false;
+}();
+
 node.nedb.prototype.updateById = function (_id, docReplace, callback) {
   if (!this._updateByIdQueue) {
     this._updateByIdQueue = {};
@@ -1741,6 +1753,15 @@ _frame.app_main = {
     $('<div class="nav-mask"/>').appendTo(_frame.dom.layout).on('click', function () {
       _frame.dom.mobilemenu.prop('checked', false);
     });
+
+    if (_g.v1Frame) {
+      _frame.dom.v1frame = $('<div class="v1frame"/>').appendTo(_frame.dom.main);
+      _frame.dom.v1frameIframe = $("<iframe src=\"".concat(_g.v1Frame.root, "?v0\" allowTransparent />")).appendTo(_frame.dom.v1frame);
+      _g.v1Frame.iframe = _frame.dom.v1frameIframe;
+      _g.v1Frame.frame = _frame.dom.v1frameIframe[0].contentWindow;
+      console.log(_g.v1Frame, _frame.dom);
+    }
+
     var titlebar_btns = $('#titlebar > .buttons');
 
     if (titlebar_btns && titlebar_btns.length) {
@@ -1775,18 +1796,56 @@ _frame.app_main = {
     var promise_chain = Q.fcall(function () {});
     promise_chain.then(function () {
       var deferred = Q.defer();
-      node.fs.readdir(_g.path.db, function (err, files) {
-        if (err) {
-          deferred.reject(new Error(err));
-        } else {
-          files.forEach(function (file) {
-            _db[node.path.parse(file)['name']] = new node.nedb({
-              filename: node.path.join(_g.path.db, '/' + file)
+
+      try {
+        node.fs.readdir(_g.path.db, function (err, files) {
+          if (err) {
+            deferred.reject(new Error(err));
+          } else {
+            files.forEach(function (filename) {
+              var _node$path$parse = node.path.parse(filename),
+                  ext = _node$path$parse.ext;
+
+              var file = node.path.resolve(_g.path.db, filename);
+
+              if (ext === '.nedb~') {
+                node.fs.unlinkSync(file);
+              }
             });
-          });
+          }
+
           deferred.resolve(files);
-        }
-      });
+        });
+      } catch (e) {
+        console.trace(e);
+      }
+
+      return deferred.promise;
+    }).then(function () {
+      var deferred = Q.defer();
+
+      try {
+        node.fs.readdir(_g.path.db, function (err, files) {
+          if (err) {
+            deferred.reject(new Error(err));
+          } else {
+            files.forEach(function (filename) {
+              var _node$path$parse2 = node.path.parse(filename),
+                  name = _node$path$parse2.name;
+
+              var file = node.path.resolve(_g.path.db, filename);
+              _db[name] = new node.nedb({
+                filename: file
+              });
+            });
+          }
+
+          deferred.resolve(files);
+        });
+      } catch (e) {
+        console.trace(e);
+      }
+
       return deferred.promise;
     }).then(BgImg.init).then(function () {
       _g.log('Preload All DBs: START');
@@ -3093,6 +3152,7 @@ var Page = function () {
   function Page($page) {
     _classCallCheck(this, Page);
 
+    this.lastScrollY = 0;
     $page.on({
       'pageHide': function () {
         this.modeSelectionExit();

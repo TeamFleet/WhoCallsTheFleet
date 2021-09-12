@@ -1,5 +1,7 @@
 class Page {
     constructor($page) {
+        this.lastScrollY = 0
+
         $page.on({
             'pageHide': function () {
                 this.modeSelectionExit()
@@ -102,6 +104,9 @@ Page.resetScroll = function (page) {
 }
 
 Page.init = function (page) {
+    // if (_g.v1Frame) {
+    //     return
+    // }
     page = page || _frame.app_main.cur_page
     let p
 

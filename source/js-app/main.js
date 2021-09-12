@@ -89,6 +89,16 @@
     _g.ship_type_order_full = []
     _g.ship_type_order_map = {}
 
+    _g.v1Frame = (() => {
+        const localCheck = node.path.resolve(_g.root, '../Yuubari');
+        if (node.fs.existsSync(localCheck)) {
+            return {
+                root: 'http://localhost:8703/'
+            }
+        }
+        return false;
+    })();
+
 
 
 
@@ -643,6 +653,16 @@ _frame.app_main = {
                     _frame.dom.mobilemenu.prop('checked', false)
                 })
 
+            if (_g.v1Frame) { // V1 Iframe
+                _frame.dom.v1frame = $('<div class="v1frame"/>')
+                    .appendTo( _frame.dom.main )
+                _frame.dom.v1frameIframe = $(`<iframe src="${_g.v1Frame.root}?v0" allowTransparent />`)
+                    .appendTo( _frame.dom.v1frame )
+                _g.v1Frame.iframe = _frame.dom.v1frameIframe
+                _g.v1Frame.frame = _frame.dom.v1frameIframe[0].contentWindow
+                console.log(_g.v1Frame, _frame.dom);
+            }
+
         // 功能按钮：反馈信息
         /*
             $('#titlebar>.buttons')
@@ -694,22 +714,52 @@ _frame.app_main = {
         // 开始异步函数链
             promise_chain
 
+        // 检查 app-db 目录，清理残余文件
+            .then(function(){
+                var deferred = Q.defer()
+                try {
+                    node.fs.readdir(_g.path.db, function(err, files){
+                        if( err ){
+                            deferred.reject(new Error(err))
+                        }else{
+                            files.forEach(function(filename){
+                                const { ext } = node.path.parse(filename)
+                                const file = node.path.resolve(_g.path.db, filename)
+                                if (ext === '.nedb~') {
+                                    node.fs.unlinkSync(file)
+                                }
+                            })
+                        }
+                        deferred.resolve(files)
+                    })
+                } catch(e) {
+                    console.trace(e)
+                }
+                return deferred.promise
+            })
+
         // 检查 app-db 目录，预加载全部数据库
             .then(function(){
                 var deferred = Q.defer()
-                node.fs.readdir(_g.path.db, function(err, files){
-                    if( err ){
-                        deferred.reject(new Error(err))
-                    }else{
-                        files.forEach(function(file){
-                            _db[ node.path.parse(file)['name'] ]
-                                = new node.nedb({
-                                        filename: 	node.path.join(_g.path.db, '/' + file)
-                                    })
-                        })
+                try {
+                    node.fs.readdir(_g.path.db, function(err, files){
+                        if( err ){
+                            deferred.reject(new Error(err))
+                        }else{
+                            files.forEach(function(filename){
+                                const { name } = node.path.parse(filename)
+                                const file = node.path.resolve(_g.path.db, filename)
+                                _db[name]
+                                    = new node.nedb({
+                                            filename: file
+                                        })
+                            })
+                        }
                         deferred.resolve(files)
-                    }
-                })
+                    })
+                } catch(e) {
+                    console.trace(e)
+                }
                 return deferred.promise
             })
 
