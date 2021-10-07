@@ -104,7 +104,7 @@ Page.resetScroll = function (page) {
 }
 
 Page.init = function (page) {
-    // if (_g.v1Frame) {
+    // if (_g.yuubariFrame) {
     //     return
     // }
     page = page || _frame.app_main.cur_page

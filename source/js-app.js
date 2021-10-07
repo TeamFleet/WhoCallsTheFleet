@@ -5,6 +5,7 @@
 // @koala-prepend "js-app/google_analytics.js"
 // @koala-prepend "js-app/kancolle-calc.js"
 // @koala-prepend "js-app/events.js"
+// @koala-prepend "js-app/yuubari-frame.js"
 
 // @koala-prepend "js-app/canvas/!.js"
 // @koala-prepend "js-app/canvas/blur.js"

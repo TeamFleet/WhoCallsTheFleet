@@ -4,8 +4,6 @@ var _this29 = void 0;
 
 function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -45,6 +43,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -661,6 +661,64 @@ _g.getCurrentEvent = function (now) {
     return now >= event.start && now < event.end;
   });
 };
+
+var YuubariFrame = function () {
+  function YuubariFrame() {
+    _classCallCheck(this, YuubariFrame);
+
+    _defineProperty(this, "enabled", false);
+
+    _defineProperty(this, "iframe", undefined);
+
+    _defineProperty(this, "frame", undefined);
+
+    if (!node || !node.path) return;
+    var localCheck = node.path.resolve(_g.root, '../Yuubari');
+
+    if (node.fs.existsSync(localCheck)) {
+      this.enabled = true;
+      this.root = 'http://localhost:8703/';
+    }
+  }
+
+  _createClass(YuubariFrame, [{
+    key: "init",
+    value: function init() {
+      if (!this.enabled) return;
+      _frame.dom.yuubariFrame = $('<div class="yuubari-frame"/>').appendTo(_frame.dom.main);
+      _frame.dom.yuubariFrameIframe = $("<iframe src=\"".concat(this.root, "?v0\" allowTransparent />")).appendTo(_frame.dom.yuubariFrame);
+      this.iframe = _frame.dom.yuubariFrameIframe;
+      this.frame = _frame.dom.yuubariFrameIframe[0].contentWindow;
+    }
+  }, {
+    key: "show",
+    value: function show() {
+      if (!this.enabled) return;
+    }
+  }, {
+    key: "hide",
+    value: function hide() {
+      if (!this.enabled) return;
+    }
+  }, {
+    key: "go",
+    value: function go(route) {
+      if (!this.enabled) return;
+    }
+  }, {
+    key: "replace",
+    value: function replace(route) {
+      if (!this.enabled) return;
+    }
+  }, {
+    key: "message",
+    value: function message(msg) {
+      if (!this.enabled) return;
+    }
+  }]);
+
+  return YuubariFrame;
+}();
 
 var canvas = {
   isSupport: window.CanvasRenderingContext2D ? true : false
@@ -1380,18 +1438,7 @@ var _db = {
 _g.ship_type_order = [];
 _g.ship_type_order_full = [];
 _g.ship_type_order_map = {};
-
-_g.v1Frame = function () {
-  var localCheck = node.path.resolve(_g.root, '../Yuubari');
-
-  if (node.fs.existsSync(localCheck)) {
-    return {
-      root: 'http://localhost:8703/'
-    };
-  }
-
-  return false;
-}();
+_g.yuubariFrame = new YuubariFrame();
 
 node.nedb.prototype.updateById = function (_id, docReplace, callback) {
   if (!this._updateByIdQueue) {
@@ -1754,13 +1801,7 @@ _frame.app_main = {
       _frame.dom.mobilemenu.prop('checked', false);
     });
 
-    if (_g.v1Frame) {
-      _frame.dom.v1frame = $('<div class="v1frame"/>').appendTo(_frame.dom.main);
-      _frame.dom.v1frameIframe = $("<iframe src=\"".concat(_g.v1Frame.root, "?v0\" allowTransparent />")).appendTo(_frame.dom.v1frame);
-      _g.v1Frame.iframe = _frame.dom.v1frameIframe;
-      _g.v1Frame.frame = _frame.dom.v1frameIframe[0].contentWindow;
-      console.log(_g.v1Frame, _frame.dom);
-    }
+    _g.yuubariFrame.init();
 
     var titlebar_btns = $('#titlebar > .buttons');
 

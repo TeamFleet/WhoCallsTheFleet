@@ -89,15 +89,7 @@
     _g.ship_type_order_full = []
     _g.ship_type_order_map = {}
 
-    _g.v1Frame = (() => {
-        const localCheck = node.path.resolve(_g.root, '../Yuubari');
-        if (node.fs.existsSync(localCheck)) {
-            return {
-                root: 'http://localhost:8703/'
-            }
-        }
-        return false;
-    })();
+    _g.yuubariFrame = new YuubariFrame();
 
 
 
@@ -653,15 +645,7 @@ _frame.app_main = {
                     _frame.dom.mobilemenu.prop('checked', false)
                 })
 
-            if (_g.v1Frame) { // V1 Iframe
-                _frame.dom.v1frame = $('<div class="v1frame"/>')
-                    .appendTo( _frame.dom.main )
-                _frame.dom.v1frameIframe = $(`<iframe src="${_g.v1Frame.root}?v0" allowTransparent />`)
-                    .appendTo( _frame.dom.v1frame )
-                _g.v1Frame.iframe = _frame.dom.v1frameIframe
-                _g.v1Frame.frame = _frame.dom.v1frameIframe[0].contentWindow
-                console.log(_g.v1Frame, _frame.dom);
-            }
+            _g.yuubariFrame.init()
 
         // 功能按钮：反馈信息
         /*

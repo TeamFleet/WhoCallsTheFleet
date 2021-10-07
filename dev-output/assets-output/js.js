@@ -3103,7 +3103,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
   location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20210913';
+_g.db_version = '20211008';
 _g.bgimg_count = 0;
 _g.event = {
   'animationend': 'animationend webkitAnimationEnd',
@@ -3131,6 +3131,7 @@ var _db = {
     filename: 'fleets'
   })
 };
+_g.yuubariFrame = new YuubariFrame();
 
 Nedb.prototype.updateById = function (_id, docReplace, callback) {
   if (!this._updateByIdQueue) {
@@ -3582,6 +3583,9 @@ _frame.app_main = {
     $('<div class="nav-mask"/>').appendTo(_frame.dom.layout).on('click', function () {
       _frame.dom.mobilemenu.prop('checked', false);
     });
+
+    _g.yuubariFrame.init();
+
     var promise_chain = Q.fcall(function () {});
     this.nav = [];
     this.navtitle = {};

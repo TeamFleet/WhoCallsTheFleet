@@ -17,7 +17,7 @@
 
 
 // Global Variables
-    _g.db_version = '20210913';
+    _g.db_version = '20211008';
 
     _g.bgimg_count = 0;
 
@@ -61,6 +61,7 @@
             })
     }
 
+    _g.yuubariFrame = new YuubariFrame();
 
 
 
@@ -671,6 +672,8 @@ _frame.app_main = {
                 .on('click', function(){
                     _frame.dom.mobilemenu.prop('checked', false)
                 })
+
+            _g.yuubariFrame.init()
 
         // 功能按钮：反馈信息
         /*
