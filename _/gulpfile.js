@@ -108,9 +108,10 @@ const scripts = {
             require("@babel/preset-env"), //,
             //"stage-0"
           ],
-          // "plugins": [
-          //     require("@babel/plugin-transform-minify-booleans")
-          // ]
+          plugins: [
+            //     require("@babel/plugin-transform-minify-booleans")
+            require("@babel/plugin-proposal-class-properties"),
+          ],
         })
       )
       .pipe(gulp.dest(path.join(rootOutput, "assets-output")))
