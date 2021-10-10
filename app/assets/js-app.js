@@ -672,7 +672,8 @@ var YuubariFrame = function () {
 
     _defineProperty(this, "frame", undefined);
 
-    if (!node || !node.path) return;
+    if (typeof node === 'undefined') return;
+    if (!node.path) return;
     var localCheck = node.path.resolve(_g.root, '../Yuubari');
 
     if (node.fs.existsSync(localCheck)) {
