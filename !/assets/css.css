@@ -8824,7 +8824,8 @@ body.mod-capture .infos-fleet:before {
   font-size: inherit;
 }
 .infos-fleet .title-editable {
-  padding: 5px 10px 5px 0;
+  padding: 5px 10px 5px 10px;
+  margin-left: -10px;
   display: inline-block;
   border-radius: 3px;
   border: 0.05rem solid transparent;
@@ -8837,6 +8838,7 @@ body.mod-capture .infos-fleet:before {
 }
 .infos-fleet .title-editable[data-content]:before {
   margin-top: 0.25rem;
+  padding-left: 0.5rem;
   padding-right: 0.5rem;
   transition: none 0.2s ease-out;
   transition-property: none;
@@ -8848,11 +8850,6 @@ body.mod-capture .infos-fleet:before {
 }
 html.is-gecko .infos-fleet .title-editable[data-content]:before {
   z-index: -1;
-}
-.infos-fleet .title-editable:focus,
-.infos-fleet .title-editable:not([data-content]),
-.infos-fleet .title-editable[data-content]:focus:before {
-  padding-left: 0.5rem;
 }
 .infos-fleet .title-editable:focus {
   background: rgba(0, 0, 0, 0.175);

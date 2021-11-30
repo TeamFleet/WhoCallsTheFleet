@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",442,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/5.png)\"></s><strong>潜艇后部鱼雷发射管4门<small>(初期型)</small></strong><small>潜艇专用鱼雷</small></h3><span>+6 雷装</span><span>+1 命中</span><span>+1 回避</span><span>射程: 短</span>")

@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",440,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/5.png)\"></s><strong>21inch舰首鱼雷发射管6门<small>(初期型)</small></strong><small>潜艇专用鱼雷</small></h3><span>+10 雷装</span><span>+2 回避</span><span>射程: 短</span>")

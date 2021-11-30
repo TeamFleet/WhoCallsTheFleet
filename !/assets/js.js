@@ -3162,7 +3162,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
   location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20211018';
+_g.db_version = '20211201';
 _g.bgimg_count=26;
 _g.event = {
   'animationend': 'animationend webkitAnimationEnd',
@@ -5931,7 +5931,7 @@ var InfosFleet = function () {
               } else {
                 try {
                   this._infos_state_id = id;
-                  this.init(TablelistFleets.prototype.new_data(JSON.parse(LZString.decompressFromEncodedURIComponent(_g.uriSearch('d')))));
+                  this.init(TablelistFleets.prototype.new_data(JSON.parse(LZString.decompressFromEncodedURIComponent(decodeURIComponent(_g.uriSearch('d'))))));
                 } catch (e) {
                   _g.error(e);
                 }
@@ -6271,7 +6271,7 @@ var InfosFleet = function () {
         delete d.time_modify;
         delete d.rating;
         delete d.user;
-        history.replaceState(history.state, document.title, location.pathname + '?i=' + _id + '&d=' + LZString.compressToEncodedURIComponent(JSON.stringify(d)));
+        history.replaceState(history.state, document.title, location.pathname + '?i=' + _id + '&d=' + encodeURIComponent(LZString.compressToEncodedURIComponent(JSON.stringify(d))));
       }
     }
   }, {
@@ -6476,7 +6476,9 @@ var InfosFleet = function () {
         delete d.time_modify;
         delete d.rating;
         delete d.user;
-        return 'http://fleet.moe/fleets/build/?i=' + _id + '&d=' + LZString.compressToEncodedURIComponent(JSON.stringify(d));
+        var url = 'http://fleet.moe/fleets/build/?i=' + _id + '&d=' + encodeURIComponent(LZString.compressToEncodedURIComponent(JSON.stringify(d)));
+        console.log('EXPORT', d, url);
+        return url;
       }
     }
   }]);
@@ -6492,11 +6494,24 @@ InfosFleet.modalExport = function (curval) {
       'readonly': true
     })).append($('<p class="note-codeusage"/>').html('* 该配置代码可用于<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>'));
     var btn = $('<button class="button">复制到剪切板</button>').appendTo(InfosFleet.elModalExport);
-    new Clipboard(btn[0], {
-      text: function text() {
-        return InfosFleet.elModalExportTextarea.val();
-      }
-    });
+
+    if (!navigator.clipboard) {
+      try {
+        new Clipboard(btn[0], {
+          text: function text() {
+            return InfosFleet.elModalExportTextarea.val();
+          }
+        });
+      } catch (e) {}
+    } else {
+      btn.on('click', function () {
+        var type = "text/plain";
+        var blob = new Blob([InfosFleet.elModalExportTextarea.val()], {
+          type: type
+        });
+        navigator.clipboard.write([new ClipboardItem(_defineProperty({}, type, blob))]);
+      });
+    }
   }
 
   InfosFleet.elModalExportTextarea.val(curval || '');

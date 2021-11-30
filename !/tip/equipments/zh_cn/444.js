@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",444,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/37.png)\"></s><strong>四式重爆 飞龙 + Ｉ号一型甲 诱导弹</strong><small>陆上轰炸机</small></h3><span>+15 雷装</span><span>+5 对空</span><span>+3 对潜</span><span>+20 爆装</span><span>+1 命中</span><span>+4 索敌</span><span>航程: 5</span>")
