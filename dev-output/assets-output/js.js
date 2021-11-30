@@ -5931,7 +5931,7 @@ var InfosFleet = function () {
               } else {
                 try {
                   this._infos_state_id = id;
-                  this.init(TablelistFleets.prototype.new_data(JSON.parse(LZString.decompressFromEncodedURIComponent(_g.uriSearch('d')))));
+                  this.init(TablelistFleets.prototype.new_data(JSON.parse(LZString.decompressFromEncodedURIComponent(decodeURIComponent(_g.uriSearch('d'))))));
                 } catch (e) {
                   _g.error(e);
                 }
@@ -6271,7 +6271,7 @@ var InfosFleet = function () {
         delete d.time_modify;
         delete d.rating;
         delete d.user;
-        history.replaceState(history.state, document.title, location.pathname + '?i=' + _id + '&d=' + LZString.compressToEncodedURIComponent(JSON.stringify(d)));
+        history.replaceState(history.state, document.title, location.pathname + '?i=' + _id + '&d=' + encodeURIComponent(LZString.compressToEncodedURIComponent(JSON.stringify(d))));
       }
     }
   }, {
@@ -6476,7 +6476,9 @@ var InfosFleet = function () {
         delete d.time_modify;
         delete d.rating;
         delete d.user;
-        return 'http://fleet.moe/fleets/build/?i=' + _id + '&d=' + LZString.compressToEncodedURIComponent(JSON.stringify(d));
+        var url = 'http://fleet.moe/fleets/build/?i=' + _id + '&d=' + encodeURIComponent(LZString.compressToEncodedURIComponent(JSON.stringify(d)));
+        console.log('EXPORT', d, url);
+        return url;
       }
     }
   }]);
