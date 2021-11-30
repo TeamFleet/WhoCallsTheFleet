@@ -903,11 +903,24 @@ InfosFleet.modalExport = function (curval) {
         )
         */
         let btn = $('<button class="button">复制到剪切板</button>').appendTo(InfosFleet.elModalExport)
-        new Clipboard(btn[0], {
-            text: function () {
-                return InfosFleet.elModalExportTextarea.val();
-            }
-        });
+        if (!navigator.clipboard) {
+            try {
+                new Clipboard(btn[0], {
+                    text: function () {
+                        return InfosFleet.elModalExportTextarea.val();
+                    }
+                });
+            } catch(e) {}
+        } else {
+            btn.on('click', function() {
+                const type = "text/plain";
+                const blob = new Blob(
+                    [InfosFleet.elModalExportTextarea.val()],
+                    { type }
+                );
+                navigator.clipboard.write([new ClipboardItem({ [type]: blob })])
+            })
+        }
     }
     InfosFleet.elModalExportTextarea.val(curval || '')
 

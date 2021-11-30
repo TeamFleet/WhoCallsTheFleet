@@ -3162,7 +3162,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
   location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20211018';
+_g.db_version = '20211201';
 _g.bgimg_count = 0;
 _g.event = {
   'animationend': 'animationend webkitAnimationEnd',
@@ -6492,11 +6492,24 @@ InfosFleet.modalExport = function (curval) {
       'readonly': true
     })).append($('<p class="note-codeusage"/>').html('* 该配置代码可用于<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>'));
     var btn = $('<button class="button">复制到剪切板</button>').appendTo(InfosFleet.elModalExport);
-    new Clipboard(btn[0], {
-      text: function text() {
-        return InfosFleet.elModalExportTextarea.val();
-      }
-    });
+
+    if (!navigator.clipboard) {
+      try {
+        new Clipboard(btn[0], {
+          text: function text() {
+            return InfosFleet.elModalExportTextarea.val();
+          }
+        });
+      } catch (e) {}
+    } else {
+      btn.on('click', function () {
+        var type = "text/plain";
+        var blob = new Blob([InfosFleet.elModalExportTextarea.val()], {
+          type: type
+        });
+        navigator.clipboard.write([new ClipboardItem(_defineProperty({}, type, blob))]);
+      });
+    }
   }
 
   InfosFleet.elModalExportTextarea.val(curval || '');
