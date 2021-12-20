@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",446,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/44.png)\"></s><strong>二式复战 屠龙 丙型</strong><small>陆军战斗机</small></h3><span>+3 对空</span><span>+6 命中</span><span>+2 装甲</span><span>+2 回避</span><span>航程: 3</span>")
