@@ -75,7 +75,7 @@
 {"ship_type_id":1,"id":84,"_id":"ZL3yqVUTmQFOkWaC","speed_rule":"high-3","name":{"en_us":"Kamikaze","ja_jp":"神風","zh_cn":"神风"}}
 {"ship_type_id":4,"id":57,"_id":"ZhPM1Msam9Zr1lRh","speed_rule":"high-3","name":{"en_us":"Admiral Hipper","ja_jp":"Admiral Hipper","zh_cn":"希佩尔海军上将"},"navy":"km"}
 {"name":{"ja_jp":"Fletcher","zh_cn":"弗莱彻"},"ship_type_id":1,"id":117,"_id":"aQO0mki7ozsr5pBu","navy":"usn"}
-{"name":{"ja_jp":"Gato","zh_cn":"猫鲨"},"ship_type_id":13,"id":151,"_id":"aW3hhLQXHmhoB7Ky"}
+{"name":{"ja_jp":"Gato","zh_cn":"猫鲨"},"ship_type_id":13,"id":151,"_id":"aW3hhLQXHmhoB7Ky","navy":"usn"}
 {"ship_type_id":3,"id":54,"_id":"aqjF6P9FYhNyZMn9","speed_rule":"high-3","name":{"en_us":"Kuma","ja_jp":"球磨","zh_cn":"球磨"}}
 {"name":{"ja_jp":"Marconi","zh_cn":"马可尼","en_us":"Marconi"},"ship_type_id":13,"id":102,"_id":"b6wYdO1eak7LwLDa","navy":"rm","speed_rule":"low-3"}
 {"ship_type_id":10,"id":80,"_id":"bNn1ADmTUuacGgdG","speed_rule":"high-3","name":{"en_us":"Graf Zeppelin","ja_jp":"Graf Zeppelin","zh_cn":"齐柏林伯爵"},"navy":"km"}
