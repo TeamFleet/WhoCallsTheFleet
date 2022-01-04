@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",447,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/7.png)\"></s><strong>零式舰战64型<small>(复座KMX搭载机)</small></strong><small>舰载俯冲轰炸机</small></h3><span>+4 对空</span><span>+8 对潜</span><span>+3 爆装</span><span>+3 索敌</span><span>航程: 4</span>")

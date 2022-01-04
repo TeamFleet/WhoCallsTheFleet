@@ -1,14 +1,14 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.31.8.0",
-			"path":		"data/2021.12.21/app.nwjs-data",
-			"bytes":	4910186
+			"version":	"0.31.9.0",
+			"path":		"data/2022.01.05/app.nwjs-data",
+			"bytes":	4911442
 		},
 		"app-db": {
-			"version":	"2021.12.21",
-			"path":		"data/2021.12.21/app-db.nwjs-data",
-			"bytes":	2277766
+			"version":	"2022.01.05",
+			"path":		"data/2022.01.05/app-db.nwjs-data",
+			"bytes":	2715667
 		},
 		"bgimgs": {
 			"version":	"1.18.6.0",
@@ -16,9 +16,9 @@
 			"bytes":	12494509
 		},
 		"pics": {
-			"version":	"2021.12.21",
-			"path":		"data/2021.12.21/pics.nwjs-data",
-			"bytes":	46110785
+			"version":	"2022.01.05",
+			"path":		"data/2022.01.05/pics.nwjs-data",
+			"bytes":	46301441
 		},
 		"pics-enemies": {
 			"version":	"2018.08.28",
@@ -62,9 +62,9 @@
 			"bytes":	8238597
 		},
 		"pics-ships-8": {
-			"version":	"2019.06.01",
-			"path":		"data/2021.06.30/pics-ships-8.nwjs-data",
-			"bytes":	4992360
+			"version":	"2022.01.05",
+			"path":		"data/2022.01.05/pics-ships-8.nwjs-data",
+			"bytes":	5188317
 		},
 		"pics-ships-9": {
 			"version":	"2018.12.08",
@@ -77,9 +77,9 @@
 			"bytes":	22855130
 		},
 		"pics-ships-11": {
-			"version":	"2021.03.31",
-			"path":		"data/2021.06.30/pics-ships-11.nwjs-data",
-			"bytes":	18336435
+			"version":	"2022.01.05",
+			"path":		"data/2022.01.05/pics-ships-11.nwjs-data",
+			"bytes":	18532177
 		},
 		"pics-ships-12": {
 			"version":	"2021.10.08",
@@ -102,9 +102,9 @@
 			"bytes":	5341449
 		},
 		"pics-ships-18": {
-			"version":	"2021.12.01",
-			"path":		"data/2021.12.01/pics-ships-18.nwjs-data",
-			"bytes":	3799979
+			"version":	"2022.01.05",
+			"path":		"data/2022.01.05/pics-ships-18.nwjs-data",
+			"bytes":	4190565
 		},
 		"pics-ships-30": {
 			"version":	"2019.05.25",
@@ -143,9 +143,9 @@
 			"bytes":	15551960
 		},
 		"pics-ships-extra-6": {
-			"version":	"2019.02.13",
-			"path":		"data/2021.06.30/pics-ships-extra-6.nwjs-data",
-			"bytes":	15007308
+			"version":	"2022.01.05",
+			"path":		"data/2022.01.05/pics-ships-extra-6.nwjs-data",
+			"bytes":	15115563
 		},
 		"pics-ships-extra-7": {
 			"version":	"2020.05.24",
@@ -178,15 +178,15 @@
 			"bytes":	13553189
 		},
 		"pics-ships-extra-13": {
-			"version":	"2021.12.21",
-			"path":		"data/2021.12.21/pics-ships-extra-13.nwjs-data",
-			"bytes":	6188803
+			"version":	"2022.01.05",
+			"path":		"data/2022.01.05/pics-ships-extra-13.nwjs-data",
+			"bytes":	9208194
 		}
 
 	},
 
 	"packages-beta": {},
-	"core":  "0.21.6",
+	"core": "0.21.6",
 	"homepage": "http://fleet.moe/",
 	"release-notes": "https://github.com/Diablohu/WhoCallsTheFleet/releases",
 	"forum": "http://bbs.ngacn.cc/read.php?tid=7959995"
