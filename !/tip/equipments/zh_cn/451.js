@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",451,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/22.png)\"></s><strong>三式指挥联络机改</strong><small>对潜哨戒机</small></h3><span>+1 火力</span><span>+9 对潜</span><span>+2 命中</span><span>+2 索敌</span>")

@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",452,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/44.png)\"></s><strong>Ki-96</strong><small>陆军战斗机</small></h3><span>+5 对空</span><span>+5 命中</span><span>+2 装甲</span><span>+4 回避</span><span>航程: 3</span>")

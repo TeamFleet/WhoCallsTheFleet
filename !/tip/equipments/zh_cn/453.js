@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",453,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/48.png)\"></s><strong>Ki-102乙</strong><small>新型袭击机</small></h3><span>+4 火力</span><span>+11 雷装</span><span>+4 对空</span><span>+4 对潜</span><span>+19 爆装</span><span>+4 命中</span><span>航程: 4</span>")

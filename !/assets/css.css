@@ -1072,7 +1072,7 @@ html {
   cursor: default;
 }
 body {
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Lucida Grande", "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif, caption;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", /*Helvetica, */ "Nimbus Sans L", Arial, "Lucida Grande", "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif, caption;
   font-weight: 300;
 }
 .none {
@@ -1733,7 +1733,7 @@ html.ie6 * {
 [icon="tieba"]:before,
 [icon="贴吧"]:before {
   content: '贴' !important;
-  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif !important;
+  font-family: "Helvetica Neue", /*Helvetica, */ "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif !important;
   font-weight: lighter !important;
 }
 label[for],
@@ -1862,7 +1862,7 @@ body {
 }
 body {
   font-size: 14px;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Lucida Grande", "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif, caption;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", /*Helvetica, */ "Nimbus Sans L", Arial, "Lucida Grande", "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif, caption;
 }
 button:focus,
 input:focus,
@@ -1880,7 +1880,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
+  font-family: "Helvetica Neue", /*Helvetica, */ "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
   line-height: 1.2em;
   position: relative;
   color: hsl(46, 25%, 85%);
@@ -4496,7 +4496,7 @@ body.mod-capture #tip {
   position: relative;
 }
 .improvement > strong {
-  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
+  font-family: "Helvetica Neue", /*Helvetica, */ "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
   font-size: 18px;
   line-height: 32px;
   vertical-align: top;
@@ -6394,7 +6394,7 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships h4:not([inited]) label.checkbox:after {
   content: "处理中……";
   font-size: smaller;
-  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
+  font-family: "Helvetica Neue", /*Helvetica, */ "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
   display: inline-block;
   padding-left: 0.5em;
   opacity: 0.65;
@@ -7924,7 +7924,7 @@ html.ios .tablelist.fleets > .options > div.filters button.export {
   margin: 0 auto 0 -20px;
   width: calc(100% + 40px);
   padding: 18px 0 0 20px;
-  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
+  font-family: "Helvetica Neue", /*Helvetica, */ "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
   text-shadow: 0 1px 0 #000;
   font-size: 18px;
 }
@@ -13361,7 +13361,7 @@ body > .modal > div > header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.1));
   padding: 0 0.5em;
-  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
+  font-family: "Helvetica Neue", /*Helvetica, */ "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
   font-size: 18px;
   color: rgba(255, 255, 255, 0.75);
 }
@@ -13991,7 +13991,7 @@ body > .modal.infos_fleet > div > section textarea {
 }
 body > .modal.infos_fleet > div > section textarea::-webkit-input-placeholder {
   color: rgba(255, 255, 255, 0.25);
-  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
+  font-family: "Helvetica Neue", /*Helvetica, */ "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
   padding: 0.25em;
 }
 body > .modal.infos_fleet > div > section p {
@@ -15121,7 +15121,7 @@ body > .modal.hastitle.modal-bonuses section .bonus-set .stats .info {
   padding-left: 26px;
 }
 body > .modal.hastitle.modal-bonuses section .bonus-title {
-  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
+  font-family: "Helvetica Neue", /*Helvetica, */ "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
   font-size: 18px;
   font-style: italic;
   line-height: 1.25em;
@@ -15269,7 +15269,7 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
   font-weight: normal;
   color: #c9c19f;
   display: block;
-  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
+  font-family: "Helvetica Neue", /*Helvetica, */ "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
   padding: 0;
   line-height: 0.7000000000000001rem;
 }
@@ -15314,7 +15314,7 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
   font-weight: normal;
   color: #c9c19f;
   display: block;
-  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
+  font-family: "Helvetica Neue", /*Helvetica, */ "Nimbus Sans L", Arial, "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", "Meiryo", sans-serif;
   padding: 0;
   margin-top: 0.1rem;
   line-height: 0.7000000000000001rem;
@@ -15463,7 +15463,7 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
   background: linear-gradient(to bottom, hsl(149, 100%, 30%), hsl(149, 100%, 20%));
   color: hsl(149, 100%, 90%);
   text-align: center;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Lucida Grande", "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif, caption;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", /*Helvetica, */ "Nimbus Sans L", Arial, "Lucida Grande", "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif, caption;
   box-shadow: 0 1px 1px hsla(149, 100%, 90%, 0.5);
   margin-left: 0.4rem;
 }
@@ -16017,7 +16017,7 @@ body > .modal.hastitle.modal-bonuses.modal-bonuses-equipment > div > button.clos
 .page-container[page="about"] h4 small,
 .page-container[page="about"] h5 small,
 .page-container[page="about"] h6 small {
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Lucida Grande", "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif, caption;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", /*Helvetica, */ "Nimbus Sans L", Arial, "Lucida Grande", "Liberation Sans", "Microsoft YaHei UI", "Microsoft YaHei", "Hiragino Sans GB", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif, caption;
   font-weight: lighter;
 }
 .page-container[page="about"] .infos {

@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",450,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/11.png)\"></s><strong>13号对空电探改<small>(后期型)</small></strong><small>小型电探/雷达</small></h3><span>+6 对空</span><span>+2 命中</span><span>+3 回避</span><span>+5 索敌</span>")
