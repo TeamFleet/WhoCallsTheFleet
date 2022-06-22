@@ -5922,7 +5922,7 @@ body.mod-capture #tip {
 	}
 */
 .tablelist.ships .tablelist-body h5[data-type="ship-class"] {
-  display: none;
+  display: block;
   flex-basis: 100%;
   padding-left: 28px;
   margin-bottom: 0;
@@ -6152,7 +6152,6 @@ body.mod-capture #tip {
   }
 }
 .tablelist.ships > [viewtype="list"] ~ .tablelist-container h5[data-type="ship-class"] {
-  display: block;
   padding-left: 0;
 }
 .tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body dl[data-shipid] {
@@ -6210,9 +6209,6 @@ body.mod-capture #tip {
   left: 80px;
   z-index: 10;
 }
-.tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body h5[data-type="ship-class"] {
-  display: block;
-}
 .tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid] label.checkbox {
   display: none;
 }
@@ -6231,6 +6227,9 @@ body.mod-capture #tip {
   padding-left: 146px;
 }
 .tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid]:not([compare="true"]) {
+  display: none;
+}
+.tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body h5[data-type="ship-class"] {
   display: none;
 }
 .tablelist.ships .event-container {
@@ -7033,7 +7032,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="30"]:checked ~ .tablelist-container h4[data-header="30"] label.checkbox {
   transform: translateX(30px);
 }
-.tablelist.ships.mod-search .tablelist-body h4 {
+.tablelist.ships.mod-search .tablelist-body h4,
+.tablelist.ships.mod-search .tablelist-body h5[data-type="ship-class"] {
   display: none;
 }
 .tablelist.ships.mod-search .tablelist-body dl:empty {
