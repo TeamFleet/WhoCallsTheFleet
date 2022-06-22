@@ -1,14 +1,14 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.31.11.0",
-			"path":		"data/2022.04.07/app.nwjs-data",
-			"bytes":	4923721
+			"version":	"0.32.0.0",
+			"path":		"data/2022.06.22/app.nwjs-data",
+			"bytes":	4934727
 		},
 		"app-db": {
-			"version":	"2022.04.07",
-			"path":		"data/2022.04.07/app-db.nwjs-data",
-			"bytes":	2784881
+			"version":	"2022.06.22",
+			"path":		"data/2022.06.22/app-db.nwjs-data",
+			"bytes":	2791227
 		},
 		"bgimgs": {
 			"version":	"1.18.6.0",
@@ -16,9 +16,9 @@
 			"bytes":	12494509
 		},
 		"pics": {
-			"version":	"2022.04.07",
-			"path":		"data/2022.04.07/pics.nwjs-data",
-			"bytes":	46814099
+			"version":	"2022.06.22",
+			"path":		"data/2022.06.22/pics.nwjs-data",
+			"bytes":	47863934
 		},
 		"pics-enemies": {
 			"version":	"2018.08.28",
@@ -92,24 +92,24 @@
 			"bytes":	18869048
 		},
 		"pics-ships-14": {
-			"version":	"2022.04.07",
-			"path":		"data/2022.04.07/pics-ships-14.nwjs-data",
-			"bytes":	12944154
+			"version":	"2022.06.22",
+			"path":		"data/2022.06.22/pics-ships-14.nwjs-data",
+			"bytes":	13128667
 		},
 		"pics-ships-15": {
-			"version":	"2022.04.07",
-			"path":		"data/2022.04.07/pics-ships-15.nwjs-data",
-			"bytes":	6333958
+			"version":	"2022.06.22",
+			"path":		"data/2022.06.22/pics-ships-15.nwjs-data",
+			"bytes":	6869875
 		},
 		"pics-ships-18": {
-			"version":	"2022.04.07",
-			"path":		"data/2022.04.07/pics-ships-18.nwjs-data",
-			"bytes":	4572833
+			"version":	"2022.06.22",
+			"path":		"data/2022.06.22/pics-ships-18.nwjs-data",
+			"bytes":	5108122
 		},
 		"pics-ships-19": {
-			"version":	"2022.02.09",
-			"path":		"data/2022.02.09/pics-ships-19.nwjs-data",
-			"bytes":	879435
+			"version":	"2022.06.22",
+			"path":		"data/2022.06.22/pics-ships-19.nwjs-data",
+			"bytes":	3991215
 		},
 		"pics-ships-30": {
 			"version":	"2019.05.25",
@@ -186,6 +186,11 @@
 			"version":	"2022.04.07",
 			"path":		"data/2022.04.07/pics-ships-extra-13.nwjs-data",
 			"bytes":	13053867
+		},
+		"pics-ships-extra-14": {
+			"version":	"2022.06.22",
+			"path":		"data/2022.06.22/pics-ships-extra-14.nwjs-data",
+			"bytes":	4779161
 		}
 
 	},

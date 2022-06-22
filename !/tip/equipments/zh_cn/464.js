@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",464,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/16.png)\"></s><strong>10cm连装高角炮群 集中配备</strong><small>高角副炮 (对空强化)</small></h3><span>+3 火力</span><span>+12 对空</span><span>+2 命中</span><span>+2 装甲</span><span>+2 回避</span><span>射程: 短</span>")

@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",460,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/11.png)\"></s><strong>15m二重测距仪改+21号电探改二+熟练射击指挥所</strong><small>超大型电探/雷达</small></h3><span>+4 火力</span><span>+8 对空</span><span>+10 命中</span><span>+1 装甲</span><span>+2 回避</span><span>+8 索敌</span>")

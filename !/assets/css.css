@@ -5921,6 +5921,15 @@ body.mod-capture #tip {
 		}
 	}
 */
+.tablelist.ships .tablelist-body h5[data-type="ship-class"] {
+  display: block;
+  flex-basis: 100%;
+  padding-left: 28px;
+  margin-bottom: 0;
+  margin-top: 16px;
+  font-style: italic;
+  font-size: 16px;
+}
 .tablelist.ships .tablelist-body dl[data-shipid] dt {
   /*
 				label.checkbox:hover, input[type="checkbox"]:checked + label.checkbox{
@@ -5956,7 +5965,7 @@ body.mod-capture #tip {
 .tablelist.ships .tablelist-body dl[data-shipid] dt label.checkbox:after {
   transition: none 0.2s ease-out;
   transition-property: background;
-  content: '';
+  content: "";
   position: absolute;
   z-index: -1;
   width: 26px;
@@ -6083,6 +6092,25 @@ body.mod-capture #tip {
 .tablelist.ships .tablelist-body dl[data-shipid] dt .flag-navy[data-navy="0"] {
   display: none;
 }
+.tablelist.ships .tablelist-body dl[data-shipid] dt .icon-anti-installation {
+  background: url(/!/assets/images/ship-anti-installation.png) no-repeat 50% 48px;
+  background-size: 100% auto;
+  bottom: 2px;
+  height: 10px;
+  left: 66px;
+  position: absolute;
+  width: 33px;
+  z-index: 5;
+}
+.tablelist.ships .tablelist-body dl[data-shipid] dt .icon-anti-installation[type="landing-craft"] {
+  background-position: 50% -10.5px;
+}
+.tablelist.ships .tablelist-body dl[data-shipid] dt .icon-anti-installation[type="amphibious-craft"] {
+  background-position: 50% 0px;
+}
+.tablelist.ships .tablelist-body dl[data-shipid] dt .icon-anti-installation + .icon-anti-installation {
+  bottom: 13px;
+}
 .tablelist.ships .tablelist-body dl[data-shipid] dd {
   position: relative;
 }
@@ -6110,6 +6138,9 @@ body.mod-capture #tip {
 .tablelist.ships .tablelist-body dl[data-shipid][compare="true"] dt label.checkbox:after {
   background: hsla(199, 65%, 35%, 0.85);
 }
+.tablelist.ships .tablelist-body h4 ~ h4 {
+  margin-top: 25px;
+}
 @media all and (max-width: 720px) {
   .tablelist.ships > [viewtype="list"] ~ .tablelist-container .tablelist-body dl[data-shipid] dt label.checkbox {
     left: 0;
@@ -6119,6 +6150,9 @@ body.mod-capture #tip {
   .tablelist.ships > [viewtype="list"] ~ .tablelist-container .tablelist-body dl[data-shipid] dt a {
     left: 10px;
   }
+}
+.tablelist.ships > [viewtype="list"] ~ .tablelist-container h5[data-type="ship-class"] {
+  padding-left: 0;
 }
 .tablelist.ships > [viewtype="card"] ~ .tablelist-container .tablelist-body dl[data-shipid] {
   margin-left: 30px;
@@ -6193,6 +6227,9 @@ body.mod-capture #tip {
   padding-left: 146px;
 }
 .tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid]:not([compare="true"]) {
+  display: none;
+}
+.tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body h5[data-type="ship-class"] {
   display: none;
 }
 .tablelist.ships .event-container {
@@ -6329,10 +6366,10 @@ body.mod-capture #tip {
   .tablelist.ships [stat="carry"] {
     display: none !important;
   }
-  .tablelist.ships > [viewtype=compare] ~ .tablelist-container .tablelist-body dl[data-shipid][compare="true"] dt img {
+  .tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid][compare="true"] dt img {
     left: -50px;
   }
-  .tablelist.ships > [viewtype=compare] ~ .tablelist-container .tablelist-body dl[data-shipid][compare="true"] dt a {
+  .tablelist.ships > [viewtype="compare"] ~ .tablelist-container .tablelist-body dl[data-shipid][compare="true"] dt a {
     padding-left: 90px;
   }
 }
@@ -6367,7 +6404,7 @@ body.mod-capture #tip {
 }
 #layout.mode-selection .tablelist.ships h4 label.shiptype:before {
   position: absolute;
-  content: '';
+  content: "";
   width: 0;
   height: 0;
   top: 50%;
@@ -6412,7 +6449,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="0"]:not(:checked) ~ .tablelist-container h4[data-header="0"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="0"]:not(:checked) ~ .tablelist-container dl[data-header="0"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="0"]:not(:checked) ~ .tablelist-container dl[data-header="0"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="0"]:not(:checked) ~ .tablelist-container h5[data-header="0"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="0"]:checked ~ .tablelist-container h4[data-header="0"] label.shiptype {
@@ -6430,7 +6468,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="1"]:not(:checked) ~ .tablelist-container h4[data-header="1"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="1"]:not(:checked) ~ .tablelist-container dl[data-header="1"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="1"]:not(:checked) ~ .tablelist-container dl[data-header="1"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="1"]:not(:checked) ~ .tablelist-container h5[data-header="1"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="1"]:checked ~ .tablelist-container h4[data-header="1"] label.shiptype {
@@ -6448,7 +6487,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="2"]:not(:checked) ~ .tablelist-container h4[data-header="2"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="2"]:not(:checked) ~ .tablelist-container dl[data-header="2"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="2"]:not(:checked) ~ .tablelist-container dl[data-header="2"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="2"]:not(:checked) ~ .tablelist-container h5[data-header="2"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="2"]:checked ~ .tablelist-container h4[data-header="2"] label.shiptype {
@@ -6466,7 +6506,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="3"]:not(:checked) ~ .tablelist-container h4[data-header="3"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="3"]:not(:checked) ~ .tablelist-container dl[data-header="3"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="3"]:not(:checked) ~ .tablelist-container dl[data-header="3"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="3"]:not(:checked) ~ .tablelist-container h5[data-header="3"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="3"]:checked ~ .tablelist-container h4[data-header="3"] label.shiptype {
@@ -6484,7 +6525,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="4"]:not(:checked) ~ .tablelist-container h4[data-header="4"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="4"]:not(:checked) ~ .tablelist-container dl[data-header="4"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="4"]:not(:checked) ~ .tablelist-container dl[data-header="4"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="4"]:not(:checked) ~ .tablelist-container h5[data-header="4"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="4"]:checked ~ .tablelist-container h4[data-header="4"] label.shiptype {
@@ -6502,7 +6544,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="5"]:not(:checked) ~ .tablelist-container h4[data-header="5"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="5"]:not(:checked) ~ .tablelist-container dl[data-header="5"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="5"]:not(:checked) ~ .tablelist-container dl[data-header="5"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="5"]:not(:checked) ~ .tablelist-container h5[data-header="5"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="5"]:checked ~ .tablelist-container h4[data-header="5"] label.shiptype {
@@ -6520,7 +6563,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="6"]:not(:checked) ~ .tablelist-container h4[data-header="6"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="6"]:not(:checked) ~ .tablelist-container dl[data-header="6"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="6"]:not(:checked) ~ .tablelist-container dl[data-header="6"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="6"]:not(:checked) ~ .tablelist-container h5[data-header="6"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="6"]:checked ~ .tablelist-container h4[data-header="6"] label.shiptype {
@@ -6538,7 +6582,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="7"]:not(:checked) ~ .tablelist-container h4[data-header="7"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="7"]:not(:checked) ~ .tablelist-container dl[data-header="7"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="7"]:not(:checked) ~ .tablelist-container dl[data-header="7"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="7"]:not(:checked) ~ .tablelist-container h5[data-header="7"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="7"]:checked ~ .tablelist-container h4[data-header="7"] label.shiptype {
@@ -6556,7 +6601,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="8"]:not(:checked) ~ .tablelist-container h4[data-header="8"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="8"]:not(:checked) ~ .tablelist-container dl[data-header="8"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="8"]:not(:checked) ~ .tablelist-container dl[data-header="8"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="8"]:not(:checked) ~ .tablelist-container h5[data-header="8"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="8"]:checked ~ .tablelist-container h4[data-header="8"] label.shiptype {
@@ -6574,7 +6620,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="9"]:not(:checked) ~ .tablelist-container h4[data-header="9"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="9"]:not(:checked) ~ .tablelist-container dl[data-header="9"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="9"]:not(:checked) ~ .tablelist-container dl[data-header="9"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="9"]:not(:checked) ~ .tablelist-container h5[data-header="9"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="9"]:checked ~ .tablelist-container h4[data-header="9"] label.shiptype {
@@ -6592,7 +6639,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="10"]:not(:checked) ~ .tablelist-container h4[data-header="10"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="10"]:not(:checked) ~ .tablelist-container dl[data-header="10"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="10"]:not(:checked) ~ .tablelist-container dl[data-header="10"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="10"]:not(:checked) ~ .tablelist-container h5[data-header="10"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="10"]:checked ~ .tablelist-container h4[data-header="10"] label.shiptype {
@@ -6610,7 +6658,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="11"]:not(:checked) ~ .tablelist-container h4[data-header="11"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="11"]:not(:checked) ~ .tablelist-container dl[data-header="11"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="11"]:not(:checked) ~ .tablelist-container dl[data-header="11"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="11"]:not(:checked) ~ .tablelist-container h5[data-header="11"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="11"]:checked ~ .tablelist-container h4[data-header="11"] label.shiptype {
@@ -6628,7 +6677,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="12"]:not(:checked) ~ .tablelist-container h4[data-header="12"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="12"]:not(:checked) ~ .tablelist-container dl[data-header="12"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="12"]:not(:checked) ~ .tablelist-container dl[data-header="12"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="12"]:not(:checked) ~ .tablelist-container h5[data-header="12"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="12"]:checked ~ .tablelist-container h4[data-header="12"] label.shiptype {
@@ -6646,7 +6696,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="13"]:not(:checked) ~ .tablelist-container h4[data-header="13"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="13"]:not(:checked) ~ .tablelist-container dl[data-header="13"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="13"]:not(:checked) ~ .tablelist-container dl[data-header="13"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="13"]:not(:checked) ~ .tablelist-container h5[data-header="13"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="13"]:checked ~ .tablelist-container h4[data-header="13"] label.shiptype {
@@ -6664,7 +6715,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="14"]:not(:checked) ~ .tablelist-container h4[data-header="14"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="14"]:not(:checked) ~ .tablelist-container dl[data-header="14"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="14"]:not(:checked) ~ .tablelist-container dl[data-header="14"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="14"]:not(:checked) ~ .tablelist-container h5[data-header="14"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="14"]:checked ~ .tablelist-container h4[data-header="14"] label.shiptype {
@@ -6682,7 +6734,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="15"]:not(:checked) ~ .tablelist-container h4[data-header="15"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="15"]:not(:checked) ~ .tablelist-container dl[data-header="15"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="15"]:not(:checked) ~ .tablelist-container dl[data-header="15"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="15"]:not(:checked) ~ .tablelist-container h5[data-header="15"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="15"]:checked ~ .tablelist-container h4[data-header="15"] label.shiptype {
@@ -6700,7 +6753,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="16"]:not(:checked) ~ .tablelist-container h4[data-header="16"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="16"]:not(:checked) ~ .tablelist-container dl[data-header="16"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="16"]:not(:checked) ~ .tablelist-container dl[data-header="16"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="16"]:not(:checked) ~ .tablelist-container h5[data-header="16"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="16"]:checked ~ .tablelist-container h4[data-header="16"] label.shiptype {
@@ -6718,7 +6772,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="17"]:not(:checked) ~ .tablelist-container h4[data-header="17"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="17"]:not(:checked) ~ .tablelist-container dl[data-header="17"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="17"]:not(:checked) ~ .tablelist-container dl[data-header="17"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="17"]:not(:checked) ~ .tablelist-container h5[data-header="17"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="17"]:checked ~ .tablelist-container h4[data-header="17"] label.shiptype {
@@ -6736,7 +6791,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="18"]:not(:checked) ~ .tablelist-container h4[data-header="18"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="18"]:not(:checked) ~ .tablelist-container dl[data-header="18"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="18"]:not(:checked) ~ .tablelist-container dl[data-header="18"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="18"]:not(:checked) ~ .tablelist-container h5[data-header="18"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="18"]:checked ~ .tablelist-container h4[data-header="18"] label.shiptype {
@@ -6754,7 +6810,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="19"]:not(:checked) ~ .tablelist-container h4[data-header="19"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="19"]:not(:checked) ~ .tablelist-container dl[data-header="19"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="19"]:not(:checked) ~ .tablelist-container dl[data-header="19"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="19"]:not(:checked) ~ .tablelist-container h5[data-header="19"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="19"]:checked ~ .tablelist-container h4[data-header="19"] label.shiptype {
@@ -6772,7 +6829,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="20"]:not(:checked) ~ .tablelist-container h4[data-header="20"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="20"]:not(:checked) ~ .tablelist-container dl[data-header="20"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="20"]:not(:checked) ~ .tablelist-container dl[data-header="20"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="20"]:not(:checked) ~ .tablelist-container h5[data-header="20"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="20"]:checked ~ .tablelist-container h4[data-header="20"] label.shiptype {
@@ -6790,7 +6848,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="21"]:not(:checked) ~ .tablelist-container h4[data-header="21"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="21"]:not(:checked) ~ .tablelist-container dl[data-header="21"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="21"]:not(:checked) ~ .tablelist-container dl[data-header="21"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="21"]:not(:checked) ~ .tablelist-container h5[data-header="21"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="21"]:checked ~ .tablelist-container h4[data-header="21"] label.shiptype {
@@ -6808,7 +6867,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="22"]:not(:checked) ~ .tablelist-container h4[data-header="22"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="22"]:not(:checked) ~ .tablelist-container dl[data-header="22"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="22"]:not(:checked) ~ .tablelist-container dl[data-header="22"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="22"]:not(:checked) ~ .tablelist-container h5[data-header="22"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="22"]:checked ~ .tablelist-container h4[data-header="22"] label.shiptype {
@@ -6826,7 +6886,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="23"]:not(:checked) ~ .tablelist-container h4[data-header="23"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="23"]:not(:checked) ~ .tablelist-container dl[data-header="23"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="23"]:not(:checked) ~ .tablelist-container dl[data-header="23"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="23"]:not(:checked) ~ .tablelist-container h5[data-header="23"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="23"]:checked ~ .tablelist-container h4[data-header="23"] label.shiptype {
@@ -6844,7 +6905,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="24"]:not(:checked) ~ .tablelist-container h4[data-header="24"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="24"]:not(:checked) ~ .tablelist-container dl[data-header="24"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="24"]:not(:checked) ~ .tablelist-container dl[data-header="24"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="24"]:not(:checked) ~ .tablelist-container h5[data-header="24"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="24"]:checked ~ .tablelist-container h4[data-header="24"] label.shiptype {
@@ -6862,7 +6924,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="25"]:not(:checked) ~ .tablelist-container h4[data-header="25"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="25"]:not(:checked) ~ .tablelist-container dl[data-header="25"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="25"]:not(:checked) ~ .tablelist-container dl[data-header="25"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="25"]:not(:checked) ~ .tablelist-container h5[data-header="25"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="25"]:checked ~ .tablelist-container h4[data-header="25"] label.shiptype {
@@ -6880,7 +6943,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="26"]:not(:checked) ~ .tablelist-container h4[data-header="26"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="26"]:not(:checked) ~ .tablelist-container dl[data-header="26"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="26"]:not(:checked) ~ .tablelist-container dl[data-header="26"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="26"]:not(:checked) ~ .tablelist-container h5[data-header="26"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="26"]:checked ~ .tablelist-container h4[data-header="26"] label.shiptype {
@@ -6898,7 +6962,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="27"]:not(:checked) ~ .tablelist-container h4[data-header="27"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="27"]:not(:checked) ~ .tablelist-container dl[data-header="27"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="27"]:not(:checked) ~ .tablelist-container dl[data-header="27"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="27"]:not(:checked) ~ .tablelist-container h5[data-header="27"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="27"]:checked ~ .tablelist-container h4[data-header="27"] label.shiptype {
@@ -6916,7 +6981,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="28"]:not(:checked) ~ .tablelist-container h4[data-header="28"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="28"]:not(:checked) ~ .tablelist-container dl[data-header="28"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="28"]:not(:checked) ~ .tablelist-container dl[data-header="28"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="28"]:not(:checked) ~ .tablelist-container h5[data-header="28"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="28"]:checked ~ .tablelist-container h4[data-header="28"] label.shiptype {
@@ -6934,7 +7000,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="29"]:not(:checked) ~ .tablelist-container h4[data-header="29"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="29"]:not(:checked) ~ .tablelist-container dl[data-header="29"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="29"]:not(:checked) ~ .tablelist-container dl[data-header="29"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="29"]:not(:checked) ~ .tablelist-container h5[data-header="29"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="29"]:checked ~ .tablelist-container h4[data-header="29"] label.shiptype {
@@ -6952,7 +7019,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="30"]:not(:checked) ~ .tablelist-container h4[data-header="30"] label.checkbox:before {
   opacity: 0;
 }
-#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="30"]:not(:checked) ~ .tablelist-container dl[data-header="30"] {
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="30"]:not(:checked) ~ .tablelist-container dl[data-header="30"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="30"]:not(:checked) ~ .tablelist-container h5[data-header="30"] {
   display: none !important;
 }
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="30"]:checked ~ .tablelist-container h4[data-header="30"] label.shiptype {
@@ -6964,7 +7032,8 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="30"]:checked ~ .tablelist-container h4[data-header="30"] label.checkbox {
   transform: translateX(30px);
 }
-.tablelist.ships.mod-search .tablelist-body h4 {
+.tablelist.ships.mod-search .tablelist-body h4,
+.tablelist.ships.mod-search .tablelist-body h5[data-type="ship-class"] {
   display: none;
 }
 .tablelist.ships.mod-search .tablelist-body dl:empty {
