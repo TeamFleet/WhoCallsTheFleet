@@ -33,6 +33,7 @@
 {"name":{"ja_jp":"Conte di Cavour","zh_cn":"加富尔伯爵"},"ship_type_id":7,"id":148,"_id":"E2KxLy3vX3EMAtsl","navy":"rm"}
 {"ship_type_id":28,"id":75,"_id":"EZogkjzM4YkDTpbV","speed_rule":"high-3","name":{"en_us":"Nagara","ja_jp":"長良","zh_cn":"长良"}}
 {"name":{"ja_jp":"J","zh_cn":"J"},"ship_type_id":1,"id":107,"_id":"Erl4Zv7yYnt5v7rx","navy":"rn"}
+{"name":{"ja_jp":"Ranger","zh_cn":"突击者"},"ship_type_id":10,"id":157,"_id":"F8f33Ur9LGBdBQsa","navy":"usn"}
 {"ship_type_id":11,"id":79,"_id":"FG1QUOKlFDusxWDV","speed_rule":"high-1","name":{"en_us":"Shoukaku","ja_jp":"翔鶴","zh_cn":"翔鹤"}}
 {"id":6,"ship_type_id":8,"_id":"FP4S6jTaP67kVM38","speed_rule":"low-2","name":{"en_us":"Ise","ja_jp":"伊勢","zh_cn":"伊势"},"capabilities":{"anti_air_rocket_barrage":"high"}}
 {"ship_type_id":2,"id":51,"_id":"FWe8gJkEc3hdZrKz","speed_rule":"high-4","name":{"en_us":"Yuubari","ja_jp":"夕張","zh_cn":"夕张"}}
@@ -80,6 +81,7 @@
 {"name":{"ja_jp":"Gato","zh_cn":"猫鲨"},"ship_type_id":13,"id":151,"_id":"aW3hhLQXHmhoB7Ky","navy":"usn"}
 {"ship_type_id":3,"id":54,"_id":"aqjF6P9FYhNyZMn9","speed_rule":"high-3","name":{"en_us":"Kuma","ja_jp":"球磨","zh_cn":"球磨"}}
 {"name":{"ja_jp":"特2TL","zh_cn":"特2TL"},"ship_type_id":29,"id":152,"_id":"asNKLZ1JZffdlMAf"}
+{"name":{"ja_jp":"Independence","zh_cn":"独立"},"ship_type_id":9,"id":156,"_id":"ayKmRHXQQ8wurVXB","navy":"usn"}
 {"name":{"ja_jp":"Marconi","zh_cn":"马可尼","en_us":"Marconi"},"ship_type_id":13,"id":102,"_id":"b6wYdO1eak7LwLDa","navy":"rm","speed_rule":"low-3"}
 {"ship_type_id":10,"id":80,"_id":"bNn1ADmTUuacGgdG","speed_rule":"high-3","name":{"en_us":"Graf Zeppelin","ja_jp":"Graf Zeppelin","zh_cn":"齐柏林伯爵"},"navy":"km"}
 {"name":{"ja_jp":"改加賀","zh_cn":"改加贺"},"ship_type_id":10,"id":137,"_id":"bPGEmLk6w9KA5NCc"}
@@ -106,6 +108,7 @@
 {"ship_type_id":25,"id":72,"_id":"jfpjyPAIEH0Spe0F","name":{"en_us":"","ja_jp":"タカオ","zh_cn":"高雄"}}
 {"ship_type_id":4,"id":44,"_id":"jw8eyIBRveuECrsi","speed_rule":"high-1","name":{"en_us":"Tone","ja_jp":"利根","zh_cn":"利根"}}
 {"name":{"ja_jp":"Atlanta","zh_cn":"亚特兰大"},"ship_type_id":28,"id":128,"_id":"kLDJJhxCldypyxcB","navy":"usn"}
+{"name":{"ja_jp":"鵜来","zh_cn":"鸠来","en_us":"Ukuru"},"ship_type_id":31,"id":155,"_id":"kLenhToDwfrT0FBK"}
 {"ship_type_id":9,"id":97,"_id":"kRCQrUu1SJ0dK9S3","name":{"en_us":"Taiyou","ja_jp":"大鷹","zh_cn":"大鹰"}}
 {"id":11,"ship_type_id":8,"_id":"kSJwuMPND49q30PL","speed_rule":"low-2","name":{"en_us":"Fusou","ja_jp":"扶桑","zh_cn":"扶桑"}}
 {"name":{"ja_jp":"Illustrious","zh_cn":"光辉","en_us":"Illustrious"},"ship_type_id":11,"id":149,"_id":"l9JvcREliiixLQzm","navy":"rn"}
