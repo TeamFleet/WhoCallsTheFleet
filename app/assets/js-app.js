@@ -7851,8 +7851,8 @@ modal.bonuses = function () {
       }
 
       return _frame.modal.show(this.getFrame(), this.getTitle(), {
-        'classname': "modal-bonuses modal-bonuses-".concat(this.type),
-        'detach': true
+        classname: "modal-bonuses modal-bonuses-".concat(this.type),
+        detach: true
       });
     },
     _cache: {
@@ -7996,8 +7996,21 @@ modal.bonuses = function () {
       }).join('') + "</div>" + "<div class=\"one-of-trail\"></div>";
     },
     renderConditionEquipmentOneOfForSet: function renderConditionEquipmentOneOfForSet(bonus) {
-      if (!bonus.equipments || !Array.isArray(bonus.equipments.hasOneOf)) return '';
-      return this.renderConditionEquipmentOneOf(bonus.equipments.hasOneOf);
+      if (Array.isArray(bonus.equipments.hasOneOf)) return this.renderConditionEquipmentOneOf(bonus.equipments.hasOneOf);
+      if (Array.isArray(bonus.equipments) && bonus.equipments.some(function (_ref) {
+        var isOneOf = _ref.isOneOf;
+        return Array.isArray(isOneOf);
+      })) return this.renderConditionEquipmentOneOf(bonus.equipments.filter(function (_ref2) {
+        var isOneOf = _ref2.isOneOf;
+        return Array.isArray(isOneOf);
+      }).map(function (_ref3) {
+        var isOneOf = _ref3.isOneOf;
+        return isOneOf.map(function (_ref4) {
+          var isID = _ref4.isID;
+          return isID;
+        });
+      }).flat(2));
+      return '';
     },
     renderBonusSingle: function renderBonusSingle(bonus) {
       var _this18 = this;
