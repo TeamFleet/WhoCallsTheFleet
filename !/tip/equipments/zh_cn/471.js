@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",471,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/50.png)\"></s><strong>卢瓦尔<small>(Loire)</small>130M</strong><small>水上侦察机 (夜间)</small></h3><span>+3 对潜</span><span>+2 命中</span><span>+3 索敌</span><span>航程: 3</span>")

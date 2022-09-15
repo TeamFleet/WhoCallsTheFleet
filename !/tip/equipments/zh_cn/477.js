@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",477,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/29.png)\"></s><strong>熟练甲板要员</strong><small>航空要员</small></h3><span>+2 火力</span><span>+1 对空</span><span>+1 命中</span><span>+1 装甲</span><span>+1 回避</span><span>+1 索敌</span>")

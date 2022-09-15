@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",475,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/7.png)\"></s><strong>AU-1</strong><small>舰载俯冲轰炸机</small></h3><span>+3 火力</span><span>+6 雷装</span><span>+9 对空</span><span>+5 对潜</span><span>+12 爆装</span><span>+1 回避</span><span>+2 索敌</span><span>航程: 6</span>")

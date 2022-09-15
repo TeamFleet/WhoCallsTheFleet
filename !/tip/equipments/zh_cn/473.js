@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",473,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/45.png)\"></s><strong>F4U-2 夜海盗<small>(Night Corsair)</small></strong><small>舰载战斗机（夜间）</small></h3><span>+1 火力</span><span>+9 对空</span><span>+5 对潜</span><span>+1 命中</span><span>+2 回避</span><span>+2 索敌</span><span>航程: 6</span>")

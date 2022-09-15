@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",469,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/50.png)\"></s><strong>零式水上侦察机11型乙改<small>(夜侦)</small></strong><small>水上侦察机 (夜间)</small></h3><span>+1 火力</span><span>+1 对空</span><span>+6 对潜</span><span>+2 命中</span><span>+5 索敌</span><span>航程: 7</span>")

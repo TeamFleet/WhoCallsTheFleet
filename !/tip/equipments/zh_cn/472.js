@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",472,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/17.png)\"></s><strong>Mk.32 对潜鱼雷<small>(Mk.2落射机)</small></strong><small>爆雷</small></h3><span>+1 雷装</span><span>+19 对潜</span><span>+1 命中</span>")

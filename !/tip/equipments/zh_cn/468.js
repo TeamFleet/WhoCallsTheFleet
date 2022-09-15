@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",468,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/3.png)\"></s><strong>38cm四连装炮改 deux</strong><small>大口径主炮</small></h3><span>+24 火力</span><span>+5 对空</span><span>+4 命中</span><span>+1 装甲</span><span>射程: 中</span>")

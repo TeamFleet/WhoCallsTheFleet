@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",459,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/37.png)\"></s><strong>B-52</strong><small>陆上轰炸机</small></h3><span>+3 火力</span><span>+8 雷装</span><span>+4 对空</span><span>+16 爆装</span><span>+4 索敌</span><span>航程: 7</span>")
+KCTip.loaded("equipments",459,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/37.png)\"></s><strong>B-25</strong><small>陆上轰炸机</small></h3><span>+3 火力</span><span>+8 雷装</span><span>+4 对空</span><span>+16 爆装</span><span>+4 索敌</span><span>航程: 7</span>")

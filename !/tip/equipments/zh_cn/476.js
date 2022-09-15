@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",476,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/7.png)\"></s><strong>F4U-7</strong><small>舰载俯冲轰炸机</small></h3><span>+3 火力</span><span>+8 雷装</span><span>+10 对空</span><span>+4 对潜</span><span>+11 爆装</span><span>+2 回避</span><span>+2 索敌</span><span>航程: 6</span>")
