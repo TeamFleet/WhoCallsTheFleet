@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",485,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/43.png)\"></s><strong>强风改二</strong><small>水上战斗机</small></h3><span>+6 对空</span><span>+1 命中</span><span>+4 回避</span><span>+2 索敌</span><span>航程: 3</span>")

@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",483,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/12.png)\"></s><strong>三式弹改二</strong><small>对空强化弹</small></h3><span>+5 火力</span><span>+7 对空</span><span>+1 命中</span><span>+1 回避</span>")
