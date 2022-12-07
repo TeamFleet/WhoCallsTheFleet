@@ -7895,7 +7895,7 @@ modal.bonuses = function () {
       return cache[id];
     },
     renderSubTitle: function renderSubTitle(type) {
-      return $("<div class=\"bonus bonus-title\">" + (type === 'set' ? '套装加成<small>每一个条件的效果仅计算一次，多个条件的效果可叠加</small>' : '') + "</div>");
+      return $("<div class=\"bonus bonus-title\">" + (type === 'set' ? '单次加成<small>每一个条件的效果仅计算一次，多个条件的效果可叠加</small>' : '') + "</div>");
     },
     renderStat: function renderStat(bonus) {
       var r = '';

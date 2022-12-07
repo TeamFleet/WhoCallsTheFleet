@@ -72,7 +72,7 @@ modal.bonuses = (() => ({
         return $(
             `<div class="bonus bonus-title">` +
                 (type === 'set'
-                    ? '套装加成<small>每一个条件的效果仅计算一次，多个条件的效果可叠加</small>'
+                    ? '单次加成<small>每一个条件的效果仅计算一次，多个条件的效果可叠加</small>'
                     : '') +
                 `</div>`
         );
