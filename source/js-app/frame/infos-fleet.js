@@ -3327,6 +3327,8 @@ InfosFleetAirfield.equipmentTypes = $.unique(
         .concat(Formula.equipmentType.Seaplanes)
         .concat(Formula.equipmentType.CarrierBased)
         .concat(Formula.equipmentType.Recons)
+        .concat(Formula.equipmentType.Autogyro)
+        .concat(Formula.equipmentType.AntiSubPatrol)
 )
 InfosFleetAirfield.getCarryFromType = function (equipmentType) {
     if (Formula.equipmentType.Recons.indexOf(equipmentType) > -1)

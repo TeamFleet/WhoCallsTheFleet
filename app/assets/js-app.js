@@ -7033,7 +7033,7 @@ InfosFleetAirfield.dragEnter = function (infosFleetAirfield_enter) {
   InfosFleetAirfield.dragging.swap(infosFleetAirfield_enter);
 };
 
-InfosFleetAirfield.equipmentTypes = $.unique(Formula.equipmentType.LandBased.concat(Formula.equipmentType.Seaplanes).concat(Formula.equipmentType.CarrierBased).concat(Formula.equipmentType.Recons));
+InfosFleetAirfield.equipmentTypes = $.unique(Formula.equipmentType.LandBased.concat(Formula.equipmentType.Seaplanes).concat(Formula.equipmentType.CarrierBased).concat(Formula.equipmentType.Recons).concat(Formula.equipmentType.Autogyro).concat(Formula.equipmentType.AntiSubPatrol));
 
 InfosFleetAirfield.getCarryFromType = function (equipmentType) {
   if (Formula.equipmentType.Recons.indexOf(equipmentType) > -1) return KC.planesPerSlotLBAS.recon;else if (Formula.equipmentType.LandBasedLarge.indexOf(equipmentType) > -1) return KC.planesPerSlotLBAS.large;else return KC.planesPerSlotLBAS.attacker;
