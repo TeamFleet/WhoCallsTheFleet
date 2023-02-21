@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",489,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/22.png)\"></s><strong>一式战 隼II型改<small>(20战队)</small></strong><small>对潜哨戒机</small></h3><span>+2 火力</span><span>+6 对空</span><span>+8 对潜</span><span>+4 爆装</span><span>+3 回避</span><span>航程: 4</span>")

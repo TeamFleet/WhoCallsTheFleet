@@ -1,1 +1,1 @@
-KCTip.loaded("equipments",324,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/21.png)\"></s><strong>Ｏ号观测机改</strong><small>旋翼机</small></h3><span>+1 火力</span><span>+10 对潜</span><span>+1 命中</span>")
+KCTip.loaded("equipments",324,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/21.png)\"></s><strong>Ｏ号观测机改</strong><small>旋翼机</small></h3><span>+1 火力</span><span>+10 对潜</span><span>+1 命中</span><span>航程: 1</span>")

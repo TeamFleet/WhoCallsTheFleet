@@ -3162,7 +3162,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
   location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20221208';
+_g.db_version = '20230222';
 _g.bgimg_count=26;
 _g.event = {
   'animationend': 'animationend webkitAnimationEnd',
@@ -8061,7 +8061,7 @@ InfosFleetAirfield.dragEnter = function (infosFleetAirfield_enter) {
   InfosFleetAirfield.dragging.swap(infosFleetAirfield_enter);
 };
 
-InfosFleetAirfield.equipmentTypes = $.unique(Formula.equipmentType.LandBased.concat(Formula.equipmentType.Seaplanes).concat(Formula.equipmentType.CarrierBased).concat(Formula.equipmentType.Recons));
+InfosFleetAirfield.equipmentTypes = $.unique(Formula.equipmentType.LandBased.concat(Formula.equipmentType.Seaplanes).concat(Formula.equipmentType.CarrierBased).concat(Formula.equipmentType.Recons).concat(Formula.equipmentType.Autogyro).concat(Formula.equipmentType.AntiSubPatrol));
 
 InfosFleetAirfield.getCarryFromType = function (equipmentType) {
   if (Formula.equipmentType.Recons.indexOf(equipmentType) > -1) return KC.planesPerSlotLBAS.recon;else if (Formula.equipmentType.LandBasedLarge.indexOf(equipmentType) > -1) return KC.planesPerSlotLBAS.large;else return KC.planesPerSlotLBAS.attacker;
