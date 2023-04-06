@@ -5,4 +5,4 @@
 {"name":{"zh_cn":"对空机枪&高射装置","en_us":"AA Guns&AAFDs"},"types":[29,30,31],"id":6,"_id":"T1bfkKRZc6rUFMVW"}
 {"name":{"zh_cn":"电探&雷达","en_us":"Radars"},"types":[24,25,47],"id":4,"_id":"YZQCvOtcwe76Pe61"}
 {"name":{"zh_cn":"声纳&爆雷","en_us":"Sonars&D.Chargers"},"types":[27,28,26],"id":5,"_id":"eraF8Oxb0RsIC84i"}
-{"name":{"zh_cn":"其他","en_us":"Others"},"types":[35,36,37,38,52,39,46,40,41,42,43,44,48,49,57,58],"id":8,"_id":"f169u3YDnTFweycp"}
+{"name":{"zh_cn":"其他","en_us":"Others"},"types":[35,36,37,38,52,69,39,46,40,41,42,43,44,48,49,57,58],"id":8,"_id":"f169u3YDnTFweycp"}

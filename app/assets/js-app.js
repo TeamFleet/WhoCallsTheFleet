@@ -4796,10 +4796,10 @@ _frame.infos.__equipment_init = function ($el) {
 _frame.infos.__fleet = function (id, el, d) {
   var instance = new InfosFleet(id, el, d);
   var $el = instance.el.on({
-    'show': function show() {
+    show: function show() {
       InfosFleet.cur = instance;
     },
-    'hide': function hide() {
+    hide: function hide() {
       InfosFleet.cur = null;
     }
   });
@@ -4815,16 +4815,16 @@ var InfosFleetEditableTitle = function InfosFleetEditableTitle(settings) {
     "class": 'title-editable ' + options.className,
     html: options.placeholder
   }).on({
-    'input': function input() {
+    input: function input() {
       $el.trigger('namechange');
     },
-    'focus': function focus() {
+    focus: function focus() {
       if ($el.text() == options.placeholder) $el.html('');
     },
-    'blur': function blur() {
+    blur: function blur() {
       if (!$el.text()) $el.html(options.placeholder);
     },
-    'namechange': function namechange(e, content) {
+    namechange: function namechange(e, content) {
       if (typeof content == 'undefined') {
         content = $el.text();
       }
@@ -4840,7 +4840,7 @@ var InfosFleetEditableTitle = function InfosFleetEditableTitle(settings) {
 
       return $el;
     },
-    'keydown': function keydown(e) {
+    keydown: function keydown(e) {
       if (e.keyCode == 13) {
         $el.blur();
         setTimeout(function () {
@@ -4894,7 +4894,7 @@ var InfosFleet = function () {
         }.bind(this));
       } else {
         _db.fleets.find({
-          '_id': id
+          _id: id
         }, function (err, docs) {
           if (err || !docs) {
             _g.error(err);
@@ -4929,7 +4929,7 @@ var InfosFleet = function () {
 
       if (!d) return false;
       this.el.on({
-        'show': function (e, is_firstShow) {
+        show: function (e, is_firstShow) {
           this.is_showing = true;
           if (InfosFleetShipEquipment.cur) InfosFleetShipEquipment.cur.trigger('blur');
 
@@ -4952,7 +4952,7 @@ var InfosFleet = function () {
             this.updateURI();
           }
         }.bind(this),
-        'hidden': function hidden() {
+        hidden: function hidden() {
           this.is_showing = false;
           if (InfosFleetShipEquipment.cur) InfosFleetShipEquipment.cur.trigger('blur');
         }
@@ -4975,8 +4975,8 @@ var InfosFleet = function () {
         }
       }).$el).append(this.doms['preview'] = $('<div class="preview"/>')).appendTo(this.el);
       $('<div class="fleets"/>').append(this.doms['tabs'] = $('<div class="tabs"/>')).append(this.doms['options'] = $('<div class="options"/>').append(this.doms['hqlvOptionLabel'] = $('<label/>', {
-        'class': 'option option-hqlv',
-        'html': '司令部等级',
+        "class": 'option option-hqlv',
+        html: '司令部等级',
         'data-tip': this.tip_hqlv_input.printf(defaultHqLv)
       }).on({
         'mouseenter mouseleave': function (e) {
@@ -4986,12 +4986,12 @@ var InfosFleet = function () {
           }
         }.bind(this)
       }).append(this.doms['hqlvOption'] = $('<input/>', {
-        'type': 'number',
-        'min': 0,
-        'max': _g.hqMaxLv,
-        'placeholder': defaultHqLv
+        type: 'number',
+        min: 0,
+        max: _g.hqMaxLv,
+        placeholder: defaultHqLv
       }).val(this._hqlv || defaultHqLv).on({
-        'input': function () {
+        input: function () {
           this._hqlv = this.doms['hqlvOption'].val();
         }.bind(this),
         'focus.tipshow': function () {
@@ -5005,7 +5005,7 @@ var InfosFleet = function () {
             this.doms['hqlvOption'].trigger('input');
           }
         }.bind(this),
-        'click': function click(e) {
+        click: function click(e) {
           e.stopImmediatePropagation();
           e.stopPropagation();
         }
@@ -5016,8 +5016,8 @@ var InfosFleet = function () {
 
         for (var j = 1; j < 11; j++) {
           els = els.add($('<option/>', {
-            'value': j,
-            'html': '主题-' + j
+            value: j,
+            html: '主题-' + j
           }));
         }
 
@@ -5040,8 +5040,8 @@ var InfosFleet = function () {
           }
 
           InfosFleet.menuTheme = new _menu({
-            'className': 'contextmenu-infos_fleet_themes',
-            'items': [InfosFleet.menuThemeItems]
+            className: 'contextmenu-infos_fleet_themes',
+            items: [InfosFleet.menuThemeItems]
           });
         }
 
@@ -5070,33 +5070,33 @@ var InfosFleet = function () {
 
           if (_g.isClient) {
             menuitems.push($('<menuitem/>', {
-              'html': '在浏览器中打开当前配置'
+              html: '在浏览器中打开当前配置'
             }).on('click', function () {
               node.gui.Shell.openExternal(InfosFleet.menuCur.url);
             }));
           }
 
           menuitems = menuitems.concat([$('<menuitem/>', {
-            'html': '导出配置代码'
+            html: '导出配置代码'
           }).on('click', function () {
             InfosFleet.menuCur.modalExport_show();
           }), $('<menuitem/>', {
-            'html': '导出配置文本'
+            html: '导出配置文本'
           }).on('click', function () {
             InfosFleet.menuCur.modalExportText_show();
           })]);
 
           if (_g.isNWjs) {
             menuitems.push($('<menuitem/>', {
-              'html': '生成图片'
+              html: '生成图片'
             }).on('click', function () {
               InfosFleet.menuCur.exportPic();
             }));
           }
 
           InfosFleet.menuExport = new _menu({
-            'className': 'contextmenu-infos_fleet_themes',
-            'items': menuitems
+            className: 'contextmenu-infos_fleet_themes',
+            items: menuitems
           });
         }
 
@@ -5110,37 +5110,37 @@ var InfosFleet = function () {
 
       while (i < 4) {
         this.subfleetinputs[i] = $('<input/>', {
-          'type': 'radio',
-          'name': 'fleet_' + d._id + '_tab',
-          'id': 'fleet_' + d._id + '_tab_' + i,
-          'value': i
+          type: 'radio',
+          name: 'fleet_' + d._id + '_tab',
+          id: 'fleet_' + d._id + '_tab_' + i,
+          value: i
         }).prop('checked', i == 0).prependTo(this.el);
         this.fleets[i] = new InfosFleetSubFleet(this, [], i, $('<label/>', {
-          'for': 'fleet_' + d._id + '_tab_' + i,
+          "for": 'fleet_' + d._id + '_tab_' + i,
           'data-fleet': i,
-          'html': '#' + (i + 1)
+          html: '#' + (i + 1)
         }).appendTo(this.doms['tabs']));
         this.fleets[i].el.attr('data-fleet', i).appendTo(this.doms['ships']);
         i++;
       }
 
       $('<input/>', {
-        'type': 'radio',
-        'name': 'fleet_' + d._id + '_tab',
-        'id': 'fleet_' + d._id + '_tab_airfileds',
-        'value': 4
+        type: 'radio',
+        name: 'fleet_' + d._id + '_tab',
+        id: 'fleet_' + d._id + '_tab_airfileds',
+        value: 4
       }).prop('checked', false).prependTo(this.el);
       this.fleet_airfileds = new InfosFleetSubAirfield(this, [], $('<label/>', {
-        'for': 'fleet_' + d._id + '_tab_airfileds',
+        "for": 'fleet_' + d._id + '_tab_airfileds',
         'data-fleet': 4,
-        'html': '基地'
+        html: '基地'
       }).appendTo(this.doms['tabs']));
       this.fleet_airfileds.el.attr('data-fleet', 4).appendTo(this.doms['ships']);
 
       if (!this.data._id) {
         this.el.addClass('mod-preview');
         this.doms['preview'].html('若要编辑配置或保存以备日后查看，请').append($('<button/>', {
-          'html': '保存配置'
+          html: '保存配置'
         }).on('click', function () {
           this.previewSave();
         }.bind(this)));
@@ -5314,15 +5314,15 @@ var InfosFleet = function () {
     value: function exportPic() {
       if (!InfosFleet.fileDialog_export) {
         InfosFleet.fileDialog_export = $('<input type="file" accept=".png" nwsaveas/>').on({
-          'click': function click(e, windowWidth, windowHeight, isMaxmize) {
+          click: function click(e, windowWidth, windowHeight, isMaxmize) {
             InfosFleet.fileDialog_export.data({
-              'windowWidth': windowWidth,
-              'windowHeight': windowHeight,
-              'isMaxmize': isMaxmize
+              windowWidth: windowWidth,
+              windowHeight: windowHeight,
+              isMaxmize: isMaxmize
             });
             InfosFleet.fileDialog_export_showing = true;
           },
-          'change': function change() {
+          change: function change() {
             var path = InfosFleet.fileDialog_export.val();
             InfosFleet.fileDialog_export.val('');
 
@@ -5339,15 +5339,15 @@ var InfosFleet = function () {
               });
             }, 0);
           },
-          'resetCaptureMode': function resetCaptureMode() {
+          resetCaptureMode: function resetCaptureMode() {
             if (!InfosFleet.fileDialog_export.val() && $body.hasClass('mod-capture')) {
               $body.removeClass('mod-capture');
               node.win.resizeTo(InfosFleet.fileDialog_export.data('windowWidth'), InfosFleet.fileDialog_export.data('windowHeight'));
               if (InfosFleet.fileDialog_export.data('isMaxmize')) node.win.maximize();
               InfosFleet.fileDialog_export.data({
-                'windowWidth': null,
-                'windowHeight': null,
-                'isMaxmize': null
+                windowWidth: null,
+                windowHeight: null,
+                isMaxmize: null
               });
 
               _g.zoom(Scale.cur);
@@ -5463,7 +5463,7 @@ InfosFleet.minSubFleetShipsCount = 6;
 InfosFleet.modalExport = function (curval) {
   if (!InfosFleet.elModalExport) {
     InfosFleet.elModalExport = $('<div/>').append(InfosFleet.elModalExportTextarea = $('<textarea/>', {
-      'readonly': true
+      readonly: true
     })).append($('<p class="note-codeusage"/>').html('* 该配置代码可用于<a href="http://www.kancolle-calc.net/deckbuilder.html">艦載機厨デッキビルダー</a>'));
     var btn = $('<button class="button">复制到剪切板</button>').appendTo(InfosFleet.elModalExport);
 
@@ -5477,7 +5477,7 @@ InfosFleet.modalExport = function (curval) {
       } catch (e) {}
     } else {
       btn.on('click', function () {
-        var type = "text/plain";
+        var type = 'text/plain';
         var blob = new Blob([InfosFleet.elModalExportTextarea.val()], {
           type: type
         });
@@ -5495,8 +5495,8 @@ InfosFleet.modalExport_show = function (data) {
   data = JSON.stringify(_g.kancolle_calc.encode(data));
 
   _frame.modal.show(InfosFleet.modalExport(data), '导出配置代码', {
-    'classname': 'infos_fleet infos_fleet_export',
-    'detach': true
+    classname: 'infos_fleet infos_fleet_export',
+    detach: true
   });
 };
 
@@ -5568,8 +5568,8 @@ InfosFleet.modalExportText_show = function (data) {
   text += (text ? '\n\n' : '') + '* 创建自 是谁呼叫舰队 (fleet.moe)';
 
   _frame.modal.show(InfosFleet.modalExport(text), '导出配置文本', {
-    'classname': 'infos_fleet infos_fleet_export mod-text',
-    'detach': true
+    classname: 'infos_fleet infos_fleet_export mod-text',
+    detach: true
   });
 };
 
@@ -5584,13 +5584,13 @@ InfosFleet.modalRemove_show = function (id, is_list) {
 
   if (!InfosFleet.elModalRemove) {
     InfosFleet.elModalRemove = $('<form/>').append(InfosFleet.elModalRemoveId = $('<input name="id" type="hidden"/>')).append($('<p/>').html('是否删除该舰队配置？')).append($('<p class="actions"/>').append($('<button/>', {
-      'type': 'submit',
-      'class': 'button',
-      'html': '是'
+      type: 'submit',
+      "class": 'button',
+      html: '是'
     })).append($('<button/>', {
-      'type': 'button',
-      'class': 'button',
-      'html': '否'
+      type: 'button',
+      "class": 'button',
+      html: '否'
     }).on('click', function () {
       _frame.modal.hide();
     }))).on('submit', function (e) {
@@ -5629,8 +5629,8 @@ InfosFleet.modalRemove_show = function (id, is_list) {
   InfosFleet.elModalRemoveId.val(id);
 
   _frame.modal.show(InfosFleet.elModalRemove, '删除配置', {
-    'classname': 'infos_fleet infos_fleet_remove',
-    'detach': true
+    classname: 'infos_fleet infos_fleet_remove',
+    detach: true
   });
 };
 
@@ -5903,9 +5903,9 @@ var InfosFleetShip = function () {
 
     this.equipments[4] = new InfosFleetShipEquipment(this, 4, 0, InfosFleetShipEquipment.exslotTypes, InfosFleetShipEquipment.exslotEquipments);
     this.el = $('<dd class="ship"/>').append($('<dt/>').append(this.elAvatar = $('<s touch-action="none"/>')).append(this.elInfos = $('<div/>').html('<span>' + (this.infosFleet.data._id ? '选择舰娘' : '无舰娘') + '...</span>').append(this.elInfosTitle = $('<div class="title"/>')).append($('<div class="info"/>').append($('<label/>').html('Lv.').append(this.elInputLevel = $('<input/>', {
-      'type': 'number',
-      'min': 0,
-      'max': _g.shipMaxLv
+      type: 'number',
+      min: 0,
+      max: _g.shipMaxLv
     }).on({
       checkValue: function checkValue() {
         var value = _this9.elInputLevel.val();
@@ -5948,18 +5948,18 @@ var InfosFleetShip = function () {
 
     if (this.infosFleet.data._id) {
       this.el.on({
-        'click': function () {
+        click: function () {
           if (!this.data[0]) this.selectShipStart();
         }.bind(this),
-        'pointerenter': function () {
+        pointerenter: function () {
           InfosFleetShip.dragEnter(this);
         }.bind(this),
-        'touchmove': function touchmove(e) {
+        touchmove: function touchmove(e) {
           InfosFleetShip.dragTouchmove(e);
         }
       });
       this.elAvatar.on({
-        'pointerdown': function (e) {
+        pointerdown: function (e) {
           e.preventDefault();
 
           if (this.data[0]) {
@@ -6031,8 +6031,8 @@ var InfosFleetShip = function () {
         switch (type) {
           case 'losPower':
             return Formula[type](this.shipId, this.data[2], this.data[3], this.data[4], {
-              'hqLv': this.infosFleet.data.hq_lv,
-              'shipLv': this.shipLv
+              hqLv: this.infosFleet.data.hq_lv,
+              shipLv: this.shipLv
             });
 
           default:
@@ -6089,25 +6089,25 @@ var InfosFleetShip = function () {
 
       if (!InfosFleetShip.menu) {
         InfosFleetShip.menuItems = [$('<menuitem class="move move-up"/>').html(' ').on({
-          'click': function click(e) {
+          click: function click(e) {
             InfosFleetShip.menuCurObj.moveUp();
           },
-          'show': function show() {
+          show: function show() {
             if (InfosFleetShip.menuCurObj.index) InfosFleetShip.menuItems[0].removeClass('disabled');else InfosFleetShip.menuItems[0].addClass('disabled');
           }
         }), $('<menuitem class="move move-down"/>').html(' ').on({
-          'click': function click(e) {
+          click: function click(e) {
             InfosFleetShip.menuCurObj.moveDown();
           },
-          'show': function show() {
+          show: function show() {
             if (InfosFleetShip.menuCurObj.index < InfosFleetShip.menuCurObj.infosFleetSubFleet.ships.length - 1) InfosFleetShip.menuItems[1].removeClass('disabled');else InfosFleetShip.menuItems[1].addClass('disabled');
           }
         }), $('<hr/>'), $('<menuitem/>').html('查看资料').on({
-          'show': function show() {
+          show: function show() {
             InfosFleetShip.menuItems[3].attr('data-infos', '[[SHIP::' + InfosFleetShip.menuCurObj.shipId + ']]');
           }
         }), $('<menuitem/>').html('查看装备属性加成...').on({
-          'show': function show() {
+          show: function show() {
             var $el = InfosFleetShip.menuItems[4];
             $el.off('click.fleet-ship-show-bonuses');
             $el.on('click.fleet-ship-show-bonuses', function () {
@@ -6115,11 +6115,11 @@ var InfosFleetShip = function () {
             });
           }
         }), $('<menuitem/>').html('移除').on({
-          'click': function click(e) {
+          click: function click(e) {
             InfosFleetShip.menuCurObj.shipId = null;
           }
         }), $('<menuitem/>').html('替换为 ...').on({
-          'click': function click(e) {
+          click: function click(e) {
             InfosFleetShip.menuCurObj.selectShipStart();
           }
         }), $('<div/>').on('show', function () {
@@ -6132,7 +6132,7 @@ var InfosFleetShip = function () {
               series.forEach(function (currentValue, i) {
                 if (!i) $div.append($('<hr/>'));
                 if (currentValue['id'] != InfosFleetShip.menuCurObj.shipId) $div.append($('<menuitem/>').html('替换为 ' + _g['data']['ships'][currentValue['id']].getName(true)).on({
-                  'click': function click() {
+                  click: function click() {
                     InfosFleetShip.menuCurObj.shipId = currentValue['id'];
                   }
                 }));
@@ -6141,8 +6141,8 @@ var InfosFleetShip = function () {
           }
         })];
         InfosFleetShip.menu = new _menu({
-          'className': 'contextmenu-ship',
-          'items': InfosFleetShip.menuItems
+          className: 'contextmenu-ship',
+          items: InfosFleetShip.menuItems
         });
       }
 
@@ -6368,10 +6368,10 @@ var InfosFleetShipEquipment = function () {
     if (this.el) return this.el;
     this.elBlurTimeout;
     this.el = $("<div class=\"equipment equipment-".concat(this.index, "\" tabindex=\"0\"/>")).on({
-      'focus': function () {
+      focus: function () {
         InfosFleetShipEquipment.cur = this.el.addClass('is-hover');
       }.bind(this),
-      'blur': function () {
+      blur: function () {
         var _this12 = this;
 
         this.elBlurTimeout = setTimeout(function () {
@@ -6380,7 +6380,7 @@ var InfosFleetShipEquipment = function () {
           InfosFleetShipEquipment.cur = null;
         }, 10);
       }.bind(this),
-      'pointerenter': function (e) {
+      pointerenter: function (e) {
         var _this13 = this;
 
         if (e.originalEvent.pointerType != 'touch') {
@@ -6412,7 +6412,7 @@ var InfosFleetShipEquipment = function () {
           }
         }
       }.bind(this),
-      'pointerleave': function (e) {
+      pointerleave: function (e) {
         if (e.originalEvent.pointerType != 'touch') {
           this.el.removeClass('is-hover').blur();
           InfosFleetShipEquipment.cur = null;
@@ -6425,28 +6425,28 @@ var InfosFleetShipEquipment = function () {
       this.elCarry = this.elCarry.add(el);
       return el;
     }.bind(this))).append($('<div class="equipment-layer equipment-options"/>').append(this.elInputStar = $('<input/>', {
-      'class': 'equipment-starinput',
-      'type': 'number',
-      'placeholder': 0,
-      'min': 0,
-      'max': 10
+      "class": 'equipment-starinput',
+      type: 'number',
+      placeholder: 0,
+      min: 0,
+      max: 10
     }).on({
-      'input': function () {
+      input: function () {
         var value = this.elInputStar.val();
         if ((typeof value == 'undefined' || value === '') && this.star) this.star = null;
         value = parseInt(value);
         if (!isNaN(value) && this.star != value) this.star = value;
       }.bind(this),
-      'focus': function () {
+      focus: function () {
         clearTimeout(this.elBlurTimeout);
         this.el.addClass('is-hover');
       }.bind(this),
-      'blur': function () {
+      blur: function () {
         setTimeout(function () {
           if (!this.el.is(':focus')) this.el.removeClass('is-hover');
         }.bind(this), 10);
       }.bind(this),
-      'pointerdown': function (e) {
+      pointerdown: function (e) {
         var _this14 = this;
 
         console.log('pointerdown');
@@ -6459,19 +6459,19 @@ var InfosFleetShipEquipment = function () {
           }, 10);
         }
       }.bind(this),
-      'pointerenter': function (e) {
+      pointerenter: function (e) {
         if (e.originalEvent.pointerType != 'touch') {
           InfosFleetShipEquipment.cur = this.el.addClass('is-hover');
           clearTimeout(this.elBlurTimeout);
         }
       }.bind(this),
-      'mouseenter': function (e) {
+      mouseenter: function (e) {
         InfosFleetShipEquipment.cur = this.el.addClass('is-hover');
         clearTimeout(this.elBlurTimeout);
       }.bind(this)
     })).append(this.elSelectRank = $('<div/>', {
-      'class': 'equipment-rankselect',
-      'html': '<span>...</span>'
+      "class": 'equipment-rankselect',
+      html: '<span>...</span>'
     }).on('click', function () {
       if (!this.el.hasClass('is-rankupgradable')) return;
 
@@ -6489,8 +6489,8 @@ var InfosFleetShipEquipment = function () {
         }
 
         InfosFleet.menuRankSelect = new _menu({
-          'className': 'contextmenu-infos_fleet_rank_select',
-          'items': [InfosFleet.menuRankSelectItems]
+          className: 'contextmenu-infos_fleet_rank_select',
+          items: [InfosFleet.menuRankSelectItems]
         });
       }
 
@@ -6893,12 +6893,17 @@ var InfosFleetAirfield = function () {
           recon: 0
         },
             fighterPowerAA = [0, 0],
-            planes = [];
+            planes = [],
+            cannotIncreaseRange = false;
         this.data.forEach(function (d) {
           if (d[0]) {
             var e = _g.data.items[d[0]],
                 carry = this.getCarry(e),
                 _distance = e.stat.distance || 0;
+
+            if (Formula.equipmentType.AntiSubPatrols.indexOf(e.type) > -1) {
+              cannotIncreaseRange = true;
+            }
 
             if (Formula.equipmentType.Recons.indexOf(e.type) > -1) {
               distance.recon = Math.max(distance.recon, _distance);
@@ -6930,14 +6935,13 @@ var InfosFleetAirfield = function () {
 
         renderMinMax(fighterPower, this.elSummaryFighterPower);
         renderMinMax(fighterPowerAA, this.elSummaryFighterPowerAA);
+        if (cannotIncreaseRange) distance.recon = distance.min;
 
         if (distance.min + distance.recon > 0) {
           var val = distance.min;
-
-          if (distance.recon) {
+          if (distance.min >= distance.recon) val = distance.recon;else if (distance.recon) {
             val += Math.round(Math.min(3, Math.max(0, Math.sqrt(distance.recon - distance.min))));
           }
-
           this.elSummaryDistance.removeClass('empty').html(val);
         } else {
           this.elSummaryDistance.addClass('empty').html('-');
