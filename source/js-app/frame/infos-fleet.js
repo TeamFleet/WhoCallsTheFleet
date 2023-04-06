@@ -3537,7 +3537,7 @@ class InfosFleetAirfield {
                 // 航程计算
                 if (distance.min + distance.recon > 0) {
                     let val = distance.min;
-                    if (distance.min >= distance.recon) val = distance.recon;
+                    if (distance.recon > 0 && distance.min >= distance.recon) val = distance.recon;
                     else if (distance.recon) {
                         /*
                     val+= ` + ${

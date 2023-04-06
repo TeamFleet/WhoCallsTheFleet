@@ -6939,7 +6939,7 @@ var InfosFleetAirfield = function () {
 
         if (distance.min + distance.recon > 0) {
           var val = distance.min;
-          if (distance.min >= distance.recon) val = distance.recon;else if (distance.recon) {
+          if (distance.recon > 0 && distance.min >= distance.recon) val = distance.recon;else if (distance.recon) {
             val += Math.round(Math.min(3, Math.max(0, Math.sqrt(distance.recon - distance.min))));
           }
           this.elSummaryDistance.removeClass('empty').html(val);
