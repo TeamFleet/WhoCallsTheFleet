@@ -4079,312 +4079,318 @@ body.mod-capture #tip {
   }
 }
 .equiptypeicon {
-  background-image: url(/!/assets/images/equiptypeicon.png?20220914);
+  background-image: url(/!/assets/images/equiptypeicon.png?20230407);
   background-repeat: no-repeat;
   background-position: 50% 0;
   background-size: cover;
 }
 .equiptypeicon.mod-2 {
-  background-position: 50% 2%;
+  background-position: 50% 1.96078431%;
 }
 .equiptypeicon.mod-3 {
-  background-position: 50% 4%;
+  background-position: 50% 3.92156863%;
 }
 .equiptypeicon.mod-4 {
-  background-position: 50% 6%;
+  background-position: 50% 5.88235294%;
 }
 .equiptypeicon.mod-5 {
-  background-position: 50% 8%;
+  background-position: 50% 7.84313725%;
 }
 .equiptypeicon.mod-6 {
-  background-position: 50% 10%;
+  background-position: 50% 9.80392157%;
 }
 .equiptypeicon.mod-7 {
-  background-position: 50% 12%;
+  background-position: 50% 11.76470588%;
 }
 .equiptypeicon.mod-8 {
-  background-position: 50% 14%;
+  background-position: 50% 13.7254902%;
 }
 .equiptypeicon.mod-9 {
-  background-position: 50% 16%;
+  background-position: 50% 15.68627451%;
 }
 .equiptypeicon.mod-10 {
-  background-position: 50% 18%;
+  background-position: 50% 17.64705882%;
 }
 .equiptypeicon.mod-11 {
-  background-position: 50% 20%;
+  background-position: 50% 19.60784314%;
 }
 .equiptypeicon.mod-12 {
-  background-position: 50% 22%;
+  background-position: 50% 21.56862745%;
 }
 .equiptypeicon.mod-13 {
-  background-position: 50% 24%;
+  background-position: 50% 23.52941176%;
 }
 .equiptypeicon.mod-14 {
-  background-position: 50% 26%;
+  background-position: 50% 25.49019608%;
 }
 .equiptypeicon.mod-15 {
-  background-position: 50% 28%;
+  background-position: 50% 27.45098039%;
 }
 .equiptypeicon.mod-16 {
-  background-position: 50% 30%;
+  background-position: 50% 29.41176471%;
 }
 .equiptypeicon.mod-17 {
-  background-position: 50% 32%;
+  background-position: 50% 31.37254902%;
 }
 .equiptypeicon.mod-18 {
-  background-position: 50% 34%;
+  background-position: 50% 33.33333333%;
 }
 .equiptypeicon.mod-19 {
-  background-position: 50% 36%;
+  background-position: 50% 35.29411765%;
 }
 .equiptypeicon.mod-20 {
-  background-position: 50% 38%;
+  background-position: 50% 37.25490196%;
 }
 .equiptypeicon.mod-21 {
-  background-position: 50% 40%;
+  background-position: 50% 39.21568627%;
 }
 .equiptypeicon.mod-22 {
-  background-position: 50% 42%;
+  background-position: 50% 41.17647059%;
 }
 .equiptypeicon.mod-23 {
-  background-position: 50% 44%;
+  background-position: 50% 43.1372549%;
 }
 .equiptypeicon.mod-24 {
-  background-position: 50% 46%;
+  background-position: 50% 45.09803922%;
 }
 .equiptypeicon.mod-25 {
-  background-position: 50% 48%;
+  background-position: 50% 47.05882353%;
 }
 .equiptypeicon.mod-26 {
-  background-position: 50% 50%;
+  background-position: 50% 49.01960784%;
 }
 .equiptypeicon.mod-27 {
-  background-position: 50% 52%;
+  background-position: 50% 50.98039216%;
 }
 .equiptypeicon.mod-28 {
-  background-position: 50% 54%;
+  background-position: 50% 52.94117647%;
 }
 .equiptypeicon.mod-29 {
-  background-position: 50% 56%;
+  background-position: 50% 54.90196078%;
 }
 .equiptypeicon.mod-30 {
-  background-position: 50% 58%;
+  background-position: 50% 56.8627451%;
 }
 .equiptypeicon.mod-31 {
-  background-position: 50% 60%;
+  background-position: 50% 58.82352941%;
 }
 .equiptypeicon.mod-32 {
-  background-position: 50% 62%;
+  background-position: 50% 60.78431373%;
 }
 .equiptypeicon.mod-33 {
-  background-position: 50% 64%;
+  background-position: 50% 62.74509804%;
 }
 .equiptypeicon.mod-34 {
-  background-position: 50% 66%;
+  background-position: 50% 64.70588235%;
 }
 .equiptypeicon.mod-35 {
-  background-position: 50% 68%;
+  background-position: 50% 66.66666667%;
 }
 .equiptypeicon.mod-36 {
-  background-position: 50% 70%;
+  background-position: 50% 68.62745098%;
 }
 .equiptypeicon.mod-37 {
-  background-position: 50% 72%;
+  background-position: 50% 70.58823529%;
 }
 .equiptypeicon.mod-38 {
-  background-position: 50% 74%;
+  background-position: 50% 72.54901961%;
 }
 .equiptypeicon.mod-39 {
-  background-position: 50% 76%;
+  background-position: 50% 74.50980392%;
 }
 .equiptypeicon.mod-40 {
-  background-position: 50% 78%;
+  background-position: 50% 76.47058824%;
 }
 .equiptypeicon.mod-41 {
-  background-position: 50% 80%;
+  background-position: 50% 78.43137255%;
 }
 .equiptypeicon.mod-42 {
-  background-position: 50% 82%;
+  background-position: 50% 80.39215686%;
 }
 .equiptypeicon.mod-43 {
-  background-position: 50% 84%;
+  background-position: 50% 82.35294118%;
 }
 .equiptypeicon.mod-44 {
-  background-position: 50% 86%;
+  background-position: 50% 84.31372549%;
 }
 .equiptypeicon.mod-45 {
-  background-position: 50% 88%;
+  background-position: 50% 86.2745098%;
 }
 .equiptypeicon.mod-46 {
-  background-position: 50% 90%;
+  background-position: 50% 88.23529412%;
 }
 .equiptypeicon.mod-47 {
-  background-position: 50% 92%;
+  background-position: 50% 90.19607843%;
 }
 .equiptypeicon.mod-48 {
-  background-position: 50% 94%;
+  background-position: 50% 92.15686275%;
 }
 .equiptypeicon.mod-49 {
-  background-position: 50% 96%;
+  background-position: 50% 94.11764706%;
 }
 .equiptypeicon.mod-50 {
-  background-position: 50% 98%;
+  background-position: 50% 96.07843137%;
 }
 .equiptypeicon.mod-51 {
+  background-position: 50% 98.03921569%;
+}
+.equiptypeicon.mod-52 {
   background-position: 50% 100%;
 }
 .equiptypeicon.mod-left {
   background-position: 0 0;
 }
 .equiptypeicon.mod-left.mod-2 {
-  background-position: 0 2%;
+  background-position: 0 1.96078431%;
 }
 .equiptypeicon.mod-left.mod-3 {
-  background-position: 0 4%;
+  background-position: 0 3.92156863%;
 }
 .equiptypeicon.mod-left.mod-4 {
-  background-position: 0 6%;
+  background-position: 0 5.88235294%;
 }
 .equiptypeicon.mod-left.mod-5 {
-  background-position: 0 8%;
+  background-position: 0 7.84313725%;
 }
 .equiptypeicon.mod-left.mod-6 {
-  background-position: 0 10%;
+  background-position: 0 9.80392157%;
 }
 .equiptypeicon.mod-left.mod-7 {
-  background-position: 0 12%;
+  background-position: 0 11.76470588%;
 }
 .equiptypeicon.mod-left.mod-8 {
-  background-position: 0 14%;
+  background-position: 0 13.7254902%;
 }
 .equiptypeicon.mod-left.mod-9 {
-  background-position: 0 16%;
+  background-position: 0 15.68627451%;
 }
 .equiptypeicon.mod-left.mod-10 {
-  background-position: 0 18%;
+  background-position: 0 17.64705882%;
 }
 .equiptypeicon.mod-left.mod-11 {
-  background-position: 0 20%;
+  background-position: 0 19.60784314%;
 }
 .equiptypeicon.mod-left.mod-12 {
-  background-position: 0 22%;
+  background-position: 0 21.56862745%;
 }
 .equiptypeicon.mod-left.mod-13 {
-  background-position: 0 24%;
+  background-position: 0 23.52941176%;
 }
 .equiptypeicon.mod-left.mod-14 {
-  background-position: 0 26%;
+  background-position: 0 25.49019608%;
 }
 .equiptypeicon.mod-left.mod-15 {
-  background-position: 0 28%;
+  background-position: 0 27.45098039%;
 }
 .equiptypeicon.mod-left.mod-16 {
-  background-position: 0 30%;
+  background-position: 0 29.41176471%;
 }
 .equiptypeicon.mod-left.mod-17 {
-  background-position: 0 32%;
+  background-position: 0 31.37254902%;
 }
 .equiptypeicon.mod-left.mod-18 {
-  background-position: 0 34%;
+  background-position: 0 33.33333333%;
 }
 .equiptypeicon.mod-left.mod-19 {
-  background-position: 0 36%;
+  background-position: 0 35.29411765%;
 }
 .equiptypeicon.mod-left.mod-20 {
-  background-position: 0 38%;
+  background-position: 0 37.25490196%;
 }
 .equiptypeicon.mod-left.mod-21 {
-  background-position: 0 40%;
+  background-position: 0 39.21568627%;
 }
 .equiptypeicon.mod-left.mod-22 {
-  background-position: 0 42%;
+  background-position: 0 41.17647059%;
 }
 .equiptypeicon.mod-left.mod-23 {
-  background-position: 0 44%;
+  background-position: 0 43.1372549%;
 }
 .equiptypeicon.mod-left.mod-24 {
-  background-position: 0 46%;
+  background-position: 0 45.09803922%;
 }
 .equiptypeicon.mod-left.mod-25 {
-  background-position: 0 48%;
+  background-position: 0 47.05882353%;
 }
 .equiptypeicon.mod-left.mod-26 {
-  background-position: 0 50%;
+  background-position: 0 49.01960784%;
 }
 .equiptypeicon.mod-left.mod-27 {
-  background-position: 0 52%;
+  background-position: 0 50.98039216%;
 }
 .equiptypeicon.mod-left.mod-28 {
-  background-position: 0 54%;
+  background-position: 0 52.94117647%;
 }
 .equiptypeicon.mod-left.mod-29 {
-  background-position: 0 56%;
+  background-position: 0 54.90196078%;
 }
 .equiptypeicon.mod-left.mod-30 {
-  background-position: 0 58%;
+  background-position: 0 56.8627451%;
 }
 .equiptypeicon.mod-left.mod-31 {
-  background-position: 0 60%;
+  background-position: 0 58.82352941%;
 }
 .equiptypeicon.mod-left.mod-32 {
-  background-position: 0 62%;
+  background-position: 0 60.78431373%;
 }
 .equiptypeicon.mod-left.mod-33 {
-  background-position: 0 64%;
+  background-position: 0 62.74509804%;
 }
 .equiptypeicon.mod-left.mod-34 {
-  background-position: 0 66%;
+  background-position: 0 64.70588235%;
 }
 .equiptypeicon.mod-left.mod-35 {
-  background-position: 0 68%;
+  background-position: 0 66.66666667%;
 }
 .equiptypeicon.mod-left.mod-36 {
-  background-position: 0 70%;
+  background-position: 0 68.62745098%;
 }
 .equiptypeicon.mod-left.mod-37 {
-  background-position: 0 72%;
+  background-position: 0 70.58823529%;
 }
 .equiptypeicon.mod-left.mod-38 {
-  background-position: 0 74%;
+  background-position: 0 72.54901961%;
 }
 .equiptypeicon.mod-left.mod-39 {
-  background-position: 0 76%;
+  background-position: 0 74.50980392%;
 }
 .equiptypeicon.mod-left.mod-40 {
-  background-position: 0 78%;
+  background-position: 0 76.47058824%;
 }
 .equiptypeicon.mod-left.mod-41 {
-  background-position: 0 80%;
+  background-position: 0 78.43137255%;
 }
 .equiptypeicon.mod-left.mod-42 {
-  background-position: 0 82%;
+  background-position: 0 80.39215686%;
 }
 .equiptypeicon.mod-left.mod-43 {
-  background-position: 0 84%;
+  background-position: 0 82.35294118%;
 }
 .equiptypeicon.mod-left.mod-44 {
-  background-position: 0 86%;
+  background-position: 0 84.31372549%;
 }
 .equiptypeicon.mod-left.mod-45 {
-  background-position: 0 88%;
+  background-position: 0 86.2745098%;
 }
 .equiptypeicon.mod-left.mod-46 {
-  background-position: 0 90%;
+  background-position: 0 88.23529412%;
 }
 .equiptypeicon.mod-left.mod-47 {
-  background-position: 0 92%;
+  background-position: 0 90.19607843%;
 }
 .equiptypeicon.mod-left.mod-48 {
-  background-position: 0 94%;
+  background-position: 0 92.15686275%;
 }
 .equiptypeicon.mod-left.mod-49 {
-  background-position: 0 96%;
+  background-position: 0 94.11764706%;
 }
 .equiptypeicon.mod-left.mod-50 {
-  background-position: 0 98%;
+  background-position: 0 96.07843137%;
 }
 .equiptypeicon.mod-left.mod-51 {
+  background-position: 0 98.03921569%;
+}
+.equiptypeicon.mod-left.mod-52 {
   background-position: 0 100%;
 }
 /*
@@ -7044,6 +7050,44 @@ body.mod-capture #tip {
 #layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="30"]:checked ~ .tablelist-container h4[data-header="30"] label.checkbox {
   transform: translateX(30px);
 }
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="31"]:not(:checked) ~ .tablelist-container h4[data-header="31"] label.checkbox {
+  z-index: -1;
+}
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="31"]:not(:checked) ~ .tablelist-container h4[data-header="31"] label.checkbox:before {
+  opacity: 0;
+}
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="31"]:not(:checked) ~ .tablelist-container dl[data-header="31"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="31"]:not(:checked) ~ .tablelist-container h5[data-header="31"] {
+  display: none !important;
+}
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="31"]:checked ~ .tablelist-container h4[data-header="31"] label.shiptype {
+  width: 30px;
+}
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="31"]:checked ~ .tablelist-container h4[data-header="31"] label.shiptype:before {
+  transform: rotate(90deg) translateX(-1px);
+}
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="31"]:checked ~ .tablelist-container h4[data-header="31"] label.checkbox {
+  transform: translateX(30px);
+}
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="32"]:not(:checked) ~ .tablelist-container h4[data-header="32"] label.checkbox {
+  z-index: -1;
+}
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="32"]:not(:checked) ~ .tablelist-container h4[data-header="32"] label.checkbox:before {
+  opacity: 0;
+}
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="32"]:not(:checked) ~ .tablelist-container dl[data-header="32"],
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="32"]:not(:checked) ~ .tablelist-container h5[data-header="32"] {
+  display: none !important;
+}
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="32"]:checked ~ .tablelist-container h4[data-header="32"] label.shiptype {
+  width: 30px;
+}
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="32"]:checked ~ .tablelist-container h4[data-header="32"] label.shiptype:before {
+  transform: rotate(90deg) translateX(-1px);
+}
+#layout.mode-selection .tablelist.ships:not(.mod-search) > .shiptype[value="32"]:checked ~ .tablelist-container h4[data-header="32"] label.checkbox {
+  transform: translateX(30px);
+}
 .tablelist.ships.mod-search .tablelist-body h4,
 .tablelist.ships.mod-search .tablelist-body h5[data-type="ship-class"] {
   display: none;
@@ -7760,6 +7804,13 @@ body.mod-capture #tip {
   opacity: 0.35;
 }
 .tablelist-equipments > [name="types"][class]:not(.type68) ~ .tablelist-container .tablelist-body h4[data-type="68"] {
+  opacity: 0.35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type69) ~ .tablelist-container .tablelist-body > [data-equipmenttype="69"] {
+  display: none;
+  opacity: 0.35;
+}
+.tablelist-equipments > [name="types"][class]:not(.type69) ~ .tablelist-container .tablelist-body h4[data-type="69"] {
   opacity: 0.35;
 }
 .tablelist-equipments > [value="3"]:checked ~ .tablelist-container [stat="range"] {

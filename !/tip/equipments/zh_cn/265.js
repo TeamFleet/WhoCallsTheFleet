@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",265,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/38.png)\"></s><strong>紫电改<small>(三四三空)</small>战斗407</strong><small>截击机</small></h3><span>+11 对空</span><span>+2 对爆</span><span>+2 装甲</span><span>+4 迎击</span><span>航程: 4</span>")

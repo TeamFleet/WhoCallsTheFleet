@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",496,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/52.png)\"></s><strong>陆军步兵部队</strong><small>陆战部队</small></h3>")

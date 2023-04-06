@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",498,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/52.png)\"></s><strong>九七式中战车 新炮塔<small>(中三改)</small></strong><small>陆战部队</small></h3>")
