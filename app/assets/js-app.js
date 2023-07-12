@@ -6520,6 +6520,7 @@ var InfosFleetShipEquipment = function () {
 
       _frame.app_main.load_page('equipments', {
         callback_modeSelection_select: function (id) {
+          console.log(123, id);
           history.back();
           this.id = id;
           this.star = 0;
@@ -6529,7 +6530,7 @@ var InfosFleetShipEquipment = function () {
         callback_modeSelection_enter: function () {
           var shipId = this.infosParent.shipId;
           var ship = shipId && _g.data.ships[shipId];
-          var shipExtraSlotExtra = shipId && ship.additional_exslot_item_ids;
+          var shipExtraSlotExtra = shipId && ship.getAdditionalExslotEquipIds();
           var shipCanEquip = shipId ? ship.getEquipmentTypes(this.index) : [];
           var types = shipId ? shipCanEquip : [];
           var isExtraSlot = false;

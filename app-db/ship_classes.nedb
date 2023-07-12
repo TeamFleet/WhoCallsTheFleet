@@ -1,161 +1,162 @@
-{"ship_type_id":10,"id":31,"_id":"0AfkBhoswsyIt8y9","speed_rule":"high-2","name":{"en_us":"Unryuu","ja_jp":"雲龍","zh_cn":"云龙"}}
-{"ship_type_id":32,"id":95,"_id":"0zwQTERDbU74z621","name":{"en_us":"Kasuga Maru","ja_jp":"春日丸","zh_cn":"春日丸"}}
+{"ship_type_id":10,"id":31,"_id":"0AfkBhoswsyIt8y9","speed_rule":"high-2","name":{"en_us":"Unryuu","ja_jp":"雲龍","zh_cn":"云龙"},"id_ingame":53}
+{"ship_type_id":32,"id":95,"_id":"0zwQTERDbU74z621","name":{"en_us":"Kasuga Maru","ja_jp":"春日丸","zh_cn":"春日丸"},"id_ingame":75}
 {"id":1,"ship_type_id":20,"_id":"1ly1K7GgqVSs3MOY","speed_rule":"low-2","name":{"en_us":"","ja_jp":"長門","zh_cn":"长门"}}
-{"name":{"ja_jp":"改大和","zh_cn":"改大和","en_us":"Revised Yamato"},"ship_type_id":8,"id":154,"_id":"2Eb6QahNq769c8Cp"}
-{"name":{"ja_jp":"日進","zh_cn":"日进","en_us":"Nisshin"},"ship_type_id":12,"id":118,"_id":"2XjwEygFhIzdGz5V"}
-{"ship_type_id":14,"id":68,"_id":"3TtUWRHqFYIrakb9","speed_rule":"low-3","name":{"en_us":"Sentoku (I-400)","ja_jp":"潜特","zh_cn":"潜特"}}
-{"name":{"ja_jp":"L.d.S.D.d.Abruzzi","zh_cn":"阿布鲁齐公爵"},"ship_type_id":2,"id":120,"_id":"4i5wMtJnzTZT1SpP","navy":"rm"}
-{"name":{"ja_jp":"特種船M丙","zh_cn":"特种船M丙"},"ship_type_id":15,"id":161,"_id":"4oGoVODW9y36xTM4"}
-{"ship_type_id":13,"id":59,"_id":"5lSLj3e764aqi9Wg","speed_rule":"low-3","name":{"en_us":"Junsen 3","ja_jp":"巡潜3","zh_cn":"巡潜3"}}
-{"id":2,"ship_type_id":6,"_id":"6XmCza9ct2aXmYxi","speed_rule":"low-2","name":{"en_us":"Ise","ja_jp":"伊勢","zh_cn":"伊势"}}
+{"name":{"ja_jp":"改大和","zh_cn":"改大和","en_us":"Revised Yamato"},"ship_type_id":8,"id":154,"_id":"2Eb6QahNq769c8Cp","id_ingame":37}
+{"name":{"ja_jp":"日進","zh_cn":"日进","en_us":"Nisshin"},"ship_type_id":12,"id":118,"_id":"2XjwEygFhIzdGz5V","id_ingame":90}
+{"ship_type_id":14,"id":68,"_id":"3TtUWRHqFYIrakb9","speed_rule":"low-3","name":{"en_us":"Sentoku (I-400)","ja_jp":"潜特","zh_cn":"潜特"},"id_ingame":44}
+{"name":{"ja_jp":"L.d.S.D.d.Abruzzi","zh_cn":"阿布鲁齐公爵"},"ship_type_id":2,"id":120,"_id":"4i5wMtJnzTZT1SpP","navy":"rm","id_ingame":92}
+{"name":{"ja_jp":"特種船M丙","zh_cn":"特种船M丙"},"ship_type_id":15,"id":161,"_id":"4oGoVODW9y36xTM4","id_ingame":119}
+{"ship_type_id":13,"id":59,"_id":"5lSLj3e764aqi9Wg","speed_rule":"low-3","name":{"en_us":"Junsen 3","ja_jp":"巡潜3","zh_cn":"巡潜3"},"id_ingame":40}
+{"id":2,"ship_type_id":6,"_id":"6XmCza9ct2aXmYxi","speed_rule":"low-2","name":{"en_us":"Ise","ja_jp":"伊勢","zh_cn":"伊势"},"id_ingame":2}
 {"ship_type_id":23,"id":69,"_id":"6haxyRDjPtNvLEHP","speed_rule":"high-3","name":{"en_us":"Takao","ja_jp":"高雄","zh_cn":"高雄"}}
 {"ship_type_id":27,"id":74,"_id":"6mznKl2SV4zD0TOl","name":{"en_us":"","ja_jp":"イ400","zh_cn":"伊400"}}
-{"ship_type_id":5,"id":46,"_id":"6ofZS1neno5uJ91T","speed_rule":"high-1","name":{"en_us":"Tone","ja_jp":"利根","zh_cn":"利根"}}
-{"ship_type_id":31,"id":94,"_id":"6pozOhWom5pRpbxE","name":{"en_us":"Etorofu","ja_jp":"択捉","zh_cn":"择捉"}}
+{"ship_type_id":5,"id":46,"_id":"6ofZS1neno5uJ91T","speed_rule":"high-1","name":{"en_us":"Tone","ja_jp":"利根","zh_cn":"利根"},"id_ingame":31}
+{"ship_type_id":31,"id":94,"_id":"6pozOhWom5pRpbxE","name":{"en_us":"Etorofu","ja_jp":"択捉","zh_cn":"择捉"},"id_ingame":77}
 {"ship_type_id":26,"id":73,"_id":"6qBoMqBJlE0f5CQe","name":{"en_us":"","ja_jp":"コンゴウ","zh_cn":"金刚"}}
-{"ship_type_id":9,"id":34,"_id":"6rOLfoN9DZmM2WON","speed_rule":"high-3","name":{"en_us":"Ryuujou","ja_jp":"龍驤","zh_cn":"龙骧"}}
+{"ship_type_id":9,"id":34,"_id":"6rOLfoN9DZmM2WON","speed_rule":"high-3","name":{"en_us":"Ryuujou","ja_jp":"龍驤","zh_cn":"龙骧"},"id_ingame":32}
 {"id":3,"ship_type_id":20,"_id":"7Dzqr0FFx8i6z5Tn","speed_rule":"low-1","name":{"en_us":"","ja_jp":"大和","zh_cn":"大和"}}
-{"ship_type_id":13,"id":60,"_id":"7o2yPGimgHf6uV7g","speed_rule":"low-3","name":{"en_us":"Junsen Type B","ja_jp":"巡潜乙","zh_cn":"巡潜乙"}}
-{"name":{"ja_jp":"第百一号","zh_cn":"第百一号"},"ship_type_id":37,"id":159,"_id":"7vBGK5UcV5eviLNW"}
-{"name":{"ja_jp":"改装球磨","zh_cn":"改装球磨","en_us":"Revised Kuma"},"ship_type_id":2,"id":142,"_id":"84dnHByIS9TIQwsT","speed_rule":"high-3"}
-{"id":4,"ship_type_id":6,"_id":"8Sh8jh40V9c1dwKp","speed_rule":"low-2","name":{"en_us":"Fusou","ja_jp":"扶桑","zh_cn":"扶桑"}}
-{"id":5,"ship_type_id":16,"_id":"8xQPYsq6jHfdAjBa","speed_rule":"low-3","name":{"en_us":"Akashi","ja_jp":"明石","zh_cn":"明石"}}
-{"name":{"ja_jp":"巡潜丙","zh_cn":"巡潜丙"},"ship_type_id":13,"id":130,"_id":"9AnzT7vfrUQTX7PP"}
-{"name":{"ja_jp":"Lexington","zh_cn":"列克星敦","en_us":"Lexington"},"ship_type_id":11,"id":105,"_id":"9B4Fg2wROIO0QVaS","speed_rule":"high-3","navy":"usn"}
-{"name":{"ja_jp":"Gotland","zh_cn":"哥特兰","en_us":"Gotland"},"ship_type_id":2,"id":114,"_id":"9TYhXiyhxptAtc1A","navy":"sm"}
-{"ship_type_id":1,"id":22,"_id":"AcZKZJTEy3ySYL7p","speed_rule":"high-3","name":{"en_us":"Yuugumo","ja_jp":"夕雲","zh_cn":"夕云"}}
-{"ship_type_id":1,"id":78,"_id":"AtJsZGIYiyfK2m47","speed_rule":"high-3","name":{"en_us":"Maestrale","ja_jp":"Maestrale","zh_cn":"西北风"},"navy":"rm"}
-{"ship_type_id":13,"id":64,"_id":"BS1phNGWHoLWnP2X","speed_rule":"low-3","name":{"en_us":"Type 3 Submergence Transport Vehicle","ja_jp":"三式潜航輸送艇","zh_cn":"三式潜航运输艇"}}
-{"ship_type_id":13,"id":58,"_id":"CHm2NzKneYLoNM0M","speed_rule":"low-3","name":{"en_us":"Kaidai VI","ja_jp":"海大VI","zh_cn":"海大VI"}}
-{"ship_type_id":7,"id":82,"_id":"D6dtjWFITvcR1Ne0","speed_rule":"high-2","name":{"en_us":"Iowa","ja_jp":"Iowa","zh_cn":"衣阿华"},"navy":"usn"}
-{"ship_type_id":1,"id":19,"_id":"D8Fb8K8IZYvwA4nk","speed_rule":"high-3","name":{"en_us":"Shiratsuyu","ja_jp":"白露","zh_cn":"白露"}}
-{"ship_type_id":11,"id":32,"_id":"DIT19RGREoH9VmW0","speed_rule":"high-1","name":{"en_us":"Taihou","ja_jp":"大鳳","zh_cn":"大凤"}}
-{"ship_type_id":10,"id":28,"_id":"DJsAzVZt0zBc2d7Z","speed_rule":"high-2","name":{"en_us":"Souryuu","ja_jp":"蒼龍","zh_cn":"苍龙"}}
-{"name":{"ja_jp":"Ark Royal","zh_cn":"皇家方舟","en_us":"Ark Royal"},"ship_type_id":10,"id":101,"_id":"E1DfI5NmHeLWywRu","navy":"rn"}
-{"name":{"ja_jp":"Conte di Cavour","zh_cn":"加富尔伯爵"},"ship_type_id":7,"id":148,"_id":"E2KxLy3vX3EMAtsl","navy":"rm"}
+{"ship_type_id":13,"id":60,"_id":"7o2yPGimgHf6uV7g","speed_rule":"low-3","name":{"en_us":"Junsen Type B","ja_jp":"巡潜乙","zh_cn":"巡潜乙"},"id_ingame":39}
+{"name":{"ja_jp":"第百一号","zh_cn":"第百一号"},"ship_type_id":37,"id":159,"_id":"7vBGK5UcV5eviLNW","id_ingame":120}
+{"name":{"ja_jp":"改装球磨","zh_cn":"改装球磨","en_us":"Revised Kuma"},"ship_type_id":2,"id":142,"_id":"84dnHByIS9TIQwsT","speed_rule":"high-3","id_ingame":4,"additional_exslot_item_ids":[413]}
+{"id":4,"ship_type_id":6,"_id":"8Sh8jh40V9c1dwKp","speed_rule":"low-2","name":{"en_us":"Fusou","ja_jp":"扶桑","zh_cn":"扶桑"},"id_ingame":26}
+{"id":5,"ship_type_id":16,"_id":"8xQPYsq6jHfdAjBa","speed_rule":"low-3","name":{"en_us":"Akashi","ja_jp":"明石","zh_cn":"明石"},"id_ingame":49}
+{"name":{"ja_jp":"巡潜丙","zh_cn":"巡潜丙"},"ship_type_id":13,"id":130,"_id":"9AnzT7vfrUQTX7PP","id_ingame":103}
+{"name":{"ja_jp":"Lexington","zh_cn":"列克星敦","en_us":"Lexington"},"ship_type_id":11,"id":105,"_id":"9B4Fg2wROIO0QVaS","speed_rule":"high-3","navy":"usn","id_ingame":69}
+{"name":{"ja_jp":"Gotland","zh_cn":"哥特兰","en_us":"Gotland"},"ship_type_id":2,"id":114,"_id":"9TYhXiyhxptAtc1A","navy":"sm","id_ingame":89}
+{"ship_type_id":1,"id":22,"_id":"AcZKZJTEy3ySYL7p","speed_rule":"high-3","name":{"en_us":"Yuugumo","ja_jp":"夕雲","zh_cn":"夕云"},"id_ingame":38,"additional_exslot_item_ids":[88,240,27,413,28,106,450]}
+{"ship_type_id":1,"id":78,"_id":"AtJsZGIYiyfK2m47","speed_rule":"high-3","name":{"en_us":"Maestrale","ja_jp":"Maestrale","zh_cn":"西北风"},"navy":"rm","id_ingame":61}
+{"ship_type_id":13,"id":64,"_id":"BS1phNGWHoLWnP2X","speed_rule":"low-3","name":{"en_us":"Type 3 Submergence Transport Vehicle","ja_jp":"三式潜航輸送艇","zh_cn":"三式潜航运输艇"},"id_ingame":46}
+{"ship_type_id":13,"id":58,"_id":"CHm2NzKneYLoNM0M","speed_rule":"low-3","name":{"en_us":"Kaidai VI","ja_jp":"海大VI","zh_cn":"海大VI"},"id_ingame":35}
+{"ship_type_id":7,"id":82,"_id":"D6dtjWFITvcR1Ne0","speed_rule":"high-2","name":{"en_us":"Iowa","ja_jp":"Iowa","zh_cn":"衣阿华"},"navy":"usn","id_ingame":65}
+{"ship_type_id":1,"id":19,"_id":"D8Fb8K8IZYvwA4nk","speed_rule":"high-3","name":{"en_us":"Shiratsuyu","ja_jp":"白露","zh_cn":"白露"},"id_ingame":23}
+{"ship_type_id":11,"id":32,"_id":"DIT19RGREoH9VmW0","speed_rule":"high-1","name":{"en_us":"Taihou","ja_jp":"大鳳","zh_cn":"大凤"},"id_ingame":43,"additional_exslot_item_ids":[71,275]}
+{"ship_type_id":10,"id":28,"_id":"DJsAzVZt0zBc2d7Z","speed_rule":"high-2","name":{"en_us":"Souryuu","ja_jp":"蒼龍","zh_cn":"苍龙"},"id_ingame":17}
+{"name":{"ja_jp":"Ark Royal","zh_cn":"皇家方舟","en_us":"Ark Royal"},"ship_type_id":10,"id":101,"_id":"E1DfI5NmHeLWywRu","navy":"rn","id_ingame":78}
+{"name":{"ja_jp":"Conte di Cavour","zh_cn":"加富尔伯爵"},"ship_type_id":7,"id":148,"_id":"E2KxLy3vX3EMAtsl","navy":"rm","id_ingame":113}
 {"ship_type_id":28,"id":75,"_id":"EZogkjzM4YkDTpbV","speed_rule":"high-3","name":{"en_us":"Nagara","ja_jp":"長良","zh_cn":"长良"}}
-{"name":{"ja_jp":"J","zh_cn":"J"},"ship_type_id":1,"id":107,"_id":"Erl4Zv7yYnt5v7rx","navy":"rn"}
-{"name":{"ja_jp":"Ranger","zh_cn":"突击者"},"ship_type_id":10,"id":157,"_id":"F8f33Ur9LGBdBQsa","navy":"usn"}
-{"ship_type_id":11,"id":79,"_id":"FG1QUOKlFDusxWDV","speed_rule":"high-1","name":{"en_us":"Shoukaku","ja_jp":"翔鶴","zh_cn":"翔鹤"}}
-{"id":6,"ship_type_id":8,"_id":"FP4S6jTaP67kVM38","speed_rule":"low-2","name":{"en_us":"Ise","ja_jp":"伊勢","zh_cn":"伊势"},"capabilities":{"anti_air_rocket_barrage":"high"}}
-{"ship_type_id":2,"id":51,"_id":"FWe8gJkEc3hdZrKz","speed_rule":"high-4","name":{"en_us":"Yuubari","ja_jp":"夕張","zh_cn":"夕张"}}
-{"name":{"ja_jp":"迅鯨","zh_cn":"迅鲸"},"ship_type_id":17,"id":133,"_id":"FeGjivU8uYHQ75tS"}
-{"ship_type_id":4,"id":39,"_id":"GGpHWtPGbFEdb938","speed_rule":"high-3","name":{"en_us":"Furutaka","ja_jp":"古鷹","zh_cn":"古鹰"}}
-{"name":{"ja_jp":"伊五百一","zh_cn":"伊501","en_us":"I-501"},"ship_type_id":13,"id":104,"_id":"HFlfZjKO265xIQtq","speed_rule":"low-3"}
-{"ship_type_id":2,"id":47,"_id":"HVljyw6ggwPr7Ges","speed_rule":"high-3","name":{"en_us":"Tenryuu","ja_jp":"天龍","zh_cn":"天龙"}}
-{"name":{"ja_jp":"St. Louis","zh_cn":"圣路易斯"},"ship_type_id":2,"id":136,"_id":"HXEXn8l70sekPnOo","navy":"usn"}
-{"name":{"ja_jp":"Colorado","zh_cn":"科罗拉多"},"ship_type_id":6,"id":122,"_id":"IMtz2w4yGmrJyexw","navy":"usn"}
-{"name":{"ja_jp":"改白露","zh_cn":"改白露"},"ship_type_id":1,"id":150,"_id":"IcfI72E2Gz9auMug"}
-{"ship_type_id":7,"id":93,"_id":"Iua8Fv2PvMLQX8Ii","speed_rule":"low-2","name":{"en_us":"Gangut","ja_jp":"ガングート","zh_cn":"甘古特"},"navy":"vmf"}
-{"name":{"ja_jp":"改大和","zh_cn":"改大和","en_us":"Revised Yamato"},"ship_type_id":7,"id":153,"_id":"JTOOHAO6s36yOfD8"}
-{"ship_type_id":10,"id":29,"_id":"KKX4kYY2ldDf60Oh","speed_rule":"high-2","name":{"en_us":"Hiryuu","ja_jp":"飛龍","zh_cn":"飞龙"}}
-{"ship_type_id":1,"id":24,"_id":"KM7CsokdghksQ1x1","speed_rule":"high-1","name":{"en_us":"Shimakaze","ja_jp":"島風","zh_cn":"岛风"}}
-{"ship_type_id":1,"id":25,"_id":"LFktZnFndcgKf7Ar","speed_rule":"high-3","name":{"en_us":"Type 1934","ja_jp":"Z1","zh_cn":"Z1"},"navy":"km"}
-{"name":{"ja_jp":"改赤城","zh_cn":"改赤城","en_us":"Revised Akagi"},"ship_type_id":10,"id":121,"_id":"LGu7cgj9z6oQF21f","speed_rule":"high-3"}
-{"ship_type_id":9,"id":37,"_id":"LkECCXzx3uRECMCo","speed_rule":"low-2","name":{"en_us":"Hiyou","ja_jp":"飛鷹","zh_cn":"飞鹰"}}
-{"name":{"ja_jp":"改装陽炎","zh_cn":"改装阳炎"},"ship_type_id":1,"id":138,"_id":"MMjDJ7lYAh3ehJAF","navy":"rocn"}
-{"ship_type_id":13,"id":63,"_id":"MXCJDdredQZNAeyX","speed_rule":"low-3","name":{"en_us":"Ro-series","ja_jp":"呂号","zh_cn":"吕号"}}
-{"name":{"ja_jp":"改阿賀野","zh_cn":"改阿贺野","en_us":"Revised Agano"},"ship_type_id":2,"id":143,"_id":"MvTlUFVIc4eEpmtN","speed_rule":"high-2","equipable_exclude_by_slot":[null,null,null,[12]]}
-{"name":{"ja_jp":"John C.Butler","zh_cn":"约翰·C·巴特勒","en_us":""},"ship_type_id":1,"id":112,"_id":"Nvzvklc2BNAuwjnZ","navy":"usn","speed_rule":"low-4"}
-{"name":{"ja_jp":"神威","zh_cn":"神威","en_us":"Kamoi"},"ship_type_id":29,"id":98,"_id":"O3lucZpi7fHXfyYb"}
-{"name":{"ja_jp":"潜高","zh_cn":"潜高"},"ship_type_id":13,"id":146,"_id":"PSBFXovnUlkOWJkU","speed_rule":"low-5"}
-{"id":7,"ship_type_id":7,"_id":"PkNoV9TpcX3TA9qG","speed_rule":"high-3","name":{"en_us":"Bismarck","ja_jp":"Bismarck","zh_cn":"俾斯麦"},"navy":"km"}
-{"ship_type_id":24,"id":71,"_id":"QCTrW1I7vS81vUaV","speed_rule":"low-2","name":{"en_us":"Akitsushima","ja_jp":"秋津洲","zh_cn":"秋津洲"}}
-{"ship_type_id":12,"id":77,"_id":"QDw2yfrIJfDl63rN","speed_rule":"low-2","name":{"en_us":"Mizuho","ja_jp":"瑞穂","zh_cn":"瑞穗"}}
-{"name":{"ja_jp":"De Ruyter","zh_cn":"德·鲁伊特","en_us":"De Ruyter"},"ship_type_id":2,"id":127,"_id":"QhMEOAL6a9m7Q2l2","navy":"rnln"}
-{"name":{"ja_jp":"日振","zh_cn":"日振"},"ship_type_id":31,"id":108,"_id":"R6kZbfO5AV9sBWlt"}
-{"name":{"ja_jp":"Ташкент","zh_cn":"塔什干","en_us":"Tashkent"},"ship_type_id":1,"id":109,"_id":"SVaLWZ2Um7C9td4c","navy":"vmf","speed_rule":"high-1"}
-{"ship_type_id":10,"id":91,"_id":"T5TIzP4V1vYfSz1u","name":{"en_us":"Aquila","ja_jp":"Aquila","zh_cn":"天鹰"},"navy":"rm"}
-{"ship_type_id":31,"id":92,"_id":"TGSlMB6OBuVzahFV","name":{"en_us":"Shimushu","ja_jp":"占守","zh_cn":"占守"}}
-{"ship_type_id":14,"id":66,"_id":"TkXaOcPURNWGeKqT","speed_rule":"low-3","name":{"en_us":"Junsen Type B","ja_jp":"巡潜乙","zh_cn":"巡潜乙"}}
-{"name":{"ja_jp":"Northampton","zh_cn":"北安普敦","en_us":"Northampton"},"ship_type_id":4,"id":124,"_id":"TqSucKfVc35XtQvm","navy":"usn"}
-{"ship_type_id":4,"id":81,"_id":"TqvaW6jEdVptFohN","speed_rule":"high-3","name":{"en_us":"Zara","ja_jp":"Zara","zh_cn":"扎拉"},"navy":"rm"}
-{"name":{"ja_jp":"Yorktown","zh_cn":"约克城"},"ship_type_id":10,"id":135,"_id":"URPYgaL8JlUwTXo4","navy":"usn"}
-{"name":{"ja_jp":"North Carolina","zh_cn":"北卡罗莱纳","en_us":"North Carolina"},"ship_type_id":7,"id":141,"_id":"VaCsevxhYgGjiiKV","navy":"usn"}
-{"name":{"ja_jp":"New Orleans","zh_cn":"新奥尔良"},"ship_type_id":4,"id":160,"_id":"VzxdZINk7lhV0vfc","navy":"usn"}
-{"ship_type_id":7,"id":70,"_id":"X7YkWImv52ZLa7tS","speed_rule":"high-3","name":{"en_us":"Vittorio Veneto","ja_jp":"V.Veneto","zh_cn":"维托里奥·维内托"},"navy":"rm"}
-{"name":{"ja_jp":"Brooklyn","zh_cn":"布鲁克林"},"ship_type_id":2,"id":147,"_id":"XqrgBbSe2eye8fqP","navy":"usn"}
-{"ship_type_id":9,"id":36,"_id":"YN9ONCrGYRZHFcBl","speed_rule":"high-3","name":{"en_us":"Shouhou","ja_jp":"祥鳳","zh_cn":"祥凤"}}
-{"ship_type_id":13,"id":61,"_id":"YZ70kvfsnx9rAx3z","speed_rule":"low-3","name":{"en_us":"Junsen Type B Kai Ni","ja_jp":"巡潜乙（改二）","zh_cn":"巡潜乙（改二）"}}
-{"name":{"ja_jp":"Casablanca","zh_cn":"卡萨布兰卡"},"ship_type_id":9,"id":106,"_id":"YnuXflCSvTPmhtWg","navy":"usn"}
-{"ship_type_id":1,"id":84,"_id":"ZL3yqVUTmQFOkWaC","speed_rule":"high-3","name":{"en_us":"Kamikaze","ja_jp":"神風","zh_cn":"神风"}}
-{"ship_type_id":4,"id":57,"_id":"ZhPM1Msam9Zr1lRh","speed_rule":"high-3","name":{"en_us":"Admiral Hipper","ja_jp":"Admiral Hipper","zh_cn":"希佩尔海军上将"},"navy":"km"}
-{"name":{"ja_jp":"Fletcher","zh_cn":"弗莱彻"},"ship_type_id":1,"id":117,"_id":"aQO0mki7ozsr5pBu","navy":"usn"}
-{"name":{"ja_jp":"Gato","zh_cn":"猫鲨"},"ship_type_id":13,"id":151,"_id":"aW3hhLQXHmhoB7Ky","navy":"usn"}
-{"ship_type_id":3,"id":54,"_id":"aqjF6P9FYhNyZMn9","speed_rule":"high-3","name":{"en_us":"Kuma","ja_jp":"球磨","zh_cn":"球磨"}}
-{"name":{"ja_jp":"特2TL","zh_cn":"特2TL"},"ship_type_id":29,"id":152,"_id":"asNKLZ1JZffdlMAf"}
-{"name":{"ja_jp":"Independence","zh_cn":"独立"},"ship_type_id":9,"id":156,"_id":"ayKmRHXQQ8wurVXB","navy":"usn"}
-{"name":{"ja_jp":"Marconi","zh_cn":"马可尼","en_us":"Marconi"},"ship_type_id":13,"id":102,"_id":"b6wYdO1eak7LwLDa","navy":"rm","speed_rule":"low-3"}
-{"ship_type_id":10,"id":80,"_id":"bNn1ADmTUuacGgdG","speed_rule":"high-3","name":{"en_us":"Graf Zeppelin","ja_jp":"Graf Zeppelin","zh_cn":"齐柏林伯爵"},"navy":"km"}
-{"name":{"ja_jp":"改加賀","zh_cn":"改加贺"},"ship_type_id":10,"id":137,"_id":"bPGEmLk6w9KA5NCc"}
-{"name":{"ja_jp":"改龍鳳","zh_cn":"改龙凤","en_us":"Revised Ryuuhou"},"ship_type_id":9,"id":145,"_id":"c0cUBdqLq4qGbIdD"}
-{"id":8,"ship_type_id":12,"_id":"cQQU4HKdtsPXF1C6","speed_rule":"high-3","name":{"en_us":"Chitose","ja_jp":"千歳","zh_cn":"千岁"}}
-{"ship_type_id":10,"id":87,"_id":"cQfrKdxLfNxAwn4n","speed_rule":"high-3","name":{"en_us":"Lexington","ja_jp":"Lexington","zh_cn":"列克星敦"},"navy":"usn"}
-{"ship_type_id":12,"id":86,"_id":"ci3ELjKOc4QSc4GY","speed_rule":"low-2","name":{"en_us":"Commandant Teste","ja_jp":"C.Teste","zh_cn":"塔斯特司令官"},"navy":"mn"}
-{"name":{"ja_jp":"UボートIT","zh_cn":"U型潜艇IT","en_us":"Type IT U-boat"},"ship_type_id":13,"id":103,"_id":"crp9W5Tjj3gQYQmO","navy":"km","speed_rule":"low-3"}
-{"ship_type_id":6,"id":85,"_id":"dAWqBqZF5LTupVGw","speed_rule":"low-2","name":{"en_us":"Queen Elizabeth","ja_jp":"Queen Elizabeth","zh_cn":"伊丽莎白女王"},"navy":"rn"}
-{"id":9,"ship_type_id":7,"_id":"dLZ8YVNL7vozx2TK","speed_rule":"high-2","name":{"en_us":"Kongou","ja_jp":"金剛","zh_cn":"金刚"}}
-{"ship_type_id":13,"id":62,"_id":"dUnjH1tY6sJU8n8f","speed_rule":"low-3","name":{"en_us":"Type IXC U-boat","ja_jp":"UボートIXC","zh_cn":"U型潜艇IXC"},"navy":"km"}
-{"name":{"ja_jp":"御蔵","zh_cn":"御藏"},"ship_type_id":31,"id":123,"_id":"dhkmd60arVZ99GzN"}
-{"ship_type_id":1,"id":16,"_id":"evm4ogjAEbdtDCSs","speed_rule":"high-3","name":{"en_us":"Ayanami","ja_jp":"綾波","zh_cn":"绫波"}}
-{"name":{"ja_jp":"改金剛","zh_cn":"改金刚","en_us":"Revised Kongou"},"ship_type_id":7,"id":119,"_id":"fNIBeCW5BTWyVapU","speed_rule":"high-2"}
-{"ship_type_id":9,"id":33,"_id":"fc4I0XDHvViLR6T8","speed_rule":"low-2","name":{"en_us":"Houshou","ja_jp":"鳳翔","zh_cn":"凤翔"}}
-{"ship_type_id":32,"id":96,"_id":"ffyU0DgRZRHGjaiW","name":{"en_us":"Taiyou","ja_jp":"大鷹","zh_cn":"大鹰"}}
-{"name":{"ja_jp":"丁","zh_cn":"丁"},"ship_type_id":31,"id":132,"_id":"g5euo6YoF9kVgKld"}
-{"name":{"ja_jp":"松","zh_cn":"松"},"ship_type_id":1,"id":131,"_id":"gAfTNXyFOgal7cqQ"}
-{"name":{"ja_jp":"South Dakota","zh_cn":"南达科他"},"ship_type_id":7,"id":134,"_id":"hGnDUAEfmqVjly4q","navy":"usn"}
-{"ship_type_id":2,"id":52,"_id":"hJAm96B6jC0wWmvP","speed_rule":"high-2","name":{"en_us":"Agano","ja_jp":"阿賀野","zh_cn":"阿贺野"}}
-{"ship_type_id":15,"id":56,"_id":"hcWdqljjY0waaU64","speed_rule":"low-3","name":{"en_us":"Hei","ja_jp":"特種船丙","zh_cn":"特种船丙"}}
-{"id":10,"ship_type_id":6,"_id":"hfYDUbSqjpp3bZTz","speed_rule":"low-2","name":{"en_us":"Nagato","ja_jp":"長門","zh_cn":"长门"}}
-{"ship_type_id":19,"id":23,"_id":"hsLQJLbzOtNBTD5b","speed_rule":"high-3","name":{"en_us":"Akizuki","ja_jp":"秋月","zh_cn":"秋月"}}
+{"name":{"ja_jp":"J","zh_cn":"J"},"ship_type_id":1,"id":107,"_id":"Erl4Zv7yYnt5v7rx","navy":"rn","id_ingame":82}
+{"name":{"ja_jp":"Ranger","zh_cn":"突击者"},"ship_type_id":10,"id":157,"_id":"F8f33Ur9LGBdBQsa","navy":"usn","id_ingame":118}
+{"ship_type_id":11,"id":79,"_id":"FG1QUOKlFDusxWDV","speed_rule":"high-1","name":{"en_us":"Shoukaku","ja_jp":"翔鶴","zh_cn":"翔鹤"},"id_ingame":33}
+{"id":6,"ship_type_id":8,"_id":"FP4S6jTaP67kVM38","speed_rule":"low-2","name":{"en_us":"Ise","ja_jp":"伊勢","zh_cn":"伊势"},"capabilities":{"anti_air_rocket_barrage":"high"},"id_ingame":2}
+{"ship_type_id":2,"id":51,"_id":"FWe8gJkEc3hdZrKz","speed_rule":"high-4","name":{"en_us":"Yuubari","ja_jp":"夕張","zh_cn":"夕张"},"id_ingame":34}
+{"name":{"ja_jp":"迅鯨","zh_cn":"迅鲸"},"ship_type_id":17,"id":133,"_id":"FeGjivU8uYHQ75tS","id_ingame":100}
+{"ship_type_id":4,"id":39,"_id":"GGpHWtPGbFEdb938","speed_rule":"high-3","name":{"en_us":"Furutaka","ja_jp":"古鷹","zh_cn":"古鹰"},"id_ingame":7}
+{"name":{"ja_jp":"伊五百一","zh_cn":"伊501","en_us":"I-501"},"ship_type_id":13,"id":104,"_id":"HFlfZjKO265xIQtq","speed_rule":"low-3","id_ingame":80}
+{"ship_type_id":2,"id":47,"_id":"HVljyw6ggwPr7Ges","speed_rule":"high-3","name":{"en_us":"Tenryuu","ja_jp":"天龍","zh_cn":"天龙"},"id_ingame":21}
+{"name":{"ja_jp":"St. Louis","zh_cn":"圣路易斯"},"ship_type_id":2,"id":136,"_id":"HXEXn8l70sekPnOo","navy":"usn","id_ingame":106}
+{"name":{"ja_jp":"Colorado","zh_cn":"科罗拉多"},"ship_type_id":6,"id":122,"_id":"IMtz2w4yGmrJyexw","navy":"usn","id_ingame":93}
+{"name":{"ja_jp":"改白露","zh_cn":"改白露"},"ship_type_id":1,"id":150,"_id":"IcfI72E2Gz9auMug","id_ingame":23}
+{"ship_type_id":7,"id":93,"_id":"Iua8Fv2PvMLQX8Ii","speed_rule":"low-2","name":{"en_us":"Gangut","ja_jp":"ガングート","zh_cn":"甘古特"},"navy":"vmf","id_ingame":73}
+{"name":{"ja_jp":"改大和","zh_cn":"改大和","en_us":"Revised Yamato"},"ship_type_id":7,"id":153,"_id":"JTOOHAO6s36yOfD8","id_ingame":37}
+{"ship_type_id":10,"id":29,"_id":"KKX4kYY2ldDf60Oh","speed_rule":"high-2","name":{"en_us":"Hiryuu","ja_jp":"飛龍","zh_cn":"飞龙"},"id_ingame":25}
+{"ship_type_id":1,"id":24,"_id":"KM7CsokdghksQ1x1","speed_rule":"high-1","name":{"en_us":"Shimakaze","ja_jp":"島風","zh_cn":"岛风"},"id_ingame":22}
+{"ship_type_id":1,"id":25,"_id":"LFktZnFndcgKf7Ar","speed_rule":"high-3","name":{"en_us":"Type 1934","ja_jp":"Z1","zh_cn":"Z1"},"navy":"km","id_ingame":48}
+{"name":{"ja_jp":"改赤城","zh_cn":"改赤城","en_us":"Revised Akagi"},"ship_type_id":10,"id":121,"_id":"LGu7cgj9z6oQF21f","speed_rule":"high-3","id_ingame":14}
+{"ship_type_id":9,"id":37,"_id":"LkECCXzx3uRECMCo","speed_rule":"low-2","name":{"en_us":"Hiyou","ja_jp":"飛鷹","zh_cn":"飞鹰"},"id_ingame":24}
+{"name":{"ja_jp":"改装陽炎","zh_cn":"改装阳炎"},"ship_type_id":1,"id":138,"_id":"MMjDJ7lYAh3ehJAF","navy":"rocn","id_ingame":30,"additional_exslot_item_ids":[88,240,28]}
+{"ship_type_id":13,"id":63,"_id":"MXCJDdredQZNAeyX","speed_rule":"low-3","name":{"en_us":"Ro-series","ja_jp":"呂号","zh_cn":"吕号"},"id_ingame":86}
+{"name":{"ja_jp":"改阿賀野","zh_cn":"改阿贺野","en_us":"Revised Agano"},"ship_type_id":2,"id":143,"_id":"MvTlUFVIc4eEpmtN","speed_rule":"high-2","equipable_exclude_by_slot":[null,null,null,[12]],"id_ingame":41,"additional_exslot_item_ids":[220,413,66]}
+{"name":{"ja_jp":"宗谷","zh_cn":"宗谷"},"ship_type_id":29,"id":162,"_id":"N3ABoemd8THde36P","id_ingame":111}
+{"name":{"ja_jp":"John C.Butler","zh_cn":"约翰·C·巴特勒","en_us":""},"ship_type_id":1,"id":112,"_id":"Nvzvklc2BNAuwjnZ","navy":"usn","speed_rule":"low-4","id_ingame":87}
+{"name":{"ja_jp":"神威","zh_cn":"神威","en_us":"Kamoi"},"ship_type_id":29,"id":98,"_id":"O3lucZpi7fHXfyYb","id_ingame":72}
+{"name":{"ja_jp":"潜高","zh_cn":"潜高"},"ship_type_id":13,"id":146,"_id":"PSBFXovnUlkOWJkU","speed_rule":"low-5","id_ingame":109}
+{"id":7,"ship_type_id":7,"_id":"PkNoV9TpcX3TA9qG","speed_rule":"high-3","name":{"en_us":"Bismarck","ja_jp":"Bismarck","zh_cn":"俾斯麦"},"navy":"km","id_ingame":47}
+{"ship_type_id":24,"id":71,"_id":"QCTrW1I7vS81vUaV","speed_rule":"low-2","name":{"en_us":"Akitsushima","ja_jp":"秋津洲","zh_cn":"秋津洲"},"id_ingame":59}
+{"ship_type_id":12,"id":77,"_id":"QDw2yfrIJfDl63rN","speed_rule":"low-2","name":{"en_us":"Mizuho","ja_jp":"瑞穂","zh_cn":"瑞穗"},"id_ingame":62}
+{"name":{"ja_jp":"De Ruyter","zh_cn":"德·鲁伊特","en_us":"De Ruyter"},"ship_type_id":2,"id":127,"_id":"QhMEOAL6a9m7Q2l2","navy":"rnln","id_ingame":98}
+{"name":{"ja_jp":"日振","zh_cn":"日振"},"ship_type_id":31,"id":108,"_id":"R6kZbfO5AV9sBWlt","id_ingame":85}
+{"name":{"ja_jp":"Ташкент","zh_cn":"塔什干","en_us":"Tashkent"},"ship_type_id":1,"id":109,"_id":"SVaLWZ2Um7C9td4c","navy":"vmf","speed_rule":"high-1","id_ingame":81}
+{"ship_type_id":10,"id":91,"_id":"T5TIzP4V1vYfSz1u","name":{"en_us":"Aquila","ja_jp":"Aquila","zh_cn":"天鹰"},"navy":"rm","id_ingame":68}
+{"ship_type_id":31,"id":92,"_id":"TGSlMB6OBuVzahFV","name":{"en_us":"Shimushu","ja_jp":"占守","zh_cn":"占守"},"id_ingame":74}
+{"ship_type_id":14,"id":66,"_id":"TkXaOcPURNWGeKqT","speed_rule":"low-3","name":{"en_us":"Junsen Type B","ja_jp":"巡潜乙","zh_cn":"巡潜乙"},"id_ingame":39}
+{"name":{"ja_jp":"Northampton","zh_cn":"北安普敦","en_us":"Northampton"},"ship_type_id":4,"id":124,"_id":"TqSucKfVc35XtQvm","navy":"usn","id_ingame":95}
+{"ship_type_id":4,"id":81,"_id":"TqvaW6jEdVptFohN","speed_rule":"high-3","name":{"en_us":"Zara","ja_jp":"Zara","zh_cn":"扎拉"},"navy":"rm","id_ingame":64}
+{"name":{"ja_jp":"Yorktown","zh_cn":"约克城"},"ship_type_id":10,"id":135,"_id":"URPYgaL8JlUwTXo4","navy":"usn","id_ingame":105}
+{"name":{"ja_jp":"North Carolina","zh_cn":"北卡罗莱纳","en_us":"North Carolina"},"ship_type_id":7,"id":141,"_id":"VaCsevxhYgGjiiKV","navy":"usn","id_ingame":107}
+{"name":{"ja_jp":"New Orleans","zh_cn":"新奥尔良"},"ship_type_id":4,"id":160,"_id":"VzxdZINk7lhV0vfc","navy":"usn","id_ingame":121}
+{"ship_type_id":7,"id":70,"_id":"X7YkWImv52ZLa7tS","speed_rule":"high-3","name":{"en_us":"Vittorio Veneto","ja_jp":"V.Veneto","zh_cn":"维托里奥·维内托"},"navy":"rm","id_ingame":58}
+{"name":{"ja_jp":"Brooklyn","zh_cn":"布鲁克林"},"ship_type_id":2,"id":147,"_id":"XqrgBbSe2eye8fqP","navy":"usn","id_ingame":110}
+{"ship_type_id":9,"id":36,"_id":"YN9ONCrGYRZHFcBl","speed_rule":"high-3","name":{"en_us":"Shouhou","ja_jp":"祥鳳","zh_cn":"祥凤"},"id_ingame":11}
+{"ship_type_id":13,"id":61,"_id":"YZ70kvfsnx9rAx3z","speed_rule":"low-3","name":{"en_us":"Junsen Type B Kai Ni","ja_jp":"巡潜乙（改二）","zh_cn":"巡潜乙（改二）"},"id_ingame":36}
+{"name":{"ja_jp":"Casablanca","zh_cn":"卡萨布兰卡"},"ship_type_id":9,"id":106,"_id":"YnuXflCSvTPmhtWg","navy":"usn","id_ingame":83}
+{"ship_type_id":1,"id":84,"_id":"ZL3yqVUTmQFOkWaC","speed_rule":"high-3","name":{"en_us":"Kamikaze","ja_jp":"神風","zh_cn":"神风"},"id_ingame":66}
+{"ship_type_id":4,"id":57,"_id":"ZhPM1Msam9Zr1lRh","speed_rule":"high-3","name":{"en_us":"Admiral Hipper","ja_jp":"Admiral Hipper","zh_cn":"希佩尔海军上将"},"navy":"km","id_ingame":55}
+{"name":{"ja_jp":"Fletcher","zh_cn":"弗莱彻"},"ship_type_id":1,"id":117,"_id":"aQO0mki7ozsr5pBu","navy":"usn","id_ingame":91}
+{"name":{"ja_jp":"Gato","zh_cn":"猫鲨"},"ship_type_id":13,"id":151,"_id":"aW3hhLQXHmhoB7Ky","navy":"usn","id_ingame":114}
+{"ship_type_id":3,"id":54,"_id":"aqjF6P9FYhNyZMn9","speed_rule":"high-3","name":{"en_us":"Kuma","ja_jp":"球磨","zh_cn":"球磨"},"id_ingame":4,"additional_exslot_item_ids":[413]}
+{"name":{"ja_jp":"特2TL","zh_cn":"特2TL"},"ship_type_id":29,"id":152,"_id":"asNKLZ1JZffdlMAf","id_ingame":115}
+{"name":{"ja_jp":"Independence","zh_cn":"独立"},"ship_type_id":9,"id":156,"_id":"ayKmRHXQQ8wurVXB","navy":"usn","id_ingame":116}
+{"name":{"ja_jp":"Marconi","zh_cn":"马可尼","en_us":"Marconi"},"ship_type_id":13,"id":102,"_id":"b6wYdO1eak7LwLDa","navy":"rm","speed_rule":"low-3","id_ingame":80}
+{"ship_type_id":10,"id":80,"_id":"bNn1ADmTUuacGgdG","speed_rule":"high-3","name":{"en_us":"Graf Zeppelin","ja_jp":"Graf Zeppelin","zh_cn":"齐柏林伯爵"},"navy":"km","id_ingame":63}
+{"name":{"ja_jp":"改加賀","zh_cn":"改加贺"},"ship_type_id":10,"id":137,"_id":"bPGEmLk6w9KA5NCc","id_ingame":3}
+{"name":{"ja_jp":"改龍鳳","zh_cn":"改龙凤","en_us":"Revised Ryuuhou"},"ship_type_id":9,"id":145,"_id":"c0cUBdqLq4qGbIdD","id_ingame":51}
+{"id":8,"ship_type_id":12,"_id":"cQQU4HKdtsPXF1C6","speed_rule":"high-3","name":{"en_us":"Chitose","ja_jp":"千歳","zh_cn":"千岁"},"id_ingame":15}
+{"ship_type_id":10,"id":87,"_id":"cQfrKdxLfNxAwn4n","speed_rule":"high-3","name":{"en_us":"Lexington","ja_jp":"Lexington","zh_cn":"列克星敦"},"navy":"usn","id_ingame":69}
+{"ship_type_id":12,"id":86,"_id":"ci3ELjKOc4QSc4GY","speed_rule":"low-2","name":{"en_us":"Commandant Teste","ja_jp":"C.Teste","zh_cn":"塔斯特司令官"},"navy":"mn","id_ingame":70}
+{"name":{"ja_jp":"UボートIT","zh_cn":"U型潜艇IT","en_us":"Type IT U-boat"},"ship_type_id":13,"id":103,"_id":"crp9W5Tjj3gQYQmO","navy":"km","speed_rule":"low-3","id_ingame":80}
+{"ship_type_id":6,"id":85,"_id":"dAWqBqZF5LTupVGw","speed_rule":"low-2","name":{"en_us":"Queen Elizabeth","ja_jp":"Queen Elizabeth","zh_cn":"伊丽莎白女王"},"navy":"rn","id_ingame":67}
+{"id":9,"ship_type_id":7,"_id":"dLZ8YVNL7vozx2TK","speed_rule":"high-2","name":{"en_us":"Kongou","ja_jp":"金剛","zh_cn":"金刚"},"id_ingame":6}
+{"ship_type_id":13,"id":62,"_id":"dUnjH1tY6sJU8n8f","speed_rule":"low-3","name":{"en_us":"Type IXC U-boat","ja_jp":"UボートIXC","zh_cn":"U型潜艇IXC"},"navy":"km","id_ingame":57}
+{"name":{"ja_jp":"御蔵","zh_cn":"御藏"},"ship_type_id":31,"id":123,"_id":"dhkmd60arVZ99GzN","id_ingame":94}
+{"ship_type_id":1,"id":16,"_id":"evm4ogjAEbdtDCSs","speed_rule":"high-3","name":{"en_us":"Ayanami","ja_jp":"綾波","zh_cn":"绫波"},"id_ingame":1}
+{"name":{"ja_jp":"改金剛","zh_cn":"改金刚","en_us":"Revised Kongou"},"ship_type_id":7,"id":119,"_id":"fNIBeCW5BTWyVapU","speed_rule":"high-2","id_ingame":6}
+{"ship_type_id":9,"id":33,"_id":"fc4I0XDHvViLR6T8","speed_rule":"low-2","name":{"en_us":"Houshou","ja_jp":"鳳翔","zh_cn":"凤翔"},"id_ingame":27}
+{"ship_type_id":32,"id":96,"_id":"ffyU0DgRZRHGjaiW","name":{"en_us":"Taiyou","ja_jp":"大鷹","zh_cn":"大鹰"},"id_ingame":76}
+{"name":{"ja_jp":"丁","zh_cn":"丁"},"ship_type_id":31,"id":132,"_id":"g5euo6YoF9kVgKld","id_ingame":104}
+{"name":{"ja_jp":"松","zh_cn":"松"},"ship_type_id":1,"id":131,"_id":"gAfTNXyFOgal7cqQ","id_ingame":101,"additional_exslot_item_ids":[88,240,27,28,106,450]}
+{"name":{"ja_jp":"South Dakota","zh_cn":"南达科他"},"ship_type_id":7,"id":134,"_id":"hGnDUAEfmqVjly4q","navy":"usn","id_ingame":102}
+{"ship_type_id":2,"id":52,"_id":"hJAm96B6jC0wWmvP","speed_rule":"high-2","name":{"en_us":"Agano","ja_jp":"阿賀野","zh_cn":"阿贺野"},"id_ingame":41,"additional_exslot_item_ids":[220,413,66]}
+{"ship_type_id":15,"id":56,"_id":"hcWdqljjY0waaU64","speed_rule":"low-3","name":{"en_us":"Hei","ja_jp":"特種船丙","zh_cn":"特种船丙"},"id_ingame":45}
+{"id":10,"ship_type_id":6,"_id":"hfYDUbSqjpp3bZTz","speed_rule":"low-2","name":{"en_us":"Nagato","ja_jp":"長門","zh_cn":"长门"},"id_ingame":19}
+{"ship_type_id":19,"id":23,"_id":"hsLQJLbzOtNBTD5b","speed_rule":"high-3","name":{"en_us":"Akizuki","ja_jp":"秋月","zh_cn":"秋月"},"id_ingame":54,"additional_exslot_item_ids":[27,413,106,450]}
 {"ship_type_id":25,"id":72,"_id":"jfpjyPAIEH0Spe0F","name":{"en_us":"","ja_jp":"タカオ","zh_cn":"高雄"}}
-{"ship_type_id":4,"id":44,"_id":"jw8eyIBRveuECrsi","speed_rule":"high-1","name":{"en_us":"Tone","ja_jp":"利根","zh_cn":"利根"}}
-{"name":{"ja_jp":"Atlanta","zh_cn":"亚特兰大"},"ship_type_id":28,"id":128,"_id":"kLDJJhxCldypyxcB","navy":"usn"}
-{"name":{"ja_jp":"鵜来","zh_cn":"鹈来","en_us":"Ukuru"},"ship_type_id":31,"id":155,"_id":"kLenhToDwfrT0FBK"}
-{"ship_type_id":9,"id":97,"_id":"kRCQrUu1SJ0dK9S3","name":{"en_us":"Taiyou","ja_jp":"大鷹","zh_cn":"大鹰"}}
-{"id":11,"ship_type_id":8,"_id":"kSJwuMPND49q30PL","speed_rule":"low-2","name":{"en_us":"Fusou","ja_jp":"扶桑","zh_cn":"扶桑"}}
-{"name":{"ja_jp":"Illustrious","zh_cn":"光辉","en_us":"Illustrious"},"ship_type_id":11,"id":149,"_id":"l9JvcREliiixLQzm","navy":"rn"}
-{"ship_type_id":2,"id":53,"_id":"lAB5BEpDEOb0YJya","speed_rule":"high-3","name":{"en_us":"Ooyodo","ja_jp":"大淀","zh_cn":"大淀"}}
-{"ship_type_id":1,"id":21,"_id":"lV7UMq31ARn8yjAj","speed_rule":"high-3","name":{"en_us":"Kagerou","ja_jp":"陽炎","zh_cn":"阳炎"}}
-{"name":{"ja_jp":"改陽炎","zh_cn":"改阳炎"},"ship_type_id":1,"id":139,"_id":"lW14O1UZkXsKiJZ2"}
-{"id":12,"ship_type_id":1,"_id":"lwGizhf1akrQ7WjP","speed_rule":"high-3","name":{"en_us":"Mutsuki","ja_jp":"睦月","zh_cn":"睦月"}}
-{"ship_type_id":10,"id":26,"_id":"m3KaV0Fw0rYP6TJV","speed_rule":"high-3","name":{"en_us":"Akagi","ja_jp":"赤城","zh_cn":"赤城"}}
-{"ship_type_id":4,"id":42,"_id":"mjCd471R46EOYXXd","speed_rule":"high-3","name":{"en_us":"Takao","ja_jp":"高雄","zh_cn":"高雄"}}
-{"ship_type_id":1,"id":18,"_id":"nP4rNEn1hmsDYHYK","speed_rule":"high-3","name":{"en_us":"Hatsuharu","ja_jp":"初春","zh_cn":"初春"}}
-{"ship_type_id":1,"id":15,"_id":"nptIT0nlZHeAgDU1","speed_rule":"high-3","name":{"en_us":"Fubuki","ja_jp":"吹雪","zh_cn":"吹雪"}}
-{"ship_type_id":4,"id":41,"_id":"oK507q250RthzO2L","speed_rule":"high-3","name":{"en_us":"Myoukou","ja_jp":"妙高","zh_cn":"妙高"}}
-{"ship_type_id":5,"id":45,"_id":"oXJHqtZn9yVOGvyV","speed_rule":"high-1","name":{"en_us":"Mogami","ja_jp":"最上","zh_cn":"最上"}}
-{"name":{"ja_jp":"神威","zh_cn":"神威","en_us":"Kamoi"},"ship_type_id":12,"id":99,"_id":"pvSa5NQ6kpvkNQrG"}
-{"name":{"ja_jp":"Richelieu","zh_cn":"黎塞留","en_us":"Richelieu"},"ship_type_id":7,"id":100,"_id":"qYySAovCnmgN7j7v","navy":"mn"}
-{"ship_type_id":2,"id":50,"_id":"rTcwRUa6ruzaEqeS","speed_rule":"high-3","name":{"en_us":"Sendai","ja_jp":"川内","zh_cn":"川内"}}
-{"ship_type_id":9,"id":38,"_id":"s4IsfZ3yRCMr7V5U","speed_rule":"high-3","name":{"en_us":"Chitose","ja_jp":"千歳","zh_cn":"千岁"}}
-{"name":{"ja_jp":"改伊勢","zh_cn":"改伊势","en_us":"Revised Ise"},"ship_type_id":33,"id":113,"_id":"s5BBroTMtfkzbgpJ","capabilities":{"anti_air_rocket_barrage":"high"},"speed_rule":"low-2"}
-{"ship_type_id":14,"id":67,"_id":"sqbMptvXyvskgG6W","speed_rule":"low-3","name":{"en_us":"Junsen Type B Kai Ni","ja_jp":"巡潜乙（改二）","zh_cn":"巡潜乙（改二）"}}
-{"ship_type_id":1,"id":20,"_id":"ssTgmPb3uPu3CxBy","speed_rule":"high-3","name":{"en_us":"Asashio","ja_jp":"朝潮","zh_cn":"朝潮"}}
-{"ship_type_id":2,"id":48,"_id":"t84eJdJn5UOoVByp","speed_rule":"high-3","name":{"en_us":"Kuma","ja_jp":"球磨","zh_cn":"球磨"}}
-{"name":{"ja_jp":"Gotland","zh_cn":"哥特兰"},"ship_type_id":34,"id":116,"_id":"tN2i0YzhCj6YglHx","navy":"sm"}
-{"ship_type_id":10,"id":27,"_id":"tj5fsdvqsUpt5yUq","speed_rule":"high-4","name":{"en_us":"Kaga","ja_jp":"加賀","zh_cn":"加贺"}}
-{"name":{"ja_jp":"最上","zh_cn":"最上","en_us":"Mogami"},"ship_type_id":36,"id":144,"_id":"tzPO7c3NWtFmRubL","speed_rule":"high-1"}
-{"ship_type_id":21,"id":55,"_id":"u2OtssehEtbGtBOz","speed_rule":"low-2","name":{"en_us":"Katori","ja_jp":"香取","zh_cn":"香取"}}
-{"ship_type_id":29,"id":76,"_id":"uBFfKbVS5UnIqTnt","speed_rule":"low-3","name":{"en_us":"Revised Kazahaya","ja_jp":"改風早","zh_cn":"改风早"}}
-{"ship_type_id":4,"id":43,"_id":"uecETOoA1Bao9clc","speed_rule":"high-1","name":{"en_us":"Mogami","ja_jp":"最上","zh_cn":"最上"}}
+{"ship_type_id":4,"id":44,"_id":"jw8eyIBRveuECrsi","speed_rule":"high-1","name":{"en_us":"Tone","ja_jp":"利根","zh_cn":"利根"},"id_ingame":31}
+{"name":{"ja_jp":"Atlanta","zh_cn":"亚特兰大"},"ship_type_id":28,"id":128,"_id":"kLDJJhxCldypyxcB","navy":"usn","id_ingame":99}
+{"name":{"ja_jp":"鵜来","zh_cn":"鹈来","en_us":"Ukuru"},"ship_type_id":31,"id":155,"_id":"kLenhToDwfrT0FBK","id_ingame":117}
+{"ship_type_id":9,"id":97,"_id":"kRCQrUu1SJ0dK9S3","name":{"en_us":"Taiyou","ja_jp":"大鷹","zh_cn":"大鹰"},"id_ingame":76}
+{"id":11,"ship_type_id":8,"_id":"kSJwuMPND49q30PL","speed_rule":"low-2","name":{"en_us":"Fusou","ja_jp":"扶桑","zh_cn":"扶桑"},"id_ingame":26}
+{"name":{"ja_jp":"Illustrious","zh_cn":"光辉","en_us":"Illustrious"},"ship_type_id":11,"id":149,"_id":"l9JvcREliiixLQzm","navy":"rn","id_ingame":112}
+{"ship_type_id":2,"id":53,"_id":"lAB5BEpDEOb0YJya","speed_rule":"high-3","name":{"en_us":"Ooyodo","ja_jp":"大淀","zh_cn":"大淀"},"id_ingame":52,"additional_exslot_item_ids":[71,413,275]}
+{"ship_type_id":1,"id":21,"_id":"lV7UMq31ARn8yjAj","speed_rule":"high-3","name":{"en_us":"Kagerou","ja_jp":"陽炎","zh_cn":"阳炎"},"id_ingame":30,"additional_exslot_item_ids":[88,240,28]}
+{"name":{"ja_jp":"改陽炎","zh_cn":"改阳炎"},"ship_type_id":1,"id":139,"_id":"lW14O1UZkXsKiJZ2","id_ingame":30,"additional_exslot_item_ids":[88,240,28]}
+{"id":12,"ship_type_id":1,"_id":"lwGizhf1akrQ7WjP","speed_rule":"high-3","name":{"en_us":"Mutsuki","ja_jp":"睦月","zh_cn":"睦月"},"id_ingame":28}
+{"ship_type_id":10,"id":26,"_id":"m3KaV0Fw0rYP6TJV","speed_rule":"high-3","name":{"en_us":"Akagi","ja_jp":"赤城","zh_cn":"赤城"},"id_ingame":14}
+{"ship_type_id":4,"id":42,"_id":"mjCd471R46EOYXXd","speed_rule":"high-3","name":{"en_us":"Takao","ja_jp":"高雄","zh_cn":"高雄"},"id_ingame":8}
+{"ship_type_id":1,"id":18,"_id":"nP4rNEn1hmsDYHYK","speed_rule":"high-3","name":{"en_us":"Hatsuharu","ja_jp":"初春","zh_cn":"初春"},"id_ingame":10}
+{"ship_type_id":1,"id":15,"_id":"nptIT0nlZHeAgDU1","speed_rule":"high-3","name":{"en_us":"Fubuki","ja_jp":"吹雪","zh_cn":"吹雪"},"id_ingame":12}
+{"ship_type_id":4,"id":41,"_id":"oK507q250RthzO2L","speed_rule":"high-3","name":{"en_us":"Myoukou","ja_jp":"妙高","zh_cn":"妙高"},"id_ingame":29}
+{"ship_type_id":5,"id":45,"_id":"oXJHqtZn9yVOGvyV","speed_rule":"high-1","name":{"en_us":"Mogami","ja_jp":"最上","zh_cn":"最上"},"id_ingame":9}
+{"name":{"ja_jp":"神威","zh_cn":"神威","en_us":"Kamoi"},"ship_type_id":12,"id":99,"_id":"pvSa5NQ6kpvkNQrG","id_ingame":72}
+{"name":{"ja_jp":"Richelieu","zh_cn":"黎塞留","en_us":"Richelieu"},"ship_type_id":7,"id":100,"_id":"qYySAovCnmgN7j7v","navy":"mn","id_ingame":79}
+{"ship_type_id":2,"id":50,"_id":"rTcwRUa6ruzaEqeS","speed_rule":"high-3","name":{"en_us":"Sendai","ja_jp":"川内","zh_cn":"川内"},"id_ingame":16,"additional_exslot_item_ids":[413]}
+{"ship_type_id":9,"id":38,"_id":"s4IsfZ3yRCMr7V5U","speed_rule":"high-3","name":{"en_us":"Chitose","ja_jp":"千歳","zh_cn":"千岁"},"id_ingame":15}
+{"name":{"ja_jp":"改伊勢","zh_cn":"改伊势","en_us":"Revised Ise"},"ship_type_id":33,"id":113,"_id":"s5BBroTMtfkzbgpJ","capabilities":{"anti_air_rocket_barrage":"high"},"speed_rule":"low-2","id_ingame":2}
+{"ship_type_id":14,"id":67,"_id":"sqbMptvXyvskgG6W","speed_rule":"low-3","name":{"en_us":"Junsen Type B Kai Ni","ja_jp":"巡潜乙（改二）","zh_cn":"巡潜乙（改二）"},"id_ingame":36}
+{"ship_type_id":1,"id":20,"_id":"ssTgmPb3uPu3CxBy","speed_rule":"high-3","name":{"en_us":"Asashio","ja_jp":"朝潮","zh_cn":"朝潮"},"id_ingame":18}
+{"ship_type_id":2,"id":48,"_id":"t84eJdJn5UOoVByp","speed_rule":"high-3","name":{"en_us":"Kuma","ja_jp":"球磨","zh_cn":"球磨"},"id_ingame":4,"additional_exslot_item_ids":[413]}
+{"name":{"ja_jp":"Gotland","zh_cn":"哥特兰"},"ship_type_id":34,"id":116,"_id":"tN2i0YzhCj6YglHx","navy":"sm","id_ingame":89}
+{"ship_type_id":10,"id":27,"_id":"tj5fsdvqsUpt5yUq","speed_rule":"high-4","name":{"en_us":"Kaga","ja_jp":"加賀","zh_cn":"加贺"},"id_ingame":3}
+{"name":{"ja_jp":"最上","zh_cn":"最上","en_us":"Mogami"},"ship_type_id":36,"id":144,"_id":"tzPO7c3NWtFmRubL","speed_rule":"high-1","id_ingame":9}
+{"ship_type_id":21,"id":55,"_id":"u2OtssehEtbGtBOz","speed_rule":"low-2","name":{"en_us":"Katori","ja_jp":"香取","zh_cn":"香取"},"id_ingame":56}
+{"ship_type_id":29,"id":76,"_id":"uBFfKbVS5UnIqTnt","speed_rule":"low-3","name":{"en_us":"Revised Kazahaya","ja_jp":"改風早","zh_cn":"改风早"},"id_ingame":60}
+{"ship_type_id":4,"id":43,"_id":"uecETOoA1Bao9clc","speed_rule":"high-1","name":{"en_us":"Mogami","ja_jp":"最上","zh_cn":"最上"},"id_ingame":9}
 {"ship_type_id":30,"id":89,"_id":"ulnyuOvwz9UdVNIC","name":{"en_us":"Mogami","ja_jp":"最上","zh_cn":"最上"},"speed_rule":"high-1"}
-{"name":{"ja_jp":"改鳳翔","zh_cn":"改凤翔"},"ship_type_id":9,"id":158,"_id":"vLOKQapbfNn8Ekwm","speed_rule":"low-6"}
-{"ship_type_id":1,"id":17,"_id":"vM1dk7HQDkw12RHP","speed_rule":"high-3","name":{"en_us":"Akatsuki","ja_jp":"暁","zh_cn":"晓"}}
-{"name":{"ja_jp":"夕張","zh_cn":"夕张","en_us":"Yuubari"},"ship_type_id":35,"id":129,"_id":"vRomLPVVMeprFnOS"}
-{"ship_type_id":9,"id":35,"_id":"vaAJbqOdJc4zC0cX","speed_rule":"low-2","name":{"en_us":"Ryuuhou","ja_jp":"龍鳳","zh_cn":"龙凤"}}
-{"id":13,"ship_type_id":17,"_id":"wIQmLK3nowZHC6W9","speed_rule":"low-2","name":{"en_us":"Taigei","ja_jp":"大鯨","zh_cn":"大鲸"}}
-{"ship_type_id":14,"id":88,"_id":"wSSuUroh6oRBa3zc","speed_rule":"low-3","name":{"en_us":"Junsen Type A Kai Ni","ja_jp":"巡潜甲型改二","zh_cn":"巡潜甲型改二"}}
-{"ship_type_id":10,"id":30,"_id":"wc6e0apWiuxMjzUa","speed_rule":"high-1","name":{"en_us":"Shoukaku","ja_jp":"翔鶴","zh_cn":"翔鹤"}}
-{"name":{"ja_jp":"Nelson","zh_cn":"纳尔逊","en_us":"Nelson"},"ship_type_id":6,"id":115,"_id":"wmoSdmAIXxfcTcfL","navy":"rn"}
-{"ship_type_id":2,"id":49,"_id":"wxZ0fgIHk6PXIfFP","speed_rule":"high-3","name":{"en_us":"Nagara","ja_jp":"長良","zh_cn":"长良"}}
+{"name":{"ja_jp":"改鳳翔","zh_cn":"改凤翔"},"ship_type_id":9,"id":158,"_id":"vLOKQapbfNn8Ekwm","speed_rule":"low-6","id_ingame":27}
+{"ship_type_id":1,"id":17,"_id":"vM1dk7HQDkw12RHP","speed_rule":"high-3","name":{"en_us":"Akatsuki","ja_jp":"暁","zh_cn":"晓"},"id_ingame":5}
+{"name":{"ja_jp":"夕張","zh_cn":"夕张","en_us":"Yuubari"},"ship_type_id":35,"id":129,"_id":"vRomLPVVMeprFnOS","id_ingame":34}
+{"ship_type_id":9,"id":35,"_id":"vaAJbqOdJc4zC0cX","speed_rule":"low-2","name":{"en_us":"Ryuuhou","ja_jp":"龍鳳","zh_cn":"龙凤"},"id_ingame":51}
+{"id":13,"ship_type_id":17,"_id":"wIQmLK3nowZHC6W9","speed_rule":"low-2","name":{"en_us":"Taigei","ja_jp":"大鯨","zh_cn":"大鲸"},"id_ingame":50}
+{"ship_type_id":14,"id":88,"_id":"wSSuUroh6oRBa3zc","speed_rule":"low-3","name":{"en_us":"Junsen Type A Kai Ni","ja_jp":"巡潜甲型改二","zh_cn":"巡潜甲型改二"},"id_ingame":71}
+{"ship_type_id":10,"id":30,"_id":"wc6e0apWiuxMjzUa","speed_rule":"high-1","name":{"en_us":"Shoukaku","ja_jp":"翔鶴","zh_cn":"翔鹤"},"id_ingame":33}
+{"name":{"ja_jp":"Nelson","zh_cn":"纳尔逊","en_us":"Nelson"},"ship_type_id":6,"id":115,"_id":"wmoSdmAIXxfcTcfL","navy":"rn","id_ingame":88}
+{"ship_type_id":2,"id":49,"_id":"wxZ0fgIHk6PXIfFP","speed_rule":"high-3","name":{"en_us":"Nagara","ja_jp":"長良","zh_cn":"长良"},"id_ingame":20,"additional_exslot_item_ids":[413]}
 {"id":14,"ship_type_id":18,"_id":"x7qm99OMLRKbJfnx","speed_rule":"high-3","name":{"en_us":"","ja_jp":"Bismarck","zh_cn":"俾斯麦"}}
-{"name":{"ja_jp":"Town","zh_cn":"城","en_us":"Town"},"ship_type_id":2,"id":140,"_id":"xVHRpX0vuNR7LwYV","navy":"rn"}
-{"name":{"ja_jp":"Perth","zh_cn":"珀斯","en_us":"Perth"},"ship_type_id":2,"id":125,"_id":"xyzF3wJ2mOHKhV5B","navy":"ran"}
-{"name":{"ja_jp":"Essex","zh_cn":"埃塞克斯"},"ship_type_id":10,"id":110,"_id":"yCbmTHhmquQzIcX0","navy":"usn"}
-{"ship_type_id":5,"id":90,"_id":"yEuYyegyCYUN5hJ1","name":{"en_us":"Revised Mogami","ja_jp":"改最上","zh_cn":"改最上"},"speed_rule":"high-1"}
-{"name":{"ja_jp":"陸軍特種船(R1)","zh_cn":"陆军特种船（R1）","en_us":"IJA R1"},"ship_type_id":15,"id":126,"_id":"yKgy0czb7ER1jYIu"}
-{"ship_type_id":4,"id":40,"_id":"yMEDlHbJYXS6xZkJ","speed_rule":"high-3","name":{"en_us":"Aoba","ja_jp":"青葉","zh_cn":"青叶"}}
-{"name":{"ja_jp":"最上","zh_cn":"最上","en_us":"Mogami"},"ship_type_id":9,"id":111,"_id":"zAVA3uPNi9zbumxd","capabilities":{"attack_surface_ship_prioritised":true},"speed_rule":"high-1"}
-{"ship_type_id":6,"id":83,"_id":"zRY8kHSuCn1UjaFe","speed_rule":"low-1","name":{"en_us":"Yamato","ja_jp":"大和","zh_cn":"大和"}}
-{"ship_type_id":14,"id":65,"_id":"zy8EKKJjAoxtIRtj","speed_rule":"low-3","name":{"en_us":"Junsen 3","ja_jp":"巡潜3","zh_cn":"巡潜3"}}
+{"name":{"ja_jp":"Town","zh_cn":"城","en_us":"Town"},"ship_type_id":2,"id":140,"_id":"xVHRpX0vuNR7LwYV","navy":"rn","id_ingame":108}
+{"name":{"ja_jp":"Perth","zh_cn":"珀斯","en_us":"Perth"},"ship_type_id":2,"id":125,"_id":"xyzF3wJ2mOHKhV5B","navy":"ran","id_ingame":96}
+{"name":{"ja_jp":"Essex","zh_cn":"埃塞克斯"},"ship_type_id":10,"id":110,"_id":"yCbmTHhmquQzIcX0","navy":"usn","id_ingame":84}
+{"ship_type_id":5,"id":90,"_id":"yEuYyegyCYUN5hJ1","name":{"en_us":"Revised Mogami","ja_jp":"改最上","zh_cn":"改最上"},"speed_rule":"high-1","id_ingame":9}
+{"name":{"ja_jp":"陸軍特種船(R1)","zh_cn":"陆军特种船（R1）","en_us":"IJA R1"},"ship_type_id":15,"id":126,"_id":"yKgy0czb7ER1jYIu","id_ingame":97}
+{"ship_type_id":4,"id":40,"_id":"yMEDlHbJYXS6xZkJ","speed_rule":"high-3","name":{"en_us":"Aoba","ja_jp":"青葉","zh_cn":"青叶"},"id_ingame":13}
+{"name":{"ja_jp":"最上","zh_cn":"最上","en_us":"Mogami"},"ship_type_id":9,"id":111,"_id":"zAVA3uPNi9zbumxd","capabilities":{"attack_surface_ship_prioritised":true},"speed_rule":"high-1","id_ingame":9}
+{"ship_type_id":6,"id":83,"_id":"zRY8kHSuCn1UjaFe","speed_rule":"low-1","name":{"en_us":"Yamato","ja_jp":"大和","zh_cn":"大和"},"id_ingame":37}
+{"ship_type_id":14,"id":65,"_id":"zy8EKKJjAoxtIRtj","speed_rule":"low-3","name":{"en_us":"Junsen 3","ja_jp":"巡潜3","zh_cn":"巡潜3"},"id_ingame":40}

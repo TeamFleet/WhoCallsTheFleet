@@ -2886,6 +2886,7 @@ class InfosFleetShipEquipment {
 
         _frame.app_main.load_page('equipments', {
             callback_modeSelection_select: function (id) {
+                console.log(123, id)
                 history.back();
                 this.id = id;
                 this.star = 0;
@@ -2913,7 +2914,7 @@ class InfosFleetShipEquipment {
                 // const shipClass = shipId && _g.data.ship_classes[ship.class]
                 // const shipClassExtraSlotExtra = shipId && shipClass && shipClass.extraSlotExtra
                 const shipExtraSlotExtra =
-                    shipId && ship.additional_exslot_item_ids;
+                    shipId && ship.getAdditionalExslotEquipIds();
                 const shipCanEquip = shipId
                     ? ship.getEquipmentTypes(this.index)
                     : [];
