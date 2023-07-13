@@ -8134,16 +8134,25 @@ modal.bonuses = function () {
           }
 
           switch (type) {
+            case 'SuperSurfaceRadar':
+              {
+                iconId = 11;
+                name = '对水面雷达/电探 (命中 ≥ 8)';
+                break;
+              }
+
             case 'SurfaceRadar':
               {
                 iconId = 11;
-                name = '对水面雷达/电探';
+                name = '对水面雷达/电探 (索敌 ≥ 5)';
+                break;
               }
 
             case 'AARadar':
               {
                 iconId = 11;
-                name = '对空雷达/电探';
+                name = '对空雷达/电探 (对空 ≥ 1)';
+                break;
               }
 
             default:
