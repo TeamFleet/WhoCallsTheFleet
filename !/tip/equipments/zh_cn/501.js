@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",501,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/54.png)\"></s><strong>发烟装置改<small>(烟幕)</small></strong><small>舰载烟幕弹</small></h3><span>+3 回避</span>")
