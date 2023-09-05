@@ -3162,7 +3162,7 @@ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && lo
   location.replace('http://fleet.moe' + location.pathname);
 }
 
-_g.db_version = '20230222';
+_g.db_version = '20230906';
 _g.bgimg_count=26;
 _g.event = {
   'animationend': 'animationend webkitAnimationEnd',
@@ -7930,7 +7930,7 @@ var InfosFleetAirfield = function () {
                 carry = this.getCarry(e),
                 _distance = e.stat.distance || 0;
 
-            if (Formula.equipmentType.AntiSubPatrols.indexOf(e.type) > -1) {
+            if (e.type === Formula.equipmentType.AntiSubPatrol) {
               cannotIncreaseRange = true;
             }
 
@@ -8299,16 +8299,23 @@ modal.bonuses = function () {
       });
 
       if (bonuses.single.length) {
+        cache[id] = cache[id].add(this.renderSubTitle('single'));
+        var list = $('<div class="bonuses"></div>');
         bonuses.single.forEach(function (bonus) {
-          cache[id] = cache[id].add(_this17.renderBonusSingle(bonus));
+          _this17.renderBonusSingle(bonus).appendTo(list);
         });
+        cache[id] = cache[id].add(list);
       }
 
       if (bonuses.set.length) {
         cache[id] = cache[id].add(this.renderSubTitle('set'));
+
+        var _list = $('<div class="bonuses"></div>');
+
         bonuses.set.forEach(function (bonus) {
-          cache[id] = cache[id].add(_this17.renderBonusSet(bonus));
+          _this17.renderBonusSet(bonus).appendTo(_list);
         });
+        cache[id] = cache[id].add(_list);
       }
 
       if (!bonuses.single.length && !bonuses.set.length) {
@@ -8318,7 +8325,7 @@ modal.bonuses = function () {
       return cache[id];
     },
     renderSubTitle: function renderSubTitle(type) {
-      return $("<div class=\"bonus bonus-title\">" + (type === 'set' ? '单次加成<small>每一个条件的效果仅计算一次，多个条件的效果可叠加</small>' : '') + "</div>");
+      return $("<div class=\"bonus bonus-title\">" + (type === 'set' ? '单次加成<small>每一个条件的效果仅计算一次，多个条件的效果可叠加</small>' : '<small>如果满足多个条件，相应的加成都会生效</small>') + "</div>");
     },
     renderStat: function renderStat(bonus) {
       var r = '';
@@ -8476,8 +8483,10 @@ modal.bonuses = function () {
           bonusStats += "<div class=\"has-extra\">" + "<div class=\"extra count\" data-count=\"".concat(count, "\">").concat(count, "</div>") + _this18.renderStat(bonus.bonusCount[count]) + "</div>";
         });
       } else if (_typeof(bonus.bonusImprove) === 'object') {
-        bonusInfoText += "\u6BCF\u4E2A\u8BE5\u88C5\u5907\u6839\u636E\u6539\u4FEE\u661F\u7EA7\u63D0\u4F9B\u5C5E\u6027\u52A0\u6210";
-        Object.keys(bonus.bonusImprove).sort(function (a, b) {
+        bonusInfoText += !!bonus.bonusImprove.maxCount ? "\u7531\u6539\u4FEE\u661F\u7EA7\u6700\u9AD8\u7684<strong>".concat(bonus.bonusImprove.maxCount, "</strong>\u4E2A\u88C5\u5907\u63D0\u4F9B\u52A0\u6210... (\u591A\u4F59\u5FFD\u7565)") : "\u6BCF\u4E2A\u8BE5\u88C5\u5907\u6839\u636E\u6539\u4FEE\u661F\u7EA7\u63D0\u4F9B\u5C5E\u6027\u52A0\u6210";
+        Object.keys(bonus.bonusImprove).filter(function (star) {
+          return !isNaN(star);
+        }).sort(function (a, b) {
           return parseInt(a) - parseInt(b);
         }).forEach(function (star) {
           bonusStats += "<div class=\"has-extra\">" + "<div class=\"extra star\" data-star=\"".concat(star, "\">").concat(star, "</div>") + _this18.renderStat(bonus.bonusImprove[star]) + "</div>";

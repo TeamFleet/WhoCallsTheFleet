@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",514,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/20.png)\"></s><strong>特大发动艇+Ⅲ号战车J型</strong><small>登陆艇</small></h3><span>+2 火力</span><span>+1 对空</span><span>+1 命中</span>")

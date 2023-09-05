@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",516,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/56.png)\"></s><strong>Me 262 A-1a/R1</strong><small>截击机</small></h3><span>+15 对空</span><span>+3 爆装</span><span>+6 对爆</span><span>+1 迎击</span><span>航程: 3</span>")

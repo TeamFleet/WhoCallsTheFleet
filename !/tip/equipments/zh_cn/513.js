@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",513,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/55.png)\"></s><strong>阻塞气球</strong><small>防空气球</small></h3><span>+1 回避</span>")
