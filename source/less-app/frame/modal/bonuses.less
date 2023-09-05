@@ -18,6 +18,7 @@ body > .modal.hastitle.modal-bonuses{
     &>div{
         height: auto;
         width: 50%;
+        width: calc(100vw - 300px);
         min-width: @screen-width-t5-breaking-point;
         @media all and (max-width: @mobileview-breaking-point ){
             min-width:  0;
@@ -47,10 +48,40 @@ body > .modal.hastitle.modal-bonuses{
     section{
         max-height: ~"calc(100vh - 100px)";
         @icon-width: 36px;
+        overflow-x: hidden;
 
         .no-bonuses{
             color: hsl(0, 0%, 50%);
             font-style: italic;
+        }
+
+        .bonuses{
+            display: grid;
+            grid-template-columns: repeat(auto-fill,minmax(350px,1fr));
+            // gap: 20px 0px;
+            // padding-bottom: 20px;
+            margin-left: -10px;
+            margin-right: -11px;
+            .bonus{
+                // margin-top: 10px;
+                // border-top: 10px solid transparent;
+                border-top: 1px solid fade(#fff, 25%);
+                border-right: 1px solid fade(#fff, 25%);
+                position: relative;
+                padding: 10px 15px 20px 15px;
+                // &::before{
+                //     content: "";
+                //     top: -10px;
+                //     height: 1px;
+                //     left: -10px;
+                //     right: -10px;
+                //     position: absolute;
+                //     background: fade(#fff, 25%);
+                // }
+            }
+            & ~ .bonus-title{
+                margin-top: 35px;
+            }
         }
         
         .bonus{
@@ -61,29 +92,17 @@ body > .modal.hastitle.modal-bonuses{
                 height: 0;
                 clear: both;
             }
-            & + .bonus{
-                margin-top: 10px;
-                border-top: 10px solid transparent;
-                position: relative;
-                &::before{
-                    content: "";
-                    top: -10px;
-                    height: 1px;
-                    left: -10px;
-                    right: -10px;
-                    position: absolute;
-                    background: fade(#fff, 25%);
-                }
-                @supports (position: sticky) {
-                    &.bonus-title{
-                        position: sticky;
-                        top: -0.55rem;
-                        z-index: 100;
-                        &::after{
-                            right: -10px;
-                            width: auto;
-                            background: linear-gradient(90deg,hsla(0,0%,30%,.95) 25%,hsla(0,0%,20%,.85) 50%,transparent);
-                        }
+            @supports (position: sticky) {
+                &.bonus-title{
+                    position: sticky;
+                    top: -5px;
+                    // top: 0;
+                    z-index: 100;
+                    margin-bottom: 10px;
+                    &::after{
+                        right: -10px;
+                        width: auto;
+                        background: linear-gradient(90deg,hsla(0,0%,30%,.95) 25%,hsla(0,0%,20%,.85) 50%,transparent);
                     }
                 }
             }
@@ -242,6 +261,14 @@ body > .modal.hastitle.modal-bonuses{
                     display: block;
                     font-size: 14px;
                     line-height: 22px;
+                    strong {
+                        padding: 0 0.25em;
+                        color: #ffbe3d;
+                        text-decoration: underline;
+                        font-weight: 900;
+                        text-decoration-skip-ink: auto;
+                        text-underline-position: under;
+                    }
                 }
                 .has-extra{
                     position: relative;

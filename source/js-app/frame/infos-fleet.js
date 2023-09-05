@@ -3487,9 +3487,10 @@ class InfosFleetAirfield {
                         // fighterPower[1] += fp[1]
 
                         if (
-                            Formula.equipmentType.AntiSubPatrols.indexOf(
-                                e.type
-                            ) > -1
+                            // Formula.equipmentType.AntiSubPatrols.indexOf(
+                            //     e.type
+                            // ) > -1
+                            e.type === Formula.equipmentType.AntiSubPatrol
                         ) {
                             cannotIncreaseRange = true;
                         }

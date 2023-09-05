@@ -50,16 +50,20 @@ modal.bonuses = (() => ({
         });
 
         if (bonuses.single.length) {
-            // cache[id] = cache[id].add(this.renderSubTitle('single'))
+            cache[id] = cache[id].add(this.renderSubTitle('single'));
+            const list = $('<div class="bonuses"></div>');
             bonuses.single.forEach((bonus) => {
-                cache[id] = cache[id].add(this.renderBonusSingle(bonus));
+                this.renderBonusSingle(bonus).appendTo(list)
             });
+            cache[id] = cache[id].add(list);
         }
         if (bonuses.set.length) {
             cache[id] = cache[id].add(this.renderSubTitle('set'));
+            const list = $('<div class="bonuses"></div>');
             bonuses.set.forEach((bonus) => {
-                cache[id] = cache[id].add(this.renderBonusSet(bonus));
+                this.renderBonusSet(bonus).appendTo(list)
             });
+            cache[id] = cache[id].add(list);
         }
         if (!bonuses.single.length && !bonuses.set.length) {
             cache[id] = $('<span class="no-bonuses">无</span>');
@@ -73,10 +77,11 @@ modal.bonuses = (() => ({
             `<div class="bonus bonus-title">` +
                 (type === 'set'
                     ? '单次加成<small>每一个条件的效果仅计算一次，多个条件的效果可叠加</small>'
-                    : '') +
+                    : '<small>如果满足多个条件，相应的加成都会生效</small>') +
                 `</div>`
         );
     },
+
     renderStat(bonus) {
         let r = '';
         _g.stats.forEach((arr) => {
@@ -238,9 +243,7 @@ modal.bonuses = (() => ({
             return this.renderConditionEquipmentOneOf(
                 bonus.equipments
                     .filter(({ isOneOf }) => Array.isArray(isOneOf))
-                    .map(({ isOneOf }) =>
-                        isOneOf.map(({ isID }) => isID)
-                    )
+                    .map(({ isOneOf }) => isOneOf.map(({ isID }) => isID))
                     .flat(2)
             );
 
@@ -295,8 +298,11 @@ modal.bonuses = (() => ({
                         `</div>`;
                 });
         } else if (typeof bonus.bonusImprove === 'object') {
-            bonusInfoText += `每个该装备根据改修星级提供属性加成`;
+            bonusInfoText += !!bonus.bonusImprove.maxCount
+                ? `由改修星级最高的<strong>${bonus.bonusImprove.maxCount}</strong>个装备提供加成... (多余忽略)`
+                : `每个该装备根据改修星级提供属性加成`;
             Object.keys(bonus.bonusImprove)
+                .filter((star) => !isNaN(star))
                 .sort((a, b) => parseInt(a) - parseInt(b))
                 .forEach((star) => {
                     bonusStats +=
