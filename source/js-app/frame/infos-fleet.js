@@ -2609,6 +2609,10 @@ class InfosFleetShipEquipment {
         // 直接对 infosParent.data 相关数据进行读写
 
         this.index = index || 0;
+        /** 当前装备栏是否是补强增设 */
+        this.isExSlot = this.index === 4;
+        /** 当前栏位最小的改修星数 */
+        this.minStar = 0;
         this.isParentAirfield = infosParent instanceof InfosFleetAirfield;
         this.infosParent = infosParent;
 
@@ -2886,7 +2890,7 @@ class InfosFleetShipEquipment {
 
         _frame.app_main.load_page('equipments', {
             callback_modeSelection_select: function (id) {
-                console.log(123, id)
+                console.log(123, id);
                 history.back();
                 this.id = id;
                 this.star = 0;
@@ -3045,12 +3049,25 @@ class InfosFleetShipEquipment {
                     _g.data.items[value].type
                 );
             }
+            // 如果是补强增设栏，设定最低改修星级
+            if (this.isExSlot) {
+                this.minStar = _g.data.items[value].exslot_min_star_level || 0;
+                const currStar = this.star || 0;
+                // console.log(
+                //     123,
+                //     this.minStar,
+                //     currStar,
+                //     currStar < this.minStar
+                // );
+                if (currStar < this.minStar) this.star = this.minStar;
+            }
         } else {
             if (this.isParentAirfield) {
                 this.infosParent.data[this.index][0] = null;
                 this.carry = 18;
             } else this.infosParent.data[2][this.index] = null;
             this.improvable = true;
+            this.minStar = 0;
             // this.improvable = false
             this.el
                 .removeAttr('data-equipmentId')
@@ -3086,7 +3103,7 @@ class InfosFleetShipEquipment {
 
             if (value > 10) value = 10;
 
-            if (value < 0) value = 0;
+            if (value < this.minStar || 0) value = this.minStar || 0;
 
             if (value) {
                 update(value);
@@ -3539,7 +3556,8 @@ class InfosFleetAirfield {
                 // 航程计算
                 if (distance.min + distance.recon > 0) {
                     let val = distance.min;
-                    if (distance.recon > 0 && distance.min >= distance.recon) val = distance.recon;
+                    if (distance.recon > 0 && distance.min >= distance.recon)
+                        val = distance.recon;
                     else if (distance.recon) {
                         /*
                     val+= ` + ${

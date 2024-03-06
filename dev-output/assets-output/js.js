@@ -7391,6 +7391,8 @@ var InfosFleetShipEquipment = function () {
     _classCallCheck(this, InfosFleetShipEquipment);
 
     this.index = index || 0;
+    this.isExSlot = this.index === 4;
+    this.minStar = 0;
     this.isParentAirfield = infosParent instanceof InfosFleetAirfield;
     this.infosParent = infosParent;
     if (this.el) return this.el;
@@ -7648,6 +7650,12 @@ var InfosFleetShipEquipment = function () {
         if (this.isParentAirfield) {
           this.carry = InfosFleetAirfield.getCarryFromType(_g.data.items[value].type);
         }
+
+        if (this.isExSlot) {
+          this.minStar = _g.data.items[value].exslot_min_star_level || 0;
+          var currStar = this.star || 0;
+          if (currStar < this.minStar) this.star = this.minStar;
+        }
       } else {
         if (this.isParentAirfield) {
           this.infosParent.data[this.index][0] = null;
@@ -7655,6 +7663,7 @@ var InfosFleetShipEquipment = function () {
         } else this.infosParent.data[2][this.index] = null;
 
         this.improvable = true;
+        this.minStar = 0;
         this.el.removeAttr('data-equipmentId').removeAttr('data-tip').removeAttr('data-star').removeAttr('data-rank').removeAttr('touch-action').css('background-image', '').removeClass('is-aircraft is-rankupgradable');
         this.elName.html('');
       }
@@ -7675,7 +7684,7 @@ var InfosFleetShipEquipment = function () {
       if (this._improvable) {
         value = parseInt(value) || null;
         if (value > 10) value = 10;
-        if (value < 0) value = 0;
+        if (value < this.minStar || 0) value = this.minStar || 0;
 
         if (value) {
           update(value);
