@@ -1,7 +1,7 @@
 {
   "name": "WhoCallsTheFleet",
   "main": "app/main.html",
-  "version": "0.34.0",
+  "version": "0.34.1",
   "description": "An offline guidebook for KanColle. Based on NW.JS",
   "repository": {
     "type": "git",
@@ -38,10 +38,10 @@
       "package.json"
     ],
     "dataVersion": {
-      "app": "0.34.0.0",
-      "app-db": "2023.09.06",
+      "app": "0.34.1.0",
+      "app-db": "2024.03.08",
       "bgimgs": "1.18.6.0",
-      "pics": "2023.09.06",
+      "pics": "2024.03.08",
       "pics-enemies": "2018.08.28",
       "pics-ships-1": "2018.12.08",
       "pics-ships-2": "2018.12.08",
@@ -50,17 +50,17 @@
       "pics-ships-5": "2019.01.29",
       "pics-ships-6": "2021.12.01",
       "pics-ships-7": "2018.11.18",
-      "pics-ships-8": "2023.09.06",
+      "pics-ships-8": "2024.03.08",
       "pics-ships-9": "2018.12.08",
       "pics-ships-10": "2018.12.28",
-      "pics-ships-11": "2022.04.07",
+      "pics-ships-11": "2024.03.08",
       "pics-ships-12": "2023.09.06",
       "pics-ships-13": "2023.04.07",
       "pics-ships-14": "2022.06.22",
-      "pics-ships-15": "2023.09.06",
-      "pics-ships-18": "2023.09.06",
-      "pics-ships-19": "2023.09.06",
-      "pics-ships-20": "2023.09.06",
+      "pics-ships-15": "2024.03.08",
+      "pics-ships-18": "2024.03.08",
+      "pics-ships-19": "2024.03.08",
+      "pics-ships-20": "2024.03.08",
       "pics-ships-30": "2019.05.25",
       "pics-ships-184": "2018.08.28",
       "pics-ships-extra-1": "2019.10.07",
@@ -78,7 +78,9 @@
       "pics-ships-extra-13": "2022.04.07",
       "pics-ships-extra-14": "2022.12.08",
       "pics-ships-extra-15": "2023.02.22",
-      "pics-ships-extra-16": "2023.09.06"
+      "pics-ships-extra-16": "2024.03.08",
+      "pics-ships-extra-17": "2024.03.08",
+      "pics-ships-extra-18": "2024.03.08"
     },
     "versions": {
       "win32": "0.35.2",
@@ -129,7 +131,9 @@
       "pics-ships-extra-13",
       "pics-ships-extra-14",
       "pics-ships-extra-15",
-      "pics-ships-extra-16"
+      "pics-ships-extra-16",
+      "pics-ships-extra-17",
+      "pics-ships-extra-18"
     ],
     "launcherSplash": "./source/launcher.webp",
     "macIcns": "./source/appicon.icns"
