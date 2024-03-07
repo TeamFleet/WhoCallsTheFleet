@@ -1,14 +1,14 @@
 {
 	"packages": {
 		"app": {
-			"version":	"0.34.0.0",
-			"path":		"data/2023.09.06/app.nwjs-data",
-			"bytes":	5001372
+			"version":	"0.34.1.0",
+			"path":		"data/2024.03.08/app.nwjs-data",
+			"bytes":	5011657
 		},
 		"app-db": {
-			"version":	"2023.09.06",
-			"path":		"data/2023.09.06/app-db.nwjs-data",
-			"bytes":	4284881
+			"version":	"2024.03.08",
+			"path":		"data/2024.03.08/app-db.nwjs-data",
+			"bytes":	4312798
 		},
 		"bgimgs": {
 			"version":	"1.18.6.0",
@@ -16,9 +16,9 @@
 			"bytes":	12494509
 		},
 		"pics": {
-			"version":	"2023.09.06",
-			"path":		"data/2023.09.06/pics.nwjs-data",
-			"bytes":	46353604
+			"version":	"2024.03.08",
+			"path":		"data/2024.03.08/pics.nwjs-data",
+			"bytes":	47261560
 		},
 		"pics-enemies": {
 			"version":	"2018.08.28",
@@ -62,9 +62,9 @@
 			"bytes":	8238597
 		},
 		"pics-ships-8": {
-			"version":	"2023.09.06",
-			"path":		"data/2023.09.06/pics-ships-8.nwjs-data",
-			"bytes":	5600870
+			"version":	"2024.03.08",
+			"path":		"data/2024.03.08/pics-ships-8.nwjs-data",
+			"bytes":	5579552
 		},
 		"pics-ships-9": {
 			"version":	"2018.12.08",
@@ -77,9 +77,9 @@
 			"bytes":	22855130
 		},
 		"pics-ships-11": {
-			"version":	"2022.04.07",
-			"path":		"data/2022.04.07/pics-ships-11.nwjs-data",
-			"bytes":	19420179
+			"version":	"2024.03.08",
+			"path":		"data/2024.03.08/pics-ships-11.nwjs-data",
+			"bytes":	20150093
 		},
 		"pics-ships-12": {
 			"version":	"2023.09.06",
@@ -97,24 +97,24 @@
 			"bytes":	13128667
 		},
 		"pics-ships-15": {
-			"version":	"2023.09.06",
-			"path":		"data/2023.09.06/pics-ships-15.nwjs-data",
-			"bytes":	10483956
+			"version":	"2024.03.08",
+			"path":		"data/2024.03.08/pics-ships-15.nwjs-data",
+			"bytes":	10936275
 		},
 		"pics-ships-18": {
-			"version":	"2023.09.06",
-			"path":		"data/2023.09.06/pics-ships-18.nwjs-data",
-			"bytes":	7046921
+			"version":	"2024.03.08",
+			"path":		"data/2024.03.08/pics-ships-18.nwjs-data",
+			"bytes":	7498589
 		},
 		"pics-ships-19": {
-			"version":	"2023.09.06",
-			"path":		"data/2023.09.06/pics-ships-19.nwjs-data",
-			"bytes":	14435889
+			"version":	"2024.03.08",
+			"path":		"data/2024.03.08/pics-ships-19.nwjs-data",
+			"bytes":	15194521
 		},
 		"pics-ships-20": {
-			"version":	"2023.09.06",
-			"path":		"data/2023.09.06/pics-ships-20.nwjs-data",
-			"bytes":	2407245
+			"version":	"2024.03.08",
+			"path":		"data/2024.03.08/pics-ships-20.nwjs-data",
+			"bytes":	4396834
 		},
 		"pics-ships-30": {
 			"version":	"2019.05.25",
@@ -203,9 +203,19 @@
 			"bytes":	13989745
 		},
 		"pics-ships-extra-16": {
-			"version":	"2023.09.06",
-			"path":		"data/2023.09.06/pics-ships-extra-16.nwjs-data",
-			"bytes":	8305993
+			"version":	"2024.03.08",
+			"path":		"data/2024.03.08/pics-ships-extra-16.nwjs-data",
+			"bytes":	11855750
+		},
+		"pics-ships-extra-17": {
+			"version":	"2024.03.08",
+			"path":		"data/2024.03.08/pics-ships-extra-17.nwjs-data",
+			"bytes":	15359528
+		},
+		"pics-ships-extra-18": {
+			"version":	"2024.03.08",
+			"path":		"data/2024.03.08/pics-ships-extra-18.nwjs-data",
+			"bytes":	4355915
 		}
 
 	},

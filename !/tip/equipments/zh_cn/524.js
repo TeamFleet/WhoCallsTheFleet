@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",524,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/16.png)\"></s><strong>12cm单装高角炮+25mm机枪增备</strong><small>高角副炮</small></h3><span>+1 火力</span><span>+5 对空</span><span>+1 对潜</span><span>+2 回避</span><span>射程: 短</span>")

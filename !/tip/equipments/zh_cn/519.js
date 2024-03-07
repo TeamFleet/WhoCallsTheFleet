@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",519,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/42.png)\"></s><strong>SJ雷达+潜艇司令塔装备</strong><small>潜艇装备</small></h3><span>+5 雷装</span><span>+5 命中</span><span>+6 回避</span><span>+7 索敌</span>")

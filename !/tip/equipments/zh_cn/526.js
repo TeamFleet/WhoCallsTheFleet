@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",526,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/36.png)\"></s><strong>特四式内火艇改</strong><small>特型内火艇</small></h3><span>+3 雷装</span><span>+2 对空</span><span>+1 命中</span>")

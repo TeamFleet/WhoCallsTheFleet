@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",521,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/10.png)\"></s><strong>紫云<small>(熟练)</small></strong><small>水上侦察机</small></h3><span>+4 对潜</span><span>+1 爆装</span><span>+2 命中</span><span>+2 回避</span><span>+9 索敌</span><span>航程: 5</span>")

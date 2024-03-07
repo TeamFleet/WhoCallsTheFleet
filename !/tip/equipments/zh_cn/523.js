@@ -1,0 +1,1 @@
+KCTip.loaded("equipments",523,"zh_cn","<h3><s style=\"background-image: url(http://fleet.moe/!/assets/images/itemicon/10.png)\"></s><strong>零式小型水上机<small>(熟练)</small></strong><small>水上侦察机</small></h3><span>+2 对潜</span><span>+1 爆装</span><span>+1 命中</span><span>+2 回避</span><span>+4 索敌</span><span>航程: 3</span>")
